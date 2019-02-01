@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 
 import { UIComponent, UIComponentProps, commonPropTypes, rtlTextContainer } from '../../lib'
-import { ReactProps } from '../../../../../types/utils'
+import { ReactProps } from '../../types'
 import { ICSSInJSStyle } from '../../themes/types'
 
 export interface LayoutProps extends UIComponentProps {

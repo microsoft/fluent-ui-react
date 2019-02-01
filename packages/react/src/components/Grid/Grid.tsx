@@ -11,7 +11,7 @@ import {
   ContentComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps } from '../../../../../types/utils'
+import { ReactProps } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import ReactNode = React.ReactNode

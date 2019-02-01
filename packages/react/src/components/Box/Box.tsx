@@ -9,7 +9,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
-import { ReactProps } from '../../../types/utils'
+import { ReactProps } from '../../types'
 
 export interface BoxProps
   extends UIComponentProps<BoxProps>,

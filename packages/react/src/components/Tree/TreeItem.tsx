@@ -16,7 +16,7 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandRenderFunction, ShorthandValue } from '../../types'
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**

@@ -8,7 +8,7 @@ import {
   commonPropTypes,
   customPropTypes,
 } from '../../lib'
-import { ReactProps, ShorthandValue } from '../../../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../types'
 import Icon from '../Icon/Icon'
 
 export interface IndicatorProps extends UIComponentProps {

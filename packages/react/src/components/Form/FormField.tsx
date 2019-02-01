@@ -10,7 +10,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { ReactProps, ShorthandValue } from '../../../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../types'
 import Text from '../Text/Text'
 import Input from '../Input/Input'
 import Box from '../Box/Box'

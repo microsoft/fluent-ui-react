@@ -12,7 +12,7 @@ import {
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
-import { Extendable, ShorthandValue } from 'utils'
+import { Extendable, ShorthandValue } from 'src/types'
 import { ChatData, UserStatus, MessageData, UserData, areSameDay, getFriendlyDateString } from '.'
 
 export enum ChatItemTypes {

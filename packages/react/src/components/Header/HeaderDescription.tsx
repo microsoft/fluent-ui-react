@@ -11,7 +11,7 @@ import {
   ColorComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps } from '../../../../../types/utils'
+import { ReactProps } from '../../types'
 
 export interface HeaderDescriptionProps
   extends UIComponentProps,

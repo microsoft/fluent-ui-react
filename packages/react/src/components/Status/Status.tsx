@@ -9,7 +9,7 @@ import {
   UIComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { ReactProps, ShorthandValue } from '../../../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../types'
 
 export interface StatusProps extends UIComponentProps {
   /** A custom color. */

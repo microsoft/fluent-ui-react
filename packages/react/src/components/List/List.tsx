@@ -16,7 +16,7 @@ import ListItem, { ListItemProps } from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /**

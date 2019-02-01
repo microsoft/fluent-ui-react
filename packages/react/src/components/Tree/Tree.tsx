@@ -11,7 +11,7 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../../types/utils'
+import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import * as customPropTypes from '../../lib/customPropTypes'

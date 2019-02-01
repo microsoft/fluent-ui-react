@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import { OneOrArray } from 'types/utils'
+import { OneOrArray } from '../../types'
 
 export default class EventTarget {
   private _handlers: { [key: string]: EventListener } = {}

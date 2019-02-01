@@ -5,7 +5,7 @@ import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes 
 import { imageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import { ReactProps } from '../../../types/utils'
+import { ReactProps } from '../../types'
 
 export interface ImageProps extends UIComponentProps {
   /**

@@ -14,7 +14,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import HeaderDescription from './HeaderDescription'
-import { ReactProps, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../types'
 
 export interface HeaderProps
   extends UIComponentProps,

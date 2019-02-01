@@ -18,7 +18,7 @@ import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 import ButtonGroup from './ButtonGroup'
 
 export interface ButtonProps

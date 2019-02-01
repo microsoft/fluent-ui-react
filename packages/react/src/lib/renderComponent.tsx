@@ -18,7 +18,7 @@ import {
   State,
   ThemePrepared,
 } from '../themes/types'
-import { Props } from '../../types/utils'
+import { Props } from '../types'
 import {
   AccessibilityBehavior,
   AccessibilityDefinition,

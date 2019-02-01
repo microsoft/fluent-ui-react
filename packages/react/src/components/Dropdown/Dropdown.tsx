@@ -8,7 +8,7 @@ import {
   ShorthandRenderFunction,
   ShorthandValue,
   ComponentEventHandler,
-} from '../../../../../types/utils'
+} from '../../types'
 import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
 import Downshift, {
   DownshiftState,

@@ -18,7 +18,7 @@ import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
-import { ReactPropsStrict } from '../../../types/utils'
+import { ReactPropsStrict } from '../../types'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 export type TriggerAccessibility = {

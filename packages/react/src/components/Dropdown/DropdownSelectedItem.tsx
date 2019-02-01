@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import keyboardKey from 'keyboard-key'
-import { ComponentEventHandler, ShorthandValue, ReactProps } from '../../../../../types/utils'
+import { ComponentEventHandler, ShorthandValue, ReactProps } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import {
   customPropTypes,

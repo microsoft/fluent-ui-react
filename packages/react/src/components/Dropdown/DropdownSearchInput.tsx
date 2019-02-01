@@ -9,7 +9,7 @@ import {
   commonPropTypes,
   customPropTypes,
 } from '../../lib'
-import { ComponentEventHandler, ReactProps } from '../../../../../types/utils'
+import { ComponentEventHandler, ReactProps } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
 

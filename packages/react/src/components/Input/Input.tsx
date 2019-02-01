@@ -13,7 +13,7 @@ import {
   commonPropTypes,
   handleRef,
 } from '../../lib'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import Box from '../Box/Box'

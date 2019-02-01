@@ -12,7 +12,7 @@ import {
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ReactProps, ComponentEventHandler } from '../../../types/utils'
+import { ReactProps, ComponentEventHandler } from '../../types'
 
 export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
   /**

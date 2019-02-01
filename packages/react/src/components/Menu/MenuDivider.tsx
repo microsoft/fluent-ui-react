@@ -10,7 +10,7 @@ import {
   ColorComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { ReactProps } from '../../../types/utils'
+import { ReactProps } from '../../types'
 
 export interface MenuDividerProps extends UIComponentProps, ColorComponentProps {
   /**

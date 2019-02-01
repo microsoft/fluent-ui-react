@@ -13,7 +13,7 @@ import {
 } from '../../lib'
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
-import { ReactProps } from '../../../types/utils'
+import { ReactProps } from '../../types'
 
 export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps<any> {
   contentMedia?: any

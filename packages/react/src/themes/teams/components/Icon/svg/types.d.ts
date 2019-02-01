@@ -1,5 +1,5 @@
 import { SvgIconSpec, ComponentSlotStyleFunction } from '../../../../types'
-import { ObjectOf } from '../../../../../../../../types/utils'
+import { ObjectOf } from '../../../../../types'
 import { IconProps } from '../../../../../components/Icon/Icon'
 
 type SvgIconSpecWithStyles = {

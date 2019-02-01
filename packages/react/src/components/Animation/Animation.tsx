@@ -10,7 +10,7 @@ import {
 } from '../../lib'
 import { AnimationProp } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
-import { ReactPropsStrict } from '../../../types/utils'
+import { ReactPropsStrict } from '../../types'
 
 export interface AnimationProps
   extends StyledComponentProps,

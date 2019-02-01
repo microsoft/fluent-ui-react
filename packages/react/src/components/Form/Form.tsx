@@ -11,7 +11,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 import FormField from './FormField'
 
 export interface FormProps extends UIComponentProps, ChildrenComponentProps {

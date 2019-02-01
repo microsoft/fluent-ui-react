@@ -3,7 +3,7 @@ import * as React from 'react'
 import { isForwardRef } from 'react-is'
 
 import { ChildrenComponentProps, customPropTypes } from '../../lib'
-import { ReactPropsStrict } from '../../../../../types/utils'
+import { ReactPropsStrict } from '../../types'
 import RefFindNode from './RefFindNode'
 import RefForward from './RefForward'
 

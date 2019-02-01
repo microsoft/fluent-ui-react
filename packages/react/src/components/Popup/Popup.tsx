@@ -16,7 +16,7 @@ import {
   commonPropTypes,
   isFromKeyboard,
 } from '../../lib'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 
 import Ref from '../Ref/Ref'
 import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './positioningHelper'

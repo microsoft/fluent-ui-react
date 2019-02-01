@@ -6,7 +6,7 @@ import {
   ColorSchemeMapping,
   ColorScheme,
 } from '../themes/types'
-import { Partial } from '../../../../types/utils'
+import { Partial } from '../utils'
 import { ComplexColorPropType } from './commonPropInterfaces'
 
 export const mapColorsToScheme = <T>(

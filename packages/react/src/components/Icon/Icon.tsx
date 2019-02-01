@@ -12,7 +12,7 @@ import { iconBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { SvgIconSpec } from '../../themes/types'
-import { ReactProps } from '../../../types/utils'
+import { ReactProps } from '../../types'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 

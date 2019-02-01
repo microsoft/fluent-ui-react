@@ -3,7 +3,7 @@ import * as React from 'react'
 import Image from '../Image/Image'
 import Label from '../Label/Label'
 import Status from '../Status/Status'
-import { ReactProps, ShorthandValue } from '../../../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../types'
 import {
   createShorthandFactory,
   customPropTypes,

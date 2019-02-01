@@ -9,7 +9,7 @@ import {
   customPropTypes,
   commonPropTypes,
 } from '../../lib'
-import { ShorthandValue, ComponentEventHandler, ReactProps } from '../../../../../types/utils'
+import { ShorthandValue, ComponentEventHandler, ReactProps } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
 import Image from '../Image/Image'

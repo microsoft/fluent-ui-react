@@ -3,7 +3,7 @@ import { FlexDirectionProperty } from 'csstype'
 import { pxToRem } from '../../../../lib'
 import { LoaderProps } from '../../../../components/Loader/Loader'
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
-import { ObjectOf } from '../../../../../../../types/utils'
+import { ObjectOf } from '../../../../types'
 import { LoaderVariables } from './loaderVariables'
 
 const rootFlexDirections: ObjectOf<FlexDirectionProperty> = {

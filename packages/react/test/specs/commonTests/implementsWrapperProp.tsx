@@ -3,7 +3,7 @@ import { ReactWrapper } from 'enzyme'
 import { mountWithProvider as mount } from 'test/utils'
 
 import Box from 'src/components/Box/Box'
-import { ReactProps, ShorthandValue } from 'utils'
+import { ReactProps, ShorthandValue } from 'src/types'
 
 export interface ImplementsWrapperPropOptions {
   wrapppedComponentSelector: any

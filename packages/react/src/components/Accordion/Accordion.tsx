@@ -21,7 +21,7 @@ import {
   ReactProps,
   ShorthandValue,
   ShorthandRenderFunction,
-} from '../../../types/utils'
+} from '../../types'
 
 export interface AccordionProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active panel. */
