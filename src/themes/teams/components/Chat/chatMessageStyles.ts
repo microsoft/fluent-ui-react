@@ -45,8 +45,8 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
       textDecoration: 'underline',
     },
   }),
-  badge: ({ props: { badgePosition } }) => {
-    const sidePosition = badgePosition === 'start' ? 'left' : 'right'
+  badge: ({ props: p }) => {
+    const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
     return {
       position: 'absolute',
       height: pxToRem(24),
