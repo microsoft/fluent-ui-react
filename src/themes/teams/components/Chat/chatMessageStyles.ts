@@ -53,6 +53,7 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
       width: pxToRem(24),
       borderRadius: '50%',
       top: pxToRem(4),
+      zIndex: '1',
       [sidePosition]: pxToRem(-12),
     }
   },
