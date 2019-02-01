@@ -51,8 +51,8 @@ export interface ChatMessageProps
   /** Badge attached to the message. */
   badge?: ShorthandValue
 
-  /** A message can format the badge to appear on the start, end, top or on the bottom of the message. */
-  badgePosition?: 'start' | 'end' | 'top' | 'bottom'
+  /** A message can format the badge to appear on the start or the end of the message. */
+  badgePosition?: 'start' | 'end'
 
   /**
    * Called after user's focus.
@@ -82,6 +82,8 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     ...commonPropTypes.createCommon({ content: 'shorthand' }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     author: customPropTypes.itemShorthand,
+    badge: customPropTypes.itemShorthand,
+    badgePosition: PropTypes.oneOf(['start', 'end']),
     mine: PropTypes.bool,
     timestamp: customPropTypes.itemShorthand,
     onFocus: PropTypes.func,
@@ -121,9 +123,8 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
     const badgeElement = Label.create(badge, {
-      defaultProps: { circular: true, styles: styles.badge },
+      defaultProps: { styles: styles.badge },
     })
-    const badgeBeforeContent = badgePosition === 'start' || badgePosition === 'top'
 
     return (
       <ElementType
@@ -138,7 +139,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
           children
         ) : (
           <>
-            {badgeBeforeContent && badgeElement}
+            {badgePosition === 'start' && badgeElement}
             {Text.create(author, {
               defaultProps: {
                 size: 'small',
@@ -155,7 +156,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
               },
             })}
             {Box.create(content, { defaultProps: { styles: styles.content } })}
-            {!badgeBeforeContent && badgeElement}
+            {badgePosition === 'end' && badgeElement}
           </>
         )}
       </ElementType>
