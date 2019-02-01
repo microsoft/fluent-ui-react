@@ -125,18 +125,25 @@ task(
 )
 
 task('stats:save', async () => {
-  const data = _.pick(argv, ['name'])
+  const commandLineArgs = _.pick(argv, ['sha', 'branch', 'tag', 'pr', 'build'])
   const bundleStats = require(paths.docsSrc('bundleStats.json'))[UNRELEASED_VERSION_STRING]
 
   const options = {
     method: 'POST',
     uri: process.env.STATS_URI,
     body: {
-      ...data,
+      sha: process.env.CIRCLE_SHA1,
+      branch: process.env.CIRCLE_BRANCH,
+      tag: process.env.CIRCLE_TAG, // optional
+      pr: process.env.CIRCLE_PULL_REQUEST, // optional
+      build: process.env.CIRCLE_BUILD_NUM,
+      ...commandLineArgs, // allow command line overwrites
       bundleSize: bundleStats,
+      ts: new Date(),
     },
     json: true,
   }
+
   const ret = await rp(options)
   console.log(ret)
 })
