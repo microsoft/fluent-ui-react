@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { StatusPropsWithDefaults } from '../../../../components/Status/Status'
+import { StatusProps } from '../../../../components/Status/Status'
 import { StatusVariables } from './statusVariables'
 
 const getBackgroundColor = (state: string, variables: StatusVariables) => {
@@ -35,16 +35,33 @@ const getTextColor = (state: string, variables: StatusVariables) => {
   }
 }
 
-const statusStyles: ComponentSlotStylesInput<StatusPropsWithDefaults, StatusVariables> = {
+export const sizeToPxValue = {
+  smallest: 8,
+  smaller: 8,
+  small: 8,
+  medium: 10,
+  large: 12,
+  larger: 14,
+  largest: 16,
+}
+
+export const getSizeStyles = (sizeInPx: number, variables: StatusVariables) => {
+  const sizeInRem = pxToRem(sizeInPx + 2 * ((variables.borderColor && variables.borderWidth) || 0))
+
+  return {
+    height: sizeInRem,
+    width: sizeInRem,
+  }
+}
+
+const statusStyles: ComponentSlotStylesInput<StatusProps, StatusVariables> = {
   root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => {
-    const sizeInRem = pxToRem(size + 2 * ((variables.borderColor && variables.borderWidth) || 0))
     return {
       boxSizing: 'border-box',
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',
-      height: sizeInRem,
-      width: sizeInRem,
+      ...getSizeStyles(sizeToPxValue[size], variables),
       verticalAlign: 'middle',
       borderRadius: '9999px',
       ...(variables.borderColor && {

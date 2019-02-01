@@ -4,6 +4,7 @@ import * as React from 'react'
 import {
   childrenExist,
   createShorthandFactory,
+  customPropTypes,
   UIComponent,
   UIComponentProps,
   ContentComponentProps,
@@ -11,6 +12,7 @@ import {
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
+  SizeValue,
 } from '../../lib'
 
 import { ReactProps } from '../../../types/utils'
@@ -33,7 +35,7 @@ export interface TextProps
   important?: boolean
 
   /** The size for the Text component */
-  size?: 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
+  size?: SizeValue
 
   /** The weight for the Text component */
   weight?: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
@@ -74,7 +76,7 @@ class Text extends UIComponent<ReactProps<TextProps>, any> {
     disabled: PropTypes.bool,
     error: PropTypes.bool,
     important: PropTypes.bool,
-    size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
+    size: customPropTypes.size,
     weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
     success: PropTypes.bool,
     temporary: PropTypes.bool,

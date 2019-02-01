@@ -450,6 +450,16 @@ export const deprecate = (help: string, validator: Function) => (
   return error
 }
 
+export const size = PropTypes.oneOf([
+  'smallest',
+  'smaller',
+  'small',
+  'medium',
+  'large',
+  'larger',
+  'largest',
+])
+
 export const animation = PropTypes.oneOfType([
   // Validator is broken in the latest @react/types
   PropTypes.shape({

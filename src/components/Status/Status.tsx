@@ -8,6 +8,7 @@ import {
   createShorthandFactory,
   UIComponentProps,
   commonPropTypes,
+  SizeValue,
 } from '../../lib'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 
@@ -19,7 +20,7 @@ export interface StatusProps extends UIComponentProps {
   icon?: ShorthandValue
 
   /** Size multiplier */
-  size?: number
+  size?: SizeValue
 
   /** The pre-defined state values which can be consumed directly. */
   state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
@@ -42,18 +43,18 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
     }),
     color: PropTypes.string,
     icon: customPropTypes.itemShorthand,
-    size: PropTypes.number,
+    size: customPropTypes.size,
     state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
   }
 
   static defaultProps = {
     as: 'span',
-    size: 10,
+    size: 'medium',
     state: 'unknown',
   }
 
   renderComponent({ ElementType, classes, unhandledProps, variables, styles }) {
-    const { icon } = this.props as StatusPropsWithDefaults
+    const { icon } = this.props as StatusProps
     return (
       <ElementType {...unhandledProps} className={classes.root}>
         {Icon.create(icon, {
@@ -72,4 +73,3 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
 Status.create = createShorthandFactory(Status, 'state')
 
 export default Status
-export type StatusPropsWithDefaults = StatusProps & typeof Status.defaultProps

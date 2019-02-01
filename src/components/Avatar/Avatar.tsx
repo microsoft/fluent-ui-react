@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import Image from '../Image/Image'
 import Label from '../Label/Label'
-import Status from '../Status/Status'
+import Status, { StatusProps } from '../Status/Status'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import {
   createShorthandFactory,
@@ -10,6 +10,7 @@ import {
   UIComponent,
   UIComponentProps,
   commonPropTypes,
+  SizeValue,
 } from '../../lib'
 
 export interface AvatarProps extends UIComponentProps {
@@ -23,10 +24,10 @@ export interface AvatarProps extends UIComponentProps {
   name?: string
 
   /** Size multiplier. */
-  size?: number
+  size?: SizeValue
 
   /** Shorthand for the status of the user. */
-  status?: ShorthandValue
+  status?: ShorthandValue<StatusProps>
 
   /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
   getInitials?: (name: string) => string
@@ -50,13 +51,13 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
     name: PropTypes.string,
     image: customPropTypes.itemShorthand,
     label: customPropTypes.itemShorthand,
-    size: PropTypes.number,
+    size: customPropTypes.size,
     status: customPropTypes.itemShorthand,
     getInitials: PropTypes.func,
   }
 
   static defaultProps = {
-    size: 32,
+    size: 'medium',
     getInitials(name: string) {
       if (!name) {
         return ''
@@ -78,10 +79,10 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
       }
       return initials
     },
-  }
+  } as AvatarProps
 
   renderComponent({ ElementType, classes, unhandledProps, styles, variables }) {
-    const { name, status, image, label, getInitials } = this.props as AvatarPropsWithDefaults
+    const { name, status, image, label, getInitials, size } = this.props as AvatarProps
 
     return (
       <ElementType {...unhandledProps} className={classes.root}>
@@ -104,6 +105,7 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
           })}
         {Status.create(status, {
           defaultProps: {
+            size,
             styles: styles.status,
             variables: {
               borderColor: variables.statusBorderColor,
@@ -119,5 +121,3 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
 Avatar.create = createShorthandFactory(Avatar, 'name')
 
 export default Avatar
-
-export type AvatarPropsWithDefaults = AvatarProps & typeof Avatar.defaultProps
