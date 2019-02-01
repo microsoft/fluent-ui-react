@@ -1,4 +1,4 @@
-import { customPropTypes } from 'src/lib'
+import { customPropTypes } from '../../../src/lib'
 
 describe('suggest prop type', () => {
   test('should throw error when non-array argument given', () => {
