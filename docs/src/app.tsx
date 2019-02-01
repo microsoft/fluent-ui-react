@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import { Provider, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from 'src/lib'
