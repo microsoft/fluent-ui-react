@@ -1,70 +1,6 @@
-import {
-  Chat,
-  Provider,
-  Avatar,
-  toolbarButtonBehavior,
-  Accessibility,
-  toolbarBehavior,
-} from '@stardust-ui/react'
+import { Chat, Provider, Avatar } from '@stardust-ui/react'
 import * as React from 'react'
-
-const popoverBehavior: Accessibility = (props: any) => {
-  const behavior = toolbarBehavior(props)
-
-  behavior.focusZone.props.defaultTabbableElement = (root: HTMLElement): HTMLElement => {
-    return root.querySelector('[aria-label="thumbs up"]')
-  }
-
-  return behavior
-}
-const actionMenu = {
-  accessibility: popoverBehavior,
-  iconOnly: true,
-  items: [
-    {
-      key: 'smile',
-      icon: 'smile',
-      className: 'smile-emoji',
-      accessibility: toolbarButtonBehavior,
-      'aria-label': 'smile one',
-    },
-    {
-      key: 'smile2',
-      icon: 'smile',
-      className: 'smile-emoji',
-      accessibility: toolbarButtonBehavior,
-      'aria-label': 'smile two',
-    },
-    {
-      key: 'smile3',
-      icon: 'smile',
-      className: 'smile-emoji',
-      accessibility: toolbarButtonBehavior,
-      'aria-label': 'smile three',
-    },
-    {
-      key: 'a',
-      icon: 'thumbs up',
-      accessibility: toolbarButtonBehavior,
-      'aria-label': 'thumbs up',
-    },
-    {
-      key: 'c',
-      icon: 'ellipsis horizontal',
-      accessibility: toolbarButtonBehavior,
-      'aria-label': 'more options',
-      indicator: false,
-      menu: {
-        pills: true,
-        items: [
-          { key: 'bookmark', icon: 'folder', content: 'Save this message' },
-          { key: 'linkify', icon: 'linkify', content: 'Copy link' },
-          { key: 'translate', icon: 'translate', content: 'Translate' },
-        ],
-      },
-    },
-  ],
-}
+import Popover from './Popover'
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
@@ -80,25 +16,6 @@ const ChatWithPopover = () => (
             '& a': {
               color: siteVariables.brand,
             },
-
-            '& .smile-emoji': {
-              position: 'absolute',
-              opacity: 0,
-              zIndex: -1,
-            },
-
-            '&:hover .smile-emoji': {
-              position: 'inherit',
-              opacity: 1,
-              zIndex: 'initial',
-            },
-            ...(p.focused && {
-              '& .smile-emoji': {
-                position: 'inherit',
-                opacity: 1,
-                zIndex: 'initial',
-              },
-            }),
           }),
         },
         Menu: {
@@ -114,6 +31,18 @@ const ChatWithPopover = () => (
             '& a': {
               color: 'inherit',
             },
+
+            '& .smile-emoji': {
+              display: 'none',
+            },
+
+            '&.focused .smile-emoji': {
+              display: 'flex',
+            },
+
+            '&:hover .smile-emoji': {
+              display: 'flex',
+            },
           },
         },
       },
@@ -126,7 +55,7 @@ const ChatWithPopover = () => (
           message: {
             content: (
               <Chat.Message
-                actionMenu={actionMenu}
+                actionMenu={<Popover />}
                 author="Jane Doe"
                 content={{
                   content: (
@@ -146,7 +75,7 @@ const ChatWithPopover = () => (
           message: {
             content: (
               <Chat.Message
-                actionMenu={actionMenu}
+                actionMenu={<Popover />}
                 author="Jane Doe"
                 content={{
                   content: (
@@ -166,7 +95,7 @@ const ChatWithPopover = () => (
           message: {
             content: (
               <Chat.Message
-                actionMenu={actionMenu}
+                actionMenu={<Popover />}
                 author="Jane Doe"
                 content={{
                   content: (
