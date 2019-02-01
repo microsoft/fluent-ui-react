@@ -5,7 +5,7 @@ import {
   AccessibilityActionHandlers,
   ActionsKeyHandler,
   KeyActions,
-} from 'src/lib/accessibility/types'
+} from './accessibility/types'
 import { State, PropsWithVarsAndStyles } from '../themes/types'
 
 const rtlKeyMap = {
