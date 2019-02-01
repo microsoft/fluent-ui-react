@@ -21,7 +21,7 @@ import {
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
 import toCompactArray from './toCompactArray'
-import { ObjectOf } from 'packages/react/src/utils'
+import { ObjectOf } from '../types'
 
 // ----------------------------------------
 // Component level merge functions

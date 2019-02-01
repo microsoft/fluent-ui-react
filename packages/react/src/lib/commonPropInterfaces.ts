@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ComponentVariablesInput, ComponentSlotStyle, AnimationProp } from '../themes/types'
-import { ReactChildren } from '../utils'
+import { ReactChildren } from '../types'
 
 export interface StyledComponentProps<P = any, V = any> {
   /** Additional CSS styles to apply to the component instance.  */

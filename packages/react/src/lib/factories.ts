@@ -8,7 +8,7 @@ import {
   ShorthandRenderCallback,
   ShorthandRenderFunction,
   ShorthandRenderer,
-} from '../utils'
+} from '../types'
 import { mergeStyles } from './mergeThemes'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
