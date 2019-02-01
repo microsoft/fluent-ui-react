@@ -46,10 +46,8 @@ const screenerConfig = {
       const rtl = exampleNameWithExtension.endsWith('.rtl.tsx')
       const exampleUrl = _.kebabCase(exampleNameWithoutExtension)
 
-      const url = `http://${SCREENER_HOST_URL}/maximize/${exampleUrl}/${rtl}`
-
       states.push({
-        url,
+        url: `http://${SCREENER_HOST_URL}/maximize/${exampleUrl}/${rtl}`,
         name: exampleNameWithExtension,
 
         // https://www.npmjs.com/package/screener-runner#testing-interactions
