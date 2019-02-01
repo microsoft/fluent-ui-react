@@ -30,7 +30,7 @@ import {
   toolbarButtonBehavior,
   treeTitleBehavior,
   gridBehavior,
-} from '../../../src/lib/accessibility'
+} from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
 

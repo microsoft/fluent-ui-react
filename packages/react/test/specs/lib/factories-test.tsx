@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import { shallow } from 'enzyme'
 import { createShorthand, createShorthandFactory } from 'src/lib'
 import { Props, ShorthandValue, ObjectOf, ShorthandRenderFunction } from 'types/utils'
-import { consoleUtil } from '../../utils'
+import { consoleUtil } from 'test/utils'
 import callable from '../../../src/lib/callable'
 
 // ----------------------------------------
