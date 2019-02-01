@@ -11,8 +11,6 @@ export type Extendable<T, V = any> = T & {
 export type Nullable<T> = T | null
 export type NullableIfUndefined<T> = T extends undefined ? Nullable<T> : T
 
-export type Partial<T> = { [Key in keyof T]?: T[Key] }
-
 export type ArgOf<T> = T extends (arg: infer TArg) => any ? TArg : never
 export type ResultOf<T> = T extends (...arg: any[]) => infer TResult ? TResult : never
 
