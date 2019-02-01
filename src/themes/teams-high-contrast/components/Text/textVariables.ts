@@ -1,5 +1,4 @@
 import { TeamsTextVariables } from '../../../teams/components/Text/textVariables'
-import { Partial } from 'types/utils'
 
 export default (siteVariables): Partial<TeamsTextVariables> => ({
   atMentionMeColor: siteVariables.accessibleYellow,
