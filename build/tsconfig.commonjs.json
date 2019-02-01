@@ -3,5 +3,5 @@
   "compilerOptions": {
     "module": "commonjs"
   },
-  "include": ["../packages", "../types"]
+  "include": ["../packages/src", "../types"]
 }
