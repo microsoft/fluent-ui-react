@@ -14,8 +14,11 @@ const avatarStyles: ComponentSlotStylesInput<AvatarPropsWithDefaults, any> = {
       width: sizeInRem,
     }
   },
-  image: (): ICSSInJSStyle => ({
+  image: ({ variables }): ICSSInJSStyle => ({
     verticalAlign: 'top',
+    borderStyle: 'solid',
+    borderColor: variables.avatarBorderColor,
+    borderWidth: `${variables.avatarBorderWidth}px`,
   }),
   label: ({ props: { size } }): ICSSInJSStyle => {
     const sizeInRem = pxToRem(size)
