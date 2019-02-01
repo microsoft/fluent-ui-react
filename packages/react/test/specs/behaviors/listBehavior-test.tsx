@@ -1,4 +1,4 @@
-import { listBehavior } from 'src/lib/accessibility'
+import { listBehavior } from '../../../src/lib/accessibility'
 
 describe('ListBehavior.ts', () => {
   test('use SelectableListBehavior if selectable prop is defined', () => {

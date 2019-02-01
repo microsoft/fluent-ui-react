@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import { mountWithProvider } from 'test/utils'
-import { Props, PropsOf } from '../../../types/utils'
+import { Props, PropsOf } from '../../../../../types/utils'
 
 export type ShorthandTestOptions<TProps = any> = {
   mapsValueToProp: keyof (TProps & React.HTMLProps<HTMLElement>) | false

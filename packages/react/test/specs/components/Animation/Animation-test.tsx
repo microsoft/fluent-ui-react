@@ -1,4 +1,4 @@
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
 import Animation from 'src/components/Animation/Animation'
 

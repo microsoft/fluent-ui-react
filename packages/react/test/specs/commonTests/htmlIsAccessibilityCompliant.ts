@@ -1,6 +1,6 @@
 import * as ReactDOMServer from 'react-dom/server'
 import { axe, toHaveNoViolations } from 'jest-axe'
-import { withProvider } from 'test/utils'
+import { withProvider } from '../../utils'
 
 type AxeMatcher<R> = jest.Matchers<R> & {
   toHaveNoViolations: () => R
