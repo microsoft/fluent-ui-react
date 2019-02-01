@@ -33,15 +33,21 @@ const ChatWithPopover = () => (
             },
 
             '& .smile-emoji': {
-              display: 'none',
+              position: 'absolute',
+              opacity: 0,
+              zIndex: -1,
             },
 
             '&.focused .smile-emoji': {
-              display: 'flex',
+              position: 'initial',
+              zIndex: 'initial',
+              opacity: 1,
             },
 
             '&:hover .smile-emoji': {
-              display: 'flex',
+              position: 'initial',
+              zIndex: 'initial',
+              opacity: 1,
             },
           },
         },
