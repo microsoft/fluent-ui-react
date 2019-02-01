@@ -15,6 +15,7 @@ import {
   loaderBehavior,
   menuBehavior,
   menuItemBehavior,
+  menuDividerBehavior,
   submenuBehavior,
   popupBehavior,
   popupFocusTrapBehavior,
@@ -49,6 +50,7 @@ testHelper.addBehavior('imageBehavior', imageBehavior)
 testHelper.addBehavior('loaderBehavior', loaderBehavior)
 testHelper.addBehavior('menuBehavior', menuBehavior)
 testHelper.addBehavior('menuItemBehavior', menuItemBehavior)
+testHelper.addBehavior('menuDividerBehavior', menuDividerBehavior)
 testHelper.addBehavior('submenuBehavior', submenuBehavior)
 testHelper.addBehavior('popupBehavior', popupBehavior)
 testHelper.addBehavior('popupFocusTrapBehavior', popupFocusTrapBehavior)
