@@ -1,4 +1,4 @@
-import { isConformant, implementsShorthandProp } from '../../commonTests'
+import { isConformant, implementsShorthandProp } from 'test/specs/commonTests'
 import ChatItem from 'src/components/Chat/ChatItem'
 import Box from 'src/components/Box/Box'
 

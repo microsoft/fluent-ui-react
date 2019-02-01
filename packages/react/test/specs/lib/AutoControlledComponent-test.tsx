@@ -1,8 +1,8 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { shallow, ShallowWrapper } from 'enzyme'
-import { AutoControlledComponent } from '../../../src/lib'
-import { consoleUtil } from '../../utils'
+import { AutoControlledComponent } from 'src/lib'
+import { consoleUtil } from 'test/utils'
 import { Props } from 'types/utils'
 
 let TestClass

@@ -1,4 +1,4 @@
-import { handlesAccessibility, implementsShorthandProp, isConformant } from '../../commonTests'
+import { handlesAccessibility, implementsShorthandProp, isConformant } from 'test/specs/commonTests'
 
 import ChatMessage from 'src/components/Chat/ChatMessage'
 import { chatMessageBehavior } from '../../../../src/lib/accessibility'

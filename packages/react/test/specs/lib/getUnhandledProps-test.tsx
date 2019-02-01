@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { shallow } from 'enzyme'
-import { getUnhandledProps } from '../../../src/lib'
+import { getUnhandledProps } from 'src/lib'
 
 // We spread the unhandled props onto the rendered result.
 // Then, we can test the props of the rendered result.

@@ -1,10 +1,10 @@
 import * as React from 'react'
 
-import { mountWithProviderAndGetComponent } from '../../utils'
-import { defaultBehavior } from '../../../src/lib/accessibility'
-import { Accessibility, AriaRole, FocusZoneMode } from '../../../src/lib/accessibility/types'
-import { FocusZone } from '../../../src/lib/accessibility/FocusZone'
-import { FOCUSZONE_WRAP_ATTRIBUTE } from '../../../src/lib/accessibility/FocusZone/focusUtilities'
+import { mountWithProviderAndGetComponent } from 'test/utils'
+import { defaultBehavior } from 'src/lib/accessibility'
+import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/types'
+import { FocusZone } from 'src/lib/accessibility/FocusZone'
+import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
 export const getRenderedAttribute = (renderedComponent, propName, partSelector) => {
   const target = partSelector

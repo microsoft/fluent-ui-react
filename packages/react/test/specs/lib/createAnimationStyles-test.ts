@@ -1,4 +1,4 @@
-import { createAnimationStyles, felaRenderer } from '../../../src/lib'
+import { createAnimationStyles, felaRenderer } from 'src/lib'
 
 const theme = {
   siteVariables: { fontSizes: {} },
