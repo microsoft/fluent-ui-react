@@ -25,6 +25,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
     flexWrap: 'wrap',
     overflowY: 'auto',
     maxHeight: v.selectedItemsMaxHeight,
+    width: '100%',
     ...(p.toggleIndicator && { paddingRight: v.toggleIndicatorSize }),
   }),
 
@@ -39,7 +40,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
       justifyContent: 'left',
       padding: v.comboboxPaddingButton,
       ...transparentColorStyle,
-      height: pxToRem(30),
       ':hover': transparentColorStyle,
       ':focus': {
         ...transparentColorStyle,
