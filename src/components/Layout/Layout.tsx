@@ -6,6 +6,16 @@ import { UIComponent, UIComponentProps, commonPropTypes, rtlTextContainer } from
 import { ReactProps } from '../../../types/utils'
 import { ICSSInJSStyle } from '../../themes/types'
 
+export interface LayoutSlotClassNames {
+  start: string
+  main: string
+  end: string
+  gap: string
+  reducedStart: string
+  reducedMain: string
+  reducedEnd: string
+}
+
 export interface LayoutProps extends UIComponentProps {
   debug?: boolean
   renderStartArea?: (params: object) => React.ReactNode
@@ -46,6 +56,8 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
+
+  static slotClassNames: LayoutSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -99,7 +111,7 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
       return (
         start && (
           <div
-            className={cx('ui-layout__start', classes.start)}
+            className={cx(Layout.slotClassNames.start, classes.start)}
             {...rtlTextContainer.getAttributes({ forElements: [start] })}
           >
             {start}
@@ -112,7 +124,7 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
       return (
         main && (
           <div
-            className={cx('ui-layout__main', classes.main)}
+            className={cx(Layout.slotClassNames.main, classes.main)}
             {...rtlTextContainer.getAttributes({ forElements: [main] })}
           >
             {main}
@@ -125,7 +137,7 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
       return (
         end && (
           <div
-            className={cx('ui-layout__end', classes.end)}
+            className={cx(Layout.slotClassNames.end, classes.end)}
             {...rtlTextContainer.getAttributes({ forElements: [end] })}
           >
             {end}
@@ -137,7 +149,7 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
     // Heads up!
     // IE11 Doesn't support grid-gap, insert virtual columns instead
     renderGap({ gap, classes }) {
-      return gap && <span className={cx('ui-layout__gap', classes.gap)} />
+      return gap && <span className={cx(Layout.slotClassNames.gap, classes.gap)} />
     },
   }
 
@@ -173,9 +185,9 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
     if (reducing && isSingleArea) {
       const composedClasses = cx(
         classes.root,
-        startArea && 'ui-layout--reduced__start',
-        mainArea && 'ui-layout--reduced__main',
-        endArea && 'ui-layout--reduced__end',
+        startArea && Layout.slotClassNames.reducedStart,
+        mainArea && Layout.slotClassNames.reducedMain,
+        endArea && Layout.slotClassNames.reducedEnd,
       )
       return (
         <ElementType {...unhandledProps} className={composedClasses}>
@@ -194,6 +206,16 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
       </ElementType>
     )
   }
+}
+
+Layout.slotClassNames = {
+  start: `${Layout.className}__start`,
+  main: `${Layout.className}__main`,
+  end: `${Layout.className}__end`,
+  gap: `${Layout.className}__gap`,
+  reducedStart: `${Layout.className}--reduced__start`,
+  reducedMain: `${Layout.className}--reduced__main`,
+  reducedEnd: `${Layout.className}--reduced__end`,
 }
 
 export default Layout

@@ -27,6 +27,10 @@ import { focusAsync } from '../../lib/accessibility/FocusZone'
 import Ref from '../Ref/Ref'
 import Indicator from '../Indicator/Indicator'
 
+export interface MenuItemSlotClassNames {
+  wrapper: string
+}
+
 export interface MenuItemProps
   extends UIComponentProps,
     ChildrenComponentProps,
@@ -126,6 +130,8 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   static className = 'ui-menu__item'
 
   static create: Function
+
+  static slotClassNames: MenuItemSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
@@ -244,7 +250,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     if (wrapper) {
       return Box.create(wrapper, {
         defaultProps: {
-          className: cx('ui-menu__item__wrapper', classes.wrapper),
+          className: cx(MenuItem.slotClassNames.wrapper, classes.wrapper),
           ...accessibility.attributes.wrapper,
           ...accessibility.keyHandlers.wrapper,
         },
@@ -377,5 +383,8 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
 }
 
 MenuItem.create = createShorthandFactory(MenuItem, 'content')
+MenuItem.slotClassNames = {
+  wrapper: `${MenuItem.className}__wrapper`,
+}
 
 export default MenuItem

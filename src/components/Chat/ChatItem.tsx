@@ -16,6 +16,11 @@ import {
 import Box from '../Box/Box'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
+export interface ChatItemSlotClassNames {
+  message: string
+  gutter: string
+}
+
 export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
   /** Controls item's relation to other chat items. */
   attached?: boolean | 'top' | 'bottom'
@@ -37,6 +42,7 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
   static className = 'ui-chat__item'
   static create: Function
   static displayName = 'ChatItem'
+  static slotClassNames: ChatItemSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon({ content: false }),
@@ -73,12 +79,18 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
 
   private renderChatItem(styles: ComponentSlotStylesPrepared) {
     const { message, gutter, contentPosition } = this.props
-    const gutterElement = gutter && Box.create(gutter, { defaultProps: { styles: styles.gutter } })
+    const gutterElement =
+      gutter &&
+      Box.create(gutter, {
+        defaultProps: { className: ChatItem.slotClassNames.gutter, styles: styles.gutter },
+      })
 
     return (
       <>
         {contentPosition === 'start' && gutterElement}
-        {Box.create(message, { defaultProps: { styles: styles.message } })}
+        {Box.create(message, {
+          defaultProps: { className: ChatItem.slotClassNames.message, styles: styles.message },
+        })}
         {contentPosition === 'end' && gutterElement}
       </>
     )
@@ -86,5 +98,9 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
 }
 
 ChatItem.create = createShorthandFactory(ChatItem, 'message')
+ChatItem.slotClassNames = {
+  message: `${ChatItem.className}__message`,
+  gutter: `${ChatItem.className}__gutter`,
+}
 
 export default ChatItem

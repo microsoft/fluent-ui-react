@@ -22,7 +22,11 @@ export { default as Button, ButtonProps, ButtonState } from './components/Button
 export { default as ButtonGroup, ButtonGroupProps } from './components/Button/ButtonGroup'
 
 export { default as Chat, ChatProps } from './components/Chat/Chat'
-export { default as ChatItem, ChatItemProps } from './components/Chat/ChatItem'
+export {
+  default as ChatItem,
+  ChatItemProps,
+  ChatItemSlotClassNames,
+} from './components/Chat/ChatItem'
 export {
   default as ChatMessage,
   ChatMessageProps,
@@ -36,7 +40,11 @@ export {
 } from './components/Divider/Divider'
 export { default as Dialog, DialogProps } from './components/Dialog/Dialog'
 
-export { default as Dropdown, DropdownProps } from './components/Dropdown/Dropdown'
+export {
+  default as Dropdown,
+  DropdownProps,
+  DropdownSlotClassNames,
+} from './components/Dropdown/Dropdown'
 
 export { default as DropdownItem, DropdownItemProps } from './components/Dropdown/DropdownItem'
 
@@ -71,18 +79,29 @@ export {
   default as ItemLayout,
   ItemLayoutPropsWithDefaults,
   ItemLayoutProps,
+  ItemLayoutSlotClassNames,
 } from './components/ItemLayout/ItemLayout'
 
 export { default as Label, LabelProps } from './components/Label/Label'
 export { default as Loader, LoaderProps } from './components/Loader/Loader'
 
-export { default as Layout, LayoutPropsWithDefaults, LayoutProps } from './components/Layout/Layout'
+export {
+  default as Layout,
+  LayoutPropsWithDefaults,
+  LayoutProps,
+  LayoutSlotClassNames,
+} from './components/Layout/Layout'
 
 export { default as List, ListProps } from './components/List/List'
 export { default as ListItem, ListItemProps } from './components/List/ListItem'
 
 export { default as Menu, MenuProps, MenuState, MenuShorthandKinds } from './components/Menu/Menu'
-export { default as MenuItem, MenuItemState, MenuItemProps } from './components/Menu/MenuItem'
+export {
+  default as MenuItem,
+  MenuItemState,
+  MenuItemProps,
+  MenuItemSlotClassNames,
+} from './components/Menu/MenuItem'
 export { default as MenuDivider, MenuDividerProps } from './components/Menu/MenuDivider'
 
 export {

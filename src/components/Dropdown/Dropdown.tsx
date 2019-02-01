@@ -39,6 +39,11 @@ import Button from '../Button/Button'
 import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 import ListItem from '../List/ListItem'
 
+export interface DropdownSlotClassNames {
+  container: string
+  selectedItems: string
+}
+
 export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownState> {
   /** The initial value for the search query, if the dropdown is also a search. */
   defaultSearchQuery?: string
@@ -158,10 +163,7 @@ export interface DropdownState {
  * @accessibility
  * Implements ARIA collapsible Listbox design pattern, uses aria-live to announce state changes.
  */
-export default class Dropdown extends AutoControlledComponent<
-  Extendable<DropdownProps>,
-  DropdownState
-> {
+class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, DropdownState> {
   private buttonRef = React.createRef<HTMLElement>()
   private inputRef = React.createRef<HTMLElement>()
   private listRef = React.createRef<HTMLElement>()
@@ -170,6 +172,8 @@ export default class Dropdown extends AutoControlledComponent<
   static displayName = 'Dropdown'
 
   static className = 'ui-dropdown'
+
+  static slotClassNames: DropdownSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -284,12 +288,12 @@ export default class Dropdown extends AutoControlledComponent<
             return (
               <Ref innerRef={innerRef}>
                 <div
-                  className={cx(`${Dropdown.className}__container`, classes.container)}
+                  className={cx(Dropdown.slotClassNames.container, classes.container)}
                   onClick={multiple ? this.handleContainerClick.bind(this, isOpen) : undefined}
                 >
                   <div
                     ref={this.selectedItemsRef}
-                    className={cx(`${Dropdown.className}__selected-items`, classes.selectedItems)}
+                    className={cx(Dropdown.slotClassNames.selectedItems, classes.selectedItems)}
                   >
                     {multiple && this.renderSelectedItems()}
                     {search
@@ -782,3 +786,10 @@ export default class Dropdown extends AutoControlledComponent<
     _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, value })
   }
 }
+
+Dropdown.slotClassNames = {
+  container: `${Dropdown.className}__container`,
+  selectedItems: `${Dropdown.className}__selected-items`,
+}
+
+export default Dropdown
