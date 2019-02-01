@@ -27,6 +27,7 @@ import Label from '../Label/Label'
 export interface ChatMessageSlotClassNames {
   author: string
   timestamp: string
+  badge: string
 }
 
 export interface ChatMessageProps
@@ -123,7 +124,10 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
     const badgeElement = Label.create(badge, {
-      defaultProps: { styles: styles.badge },
+      defaultProps: {
+        className: ChatMessage.slotClassNames.badge,
+        styles: styles.badge,
+      },
     })
 
     return (
@@ -168,6 +172,7 @@ ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
 ChatMessage.slotClassNames = {
   author: `${ChatMessage.className}__author`,
   timestamp: `${ChatMessage.className}__timestamp`,
+  badge: `${ChatMessage.className}__badge`,
 }
 
 export default ChatMessage
