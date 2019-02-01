@@ -52,7 +52,7 @@ export interface ChatMessageProps
   /** Badge attached to the message. */
   badge?: ShorthandValue
 
-  /** A message can format the badge to appear on the start or the end of the message. */
+  /** A message can format the badge to appear at the start or the end of the message. */
   badgePosition?: 'start' | 'end'
 
   /**
