@@ -1,11 +1,7 @@
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
 import keyboardHandlerFilter from './keyboardHandlerFilter'
-import {
-  AccessibilityActionHandlers,
-  ActionsKeyHandler,
-  KeyActions,
-} from 'src/lib/accessibility/types'
+import { AccessibilityActionHandlers, ActionsKeyHandler, KeyActions } from './accessibility/types'
 import { State, PropsWithVarsAndStyles } from '../themes/types'
 
 const rtlKeyMap = {
