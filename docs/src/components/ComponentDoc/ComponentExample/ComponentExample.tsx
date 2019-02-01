@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
 import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
-import { Provider, themes } from '@stardust-ui/react'
+import { Provider, themes, ThemeInput, ThemePrepared } from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
 import { callable, pxToRem, constants } from 'src/lib'
@@ -16,8 +16,7 @@ import ComponentExampleTitle from './ComponentExampleTitle'
 import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager'
-import { ThemeInput, ThemePrepared } from 'src/themes/types'
-import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
+import { mergeThemeVariables } from 'src/lib/mergeThemes'
 import { ThemeContext } from '../../../context/ThemeContext'
 import CodeSnippet from '../../CodeSnippet'
 
