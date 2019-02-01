@@ -1,12 +1,11 @@
-import { pxToRem } from '../../../../lib'
-import { LoaderSize } from '../../../../components/Loader/Loader'
+import { pxToRem, SizeValue } from '../../../../lib'
 
 export interface LoaderVariables {
   foregroundColor: string
   backgroundColor: string
 
-  borderSizes: Record<LoaderSize, string>
-  indicatorSizes: Record<LoaderSize, string>
+  borderSizes: Record<SizeValue, string>
+  indicatorSizes: Record<SizeValue, string>
 }
 
 export default (siteVariables): LoaderVariables => ({

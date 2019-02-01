@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, Grid } from '@stardust-ui/react'
+import { Avatar, Grid, SizeValue } from '@stardust-ui/react'
 
 const statusProps = {
   icon: 'check',
@@ -9,7 +9,7 @@ const statusProps = {
 
 const AvatarExampleSizeShorthand = () => (
   <Grid columns="80px 1fr">
-    {(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest'] as any[]).map(
+    {(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest'] as SizeValue[]).map(
       size => {
         return (
           <>

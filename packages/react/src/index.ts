@@ -61,7 +61,7 @@ export {
   HeaderDescriptionProps,
 } from './components/Header/HeaderDescription'
 
-export { default as Icon, IconProps, IconXSpacing, IconSize } from './components/Icon/Icon'
+export { default as Icon, IconProps, IconXSpacing } from './components/Icon/Icon'
 
 export { default as Image, ImageProps } from './components/Image/Image'
 
@@ -176,5 +176,6 @@ export {
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
+  SizeValue,
 } from './lib'
 export { ShorthandRenderer } from './types'
