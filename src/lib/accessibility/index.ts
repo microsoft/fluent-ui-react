@@ -5,6 +5,7 @@ export { default as toggleButtonBehavior } from './Behaviors/Button/toggleButton
 export { default as imageBehavior } from './Behaviors/Image/imageBehavior'
 export { default as menuBehavior } from './Behaviors/Menu/menuBehavior'
 export { default as menuItemBehavior } from './Behaviors/Menu/menuItemBehavior'
+export { default as menuDividerBehavior } from './Behaviors/Menu/menuDividerBehavior'
 export { default as submenuBehavior } from './Behaviors/Menu/submenuBehavior'
 export { default as basicListBehavior } from './Behaviors/List/listBehavior'
 export { default as basicListItemBehavior } from './Behaviors/List/basicListItemBehavior'
