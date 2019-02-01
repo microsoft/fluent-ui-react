@@ -13,7 +13,7 @@ import {
   customPropTypes,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../../../../types/utils'
+import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../../types/utils'
 import Indicator from '../Indicator/Indicator'
 import Layout from '../Layout/Layout'
 

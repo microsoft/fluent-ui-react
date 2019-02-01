@@ -16,7 +16,7 @@ import {
   isFromKeyboard,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../../../types/utils'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 

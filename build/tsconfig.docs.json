@@ -7,5 +7,5 @@
       "*": ["*", "types/*", "packages/react/*"]
     }
   },
-  "include": ["../packages/src", "../docs/src", "../types"]
+  "include": ["../docs/src", "../packages/src", "../packages/types", "../types"]
 }

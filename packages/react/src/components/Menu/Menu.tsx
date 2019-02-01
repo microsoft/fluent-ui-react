@@ -18,7 +18,7 @@ import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
-import { ReactProps, ShorthandCollection, ShorthandValue } from '../../../../../types/utils'
+import { ReactProps, ShorthandCollection, ShorthandValue } from '../../../types/utils'
 import MenuDivider from './MenuDivider'
 
 export type MenuShorthandKinds = 'divider' | 'item'

@@ -12,7 +12,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps } from '../../../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 
 export interface DividerProps
   extends UIComponentProps,

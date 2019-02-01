@@ -177,4 +177,4 @@ export {
   ChildrenComponentProps,
   ContentComponentProps,
 } from './lib'
-export { ShorthandRenderer } from '../../../types/utils'
+export { ShorthandRenderer } from '../types/utils'

@@ -11,7 +11,7 @@ import {
 } from '../../lib'
 import { loaderBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ReactProps, ShorthandValue } from '../../../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 import Box from '../Box/Box'
 
 export type LoaderPosition = 'above' | 'below' | 'start' | 'end'

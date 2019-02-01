@@ -12,7 +12,7 @@ import {
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
-import { ReactChildren } from '../../../types/utils'
+import { ReactChildren } from '../../../packages/react/types/utils'
 
 interface StyledButtonProps {
   className?: string

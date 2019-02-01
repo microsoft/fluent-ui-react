@@ -13,7 +13,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 
-import { ReactProps } from '../../../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 
 export interface TextProps
   extends UIComponentProps,

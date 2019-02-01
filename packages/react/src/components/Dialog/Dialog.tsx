@@ -14,7 +14,7 @@ import {
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
 import Header from '../Header/Header'

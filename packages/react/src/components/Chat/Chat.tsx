@@ -11,7 +11,7 @@ import {
 } from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
-import { ReactProps, ShorthandValue } from '../../../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'

@@ -19,7 +19,7 @@ import Icon from '../Icon/Icon'
 import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ReactProps, ShorthandValue } from '../../../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 import { ComplexColorPropType } from '../../lib/commonPropInterfaces'
 
 export interface LabelProps

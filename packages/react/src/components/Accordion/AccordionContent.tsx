@@ -11,7 +11,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ComponentEventHandler } from '../../../../../types/utils'
+import { ReactProps, ComponentEventHandler } from '../../../types/utils'
 
 export interface AccordionContentProps
   extends UIComponentProps,

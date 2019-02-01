@@ -14,7 +14,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import Label from '../Label/Label'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
