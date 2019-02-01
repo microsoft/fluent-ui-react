@@ -1,11 +1,10 @@
 import * as _ from 'lodash'
 
 import fontAwesomeIcons from './fontAwesomeIconStyles'
-import { callable } from '../../../../lib'
+import { callable, pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../../../../types/utils'
 import { IconXSpacing, IconProps, IconSize } from '../../../../components/Icon/Icon'
-import { pxToRem } from '../../../../lib'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, IconSizeModifier } from './iconVariables'
 
