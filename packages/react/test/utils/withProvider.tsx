@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import { ThemeProvider } from 'react-fela'
-import { felaRenderer } from '../../src/lib'
-import { ThemeInput } from '../../src/themes/types'
+import { felaRenderer } from 'src/lib'
+import { ThemeInput } from 'themes/types'
 
 export const withProvider = (node: React.ReactElement<any>, theme?: ThemeInput) => (
   <ThemeProvider theme={theme || { renderer: felaRenderer }}>{node}</ThemeProvider>

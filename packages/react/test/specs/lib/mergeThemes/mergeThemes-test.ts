@@ -1,5 +1,5 @@
 import mergeThemes, { mergeStyles } from 'src/lib/mergeThemes'
-import { felaRenderer, felaRtlRenderer } from '../../../../src/lib'
+import { felaRenderer, felaRtlRenderer } from 'src/lib'
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from 'src/themes/types'
 
 describe('mergeThemes', () => {
