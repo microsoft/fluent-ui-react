@@ -9,6 +9,7 @@ export interface ButtonVariables {
   borderRadius: string
   circularRadius: string
   paddingLeftRightValue: number
+  fontWeight: string
 
   color: string
   colorActive: string

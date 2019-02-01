@@ -279,10 +279,12 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
     }
   },
 
-  content: () => ({
+  // modifies the text of the button
+  content: ({ variables }): ICSSInJSStyle => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
+    fontWeight: variables.fontWeight,
   }),
 }
 
