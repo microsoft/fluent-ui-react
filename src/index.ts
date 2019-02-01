@@ -134,6 +134,11 @@ export { default as Indicator, IndicatorProps } from './components/Indicator/Ind
 // Accessibility
 //
 export * from './lib/accessibility/types'
+export { default as menuBehavior } from './lib/accessibility/Behaviors/Menu/menuBehavior'
+export { default as menuItemBehavior } from './lib/accessibility/Behaviors/Menu/menuItemBehavior'
+export {
+  default as menuDividerBehavior,
+} from './lib/accessibility/Behaviors/Menu/menuDividerBehavior'
 export { default as tabBehavior } from './lib/accessibility/Behaviors/Tab/tabBehavior'
 export { default as tabListBehavior } from './lib/accessibility/Behaviors/Tab/tabListBehavior'
 export { default as toolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/toolbarBehavior'
