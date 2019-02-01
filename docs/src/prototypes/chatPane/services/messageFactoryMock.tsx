@@ -7,7 +7,7 @@ import {
   AvatarProps,
   ChatMessageProps,
   DividerProps,
-  StatusProps
+  StatusProps,
 } from '@stardust-ui/react'
 import * as React from 'react'
 import * as _ from 'lodash'
