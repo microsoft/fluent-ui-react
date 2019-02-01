@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { Layout, Input, toolbarButtonBehavior, toolbarBehavior, Menu } from '@stardust-ui/react'
-import { MenuItemProps } from 'src/components/Menu/MenuItem'
+import { Layout, Input, toolbarButtonBehavior, toolbarBehavior, Menu, MenuItemProps } from '@stardust-ui/react'
 import style from './chatProtoStyle'
 
 type ToolbarProps = MenuItemProps & { key: string; 'aria-label'?: string }
