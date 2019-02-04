@@ -23,7 +23,6 @@ export default class DialogExampleCallbacks extends React.Component<
   }
 
   handleClose = (callbackName: string) => () => {
-    console.log(callbackName)
     this.setState({ open: false })
     this.writeLog(callbackName)
   }

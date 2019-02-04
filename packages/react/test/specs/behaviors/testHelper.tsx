@@ -47,9 +47,11 @@ export class TestHelper {
   public run(behaviorMenuItems: any) {
     this.findRegexAndAssingCorrespondingInfoToArray(behaviorMenuItems)
 
-    const groupedByBehavior = _(this.filteredSpecificationWithAssignedTestMethod)
-      .groupBy('behaviorName')
-      .value()
+    const groupedByBehavior = _.groupBy(
+      this.filteredSpecificationWithAssignedTestMethod,
+      'behaviorName',
+    )
+
     _.each(groupedByBehavior, (value, key) => {
       describe(key, () => {
         value.forEach(singleTest => {

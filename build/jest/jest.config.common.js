@@ -11,9 +11,6 @@ module.exports = {
   testRegex: '/test/.*-test\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   setupFilesAfterEnv,
-  transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
-  },
   moduleNameMapper: {
     ...lernaAliases(),
     'docs/(.*)$': `<rootDir>/docs/$1`,
@@ -21,6 +18,9 @@ module.exports = {
     // Legacy aliases, they should not be used in new tests
     'src/(.*)$': `<rootDir>/packages/react/src/$1`,
     'test/(.*)$': `<rootDir>/packages/react/test/$1`,
+  },
+  transform: {
+    '^.+\\.tsx?$': `${__dirname}/jest.transform.js`,
   },
   globals: {
     'ts-jest': {

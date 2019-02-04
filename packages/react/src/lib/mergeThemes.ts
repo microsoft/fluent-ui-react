@@ -223,9 +223,9 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
     // Use the correct renderer for RTL
     acc.renderer = acc.rtl ? felaRtlRenderer : felaRenderer
 
-    acc.fontFaces = mergeFontFaces(...acc.fontFaces, ...next.fontFaces)
+    acc.fontFaces = mergeFontFaces(...(acc.fontFaces || []), ...(next.fontFaces || []))
 
-    acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...next.staticStyles)
+    acc.staticStyles = mergeStaticStyles(...(acc.staticStyles || []), ...(next.staticStyles || []))
 
     acc.animations = mergeAnimations(acc.animations, next.animations)
 

@@ -1,17 +1,16 @@
 import * as React from 'react'
-import Component = React.Component
 
 export const DOMFunction = props => <div {...props} id="node" />
 
 export const CompositeFunction = props => <DOMFunction {...props} />
 
-export class DOMClass extends Component {
+export class DOMClass extends React.Component {
   render() {
     return <div {...this.props} id="node" />
   }
 }
 
-export class CompositeClass extends Component {
+export class CompositeClass extends React.Component {
   render() {
     return <DOMClass {...this.props} />
   }
