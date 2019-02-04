@@ -1,7 +1,7 @@
 import * as React from 'react'
 import cx from 'classnames'
 import { TeamsSvgIconSpec } from '../types'
-import { teamsIconSlotClassNames } from '../index'
+import { teamsIconSlotClassNames } from '../teamsIconSlotClassNames'
 
 export default {
   icon: ({ classes }) => (

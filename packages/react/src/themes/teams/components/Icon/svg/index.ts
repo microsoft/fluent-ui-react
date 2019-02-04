@@ -16,14 +16,6 @@ export const getStyle = partName => {
   }
 }
 
-export interface TeamsIconSlotClassNames {
-  filled: string
-  outline: string
-}
-
-export const teamsIconSlotClassNames: TeamsIconSlotClassNames = {
-  filled: 'ui-icon__filled',
-  outline: 'ui-icon__outline',
-}
+export { TeamsIconSlotClassNames, teamsIconSlotClassNames } from './teamsIconSlotClassNames'
 
 export default svgIconsAndStyles as { [iconName: string]: TeamsSvgIconSpec }
