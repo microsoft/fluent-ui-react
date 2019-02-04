@@ -4,6 +4,7 @@ import { shallow } from 'enzyme'
 import icons, {
   teamsIconSlotClassNames,
 } from '../../../../../../src/themes/teams/components/Icon/svg'
+import processedIcons from '../../../../../../src/themes/teams/components/Icon/svg/processedIndex'
 import { SvgIconSpecWithStyles } from '../../../../../../src/themes/teams/components/Icon/svg/types'
 
 describe('Teams Theme Icon', () => {
@@ -25,6 +26,11 @@ describe('Teams Theme Icon', () => {
 
   _.forEach(icons, (icon, iconName) => {
     test(`Teams theme icon '${iconName}' correctly sets static outline and filled classes`, () =>
+      testIcon(icon))
+  })
+
+  _.forEach(processedIcons, (icon, iconName) => {
+    test(`Teams theme processed icon '${iconName}' correctly sets static outline and filled classes`, () =>
       testIcon(icon))
   })
 })

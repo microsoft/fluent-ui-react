@@ -1,12 +1,14 @@
 import * as React from 'react'
+import cx from 'classnames'
 import { TeamsProcessedSvgIconSpec } from '../types'
+import { teamsIconSlotClassNames } from '../index'
 
 export default {
   icon: ({ classes }) => (
     <svg role="presentation" focusable="false" viewBox="8 8 16 16" className={classes.svg}>
       <g>
         <path
-          className={classes.outlinePart}
+          className={cx(teamsIconSlotClassNames.outline, classes.outlinePart)}
           d="M23.8535,23.1465c0.1953,0.1953,0.1953,0.5117,0,0.707C23.7559,23.9512,23.6279,24,23.5,24s-0.2559-0.0488-0.3535-0.1465
           L21.5,22.207l-1.6465,1.6465C19.7559,23.9512,19.6279,24,19.5,24s-0.2559-0.0488-0.3535-0.1465
           c-0.1953-0.1953-0.1953-0.5117,0-0.707L20.793,21.5l-1.6465-1.6465c-0.1953-0.1953-0.1953-0.5117,0-0.707s0.5117-0.1953,0.707,0
@@ -19,7 +21,7 @@ export default {
           c0.2764,0,0.5-0.2236,0.5-0.5S17.7764,22,17.5,22z"
         />
         <path
-          className={classes.filledPart}
+          className={cx(teamsIconSlotClassNames.filled, classes.filledPart)}
           d="M23.8535,23.1465c0.1953,0.1953,0.1953,0.5117,0,0.707C23.7559,23.9512,23.6279,24,23.5,24s-0.2559-0.0488-0.3535-0.1465
           L21.5,22.207l-1.6465,1.6465C19.7559,23.9512,19.6279,24,19.5,24s-0.2559-0.0488-0.3535-0.1465
           c-0.1953-0.1953-0.1953-0.5117,0-0.707L20.793,21.5l-1.6465-1.6465c-0.1953-0.1953-0.1953-0.5117,0-0.707s0.5117-0.1953,0.707,0
