@@ -7,6 +7,7 @@ import {
   UIComponent,
   childrenExist,
   commonPropTypes,
+  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   rtlTextContainer,
@@ -14,7 +15,6 @@ import {
 import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import * as customPropTypes from '../../lib/customPropTypes'
 
 export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /**
