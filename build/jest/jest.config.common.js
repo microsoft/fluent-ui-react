@@ -1,4 +1,7 @@
+const { jest: lernaAliases } = require('lerna-alias')
+
 module.exports = {
+  rootDir: `${__dirname}/../../`,
   coverageDirectory: './coverage/',
   coverageReporters: ['json', 'lcov'],
   testRegex: '/test/.*-test\\.tsx?$',
@@ -8,9 +11,12 @@ module.exports = {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   moduleNameMapper: {
-    'docs/(.*)$': `${__dirname}/../../../docs/$1`,
-    'src/(.*)$': `${__dirname}/../src/$1`,
-    'test/(.*)$': `${__dirname}/../test/$1`,
+    ...lernaAliases(),
+
+    // Legacy aliases, they should not be used in new tests
+    'docs/(.*)$': `<rootDir>/docs/$1`,
+    'src/(.*)$': `<rootDir>/packages/react/src/$1`,
+    'test/(.*)$': `<rootDir>/packages/react/test/$1`,
   },
   globals: {
     'ts-jest': {

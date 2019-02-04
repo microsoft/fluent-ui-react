@@ -114,10 +114,4 @@ task('build:stats:bundle', async () => {
   updateStatsFile(paths.docsSrc('bundleStats.json'), results)
 })
 
-task(
-  'stats',
-  series(
-    parallel(series('clean:dist:es', 'build:dist:es'), 'build:docs:component-info'),
-    'build:stats:bundle',
-  ),
-)
+task('stats', series(parallel('bundle:all', 'build:docs:component-info'), 'build:stats:bundle'))

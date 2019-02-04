@@ -1,15 +1,15 @@
 import config from '../config'
 import webpackConfig from '../webpack.config'
 
-const pkg = require('../package.json')
+const pkg = require('../packages/react/package.json')
 const { paths } = config
 
-const webpackUMDConfig = {
+const webpackUMDConfig = (packageName: string) => ({
   target: 'web',
   mode: 'production',
   devtool: false,
   entry: {
-    [pkg.name]: paths.src('umd.ts'),
+    [pkg.name]: paths.packageSrc(packageName, 'umd.ts'),
   },
   externals: {
     react: 'React',
@@ -19,7 +19,7 @@ const webpackUMDConfig = {
     filename: 'stardust-ui-react.min.js',
     libraryTarget: 'umd',
     library: 'Stardust',
-    path: paths.dist('umd'),
+    path: paths.packageDist(packageName, 'umd'),
     publicPath: '/',
     pathinfo: true,
   },
@@ -31,6 +31,6 @@ const webpackUMDConfig = {
   performance: {
     hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
   },
-}
+})
 
 export default webpackUMDConfig

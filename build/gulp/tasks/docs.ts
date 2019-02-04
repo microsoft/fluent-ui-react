@@ -72,8 +72,8 @@ task(
 // Build
 // ----------------------------------------
 
-const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`, '!**/Box.tsx']
-const behaviorSrc = [`${paths.posix.src()}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
+const componentsSrc = [`${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`, '!**/Box.tsx']
+const behaviorSrc = [`${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
 const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/!(*index|.knobs).tsx`
 const markdownSrc = [
@@ -245,7 +245,7 @@ task('watch:docs', cb => {
     .on('unlink', path => handleWatchUnlink('component-menu-behaviors', path))
 
   // rebuild images
-  watch(`${config.paths.src()}/**/*.{png,jpg,gif}`, series('build:docs:images')).on(
+  watch(`${config.paths.docsSrc()}/**/*.{png,jpg,gif}`, series('build:docs:images')).on(
     'change',
     handleWatchChange,
   )
