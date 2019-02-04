@@ -11,7 +11,7 @@ const Types = () => (
     />
     <ComponentExample
       title="Exclusive"
-      description="An exclusive Accordion."
+      description="An exclusive Accordion can only have one item open at a time."
       examplePath="components/Accordion/Types/AccordionExclusiveExample"
     />
   </ExampleSection>
