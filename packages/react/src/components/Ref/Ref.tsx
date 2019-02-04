@@ -25,6 +25,7 @@ const Ref: React.SFC<ReactPropsStrict<RefProps>> = props => {
   return <ElementType innerRef={innerRef}>{child}</ElementType>
 }
 
+Ref.displayName = 'Ref'
 Ref.propTypes = {
   children: PropTypes.element.isRequired,
   innerRef: customPropTypes.ref as PropTypes.Requireable<any>,
