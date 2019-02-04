@@ -2,6 +2,7 @@ import { pxToRem } from '../../../../lib'
 import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
+import { teamsIconSlotClassNames } from '../Icon/svg'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
@@ -337,11 +338,11 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           borderRadius: '50%',
           borderColor: v.iconOnlyActiveColor,
 
-          '& .ui-icon__filled': {
+          [`& .${teamsIconSlotClassNames.filled}`]: {
             display: 'block',
           },
 
-          '& .ui-icon__outline': {
+          [`& .${teamsIconSlotClassNames.outline}`]: {
             display: 'none',
           },
         }),
@@ -373,11 +374,11 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         color: 'inherit',
 
         ...(iconOnly && {
-          '& .ui-icon__filled': {
+          [`& .${teamsIconSlotClassNames.filled}`]: {
             display: 'block',
           },
 
-          '& .ui-icon__outline': {
+          [`& .${teamsIconSlotClassNames.outline}`]: {
             display: 'none',
           },
         }),
