@@ -108,7 +108,7 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
         onFocus={this.handleFocus}
         onKeyUp={this.handleKeyUp}
         wrapper={{
-          styles: styles.combobox,
+          styles: styles.root,
           ...accessibilityComboboxProps,
         }}
         input={{
