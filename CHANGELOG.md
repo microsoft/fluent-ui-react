@@ -23,6 +23,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Accessibility for menu divider @jurokapsiar ([#822](https://github.com/stardust-ui/react/pull/822))
 
+### Fixes
+- Fix `Dropdown` component styles regression @Bugaa92 ([#824](https://github.com/stardust-ui/react/pull/824))
+
 <!--------------------------------[ v0.19.2 ]------------------------------- -->
 ## [v0.19.2](https://github.com/stardust-ui/react/tree/v0.19.2) (2019-02-01)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.19.1...v0.19.2)
@@ -77,7 +80,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Make `headerMedia` visible for screen readers in `ListItem` @layershifter ([#772](https://github.com/stardust-ui/react/pull/772))
 - Cleanup for `Dropdown` examples' accessibility and added localisation example. @silviuavram ([#771](https://github.com/stardust-ui/react/pull/771))
-- Fix highlighted selected option in single selection `Dropdown` when opened @silviuavram ([#726](https://github.com/stardust-ui/react/pull/726)) 
+- Fix highlighted selected option in single selection `Dropdown` when opened @silviuavram ([#726](https://github.com/stardust-ui/react/pull/726))
 
 <!--------------------------------[ v0.18.0 ]------------------------------- -->
 ## [v0.18.0](https://github.com/stardust-ui/react/tree/v0.18.0) (2019-01-24)
