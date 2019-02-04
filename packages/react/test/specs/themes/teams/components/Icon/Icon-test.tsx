@@ -1,4 +1,5 @@
 import * as _ from 'lodash'
+import * as React from 'react'
 import { shallow } from 'enzyme'
 
 import icons, {
@@ -9,9 +10,9 @@ import { SvgIconSpecWithStyles } from '../../../../../../src/themes/teams/compon
 
 describe('Teams Theme Icon', () => {
   function testIcon(icon) {
-    const iconFunc: any = (icon as SvgIconSpecWithStyles).icon
+    const SvgIcon: any = (icon as SvgIconSpecWithStyles).icon
     const component = shallow(
-      iconFunc({ classes: { outlinePart: 'TEST-OUTLINE', filledPart: 'TEST-FILLED' } }),
+      <SvgIcon classes={{ outlinePart: 'TEST-OUTLINE', filledPart: 'TEST-FILLED' }} />,
     )
 
     const outlineByDynamicClass = component.find('.TEST-OUTLINE')
