@@ -5,7 +5,7 @@ import * as through2 from 'through2'
 import * as Vinyl from 'vinyl'
 
 import { parseDocSection } from './util'
-import { ObjectOf } from 'types/utils'
+import { ObjectOf } from 'packages/react/src/types'
 
 const SECTION_ORDER = {
   Types: 1,
