@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem, SizeValue } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { StatusProps } from '../../../../components/Status/Status'
 import { StatusVariables } from './statusVariables'
@@ -35,7 +35,7 @@ const getTextColor = (state: string, variables: StatusVariables) => {
   }
 }
 
-export const sizeToPxValue = {
+const sizeToPxValue: Record<SizeValue, number> = {
   smallest: 8,
   smaller: 8,
   small: 8,
@@ -46,7 +46,8 @@ export const sizeToPxValue = {
 }
 
 export const getSizeStyles = (sizeInPx: number, variables: StatusVariables) => {
-  const sizeInRem = pxToRem(sizeInPx + 2 * ((variables.borderColor && variables.borderWidth) || 0))
+  const borderWidth = (variables.borderColor && variables.borderWidth) || 0
+  const sizeInRem = pxToRem(sizeInPx + 2 * borderWidth)
 
   return {
     height: sizeInRem,

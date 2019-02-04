@@ -8,7 +8,7 @@ import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, IconSizeModifier } from './iconVariables'
 
-const sizes: { [key in SizeValue]: number } = {
+const sizes: Record<SizeValue, number> = {
   smallest: 7,
   smaller: 10,
   small: 12,
