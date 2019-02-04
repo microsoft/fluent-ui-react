@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Box, Grid, Header } from '@stardust-ui/react'
 
-import { Extendable } from 'types/utils'
+import { Extendable } from 'src/types'
 
 const headerStyle: React.CSSProperties = {
   textAlign: 'center',

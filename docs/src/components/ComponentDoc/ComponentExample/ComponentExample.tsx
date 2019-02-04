@@ -3,6 +3,7 @@ import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
+
 import {
   Box,
   Divider,
@@ -110,7 +111,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   constructor(props) {
     super(props)
 
-    this.anchorName = examplePathToHash(props.examplePath)
+    const { examplePath } = props
+
+    this.anchorName = examplePathToHash(examplePath)
     this.state = {
       handleMouseLeave: this.handleMouseLeave,
       handleMouseMove: this.handleMouseMove,
@@ -118,7 +121,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showCode: this.isActiveHash(),
       themeName: 'teams',
       componentVariables: {},
-      showRtl: false,
+      showRtl: examplePath && examplePath.endsWith('rtl') ? true : false,
       showTransparent: false,
       showVariables: false,
       isHovering: false,

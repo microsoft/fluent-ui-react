@@ -4,7 +4,7 @@ import { Button, Divider, Icon, Label, Provider, Header } from '@stardust-ui/rea
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
-import { pxToRem } from '../../../src/lib'
+import { pxToRem } from 'src/lib'
 
 export default () => (
   <DocPage title="Theming Examples">

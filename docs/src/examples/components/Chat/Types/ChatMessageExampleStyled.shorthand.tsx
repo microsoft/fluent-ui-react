@@ -17,10 +17,11 @@ const content = (
   </div>
 )
 
-const slotLabelStyles: any = (label, beforeStyles) => ({
+const slotLabelStyles: any = (label, beforeStyles?, slotStyles?) => ({
   position: 'relative',
   border: '1px solid #000',
   padding: '12px',
+  ...slotStyles,
   ':before': {
     content: `'${label}'`,
     position: 'absolute',
@@ -56,6 +57,14 @@ const ChatMessageExampleStyled = () => (
           }),
           content: { ...slotLabelStyles('content'), backgroundColor: '#F08080' },
           timestamp: { ...slotLabelStyles('timestamp'), backgroundColor: '#FFFFE0' },
+          badge: {
+            ...slotLabelStyles(
+              'badge',
+              { textAlign: 'center', left: '0px' },
+              { position: 'absolute', overflow: 'visible' },
+            ),
+            backgroundColor: '#FFFF00',
+          },
         },
       },
       componentVariables: {
@@ -77,6 +86,8 @@ const ChatMessageExampleStyled = () => (
                 author="John Doe"
                 timestamp="Yesterday, 10:15 PM"
                 mine
+                badge={{ icon: 'at' }}
+                badgePosition="start"
               />
             ),
           },
@@ -92,6 +103,7 @@ const ChatMessageExampleStyled = () => (
                 content={{ content }}
                 author="Jane Doe"
                 timestamp="Yesterday, 10:15 PM"
+                badge={{ icon: 'exclamation' }}
               />
             ),
           },

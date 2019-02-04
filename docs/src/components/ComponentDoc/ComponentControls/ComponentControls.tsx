@@ -114,7 +114,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
       <ComponentControlsShowVariables active={showVariables} onClick={onShowVariables} />
       <ComponentControlsShowTransparent active={showTransparent} onClick={onShowTransparent} />
       <ComponentControlsRtl active={showRtl} onClick={onShowRtl} />
-      <ComponentControlsMaximize examplePath={examplePath} />
+      <ComponentControlsMaximize examplePath={examplePath} rtl={showRtl} />
       <ComponentControlsCopyLink anchorName={anchorName} onClick={onCopyLink} />
     </Menu>
 
