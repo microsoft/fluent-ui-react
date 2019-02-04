@@ -14,10 +14,7 @@ const dropdownSearchInputStyles: ComponentSlotStylesInput<
   input: ({ variables: v }): ICSSInJSStyle => ({
     width: '100%',
     backgroundColor: v.backgroundColor,
-
-    ':focus': {
-      borderBottomColor: 'transparent',
-    },
+    borderWidth: 0,
   }),
 }
 

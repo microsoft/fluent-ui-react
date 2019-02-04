@@ -10,7 +10,7 @@ import { Renderer } from '../themes/types'
 const createRendererConfig = (options: any = {}) => ({
   // https://github.com/stardust-ui/react/issues/782
   // devMode: process.env.NODE_ENV !== 'production',
-  devMode: false,
+  devMode: true,
   plugins: [
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
