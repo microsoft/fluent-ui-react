@@ -1,13 +1,19 @@
-import { Dropdown, Button, List } from '@stardust-ui/react'
+import { Dropdown } from '@stardust-ui/react'
+
+const selectors = {
+  triggerButton: `.${Dropdown.slotClassNames.triggerButton}`,
+  dropdownItem: (itemIndex = 1) =>
+    `.${Dropdown.slotClassNames.itemsList} li:nth-child(${itemIndex})`,
+}
+
+const toggle = steps => steps.click(selectors.triggerButton)
 
 const steps = [
-  steps => steps.click(`.${Dropdown.className} .${Button.className}`).snapshot('Shows list'),
-  steps => steps.click(`.${List.className} li:nth-child(3)`).snapshot('Selects an element'),
-  steps =>
-    steps
-      .click(`.${Dropdown.className} .${Button.className}`)
-      .snapshot('Opens with selected element highlighted'),
-  steps => steps.hover(`.${List.className} li:nth-child(2)`).snapshot('Highlights another element'),
+  steps => toggle(steps).snapshot('Shows list'),
+  steps => steps.click(selectors.dropdownItem(3)).snapshot('Selects an item'),
+  steps => toggle(steps).snapshot('Opens with selected item highlighted'),
+  steps => steps.hover(selectors.dropdownItem(2)).snapshot('Highlights another item'),
+  steps => toggle(steps).snapshot('Closes the list'),
 ]
 
 export default steps

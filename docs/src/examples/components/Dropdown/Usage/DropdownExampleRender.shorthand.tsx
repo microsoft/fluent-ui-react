@@ -15,8 +15,9 @@ const inputItems = [
 
 const DropdownExampleRender: React.FC = () => (
   <Dropdown
-    items={inputItems}
+    search
     multiple
+    items={inputItems}
     placeholder="Start typing a name"
     renderItem={(Item: typeof Dropdown.Item, props) => (
       <Item {...props} header={`${props.header} (active)`} />
@@ -24,7 +25,6 @@ const DropdownExampleRender: React.FC = () => (
     renderSelectedItem={(SelectedItem: typeof Dropdown.SelectedItem, props) => (
       <SelectedItem {...props} header={`${props.header} (selected)`} />
     )}
-    search
   />
 )
 

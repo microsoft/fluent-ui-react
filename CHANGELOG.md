@@ -35,6 +35,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `hasMention`, `isImportant`, `hasMentionColor` and `isImportantColor` in ChatMessage variables in Teams theme @mnajdova ([#841](https://github.com/stardust-ui/react/pull/841))
 - Add `actionMenu` prop to `ChatMessage` component @layershifter ([#811](https://github.com/stardust-ui/react/pull/811))
 - Add `rtl` field in the `SvgIconFuncArg`, and used it in Teams theme's number-list icon ([#851](https://github.com/stardust-ui/react/pull/851))
+- Add single search flavor for `Dropdown` component @Bugaa92 ([#839](https://github.com/stardust-ui/react/pull/839))
 
 ### Fixes
 - Fix `Dropdown` component styles regression @Bugaa92 ([#824](https://github.com/stardust-ui/react/pull/824))
@@ -96,7 +97,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Make `headerMedia` visible for screen readers in `ListItem` @layershifter ([#772](https://github.com/stardust-ui/react/pull/772))
 - Cleanup for `Dropdown` examples' accessibility and added localisation example. @silviuavram ([#771](https://github.com/stardust-ui/react/pull/771))
-- Fix highlighted selected option in single selection `Dropdown` when opened @silviuavram ([#726](https://github.com/stardust-ui/react/pull/726)) 
+- Fix highlighted selected option in single selection `Dropdown` when opened @silviuavram ([#726](https://github.com/stardust-ui/react/pull/726))
 
 <!--------------------------------[ v0.18.0 ]------------------------------- -->
 ## [v0.18.0](https://github.com/stardust-ui/react/tree/v0.18.0) (2019-01-24)

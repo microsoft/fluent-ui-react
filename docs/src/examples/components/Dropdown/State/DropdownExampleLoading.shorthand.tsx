@@ -5,12 +5,12 @@ const inputItems = ['Bruce Wayne', 'Natasha Romanoff', 'Steven Strange', 'Alfred
 
 const DropdownExampleLoading: React.FC<{ knobs: { loading: boolean } }> = ({ knobs }) => (
   <Dropdown
-    loading={knobs.loading}
-    loadingMessage="Loading..."
+    search
     multiple
     items={inputItems}
     placeholder="Start typing a name"
-    search
+    loading={knobs.loading}
+    loadingMessage="Loading..."
   />
 )
 
