@@ -50,12 +50,14 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     return {
       boxShadow: v.badgeShadow,
       position: 'absolute',
-      height: pxToRem(24),
-      width: pxToRem(24),
+      padding: pxToRem(4),
+      height: 'auto',
+      width: 'auto',
       borderRadius: '50%',
       top: pxToRem(4),
       zIndex: '1',
-      [sidePosition]: pxToRem(-12),
+      [sidePosition]: 0,
+      transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
     }
   },
 }
