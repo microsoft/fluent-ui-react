@@ -16,6 +16,6 @@ export const getStyle = partName => {
   }
 }
 
-export { TeamsIconSlotClassNames, teamsIconSlotClassNames } from './teamsIconSlotClassNames'
+export { TeamsIconClassNames, teamsIconClassNames } from './teamsIconClassNames'
 
 export default svgIconsAndStyles as { [iconName: string]: TeamsSvgIconSpec }

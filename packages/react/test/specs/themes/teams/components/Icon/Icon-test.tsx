@@ -2,9 +2,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import { shallow } from 'enzyme'
 
-import icons, {
-  teamsIconSlotClassNames,
-} from '../../../../../../src/themes/teams/components/Icon/svg'
+import icons, { teamsIconClassNames } from '../../../../../../src/themes/teams/components/Icon/svg'
 import processedIcons from '../../../../../../src/themes/teams/components/Icon/svg/processedIndex'
 import { SvgIconSpecWithStyles } from '../../../../../../src/themes/teams/components/Icon/svg/types'
 
@@ -16,10 +14,10 @@ describe('Teams Theme Icon', () => {
     )
 
     const outlineByDynamicClass = component.find('.TEST-OUTLINE')
-    const outlineByStaticClass = component.find(`.${teamsIconSlotClassNames.outline}`)
+    const outlineByStaticClass = component.find(`.${teamsIconClassNames.outline}`)
 
     const filledByDynamicClass = component.find('.TEST-FILLED')
-    const filledByStaticClass = component.find(`.${teamsIconSlotClassNames.filled}`)
+    const filledByStaticClass = component.find(`.${teamsIconClassNames.filled}`)
 
     expect(outlineByDynamicClass).toEqual(outlineByStaticClass)
     expect(filledByDynamicClass).toEqual(filledByStaticClass)

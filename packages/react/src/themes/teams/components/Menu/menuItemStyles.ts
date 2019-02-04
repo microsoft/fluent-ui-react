@@ -2,7 +2,7 @@ import { pxToRem } from '../../../../lib'
 import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
-import { teamsIconSlotClassNames } from '../Icon/svg'
+import { teamsIconClassNames } from '../Icon/svg'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
@@ -338,11 +338,11 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           borderRadius: '50%',
           borderColor: v.iconOnlyActiveColor,
 
-          [`& .${teamsIconSlotClassNames.filled}`]: {
+          [`& .${teamsIconClassNames.filled}`]: {
             display: 'block',
           },
 
-          [`& .${teamsIconSlotClassNames.outline}`]: {
+          [`& .${teamsIconClassNames.outline}`]: {
             display: 'none',
           },
         }),
@@ -374,11 +374,11 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         color: 'inherit',
 
         ...(iconOnly && {
-          [`& .${teamsIconSlotClassNames.filled}`]: {
+          [`& .${teamsIconClassNames.filled}`]: {
             display: 'block',
           },
 
-          [`& .${teamsIconSlotClassNames.outline}`]: {
+          [`& .${teamsIconClassNames.outline}`]: {
             display: 'none',
           },
         }),
