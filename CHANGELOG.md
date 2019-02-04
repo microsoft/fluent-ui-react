@@ -19,9 +19,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### BREAKING CHANGES
 - Rename `combobox` to `root` in `dropdownSearchInputStyles` @layershifter ([#816](https://github.com/stardust-ui/react/pull/816))
+- Renamed class names for the slots inside the `ItemLayout` component @mnajdova ([#827](https://github.com/stardust-ui/react/pull/827)) 
 
 ### Features
 - Accessibility for menu divider @jurokapsiar ([#822](https://github.com/stardust-ui/react/pull/822))
+- Added slot class names in `ChatMessage`, `ChatItem`, `Dropdown`, `ItemLayout`, `Layout`, `MenuItem` @mnajdova ([#827](https://github.com/stardust-ui/react/pull/827))
 
 ### Fixes
 - Fix `Dropdown` component styles regression @Bugaa92 ([#824](https://github.com/stardust-ui/react/pull/824))

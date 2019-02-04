@@ -26,6 +26,7 @@ import Box from '../Box/Box'
 export interface ChatMessageSlotClassNames {
   author: string
   timestamp: string
+  content: string
 }
 
 export interface ChatMessageProps
@@ -141,7 +142,12 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
                 className: ChatMessage.slotClassNames.timestamp,
               },
             })}
-            {Box.create(content, { defaultProps: { styles: styles.content } })}
+            {Box.create(content, {
+              defaultProps: {
+                className: ChatMessage.slotClassNames.content,
+                styles: styles.content,
+              },
+            })}
           </>
         )}
       </ElementType>
@@ -153,6 +159,7 @@ ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
 ChatMessage.slotClassNames = {
   author: `${ChatMessage.className}__author`,
   timestamp: `${ChatMessage.className}__timestamp`,
+  content: `${ChatMessage.className}__content`,
 }
 
 export default ChatMessage
