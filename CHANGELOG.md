@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Unify size values for `Avatar` and `Status` components @kuzhelov ([#828](https://github.com/stardust-ui/react/pull/828))
+
 ### Features
 - Accessibility for menu divider @jurokapsiar ([#822](https://github.com/stardust-ui/react/pull/822))
 
