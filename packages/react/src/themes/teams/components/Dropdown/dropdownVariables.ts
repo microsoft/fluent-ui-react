@@ -3,7 +3,7 @@ export interface DropdownVariables {
   backgroundColor: string
   borderColorFocus: string
   borderRadius: string
-  borderBottom: string
+  borderWidth: string
   color: string
   comboboxPaddingButton: string
   comboboxFlexBasis: string
@@ -24,9 +24,9 @@ const [_2px_asRem, _3px_asRem, _12px_asRem] = [2, 3, 12].map(v => pxToRem(v))
 
 export default (siteVars): DropdownVariables => ({
   backgroundColor: siteVars.gray10,
-  borderRadius: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
-  borderBottom: `${_2px_asRem} solid transparent`,
   borderColorFocus: siteVars.brand,
+  borderRadius: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
+  borderWidth: `0 0 ${pxToRem(2)} 0`,
   color: siteVars.bodyColor,
   comboboxPaddingButton: `0 ${_12px_asRem}`,
   comboboxFlexBasis: '50px',

@@ -30,7 +30,6 @@ export {
 
 export { default as isBrowser } from './isBrowser'
 export { default as doesNodeContainClick } from './doesNodeContainClick'
-export { default as leven } from './leven'
 
 export { pxToRem } from './fontSizeUtility'
 export { customPropTypes }
