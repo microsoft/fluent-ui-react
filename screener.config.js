@@ -11,7 +11,7 @@ const { default: config } = require('./config')
 const { compilerOptions } = require('./build/tsconfig.common.json')
 
 tsPaths.register({
-  baseUrl: '.',
+  baseUrl: config.path_base,
   paths: compilerOptions.paths,
 })
 
