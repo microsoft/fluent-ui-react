@@ -4,9 +4,8 @@
     "docs/src",
     "build",
     "gulp",
-    "packages/src",
-    "packages/test",
-    "packages/types",
+    "packages/react/src",
+    "packages/react/test",
     "perf/src",
     "types"
   ]
