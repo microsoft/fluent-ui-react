@@ -4,7 +4,7 @@
     "module": "esnext",
     "paths": {
       "@stardust-ui/react": ["packages/react/src"],
-      "*": ["*", "types/*", "packages/react/*"]
+      "*": ["packages/react/*", "*", "types/*"]
     }
   },
   "include": ["../docs/src", "../packages/react/src", "../types"]
