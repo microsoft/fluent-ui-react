@@ -6,7 +6,10 @@ const dropdownSearchInputStyles: ComponentSlotStylesInput<
   DropdownSearchInputProps,
   DropdownVariables
 > = {
-  root: {},
+  root: ({ variables: v }): ICSSInJSStyle => ({
+    flexBasis: v.comboboxFlexBasis,
+    flexGrow: 1,
+  }),
 
   input: ({ variables: v }): ICSSInJSStyle => ({
     width: '100%',
@@ -15,11 +18,6 @@ const dropdownSearchInputStyles: ComponentSlotStylesInput<
     ':focus': {
       borderBottomColor: 'transparent',
     },
-  }),
-
-  combobox: ({ variables: v }): ICSSInJSStyle => ({
-    flexBasis: v.comboboxFlexBasis,
-    flexGrow: 1,
   }),
 }
 
