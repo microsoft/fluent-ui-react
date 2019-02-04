@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Grid, Header } from 'semantic-ui-react'
 
-import { Extendable } from 'types/utils'
+import { Extendable } from 'src/types'
 
 const headerStyle: React.CSSProperties = {
   textAlign: 'center',
