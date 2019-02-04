@@ -6,6 +6,7 @@ import { pxToRem } from '../../../../lib'
 
 const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    position: 'relative',
     display: 'inline-block',
     paddingLeft: v.padding,
     paddingRight: v.padding,
@@ -44,6 +45,21 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
       textDecoration: 'underline',
     },
   }),
+  badge: ({ props: p, variables: v }) => {
+    const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
+    return {
+      boxShadow: v.badgeShadow,
+      position: 'absolute',
+      padding: pxToRem(4),
+      height: 'auto',
+      width: 'auto',
+      borderRadius: '50%',
+      top: pxToRem(4),
+      zIndex: '1',
+      [sidePosition]: 0,
+      transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
+    }
+  },
 }
 
 export default chatMessageStyles
