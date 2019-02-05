@@ -6,7 +6,7 @@ general:
 jobs:
   build:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:8-browsers
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
