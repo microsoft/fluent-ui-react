@@ -22,10 +22,13 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 
 import Text from '../Text/Text'
 import Box from '../Box/Box'
+import Label from '../Label/Label'
 
 export interface ChatMessageSlotClassNames {
   author: string
   timestamp: string
+  badge: string
+  content: string
 }
 
 export interface ChatMessageProps
@@ -46,6 +49,12 @@ export interface ChatMessageProps
 
   /** Timestamp of the message. */
   timestamp?: ShorthandValue
+
+  /** Badge attached to the message. */
+  badge?: ShorthandValue
+
+  /** A message can format the badge to appear at the start or the end of the message. */
+  badgePosition?: 'start' | 'end'
 
   /**
    * Called after user's focus.
@@ -75,6 +84,8 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     ...commonPropTypes.createCommon({ content: 'shorthand' }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     author: customPropTypes.itemShorthand,
+    badge: customPropTypes.itemShorthand,
+    badgePosition: PropTypes.oneOf(['start', 'end']),
     mine: PropTypes.bool,
     timestamp: customPropTypes.itemShorthand,
     onFocus: PropTypes.func,
@@ -83,6 +94,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   static defaultProps = {
     accessibility: chatMessageBehavior,
     as: 'div',
+    badgePosition: 'end',
   }
 
   public state = {
@@ -109,9 +121,15 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     unhandledProps,
     styles,
   }: RenderResultConfig<ChatMessageProps>) {
-    const { author, children, content, timestamp } = this.props
+    const { author, children, content, timestamp, badge, badgePosition } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
+    const badgeElement = Label.create(badge, {
+      defaultProps: {
+        className: ChatMessage.slotClassNames.badge,
+        styles: styles.badge,
+      },
+    })
 
     return (
       <ElementType
@@ -126,6 +144,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
           children
         ) : (
           <>
+            {badgePosition === 'start' && badgeElement}
             {Text.create(author, {
               defaultProps: {
                 size: 'small',
@@ -141,7 +160,14 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
                 className: ChatMessage.slotClassNames.timestamp,
               },
             })}
-            {Box.create(content, { defaultProps: { styles: styles.content } })}
+
+            {Box.create(content, {
+              defaultProps: {
+                className: ChatMessage.slotClassNames.content,
+                styles: styles.content,
+              },
+            })}
+            {badgePosition === 'end' && badgeElement}
           </>
         )}
       </ElementType>
@@ -153,6 +179,8 @@ ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
 ChatMessage.slotClassNames = {
   author: `${ChatMessage.className}__author`,
   timestamp: `${ChatMessage.className}__timestamp`,
+  badge: `${ChatMessage.className}__badge`,
+  content: `${ChatMessage.className}__content`,
 }
 
 export default ChatMessage
