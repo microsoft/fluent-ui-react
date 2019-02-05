@@ -45,6 +45,7 @@ export const green04 = '#237b4b'
 // SHADOW LEVELS
 //
 export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, 0.1)'
+export const shadowLevel1Darker = '0 .2rem .4rem -.075rem rgba(0, 0, 0, 0.5)'
 
 //
 // FONT SIZES
