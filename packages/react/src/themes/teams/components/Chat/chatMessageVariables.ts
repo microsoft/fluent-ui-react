@@ -14,8 +14,8 @@ export interface ChatMessageVariables {
   badgeShadow: string
   isImportant: boolean
   hasMention: boolean
-  mentionColor: string
-  importantColor: string
+  hasMentionColor: string
+  isImportantColor: string
 }
 
 export default (siteVars): ChatMessageVariables => ({
@@ -32,6 +32,6 @@ export default (siteVars): ChatMessageVariables => ({
   badgeShadow: siteVars.shadowLevel1Darker,
   isImportant: false,
   hasMention: false,
-  mentionColor: siteVars.orange04,
-  importantColor: siteVars.red,
+  hasMentionColor: siteVars.orange04,
+  isImportantColor: siteVars.red,
 })

@@ -28,7 +28,7 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     ...((v.hasMention || v.isImportant) && {
       '::before': {
         content: '""',
-        backgroundColor: v.hasMention ? v.mentionColor : v.importantColor,
+        backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
         height: '100%',
         left: '0',
         position: 'absolute',
@@ -67,7 +67,7 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
   }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
     return {
-      backgroundColor: v.hasMention ? v.mentionColor : v.importantColor,
+      backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
       color: white,
       boxShadow: v.badgeShadow,
       position: 'absolute',
