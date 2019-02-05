@@ -14,6 +14,8 @@ export interface RefFindNodeProps extends ChildrenComponentProps<React.ReactElem
 }
 
 export default class RefFindNode extends React.Component<RefFindNodeProps> {
+  static displayName = 'RefFindNode'
+
   static propTypes = {
     children: PropTypes.element.isRequired,
     innerRef: customPropTypes.ref,
