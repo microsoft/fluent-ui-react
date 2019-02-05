@@ -1,9 +1,9 @@
 import { pxToRem } from '../../../../lib'
 
 export interface ChatMessageVariables {
-  actionsBoxShadow: string
-  actionsPositionRight: string
-  actionsPositionTop: string
+  actionMenuBoxShadow: string
+  actionMenuPositionRight: string
+  actionMenuPositionTop: string
   width: string
   backgroundColor: string
   backgroundColorMine: string
@@ -22,9 +22,9 @@ export interface ChatMessageVariables {
 }
 
 export default (siteVars): ChatMessageVariables => ({
-  actionsBoxShadow: siteVars.shadowLevel1,
-  actionsPositionRight: pxToRem(5),
-  actionsPositionTop: pxToRem(-30),
+  actionMenuBoxShadow: siteVars.shadowLevel1,
+  actionMenuPositionRight: pxToRem(5),
+  actionMenuPositionTop: pxToRem(-30),
   width: '100%',
   backgroundColor: siteVars.white,
   backgroundColorMine: '#E5E5F1',

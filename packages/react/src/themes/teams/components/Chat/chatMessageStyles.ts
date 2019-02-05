@@ -59,11 +59,11 @@ const chatMessageStyles: ComponentSlotStylesInput<
   actionMenu: ({ props: p, variables: v }): ICSSInJSStyle => ({
     backgroundColor: v.backgroundColor,
     borderRadius: v.borderRadius,
-    boxShadow: v.actionsBoxShadow,
+    boxShadow: v.actionMenuBoxShadow,
     opacity: p.focused ? 1 : 0,
     position: 'absolute',
-    right: v.actionsPositionRight,
-    top: v.actionsPositionTop,
+    right: v.actionMenuPositionRight,
+    top: v.actionMenuPositionTop,
   }),
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
