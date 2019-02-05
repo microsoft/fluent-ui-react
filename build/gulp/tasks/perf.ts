@@ -86,7 +86,9 @@ task('perf:run', async () => {
   let browser
 
   try {
-    browser = await puppeteer.launch()
+    browser = await puppeteer.launch({
+      args: ['--single-process'], // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568
+    })
 
     for (let i = 0; i < times; i++) {
       const page = await browser.newPage()
