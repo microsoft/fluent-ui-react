@@ -475,8 +475,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       <SourceRender.Consumer>
         {({ error }) =>
           error && (
-            <Segment inverted>
-              <pre>{error.toString()}</pre>
+            <Segment inverted color="red" size="small">
+              <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
             </Segment>
           )
         }

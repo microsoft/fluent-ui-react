@@ -377,10 +377,17 @@ class Sidebar extends React.Component<any, any> {
       },
       {
         key: 'iconviewer',
-        content: 'Icon Viewer',
+        content: 'Processed Icons',
         as: NavLink,
         to: '/icon-viewer',
         accessibility: listItemBehavior,
+      },
+      {
+        key: 'importantmentionmessages',
+        content: 'Important and mention messages',
+        as: NavLink,
+        to: '/important-and-mention-messages',
+        accessiility: listItemBehavior,
       },
       {
         key: 'divider4',
@@ -437,6 +444,25 @@ class Sidebar extends React.Component<any, any> {
       <ThemeContext.Consumer>
         {({ themeName, changeTheme }) => (
           <Menu vertical fixed="left" inverted style={{ ...style }}>
+            {process.env.NODE_ENV !== 'production' && (
+              <Menu.Item>
+                <p>Theme:</p>
+                <select
+                  placeholder="Select theme..."
+                  defaultValue={themeName}
+                  onChange={e => {
+                    changeTheme(e.target.value)
+                  }}
+                >
+                  {this.getThemeOptions().map(o => (
+                    <option key={o.value} value={o.value}>
+                      {o.text}
+                    </option>
+                  ))}
+                </select>
+              </Menu.Item>
+            )}
+
             <Menu.Item active>
               <SemanticUIInput
                 className="transparent inverted icon"

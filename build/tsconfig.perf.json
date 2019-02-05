@@ -3,5 +3,5 @@
   "compilerOptions": {
     "module": "esnext"
   },
-  "include": ["../packages/src", "../packages/types", "../perf", "../types"]
+  "include": ["../packages/react/src", "../perf", "../types"]
 }

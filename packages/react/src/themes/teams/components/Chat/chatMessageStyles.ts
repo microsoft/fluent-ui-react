@@ -25,6 +25,19 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
         outline: `.2rem solid ${v.contentFocusOutlineColor}`,
       },
     }),
+    ...((v.hasMention || v.isImportant) && {
+      '::before': {
+        content: '""',
+        backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
+        height: '100%',
+        left: '0',
+        position: 'absolute',
+        top: '0',
+        width: pxToRem(3),
+        borderBottomLeftRadius: 'inherit',
+        borderTopLeftRadius: 'inherit',
+      },
+    }),
   }),
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -45,9 +58,17 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
       textDecoration: 'underline',
     },
   }),
-  badge: ({ props: p, variables: v }) => {
+  badge: ({
+    props: p,
+    variables: v,
+    theme: {
+      siteVariables: { white },
+    },
+  }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
     return {
+      backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
+      color: white,
       boxShadow: v.badgeShadow,
       position: 'absolute',
       padding: pxToRem(4),

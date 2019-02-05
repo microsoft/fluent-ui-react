@@ -12,6 +12,10 @@ export interface ChatMessageVariables {
   contentFocusOutlineColor: string
   border: string
   badgeShadow: string
+  isImportant: boolean
+  hasMention: boolean
+  hasMentionColor: string
+  isImportantColor: string
 }
 
 export default (siteVars): ChatMessageVariables => ({
@@ -26,4 +30,8 @@ export default (siteVars): ChatMessageVariables => ({
   contentFocusOutlineColor: siteVars.brand,
   border: 'none',
   badgeShadow: siteVars.shadowLevel1Darker,
+  isImportant: false,
+  hasMention: false,
+  hasMentionColor: siteVars.orange04,
+  isImportantColor: siteVars.red,
 })

@@ -28,6 +28,8 @@ export interface ProviderProps {
 class Provider extends React.Component<ProviderProps> {
   staticStylesRendered: boolean = false
 
+  static displayName = 'Provider'
+
   static propTypes = {
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
