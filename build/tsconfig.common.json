@@ -6,7 +6,7 @@
     "baseUrl": "../",
     "paths": {
       "@stardust-ui/react": ["packages/react/src"],
-      "*": ["*", "types/*"]
+      "*": ["packages/react/*", "*", "types/*"]
     },
     "types": ["node", "jest"],
     "typeRoots": ["../types", "../node_modules/@types"],
