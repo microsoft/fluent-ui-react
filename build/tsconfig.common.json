@@ -5,17 +5,11 @@
     "lib": ["es2015", "dom"],
     "baseUrl": "../",
     "paths": {
-      "@stardust-ui/react": ["src"],
+      "@stardust-ui/react": ["packages/react/src"],
       "*": ["*", "types/*"]
     },
-    "types": [
-      "node",
-      "jest"
-    ],
-    "typeRoots": [
-      "../types",
-      "../node_modules/@types"
-    ],
+    "types": ["node", "jest"],
+    "typeRoots": ["../types", "../node_modules/@types"],
     "jsx": "react",
     "moduleResolution": "node",
     "sourceMap": true,
@@ -24,6 +18,6 @@
     "noImplicitThis": false,
     "noImplicitAny": false,
     "strictNullChecks": false,
-    "noUnusedLocals": true,
+    "noUnusedLocals": true
   }
 }

@@ -14,6 +14,11 @@ const Variations = () => (
       description="A multiple search dropdown that fits the width of the container."
       examplePath="components/Dropdown/Variations/DropdownExampleMultipleSearchFluid"
     />
+    <ComponentExample
+      title="Multiple Search Using French Language"
+      description="A multiple search dropdown that uses French to provide information and accessibility."
+      examplePath="components/Dropdown/Variations/DropdownExampleMultipleSearchFrenchLanguage"
+    />
   </ExampleSection>
 )
 
