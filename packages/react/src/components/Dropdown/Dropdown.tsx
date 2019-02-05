@@ -47,6 +47,12 @@ export interface DropdownSlotClassNames {
 }
 
 export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownState> {
+  /** The index of the currently active selected item, if dropdown has a multiple selection. */
+  activeIndex?: number
+
+  /** The initial value for the index of the currently active selected item, in a multiple selection. */
+  defaultActiveIndex?: number
+
   /** The initial value for the search query, if the dropdown is also a search. */
   defaultSearchQuery?: string
 
@@ -153,6 +159,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 export interface DropdownState {
   isOpen?: boolean
   value: ShorthandValue | ShorthandValue[]
+  activeIndex: number
   backspaceDelete: boolean
   focused: boolean
   searchQuery?: string
@@ -182,6 +189,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       children: false,
       content: false,
     }),
+    activeIndex: PropTypes.number,
+    defaultActiveIndex: PropTypes.number,
     defaultSearchQuery: PropTypes.string,
     defaultValue: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
@@ -226,7 +235,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     triggerButton: {},
   }
 
-  static autoControlledProps = ['searchQuery', 'value']
+  static autoControlledProps = ['activeIndex', 'searchQuery', 'value']
 
   static Item = DropdownItem
   static SearchInput = DropdownSearchInput
@@ -234,6 +243,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   getInitialAutoControlledState({ multiple, search }: DropdownProps): DropdownState {
     return {
+      activeIndex: multiple ? null : undefined,
       // prevent deletion of last character + last selected value at the same time on backspace.
       backspaceDelete: multiple,
       focused: false,
@@ -291,7 +301,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                     ref={this.selectedItemsRef}
                     className={cx(Dropdown.slotClassNames.selectedItems, classes.selectedItems)}
                   >
-                    {multiple && this.renderSelectedItems()}
+                    {multiple && this.renderSelectedItems(variables)}
                     {search
                       ? this.renderSearchInput(
                           accessibilityRootPropsRest,
@@ -487,7 +497,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     ]
   }
 
-  private renderSelectedItems() {
+  private renderSelectedItems(variables) {
     const { renderSelectedItem } = this.props
     const value = this.state.value as ShorthandValue[]
 
@@ -495,9 +505,11 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       return null
     }
 
-    return value.map(item =>
+    return value.map((item, index) =>
       DropdownSelectedItem.create(item, {
         defaultProps: {
+          active: this.isSelectedItemActive(index),
+          variables,
           ...(typeof item === 'object' &&
             !item.hasOwnProperty('key') && {
               key: (item as any).header,
@@ -588,6 +600,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     statusDiv.textContent = statusMessage
   }
 
+  isSelectedItemActive = (index: number): boolean => {
+    return index === this.state.activeIndex
+  }
+
   private handleItemOverrides = (
     item: ShorthandValue,
     index: number,
@@ -599,12 +615,18 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     item: ShorthandValue,
   ) => ({
     onRemove: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
-      this.handleSelectedItemRemove(e, item)
-      _.invoke(predefinedProps, 'onRemove', e, DropdownSelectedItemProps)
+      this.handleSelectedItemRemove(e, item, predefinedProps, DropdownSelectedItemProps)
     },
     onClick: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
+      const { value } = this.state as { value: ShorthandValue[] }
+      this.trySetState({
+        activeIndex: value.indexOf(item),
+      })
       e.stopPropagation()
       _.invoke(predefinedProps, 'onClick', e, DropdownSelectedItemProps)
+    },
+    onKeyDown: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
+      this.handleSelectedItemKeyDown(e, item, predefinedProps, DropdownSelectedItemProps)
     },
   })
 
@@ -619,6 +641,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     accessibilityComboboxProps: Object,
     getInputProps: (options?: GetInputPropsOptions) => any,
   ) => {
+    const { multiple } = this.props
     const handleInputBlur = (
       e: React.SyntheticEvent,
       searchInputProps: DropdownSearchInputProps,
@@ -631,8 +654,35 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       e: React.SyntheticEvent,
       searchInputProps: DropdownSearchInputProps,
     ) => {
-      if (keyboardKey.getCode(e) === keyboardKey.Tab && !_.isNil(highlightedIndex)) {
-        selectItemAtIndex(highlightedIndex)
+      switch (keyboardKey.getCode(e)) {
+        case keyboardKey.Tab:
+          if (!_.isNil(highlightedIndex)) {
+            selectItemAtIndex(highlightedIndex)
+          }
+          break
+        case keyboardKey.ArrowLeft:
+          if (multiple) {
+            const { value } = this.state as { value: ShorthandValue[] }
+            if (value.length > 0) {
+              this.trySetState({
+                activeIndex: value.length - 1,
+              })
+            }
+          }
+          break
+        case keyboardKey.Backspace:
+          const { searchQuery, value, backspaceDelete } = this.state
+
+          if (multiple && searchQuery === '' && (value as ShorthandValue[]).length > 0) {
+            if (backspaceDelete) {
+              this.removeItemFromValue()
+            } else {
+              this.setState({ backspaceDelete: true })
+            }
+          }
+          break
+        default:
+          break
       }
 
       _.invoke(predefinedProps, 'onInputKeyDown', e, {
@@ -662,23 +712,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
         _.invoke(predefinedProps, 'onFocus', e, searchInputProps)
       },
-      ...(this.props.multiple && {
-        onKeyUp: (e: React.SyntheticEvent, searchInputProps: DropdownSearchInputProps) => {
-          if (keyboardKey.getCode(e) === keyboardKey.Backspace) {
-            const { searchQuery, value, backspaceDelete } = this.state
-
-            if (searchQuery === '' && (value as ShorthandValue[]).length > 0) {
-              if (backspaceDelete) {
-                this.removeItemFromValue()
-              } else {
-                this.setState({ backspaceDelete: true })
-              }
-            }
-          }
-
-          _.invoke(predefinedProps, 'onKeyUp', e, searchInputProps)
-        },
-      }),
       onInputBlur: (e: React.SyntheticEvent, searchInputProps: DropdownSearchInputProps) => {
         handleInputBlur(e, searchInputProps)
       },
@@ -748,11 +781,59 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, ...newState })
   }
 
-  private handleSelectedItemRemove(e: React.SyntheticEvent, item: ShorthandValue) {
+  private handleSelectedItemKeyDown(
+    e: React.SyntheticEvent,
+    item: ShorthandValue,
+    predefinedProps: DropdownSelectedItemProps,
+    DropdownSelectedItemProps: DropdownSelectedItemProps,
+  ) {
+    const { activeIndex, value } = this.state as { activeIndex: number; value: ShorthandValue[] }
+    switch (keyboardKey.getCode(e)) {
+      case keyboardKey.Delete:
+      case keyboardKey.Backspace:
+        this.handleSelectedItemRemove(e, item, predefinedProps, DropdownSelectedItemProps)
+        break
+      case keyboardKey.ArrowLeft:
+        if (value.length > 0 && !_.isNil(activeIndex) && activeIndex > 0) {
+          this.trySetState({
+            activeIndex: activeIndex - 1,
+          })
+        }
+        break
+      case keyboardKey.ArrowRight:
+        if (value.length > 0 && !_.isNil(activeIndex)) {
+          if (activeIndex < value.length - 1) {
+            this.trySetState({
+              activeIndex: activeIndex + 1,
+            })
+          } else {
+            this.trySetState({
+              activeIndex: null,
+            })
+            this.inputRef.current.focus()
+          }
+        }
+        break
+      default:
+        break
+    }
+    _.invoke(predefinedProps, 'onKeyDown', e, DropdownSelectedItemProps)
+  }
+
+  private handleSelectedItemRemove(
+    e: React.SyntheticEvent,
+    item: ShorthandValue,
+    predefinedProps: DropdownSelectedItemProps,
+    DropdownSelectedItemProps: DropdownSelectedItemProps,
+  ) {
+    this.trySetState({
+      activeIndex: null,
+    })
     this.removeItemFromValue(item)
     this.tryFocusSearchInput()
     this.tryFocusTriggerButton()
     e.stopPropagation()
+    _.invoke(predefinedProps, 'onRemove', e, DropdownSelectedItemProps)
   }
 
   private removeItemFromValue(item?: ShorthandValue) {
