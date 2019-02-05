@@ -14,7 +14,7 @@ export { default as Accordion, AccordionProps } from './components/Accordion/Acc
 
 export { default as Attachment, AttachmentProps } from './components/Attachment/Attachment'
 
-export { default as Avatar, AvatarProps, AvatarPropsWithDefaults } from './components/Avatar/Avatar'
+export { default as Avatar, AvatarProps } from './components/Avatar/Avatar'
 
 export { default as Box, BoxProps } from './components/Box/Box'
 
@@ -22,7 +22,11 @@ export { default as Button, ButtonProps, ButtonState } from './components/Button
 export { default as ButtonGroup, ButtonGroupProps } from './components/Button/ButtonGroup'
 
 export { default as Chat, ChatProps } from './components/Chat/Chat'
-export { default as ChatItem, ChatItemProps } from './components/Chat/ChatItem'
+export {
+  default as ChatItem,
+  ChatItemProps,
+  ChatItemSlotClassNames,
+} from './components/Chat/ChatItem'
 export {
   default as ChatMessage,
   ChatMessageProps,
@@ -36,7 +40,11 @@ export {
 } from './components/Divider/Divider'
 export { default as Dialog, DialogProps } from './components/Dialog/Dialog'
 
-export { default as Dropdown, DropdownProps } from './components/Dropdown/Dropdown'
+export {
+  default as Dropdown,
+  DropdownProps,
+  DropdownSlotClassNames,
+} from './components/Dropdown/Dropdown'
 
 export { default as DropdownItem, DropdownItemProps } from './components/Dropdown/DropdownItem'
 
@@ -61,7 +69,7 @@ export {
   HeaderDescriptionProps,
 } from './components/Header/HeaderDescription'
 
-export { default as Icon, IconProps, IconXSpacing, IconSize } from './components/Icon/Icon'
+export { default as Icon, IconProps, IconXSpacing } from './components/Icon/Icon'
 
 export { default as Image, ImageProps } from './components/Image/Image'
 
@@ -71,18 +79,29 @@ export {
   default as ItemLayout,
   ItemLayoutPropsWithDefaults,
   ItemLayoutProps,
+  ItemLayoutSlotClassNames,
 } from './components/ItemLayout/ItemLayout'
 
 export { default as Label, LabelProps } from './components/Label/Label'
 export { default as Loader, LoaderProps } from './components/Loader/Loader'
 
-export { default as Layout, LayoutPropsWithDefaults, LayoutProps } from './components/Layout/Layout'
+export {
+  default as Layout,
+  LayoutPropsWithDefaults,
+  LayoutProps,
+  LayoutSlotClassNames,
+} from './components/Layout/Layout'
 
 export { default as List, ListProps } from './components/List/List'
 export { default as ListItem, ListItemProps } from './components/List/ListItem'
 
 export { default as Menu, MenuProps, MenuState, MenuShorthandKinds } from './components/Menu/Menu'
-export { default as MenuItem, MenuItemState, MenuItemProps } from './components/Menu/MenuItem'
+export {
+  default as MenuItem,
+  MenuItemState,
+  MenuItemProps,
+  MenuItemSlotClassNames,
+} from './components/Menu/MenuItem'
 export { default as MenuDivider, MenuDividerProps } from './components/Menu/MenuDivider'
 
 export {
@@ -120,7 +139,7 @@ export {
 export { default as Ref, RefProps } from './components/Ref/Ref'
 export { default as Segment, SegmentProps } from './components/Segment/Segment'
 
-export { default as Status, StatusPropsWithDefaults, StatusProps } from './components/Status/Status'
+export { default as Status, StatusProps } from './components/Status/Status'
 
 export { default as Text, TextProps } from './components/Text/Text'
 
@@ -176,5 +195,6 @@ export {
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
+  SizeValue,
 } from './lib'
 export { ShorthandRenderer } from './types'

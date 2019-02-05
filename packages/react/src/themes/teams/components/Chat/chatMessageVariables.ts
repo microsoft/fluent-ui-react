@@ -11,6 +11,7 @@ export interface ChatMessageVariables {
   headerMarginBottom: string
   contentFocusOutlineColor: string
   border: string
+  badgeShadow: string
 }
 
 export default (siteVars): ChatMessageVariables => ({
@@ -24,4 +25,5 @@ export default (siteVars): ChatMessageVariables => ({
   headerMarginBottom: pxToRem(2),
   contentFocusOutlineColor: siteVars.brand,
   border: 'none',
+  badgeShadow: siteVars.shadowLevel1Darker,
 })
