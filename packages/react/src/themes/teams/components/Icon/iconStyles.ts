@@ -4,9 +4,10 @@ import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { callable, pxToRem, SizeValue } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../types'
-import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
+import { Avatar, IconXSpacing, IconProps } from '../../../../'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, IconSizeModifier } from './iconVariables'
+import { getAvatarFontIconStyles } from './avatarIconStyles'
 
 const sizes: Record<SizeValue, number> = {
   smallest: 7,
@@ -19,7 +20,7 @@ const sizes: Record<SizeValue, number> = {
 }
 
 const getDefaultFontIcon = (iconName: string) => {
-  return callable(fontAwesomeIcons(iconName).icon)()
+  return callable(fontAwesomeIcons(iconName).icon as FontIconSpec)()
 }
 
 const getFontStyles = (
@@ -124,6 +125,10 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       ...(!rtl && {
         transform: `rotate(${rotate}deg)`,
       }),
+
+      [`&.${Avatar.slotClassNames.image}`]: {
+        ...(isFontBased && getAvatarFontIconStyles(size, v)),
+      },
     }
   },
 

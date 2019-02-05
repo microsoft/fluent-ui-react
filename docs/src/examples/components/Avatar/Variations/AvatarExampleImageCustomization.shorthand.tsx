@@ -12,7 +12,7 @@ const AvatarExampleImageCustomizationShorthand = () => (
       image={
         // This example does not react to the avatar size variable
         // and otherwise produces bad results when border is applied compared to "normal" image
-        <Icon name="user" circular variables={{ color: 'blue' }} styles={{ padding: '8px' }} />
+        <Icon name="user" circular variables={{ color: 'blue' }} />
       }
       status={{ color: 'green', icon: 'check', title: 'Available' }}
     />

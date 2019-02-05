@@ -211,10 +211,10 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           colors,
         }
 
-        mergedStyles.root = {
+        mergedStyles.root = callable({
           ...callable(mergedStyles.root)(styleParam),
           ...animationCSSProp,
-        }
+        })
 
         const resolvedStyles: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(
           (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),

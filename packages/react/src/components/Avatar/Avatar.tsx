@@ -13,6 +13,10 @@ import {
   SizeValue,
 } from '../../lib'
 
+export type AvatarSlotClassNames = {
+  image: string
+}
+
 export interface AvatarProps extends UIComponentProps {
   /** Shorthand for the image. */
   image?: ShorthandValue
@@ -42,6 +46,10 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
   static className = 'ui-avatar'
 
   static displayName = 'Avatar'
+
+  static slotClassNames = {
+    image: `${Avatar.className}__image`,
+  }
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -92,6 +100,7 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
             avatar: true,
             title: name,
             styles: styles.image,
+            className: Avatar.slotClassNames.image,
           },
         })}
         {!image &&

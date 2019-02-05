@@ -1,7 +1,7 @@
-import { ThemePrepared, AnimationProp } from '../themes/types'
+import { AnimationProp, ICSSInJSStyle, ThemePrepared } from '../themes/types'
 import callable from './callable'
 
-const createAnimationStyles = (animation: AnimationProp, theme: ThemePrepared) => {
+const createAnimationStyles = (animation: AnimationProp, theme: ThemePrepared): ICSSInJSStyle => {
   let animationCSSProp = {}
   const { animations = {} } = theme
 

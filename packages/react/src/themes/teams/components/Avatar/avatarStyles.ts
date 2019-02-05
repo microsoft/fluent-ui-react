@@ -1,8 +1,8 @@
 import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { AvatarProps } from '../../../../components/Avatar/Avatar'
+import { AvatarProps } from '../../../..'
 
-const sizeToPxValue = {
+export const sizeToPxValue = {
   smallest: 24,
   smaller: 24,
   small: 24,

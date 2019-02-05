@@ -1,5 +1,7 @@
 import { ColorValues } from '../../../types'
-import { mapColorsToScheme, pxToRem } from '../../../../lib'
+import { callable, mapColorsToScheme, pxToRem } from '../../../../lib'
+
+import avatarVariables from '../Avatar/avatarVariables'
 
 export type IconSizeModifier = 'x' | 'xx'
 
@@ -19,6 +21,8 @@ export interface IconVariables {
   marginRight: string
   outline?: boolean
   sizeModifier?: IconSizeModifier
+
+  avatarBorderWidth?: number
 }
 
 const colorVariant = 500
@@ -36,4 +40,6 @@ export default (siteVars): IconVariables => ({
   horizontalSpace: pxToRem(10),
   marginRight: pxToRem(8),
   outline: undefined,
+
+  avatarBorderWidth: callable(avatarVariables)(siteVars).avatarBorderWidth,
 })

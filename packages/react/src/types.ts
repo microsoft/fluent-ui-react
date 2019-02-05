@@ -17,6 +17,7 @@ export type ResultOf<T> = T extends (...arg: any[]) => infer TResult ? TResult :
 export type OneOrArray<T> = T | T[]
 export type ObjectOf<T> = { [key: string]: T }
 
+export type Func<TResult> = (...args: any[]) => TResult
 export type ObjectOrFunc<TResult, TArg = {}> = ((arg: TArg) => TResult) | TResult
 
 // ========================================================

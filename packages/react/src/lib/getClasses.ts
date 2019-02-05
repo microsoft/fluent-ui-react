@@ -19,7 +19,10 @@ const getClasses = (
   const componentParts: string[] = Object.keys(componentStyles)
 
   return componentParts.reduce((classes, partName) => {
-    classes[partName] = renderer.renderRule(callable(componentStyles[partName]), styleParam)
+    // The reason for explicit cast is that Fela and Stardust use different interfaces for CSS styles
+    // - Fela: interface IStyle extends CSS.Properties<string | number>
+    // - Stardust: interface ICSSInJSStyle extends React.CSSProperties
+    classes[partName] = renderer.renderRule(callable<any>(componentStyles[partName]), styleParam)
 
     return classes
   }, {})
