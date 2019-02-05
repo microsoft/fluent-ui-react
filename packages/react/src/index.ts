@@ -14,7 +14,7 @@ export { default as Accordion, AccordionProps } from './components/Accordion/Acc
 
 export { default as Attachment, AttachmentProps } from './components/Attachment/Attachment'
 
-export { default as Avatar, AvatarProps, AvatarPropsWithDefaults } from './components/Avatar/Avatar'
+export { default as Avatar, AvatarProps } from './components/Avatar/Avatar'
 
 export { default as Box, BoxProps } from './components/Box/Box'
 
@@ -69,7 +69,7 @@ export {
   HeaderDescriptionProps,
 } from './components/Header/HeaderDescription'
 
-export { default as Icon, IconProps, IconXSpacing, IconSize } from './components/Icon/Icon'
+export { default as Icon, IconProps, IconXSpacing } from './components/Icon/Icon'
 
 export { default as Image, ImageProps } from './components/Image/Image'
 
@@ -139,7 +139,7 @@ export {
 export { default as Ref, RefProps } from './components/Ref/Ref'
 export { default as Segment, SegmentProps } from './components/Segment/Segment'
 
-export { default as Status, StatusPropsWithDefaults, StatusProps } from './components/Status/Status'
+export { default as Status, StatusProps } from './components/Status/Status'
 
 export { default as Text, TextProps } from './components/Text/Text'
 
@@ -195,5 +195,6 @@ export {
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
+  SizeValue,
 } from './lib'
 export { ShorthandRenderer } from './types'
