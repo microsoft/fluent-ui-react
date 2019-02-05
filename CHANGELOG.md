@@ -31,6 +31,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Fix `Dropdown` component styles regression @Bugaa92 ([#824](https://github.com/stardust-ui/react/pull/824))
+- Update vulnerable version of `lodash` dependency  @kuzhelov ([#840](https://github.com/stardust-ui/react/pull/840))
 
 <!--------------------------------[ v0.19.2 ]------------------------------- -->
 ## [v0.19.2](https://github.com/stardust-ui/react/tree/v0.19.2) (2019-02-01)
