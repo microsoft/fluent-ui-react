@@ -119,7 +119,8 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
-    // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys as navigation (only Tab key should work)
+    // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys
+    // as navigation (only Tab key should work)
     preventDefault: event => {
       event.preventDefault()
     },
@@ -135,6 +136,8 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   }
 
   handleBlur = (e: React.FocusEvent) => {
+    // `this.state.focused` controls is focused the whole `ChatMessage` or any of its children. When we're navigating
+    // with keyboard the focused element will be changed and there is no way to use `:focus` selector
     const shouldPreserveFocusState = _.invoke(e, 'currentTarget.contains', e.relatedTarget)
 
     this.setState({ focused: shouldPreserveFocusState })
