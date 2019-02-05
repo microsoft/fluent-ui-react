@@ -3,7 +3,7 @@ import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Header, Segment, ICSSInJSStyle, Provider, themes } from '@stardust-ui/react'
 
-import { mergeThemes } from '../../../src/lib'
+import { mergeThemes } from '../../../packages/react/src/lib'
 import Logo from '../components/Logo/Logo'
 
 const pkg = require('package.json')

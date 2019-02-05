@@ -27,8 +27,8 @@ import ComponentExampleTitle from './ComponentExampleTitle'
 import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager'
-import { ThemeInput, ThemePrepared } from 'src/themes/types'
-import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
+import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
+import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import CodeSnippet from '../../CodeSnippet'
 
@@ -379,7 +379,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const { copiedCode } = this.state
 
     const codeEditorStyle: React.CSSProperties = {
-      position: 'absolute',
+      position: 'relative',
       margin: 0,
       top: '2px',
       right: '0.5rem',
@@ -450,7 +450,14 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             } as React.CSSProperties
           }
         >
-          <Menu attached="top" size="small" inverted secondary pointing>
+          <Menu
+            attached="top"
+            size="small"
+            inverted
+            secondary
+            pointing
+            styles={{ display: 'flex', flexDirection: 'column' }}
+          >
             {this.renderAPIsMenu()}
             {this.renderLanguagesMenu()}
           </Menu>

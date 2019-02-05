@@ -1,6 +1,6 @@
 import { Icon, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
-import { ShorthandValue } from '../../../../types/utils'
-import { listItemBehavior, listBehavior } from '../../../../src/lib/accessibility'
+import { ShorthandValue } from '../../../../packages/react/src/types'
+import { listItemBehavior, listBehavior } from '../../../../packages/react/src/lib/accessibility'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
 import keyboardKey from 'keyboard-key'
