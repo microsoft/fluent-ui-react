@@ -20,6 +20,7 @@ const ProviderConsumer: React.SFC<ProviderConsumerProps> = ({ render }) => (
   <FelaTheme>{render}</FelaTheme>
 )
 
+ProviderConsumer.displayName = 'ProviderConsumer'
 ProviderConsumer.propTypes = {
   render: PropTypes.func.isRequired,
 }

@@ -25,6 +25,8 @@ export interface UIComponentProps<P = any, V = any>
   className?: string
 }
 
+export type SizeValue = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
+
 export type ColorValue =
   | 'primary'
   | 'secondary'
