@@ -125,7 +125,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     },
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     this.changeFocusState(true)
     this.setState({ isFromKeyboard: isFromKeyboard() })
 
