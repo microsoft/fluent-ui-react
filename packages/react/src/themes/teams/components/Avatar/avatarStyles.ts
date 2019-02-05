@@ -1,10 +1,21 @@
 import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { AvatarPropsWithDefaults } from '../../../../components/Avatar/Avatar'
+import { AvatarProps } from '../../../../components/Avatar/Avatar'
 
-const avatarStyles: ComponentSlotStylesInput<AvatarPropsWithDefaults, any> = {
+const sizeToPxValue = {
+  smallest: 24,
+  smaller: 24,
+  small: 24,
+  medium: 32,
+  large: 36,
+  larger: 42,
+  largest: 48,
+}
+
+const avatarStyles: ComponentSlotStylesInput<AvatarProps, any> = {
   root: ({ props: { size } }): ICSSInJSStyle => {
-    const sizeInRem = pxToRem(size)
+    const sizeInRem = pxToRem(sizeToPxValue[size])
+
     return {
       position: 'relative',
       backgroundColor: 'inherit',
@@ -14,29 +25,29 @@ const avatarStyles: ComponentSlotStylesInput<AvatarPropsWithDefaults, any> = {
       width: sizeInRem,
     }
   },
-  image: ({ variables }): ICSSInJSStyle => ({
+  image: ({ variables: v }): ICSSInJSStyle => ({
     verticalAlign: 'top',
     borderStyle: 'solid',
-    borderColor: variables.avatarBorderColor,
-    borderWidth: `${variables.avatarBorderWidth}px`,
+    borderColor: v.avatarBorderColor,
+    borderWidth: `${v.avatarBorderWidth}px`,
   }),
   label: ({ props: { size } }): ICSSInJSStyle => {
-    const sizeInRem = pxToRem(size)
+    const sizeInRem = pxToRem(sizeToPxValue[size])
     return {
       display: 'inline-block',
       width: sizeInRem,
       height: sizeInRem,
       lineHeight: sizeInRem,
-      fontSize: pxToRem(size / 2.333),
+      fontSize: pxToRem(sizeToPxValue[size] / 2.333),
       verticalAlign: 'top',
       textAlign: 'center',
       padding: '0px',
     }
   },
-  status: ({ props, variables }): ICSSInJSStyle => ({
+  status: ({ variables: v }): ICSSInJSStyle => ({
     position: 'absolute',
-    bottom: `-${variables.statusBorderWidth}px`,
-    right: `-${variables.statusBorderWidth}px`,
+    bottom: `-${v.statusBorderWidth}px`,
+    right: `-${v.statusBorderWidth}px`,
   }),
 }
 

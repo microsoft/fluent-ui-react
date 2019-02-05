@@ -15,8 +15,9 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
   input: ({ props: p, variables: v }): ICSSInJSStyle => ({
     outline: 0,
     boxSizing: 'border-box',
-    border: v.border,
-    borderBottom: v.borderBottom,
+    borderStyle: 'solid',
+    borderColor: 'transparent',
+    borderWidth: v.borderWidth,
     borderRadius: v.borderRadius,
     color: v.fontColor,
     backgroundColor: v.backgroundColor,

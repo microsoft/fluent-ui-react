@@ -12,7 +12,7 @@ import {
 } from 'test/utils'
 import helpers from './commonHelpers'
 
-import * as stardust from 'src/'
+import * as stardust from 'src/index'
 
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
