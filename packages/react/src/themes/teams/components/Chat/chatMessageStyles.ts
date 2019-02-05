@@ -30,6 +30,20 @@ const chatMessageStyles: ComponentSlotStylesInput<
     wordWrap: 'break-word',
     outline: 0,
 
+    ...((v.hasMention || v.isImportant) && {
+      '::before': {
+        content: '""',
+        backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
+        height: '100%',
+        left: '0',
+        position: 'absolute',
+        top: '0',
+        width: pxToRem(3),
+        borderBottomLeftRadius: 'inherit',
+        borderTopLeftRadius: 'inherit',
+      },
+    }),
+
     ':focus': {
       ...(p.isFromKeyboard && {
         outline: `.2rem solid ${v.contentFocusOutlineColor}`,
@@ -70,6 +84,29 @@ const chatMessageStyles: ComponentSlotStylesInput<
       textDecoration: 'underline',
     },
   }),
+  badge: ({
+    props: p,
+    variables: v,
+    theme: {
+      siteVariables: { white },
+    },
+  }) => {
+    const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
+    return {
+      backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
+      color: white,
+      boxShadow: v.badgeShadow,
+      position: 'absolute',
+      padding: pxToRem(4),
+      height: 'auto',
+      width: 'auto',
+      borderRadius: '50%',
+      top: pxToRem(4),
+      zIndex: '1',
+      [sidePosition]: 0,
+      transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
+    }
+  },
 }
 
 export default chatMessageStyles

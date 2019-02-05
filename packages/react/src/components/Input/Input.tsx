@@ -134,6 +134,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
                   as: 'input',
                   type,
                   value,
+                  className: `${Input.className}__input`,
                   styles: styles.input,
                   onChange: this.handleChange,
                 },

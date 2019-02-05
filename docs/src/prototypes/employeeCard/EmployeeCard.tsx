@@ -71,7 +71,7 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
         </div>
         {Avatar.create(avatar, {
           defaultProps: {
-            size: 72,
+            size: 'largest',
             name: `${firstName} ${lastName}`,
           },
         })}
