@@ -63,7 +63,7 @@ class StickerPicker extends React.Component {
                   pointing
                 />
               </div>
-              <div className="right-rail">
+              <div className="right-rail" style={{ display: 'flex', flexDirection: 'column' }}>
                 <GridImagePicker ref={this.gridPickerRef} items={this.getStickersData()} />
               </div>
             </div>
