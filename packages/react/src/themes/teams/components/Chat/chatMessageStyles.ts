@@ -5,7 +5,13 @@ import { screenReaderContainerStyles } from '../../../../lib/accessibility/Style
 import { pxToRem } from '../../../../lib'
 
 const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  root: ({
+    props: p,
+    variables: v,
+    theme: {
+      siteVariables: { orange04, red },
+    },
+  }): ICSSInJSStyle => ({
     position: 'relative',
     display: 'inline-block',
     paddingLeft: v.padding,
@@ -23,6 +29,19 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     ...(p.isFromKeyboard && {
       ':focus': {
         outline: `.2rem solid ${v.contentFocusOutlineColor}`,
+      },
+    }),
+    ...((v.hasMention || v.isImportant) && {
+      '::before': {
+        content: '""',
+        backgroundColor: v.hasMention ? orange04 : red,
+        height: '100%',
+        left: '0',
+        position: 'absolute',
+        top: '0',
+        width: pxToRem(3),
+        borderBottomLeftRadius: 'inherit',
+        borderTopLeftRadius: 'inherit',
       },
     }),
   }),
@@ -45,9 +64,17 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
       textDecoration: 'underline',
     },
   }),
-  badge: ({ props: p, variables: v }) => {
+  badge: ({
+    props: p,
+    variables: v,
+    theme: {
+      siteVariables: { orange04, red, white },
+    },
+  }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
     return {
+      backgroundColor: v.hasMention ? orange04 : red,
+      color: white,
       boxShadow: v.badgeShadow,
       position: 'absolute',
       padding: pxToRem(4),
