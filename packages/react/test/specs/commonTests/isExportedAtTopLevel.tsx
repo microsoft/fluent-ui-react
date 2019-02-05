@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import * as stardust from 'src/'
+import * as stardust from 'src/index'
 
 // ----------------------------------------
 // Is exported or private

@@ -63,7 +63,7 @@ export interface ChatMessageProps
   badgePosition?: 'start' | 'end'
 
   /**
-   * Called after user's focus.
+   * Called after user's blur.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
