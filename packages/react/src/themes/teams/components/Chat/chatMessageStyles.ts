@@ -8,8 +8,6 @@ import { ChatMessageVariables } from './chatMessageVariables'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../lib'
 
-const chatMessageActionsClassNameSelector = `& .${ChatMessage.slotClassNames.actionMenu}`
-
 const chatMessageStyles: ComponentSlotStylesInput<
   ChatMessageProps & ChatMessageState,
   ChatMessageVariables
@@ -50,7 +48,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
       }),
     },
     ':hover': {
-      [chatMessageActionsClassNameSelector]: {
+      [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
         opacity: 1,
       },
     },
