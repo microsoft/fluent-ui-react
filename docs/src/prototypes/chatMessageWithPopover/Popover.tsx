@@ -25,17 +25,10 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     focused: false,
   }
 
-  changeFocusState = (isFocused: boolean) => {
-    this.state.focused !== isFocused && this.setState({ focused: isFocused })
-  }
-
-  handleFocus = () => {
-    this.changeFocusState(true)
-  }
+  handleFocus = () => this.setState({ focused: true })
 
   handleBlur = e => {
-    const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget)
-    this.changeFocusState(shouldPreserveFocusState)
+    this.setState({ focused: e.currentTarget.contains(e.relatedTarget) })
   }
 
   render() {

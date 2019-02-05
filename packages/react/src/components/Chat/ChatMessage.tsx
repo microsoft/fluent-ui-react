@@ -126,8 +126,10 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
-    this.changeFocusState(true)
-    this.setState({ isFromKeyboard: isFromKeyboard() })
+    this.setState({
+      focused: true,
+      isFromKeyboard: isFromKeyboard(),
+    })
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }
@@ -135,14 +137,8 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   handleBlur = (e: React.FocusEvent) => {
     const shouldPreserveFocusState = _.invoke(e, 'currentTarget.contains', e.relatedTarget)
 
-    this.changeFocusState(shouldPreserveFocusState)
+    this.setState({ focused: shouldPreserveFocusState })
     _.invoke(this.props, 'onBlur', e, this.props)
-  }
-
-  changeFocusState = (isFocused: boolean) => {
-    if (this.state.focused !== isFocused) {
-      this.setState({ focused: isFocused })
-    }
   }
 
   renderComponent({
