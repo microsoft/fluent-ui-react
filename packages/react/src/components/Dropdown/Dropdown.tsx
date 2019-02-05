@@ -815,5 +815,3 @@ Dropdown.slotClassNames = {
   itemsList: `${Dropdown.className}__items-list`,
   selectedItems: `${Dropdown.className}__selected-items`,
 }
-
-export default Dropdown
