@@ -415,7 +415,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         {({ error }) =>
           error && (
             <Segment size="small" color="red" basic inverted padded secondary>
-              <pre>{error.toString()}</pre>
+              <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
             </Segment>
           )
         }
