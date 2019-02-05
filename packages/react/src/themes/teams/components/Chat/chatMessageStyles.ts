@@ -5,13 +5,7 @@ import { screenReaderContainerStyles } from '../../../../lib/accessibility/Style
 import { pxToRem } from '../../../../lib'
 
 const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
-  root: ({
-    props: p,
-    variables: v,
-    theme: {
-      siteVariables: { orange04, red },
-    },
-  }): ICSSInJSStyle => ({
+  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'relative',
     display: 'inline-block',
     paddingLeft: v.padding,
@@ -34,7 +28,7 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     ...((v.hasMention || v.isImportant) && {
       '::before': {
         content: '""',
-        backgroundColor: v.hasMention ? orange04 : red,
+        backgroundColor: v.hasMention ? v.mentionColor : v.importantColor,
         height: '100%',
         left: '0',
         position: 'absolute',
@@ -68,12 +62,12 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     props: p,
     variables: v,
     theme: {
-      siteVariables: { orange04, red, white },
+      siteVariables: { white },
     },
   }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
     return {
-      backgroundColor: v.hasMention ? orange04 : red,
+      backgroundColor: v.hasMention ? v.mentionColor : v.importantColor,
       color: white,
       boxShadow: v.badgeShadow,
       position: 'absolute',
