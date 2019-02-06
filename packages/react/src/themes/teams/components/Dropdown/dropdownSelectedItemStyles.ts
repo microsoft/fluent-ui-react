@@ -12,6 +12,9 @@ const dropdownSelectedItemStyles: ComponentSlotStylesInput<
       backgroundColor: v.selectedItemBackgroundColorFocus,
       outline: '0',
     },
+    ':hover': {
+      backgroundColor: v.selectedItemBackgroundColorFocus,
+    },
   }),
 }
 
