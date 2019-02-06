@@ -4,11 +4,11 @@ import { FlexItemProps } from '../../../../components/Flex/FlexItem'
 import { toFlexAlignment, toFlexItemSizeValues } from './utils'
 
 const flexItemStyles: ComponentSlotStylesInput<FlexItemProps, any> = {
-  root: ({ props: p }) => {
+  root: ({ props: p, variables: v }) => {
     return {
       ...(p.align && { alignSelf: toFlexAlignment(p.align) }),
 
-      ...(p.size && toFlexItemSizeValues(p.size)),
+      ...(p.size && toFlexItemSizeValues(v[p.size])),
 
       ...(p.shrink && { flexShrink: p.shrink }),
       ...(p.shrink === false && { flexShrink: 0 }),
