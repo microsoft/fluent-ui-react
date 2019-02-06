@@ -10,26 +10,23 @@ const selectors = {
     }`,
 }
 
-const toggle = steps => steps.click(selectors.triggerButton)
-
 const steps = [
-  steps => toggle(steps).snapshot('Shows list'),
-  steps => steps.click(selectors.dropdownItem(3)).snapshot('Selects an item'),
   steps =>
-    toggle(steps)
-      .hover(selectors.dropdownItem(2))
-      .snapshot('Oepns and highlights an item'),
-  steps => steps.click(selectors.dropdownItem(2)).snapshot('Selects another item'),
-  steps => toggle(steps).snapshot('Reopens list'),
+    steps
+      .click(selectors.triggerButton)
+      .click(selectors.dropdownItem(3))
+      .click(selectors.triggerButton)
+      .click(selectors.dropdownItem(2))
+      .click(selectors.triggerButton)
+      .snapshot('Selects 2 items and opens list'),
   steps =>
     steps
       .click(selectors.dropdownSelectedItemRemoveIcon())
-      .snapshot('Removes a selected item and sees it in the list'),
-  steps =>
-    steps
+      .click(selectors.triggerButton)
       .click(selectors.dropdownSelectedItemRemoveIcon())
-      .snapshot('Removes the last item, sees placeholder and sees the initial list'),
-  steps => toggle(steps).snapshot('Closes the list'),
+      .click(selectors.triggerButton)
+      .snapshot('Removes the 2 items and sees the initial list')
+      .click(selectors.triggerButton), // close the list, no need for new screenshot
 ]
 
 export default steps
