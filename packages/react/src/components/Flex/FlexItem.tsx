@@ -60,10 +60,12 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
 
   displayName: 'FlexItem'
 
-  // TODO for now, Symbol-based approach should be used instead
-  static __isFlexItem = true
+  // Boolean flag for now, Symbol-based approach should be used instead
+  // However, there are some concerns related to browser compatibility if Symbols will be used
+  // static __isFlexItem = true
 
   static create: Function
+  static Marker = Symbol(FlexItem.displayName)
 
   renderComponent({ styles, classes }) {
     const { children } = this.props
@@ -79,6 +81,8 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
     return withStyles(React.Children.only(children), styles, classes)
   }
 }
+
+FlexItem[FlexItem.Marker] = true
 
 export default FlexItem
 
