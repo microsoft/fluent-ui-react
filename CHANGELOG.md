@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Changed site variables' `colors.black` to be `#000` instead of `grey[900](#252424)` in Teams theme @mnajdova ([#855](https://github.com/stardust-ui/react/pull/855))
+
 ### Features
 - Add `black` and `white` options for the `color` prop of the `Label` component @mnajdova ([#855](https://github.com/stardust-ui/react/pull/855))
 
