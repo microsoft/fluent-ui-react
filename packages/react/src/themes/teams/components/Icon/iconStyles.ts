@@ -1,14 +1,14 @@
 import * as _ from 'lodash'
 
 import fontAwesomeIcons from './fontAwesomeIconStyles'
-import { callable, pxToRem } from '../../../../lib'
+import { callable, pxToRem, SizeValue } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../types'
-import { IconXSpacing, IconProps, IconSize } from '../../../../components/Icon/Icon'
+import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, IconSizeModifier } from './iconVariables'
 
-const sizes: { [key in IconSize]: number } = {
+const sizes: Record<SizeValue, number> = {
   smallest: 7,
   smaller: 10,
   small: 12,
@@ -71,7 +71,7 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),
 })
 
-const getIconSize = (size: IconSize, sizeModifier: IconSizeModifier): number => {
+const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier): number => {
   if (!sizeModifier) {
     return sizes[size]
   }

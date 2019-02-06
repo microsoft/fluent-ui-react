@@ -10,14 +10,16 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
     display: 'flex',
     flexWrap: 'wrap',
     outline: 0,
-    border: 0,
     backgroundColor: v.backgroundColor,
-    borderBottom: v.borderBottom,
+    boxSizing: 'border-box',
+    borderStyle: 'solid',
+    borderColor: 'transparent',
+    borderWidth: v.borderWidth,
     borderRadius: v.borderRadius,
     color: v.color,
     width: p.fluid ? '100%' : v.width,
     position: 'relative',
-    ...(p.focused && { borderColor: v.borderColorFocus }),
+    ...(p.focused && { borderBottomColor: v.borderColorFocus }),
   }),
 
   selectedItems: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -25,6 +27,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
     flexWrap: 'wrap',
     overflowY: 'auto',
     maxHeight: v.selectedItemsMaxHeight,
+    width: '100%',
     ...(p.toggleIndicator && { paddingRight: v.toggleIndicatorSize }),
   }),
 
@@ -38,12 +41,14 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
       margin: '0',
       justifyContent: 'left',
       padding: v.comboboxPaddingButton,
-      ...transparentColorStyle,
       height: pxToRem(30),
+      ...transparentColorStyle,
       ':hover': transparentColorStyle,
       ':focus': {
         ...transparentColorStyle,
         ':after': {
+          top: '0',
+          bottom: '0',
           borderColor: 'transparent',
         },
         ':active': transparentColorStyle,

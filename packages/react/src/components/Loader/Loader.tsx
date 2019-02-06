@@ -8,6 +8,7 @@ import {
   commonPropTypes,
   ColorComponentProps,
   customPropTypes,
+  SizeValue,
 } from '../../lib'
 import { loaderBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -15,14 +16,6 @@ import { ReactProps, ShorthandValue } from '../../types'
 import Box from '../Box/Box'
 
 export type LoaderPosition = 'above' | 'below' | 'start' | 'end'
-export type LoaderSize =
-  | 'smallest'
-  | 'smaller'
-  | 'small'
-  | 'medium'
-  | 'large'
-  | 'larger'
-  | 'largest'
 
 export interface LoaderProps extends UIComponentProps, ColorComponentProps {
   /**
@@ -41,7 +34,7 @@ export interface LoaderProps extends UIComponentProps, ColorComponentProps {
   labelPosition?: LoaderPosition
 
   /** A size of the loader. */
-  size?: LoaderSize
+  size?: SizeValue
 }
 
 /**
@@ -62,7 +55,7 @@ class Loader extends UIComponent<ReactProps<LoaderProps>> {
     indicator: customPropTypes.itemShorthand,
     label: customPropTypes.itemShorthand,
     labelPosition: PropTypes.oneOf(['above', 'below', 'start', 'end']),
-    size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
+    size: customPropTypes.size,
   }
 
   static defaultProps = {

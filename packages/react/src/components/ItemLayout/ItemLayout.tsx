@@ -15,6 +15,16 @@ import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
 import { ReactProps } from '../../types'
 
+export interface ItemLayoutSlotClassNames {
+  header: string
+  headerMedia: string
+  main: string
+  content: string
+  contentMedia: string
+  media: string
+  endMedia: string
+}
+
 export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps<any> {
   contentMedia?: any
   /** Toggle debug mode */
@@ -66,6 +76,8 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
 
   static className = 'ui-itemlayout'
 
+  static slotClassNames: ItemLayoutSlotClassNames
+
   static propTypes = {
     ...commonPropTypes.createCommon({
       children: false,
@@ -103,7 +115,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
 
       return (
         <div
-          className="ui-item-layout__main"
+          className={ItemLayout.slotClassNames.main}
           style={{
             gridTemplateRows: '1fr 1fr',
           }}
@@ -117,8 +129,8 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
     renderHeaderArea: (props, state, classes) => {
       const { debug, header, headerMedia, truncateHeader, headerCSS, headerMediaCSS } = props
 
-      const mergedClasses = cx('ui-item-layout__header', classes.header)
-      const mediaClasses = cx('ui-item-layout__headerMedia', classes.headerMedia)
+      const mergedClasses = cx(ItemLayout.slotClassNames.header, classes.header)
+      const mediaClasses = cx(ItemLayout.slotClassNames.headerMedia, classes.headerMedia)
 
       return !header && !headerMedia ? null : (
         <Layout
@@ -143,8 +155,8 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
     renderContentArea: (props, state, classes) => {
       const { debug, content, contentMedia, truncateContent, contentCSS, contentMediaCSS } = props
 
-      const mergedClasses = cx('ui-item-layout__content', classes.content)
-      const mediaClasses = cx('ui-item-layout__contentMedia', classes.contentMedia)
+      const mergedClasses = cx(ItemLayout.slotClassNames.content, classes.content)
+      const mediaClasses = cx(ItemLayout.slotClassNames.contentMedia, classes.contentMedia)
 
       return !content && !contentMedia ? null : (
         <Layout
@@ -175,8 +187,8 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
     const mainArea = renderMainArea(this.props, this.state, classes)
     const endArea = endMedia
 
-    const mergedMediaClasses = cx('ui-item-layout__media', classes.media)
-    const mergedEndMediaClasses = cx('ui-item-layout__endMedia', classes.endMedia)
+    const mergedMediaClasses = cx(ItemLayout.slotClassNames.media, classes.media)
+    const mergedEndMediaClasses = cx(ItemLayout.slotClassNames.endMedia, classes.endMedia)
 
     return (
       <Layout
@@ -210,6 +222,15 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
 }
 
 ItemLayout.create = createShorthandFactory(ItemLayout, 'content')
+ItemLayout.slotClassNames = {
+  header: `${ItemLayout.className}__header`,
+  headerMedia: `${ItemLayout.className}__headerMedia`,
+  main: `${ItemLayout.className}__main`,
+  content: `${ItemLayout.className}__content`,
+  contentMedia: `${ItemLayout.className}__contentMedia`,
+  media: `${ItemLayout.className}__media`,
+  endMedia: `${ItemLayout.className}__endMedia`,
+}
 
 export default ItemLayout
 
