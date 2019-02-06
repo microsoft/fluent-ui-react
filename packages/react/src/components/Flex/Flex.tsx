@@ -83,8 +83,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
   renderChildren = gapClasses => {
     const { column, gap, children } = this.props
 
-    let isFirst = true
-    return React.Children.map(children, (child: React.ReactElement<any>) => {
+    return React.Children.map(children, (child: React.ReactElement<any>, index) => {
       const childElement =
         child.type && ((child.type as any) as typeof FlexItem).__isFlexItem
           ? React.cloneElement(child, {
@@ -92,9 +91,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
             })
           : child
 
-      const renderGap = !isFirst
-      isFirst = false
-
+      const renderGap = index !== 0
       return (
         <>
           {renderGap && gap && <Flex.Gap className={gapClasses} />}
