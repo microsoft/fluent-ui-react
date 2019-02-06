@@ -5,14 +5,14 @@ import {
   Menu,
   popupFocusTrapBehavior,
   AvatarProps,
+  ChatMessageProps,
+  DividerProps,
+  StatusProps,
 } from '@stardust-ui/react'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
-import { ChatMessageProps } from 'src/components/Chat/ChatMessage'
-import { DividerProps } from 'src/components/Divider/Divider'
-import { StatusProps } from 'src/components/Status/Status'
-import { Extendable, ShorthandValue } from 'utils'
+import { Extendable, ShorthandValue } from 'src/types'
 import { ChatData, UserStatus, MessageData, UserData, areSameDay, getFriendlyDateString } from '.'
 
 export enum ChatItemTypes {
