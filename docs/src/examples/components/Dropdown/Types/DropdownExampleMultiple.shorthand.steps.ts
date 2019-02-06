@@ -2,9 +2,8 @@ import { Dropdown, DropdownSelectedItem } from '@stardust-ui/react'
 
 const selectors = {
   triggerButton: `.${Dropdown.slotClassNames.triggerButton}`,
-  dropdownItem: (itemIndex = 1) =>
-    `.${Dropdown.slotClassNames.itemsList} li:nth-child(${itemIndex})`,
-  dropdownSelectedItemRemoveIcon: (itemIndex = 1) =>
+  item: (itemIndex: number) => `.${Dropdown.slotClassNames.itemsList} li:nth-child(${itemIndex})`,
+  removeItemIcon: (itemIndex: number) =>
     `.${Dropdown.slotClassNames.selectedItems} span:nth-child(${itemIndex}) .${
       DropdownSelectedItem.slotClassNames.removeIcon
     }`,
@@ -14,18 +13,18 @@ const steps = [
   steps =>
     steps
       .click(selectors.triggerButton)
-      .click(selectors.dropdownItem(3))
+      .click(selectors.item(3))
       .click(selectors.triggerButton)
-      .click(selectors.dropdownItem(2))
+      .click(selectors.item(2))
       .click(selectors.triggerButton)
-      .snapshot('Selects 2 items and opens list'),
+      .snapshot('Opened dropdown with two items selected'),
   steps =>
     steps
-      .click(selectors.dropdownSelectedItemRemoveIcon())
+      .click(selectors.removeItemIcon(1))
       .click(selectors.triggerButton)
-      .click(selectors.dropdownSelectedItemRemoveIcon())
+      .click(selectors.removeItemIcon(1))
       .click(selectors.triggerButton)
-      .snapshot('Removes the 2 items and sees the initial list'),
+      .snapshot('Opened dropdown with no items selected'),
 ]
 
 export default steps

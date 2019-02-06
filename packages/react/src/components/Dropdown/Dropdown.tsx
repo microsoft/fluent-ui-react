@@ -342,7 +342,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             className: Dropdown.slotClassNames.triggerButton,
             content,
             fluid: true,
-            styles: styles.button,
+            styles: styles.triggerButton,
             ...getToggleButtonProps({
               onFocus: () => {
                 this.setState({ focused: true })
