@@ -261,8 +261,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           inputValue={search ? searchQuery : null}
           stateReducer={this.handleDownshiftStateChanges}
           itemToString={itemToString}
-          // If it's single search, don't pass anything. Pass a null otherwise, as Downshift does
-          // not handle selection by default for single/multiple selection and multiple search.
           selectedItem={null}
           getA11yStatusMessage={getA11yStatusMessage}
           defaultHighlightedIndex={defaultHighlightedIndex}
