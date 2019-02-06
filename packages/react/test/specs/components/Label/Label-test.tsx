@@ -13,14 +13,4 @@ describe('Label', () => {
   isConformant(Label)
   labelImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })
   labelImplementsShorthandProp('image', Image, { mapsValueToProp: 'src' })
-
-  describe('icon', () => {
-    it('sets tabIndex="0" if the icon has onClick prop', () => {
-      const icon = mountWithProvider(
-        <Label icon={{ name: 'close', key: 'icon-key', onClick: () => {} }} />,
-      ).find('Icon[name="close"]')
-
-      expect(icon.prop('tabIndex')).toEqual('0')
-    })
-  })
 })
