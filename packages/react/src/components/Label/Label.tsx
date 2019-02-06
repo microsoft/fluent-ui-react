@@ -20,13 +20,16 @@ import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../types'
-import { ComplexColorPropType } from '../../lib/commonPropInterfaces'
+import {
+  ComplexColorPropType,
+  ColorValuesWithPrimitiveColors,
+} from '../../lib/commonPropInterfaces'
 
 export interface LabelProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps,
-    ColorComponentProps<ComplexColorPropType> {
+    ColorComponentProps<ComplexColorPropType<ColorValuesWithPrimitiveColors>> {
   accessibility?: Accessibility
 
   /** A Label can be circular. */
