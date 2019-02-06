@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Flex, Segment } from '@stardust-ui/react'
 
-const FlexExampleShorthand = () => (
+const FlexExampleColumns = () => (
   <>
     <Flex gap="gap.small" padding="padding.medium">
       <Flex.Item size="size.half">
@@ -39,4 +39,4 @@ const FlexExampleShorthand = () => (
   </>
 )
 
-export default FlexExampleShorthand
+export default FlexExampleColumns

@@ -7,7 +7,7 @@ const Types = () => (
     <ComponentExample
       title="Media Card"
       description="Flex items alignment options."
-      examplePath="components/Flex/Types/FlexMediaCardExample"
+      examplePath="components/Flex/Types/FlexExampleMediaCard"
     />
     <ComponentExample
       title="Input"
@@ -22,17 +22,17 @@ const Types = () => (
     <ComponentExample
       title="Items Alignment"
       description="Flex items alignment options."
-      examplePath="components/Flex/Types/FlexItemsAlignmentOptionsExample"
+      examplePath="components/Flex/Types/FlexExampleItemsAlignment"
     />
     <ComponentExample
       title="Mixed Alignment"
       description="Flex mixed alignment feature."
-      examplePath="components/Flex/Types/FlexMixedAlignmentExample"
+      examplePath="components/Flex/Types/FlexExampleMixedAlignment"
     />
     <ComponentExample
       title="Columns (item size)"
       description="Flex columns example."
-      examplePath="components/Flex/Types/FlexColumnsExample"
+      examplePath="components/Flex/Types/FlexExampleColumns"
     />
   </ExampleSection>
 )
