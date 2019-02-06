@@ -1,10 +1,10 @@
-import { white, green } from '../teams/siteVariables'
+import { green } from '../teams/siteVariables'
 
 //
 // COLORS
 //
 export const black = '#201f1f'
-
+export const white = '#fff'
 export const gray02 = '#c8c6c4'
 export const gray03 = '#b3b0ad'
 export const gray04 = '#8a8886'

@@ -21,7 +21,7 @@ export const gray09 = '#EDEBE9'
 export const gray10 = '#F3F2F1'
 export const gray14 = '#FAF9F8'
 
-export const white = colors.white
+export const white = '#fff'
 
 export const brand = colors.primary[500]
 export const brand02 = colors.primary[900]
