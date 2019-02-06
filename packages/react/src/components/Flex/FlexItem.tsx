@@ -62,11 +62,11 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
 
   displayName: 'FlexItem'
 
-  // Boolean flag for now, Symbol-based approach should be used instead
-  // However, there are some concerns related to browser compatibility if Symbols will be used
-  // static __isFlexItem = true
-
   static create: Function
+
+  // Boolean flag for now, Symbol-based approach may be used instead.
+  // However, there are  concerns related to browser compatibility if Symbols will be used.
+  // Completely alternative approach - check class name of React element (and generalize this logic).
   static __isFlexItem = true
 
   renderComponent({ styles, classes }) {
