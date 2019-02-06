@@ -1,7 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[31],{2202:
-/*!**************************************************!*\
-  !*** ./docs/src/exampleMenus/Text.examples.json ***!
-  \**************************************************/
-/*! exports provided: 0, 1, 2, default */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */function(e){e.exports=[{sectionName:"Types",examples:[{title:"Size",examplePath:"components/Text/Types/TextSizesExample"},{title:"Weight",examplePath:"components/Text/Types/TextWeightsExample"}]},{sectionName:"States",examples:[{title:"Disabled",examplePath:"components/Text/States/TextExampleDisabled"},{title:"Error",examplePath:"components/Text/States/TextExampleError"},{title:"Success",examplePath:"components/Text/States/TextExampleSuccess"},{title:"Temporary",examplePath:"components/Text/States/TextExampleTemporary"},{title:"Truncated",examplePath:"components/Text/States/TextExampleTruncated"}]},{sectionName:"Variations",examples:[{title:"Color",examplePath:"components/Text/Variations/TextExampleColor"},{title:"@ mention",examplePath:"components/Text/Variations/TextExampleAtMention"},{title:"Timestamp",examplePath:"components/Text/Variations/TextExampleTimestamp"},{title:"Important",examplePath:"components/Text/Variations/TextExampleImportant"}]}]}}]);
