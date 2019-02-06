@@ -1,4 +1,4 @@
-import { Dropdown, DropdownSelectedItem } from '../../../../../../packages/react/src'
+import { Dropdown, DropdownSelectedItem } from '@stardust-ui/react'
 
 const selectors = {
   triggerButton: `.${Dropdown.slotClassNames.triggerButton}`,
