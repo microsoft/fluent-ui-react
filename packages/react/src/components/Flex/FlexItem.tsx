@@ -65,7 +65,7 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
   // static __isFlexItem = true
 
   static create: Function
-  static Marker = Symbol(FlexItem.displayName)
+  static __isFlexItem = true
 
   renderComponent({ styles, classes }) {
     const { children } = this.props
@@ -81,8 +81,6 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
     return withStyles(React.Children.only(children), styles, classes)
   }
 }
-
-FlexItem[FlexItem.Marker] = true
 
 export default FlexItem
 
