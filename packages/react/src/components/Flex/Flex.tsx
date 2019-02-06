@@ -76,11 +76,10 @@ class Flex extends UIComponent<ReactProps<FlexProps>, any> {
 
     gap: PropTypes.string,
 
-    ////////// EXPERIMENTAL ONES /////////////
     padding: PropTypes.string,
-    debug: PropTypes.bool,
     fill: PropTypes.bool,
-    ////////////////////////////////////////////
+
+    debug: PropTypes.bool,
   }
 
   renderChildren = gapClasses => {
