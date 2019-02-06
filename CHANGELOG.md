@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.20.0 ]------------------------------- -->
+## [v0.20.0](https://github.com/stardust-ui/react/tree/v0.20.0) (2019-02-06)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.19.2...v0.20.0)
+
 ### BREAKING CHANGES
 - Generalize size values for `Avatar` and `Status` components @kuzhelov ([#828](https://github.com/stardust-ui/react/pull/828))
 - Remove `AvatarPropsWithDefaults` and `StatusPropsWithDefaults` from public API @kuzhelov ([#828](https://github.com/stardust-ui/react/pull/828))
