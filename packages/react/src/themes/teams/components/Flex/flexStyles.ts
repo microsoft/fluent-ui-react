@@ -26,7 +26,6 @@ const flexStyles: ComponentSlotStylesInput<FlexProps, any> = {
 
       ...(p.wrap && { flexWrap: 'wrap' }),
 
-      // NOTE - EXPERIMENTAL PROPS //
       ...(p.fill && {
         height: '100%',
       }),
