@@ -4,7 +4,7 @@ import { Flex, Image, Text, Header } from '@stardust-ui/react'
 const FlexExampleShorthand = () => (
   <>
     <Flex gap="gap.medium" debug>
-      <Flex.Item as="div" size="size.medium">
+      <Flex.Item size="size.medium">
         <div style={{ position: 'relative' }}>
           <Image fluid src="http://localhost:8080/public/images/avatar/large/helen.jpg" />
         </div>
