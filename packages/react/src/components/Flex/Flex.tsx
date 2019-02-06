@@ -65,7 +65,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>, any> {
 
     inline: PropTypes.bool,
 
-    vertical: PropTypes.bool,
+    column: PropTypes.bool,
 
     wrap: PropTypes.bool,
 
