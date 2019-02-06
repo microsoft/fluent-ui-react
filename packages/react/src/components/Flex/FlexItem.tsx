@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import { UIComponent, commonPropTypes } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { Extendable } from '../../types'
 import { mergeStyles } from '../../../src/lib/mergeThemes'
 
 export interface FlexItemProps {

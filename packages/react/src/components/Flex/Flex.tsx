@@ -3,7 +3,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import { UIComponent, commonPropTypes } from '../../lib'
-import { ReactProps } from '../../../types/utils'
+import { ReactProps } from '../../types'
 import FlexItem from './FlexItem'
 
 export interface FlexProps {
