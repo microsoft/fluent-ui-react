@@ -260,6 +260,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     styles,
     variables,
     unhandledProps,
+    rtl,
   }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, getA11yStatusMessage, itemToString, toggleIndicator } = this.props
     const { defaultHighlightedIndex, searchQuery } = this.state
@@ -301,12 +302,13 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                     ref={this.selectedItemsRef}
                     className={cx(Dropdown.slotClassNames.selectedItems, classes.selectedItems)}
                   >
-                    {multiple && this.renderSelectedItems(variables)}
+                    {multiple && this.renderSelectedItems(variables, rtl)}
                     {search
                       ? this.renderSearchInput(
                           accessibilityRootPropsRest,
-                          getInputProps,
+                          rtl,
                           highlightedIndex,
+                          getInputProps,
                           selectItemAtIndex,
                           variables,
                         )
@@ -370,8 +372,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   private renderSearchInput(
     accessibilityComboboxProps: Object,
-    getInputProps: (options?: GetInputPropsOptions) => any,
+    rtl: boolean,
     highlightedIndex: number,
+    getInputProps: (options?: GetInputPropsOptions) => any,
     selectItemAtIndex: (
       index: number,
       otherStateToSet?: Partial<StateChangeOptions<any>>,
@@ -395,6 +398,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         this.handleSearchInputOverrides(
           predefinedProps,
           highlightedIndex,
+          rtl,
           selectItemAtIndex,
           accessibilityComboboxProps,
           getInputProps,
@@ -497,7 +501,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     ]
   }
 
-  private renderSelectedItems(variables) {
+  private renderSelectedItems(variables, rtl: boolean) {
     const { renderSelectedItem } = this.props
     const value = this.state.value as ShorthandValue[]
 
@@ -516,7 +520,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             }),
         },
         overrideProps: (predefinedProps: DropdownSelectedItemProps) =>
-          this.handleSelectedItemOverrides(predefinedProps, item),
+          this.handleSelectedItemOverrides(predefinedProps, item, rtl),
         render: renderSelectedItem,
       }),
     )
@@ -613,6 +617,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   private handleSelectedItemOverrides = (
     predefinedProps: DropdownSelectedItemProps,
     item: ShorthandValue,
+    rtl: boolean,
   ) => ({
     onRemove: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
       this.handleSelectedItemRemove(e, item, predefinedProps, DropdownSelectedItemProps)
@@ -626,13 +631,14 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       _.invoke(predefinedProps, 'onClick', e, DropdownSelectedItemProps)
     },
     onKeyDown: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
-      this.handleSelectedItemKeyDown(e, item, predefinedProps, DropdownSelectedItemProps)
+      this.handleSelectedItemKeyDown(e, item, predefinedProps, DropdownSelectedItemProps, rtl)
     },
   })
 
   private handleSearchInputOverrides = (
     predefinedProps: DropdownSearchInputProps,
     highlightedIndex: number,
+    rtl: boolean,
     selectItemAtIndex: (
       index: number,
       otherStateToSet?: Partial<StateChangeOptions<any>>,
@@ -660,7 +666,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             selectItemAtIndex(highlightedIndex)
           }
           break
-        case keyboardKey.ArrowLeft:
+        case rtl ? keyboardKey.ArrowRight : keyboardKey.ArrowLeft:
           if (multiple) {
             const { value } = this.state as { value: ShorthandValue[] }
             if (value.length > 0) {
@@ -786,21 +792,25 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     item: ShorthandValue,
     predefinedProps: DropdownSelectedItemProps,
     DropdownSelectedItemProps: DropdownSelectedItemProps,
+    rtl: boolean,
   ) {
     const { activeIndex, value } = this.state as { activeIndex: number; value: ShorthandValue[] }
+    const previousKey = rtl ? keyboardKey.ArrowRight : keyboardKey.ArrowLeft
+    const nextKey = rtl ? keyboardKey.ArrowLeft : keyboardKey.ArrowRight
+
     switch (keyboardKey.getCode(e)) {
       case keyboardKey.Delete:
       case keyboardKey.Backspace:
         this.handleSelectedItemRemove(e, item, predefinedProps, DropdownSelectedItemProps)
         break
-      case keyboardKey.ArrowLeft:
+      case previousKey:
         if (value.length > 0 && !_.isNil(activeIndex) && activeIndex > 0) {
           this.trySetState({
             activeIndex: activeIndex - 1,
           })
         }
         break
-      case keyboardKey.ArrowRight:
+      case nextKey:
         if (value.length > 0 && !_.isNil(activeIndex)) {
           if (activeIndex < value.length - 1) {
             this.trySetState({
