@@ -13,7 +13,7 @@ const inputItems = [
   'Selina Kyle',
 ]
 
-const DropdownExampleMultipleSelection = () => (
+const DropdownExampleMultiple = () => (
   <Dropdown
     multiple
     items={inputItems}
@@ -22,4 +22,4 @@ const DropdownExampleMultipleSelection = () => (
   />
 )
 
-export default DropdownExampleMultipleSelection
+export default DropdownExampleMultiple

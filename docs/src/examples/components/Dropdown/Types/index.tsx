@@ -10,20 +10,14 @@ const Types = () => (
       examplePath="components/Dropdown/Types/DropdownExample"
     />
     <ComponentExample
-<<<<<<< HEAD
       title="Search"
       description="A dropdown can be searchable."
       examplePath="components/Dropdown/Types/DropdownExampleSearch"
-=======
-      title="Multiple Selection"
-      description="A dropdown with multiple selection."
-      examplePath="components/Dropdown/Types/DropdownExampleMultipleSelection"
     />
     <ComponentExample
-      title="Multiple Search"
-      description="A dropdown with multiple selection and search."
-      examplePath="components/Dropdown/Types/DropdownExampleMultipleSearch"
->>>>>>> feat(dropdown): multiple selection
+      title="Multiple"
+      description="A dropdown can be used to select multiple items from a form."
+      examplePath="components/Dropdown/Types/DropdownExampleMultiple"
     />
   </ExampleSection>
 )
