@@ -13,8 +13,8 @@ const flexItemStyles: ComponentSlotStylesInput<FlexItemProps, any> = {
       ...(p.shrink && { flexShrink: p.shrink }),
       ...(p.shrink === false && { flexShrink: 0 }),
 
-      ...(p.stretch && { flexGrow: p.stretch }),
-      ...(p.stretch === true && { flexGrow: 1 }),
+      ...(p.grow && { flexGrow: p.grow }),
+      ...(p.grow === true && { flexGrow: 1 }),
 
       ...p.itemStyles,
       ...(p.push &&

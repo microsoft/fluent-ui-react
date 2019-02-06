@@ -16,7 +16,7 @@ export interface FlexItemProps {
    * Item can fill remaining space of the container.
    * If numeric value is provided, remaining space will be distributed proportionally between all the items.
    * */
-  stretch?: boolean | number
+  grow?: boolean | number
 
   /**
    * Controls item's ability to shrink.

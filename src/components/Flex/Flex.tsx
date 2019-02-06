@@ -10,8 +10,8 @@ export interface FlexProps {
   /** Defines if container should be inline element. */
   inline?: boolean
 
-  /** Sets flow direction to vertical. */
-  vertical?: boolean
+  /** Sets vertical flow direction. */
+  column?: boolean
 
   /** Allows overflow items to wrap on the next container's line. */
   wrap?: boolean
@@ -20,7 +20,7 @@ export interface FlexProps {
   hAlign?: 'start' | 'center' | 'end' | 'stretch'
 
   /** Controls items alignment in vertical direction. */
-  vAlign?: 'start' | 'center' | 'end' | 'stretch' //  'top' | 'center' | 'bottom' as an alternative
+  vAlign?: 'start' | 'center' | 'end' | 'stretch'
 
   /** Defines strategy for distributing remaining space between items. */
   space?: 'around' | 'between' | 'evenly'
@@ -81,7 +81,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>, any> {
   }
 
   renderChildren = () => {
-    const { vertical, gap, children } = this.props
+    const { column: vertical, gap, children } = this.props
 
     let isFirst = true
     return React.Children.map(children, (child: React.ReactElement<any>) => {

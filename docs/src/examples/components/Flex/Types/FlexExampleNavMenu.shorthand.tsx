@@ -1,18 +1,18 @@
 import * as React from 'react'
-import { Flex as Row, Button } from '@stardust-ui/react'
+import { Flex, Button } from '@stardust-ui/react'
 
 const FlexExampleShorthand = () => (
   <>
-    <Row gap="10px" debug>
+    <Flex gap="10px" debug>
       <Button content="Logo" icon="chess rook" />
 
-      <Row.Item push>
+      <Flex.Item push>
         <Button content="Page 1" />
-      </Row.Item>
+      </Flex.Item>
 
       <Button content="Page 2" />
       <Button content="Page 3" />
-    </Row>
+    </Flex>
   </>
 )
 
