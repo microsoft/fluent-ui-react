@@ -1,4 +1,4 @@
-export const toFlexAlignment = propValue => {
+export const toFlexAlignment = (propValue: string) => {
   const trimmedValue = propValue.trim()
 
   if (trimmedValue === 'start' || trimmedValue === 'end') {
@@ -8,8 +8,6 @@ export const toFlexAlignment = propValue => {
   return trimmedValue
 }
 
-export const toFlexItemSizeValues = sizeValue => {
-  return {
-    flexBasis: sizeValue,
-  }
-}
+export const toFlexItemSizeValues = (sizeValue: string) => ({
+  flexBasis: sizeValue,
+})
