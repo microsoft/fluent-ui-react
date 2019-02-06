@@ -4,9 +4,9 @@ import { FlexItemSize } from '../../../../components/Flex/FlexItem'
 
 type SizeValues = { [Key in FlexItemSize]: string }
 
-export type FlexVariables = SizeValues
+export type FlexItemVariables = SizeValues
 
-export default (): FlexVariables => ({
+export default (): FlexItemVariables => ({
   'size.half': '50%',
   'size.quater': '25%',
 
