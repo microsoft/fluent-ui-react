@@ -791,7 +791,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   /**
-   * if there is no value we use the placeholder value
+   * If there is no value we use the placeholder value
    * otherwise, for single selection we convert the value with itemToString
    * and for multiple selection we return empty string, the values are rendered by renderSelectedItems
    */

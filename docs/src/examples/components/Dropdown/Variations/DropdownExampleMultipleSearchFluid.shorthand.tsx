@@ -15,8 +15,8 @@ const inputItems = [
 
 const DropdownExampleMultipleSearchFluid = () => (
   <Dropdown
-    search
     multiple
+    search
     fluid
     items={inputItems}
     placeholder="Start typing a name"

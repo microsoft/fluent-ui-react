@@ -51,8 +51,8 @@ const inputItems = [
 
 const DropdownExampleMultipleSearchImageAndContent = () => (
   <Dropdown
-    search
     multiple
+    search
     items={inputItems}
     placeholder="Start typing a name"
     getA11ySelectionMessage={getA11ySelectionMessage}

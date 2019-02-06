@@ -15,8 +15,8 @@ const inputItems = [
 
 const DropdownExampleRender: React.FC = () => (
   <Dropdown
-    search
     multiple
+    search
     items={inputItems}
     placeholder="Start typing a name"
     renderItem={(Item: typeof Dropdown.Item, props) => (

@@ -21,8 +21,8 @@ const inputItems = [
 
 const DropdownExampleMultipleSearchFrenchLanguage = () => (
   <Dropdown
-    search
     multiple
+    search
     items={inputItems}
     placeholder="Commencez à taper un nom"
     getA11yStatusMessage={getA11yStatusMessage}
