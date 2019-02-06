@@ -86,7 +86,7 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
 
 export default FlexItem
 
-const withStyles = (element: React.ReactElement<any>, styles, classes): any => {
+const withStyles = (element: React.ReactElement<any>, styles, classes): React.ReactElement<any> => {
   if (!styles) {
     return element
   }

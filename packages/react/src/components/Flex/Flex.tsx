@@ -44,7 +44,7 @@ export interface FlexProps {
 /**
  * Arrange group of items aligned towards common direction.
  */
-class Flex extends UIComponent<ReactProps<FlexProps>, any> {
+class Flex extends UIComponent<ReactProps<FlexProps>> {
   static Item: typeof FlexItem
 
   static Gap: any
