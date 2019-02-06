@@ -3,7 +3,7 @@ import { Flex, Segment } from '@stardust-ui/react'
 
 const FlexExampleShorthand = () => (
   <>
-    <Flex column gap={30} hAlign="center" vAlign="center" debug>
+    <Flex column gap="gap.large" hAlign="center" vAlign="center" debug>
       {[
         [
           { hAlign: 'start', vAlign: 'start' },
@@ -21,7 +21,7 @@ const FlexExampleShorthand = () => (
           { hAlign: 'end', vAlign: 'end' },
         ],
       ].map(rowOfAlignmentProps => (
-        <Flex gap={30}>
+        <Flex gap="gap.large">
           {rowOfAlignmentProps.map((alignmentProps: any) => (
             <Flex
               inline

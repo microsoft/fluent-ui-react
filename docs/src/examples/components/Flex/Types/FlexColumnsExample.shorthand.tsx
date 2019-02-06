@@ -3,36 +3,36 @@ import { Flex, Segment } from '@stardust-ui/react'
 
 const FlexExampleShorthand = () => (
   <>
-    <Flex gap="10px" padding="10px">
-      <Flex.Item size="50%">
+    <Flex gap="gap.small" padding="padding.medium">
+      <Flex.Item size="size.half">
         <Segment content="1/2" />
       </Flex.Item>
 
-      <Flex.Item size="50%">
+      <Flex.Item size="size.half">
         <Segment content="1/2" />
       </Flex.Item>
     </Flex>
 
-    <Flex gap="10px" padding="10px">
-      <Flex.Item size="25%">
+    <Flex gap="gap.small" padding="padding.medium">
+      <Flex.Item size="size.quater">
         <Segment content="1/4" />
       </Flex.Item>
 
-      <Flex.Item size="50%">
+      <Flex.Item size="size.half">
         <Segment content="1/2" />
       </Flex.Item>
 
-      <Flex.Item size="25%">
+      <Flex.Item size="size.quater">
         <Segment content="1/4" />
       </Flex.Item>
     </Flex>
 
-    <Flex gap="10px" padding="10px" style={{ minHeight: 200 }}>
-      <Flex.Item size="50%">
+    <Flex gap="gap.small" padding="padding.medium" style={{ minHeight: 200 }}>
+      <Flex.Item size="size.half">
         <Segment content="Full-height, even when my content doesn't fill the space." />
       </Flex.Item>
 
-      <Flex.Item size="50%">
+      <Flex.Item size="size.half">
         <Segment content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum mollis velit non gravida venenatis. Praesent consequat lectus purus, ut scelerisque velit condimentum eu. Maecenas sagittis ante ut turpis varius interdum. Quisque tellus ipsum, eleifend non ipsum id, suscipit ultricies neque." />
       </Flex.Item>
     </Flex>

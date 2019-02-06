@@ -5,12 +5,14 @@ import { UIComponent, commonPropTypes } from '../../lib'
 import { mergeStyles } from '../../lib/mergeThemes'
 import { Extendable } from '../../types'
 
+export type FlexItemSize = 'size.half' | 'size.quater' | 'size.small' | 'size.medium'
+
 export interface FlexItemProps {
   /** Controls item's alignment. */
   align?: 'auto' | 'start' | 'end' | 'center' | 'baseline' | 'stretch'
 
   /** Defines size of the item. */
-  size?: string
+  size?: FlexItemSize
 
   /**
    * Item can fill remaining space of the container.
@@ -30,7 +32,7 @@ export interface FlexItemProps {
 
   /**
    * IGNORE (will be refactored and not exposed via API).
-   * Will be automatically set by parent Flex component
+   * Value is automatically set by parent Flex component.
    */
   flexDirection?: 'row' | 'column'
 }

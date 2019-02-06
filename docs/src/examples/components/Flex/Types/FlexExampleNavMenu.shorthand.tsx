@@ -3,7 +3,7 @@ import { Flex, Button } from '@stardust-ui/react'
 
 const FlexExampleShorthand = () => (
   <>
-    <Flex gap="10px" debug>
+    <Flex gap="gap.small" debug>
       <Button content="Logo" icon="chess rook" />
 
       <Flex.Item push>

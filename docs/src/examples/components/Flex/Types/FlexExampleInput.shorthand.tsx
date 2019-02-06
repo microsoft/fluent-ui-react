@@ -3,7 +3,7 @@ import { Flex, Input, Button, Label } from '@stardust-ui/react'
 
 const FlexExampleShorthand = () => (
   <>
-    <Flex gap={15} debug>
+    <Flex gap="gap.medium" debug>
       <Flex.Item grow>
         <Flex>
           <Label

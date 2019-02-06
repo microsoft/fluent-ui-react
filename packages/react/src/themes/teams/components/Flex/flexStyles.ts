@@ -4,7 +4,7 @@ import { FlexProps } from '../../../../components/Flex/Flex'
 import { toFlexAlignment } from './utils'
 
 const flexStyles: ComponentSlotStylesInput<FlexProps, any> = {
-  root: ({ props: p }) => {
+  root: ({ props: p, variables: v }) => {
     return {
       display: 'flex',
       ...(p.debug && { border: '1px dotted grey', background: 'lightgrey' }),
@@ -13,7 +13,6 @@ const flexStyles: ComponentSlotStylesInput<FlexProps, any> = {
 
       ...(p.column && { flexDirection: 'column' }),
 
-      // TODO note - too much copypaste!!
       ...(p.hAlign &&
         (p.column
           ? { alignItems: toFlexAlignment(p.hAlign) }
@@ -32,7 +31,15 @@ const flexStyles: ComponentSlotStylesInput<FlexProps, any> = {
         height: '100%',
       }),
 
-      ...(p.padding && { padding: p.padding }),
+      ...(p.padding && { padding: v[p.padding] }),
+    }
+  },
+
+  gap: ({ props: p, variables: v }) => {
+    const gapValue = v[p.gap]
+
+    return {
+      ...(p.column ? { height: gapValue } : { width: gapValue }),
     }
   },
 }

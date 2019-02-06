@@ -6,6 +6,9 @@ import { UIComponent, commonPropTypes } from '../../lib'
 import { ReactProps } from '../../types'
 import FlexItem from './FlexItem'
 
+export type FlexGap = 'gap.small' | 'gap.medium' | 'gap.large'
+export type FlexPadding = 'padding.medium'
+
 export interface FlexProps {
   /** Defines if container should be inline element. */
   inline?: boolean
@@ -27,11 +30,11 @@ export interface FlexProps {
 
   // for now - but it should be a string with limited set of values
   /** Defines gap between each two adjacent child items. */
-  gap?: number | string
+  gap?: FlexGap
 
   ////////// EXPERIMENTAL ONES /////////////
   /** Defines container's padding. */
-  padding?: number | string // but it should be a 'string' with limited set of values
+  padding?: FlexPadding
 
   /** Enables debug mode. */
   debug?: boolean
@@ -44,7 +47,7 @@ export interface FlexProps {
  * Arrange group of items aligned towards common direction.
  */
 class Flex extends UIComponent<ReactProps<FlexProps>, any> {
-  static Item: any
+  static Item: typeof FlexItem
 
   static Gap: any
 
@@ -71,16 +74,16 @@ class Flex extends UIComponent<ReactProps<FlexProps>, any> {
 
     space: PropTypes.oneOf(['around', 'between', 'evenly']),
 
-    gap: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // for now - but it should be a string with limited set of values
+    gap: PropTypes.string,
 
     ////////// EXPERIMENTAL ONES /////////////
-    padding: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // but it should be a 'string' with limited set of values
+    padding: PropTypes.string,
     debug: PropTypes.bool,
     fill: PropTypes.bool,
     ////////////////////////////////////////////
   }
 
-  renderChildren = () => {
+  renderChildren = gapClasses => {
     const { column, gap, children } = this.props
 
     let isFirst = true
@@ -97,7 +100,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>, any> {
 
       return (
         <>
-          {renderGap && gap && <Flex.Gap gap={gap} column={column} />}
+          {renderGap && gap && <Flex.Gap className={gapClasses} />}
           {childElement}
         </>
       )
@@ -107,13 +110,13 @@ class Flex extends UIComponent<ReactProps<FlexProps>, any> {
   renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
     return (
       <ElementType className={classes.root} {...unhandledProps}>
-        {this.renderChildren()}
+        {this.renderChildren(classes.gap)}
       </ElementType>
     )
   }
 }
 
 Flex.Item = FlexItem
-Flex.Gap = ({ gap, column }) => <div style={column ? { height: gap } : { width: gap }} />
+Flex.Gap = ({ className }) => <div className={className} />
 
 export default Flex

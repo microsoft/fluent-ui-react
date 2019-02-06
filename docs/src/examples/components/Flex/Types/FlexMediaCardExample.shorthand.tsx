@@ -3,15 +3,15 @@ import { Flex, Image, Text, Header } from '@stardust-ui/react'
 
 const FlexExampleShorthand = () => (
   <>
-    <Flex gap={15} debug>
-      <Flex.Item as="div" size="200px">
+    <Flex gap="gap.medium" debug>
+      <Flex.Item as="div" size="size.medium">
         <div style={{ position: 'relative' }}>
           <Image fluid src="http://localhost:8080/public/images/avatar/large/helen.jpg" />
         </div>
       </Flex.Item>
 
       <Flex.Item grow>
-        <Flex column gap={'10px'} vAlign="stretch">
+        <Flex column gap="gap.small" vAlign="stretch">
           <Flex space="between">
             <Header as="h3" content="LOREM IPSUM" />
             <Text as="pre" content="Oct 24th, 00:01" />
