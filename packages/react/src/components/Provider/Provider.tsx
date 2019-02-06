@@ -5,7 +5,14 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { RendererProvider, ThemeProvider } from 'react-fela'
 
-import { felaRenderer as felaLtrRenderer, isBrowser, mergeThemes } from '../../lib'
+import {
+  felaRenderer as felaLtrRenderer,
+  isBrowser,
+  mergeThemes,
+  UIComponent,
+  commonPropTypes,
+} from '../../lib'
+
 import {
   ThemePrepared,
   ThemeInput,
@@ -14,6 +21,7 @@ import {
   StaticStyleFunction,
   FontFace,
 } from '../../themes/types'
+
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
 
@@ -25,12 +33,17 @@ export interface ProviderProps {
 /**
  * The Provider passes the CSS in JS renderer and theme to your components.
  */
-class Provider extends React.Component<ProviderProps> {
-  staticStylesRendered: boolean = false
+class Provider extends UIComponent<ProviderProps> {
+  static className = 'ui-provider'
 
   static displayName = 'Provider'
 
   static propTypes = {
+    ...commonPropTypes.createCommon({
+      animated: false,
+      color: false,
+      content: false,
+    }),
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
       componentVariables: PropTypes.object,
@@ -59,6 +72,8 @@ class Provider extends React.Component<ProviderProps> {
   }
 
   static Consumer = ProviderConsumer
+
+  staticStylesRendered: boolean = false
 
   renderStaticStyles = (mergedTheme: ThemePrepared) => {
     // RTL WARNING
@@ -119,7 +134,7 @@ class Provider extends React.Component<ProviderProps> {
     this.renderFontFaces()
   }
 
-  render() {
+  renderComponent({ ElementType, classes, unhandledProps }) {
     const { theme, children } = this.props
 
     // rehydration disabled to avoid leaking styles between renderers
@@ -137,7 +152,11 @@ class Provider extends React.Component<ProviderProps> {
 
           return (
             <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
-              <ThemeProvider theme={outgoingTheme}>{children}</ThemeProvider>
+              <ThemeProvider theme={outgoingTheme}>
+                <ElementType {...unhandledProps} className={classes.root}>
+                  {children}
+                </ElementType>
+              </ThemeProvider>
             </RendererProvider>
           )
         }}

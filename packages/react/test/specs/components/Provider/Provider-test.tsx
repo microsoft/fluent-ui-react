@@ -2,8 +2,14 @@ import * as React from 'react'
 import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
 import { mount } from 'enzyme'
+import { isConformant } from 'test/specs/commonTests'
 
 describe('Provider', () => {
+  isConformant(Provider, {
+    requiredProps: { theme: {}, children: <div>children</div> },
+    nestingLevel: 4, // ProviderConsumer -> FelaTheme -> RendererProvider -> ThemeProvider -> ElementType
+  })
+
   test('is exported', () => {
     expect(require('src/index.ts').Provider).toEqual(Provider)
   })

@@ -155,7 +155,10 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
     <FelaTheme>
       {(theme: ThemePrepared) => {
         if (_.isEmpty(theme)) {
-          logProviderMissingWarning()
+          if (className !== 'ui-provider') {
+            // FIXME
+            logProviderMissingWarning()
+          }
         }
 
         const {
@@ -171,7 +174,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           componentStyles = {},
           rtl = false,
           renderer = felaRenderer,
-        } = theme
+        } = theme || {}
         const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
 
         const stateAndProps = { ...state, ...props }
