@@ -169,15 +169,15 @@ export const colors: ColorPalette = {
 
 const primitiveColorsScheme = {
   black: {
-    foreground: '#FFF',
-    border: '#FFF',
-    shadow: '#FFF',
+    foreground: colors.white,
+    border: colors.white,
+    shadow: colors.white,
     background: colors.black,
   },
   white: {
-    foreground: '#000',
-    border: '#000',
-    shadow: '#000',
+    foreground: colors.black,
+    border: colors.black,
+    shadow: colors.black,
     background: colors.white,
   },
 }
