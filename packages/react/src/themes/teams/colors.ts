@@ -163,7 +163,7 @@ export const colors: ColorPalette = {
   ...contextualColors,
 
   // Primitive colors
-  black: naturalColors.grey[900],
+  black: '#000',
   white: naturalColors.grey[50],
 }
 
