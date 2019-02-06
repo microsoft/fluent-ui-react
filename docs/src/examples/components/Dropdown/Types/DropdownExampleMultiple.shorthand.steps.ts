@@ -25,8 +25,7 @@ const steps = [
       .click(selectors.triggerButton)
       .click(selectors.dropdownSelectedItemRemoveIcon())
       .click(selectors.triggerButton)
-      .snapshot('Removes the 2 items and sees the initial list')
-      .click(selectors.triggerButton), // close the list, no need for new screenshot
+      .snapshot('Removes the 2 items and sees the initial list'),
 ]
 
 export default steps
