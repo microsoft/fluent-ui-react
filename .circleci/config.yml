@@ -79,7 +79,7 @@ jobs:
           command: yarn test:projects
       - run:
           name: Bundle Statistics
-          command: yarn build:stats
+          command: yarn stats:build
       - run:
           name: Save Statistics to DB
           command: |

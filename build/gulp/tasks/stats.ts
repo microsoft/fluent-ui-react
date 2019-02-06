@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 import * as webpack from 'webpack'
 import * as stableStringify from 'json-stable-stringify-without-jsonify'
 import { argv } from 'yargs'
-import * as rp from 'request-promise-native'
+import * as requestHttp from 'request-promise-native'
 
 import config from '../../../config'
 
@@ -103,7 +103,7 @@ function updateStatsFile(filePath: string, currentBundleStats: any) {
   )
 }
 
-task('build:stats:bundle', async () => {
+task('stats:build:bundle', async () => {
   process.env.NODE_ENV = 'build'
   const webpackStatsConfig = require('../../webpack.config.stats').default
 
@@ -120,7 +120,7 @@ task(
   'stats',
   series(
     parallel(series('clean:dist:es', 'build:dist:es'), 'build:docs:component-info'),
-    'build:stats:bundle',
+    'stats:build:bundle',
   ),
 )
 
@@ -128,22 +128,31 @@ task('stats:save', async () => {
   const commandLineArgs = _.pick(argv, ['sha', 'branch', 'tag', 'pr', 'build'])
   const bundleStats = require(paths.docsSrc('bundleStats.json'))[UNRELEASED_VERSION_STRING]
 
+  const statsPayload = {
+    sha: process.env.CIRCLE_SHA1,
+    branch: process.env.CIRCLE_BRANCH,
+    tag: process.env.CIRCLE_TAG, // optional
+    pr: process.env.CIRCLE_PULL_REQUEST, // optional
+    build: process.env.CIRCLE_BUILD_NUM,
+    ...commandLineArgs, // allow command line overwrites
+    bundleSize: bundleStats,
+    ts: new Date(),
+  }
+
+  // payload sanity check
+  _.forEach(['sha', 'branch', 'build', 'bundleSize'], fieldName => {
+    if (statsPayload[fieldName] === undefined) {
+      throw `Required field '${fieldName}' not set in stats payload`
+    }
+  })
+
   const options = {
     method: 'POST',
     uri: process.env.STATS_URI,
-    body: {
-      sha: process.env.CIRCLE_SHA1,
-      branch: process.env.CIRCLE_BRANCH,
-      tag: process.env.CIRCLE_TAG, // optional
-      pr: process.env.CIRCLE_PULL_REQUEST, // optional
-      build: process.env.CIRCLE_BUILD_NUM,
-      ...commandLineArgs, // allow command line overwrites
-      bundleSize: bundleStats,
-      ts: new Date(),
-    },
+    body: statsPayload,
     json: true,
   }
 
-  const ret = await rp(options)
-  console.log(ret)
+  const response = await requestHttp(options)
+  console.log(response)
 })
