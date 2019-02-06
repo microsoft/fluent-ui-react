@@ -86,7 +86,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>, any> {
     let isFirst = true
     return React.Children.map(children, (child: React.ReactElement<any>) => {
       const childElement =
-        (child.type as any) && (child.type as any).__isFlexItem
+        child.type && (child.type as any).__isFlexItem
           ? React.cloneElement(child, {
               flexDirection: vertical ? 'column' : 'row',
             })
@@ -111,7 +111,6 @@ class Flex extends UIComponent<ReactProps<FlexProps>, any> {
 }
 
 Flex.Item = FlexItem
-
 Flex.Gap = ({ gap, column }) => <div style={column ? { height: gap } : { width: gap }} />
 
 export default Flex
