@@ -28,11 +28,9 @@ export interface FlexProps {
   /** Defines strategy for distributing remaining space between items. */
   space?: 'around' | 'between' | 'evenly'
 
-  // for now - but it should be a string with limited set of values
   /** Defines gap between each two adjacent child items. */
   gap?: FlexGap
 
-  ////////// EXPERIMENTAL ONES /////////////
   /** Defines container's padding. */
   padding?: FlexPadding
 
