@@ -167,9 +167,24 @@ export const colors: ColorPalette = {
   white: naturalColors.grey[50],
 }
 
-export const colorScheme: ColorSchemeMapping = _.mapValues(
-  emphasisAndNaturalColors,
-  (colorVariants, colorName) => {
+const primitiveColorsScheme = {
+  black: {
+    foreground: '#FFF',
+    border: '#FFF',
+    shadow: '#FFF',
+    background: colors.black,
+  },
+  white: {
+    foreground: '#000',
+    border: '#000',
+    shadow: '#000',
+    background: colors.white,
+  },
+}
+
+export const colorScheme: ColorSchemeMapping = {
+  ...primitiveColorsScheme,
+  ..._.mapValues(emphasisAndNaturalColors, (colorVariants, colorName) => {
     const foreground = isLightBackground(colorName) ? colors.black : colorVariants[50]
 
     return {
@@ -184,5 +199,5 @@ export const colorScheme: ColorSchemeMapping = _.mapValues(
         background: colors.grey[100],
       },
     }
-  },
-)
+  }),
+}

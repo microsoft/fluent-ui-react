@@ -15,7 +15,7 @@ export interface LabelVariables {
 
 export default (siteVars: SiteVariablesPrepared): LabelVariables => {
   const color = 'rgba(0, 0, 0, 0.6)'
-
+  console.log(siteVars.colorScheme)
   return {
     colorScheme: getColorSchemeWithCustomDefaults(siteVars.colorScheme, {
       foreground: color,

@@ -39,6 +39,8 @@ export type ColorValue =
   | 'teal'
   | 'red'
   | 'yellow'
+  | 'black'
+  | 'white'
   | string
 
 export type ComplexColorPropType =
