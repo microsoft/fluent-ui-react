@@ -10,14 +10,14 @@ const Types = () => (
       examplePath="components/Dropdown/Types/DropdownExample"
     />
     <ComponentExample
-      title="Search"
-      description="A dropdown can be searchable."
-      examplePath="components/Dropdown/Types/DropdownExampleSearch"
-    />
-    <ComponentExample
       title="Multiple"
       description="A dropdown can be used to select multiple items from a form."
       examplePath="components/Dropdown/Types/DropdownExampleMultiple"
+    />
+    <ComponentExample
+      title="Search"
+      description="A dropdown can be searchable."
+      examplePath="components/Dropdown/Types/DropdownExampleSearch"
     />
   </ExampleSection>
 )

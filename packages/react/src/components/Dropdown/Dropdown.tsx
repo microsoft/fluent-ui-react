@@ -172,6 +172,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   private selectedItemsRef = React.createRef<HTMLDivElement>()
 
   static displayName = 'Dropdown'
+
   static className = 'ui-dropdown'
 
   static slotClassNames: DropdownSlotClassNames
