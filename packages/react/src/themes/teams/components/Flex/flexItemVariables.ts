@@ -8,7 +8,7 @@ export type FlexItemVariables = SizeValues
 
 export default (): FlexItemVariables => ({
   'size.half': '50%',
-  'size.quater': '25%',
+  'size.quarter': '25%',
 
   'size.small': pxToRem(150),
   'size.medium': pxToRem(200),

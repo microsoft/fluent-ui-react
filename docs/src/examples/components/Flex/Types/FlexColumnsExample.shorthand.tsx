@@ -14,7 +14,7 @@ const FlexExampleShorthand = () => (
     </Flex>
 
     <Flex gap="gap.small" padding="padding.medium">
-      <Flex.Item size="size.quater">
+      <Flex.Item size="size.quarter">
         <Segment content="1/4" />
       </Flex.Item>
 
@@ -22,7 +22,7 @@ const FlexExampleShorthand = () => (
         <Segment content="1/2" />
       </Flex.Item>
 
-      <Flex.Item size="size.quater">
+      <Flex.Item size="size.quarter">
         <Segment content="1/4" />
       </Flex.Item>
     </Flex>
