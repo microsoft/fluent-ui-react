@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Extendable, ShorthandValue } from '../../../../types/utils'
+import { Extendable, ShorthandValue } from 'src/types'
 import { Avatar, Divider, Grid } from '@stardust-ui/react'
 import Text from './Text'
 
@@ -71,7 +71,7 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
         </div>
         {Avatar.create(avatar, {
           defaultProps: {
-            size: 72,
+            size: 'largest',
             name: `${firstName} ${lastName}`,
           },
         })}

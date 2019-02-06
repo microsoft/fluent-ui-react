@@ -1,4 +1,4 @@
-import { Dropdown, Button, List } from '../../../../../../src'
+import { Dropdown, Button, List } from '@stardust-ui/react'
 
 const steps = [
   steps => steps.click(`.${Dropdown.className} .${Button.className}`).snapshot('Shows list'),
