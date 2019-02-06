@@ -80,13 +80,17 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
       })
     }
 
-    return withStyles(React.Children.only(children), styles, classes)
+    return applyStyles(React.Children.only(children), styles, classes)
   }
 }
 
 export default FlexItem
 
-const withStyles = (element: React.ReactElement<any>, styles, classes): React.ReactElement<any> => {
+const applyStyles = (
+  element: React.ReactElement<any>,
+  styles,
+  classes,
+): React.ReactElement<any> => {
   if (!styles) {
     return element
   }
