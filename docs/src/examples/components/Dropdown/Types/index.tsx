@@ -5,14 +5,14 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Types = () => (
   <ExampleSection title="Types">
     <ComponentExample
-      title="Single Selection"
-      description="A dropdown with single selection."
-      examplePath="components/Dropdown/Types/DropdownExampleSingleSelection"
+      title="Default"
+      description="A dropdown can be used to select between choices in a form."
+      examplePath="components/Dropdown/Types/DropdownExample"
     />
     <ComponentExample
-      title="Multiple Search"
-      description="A dropdown with multiple selection and search."
-      examplePath="components/Dropdown/Types/DropdownExampleMultipleSearch"
+      title="Search"
+      description="A dropdown can be searchable."
+      examplePath="components/Dropdown/Types/DropdownExampleSearch"
     />
   </ExampleSection>
 )
