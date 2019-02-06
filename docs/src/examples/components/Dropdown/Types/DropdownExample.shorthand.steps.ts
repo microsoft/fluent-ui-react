@@ -6,14 +6,12 @@ const selectors = {
     `.${Dropdown.slotClassNames.itemsList} li:nth-child(${itemIndex})`,
 }
 
-const toggle = steps => steps.click(selectors.triggerButton)
-
 const steps = [
-  steps => toggle(steps).snapshot('Shows list'),
+  steps => steps.click(selectors.triggerButton).snapshot('Shows list'),
   steps => steps.click(selectors.dropdownItem(3)).snapshot('Selects an item'),
-  steps => toggle(steps).snapshot('Opens with selected item highlighted'),
+  steps => steps.click(selectors.triggerButton).snapshot('Opens with selected item highlighted'),
   steps => steps.hover(selectors.dropdownItem(2)).snapshot('Highlights another item'),
-  steps => toggle(steps).snapshot('Closes the list'),
+  steps => steps.click(selectors.triggerButton).snapshot('Closes the list'),
 ]
 
 export default steps

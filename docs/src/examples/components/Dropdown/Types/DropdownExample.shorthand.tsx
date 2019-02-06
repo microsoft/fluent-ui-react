@@ -13,7 +13,7 @@ const inputItems = [
   'Selina Kyle',
 ]
 
-const DropdownExampleSingleSelection = () => (
+const DropdownExample = () => (
   <Dropdown
     items={inputItems}
     placeholder="Select your hero"
@@ -21,4 +21,4 @@ const DropdownExampleSingleSelection = () => (
   />
 )
 
-export default DropdownExampleSingleSelection
+export default DropdownExample
