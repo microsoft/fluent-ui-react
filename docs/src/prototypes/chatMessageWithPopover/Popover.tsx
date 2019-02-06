@@ -1,4 +1,4 @@
-import { Menu, toolbarBehavior, toolbarButtonBehavior } from '@stardust-ui/react'
+import { Accessibility, Menu, toolbarBehavior, toolbarButtonBehavior } from '@stardust-ui/react'
 import * as React from 'react'
 import cx from 'classnames'
 
@@ -10,48 +10,32 @@ interface PopoverState {
   focused: boolean
 }
 
+const popoverBehavior: Accessibility = (props: any) => {
+  const behavior = toolbarBehavior(props)
+
+  behavior.focusZone.props.defaultTabbableElement = (root: HTMLElement): HTMLElement => {
+    return root.querySelector('[aria-label="thumbs up"]')
+  }
+
+  return behavior
+}
+
 class Popover extends React.Component<PopoverProps, PopoverState> {
   state = {
     focused: false,
   }
 
-  changeFocusState = (isFocused: boolean) => {
-    this.state.focused !== isFocused && this.setState({ focused: isFocused })
-  }
-
-  handleFocus = () => {
-    this.changeFocusState(true)
-  }
+  handleFocus = () => this.setState({ focused: true })
 
   handleBlur = e => {
-    const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget)
-    this.changeFocusState(shouldPreserveFocusState)
+    this.setState({ focused: e.currentTarget.contains(e.relatedTarget) })
   }
-
-  popoverStyles = ({ theme: { siteVariables } }) => ({
-    transition: 'opacity 0.2s',
-    position: 'absolute',
-    top: '-20px',
-    right: '5px',
-    opacity: 0,
-
-    '& .smile-emoji': {
-      display: 'none',
-    },
-
-    '&.focused .smile-emoji': {
-      display: 'flex',
-    },
-
-    '&:hover .smile-emoji': {
-      display: 'flex',
-    },
-  })
 
   render() {
     return (
       <Menu
-        styles={this.popoverStyles}
+        {...this.props}
+        accessibility={popoverBehavior}
         iconOnly
         className={cx(this.props.className, this.state.focused ? 'focused' : '')}
         items={[
@@ -100,7 +84,6 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
         ]}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
-        accessibility={toolbarBehavior}
         data-is-focusable={true}
       />
     )
