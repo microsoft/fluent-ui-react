@@ -52,7 +52,7 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
       content: false,
     }),
     align: PropTypes.oneOf(['auto', 'start', 'end', 'center', 'baseline', 'stretch']),
-    size: PropTypes.string,
+    size: PropTypes.oneOf(['size.half', 'size.quarter', 'size.small', 'size.medium', 'size.large']),
 
     stretch: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
     shrink: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
