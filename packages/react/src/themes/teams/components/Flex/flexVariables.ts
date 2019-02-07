@@ -1,8 +1,8 @@
 import { pxToRem } from '../../../../lib'
 import { FlexProps } from '../../../../components/Flex/Flex'
 
-type GapValues = { [Key in FlexProps['gap']]: string }
-type PaddingValues = { [Key in FlexProps['padding']]: string }
+type GapValues = Record<FlexProps['gap'], string>
+type PaddingValues = Record<FlexProps['padding'], string>
 
 export type FlexVariables = GapValues & PaddingValues
 

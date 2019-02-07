@@ -2,8 +2,9 @@ import { ComponentSlotStylesInput } from '../../../types'
 import { FlexItemProps } from '../../../../components/Flex/FlexItem'
 
 import { toFlexAlignment, toFlexItemSizeValues } from './utils'
+import { FlexItemVariables } from './flexItemVariables'
 
-const flexItemStyles: ComponentSlotStylesInput<FlexItemProps, any> = {
+const flexItemStyles: ComponentSlotStylesInput<FlexItemProps, FlexItemVariables> = {
   root: ({ props: p, variables: v }) => {
     return {
       ...(p.align && { alignSelf: toFlexAlignment(p.align) }),

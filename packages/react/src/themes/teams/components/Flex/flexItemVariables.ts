@@ -1,8 +1,8 @@
 import { pxToRem } from '../../../../lib'
 
-import { FlexItemSize } from '../../../../components/Flex/FlexItem'
+import { FlexItemProps } from '../../../../components/Flex/FlexItem'
 
-type SizeValues = { [Key in FlexItemSize]: string }
+type SizeValues = Record<FlexItemProps['size'], string>
 
 export type FlexItemVariables = SizeValues
 
