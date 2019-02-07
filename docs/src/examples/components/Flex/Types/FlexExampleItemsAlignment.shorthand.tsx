@@ -22,11 +22,7 @@ const FlexExampleItemsAlignment = () => (
     ].map(rowOfAlignmentProps => (
       <Flex gap="gap.large">
         {rowOfAlignmentProps.map((alignmentProps: any) => (
-          <Flex
-            inline
-            {...alignmentProps}
-            style={{ width: '100px', height: '100px', border: '1px dashed grey' }}
-          >
+          <Flex inline {...alignmentProps} style={{ width: '100px', height: '100px' }} debug>
             <Segment styles={{ width: '30px', height: '30px' }} />
           </Flex>
         ))}
