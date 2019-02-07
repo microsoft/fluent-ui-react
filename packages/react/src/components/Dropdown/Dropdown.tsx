@@ -604,7 +604,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     statusDiv.textContent = statusMessage
   }
 
-  isSelectedItemActive = (index: number): boolean => {
+  private isSelectedItemActive = (index: number): boolean => {
     return index === this.state.activeIndex
   }
 
