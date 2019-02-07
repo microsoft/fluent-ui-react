@@ -1,4 +1,4 @@
-import { white, green } from '../teams/siteVariables'
+import { colors, naturalColors } from '../teams/siteVariables'
 
 //
 // COLORS
@@ -19,7 +19,7 @@ export const brand02 = '#e2e2f6'
 export const brand04 = '#bdbde6'
 export const brand06 = '#a6a7dc'
 export const brand08 = '#8b8cc7'
-export const brand12 = brand
+export const brand12 = colors.primary[500]
 export const brand14 = '#464775'
 export const brand16 = '#33344a'
 
@@ -28,7 +28,7 @@ export const magenta = '#cf6098'
 export const orchid = '#ae3d84'
 export const red = '#d74654'
 export const red08 = '#4f232b'
-export const green04 = green
+export const green04 = naturalColors.lightGreen[900]
 
 //
 // SHADOW LEVELS
@@ -39,4 +39,4 @@ export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(255, 255, 255, 0.1)'
 // SEMANTIC ASSIGNMENTS
 //
 export const bodyBackground = black
-export const bodyColor = white
+export const bodyColor = colors.white

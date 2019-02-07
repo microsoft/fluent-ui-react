@@ -86,7 +86,9 @@ const chatMessageStyles: ComponentSlotStylesInput<
     props: p,
     variables: v,
     theme: {
-      siteVariables: { white },
+      siteVariables: {
+        colors: { white },
+      },
     },
   }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
