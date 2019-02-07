@@ -49,6 +49,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update vulnerable version of `lodash` dependency  @kuzhelov ([#840](https://github.com/stardust-ui/react/pull/840))
 - Add `displayName` property to `Ref` and `Provider` components @layershifter ([#836](https://github.com/stardust-ui/react/pull/836))
 - Wrap error text of docs code editor @kuzhelov ([#843](https://github.com/stardust-ui/react/pull/843))
+- Fix `Button` Teams theme styles to use semibold weight @notandrew ([#829](https://github.com/stardust-ui/react/pull/829))
 
 <!--------------------------------[ v0.19.2 ]------------------------------- -->
 ## [v0.19.2](https://github.com/stardust-ui/react/tree/v0.19.2) (2019-02-01)
