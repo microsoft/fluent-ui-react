@@ -6,6 +6,8 @@ import {
   EmphasisColors,
   NaturalColors,
   ColorSchemeMapping,
+  PrimitiveColors,
+  ColorScheme,
 } from '../types'
 
 export const emphasisColors: EmphasisColors = {
@@ -167,9 +169,24 @@ export const colors: ColorPalette = {
   white: naturalColors.grey[50], // siteVariables.white
 }
 
-export const colorScheme: ColorSchemeMapping = _.mapValues(
-  emphasisAndNaturalColors,
-  (colorVariants, colorName) => {
+const primitiveColorsScheme: Record<keyof PrimitiveColors, ColorScheme> = {
+  black: {
+    foreground: colors.white,
+    border: colors.white,
+    shadow: colors.white,
+    background: colors.black,
+  },
+  white: {
+    foreground: colors.black,
+    border: colors.black,
+    shadow: colors.black,
+    background: colors.white,
+  },
+}
+
+export const colorScheme: ColorSchemeMapping = {
+  ...primitiveColorsScheme,
+  ..._.mapValues(emphasisAndNaturalColors, (colorVariants, colorName) => {
     const foreground = isLightBackground(colorName) ? colors.black : colorVariants[50]
 
     return {
@@ -184,5 +201,5 @@ export const colorScheme: ColorSchemeMapping = _.mapValues(
         background: colors.grey[100],
       },
     }
-  },
-)
+  }),
+}
