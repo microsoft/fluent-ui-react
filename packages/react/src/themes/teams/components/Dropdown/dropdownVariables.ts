@@ -40,5 +40,5 @@ export default (siteVars): DropdownVariables => ({
   listItemColorActive: siteVars.white,
   selectedItemsMaxHeight: pxToRem(82),
   toggleIndicatorSize: pxToRem(32),
-  width: pxToRem(356),
+  width: pxToRem(368),
 })

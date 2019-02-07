@@ -3,23 +3,49 @@ import { DropdownProps, DropdownState } from '../../../../components/Dropdown/Dr
 import { DropdownVariables } from './dropdownVariables'
 import { pxToRem } from '../../../../lib'
 
-const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, DropdownVariables> = {
-  root: (): ICSSInJSStyle => ({}),
+type Props = DropdownProps & DropdownState
+
+const transparentColorStyle: ICSSInJSStyle = {
+  backgroundColor: 'transparent',
+  borderColor: 'transparent',
+  borderBottomColor: 'transparent',
+}
+
+const transparentColorStyleObj: ICSSInJSStyle = {
+  ...transparentColorStyle,
+  ':hover': transparentColorStyle,
+  ':active': transparentColorStyle,
+  ':focus': {
+    ...transparentColorStyle,
+    ':active': transparentColorStyle,
+  },
+}
+
+const getWidth = (p: Props, v: DropdownVariables): string =>
+  p.fluid ? '100%' : p.inline ? 'initial' : v.width
+
+const dropdownStyles: ComponentSlotStylesInput<Props, DropdownVariables> = {
+  root: ({ props: p }): ICSSInJSStyle => ({
+    ...(p.inline && {
+      display: 'inline-flex',
+    }),
+  }),
 
   container: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'flex',
     flexWrap: 'wrap',
-    outline: 0,
-    backgroundColor: v.backgroundColor,
+    position: 'relative',
     boxSizing: 'border-box',
     borderStyle: 'solid',
     borderColor: 'transparent',
+    outline: 0,
+    width: getWidth(p, v),
     borderWidth: v.borderWidth,
     borderRadius: v.borderRadius,
     color: v.color,
-    width: p.fluid ? '100%' : v.width,
-    position: 'relative',
+    backgroundColor: v.backgroundColor,
     ...(p.focused && { borderBottomColor: v.borderColorFocus }),
+    ...(p.inline && transparentColorStyleObj),
   }),
 
   selectedItems: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -32,19 +58,14 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
   }),
 
   triggerButton: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const transparentColorStyle = {
-      backgroundColor: 'transparent',
-      borderColor: 'transparent',
-    }
     return {
       boxShadow: 'none',
       margin: '0',
       justifyContent: 'left',
       padding: v.comboboxPaddingButton,
       height: pxToRem(30),
-      ...transparentColorStyle,
       ...(p.multiple && { minWidth: 0, flex: 1 }),
-      ':hover': transparentColorStyle,
+      ...transparentColorStyleObj,
       ':focus': {
         ...transparentColorStyle,
         ':after': {
@@ -54,7 +75,10 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
         },
         ':active': transparentColorStyle,
       },
-      ':active': transparentColorStyle,
+      ...(p.inline && {
+        paddingLeft: 0,
+        paddingRight: 0,
+      }),
     }
   },
 
@@ -65,7 +89,8 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
     zIndex: 1000,
     maxHeight: v.listMaxHeight,
     overflowY: 'auto',
-    width: p.fluid ? '100%' : v.width,
+    width: getWidth(p, v),
+    minWidth: 'max-content',
     top: 'calc(100% + 2px)', // leave room for container + its border
     background: v.listBackgroundColor,
     ...(p.isOpen && {
@@ -83,7 +108,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
     fontWeight: 'bold',
   }),
 
-  toggleIndicator: ({ variables: v }): ICSSInJSStyle => ({
+  toggleIndicator: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'absolute',
     height: v.toggleIndicatorSize,
     width: v.toggleIndicatorSize,
