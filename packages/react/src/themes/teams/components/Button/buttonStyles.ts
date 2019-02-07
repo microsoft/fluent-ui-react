@@ -284,7 +284,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    fontWeight: variables.fontWeight,
+    fontWeight: variables.buttonFontWeight,
   }),
 }
 

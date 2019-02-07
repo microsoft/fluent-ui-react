@@ -9,7 +9,7 @@ export interface ButtonVariables {
   borderRadius: string
   circularRadius: string
   paddingLeftRightValue: number
-  fontWeight: string
+  buttonFontWeight: string
 
   color: string
   colorActive: string
@@ -75,7 +75,7 @@ export default (siteVars: any): ButtonVariables => {
     maxWidth: pxToRem(280),
     borderRadius: pxToRem(2),
     circularRadius: pxToRem(999),
-    fontWeight: siteVars.fontWeightSemibold,
+    buttonFontWeight: siteVars.fontWeightSemibold,
     paddingLeftRightValue: 20,
 
     color: siteVars.black,
