@@ -6,6 +6,8 @@ import {
   EmphasisColors,
   NaturalColors,
   ColorSchemeMapping,
+  PrimitiveColors,
+  ColorScheme,
 } from '../types'
 
 export const emphasisColors: EmphasisColors = {
