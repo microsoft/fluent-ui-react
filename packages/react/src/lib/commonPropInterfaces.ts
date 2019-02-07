@@ -25,6 +25,8 @@ export interface UIComponentProps<P = any, V = any>
   className?: string
 }
 
+export type SizeValue = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
+
 export type ColorValue =
   | 'primary'
   | 'secondary'
@@ -39,14 +41,16 @@ export type ColorValue =
   | 'yellow'
   | string
 
-export type ComplexColorPropType =
+export type ColorValuesWithPrimitiveColors = ColorValue | 'black' | 'white'
+
+export type ComplexColorPropType<TColorValue = ColorValue> =
   | {
-      foreground?: ColorValue
-      background?: ColorValue
-      border?: ColorValue
-      shadow?: ColorValue
+      foreground?: TColorValue
+      background?: TColorValue
+      border?: TColorValue
+      shadow?: TColorValue
     }
-  | ColorValue
+  | TColorValue
 
 export interface ColorComponentProps<TColor = ColorValue> {
   /** A component can have a color. */

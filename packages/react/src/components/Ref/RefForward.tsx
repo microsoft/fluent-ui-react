@@ -14,6 +14,8 @@ export interface RefForwardProps
 }
 
 export default class RefForward extends React.Component<RefForwardProps> {
+  static displayName = 'RefForward'
+
   static propTypes = {
     children: PropTypes.element.isRequired,
     innerRef: customPropTypes.ref,

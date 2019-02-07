@@ -1,25 +1,35 @@
-import * as _ from 'lodash'
 import * as React from 'react'
-import { Avatar } from '@stardust-ui/react'
+import { Avatar, Grid, SizeValue } from '@stardust-ui/react'
 
-const statusProps = { icon: 'check', color: 'green', title: 'Available' }
+const statusProps = {
+  icon: 'check',
+  color: 'green',
+  title: 'Available',
+}
 
-const AvatarExampleSizeShorthand = () =>
-  _.times(7, i => {
-    const size = 20 + i * 4
-    const status = { ...statusProps, size: size * 0.3125 }
-
-    return (
-      <div key={size}>
-        <strong>{size}</strong>
-        &emsp;
-        <Avatar size={size} image="public/images/avatar/small/matt.jpg" status={status} />
-        &emsp;
-        <Avatar size={size} name="John Doe" status={status} />
-        &emsp;
-        <Avatar size={size} image="public/images/avatar/small/matt.jpg" />
-      </div>
-    )
-  })
+const AvatarExampleSizeShorthand = () => (
+  <Grid columns="80px 1fr">
+    {(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest'] as SizeValue[]).map(
+      size => {
+        return (
+          <>
+            <strong>{size}</strong>
+            <div>
+              <Avatar
+                size={size}
+                image="public/images/avatar/small/matt.jpg"
+                status={statusProps}
+              />
+              &emsp;
+              <Avatar size={size} name="John Doe" status={statusProps} />
+              &emsp;
+              <Avatar size={size} image="public/images/avatar/small/matt.jpg" />
+            </div>
+          </>
+        )
+      },
+    )}
+  </Grid>
+)
 
 export default AvatarExampleSizeShorthand

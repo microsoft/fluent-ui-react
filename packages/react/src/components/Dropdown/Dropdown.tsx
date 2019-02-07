@@ -39,6 +39,13 @@ import Button from '../Button/Button'
 import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 import ListItem from '../List/ListItem'
 
+export interface DropdownSlotClassNames {
+  container: string
+  triggerButton: string
+  itemsList: string
+  selectedItems: string
+}
+
 export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownState> {
   /** The initial value for the search query, if the dropdown is also a search. */
   defaultSearchQuery?: string
@@ -158,10 +165,7 @@ export interface DropdownState {
  * @accessibility
  * Implements ARIA collapsible Listbox design pattern, uses aria-live to announce state changes.
  */
-export default class Dropdown extends AutoControlledComponent<
-  Extendable<DropdownProps>,
-  DropdownState
-> {
+class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, DropdownState> {
   private buttonRef = React.createRef<HTMLElement>()
   private inputRef = React.createRef<HTMLElement>()
   private listRef = React.createRef<HTMLElement>()
@@ -170,6 +174,8 @@ export default class Dropdown extends AutoControlledComponent<
   static displayName = 'Dropdown'
 
   static className = 'ui-dropdown'
+
+  static slotClassNames: DropdownSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -214,11 +220,7 @@ export default class Dropdown extends AutoControlledComponent<
       }
 
       // targets DropdownItem shorthand objects
-      if ((item as any).header) {
-        return (item as any).header
-      }
-
-      return `${item}`
+      return (item as any).header || String(item)
     },
     toggleIndicator: {},
     triggerButton: {},
@@ -238,7 +240,7 @@ export default class Dropdown extends AutoControlledComponent<
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
       // used on single selection to open the dropdown with the selected option as highlighted.
-      defaultHighlightedIndex: !this.props.search && !this.props.multiple ? null : undefined,
+      defaultHighlightedIndex: this.props.multiple ? undefined : null,
     }
   }
 
@@ -259,9 +261,7 @@ export default class Dropdown extends AutoControlledComponent<
           inputValue={search ? searchQuery : null}
           stateReducer={this.handleDownshiftStateChanges}
           itemToString={itemToString}
-          // If it's single search, don't pass anything. Pass a null otherwise, as Downshift does
-          // not handle selection by default for single/multiple selection and multiple search.
-          selectedItem={search && !multiple ? undefined : null}
+          selectedItem={null}
           getA11yStatusMessage={getA11yStatusMessage}
           defaultHighlightedIndex={defaultHighlightedIndex}
           onStateChange={this.handleStateChange}
@@ -284,12 +284,12 @@ export default class Dropdown extends AutoControlledComponent<
             return (
               <Ref innerRef={innerRef}>
                 <div
-                  className={cx(`${Dropdown.className}__container`, classes.container)}
-                  onClick={multiple ? this.handleContainerClick.bind(this, isOpen) : undefined}
+                  className={cx(Dropdown.slotClassNames.container, classes.container)}
+                  onClick={search && !isOpen ? this.handleContainerClick : undefined}
                 >
                   <div
                     ref={this.selectedItemsRef}
-                    className={cx(`${Dropdown.className}__selected-items`, classes.selectedItems)}
+                    className={cx(Dropdown.slotClassNames.selectedItems, classes.selectedItems)}
                   >
                     {multiple && this.renderSelectedItems()}
                     {search
@@ -333,16 +333,16 @@ export default class Dropdown extends AutoControlledComponent<
     styles: ComponentSlotStylesInput,
     getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
   ): JSX.Element {
-    const { placeholder, itemToString, multiple, triggerButton } = this.props
-    const { value } = this.state
-    const content = value && !multiple ? itemToString(value) : placeholder
+    const content = this.getSelectedItemAsString(this.state.value)
+
     return (
       <Ref innerRef={this.buttonRef}>
-        {Button.create(triggerButton, {
+        {Button.create(this.props.triggerButton, {
           defaultProps: {
+            className: Dropdown.slotClassNames.triggerButton,
             content,
             fluid: true,
-            styles: styles.button,
+            styles: styles.triggerButton,
             ...getToggleButtonProps({
               onFocus: () => {
                 this.setState({ focused: true })
@@ -434,6 +434,7 @@ export default class Dropdown extends AutoControlledComponent<
         }}
       >
         <List
+          className={Dropdown.slotClassNames.itemsList}
           {...accessibilityMenuProps}
           styles={styles.list}
           tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
@@ -552,11 +553,7 @@ export default class Dropdown extends AutoControlledComponent<
   private getItemsFilteredBySearchQuery = (): ShorthandValue[] => {
     const { items, itemToString, multiple, search } = this.props
     const { searchQuery, value } = this.state
-    let filteredItems = items
-
-    if (multiple) {
-      filteredItems = _.difference(filteredItems, value as ShorthandValue[])
-    }
+    const filteredItems = multiple ? _.difference(items, value as ShorthandValue[]) : items
 
     if (search) {
       if (_.isFunction(search)) {
@@ -691,8 +688,8 @@ export default class Dropdown extends AutoControlledComponent<
     }
   }
 
-  private handleContainerClick = (isOpen: boolean) => {
-    !isOpen && this.inputRef.current.focus()
+  private handleContainerClick = () => {
+    this.tryFocusSearchInput()
   }
 
   private handleListKeyDown = (
@@ -712,7 +709,7 @@ export default class Dropdown extends AutoControlledComponent<
         return
       case keyboardKey.Escape:
         accessibilityInputPropsKeyDown(e)
-        this.buttonRef.current.focus()
+        this.tryFocusTriggerButton()
         return
       default:
         accessibilityInputPropsKeyDown(e)
@@ -721,12 +718,15 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private handleSelectedChange = (item: ShorthandValue) => {
-    const { items, multiple, getA11ySelectionMessage, search } = this.props
-    const newValue = multiple ? [...(this.state.value as ShorthandValue[]), item] : item
+    const { items, multiple, getA11ySelectionMessage } = this.props
+    const newState = {
+      value: multiple ? [...(this.state.value as ShorthandValue[]), item] : item,
+      searchQuery: this.getSelectedItemAsString(item),
+    }
 
-    this.trySetState({ value: newValue, searchQuery: '' })
+    this.trySetState(newState)
 
-    if (!search && !multiple) {
+    if (!multiple) {
       this.setState({ defaultHighlightedIndex: items.indexOf(item) })
     }
 
@@ -742,22 +742,16 @@ export default class Dropdown extends AutoControlledComponent<
       )
     }
 
-    if (!search) {
-      this.buttonRef.current.focus()
-    }
+    this.tryFocusTriggerButton()
 
     // we don't have event for it, but want to keep the event handling interface, event is empty.
-    _.invoke(
-      this.props,
-      'onSelectedChange',
-      {},
-      { ...this.props, searchQuery: '', value: newValue },
-    )
+    _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, ...newState })
   }
 
   private handleSelectedItemRemove(e: React.SyntheticEvent, item: ShorthandValue) {
     this.removeItemFromValue(item)
-    this.inputRef.current.focus()
+    this.tryFocusSearchInput()
+    this.tryFocusTriggerButton()
     e.stopPropagation()
   }
 
@@ -781,4 +775,45 @@ export default class Dropdown extends AutoControlledComponent<
     // we don't have event for it, but want to keep the event handling interface, event is empty.
     _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, value })
   }
+
+  private tryFocusTriggerButton = () => {
+    if (!this.props.search) {
+      this.buttonRef.current.focus()
+    }
+  }
+
+  private tryFocusSearchInput = () => {
+    if (this.props.search) {
+      this.inputRef.current.focus()
+    }
+  }
+
+  /**
+   * If there is no value we use the placeholder value
+   * otherwise, for single selection we convert the value with itemToString
+   * and for multiple selection we return empty string, the values are rendered by renderSelectedItems
+   */
+  private getSelectedItemAsString = (value: ShorthandValue): string => {
+    const { itemToString, multiple, placeholder } = this.props
+    const isValueEmpty = _.isArray(value) ? value.length < 1 : !value
+
+    if (isValueEmpty) {
+      return placeholder
+    }
+
+    if (multiple) {
+      return ''
+    }
+
+    return itemToString(value)
+  }
 }
+
+Dropdown.slotClassNames = {
+  container: `${Dropdown.className}__container`,
+  triggerButton: `${Dropdown.className}__trigger-button`,
+  itemsList: `${Dropdown.className}__items-list`,
+  selectedItems: `${Dropdown.className}__selected-items`,
+}
+
+export default Dropdown
