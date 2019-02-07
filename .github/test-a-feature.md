@@ -11,6 +11,12 @@ Test a feature
   - [isConformant (required)](#isconformant-required)
   - [Writing tests](#writing-tests)
   - [Running tests](#running-tests)
+- [Screener Tests](#screener-tests)
+  - [Tests with Steps API](#tests-with-steps-api)
+    - [Example for a test file:](#example-for-a-test-file)
+    - [Important mentions:](#important-mentions)
+  - [Run Screener tests](#run-screener-tests)
+    - [Local run command](#local-run-command)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
