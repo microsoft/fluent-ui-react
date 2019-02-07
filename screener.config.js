@@ -1,8 +1,21 @@
+require('ts-node').register()
+
 const _ = require('lodash')
 const glob = require('glob')
 const path = require('path')
 const fs = require('fs')
+const tsPaths = require('tsconfig-paths')
 const Steps = require('screener-runner/src/steps')
+
+const { default: config } = require('./config')
+const { compilerOptions } = require('./build/tsconfig.common.json')
+
+tsPaths.register({
+  baseUrl: config.path_base,
+  paths: compilerOptions.paths,
+})
+
+const SCREENER_HOST_URL = `${config.server_host}:${config.server_port}`
 
 // https://github.com/screener-io/screener-runner
 const screenerConfig = {
@@ -11,7 +24,7 @@ const screenerConfig = {
   apiKey: process.env.SCREENER_API_KEY,
 
   tunnel: {
-    host: 'localhost:8080',
+    host: `${SCREENER_HOST_URL}`,
     gzip: true, // gzip compress all content being served from tunnel host
     cache: true, // sets cache-control header for all content being served from tunnel host. Must be used with gzip option
   },
@@ -31,17 +44,21 @@ const screenerConfig = {
   states: glob
     .sync('docs/src/examples/**/*.tsx', { ignore: ['**/index.tsx', '**/*.knobs.tsx'] })
     .reduce((states, examplePath) => {
-      const { name: nameWithoutExtension, base: nameWithExtension, dir } = path.parse(examplePath)
-      const rtl = nameWithExtension.endsWith('.rtl.tsx')
-      const url = `http://localhost:8080/maximize/${_.kebabCase(nameWithoutExtension)}/${rtl}`
+      const {
+        name: exampleNameWithoutExtension,
+        base: exampleNameWithExtension,
+        dir: exampleDir,
+      } = path.parse(examplePath)
+
+      const rtl = exampleNameWithExtension.endsWith('.rtl.tsx')
+      const exampleUrl = _.kebabCase(exampleNameWithoutExtension)
 
       states.push({
-        url,
-        name: nameWithExtension,
-        // https://github.com/screener-io/screener-runner
-        steps: fs.existsSync(`${dir}/${nameWithoutExtension}.steps.js`)
-          ? getSteps(dir, nameWithoutExtension).end()
-          : undefined,
+        url: `http://${SCREENER_HOST_URL}/maximize/${exampleUrl}/${rtl}`,
+        name: exampleNameWithExtension,
+
+        // https://www.npmjs.com/package/screener-runner#testing-interactions
+        steps: getSteps(exampleDir, exampleNameWithoutExtension),
       })
 
       return states
@@ -49,8 +66,13 @@ const screenerConfig = {
 }
 
 function getSteps(dir, nameWithoutExtension) {
-  const stepTests = require(`./${dir}/${nameWithoutExtension}.steps`)
-  return stepTests.reduce((stepsAcc, steps) => steps(stepsAcc), new Steps())
+  const stepsSpecModulePath = `${dir}/${nameWithoutExtension}.steps.ts`
+
+  return fs.existsSync(stepsSpecModulePath)
+    ? require(`./${dir}/${nameWithoutExtension}.steps`)
+        .default.reduce((stepsAcc, steps) => steps(stepsAcc), new Steps())
+        .end()
+    : undefined
 }
 
 if (process.env.CI) {

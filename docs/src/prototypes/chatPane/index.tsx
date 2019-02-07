@@ -3,7 +3,7 @@ import { Provider, Divider } from '@stardust-ui/react'
 
 import ChatPaneLayout from './chatPaneLayout'
 import { getChatMock } from './services'
-import { pxToRem } from '../../../../src/lib'
+import { pxToRem } from 'src/lib'
 
 const chatMock = getChatMock({ msgCount: 40, userCount: 6 })
 const dividerSelector = `& .${Divider.className}`
