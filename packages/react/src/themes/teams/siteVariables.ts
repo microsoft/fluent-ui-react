@@ -11,7 +11,7 @@ export const htmlFontSize = '10px' // what 1rem represents
 //
 export { colors, contextualColors, emphasisColors, naturalColors, colorScheme } from './colors'
 
-export const black = colors.black
+export const black = colors.grey[900]
 export const gray02 = '#484644'
 export const gray03 = '#605E5C'
 export const gray04 = '#979593'
