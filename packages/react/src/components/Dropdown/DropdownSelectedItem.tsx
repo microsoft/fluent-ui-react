@@ -140,7 +140,6 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
         <Label
           tabIndex={-1}
           styles={styles.root}
-          role="presentation"
           circular
           onClick={this.handleClick}
           onKeyDown={this.handleKeyDown}
