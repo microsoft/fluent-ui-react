@@ -166,13 +166,15 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   private outsideClickSubscription = EventStack.noSubscription
 
   private triggerDomElement = null
+  // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
+  private triggerFocusableDomElement = null
   private popupDomElement = null
 
   private closeTimeoutId
 
   protected actionHandlers: AccessibilityActionHandlers = {
     closeAndFocusTrigger: e => {
-      this.close(e, () => _.invoke(this.triggerDomElement, 'focus'))
+      this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
       e.stopPropagation()
     },
     close: e => this.close(e),
@@ -474,6 +476,8 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   }
 
   private trySetOpen(newValue: boolean, eventArgs: any) {
+    // when new state 'open' === 'true', save the last focused element
+    newValue && this.updateTriggerFocusableDomElement()
     this.trySetState({ open: newValue })
     _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
   }
@@ -496,5 +500,15 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       this.trySetOpen(false, e)
       onClose && onClose()
     }
+  }
+
+  /**
+   * Save DOM element which had focus before Popup opens.
+   * Can be either trigger DOM element itself or the element inside it.
+   */
+  private updateTriggerFocusableDomElement() {
+    this.triggerFocusableDomElement = this.triggerDomElement.contains(document.activeElement)
+      ? document.activeElement
+      : this.triggerDomElement
   }
 }
