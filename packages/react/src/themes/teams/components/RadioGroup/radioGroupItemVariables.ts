@@ -11,13 +11,13 @@ export type RadioGroupItemVariables = {
 }
 
 export default (siteVars: any): RadioGroupItemVariables => ({
-  color: siteVars.brand,
+  color: siteVars.colors.primary[500],
   colorChecked: siteVars.colors.white,
   colorDisabled: siteVars.gray06,
 
-  colorBorder: siteVars.brand,
+  colorBorder: siteVars.colors.primary[500],
   colorBorderChecked: siteVars.colors.white,
 
   colorBackground: siteVars.colors.white,
-  colorBackgroundChecked: siteVars.brand,
+  colorBackgroundChecked: siteVars.colors.primary[500],
 })
