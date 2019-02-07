@@ -6,9 +6,6 @@ import { UIComponent, commonPropTypes } from '../../lib'
 import { ReactProps } from '../../types'
 import FlexItem from './FlexItem'
 
-export type FlexGap = 'gap.small' | 'gap.medium' | 'gap.large'
-export type FlexPadding = 'padding.medium'
-
 export interface FlexProps {
   /** Defines if container should be inline element. */
   inline?: boolean
@@ -29,10 +26,10 @@ export interface FlexProps {
   space?: 'around' | 'between' | 'evenly'
 
   /** Defines gap between each two adjacent child items. */
-  gap?: FlexGap
+  gap?: 'gap.small' | 'gap.medium' | 'gap.large'
 
   /** Defines container's padding. */
-  padding?: FlexPadding
+  padding?: 'padding.medium'
 
   /** Enables debug mode. */
   debug?: boolean
