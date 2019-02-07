@@ -8,9 +8,9 @@ const DropdownExampleLoading: React.FC<{ knobs: { loading: boolean } }> = ({ kno
     loading={knobs.loading}
     loadingMessage="Loading..."
     multiple
+    search
     items={inputItems}
     placeholder="Start typing a name"
-    search
   />
 )
 
