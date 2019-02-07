@@ -174,7 +174,7 @@ export interface DropdownState {
  */
 class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, DropdownState> {
   private buttonRef = React.createRef<HTMLElement>()
-  private inputRef = React.createRef<HTMLElement>()
+  private inputRef = React.createRef<HTMLInputElement>()
   private listRef = React.createRef<HTMLElement>()
   private selectedItemsRef = React.createRef<HTMLDivElement>()
 
@@ -672,12 +672,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           break
         case keyboardKey.ArrowLeft:
           if (!rtl) {
-            this.setActiveIndexToLastSelectedItem()
+            this.trySetLastSelectedItemAsActive()
           }
           break
         case keyboardKey.ArrowRight:
           if (rtl) {
-            this.setActiveIndexToLastSelectedItem()
+            this.trySetLastSelectedItemAsActive()
           }
           break
         case keyboardKey.Backspace:
@@ -731,7 +731,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
   }
 
-  private setActiveIndexToLastSelectedItem = () => {
+  private trySetLastSelectedItemAsActive = () => {
+    if (this.inputRef.current.selectionStart !== 0) {
+      return
+    }
     const { value } = this.state as { value: ShorthandValue[] }
     if (this.props.multiple && value.length > 0) {
       this.trySetState({ activeIndex: value.length - 1 })
@@ -746,12 +749,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     switch (keyboardKey.getCode(e)) {
       case keyboardKey.ArrowLeft:
         if (!rtl) {
-          this.setActiveIndexToLastSelectedItem()
+          this.trySetLastSelectedItemAsActive()
         }
         break
       case keyboardKey.ArrowRight:
         if (rtl) {
-          this.setActiveIndexToLastSelectedItem()
+          this.trySetLastSelectedItemAsActive()
         }
         break
       default:
@@ -849,6 +852,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
               activeIndex: null,
             })
             if (this.props.search) {
+              e.preventDefault() // prevents caret to forward one position in input.
               this.inputRef.current.focus()
             } else {
               this.buttonRef.current.focus()
