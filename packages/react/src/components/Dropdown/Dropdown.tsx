@@ -312,7 +312,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                           selectItemAtIndex,
                           variables,
                         )
-                      : this.renderTriggerButton(styles, getToggleButtonProps)}
+                      : this.renderTriggerButton(styles, rtl, getToggleButtonProps)}
                   </div>
                   {Indicator.create(toggleIndicator, {
                     defaultProps: {
@@ -343,6 +343,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   private renderTriggerButton(
     styles: ComponentSlotStylesInput,
+    rtl: boolean,
     getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
   ): JSX.Element {
     const content = this.getSelectedItemAsString(this.state.value)
@@ -361,6 +362,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
               },
               onBlur: () => {
                 this.setState({ focused: false })
+              },
+              onKeyDown: e => {
+                this.handleTriggerButtonKeyDown(e, rtl)
               },
               'aria-label': content,
             }),
@@ -666,14 +670,14 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             selectItemAtIndex(highlightedIndex)
           }
           break
-        case rtl ? keyboardKey.ArrowRight : keyboardKey.ArrowLeft:
-          if (multiple) {
-            const { value } = this.state as { value: ShorthandValue[] }
-            if (value.length > 0) {
-              this.trySetState({
-                activeIndex: value.length - 1,
-              })
-            }
+        case keyboardKey.ArrowLeft:
+          if (!rtl) {
+            this.setActiveIndexToLastSelectedItem()
+          }
+          break
+        case keyboardKey.ArrowRight:
+          if (rtl) {
+            this.setActiveIndexToLastSelectedItem()
           }
           break
         case keyboardKey.Backspace:
@@ -727,8 +731,32 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
   }
 
+  private setActiveIndexToLastSelectedItem = () => {
+    const { value } = this.state as { value: ShorthandValue[] }
+    if (this.props.multiple && value.length > 0) {
+      this.trySetState({ activeIndex: value.length - 1 })
+    }
+  }
+
   private handleContainerClick = () => {
     this.tryFocusSearchInput()
+  }
+
+  private handleTriggerButtonKeyDown = (e: React.SyntheticEvent, rtl: boolean) => {
+    switch (keyboardKey.getCode(e)) {
+      case keyboardKey.ArrowLeft:
+        if (!rtl) {
+          this.setActiveIndexToLastSelectedItem()
+        }
+        break
+      case keyboardKey.ArrowRight:
+        if (rtl) {
+          this.setActiveIndexToLastSelectedItem()
+        }
+        break
+      default:
+        break
+    }
   }
 
   private handleListKeyDown = (
@@ -820,7 +848,11 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             this.trySetState({
               activeIndex: null,
             })
-            this.inputRef.current.focus()
+            if (this.props.search) {
+              this.inputRef.current.focus()
+            } else {
+              this.buttonRef.current.focus()
+            }
           }
         }
         break
