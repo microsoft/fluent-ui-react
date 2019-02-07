@@ -1,10 +1,12 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
+import cx from 'classnames'
 
 import { UIComponent, commonPropTypes } from '../../lib'
 import { ReactProps } from '../../types'
 import FlexItem from './FlexItem'
+import FlexGap from './FlexGap'
 
 export interface FlexProps {
   /** Defines if container should be inline element. */
@@ -42,9 +44,9 @@ export interface FlexProps {
  * Arrange group of items aligned towards common direction.
  */
 class Flex extends UIComponent<ReactProps<FlexProps>> {
-  static Item: typeof FlexItem
+  static Item = FlexItem
 
-  static Gap: any
+  static Gap = FlexGap
 
   static displayName = 'Flex'
   static className = 'ui-flex'
@@ -69,15 +71,23 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
 
     space: PropTypes.oneOf(['around', 'between', 'evenly']),
 
-    gap: PropTypes.string,
+    gap: PropTypes.oneOf(['gap.small', 'gap.medium', 'gap.large']),
 
-    padding: PropTypes.string,
+    padding: PropTypes.oneOf(['padding.medium']),
     fill: PropTypes.bool,
 
     debug: PropTypes.bool,
   }
 
-  renderChildren = gapClasses => {
+  renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
+    return (
+      <ElementType className={classes.root} {...unhandledProps}>
+        {this.renderChildren(classes.gap)}
+      </ElementType>
+    )
+  }
+
+  renderChildren = (gapClasses: string) => {
     const { column, gap, children } = this.props
 
     return React.Children.map(children, (child: React.ReactElement<any>, index) => {
@@ -91,23 +101,12 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
       const renderGap = index !== 0
       return (
         <>
-          {renderGap && gap && <Flex.Gap className={gapClasses} />}
+          {renderGap && gap && <Flex.Gap className={cx(`${Flex.className}__gap`, gapClasses)} />}
           {childElement}
         </>
       )
     })
   }
-
-  renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
-    return (
-      <ElementType className={classes.root} {...unhandledProps}>
-        {this.renderChildren(classes.gap)}
-      </ElementType>
-    )
-  }
 }
-
-Flex.Item = FlexItem
-Flex.Gap = ({ className }) => <div className={className} />
 
 export default Flex
