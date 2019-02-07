@@ -160,7 +160,6 @@ export interface DropdownState {
   isOpen?: boolean
   value: ShorthandValue | ShorthandValue[]
   activeIndex: number
-  backspaceDelete: boolean
   focused: boolean
   searchQuery?: string
   defaultHighlightedIndex: number
@@ -244,8 +243,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   getInitialAutoControlledState({ multiple, search }: DropdownProps): DropdownState {
     return {
       activeIndex: multiple ? null : undefined,
-      // prevent deletion of last character + last selected value at the same time on backspace.
-      backspaceDelete: multiple,
       focused: false,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
@@ -539,9 +536,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         this.trySetState({
           searchQuery: changes.inputValue,
         })
-        this.setState({
-          backspaceDelete: !(state.inputValue.length > 0 && changes.inputValue.length === 0),
-        })
         _.invoke(
           this.props,
           'onSearchQueryChange',
@@ -651,7 +645,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     accessibilityComboboxProps: Object,
     getInputProps: (options?: GetInputPropsOptions) => any,
   ) => {
-    const { multiple } = this.props
     const handleInputBlur = (
       e: React.SyntheticEvent,
       searchInputProps: DropdownSearchInputProps,
@@ -681,15 +674,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           }
           break
         case keyboardKey.Backspace:
-          const { searchQuery, value, backspaceDelete } = this.state
-
-          if (multiple && searchQuery === '' && (value as ShorthandValue[]).length > 0) {
-            if (backspaceDelete) {
-              this.removeItemFromValue()
-            } else {
-              this.setState({ backspaceDelete: true })
-            }
-          }
+          this.tryRemoveItemFromValue()
           break
         default:
           break
@@ -738,6 +723,19 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     const { value } = this.state as { value: ShorthandValue[] }
     if (this.props.multiple && value.length > 0) {
       this.trySetState({ activeIndex: value.length - 1 })
+    }
+  }
+
+  private tryRemoveItemFromValue = () => {
+    const { searchQuery, value } = this.state
+    const { multiple } = this.props
+
+    if (
+      multiple &&
+      (searchQuery === '' || this.inputRef.current.selectionStart === 0) &&
+      (value as ShorthandValue[]).length > 0
+    ) {
+      this.removeItemFromValue()
     }
   }
 
