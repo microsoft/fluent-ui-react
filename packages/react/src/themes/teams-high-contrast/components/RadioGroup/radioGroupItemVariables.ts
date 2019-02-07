@@ -8,6 +8,7 @@ export type RadioGroupItemVariables = {
 
   colorBackground: string
   colorBackgroundChecked: string
+  colorFocusShadow: string
 }
 
 export default (siteVars: any): RadioGroupItemVariables => ({
@@ -15,9 +16,10 @@ export default (siteVars: any): RadioGroupItemVariables => ({
   colorChecked: siteVars.white,
   colorDisabled: siteVars.gray06,
 
-  colorBorder: siteVars.brand,
-  colorBorderChecked: siteVars.white,
+  colorBorder: siteVars.white,
+  colorBorderChecked: siteVars.accessibleCyan,
 
   colorBackground: siteVars.white,
-  colorBackgroundChecked: siteVars.brand,
+  colorBackgroundChecked: siteVars.accessibleCyan,
+  colorFocusShadow: siteVars.accessibleYellow,
 })
