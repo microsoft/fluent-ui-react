@@ -167,7 +167,7 @@ export const colors: ColorPalette = {
   white: naturalColors.grey[50],
 }
 
-const primitiveColorsScheme = {
+const primitiveColorsScheme: Record<keyof PrimitiveColors, ColorScheme> = {
   black: {
     foreground: colors.white,
     border: colors.white,
