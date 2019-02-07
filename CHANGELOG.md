@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Removed colors from `siteVariables` in Teams theme @mnajdova ([#858](https://github.com/stardust-ui/react/pull/858))
+
 ### Features
 - Add single search flavor for `Dropdown` component @Bugaa92 ([#839](https://github.com/stardust-ui/react/pull/839))
 - Add multiple selection flavor for `Dropdown` component @Bugaa92 ([#845](https://github.com/stardust-ui/react/pull/845))
