@@ -5,7 +5,12 @@ import { UIComponent, commonPropTypes } from '../../lib'
 import { mergeStyles } from '../../lib/mergeThemes'
 import { Extendable } from '../../types'
 
-export type FlexItemSize = 'size.half' | 'size.quarter' | 'size.small' | 'size.medium'
+export type FlexItemSize =
+  | 'size.half'
+  | 'size.quarter'
+  | 'size.small'
+  | 'size.medium'
+  | 'size.large'
 
 export interface FlexItemProps {
   /** Controls item's alignment. */
