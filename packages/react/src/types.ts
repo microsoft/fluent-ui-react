@@ -19,6 +19,8 @@ export type ObjectOf<T> = { [key: string]: T }
 
 export type ObjectOrFunc<TResult, TArg = {}> = ((arg: TArg) => TResult) | TResult
 
+export type ValueOf<T> = T[keyof T]
+
 // ========================================================
 // Props
 // ========================================================

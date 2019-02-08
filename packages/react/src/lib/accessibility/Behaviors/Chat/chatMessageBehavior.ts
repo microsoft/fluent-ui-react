@@ -1,7 +1,7 @@
 import { Accessibility, FocusZoneMode } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as keyboardKey from 'keyboard-key'
-import { FocusZoneTabbableElements, FocusZoneDirection } from '../../FocusZone'
+import { focusZoneTabbableElements, FocusZoneDirection } from '../../FocusZone'
 
 /**
  * @description
@@ -18,7 +18,7 @@ const chatMessageBehavior: Accessibility = (props: any) => ({
   focusZone: {
     mode: FocusZoneMode.Embed,
     props: {
-      handleTabKey: FocusZoneTabbableElements.all,
+      handleTabKey: focusZoneTabbableElements.all,
       isCircularNavigation: true,
       direction: FocusZoneDirection.vertical,
     },
