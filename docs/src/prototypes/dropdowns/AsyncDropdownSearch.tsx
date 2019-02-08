@@ -1,4 +1,4 @@
-import { Divider, Dropdown, DropdownProps, Header, Loader, Segment } from '@stardust-ui/react'
+import { Divider, Dropdown, DropdownProps, Loader } from '@stardust-ui/react'
 import * as faker from 'faker'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -68,33 +68,26 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
     const { items, loading, searchQuery, value } = this.state
 
     return (
-      <div style={{ margin: 20 }}>
-        <Segment>
-          <Header content="Async Dropdown Search" />
-          <p>Use the field to perform a simulated search.</p>
-        </Segment>
-
-        <Segment>
-          <Dropdown
-            fluid
-            items={items}
-            loading={loading}
-            loadingMessage={{
-              content: <Loader label="Loading..." labelPosition="end" size="larger" />,
-            }}
-            multiple
-            onSearchQueryChange={this.handleSearchQueryChange}
-            onSelectedChange={this.handleSelectedChange}
-            placeholder="Try to enter something..."
-            search
-            searchQuery={searchQuery}
-            toggleIndicator={false}
-            value={value}
-          />
-          <Divider />
-          <CodeSnippet mode="json" value={this.state} />
-        </Segment>
-      </div>
+      <>
+        <Dropdown
+          fluid
+          items={items}
+          loading={loading}
+          loadingMessage={{
+            content: <Loader label="Loading..." labelPosition="end" size="larger" />,
+          }}
+          multiple
+          onSearchQueryChange={this.handleSearchQueryChange}
+          onSelectedChange={this.handleSelectedChange}
+          placeholder="Try to enter something..."
+          search
+          searchQuery={searchQuery}
+          toggleIndicator={false}
+          value={value}
+        />
+        <Divider />
+        <CodeSnippet mode="json" value={this.state} />
+      </>
     )
   }
 }
