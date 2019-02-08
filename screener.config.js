@@ -4,9 +4,16 @@ const _ = require('lodash')
 const glob = require('glob')
 const path = require('path')
 const fs = require('fs')
+const tsPaths = require('tsconfig-paths')
+const Steps = require('screener-runner/src/steps')
 
 const { default: config } = require('./config')
-const Steps = require('screener-runner/src/steps')
+const { compilerOptions } = require('./build/tsconfig.common.json')
+
+tsPaths.register({
+  baseUrl: config.path_base,
+  paths: compilerOptions.paths,
+})
 
 const SCREENER_HOST_URL = `${config.server_host}:${config.server_port}`
 

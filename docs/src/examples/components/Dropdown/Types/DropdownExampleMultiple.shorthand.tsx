@@ -13,14 +13,13 @@ const inputItems = [
   'Selina Kyle',
 ]
 
-const DropdownExample = () => (
+const DropdownExampleMultiple = () => (
   <Dropdown
-    getA11ySelectionMessage={{
-      onAdd: item => `${item} has been selected.`,
-    }}
-    placeholder="Select your hero"
+    multiple
     items={inputItems}
+    placeholder="Select your heroes"
+    noResultsMessage="We couldn't find any matches."
   />
 )
 
-export default DropdownExample
+export default DropdownExampleMultiple
