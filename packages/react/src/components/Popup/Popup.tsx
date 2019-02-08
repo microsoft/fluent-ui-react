@@ -477,7 +477,9 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
   private trySetOpen(newValue: boolean, eventArgs: any) {
     // when new state 'open' === 'true', save the last focused element
-    newValue && this.updateTriggerFocusableDomElement()
+    if (newValue) {
+      this.updateTriggerFocusableDomElement()
+    }
     this.trySetState({ open: newValue })
     _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
   }
