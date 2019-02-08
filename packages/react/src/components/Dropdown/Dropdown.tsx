@@ -82,6 +82,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    */
   getA11yStatusMessage?: (options: DownshiftA11yStatusMessageOptions<ShorthandValue>) => string
 
+  /** A dropdown can be formatted to appear inline in the content of other components. */
+  inline?: boolean
+
   /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.SelectedItem[]), if it's a multiple selection. */
   items?: ShorthandValue[]
 
@@ -198,6 +201,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     fluid: PropTypes.bool,
     getA11ySelectionMessage: PropTypes.object,
     getA11yStatusMessage: PropTypes.func,
+    inline: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
     loading: PropTypes.bool,
@@ -343,11 +347,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     rtl: boolean,
     getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
   ): JSX.Element {
+    const { triggerButton } = this.props
     const content = this.getSelectedItemAsString(this.state.value)
 
     return (
       <Ref innerRef={this.buttonRef}>
-        {Button.create(this.props.triggerButton, {
+        {Button.create(triggerButton, {
           defaultProps: {
             className: Dropdown.slotClassNames.triggerButton,
             content,
@@ -383,7 +388,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     ) => void,
     variables,
   ): JSX.Element {
-    const { searchInput, multiple, placeholder } = this.props
+    const { inline, searchInput, multiple, placeholder } = this.props
     const { searchQuery, value } = this.state
 
     const noPlaceholder =
@@ -392,6 +397,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     return DropdownSearchInput.create(searchInput || {}, {
       defaultProps: {
         placeholder: noPlaceholder ? '' : placeholder,
+        inline,
         variables,
         inputRef: this.inputRef,
       },

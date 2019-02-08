@@ -24,6 +24,11 @@ const Types = () => (
       description="A dropdown can be searchable and allow a multiple selection."
       examplePath="components/Dropdown/Types/DropdownExampleSearchMultiple"
     />
+    <ComponentExample
+      title="Inline"
+      description="A dropdown can be used inline with text."
+      examplePath="components/Dropdown/Types/DropdownExampleInline"
+    />
   </ExampleSection>
 )
 
