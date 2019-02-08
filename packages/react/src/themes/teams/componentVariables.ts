@@ -15,6 +15,9 @@ export { default as Divider } from './components/Divider/dividerVariables'
 
 export { default as Dropdown } from './components/Dropdown/dropdownVariables'
 
+export { default as Flex } from './components/Flex/flexVariables'
+export { default as FlexItem } from './components/Flex/flexItemVariables'
+
 export { default as Grid } from './components/Grid/gridVariables'
 
 export { default as Header } from './components/Header/headerVariables'
