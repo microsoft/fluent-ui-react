@@ -113,7 +113,7 @@ yarn test:watch
 
 ## Screener Tests
 
-For some components, it is necessary to write screenshot tests in order to check they render properly. For each component added to the docsite, a screenshot test is automatically created. This checks if that the component is rendered in a consistent way, as it checks the visual differences between the previous and the current rendering. We use [screener-io](https://screener.io/) to achieve this.
+For some components, it is necessary to write screenshot tests in order to check they render properly. For each component example added to the docsite a screenshot test is automatically created. This checks if that the component is rendered in a consistent way, as it checks the visual differences between the previous and the current rendering. We use [screener-io](https://screener.io/) to achieve this.
 
 ### Tests with Steps API
 
