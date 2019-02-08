@@ -1,6 +1,6 @@
 {
   "name": "@stardust-ui/react",
-  "version": "0.19.2",
+  "version": "0.20.0",
   "description": "A themable React component library.",
   "license": "MIT",
   "author": "Levi Thomason <me@levithomason.com>",
@@ -24,7 +24,7 @@
     "build": "gulp bundle --package react --umd"
   },
   "dependencies": {
-    "@stardust-ui/react-proptypes": "^0.19.2",
+    "@stardust-ui/react-proptypes": "^0.20.0",
     "classnames": "^2.2.5",
     "downshift": "^3.2.0",
     "fela": "^10.1.3",
