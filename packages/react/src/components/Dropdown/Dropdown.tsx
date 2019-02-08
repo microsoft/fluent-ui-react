@@ -717,11 +717,14 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private trySetLastSelectedItemAsActive = () => {
-    if (this.inputRef.current && this.inputRef.current.selectionStart !== 0) {
+    if (
+      !this.props.multiple ||
+      (this.inputRef.current && this.inputRef.current.selectionStart !== 0)
+    ) {
       return
     }
     const { value } = this.state as { value: ShorthandValue[] }
-    if (this.props.multiple && value.length > 0) {
+    if (value.length > 0) {
       this.trySetState({ activeSelectedIndex: value.length - 1 })
     }
   }
@@ -749,14 +752,14 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         if (!rtl) {
           this.trySetLastSelectedItemAsActive()
         }
-        break
+        return
       case keyboardKey.ArrowRight:
         if (rtl) {
           this.trySetLastSelectedItemAsActive()
         }
-        break
+        return
       default:
-        break
+        return
     }
   }
 
