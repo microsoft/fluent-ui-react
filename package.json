@@ -66,6 +66,7 @@
   "homepage": "https://github.com/stardust-ui/react#readme",
   "dependencies": {
     "classnames": "^2.2.5",
+    "css-shorthand-expand": "^1.2.0",
     "downshift": "^3.2.0",
     "fela": "^10.1.3",
     "fela-plugin-fallback-value": "^10.1.3",

@@ -1,5 +1,6 @@
 import { createRenderer } from 'fela'
 import felaSanitizeCss from './felaSanitizeCssPlugin'
+import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
 import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
 import felaPluginPrefixer from 'fela-plugin-prefixer'
@@ -18,6 +19,7 @@ const createRendererConfig = (options: any = {}) => ({
       skip: ['content'],
     }),
 
+    felaExpandCssShorthandsPlugin(),
     felaPluginPlaceholderPrefixer(),
     felaPluginPrefixer(),
 
