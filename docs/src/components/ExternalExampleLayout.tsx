@@ -1,3 +1,4 @@
+import { Provider } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -11,7 +12,6 @@ import {
 } from 'docs/src/utils'
 import PageNotFound from '../views/PageNotFound'
 import { babelConfig, importResolver } from './Playground/renderConfig'
-import Provider from '../../../src/components/Provider/Provider'
 
 const examplePaths = exampleSourcesContext.keys()
 

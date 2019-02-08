@@ -49,14 +49,14 @@ const inputItems = [
   },
 ]
 
-const DropdownExample = () => (
+const DropdownExampleMultipleSearchImageAndContent = () => (
   <Dropdown
     multiple
     search
+    items={inputItems}
+    placeholder="Start typing a name"
     getA11ySelectionMessage={getA11ySelectionMessage}
     noResultsMessage="We couldn't find any matches."
-    placeholder="Start typing a name"
-    items={inputItems}
   />
 )
 
@@ -65,4 +65,4 @@ const getA11ySelectionMessage = {
   onRemove: item => `${item.header} has been removed.`,
 }
 
-export default DropdownExample
+export default DropdownExampleMultipleSearchImageAndContent

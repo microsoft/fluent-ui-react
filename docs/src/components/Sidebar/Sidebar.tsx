@@ -327,6 +327,14 @@ class Sidebar extends React.Component<any, any> {
                   >
                     Chat pane header
                   </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/important-and-mention-messages"
+                    activeClassName="active"
+                  >
+                    Important and mention messages
+                  </Menu.Item>
                 </Menu.Menu>
               </Menu.Item>
             )}
