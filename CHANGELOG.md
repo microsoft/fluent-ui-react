@@ -26,6 +26,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `black` and `white` options for the `color` prop of the `Label` component @mnajdova ([#855](https://github.com/stardust-ui/react/pull/855))
 - Add `Flex` component @kuzhelov ([#802](https://github.com/stardust-ui/react/pull/802))
 - Add `inline` prop for `Dropdown` component @Bugaa92 ([#863](https://github.com/stardust-ui/react/pull/863))
+- Add basic animation for Teams theme @mnajdova ([#870](https://github.com/stardust-ui/react/pull/870))
 
 ### Fixes
 - Focus the last focused element which triggered `Popup` on ESC @sophieH29 ([#861](https://github.com/stardust-ui/react/pull/861))
