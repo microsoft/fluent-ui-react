@@ -22,12 +22,12 @@ const radioStyles: ComponentSlotStylesInput<
 
   label: ({ props: p, variables: v }): ICSSInJSStyle => ({
     backgroundColor: 'transparent',
-    color: p.checked ? v.colorChecked : v.color,
+    color: p.checked ? v.labelColorChecked : v.labelColorDefault,
     ':hover': {
-      color: v.colorChecked,
+      color: v.labelColorChecked,
     },
     ':focus': {
-      color: v.colorChecked,
+      color: v.labelColorChecked,
     },
     ...(p.disabled && {
       color: v.colorDisabled,
@@ -39,16 +39,18 @@ const radioStyles: ComponentSlotStylesInput<
 
   icon: ({ props: p, variables: v }): ICSSInJSStyle => ({
     margin: `0 ${pxToRem(12)} 0 0`,
-    backgroundColor: p.checked ? v.colorBackgroundChecked : 'transparent',
+    backgroundColor: p.checked ? v.iconColorBackgroundChecked : 'transparent',
     height: `${pxToRem(12)}`,
     width: `${pxToRem(12)}`,
     boxShadow: 'none',
-    border: `${pxToRem(1)} solid ${p.checked ? v.colorBorderChecked : v.colorBorder}`,
+    border: `${pxToRem(1)} solid ${
+      p.checked ? v.iconColorBorderChecked : v.iconColorBorderDefault
+    }`,
     ':hover': {
-      borderColor: v.colorChecked,
+      borderColor: v.iconColorBorderChecked,
     },
     ':focus': {
-      borderColor: v.colorChecked,
+      borderColor: v.iconColorBorderChecked,
     },
     ...(p.disabled && {
       borderColor: v.colorDisabled,
@@ -57,8 +59,8 @@ const radioStyles: ComponentSlotStylesInput<
       },
     }),
     ...(p.isFromKeyboard && {
-      borderColor: v.colorBorderChecked,
-      boxShadow: `0 0 0 ${pxToRem(2)} ${v.colorFocusShadow}`,
+      borderColor: v.iconColorBorderChecked,
+      boxShadow: `0 0 0 ${pxToRem(2)} ${v.iconColorBoxShadowFocus}`,
     }),
   }),
 }

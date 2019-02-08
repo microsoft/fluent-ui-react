@@ -1,23 +1,15 @@
-export type RadioGroupItemVariables = {
-  color: string
-  colorChecked: string
-  colorDisabled: string
+export default (siteVars: any) => {
+  return {
+    labelColorDefault: siteVars.gray02,
+    labelColorChecked: siteVars.white,
 
-  colorBorder: string
-  colorBorderChecked: string
+    iconColorBorderDefault: siteVars.brand,
+    iconColorBorderChecked: siteVars.brand,
 
-  colorBackground: string
-  colorBackgroundChecked: string
+    iconcolorBackgroundDefault: siteVars.white,
+    iconColorBackgroundChecked: siteVars.brand,
+    iconColorBoxShadowFocus: '#a6a7dc', // brand06 dark theme
+
+    colorDisabled: siteVars.gray06,
+  }
 }
-
-export default (siteVars: any): RadioGroupItemVariables => ({
-  color: siteVars.brand,
-  colorChecked: siteVars.gray02,
-  colorDisabled: siteVars.gray06,
-
-  colorBorder: siteVars.brand,
-  colorBorderChecked: siteVars.white,
-
-  colorBackground: siteVars.white,
-  colorBackgroundChecked: siteVars.brand,
-})
