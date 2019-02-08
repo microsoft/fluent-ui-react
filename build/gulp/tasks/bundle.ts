@@ -12,7 +12,7 @@ const g = require('gulp-load-plugins')()
 const { log, PluginError } = g.util
 
 const buildUMD = !!argv.umd
-const packageName: string = argv.package
+const packageName: string = argv.package || 'react'
 
 // ----------------------------------------
 // Clean
@@ -35,7 +35,7 @@ task('bundle:clean', parallel('bundle:clean:es', 'bundle:clean:commonjs', 'bundl
 // ----------------------------------------
 // Build
 // ----------------------------------------
-const createComponentSrc = () => [
+const componentsSrc = [
   paths.packageSrc(packageName, '**/*.{ts,tsx}'),
   `!${paths.packageSrc(packageName, '**/umd.ts')}`,
 ]
@@ -45,7 +45,7 @@ task('bundle:build:commonjs', () => {
   const settings = { declaration: true }
 
   const typescript = g.typescript.createProject(tsConfig, settings)
-  const { dts, js } = src(createComponentSrc()).pipe(typescript())
+  const { dts, js } = src(componentsSrc).pipe(typescript())
 
   return merge2([
     dts.pipe(dest(paths.packageDist(packageName, 'commonjs'))),
@@ -58,7 +58,7 @@ task('bundle:build:es', () => {
   const settings = { declaration: true }
 
   const typescript = g.typescript.createProject(tsConfig, settings)
-  const { dts, js } = src(createComponentSrc()).pipe(typescript())
+  const { dts, js } = src(componentsSrc).pipe(typescript())
 
   return merge2([
     dts.pipe(dest(paths.packageDist(packageName, 'es'))),
