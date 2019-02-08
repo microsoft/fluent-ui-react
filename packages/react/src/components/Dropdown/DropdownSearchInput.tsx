@@ -73,7 +73,7 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
     }),
     accessibilityInputProps: PropTypes.object,
     accessibilityComboboxProps: PropTypes.object,
-    hasToggleButton: PropTypes.bool,
+    inline: PropTypes.bool,
     inputRef: customPropTypes.ref,
     onFocus: PropTypes.func,
     onInputBlur: PropTypes.func,
