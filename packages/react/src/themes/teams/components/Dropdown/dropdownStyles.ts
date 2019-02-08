@@ -117,7 +117,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     fontWeight: 'bold',
   }),
 
-  toggleIndicator: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  toggleIndicator: ({ variables: v }): ICSSInJSStyle => ({
     position: 'absolute',
     height: v.toggleIndicatorSize,
     width: v.toggleIndicatorSize,
