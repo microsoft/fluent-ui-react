@@ -48,10 +48,10 @@ export interface DropdownSlotClassNames {
 
 export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownState> {
   /** The index of the currently active selected item, if dropdown has a multiple selection. */
-  activeIndex?: number
+  activeSelectedIndex?: number
 
   /** The initial value for the index of the currently active selected item, in a multiple selection. */
-  defaultActiveIndex?: number
+  defaultActiveSelectedIndex?: number
 
   /** The initial value for the search query, if the dropdown is also a search. */
   defaultSearchQuery?: string
@@ -157,12 +157,12 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 }
 
 export interface DropdownState {
-  isOpen?: boolean
-  value: ShorthandValue | ShorthandValue[]
-  activeIndex: number
-  focused: boolean
-  searchQuery?: string
+  activeSelectedIndex: number
   defaultHighlightedIndex: number
+  focused: boolean
+  isOpen?: boolean
+  searchQuery?: string
+  value: ShorthandValue | ShorthandValue[]
 }
 
 /**
@@ -188,8 +188,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       children: false,
       content: false,
     }),
-    activeIndex: PropTypes.number,
-    defaultActiveIndex: PropTypes.number,
+    activeSelectedIndex: PropTypes.number,
+    defaultActiveSelectedIndex: PropTypes.number,
     defaultSearchQuery: PropTypes.string,
     defaultValue: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
@@ -234,7 +234,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     triggerButton: {},
   }
 
-  static autoControlledProps = ['activeIndex', 'searchQuery', 'value']
+  static autoControlledProps = ['activeSelectedIndex', 'searchQuery', 'value']
 
   static Item = DropdownItem
   static SearchInput = DropdownSearchInput
@@ -242,12 +242,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   getInitialAutoControlledState({ multiple, search }: DropdownProps): DropdownState {
     return {
-      activeIndex: multiple ? null : undefined,
+      activeSelectedIndex: multiple ? null : undefined,
+      // used on single selection to open the dropdown with the selected option as highlighted.
+      defaultHighlightedIndex: this.props.multiple ? undefined : null,
       focused: false,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
-      // used on single selection to open the dropdown with the selected option as highlighted.
-      defaultHighlightedIndex: this.props.multiple ? undefined : null,
     }
   }
 
@@ -603,7 +603,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private isSelectedItemActive = (index: number): boolean => {
-    return index === this.state.activeIndex
+    return index === this.state.activeSelectedIndex
   }
 
   private handleItemOverrides = (
@@ -623,7 +623,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     onClick: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
       const { value } = this.state as { value: ShorthandValue[] }
       this.trySetState({
-        activeIndex: value.indexOf(item),
+        activeSelectedIndex: value.indexOf(item),
       })
       e.stopPropagation()
       _.invoke(predefinedProps, 'onClick', e, DropdownSelectedItemProps)
@@ -722,7 +722,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
     const { value } = this.state as { value: ShorthandValue[] }
     if (this.props.multiple && value.length > 0) {
-      this.trySetState({ activeIndex: value.length - 1 })
+      this.trySetState({ activeSelectedIndex: value.length - 1 })
     }
   }
 
@@ -823,7 +823,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     DropdownSelectedItemProps: DropdownSelectedItemProps,
     rtl: boolean,
   ) {
-    const { activeIndex, value } = this.state as { activeIndex: number; value: ShorthandValue[] }
+    const { activeSelectedIndex, value } = this.state as {
+      activeSelectedIndex: number
+      value: ShorthandValue[]
+    }
     const previousKey = rtl ? keyboardKey.ArrowRight : keyboardKey.ArrowLeft
     const nextKey = rtl ? keyboardKey.ArrowLeft : keyboardKey.ArrowRight
 
@@ -833,21 +836,21 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         this.handleSelectedItemRemove(e, item, predefinedProps, DropdownSelectedItemProps)
         break
       case previousKey:
-        if (value.length > 0 && !_.isNil(activeIndex) && activeIndex > 0) {
+        if (value.length > 0 && !_.isNil(activeSelectedIndex) && activeSelectedIndex > 0) {
           this.trySetState({
-            activeIndex: activeIndex - 1,
+            activeSelectedIndex: activeSelectedIndex - 1,
           })
         }
         break
       case nextKey:
-        if (value.length > 0 && !_.isNil(activeIndex)) {
-          if (activeIndex < value.length - 1) {
+        if (value.length > 0 && !_.isNil(activeSelectedIndex)) {
+          if (activeSelectedIndex < value.length - 1) {
             this.trySetState({
-              activeIndex: activeIndex + 1,
+              activeSelectedIndex: activeSelectedIndex + 1,
             })
           } else {
             this.trySetState({
-              activeIndex: null,
+              activeSelectedIndex: null,
             })
             if (this.props.search) {
               e.preventDefault() // prevents caret to forward one position in input.
@@ -871,7 +874,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     DropdownSelectedItemProps: DropdownSelectedItemProps,
   ) {
     this.trySetState({
-      activeIndex: null,
+      activeSelectedIndex: null,
     })
     this.removeItemFromValue(item)
     this.tryFocusSearchInput()
