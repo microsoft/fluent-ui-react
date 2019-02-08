@@ -58,6 +58,9 @@ export {
   DropdownSearchInputProps,
 } from './components/Dropdown/DropdownSearchInput'
 
+export { default as Flex, FlexProps } from './components/Flex/Flex'
+export { default as FlexItem, FlexItemProps } from './components/Flex/FlexItem'
+
 export { default as Form, FormProps } from './components/Form/Form'
 export { default as FormField, FormFieldProps } from './components/Form/FormField'
 

@@ -15,17 +15,10 @@ const inputItems = [
 
 const DropdownExample = () => (
   <Dropdown
-    multiple
-    search
-    getA11ySelectionMessage={getA11ySelectionMessage}
-    noResultsMessage="We couldn't find any matches."
-    placeholder="Start typing a name"
     items={inputItems}
+    placeholder="Select your hero"
+    getA11ySelectionMessage={{ onAdd: item => `${item} has been selected.` }}
   />
 )
 
-const getA11ySelectionMessage = {
-  onAdd: item => `${item} has been selected.`,
-  onRemove: item => `${item} has been removed.`,
-}
 export default DropdownExample

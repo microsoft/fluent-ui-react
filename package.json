@@ -1,6 +1,6 @@
 {
   "name": "@stardust-ui/react",
-  "version": "0.19.2",
+  "version": "0.20.0",
   "description": "A themable React component library.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
@@ -82,7 +82,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.0",
     "@babel/preset-typescript": "^7.1.0",
-    "@babel/standalone": "^7.1.0",
+    "@babel/standalone": "^7.3.2",
     "@types/babel__traverse": "^7.0.4",
     "@types/color": "^3.0.0",
     "@types/enzyme": "^3.1.14",
