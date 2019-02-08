@@ -31,7 +31,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
     ...(p.toggleIndicator && { paddingRight: v.toggleIndicatorSize }),
   }),
 
-  button: ({ variables: v }): ICSSInJSStyle => {
+  triggerButton: ({ props: p, variables: v }): ICSSInJSStyle => {
     const transparentColorStyle = {
       backgroundColor: 'transparent',
       borderColor: 'transparent',
@@ -43,6 +43,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
       padding: v.comboboxPaddingButton,
       height: pxToRem(30),
       ...transparentColorStyle,
+      ...(p.multiple && { minWidth: 0, flex: 1 }),
       ':hover': transparentColorStyle,
       ':focus': {
         ...transparentColorStyle,
