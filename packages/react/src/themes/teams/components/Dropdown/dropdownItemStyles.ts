@@ -5,7 +5,10 @@ import ListItem from '../../../../components/List/ListItem'
 
 const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVariables> = {
   root: ({ variables: v, props: { active } }): ICSSInJSStyle => ({
-    [`&.${ListItem.className}`]: { backgroundColor: v.listItemBackgroundColor },
+    [`&.${ListItem.className}`]: {
+      backgroundColor: v.listItemBackgroundColor,
+      whiteSpace: 'nowrap',
+    },
 
     ...(active && {
       [`&.${ListItem.className}`]: {
