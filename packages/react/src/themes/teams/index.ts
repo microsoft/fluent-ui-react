@@ -8,6 +8,7 @@ import * as componentVariables from './componentVariables'
 import * as componentStyles from './componentStyles'
 import fontFaces from './fontFaces'
 import staticStyles from './staticStyles'
+import animations from './animations'
 
 import { default as svgIconsAndStyles } from './components/Icon/svg'
 import { default as fontIcons } from './components/Icon/font'
@@ -44,4 +45,5 @@ export default mergeThemes(base, {
   fontFaces,
   staticStyles,
   icons,
+  animations,
 })
