@@ -26,6 +26,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `black` and `white` options for the `color` prop of the `Label` component @mnajdova ([#855](https://github.com/stardust-ui/react/pull/855))
 - Add `Flex` component @kuzhelov ([#802](https://github.com/stardust-ui/react/pull/802))
 
+### Fixes
+- Focus the last focused element which triggered `Popup` on ESC @sophieH29 ([#861](https://github.com/stardust-ui/react/pull/861))
+
+### Documentation
+- Add screener with steps testing documentation @silviuavram ([#856](https://github.com/stardust-ui/react/pull/856))
+
 <!--------------------------------[ v0.20.0 ]------------------------------- -->
 ## [v0.20.0](https://github.com/stardust-ui/react/tree/v0.20.0) (2019-02-06)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.19.2...v0.20.0)
