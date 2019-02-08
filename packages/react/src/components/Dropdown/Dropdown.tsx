@@ -337,7 +337,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     styles: ComponentSlotStylesInput,
     getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
   ): JSX.Element {
-    const { inline, fluid, triggerButton } = this.props
+    const { triggerButton } = this.props
     const content = this.getSelectedItemAsString(this.state.value)
 
     return (
@@ -346,7 +346,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           defaultProps: {
             className: Dropdown.slotClassNames.triggerButton,
             content,
-            fluid: fluid || !inline,
+            fluid: true,
             styles: styles.triggerButton,
             ...getToggleButtonProps({
               onFocus: () => {

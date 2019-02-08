@@ -3,7 +3,7 @@ import { DropdownProps, DropdownState } from '../../../../components/Dropdown/Dr
 import { DropdownVariables } from './dropdownVariables'
 import { pxToRem } from '../../../../lib'
 
-type Props = DropdownProps & DropdownState
+type DropdownPropsAndState = DropdownProps & DropdownState
 
 const transparentColorStyle: ICSSInJSStyle = {
   backgroundColor: 'transparent',
@@ -21,10 +21,19 @@ const transparentColorStyleObj: ICSSInJSStyle = {
   },
 }
 
-const getWidth = (p: Props, v: DropdownVariables): string =>
-  p.fluid ? '100%' : p.inline ? 'initial' : v.width
+const getWidth = (p: DropdownPropsAndState, v: DropdownVariables): string => {
+  if (p.fluid) {
+    return '100%'
+  }
 
-const dropdownStyles: ComponentSlotStylesInput<Props, DropdownVariables> = {
+  if (p.inline) {
+    return 'initial'
+  }
+
+  return v.width
+}
+
+const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVariables> = {
   root: ({ props: p }): ICSSInJSStyle => ({
     ...(p.inline && {
       display: 'inline-flex',
@@ -78,6 +87,7 @@ const dropdownStyles: ComponentSlotStylesInput<Props, DropdownVariables> = {
       ...(p.inline && {
         paddingLeft: 0,
         paddingRight: 0,
+        width: 'initial',
       }),
     }
   },

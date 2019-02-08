@@ -13,7 +13,7 @@ const inputItems = [
   'Selina Kyle',
 ]
 
-const DropdownExample = () => (
+const DropdownExampleInline = () => (
   <>
     <Header as="h3">Inline:</Header>
     <div>
@@ -35,4 +35,4 @@ const DropdownExample = () => (
   </>
 )
 
-export default DropdownExample
+export default DropdownExampleInline
