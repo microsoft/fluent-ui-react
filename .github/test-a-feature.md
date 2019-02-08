@@ -113,14 +113,14 @@ yarn test:watch
 
 ## Screener Tests
 
-For some components, it is necessary to write screenshot tests in order to check they render properly. For each component example added to the docsite a screenshot test is automatically created. This checks if that the component is rendered in a consistent way, as it checks the visual differences between the previous and the current rendering. We use [screener-io](https://screener.io/) to achieve this.
+For some components, it is necessary to write screenshot tests in order to check that they render properly. For each component example added to the docsite a screenshot test is automatically created. This checks if that the component is rendered in a consistent way, as it looks for visual differences between the previous rendering and the current one. We use [screener-io](https://screener.io/) to achieve screenshot testing.
 
 ### Tests with Steps API
 
-This default test only checks the rendering for the component in its initial state. In order to test the rendering of more complex components, such as a `Dropdown`, screener provides an [api](https://www.npmjs.com/package/screener-runner) to execute actions on the DOM, in a way similar to end-to-end tests. These tests are automatically sent to Screener in our test runs, as long as the tests and their files respect the conventions:
-- the test file should be placed at the same location as the tested component in the docs.
-- the test file should be named exactly as the component file. If `DropdownExample.shorthand.tsx` is to be tested, the screener test file should be `DropdownExample.shorthand.steps.ts`.
-- the tests should be written as an array of callbacks that accept a `steps` parameter, as they will be chained in `screener.config` automatically. The `steps` parameter is actually the `Steps` object from screener, instantiated in `screener.config`.
+This default test only checks the rendering for the component in its initial state. In order to test the rendering of more complex components, such as a `Dropdown`, screener provides an [api](https://www.npmjs.com/package/screener-runner) to execute actions on the DOM, in a way similar to end-to-end tests. These tests are executed by Screener as long as both the tests and their files respect the conventions:
+- the test file should be placed at the same location as the component example under test.
+- the test file should be named exactly as the component example file. If `DropdownExample.shorthand.tsx` is to be tested, the screener test file should be named `DropdownExample.shorthand.steps.ts`.
+- the tests should be written as an array of callbacks that accept a `steps` parameter, as all of them will be chained in `screener.config`. The `steps` parameter is actually the `Steps` object from screener, instantiated in `screener.config`.
 
 #### Example for a test file:
 
@@ -129,9 +129,9 @@ import { Dropdown } from '@stardust-ui/react'
 
 const steps = [
   steps => steps.click(`.${Dropdown.slotClassNames.triggerButton}`)
-    .snapshot('Opens with selected item highlighted'),
+    .snapshot('Opens dropdown list'),
   steps => steps.hover(`.${Dropdown.slotClassNames.itemsList} li:nth-child(2)`)
-    .snapshot('Highlights another item'),
+    .snapshot('Highlights an item'),
 ]
 
 export default steps
