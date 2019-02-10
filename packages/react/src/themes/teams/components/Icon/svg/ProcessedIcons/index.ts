@@ -139,6 +139,7 @@ import processedIcons_manageteams from './icons-manage-teams'
 import processedIcons_lock18 from './icons-lock-18'
 import processedIcons_lock14 from './icons-lock-14'
 import processedIcons_lock from './icons-lock'
+import processedIcons_locknew from './icons-lock-new'
 import processedIcons_locationoff from './icons-location-off'
 import processedIcons_location from './icons-location'
 import processedIcons_link from './icons-link'
@@ -442,6 +443,7 @@ export default {
   processedIcons_lock18,
   processedIcons_lock14,
   processedIcons_lock,
+  processedIcons_locknew,
   processedIcons_locationoff,
   processedIcons_location,
   processedIcons_link,
