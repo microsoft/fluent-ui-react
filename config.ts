@@ -17,7 +17,7 @@ const envConfig = {
   // Project Structure
   // ----------------------------------
   path_base: __dirname,
-  dir_src: 'src',
+  dir_src: 'packages/react/src',
   dir_dist: 'dist',
   dir_dll: 'dll',
   dir_docs_dist: 'docs/dist',

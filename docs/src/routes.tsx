@@ -18,7 +18,7 @@ import IntegrateCustomComponents from './views/IntegrateCustomComponents'
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
     <Switch>
-      <Route exact path="/maximize/:exampleName" component={ExternalExampleLayout} />
+      <Route exact path="/maximize/:exampleName/:rtl?" component={ExternalExampleLayout} />
       <Switch>
         <DocsLayout exact path="/" component={Introduction} />
         <DocsLayout exact path="/:type/:name" component={DocsRoot} sidebar />
@@ -62,6 +62,12 @@ const Router = () => (
           />,
           <DocsLayout
             exact
+            key="/prototype-async-dropdown-search"
+            path="/prototype-async-dropdown-search"
+            component={require('./prototypes/AsyncDropdownSearch/index').default}
+          />,
+          <DocsLayout
+            exact
             key="/prototype-popups"
             path="/prototype-popups"
             component={require('./prototypes/popups/index').default}
@@ -71,6 +77,12 @@ const Router = () => (
             key="/icon-viewer"
             path="/icon-viewer"
             component={require('./prototypes/IconViewer/index').default}
+          />,
+          <DocsLayout
+            exact
+            key="/important-and-mention-messages"
+            path="/important-and-mention-messages"
+            component={require('./prototypes/ImportantAndMentionMessages/index').default}
           />,
         ]}
         <DocsLayout exact path="/accessibility" component={Accessibility} />

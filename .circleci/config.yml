@@ -6,10 +6,18 @@ general:
 jobs:
   build:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:8-browsers
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
+      # https://circleci.com/docs/2.0/api-job-trigger/
+      - run:
+          name: Start Visual Tests job
+          command: |
+            curl --user ${CIRCLE_API_USER_TOKEN} \
+              --data build_parameters[CIRCLE_JOB]=visual \
+              --data revision=$CIRCLE_SHA1 \
+              https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH
       - run:
           name: Update yarn
           command: |
@@ -43,14 +51,9 @@ jobs:
       - run:
           name: Prettier
           command: yarn prettier
-      # weak package is required for --detectLeaks in Unit tests
-      # it is not in package.json as it would require Python on Windows
-      - run:
-          name: Install weak
-          command: yarn add --dev weak
       - run:
           name: Unit Tests
-          command: yarn test --strict --maxWorkers=4 --detectLeaks
+          command: yarn test --strict --maxWorkers=4
       - run:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)
@@ -67,14 +70,22 @@ jobs:
             - .vuln-scans
 
       - run:
-          name: Visual Tests
-          command: yarn test:visual
-      - run:
           name: Project Tests
           command: yarn test:projects
       - run:
           name: Bundle Statistics
-          command: yarn build:stats
+          command: yarn stats:build
+      - run:
+          name: Save Statistics to DB
+          command: |
+            if [ -n "${STATS_URI}" ]; then
+              yarn stats:save
+            else
+              echo "STATS_URI not set, skipping"
+            fi
+      - run:
+          name: Performance Tests
+          command: yarn perf
       - run:
           name: Danger JS
           command: |
@@ -84,8 +95,46 @@ jobs:
       - run:
           name: Publish npm package
           command: |
-            if [ -n "${npm_TOKEN+x}" ] && [ "${CIRCLE_BRANCH}" == "master" ]; then
+            if [ -n "${npm_TOKEN}" ] && [ "${CIRCLE_BRANCH}" == "master" ]; then
               echo "//registry.npmjs.org/:_authToken=${npm_TOKEN}" > ~/project/.npmrc
               npm version prerelease --preid="${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}.`git rev-parse --short HEAD`" --no-git-tag-version
               npm publish --tag current
             fi
+
+  visual:
+    docker:
+      - image: circleci/node:8
+    environment:
+      TZ: "/usr/share/zoneinfo/America/Los_Angeles"
+    steps:
+      - run:
+          name: Update yarn
+          command: |
+            # remove default yarn
+            sudo rm -rf $(dirname $(which yarn))/yarn*
+            # download latest
+            rm -rf ~/.yarn
+            curl -o- -L https://yarnpkg.com/install.sh | bash
+            echo 'export PATH="${PATH}:${HOME}/.yarn/bin"' >> $BASH_ENV
+      - checkout
+      # because we don't invoke npm (we use yarn) we need to add npm bin to PATH manually
+      - run:
+          name: Add npm bin to PATH
+          command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies
+      - run:
+          name: Install Dependencies
+          command: yarn
+      - save_cache:
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+            - .yarn-cache
+            - node_modules
+
+      - run:
+          name: Visual Tests
+          command: yarn test:visual

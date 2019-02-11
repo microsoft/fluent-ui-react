@@ -1,3 +1,4 @@
+import { Provider } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -15,7 +16,7 @@ import { babelConfig, importResolver } from './Playground/renderConfig'
 const examplePaths = exampleSourcesContext.keys()
 
 const ExternalExampleLayout: any = props => {
-  const { exampleName } = props.match.params
+  const { exampleName, rtl } = props.match.params
   const exampleFilename = exampleKebabNameToSourceFilename(exampleName)
 
   const examplePath = _.find(examplePaths, path => {
@@ -26,23 +27,29 @@ const ExternalExampleLayout: any = props => {
   if (!examplePath) return <PageNotFound />
   const exampleSource: ExampleSource = exampleSourcesContext(examplePath)
 
+  const isRtlEnabled = rtl === 'true'
+
   return (
-    <SourceRender
-      babelConfig={babelConfig}
-      source={exampleSource.js}
-      renderHtml={false}
-      resolver={importResolver}
-    >
-      <SourceRender.Consumer>
-        {({ element, error }) => (
-          <>
-            {element}
-            {/* This block allows to see issues with examples as visual regressions. */}
-            {error && <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>}
-          </>
-        )}
-      </SourceRender.Consumer>
-    </SourceRender>
+    <Provider theme={{ rtl: isRtlEnabled }}>
+      <div dir={isRtlEnabled ? 'rtl' : undefined}>
+        <SourceRender
+          babelConfig={babelConfig}
+          source={exampleSource.js}
+          renderHtml={false}
+          resolver={importResolver}
+        >
+          <SourceRender.Consumer>
+            {({ element, error }) => (
+              <>
+                {element}
+                {/* This block allows to see issues with examples as visual regressions. */}
+                {error && <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>}
+              </>
+            )}
+          </SourceRender.Consumer>
+        </SourceRender>
+      </div>
+    </Provider>
   )
 }
 

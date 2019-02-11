@@ -1,10 +1,13 @@
 import * as React from 'react'
+
+import Content from './Content'
 import Types from './Types'
 
 const ChatExamples = () => (
-  <div>
+  <>
     <Types />
-  </div>
+    <Content />
+  </>
 )
 
 export default ChatExamples

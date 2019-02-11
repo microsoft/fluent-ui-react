@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
 import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
-import { Provider, themes } from '@stardust-ui/react'
+import { Provider, themes, ThemeInput, ThemePrepared } from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
 import { callable, pxToRem, constants } from 'src/lib'
@@ -16,8 +16,7 @@ import ComponentExampleTitle from './ComponentExampleTitle'
 import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager'
-import { ThemeInput, ThemePrepared } from 'src/themes/types'
-import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
+import { mergeThemeVariables } from 'src/lib/mergeThemes'
 import { ThemeContext } from '../../../context/ThemeContext'
 import CodeSnippet from '../../CodeSnippet'
 
@@ -64,7 +63,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   constructor(props) {
     super(props)
 
-    this.anchorName = examplePathToHash(props.examplePath)
+    const { examplePath } = props
+
+    this.anchorName = examplePathToHash(examplePath)
     this.state = {
       handleMouseLeave: this.handleMouseLeave,
       handleMouseMove: this.handleMouseMove,
@@ -72,7 +73,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showCode: this.isActiveHash(),
       themeName: 'teams',
       componentVariables: {},
-      showRtl: false,
+      showRtl: examplePath && examplePath.endsWith('rtl') ? true : false,
       showTransparent: false,
       showVariables: false,
       isHovering: false,
@@ -414,7 +415,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         {({ error }) =>
           error && (
             <Segment size="small" color="red" basic inverted padded secondary>
-              <pre>{error.toString()}</pre>
+              <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
             </Segment>
           )
         }

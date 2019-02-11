@@ -10,14 +10,19 @@ const Types = () => (
       examplePath="components/Chat/Types/ChatExample"
     />
     <ComponentExample
-      title="Gutter"
-      description="A Chat can have a gutter positioned at the start or at the end of a message."
-      examplePath="components/Chat/Types/ChatExampleGutterPosition"
+      title="Content position"
+      description="A ChatItem can position it's content at the start or at the end of the container."
+      examplePath="components/Chat/Types/ChatExampleContentPosition"
     />
     <ComponentExample
       title="Styled Chat Item"
       description="A Chat item with custom styles for every slot."
       examplePath="components/Chat/Types/ChatMessageExampleStyled"
+    />
+    <ComponentExample
+      title="Badge"
+      description="A Chat message may contained badge positioned at the start or end of the message."
+      examplePath="components/Chat/Types/ChatMessageExampleBadge"
     />
   </ExampleSection>
 )

@@ -17,6 +17,113 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Changed site variables' `colors.black` to be `#000` instead of `grey[900](#252424)` in Teams theme @mnajdova ([#855](https://github.com/stardust-ui/react/pull/855))
+
+### Features
+- Add single search flavor for `Dropdown` component @Bugaa92 ([#839](https://github.com/stardust-ui/react/pull/839))
+- Add multiple selection flavor for `Dropdown` component @Bugaa92 ([#845](https://github.com/stardust-ui/react/pull/845))
+- Add `black` and `white` options for the `color` prop of the `Label` component @mnajdova ([#855](https://github.com/stardust-ui/react/pull/855))
+- Add `Flex` component @kuzhelov ([#802](https://github.com/stardust-ui/react/pull/802))
+- Add `inline` prop for `Dropdown` component @Bugaa92 ([#863](https://github.com/stardust-ui/react/pull/863))
+
+### Fixes
+- Focus the last focused element which triggered `Popup` on ESC @sophieH29 ([#861](https://github.com/stardust-ui/react/pull/861))
+- Changing the focus zone to embed for gridBehavior @kolaps33 ([#844] (https://github.com/stardust-ui/react/pull/844))
+
+### Documentation
+- Add screener with steps testing documentation @silviuavram ([#856](https://github.com/stardust-ui/react/pull/856))
+
+<!--------------------------------[ v0.20.0 ]------------------------------- -->
+## [v0.20.0](https://github.com/stardust-ui/react/tree/v0.20.0) (2019-02-06)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.19.2...v0.20.0)
+
+### BREAKING CHANGES
+- Generalize size values for `Avatar` and `Status` components @kuzhelov ([#828](https://github.com/stardust-ui/react/pull/828))
+- Remove `AvatarPropsWithDefaults` and `StatusPropsWithDefaults` from public API @kuzhelov ([#828](https://github.com/stardust-ui/react/pull/828))
+- Rename `combobox` to `root` in `dropdownSearchInputStyles` @layershifter ([#816](https://github.com/stardust-ui/react/pull/816))
+- Renamed class names for the slots inside the `ItemLayout` component @mnajdova ([#827](https://github.com/stardust-ui/react/pull/827))
+
+### Features
+- Accessibility for menu divider @jurokapsiar ([#822](https://github.com/stardust-ui/react/pull/822))
+- Add static outline and filled class names to icons in Teams theme @miroslavstastny ([#834](https://github.com/stardust-ui/react/pull/834))
+- Added slot class names in `ChatMessage`, `ChatItem`, `Dropdown`, `ItemLayout`, `Layout`, `MenuItem` @mnajdova ([#827](https://github.com/stardust-ui/react/pull/827))
+- Add `badge` and `badgePosition` properties on the `ChatMessage` @mnajdova ([#823](https://github.com/stardust-ui/react/pull/823))
+- Add `hasMention`, `isImportant`, `hasMentionColor` and `isImportantColor` in ChatMessage variables in Teams theme @mnajdova ([#841](https://github.com/stardust-ui/react/pull/841))
+- Add `actionMenu` prop to `ChatMessage` component @layershifter ([#811](https://github.com/stardust-ui/react/pull/811))
+- Add `rtl` field in the `SvgIconFuncArg`, and used it in Teams theme's number-list icon ([#851](https://github.com/stardust-ui/react/pull/851))
+- Add keyboard navigation between selected items in `Dropdown` multiple version @silviuavram ([#842](https://github.com/stardust-ui/react/pull/842))
+
+### Fixes
+- Fix `Dropdown` component styles regression @Bugaa92 ([#824](https://github.com/stardust-ui/react/pull/824))
+- Update vulnerable version of `lodash` dependency  @kuzhelov ([#840](https://github.com/stardust-ui/react/pull/840))
+- Add `displayName` property to `Ref` and `Provider` components @layershifter ([#836](https://github.com/stardust-ui/react/pull/836))
+- Wrap error text of docs code editor @kuzhelov ([#843](https://github.com/stardust-ui/react/pull/843))
+
+<!--------------------------------[ v0.19.2 ]------------------------------- -->
+## [v0.19.2](https://github.com/stardust-ui/react/tree/v0.19.2) (2019-02-01)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.19.1...v0.19.2)
+
+### Features
+- Export `triangle-down` and `triangle-right` icons in Teams theme @codepretty ([#785](https://github.com/stardust-ui/react/pull/785))
+- Add RTL examples for `Button` and `Divider` components @mnajdova ([#792](https://github.com/stardust-ui/react/pull/792))
+- Add mechanism for marking icons that should rotate in RTL in Teams theme; marked icons: `send`, `bullets`, `leave`, `outdent`, `redo`, `undo`, `send` @mnajdova ([#788](https://github.com/stardust-ui/react/pull/788))
+- Remove ability to introduce global style overrides for HTML document from `pxToRem` @kuzhelov ([#789](https://github.com/stardust-ui/react/pull/789))
+- Padding variable for horizontal menu @jurokapsiar ([#808](https://github.com/stardust-ui/react/pull/808))
+- Remove handledProps from behaviors @jurokapsiar ([#805](https://github.com/stardust-ui/react/pull/805))
+- Add `create` shorthand factory to `Header` component @layershifter ([#809](https://github.com/stardust-ui/react/pull/809))
+- Add `keyframeParams` prop in the `Animation` component and the `animation` prop @mnajdova ([#794](https://github.com/stardust-ui/react/pull/794))
+- Add `Dialog` component @layershifter ([#790](https://github.com/stardust-ui/react/pull/790))
+- Add sample screener tests with steps for `Dropdown` @silviuavram ([#797](https://github.com/stardust-ui/react/pull/797))
+- Add shorthand support for `triggerButton` in `Dropdown` @silviuavram ([#815](https://github.com/stardust-ui/react/pull/815))
+- Add toggle functionality in the `Popoup` even if the `trigger` is not button @kolaps33 ([#758](https://github.com/stardust-ui/react/pull/758))
+
+### Fixes
+- Handle `onClick` and `onFocus` on ListItems correctly @layershifter ([#779](https://github.com/stardust-ui/react/pull/779))
+- Remove popup trigger button default role @jurokapsiar ([#806](https://github.com/stardust-ui/react/pull/806))
+- Improve `Dropdown` component styles @Bugaa92 ([#786](https://github.com/stardust-ui/react/pull/786))
+- Preserve outside click subscription on `Popup` and `MenuItem` component updates @kuzhelov ([#803](https://github.com/stardust-ui/react/pull/803))
+- Exports `Menu`'s variables as `MenuItem` and `MenuDivider`'s variables in `Teams` theme @mnajdova ([#814](https://github.com/stardust-ui/react/pull/814))
+- Fix `Avatar` - Add white circle border in contrast theme @bcalvery ([#795](https://github.com/stardust-ui/react/pull/795))
+- Dix `MenuDivider` not shown on horizontal `Menu` @mnajdova ([#813](https://github.com/stardust-ui/react/pull/813))
+
+<!--------------------------------[ v0.19.1 ]------------------------------- -->
+## [v0.19.1](https://github.com/stardust-ui/react/tree/v0.19.1) (2019-01-29)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.19.0...v0.19.1)
+
+### Fixes
+- Fix layout of `Accordion` panel's title @kuzhelov ([#780](https://github.com/stardust-ui/react/pull/780))
+- Allow to use `createRef()` API with `triggerRef` prop in `Portal` component @layershifter ([#787](https://github.com/stardust-ui/react/pull/787))
+
+<!--------------------------------[ v0.19.0 ]------------------------------- -->
+## [v0.19.0](https://github.com/stardust-ui/react/tree/v0.19.0) (2019-01-28)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.18.0...v0.19.0)
+
+### BREAKING CHANGES
+- Update variable names in themes, add missing sizes @layershifter ([#762](https://github.com/stardust-ui/react/pull/762))
+- Rename `toggleButton` prop to `toggleIndicator` and make it visible by default @layershifter ([#729](https://github.com/stardust-ui/react/pull/729))
+- Remove `props` from variables resolution process @kuzhelov ([#770](https://github.com/stardust-ui/react/pull/770))
+- Update Fela and is deps to latest, `10.1.3` is required @layershifter ([#768](https://github.com/stardust-ui/react/pull/768))
+- Replaced `gutterPosition` with `contentPosition` in ChatItem (`contentPosition='end'` should be added on the ChatItems containing ChatMessage with `mine` prop for teams theme) @mnajdova ([#767](https://github.com/stardust-ui/react/pull/767))
+
+### Features
+- Add `loading` prop for `Dropdown` @layershifter ([#729](https://github.com/stardust-ui/react/pull/729))
+- Export `close` icon in Teams theme @alinais ([#774](https://github.com/stardust-ui/react/pull/774))
+- Add `attached` prop for ChatItem @mnajdova ([#767](https://github.com/stardust-ui/react/pull/767))
+
+### Fixes
+- Make `headerMedia` visible for screen readers in `ListItem` @layershifter ([#772](https://github.com/stardust-ui/react/pull/772))
+- Cleanup for `Dropdown` examples' accessibility and added localisation example. @silviuavram ([#771](https://github.com/stardust-ui/react/pull/771))
+- Fix highlighted selected option in single selection `Dropdown` when opened @silviuavram ([#726](https://github.com/stardust-ui/react/pull/726))
+
+<!--------------------------------[ v0.18.0 ]------------------------------- -->
+## [v0.18.0](https://github.com/stardust-ui/react/tree/v0.18.0) (2019-01-24)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.17.0...v0.18.0)
+
+### BREAKING CHANGES
+- Forwarding props for `createShorthand` calls if the value is a React element @mnajdova ([#759](https://github.com/stardust-ui/react/pull/759))
+- Rename `Slot` component to `Box` and export it @Bugaa92 ([#713](https://github.com/stardust-ui/react/pull/713))
+
 ### Fixes
 - Fix focus outline visible only during keyboard navigation in `ListItem` @layershifter ([#727](https://github.com/stardust-ui/react/pull/727))
 - Pass `jest --detectLeaks` tests @miroslavstastny ([#718](https://github.com/stardust-ui/react/pull/718))
@@ -24,10 +131,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix teams theme `Status` and `Chat.Message` styles ([#747](https://github.com/stardust-ui/react/pull/747))
 - Fix `Popup` - do not stop event propagation when pressing Esc on trigger element @sophieH29 ([#750](https://github.com/stardust-ui/react/pull/750))
 - Fix alignment of `Layout`'s `main` area @kuzhelov ([#752](https://github.com/stardust-ui/react/pull/752))
-- Forwarding props for `createShorthand` calls if the value is a React element @mnajdova ([#759](https://github.com/stardust-ui/react/pull/759))
+- Call `Popup` `onOpenChange` on all user initiated events @levithomason ([#619](https://github.com/stardust-ui/react/pull/619))
+- Fix `ChatMessage` - Author element should always be rendered @sophieH29 ([#761](https://github.com/stardust-ui/react/pull/761))
 
 ### Features
-- Rename `Slot` component to `Box` and export it @Bugaa92 ([#713](https://github.com/stardust-ui/react/pull/713))
 - Add and export 'missed call' icon in Teams theme @codepretty ([#748](https://github.com/stardust-ui/react/pull/748))
 - Add `Indicator` component and used it in `MenuItem` and `AccordionTitle` @mnajdova ([#721](https://github.com/stardust-ui/react/pull/721))
 - Expose `renderItem` and `renderSelectedItem` callbacks API for `Dropdown` @layershifter ([#746](https://github.com/stardust-ui/react/pull/746))
