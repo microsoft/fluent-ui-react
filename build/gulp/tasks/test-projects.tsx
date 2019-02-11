@@ -18,6 +18,8 @@ const log = (context: string) => (message: string) => {
 }
 
 const installStardustPackages = async (tmpDirectory: string) => {
+  // packages/react/src -> packages/react,
+  // as lernaAliases append 'src'  by default
   const stardustPackages = lernaAliases({ sourceDirectory: false })
   const packedPackages = await Promise.all(
     Object.keys(stardustPackages).map(
