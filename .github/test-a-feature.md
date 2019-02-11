@@ -169,24 +169,27 @@ Each line under the `@specification` tag is taken and matched against the regex 
   - add regex expression into `testDefinitions.ts` which will match your line written under `@specification` tag
 
 - For an existing behavior:
-  - add regex expression into `testDefinitions.ts` which will match your line written under @specification tag
+  - add regex expression into `testDefinitions.ts` which will match your line written under `@specification` tag
 
 ### Running test(s)
 
-Run test and watch: yarn jest --watch behavior-test
+Run test and watch:  
+```
+yarn jest --watch behavior-test
+```
 
 ### Troubleshooting
 
-#### I am not sure if my line under `@specification` was process correctly.
-Go into docs\src\behaviorMenu.json file and verify if you can find your line. If not then:
-  - run command "gulp build:docs:component-menu-behaviors", this will build the file again
-  - verify formatting the file (if some tag is not missing, etc...) and run command again
+#### I am not sure if my line under `@specification` was process correctly
+Go into `docs\src\behaviorMenu.json` file and verify if you can find your line. If not then:
+  - run command `gulp build:docs:component-menu-behaviors`, this will build the file again
+  - verify formatting of the file (if some tag is not missing, etc...) and run command again
 
 #### I am not sure if my line was executed
 Rename all test files title containing `behavior-test` string.
 For example, like (goal of the renaming is reach that these tests will not run):
-  - listBehaviorrrrrrrrrrr-test.tsx
-  - listItemBehaviorrrrrrr-test.tsx
+  - `listBehaviorrrrrrrrrrr-test.tsx`
+  - `listItemBehaviorrrrrrr-test.tsx`
 
 Run the tests again and you should see in console:
 ```
@@ -207,7 +210,7 @@ Run the tests again and you should see in console:
     √ Wraps component in FocusZone allowing circular arrow key navigation through the children of the component.  
 ```
 
-#### I want to add any description which should not be consider as unit test.
+#### I want to add any description which should not be consider as unit test
 Add description under the `@description` tag. Like:
 ```
 /**
@@ -215,5 +218,5 @@ Add description under the `@description` tag. Like:
  * Image is usually only visual representation and therefore is hidden from screen readers.
 ```
 
-#### I want to create unit tests in separate file not through the regex.
+#### I want to create unit tests in separate file not through the regex
 Add your spec file into the array of files `skipSpecChecksForFiles` in `testHelper.tsx`. And put description in behavior file under `@description` tag.
