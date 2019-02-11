@@ -6,7 +6,7 @@ import * as _ from 'lodash'
 import { updateForKeys } from 'docs/src/hoc'
 import ComponentButton from './ComponentButton'
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
-// import ComponentControlsCodeSandbox from './ComponentControlsCodeSandbox/ComponentControlsCodeSandbox'
+import ComponentControlsCodeSandbox from './ComponentControlsCodeSandbox/ComponentControlsCodeSandbox'
 import ComponentControlsShowCode from './ComponentControlsShowCode'
 import ComponentControlsCopyLink from './ComponentControlsCopyLink'
 import ComponentControlsShowVariables from './ComponentControlsShowVariables'
@@ -35,9 +35,9 @@ type ComponentControlsProps = {
 const ComponentControls: React.FC<ComponentControlsProps> = props => {
   const {
     anchorName,
-    // exampleCode,
-    // exampleLanguage,
-    // examplePath,
+    exampleCode,
+    exampleLanguage,
+    examplePath,
     showCode,
     showRtl,
     showTransparent,
@@ -66,6 +66,21 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
           accessibility: toolbarButtonBehavior,
         },
         {
+          key: 'show-codesandbox',
+          content: (
+            <ComponentControlsCodeSandbox
+              exampleCode={exampleCode}
+              exampleLanguage={exampleLanguage}
+              exampleName={examplePath}
+            />
+          ),
+          as: NavLink,
+          to: `/maximize/${_.kebabCase(examplePath.split('/').slice(-1))}`,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          accessibility: toolbarButtonBehavior,
+        },
+        {
           key: 'show-variables',
           content: <ComponentControlsShowVariables active={showVariables} />,
           onClick: onShowVariables,
@@ -87,10 +102,6 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
           key: 'maximize',
           content: <ComponentControlsMaximize />,
           onClick: onMaximize,
-          as: NavLink,
-          to: `/maximize/${_.kebabCase(props.examplePath)}`, // `/maximize/${_.kebabCase(examplePath.split('/').slice(-1))}`,
-          target: '_blank',
-          rel: 'noopener noreferrer',
           accessibility: toolbarButtonBehavior,
         },
         {
@@ -104,23 +115,6 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
   )
 }
 
-/*<Menu color="green" icon="labeled" size="tiny" compact text>
-      <ComponentControlsShowCode active={showCode} onClick={onShowCode} />
-      <ComponentControlsCodeSandbox
-        exampleCode={exampleCode}
-        exampleLanguage={exampleLanguage}
-        exampleName={examplePath}
-      />
-      <ComponentControlsShowVariables active={showVariables} onClick={onShowVariables} />
-      <ComponentControlsShowTransparent active={showTransparent} onClick={onShowTransparent} />
-      <ComponentControlsRtl active={showRtl} onClick={onShowRtl} />
-      <ComponentControlsMaximize examplePath={examplePath} rtl={showRtl} />
-      <ComponentControlsCopyLink anchorName={anchorName} onClick={onCopyLink} />
-    </Menu>
-
-  )
-}
-*/
 export default updateForKeys([
   'exampleCode',
   'examplePath',

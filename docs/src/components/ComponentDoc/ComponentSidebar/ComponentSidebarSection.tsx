@@ -52,8 +52,7 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
     }) !== -1
 
   render() {
-    const { activePath, examples } = this.props
-    const { /*activePath, examples,*/ sectionName } = this.props
+    const { activePath, examples, sectionName } = this.props
     //    const { isActiveByProps, isActiveByUser } = this.state
 
     //    const active = isActiveByUser || isActiveByProps
@@ -63,20 +62,19 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
     }
 
     return (
-      <Menu.Item>
-        <Accordion
-          onTitleClick={this.handleTitleClick}
-          panels={_.map(examples, ({ title, examplePath }) => ({
-            key: examplePath,
-            content: {
-              title,
-              onClick: this.handleItemClick(examplePath),
-              active: activePath === examplePathToHash(examplePath),
-            },
-            title: { title },
-          }))}
-        />
-      </Menu.Item>
+      // <Menu.Item>
+      <Accordion
+        onTitleClick={this.handleTitleClick}
+        panels={_.map(examples, example => ({
+          key: example.examplePath,
+          content: <span />,
+          title: {
+            content: sectionName,
+            // active: activePath === examplePathToHash(examplePath),
+          },
+        }))}
+      />
+      // </Menu.Item>
     )
   }
 }

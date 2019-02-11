@@ -3,6 +3,7 @@ import * as React from 'react'
 import { Menu, Segment } from '@stardust-ui/react'
 
 import ComponentSidebarSection from './ComponentSidebarSection'
+// mport { ShorthandValue } from 'src/types';
 
 const sidebarStyle = {
   boxShadow: '0 2px 2px rgba(0, 0, 0, 0.1)',
@@ -41,22 +42,22 @@ class ComponentSidebar extends React.Component<ComponentSidebarProps, any> {
     const { activePath, examplesRef, onItemClick } = this.props
     const { sections } = this.state
 
+    const menuItems = _.map(sections, ({ examples, sectionName, index }) => ({
+      key: index,
+      content: (
+        <ComponentSidebarSection
+          activePath={activePath}
+          examples={examples}
+          key={`${sectionName}-${index}`}
+          sectionName={sectionName}
+          onItemClick={onItemClick}
+        />
+      ),
+    }))
+
     return (
       <Segment context={examplesRef} offset={15}>
-        <Menu
-          fluid
-          styles={{ ...sidebarStyle }}
-          vertical
-          content={_.map(sections, ({ examples, sectionName, index }) => (
-            <ComponentSidebarSection
-              activePath={activePath}
-              examples={examples}
-              key={`${sectionName}-${index}`}
-              sectionName={sectionName}
-              onItemClick={onItemClick}
-            />
-          ))}
-        />
+        <Menu fluid styles={{ ...sidebarStyle }} vertical items={menuItems} />
       </Segment>
     )
   }

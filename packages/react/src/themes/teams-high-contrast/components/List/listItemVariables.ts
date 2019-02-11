@@ -1,5 +1,4 @@
 import { ListItemVariables } from '../../../teams/components/List/listItemVariables'
-import { Partial } from 'types/utils'
 
 export default (siteVariables: any): Partial<ListItemVariables> => {
   return {

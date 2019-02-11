@@ -18,7 +18,7 @@ import {
 } from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
-import { callable, pxToRem, constants } from 'src/lib'
+import { callable, constants, pxToRem } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
 import ExampleContext, { ExampleContextValue } from 'docs/src/context/ExampleContext'
@@ -62,7 +62,14 @@ const childrenStyle: React.CSSProperties = {
   maxWidth: pxToRem(500),
 }
 
-const disabledStyle = { opacity: 0.5, pointerEvents: 'none' }
+/*
+const disabledStyle = {
+  opacity: 0.5,
+  pointerEvents: 'none',
+  ':hover, :focus': {
+    background: 'transparent',
+  },
+}*/
 
 /**
  * Renders a `component` and the raw `code` that produced it.
@@ -329,42 +336,65 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }
   }
 
+  exampleMenuVariables = {
+    primaryActiveBackgroundColor: 'transparent',
+    primaryActiveBorderColor: 'white',
+    primaryActiveColor: 'white',
+    primaryBorderColor: 'white',
+    activeColor: 'white',
+    disabledColor: '#ffffff80',
+    color: '#ffffff80',
+  }
+
   renderAPIsMenu = (): JSX.Element => {
     const { componentAPIs, currentCodeAPI } = this.props
-    const menuItems = _.map(componentAPIs, ({ name, supported }, type) => (
-      <Menu.Item
-        active={currentCodeAPI === type}
-        content={
-          <span>
-            {name}
-            {!supported && <em> (not supported)</em>}
-          </span>
-        }
-        disabled={!supported}
-        key={type}
-        onClick={this.handleCodeApiChange(type)}
-      />
-    ))
+    const menuItems = _.map(componentAPIs, ({ name, supported }, type) => ({
+      active: currentCodeAPI === type,
+      content: (
+        <span>
+          {name}
+          {!supported && <em> (not supported)</em>}
+        </span>
+      ),
+      disabled: !supported,
+      key: type,
+      onClick: this.handleCodeApiChange(type),
+    }))
 
-    return <Menu>{menuItems}</Menu>
+    return (
+      <Menu
+        primary
+        underlined
+        items={menuItems}
+        variables={this.exampleMenuVariables}
+        styles={{ borderBottom: 0 }}
+      />
+    )
   }
 
   renderLanguagesMenu = (): JSX.Element => {
     const { currentCodeLanguage } = this.props
+    const menuItems = [
+      {
+        active: currentCodeLanguage === 'js',
+        content: 'JavaScript',
+        onClick: this.handleCodeLanguageChange('js'),
+      },
+      {
+        active: currentCodeLanguage === 'ts',
+        content: 'TypeScript',
+        onClick: this.handleCodeLanguageChange('ts'),
+      },
+    ]
 
     return (
-      <Menu>
-        <Menu.Item
-          active={currentCodeLanguage === 'js'}
-          content="JavaScript"
-          onClick={this.handleCodeLanguageChange('js')}
-        />
-        <Menu.Item
-          active={currentCodeLanguage === 'ts'}
-          content="TypeScript"
-          onClick={this.handleCodeLanguageChange('ts')}
-        />
-      </Menu>
+      <Menu
+        primary
+        underlined
+        items={menuItems}
+        variables={this.exampleMenuVariables}
+        styles={{ borderBottom: 0 }}
+      />
     )
   }
 
@@ -378,12 +408,21 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     } = this.props
     const { copiedCode } = this.state
 
-    const codeEditorStyle: React.CSSProperties = {
+    const codeEditorStyle: ICSSInJSStyle = {
       position: 'relative',
-      margin: 0,
+      margin: '0 0 0 .5rem',
       top: '2px',
-      right: '0.5rem',
+      border: '0',
+      paddingTop: '.5rem',
+      float: 'right',
+      color: '#ffffff80',
+      borderBottom: 0,
+      ':hover, :focus': {
+        borderBottom: 0,
+        color: 'white',
+      },
     }
+
     // get component name from file path:
     // elements/Button/Types/ButtonButtonExample
     const pathParts = currentCodePath.split(__PATH_SEP__)
@@ -394,42 +433,63 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       `?message=docs(${filename}): your description`,
     ].join('')
 
+    const menuItems = [
+      {
+        icon: canCodeBeFormatted ? 'magic' : 'check',
+        // active: !!error,
+        content: 'Prettier',
+        onClick: handleCodeFormat,
+        disabled: !canCodeBeFormatted,
+      },
+      {
+        icon: 'refresh',
+        content: 'Reset',
+        onClick: this.resetSourceCode,
+        disabled: !wasCodeChanged,
+      },
+      {
+        active: copiedCode, // to show the color
+        icon: copiedCode ? { color: 'green', name: 'check' } : 'copy',
+        content: 'Copy',
+        onClick: this.copySourceCode,
+      },
+      {
+        disabled: currentCodeLanguage !== 'ts',
+        icon: 'github',
+        content: 'Edit',
+        href: ghEditHref,
+        rel: 'noopener noreferrer',
+        target: '_blank',
+        key: 'withtslanguage',
+      },
+    ]
+
     return (
-      <Menu size="small" secondary styles={codeEditorStyle}>
-        <SourceRender.Consumer>
+      <Menu
+        size="small"
+        primary
+        underlined
+        styles={codeEditorStyle}
+        variables={{
+          activeColor: 'white',
+          disabledColor: '#ffffff80',
+          color: '#ffffff80',
+        }}
+        items={menuItems}
+      />
+      /*{ <SourceRender.Consumer>
           {({ error }) => (
-            <Menu.Item
+            <MenuItem
               icon={(error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')}
               color={error ? 'red' : undefined}
               active={!!error}
               content="Prettier"
               onClick={handleCodeFormat}
-              style={!canCodeBeFormatted ? disabledStyle : undefined}
+              styles={(!canCodeBeFormatted ? disabledStyle : undefined) as ICSSInJSStyle}
             />
           )}
-        </SourceRender.Consumer>
-        <Menu.Item
-          styles={(!wasCodeChanged ? disabledStyle : undefined) as ICSSInJSStyle}
-          icon="refresh"
-          content="Reset"
-          onClick={this.resetSourceCode}
-        />
-        <Menu.Item
-          active={copiedCode} // to show the color
-          icon={copiedCode ? { color: 'green', name: 'check' } : 'copy'}
-          content="Copy"
-          onClick={this.copySourceCode}
-        />
-        {currentCodeLanguage === 'ts' && (
-          <Menu.Item
-            style={{ border: 'none' }}
-            icon="github"
-            content="Edit"
-            href={ghEditHref}
-            target="_blank"
-          />
-        )}
-      </Menu>
+        </SourceRender.Consumer> }
+        */
     )
   }
 
@@ -451,12 +511,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           }
         >
           <Menu
-            attached="top"
             size="small"
-            inverted
-            secondary
-            pointing
-            styles={{ display: 'flex', flexDirection: 'column' }}
+            styles={{ display: 'flex', justifyContent: 'space-between', border: 'none' }}
           >
             {this.renderAPIsMenu()}
             {this.renderLanguagesMenu()}
