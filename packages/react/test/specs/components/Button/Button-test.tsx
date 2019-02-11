@@ -90,7 +90,7 @@ describe('Button', () => {
         })
       })
 
-      // TODO discuss the intent of this tests
+      // TODO refine the intent of these tests
       xdescribe('aria-pressed', () => {
         // test("is set to true, if 'active' attribute is provided", () => {
         //   const renderedComponent = mountWithProviderAndGetComponent(
