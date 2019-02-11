@@ -41,7 +41,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
               <Header
                 as="h1"
                 content={pageTitle}
-                subheader={`Keyboard and Screenreader options for ${match.params.name}s.`}
+                subheader={`Keyboard and Screenreader options for ${match.params.name} component.`}
               />
             </Grid.Column>
           </Grid.Row>

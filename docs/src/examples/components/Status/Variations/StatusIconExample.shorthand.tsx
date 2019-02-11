@@ -3,9 +3,9 @@ import { Status } from '@stardust-ui/react'
 
 const StatusIconExampleShorthand = () => (
   <div>
-    <Status state="success" icon="check" />
+    <Status state="success" icon="check" alt="available" />
     &emsp;
-    <Status state="error" icon="minus" />
+    <Status state="error" icon="minus" alt="busy" />
   </div>
 )
 
