@@ -26,8 +26,16 @@ export type ObjectOrFunc<TResult, TArg = {}> = ((arg: TArg) => TResult) | TResul
 export type Props<T = {}> = T & ObjectOf<any>
 export type ReactChildren = React.ReactNodeArray | React.ReactNode
 
+type Extended<TFirst, TSecond> = { [K in keyof TFirst]: TFirst[K] } &
+  { [K in Exclude<keyof TSecond, keyof TFirst>]?: TSecond[K] }
+
+export type WithHtmlProps<TProps> = Extended<TProps, React.AllHTMLAttributes<any>>
+
 export type ReactPropsStrict<T> = { [K in keyof T]: NullableIfUndefined<T[K]> }
-export type ReactProps<T> = Extendable<ReactPropsStrict<T>>
+export type ReactProps<T> = Extended<
+  ReactPropsStrict<T>,
+  React.AllHTMLAttributes<any> & { to: any }
+>
 
 export type ComponentEventHandler<TProps> = (
   event: React.SyntheticEvent<HTMLElement>,

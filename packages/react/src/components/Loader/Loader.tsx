@@ -27,6 +27,9 @@ export interface LoaderProps extends UIComponentProps, ColorComponentProps {
   /** A loader can contain an indicator. */
   indicator?: ShorthandValue
 
+  /** TODO add desription */
+  inline?: boolean
+
   /** A loader can contain a label. */
   label?: ShorthandValue
 

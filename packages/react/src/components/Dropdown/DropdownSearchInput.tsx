@@ -14,6 +14,10 @@ import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
 
 export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearchInputProps> {
+  /** TODO introduce descriptions */
+  accessibilityComboboxProps
+  accessibilityInputProps
+
   /** A dropdown search input can be formatted to appear inline in the context of a Dropdown. */
   inline?: boolean
 

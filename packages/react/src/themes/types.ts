@@ -194,24 +194,24 @@ export interface ComponentStyleFunctionParam<
   TProps extends PropsWithVarsAndStyles = PropsWithVarsAndStyles,
   TVars extends ComponentVariablesObject = ComponentVariablesObject
 > {
-  props: State & TProps
+  props: TProps
   variables: TVars
   theme: ThemePrepared
   colors: Partial<ColorScheme>
 }
 
-export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((
+export type ComponentSlotStyleFunction<TProps = any, TVars = any> = ((
   styleParam?: ComponentStyleFunctionParam<TProps, TVars>,
 ) => ICSSInJSStyle)
 
-export type ComponentSlotStyle<TProps = {}, TVars = {}> =
+export type ComponentSlotStyle<TProps = any, TVars = any> =
   | ComponentSlotStyleFunction<TProps, TVars>
   | ICSSInJSStyle
 
-export interface ComponentSlotStylesInput<TProps = {}, TVars = {}>
+export interface ComponentSlotStylesInput<TProps = any, TVars = any>
   extends ObjectOf<ComponentSlotStyle<TProps, TVars>> {}
 
-export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
+export interface ComponentSlotStylesPrepared<TProps = any, TVars = any>
   extends ObjectOf<ComponentSlotStyleFunction<TProps, TVars>> {}
 
 export interface ComponentSlotClasses extends ObjectOf<string> {}

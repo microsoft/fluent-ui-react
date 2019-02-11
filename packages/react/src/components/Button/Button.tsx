@@ -13,6 +13,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  SizeValue,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
@@ -71,6 +72,9 @@ export interface ButtonProps
 
   /** A button can be formatted to show different levels of emphasis. */
   secondary?: boolean
+
+  /** TODO add description */
+  size?: SizeValue
 }
 
 export interface ButtonState {

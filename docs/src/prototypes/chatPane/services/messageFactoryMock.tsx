@@ -119,7 +119,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
     />
   )
 
-  const stopPropagationOnKeys = (keys: number[]) => (e: Event) => {
+  const stopPropagationOnKeys = (keys: number[]) => e => {
     if (keys.indexOf(keyboardKey.getCode(e)) > -1) {
       e.stopPropagation()
     }

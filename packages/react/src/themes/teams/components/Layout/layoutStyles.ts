@@ -1,13 +1,14 @@
 import { debugRoot, debugArea, debugGap } from '../../../../styles/debugStyles'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { LayoutProps } from '../../../../components/Layout/Layout'
 
 const truncateStyle = {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
-}
+} as ICSSInJSStyle
 
-const layoutStyles: ComponentSlotStylesInput = {
+const layoutStyles: ComponentSlotStylesInput<LayoutProps> = {
   root: ({ props }): ICSSInJSStyle => {
     const {
       alignItems,

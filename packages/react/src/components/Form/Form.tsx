@@ -21,6 +21,9 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
   /** Shorthand array of props for the Form.Fields inside the Form. */
   fields?: ShorthandValue[]
 
+  /** update description */
+  inline?: boolean
+
   /**
    * The HTML form submit handler.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.

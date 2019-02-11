@@ -18,7 +18,8 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
 
     outline: 0,
 
-    ...(props.isFromKeyboard && {
+    // TODO: FIX that
+    ...((props as any).isFromKeyboard && {
       ':focus': {
         outline: `.2rem solid ${variables.focusOutlineColor}`,
       },

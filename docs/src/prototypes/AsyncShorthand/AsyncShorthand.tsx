@@ -29,37 +29,38 @@ class CustomChatMessage extends React.Component {
 
   togglePopup = () => this.setState({ open: !this.state.open })
 
-  renderMenuItem = (MenuItem, props) => {
-    if (props.icon !== 'thumbs up') {
-      return <MenuItem {...props} />
-    }
+  renderCustomItem = item => render =>
+    render(item, (MenuItem, props) => {
+      if (props.icon !== 'thumbs up') {
+        return <MenuItem {...props} />
+      }
 
-    return (
-      <Popup
-        key={props.key}
-        position="below"
-        open={this.state.open}
-        content={{
-          content: (
+      return (
+        <Popup
+          key={props.key}
+          position="below"
+          open={this.state.open}
+          content={{
+            content: (
+              <AsyncData
+                data={['User 1', 'User 2', 'User 3']}
+                render={data => {
+                  return !data ? '...loading' : data.map(user => <div key={user}>{user}</div>)
+                }}
+              />
+            ),
+          }}
+          trigger={
             <AsyncData
-              data={['User 1', 'User 2', 'User 3']}
-              render={data => {
-                return !data ? '...loading' : data.map(user => <div key={user}>{user}</div>)
-              }}
+              data={3}
+              render={data => (
+                <MenuItem {...props} icon="thumbs up" content={data} onClick={this.togglePopup} />
+              )}
             />
-          ),
-        }}
-        trigger={
-          <AsyncData
-            data={3}
-            render={data => (
-              <MenuItem {...props} icon="thumbs up" content={data} onClick={this.togglePopup} />
-            )}
-          />
-        }
-      />
-    )
-  }
+          }
+        />
+      )
+    })
 
   render() {
     return (
@@ -92,11 +93,10 @@ class CustomChatMessage extends React.Component {
               iconOnly
               className="actions"
               items={[
-                { key: 'a', icon: 'thumbs up' },
-                { key: 'b', icon: 'user' },
-                { key: 'c', icon: 'ellipsis horizontal' },
+                this.renderCustomItem({ key: 'a', icon: 'thumbs up' }),
+                this.renderCustomItem({ key: 'b', icon: 'user' }),
+                this.renderCustomItem({ key: 'c', icon: 'ellipsis horizontal' }),
               ]}
-              renderItem={this.renderMenuItem}
             />
           </div>
         }

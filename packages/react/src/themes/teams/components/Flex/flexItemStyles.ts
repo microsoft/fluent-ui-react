@@ -17,7 +17,8 @@ const flexItemStyles: ComponentSlotStylesInput<FlexItemProps, FlexItemVariables>
       ...(p.grow && { flexGrow: p.grow }),
       ...(p.grow === true && { flexGrow: 1 }),
 
-      ...p.itemStyles,
+      // TODO: FIX that
+      ...(p as any).itemStyles,
       ...(p.push &&
         (p.flexDirection === 'column' ? { marginTop: 'auto' } : { marginLeft: 'auto' })),
     }

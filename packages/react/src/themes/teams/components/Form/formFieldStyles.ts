@@ -2,7 +2,10 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { FormProps } from '../../../../components/Form/Form'
 import { pxToRem } from '../../../../lib'
 
-const formFieldStyles: ComponentSlotStylesInput<FormProps, any> = {
+// TODO update import!
+import { WithHtmlProps } from '../../../../../src/types'
+
+const formFieldStyles: ComponentSlotStylesInput<WithHtmlProps<FormProps>, any> = {
   root: ({ props, variables }): ICSSInJSStyle => ({}),
   label: ({ props }): ICSSInJSStyle => {
     const { type, inline, required } = props

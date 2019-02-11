@@ -5,6 +5,7 @@ import {
   childrenExist,
   UIComponentProps,
   ContentComponentProps,
+  ColorComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
@@ -15,7 +16,9 @@ import Box from '../Box/Box'
 export interface SegmentProps
   extends UIComponentProps<SegmentProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue> {
+    ContentComponentProps<ShorthandValue>,
+    // TODO check generic parameter of this type
+    ColorComponentProps {
   /** A segment can have its colors inverted for contrast. */
   inverted?: boolean
 }

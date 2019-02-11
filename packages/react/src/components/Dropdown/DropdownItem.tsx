@@ -15,6 +15,9 @@ import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
 
 export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
+  /** TODO introduce description */
+  accessibilityItemProps?: any
+
   /** A dropdown item can be active. */
   active?: boolean
 
