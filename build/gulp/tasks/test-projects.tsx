@@ -8,6 +8,8 @@ import * as rimraf from 'rimraf'
 import config from '../../../config'
 import * as tmp from 'tmp'
 
+type PackedPackages = Record<string, string>
+
 const { paths } = config
 
 const log = (context: string) => (message: string) => {
@@ -17,38 +19,46 @@ const log = (context: string) => (message: string) => {
   console.log('='.repeat(80))
 }
 
-const installStardustPackages = async (testProjectDir: string) => {
-  // packages/react/src -> packages/react,
-  // as lernaAliases append 'src'  by default
-  const stardustPackages = lernaAliases({ sourceDirectory: false })
-  const packedPackages = await Promise.all(
-    Object.keys(stardustPackages).map(
-      async (packageName: string): Promise<{ packageName: string; filename: string }> => {
-        const filename = tmp.tmpNameSync({ prefix: `stardust-`, postfix: '.tgz' })
-        const directory = stardustPackages[packageName]
+export const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
 
-        await runIn(directory)(`yarn pack --filename ${filename}`)
-
-        return { packageName, filename }
-      },
-    ),
-  )
-
+const addResolutionPathsForStardustPackages = async (
+  testProjectDir: string,
+  packedPackages: PackedPackages,
+) => {
   const packageJsonPath = path.resolve(testProjectDir, 'package.json')
   const packageJson = require(packageJsonPath)
 
   packageJson.resolutions = packageJson.resolutions || {}
-  packedPackages.forEach(({ packageName, filename }) => {
-    packageJson.resolutions[`**/${packageName}`] = `file:${filename}`
+  Object.keys(packedPackages).forEach(packageName => {
+    packageJson.resolutions[`**/${packageName}`] = `file:${packedPackages[packageName]}`
   })
 
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
-
-  const stardustPackageFilenames = packedPackages.map(({ filename }) => filename).join(' ')
-  await runIn(testProjectDir)(`yarn add ${stardustPackageFilenames}`)
 }
 
-export const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
+const packStardustPackages = async (): Promise<PackedPackages> => {
+  // packages/react/src -> packages/react,
+  // as lernaAliases append 'src'  by default
+  const stardustPackages = lernaAliases({ sourceDirectory: false })
+
+  await Promise.all(
+    Object.keys(stardustPackages).map(async (packageName: string) => {
+      const filename = tmp.tmpNameSync({ prefix: `stardust-`, postfix: '.tgz' })
+      const directory = stardustPackages[packageName]
+
+      await runIn(directory)(`yarn pack --filename ${filename}`)
+
+      stardustPackages[packageName] = filename
+    }),
+  )
+
+  return stardustPackages
+}
+
+const installStardustReactPackage = async (
+  testProjectDir: string,
+  packedPackages: PackedPackages,
+) => runIn(testProjectDir)(`yarn add ${packedPackages['@stardust-ui/react']}`)
 
 const createReactApp = async (atTempDirectory: string, appName: string): Promise<string> => {
   const atDirectorySubpath = paths.withRootAt(atTempDirectory)
@@ -99,7 +109,9 @@ task('test:projects:cra-ts', async () => {
   //////// ADD STARDUST AS A DEPENDENCY ///////
   logger('STEP 2. Add Stardust dependency to test project..')
 
-  await installStardustPackages(testAppPath())
+  const packedPackages = await packStardustPackages()
+  await addResolutionPathsForStardustPackages(testAppPath(), packedPackages)
+  await installStardustReactPackage(testAppPath(), packedPackages)
   logger(`✔️Stardust UI packages were added to dependencies`)
 
   //////// REFERENCE STARDUST COMPONENTS IN TEST APP's MAIN FILE ///////
@@ -132,7 +144,9 @@ task('test:projects:rollup', async () => {
   await runIn(tmpDirectory)(`yarn add ${dependencies}`)
   logger(`✔️Dependencies were installed`)
 
-  await installStardustPackages(tmpDirectory)
+  const packedPackages = await packStardustPackages()
+  await addResolutionPathsForStardustPackages(tmpDirectory, packedPackages)
+  await installStardustReactPackage(tmpDirectory, packedPackages)
   logger(`✔️Stardust UI packages were added to dependencies`)
 
   fs.copyFileSync(scaffoldPath('app.js'), path.resolve(tmpDirectory, 'app.js'))
