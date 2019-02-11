@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import {
   FocusZoneDirection,
-  focusZoneTabbableElements,
+  FocusZoneTabbableElements,
   IFocusZone,
   FocusZoneProps,
 } from './FocusZone.types'
@@ -466,8 +466,8 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
         case keyboardKey.Tab:
           if (
-            this.props.handleTabKey === focusZoneTabbableElements.all ||
-            (this.props.handleTabKey === focusZoneTabbableElements.inputOnly &&
+            this.props.handleTabKey === FocusZoneTabbableElements.all ||
+            (this.props.handleTabKey === FocusZoneTabbableElements.inputOnly &&
               this.isElementInput(ev.target as HTMLElement))
           ) {
             let focusChanged = false

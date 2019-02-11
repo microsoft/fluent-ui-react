@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { FocusZone } from './FocusZone'
-import { ValueOf } from '../../../types'
 
 /**
  * FocusZone component class interface.
@@ -115,7 +114,7 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
    * an unfortunate side effect is that users will not be able to tab out of the focus zone
    * and have to hit escape or some other key.
    */
-  handleTabKey?: ValueOf<FocusZoneTabbableElements>
+  handleTabKey?: FocusZoneTabbableElements
 
   /**
    * A callback method to determine if the input element should lose focus on arrow keys.
@@ -142,21 +141,15 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
   preventDefaultWhenHandled?: boolean
 }
 
-export type FocusZoneTabbableElements = {
+export enum FocusZoneTabbableElements {
   /** Tabbing is not allowed */
-  none: 0
+  none = 0,
 
   /** All tabbing action is allowed */
-  all: 1
+  all = 1,
 
   /** Tabbing is allowed only on input elements */
-  inputOnly: 2
-}
-
-export const focusZoneTabbableElements: FocusZoneTabbableElements = {
-  none: 0,
-  all: 1,
-  inputOnly: 2,
+  inputOnly = 2,
 }
 
 export enum FocusZoneDirection {

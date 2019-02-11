@@ -7,7 +7,7 @@ import * as keyboardKey from 'keyboard-key'
 import {
   FocusZone,
   FocusZoneDirection,
-  focusZoneTabbableElements,
+  FocusZoneTabbableElements,
 } from '../../../src/lib/accessibility/FocusZone'
 import { IS_FOCUSABLE_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
@@ -881,7 +881,7 @@ describe('FocusZone', () => {
     const tabDownListener = jest.fn()
     const component = ReactTestUtils.renderIntoDocument(
       <div {...{ onFocusCapture: onFocus, onKeyDown: tabDownListener }}>
-        <FocusZone {...{ handleTabKey: focusZoneTabbableElements.all, isCircularNavigation: true }}>
+        <FocusZone {...{ handleTabKey: FocusZoneTabbableElements.all, isCircularNavigation: true }}>
           <button id="a">a</button>
           <button id="b">b</button>
           <button id="c">c</button>
@@ -999,7 +999,7 @@ describe('FocusZone', () => {
     const component = ReactTestUtils.renderIntoDocument(
       <div {...{ onFocusCapture: onFocus, onKeyDown: tabDownListener }}>
         <FocusZone
-          {...{ handleTabKey: focusZoneTabbableElements.inputOnly, isCircularNavigation: false }}
+          {...{ handleTabKey: FocusZoneTabbableElements.inputOnly, isCircularNavigation: false }}
         >
           <input type="text" id="a" />
           <button id="b">b</button>
@@ -1060,7 +1060,7 @@ describe('FocusZone', () => {
       <div {...{ onFocusCapture: onFocus, onKeyDown: tabDownListener }}>
         <FocusZone
           {...{
-            handleTabKey: focusZoneTabbableElements.all,
+            handleTabKey: FocusZoneTabbableElements.all,
             isCircularNavigation: false,
             shouldInputLoseFocusOnArrowKey: element => {
               return true
