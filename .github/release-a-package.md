@@ -5,7 +5,7 @@ This documentation is intended for core Stardust contributors and describes `@st
 ## Prerequisities
 
 1. You need NPM account and npm configured with your token.
-2. You must be a member of [stardust-ui organization on npmjs.com](https://www.npmjs.com/settings/stardust-ui/members).
+2. You must be a member of stardust-ui organization on [npmjs.com](https://www.npmjs.com).
 
 ## Define new version number
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html), version is in `MAJOR.MINOR.PATCH` format.
