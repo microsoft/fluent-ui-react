@@ -15,6 +15,10 @@ import {
 import { Image, Icon, Label } from '../..'
 import { IconProps } from '../Icon/Icon'
 
+export interface DropdownSelectedItemSlotClassNames {
+  removeIcon: string
+}
+
 export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSelectedItemProps> {
   /** Header of the selected item. */
   header?: string
@@ -48,9 +52,8 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
  */
 class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemProps>, any> {
   static displayName = 'DropdownSelectedItem'
-
   static create: Function
-
+  static slotClassNames: DropdownSelectedItemSlotClassNames
   static className = 'ui-dropdown__selected-item'
 
   static propTypes = {
@@ -97,6 +100,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
       defaultProps: {
         'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
         'aria-hidden': false,
+        className: DropdownSelectedItem.slotClassNames.removeIcon,
         role: 'button',
       },
       overrideProps: this.handleIconOverrides,
@@ -120,6 +124,10 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
       />
     )
   }
+}
+
+DropdownSelectedItem.slotClassNames = {
+  removeIcon: `${DropdownSelectedItem.className}__remove-icon`,
 }
 
 DropdownSelectedItem.create = createShorthandFactory(DropdownSelectedItem, 'header')

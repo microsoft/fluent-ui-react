@@ -14,6 +14,9 @@ import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
 
 export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearchInputProps> {
+  /** A dropdown search input can be formatted to appear inline in the context of a Dropdown. */
+  inline?: boolean
+
   /** Ref for input DOM node. */
   inputRef?: React.Ref<HTMLElement>
 
@@ -70,7 +73,7 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
     }),
     accessibilityInputProps: PropTypes.object,
     accessibilityComboboxProps: PropTypes.object,
-    hasToggleButton: PropTypes.bool,
+    inline: PropTypes.bool,
     inputRef: customPropTypes.ref,
     onFocus: PropTypes.func,
     onInputBlur: PropTypes.func,

@@ -12,15 +12,16 @@ const inputItems = [
   'Peter Parker',
   'Selina Kyle',
 ]
-const DropdownExample = () => (
+
+const DropdownExampleMultipleSearchFluid = () => (
   <Dropdown
     multiple
-    getA11ySelectionMessage={getA11ySelectionMessage}
-    noResultsMessage="We couldn't find any matches."
     search
     fluid
-    placeholder="Start typing a name"
     items={inputItems}
+    placeholder="Start typing a name"
+    getA11ySelectionMessage={getA11ySelectionMessage}
+    noResultsMessage="We couldn't find any matches."
   />
 )
 
@@ -29,4 +30,4 @@ const getA11ySelectionMessage = {
   onRemove: item => `${item} has been removed.`,
 }
 
-export default DropdownExample
+export default DropdownExampleMultipleSearchFluid
