@@ -1,8 +1,7 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-
-import { ObjectOf } from 'src/types'
 import leven from './leven'
+import { ObjectOf } from '../types'
 
 const typeOf = x => Object.prototype.toString.call(x)
 
