@@ -2,11 +2,11 @@ import { Accessibility, FocusZoneMode } from '../../types'
 
 /**
  * @specification
- * Wraps component in FocusZone allowing circular arrow key navigation through the children of the component.
+ * Embeds FocusZone into component allowing circular arrow key navigation through the children of the component.
  */
 const gridBehavior: Accessibility = (props: any) => ({
   focusZone: {
-    mode: FocusZoneMode.Wrap,
+    mode: FocusZoneMode.Embed,
     props: {
       isCircularNavigation: true,
       preventDefaultWhenHandled: true,
