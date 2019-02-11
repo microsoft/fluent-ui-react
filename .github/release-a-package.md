@@ -21,7 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   - create a new heading for UNRELEASED changes,
   - commit as `chore: prepare release v0.2.3 [ci skip]`` (yes, directly to master).
 4. Run the release:
-  - **Please review [this section](0x-convention) to decide which version (major, minor, patch) should be incremented.**
+  - **Please review [this section](#0x-convention) to decide which version (major, minor, patch) should be incremented.**
   - with incremented patch version run `npm run release:patch`,
   - with incremented minor version run `npm run release:minor`.
 
