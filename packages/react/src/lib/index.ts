@@ -1,4 +1,4 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from './customPropTypes'
 import * as commonPropTypes from './commonPropTypes'
 
 export { default as AutoControlledComponent } from './AutoControlledComponent'

@@ -1,4 +1,3 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as keyboardKey from 'keyboard-key'
@@ -18,6 +17,7 @@ import {
 import { FocusTrapZoneProps } from './FocusTrapZone.types'
 import getUnhandledProps from '../../getUnhandledProps'
 import getElementType from '../../getElementType'
+import * as customPropTypes from '../../customPropTypes'
 
 /** FocusTrapZone is used to trap the focus in any html element placed in body
  *  and hide other elements outside of Focus Trap Zone from accessibility tree.

@@ -1,4 +1,3 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
@@ -22,6 +21,7 @@ import {
   FOCUSZONE_ID_ATTRIBUTE,
 } from './focusUtilities'
 import getUnhandledProps from '../../getUnhandledProps'
+import * as customPropTypes from '../../customPropTypes'
 import getElementType from '../../getElementType'
 
 const TABINDEX = 'tabindex'

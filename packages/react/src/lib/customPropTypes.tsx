@@ -1,9 +1,9 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 
+import { ObjectOf } from 'src/types'
 import leven from './leven'
 
-type ObjectOf<T> = Record<string, T>
 const typeOf = x => Object.prototype.toString.call(x)
 
 /**

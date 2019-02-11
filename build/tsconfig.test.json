@@ -3,5 +3,5 @@
   "compilerOptions": {
     "module": "esnext"
   },
-  "include": ["../packages/*/src", "../packages/*/test", "../docs/src", "../types"]
+  "include": ["../packages", "../docs/src", "../types"]
 }
