@@ -44,8 +44,8 @@ const installStardustPackages = async (tmpDirectory: string) => {
 
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
-  const filenames = packedPackages.map(({ filename }) => filename).join(' ')
-  await runIn(tmpDirectory)(`yarn add ${filenames}`)
+  const stardustPackageFilenames = packedPackages.map(({ filename }) => filename).join(' ')
+  await runIn(tmpDirectory)(`yarn add ${stardustPackageFilenames}`)
 }
 
 export const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
