@@ -103,6 +103,15 @@ function updateStatsFile(filePath: string, currentBundleStats: any) {
   )
 }
 
+function writeCurrentStats(filePath: string, currentBundleStats: any) {
+  const statsData = _.chain(currentBundleStats)
+    .keyBy('name')
+    .mapValues(result => ({ size: result.size }))
+    .value()
+
+  fs.writeFileSync(filePath, JSON.stringify(statsData, null, 2))
+}
+
 task('stats:build:bundle', async () => {
   process.env.NODE_ENV = 'build'
   const webpackStatsConfig = require('../../webpack.config.stats').default
@@ -114,6 +123,7 @@ task('stats:build:bundle', async () => {
     .value()
 
   updateStatsFile(paths.docsSrc('bundleStats.json'), results)
+  writeCurrentStats(paths.docsSrc('currentBundleStats.json'), results)
 })
 
 task(
@@ -124,9 +134,21 @@ task(
   ),
 )
 
+function readSummaryPerfStats() {
+  return _.mapValues(require(paths.perfDist('result.json')), result => ({
+    actualTime: _.omit(result.actualTime, 'values'),
+    baseTime: _.omit(result.baseTime, 'values'),
+  }))
+}
+
+function readCurrentBundleStats() {
+  return require(paths.docsSrc('currentBundleStats.json'))
+}
+
 task('stats:save', async () => {
   const commandLineArgs = _.pick(argv, ['sha', 'branch', 'tag', 'pr', 'build'])
-  const bundleStats = require(paths.docsSrc('bundleStats.json'))[UNRELEASED_VERSION_STRING]
+  const bundleStats = readCurrentBundleStats()
+  const perfStats = readSummaryPerfStats()
 
   const statsPayload = {
     sha: process.env.CIRCLE_SHA1,
@@ -136,11 +158,12 @@ task('stats:save', async () => {
     build: process.env.CIRCLE_BUILD_NUM,
     ...commandLineArgs, // allow command line overwrites
     bundleSize: bundleStats,
+    performance: perfStats,
     ts: new Date(),
   }
 
   // payload sanity check
-  _.forEach(['sha', 'branch', 'build', 'bundleSize'], fieldName => {
+  _.forEach(['sha', 'branch', 'build', 'bundleSize', 'performance'], fieldName => {
     if (statsPayload[fieldName] === undefined) {
       throw `Required field '${fieldName}' not set in stats payload`
     }
