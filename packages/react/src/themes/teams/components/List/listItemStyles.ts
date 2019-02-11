@@ -40,10 +40,6 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     ...(p.selectable && {
       position: 'relative',
-
-      // hide the end media by default
-      '& .ui-item-layout__endMedia': { display: 'none' },
-
       '&:hover': selectableHoverStyle(p, v),
       '&:focus': selectableFocusStyle(p, v),
       ...(p.selected && selectedStyle(v)),
@@ -75,6 +71,9 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
   content: ({ variables: v }) => ({
     fontSize: v.contentFontSize,
     lineHeight: v.contentLineHeight,
+  }),
+  endMedia: ({ props: p }) => ({
+    ...(p.selectable && { display: 'none' }),
   }),
 }
 

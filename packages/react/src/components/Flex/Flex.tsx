@@ -92,7 +92,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
 
     return React.Children.map(children, (child: React.ReactElement<any>, index) => {
       const childElement =
-        child.type && ((child.type as any) as typeof FlexItem).__isFlexItem
+        child && child.type && ((child.type as any) as typeof FlexItem).__isFlexItem
           ? React.cloneElement(child, {
               flexDirection: column ? 'column' : 'row',
             })

@@ -9,10 +9,11 @@ import {
   ContentComponentProps,
   isFromKeyboard,
 } from '../../lib'
-import ItemLayout from '../ItemLayout/ItemLayout'
+import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ReactProps, ComponentEventHandler } from '../../types'
+import Box from 'src/components/Box/Box'
 
 export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
   /**
@@ -132,34 +133,68 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
       contentMedia,
       header,
       headerMedia,
-      truncateContent,
-      truncateHeader,
+      // truncateContent,
+      // truncateHeader,
     } = this.props
 
+    const contentElement = Box.create(content, {
+      defaultProps: {
+        styles: styles.content,
+      },
+    })
+    const contentMediaElement = Box.create(contentMedia, {
+      defaultProps: {
+        styles: styles.contentMedia,
+      },
+    })
+    const headerElement = Box.create(header, {
+      defaultProps: {
+        styles: styles.header,
+      },
+    })
+    const headerMediaElement = Box.create(headerMedia, {
+      defaultProps: {
+        styles: styles.headerMedia,
+      },
+    })
+    const endMediaElement = Box.create(endMedia, {
+      defaultProps: {
+        styles: styles.endMedia,
+      },
+    })
+    const mediaElement = Box.create(media, {
+      defaultProps: {
+        styles: styles.media,
+      },
+    })
+
     return (
-      <ItemLayout
+      <Flex
+        vAlign="center"
         as={as}
-        className={classes.root}
-        rootCSS={styles.root}
-        content={content}
-        contentMedia={contentMedia}
         debug={debug}
-        endMedia={endMedia}
-        header={header}
-        headerMedia={headerMedia}
-        media={media}
-        mediaCSS={styles.media}
-        truncateContent={truncateContent}
-        truncateHeader={truncateHeader}
-        headerCSS={styles.header}
-        headerMediaCSS={styles.headerMedia}
-        contentCSS={styles.content}
+        styles={styles.root}
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...unhandledProps}
-      />
+      >
+        {mediaElement}
+        <Flex.Item grow>
+          <Flex column>
+            <Flex>
+              {headerElement && <Flex.Item grow>{headerElement}</Flex.Item>}
+              {headerMediaElement}
+            </Flex>
+            <Flex>
+              {contentElement && <Flex.Item grow>{contentElement}</Flex.Item>}
+              {contentMediaElement}
+            </Flex>
+          </Flex>
+        </Flex.Item>
+        {endMediaElement}
+      </Flex>
     )
   }
 }
