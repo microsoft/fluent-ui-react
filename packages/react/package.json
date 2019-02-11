@@ -21,7 +21,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "gulp bundle --package react --umd"
+    "build": "gulp bundle:with-umd --package react"
   },
   "dependencies": {
     "@stardust-ui/react-proptypes": "^0.20.0",

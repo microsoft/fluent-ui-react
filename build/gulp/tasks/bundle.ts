@@ -11,7 +11,6 @@ const { paths } = config
 const g = require('gulp-load-plugins')()
 const { log, PluginError } = g.util
 
-const buildUMD = !!argv.umd
 const packageName: string = argv.package || 'react'
 
 // ----------------------------------------
@@ -67,11 +66,6 @@ task('bundle:build:es', () => {
 })
 
 task('bundle:build:umd', cb => {
-  if (!buildUMD) {
-    cb()
-    return
-  }
-
   process.env.NODE_ENV = 'build'
   const webpackUMDConfig = require('../../webpack.config.umd').default
   const compiler = webpack(webpackUMDConfig(packageName))
@@ -97,11 +91,10 @@ task('bundle:build:umd', cb => {
   })
 })
 
-task('bundle:build', parallel('bundle:build:commonjs', 'bundle:build:es', 'bundle:build:umd'))
-
 // ----------------------------------------
 // Default
 // ----------------------------------------
 
-task('bundle', series('bundle:clean', 'bundle:build'))
+task('bundle', series('bundle:clean', parallel('bundle:build:commonjs', 'bundle:build:es')))
+task('bundle:with-umd', series('bundle', 'bundle:build:umd'))
 task('bundle:all', () => sh('lerna run build'))
