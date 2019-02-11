@@ -38,9 +38,11 @@ import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchI
 import Button from '../Button/Button'
 import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 import ListItem from '../List/ListItem'
+import Icon from '../Icon/Icon'
 
 export interface DropdownSlotClassNames {
   container: string
+  clearIndicator: string
   triggerButton: string
   itemsList: string
   selectedItems: string
@@ -49,6 +51,12 @@ export interface DropdownSlotClassNames {
 export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownState> {
   /** The index of the currently active selected item, if dropdown has a multiple selection. */
   activeSelectedIndex?: number
+
+  /** A dropdown can be clearable and let users remove their selection. */
+  clearable?: boolean
+
+  /** A slot for a clearing indicator. */
+  clearIndicator?: ShorthandValue
 
   /** The initial value for the index of the currently active selected item, in a multiple selection. */
   defaultActiveSelectedIndex?: number
@@ -192,6 +200,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       content: false,
     }),
     activeSelectedIndex: PropTypes.number,
+    clearable: PropTypes.bool,
+    clearIndicator: customPropTypes.itemShorthand,
     defaultActiveSelectedIndex: PropTypes.number,
     defaultSearchQuery: PropTypes.string,
     defaultValue: PropTypes.oneOfType([
@@ -226,6 +236,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   static defaultProps: DropdownProps = {
     as: 'div',
+    clearIndicator: 'close',
     itemToString: item => {
       if (!item || React.isValidElement(item)) {
         return ''
@@ -263,8 +274,16 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     unhandledProps,
     rtl,
   }: RenderResultConfig<DropdownProps>) {
-    const { search, multiple, getA11yStatusMessage, itemToString, toggleIndicator } = this.props
-    const { defaultHighlightedIndex, searchQuery } = this.state
+    const {
+      clearable,
+      clearIndicator,
+      search,
+      multiple,
+      getA11yStatusMessage,
+      itemToString,
+      toggleIndicator,
+    } = this.props
+    const { defaultHighlightedIndex, searchQuery, value } = this.state
 
     return (
       <ElementType className={classes.root} {...unhandledProps}>
@@ -293,6 +312,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
               { refKey: 'innerRef' },
               { suppressRefError: true },
             )
+            const showClearIndicator = clearable && !this.isValueEmpty(value)
+
             return (
               <Ref innerRef={innerRef}>
                 <div
@@ -315,13 +336,22 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                         )
                       : this.renderTriggerButton(styles, rtl, getToggleButtonProps)}
                   </div>
-                  {Indicator.create(toggleIndicator, {
-                    defaultProps: {
-                      direction: isOpen ? 'top' : 'bottom',
-                      onClick: getToggleButtonProps().onClick,
-                      styles: styles.toggleIndicator,
-                    },
-                  })}
+                  {showClearIndicator
+                    ? Icon.create(clearIndicator, {
+                        defaultProps: {
+                          className: Dropdown.slotClassNames.clearIndicator,
+                          onClick: this.handleClear,
+                          styles: styles.clearIndicator,
+                          xSpacing: 'none',
+                        },
+                      })
+                    : Indicator.create(toggleIndicator, {
+                        defaultProps: {
+                          direction: isOpen ? 'top' : 'bottom',
+                          onClick: getToggleButtonProps().onClick,
+                          styles: styles.toggleIndicator,
+                        },
+                      })}
                   {this.renderItemsList(
                     styles,
                     variables,
@@ -748,6 +778,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
   }
 
+  private handleClear = () => {
+    const { multiple } = this.props
+
+    this.setState({ value: multiple ? [] : '' })
+  }
+
   private handleContainerClick = () => {
     this.tryFocusSearchInput()
   }
@@ -932,9 +968,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
    */
   private getSelectedItemAsString = (value: ShorthandValue): string => {
     const { itemToString, multiple, placeholder } = this.props
-    const isValueEmpty = _.isArray(value) ? value.length < 1 : !value
 
-    if (isValueEmpty) {
+    if (this.isValueEmpty(value)) {
       return placeholder
     }
 
@@ -944,10 +979,15 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
     return itemToString(value)
   }
+
+  private isValueEmpty = (value: ShorthandValue | ShorthandValue[]) => {
+    return _.isArray(value) ? value.length < 1 : !value
+  }
 }
 
 Dropdown.slotClassNames = {
   container: `${Dropdown.className}__container`,
+  clearIndicator: `${Dropdown.className}__clear-indicator`,
   triggerButton: `${Dropdown.className}__trigger-button`,
   itemsList: `${Dropdown.className}__items-list`,
   selectedItems: `${Dropdown.className}__selected-items`,

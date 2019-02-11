@@ -40,6 +40,22 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     }),
   }),
 
+  clearIndicator: ({ variables: v }): ICSSInJSStyle => ({
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+
+    backgroundColor: 'transparent',
+    cursor: 'pointer',
+    userSelect: 'none',
+
+    margin: 0,
+    position: 'absolute',
+    right: pxToRem(5),
+    height: v.toggleIndicatorSize,
+    width: v.toggleIndicatorSize,
+  }),
+
   container: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'flex',
     flexWrap: 'wrap',
