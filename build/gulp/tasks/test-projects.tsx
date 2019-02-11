@@ -34,15 +34,15 @@ const installStardustPackages = async (tmpDirectory: string) => {
     ),
   )
 
-  const packageJsonName = path.resolve(tmpDirectory, 'package.json')
-  const packageJson = require(packageJsonName)
+  const packageJsonPath = path.resolve(tmpDirectory, 'package.json')
+  const packageJson = require(packageJsonPath)
 
   packageJson.resolutions = packageJson.resolutions || {}
   packedPackages.forEach(({ packageName, filename }) => {
     packageJson.resolutions[`**/${packageName}`] = `file:${filename}`
   })
 
-  fs.writeFileSync(packageJsonName, JSON.stringify(packageJson, null, 2))
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
   const filenames = packedPackages.map(({ filename }) => filename).join(' ')
   await runIn(tmpDirectory)(`yarn add ${filenames}`)
