@@ -79,7 +79,6 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
 
   handleIconOverrides = iconProps => {
     return {
-      ...(iconProps.onClick && { tabIndex: '0' }),
       ...(!iconProps.xSpacing && {
         xSpacing: 'none',
       }),
