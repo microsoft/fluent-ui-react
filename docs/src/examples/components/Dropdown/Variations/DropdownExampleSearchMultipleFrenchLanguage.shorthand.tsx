@@ -19,7 +19,7 @@ const inputItems = [
   },
 }))
 
-const DropdownExampleMultipleSearchFrenchLanguage = () => (
+const DropdownExampleSearchMultipleFrenchLanguage = () => (
   <Dropdown
     multiple
     search
@@ -57,4 +57,4 @@ const getA11ySelectionMessage = {
   onRemove: item => `${item.header} a été éliminé.`,
 }
 
-export default DropdownExampleMultipleSearchFrenchLanguage
+export default DropdownExampleSearchMultipleFrenchLanguage

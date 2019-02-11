@@ -151,7 +151,7 @@
     "request-promise-native": "^1.0.5",
     "rimraf": "^2.6.1",
     "satisfied": "^1.1.1",
-    "screener-runner": "^0.10.7",
+    "screener-runner": "^0.10.30",
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.81.1",
     "simulant": "^0.2.2",
