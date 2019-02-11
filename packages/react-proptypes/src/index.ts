@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 
 import leven from './leven'
 
-type ObjectOf<T> = { [key: string]: T }
+type ObjectOf<T> = Record<string, T>
 const typeOf = x => Object.prototype.toString.call(x)
 
 /**
