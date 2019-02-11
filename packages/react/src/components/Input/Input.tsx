@@ -18,6 +18,10 @@ import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import Box from '../Box/Box'
 
+export interface InputSlotClassNames {
+  input: string
+}
+
 export interface InputProps extends UIComponentProps, ChildrenComponentProps {
   /** A property that will change the icon on the input and clear the input on click on Cancel. */
   clearable?: boolean
@@ -80,6 +84,8 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
 
   static displayName = 'Input'
 
+  static slotClassNames: InputSlotClassNames
+
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
@@ -134,7 +140,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
                   as: 'input',
                   type,
                   value,
-                  className: `${Input.className}__input`,
+                  className: Input.slotClassNames.input,
                   styles: styles.input,
                   onChange: this.handleChange,
                 },
@@ -191,6 +197,10 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
 
     return icon || null
   }
+}
+
+Input.slotClassNames = {
+  input: `${Input.className}__input`,
 }
 
 export default Input
