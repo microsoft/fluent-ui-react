@@ -17,7 +17,7 @@ const log = (context: string) => (message: string) => {
   console.log('='.repeat(80))
 }
 
-const installStardustPackages = async (tmpDirectory: string) => {
+const installStardustPackages = async (testProjectDir: string) => {
   // packages/react/src -> packages/react,
   // as lernaAliases append 'src'  by default
   const stardustPackages = lernaAliases({ sourceDirectory: false })
@@ -34,7 +34,7 @@ const installStardustPackages = async (tmpDirectory: string) => {
     ),
   )
 
-  const packageJsonPath = path.resolve(tmpDirectory, 'package.json')
+  const packageJsonPath = path.resolve(testProjectDir, 'package.json')
   const packageJson = require(packageJsonPath)
 
   packageJson.resolutions = packageJson.resolutions || {}
@@ -45,7 +45,7 @@ const installStardustPackages = async (tmpDirectory: string) => {
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
   const stardustPackageFilenames = packedPackages.map(({ filename }) => filename).join(' ')
-  await runIn(tmpDirectory)(`yarn add ${stardustPackageFilenames}`)
+  await runIn(testProjectDir)(`yarn add ${stardustPackageFilenames}`)
 }
 
 export const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
