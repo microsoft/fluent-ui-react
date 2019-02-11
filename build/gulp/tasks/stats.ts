@@ -135,14 +135,19 @@ task(
 )
 
 function readSummaryPerfStats() {
-  return _.mapValues(require(paths.perfDist('result.json')), result => ({
-    actualTime: _.omit(result.actualTime, 'values'),
-    baseTime: _.omit(result.baseTime, 'values'),
-  }))
+  return _.chain(require(paths.perfDist('result.json')))
+    .mapKeys((value, key) => _.camelCase(key))
+    .mapValues(result => ({
+      actualTime: _.omit(result.actualTime, 'values'),
+      baseTime: _.omit(result.baseTime, 'values'),
+    }))
+    .value()
 }
 
 function readCurrentBundleStats() {
-  return require(paths.docsSrc('currentBundleStats.json'))
+  return _.mapKeys(require(paths.docsSrc('currentBundleStats.json')), (value, key) =>
+    _.camelCase(key),
+  )
 }
 
 task('stats:save', async () => {
