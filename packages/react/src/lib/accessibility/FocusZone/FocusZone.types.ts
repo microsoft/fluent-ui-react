@@ -141,7 +141,7 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
   preventDefaultWhenHandled?: boolean
 }
 
-export const enum FocusZoneTabbableElements {
+export enum FocusZoneTabbableElements {
   /** Tabbing is not allowed */
   none = 0,
 
