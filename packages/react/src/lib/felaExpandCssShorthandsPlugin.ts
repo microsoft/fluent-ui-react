@@ -1,5 +1,9 @@
 import * as _ from 'lodash'
-import * as expand from 'css-shorthand-expand'
+import * as _expand from 'css-shorthand-expand'
+
+// `css-shorthand-expand` is a CJS library, there are known issues with them:
+// https://github.com/rollup/rollup/issues/1267#issuecomment-446681320
+const expand = (_expand as any).default || _expand
 
 export default () => {
   const expandCssShorthands = styles => {

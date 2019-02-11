@@ -18,5 +18,3 @@ declare module '*.json' {
 declare interface Window {
   prettierPlugins: any
 }
-
-declare module 'css-shorthand-expand'
