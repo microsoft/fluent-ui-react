@@ -97,11 +97,11 @@ task('bundle:build:umd', cb => {
   })
 })
 
-task('build:build', parallel('bundle:build:commonjs', 'bundle:build:es', 'bundle:build:umd'))
+task('bundle:build', parallel('bundle:build:commonjs', 'bundle:build:es', 'bundle:build:umd'))
 
 // ----------------------------------------
 // Default
 // ----------------------------------------
 
-task('bundle', series('bundle:clean', 'build:build'))
+task('bundle', series('bundle:clean', 'bundle:build'))
 task('bundle:all', () => sh('lerna run build'))
