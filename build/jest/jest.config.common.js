@@ -12,9 +12,9 @@ module.exports = {
   },
   moduleNameMapper: {
     ...lernaAliases(),
+    'docs/(.*)$': `<rootDir>/docs/$1`,
 
     // Legacy aliases, they should not be used in new tests
-    'docs/(.*)$': `<rootDir>/docs/$1`,
     'src/(.*)$': `<rootDir>/packages/react/src/$1`,
     'test/(.*)$': `<rootDir>/packages/react/test/$1`,
   },
