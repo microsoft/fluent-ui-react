@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import * as expand from 'css-shorthand-expand'
+import { default as expand } from 'css-shorthand-expand'
 
 export default () => {
   const expandCssShorthands = styles => {
