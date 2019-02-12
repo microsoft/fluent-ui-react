@@ -25,15 +25,18 @@ export interface MenuVariables {
   lineHeightBase: string
 
   horizontalPadding: string
+
+  defaultBackgroundColor: string
+  verticalSubmenuPrimaryBorderShorthand: string,
+  verticalSubmenuItemPadding: string,
+  verticalSubmenuBoxShadow: string,
 }
 
 export default (siteVars: any): MenuVariables => {
   return {
     color: siteVars.gray02,
-
-    iconOnlyActiveColor: siteVars.colors.primary[500],
-
-    activeColor: siteVars.colors.grey[900],
+    iconOnlyActiveColor: siteVars.brand06,
+    activeColor: siteVars.black,
     activeBackgroundColor: siteVars.gray10,
     focusedBackgroundColor: siteVars.gray14,
     borderColor: siteVars.gray08,
@@ -45,7 +48,7 @@ export default (siteVars: any): MenuVariables => {
     primaryFocusedColor: siteVars.colors.white,
     primaryFocusedBackgroundColor: siteVars.colors.primary[200],
 
-    primaryBorderColor: siteVars.brand08,
+    primaryBorderColor: siteVars.gray10,
     primaryHoverBorderColor: siteVars.gray08,
     primaryUnderlinedBorderColor: siteVars.gray08,
 
@@ -54,5 +57,10 @@ export default (siteVars: any): MenuVariables => {
     lineHeightBase: siteVars.lineHeightMedium,
 
     horizontalPadding: `${pxToRem(14)} ${pxToRem(18)} ${pxToRem(14)} ${pxToRem(18)}`,
+
+    defaultBackgroundColor: siteVars.white,
+    verticalSubmenuPrimaryBorderShorthand: `none`,
+    verticalSubmenuItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
+    verticalSubmenuBoxShadow: siteVars.shadowLevel1,
   }
 }

@@ -17,7 +17,7 @@ const underlinedItem = (color: string): ICSSInJSStyle => ({
 })
 
 const getActionStyles = ({
-  props: { primary, underlined, iconOnly, isFromKeyboard },
+  props: { primary, underlined, iconOnly },
   variables: v,
   color,
 }: {
@@ -74,6 +74,7 @@ const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVaria
   const { iconOnly, pointing, pills, primary, underlined, vertical } = props
 
   return (
+    !vertical &&
     !pills &&
     !underlined &&
     !(pointing && vertical) &&
@@ -83,7 +84,8 @@ const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVaria
         content: '""',
         top: 0,
         right: 0,
-        ...(vertical ? { width: '100%', height: '1px' } : { width: '1px', height: '100%' }),
+        width: '1px',
+        height: '100%',
         ...(primary ? { background: v.primaryBorderColor } : { background: v.borderColor }),
       },
     }
@@ -274,7 +276,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  root: ({ props, variables: v, theme }): ICSSInJSStyle => {
+  root: ({ props, variables: v }): ICSSInJSStyle => {
     const {
       active,
       iconOnly,
@@ -304,6 +306,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         ? { padding: `${pxToRem(4)} 0` }
         : pointing && vertical
         ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
+        : vertical
+        ? { padding: v.verticalSubmenuItemPadding, }
         : {
             padding: v.horizontalPadding,
           }),
@@ -401,11 +405,14 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  menu: ({ props: { vertical } }) => ({
+  menu: ({ props: { vertical }, variables: v }) => ({
     zIndex: '1000',
     position: 'absolute',
     top: vertical ? '0' : '100%',
     left: vertical ? '100%' : '0',
+    boxShadow: v.verticalSubmenuBoxShadow,
+    backgroundColor: v.defaultBackgroundColor,
+    padding: `${pxToRem(8)} 0`,
   }),
 
   indicator: () => ({

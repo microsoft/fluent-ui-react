@@ -10,6 +10,11 @@ const Usages = () => (
       examplePath="components/Menu/Usages/MenuExampleToolbar"
     />
     <ComponentExample
+      title="Menu as toolbar with submenu"
+      description="A menu with Toolbar accessibility behavior."
+      examplePath="components/Menu/Usages/MenuExampleToolbarWithSubmenu"
+    />
+    <ComponentExample
       title="Menu as a Tab List"
       description="A menu with TabList accessibility behavior."
       examplePath="components/Menu/Usages/MenuExampleTabList"

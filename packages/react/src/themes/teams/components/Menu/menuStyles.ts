@@ -19,6 +19,10 @@ export default {
     const { iconOnly, fluid, pointing, pills, primary, underlined, vertical } = props
     return {
       display: 'flex',
+      minHeight: pxToRem(24),
+      margin: 0,
+      padding: 0,
+      listStyleType: 'none',
       ...(iconOnly && { alignItems: 'center' }),
       ...(vertical && {
         flexDirection: 'column',
@@ -41,10 +45,6 @@ export default {
       ...(underlined && {
         borderBottom: `2px solid ${variables.primaryUnderlinedBorderColor}`,
       }),
-      minHeight: pxToRem(24),
-      margin: 0,
-      padding: 0,
-      listStyleType: 'none',
     }
   },
   divider: ({ props: { pointing, vertical, pills } }) => ({
