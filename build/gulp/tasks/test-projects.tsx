@@ -36,7 +36,7 @@ const addResolutionPathsForStardustPackages = async (
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 }
 
-const packStardustPackages = async (): Promise<PackedPackages> => {
+const packStardustPackages = async (logger: Function): Promise<PackedPackages> => {
   // packages/react/src -> packages/react,
   // as lernaAliases append 'src'  by default
   const stardustPackages = lernaAliases({ sourceDirectory: false })
@@ -47,6 +47,7 @@ const packStardustPackages = async (): Promise<PackedPackages> => {
       const directory = stardustPackages[packageName]
 
       await runIn(directory)(`yarn pack --filename ${filename}`)
+      logger(`✔️Package "${packageName}" was packed to ${filename}`)
 
       stardustPackages[packageName] = filename
     }),
@@ -54,11 +55,6 @@ const packStardustPackages = async (): Promise<PackedPackages> => {
 
   return stardustPackages
 }
-
-const installStardustReactPackage = async (
-  testProjectDir: string,
-  packedPackages: PackedPackages,
-) => runIn(testProjectDir)(`yarn add ${packedPackages['@stardust-ui/react']}`)
 
 const createReactApp = async (atTempDirectory: string, appName: string): Promise<string> => {
   const atDirectorySubpath = paths.withRootAt(atTempDirectory)
@@ -109,9 +105,9 @@ task('test:projects:cra-ts', async () => {
   //////// ADD STARDUST AS A DEPENDENCY ///////
   logger('STEP 2. Add Stardust dependency to test project..')
 
-  const packedPackages = await packStardustPackages()
+  const packedPackages = await packStardustPackages(logger)
   await addResolutionPathsForStardustPackages(testAppPath(), packedPackages)
-  await installStardustReactPackage(testAppPath(), packedPackages)
+  await runInTestApp(`yarn add ${packedPackages['@stardust-ui/react']}`)
   logger(`✔️Stardust UI packages were added to dependencies`)
 
   //////// REFERENCE STARDUST COMPONENTS IN TEST APP's MAIN FILE ///////
@@ -144,9 +140,9 @@ task('test:projects:rollup', async () => {
   await runIn(tmpDirectory)(`yarn add ${dependencies}`)
   logger(`✔️Dependencies were installed`)
 
-  const packedPackages = await packStardustPackages()
+  const packedPackages = await packStardustPackages(logger)
   await addResolutionPathsForStardustPackages(tmpDirectory, packedPackages)
-  await installStardustReactPackage(tmpDirectory, packedPackages)
+  await runIn(tmpDirectory)(`yarn add ${packedPackages['@stardust-ui/react']}`)
   logger(`✔️Stardust UI packages were added to dependencies`)
 
   fs.copyFileSync(scaffoldPath('app.js'), path.resolve(tmpDirectory, 'app.js'))
