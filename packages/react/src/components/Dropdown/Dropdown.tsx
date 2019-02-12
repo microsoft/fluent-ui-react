@@ -782,6 +782,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     const { multiple } = this.props
 
     this.setState({ value: multiple ? [] : '' })
+
+    this.tryFocusSearchInput()
+    this.tryFocusTriggerButton()
   }
 
   private handleContainerClick = () => {
