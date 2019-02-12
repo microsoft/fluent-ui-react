@@ -91,6 +91,10 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
     lineHeight: v.contentLineHeight,
     // ...(p.truncateContent && truncateStyle),
   }),
+  contentMedia: ({ props: p, variables: v }) => ({
+    fontSize: v.contentMediaFontSize,
+    lineHeight: v.contentMediaLineHeight,
+  }),
   endMedia: ({ props: p }) => ({
     ...(p.selectable && { display: 'none' }),
   }),
