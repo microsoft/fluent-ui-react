@@ -89,7 +89,7 @@ const applyStyles = (
   styles,
   classes,
 ): React.ReactElement<any> => {
-  if (!styles) {
+  if (!element || !styles) {
     return element
   }
 
