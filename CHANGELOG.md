@@ -84,6 +84,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add sample screener tests with steps for `Dropdown` @silviuavram ([#797](https://github.com/stardust-ui/react/pull/797))
 - Add shorthand support for `triggerButton` in `Dropdown` @silviuavram ([#815](https://github.com/stardust-ui/react/pull/815))
 - Add toggle functionality in the `Popoup` even if the `trigger` is not button @kolaps33 ([#758](https://github.com/stardust-ui/react/pull/758))
+- Export `arrow-up`,`arrow-down` and `chat` SVG icon @VyshnaviDasari ([#873](https://github.com/stardust-ui/react/pull/873))
 
 ### Fixes
 - Handle `onClick` and `onFocus` on ListItems correctly @layershifter ([#779](https://github.com/stardust-ui/react/pull/779))
