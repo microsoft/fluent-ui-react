@@ -15,6 +15,16 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import { ReactProps, ComponentEventHandler } from '../../types'
 import Box from 'src/components/Box/Box'
 
+export interface ListItemSlotClassNames {
+  header: string
+  headerMedia: string
+  main: string
+  content: string
+  contentMedia: string
+  media: string
+  endMedia: string
+}
+
 export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
   /**
    * Accessibility behavior if overridden by the user.
@@ -70,6 +80,8 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
 
   static className = 'ui-list__item'
 
+  static slotClassNames: ListItemSlotClassNames
+
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
@@ -124,46 +136,41 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
   }
 
   renderComponent({ classes, accessibility, unhandledProps, styles }) {
-    const {
-      as,
-      debug,
-      endMedia,
-      media,
-      content,
-      contentMedia,
-      header,
-      headerMedia,
-      // truncateContent,
-      // truncateHeader,
-    } = this.props
+    const { as, debug, endMedia, media, content, contentMedia, header, headerMedia } = this.props
 
     const contentElement = Box.create(content, {
       defaultProps: {
+        className: ListItem.slotClassNames.content,
         styles: styles.content,
       },
     })
     const contentMediaElement = Box.create(contentMedia, {
       defaultProps: {
+        className: ListItem.slotClassNames.contentMedia,
         styles: styles.contentMedia,
       },
     })
     const headerElement = Box.create(header, {
       defaultProps: {
+        className: ListItem.slotClassNames.header,
         styles: styles.header,
       },
     })
     const headerMediaElement = Box.create(headerMedia, {
       defaultProps: {
+        className: ListItem.slotClassNames.headerMedia,
         styles: styles.headerMedia,
       },
     })
     const endMediaElement = Box.create(endMedia, {
       defaultProps: {
+        className: ListItem.slotClassNames.endMedia,
         styles: styles.endMedia,
       },
     })
     const mediaElement = Box.create(media, {
       defaultProps: {
+        className: ListItem.slotClassNames.media,
         styles: styles.media,
       },
     })
@@ -171,6 +178,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
     return (
       <Flex
         vAlign="center"
+        gap="gap.list.item"
         as={as}
         debug={debug}
         styles={styles.root}
@@ -181,13 +189,13 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
         {...unhandledProps}
       >
         {mediaElement}
-        <Flex.Item grow>
+        <Flex.Item grow className={ListItem.slotClassNames.main}>
           <Flex column>
-            <Flex>
+            <Flex gap="gap.list.item">
               {headerElement && <Flex.Item grow>{headerElement}</Flex.Item>}
               {headerMediaElement}
             </Flex>
-            <Flex>
+            <Flex gap="gap.list.item">
               {contentElement && <Flex.Item grow>{contentElement}</Flex.Item>}
               {contentMediaElement}
             </Flex>
@@ -200,5 +208,14 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
 }
 
 ListItem.create = createShorthandFactory(ListItem, 'content')
+ListItem.slotClassNames = {
+  header: `${ListItem.className}__header`,
+  headerMedia: `${ListItem.className}__headerMedia`,
+  main: `${ListItem.className}__main`,
+  content: `${ListItem.className}__content`,
+  contentMedia: `${ListItem.className}__contentMedia`,
+  media: `${ListItem.className}__media`,
+  endMedia: `${ListItem.className}__endMedia`,
+}
 
 export default ListItem

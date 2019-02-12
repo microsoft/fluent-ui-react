@@ -28,7 +28,7 @@ export interface FlexProps {
   space?: 'around' | 'between' | 'evenly'
 
   /** Defines gap between each two adjacent child items. */
-  gap?: 'gap.small' | 'gap.medium' | 'gap.large'
+  gap?: 'gap.small' | 'gap.medium' | 'gap.large' | 'gap.list.item'
 
   /** Defines container's padding. */
   padding?: 'padding.medium'
@@ -71,7 +71,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
 
     space: PropTypes.oneOf(['around', 'between', 'evenly']),
 
-    gap: PropTypes.oneOf(['gap.small', 'gap.medium', 'gap.large']),
+    gap: PropTypes.oneOf(['gap.small', 'gap.medium', 'gap.large', 'gap.list.item']),
 
     padding: PropTypes.oneOf(['padding.medium']),
     fill: PropTypes.bool,
