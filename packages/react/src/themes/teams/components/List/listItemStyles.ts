@@ -2,6 +2,7 @@ import { pxToRem } from '../../../../lib'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ListItemProps, ListItemState } from '../../../../components/List/ListItem'
+import { default as ItemLayout } from '../../../../components/ItemLayout/ItemLayout'
 
 type ListItemPropsAndState = ListItemProps & ListItemState
 
@@ -10,15 +11,18 @@ const selectableHoverStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
   color: v.selectableFocusHoverColor,
   cursor: 'pointer',
 
-  '& .ui-item-layout__header': { color: 'inherit' },
-  '& .ui-item-layout__content': { color: 'inherit' },
+  [`& .${ItemLayout.slotClassNames.header}`]: { color: 'inherit' },
+  [`& .${ItemLayout.slotClassNames.content}`]: { color: 'inherit' },
 
   // hide the header media and content media on hover
-  '& .ui-item-layout__headerMedia': { ...screenReaderContainerStyles, color: 'inherit' },
-  '& .ui-item-layout__contentMedia': { display: 'none', color: 'inherit' },
+  [`& .${ItemLayout.slotClassNames.headerMedia}`]: {
+    ...screenReaderContainerStyles,
+    color: 'inherit',
+  },
+  [`& .${ItemLayout.slotClassNames.contentMedia}`]: { display: 'none', color: 'inherit' },
 
   // show the end media on hover
-  '& .ui-item-layout__endMedia': { display: 'block', color: 'inherit' },
+  [`& .${ItemLayout.slotClassNames.endMedia}`]: { display: 'block', color: 'inherit' },
 })
 
 const selectableFocusStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
@@ -42,7 +46,7 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
       position: 'relative',
 
       // hide the end media by default
-      '& .ui-item-layout__endMedia': { display: 'none' },
+      [`& .${ItemLayout.slotClassNames.endMedia}`]: { display: 'none' },
 
       '&:hover': selectableHoverStyle(p, v),
       '&:focus': selectableFocusStyle(p, v),
