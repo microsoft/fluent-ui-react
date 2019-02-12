@@ -779,9 +779,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private handleClear = () => {
-    const { multiple } = this.props
+    const initialState = this.getInitialAutoControlledState(this.props)
 
-    this.setState({ value: multiple ? [] : '' })
+    this.setState({ value: initialState.value })
 
     this.tryFocusSearchInput()
     this.tryFocusTriggerButton()
