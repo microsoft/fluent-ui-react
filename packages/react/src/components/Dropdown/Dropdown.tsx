@@ -8,6 +8,7 @@ import {
   ShorthandRenderFunction,
   ShorthandValue,
   ComponentEventHandler,
+  ShorthandCollection,
 } from '../../types'
 import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
 import Downshift, {
@@ -65,7 +66,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   defaultSearchQuery?: string
 
   /** The initial value or value array, if the array has multiple selection. */
-  defaultValue?: ShorthandValue | ShorthandValue[]
+  defaultValue?: ShorthandValue | ShorthandCollection
 
   /** A dropdown can take the width of its container. */
   fluid?: boolean
@@ -94,7 +95,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   inline?: boolean
 
   /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.SelectedItem[]), if it's a multiple selection. */
-  items?: ShorthandValue[]
+  items?: ShorthandCollection
 
   /**
    * Function to be passed to create string from selected item, if it's a shorthand object. Used when dropdown also has a search function.
@@ -149,7 +150,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   renderSelectedItem?: ShorthandRenderFunction
 
   /** A dropdown can have a search field instead of trigger button. Can receive a custom search function that will replace the default equivalent. */
-  search?: boolean | ((items: ShorthandValue[], searchQuery: string) => ShorthandValue[])
+  search?: boolean | ((items: ShorthandCollection, searchQuery: string) => ShorthandCollection)
 
   /** Component for the search input query. */
   searchInput?: ShorthandValue
@@ -164,7 +165,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   triggerButton?: ShorthandValue
 
   /** Sets currently selected value(s) (controlled mode). */
-  value?: ShorthandValue | ShorthandValue[]
+  value?: ShorthandValue | ShorthandCollection
 }
 
 export interface DropdownState {
@@ -173,7 +174,7 @@ export interface DropdownState {
   focused: boolean
   isOpen?: boolean
   searchQuery?: string
-  value: ShorthandValue | ShorthandValue[]
+  value: ShorthandValue | ShorthandCollection
 }
 
 /**
@@ -422,7 +423,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     const { searchQuery, value } = this.state
 
     const noPlaceholder =
-      searchQuery.length > 0 || (multiple && (value as ShorthandValue[]).length > 0)
+      searchQuery.length > 0 || (multiple && (value as ShorthandCollection).length > 0)
 
     return DropdownSearchInput.create(searchInput || {}, {
       defaultProps: {
@@ -540,7 +541,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   private renderSelectedItems(variables, rtl: boolean) {
     const { renderSelectedItem } = this.props
-    const value = this.state.value as ShorthandValue[]
+    const value = this.state.value as ShorthandCollection
 
     if (value.length === 0) {
       return null
@@ -600,10 +601,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
   }
 
-  private getItemsFilteredBySearchQuery = (): ShorthandValue[] => {
+  private getItemsFilteredBySearchQuery = (): ShorthandCollection => {
     const { items, itemToString, multiple, search } = this.props
     const { searchQuery, value } = this.state
-    const filteredItems = multiple ? _.difference(items, value as ShorthandValue[]) : items
+    const filteredItems = multiple ? _.difference(items, value as ShorthandCollection) : items
 
     if (search) {
       if (_.isFunction(search)) {
@@ -657,7 +658,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       this.handleSelectedItemRemove(e, item, predefinedProps, DropdownSelectedItemProps)
     },
     onClick: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
-      const { value } = this.state as { value: ShorthandValue[] }
+      const { value } = this.state as { value: ShorthandCollection }
       this.trySetState({
         activeSelectedIndex: value.indexOf(item),
       })
@@ -759,7 +760,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     ) {
       return
     }
-    const { value } = this.state as { value: ShorthandValue[] }
+    const { value } = this.state as { value: ShorthandCollection }
     if (value.length > 0) {
       this.trySetState({ activeSelectedIndex: value.length - 1 })
     }
@@ -772,7 +773,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     if (
       multiple &&
       (searchQuery === '' || this.inputRef.current.selectionStart === 0) &&
-      (value as ShorthandValue[]).length > 0
+      (value as ShorthandCollection).length > 0
     ) {
       this.removeItemFromValue()
     }
@@ -836,7 +837,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   private handleSelectedChange = (item: ShorthandValue) => {
     const { items, multiple, getA11ySelectionMessage } = this.props
     const newState = {
-      value: multiple ? [...(this.state.value as ShorthandValue[]), item] : item,
+      value: multiple ? [...(this.state.value as ShorthandCollection), item] : item,
       searchQuery: this.getSelectedItemAsString(item),
     }
 
@@ -873,7 +874,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   ) {
     const { activeSelectedIndex, value } = this.state as {
       activeSelectedIndex: number
-      value: ShorthandValue[]
+      value: ShorthandCollection
     }
     const previousKey = rtl ? keyboardKey.ArrowRight : keyboardKey.ArrowLeft
     const nextKey = rtl ? keyboardKey.ArrowLeft : keyboardKey.ArrowRight
@@ -933,7 +934,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   private removeItemFromValue(item?: ShorthandValue) {
     const { getA11ySelectionMessage } = this.props
-    let value = this.state.value as ShorthandValue[]
+    let value = this.state.value as ShorthandCollection
     let poppedItem = item
 
     if (poppedItem) {
@@ -983,7 +984,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     return itemToString(value)
   }
 
-  private isValueEmpty = (value: ShorthandValue | ShorthandValue[]) => {
+  private isValueEmpty = (value: ShorthandValue | ShorthandCollection) => {
     return _.isArray(value) ? value.length < 1 : !value
   }
 }
