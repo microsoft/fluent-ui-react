@@ -10,7 +10,6 @@ const steps = [
   steps => steps.click(selectors.triggerButton).snapshot('Shows list'),
   steps => steps.click(selectors.item(3)).snapshot('Selects an item'),
   steps => steps.click(selectors.clearIndicator).snapshot('Clears the value'),
-  steps => steps.click(selectors.triggerButton).snapshot('Closes the list'),
 ]
 
 export default steps
