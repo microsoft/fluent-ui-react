@@ -185,7 +185,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
         gap={hasAtLeastTwoParts ? 'gap.list.item' : null}
         as={as}
         debug={debug}
-        styles={styles.root}
+        className={classes.root}
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}

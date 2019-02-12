@@ -84,6 +84,7 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
   headerMedia: ({ variables: v }): ICSSInJSStyle => ({
     fontSize: v.headerMediaFontSize,
     lineHeight: v.headerMediaLineHeight,
+    alignSelf: 'flex-end',
   }),
   content: ({ props: p, variables: v }) => ({
     fontSize: v.contentFontSize,
