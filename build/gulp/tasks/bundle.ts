@@ -39,7 +39,7 @@ const componentsSrc = [
   `!${paths.packageSrc(packageName, '**/umd.ts')}`,
 ]
 
-task('bundle:build:commonjs', () => {
+task('bundle:package:commonjs', () => {
   const tsConfig = paths.base('build/tsconfig.commonjs.json')
   const settings = { declaration: true }
 
@@ -52,7 +52,7 @@ task('bundle:build:commonjs', () => {
   ])
 })
 
-task('bundle:build:es', () => {
+task('bundle:package:es', () => {
   const tsConfig = paths.base('build/tsconfig.es.json')
   const settings = { declaration: true }
 
@@ -65,7 +65,7 @@ task('bundle:build:es', () => {
   ])
 })
 
-task('bundle:build:umd', cb => {
+task('bundle:package:umd', cb => {
   process.env.NODE_ENV = 'build'
   const webpackUMDConfig = require('../../webpack.config.umd').default
   const compiler = webpack(webpackUMDConfig(packageName))
@@ -95,6 +95,10 @@ task('bundle:build:umd', cb => {
 // Default
 // ----------------------------------------
 
-task('bundle', series('bundle:clean', parallel('bundle:build:commonjs', 'bundle:build:es')))
-task('bundle:with-umd', series('bundle', 'bundle:build:umd'))
-task('bundle:all', () => sh('lerna run build'))
+task(
+  'bundle:package',
+  series('bundle:clean', parallel('bundle:package:commonjs', 'bundle:package:es')),
+)
+task('bundle:package:with-umd', series('bundle:package', 'bundle:package:umd'))
+
+task('bundle:all-packages', () => sh('lerna run build'))

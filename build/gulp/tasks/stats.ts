@@ -116,7 +116,10 @@ task('stats:build:bundle', async () => {
   updateStatsFile(paths.docsSrc('bundleStats.json'), results)
 })
 
-task('stats', series(parallel('bundle:all', 'build:docs:component-info'), 'stats:build:bundle'))
+task(
+  'stats',
+  series(parallel('bundle:all-packages', 'build:docs:component-info'), 'stats:build:bundle'),
+)
 
 task('stats:save', async () => {
   const commandLineArgs = _.pick(argv, ['sha', 'branch', 'tag', 'pr', 'build'])

@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "gulp build",
-    "build:bundle": "gulp bundle:all",
+    "build:bundle": "gulp bundle:all-packages",
     "build:docs": "gulp --series dll build:docs",
     "ci": "yarn lint && yarn prettier && yarn test --strict",
     "clean:cache": "gulp clean:cache",

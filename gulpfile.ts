@@ -27,4 +27,4 @@ require('./build/gulp/tasks/perf')
 require('./build/gulp/tasks/test-vulns')
 
 // global tasks
-task('build', series('dll', parallel('bundle:all', 'build:docs')))
+task('build', series('dll', parallel('bundle:all-packages', 'build:docs')))

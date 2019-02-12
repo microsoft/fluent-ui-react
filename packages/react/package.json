@@ -21,7 +21,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "gulp bundle:with-umd --package react"
+    "build": "gulp bundle:package:with-umd --package react"
   },
   "dependencies": {
     "classnames": "^2.2.5",
