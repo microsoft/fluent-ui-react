@@ -138,7 +138,7 @@ task(
 
 function readSummaryPerfStats() {
   return _.chain(require(paths.perfDist('result.json')))
-    .mapKeys((value, key) => _.camelCase(key))
+    .mapKeys((value, key) => _.camelCase(key)) // mongodb does not allow dots in keys
     .mapValues(result => ({
       actualTime: _.omit(result.actualTime, 'values'),
       baseTime: _.omit(result.baseTime, 'values'),
@@ -147,7 +147,7 @@ function readSummaryPerfStats() {
 }
 
 function readCurrentBundleStats() {
-  return _.mapKeys(require(currentStatsFilePath), (value, key) => _.camelCase(key))
+  return _.mapKeys(require(currentStatsFilePath), (value, key) => _.camelCase(key)) // mongodb does not allow dots in keys
 }
 
 task('stats:save', async () => {
@@ -158,7 +158,6 @@ task('stats:save', async () => {
   const statsPayload = {
     sha: process.env.CIRCLE_SHA1,
     branch: process.env.CIRCLE_BRANCH,
-    tag: process.env.CIRCLE_TAG, // optional
     pr: process.env.CIRCLE_PULL_REQUEST, // optional
     build: process.env.CIRCLE_BUILD_NUM,
     ...commandLineArgs, // allow command line overwrites

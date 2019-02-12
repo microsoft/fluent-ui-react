@@ -82,7 +82,7 @@ jobs:
           name: Save Statistics to DB
           command: |
             if [ -n "${STATS_URI}" ]; then
-              yarn stats:save
+              yarn stats:save --tag=`git tag --points-at`
             else
               echo "STATS_URI not set, skipping"
             fi
