@@ -91,6 +91,7 @@
     "@types/gulp-load-plugins": "^0.0.31",
     "@types/jest": "^23.3.9",
     "@types/jest-axe": "^2.2.2",
+    "@types/jest-diff": "^20.0.0",
     "@types/lodash": "^4.14.118",
     "@types/node": "^10.3.2",
     "@types/puppeteer": "^1.11.1",
