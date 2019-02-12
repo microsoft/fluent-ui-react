@@ -193,8 +193,8 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
         {...unhandledProps}
       >
         {mediaElement}
-        <Flex.Item grow className={ListItem.slotClassNames.main}>
-          <Flex column>
+        <Flex.Item grow>
+          <Flex column className={ListItem.slotClassNames.main} styles={styles.main}>
             <Flex gap={header && headerMedia ? 'gap.list.item' : null}>
               {headerElement && <Flex.Item grow>{headerElement}</Flex.Item>}
               {headerMediaElement}

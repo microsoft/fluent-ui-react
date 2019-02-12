@@ -9,11 +9,11 @@ import {
 
 type ListItemPropsAndState = ListItemProps & ListItemState
 
-// const truncateStyle = {
-//   overflow: 'hidden',
-//   textOverflow: 'ellipsis',
-//   whiteSpace: 'nowrap',
-// }
+const truncateStyle = {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+}
 
 const selectableHoverStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
   background: v.selectableFocusHoverBackgroundColor,
@@ -83,7 +83,7 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
   header: ({ props: p, variables: v }) => ({
     fontSize: v.headerFontSize,
     lineHeight: v.headerLineHeight,
-    // ...(p.truncateHeader && truncateStyle),
+    ...(p.truncateHeader && truncateStyle),
   }),
   headerMedia: ({ variables: v }): ICSSInJSStyle => ({
     fontSize: v.headerMediaFontSize,
@@ -93,7 +93,7 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
   content: ({ props: p, variables: v }) => ({
     fontSize: v.contentFontSize,
     lineHeight: v.contentLineHeight,
-    // ...(p.truncateContent && truncateStyle),
+    ...(p.truncateContent && truncateStyle),
   }),
   contentMedia: ({ props: p, variables: v }) => ({
     fontSize: v.contentMediaFontSize,
@@ -101,6 +101,9 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
   }),
   endMedia: ({ props: p }) => ({
     ...(p.selectable && { display: 'none' }),
+  }),
+  main: () => ({
+    minWidth: 0, // needed for the truncate styles to work
   }),
 }
 
