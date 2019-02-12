@@ -8,4 +8,5 @@ export default {
     </svg>
   ),
   styles: {},
+  exportedAs: 'arrow-up',
 } as TeamsProcessedSvgIconSpec
