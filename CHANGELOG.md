@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.21.0 ]------------------------------- -->
+## [v0.21.0](https://github.com/stardust-ui/react/tree/v0.21.0) (2019-02-12)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.20.0...v0.21.0)
+
 ### BREAKING CHANGES
 - Changed site variables' `colors.black` to be `#000` instead of `grey[900](#252424)` in Teams theme @mnajdova ([#855](https://github.com/stardust-ui/react/pull/855))
 
@@ -31,6 +35,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Focus the last focused element which triggered `Popup` on ESC @sophieH29 ([#861](https://github.com/stardust-ui/react/pull/861))
 - Changing the focus zone to embed for gridBehavior @kolaps33 ([#844] (https://github.com/stardust-ui/react/pull/844))
 - Add polyfills to correctly work in IE11 @layershifter ([#868](https://github.com/stardust-ui/react/pull/868))
+- Fix selectors for `ItemLayout` class names in the `listItemStyles` in Teams theme @mnajdova([#882](https://github.com/stardust-ui/react/pull/882))
 
 ### Documentation
 - Add screener with steps testing documentation @silviuavram ([#856](https://github.com/stardust-ui/react/pull/856))
