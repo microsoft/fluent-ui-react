@@ -21,7 +21,7 @@ export default (siteVars: any): RadioGroupItemVariables => ({
 
   iconcolorBackgroundDefault: siteVars.white,
   iconColorBackgroundChecked: siteVars.brand,
-  iconColorBoxShadowFocus: '#a6a7dc', // brand06 dark theme
+  iconColorBoxShadowFocus: siteVars.brand07,
 
   colorDisabled: siteVars.gray06,
 })

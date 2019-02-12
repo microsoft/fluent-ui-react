@@ -27,6 +27,7 @@ export const brand = colors.primary[500]
 export const brand02 = colors.primary[900]
 export const brand04 = '#464775'
 export const brand06 = colors.primary[500]
+export const brand07 = '#a6a7dc'
 export const brand08 = '#8B8CC7'
 export const brand12 = colors.primary[200]
 export const brand14 = colors.primary[100]
