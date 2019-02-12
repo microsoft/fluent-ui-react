@@ -3,13 +3,12 @@ import * as React from 'react'
 import { Menu, Segment } from '@stardust-ui/react'
 
 import ComponentSidebarSection from './ComponentSidebarSection'
-// mport { ShorthandValue } from 'src/types';
 
 const sidebarStyle = {
-  boxShadow: '0 2px 2px rgba(0, 0, 0, 0.1)',
-  paddingLeft: '1em',
   paddingBottom: '0.1em',
   paddingTop: '0.1em',
+  border: 0,
+  background: 'none',
 }
 
 type ComponentSidebarProps = {
@@ -56,8 +55,14 @@ class ComponentSidebar extends React.Component<ComponentSidebarProps, any> {
     }))
 
     return (
-      <Segment context={examplesRef} offset={15}>
-        <Menu fluid styles={{ ...sidebarStyle }} vertical items={menuItems} />
+      <Segment context={examplesRef} styles={{ padding: 0 }}>
+        <Menu
+          fluid
+          vertical
+          items={menuItems}
+          variables={{ activeBackgroundColor: 'none', focusedBackgroundColor: 'none' }}
+          styles={{ ...sidebarStyle }}
+        />
       </Segment>
     )
   }

@@ -75,7 +75,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
             />
           ),
           as: NavLink,
-          to: `/maximize/${_.kebabCase(examplePath.split('/').slice(-1))}`,
+          to: `/maximize/${_.kebabCase(examplePath)}`, // `/maximize/${_.kebabCase(examplePath.split('/').slice(-1))}`,
           target: '_blank',
           rel: 'noopener noreferrer',
           accessibility: toolbarButtonBehavior,

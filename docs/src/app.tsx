@@ -72,11 +72,6 @@ class App extends React.Component<any, AppState> {
         body: {
           fontSize: '1rem',
           fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
-          '::-webkit-scrollbar': {
-            '-webkit-appearance': 'none',
-            width: '10px',
-            height: '10px',
-          },
         },
       },
     ],

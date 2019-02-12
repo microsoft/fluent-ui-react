@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Accordion, Menu } from '@stardust-ui/react'
+import { Indicator, Tree } from '@stardust-ui/react'
 
 import { examplePathToHash } from 'docs/src/utils'
 
@@ -53,28 +53,57 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
 
   render() {
     const { activePath, examples, sectionName } = this.props
-    //    const { isActiveByProps, isActiveByUser } = this.state
+    const { isActiveByProps, isActiveByUser } = this.state
 
-    //    const active = isActiveByUser || isActiveByProps
+    const active = isActiveByUser || isActiveByProps
 
     if (process.env.NODE_ENV !== 'development' && sectionName === 'Performance') {
       return null
     }
 
-    return (
-      // <Menu.Item>
-      <Accordion
-        onTitleClick={this.handleTitleClick}
-        panels={_.map(examples, example => ({
+    const items = [
+      {
+        key: sectionName,
+        title: sectionName,
+        items: _.map(examples, example => ({
           key: example.examplePath,
-          content: <span />,
           title: {
-            content: sectionName,
-            // active: activePath === examplePathToHash(examplePath),
+            content: example.title,
+            active: activePath === examplePathToHash(example.examplePath),
           },
-        }))}
-      />
-      // </Menu.Item>
+          styles: {
+            paddingLeft: 0,
+          },
+        })),
+      },
+    ]
+
+    const treeStyles = {
+      display: 'flex',
+      justifyContent: 'space-between',
+      paddingBottom: '.6rem',
+      paddingLeft: 0,
+      ':focus, :hover': {
+        color: '#252424',
+        outline: 'none',
+      },
+    }
+
+    const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
+      <Component
+        open={open}
+        hasSubtree={hasSubtree}
+        {...restProps}
+        styles={treeStyles}
+        active={active}
+      >
+        <span>{content}</span>
+        {hasSubtree && <Indicator direction={open ? 'bottom' : 'start'} />}
+      </Component>
+    )
+
+    return (
+      <Tree items={items} onTitleClick={this.handleTitleClick} renderItemTitle={titleRenderer} />
     )
   }
 }
