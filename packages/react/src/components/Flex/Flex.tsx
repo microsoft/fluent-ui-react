@@ -92,12 +92,12 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
 
     let isFirstElement = true
     return React.Children.map(children, (child: any) => {
-      const maybeChildElement =
-        child && child.type && ((child.type as any) as typeof FlexItem).__isFlexItem
-          ? React.cloneElement(child, {
-              flexDirection: column ? 'column' : 'row',
-            })
-          : child
+      const isFlexItemElement: boolean = _.get(child, 'type.__isFlexItem')
+      const maybeChildElement = isFlexItemElement
+        ? React.cloneElement(child, {
+            flexDirection: column ? 'column' : 'row',
+          })
+        : child
 
       const renderGap = !isFirstElement
       if (maybeChildElement) {
