@@ -90,20 +90,27 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
   renderChildren = (gapClasses: string) => {
     const { column, gap, children } = this.props
 
-    return React.Children.map(children, (child: React.ReactElement<any>, index) => {
-      const childElement =
+    let isFirstElement = true
+    return React.Children.map(children, (child: any) => {
+      const maybeChildElement =
         child && child.type && ((child.type as any) as typeof FlexItem).__isFlexItem
           ? React.cloneElement(child, {
               flexDirection: column ? 'column' : 'row',
             })
           : child
 
-      const renderGap = index !== 0
+      const renderGap = !isFirstElement
+      if (maybeChildElement) {
+        isFirstElement = false
+      }
+
       return (
-        <>
-          {renderGap && gap && <Flex.Gap className={cx(`${Flex.className}__gap`, gapClasses)} />}
-          {childElement}
-        </>
+        maybeChildElement && (
+          <>
+            {renderGap && gap && <Flex.Gap className={cx(`${Flex.className}__gap`, gapClasses)} />}
+            {maybeChildElement}
+          </>
+        )
       )
     })
   }
