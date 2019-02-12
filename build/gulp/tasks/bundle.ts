@@ -17,19 +17,22 @@ const packageName: string = argv.package || 'react'
 // Clean
 // ----------------------------------------
 
-task('bundle:clean:es', cb => {
+task('bundle:package:clean:es', cb => {
   rimraf(`${config.paths.packageDist(packageName)}/es/*`, cb)
 })
 
-task('bundle:clean:commonjs', cb => {
+task('bundle:package:clean:commonjs', cb => {
   rimraf(`${config.paths.packageDist(packageName)}/commonjs/*`, cb)
 })
 
-task('bundle:clean:umd', cb => {
+task('bundle:package:clean:umd', cb => {
   rimraf(`${config.paths.packageDist(packageName)}/umd/*`, cb)
 })
 
-task('bundle:clean', parallel('bundle:clean:es', 'bundle:clean:commonjs', 'bundle:clean:umd'))
+task(
+  'bundle:package:clean',
+  parallel('bundle:package:clean:es', 'bundle:package:clean:commonjs', 'bundle:package:clean:umd'),
+)
 
 // ----------------------------------------
 // Build
@@ -96,9 +99,9 @@ task('bundle:package:umd', cb => {
 // ----------------------------------------
 
 task(
-  'bundle:package',
-  series('bundle:clean', parallel('bundle:package:commonjs', 'bundle:package:es')),
+  'bundle:package:no-umd',
+  series('bundle:package:clean', parallel('bundle:package:commonjs', 'bundle:package:es')),
 )
-task('bundle:package:with-umd', series('bundle:package', 'bundle:package:umd'))
+task('bundle:package', series('bundle:package:no-umd', 'bundle:package:umd'))
 
 task('bundle:all-packages', () => sh('lerna run build'))
