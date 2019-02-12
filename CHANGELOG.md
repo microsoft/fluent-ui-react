@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.21.0 ]------------------------------- -->
+## [v0.21.0](https://github.com/stardust-ui/react/tree/v0.21.0) (2019-02-12)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.20.0...v0.21.0)
+
 ### BREAKING CHANGES
 - Changed site variables' `colors.black` to be `#000` instead of `grey[900](#252424)` in Teams theme @mnajdova ([#855](https://github.com/stardust-ui/react/pull/855))
 
