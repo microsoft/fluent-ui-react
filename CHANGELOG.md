@@ -45,6 +45,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentation
 - Add screener with steps testing documentation @silviuavram ([#856](https://github.com/stardust-ui/react/pull/856))
+- Move color palette link to prototypes section @codepretty ([#884](https://github.com/stardust-ui/react/pull/884))
 
 <!--------------------------------[ v0.20.0 ]------------------------------- -->
 ## [v0.20.0](https://github.com/stardust-ui/react/tree/v0.20.0) (2019-02-06)
