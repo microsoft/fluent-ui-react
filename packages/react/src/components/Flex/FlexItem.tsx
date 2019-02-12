@@ -78,7 +78,7 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
       })
     }
 
-    return applyStyles(React.Children.only(children), styles, classes)
+    return children ? applyStyles(React.Children.only(children), styles, classes) : children
   }
 }
 
@@ -89,7 +89,7 @@ const applyStyles = (
   styles,
   classes,
 ): React.ReactElement<any> => {
-  if (!element || !styles) {
+  if (!styles) {
     return element
   }
 
