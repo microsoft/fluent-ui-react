@@ -112,6 +112,8 @@ function writeCurrentStats(filePath: string, currentBundleStats: any) {
   fs.writeFileSync(filePath, JSON.stringify(statsData, null, 2))
 }
 
+const currentStatsFilePath = paths.docsSrc('currentBundleStats.json')
+
 task('stats:build:bundle', async () => {
   process.env.NODE_ENV = 'build'
   const webpackStatsConfig = require('../../webpack.config.stats').default
@@ -123,7 +125,7 @@ task('stats:build:bundle', async () => {
     .value()
 
   updateStatsFile(paths.docsSrc('bundleStats.json'), results)
-  writeCurrentStats(paths.docsSrc('currentBundleStats.json'), results)
+  writeCurrentStats(currentStatsFilePath, results)
 })
 
 task(
@@ -145,9 +147,7 @@ function readSummaryPerfStats() {
 }
 
 function readCurrentBundleStats() {
-  return _.mapKeys(require(paths.docsSrc('currentBundleStats.json')), (value, key) =>
-    _.camelCase(key),
-  )
+  return _.mapKeys(require(currentStatsFilePath), (value, key) => _.camelCase(key))
 }
 
 task('stats:save', async () => {
