@@ -6,7 +6,6 @@ import * as remember from 'gulp-remember'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as rimraf from 'rimraf'
-import * as through2 from 'through2'
 import * as webpack from 'webpack'
 import * as WebpackDevMiddleware from 'webpack-dev-middleware'
 import * as WebpackHotMiddleware from 'webpack-hot-middleware'
@@ -15,6 +14,7 @@ import sh from '../sh'
 import config from '../../../config'
 import gulpComponentMenu from '../plugins/gulp-component-menu'
 import gulpComponentMenuBehaviors from '../plugins/gulp-component-menu-behaviors'
+import gulpDoctoc from '../plugins/gulp-doctoc'
 import gulpExampleMenu from '../plugins/gulp-example-menu'
 import gulpExampleSource from '../plugins/gulp-example-source'
 import gulpReactDocgen from '../plugins/gulp-react-docgen'
@@ -143,11 +143,8 @@ task('build:docs:images', () =>
 
 task('build:docs:toc', () =>
   src(markdownSrc, { since: lastRun('build:docs:toc') }).pipe(
-    through2.obj((file, enc, done) => {
-      sh(`doctoc ${file.path} --github --maxlevel 4`)
-        .then(() => sh(`git add ${file.path}`))
-        .then(done)
-        .catch(done)
+    cache(gulpDoctoc(), {
+      name: 'md-docs',
     }),
   ),
 )

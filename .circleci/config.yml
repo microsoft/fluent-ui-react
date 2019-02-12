@@ -6,7 +6,7 @@ general:
 jobs:
   build:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:8-browsers
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
@@ -83,6 +83,9 @@ jobs:
             else
               echo "STATS_URI not set, skipping"
             fi
+      - run:
+          name: Performance Tests
+          command: yarn perf
       - run:
           name: Danger JS
           command: |

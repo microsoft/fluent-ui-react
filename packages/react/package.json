@@ -33,6 +33,7 @@
     "fela-plugin-rtl": "^10.1.3",
     "keyboard-key": "^1.0.1",
     "lodash": "^4.17.11",
+    "mdn-polyfills": "^5.15.0",
     "prop-types": "^15.6.1",
     "react-fela": "^10.1.3",
     "react-is": "^16.6.3",
