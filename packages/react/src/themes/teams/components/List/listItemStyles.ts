@@ -54,6 +54,10 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
     minHeight: v.minHeight,
     ...(p.selectable && {
       position: 'relative',
+
+      // hide the end media by default
+      [`& .${ListItem.slotClassNames.endMedia}`]: { display: 'none' },
+
       '&:hover': selectableHoverStyle(p, v),
       '&:focus': selectableFocusStyle(p, v),
       ...(p.selected && selectedStyle(v)),

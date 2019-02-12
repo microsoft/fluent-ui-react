@@ -13,7 +13,7 @@ import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ReactProps, ComponentEventHandler } from '../../types'
-import Box from 'src/components/Box/Box'
+import Box from '../Box/Box'
 
 export interface ListItemSlotClassNames {
   header: string
