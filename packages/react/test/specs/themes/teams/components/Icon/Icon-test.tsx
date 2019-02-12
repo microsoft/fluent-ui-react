@@ -7,10 +7,10 @@ import processedIcons from '../../../../../../src/themes/teams/components/Icon/s
 import { SvgIconSpecWithStyles } from '../../../../../../src/themes/teams/components/Icon/svg/types'
 
 describe('Teams Theme Icon', () => {
-  function testIcon(icon) {
+  function testIcon(icon, props?) {
     const SvgIcon: any = (icon as SvgIconSpecWithStyles).icon
     const component = shallow(
-      <SvgIcon classes={{ outlinePart: 'TEST-OUTLINE', filledPart: 'TEST-FILLED' }} />,
+      <SvgIcon classes={{ outlinePart: 'TEST-OUTLINE', filledPart: 'TEST-FILLED' }} {...props} />,
     )
 
     const outlineByDynamicClass = component.find('.TEST-OUTLINE')
@@ -24,12 +24,16 @@ describe('Teams Theme Icon', () => {
   }
 
   _.forEach(icons, (icon, iconName) => {
-    test(`Teams theme icon '${iconName}' correctly sets static outline and filled classes`, () =>
-      testIcon(icon))
+    test(`Teams theme icon '${iconName}' correctly sets static outline and filled classes`, () => {
+      testIcon(icon)
+      testIcon(icon, { rtl: true })
+    })
   })
 
   _.forEach(processedIcons, (icon, iconName) => {
-    test(`Teams theme processed icon '${iconName}' correctly sets static outline and filled classes`, () =>
-      testIcon(icon))
+    test(`Teams theme processed icon '${iconName}' correctly sets static outline and filled classes`, () => {
+      testIcon(icon)
+      testIcon(icon, { rtl: true })
+    })
   })
 })

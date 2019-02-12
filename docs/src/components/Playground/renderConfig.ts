@@ -4,17 +4,12 @@ import * as Stardust from '@stardust-ui/react'
 import * as ReactDOM from 'react-dom'
 
 export const babelConfig = {
-  plugins: ['proposal-class-properties', ['transform-typescript', { isTSX: true }]],
-  presets: [
-    [
-      'env',
-      {
-        targets: {
-          browsers: ['last 4 versions', 'not dead'],
-        },
-      },
-    ],
+  plugins: [
+    'proposal-class-properties',
+    ['transform-typescript', { isTSX: true }],
+    'transform-classes',
   ],
+  presets: ['es2015'],
 }
 
 export const imports = {

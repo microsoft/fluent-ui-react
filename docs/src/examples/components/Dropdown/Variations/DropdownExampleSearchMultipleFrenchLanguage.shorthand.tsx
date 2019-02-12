@@ -19,15 +19,15 @@ const inputItems = [
   },
 }))
 
-const DropdownExample = () => (
+const DropdownExampleSearchMultipleFrenchLanguage = () => (
   <Dropdown
     multiple
     search
+    items={inputItems}
+    placeholder="Commencez à taper un nom"
     getA11yStatusMessage={getA11yStatusMessage}
     getA11ySelectionMessage={getA11ySelectionMessage}
     noResultsMessage="N'avons trouvé aucun résultat."
-    placeholder="Commencez à taper un nom"
-    items={inputItems}
   />
 )
 
@@ -56,4 +56,5 @@ const getA11ySelectionMessage = {
   onAdd: item => `${item.header} a été choisi.`,
   onRemove: item => `${item.header} a été éliminé.`,
 }
-export default DropdownExample
+
+export default DropdownExampleSearchMultipleFrenchLanguage

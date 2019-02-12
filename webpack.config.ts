@@ -82,6 +82,7 @@ const webpackConfig: any = {
         collapseWhitespace: true,
       },
       versions: {
+        babelStandalone: require('@babel/standalone/package.json').version,
         lodash: require('lodash/package.json').version,
         prettier: require('prettier/package.json').version,
         propTypes: require('prop-types/package.json').version,
