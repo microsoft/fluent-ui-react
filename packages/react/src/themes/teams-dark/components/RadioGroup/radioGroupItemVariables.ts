@@ -8,7 +8,7 @@ export default (siteVars: any) => {
 
     iconcolorBackgroundDefault: siteVars.white,
     iconColorBackgroundChecked: siteVars.brand,
-    iconColorBoxShadowFocus: '#a6a7dc', // brand06 dark theme
+    iconColorBoxShadowFocus: siteVars.brand06,
 
     colorDisabled: siteVars.gray06,
   }

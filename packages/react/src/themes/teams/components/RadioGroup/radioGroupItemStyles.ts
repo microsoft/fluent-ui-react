@@ -43,9 +43,9 @@ const radioStyles: ComponentSlotStylesInput<
     height: `${pxToRem(12)}`,
     width: `${pxToRem(12)}`,
     boxShadow: 'none',
-    border: `${pxToRem(1)} solid ${
-      p.checked ? v.iconColorBorderChecked : v.iconColorBorderDefault
-    }`,
+    borderStyle: 'solid',
+    borderWidth: `${pxToRem(1)}`,
+    borderColor: p.checked ? v.iconColorBorderChecked : v.iconColorBorderDefault,
     ':hover': {
       borderColor: v.iconColorBorderChecked,
     },

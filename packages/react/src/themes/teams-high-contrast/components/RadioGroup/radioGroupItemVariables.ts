@@ -1,6 +1,6 @@
 export default (siteVars: any) => {
   return {
-    labelColorDefault: siteVars.brand,
+    labelColorDefault: siteVars.white,
     labelColorChecked: siteVars.white,
 
     iconColorBorderDefault: siteVars.white,
