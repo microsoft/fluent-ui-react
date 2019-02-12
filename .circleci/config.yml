@@ -76,6 +76,9 @@ jobs:
           name: Bundle Statistics
           command: yarn stats:build
       - run:
+          name: Performance Tests
+          command: yarn perf
+      - run:
           name: Save Statistics to DB
           command: |
             if [ -n "${STATS_URI}" ]; then
@@ -83,9 +86,6 @@ jobs:
             else
               echo "STATS_URI not set, skipping"
             fi
-      - run:
-          name: Performance Tests
-          command: yarn perf
       - run:
           name: Danger JS
           command: |
