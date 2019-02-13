@@ -175,14 +175,10 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
       },
     })
 
-    const hasMainElement = header || headerMedia || content || contentMedia
-    const hasAtLeastTwoParts =
-      (mediaElement && (hasMainElement || endMedia)) || (hasMainElement && endMedia)
-
     return (
       <Flex
         vAlign="center"
-        gap={hasAtLeastTwoParts ? 'gap.list.item' : null}
+        gap="gap.list.item"
         as={as}
         debug={debug}
         className={classes.root}
@@ -195,12 +191,12 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
         {mediaElement}
         <Flex.Item grow>
           <Flex column className={ListItem.slotClassNames.main} styles={styles.main}>
-            <Flex gap={header && headerMedia ? 'gap.list.item' : null}>
-              {headerElement && <Flex.Item grow>{headerElement}</Flex.Item>}
+            <Flex gap="gap.list.item">
+              <Flex.Item grow>{headerElement}</Flex.Item>
               {headerMediaElement}
             </Flex>
-            <Flex gap={content && contentMedia ? 'gap.list.item' : null}>
-              {contentElement && <Flex.Item grow>{contentElement}</Flex.Item>}
+            <Flex gap="gap.list.item">
+              <Flex.Item grow>{contentElement}</Flex.Item>
               {contentMediaElement}
             </Flex>
           </Flex>
