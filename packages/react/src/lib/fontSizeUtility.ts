@@ -16,6 +16,10 @@ const getFontSizeValue = (size?: string | null): number | null => {
   return (size && parseFloat(size)) || null
 }
 
+export const updateCachedRemSize = () => {
+  _documentRemSize = null
+}
+
 /**
  * Converts the provided px size to rem based on the default font size of 10px unless
  * the HTML font size has been previously defined with setHTMLFontSize().

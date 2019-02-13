@@ -17,6 +17,14 @@ Test a feature
     - [Important mentions:](#important-mentions)
   - [Run Screener tests](#run-screener-tests)
     - [Local run command](#local-run-command)
+- [Behavior tets](#behavior-tets)
+  - [Adding test(s)](#adding-tests)
+  - [Running test(s)](#running-tests)
+  - [Troubleshooting](#troubleshooting)
+    - [I am not sure if my line under `@specification` was process correctly](#i-am-not-sure-if-my-line-under-specification-was-process-correctly)
+    - [I am not sure if my line was executed](#i-am-not-sure-if-my-line-was-executed)
+    - [I want to add any description which should not be consider as unit test](#i-want-to-add-any-description-which-should-not-be-consider-as-unit-test)
+    - [I want to create unit tests in separate file not through the regex](#i-want-to-create-unit-tests-in-separate-file-not-through-the-regex)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

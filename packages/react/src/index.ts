@@ -201,3 +201,6 @@ export {
   SizeValue,
 } from './lib'
 export { ShorthandRenderer } from './types'
+
+import { getFirstTabbable, getLastTabbable } from './lib/accessibility/FocusZone/focusUtilities'
+export const focusZoneUtilities = { getFirstTabbable, getLastTabbable }
