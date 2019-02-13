@@ -11,6 +11,7 @@ import {
   mergeThemes,
   UIComponent,
   commonPropTypes,
+  updateCachedRemSize,
 } from '../../lib'
 
 import {
@@ -169,6 +170,8 @@ class Provider extends UIComponent<ProviderProps> {
     if (!this.staticStylesRendered && staticStyles) {
       this.renderStaticStyles(mergedTheme)
       this.staticStylesRendered = true
+
+      updateCachedRemSize()
     }
   }
 }
