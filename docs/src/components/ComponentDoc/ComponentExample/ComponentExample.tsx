@@ -62,15 +62,6 @@ const childrenStyle: React.CSSProperties = {
   maxWidth: pxToRem(500),
 }
 
-/*
-const disabledStyle = {
-  opacity: 0.5,
-  pointerEvents: 'none',
-  ':hover, :focus': {
-    background: 'transparent',
-  },
-}*/
-
 /**
  * Renders a `component` and the raw `code` that produced it.
  * Allows toggling the the raw `code` code block.

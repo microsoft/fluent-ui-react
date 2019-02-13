@@ -32,7 +32,6 @@ const getFontStyles = (
 
   return {
     fontFamily,
-    fontWeight: 900,
     fontSize: sizeInRems,
     lineHeight: 1,
     textAlign: 'center',
@@ -69,7 +68,7 @@ const getBorderedStyles = (circular: boolean, boxShadowColor: string): ICSSInJSS
 }
 
 const getPaddedStyle = (): ICSSInJSStyle => ({
-  padding: pxToRem(10),
+  padding: pxToRem(4),
 })
 
 const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier): number => {

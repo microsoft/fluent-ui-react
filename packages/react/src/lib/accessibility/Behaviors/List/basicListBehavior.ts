@@ -1,4 +1,4 @@
-import { Accessibility, FocusZoneMode } from '../../types'
+import { Accessibility } from '../../types'
 
 /**
  * @description
@@ -12,24 +12,6 @@ const basicListBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'list',
-    },
-  },
-
-  // keyActions: {
-  //   root: {
-  //     nextItem: {
-  //       keyCombinations: [{ keyCode: keyboardKey.ArrowDown }, { keyCode: keyboardKey.ArrowRight }],
-  //     },
-  //     prevItem: {
-  //       keyCombinations: [{ keyCode: keyboardKey.ArrowUp }, { keyCode: keyboardKey.ArrowLeft }],
-  //     },
-  //   },
-  // },
-  focusZone: {
-    mode: FocusZoneMode.Embed,
-    props: {
-      isCircularNavigation: true,
-      preventDefaultWhenHandled: true,
     },
   },
 })

@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router'
-import { Flex, Header, Icon, Dropdown, Provider, Text, themes } from '@stardust-ui/react'
+import { Flex, Header, Icon, Dropdown, Text, themes } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
@@ -92,94 +92,78 @@ class ComponentDoc extends React.Component<any, any> {
     const { activePath /*, examplesRef*/ } = this.state
 
     return (
-      <Provider
-        theme={{
-          componentStyles: {
-            Box: {
-              root: {
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-              },
-            },
-            Text: {
-              root: {
-                marginBottom: '1.4rem',
-              },
-            },
-          },
-        }}
-      >
-        <div style={{ paddingLeft: '20px' }}>
-          <Flex column>
-            <Flex.Item padding="padding.medium">
-              <ThemeContext.Consumer>
-                {({ changeTheme }) => (
-                  <Dropdown
-                    getA11yStatusMessage={getA11yStatusMessage}
-                    getA11ySelectionMessage={getA11ySelectionMessage}
-                    noResultsMessage="We couldn't find any matches."
-                    placeholder="Theme"
-                    onSelectedChange={changeTheme}
-                    items={this.getThemeOptions().map(o => o.text)}
+      <div style={{ paddingLeft: '20px' }}>
+        <Flex column>
+          <Flex.Item padding="padding.medium">
+            <ThemeContext.Consumer>
+              {({ changeTheme }) => (
+                <Dropdown
+                  getA11yStatusMessage={getA11yStatusMessage}
+                  getA11ySelectionMessage={getA11ySelectionMessage}
+                  noResultsMessage="We couldn't find any matches."
+                  placeholder="Theme"
+                  onSelectedChange={changeTheme}
+                  items={this.getThemeOptions().map(o => o.text)}
+                />
+              )}
+            </ThemeContext.Consumer>
+          </Flex.Item>
+          <Flex.Item>
+            <>
+              <Flex styles={{ justifyContent: 'space-between' }}>
+                <Flex.Item>
+                  <Header as="h1" content={info.displayName} variables={{ color: 'black' }} />
+                </Flex.Item>
+                <Flex.Item>
+                  <ComponentDocLinks
+                    displayName={info.displayName}
+                    parentDisplayName={info.parentDisplayName}
+                    repoPath={info.repoPath}
+                    type={info.type}
                   />
-                )}
-              </ThemeContext.Consumer>
-            </Flex.Item>
-            <Flex.Item>
-              <>
-                <Flex styles={{ justifyContent: 'space-between' }}>
-                  <Flex.Item>
-                    <Header as="h1" content={info.displayName} variables={{ color: 'black' }} />
-                  </Flex.Item>
-                  <Flex.Item>
-                    <ComponentDocLinks
-                      displayName={info.displayName}
-                      parentDisplayName={info.parentDisplayName}
-                      repoPath={info.repoPath}
-                      type={info.type}
-                    />
-                  </Flex.Item>
-                </Flex>
-                <Text content={_.join(info.docblock.description, ' ')} />
-                <ComponentAccessibility info={info} />
-                <ComponentDocSee displayName={info.displayName} />
-
-                <ComponentProps displayName={info.displayName} props={info.props} />
-              </>
-            </Flex.Item>
-          </Flex>
-          <Flex styles={{ width: '75%' }} column>
-            <Flex.Item>
-              <div ref={this.handleExamplesRef}>
-                <ExampleContext.Provider
-                  value={{
-                    activeAnchorName: activePath,
-                    onExamplePassed: this.handleExamplePassed,
-                  }}
-                >
-                  <ComponentExamples displayName={info.displayName} />
-                </ExampleContext.Provider>
-              </div>
-            </Flex.Item>
-
-            <Flex.Item>
-              <div style={exampleEndStyle}>
-                This is the bottom <Icon name="pointing down" />
-              </div>
-            </Flex.Item>
-
-            {/* <Box styles={{ width: '25%', paddingLeft: '14px' }}>
-              <ComponentSidebar
-                activePath={activePath}
-                displayName={info.displayName}
-                examplesRef={examplesRef}
-                onItemClick={this.handleSidebarItemClick}
+                </Flex.Item>
+              </Flex>
+              <Text
+                styles={{ marginBottom: '1.4rem' }}
+                content={_.join(info.docblock.description, ' ')}
               />
-            </Box> */}
-          </Flex>
-        </div>
-      </Provider>
+              <ComponentAccessibility info={info} />
+              <ComponentDocSee displayName={info.displayName} />
+
+              <ComponentProps displayName={info.displayName} props={info.props} />
+            </>
+          </Flex.Item>
+        </Flex>
+        <Flex styles={{ width: '75%' }} column>
+          <Flex.Item>
+            <div ref={this.handleExamplesRef}>
+              <ExampleContext.Provider
+                value={{
+                  activeAnchorName: activePath,
+                  onExamplePassed: this.handleExamplePassed,
+                }}
+              >
+                <ComponentExamples displayName={info.displayName} />
+              </ExampleContext.Provider>
+            </div>
+          </Flex.Item>
+
+          <Flex.Item>
+            <div style={exampleEndStyle}>
+              This is the bottom <Icon name="pointing down" />
+            </div>
+          </Flex.Item>
+
+          {/* <Box styles={{ width: '25%', paddingLeft: '14px' }}>
+            <ComponentSidebar
+              activePath={activePath}
+              displayName={info.displayName}
+              examplesRef={examplesRef}
+              onItemClick={this.handleSidebarItemClick}
+            />
+          </Box> */}
+        </Flex>
+      </div>
     )
   }
 

@@ -7,7 +7,7 @@ import Router from './routes'
 
 interface AppState {
   themeName: string
-  changeTheme: (e, p) => void
+  changeTheme: (newTheme: string) => void
 }
 
 class App extends React.Component<any, AppState> {
@@ -16,9 +16,9 @@ class App extends React.Component<any, AppState> {
   constructor(props) {
     super(props)
 
-    this.changeTheme = (e, p) => {
+    this.changeTheme = newTheme => {
       this.setState({
-        themeName: p.value,
+        themeName: newTheme,
       })
     }
 
@@ -30,57 +30,45 @@ class App extends React.Component<any, AppState> {
     }
   }
 
-  private docsTheme = {
-    componentStyles: {
-      Header: {
-        root: {
-          fontWeight: 700,
-        },
-      },
-      Grid: {
-        root: {
-          gridColumnGap: '1rem',
-          gridRowGap: '1rem',
-        },
-      },
-      Button: {
-        root: {
-          textDecoration: 'none',
-        },
-      },
-    },
-    staticStyles: [
-      {
-        h1: {
-          fontSize: '2rem',
-          marginTop: '-.14285714em',
-        },
-        h2: {
-          fontSize: '1.71428571rem',
-          marginTop: 'calc(2rem - 0.142857em)',
-        },
-        a: {
-          color: '#4183c4',
-          textDecoration: 'none',
-          ':hover, :focus': {
-            color: '#1e70bf',
-          },
-        },
-        html: {
-          fontSize: '14px',
-        },
-        body: {
-          fontSize: '1rem',
-          fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
-        },
-      },
-    ],
-  }
-
   render() {
+    const { themeName } = this.state
     return (
       <ThemeContext.Provider value={this.state}>
-        <Provider theme={mergeThemes(themes.teams, this.docsTheme)}>
+        <Provider
+          theme={mergeThemes(themes[themeName], {
+            // adjust Teams' theme to Semantic UI's font size scheme
+            siteVariables: {
+              htmlFontSize: '14px',
+              bodyFontSize: '1rem',
+            },
+            staticStyles: [
+              {
+                h1: {
+                  fontSize: '2rem',
+                  marginTop: '-.14285714em',
+                },
+                h2: {
+                  fontSize: '1.71428571rem',
+                  marginTop: 'calc(2rem - 0.142857em)',
+                },
+                a: {
+                  color: '#4183c4',
+                  textDecoration: 'none',
+                  ':hover, :focus': {
+                    color: '#1e70bf',
+                  },
+                },
+                html: {
+                  fontSize: '14px',
+                },
+                body: {
+                  fontSize: '1rem',
+                  // fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
+                },
+              },
+            ],
+          })}
+        >
           <Router />
         </Provider>
       </ThemeContext.Provider>

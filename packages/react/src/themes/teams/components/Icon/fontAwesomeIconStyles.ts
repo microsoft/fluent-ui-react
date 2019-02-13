@@ -4,9 +4,9 @@ const fontIcon = (content: string, fontFamily: string): ThemeIconSpec => ({
   icon: { content: `'\\${content}'`, fontFamily },
 })
 
-const normal = (content: string) => fontIcon(content, '"Font Awesome 5 Free"')
-const outline = (content: string) => fontIcon(content, '"Font Awesome 5 Free"')
-const brand = (content: string) => fontIcon(content, '"Font Awesome 5 Free"')
+const normal = (content: string) => fontIcon(content, 'Icons')
+const outline = (content: string) => fontIcon(content, 'outline-icons')
+const brand = (content: string) => fontIcon(content, 'brand-icons')
 
 // Originally generated from:
 // https://github.com/Semantic-Org/Semantic-UI-CSS/blob/master/components/icon.css
