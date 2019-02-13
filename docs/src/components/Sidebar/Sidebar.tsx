@@ -392,6 +392,13 @@ class Sidebar extends React.Component<any, any> {
         accessiility: listItemBehavior,
       },
       {
+        key: 'colorpalette',
+        content: 'Color Palette',
+        as: NavLink,
+        to: '/color-palette',
+        accessibility: listItemBehavior,
+      },
+      {
         key: 'divider4',
         kind: 'divider',
       },
@@ -464,7 +471,6 @@ class Sidebar extends React.Component<any, any> {
                 </select>
               </Menu.Item>
             )}
-
             <Menu.Item active>
               <SemanticUIInput
                 className="transparent inverted icon"
