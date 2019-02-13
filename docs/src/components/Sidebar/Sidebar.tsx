@@ -71,8 +71,6 @@ class Sidebar extends React.Component<any, any> {
     //   if (document.activeElement === this._searchInput) this._searchInput.blur()
   }
 
-  itemIndex = -1
-
   private menuItemsByType = _.map(constants.typeOrder, nextType => {
     const items = _.chain([...componentMenu, ...behaviorMenu])
       .filter(({ type }) => type === nextType)

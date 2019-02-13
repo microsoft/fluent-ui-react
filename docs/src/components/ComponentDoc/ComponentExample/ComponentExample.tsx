@@ -5,8 +5,8 @@ import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
 
 import {
-  Box,
   Divider,
+  Flex,
   Form,
   Input,
   Menu,
@@ -650,86 +650,90 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     // }
 
     return (
-      <Box>
-        {/* Ensure anchor links don't occlude card shadow effect */}
-        <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
+      <Flex column>
+        <Flex.Item>
+          <>
+            {/* Ensure anchor links don't occlude card shadow effect */}
+            {/* <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} /> */}
 
-        <Segment
-          width={19}
-          styles={{ borderBottom: '1px solid #ddd' }}
-          onMouseLeave={handleMouseLeave}
-          onMouseMove={handleMouseMove}
-        >
-          <div style={{ display: 'flex' }}>
-            <div style={{ flex: '1' }}>
-              <ComponentExampleTitle description={description} title={title} />
-            </div>
-            <div style={{ flex: '0 0 auto' }}>
-              <ComponentControls
-                anchorName={this.anchorName}
-                exampleCode={currentCode}
-                exampleLanguage={currentCodeLanguage}
-                examplePath={currentCodePath}
-                onShowCode={this.handleShowCodeClick}
-                onCopyLink={this.handleDirectLinkClick}
-                onShowRtl={this.handleShowRtlClick}
-                onShowVariables={this.handleShowVariablesClick}
-                onShowTransparent={this.handleShowTransparentClick}
-                showCode={showCode}
-                showRtl={showRtl}
-                showTransparent={showTransparent}
-                showVariables={showVariables}
-                visible
-              />
-            </div>
-          </div>
-          {this.renderKnobs()}
-        </Segment>
+            <Segment
+              width={19}
+              styles={{ borderBottom: '1px solid #ddd' }}
+              onMouseLeave={handleMouseLeave}
+              onMouseMove={handleMouseMove}
+            >
+              <div style={{ display: 'flex' }}>
+                <div style={{ flex: '1' }}>
+                  <ComponentExampleTitle description={description} title={title} />
+                </div>
+                <div style={{ flex: '0 0 auto' }}>
+                  <ComponentControls
+                    anchorName={this.anchorName}
+                    exampleCode={currentCode}
+                    exampleLanguage={currentCodeLanguage}
+                    examplePath={currentCodePath}
+                    onShowCode={this.handleShowCodeClick}
+                    onCopyLink={this.handleDirectLinkClick}
+                    onShowRtl={this.handleShowRtlClick}
+                    onShowVariables={this.handleShowVariablesClick}
+                    onShowTransparent={this.handleShowTransparentClick}
+                    showCode={showCode}
+                    showRtl={showRtl}
+                    showTransparent={showTransparent}
+                    showVariables={showVariables}
+                    visible
+                  />
+                </div>
+              </div>
+              {this.renderKnobs()}
+            </Segment>
 
-        {children && <Segment styles={childrenStyle}>{children}</Segment>}
+            {children && <Segment styles={childrenStyle}>{children}</Segment>}
 
-        <SourceRender
-          babelConfig={babelConfig}
-          knobs={knobs}
-          source={currentCode}
-          render={this.renderElement}
-          //          renderHtml={showCode}
-          renderHtml
-          resolver={importResolver}
-        >
-          <Provider theme={themes[this.getThemeKey(this.props.themeName)]}>
-            <Provider.Consumer
-              render={({ siteVariables }) => {
-                return (
-                  <Segment
-                    dir={showRtl ? 'rtl' : undefined}
-                    className={`rendered-example ${this.getKebabExamplePath()}`}
-                    styles={{
-                      padding: '2rem',
-                      color: siteVariables.bodyColor,
-                      backgroundColor: siteVariables.bodyBackground,
-                      ...(showTransparent && {
-                        backgroundImage:
-                          'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                        backgroundRepeat: 'repeat',
-                      }),
-                    }}
-                  >
-                    <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
-                  </Segment>
-                )
-              }}
-            />
-          </Provider>
-          <Segment styles={{ padding: 0 }}>
-            {this.renderSourceCode()}
-            {this.renderError()}
-            {this.renderHTML()}
-            {this.renderVariables()}
-          </Segment>
-          <div style={{ paddingBottom: '10px' }} />
-        </SourceRender>
-      </Box>
+            <SourceRender
+              babelConfig={babelConfig}
+              knobs={knobs}
+              source={currentCode}
+              render={this.renderElement}
+              //          renderHtml={showCode}
+              renderHtml
+              resolver={importResolver}
+            >
+              <Provider theme={themes[this.getThemeKey(this.props.themeName)]}>
+                <Provider.Consumer
+                  render={({ siteVariables }) => {
+                    return (
+                      <Segment
+                        dir={showRtl ? 'rtl' : undefined}
+                        className={`rendered-example ${this.getKebabExamplePath()}`}
+                        styles={{
+                          padding: '2rem',
+                          color: siteVariables.bodyColor,
+                          backgroundColor: siteVariables.bodyBackground,
+                          ...(showTransparent && {
+                            backgroundImage:
+                              'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                            backgroundRepeat: 'repeat',
+                          }),
+                        }}
+                      >
+                        <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
+                      </Segment>
+                    )
+                  }}
+                />
+              </Provider>
+              <Segment styles={{ padding: 0 }}>
+                {this.renderSourceCode()}
+                {this.renderError()}
+                {this.renderHTML()}
+                {this.renderVariables()}
+              </Segment>
+              <div style={{ paddingBottom: '10px' }} />
+            </SourceRender>
+          </>
+        </Flex.Item>
+      </Flex>
     )
   }
 

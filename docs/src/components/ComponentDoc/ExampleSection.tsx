@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Box, Grid, Header } from '@stardust-ui/react'
+import { Flex, Grid, Header } from '@stardust-ui/react'
 
 import { Extendable } from 'src/types'
 
@@ -15,14 +15,18 @@ export type ExampleSectionProps = Extendable<{
 }>
 
 const ExampleSection: React.FC<ExampleSectionProps> = ({ title, children, ...restProps }) => (
-  <Box>
-    <Header as="h2" styles={headerStyle} className="no-anchor">
-      {title}
-    </Header>
-    <Grid variables={{ gridGap: '2rem' }} columns="1">
-      {children}
-    </Grid>
-  </Box>
+  <Flex column>
+    <Flex.Item>
+      <>
+        <Header as="h2" styles={headerStyle} className="no-anchor">
+          {title}
+        </Header>
+        <Grid variables={{ gridGap: '2rem' }} columns="1">
+          {children}
+        </Grid>
+      </>
+    </Flex.Item>
+  </Flex>
 )
 
 export default ExampleSection

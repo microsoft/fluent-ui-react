@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Box, Icon } from '@stardust-ui/react'
+import { Flex, Icon } from '@stardust-ui/react'
 import { constants } from 'src/lib'
 
 export default class ComponentDocLinks extends React.PureComponent<any, any> {
@@ -12,7 +12,7 @@ export default class ComponentDocLinks extends React.PureComponent<any, any> {
   render() {
     const { repoPath } = this.props
     return (
-      <Box
+      <Flex
         styles={{
           boxShadow: '0 0 1em 0.5em #f7f7f7',
           margin: '0.5em',
@@ -25,23 +25,25 @@ export default class ComponentDocLinks extends React.PureComponent<any, any> {
           verticalAlign: 'middle',
         }}
       >
-        <Icon name="github" />
-        <code>
-          <a
-            style={{
-              color: 'rgba(0,0,0,.4)',
-              ':hover, :focus': {
-                color: 'rgba(0,0,0,.8)',
-              },
-            }}
-            href={`${constants.repoURL}/blob/master/${repoPath}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {repoPath}
-          </a>
-        </code>
-      </Box>
+        <>
+          <Icon name="github" />
+          <code>
+            <a
+              style={{
+                color: 'rgba(0,0,0,.4)',
+                ':hover, :focus': {
+                  color: 'rgba(0,0,0,.8)',
+                },
+              }}
+              href={`${constants.repoURL}/blob/master/${repoPath}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {repoPath}
+            </a>
+          </code>
+        </>
+      </Flex>
     )
   }
 }

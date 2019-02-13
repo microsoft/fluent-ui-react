@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router'
-import { Box, Flex, Header, Icon, Dropdown, Provider, Text, themes } from '@stardust-ui/react'
+import { Flex, Header, Icon, Dropdown, Provider, Text, themes } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
@@ -91,34 +91,7 @@ class ComponentDoc extends React.Component<any, any> {
     const { info } = this.props
     const { activePath /*, examplesRef*/ } = this.state
 
-    /* const topPart = [
-      <Header content={info.displayName} description={_.join(info.docblock.description, ' ')} />,
-      <ThemeContext.Consumer>
-        {({ changeTheme }) => (
-          <Dropdown
-            getA11yStatusMessage={getA11yStatusMessage}
-            getA11ySelectionMessage={getA11ySelectionMessage}
-            noResultsMessage="We couldn't find any matches."
-            placeholder="Theme"
-            onSelectedChange={changeTheme}
-            items={this.getThemeOptions().map(o => o.text)}
-          />
-        )}
-      </ThemeContext.Consumer>,
-      <ComponentDocLinks
-        displayName={info.displayName}
-        parentDisplayName={info.parentDisplayName}
-        repoPath={info.repoPath}
-        type={info.type}
-      />,
-    ] */
-
-    // const gridStyle: ICSSInJSStyle = {
-    //   justifyContent: 'space-between',
-    // }
-
     return (
-      // replace with Flex component when released
       <Provider
         theme={{
           componentStyles: {
@@ -129,25 +102,16 @@ class ComponentDoc extends React.Component<any, any> {
                 justifyContent: 'space-between',
               },
             },
-            Dropdown: {
-              root: {
-                Button: {
-                  root: {
-                    // backgroundColor: 'white',
-                  },
-                },
-              },
-            },
             Text: {
               root: {
-                marginBottom: '14px',
+                marginBottom: '1.4rem',
               },
             },
           },
         }}
       >
         <div style={{ paddingLeft: '20px' }}>
-          <Flex column padding="padding.large">
+          <Flex column>
             <Flex.Item padding="padding.medium">
               <ThemeContext.Consumer>
                 {({ changeTheme }) => (
