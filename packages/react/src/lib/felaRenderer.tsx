@@ -9,9 +9,7 @@ import rtl from 'fela-plugin-rtl'
 import { Renderer } from '../themes/types'
 
 const createRendererConfig = (options: any = {}) => ({
-  // https://github.com/stardust-ui/react/issues/782
-  // devMode: process.env.NODE_ENV !== 'production',
-  devMode: false,
+  devMode: process.env.NODE_ENV !== 'production',
   plugins: [
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
@@ -30,9 +28,12 @@ const createRendererConfig = (options: any = {}) => ({
   ],
   enhancers: [],
   ...(options.isRtl ? { selectorPrefix: 'rtl_' } : {}),
+  ...(options.rendererId ? { rendererId: options.rendererId } : {}),
 })
 
 export const felaRenderer: Renderer = createRenderer(createRendererConfig())
-export const felaRtlRenderer: Renderer = createRenderer(createRendererConfig({ isRtl: true }))
+export const felaRtlRenderer: Renderer = createRenderer(
+  createRendererConfig({ isRtl: true, rendererId: 'rtl' }),
+)
 
 export default felaRenderer
