@@ -41,9 +41,7 @@ const createReactApp = async (atTempDirectory: string, appName: string): Promise
 
     // create test project with util's create-react-app
     fs.mkdirSync(appProjectPath)
-    await runIn(tempUtilProjectPath)(
-      `yarn create-react-app ${appProjectPath} --scripts-version=react-scripts-ts`,
-    )
+    await runIn(tempUtilProjectPath)(`yarn create-react-app ${appProjectPath} --typescript`)
   } finally {
     // remove temp util directory
     rimraf.sync(tempUtilProjectPath)

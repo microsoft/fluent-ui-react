@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
+import * as _ from 'lodash'
 import { UIComponent, commonPropTypes } from '../../lib'
 import { mergeStyles } from '../../lib/mergeThemes'
 import { Extendable } from '../../types'
@@ -78,7 +79,9 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
       })
     }
 
-    return applyStyles(React.Children.only(children), styles, classes)
+    return _.isNil(children)
+      ? children
+      : applyStyles(React.Children.only(children), styles, classes)
   }
 }
 
