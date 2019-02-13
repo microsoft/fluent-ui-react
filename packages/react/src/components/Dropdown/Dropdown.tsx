@@ -30,7 +30,7 @@ import {
   UIComponentProps,
 } from '../../lib'
 import keyboardKey from 'keyboard-key'
-import Indicator from '../Indicator/Indicator'
+import Indicator, { IndicatorProps } from '../Indicator/Indicator'
 import List from '../List/List'
 import Ref from '../Ref/Ref'
 import DropdownItem from './DropdownItem'
@@ -39,7 +39,7 @@ import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchI
 import Button from '../Button/Button'
 import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 import ListItem from '../List/ListItem'
-import Icon from '../Icon/Icon'
+import Icon, { IconProps } from '../Icon/Icon'
 
 export interface DropdownSlotClassNames {
   container: string
@@ -341,17 +341,27 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                     ? Icon.create(clearIndicator, {
                         defaultProps: {
                           className: Dropdown.slotClassNames.clearIndicator,
-                          onClick: this.handleClear,
                           styles: styles.clearIndicator,
                           xSpacing: 'none',
                         },
+                        overrideProps: (predefinedProps: IconProps) => ({
+                          onClick: (e, iconProps: IconProps) => {
+                            _.invoke(predefinedProps, 'onClick', e, iconProps)
+                            this.handleClear()
+                          },
+                        }),
                       })
                     : Indicator.create(toggleIndicator, {
                         defaultProps: {
                           direction: isOpen ? 'top' : 'bottom',
-                          onClick: getToggleButtonProps().onClick,
                           styles: styles.toggleIndicator,
                         },
+                        overrideProps: (predefinedProps: IndicatorProps) => ({
+                          onClick: (e, indicatorProps: IndicatorProps) => {
+                            _.invoke(predefinedProps, 'onClick', e, indicatorProps)
+                            getToggleButtonProps().onClick(e)
+                          },
+                        }),
                       })}
                   {this.renderItemsList(
                     styles,
