@@ -123,7 +123,6 @@
     "semantic-ui-react": "^0.81.1",
     "simulant": "^0.2.2",
     "snyk": "^1.110.2",
-    "ta-scripts": "^2.5.2",
     "through2": "^2.0.3",
     "tmp": "^0.0.33",
     "ts-jest": "^23.10.4",
