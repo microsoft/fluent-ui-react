@@ -32,6 +32,7 @@ const getFontStyles = (
 
   return {
     fontFamily,
+    fontWeight: 900, // required for the fontAwesome to render
     fontSize: sizeInRems,
     lineHeight: 1,
     textAlign: 'center',
