@@ -151,10 +151,16 @@ class Provider extends UIComponent<ProviderProps> {
           if (isBrowser()) render(outgoingTheme.renderer)
           this.renderStaticStylesOnce(outgoingTheme)
 
+          const rtlProps: { dir?: 'rtl' | 'ltr' } = {}
+          // only add dir attribute for top level provider or when direction changes from parent to child
+          if (!incomingTheme || incomingTheme.rtl !== outgoingTheme.rtl) {
+            rtlProps.dir = outgoingTheme.rtl ? 'rtl' : 'ltr'
+          }
+
           return (
             <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
               <ThemeProvider theme={outgoingTheme}>
-                <ElementType {...unhandledProps} className={classes.root}>
+                <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
                   {children}
                 </ElementType>
               </ThemeProvider>
