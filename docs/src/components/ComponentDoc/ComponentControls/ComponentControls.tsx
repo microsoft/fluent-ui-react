@@ -98,7 +98,12 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
           key: 'maximize',
           content: <ComponentControlsMaximize />,
           as: NavLink,
-          to: `/maximize/${_.kebabCase(examplePath.split('/').slice(-1))}/${showRtl}`,
+          to: `/maximize/${_.kebabCase(
+            examplePath
+              .split('/')
+              .slice(-1)
+              .pop(),
+          )}/${showRtl}`,
           target: '_blank',
           rel: 'noopener noreferrer',
           onClick: onMaximize,
