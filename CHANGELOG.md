@@ -24,6 +24,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Properly handle falsy values provided as `Flex` and `Flex.Item` children @kuzhelov ([#890](https://github.com/stardust-ui/react/pull/890))
 - Update cached `rem` size value of `pxToRem` on theme static styles render @kuzhelov ([#883](https://github.com/stardust-ui/react/pull/883))
+- Stardust in TS project with `--isolatedModules` can be built @layershifter ([#894](https://github.com/stardust-ui/react/pull/894))
+- Keyframes are behaving as expected when RTL is dynamically switched @layershifter ([#894](https://github.com/stardust-ui/react/pull/894))
 
 <!--------------------------------[ v0.21.0 ]------------------------------- -->
 ## [v0.21.0](https://github.com/stardust-ui/react/tree/v0.21.0) (2019-02-12)
