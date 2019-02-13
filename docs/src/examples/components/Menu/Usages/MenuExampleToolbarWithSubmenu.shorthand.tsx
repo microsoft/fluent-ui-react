@@ -78,7 +78,7 @@ const items = [
       items: [
         {
           key: '1',
-          content: 'item1',
+          content: 'item1 123 super long text that should wrap after 330px.',
           icon: {
             name: 'bookmark',
             variables: { outline: true },

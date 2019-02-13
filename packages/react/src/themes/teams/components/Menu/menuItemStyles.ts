@@ -410,9 +410,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     position: 'absolute',
     top: vertical ? '0' : '100%',
     left: vertical ? '100%' : '0',
-    boxShadow: v.verticalSubmenuBoxShadow,
-    backgroundColor: v.defaultBackgroundColor,
-    padding: `${pxToRem(8)} 0`,
   }),
 
   indicator: () => ({
