@@ -81,7 +81,7 @@ export function createShorthand(
  */
 export function createShorthandFactory<TStringElement extends keyof JSX.IntrinsicElements>(
   Component: TStringElement,
-  mappedProp?: keyof JSX.IntrinsicElements[TStringElement],
+  mappedProp?: keyof PropsOf<TStringElement>,
 )
 export function createShorthandFactory<TFunctionComponent extends React.FunctionComponent>(
   Component: TFunctionComponent,

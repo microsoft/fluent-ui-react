@@ -43,6 +43,8 @@ export type PropsOf<T> = T extends React.Component<ReactProps<infer TProps>>
   ? (ChildrenProps & TProps)
   : T extends React.FunctionComponent<infer TProps>
   ? (ChildrenProps & TProps)
+  : T extends keyof JSX.IntrinsicElements
+  ? JSX.IntrinsicElements[T]
   : any
 
 // ========================================================
