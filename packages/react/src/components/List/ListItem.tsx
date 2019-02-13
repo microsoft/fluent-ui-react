@@ -12,7 +12,7 @@ import {
 import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ReactProps, ComponentEventHandler } from '../../types'
+import { ShorthandValue, ReactProps, ComponentEventHandler } from '../../types'
 import Box from '../Box/Box'
 
 export interface ListItemSlotClassNames {
@@ -25,22 +25,22 @@ export interface ListItemSlotClassNames {
   endMedia: string
 }
 
-export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
+export interface ListItemProps extends UIComponentProps, ContentComponentProps<ShorthandValue> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default listItemBehavior
    * */
   accessibility?: Accessibility
-  contentMedia?: any
+  contentMedia?: ShorthandValue
   /** Toggle debug mode. */
   debug?: boolean
-  header?: any
-  endMedia?: any
-  headerMedia?: any
+  header?: ShorthandValue
+  endMedia?: ShorthandValue
+  headerMedia?: ShorthandValue
 
   /** A list item can appear more important and draw the user's attention. */
   important?: boolean
-  media?: any
+  media?: ShorthandValue
 
   index?: number
   /** A list item can indicate that it can be selected. */
