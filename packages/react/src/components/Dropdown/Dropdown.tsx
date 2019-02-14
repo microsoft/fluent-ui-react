@@ -62,6 +62,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   /** The initial value for the index of the currently active selected item, in a multiple selection. */
   defaultActiveSelectedIndex?: number
 
+  /** Initial value for 'open' in uncontrolled mode */
+  defaultOpen?: boolean
+
   /** The initial value for the search query, if the dropdown is also a search. */
   defaultSearchQuery?: string
 
@@ -115,6 +118,13 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   noResultsMessage?: ShorthandValue
 
   /**
+   * Callback for change in dropdown open value.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {Object} data - All props and the new open flag value in the edit text.
+   */
+  onOpenChange?: ComponentEventHandler<DropdownProps>
+
+  /**
    * Callback for change in dropdown search query value.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {Object} data - All props and the new search query value in the edit text.
@@ -127,6 +137,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    * @param {Object} data - All props and the new active value(s).
    */
   onSelectedChange?: ComponentEventHandler<DropdownProps>
+
+  /** Defines whether dropdown is displayed. */
+  open?: boolean
 
   /** A placeholder message for the input field. */
   placeholder?: string
@@ -172,8 +185,8 @@ export interface DropdownState {
   activeSelectedIndex: number
   defaultHighlightedIndex: number
   focused: boolean
-  isOpen?: boolean
-  searchQuery?: string
+  open: boolean
+  searchQuery: string
   value: ShorthandValue | ShorthandCollection
 }
 
@@ -204,6 +217,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     clearable: PropTypes.bool,
     clearIndicator: customPropTypes.itemShorthand,
     defaultActiveSelectedIndex: PropTypes.number,
+    defaultOpen: PropTypes.bool,
     defaultSearchQuery: PropTypes.string,
     defaultValue: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
@@ -219,8 +233,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     loadingMessage: customPropTypes.itemShorthand,
     multiple: PropTypes.bool,
     noResultsMessage: customPropTypes.itemShorthand,
+    onOpenChange: PropTypes.func,
     onSearchQueryChange: PropTypes.func,
     onSelectedChange: PropTypes.func,
+    open: PropTypes.bool,
     placeholder: PropTypes.string,
     renderItem: PropTypes.func,
     renderSelectedItem: PropTypes.func,
@@ -250,7 +266,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     triggerButton: {},
   }
 
-  static autoControlledProps = ['activeSelectedIndex', 'searchQuery', 'value']
+  static autoControlledProps = ['activeSelectedIndex', 'open', 'searchQuery', 'value']
 
   static Item = DropdownItem
   static SearchInput = DropdownSearchInput
@@ -262,6 +278,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       // used on single selection to open the dropdown with the selected option as highlighted.
       defaultHighlightedIndex: this.props.multiple ? undefined : null,
       focused: false,
+      open: false,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
     }
@@ -284,11 +301,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       itemToString,
       toggleIndicator,
     } = this.props
-    const { defaultHighlightedIndex, searchQuery, value } = this.state
+    const { defaultHighlightedIndex, open, searchQuery, value } = this.state
 
     return (
       <ElementType className={classes.root} {...unhandledProps}>
         <Downshift
+          isOpen={open}
           onChange={this.handleSelectedChange}
           onInputValueChange={this.handleSearchQueryChange}
           inputValue={search ? searchQuery : null}
@@ -305,7 +323,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             getMenuProps,
             getRootProps,
             getToggleButtonProps,
-            isOpen,
             toggleMenu,
             highlightedIndex,
             selectItemAtIndex,
@@ -320,7 +337,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
               <Ref innerRef={innerRef}>
                 <div
                   className={cx(Dropdown.slotClassNames.container, classes.container)}
-                  onClick={search && !isOpen ? this.handleContainerClick : undefined}
+                  onClick={search && !open ? this.handleContainerClick : undefined}
                 >
                   <div
                     ref={this.selectedItemsRef}
@@ -354,7 +371,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                       })
                     : Indicator.create(toggleIndicator, {
                         defaultProps: {
-                          direction: isOpen ? 'top' : 'bottom',
+                          direction: open ? 'top' : 'bottom',
                           styles: styles.toggleIndicator,
                         },
                         overrideProps: (predefinedProps: IndicatorProps) => ({
@@ -367,7 +384,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                   {this.renderItemsList(
                     styles,
                     variables,
-                    isOpen,
+                    open,
                     highlightedIndex,
                     toggleMenu,
                     selectItemAtIndex,
@@ -458,7 +475,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   private renderItemsList(
     styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
-    isOpen: boolean,
+    open: boolean,
     highlightedIndex: number,
     toggleMenu: () => void,
     selectItemAtIndex: (index: number) => void,
@@ -501,8 +518,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           {...accessibilityMenuProps}
           styles={styles.list}
           tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
-          aria-hidden={!isOpen}
-          items={isOpen ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []}
+          aria-hidden={!open}
+          items={open ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []}
         />
       </Ref>
     )
@@ -576,13 +593,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private handleSearchQueryChange = (searchQuery: string) => {
-    this.trySetState({ searchQuery })
-    _.invoke(
-      this.props,
-      'onSearchQueryChange',
-      {}, // we don't have event for it, but want to keep the event handling interface, event is empty.
-      { ...this.props, searchQuery },
-    )
+    this.setStateAndInvokeHandler({ searchQuery }, 'onSearchQueryChange')
   }
 
   private handleDownshiftStateChanges = (
@@ -602,8 +613,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private handleStateChange = (changes: StateChangeOptions<ShorthandValue>) => {
-    if (changes.isOpen !== undefined && changes.isOpen !== this.state.isOpen) {
-      this.setState({ isOpen: changes.isOpen })
+    if (changes.isOpen !== undefined && changes.isOpen !== this.state.open) {
+      this.setStateAndInvokeHandler({ open: changes.isOpen }, 'onOpenChange')
     }
 
     if (changes.isOpen && !this.props.search) {
@@ -664,19 +675,18 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     item: ShorthandValue,
     rtl: boolean,
   ) => ({
-    onRemove: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
-      this.handleSelectedItemRemove(e, item, predefinedProps, DropdownSelectedItemProps)
+    onRemove: (e: React.SyntheticEvent, dropdownSelectedItemProps: DropdownSelectedItemProps) => {
+      this.handleSelectedItemRemove(e, item, predefinedProps, dropdownSelectedItemProps)
     },
-    onClick: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
+    onClick: (e: React.SyntheticEvent, dropdownSelectedItemProps: DropdownSelectedItemProps) => {
       const { value } = this.state as { value: ShorthandCollection }
-      this.trySetState({
-        activeSelectedIndex: value.indexOf(item),
-      })
+
+      this.trySetState({ activeSelectedIndex: value.indexOf(item) })
       e.stopPropagation()
-      _.invoke(predefinedProps, 'onClick', e, DropdownSelectedItemProps)
+      _.invoke(predefinedProps, 'onClick', e, dropdownSelectedItemProps)
     },
-    onKeyDown: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
-      this.handleSelectedItemKeyDown(e, item, predefinedProps, DropdownSelectedItemProps, rtl)
+    onKeyDown: (e: React.SyntheticEvent, dropdownSelectedItemProps: DropdownSelectedItemProps) => {
+      this.handleSelectedItemKeyDown(e, item, predefinedProps, dropdownSelectedItemProps, rtl)
     },
   })
 
@@ -846,12 +856,14 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   private handleSelectedChange = (item: ShorthandValue) => {
     const { items, multiple, getA11ySelectionMessage } = this.props
-    const newState = {
-      value: multiple ? [...(this.state.value as ShorthandCollection), item] : item,
-      searchQuery: this.getSelectedItemAsString(item),
-    }
 
-    this.trySetState(newState)
+    this.setStateAndInvokeHandler(
+      {
+        value: multiple ? [...(this.state.value as ShorthandCollection), item] : item,
+        searchQuery: this.getSelectedItemAsString(item),
+      },
+      'onSelectedChange',
+    )
 
     if (!multiple) {
       this.setState({ defaultHighlightedIndex: items.indexOf(item) })
@@ -870,9 +882,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
 
     this.tryFocusTriggerButton()
-
-    // we don't have event for it, but want to keep the event handling interface, event is empty.
-    _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, ...newState })
   }
 
   private handleSelectedItemKeyDown(
@@ -896,21 +905,15 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         break
       case previousKey:
         if (value.length > 0 && !_.isNil(activeSelectedIndex) && activeSelectedIndex > 0) {
-          this.trySetState({
-            activeSelectedIndex: activeSelectedIndex - 1,
-          })
+          this.trySetState({ activeSelectedIndex: activeSelectedIndex - 1 })
         }
         break
       case nextKey:
         if (value.length > 0 && !_.isNil(activeSelectedIndex)) {
           if (activeSelectedIndex < value.length - 1) {
-            this.trySetState({
-              activeSelectedIndex: activeSelectedIndex + 1,
-            })
+            this.trySetState({ activeSelectedIndex: activeSelectedIndex + 1 })
           } else {
-            this.trySetState({
-              activeSelectedIndex: null,
-            })
+            this.trySetState({ activeSelectedIndex: null })
             if (this.props.search) {
               e.preventDefault() // prevents caret to forward one position in input.
               this.inputRef.current.focus()
@@ -932,9 +935,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     predefinedProps: DropdownSelectedItemProps,
     DropdownSelectedItemProps: DropdownSelectedItemProps,
   ) {
-    this.trySetState({
-      activeSelectedIndex: null,
-    })
+    this.trySetState({ activeSelectedIndex: null })
     this.removeItemFromValue(item)
     this.tryFocusSearchInput()
     this.tryFocusTriggerButton()
@@ -953,14 +954,21 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       poppedItem = value.pop()
     }
 
-    this.trySetState({ value })
-
     if (getA11ySelectionMessage && getA11ySelectionMessage.onRemove) {
       this.setA11yStatus(getA11ySelectionMessage.onRemove(poppedItem))
     }
 
-    // we don't have event for it, but want to keep the event handling interface, event is empty.
-    _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, value })
+    this.setStateAndInvokeHandler({ value }, 'onSelectedChange')
+  }
+
+  /**
+   * Calls trySetState (for autoControlledProps) and invokes event handler exposed to user.
+   * We don't have the event object for most events coming from Downshift se we send an empty event
+   * because we want to keep the event handling interface
+   */
+  private setStateAndInvokeHandler = (newState: Partial<DropdownState>, eventName: string) => {
+    this.trySetState(newState)
+    _.invoke(this.props, eventName, {}, { ...this.props, ...newState })
   }
 
   private tryFocusTriggerButton = () => {
