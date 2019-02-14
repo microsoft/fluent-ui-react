@@ -14,7 +14,7 @@ const jest = ({ watch = false } = {}) => cb => {
   // in watch mode jest never exits
   // let the gulp task complete to prevent blocking subsequent tasks
   const command = [
-    `jest --config ./packages/react/test/${jestConfigFileName} --coverage`,
+    `jest --config ./build/jest/${jestConfigFileName} --coverage`,
     watch && '--watchAll',
     argv.runInBand && '--runInBand',
     argv.maxWorkers && `--maxWorkers=${argv.maxWorkers}`,

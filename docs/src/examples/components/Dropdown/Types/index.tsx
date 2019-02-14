@@ -25,6 +25,11 @@ const Types = () => (
       examplePath="components/Dropdown/Types/DropdownExampleSearchMultiple"
     />
     <ComponentExample
+      title="Clearable"
+      description="A dropdown can be clearable and let users remove their selection."
+      examplePath="components/Dropdown/Types/DropdownExampleClearable"
+    />
+    <ComponentExample
       title="Inline"
       description="A dropdown can be used inline with text."
       examplePath="components/Dropdown/Types/DropdownExampleInline"

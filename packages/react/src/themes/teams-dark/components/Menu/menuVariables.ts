@@ -4,6 +4,6 @@ export interface MenuVariables {
 
 export default (siteVars: any): MenuVariables => {
   return {
-    color: siteVars.white,
+    color: siteVars.colors.white,
   }
 }
