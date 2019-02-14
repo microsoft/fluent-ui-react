@@ -1,3 +1,7 @@
+// TODO: remove after switch to Babel
+import 'mdn-polyfills/Object.assign'
+import 'mdn-polyfills/String.prototype.includes'
+
 import * as customPropTypes from './customPropTypes'
 import * as commonPropTypes from './commonPropTypes'
 
@@ -31,7 +35,7 @@ export {
 export { default as isBrowser } from './isBrowser'
 export { default as doesNodeContainClick } from './doesNodeContainClick'
 
-export { pxToRem } from './fontSizeUtility'
+export { pxToRem, updateCachedRemSize } from './fontSizeUtility'
 export { customPropTypes }
 export { default as createAnimationStyles } from './createAnimationStyles'
 export { default as createComponent } from './createStardustComponent'

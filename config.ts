@@ -17,11 +17,10 @@ const envConfig = {
   // Project Structure
   // ----------------------------------
   path_base: __dirname,
-  dir_src: 'packages/react/src',
-  dir_dist: 'dist',
   dir_dll: 'dll',
   dir_docs_dist: 'docs/dist',
   dir_docs_src: 'docs/src',
+  dir_packages: 'packages',
   dir_perf_dist: 'perf/dist',
   dir_perf_src: 'perf/src',
   dir_umd_dist: 'dist/umd',
@@ -34,11 +33,14 @@ const base = (...args) => path.resolve(...[envConfig.path_base, ...args])
 
 const paths = {
   base,
-  src: base.bind(null, envConfig.dir_src),
-  dist: base.bind(null, envConfig.dir_dist),
   dll: base.bind(null, envConfig.dir_dll),
   docsDist: base.bind(null, envConfig.dir_docs_dist),
   docsSrc: base.bind(null, envConfig.dir_docs_src),
+  packageDist: (packageName: string, ...paths: string[]) =>
+    base(envConfig.dir_packages, packageName, 'dist', ...paths),
+  packageSrc: (packageName: string, ...paths: string[]) =>
+    base(envConfig.dir_packages, packageName, 'src', ...paths),
+  packages: base.bind(null, envConfig.dir_packages),
   perfDist: base.bind(null, envConfig.dir_perf_dist),
   perfSrc: base.bind(null, envConfig.dir_perf_src),
   umdDist: base.bind(null, envConfig.dir_umd_dist),

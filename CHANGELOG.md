@@ -17,6 +17,22 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Export `arrow-up`,`arrow-down` and `chat` SVG icon @VyshnaviDasari ([#873](https://github.com/stardust-ui/react/pull/873))
+- Export `FocusZone`'s utilities @sophieH29 ([#876](https://github.com/stardust-ui/react/pull/876))
+- Add `clearable` prop for `Dropdown` @layershifter ([#885](https://github.com/stardust-ui/react/pull/885))
+
+### Fixes
+- Properly handle falsy values provided as `Flex` and `Flex.Item` children @kuzhelov ([#890](https://github.com/stardust-ui/react/pull/890))
+- Update cached `rem` size value of `pxToRem` on theme static styles render @kuzhelov ([#883](https://github.com/stardust-ui/react/pull/883))
+- Stardust in TS project with `--isolatedModules` can be built @layershifter ([#894](https://github.com/stardust-ui/react/pull/894))
+- Keyframes are behaving as expected when RTL is dynamically switched @layershifter ([#894](https://github.com/stardust-ui/react/pull/894))
+- Replace margins with padding in `chatItemStyles` for Teams theme ([#878](https://github.com/stardust-ui/react/pull/878))
+
+<!--------------------------------[ v0.21.0 ]------------------------------- -->
+## [v0.21.0](https://github.com/stardust-ui/react/tree/v0.21.0) (2019-02-12)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.20.0...v0.21.0)
+
 ### BREAKING CHANGES
 - Changed site variables' `colors.black` to be `#000` instead of `grey[900](#252424)` in Teams theme @mnajdova ([#855](https://github.com/stardust-ui/react/pull/855))
 
@@ -30,10 +46,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Focus the last focused element which triggered `Popup` on ESC @sophieH29 ([#861](https://github.com/stardust-ui/react/pull/861))
 - Changing the focus zone to embed for gridBehavior @kolaps33 ([#844] (https://github.com/stardust-ui/react/pull/844))
-- Replace margins with padding in `chatItemStyles` for Teams theme ([#878](https://github.com/stardust-ui/react/pull/878))
+- Add polyfills to correctly work in IE11 @layershifter ([#868](https://github.com/stardust-ui/react/pull/868))
+- Fix selectors for `ItemLayout` class names in the `listItemStyles` in Teams theme @mnajdova([#882](https://github.com/stardust-ui/react/pull/882))
 
 ### Documentation
 - Add screener with steps testing documentation @silviuavram ([#856](https://github.com/stardust-ui/react/pull/856))
+- Move color palette link to prototypes section @codepretty ([#884](https://github.com/stardust-ui/react/pull/884))
 
 <!--------------------------------[ v0.20.0 ]------------------------------- -->
 ## [v0.20.0](https://github.com/stardust-ui/react/tree/v0.20.0) (2019-02-06)

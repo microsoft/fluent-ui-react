@@ -76,6 +76,9 @@ jobs:
           name: Bundle Statistics
           command: yarn stats:build
       - run:
+          name: Performance Tests
+          command: yarn perf
+      - run:
           name: Save Statistics to DB
           command: |
             if [ -n "${STATS_URI}" ]; then
@@ -83,9 +86,6 @@ jobs:
             else
               echo "STATS_URI not set, skipping"
             fi
-      - run:
-          name: Performance Tests
-          command: yarn perf
       - run:
           name: Danger JS
           command: |
@@ -97,8 +97,7 @@ jobs:
           command: |
             if [ -n "${npm_TOKEN}" ] && [ "${CIRCLE_BRANCH}" == "master" ]; then
               echo "//registry.npmjs.org/:_authToken=${npm_TOKEN}" > ~/project/.npmrc
-              npm version prerelease --preid="${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}.`git rev-parse --short HEAD`" --no-git-tag-version
-              npm publish --tag current
+              yarn lerna publish --canary --preid "${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}" --yes
             fi
 
   visual:
