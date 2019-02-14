@@ -408,7 +408,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       float: 'right',
       color: '#ffffff80',
       borderBottom: 0,
-      ':hover, :focus': {
+      ':hover': {
+        borderBottom: 0,
+        color: 'white',
+      },
+      ':focus': {
         borderBottom: 0,
         color: 'white',
       },

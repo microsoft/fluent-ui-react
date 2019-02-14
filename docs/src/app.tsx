@@ -42,10 +42,6 @@ class App extends React.Component<any, AppState> {
                 a: {
                   textDecoration: 'none',
                 },
-                h2: {
-                  marginTop: 0,
-                  marginBottom: 0,
-                },
                 html: {
                   fontSize: '14px',
                 },

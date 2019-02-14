@@ -77,28 +77,6 @@ class DocsLayout extends React.Component<any, any> {
                 focusedBackgroundColor: 'none',
               },
             },
-            componentStyles: {
-              MenuItem: {
-                root: {
-                  padding: '.5em 1.33333333em',
-                  textDecoration: 'none',
-                  fontSize: '0.85714286em',
-                  fontWeight: 400,
-                  color: '#ffffff80',
-                  ':hover, :focus': {
-                    color: 'white',
-                    fontWeight: '',
-                    backgroundColor: 'none',
-                  },
-                },
-              },
-              MenuDivider: {
-                root: {
-                  marginTop: '.5em',
-                  paddingBottom: '.5em',
-                },
-              },
-            },
           })}
         >
           <Sidebar style={style.menu} />

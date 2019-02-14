@@ -71,22 +71,6 @@ class Sidebar extends React.Component<any, any> {
     //   if (document.activeElement === this._searchInput) this._searchInput.blur()
   }
 
-  private menuItemsByType = _.map(constants.typeOrder, nextType => {
-    const items = _.chain([...componentMenu, ...behaviorMenu])
-      .filter(({ type }) => type === nextType)
-      .map(info => ({
-        key: info.displayName.concat(nextType),
-        content: info.displayName,
-        onClick: this.handleItemClick,
-        as: NavLink,
-        to: getComponentPathname(info),
-        accessibility: listItemBehavior,
-      }))
-      .value()
-
-    return { items }
-  })
-
   // private renderSearchItems = () => {
   //   const { selectedItemIndex, query } = this.state
   //   if (!query) return undefined
@@ -157,11 +141,40 @@ class Sidebar extends React.Component<any, any> {
 
     const menuSectionStyles: ICSSInJSStyle = {
       fontWeight: fontWeightBold,
+      margin: '0 0 .5rem',
+      padding: '0 1.2857rem',
       color: 'white',
-      ':hover, :focus': {
+      ':hover': {
         background: 'none',
+        color: 'white',
+      },
+      ':focus': {
+        background: 'none',
+        color: 'white',
       },
     }
+
+    const menuItemStyles: ICSSInJSStyle = {
+      padding: '.5em 1.33333333em',
+      textDecoration: 'none',
+      fontSize: '0.85714286em',
+      fontWeight: 400,
+      color: '#ffffff80',
+      ':hover': {
+        color: 'white',
+        backgroundColor: 'none',
+      },
+      ':focus': {
+        color: 'white',
+        backgroundColor: 'none',
+      },
+    }
+
+    const dividerStyles: ICSSInJSStyle = {
+      marginTop: '.5em',
+      paddingBottom: '.5em',
+    }
+
     const navBarStyles: ICSSInJSStyle = {
       color: '#ffffff80',
       padding: '0px',
@@ -173,6 +186,23 @@ class Sidebar extends React.Component<any, any> {
       fontWeight: 700,
     }
     const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
+
+    const menuItemsByType = _.map(constants.typeOrder, nextType => {
+      const items = _.chain([...componentMenu, ...behaviorMenu])
+        .filter(({ type }) => type === nextType)
+        .map(info => ({
+          key: info.displayName.concat(nextType),
+          content: info.displayName,
+          onClick: this.handleItemClick,
+          as: NavLink,
+          to: getComponentPathname(info),
+          styles: menuItemStyles,
+          accessibility: listItemBehavior,
+        }))
+        .value()
+
+      return { items }
+    })
 
     const menuItems: ShorthandValue[] = [
       {
@@ -198,6 +228,7 @@ class Sidebar extends React.Component<any, any> {
         href: constants.repoURL,
         target: '_blank',
         rel: 'noopener noreferrer',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -211,11 +242,13 @@ class Sidebar extends React.Component<any, any> {
         href: changeLogUrl,
         target: '_blank',
         rel: 'noopener noreferrer',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
         key: 'divider1',
         kind: 'divider',
+        styles: dividerStyles,
       },
       {
         key: 'concepts',
@@ -228,6 +261,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Introduction',
         as: NavLink,
         to: '/',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -235,11 +269,13 @@ class Sidebar extends React.Component<any, any> {
         content: 'Shorthand Props',
         as: NavLink,
         to: '/shorthand-props',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
         key: 'divider2',
         kind: 'divider',
+        styles: dividerStyles,
       },
       {
         key: 'guides',
@@ -252,6 +288,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'QuickStart',
         as: NavLink,
         to: '/quick-start',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -259,6 +296,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Accessibility',
         as: NavLink,
         to: '/accessibility',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -266,6 +304,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Theming',
         as: NavLink,
         to: '/theming',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -273,6 +312,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Theming Examples',
         as: NavLink,
         to: '/theming-examples',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -280,12 +320,16 @@ class Sidebar extends React.Component<any, any> {
         content: 'Integrate Custom Components',
         as: NavLink,
         to: '/integrate-custom-components',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
         key: 'divider3',
         kind: 'divider',
+        styles: dividerStyles,
       },
+      // TODO: to re-enable the search input - will modify the list of the components depending on the search results
+      // {query ? this.renderSearchItems() : this.menuItemsByType},
       // {
       //   key: 'search',
       //   content: (
@@ -314,6 +358,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Chat Pane',
         as: NavLink,
         to: '/prototype-chat-pane',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -321,6 +366,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Chat message with popover',
         as: NavLink,
         to: '/prototype-chat-message-with-popover',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -328,6 +374,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Async Dropdown Search',
         as: NavLink,
         to: '/prototype-async-dropdown-search',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -335,6 +382,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Async Shorthand',
         as: NavLink,
         to: '/prototype-async-shorthand',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -342,6 +390,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Employee Card',
         as: NavLink,
         to: '/prototype-employee-card',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -349,6 +398,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Meeting Options',
         as: NavLink,
         to: '/prototype-meeting-options',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -356,6 +406,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Search Page',
         as: NavLink,
         to: '/prototype-search-page',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -363,6 +414,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Popups',
         as: NavLink,
         to: '/prototype-popups',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -370,6 +422,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Processed Icons',
         as: NavLink,
         to: '/icon-viewer',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
@@ -377,6 +430,7 @@ class Sidebar extends React.Component<any, any> {
         content: 'Important and mention messages',
         as: NavLink,
         to: '/important-and-mention-messages',
+        styles: menuItemStyles,
         accessiility: listItemBehavior,
       },
       {
@@ -384,11 +438,13 @@ class Sidebar extends React.Component<any, any> {
         content: 'Color Palette',
         as: NavLink,
         to: '/color-palette',
+        styles: menuItemStyles,
         accessibility: listItemBehavior,
       },
       {
         key: 'divider4',
         kind: 'divider',
+        styles: dividerStyles,
       },
     ]
 
@@ -410,18 +466,16 @@ class Sidebar extends React.Component<any, any> {
       accessibility: listItemBehavior,
     }
 
-    const withComponents = withPrototypes
-      .concat(componentMenuItem)
-      .concat(this.menuItemsByType[0].items)
+    const withComponents = withPrototypes.concat(componentMenuItem).concat(menuItemsByType[0].items)
     const allItems = withComponents
       .concat({
         key: 'divider5',
         kind: 'divider',
+        styles: dividerStyles,
       })
       .concat(behaviorMenuItem)
-      .concat(this.menuItemsByType[1].items)
+      .concat(menuItemsByType[1].items)
 
-    // {query ? this.renderSearchItems() : this.menuItemsByType},
     // TODO: bring back the active elements indicators
     return (
       <Segment
@@ -437,25 +491,6 @@ class Sidebar extends React.Component<any, any> {
           />
         }
       />
-      /*
-      <ThemeContext.Consumer>
-        {({ themeName, changeTheme }) => (
-          <Menu vertical fixed="left" inverted style={{ ...style }}>
-            <Menu.Item active>
-              <SemanticUIInput
-                className="transparent inverted icon"
-                icon="search"
-                placeholder="Search components..."
-                value={query}
-                onChange={this.handleSearchChange}
-                onKeyDown={this.handleSearchKeyDown}
-              />
-            </Menu.Item>
-            {query ? this.renderSearchItems() : this.menuItemsByType}
-          </Menu>
-        )}
-      </ThemeContext.Consumer>
-*/
     )
   }
 }

@@ -56,13 +56,7 @@ class ComponentSidebar extends React.Component<ComponentSidebarProps, any> {
 
     return (
       <Segment context={examplesRef} styles={{ padding: 0, position: 'fixed' }}>
-        <Menu
-          fluid
-          vertical
-          items={menuItems}
-          variables={{ activeBackgroundColor: 'none', focusedBackgroundColor: 'none' }}
-          styles={{ ...sidebarStyle }}
-        />
+        <Menu fluid vertical items={menuItems} styles={{ ...sidebarStyle }} />
       </Segment>
     )
   }
