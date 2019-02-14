@@ -82,19 +82,11 @@ const chatMessageStyles: ComponentSlotStylesInput<
       textDecoration: 'underline',
     },
   }),
-  badge: ({
-    props: p,
-    variables: v,
-    theme: {
-      siteVariables: {
-        colors: { white },
-      },
-    },
-  }) => {
+  badge: ({ props: p, variables: v }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
     return {
       backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
-      color: white,
+      color: v.badgeTextColor,
       boxShadow: v.badgeShadow,
       position: 'absolute',
       padding: pxToRem(4),
