@@ -77,6 +77,6 @@ class Loader extends UIComponent<ReactProps<LoaderProps>> {
   }
 }
 
-Loader.create = createShorthandFactory(Loader, 'content')
+Loader.create = createShorthandFactory(Loader)
 
 export default Loader

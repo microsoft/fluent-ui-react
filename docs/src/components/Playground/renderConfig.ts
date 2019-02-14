@@ -9,6 +9,7 @@ export const babelConfig = {
     ['transform-typescript', { isTSX: true }],
     'transform-classes',
   ],
+  presets: ['es2015'],
 }
 
 export const imports = {
