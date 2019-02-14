@@ -52,6 +52,7 @@ const selectedStyle = variables => ({
 const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     minHeight: v.minHeight,
+    padding: v.rootPadding,
     ...(p.selectable && {
       position: 'relative',
 
@@ -65,8 +66,6 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
     ...(p.important && {
       fontWeight: 'bold',
     }),
-    paddingLeft: v.paddingLeft,
-    paddingRight: v.paddingRight,
   }),
   media: ({ props: p }): ICSSInJSStyle => ({
     ...(p.important && {
