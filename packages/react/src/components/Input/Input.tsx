@@ -114,7 +114,6 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
 
   renderComponent({
     ElementType,
-    classes,
     unhandledProps,
     styles,
     variables,
