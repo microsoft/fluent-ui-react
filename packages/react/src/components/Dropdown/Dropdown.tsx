@@ -290,6 +290,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       <ElementType className={classes.root} {...unhandledProps}>
         <Downshift
           onChange={this.handleSelectedChange}
+          onInputValueChange={this.handleSearchQueryChange}
           inputValue={search ? searchQuery : null}
           stateReducer={this.handleDownshiftStateChanges}
           itemToString={itemToString}
@@ -574,22 +575,21 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     )
   }
 
+  private handleSearchQueryChange = (searchQuery: string) => {
+    this.trySetState({ searchQuery })
+    _.invoke(
+      this.props,
+      'onSearchQueryChange',
+      {}, // we don't have event for it, but want to keep the event handling interface, event is empty.
+      { ...this.props, searchQuery },
+    )
+  }
+
   private handleDownshiftStateChanges = (
     state: DownshiftState<ShorthandValue>,
     changes: StateChangeOptions<ShorthandValue>,
   ) => {
     switch (changes.type) {
-      case Downshift.stateChangeTypes.changeInput:
-        this.trySetState({
-          searchQuery: changes.inputValue,
-        })
-        _.invoke(
-          this.props,
-          'onSearchQueryChange',
-          {}, // we don't have event for it, but want to keep the event handling interface, event is empty.
-          { ...this.props, searchQuery: changes.inputValue },
-        )
-        return changes
       case Downshift.stateChangeTypes.blurButton:
         // Downshift closes the list by default on trigger blur. It does not support the case when dropdown is
         // single selection and focuses list on trigger click/up/down/space/enter. Treating that here.
