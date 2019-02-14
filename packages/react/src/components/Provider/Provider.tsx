@@ -5,7 +5,12 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { RendererProvider, ThemeProvider } from 'react-fela'
 
-import { felaRenderer as felaLtrRenderer, isBrowser, mergeThemes } from '../../lib'
+import {
+  felaRenderer as felaLtrRenderer,
+  isBrowser,
+  mergeThemes,
+  updateCachedRemSize,
+} from '../../lib'
 import {
   ThemePrepared,
   ThemeInput,
@@ -150,6 +155,8 @@ class Provider extends React.Component<ProviderProps> {
     if (!this.staticStylesRendered && staticStyles) {
       this.renderStaticStyles(mergedTheme)
       this.staticStylesRendered = true
+
+      updateCachedRemSize()
     }
   }
 }
