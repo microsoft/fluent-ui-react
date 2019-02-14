@@ -39,7 +39,7 @@ export default (siteVars): DropdownVariables => ({
   listItemBackgroundColor: siteVars.colors.white,
   listItemBackgroundColorActive: siteVars.colors.primary[500],
   listItemColorActive: siteVars.colors.white,
-  selectedItemBackgroundColorFocus: siteVars.brand14,
+  selectedItemBackgroundColorFocus: siteVars.colors.primary[100],
   selectedItemsMaxHeight: pxToRem(82),
   toggleIndicatorSize: pxToRem(32),
   width: pxToRem(356),
