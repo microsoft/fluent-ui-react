@@ -1,5 +1,6 @@
 import * as CopyWebpackPlugin from 'copy-webpack-plugin'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
+import { webpack as lernaAliases } from 'lerna-alias'
 import * as _ from 'lodash'
 import * as webpack from 'webpack'
 import { CheckerPlugin as AsyncTypeScriptChecker } from 'awesome-typescript-loader'
@@ -95,10 +96,9 @@ const webpackConfig: any = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
     alias: {
-      '@stardust-ui/react': paths.src(),
-      src: paths.src(),
+      ...lernaAliases(),
+      src: paths.packageSrc('react'),
       docs: paths.base('docs'),
-      'package.json': paths.base('package.json'),
     },
   },
   performance: {

@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom'
 import { Header, Segment, ICSSInJSStyle, Provider, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from '../../../packages/react/src/lib'
+import pkg from '../../../packages/react/package.json'
 import Logo from '../components/Logo/Logo'
 
-const pkg = require('package.json')
 const centerAligned: ICSSInJSStyle = {
   textAlign: 'center',
   padding: '14px',

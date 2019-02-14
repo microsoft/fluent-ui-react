@@ -1,11 +1,14 @@
 import * as fs from 'fs'
 import { parallel, series, task } from 'gulp'
+import { rollup as lernaAliases } from 'lerna-alias'
 import * as path from 'path'
 import sh from '../sh'
 import * as rimraf from 'rimraf'
 
 import config from '../../../config'
 import * as tmp from 'tmp'
+
+type PackedPackages = Record<string, string>
 
 const { paths } = config
 
@@ -16,14 +19,42 @@ const log = (context: string) => (message: string) => {
   console.log('='.repeat(80))
 }
 
-export const publishPackage = async () => {
-  const filename = tmp.tmpNameSync({ prefix: 'stardust-', postfix: '.tgz' })
-  await sh(`yarn pack --filename ${filename}`)
+export const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
 
-  return filename
+const addResolutionPathsForStardustPackages = async (
+  testProjectDir: string,
+  packedPackages: PackedPackages,
+) => {
+  const packageJsonPath = path.resolve(testProjectDir, 'package.json')
+  const packageJson = require(packageJsonPath)
+
+  packageJson.resolutions = packageJson.resolutions || {}
+  Object.keys(packedPackages).forEach(packageName => {
+    packageJson.resolutions[`**/${packageName}`] = `file:${packedPackages[packageName]}`
+  })
+
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 }
 
-export const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
+const packStardustPackages = async (logger: Function): Promise<PackedPackages> => {
+  // packages/react/src -> packages/react,
+  // as lernaAliases append 'src'  by default
+  const stardustPackages = lernaAliases({ sourceDirectory: false })
+
+  await Promise.all(
+    Object.keys(stardustPackages).map(async (packageName: string) => {
+      const filename = tmp.tmpNameSync({ prefix: `stardust-`, postfix: '.tgz' })
+      const directory = stardustPackages[packageName]
+
+      await runIn(directory)(`yarn pack --filename ${filename}`)
+      logger(`✔️Package "${packageName}" was packed to ${filename}`)
+
+      stardustPackages[packageName] = filename
+    }),
+  )
+
+  return stardustPackages
+}
 
 const createReactApp = async (atTempDirectory: string, appName: string): Promise<string> => {
   const atDirectorySubpath = paths.withRootAt(atTempDirectory)
@@ -59,9 +90,6 @@ task('test:projects:cra-ts', async () => {
   const logger = log('test:projects:cra-ts')
   const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/cra')
 
-  const packageFilename = await publishPackage()
-  logger(`✔️Package was published: ${packageFilename}`)
-
   //////// CREATE TEST REACT APP ///////
   logger('STEP 1. Create test React project with TSX scripts..')
 
@@ -75,8 +103,10 @@ task('test:projects:cra-ts', async () => {
   //////// ADD STARDUST AS A DEPENDENCY ///////
   logger('STEP 2. Add Stardust dependency to test project..')
 
-  await runInTestApp(`yarn add ${packageFilename}`)
-  logger("Stardust is successfully added as test project's dependency.")
+  const packedPackages = await packStardustPackages(logger)
+  await addResolutionPathsForStardustPackages(testAppPath(), packedPackages)
+  await runInTestApp(`yarn add ${packedPackages['@stardust-ui/react']}`)
+  logger(`✔️Stardust UI packages were added to dependencies`)
 
   //////// REFERENCE STARDUST COMPONENTS IN TEST APP's MAIN FILE ///////
   logger("STEP 3. Reference Stardust components in test project's App.tsx")
@@ -97,9 +127,6 @@ task('test:projects:rollup', async () => {
 
   logger(`✔️Temporary directory was created: ${tmpDirectory}`)
 
-  const packageFilename = await publishPackage()
-  logger(`✔️Package was published: ${packageFilename}`)
-
   const dependencies = [
     'rollup',
     'rollup-plugin-replace',
@@ -111,8 +138,10 @@ task('test:projects:rollup', async () => {
   await runIn(tmpDirectory)(`yarn add ${dependencies}`)
   logger(`✔️Dependencies were installed`)
 
-  await runIn(tmpDirectory)(`yarn add ${packageFilename}`)
-  logger(`✔️Stardust UI was added to dependencies`)
+  const packedPackages = await packStardustPackages(logger)
+  await addResolutionPathsForStardustPackages(tmpDirectory, packedPackages)
+  await runIn(tmpDirectory)(`yarn add ${packedPackages['@stardust-ui/react']}`)
+  logger(`✔️Stardust UI packages were added to dependencies`)
 
   fs.copyFileSync(scaffoldPath('app.js'), path.resolve(tmpDirectory, 'app.js'))
   fs.copyFileSync(scaffoldPath('rollup.config.js'), path.resolve(tmpDirectory, 'rollup.config.js'))
@@ -124,5 +153,5 @@ task('test:projects:rollup', async () => {
 
 task(
   'test:projects',
-  series('dll', 'build:dist', parallel('test:projects:cra-ts', 'test:projects:rollup')),
+  series('dll', 'bundle:all-packages', parallel('test:projects:cra-ts', 'test:projects:rollup')),
 )

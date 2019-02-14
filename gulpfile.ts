@@ -16,7 +16,7 @@ tsPaths.register({
 
 // load tasks in order of dependency usage
 require('./build/gulp/tasks/dll')
-require('./build/gulp/tasks/dist')
+require('./build/gulp/tasks/bundle')
 require('./build/gulp/tasks/docs')
 require('./build/gulp/tasks/screener')
 require('./build/gulp/tasks/stats')
@@ -27,4 +27,4 @@ require('./build/gulp/tasks/perf')
 require('./build/gulp/tasks/test-vulns')
 
 // global tasks
-task('build', series('dll', parallel('dist', 'build:docs')))
+task('build', series('dll', parallel('bundle:all-packages', 'build:docs')))
