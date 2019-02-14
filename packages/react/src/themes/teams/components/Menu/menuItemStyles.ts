@@ -48,8 +48,8 @@ const getFocusedStyles = ({
   variables: MenuVariables
   color: string
 }): ICSSInJSStyle => {
-  const { primary, underlined, isFromKeyboard, active } = props
-  if (active && !underlined) return {}
+  const { primary, underlined, isFromKeyboard, active, vertical } = props
+  if (active && !underlined && !vertical) return {}
   return {
     ...(underlined && !isFromKeyboard
       ? {
@@ -64,6 +64,10 @@ const getFocusedStyles = ({
           color,
           background: v.focusedBackgroundColor,
         }),
+
+    ...(vertical && isFromKeyboard ? {
+      border: vertical ? v.primaryFocusedBorder : 'inherit',
+    } : {}),
   }
 }
 
@@ -170,6 +174,10 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         background: 'salmon',
       }),
 
+      ...(vertical && {
+        border: 'solid 1px transparent',
+      }),
+
       ...(pills && {
         ...(vertical
           ? { margin: `0 0 ${verticalPillsBottomMargin} 0` }
@@ -242,8 +250,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           !(pointing && vertical) &&
           !underlined && {
             ...(vertical && {
-              borderTopRightRadius: pxToRem(3),
-              borderTopLeftRadius: pxToRem(3),
               '::before': {
                 display: 'none',
               },
@@ -251,18 +257,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             ...(!vertical && {
               borderBottomLeftRadius: pxToRem(3),
               borderTopLeftRadius: pxToRem(3),
-            }),
-          }),
-      },
-
-      ':last-child': {
-        ...(!pills &&
-          !iconOnly &&
-          !(pointing && vertical) &&
-          !underlined && {
-            ...(vertical && {
-              borderBottomRightRadius: pxToRem(3),
-              borderBottomLeftRadius: pxToRem(3),
             }),
           }),
       },
@@ -307,7 +301,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         : pointing && vertical
         ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
         : vertical
-        ? { padding: v.verticalSubmenuItemPadding, }
+        ? { padding: v.verticalMenuItemPadding, }
         : {
             padding: v.horizontalPadding,
           }),

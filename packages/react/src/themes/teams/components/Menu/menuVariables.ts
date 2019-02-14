@@ -15,6 +15,7 @@ export interface MenuVariables {
 
   primaryFocusedColor: string
   primaryFocusedBackgroundColor: string
+  primaryFocusedBorder: string
 
   primaryBorderColor: string
   primaryHoverBorderColor: string
@@ -26,10 +27,9 @@ export interface MenuVariables {
 
   horizontalPadding: string
 
-  defaultBackgroundColor: string
-  verticalSubmenuPrimaryBorderShorthand: string,
-  verticalSubmenuItemPadding: string,
-  verticalSubmenuBoxShadow: string,
+  verticalMenuBackgroundColor: string
+  verticalMenuItemPadding: string,
+  verticalMenuBoxShadow: string,
 }
 
 export default (siteVars: any): MenuVariables => {
@@ -45,8 +45,9 @@ export default (siteVars: any): MenuVariables => {
     primaryActiveBackgroundColor: siteVars.brand08,
     primaryActiveBorderColor: siteVars.colors.primary[500],
 
-    primaryFocusedColor: siteVars.colors.white,
-    primaryFocusedBackgroundColor: siteVars.colors.primary[200],
+    primaryFocusedColor: siteVars.white,
+    primaryFocusedBackgroundColor: siteVars.brand12,
+    primaryFocusedBorder: `solid ${pxToRem(1)} ${siteVars.gray03}`,
 
     primaryBorderColor: siteVars.gray10,
     primaryHoverBorderColor: siteVars.gray08,
@@ -58,9 +59,8 @@ export default (siteVars: any): MenuVariables => {
 
     horizontalPadding: `${pxToRem(14)} ${pxToRem(18)} ${pxToRem(14)} ${pxToRem(18)}`,
 
-    defaultBackgroundColor: siteVars.white,
-    verticalSubmenuPrimaryBorderShorthand: `none`,
-    verticalSubmenuItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
-    verticalSubmenuBoxShadow: siteVars.shadowLevel1,
+    verticalMenuBackgroundColor: siteVars.white,
+    verticalMenuItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
+    verticalMenuBoxShadow: siteVars.shadowLevel3,
   }
 }

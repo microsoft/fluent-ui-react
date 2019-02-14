@@ -26,8 +26,8 @@ export default {
       ...(iconOnly && { alignItems: 'center' }),
       ...(vertical && {
         flexDirection: 'column',
-        boxShadow: variables.verticalSubmenuBoxShadow,
-        backgroundColor: variables.defaultBackgroundColor,
+        boxShadow: variables.verticalMenuBoxShadow,
+        backgroundColor: variables.verticalMenuBackgroundColor,
         padding: `${pxToRem(8)} 0`,
         ...(!fluid && { width: pxToRem(200) }),
         ...(iconOnly && {
