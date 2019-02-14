@@ -2,7 +2,7 @@ import { pxToRem } from '../../../../lib'
 
 export default siteVariables => ({
   minHeight: pxToRem(48),
-  rootPadding: `0 pxToRem(18) 0 pxToRem(20)`,
+  rootPadding: `0 ${pxToRem(18)} 0 ${pxToRem(20)}`,
   // Header
   // TODO: prod app uses 17.5px here, it should be 16px per the design guide!
   headerLineHeight: siteVariables.lineHeightSmall,
