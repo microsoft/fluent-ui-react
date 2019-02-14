@@ -74,7 +74,10 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     color: v.color,
     backgroundColor: v.backgroundColor,
     ...(p.focused && { borderBottomColor: v.borderColorFocus }),
-    ...(p.inline && transparentColorStyleObj),
+    ...(p.inline && {
+      ...transparentColorStyleObj,
+      alignItems: 'center',
+    }),
   }),
 
   selectedItems: ({ props: p, variables: v }): ICSSInJSStyle => ({

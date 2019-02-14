@@ -1,4 +1,4 @@
-import { Divider, Dropdown, DropdownProps, Header, Loader, Segment } from '@stardust-ui/react'
+import { Divider, Dropdown, DropdownProps, Loader } from '@stardust-ui/react'
 import * as faker from 'faker'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -34,6 +34,8 @@ const createEntry = (): Entry => ({
 // Prototype Search Page View
 // ----------------------------------------
 class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
+  private searchTimer: number
+
   state = {
     loading: false,
     searchQuery: '',
@@ -41,18 +43,46 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
     value: [],
   }
 
-  searchTimer: number
+  render() {
+    const { items, loading, searchQuery, value } = this.state
 
-  handleSelectedChange = (e: React.SyntheticEvent, { searchQuery, value }: DropdownProps) => {
+    return (
+      <>
+        <Dropdown
+          fluid
+          items={items}
+          loading={loading}
+          loadingMessage={{
+            content: <Loader label="Loading..." labelPosition="end" size="larger" />,
+          }}
+          multiple
+          onSearchQueryChange={this.handleSearchQueryChange}
+          onSelectedChange={this.handleSelectedChange}
+          placeholder="Try to enter something..."
+          search
+          searchQuery={searchQuery}
+          toggleIndicator={false}
+          value={value}
+        />
+        <Divider />
+        <CodeSnippet mode="json" value={this.state} />
+      </>
+    )
+  }
+
+  private handleSelectedChange = (
+    e: React.SyntheticEvent,
+    { searchQuery, value }: DropdownProps,
+  ) => {
     this.setState({ value: value as Entry[], searchQuery })
   }
 
-  handleSearchQueryChange = (e: React.SyntheticEvent, { searchQuery }: DropdownProps) => {
+  private handleSearchQueryChange = (e: React.SyntheticEvent, { searchQuery }: DropdownProps) => {
     this.setState({ searchQuery })
     this.fetchItems()
   }
 
-  fetchItems = () => {
+  private fetchItems = () => {
     clearTimeout(this.searchTimer)
     this.setState({ loading: true })
 
@@ -62,40 +92,6 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
         items: [...prevState.items, ..._.times<Entry>(10, createEntry)],
       }))
     }, 2000)
-  }
-
-  render() {
-    const { items, loading, searchQuery, value } = this.state
-
-    return (
-      <div style={{ margin: 20 }}>
-        <Segment>
-          <Header content="Async Dropdown Search" />
-          <p>Use the field to perform a simulated search.</p>
-        </Segment>
-
-        <Segment>
-          <Dropdown
-            fluid
-            items={items}
-            loading={loading}
-            loadingMessage={{
-              content: <Loader label="Loading..." labelPosition="end" size="larger" />,
-            }}
-            multiple
-            onSearchQueryChange={this.handleSearchQueryChange}
-            onSelectedChange={this.handleSelectedChange}
-            placeholder="Try to enter something..."
-            search
-            searchQuery={searchQuery}
-            toggleIndicator={false}
-            value={value}
-          />
-          <Divider />
-          <CodeSnippet mode="json" value={this.state} />
-        </Segment>
-      </div>
-    )
   }
 }
 
