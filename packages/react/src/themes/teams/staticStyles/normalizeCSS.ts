@@ -29,13 +29,6 @@ body {
 }
 
 /**
- * Consolidate the width and height of the elements
- */
-*, *:after, *:before {
-  box-sizing:border-box;
-}
-
-/**
  * Correct the font size and margin on \`h1\` elements within \`section\` and
  * \`article\` contexts in Chrome, Firefox, and Safari.
  */
