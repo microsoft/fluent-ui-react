@@ -15,7 +15,7 @@ import { constants } from 'src/lib'
 
 type ComponentMenuItem = { displayName: string; type: string }
 
-const pkg = require('../../../../package.json')
+const pkg = require('../../../../packages/react/package.json')
 const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
 const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
 
