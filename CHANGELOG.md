@@ -27,6 +27,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update cached `rem` size value of `pxToRem` on theme static styles render @kuzhelov ([#883](https://github.com/stardust-ui/react/pull/883))
 - Stardust in TS project with `--isolatedModules` can be built @layershifter ([#894](https://github.com/stardust-ui/react/pull/894))
 - Keyframes are behaving as expected when RTL is dynamically switched @layershifter ([#894](https://github.com/stardust-ui/react/pull/894))
+- Fix inserting char at a cursor position will the cursor to end in `Dropdown` @layershifter ([#897](https://github.com/stardust-ui/react/pull/897))
 
 <!--------------------------------[ v0.21.0 ]------------------------------- -->
 ## [v0.21.0](https://github.com/stardust-ui/react/tree/v0.21.0) (2019-02-12)
