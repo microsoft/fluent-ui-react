@@ -29,6 +29,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Keyframes are behaving as expected when RTL is dynamically switched @layershifter ([#894](https://github.com/stardust-ui/react/pull/894))
 - Fix inserting char at a cursor position will the cursor to end in `Dropdown` @layershifter ([#897](https://github.com/stardust-ui/react/pull/897))
 - Replace margins with padding in `chatItemStyles` for Teams theme ([#878](https://github.com/stardust-ui/react/pull/878))
+- Display correctly images in portrait mode inside `Avatar` @layershifter ([#899](https://github.com/stardust-ui/react/pull/899))
 
 <!--------------------------------[ v0.21.0 ]------------------------------- -->
 ## [v0.21.0](https://github.com/stardust-ui/react/tree/v0.21.0) (2019-02-12)
