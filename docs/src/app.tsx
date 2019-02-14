@@ -37,33 +37,20 @@ class App extends React.Component<any, AppState> {
         <Provider
           theme={mergeThemes(themes[themeName], {
             // adjust Teams' theme to Semantic UI's font size scheme
-            siteVariables: {
-              htmlFontSize: '14px',
-              bodyFontSize: '1rem',
-            },
             staticStyles: [
               {
-                h1: {
-                  fontSize: '2rem',
-                  marginTop: '-.14285714em',
+                a: {
+                  textDecoration: 'none',
                 },
                 h2: {
-                  fontSize: '1.71428571rem',
-                  marginTop: 'calc(2rem - 0.142857em)',
-                },
-                a: {
-                  color: '#4183c4',
-                  textDecoration: 'none',
-                  ':hover, :focus': {
-                    color: '#1e70bf',
-                  },
+                  marginTop: 0,
+                  marginBottom: 0,
                 },
                 html: {
                   fontSize: '14px',
                 },
                 body: {
                   fontSize: '1rem',
-                  // fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
                 },
               },
             ],

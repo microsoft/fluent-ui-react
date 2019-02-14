@@ -141,9 +141,6 @@ class Sidebar extends React.Component<any, any> {
     })
 */
 
-  //   return <Menu vertical pills items={menuItems} />
-  // }
-
   render() {
     // Should be applied by provider
     const sidebarStyles: ICSSInJSStyle = {
@@ -231,13 +228,6 @@ class Sidebar extends React.Component<any, any> {
         content: 'Introduction',
         as: NavLink,
         to: '/',
-        accessibility: listItemBehavior,
-      },
-      {
-        key: 'color',
-        content: 'Color Palette',
-        as: NavLink,
-        to: '/color-palette',
         accessibility: listItemBehavior,
       },
       {
@@ -451,24 +441,6 @@ class Sidebar extends React.Component<any, any> {
       <ThemeContext.Consumer>
         {({ themeName, changeTheme }) => (
           <Menu vertical fixed="left" inverted style={{ ...style }}>
-            {process.env.NODE_ENV !== 'production' && (
-              <Menu.Item>
-                <p>Theme:</p>
-                <select
-                  placeholder="Select theme..."
-                  defaultValue={themeName}
-                  onChange={e => {
-                    changeTheme(e.target.value)
-                  }}
-                >
-                  {this.getThemeOptions().map(o => (
-                    <option key={o.value} value={o.value}>
-                      {o.text}
-                    </option>
-                  ))}
-                </select>
-              </Menu.Item>
-            )}
             <Menu.Item active>
               <SemanticUIInput
                 className="transparent inverted icon"

@@ -10,10 +10,8 @@ import ComponentDocLinks from './ComponentDocLinks'
 import ComponentDocSee from './ComponentDocSee'
 import ComponentExamples from './ComponentExamples'
 import ComponentProps from './ComponentProps'
-// import ComponentSidebar from './ComponentSidebar'
 import ComponentAccessibility from './ComponentDocAccessibility'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
-// import felaPluginExtend from 'fela-plugin-extend';
 import ExampleContext from 'docs/src/context/ExampleContext'
 
 const exampleEndStyle: React.CSSProperties = {
@@ -89,7 +87,7 @@ class ComponentDoc extends React.Component<any, any> {
     }
 
     const { info } = this.props
-    const { activePath /*, examplesRef*/ } = this.state
+    const { activePath } = this.state
 
     return (
       <div style={{ paddingLeft: '20px' }}>
@@ -154,14 +152,16 @@ class ComponentDoc extends React.Component<any, any> {
             </div>
           </Flex.Item>
 
-          {/* <Box styles={{ width: '25%', paddingLeft: '14px' }}>
-            <ComponentSidebar
-              activePath={activePath}
-              displayName={info.displayName}
-              examplesRef={examplesRef}
-              onItemClick={this.handleSidebarItemClick}
-            />
-          </Box> */}
+          {/* TODO: bring back the right floating menu
+            <Box styles={{ width: '25%', paddingLeft: '14px' }}>
+              <ComponentSidebar
+                activePath={activePath}
+                displayName={info.displayName}
+                examplesRef={examplesRef}
+                onItemClick={this.handleSidebarItemClick}
+              />
+            </Box>
+          */}
         </Flex>
       </div>
     )

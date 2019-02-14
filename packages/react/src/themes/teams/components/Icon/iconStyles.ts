@@ -32,7 +32,6 @@ const getFontStyles = (
 
   return {
     fontFamily,
-    fontWeight: 900, // required for the fontAwesome to render
     fontSize: sizeInRems,
     lineHeight: 1,
     textAlign: 'center',
@@ -111,6 +110,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
       ...(isFontBased && {
         color: getIconColor(color, v),
+        fontWeight: 900, // required for the fontAwesome to render
 
         ...(disabled && {
           color: v.disabledColor,
