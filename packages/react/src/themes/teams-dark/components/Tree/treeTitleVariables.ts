@@ -2,6 +2,6 @@ import { TreeTitleVariables } from '../../../teams/components/Tree/treeTitleVari
 
 export default (siteVars: any): TreeTitleVariables => {
   return {
-    defaultColor: siteVars.white,
+    defaultColor: siteVars.colors.white,
   }
 }

@@ -31,19 +31,19 @@ export default (siteVars: any): MenuVariables => {
   return {
     color: siteVars.gray02,
 
-    iconOnlyActiveColor: siteVars.brand06,
+    iconOnlyActiveColor: siteVars.colors.primary[500],
 
-    activeColor: siteVars.black,
+    activeColor: siteVars.colors.grey[900],
     activeBackgroundColor: siteVars.gray10,
     focusedBackgroundColor: siteVars.gray14,
     borderColor: siteVars.gray08,
 
-    primaryActiveColor: siteVars.white,
+    primaryActiveColor: siteVars.colors.white,
     primaryActiveBackgroundColor: siteVars.brand08,
-    primaryActiveBorderColor: siteVars.brand,
+    primaryActiveBorderColor: siteVars.colors.primary[500],
 
-    primaryFocusedColor: siteVars.white,
-    primaryFocusedBackgroundColor: siteVars.brand12,
+    primaryFocusedColor: siteVars.colors.white,
+    primaryFocusedBackgroundColor: siteVars.colors.primary[200],
 
     primaryBorderColor: siteVars.brand08,
     primaryHoverBorderColor: siteVars.gray08,

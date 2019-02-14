@@ -43,7 +43,7 @@ class ComposeMessage extends React.Component {
         fluid
         placeholder="Type a message"
         input={{ styles: { height: '3.1429rem' /* 44px */ } }}
-        variables={siteVars => ({ backgroundColor: siteVars.white })}
+        variables={siteVars => ({ backgroundColor: siteVars.colors.white })}
       />
     )
   }

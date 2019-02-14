@@ -130,10 +130,7 @@ task('stats:build:bundle', async () => {
 
 task(
   'stats',
-  series(
-    parallel(series('clean:dist:es', 'build:dist:es'), 'build:docs:component-info'),
-    'stats:build:bundle',
-  ),
+  series(parallel('bundle:all-packages', 'build:docs:component-info'), 'stats:build:bundle'),
 )
 
 function readSummaryPerfStats() {

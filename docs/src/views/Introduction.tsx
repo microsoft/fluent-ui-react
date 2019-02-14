@@ -3,9 +3,8 @@ import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Container, Header, Segment } from 'semantic-ui-react'
 
+import pkg from '../../../packages/react/package.json'
 import Logo from '../components/Logo/Logo'
-
-const pkg = require('package.json')
 
 const Introduction = () => (
   <Container id="introduction-page" text>
