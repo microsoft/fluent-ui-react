@@ -71,6 +71,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
           defaultProps: {
             direction: active ? 'bottom' : 'end',
             styles: styles.indicator,
+            icon: 'triangle-down',
           },
         })}
         main={rtlTextContainer.createFor({ element: content })}
