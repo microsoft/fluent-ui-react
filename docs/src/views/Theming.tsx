@@ -38,7 +38,39 @@ export default () => (
 
     <ExampleSnippet
       render={() => (
-        <Provider theme={{ siteVariables: { brand: 'hotpink' } }}>
+        <Provider
+          theme={{
+            siteVariables: {
+              colors: {
+                white: '#FFF',
+                grey: {
+                  50: '#F2F2F2',
+                  100: '#E6E6E6',
+                  200: '#CCCCCC',
+                  300: '#B3B3B3',
+                  400: '#999999',
+                  500: '#737373',
+                  600: '#666666',
+                  700: '#4D4D4D',
+                  800: '#333333',
+                  900: '#1A1A1A',
+                },
+                primary: {
+                  50: 'white',
+                  100: 'white',
+                  200: 'white',
+                  300: 'pink',
+                  400: 'lightpink',
+                  500: 'hotpink',
+                  600: 'deeppink',
+                  700: 'palevioletred',
+                  800: 'black',
+                  900: 'black',
+                },
+              },
+            },
+          }}
+        >
           <Button primary>Branding</Button>
         </Provider>
       )}
