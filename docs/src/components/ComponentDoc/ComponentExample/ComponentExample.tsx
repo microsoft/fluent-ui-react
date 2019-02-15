@@ -665,30 +665,28 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               renderHtml={showCode}
               resolver={importResolver}
             >
-              <Provider theme={themes[this.getThemeKey(this.props.themeName)]}>
-                <Provider.Consumer
-                  render={({ siteVariables }) => {
-                    return (
-                      <Segment
-                        dir={showRtl ? 'rtl' : undefined}
-                        className={`rendered-example ${this.getKebabExamplePath()}`}
-                        styles={{
-                          padding: '2rem',
-                          color: siteVariables.bodyColor,
-                          backgroundColor: siteVariables.bodyBackground,
-                          ...(showTransparent && {
-                            backgroundImage:
-                              'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                            backgroundRepeat: 'repeat',
-                          }),
-                        }}
-                      >
-                        <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
-                      </Segment>
-                    )
-                  }}
-                />
-              </Provider>
+              <Provider.Consumer
+                render={({ siteVariables }) => {
+                  return (
+                    <Segment
+                      dir={showRtl ? 'rtl' : undefined}
+                      className={`rendered-example ${this.getKebabExamplePath()}`}
+                      styles={{
+                        padding: '2rem',
+                        color: siteVariables.bodyColor,
+                        backgroundColor: siteVariables.bodyBackground,
+                        ...(showTransparent && {
+                          backgroundImage:
+                            'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                          backgroundRepeat: 'repeat',
+                        }),
+                      }}
+                    >
+                      <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
+                    </Segment>
+                  )
+                }}
+              />
               <Segment styles={{ padding: 0 }}>
                 {this.renderSourceCode()}
                 {this.renderError()}
