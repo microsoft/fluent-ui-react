@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 import { Provider, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from 'src/lib'
@@ -17,8 +18,9 @@ class App extends React.Component<any, AppState> {
     super(props)
 
     this.changeTheme = (event, data) => {
+      const themeName = _.camelCase(data.value)
       this.setState({
-        themeName: data.newTheme,
+        themeName,
       })
     }
 
