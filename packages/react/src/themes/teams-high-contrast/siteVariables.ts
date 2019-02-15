@@ -4,6 +4,7 @@ import { colors, naturalColors } from '../teams/siteVariables'
 // COLORS
 //
 export const black = '#000'
+export const white = '#fff'
 
 export const accessibleYellow = '#ffff01'
 export const accessibleGreen = '#3ff23f'
