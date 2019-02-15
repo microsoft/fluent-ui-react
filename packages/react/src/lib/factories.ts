@@ -79,10 +79,19 @@ export function createShorthand(
  * @param {string} mappedProp A function that maps a primitive value to the Component props
  * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
  */
-export function createShorthandFactory<T extends React.ReactType>(
-  Component: T,
-  mappedProp?: keyof PropsOf<T>,
-) {
+export function createShorthandFactory<TStringElement extends keyof JSX.IntrinsicElements>(
+  Component: TStringElement,
+  mappedProp?: keyof PropsOf<TStringElement>,
+)
+export function createShorthandFactory<TFunctionComponent extends React.FunctionComponent>(
+  Component: TFunctionComponent,
+  mappedProp?: keyof PropsOf<TFunctionComponent>,
+)
+export function createShorthandFactory<TInstance extends React.Component>(
+  Component: { new (...args: any[]): TInstance },
+  mappedProp?: keyof PropsOf<TInstance>,
+)
+export function createShorthandFactory(Component: React.ReactType, mappedProp?: string) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthandFactory() Component must be a string or function.')
   }
