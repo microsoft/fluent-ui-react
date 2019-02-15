@@ -4,9 +4,11 @@ import {
   callable,
   UIComponent,
   createShorthandFactory,
+  customPropTypes,
   UIComponentProps,
   commonPropTypes,
   ColorComponentProps,
+  SizeValue,
 } from '../../lib'
 import { iconBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -15,8 +17,6 @@ import { SvgIconSpec } from '../../themes/types'
 import { ReactProps } from '../../types'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
-
-export type IconSize = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
 
 export interface IconProps extends UIComponentProps, ColorComponentProps {
   /**
@@ -41,7 +41,7 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
   rotate?: number
 
   /** Size of the icon. */
-  size?: IconSize
+  size?: SizeValue
 
   /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
   xSpacing?: IconXSpacing
@@ -69,7 +69,7 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
     disabled: PropTypes.bool,
     name: PropTypes.string,
     rotate: PropTypes.number,
-    size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
+    size: customPropTypes.size,
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
   }
 
@@ -96,15 +96,16 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
     classes,
     unhandledProps,
     accessibility,
+    rtl,
   ): React.ReactNode {
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {svgIconDescriptor && callable(svgIconDescriptor)({ classes })}
+        {svgIconDescriptor && callable(svgIconDescriptor)({ classes, rtl })}
       </ElementType>
     )
   }
 
-  public renderComponent({ ElementType, classes, unhandledProps, accessibility, theme }) {
+  public renderComponent({ ElementType, classes, unhandledProps, accessibility, theme, rtl }) {
     const { icons = {} } = theme
 
     const maybeIcon = icons[this.props.name]
@@ -116,6 +117,7 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
           classes,
           unhandledProps,
           accessibility,
+          rtl,
         )
       : this.renderFontIcon(ElementType, classes, unhandledProps, accessibility)
   }

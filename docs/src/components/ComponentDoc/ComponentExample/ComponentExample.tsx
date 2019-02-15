@@ -63,15 +63,15 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   constructor(props) {
     super(props)
 
-    const { examplePath } = props
+    const { examplePath, themeName } = props
 
     this.anchorName = examplePathToHash(examplePath)
     this.state = {
+      themeName,
       handleMouseLeave: this.handleMouseLeave,
       handleMouseMove: this.handleMouseMove,
       knobs: this.getDefaultKnobsValue(),
       showCode: this.isActiveHash(),
-      themeName: 'teams',
       componentVariables: {},
       showRtl: examplePath && examplePath.endsWith('rtl') ? true : false,
       showTransparent: false,
@@ -415,7 +415,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         {({ error }) =>
           error && (
             <Segment size="small" color="red" basic inverted padded secondary>
-              <pre>{error.toString()}</pre>
+              <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
             </Segment>
           )
         }

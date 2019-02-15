@@ -6,7 +6,7 @@ general:
 jobs:
   build:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:8-browsers
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
@@ -51,14 +51,9 @@ jobs:
       - run:
           name: Prettier
           command: yarn prettier
-      # weak package is required for --detectLeaks in Unit tests
-      # it is not in package.json as it would require Python on Windows
-      - run:
-          name: Install weak
-          command: yarn add --dev weak
       - run:
           name: Unit Tests
-          command: yarn test --strict --maxWorkers=4 --detectLeaks
+          command: yarn test --strict --maxWorkers=4
       - run:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)
@@ -79,7 +74,18 @@ jobs:
           command: yarn test:projects
       - run:
           name: Bundle Statistics
-          command: yarn build:stats
+          command: yarn stats:build
+      - run:
+          name: Performance Tests
+          command: yarn perf
+      - run:
+          name: Save Statistics to DB
+          command: |
+            if [ -n "${STATS_URI}" ]; then
+              yarn stats:save --tag=`git tag --points-at`
+            else
+              echo "STATS_URI not set, skipping"
+            fi
       - run:
           name: Danger JS
           command: |
@@ -89,10 +95,9 @@ jobs:
       - run:
           name: Publish npm package
           command: |
-            if [ -n "${npm_TOKEN+x}" ] && [ "${CIRCLE_BRANCH}" == "master" ]; then
+            if [ -n "${npm_TOKEN}" ] && [ "${CIRCLE_BRANCH}" == "master" ]; then
               echo "//registry.npmjs.org/:_authToken=${npm_TOKEN}" > ~/project/.npmrc
-              npm version prerelease --preid="${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}.`git rev-parse --short HEAD`" --no-git-tag-version
-              npm publish --tag current
+              yarn lerna publish --canary --preid "${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}" --yes
             fi
 
   visual:

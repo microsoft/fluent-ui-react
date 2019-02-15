@@ -43,13 +43,13 @@ const getChatMessageEvaluatedStyles = (p: ChatItemProps) => ({
 const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'relative',
-    ...((!p.attached || p.attached === 'top') && { marginTop: pxToRem(16) }),
+    ...((!p.attached || p.attached === 'top') && { paddingTop: pxToRem(16) }),
     ...((p.attached === 'bottom' || p.attached === true) && {
-      marginTop: pxToRem(2),
+      paddingTop: pxToRem(2),
       [chatMessageAuthorClassNameSelector]: screenReaderContainerStyles,
       [chatMessageTimestampClassNameSelector]: screenReaderContainerStyles,
     }),
-    marginBottom: 0,
+    paddingBottom: 0,
   }),
 
   gutter: ({ props: p, variables: v }): ICSSInJSStyle => ({

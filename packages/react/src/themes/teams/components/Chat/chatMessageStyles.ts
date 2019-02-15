@@ -1,12 +1,18 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { ChatMessageProps } from '../../../../components/Chat/ChatMessage'
+import {
+  default as ChatMessage,
+  ChatMessageProps,
+  ChatMessageState,
+} from '../../../../components/Chat/ChatMessage'
 import { ChatMessageVariables } from './chatMessageVariables'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../lib'
 
-const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
+const chatMessageStyles: ComponentSlotStylesInput<
+  ChatMessageProps & ChatMessageState,
+  ChatMessageVariables
+> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    position: 'relative',
     display: 'inline-block',
     paddingLeft: v.padding,
     paddingRight: v.padding,
@@ -17,14 +23,45 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     color: v.color,
     backgroundColor: p.mine ? v.backgroundColorMine : v.backgroundColor,
     maxWidth: v.width,
+    position: 'relative',
     wordBreak: 'break-word',
     wordWrap: 'break-word',
     outline: 0,
-    ...(p.isFromKeyboard && {
-      ':focus': {
-        outline: `.2rem solid ${v.contentFocusOutlineColor}`,
+
+    ...((v.hasMention || v.isImportant) && {
+      '::before': {
+        content: '""',
+        backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
+        height: '100%',
+        left: '0',
+        position: 'absolute',
+        top: '0',
+        width: pxToRem(3),
+        borderBottomLeftRadius: 'inherit',
+        borderTopLeftRadius: 'inherit',
       },
     }),
+
+    ':focus': {
+      ...(p.isFromKeyboard && {
+        outline: `.2rem solid ${v.contentFocusOutlineColor}`,
+      }),
+    },
+    ':hover': {
+      [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
+        opacity: 1,
+      },
+    },
+  }),
+
+  actionMenu: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    backgroundColor: v.backgroundColor,
+    borderRadius: v.borderRadius,
+    boxShadow: v.actionMenuBoxShadow,
+    opacity: p.focused ? 1 : 0,
+    position: 'absolute',
+    right: v.actionMenuPositionRight,
+    top: v.actionMenuPositionTop,
   }),
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -48,6 +85,8 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
   badge: ({ props: p, variables: v }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
     return {
+      backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
+      color: v.badgeTextColor,
       boxShadow: v.badgeShadow,
       position: 'absolute',
       padding: pxToRem(4),

@@ -17,7 +17,6 @@ const items = [
           mine
           badge={{
             icon: 'exclamation',
-            color: 'red',
           }}
           badgePosition="start"
         />
@@ -36,13 +35,12 @@ const items = [
           timestamp="Yesterday, 10:15 PM"
           badge={{
             icon: 'at',
-            color: 'red',
           }}
         />
       ),
     },
     attached: 'top',
-    key: 'message-id-4',
+    key: 'message-id-2',
   },
 ]
 

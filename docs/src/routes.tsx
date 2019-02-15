@@ -78,6 +78,12 @@ const Router = () => (
             path="/icon-viewer"
             component={require('./prototypes/IconViewer/index').default}
           />,
+          <DocsLayout
+            exact
+            key="/important-and-mention-messages"
+            path="/important-and-mention-messages"
+            component={require('./prototypes/ImportantAndMentionMessages/index').default}
+          />,
         ]}
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />

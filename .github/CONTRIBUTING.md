@@ -56,6 +56,7 @@ These guides will walk your through various activities for contributing:
 - [Add a feature](add-a-feature.md)
 - [Test a feature](test-a-feature.md)
 - [Document a feature](document-a-feature.md)
+- [Release a new package version](release-a-package.md)
 
 ## Accessibility
 

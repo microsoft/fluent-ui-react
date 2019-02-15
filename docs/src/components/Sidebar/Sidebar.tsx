@@ -15,7 +15,7 @@ import { constants } from 'src/lib'
 
 type ComponentMenuItem = { displayName: string; type: string }
 
-const pkg = require('../../../../package.json')
+const pkg = require('../../../../packages/react/package.json')
 const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
 const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
 
@@ -225,9 +225,6 @@ class Sidebar extends React.Component<any, any> {
                 <Menu.Item as={NavLink} exact to="/" activeClassName="active">
                   Introduction
                 </Menu.Item>
-                <Menu.Item as={NavLink} exact to="/color-palette" activeClassName="active">
-                  Color Palette
-                </Menu.Item>
                 <Menu.Item as={NavLink} exact to="/shorthand-props" activeClassName="active">
                   Shorthand Props
                 </Menu.Item>
@@ -318,6 +315,17 @@ class Sidebar extends React.Component<any, any> {
                   </Menu.Item>
                   <Menu.Item as={NavLink} exact to="/icon-viewer" activeClassName="active">
                     Processed Icons
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/important-and-mention-messages"
+                    activeClassName="active"
+                  >
+                    Important and mention messages
+                  </Menu.Item>
+                  <Menu.Item as={NavLink} exact to="/color-palette" activeClassName="active">
+                    Color Palette
                   </Menu.Item>
                 </Menu.Menu>
               </Menu.Item>

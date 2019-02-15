@@ -133,7 +133,6 @@ export interface SiteVariablesInput extends ObjectOf<any> {
   contextualColors?: ContextualColors
   emphasisColors?: EmphasisColors
   naturalColors?: NaturalColorsStrict
-  brand?: string
   htmlFontSize?: string
 }
 
@@ -480,6 +479,7 @@ export type FontFaces = FontFace[]
 
 type SvgIconFuncArg = {
   classes: { [iconSlot: string]: string }
+  rtl: boolean
 }
 
 export type SvgIconSpec = ObjectOrFunc<React.ReactNode, SvgIconFuncArg>

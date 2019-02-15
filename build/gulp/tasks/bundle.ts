@@ -2,70 +2,76 @@ import { task, series, parallel, src, dest } from 'gulp'
 import * as merge2 from 'merge2'
 import * as rimraf from 'rimraf'
 import * as webpack from 'webpack'
+import { argv } from 'yargs'
 
 import config from '../../../config'
+import sh from '../sh'
 
 const { paths } = config
 const g = require('gulp-load-plugins')()
 const { log, PluginError } = g.util
 
+const packageName: string = argv.package || 'react'
+
 // ----------------------------------------
 // Clean
 // ----------------------------------------
 
-task('clean:dist:es', cb => {
-  rimraf(`${config.paths.dist()}/es/*`, cb)
+task('bundle:package:clean:es', cb => {
+  rimraf(`${config.paths.packageDist(packageName)}/es/*`, cb)
 })
 
-task('clean:dist:commonjs', cb => {
-  rimraf(`${config.paths.dist()}/commonjs/*`, cb)
+task('bundle:package:clean:commonjs', cb => {
+  rimraf(`${config.paths.packageDist(packageName)}/commonjs/*`, cb)
 })
 
-task('clean:dist:umd', cb => {
-  rimraf(`${config.paths.dist()}/umd/*`, cb)
+task('bundle:package:clean:umd', cb => {
+  rimraf(`${config.paths.packageDist(packageName)}/umd/*`, cb)
 })
 
-task('clean:dist', parallel('clean:dist:es', 'clean:dist:commonjs', 'clean:dist:umd'))
+task(
+  'bundle:package:clean',
+  parallel('bundle:package:clean:es', 'bundle:package:clean:commonjs', 'bundle:package:clean:umd'),
+)
 
 // ----------------------------------------
 // Build
 // ----------------------------------------
-const componentsSrc = [paths.src('**/*.{ts,tsx}'), `!${paths.src('**/umd.ts')}`]
+const componentsSrc = [
+  paths.packageSrc(packageName, '**/*.{ts,tsx}'),
+  `!${paths.packageSrc(packageName, '**/umd.ts')}`,
+]
 
-task('build:dist:commonjs', () => {
+task('bundle:package:commonjs', () => {
   const tsConfig = paths.base('build/tsconfig.commonjs.json')
   const settings = { declaration: true }
-  const typescript = g.typescript.createProject(tsConfig, settings)
 
+  const typescript = g.typescript.createProject(tsConfig, settings)
   const { dts, js } = src(componentsSrc).pipe(typescript())
-  const types = src(paths.base('types/**'))
 
   return merge2([
-    dts.pipe(dest(paths.dist('commonjs'))),
-    js.pipe(dest(paths.dist('commonjs'))),
-    types.pipe(dest(paths.dist('types'))),
+    dts.pipe(dest(paths.packageDist(packageName, 'commonjs'))),
+    js.pipe(dest(paths.packageDist(packageName, 'commonjs'))),
   ])
 })
 
-task('build:dist:es', () => {
+task('bundle:package:es', () => {
   const tsConfig = paths.base('build/tsconfig.es.json')
   const settings = { declaration: true }
-  const typescript = g.typescript.createProject(tsConfig, settings)
 
+  const typescript = g.typescript.createProject(tsConfig, settings)
   const { dts, js } = src(componentsSrc).pipe(typescript())
-  const types = src(paths.base('types/**'))
 
   return merge2([
-    dts.pipe(dest(paths.dist('es'))),
-    js.pipe(dest(paths.dist('es'))),
-    types.pipe(dest(paths.dist('types'))),
+    dts.pipe(dest(paths.packageDist(packageName, 'es'))),
+    js.pipe(dest(paths.packageDist(packageName, 'es'))),
   ])
 })
 
-task('build:dist:umd', cb => {
+task('bundle:package:umd', cb => {
   process.env.NODE_ENV = 'build'
   const webpackUMDConfig = require('../../webpack.config.umd').default
-  const compiler = webpack(webpackUMDConfig)
+  const compiler = webpack(webpackUMDConfig(packageName))
 
   compiler.run((err, stats) => {
     const { errors, warnings } = stats.toJson()
@@ -88,10 +94,14 @@ task('build:dist:umd', cb => {
   })
 })
 
-task('build:dist', parallel('build:dist:commonjs', 'build:dist:es', 'build:dist:umd'))
-
 // ----------------------------------------
 // Default
 // ----------------------------------------
 
-task('dist', series('clean:dist', 'build:dist'))
+task(
+  'bundle:package:no-umd',
+  series('bundle:package:clean', parallel('bundle:package:commonjs', 'bundle:package:es')),
+)
+task('bundle:package', series('bundle:package:no-umd', 'bundle:package:umd'))
+
+task('bundle:all-packages', () => sh('lerna run build'))

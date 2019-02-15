@@ -6,20 +6,22 @@ import {
   EmphasisColors,
   NaturalColors,
   ColorSchemeMapping,
+  PrimitiveColors,
+  ColorScheme,
 } from '../types'
 
 export const emphasisColors: EmphasisColors = {
   primary: {
-    50: '#F4F4FC',
-    100: '#E2E2F6',
-    200: '#BDBDE6',
+    50: '#F4F4FC', // siteVariables.brand16
+    100: '#E2E2F6', // siteVariables.brand14
+    200: '#BDBDE6', // siteVariables.brand12
     300: '#8F90C1',
     400: '#6E70AE',
-    500: '#6264A7',
+    500: '#6264A7', // siteVariables.brand, siteVariables.brand06 (same color?)
     600: '#55578D',
     700: '#4A4C78',
     800: '#414265',
-    900: '#33344A',
+    900: '#33344A', // siteVariables.brand02
   },
 }
 
@@ -34,10 +36,10 @@ export const naturalColors: NaturalColors = {
     600: '#68A584',
     700: '#579A75',
     800: '#458F67',
-    900: '#237B4B',
+    900: '#237B4B', // siteVariables.green04
   },
   grey: {
-    50: '#FFFFFF',
+    50: '#FFFFFF', // siteVariables.white
     100: '#E6E6E6',
     200: '#CDCCCC',
     300: '#B8B8B8',
@@ -46,7 +48,7 @@ export const naturalColors: NaturalColors = {
     600: '#747373',
     700: '#5F5E5E',
     800: '#404040',
-    900: '#252424',
+    900: '#252424', // siteVariables.black
   },
   orange: {
     50: '#FEF9F7',
@@ -82,7 +84,7 @@ export const naturalColors: NaturalColors = {
     600: '#D56B7E',
     700: '#D05B70',
     800: '#CC4B61',
-    900: '#C4314B',
+    900: '#C4314B', // siteVariables.red
   },
   yellow: {
     50: '#FEF5D0',
@@ -94,14 +96,14 @@ export const naturalColors: NaturalColors = {
     600: '#FAE06C',
     700: '#F9DC58',
     800: '#F9D844',
-    900: '#F8D22A',
+    900: '#F8D22A', // siteVariables.yellow
   },
   darkOrange: {
     50: '#F9ECEA',
     100: '#ECBCB3',
     200: '#E29C8F',
     300: '#D97B69',
-    400: '#CC4A31',
+    400: '#CC4A31', // siteVariables.orange04
     500: '#C5472F',
     600: '#B7432D',
     700: '#A73D29',
@@ -118,7 +120,7 @@ export const naturalColors: NaturalColors = {
     600: '#B4D689',
     700: '#ACD17B',
     800: '#A1CC6B',
-    900: '#92C353',
+    900: '#92C353', // siteVariables.green
   },
   magenta: {
     50: '#E8D4E0',
@@ -163,13 +165,28 @@ export const colors: ColorPalette = {
   ...contextualColors,
 
   // Primitive colors
-  black: naturalColors.grey[900],
-  white: naturalColors.grey[50],
+  black: '#000',
+  white: naturalColors.grey[50], // siteVariables.white
 }
 
-export const colorScheme: ColorSchemeMapping = _.mapValues(
-  emphasisAndNaturalColors,
-  (colorVariants, colorName) => {
+const primitiveColorsScheme: Record<keyof PrimitiveColors, ColorScheme> = {
+  black: {
+    foreground: colors.white,
+    border: colors.white,
+    shadow: colors.white,
+    background: colors.black,
+  },
+  white: {
+    foreground: colors.black,
+    border: colors.black,
+    shadow: colors.black,
+    background: colors.white,
+  },
+}
+
+export const colorScheme: ColorSchemeMapping = {
+  ...primitiveColorsScheme,
+  ..._.mapValues(emphasisAndNaturalColors, (colorVariants, colorName) => {
     const foreground = isLightBackground(colorName) ? colors.black : colorVariants[50]
 
     return {
@@ -184,5 +201,5 @@ export const colorScheme: ColorSchemeMapping = _.mapValues(
         background: colors.grey[100],
       },
     }
-  },
-)
+  }),
+}
