@@ -11,6 +11,7 @@ const tableStyles: React.CSSProperties = {
 }
 /**
  * Displays a table of a Component's PropTypes.
+ * TODO: use Flex or a Table component, when it will be available
  */
 const ComponentTable: any = ({ props }) => (
   <table style={tableStyles}>

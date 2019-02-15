@@ -7,7 +7,7 @@ import Router from './routes'
 
 interface AppState {
   themeName: string
-  changeTheme: (newTheme: string) => void
+  changeTheme: (event, data) => void
 }
 
 class App extends React.Component<any, AppState> {
@@ -16,9 +16,9 @@ class App extends React.Component<any, AppState> {
   constructor(props) {
     super(props)
 
-    this.changeTheme = newTheme => {
+    this.changeTheme = (event, data) => {
       this.setState({
-        themeName: newTheme,
+        themeName: data.newTheme,
       })
     }
 

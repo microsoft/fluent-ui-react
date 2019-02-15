@@ -11,7 +11,7 @@ export default (siteVars: any): HeaderVariables => {
   const colorVariant = 500
   return {
     colors: mapColorsToScheme(siteVars, colorVariant),
-    color: siteVars.black,
+    color: siteVars.colors.grey[900],
     descriptionColor: undefined,
   }
 }

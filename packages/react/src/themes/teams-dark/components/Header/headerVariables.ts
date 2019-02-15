@@ -2,7 +2,7 @@ import { HeaderVariables } from '../../../teams/components/Header/headerVariable
 
 export default (siteVars: any): Partial<HeaderVariables> => {
   return {
-    color: siteVars.white,
+    color: siteVars.colors.white,
     descriptionColor: siteVars.gray02,
   }
 }

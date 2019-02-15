@@ -430,7 +430,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     const menuItems = [
       {
-        icon: canCodeBeFormatted ? 'magic' : 'check',
+        icon: canCodeBeFormatted ? 'magic' : 'check', // (error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')
         // active: !!error,
         content: 'Prettier',
         onClick: handleCodeFormat,
@@ -472,19 +472,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         }}
         items={menuItems}
       />
-      /*{ <SourceRender.Consumer>
-          {({ error }) => (
-            <MenuItem
-              icon={(error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')}
-              color={error ? 'red' : undefined}
-              active={!!error}
-              content="Prettier"
-              onClick={handleCodeFormat}
-              styles={(!canCodeBeFormatted ? disabledStyle : undefined) as ICSSInJSStyle}
-            />
-          )}
-        </SourceRender.Consumer> }
-        */
     )
   }
 
@@ -541,10 +528,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     return (
       <SourceRender.Consumer>
-        {a => (
-          <div {...a}>
+        {props => (
+          <div {...props}>
             <Divider fitted />
-            <CodeSnippet fitted label="Rendered HTML" mode="html" value={a.markup} />
+            <CodeSnippet fitted label="Rendered HTML" mode="html" value={props.markup} />
           </div>
         )}
       </SourceRender.Consumer>
@@ -629,21 +616,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showVariables,
     } = this.state
 
-    // const exampleStyle: React.CSSProperties = {
-    //   position: 'relative',
-    //   transition: 'box-shadow 200ms, background 200ms',
-    //   background: '#fff',
-    //   boxShadow: '0 1px 2px #ccc',
-    //   ...(isActive
-    //     ? {
-    //         boxShadow: '0 8px 32px #aaa',
-    //       }
-    //     : isHovering && {
-    //         boxShadow: '0 2px 8px #bbb',
-    //         zIndex: 1,
-    //       }),
-    // }
-
     return (
       <Flex column>
         <Flex.Item>
@@ -690,8 +662,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               knobs={knobs}
               source={currentCode}
               render={this.renderElement}
-              //          renderHtml={showCode}
-              renderHtml
+              renderHtml={showCode}
               resolver={importResolver}
             >
               <Provider theme={themes[this.getThemeKey(this.props.themeName)]}>

@@ -47,6 +47,7 @@ const ColorPalette = () => (
 
           <Grid columns={2}>
             {_.map(['black', 'white'], color => (
+              // TODO:try to use Segment here
               <div key={color}>
                 <ColorBox name={color} rounded size="big" value={colors[color]} />
               </div>
