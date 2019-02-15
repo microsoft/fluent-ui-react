@@ -700,21 +700,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       </Flex>
     )
   }
-
-  private getThemeKey(text: string) {
-    const key = _.find(this.getThemeOptions(), ['text', text])
-    if (key) {
-      return key.value
-    }
-    return 'teams'
-  }
-
-  private getThemeOptions = () => {
-    return Object.keys(themes).map(key => ({
-      text: _.startCase(key),
-      value: key,
-    }))
-  }
 }
 
 const ComponentExampleWithTheme = props => (
