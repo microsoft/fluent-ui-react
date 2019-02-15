@@ -1,21 +1,14 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Header, Segment, ICSSInJSStyle } from '@stardust-ui/react'
+import { Flex, Header } from '@stardust-ui/react'
 
 import pkg from '../../../packages/react/package.json'
 import Logo from '../components/Logo/Logo'
 
-const centerAligned: ICSSInJSStyle = {
-  textAlign: 'center',
-  padding: '14px',
-  backgroundColor: 'transparent',
-  boxShadow: 'none',
-}
-
 const Introduction = () => (
   <div style={{ margin: '0 225px', fontSize: '1.125em', maxWidth: '80ch' }}>
-    <Segment styles={centerAligned}>
+    <Flex column hAlign="center" padding="padding.medium">
       <Logo width="150px" />
       <Header
         as="h1"
@@ -35,7 +28,7 @@ const Introduction = () => (
           {pkg.description}
         </Header.Description>
       </Header>
-    </Segment>
+    </Flex>
     <p>
       Stardust UI provides extensible vanilla JavaScript solutions to component state, styling, and
       accessibility. These powerful features are exposed behind simple APIs based on natural

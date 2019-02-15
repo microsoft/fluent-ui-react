@@ -21,9 +21,7 @@ const pkg = require('../../../../packages/react/package.json')
 const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
 const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
 
-// const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const flexDislayStyle: any = { width: '100%' }
-// const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
 
 class Sidebar extends React.Component<any, any> {
   static propTypes = {
@@ -68,48 +66,48 @@ class Sidebar extends React.Component<any, any> {
     const { query } = this.state
 
     if (query) this.setState({ query: '' })
-    //   if (document.activeElement === this._searchInput) this._searchInput.blur()
+    // TODO: as part of search input re-enabling
+    // if (document.activeElement === this._searchInput) this._searchInput.blur()
   }
 
-  // private renderSearchItems = () => {
-  //   const { selectedItemIndex, query } = this.state
-  //   if (!query) return undefined
+  /* TODO: as part of search input re-enabling
+    private renderSearchItems = () => {
+      const { selectedItemIndex, query } = this.state
+      if (!query) return undefined
 
-  //   let itemIndex = -1
-  //   const startsWithMatches: ComponentMenuItem[] = []
-  //   const containsMatches: ComponentMenuItem[] = []
-  //   const escapedQuery = _.escapeRegExp(query)
+      let itemIndex = -1
+      const startsWithMatches: ComponentMenuItem[] = []
+      const containsMatches: ComponentMenuItem[] = []
+      const escapedQuery = _.escapeRegExp(query)
 
-  /*
-    _.each(componentMenu, info => {
-      if (new RegExp(`^${escapedQuery}`, 'i').test(info.displayName)) {
-        startsWithMatches.push(info)
-      } else if (new RegExp(escapedQuery, 'i').test(info.displayName)) {
-        containsMatches.push(info)
-      }
-    })
+      _.each(componentMenu, info => {
+        if (new RegExp(`^${escapedQuery}`, 'i').test(info.displayName)) {
+          startsWithMatches.push(info)
+        } else if (new RegExp(escapedQuery, 'i').test(info.displayName)) {
+          containsMatches.push(info)
+        }
+      })
 
-    this.filteredMenu = [...startsWithMatches, ...containsMatches]
-    const menuItems = _.map(this.filteredMenu, info => {
-      itemIndex += 1
-      const isSelected = itemIndex === selectedItemIndex
-*/
+      this.filteredMenu = [...startsWithMatches, ...containsMatches]
+      const menuItems = _.map(this.filteredMenu, info => {
+        itemIndex += 1
+        const isSelected = itemIndex === selectedItemIndex
 
-  //     if (isSelected) this.selectedRoute = getComponentPathname(info)
+        if (isSelected) this.selectedRoute = getComponentPathname(info)
 
-  //     return (
-  //       <Menu.Item
-  //         key={info.displayName}
-  //         content={info.displayName}
-  //         onClick={this.handleItemClick}
-  //         active={isSelected}
-  //         as={NavLink}
-  //         to={getComponentPathname(info)}
-  //       />
-  //     )
-  //   }, this.filteredMenu)
+        return (
+          <Menu.Item
+            key={info.displayName}
+            content={info.displayName}
+            onClick={this.handleItemClick}
+            active={isSelected}
+            as={NavLink}
+            to={getComponentPathname(info)}
+          />
+        )
+      }, this.filteredMenu)
 
-  /*     return (
+      return (
         <Menu.Item
           key={info.displayName}
           name={info.displayName}
@@ -431,7 +429,7 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/important-and-mention-messages',
         styles: menuItemStyles,
-        accessiility: listItemBehavior,
+        accessibility: listItemBehavior,
       },
       {
         key: 'colorpalette',

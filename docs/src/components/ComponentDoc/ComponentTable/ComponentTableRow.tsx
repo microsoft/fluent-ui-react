@@ -30,6 +30,7 @@ export default class ComponentTableRow extends React.Component<any, any> {
       borderTopColor: 'grey',
     }
 
+    // TODO: use Flex or a Table component, when it will be available
     return (
       <tr className={hideRow ? 'hidden' : ''} style={rowStyle}>
         <td>
@@ -41,6 +42,14 @@ export default class ComponentTableRow extends React.Component<any, any> {
         <td>{`{${type}}`}</td>
         <td>
           <ComponentPropDescription description={description} />
+          {/* TODO change these according to the react-docgen-typescript generated json */}
+          {/*<ComponentPropFunctionSignature name={name} tags={tags} />*/}
+          {/*<ComponentPropEnum*/}
+          {/*showAll={showEnums}*/}
+          {/*toggle={this.toggleEnums}*/}
+          {/*type={type}*/}
+          {/*values={value}*/}
+          {/*/>*/}
         </td>
       </tr>
     )

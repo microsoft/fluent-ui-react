@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import { neverUpdate } from 'docs/src/hoc'
 
+// TODO: Use Flex or some Table component
 const ComponentPropHeader = () => (
   <th>
     <tr>
