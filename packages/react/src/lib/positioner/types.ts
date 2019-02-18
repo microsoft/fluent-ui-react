@@ -1,4 +1,5 @@
 import PopperJS from 'popper.js'
+import * as React from 'react'
 
 export type Position = 'above' | 'below' | 'before' | 'after'
 export type Alignment = 'top' | 'bottom' | 'start' | 'end' | 'center'

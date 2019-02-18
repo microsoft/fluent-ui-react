@@ -1,6 +1,7 @@
 import config from '../../../../config'
 
-const reactPackageDist = (filePath: string) => config.paths.packageDist('react', 'es', filePath)
+const reactPackageDist = (filePath: string) =>
+  config.paths.packages('react', 'pkg', 'dist-src', filePath)
 
 export const cyclesToSkip = [
   [reactPackageDist('components/Tree/Tree.js'), reactPackageDist('components/Tree/TreeItem.js')],

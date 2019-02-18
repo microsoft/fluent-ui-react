@@ -1,5 +1,6 @@
 import path from 'path'
 import CircularDependencyPlugin from 'circular-dependency-plugin'
+import { webpack as lernaAliases } from 'lerna-alias'
 
 import config from '../../../../config'
 
@@ -44,5 +45,8 @@ export const buildWebpackConfig = ({
       filename: path.basename(outputFilePath),
     },
     plugins,
+    resolve: {
+      alias: lernaAliases({ sourceDirectory: 'pkg/dist-web' }),
+    },
   }
 }

@@ -4,7 +4,16 @@
   "version": "0.31.0",
   "author": "Levi Thomason <me@levithomason.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
+  "@pika/pack": {
+    "pipeline": [
+      ["@pika/plugin-standard-pkg", { "exclude": ["test/**/*", "**/*.md", "**/*.sh"] }],
+      ["@pika/plugin-build-node"],
+      ["@pika/plugin-build-web"],
+      ["@stardust-ui/internal-tooling/pika-plugin-bundle-types"]
+    ]
+  },
   "dependencies": {
+    "@babel/runtime-corejs2": "^7.4.5",
     "@stardust-ui/react-component-event-listener": "^0.31.0",
     "@stardust-ui/react-component-nesting-registry": "^0.31.0",
     "@stardust-ui/react-component-ref": "^0.31.0",
@@ -24,21 +33,14 @@
     "popper.js": "^1.14.6",
     "prop-types": "^15.6.1",
     "react-fela": "^10.2.0",
-    "react-is": "^16.6.3",
-    "tslib": "^1.9.3"
+    "react-is": "^16.6.3"
   },
   "devDependencies": {
     "@stardust-ui/internal-tooling": "^0.31.0",
     "lerna-alias": "^3.0.3-0"
   },
-  "files": [
-    "dist"
-  ],
   "homepage": "https://github.com/stardust-ui/react#readme",
-  "jsnext:main": "dist/es/index.js",
   "license": "MIT",
-  "main": "dist/commonjs/index.js",
-  "module": "dist/es/index.js",
   "peerDependencies": {
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
@@ -48,8 +50,8 @@
   },
   "repository": "stardust-ui/react.git",
   "scripts": {
-    "build": "gulp bundle:package --package react"
+    "build": "cross-env NODE_ENV=production pika-pack build && yarn build:types",
+    "build:types": "tsc -b tsconfig.build.json"
   },
-  "sideEffects": false,
-  "types": "dist/es/index.d.ts"
+  "types": "dist-ts/index.d.ts"
 }

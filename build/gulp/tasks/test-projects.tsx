@@ -51,7 +51,7 @@ const packStardustPackages = async (logger: Function): Promise<PackedPackages> =
   await Promise.all(
     Object.keys(stardustPackages).map(async (packageName: string) => {
       const filename = tmp.tmpNameSync({ prefix: `stardust-`, postfix: '.tgz' })
-      const directory = stardustPackages[packageName]
+      const directory = path.resolve(stardustPackages[packageName], 'pkg')
 
       await runIn(directory)(`yarn pack --filename ${filename}`)
       logger(`✔️Package "${packageName}" was packed to ${filename}`)

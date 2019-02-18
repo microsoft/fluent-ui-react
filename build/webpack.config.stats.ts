@@ -1,5 +1,6 @@
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 import fs from 'fs'
+import { webpack as lernaAliases } from 'lerna-alias'
 import path from 'path'
 import webpack from 'webpack'
 import config from '../config'
@@ -64,6 +65,7 @@ const makeConfig = (srcPath, name) => ({
     new webpack.DefinePlugin(config.compiler_globals),
   ],
   resolve: {
+    alias: lernaAliases({ sourceDirectory: 'pkg/dist-web' }),
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   performance: {

@@ -3,23 +3,25 @@
   "description": "React components for binding events on the global scope.",
   "version": "0.31.0",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
+  "@pika/pack": {
+    "pipeline": [
+      ["@pika/plugin-standard-pkg", { "exclude": ["test/**/*"] }],
+      ["@pika/plugin-build-node"],
+      ["@pika/plugin-build-web"],
+      ["@stardust-ui/internal-tooling/pika-plugin-bundle-types"]
+    ]
+  },
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
-    "prop-types": "^15.6.1",
-    "tslib": "^1.9.3"
+    "@babel/runtime-corejs2": "^7.4.5",
+    "prop-types": "^15.6.1"
   },
   "devDependencies": {
     "@stardust-ui/internal-tooling": "^0.31.0",
     "lerna-alias": "^3.0.3-0"
   },
-  "files": [
-    "dist"
-  ],
   "homepage": "https://github.com/stardust-ui/react/tree/master/packages/react-component-event-listener",
-  "jsnext:main": "dist/es/index.js",
   "license": "MIT",
-  "main": "dist/commonjs/index.js",
-  "module": "dist/es/index.js",
   "peerDependencies": {
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
@@ -29,8 +31,6 @@
   },
   "repository": "stardust-ui/react.git",
   "scripts": {
-    "build": "gulp bundle:package:no-umd --package react-component-event-listener"
-  },
-  "sideEffects": false,
-  "types": "dist/es/index.d.ts"
+    "build": "cross-env NODE_ENV=production pika-pack build"
+  }
 }

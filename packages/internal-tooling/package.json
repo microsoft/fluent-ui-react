@@ -9,11 +9,17 @@
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
+    "@pika/pack": "^0.3.7",
+    "@pika/plugin-build-node": "^0.4.0",
+    "@pika/plugin-build-web": "^0.4.0",
+    "@pika/plugin-standard-pkg": "^0.4.0",
     "@types/jest": "^24.0.11",
     "@types/jest-axe": "^2.2.3",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
     "@typescript-eslint/parser": "^1.6.0",
     "babel-jest": "^24.5.0",
+    "babel-plugin-lodash": "^3.3.4",
+    "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.1.0",
@@ -24,12 +30,16 @@
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-react-hooks": "^1.6.0",
     "jest": "^24.5.0",
-    "jest-axe": "^3.1.1"
+    "jest-axe": "^3.1.1",
+    "rollup": "^1.11.3",
+    "rollup-plugin-dts": "^0.15.1",
+    "typescript": "^3.3.3333"
   },
   "files": [
     "babel",
     "eslint",
-    "jest"
+    "jest",
+    "pika-plugin-bundle-types"
   ],
   "publishConfig": {
     "access": "public"

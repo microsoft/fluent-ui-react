@@ -4,8 +4,9 @@ const { task, series, parallel } = require('gulp')
 const path = require('path')
 const tsPaths = require('tsconfig-paths')
 
-const config = require('./config').default
 const { compilerOptions } = require('./build/tsconfig.docs.json')
+const config = require('./config').default
+const sh = require('./build/gulp/sh').default
 
 // add node_modules/.bin to the path so we can invoke .bin CLIs in tasks
 process.env.PATH =
@@ -16,9 +17,10 @@ tsPaths.register({
   paths: compilerOptions.paths,
 })
 
+task('bundle:all-packages', () => sh('lerna run build'))
+
 // load tasks in order of dependency usage
 require('./build/gulp/tasks/dll')
-require('./build/gulp/tasks/bundle')
 require('./build/gulp/tasks/docs')
 require('./build/gulp/tasks/screener')
 require('./build/gulp/tasks/stats')

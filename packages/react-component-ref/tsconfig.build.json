@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationDir": "pkg/dist-ts",
+    "emitDeclarationOnly": true,
+    "isolatedModules": false,
+    "rootDir": "src"
+  },
+  "include": ["src"],
+  "references": [{ "path": "../react-proptypes/tsconfig.build.json" }]
+}

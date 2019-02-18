@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "pkg/dist-ts",
+    "emitDeclarationOnly": true,
+    "isolatedModules": false
+  },
+  "include": ["src"],
+  "references": [
+    { "path": "../react-component-event-listener/tsconfig.build.json" },
+    { "path": "../react-component-nesting-registry/tsconfig.build.json" },
+    { "path": "../react-component-ref/tsconfig.build.json" },
+    { "path": "../react-proptypes/tsconfig.build.json" }
+  ]
+}
