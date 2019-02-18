@@ -65,7 +65,10 @@ const items = [
           author="Jane Doe"
           timestamp="Yesterday, 10:15 PM"
           badge={{ icon: 'mention' }}
-          variables={siteVars => ({ hasMention: true, hasMentionColor: siteVars.brand })}
+          variables={siteVars => ({
+            hasMention: true,
+            hasMentionColor: siteVars.colors.primary[500],
+          })}
         />
       ),
     },
@@ -81,7 +84,10 @@ const items = [
           timestamp="Yesterday, 10:16 PM"
           mine
           badge={{ icon: 'redbang' }}
-          variables={siteVars => ({ isImportant: true, isImportantColor: siteVars.yellow })}
+          variables={siteVars => ({
+            isImportant: true,
+            isImportantColor: siteVars.colors.yellow[900],
+          })}
         />
       ),
     },

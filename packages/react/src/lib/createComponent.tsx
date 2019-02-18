@@ -18,7 +18,7 @@ export interface CreateComponentConfig<P> {
   render: (config: RenderResultConfig<P>, props: P) => React.ReactNode
 }
 
-export type CreateComponentReturnType<P> = React.SFC<P> & {
+export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
   create: Function
 }
 
