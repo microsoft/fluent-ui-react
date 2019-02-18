@@ -19,6 +19,7 @@ export interface ChatMessageVariables {
   hasMention: boolean
   hasMentionColor: string
   isImportantColor: string
+  badgeTextColor: string
 }
 
 export default (siteVars): ChatMessageVariables => ({
@@ -26,18 +27,19 @@ export default (siteVars): ChatMessageVariables => ({
   actionMenuPositionRight: pxToRem(5),
   actionMenuPositionTop: pxToRem(-30),
   width: '100%',
-  backgroundColor: siteVars.white,
+  backgroundColor: siteVars.colors.white,
   backgroundColorMine: '#E5E5F1',
   borderRadius: pxToRem(3),
   color: 'rgb(64, 64, 64)',
   padding: pxToRem(16),
   authorMarginRight: pxToRem(12),
   headerMarginBottom: pxToRem(2),
-  contentFocusOutlineColor: siteVars.brand,
+  contentFocusOutlineColor: siteVars.colors.primary[500],
   border: 'none',
   badgeShadow: siteVars.shadowLevel1Darker,
   isImportant: false,
   hasMention: false,
-  hasMentionColor: siteVars.orange04,
-  isImportantColor: siteVars.red,
+  hasMentionColor: siteVars.naturalColors.darkOrange[400],
+  isImportantColor: siteVars.colors.red[900],
+  badgeTextColor: siteVars.colors.white,
 })

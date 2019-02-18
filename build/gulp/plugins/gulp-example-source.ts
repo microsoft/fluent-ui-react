@@ -42,15 +42,19 @@ export default () =>
       return
     }
 
-    const sourcePath = getRelativePathToSourceFile(file.path)
-    const source = createExampleSourceCode(file)
+    try {
+      const sourcePath = getRelativePathToSourceFile(file.path)
+      const source = createExampleSourceCode(file)
 
-    const sourceFile = new Vinyl({
-      path: sourcePath,
-      contents: Buffer.from(JSON.stringify(source, null, 2)),
-    })
-    // `gulp-cache` relies on this private entry
-    sourceFile._cachedKey = file._cachedKey
+      const sourceFile = new Vinyl({
+        path: sourcePath,
+        contents: Buffer.from(JSON.stringify(source, null, 2)),
+      })
+      // `gulp-cache` relies on this private entry
+      sourceFile._cachedKey = file._cachedKey
 
-    cb(null, sourceFile)
+      cb(null, sourceFile)
+    } catch (e) {
+      cb(e)
+    }
   })
