@@ -2,6 +2,8 @@ import { TeamsSvgIconSpec } from '../types'
 
 import add from './add'
 import addParticipant from './addParticipant'
+import arrowUp from './arrowUp'
+import arrowDown from './arrowDown'
 import bold from './bold'
 import bookmark from './bookmark'
 import bullets from './bullets'
@@ -14,6 +16,7 @@ import callRecording from './callRecording'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
+import chat from './chat'
 import close from './close'
 import codeSnippet from './codeSnippet'
 import edit from './edit'
@@ -68,6 +71,8 @@ import videoCameraEmphasis from './videoCameraEmphasis'
 
 export default {
   add,
+  'arrow-up': arrowUp,
+  'arrow-down': arrowDown,
   bold,
   bookmark,
   bullets,
@@ -80,6 +85,7 @@ export default {
   'call-control-stop-presenting-new': callControlStopPresentingNew,
   'call-recording': callRecording,
   'canvas-add-page': canvasAddPage,
+  chat,
   close,
   'code-snippet': codeSnippet,
   edit,

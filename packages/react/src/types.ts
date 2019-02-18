@@ -35,14 +35,16 @@ export type ComponentEventHandler<TProps> = (
 ) => void
 
 type ChildrenProps = { children: any }
-export type PropsOf<T> = T extends React.ComponentClass<Extendable<infer TProps>>
+export type PropsOf<T> = T extends React.Component<ReactProps<infer TProps>>
   ? (ChildrenProps & TProps)
-  : T extends React.ComponentClass<infer TProps>
+  : T extends React.Component<infer TProps>
   ? (ChildrenProps & TProps)
-  : T extends React.StatelessComponent<Extendable<infer TProps>>
+  : T extends React.FunctionComponent<ReactProps<infer TProps>>
   ? (ChildrenProps & TProps)
-  : T extends React.StatelessComponent<infer TProps>
+  : T extends React.FunctionComponent<infer TProps>
   ? (ChildrenProps & TProps)
+  : T extends keyof JSX.IntrinsicElements
+  ? JSX.IntrinsicElements[T]
   : any
 
 // ========================================================

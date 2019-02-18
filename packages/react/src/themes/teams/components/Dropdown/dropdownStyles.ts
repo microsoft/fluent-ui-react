@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStyle, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { DropdownProps, DropdownState } from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
 import { pxToRem } from '../../../../lib'
@@ -21,6 +21,24 @@ const transparentColorStyleObj: ICSSInJSStyle = {
   },
 }
 
+const getIndicatorStyles: ComponentSlotStyle<DropdownPropsAndState, DropdownVariables> = ({
+  variables: v,
+}): ICSSInJSStyle => ({
+  alignItems: 'center',
+  display: 'flex',
+  justifyContent: 'center',
+
+  backgroundColor: 'transparent',
+  cursor: 'pointer',
+  userSelect: 'none',
+
+  margin: 0,
+  position: 'absolute',
+  right: pxToRem(5),
+  height: v.toggleIndicatorSize,
+  width: v.toggleIndicatorSize,
+})
+
 const getWidth = (p: DropdownPropsAndState, v: DropdownVariables): string => {
   if (p.fluid) {
     return '100%'
@@ -39,6 +57,8 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
       display: 'inline-flex',
     }),
   }),
+
+  clearIndicator: getIndicatorStyles,
 
   container: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'flex',
@@ -117,19 +137,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     fontWeight: 'bold',
   }),
 
-  toggleIndicator: ({ variables: v }): ICSSInJSStyle => ({
-    position: 'absolute',
-    height: v.toggleIndicatorSize,
-    width: v.toggleIndicatorSize,
-    cursor: 'pointer',
-    backgroundColor: 'transparent',
-    margin: 0,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    userSelect: 'none',
-    right: pxToRem(5),
-  }),
+  toggleIndicator: getIndicatorStyles,
 }
 
 export default dropdownStyles

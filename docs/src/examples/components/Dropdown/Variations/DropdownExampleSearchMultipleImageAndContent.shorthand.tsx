@@ -49,7 +49,7 @@ const inputItems = [
   },
 ]
 
-const DropdownExampleMultipleSearchImageAndContent = () => (
+const DropdownExampleSearchMultipleImageAndContent = () => (
   <Dropdown
     multiple
     search
@@ -65,4 +65,4 @@ const getA11ySelectionMessage = {
   onRemove: item => `${item.header} has been removed.`,
 }
 
-export default DropdownExampleMultipleSearchImageAndContent
+export default DropdownExampleSearchMultipleImageAndContent

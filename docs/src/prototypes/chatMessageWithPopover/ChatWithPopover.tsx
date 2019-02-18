@@ -14,7 +14,7 @@ const ChatWithPopover = () => (
         ChatMessage: {
           root: ({ props: p, theme: { siteVariables } }) => ({
             '& a': {
-              color: siteVariables.brand,
+              color: siteVariables.colors.primary[500],
             },
           }),
         },
