@@ -37,6 +37,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
         <Segment>
           <Header
             as="h1"
+            aria-level="2"
             content={pageTitle}
             description={`Keyboard and Screenreader options for ${match.params.name}s.`}
           />

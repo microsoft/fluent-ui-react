@@ -81,7 +81,7 @@ class DocsLayout extends React.Component<any, any> {
         >
           <Sidebar style={style.menu} />
         </Provider>
-        <div style={mainStyle}>
+        <div style={mainStyle} role="main">
           <Children {...props} />
         </div>
       </div>

@@ -110,7 +110,12 @@ class ComponentDoc extends React.Component<any, any> {
             <>
               <Flex styles={{ justifyContent: 'space-between' }}>
                 <Flex.Item>
-                  <Header as="h1" content={info.displayName} variables={{ color: 'black' }} />
+                  <Header
+                    as="h1"
+                    aria-leve="2"
+                    content={info.displayName}
+                    variables={{ color: 'black' }}
+                  />
                 </Flex.Item>
                 <Flex.Item>
                   <ComponentDocLinks

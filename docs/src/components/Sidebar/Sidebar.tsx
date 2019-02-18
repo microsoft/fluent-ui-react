@@ -1,6 +1,5 @@
 import { Icon, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
-import { listItemBehavior, listBehavior } from '../../../../packages/react/src/lib/accessibility'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
 import keyboardKey from 'keyboard-key'
@@ -195,7 +194,6 @@ class Sidebar extends React.Component<any, any> {
           as: NavLink,
           to: getComponentPathname(info),
           styles: menuItemStyles,
-          accessibility: listItemBehavior,
         }))
         .value()
 
@@ -203,18 +201,6 @@ class Sidebar extends React.Component<any, any> {
     })
 
     const menuItems: ShorthandValue[] = [
-      {
-        key: 'stardust',
-        content: (
-          <>
-            <Logo width="32px" styles={logoStyles} />
-            <Text color="white" content="Stardust UI React &nbsp;" styles={logoStyles} />
-            <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
-          </>
-        ),
-        styles: menuSectionStyles,
-        accessibility: listItemBehavior,
-      },
       {
         key: 'github',
         content: (
@@ -227,7 +213,6 @@ class Sidebar extends React.Component<any, any> {
         target: '_blank',
         rel: 'noopener noreferrer',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'change',
@@ -241,7 +226,6 @@ class Sidebar extends React.Component<any, any> {
         target: '_blank',
         rel: 'noopener noreferrer',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'divider1',
@@ -252,7 +236,7 @@ class Sidebar extends React.Component<any, any> {
         key: 'concepts',
         content: 'Concepts',
         styles: menuSectionStyles,
-        accessibility: listItemBehavior,
+        disabled: true,
       },
       {
         key: 'intro',
@@ -260,7 +244,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'shorthand',
@@ -268,7 +251,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/shorthand-props',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'divider2',
@@ -279,7 +261,7 @@ class Sidebar extends React.Component<any, any> {
         key: 'guides',
         content: 'Guides',
         styles: menuSectionStyles,
-        accessibility: listItemBehavior,
+        disabled: true,
       },
       {
         key: 'quickstart',
@@ -287,7 +269,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/quick-start',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'accessiblity',
@@ -295,7 +276,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/accessibility',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'theming',
@@ -303,7 +283,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/theming',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'theming-examples',
@@ -311,7 +290,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/theming-examples',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'integrate-custom',
@@ -319,7 +297,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/integrate-custom-components',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'divider3',
@@ -347,7 +324,7 @@ class Sidebar extends React.Component<any, any> {
       key: 'prototypes',
       content: 'Prototypes',
       styles: menuSectionStyles,
-      accessibility: listItemBehavior,
+      disabled: true,
     }
 
     const prototypesMenuItems: ShorthandValue[] = [
@@ -357,7 +334,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/prototype-chat-pane',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'chatmessagepopover',
@@ -365,7 +341,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/prototype-chat-message-with-popover',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'asyncdropdown',
@@ -373,7 +348,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/prototype-async-dropdown-search',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'asyncshorthand',
@@ -381,7 +355,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/prototype-async-shorthand',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'employeecard',
@@ -389,7 +362,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/prototype-employee-card',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'meetingoptions',
@@ -397,7 +369,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/prototype-meeting-options',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'searchpage',
@@ -405,7 +376,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/prototype-search-page',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'popups',
@@ -413,7 +383,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/prototype-popups',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'iconviewer',
@@ -421,7 +390,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/icon-viewer',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'importantmentionmessages',
@@ -429,7 +397,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/important-and-mention-messages',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'colorpalette',
@@ -437,7 +404,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/color-palette',
         styles: menuItemStyles,
-        accessibility: listItemBehavior,
       },
       {
         key: 'divider4',
@@ -455,13 +421,13 @@ class Sidebar extends React.Component<any, any> {
       key: 'components',
       content: 'Components',
       styles: menuSectionStyles,
-      accessibility: listItemBehavior,
+      disabled: true,
     }
     const behaviorMenuItem = {
       key: 'behaviour',
       content: 'Behaviors',
       styles: menuSectionStyles,
-      accessibility: listItemBehavior,
+      disabled: true,
     }
 
     const withComponents = withPrototypes.concat(componentMenuItem).concat(menuItemsByType[0].items)
@@ -479,14 +445,20 @@ class Sidebar extends React.Component<any, any> {
       <Segment
         styles={sidebarStyles}
         content={
-          <Menu
-            vertical
-            fluid
-            pills
-            accessibility={listBehavior}
-            styles={navBarStyles}
-            items={allItems}
-          />
+          <>
+            <Segment styles={menuSectionStyles}>
+              <Logo width="32px" styles={logoStyles} />
+              <Text
+                role="heading"
+                aria-level="1"
+                color="white"
+                content="Stardust UI React &nbsp;"
+                styles={logoStyles}
+              />
+              <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
+            </Segment>
+            <Menu vertical fluid pills styles={navBarStyles} items={allItems} />
+          </>
         }
       />
     )
