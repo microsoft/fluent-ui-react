@@ -59,7 +59,7 @@ export default (siteVars: any): MenuVariables => {
 
     horizontalPadding: `${pxToRem(14)} ${pxToRem(18)} ${pxToRem(14)} ${pxToRem(18)}`,
 
-    verticalMenuBackgroundColor: siteVars.white,
+    verticalMenuBackgroundColor: siteVars.colors.white,
     verticalMenuItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
     verticalMenuBoxShadow: siteVars.shadowLevel3,
   }

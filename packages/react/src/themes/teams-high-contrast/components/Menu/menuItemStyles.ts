@@ -6,14 +6,19 @@ type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
   wrapper: ({ props, variables }): ICSSInJSStyle => {
-    const { iconOnly, isFromKeyboard } = props
+    const { iconOnly, isFromKeyboard, vertical, active } = props
 
     return {
-      ...(iconOnly && {
+      ...((iconOnly || vertical) && {
         // focus styles
         ...(isFromKeyboard && {
           color: variables.activeColor,
           background: variables.activeBackgroundColor,
+        }),
+
+        ...(active && {
+          color: variables.activeColor,
+          background: variables.selectedBackgroundColor,
         }),
 
         // hover styles
