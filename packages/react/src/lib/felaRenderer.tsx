@@ -8,7 +8,7 @@ import rtl from 'fela-plugin-rtl'
 import { Renderer } from '../themes/types'
 
 const createRendererConfig = (options: any = {}) => ({
-  devMode: process.env.NODE_ENV !== 'production',
+  devMode: false, // process.env.NODE_ENV !== 'production',
   plugins: [
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
