@@ -2,7 +2,7 @@
 import 'mdn-polyfills/Object.assign'
 import 'mdn-polyfills/String.prototype.includes'
 
-import * as customPropTypes from './customPropTypes'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as commonPropTypes from './commonPropTypes'
 
 export { default as AutoControlledComponent } from './AutoControlledComponent'
