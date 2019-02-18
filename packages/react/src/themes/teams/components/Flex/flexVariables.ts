@@ -8,6 +8,7 @@ export type FlexVariables = GapValues & PaddingValues
 
 export default (): FlexVariables => ({
   // GAP VALUES
+  'gap.list.item': pxToRem(8),
   'gap.small': pxToRem(10),
   'gap.medium': pxToRem(15),
   'gap.large': pxToRem(30),
