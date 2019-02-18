@@ -156,7 +156,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
       {(theme: ThemePrepared) => {
         if (_.isEmpty(theme)) {
           if (className !== 'ui-provider') {
-            // FIXME
+            // Provider does not need to be wrapped a Provider
             logProviderMissingWarning()
           }
         }
