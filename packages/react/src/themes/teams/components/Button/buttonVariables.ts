@@ -65,6 +65,7 @@ export interface ButtonVariables {
   textSecondaryColorHover: string
 
   boxShadow: string
+  borderRadiusFocused: string
 }
 
 export default (siteVars: any): ButtonVariables => {
@@ -132,5 +133,6 @@ export default (siteVars: any): ButtonVariables => {
     textSecondaryColorHover: siteVars.brand04,
 
     boxShadow: siteVars.shadowLevel1,
+    borderRadiusFocused: pxToRem(3),
   }
 }
