@@ -76,7 +76,7 @@ export default () => (
             componentStyles: {
               StyledButton: {
                 root: ({ props, variables, theme: { siteVariables } }) => ({
-                  backgroundColor: siteVariables.brand,
+                  backgroundColor: siteVariables.colors.primary[500],
                   color: variables.color,
                 }),
               },
