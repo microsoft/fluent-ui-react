@@ -1,3 +1,4 @@
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as React from 'react'
 import { PopperChildrenProps } from 'react-popper'
 import * as PropTypes from 'prop-types'
@@ -18,7 +19,6 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ComponentEventHandler } from '../../types'
 import Box from '../Box/Box'
-import Ref from '../Ref/Ref'
 
 export interface PopupContentProps
   extends UIComponentProps,

@@ -1,17 +1,17 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import handleRef from '../../lib/handleRef'
+import handleRef from './handleRef'
 
-export interface RefForwardProps extends ChildrenComponentProps<React.ReactElement<any>> {
+export interface RefForwardProps {
+  children: React.ReactElement<any>
+
   /**
    * Called when a child component will be mounted or updated.
    *
    * @param {HTMLElement} node - Referred node.
    */
-  innerRef: React.Ref<any>
+  innerRef?: React.Ref<any>
 }
 
 export default class RefForward extends React.Component<RefForwardProps> {
@@ -19,7 +19,7 @@ export default class RefForward extends React.Component<RefForwardProps> {
 
   static propTypes = {
     children: PropTypes.element.isRequired,
-    innerRef: customPropTypes.ref,
+    innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]) as PropTypes.Requireable<any>,
   }
 
   private handleRefOverride = (node: HTMLElement) => {

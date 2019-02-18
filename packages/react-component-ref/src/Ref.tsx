@@ -1,27 +1,26 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { isForwardRef } from 'react-is'
+import * as ReactIs from 'react-is'
 
-import { ChildrenComponentProps } from '../../lib'
-import { ReactProps } from '../../types'
 import RefFindNode from './RefFindNode'
 import RefForward from './RefForward'
 
-export interface RefProps extends ChildrenComponentProps<React.ReactElement<any>> {
+export interface RefProps {
+  children: React.ReactElement<any>
+
   /**
    * Called when a child component will be mounted or updated.
    *
    * @param {HTMLElement} node - Referred node.
    */
-  innerRef: React.Ref<any>
+  innerRef?: React.Ref<any>
 }
 
-const Ref: React.FunctionComponent<ReactProps<RefProps>> = props => {
+const Ref: React.FC<RefProps> = props => {
   const { children, innerRef } = props
 
   const child = React.Children.only(children)
-  const ElementType = isForwardRef(child) ? RefForward : RefFindNode
+  const ElementType = ReactIs.isForwardRef(child) ? RefForward : RefFindNode
 
   return <ElementType innerRef={innerRef}>{child}</ElementType>
 }
@@ -29,7 +28,7 @@ const Ref: React.FunctionComponent<ReactProps<RefProps>> = props => {
 Ref.displayName = 'Ref'
 Ref.propTypes = {
   children: PropTypes.element.isRequired,
-  innerRef: customPropTypes.ref.isRequired as PropTypes.Validator<React.Ref<any>>,
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]) as PropTypes.Requireable<any>,
 }
 
 export default Ref

@@ -1,3 +1,4 @@
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -10,7 +11,6 @@ import { createShorthandFactory, UIComponent, RenderResultConfig, commonPropType
 import Icon, { IconProps } from '../Icon/Icon'
 import Image from '../Image/Image'
 import Label from '../Label/Label'
-import Ref from '../Ref/Ref'
 import Box from '../Box/Box'
 
 export interface DropdownSelectedItemSlotClassNames {

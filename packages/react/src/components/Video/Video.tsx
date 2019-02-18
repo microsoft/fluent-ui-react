@@ -1,3 +1,4 @@
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -5,7 +6,6 @@ import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes 
 
 import { ReactProps } from '../../types'
 import { defaultBehavior } from '../../lib/accessibility'
-import Ref from '../Ref/Ref'
 
 export interface VideoProps extends UIComponentProps {
   /** Whether the video should start playing when rendered. Autoplay videos must be muted or they will not play immediately in certain browers like Chrome. */
