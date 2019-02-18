@@ -1,17 +1,17 @@
 import * as React from 'react'
-import { Table } from 'semantic-ui-react'
 
 import { neverUpdate } from 'docs/src/hoc'
 
+// TODO: use Flex or a Table component, when it will be available
 const ComponentTableHeader = () => (
-  <Table.Header>
-    <Table.Row>
-      <Table.HeaderCell>Name</Table.HeaderCell>
-      <Table.HeaderCell>Default</Table.HeaderCell>
-      <Table.HeaderCell>Type</Table.HeaderCell>
-      <Table.HeaderCell>Description</Table.HeaderCell>
-    </Table.Row>
-  </Table.Header>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Default</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
 )
 
 export default neverUpdate(ComponentTableHeader)
