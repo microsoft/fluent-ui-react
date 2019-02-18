@@ -34,6 +34,7 @@ import italic from './italic'
 import leave from './leave'
 import like from './like'
 import link from './link'
+import lock from './lock'
 import markAsUnread from './markAsUnread'
 import meetingNew from './meetingNew'
 import mention from './mention'
@@ -102,6 +103,7 @@ export default {
   leave,
   like,
   link,
+  lock,
   'mark-as-unread': markAsUnread,
   'meeting-new': meetingNew,
   mention,
