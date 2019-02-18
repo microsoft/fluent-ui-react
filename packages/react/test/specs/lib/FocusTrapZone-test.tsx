@@ -1,7 +1,6 @@
 import * as React from 'react'
 import * as ReactTestUtils from 'react-dom/test-utils'
 import * as keyboardKey from 'keyboard-key'
-import { mount } from 'enzyme'
 
 import {
   FocusTrapZone,
