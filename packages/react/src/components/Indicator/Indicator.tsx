@@ -74,6 +74,6 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
   }
 }
 
-Indicator.create = createShorthandFactory(Indicator, 'hex')
+Indicator.create = createShorthandFactory(Indicator)
 
 export default Indicator
