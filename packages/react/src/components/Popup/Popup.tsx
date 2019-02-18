@@ -112,7 +112,7 @@ export interface PopupProps
   trigger?: JSX.Element
 
   /** Ref for Popup content DOM node. */
-  popupRef?: React.Ref<HTMLElement>
+  contentRef?: React.Ref<HTMLElement>
 }
 
 export interface PopupState {
@@ -154,7 +154,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     renderContent: PropTypes.func,
     target: PropTypes.any,
     trigger: PropTypes.any,
-    popupRef: customPropTypes.ref,
+    contentRef: customPropTypes.ref,
   }
 
   public static defaultProps: PopupProps = {
@@ -434,7 +434,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
     { ref, scheduleUpdate, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
-    const { content: propsContent, renderContent, popupRef } = this.props
+    const { content: propsContent, renderContent, contentRef } = this.props
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
 
     const popupWrapperAttributes = {
@@ -470,7 +470,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         innerRef={domElement => {
           ref(domElement)
           this.popupDomElement = domElement
-          handleRef(popupRef, domElement)
+          handleRef(contentRef, domElement)
         }}
       >
         {accessibility.focusTrap ? (
