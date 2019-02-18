@@ -5,10 +5,10 @@
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
+    "@babel/runtime": "^7.1.2",
     "object.values": "^1.1.0",
     "prismjs": "^1.16.0",
-    "prop-types": "^15.6.1",
-    "tslib": "^1.9.3"
+    "prop-types": "^15.6.1"
   },
   "files": [
     "dist"
