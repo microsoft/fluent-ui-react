@@ -9,6 +9,11 @@ const AvatarExampleImageCustomizationShorthand = () => (
     />
     &emsp;
     <Avatar
+      image="public/images/avatar/large/jerry.png"
+      status={{ color: 'green', icon: 'check', title: 'Available' }}
+    />
+    &emsp;
+    <Avatar
       image={
         // This example does not react to the avatar size variable
         // and otherwise produces bad results when border is applied compared to "normal" image
