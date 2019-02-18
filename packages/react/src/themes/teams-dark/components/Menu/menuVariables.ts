@@ -1,15 +1,8 @@
-export interface MenuVariables {
-  color: string
+import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
 
-  verticalMenuBackgroundColor: string
-  verticalMenuBoxShadow: string,
-}
-
-export default (siteVars: any): MenuVariables => {
-  return {
+export default (siteVars: any): Partial<MenuVariables> => ({
     color: siteVars.white,
 
     verticalMenuBackgroundColor: 'red',
     verticalMenuBoxShadow: siteVars.shadowLevel3,
-  }
-}
+})
