@@ -66,7 +66,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       textPrimaryColor,
       textPrimaryColorHover,
       boxShadow,
-      focusedBorderRadius,
+      borderRadiusFocused,
     } = variables
 
     return {
@@ -112,7 +112,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
               borderWidth: pxToRem(borderWidth),
               borderStyle: 'solid',
               borderColor: borderColorFocusIndicator,
-              borderRadius: focusedBorderRadius,
+              borderRadius: borderRadiusFocused,
             },
           },
         }),
@@ -218,7 +218,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
                   borderWidth: pxToRem(primaryBorderWidth),
                   borderStyle: 'solid',
                   borderColor: primaryBorderColorFocusIndicator,
-                  borderRadius: focusedBorderRadius,
+                  borderRadius: borderRadiusFocused,
                 },
               },
             }),
