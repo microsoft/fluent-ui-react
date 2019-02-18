@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as ReactTestUtils from 'react-dom/test-utils'
 import * as keyboardKey from 'keyboard-key'
+import { mount } from 'enzyme'
+
 import {
   FocusTrapZone,
   FocusZone,
@@ -91,6 +93,27 @@ describe('FocusTrapZone', () => {
 
   beforeEach(() => {
     lastFocusedElement = undefined
+  })
+
+  it('Sets aria-hidden to elements outside focus trap zone, except aria-live regions', () => {
+    mount(
+      <>
+        <div className="should-be-hidden" />
+        <div className="should-be-visible" aria-live="polite" />
+        <FocusTrapZone className="focus-trap-zone">
+          <button className="x">x</button>
+        </FocusTrapZone>
+      </>,
+      { attachTo: document.body },
+    )
+
+    const shouldBeHiddenDiv = document.querySelector('.should-be-hidden')
+    const shouldBeVisible = document.querySelector('.should-be-visible')
+    const focusTrapZone = document.querySelector('.focus-trap-zone')
+
+    expect(shouldBeHiddenDiv.getAttribute('aria-hidden')).toBe('true')
+    expect(shouldBeVisible.getAttribute('aria-hidden')).toBe(null)
+    expect(focusTrapZone.getAttribute('aria-hidden')).toBe(null)
   })
 
   describe('Tab and shift-tab wrap at extreme ends of the FTZ', () => {
