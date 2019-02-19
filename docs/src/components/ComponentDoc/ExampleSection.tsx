@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Grid, Header } from 'semantic-ui-react'
+import { Flex, Grid, Header } from '@stardust-ui/react'
 
 import { Extendable } from 'src/types'
 
@@ -10,23 +10,23 @@ const headerStyle: React.CSSProperties = {
   textTransform: 'uppercase',
 }
 
-const sectionStyle: React.CSSProperties = {
-  paddingBottom: '5em',
-}
-
 export type ExampleSectionProps = Extendable<{
   title: string
 }>
 
 const ExampleSection: React.FC<ExampleSectionProps> = ({ title, children, ...restProps }) => (
-  <Grid padded style={sectionStyle} {...restProps}>
-    <Grid.Column>
-      <Header as="h2" style={headerStyle} className="no-anchor">
-        {title}
-      </Header>
-      {children}
-    </Grid.Column>
-  </Grid>
+  <Flex column>
+    <Flex.Item>
+      <>
+        <Header as="h2" styles={headerStyle} className="no-anchor">
+          {title}
+        </Header>
+        <Grid variables={{ gridGap: '2rem' }} columns="1">
+          {children}
+        </Grid>
+      </>
+    </Flex.Item>
+  </Flex>
 )
 
 export default ExampleSection
