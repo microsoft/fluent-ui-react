@@ -478,6 +478,7 @@ export class Parser {
 
     if (statementIsStateless(statement)) {
       let propMap = {}
+
       ; (statement as ts.ExpressionStatement).getChildren().forEach(child => {
         const { right } = child as ts.BinaryExpression
         if (right) {
