@@ -77,7 +77,14 @@ const items = [
     indicator: false,
     menu: {
       items: [
-        { key: '1', content: 'item1' },
+        {
+          key: '1',
+          content: 'item1',
+          icon: {
+            name: 'read-aloud',
+            variables: { outline: true },
+          },
+        },
         {
           key: '2',
           content: 'item2',
@@ -90,6 +97,10 @@ const items = [
         {
           key: '3',
           content: 'item3',
+          icon: {
+            name: 'link',
+            variables: { outline: true },
+          },
           menu: { items: [{ key: '1', content: 'item3.1' }, { key: '2', content: 'item3.2' }] },
         },
       ],
