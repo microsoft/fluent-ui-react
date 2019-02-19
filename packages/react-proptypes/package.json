@@ -9,7 +9,7 @@
     "prop-types": "^15.6.1"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "homepage": "https://github.com/stardust-ui/react/tree/master/packages/react-proptypes",
   "jsnext:main": "dist/es/index.js",
