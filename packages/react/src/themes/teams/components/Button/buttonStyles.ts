@@ -66,6 +66,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       textPrimaryColor,
       textPrimaryColorHover,
       boxShadow,
+      borderRadiusFocused,
     } = variables
 
     return {
@@ -87,8 +88,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       // rectangular button defaults
       ...(!text && {
         outline: 0,
-        borderRadius: '2px',
-        borderWidth: `${pxToRem(borderWidth)}`,
+        borderWidth: pxToRem(borderWidth),
         borderStyle: 'solid',
         borderColor,
         boxShadow,
@@ -109,10 +109,10 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
               right: `-${pxToRem(borderWidth * 2)}`,
               bottom: `-${pxToRem(borderWidth * 2)}`,
               left: `-${pxToRem(borderWidth * 2)}`,
-              borderWidth: `${pxToRem(borderWidth)}`,
+              borderWidth: pxToRem(borderWidth),
               borderStyle: 'solid',
-              borderColor: `${borderColorFocusIndicator}`,
-              borderRadius: '3px',
+              borderColor: borderColorFocusIndicator,
+              borderRadius: borderRadiusFocused,
             },
           },
         }),
@@ -215,10 +215,10 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
                   right: `-${pxToRem(primaryBorderWidth * 2)}`,
                   bottom: `-${pxToRem(primaryBorderWidth * 2)}`,
                   left: `-${pxToRem(primaryBorderWidth * 2)}`,
-                  borderWidth: `${pxToRem(primaryBorderWidth)}`,
+                  borderWidth: pxToRem(primaryBorderWidth),
                   borderStyle: 'solid',
-                  borderColor: `${primaryBorderColorFocusIndicator}`,
-                  borderRadius: '3px',
+                  borderColor: primaryBorderColorFocusIndicator,
+                  borderRadius: borderRadiusFocused,
                 },
               },
             }),
@@ -235,9 +235,9 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
                   right: '0',
                   bottom: '0',
                   left: '0',
-                  borderWidth: `${pxToRem(primaryBorderWidth)}`,
+                  borderWidth: pxToRem(primaryBorderWidth),
                   borderStyle: 'solid',
-                  borderColor: `${primaryCircularBorderColorFocusIndicator}`,
+                  borderColor: primaryCircularBorderColorFocusIndicator,
                   borderRadius: circularRadius,
                 },
               },
@@ -279,10 +279,12 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
     }
   },
 
-  content: () => ({
+  // modifies the text of the button
+  content: ({ variables }): ICSSInJSStyle => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
+    fontWeight: variables.contentFontWeight,
   }),
 }
 
