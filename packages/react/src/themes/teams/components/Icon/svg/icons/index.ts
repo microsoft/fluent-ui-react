@@ -31,7 +31,6 @@ import giphy from './giphy'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
 import indent from './indent'
-import inputInvalid from './inputInvalid'
 import italic from './italic'
 import leave from './leave'
 import like from './like'
@@ -103,7 +102,6 @@ export default {
   highlight,
   'horizontal-rule': horizontalRule,
   indent,
-  'input-invalid': inputInvalid,
   italic,
   leave,
   like,

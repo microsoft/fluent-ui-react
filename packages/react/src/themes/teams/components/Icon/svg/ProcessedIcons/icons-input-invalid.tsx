@@ -9,5 +9,4 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAS: 'input-invalid',
 } as TeamsProcessedSvgIconSpec
