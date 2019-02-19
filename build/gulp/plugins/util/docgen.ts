@@ -201,11 +201,11 @@ export class Parser {
     source: ts.SourceFile,
     componentNameResolver: ComponentNameResolver = () => undefined,
   ): ComponentDoc | null {
-    let exp = symbolParam
-
-    if (!!exp.declarations && exp.declarations.length === 0) {
+    if (!!symbolParam.declarations && symbolParam.declarations.length === 0) {
       return null
     }
+
+    let exp = symbolParam
 
     const type = this.checker.getTypeOfSymbolAtLocation(
       exp,
