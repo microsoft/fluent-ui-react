@@ -10,13 +10,14 @@ import {
 
 type MenuPropsAndState = MenuProps & MenuState
 
-const solidBorder = (color: string) => ({
-  border: `1px solid ${color}`,
-})
-
 export default {
   root: ({ props, variables }): ICSSInJSStyle => {
     const { iconOnly, fluid, pointing, pills, primary, underlined, vertical } = props
+
+    const solidBorder = (color: string) => ({
+      border: `${variables.menuBorderWidth} solid ${color}`,
+    })
+
     return {
       display: 'flex',
       minHeight: pxToRem(24),

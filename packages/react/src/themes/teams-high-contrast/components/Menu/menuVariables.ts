@@ -1,3 +1,5 @@
+import { pxToRem } from '../../../../lib'
+
 export interface MenuVariables {
   color: string
   activeColor: string
@@ -5,6 +7,8 @@ export interface MenuVariables {
   selectedBackgroundColor: string
 
   verticalMenuBackgroundColor: string,
+  menuDividerHeight: string,
+  menuBorderWidth: string,
 }
 
 export default (siteVars: any): MenuVariables => {
@@ -15,5 +19,8 @@ export default (siteVars: any): MenuVariables => {
     selectedBackgroundColor: siteVars.accessibleCyan,
 
     verticalMenuBackgroundColor: siteVars.colors.black,
+
+    menuDividerHeight: pxToRem(2),
+    menuBorderWidth: pxToRem(2),
   }
 }

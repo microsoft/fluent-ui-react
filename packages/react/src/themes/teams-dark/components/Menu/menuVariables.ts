@@ -1,3 +1,4 @@
+import { pxToRem } from '../../../../lib'
 import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
 
 export default (siteVars: any): Partial<MenuVariables> => ({
@@ -6,7 +7,7 @@ export default (siteVars: any): Partial<MenuVariables> => ({
     activeColor: siteVars.colors.white,
     activeBackgroundColor: siteVars.gray10,
     focusedBackgroundColor: siteVars.gray14,
-    borderColor: siteVars.gray08,
+    borderColor: siteVars.black,
 
     primaryActiveColor: siteVars.colors.white,
     primaryActiveBackgroundColor: siteVars.brand08,
@@ -15,6 +16,9 @@ export default (siteVars: any): Partial<MenuVariables> => ({
     primaryFocusedColor: siteVars.white,
     primaryFocusedBackgroundColor: siteVars.brand12,
 
-    verticalMenuBackgroundColor: siteVars.colors.black,
+    verticalMenuBackgroundColor: siteVars.gray10,
     verticalMenuBoxShadow: siteVars.shadowLevel3,
+
+    menuDividerHeight: pxToRem(2),
+    menuBorderWidth: pxToRem(2),
 })

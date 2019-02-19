@@ -30,6 +30,9 @@ export interface MenuVariables {
   verticalMenuBackgroundColor: string
   verticalMenuItemPadding: string,
   verticalMenuBoxShadow: string,
+
+  menuDividerHeight: string
+  menuBorderWidth: string,
 }
 
 export default (siteVars: any): MenuVariables => {
@@ -62,5 +65,8 @@ export default (siteVars: any): MenuVariables => {
     verticalMenuBackgroundColor: siteVars.colors.white,
     verticalMenuItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
     verticalMenuBoxShadow: siteVars.shadowLevel3,
+
+    menuDividerHeight: pxToRem(1),
+    menuBorderWidth: pxToRem(1),
   }
 }
