@@ -2,12 +2,13 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
-import { Provider, Dropdown, DropdownProps, Input, themes } from '@stardust-ui/react'
+import { Dropdown, DropdownProps, Input } from '@stardust-ui/react'
 
 import { atMentionItems, AtMention } from './dataMocks'
 import { insertNodeAtCursorPosition, removeElement } from './utils'
 
 interface InputWithDropdownState {
+  dropdownOpen?: boolean
   dropdownValue?: string
   searchQuery?: string
 }
@@ -22,63 +23,69 @@ class InputWithDropdownExample extends React.Component<{}, InputWithDropdownStat
     outline: 0,
   }
 
-  private dropdownExists = false
   private contendEditableRef = React.createRef<HTMLDivElement>()
 
   public state: InputWithDropdownState = {
+    dropdownOpen: false,
     dropdownValue: null,
     searchQuery: '',
   }
 
   render() {
     return (
-      <div
-        contentEditable
-        ref={this.contendEditableRef}
-        onKeyUp={this.handleEditorKeyUp}
-        style={this.editorStyle}
-      />
+      <>
+        <div
+          contentEditable
+          ref={this.contendEditableRef}
+          onKeyUp={this.handleEditorKeyUp}
+          style={this.editorStyle}
+        />
+        {this.renderDropdown()}
+      </>
     )
   }
 
-  private showDropdown = () => {
-    this.dropdownExists = true
-    insertNodeAtCursorPosition({ id: this.mountNodeId })
+  private renderDropdown = () => {
+    if (!this.state.dropdownOpen) {
+      return null
+    }
 
+    insertNodeAtCursorPosition({ id: this.mountNodeId })
     const node = this.getMountNode()
-    ReactDOM.render(
-      <Provider theme={themes.teams}>
-        <Dropdown
-          defaultOpen={true}
-          inline
-          search
-          items={atMentionItems}
-          toggleIndicator={null}
-          searchInput={{
-            input: { autoFocus: true },
-            onInputKeyDown: this.handleInputKeyDown,
-          }}
-          onSelectedChange={this.handleSelectedChange}
-          onSearchQueryChange={this.handleSearchQueryChange}
-          noResultsMessage="We couldn't find any matches."
-        />
-      </Provider>,
+
+    if (!node) {
+      return null
+    }
+
+    return ReactDOM.createPortal(
+      <Dropdown
+        defaultOpen={true}
+        inline
+        search
+        items={atMentionItems}
+        toggleIndicator={null}
+        searchInput={{
+          input: { autoFocus: true },
+          onInputKeyDown: this.handleInputKeyDown,
+        }}
+        onSelectedChange={this.handleSelectedChange}
+        onSearchQueryChange={this.handleSearchQueryChange}
+        noResultsMessage="We couldn't find any matches."
+      />,
       node,
     )
   }
 
   private hideDropdownAndRestoreEditor = () => {
-    const node = this.getMountNode()
-    ReactDOM.unmountComponentAtNode(node)
-    removeElement(node)
+    removeElement(this.getMountNode())
 
     this.tryFocusEditor()
-    this.dropdownExists = false
+    this.setState({ dropdownOpen: false })
   }
 
   private handleEditorKeyUp = (e: React.KeyboardEvent) => {
-    if (!this.dropdownExists && keyboardKey.getCode(e) === keyboardKey.AtSign) {
-      this.showDropdown()
+    if (!this.state.dropdownOpen && keyboardKey.getCode(e) === keyboardKey.AtSign) {
+      this.setState({ dropdownOpen: true })
       this.setInputElementSize(0)
     }
   }
