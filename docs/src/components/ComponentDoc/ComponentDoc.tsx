@@ -112,7 +112,7 @@ class ComponentDoc extends React.Component<any, any> {
                 <Flex.Item>
                   <Header
                     as="h1"
-                    aria-leve="2"
+                    aria-level="2"
                     content={info.displayName}
                     variables={{ color: 'black' }}
                   />
