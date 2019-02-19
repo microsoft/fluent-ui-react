@@ -3,6 +3,8 @@ import * as React from 'react'
 import Image from '../Image/Image'
 import Label from '../Label/Label'
 import Status, { StatusProps } from '../Status/Status'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
 import {
   createShorthandFactory,
@@ -14,6 +16,12 @@ import {
 } from '../../lib'
 
 export interface AvatarProps extends UIComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** Shorthand for the image. */
   image?: ShorthandValue
 
@@ -48,6 +56,7 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
       children: false,
       content: false,
     }),
+    accessibility: customPropTypes.accessibility,
     name: PropTypes.string,
     image: customPropTypes.itemShorthand,
     label: customPropTypes.itemShorthand,
@@ -57,6 +66,7 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
   }
 
   static defaultProps = {
+    accessibility: defaultBehavior,
     size: 'medium',
     getInitials(name: string) {
       if (!name) {
@@ -81,11 +91,11 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
     },
   } as AvatarProps
 
-  renderComponent({ ElementType, classes, unhandledProps, styles, variables }) {
+  renderComponent({ accessibility, ElementType, classes, unhandledProps, styles, variables }) {
     const { name, status, image, label, getInitials, size } = this.props as AvatarProps
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
         {Image.create(image, {
           defaultProps: {
             fluid: true,

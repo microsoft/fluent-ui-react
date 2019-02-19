@@ -104,7 +104,7 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
         }),
       ),
     ]),
-    accessibility: PropTypes.func,
+    accessibility: customPropTypes.accessibility,
 
     renderPanelTitle: PropTypes.func,
     renderPanelContent: PropTypes.func,

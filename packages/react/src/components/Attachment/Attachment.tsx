@@ -75,7 +75,7 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentStat
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: PropTypes.func,
+    accessibility: customPropTypes.accessibility,
     action: customPropTypes.itemShorthand,
     actionable: PropTypes.bool,
     description: customPropTypes.itemShorthand,

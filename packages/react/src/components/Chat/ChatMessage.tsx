@@ -96,7 +96,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
 
   static propTypes = {
     ...commonPropTypes.createCommon({ content: 'shorthand' }),
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: customPropTypes.accessibility,
     actionMenu: customPropTypes.itemShorthand,
     author: customPropTypes.itemShorthand,
     badge: customPropTypes.itemShorthand,

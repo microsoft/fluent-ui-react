@@ -39,7 +39,7 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: customPropTypes.accessibility,
     items: PropTypes.arrayOf(customPropTypes.itemShorthand),
   }
 

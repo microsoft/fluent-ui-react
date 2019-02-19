@@ -11,6 +11,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   rtlTextContainer,
+  customPropTypes,
 } from '../../lib'
 import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -42,7 +43,7 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
-    accessibility: PropTypes.func,
+    accessibility: customPropTypes.accessibility,
     open: PropTypes.bool,
     hasSubtree: PropTypes.bool,
   }

@@ -13,12 +13,20 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import Button from './Button'
 
 export interface ButtonGroupProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** The buttons contained inside the ButtonGroup. */
   buttons?: ShorthandValue[]
 
@@ -36,12 +44,13 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
 
   public static propTypes = {
     ...commonPropTypes.createCommon(),
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: customPropTypes.accessibility,
     buttons: customPropTypes.collectionShorthand,
     circular: PropTypes.bool,
   }
 
   public static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'div',
   }
 

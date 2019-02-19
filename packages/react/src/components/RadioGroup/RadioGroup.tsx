@@ -61,7 +61,7 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: customPropTypes.accessibility,
     checkedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     defaultCheckedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     items: customPropTypes.collectionShorthand,

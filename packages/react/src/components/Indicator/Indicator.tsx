@@ -8,10 +8,18 @@ import {
   commonPropTypes,
   customPropTypes,
 } from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
 import Icon from '../Icon/Icon'
 
 export interface IndicatorProps extends UIComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** The indicator can point towards different directions. */
   direction?: 'start' | 'end' | 'top' | 'bottom'
 
@@ -38,22 +46,24 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ children: false, content: false }),
+    accessibility: customPropTypes.accessibility,
     direction: PropTypes.oneOf(['start', 'end', 'top', 'bottom']),
     icon: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'span',
     direction: 'bottom',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, rtl }) {
+  renderComponent({ accessibility, ElementType, classes, unhandledProps, rtl }) {
     const { direction, icon, color } = this.props
     const hexUnicode =
       direction && Indicator.directionMap[this.getDirectionBasedOnRtl(rtl, direction)].unicode
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
         {icon
           ? Icon.create(icon, {
               defaultProps: { color },

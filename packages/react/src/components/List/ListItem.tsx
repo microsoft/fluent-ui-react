@@ -8,6 +8,7 @@ import {
   commonPropTypes,
   ContentComponentProps,
   isFromKeyboard,
+  customPropTypes,
 } from '../../lib'
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
@@ -92,7 +93,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
 
-    accessibility: PropTypes.func,
+    accessibility: customPropTypes.accessibility,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
   }

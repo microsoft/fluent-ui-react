@@ -10,14 +10,23 @@ import {
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
+  customPropTypes,
 } from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps } from '../../types'
 
 export interface HeaderDescriptionProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps,
-    ColorComponentProps {}
+    ColorComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+}
 
 /**
  * A header's description provides more detailed information.
@@ -31,17 +40,20 @@ class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, 
 
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),
+    accessibility: customPropTypes.accessibility,
   }
 
   static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'p',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  renderComponent({ accessibility, ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
     return (
       <ElementType
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...accessibility.attributes.root}
         {...unhandledProps}
         className={classes.root}
       >

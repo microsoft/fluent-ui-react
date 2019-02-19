@@ -13,6 +13,8 @@ import {
   commonPropTypes,
   handleRef,
 } from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
@@ -23,6 +25,12 @@ export interface InputSlotClassNames {
 }
 
 export interface InputProps extends UIComponentProps, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** A property that will change the icon on the input and clear the input on click on Cancel. */
   clearable?: boolean
 
@@ -90,6 +98,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
     ...commonPropTypes.createCommon({
       content: false,
     }),
+    accessibility: customPropTypes.accessibility,
     clearable: PropTypes.bool,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fluid: PropTypes.bool,
@@ -105,6 +114,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
   }
 
   static defaultProps = {
+    accessibility: defaultBehavior,
     type: 'text',
     wrapper: {},
     iconPosition: 'end',
@@ -113,6 +123,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
   static autoControlledProps = ['value']
 
   renderComponent({
+    accessibility,
     ElementType,
     classes,
     unhandledProps,
@@ -125,6 +136,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
 
     return Box.create(wrapper, {
       defaultProps: {
+        ...accessibility.attributes.root,
         className: cx(Input.className, className),
         children: (
           <>

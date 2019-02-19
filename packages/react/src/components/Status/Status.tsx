@@ -10,9 +10,17 @@ import {
   commonPropTypes,
   SizeValue,
 } from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
 
 export interface StatusProps extends UIComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** A custom color. */
   color?: string
 
@@ -41,6 +49,7 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
       children: false,
       content: false,
     }),
+    accessibility: customPropTypes.accessibility,
     color: PropTypes.string,
     icon: customPropTypes.itemShorthand,
     size: customPropTypes.size,
@@ -48,15 +57,16 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
   }
 
   static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'span',
     size: 'medium',
     state: 'unknown',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, variables, styles }) {
+  renderComponent({ accessibility, ElementType, classes, unhandledProps, variables, styles }) {
     const { icon } = this.props as StatusProps
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
         {Icon.create(icon, {
           defaultProps: {
             size: 'smallest',

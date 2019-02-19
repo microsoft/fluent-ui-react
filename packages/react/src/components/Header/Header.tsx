@@ -14,6 +14,8 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import HeaderDescription from './HeaderDescription'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
 
 export interface HeaderProps
@@ -21,6 +23,12 @@ export interface HeaderProps
     ChildrenComponentProps,
     ContentComponentProps,
     ColorComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** Shorthand for Header.Description. */
   description?: ShorthandValue
 
@@ -47,18 +55,20 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),
+    accessibility: customPropTypes.accessibility,
     description: customPropTypes.itemShorthand,
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
     rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'h1',
   }
 
   static Description = HeaderDescription
 
-  renderComponent({ ElementType, classes, variables: v, unhandledProps }) {
+  renderComponent({ accessibility, ElementType, classes, variables: v, unhandledProps }) {
     const { children, description, content } = this.props
 
     const hasChildren = childrenExist(children)
@@ -70,6 +80,7 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
           forElements: [children, content],
           condition: !description,
         })}
+        {...accessibility.attributes.root}
         {...unhandledProps}
         className={classes.root}
       >

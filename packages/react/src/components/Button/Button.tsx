@@ -106,7 +106,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     text: PropTypes.bool,
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
-    accessibility: PropTypes.func,
+    accessibility: customPropTypes.accessibility,
   }
 
   public static defaultProps = {

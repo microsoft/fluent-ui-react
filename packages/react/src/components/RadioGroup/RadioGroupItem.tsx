@@ -108,7 +108,7 @@ class RadioGroupItem extends AutoControlledComponent<
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: customPropTypes.accessibility,
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,

@@ -50,7 +50,7 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: PropTypes.func,
+    accessibility: customPropTypes.accessibility,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
     rtlAttributes: PropTypes.func,

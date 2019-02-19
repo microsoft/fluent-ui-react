@@ -8,7 +8,10 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  customPropTypes,
 } from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
 import Box from '../Box/Box'
 
@@ -16,6 +19,12 @@ export interface SegmentProps
   extends UIComponentProps<SegmentProps>,
     ChildrenComponentProps,
     ContentComponentProps<ShorthandValue> {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** A segment can have its colors inverted for contrast. */
   inverted?: boolean
 }
@@ -32,20 +41,23 @@ class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
     }),
+    accessibility: customPropTypes.accessibility,
     inverted: PropTypes.bool,
     rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'div',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  renderComponent({ accessibility, ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
 
     return (
       <ElementType
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...accessibility.attributes.root}
         {...unhandledProps}
         className={classes.root}
       >

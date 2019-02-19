@@ -12,13 +12,22 @@ import {
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  customPropTypes,
 } from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ComponentEventHandler } from '../../types'
 
 export interface PopupContentProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /**
    * Called after user's mouse enter.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
@@ -47,8 +56,13 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
 
   public static propTypes = {
     ...commonPropTypes.createCommon(),
+    accessibility: customPropTypes.accessibility,
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
+  }
+
+  static defaultProps = {
+    accessibility: defaultBehavior,
   }
 
   private handleMouseEnter = e => {
@@ -60,6 +74,7 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
   }
 
   public renderComponent({
+    accessibility,
     ElementType,
     classes,
     unhandledProps,
@@ -70,6 +85,7 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
       <ElementType
         className={classes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...accessibility.attributes.root}
         {...unhandledProps}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
