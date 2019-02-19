@@ -296,14 +296,15 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
       )
     }
 
-    for (const currentChild of bodyChildren as HTMLElement[]) {
+    for (let index = 0; index < bodyChildren.length; index++) {
+      const currentChild = bodyChildren[index] as HTMLElement
       const isOrHasFocusTrapZone =
         currentChild === this._root.current || currentChild.contains(this._root.current)
-      const isNotAriaLiveRegion = !currentChild.hasAttribute('aria-live')
+      const isAriaLiveRegion = currentChild.hasAttribute('aria-live')
 
       if (
         !isOrHasFocusTrapZone &&
-        isNotAriaLiveRegion &&
+        !isAriaLiveRegion &&
         currentChild.getAttribute('aria-hidden') !== 'true'
       ) {
         currentChild.setAttribute('aria-hidden', 'true')
