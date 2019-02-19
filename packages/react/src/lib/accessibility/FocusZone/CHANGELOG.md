@@ -55,7 +55,7 @@ This is a list of changes made to the Stardust copy of FocusTrapZone in comparis
 
 ### fixes
 - Do not focus trigger on outside click @sophieH29 ([#627](https://github.com/stardust-ui/react/pull/627))
-
+- Do not hide aria-live regions from accessibility tree @sophieH29 ([#917](https://github.com/stardust-ui/react/pull/917))
 ### features
 - Add focus trap zone [#239](https://github.com/stardust-ui/react/pull/239)
     - Used Stardust utils instead of Fabric utilities:
