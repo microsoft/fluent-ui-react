@@ -3,11 +3,22 @@ import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
-import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
-import { Provider, themes, ThemeInput, ThemePrepared } from '@stardust-ui/react'
+
+import {
+  Divider,
+  Flex,
+  Form,
+  Input,
+  Menu,
+  Segment,
+  Provider,
+  themes,
+  Grid,
+  ICSSInJSStyle,
+} from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
-import { callable, pxToRem, constants } from 'src/lib'
+import { callable, constants, pxToRem } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
 import ExampleContext, { ExampleContextValue } from 'docs/src/context/ExampleContext'
@@ -16,8 +27,9 @@ import ComponentExampleTitle from './ComponentExampleTitle'
 import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager'
-import { mergeThemeVariables } from 'src/lib/mergeThemes'
-import { ThemeContext } from '../../../context/ThemeContext'
+import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
+import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
+import { ThemeContext } from 'docs/src/context/ThemeContext'
 import CodeSnippet from '../../CodeSnippet'
 
 export interface ComponentExampleProps
@@ -46,10 +58,9 @@ interface ComponentExampleState {
 
 const childrenStyle: React.CSSProperties = {
   paddingTop: 0,
+  paddingBottom: '10px',
   maxWidth: pxToRem(500),
 }
-
-const disabledStyle = { opacity: 0.5, pointerEvents: 'none' }
 
 /**
  * Renders a `component` and the raw `code` that produced it.
@@ -60,6 +71,41 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   kebabExamplePath: string
   KnobsComponent: any
 
+  /*
+  state = {
+    knobs: {},
+    themeName: 'teams',
+    componentVariables: {},
+    handleMouseLeave: _.noop,
+    handleMouseMove: _.noop,
+    showCode: false,
+    showRtl: false,
+    showTransparent: false,
+    showVariables: false,
+    isHovering: false,
+    copiedCode: false,
+  }
+
+  static contextTypes = {
+    onPassed: PropTypes.func,
+  }
+
+  static propTypes = {
+    children: PropTypes.node,
+    description: PropTypes.node,
+    examplePath: PropTypes.string.isRequired,
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
+    title: PropTypes.node,
+    themeName: PropTypes.string,
+    exampleTheme: PropTypes.string,
+  }
+
+  componentWillMount() {
+    const { examplePath } = this.props
+    this.anchorName = examplePathToHash(examplePath)
+*/
   constructor(props) {
     super(props)
 
@@ -281,42 +327,65 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }
   }
 
+  exampleMenuVariables = {
+    primaryActiveBackgroundColor: 'transparent',
+    primaryActiveBorderColor: 'white',
+    primaryActiveColor: 'white',
+    primaryBorderColor: 'white',
+    activeColor: 'white',
+    disabledColor: '#ffffff80',
+    color: '#ffffff80',
+  }
+
   renderAPIsMenu = (): JSX.Element => {
     const { componentAPIs, currentCodeAPI } = this.props
-    const menuItems = _.map(componentAPIs, ({ name, supported }, type) => (
-      <Menu.Item
-        active={currentCodeAPI === type}
-        content={
-          <span>
-            {name}
-            {!supported && <em> (not supported)</em>}
-          </span>
-        }
-        disabled={!supported}
-        key={type}
-        onClick={this.handleCodeApiChange(type)}
-      />
-    ))
+    const menuItems = _.map(componentAPIs, ({ name, supported }, type) => ({
+      active: currentCodeAPI === type,
+      content: (
+        <span>
+          {name}
+          {!supported && <em> (not supported)</em>}
+        </span>
+      ),
+      disabled: !supported,
+      key: type,
+      onClick: this.handleCodeApiChange(type),
+    }))
 
-    return <Menu.Menu>{menuItems}</Menu.Menu>
+    return (
+      <Menu
+        primary
+        underlined
+        items={menuItems}
+        variables={this.exampleMenuVariables}
+        styles={{ borderBottom: 0 }}
+      />
+    )
   }
 
   renderLanguagesMenu = (): JSX.Element => {
     const { currentCodeLanguage } = this.props
+    const menuItems = [
+      {
+        active: currentCodeLanguage === 'js',
+        content: 'JavaScript',
+        onClick: this.handleCodeLanguageChange('js'),
+      },
+      {
+        active: currentCodeLanguage === 'ts',
+        content: 'TypeScript',
+        onClick: this.handleCodeLanguageChange('ts'),
+      },
+    ]
 
     return (
-      <Menu.Menu position="right">
-        <Menu.Item
-          active={currentCodeLanguage === 'js'}
-          content="JavaScript"
-          onClick={this.handleCodeLanguageChange('js')}
-        />
-        <Menu.Item
-          active={currentCodeLanguage === 'ts'}
-          content="TypeScript"
-          onClick={this.handleCodeLanguageChange('ts')}
-        />
-      </Menu.Menu>
+      <Menu
+        primary
+        underlined
+        items={menuItems}
+        variables={this.exampleMenuVariables}
+        styles={{ borderBottom: 0 }}
+      />
     )
   }
 
@@ -330,6 +399,25 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     } = this.props
     const { copiedCode } = this.state
 
+    const codeEditorStyle: ICSSInJSStyle = {
+      position: 'relative',
+      margin: '0 0 0 .5rem',
+      top: '2px',
+      border: '0',
+      paddingTop: '.5rem',
+      float: 'right',
+      color: '#ffffff80',
+      borderBottom: 0,
+      ':hover': {
+        borderBottom: 0,
+        color: 'white',
+      },
+      ':focus': {
+        borderBottom: 0,
+        color: 'white',
+      },
+    }
+
     // get component name from file path:
     // elements/Button/Types/ButtonButtonExample
     const pathParts = currentCodePath.split(__PATH_SEP__)
@@ -340,42 +428,50 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       `?message=docs(${filename}): your description`,
     ].join('')
 
+    const menuItems = [
+      {
+        icon: canCodeBeFormatted ? 'magic' : 'check', // (error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')
+        // active: !!error,
+        content: 'Prettier',
+        onClick: handleCodeFormat,
+        disabled: !canCodeBeFormatted,
+      },
+      {
+        icon: 'refresh',
+        content: 'Reset',
+        onClick: this.resetSourceCode,
+        disabled: !wasCodeChanged,
+      },
+      {
+        active: copiedCode, // to show the color
+        icon: copiedCode ? { color: 'green', name: 'check' } : 'copy',
+        content: 'Copy',
+        onClick: this.copySourceCode,
+      },
+      {
+        disabled: currentCodeLanguage !== 'ts',
+        icon: 'github',
+        content: 'Edit',
+        href: ghEditHref,
+        rel: 'noopener noreferrer',
+        target: '_blank',
+        key: 'withtslanguage',
+      },
+    ]
+
     return (
-      <Menu size="small" secondary inverted floated="right" text>
-        <SourceRender.Consumer>
-          {({ error }) => (
-            <Menu.Item
-              icon={(error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')}
-              color={error ? 'red' : undefined}
-              active={!!error}
-              content="Prettier"
-              onClick={handleCodeFormat}
-              style={!canCodeBeFormatted ? disabledStyle : undefined}
-            />
-          )}
-        </SourceRender.Consumer>
-        <Menu.Item
-          style={!wasCodeChanged ? disabledStyle : undefined}
-          icon="refresh"
-          content="Reset"
-          onClick={this.resetSourceCode}
-        />
-        <Menu.Item
-          active={copiedCode} // to show the color
-          icon={copiedCode ? { color: 'green', name: 'check' } : 'copy'}
-          content="Copy"
-          onClick={this.copySourceCode}
-        />
-        {currentCodeLanguage === 'ts' && (
-          <Menu.Item
-            style={{ border: 'none' }}
-            icon="github"
-            content="Edit"
-            href={ghEditHref}
-            target="_blank"
-          />
-        )}
-      </Menu>
+      <Menu
+        size="small"
+        primary
+        underlined
+        styles={codeEditorStyle}
+        variables={{
+          activeColor: 'white',
+          disabledColor: '#ffffff80',
+          color: '#ffffff80',
+        }}
+        items={menuItems}
+      />
     )
   }
 
@@ -396,7 +492,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             } as React.CSSProperties
           }
         >
-          <Menu attached="top" size="small" inverted secondary pointing>
+          <Menu
+            size="small"
+            styles={{ display: 'flex', justifyContent: 'space-between', border: 'none' }}
+          >
             {this.renderAPIsMenu()}
             {this.renderLanguagesMenu()}
           </Menu>
@@ -414,7 +513,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       <SourceRender.Consumer>
         {({ error }) =>
           error && (
-            <Segment size="small" color="red" basic inverted padded secondary>
+            <Segment inverted color="red" size="small">
               <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
             </Segment>
           )
@@ -429,10 +528,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     return (
       <SourceRender.Consumer>
-        {({ markup }) => (
-          <div>
-            <Divider inverted fitted />
-            <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup} />
+        {props => (
+          <div {...props}>
+            <Divider fitted />
+            <CodeSnippet fitted label="Rendered HTML" mode="html" value={props.markup} />
           </div>
         )}
       </SourceRender.Consumer>
@@ -446,8 +545,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const displayName = this.getDisplayName()
 
     return (
-      <div>
-        <Divider inverted horizontal>
+      <div style={{ background: 'white' } as React.CSSProperties}>
+        <Divider>
           <span style={{ opacity: 0.5 }}>Theme</span>
         </Divider>
         <Provider.Consumer
@@ -458,32 +557,29 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             const variables = mergedVariables[displayName]
 
             if (!variables) {
-              return (
-                <Segment size="small" inverted padded basic>
-                  {displayName} has no variables to edit.
-                </Segment>
-              )
+              return <Segment inverted>{displayName} has no variables to edit.</Segment>
             }
 
             const variablesObject = callable(variables)(siteVariables)
 
+            const items: any[] = []
+
             return (
-              <Form inverted widths="equal" style={{ padding: '1rem' }}>
-                {_.chunk(_.toPairs(variablesObject), 2).map(fields => {
-                  return (
-                    <Form.Group widths="equal" key={fields.map(([key]) => key).join('-')}>
-                      {fields.map(([key, val]) => (
-                        <Form.Input
-                          fluid
-                          key={key}
-                          label={key}
-                          defaultValue={val}
-                          onChange={this.handleVariableChange(displayName, key)}
-                        />
-                      ))}
-                    </Form.Group>
+              <Form styles={{ padding: '1rem' }}>
+                {_.toPairs(variablesObject).forEach((pair, key) => {
+                  items.push(
+                    <Form.Field
+                      key={pair[0]}
+                      label={pair[0]}
+                      control={{
+                        as: Input,
+                        defaultValue: pair[1],
+                        onChange: this.handleVariableChange(displayName, pair[0]),
+                      }}
+                    />,
                   )
                 })}
+                <Grid columns="4" content={items} />
               </Form>
             )
           }}
@@ -513,7 +609,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const {
       handleMouseLeave,
       handleMouseMove,
-      isHovering,
       knobs,
       showCode,
       showRtl,
@@ -521,106 +616,88 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showVariables,
     } = this.state
 
-    const isActive = this.isActiveHash() || this.isActiveState()
-    const exampleStyle: React.CSSProperties = {
-      position: 'relative',
-      transition: 'box-shadow 200ms, background 200ms',
-      background: '#fff',
-      boxShadow: '0 1px 2px #ccc',
-      ...(isActive
-        ? {
-            boxShadow: '0 8px 32px #aaa',
-          }
-        : isHovering && {
-            boxShadow: '0 2px 8px #bbb',
-            zIndex: 1,
-          }),
-    }
-
     return (
-      <Visibility once={false} onTopPassed={this.handlePass} onTopPassedReverse={this.handlePass}>
-        {/* Ensure anchor links don't occlude card shadow effect */}
-        <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
-        <Grid
-          className="docs-example"
-          onMouseLeave={handleMouseLeave}
-          onMouseMove={handleMouseMove}
-          style={exampleStyle}
-        >
-          <Grid.Column width={16} style={{ borderBottom: '1px solid #ddd' }}>
-            <div style={{ display: 'flex' }}>
-              <div style={{ flex: '1' }}>
-                <ComponentExampleTitle description={description} title={title} />
-              </div>
-              <div style={{ flex: '0 0 auto' }}>
-                <ComponentControls
-                  anchorName={this.anchorName}
-                  exampleCode={currentCode}
-                  exampleLanguage={currentCodeLanguage}
-                  examplePath={currentCodePath}
-                  onShowCode={this.handleShowCodeClick}
-                  onCopyLink={this.handleDirectLinkClick}
-                  onShowRtl={this.handleShowRtlClick}
-                  onShowVariables={this.handleShowVariablesClick}
-                  onShowTransparent={this.handleShowTransparentClick}
-                  showCode={showCode}
-                  showRtl={showRtl}
-                  showTransparent={showTransparent}
-                  showVariables={showVariables}
-                  visible
-                />
-              </div>
-            </div>
-            {this.renderKnobs()}
-          </Grid.Column>
+      <Flex column>
+        <Flex.Item>
+          <>
+            {/* Ensure anchor links don't occlude card shadow effect */}
+            {/* <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} /> */}
 
-          {children && (
-            <Grid.Column width={16} style={childrenStyle}>
-              {children}
-            </Grid.Column>
-          )}
+            <Segment
+              width={19}
+              styles={{ borderBottom: '1px solid #ddd' }}
+              onMouseLeave={handleMouseLeave}
+              onMouseMove={handleMouseMove}
+            >
+              <div style={{ display: 'flex' }}>
+                <div style={{ flex: '1' }}>
+                  <ComponentExampleTitle description={description} title={title} />
+                </div>
+                <div style={{ flex: '0 0 auto' }}>
+                  <ComponentControls
+                    anchorName={this.anchorName}
+                    exampleCode={currentCode}
+                    exampleLanguage={currentCodeLanguage}
+                    examplePath={currentCodePath}
+                    onShowCode={this.handleShowCodeClick}
+                    onCopyLink={this.handleDirectLinkClick}
+                    onShowRtl={this.handleShowRtlClick}
+                    onShowVariables={this.handleShowVariablesClick}
+                    onShowTransparent={this.handleShowTransparentClick}
+                    showCode={showCode}
+                    showRtl={showRtl}
+                    showTransparent={showTransparent}
+                    showVariables={showVariables}
+                    visible
+                  />
+                </div>
+              </div>
+              {this.renderKnobs()}
+            </Segment>
 
-          <SourceRender
-            babelConfig={babelConfig}
-            knobs={knobs}
-            source={currentCode}
-            render={this.renderElement}
-            renderHtml={showCode}
-            resolver={importResolver}
-          >
-            <Provider.Consumer
-              render={({ siteVariables }) => {
-                return (
-                  <Grid.Column
-                    width={16}
-                    dir={showRtl ? 'rtl' : undefined}
-                    className={`rendered-example ${this.getKebabExamplePath()}`}
-                    style={{
-                      padding: '2rem',
-                      color: siteVariables.bodyColor,
-                      backgroundColor: siteVariables.bodyBackground,
-                      ...(showTransparent && {
-                        backgroundImage:
-                          'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                        backgroundRepeat: 'repeat',
-                      }),
-                    }}
-                  >
-                    <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
-                  </Grid.Column>
-                )
-              }}
-            />
-            <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
-              {this.renderSourceCode()}
-              {this.renderError()}
-              {this.renderHTML()}
-              {this.renderVariables()}
-            </Grid.Column>
-          </SourceRender>
-        </Grid>
-        <Divider section horizontal />
-      </Visibility>
+            {children && <Segment styles={childrenStyle}>{children}</Segment>}
+
+            <SourceRender
+              babelConfig={babelConfig}
+              knobs={knobs}
+              source={currentCode}
+              render={this.renderElement}
+              renderHtml={showCode}
+              resolver={importResolver}
+            >
+              <Provider.Consumer
+                render={({ siteVariables }) => {
+                  return (
+                    <Segment
+                      dir={showRtl ? 'rtl' : undefined}
+                      className={`rendered-example ${this.getKebabExamplePath()}`}
+                      styles={{
+                        padding: '2rem',
+                        color: siteVariables.bodyColor,
+                        backgroundColor: siteVariables.bodyBackground,
+                        ...(showTransparent && {
+                          backgroundImage:
+                            'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                          backgroundRepeat: 'repeat',
+                        }),
+                      }}
+                    >
+                      <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
+                    </Segment>
+                  )
+                }}
+              />
+              <Segment styles={{ padding: 0 }}>
+                {this.renderSourceCode()}
+                {this.renderError()}
+                {this.renderHTML()}
+                {this.renderVariables()}
+              </Segment>
+              <div style={{ paddingBottom: '10px' }} />
+            </SourceRender>
+          </>
+        </Flex.Item>
+      </Flex>
     )
   }
 }

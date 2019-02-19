@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Icon, Popup } from 'semantic-ui-react'
+import { Icon, Popup } from '@stardust-ui/react'
 
 export default class ComponentPropName extends React.PureComponent<any, any> {
   static propTypes = {
@@ -17,10 +17,9 @@ export default class ComponentPropName extends React.PureComponent<any, any> {
         {required && (
           <Popup
             content="Required"
-            inverted
-            position="right center"
-            size="tiny"
-            trigger={<Icon color="red" name="asterisk" size="small" />}
+            align="center"
+            styles={{ fontSize: 'x-small' }}
+            trigger={<Icon styles={{ color: 'red' }} name="asterisk" size="small" />}
           />
         )}
       </div>

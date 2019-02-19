@@ -9,6 +9,7 @@ export interface ButtonVariables {
   borderRadius: string
   circularRadius: string
   paddingLeftRightValue: number
+  contentFontWeight: string
 
   color: string
   colorActive: string
@@ -65,6 +66,7 @@ export interface ButtonVariables {
   textSecondaryColorHover: string
 
   boxShadow: string
+  borderRadiusFocused: string
 }
 
 export default (siteVars: any): ButtonVariables => {
@@ -74,7 +76,7 @@ export default (siteVars: any): ButtonVariables => {
     maxWidth: pxToRem(280),
     borderRadius: pxToRem(2),
     circularRadius: pxToRem(999),
-    fontWeight: siteVars.fontWeightSemibold,
+    contentFontWeight: siteVars.fontWeightSemibold,
     paddingLeftRightValue: 20,
 
     color: siteVars.colors.grey[900],
@@ -132,5 +134,6 @@ export default (siteVars: any): ButtonVariables => {
     textSecondaryColorHover: siteVars.brand04,
 
     boxShadow: siteVars.shadowLevel1,
+    borderRadiusFocused: pxToRem(3),
   }
 }
