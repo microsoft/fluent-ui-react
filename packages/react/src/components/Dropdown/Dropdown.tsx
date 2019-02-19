@@ -593,7 +593,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private handleSearchQueryChange = (searchQuery: string) => {
-    this.setStateAndInvokeHandler({ searchQuery }, 'onSearchQueryChange')
+    this.trySetStateAndInvokeHandler('onSearchQueryChange', null, { searchQuery })
   }
 
   private handleDownshiftStateChanges = (
@@ -614,7 +614,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   private handleStateChange = (changes: StateChangeOptions<ShorthandValue>) => {
     if (changes.isOpen !== undefined && changes.isOpen !== this.state.open) {
-      this.setStateAndInvokeHandler({ open: changes.isOpen }, 'onOpenChange')
+      this.trySetStateAndInvokeHandler('onOpenChange', null, { open: changes.isOpen })
     }
 
     if (changes.isOpen && !this.props.search) {
@@ -857,13 +857,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   private handleSelectedChange = (item: ShorthandValue) => {
     const { items, multiple, getA11ySelectionMessage } = this.props
 
-    this.setStateAndInvokeHandler(
-      {
-        value: multiple ? [...(this.state.value as ShorthandCollection), item] : item,
-        searchQuery: this.getSelectedItemAsString(item),
-      },
-      'onSelectedChange',
-    )
+    this.trySetStateAndInvokeHandler('onSelectedChange', null, {
+      value: multiple ? [...(this.state.value as ShorthandCollection), item] : item,
+      searchQuery: this.getSelectedItemAsString(item),
+    })
 
     if (!multiple) {
       this.setState({ defaultHighlightedIndex: items.indexOf(item) })
@@ -958,7 +955,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       this.setA11yStatus(getA11ySelectionMessage.onRemove(poppedItem))
     }
 
-    this.setStateAndInvokeHandler({ value }, 'onSelectedChange')
+    this.trySetStateAndInvokeHandler('onSelectedChange', null, { value })
   }
 
   /**
@@ -966,9 +963,13 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
    * We don't have the event object for most events coming from Downshift se we send an empty event
    * because we want to keep the event handling interface
    */
-  private setStateAndInvokeHandler = (newState: Partial<DropdownState>, eventName: string) => {
+  private trySetStateAndInvokeHandler = (
+    handlerName: keyof DropdownProps,
+    event: React.SyntheticEvent<HTMLElement>,
+    newState: Partial<DropdownState>,
+  ) => {
     this.trySetState(newState)
-    _.invoke(this.props, eventName, {}, { ...this.props, ...newState })
+    _.invoke(this.props, handlerName, event, { ...this.props, ...newState })
   }
 
   private tryFocusTriggerButton = () => {
