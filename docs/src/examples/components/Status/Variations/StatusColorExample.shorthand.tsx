@@ -3,17 +3,17 @@ import { Status } from '@stardust-ui/react'
 
 const StatusColorExampleShorthand = () => (
   <div>
-    <Status color="red" alt="red" />
+    <Status color="red" title="red" />
     &emsp;
-    <Status color="orange" alt="orange" />
+    <Status color="orange" title="orange" />
     &emsp;
-    <Status color="yellow" alt="yellow" />
+    <Status color="yellow" title="yellow" />
     &emsp;
-    <Status color="green" alt="green" />
+    <Status color="green" title="green" />
     &emsp;
-    <Status color="blue" alt="blue" />
+    <Status color="blue" title="blue" />
     &emsp;
-    <Status color="violet" alt="violet" />
+    <Status color="violet" title="violet" />
   </div>
 )
 

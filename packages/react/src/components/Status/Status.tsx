@@ -37,7 +37,7 @@ export interface StatusProps extends UIComponentProps {
 /**
  * A status graphically represents someone's or something's state.
  * @accessibility
- * Don't forget to put appropriate 'alt' attribute describing status. This is necessary for correct screen reader behavior.
+ * The 'img' role is used to identify an element as image. 'Title' attribute have to be provided on status component. Then reader narrate content of 'title' attribute.
  */
 class Status extends UIComponent<ReactProps<StatusProps>, any> {
   static create: Function
