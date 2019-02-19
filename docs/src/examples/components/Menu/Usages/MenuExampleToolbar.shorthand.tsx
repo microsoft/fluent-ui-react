@@ -81,6 +81,11 @@ const items = [
         {
           key: '2',
           content: 'item2',
+          disabled: true,
+          icon: {
+            name: 'translation',
+            variables: { outline: true },
+          },
         },
         {
           key: '3',
