@@ -1,6 +1,8 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import Icon from '../Icon/Icon'
+import { statusBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   customPropTypes,
@@ -13,6 +15,12 @@ import {
 import { ReactProps, ShorthandValue } from '../../types'
 
 export interface StatusProps extends UIComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default statusBehavior
+   */
+  accessibility?: Accessibility
+
   /** A custom color. */
   color?: string
 
@@ -28,6 +36,8 @@ export interface StatusProps extends UIComponentProps {
 
 /**
  * A status graphically represents someone's or something's state.
+ * @accessibility
+ * The 'img' role is used to identify an element as image. 'Title' attribute have to be provided on status component. Then reader narrate content of 'title' attribute.
  */
 class Status extends UIComponent<ReactProps<StatusProps>, any> {
   static create: Function
@@ -41,6 +51,7 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
       children: false,
       content: false,
     }),
+    accessibility: PropTypes.func,
     color: PropTypes.string,
     icon: customPropTypes.itemShorthand,
     size: customPropTypes.size,
@@ -48,15 +59,16 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
   }
 
   static defaultProps = {
+    accessibility: statusBehavior,
     as: 'span',
     size: 'medium',
     state: 'unknown',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, variables, styles }) {
+  renderComponent({ accessibility, ElementType, classes, unhandledProps, variables, styles }) {
     const { icon } = this.props as StatusProps
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
+      <ElementType {...unhandledProps} className={classes.root} {...accessibility.attributes.root}>
         {Icon.create(icon, {
           defaultProps: {
             size: 'smallest',
