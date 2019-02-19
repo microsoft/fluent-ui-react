@@ -26,7 +26,7 @@
     "stats:build": "gulp stats",
     "stats:save": "gulp stats:save",
     "satisfied": "satisfied --skip-invalid",
-    "pretest": "yarn satisfied && yarn list-mismatches",
+    "pretest": "yarn satisfied && yarn syncpack list-mismatches",
     "test": "gulp test",
     "test:watch": "gulp test:watch",
     "test:vulns": "gulp test:vulns",
