@@ -34,13 +34,34 @@ const createEntry = (): Entry => ({
 // Prototype Search Page View
 // ----------------------------------------
 class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
-  private searchTimer: number
-
   state = {
     loading: false,
     searchQuery: '',
     items: [],
     value: [],
+  }
+
+  searchTimer: number
+
+  handleSelectedChange = (e: React.SyntheticEvent, { searchQuery, value }: DropdownProps) => {
+    this.setState({ value: value as Entry[], searchQuery })
+  }
+
+  handleSearchQueryChange = (e: React.SyntheticEvent, { searchQuery }: DropdownProps) => {
+    this.setState({ searchQuery })
+    this.fetchItems()
+  }
+
+  fetchItems = () => {
+    clearTimeout(this.searchTimer)
+    this.setState({ loading: true })
+
+    this.searchTimer = setTimeout(() => {
+      this.setState(prevState => ({
+        loading: false,
+        items: [...prevState.items, ..._.times<Entry>(10, createEntry)],
+      }))
+    }, 2000)
   }
 
   render() {
@@ -68,30 +89,6 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
         <CodeSnippet mode="json" value={this.state} />
       </>
     )
-  }
-
-  private handleSelectedChange = (
-    e: React.SyntheticEvent,
-    { searchQuery, value }: DropdownProps,
-  ) => {
-    this.setState({ value: value as Entry[], searchQuery })
-  }
-
-  private handleSearchQueryChange = (e: React.SyntheticEvent, { searchQuery }: DropdownProps) => {
-    this.setState({ searchQuery })
-    this.fetchItems()
-  }
-
-  private fetchItems = () => {
-    clearTimeout(this.searchTimer)
-    this.setState({ loading: true })
-
-    this.searchTimer = setTimeout(() => {
-      this.setState(prevState => ({
-        loading: false,
-        items: [...prevState.items, ..._.times<Entry>(10, createEntry)],
-      }))
-    }, 2000)
   }
 }
 
