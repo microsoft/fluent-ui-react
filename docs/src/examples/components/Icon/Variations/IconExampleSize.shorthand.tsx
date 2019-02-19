@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Grid, Icon } from '@stardust-ui/react'
 
 const IconExampleSize = () => (
-  <Grid rows={2} style={{ textAlign: 'center' }}>
+  <Grid rows={2} styles={{ textAlign: 'center' }}>
     <Icon name="home" size="smallest" />
     <Icon name="call-video" size="smallest" />
 
