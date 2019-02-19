@@ -26,6 +26,7 @@ const items = [
       name: 'emoji',
       variables: { outline: true },
     },
+    disabled: true,
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Emoji Tool',
   },
