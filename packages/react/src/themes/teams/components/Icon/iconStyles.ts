@@ -110,6 +110,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
       ...(isFontBased && {
         color: getIconColor(color, v),
+        fontWeight: 900, // required for the fontAwesome to render
 
         ...(disabled && {
           color: v.disabledColor,
