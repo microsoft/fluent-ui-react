@@ -62,11 +62,12 @@ const getFocusedStyles = ({
         }
       : {
           color,
-          background: v.focusedBackgroundColor,
+          background: v.hoverBackgroundColor,
         }),
 
     ...(vertical && isFromKeyboard ? {
-      border: vertical ? v.primaryFocusedBorder : 'inherit',
+      border: v.focusedBorder,
+      background: v.focusedBackgroundColor,
     } : {}),
   }
 }

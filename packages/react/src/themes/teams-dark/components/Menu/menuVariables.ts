@@ -2,12 +2,18 @@ import { pxToRem } from '../../../../lib'
 import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
 
 export default (siteVars: any): Partial<MenuVariables> => ({
+
     color: siteVars.gray02,
-    iconOnlyActiveColor: siteVars.brand06,
-    activeColor: siteVars.colors.white,
-    activeBackgroundColor: siteVars.gray10,
-    focusedBackgroundColor: siteVars.gray14,
     borderColor: siteVars.black,
+
+    focusedBorder: `solid ${pxToRem(1)} ${siteVars.colors.white}`,
+    focusedBackgroundColor: 'transparent',
+
+    hoverBackgroundColor: siteVars.gray08,
+
+    activeColor: siteVars.colors.white,
+    activeBackgroundColor: siteVars.gray08,
+    iconOnlyActiveColor: siteVars.brand06,
 
     primaryActiveColor: siteVars.colors.white,
     primaryActiveBackgroundColor: siteVars.brand08,

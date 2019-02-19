@@ -1,30 +1,32 @@
 import { pxToRem } from '../../../../lib'
 
 export interface MenuVariables {
+
   color: string
+  borderColor: string
+
+  focusedBorder: string
+  focusedBackgroundColor: string
+
+  hoverBackgroundColor: string
 
   activeColor: string
   activeBackgroundColor: string
-  focusedBackgroundColor: string
-  borderColor: string
-
   iconOnlyActiveColor: string
+
   primaryActiveColor: string
   primaryActiveBackgroundColor: string
   primaryActiveBorderColor: string
 
   primaryFocusedColor: string
   primaryFocusedBackgroundColor: string
-  primaryFocusedBorder: string
 
   primaryBorderColor: string
   primaryHoverBorderColor: string
   primaryUnderlinedBorderColor: string
 
   disabledColor: string
-
   lineHeightBase: string
-
   horizontalPadding: string
 
   verticalMenuBackgroundColor: string
@@ -37,12 +39,18 @@ export interface MenuVariables {
 
 export default (siteVars: any): MenuVariables => {
   return {
+
     color: siteVars.gray02,
-    iconOnlyActiveColor: siteVars.brand06,
+    borderColor: siteVars.gray08,
+
+    focusedBorder: `solid ${pxToRem(1)} ${siteVars.gray03}`,
+    focusedBackgroundColor: siteVars.gray14,
+
+    hoverBackgroundColor: siteVars.gray14,
+
     activeColor: siteVars.black,
     activeBackgroundColor: siteVars.gray10,
-    focusedBackgroundColor: siteVars.gray14,
-    borderColor: siteVars.gray08,
+    iconOnlyActiveColor: siteVars.brand06,
 
     primaryActiveColor: siteVars.colors.white,
     primaryActiveBackgroundColor: siteVars.brand08,
@@ -50,16 +58,13 @@ export default (siteVars: any): MenuVariables => {
 
     primaryFocusedColor: siteVars.white,
     primaryFocusedBackgroundColor: siteVars.brand12,
-    primaryFocusedBorder: `solid ${pxToRem(1)} ${siteVars.gray03}`,
 
     primaryBorderColor: siteVars.gray10,
     primaryHoverBorderColor: siteVars.gray08,
     primaryUnderlinedBorderColor: siteVars.gray08,
 
     disabledColor: siteVars.gray06,
-
     lineHeightBase: siteVars.lineHeightMedium,
-
     horizontalPadding: `${pxToRem(14)} ${pxToRem(18)} ${pxToRem(14)} ${pxToRem(18)}`,
 
     verticalMenuBackgroundColor: siteVars.colors.white,
