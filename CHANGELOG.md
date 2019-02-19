@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Export `lock` SVG icon @VyshnaviDasari ([#906](https://github.com/stardust-ui/react/pull/906))
+- Add basic animation library for Teams theme @bhamlefty @mnajdova ([#871](https://github.com/stardust-ui/react/pull/871)
 - Export `accept`, `input-invalid` and `urgent` SVG icons @joheredi([#929](https://github.com/stardust-ui/react/pull/929))
 
 ### Fixes
