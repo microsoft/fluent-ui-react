@@ -1,10 +1,8 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
-import { Grid, Icon } from 'semantic-ui-react'
-import { Header } from '@stardust-ui/react'
+import { Flex, Header, Icon, Dropdown, Text, themes } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
@@ -12,11 +10,10 @@ import ComponentDocLinks from './ComponentDocLinks'
 import ComponentDocSee from './ComponentDocSee'
 import ComponentExamples from './ComponentExamples'
 import ComponentProps from './ComponentProps'
-import ComponentSidebar from './ComponentSidebar'
 import ComponentAccessibility from './ComponentDocAccessibility'
+import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ExampleContext from 'docs/src/context/ExampleContext'
 
-const topRowStyle = { margin: '1em' }
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
   opacity: 0.5,
@@ -63,56 +60,123 @@ class ComponentDoc extends React.Component<any, any> {
   }
 
   render() {
+    const getA11ySelectionMessage = {
+      onAdd: item => `${item} has been selected.`,
+      onRemove: item => `${item} has been removed.`,
+    }
+
+    const getA11yStatusMessage = ({
+      isOpen,
+      itemToString,
+      previousResultCount,
+      resultCount,
+      selectedItem,
+    }) => {
+      if (!isOpen) {
+        return selectedItem ? itemToString(selectedItem) : ''
+      }
+      if (!resultCount) {
+        return 'No results are available.'
+      }
+      if (resultCount !== previousResultCount) {
+        return `${resultCount} result${
+          resultCount === 1 ? ' is' : 's are'
+        } available, use up and down arrow keys to navigate. Press Enter key to select.`
+      }
+      return ''
+    }
+
     const { info } = this.props
-    const { activePath, examplesRef } = this.state
+    const { activePath } = this.state
 
     return (
-      <DocumentTitle title={`${info.displayName} | Stardust`}>
-        <Grid>
-          <Grid.Row style={topRowStyle}>
-            <Grid.Column>
-              <Header as="h1" content={info.displayName} variables={{ color: 'black' }} />
-              <p>{_.join(info.docblock.description, ' ')}</p>
+      <div style={{ paddingLeft: '20px' }}>
+        <Flex column>
+          <Flex.Item padding="padding.medium">
+            <ThemeContext.Consumer>
+              {({ changeTheme }) => (
+                <Dropdown
+                  getA11yStatusMessage={getA11yStatusMessage}
+                  getA11ySelectionMessage={getA11ySelectionMessage}
+                  noResultsMessage="We couldn't find any matches."
+                  placeholder="Theme"
+                  onSelectedChange={changeTheme}
+                  items={this.getThemeOptions().map(o => o.text)}
+                />
+              )}
+            </ThemeContext.Consumer>
+          </Flex.Item>
+          <Flex.Item>
+            <>
+              <Flex styles={{ justifyContent: 'space-between' }}>
+                <Flex.Item>
+                  <Header
+                    as="h1"
+                    aria-leve="2"
+                    content={info.displayName}
+                    variables={{ color: 'black' }}
+                  />
+                </Flex.Item>
+                <Flex.Item>
+                  <ComponentDocLinks
+                    displayName={info.displayName}
+                    parentDisplayName={info.parentDisplayName}
+                    repoPath={info.repoPath}
+                    type={info.type}
+                  />
+                </Flex.Item>
+              </Flex>
+              <Text
+                styles={{ marginBottom: '1.4rem' }}
+                content={_.join(info.docblock.description, ' ')}
+              />
               <ComponentAccessibility info={info} />
               <ComponentDocSee displayName={info.displayName} />
-              <ComponentDocLinks
-                displayName={info.displayName}
-                parentDisplayName={info.parentDisplayName}
-                repoPath={info.repoPath}
-                type={info.type}
-              />
-              <ComponentProps displayName={info.displayName} props={info.props} />
-            </Grid.Column>
-          </Grid.Row>
 
-          <Grid.Row columns="equal">
-            <Grid.Column style={{ padding: '0 0 0 28px' } as React.CSSProperties}>
-              <div ref={this.handleExamplesRef}>
-                <ExampleContext.Provider
-                  value={{
-                    activeAnchorName: activePath,
-                    onExamplePassed: this.handleExamplePassed,
-                  }}
-                >
-                  <ComponentExamples displayName={info.displayName} />
-                </ExampleContext.Provider>
-              </div>
-              <div style={exampleEndStyle}>
-                This is the bottom <Icon name="pointing down" />
-              </div>
-            </Grid.Column>
-            <Grid.Column computer={5} largeScreen={4} widescreen={4}>
+              <ComponentProps displayName={info.displayName} props={info.props} />
+            </>
+          </Flex.Item>
+        </Flex>
+        <Flex styles={{ width: '75%' }} column>
+          <Flex.Item>
+            <div ref={this.handleExamplesRef}>
+              <ExampleContext.Provider
+                value={{
+                  activeAnchorName: activePath,
+                  onExamplePassed: this.handleExamplePassed,
+                }}
+              >
+                <ComponentExamples displayName={info.displayName} />
+              </ExampleContext.Provider>
+            </div>
+          </Flex.Item>
+
+          <Flex.Item>
+            <div style={exampleEndStyle}>
+              This is the bottom <Icon name="pointing down" />
+            </div>
+          </Flex.Item>
+
+          {/* TODO: bring back the right floating menu
+            <Box styles={{ width: '25%', paddingLeft: '14px' }}>
               <ComponentSidebar
                 activePath={activePath}
                 displayName={info.displayName}
                 examplesRef={examplesRef}
                 onItemClick={this.handleSidebarItemClick}
               />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </DocumentTitle>
+            </Box>
+          */}
+        </Flex>
+      </div>
     )
+  }
+
+  private getThemeOptions = () => {
+    return Object.keys(themes).map(key => ({
+      text: _.startCase(key),
+      value: key,
+    }))
   }
 }
 
