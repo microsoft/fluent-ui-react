@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Header, Flex, Text } from '@stardust-ui/react'
+import { Header } from '@stardust-ui/react'
 
 const behaviorMenu = require('docs/src/behaviorMenu')
 
@@ -18,40 +18,36 @@ const ComponentDocAccessibility = ({ info }) => {
   if (!behaviorName && !description) return null
 
   return (
-    <Flex column>
-      <Flex.Item>
-        <>
-          <Header
-            as="h2"
-            className="no-anchor"
-            content="Accessibility"
-            variables={{ color: 'black' }}
-          />
+    <>
+      <Header
+        as="h2"
+        className="no-anchor"
+        content="Accessibility"
+        variables={{ color: 'black' }}
+      />
 
-          {description && <Text style={{ whiteSpace: 'pre-line' }}>{description}</Text>}
+      {description && <p style={{ whiteSpace: 'pre-line' }}>{description}</p>}
 
-          {behaviorName && (
-            <Text>
-              Default behavior:{' '}
-              <a href={`behaviors/${behaviorName}#${_.kebabCase(stem)}`}>{behaviorName}</a>
-            </Text>
-          )}
+      {behaviorName && (
+        <p>
+          Default behavior:{' '}
+          <a href={`behaviors/${behaviorName}#${_.kebabCase(stem)}`}>{behaviorName}</a>
+        </p>
+      )}
 
-          {info.behaviors && (
-            <Text>
-              Available behaviors:{' '}
-              {info.behaviors.map(behavior => (
-                <React.Fragment key={`${behavior.category}-${behavior.name}`}>
-                  <a href={`behaviors/${behavior.category}#${_.kebabCase(behavior.name)}`}>
-                    {behavior.displayName}
-                  </a>{' '}
-                </React.Fragment>
-              ))}
-            </Text>
-          )}
-        </>
-      </Flex.Item>
-    </Flex>
+      {info.behaviors && (
+        <p>
+          Available behaviors:{' '}
+          {info.behaviors.map(behavior => (
+            <React.Fragment key={`${behavior.category}-${behavior.name}`}>
+              <a href={`behaviors/${behavior.category}#${_.kebabCase(behavior.name)}`}>
+                {behavior.displayName}
+              </a>{' '}
+            </React.Fragment>
+          ))}
+        </p>
+      )}
+    </>
   )
 }
 

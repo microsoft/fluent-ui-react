@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Button, Header, Icon, Divider } from '@stardust-ui/react'
+import { Header, Icon, Divider } from 'semantic-ui-react'
+
+import { Button } from '@stardust-ui/react'
 
 import CodeSnippet from '../components/CodeSnippet'
 import DocPage from '../components/DocPage'

@@ -10,7 +10,7 @@ const Types = () => (
       description="Multiple radio buttons organized into one radio group."
       examplePath="components/RadioGroup/Types/RadioGroupExample"
     >
-      <Segment styles={{ marginTop: '10px' }}>
+      <Segment style={{ marginTop: '10px' }}>
         It is possible to use Shorthand API when defining items, however it is not possible to
         create an item from just a string.
       </Segment>

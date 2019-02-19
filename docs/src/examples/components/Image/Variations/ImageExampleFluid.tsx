@@ -4,17 +4,17 @@ import { Image, Layout } from '@stardust-ui/react'
 const ImageExampleFluent = () => (
   <div>
     <Layout
-      styles={{ maxWidth: '70px' }}
+      style={{ maxWidth: '70px' }}
       debug
       renderMainArea={() => <Image fluid src="public/images/wireframe/square-image.png" />}
     />
     <Layout
-      styles={{ maxWidth: '100px' }}
+      style={{ maxWidth: '100px' }}
       debug
       renderMainArea={() => <Image fluid src="public/images/wireframe/square-image.png" />}
     />
     <Layout
-      styles={{ maxWidth: '150px' }}
+      style={{ maxWidth: '150px' }}
       debug
       renderMainArea={() => <Image fluid src="public/images/wireframe/square-image.png" />}
     />

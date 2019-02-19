@@ -1,9 +1,10 @@
 import * as React from 'react'
+import { Header, Divider, Message } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
 import DocPage from '../components/DocPage/DocPage'
 import CodeSnippet from '../components/CodeSnippet'
 
-import { Header, Divider, Segment, Button } from '@stardust-ui/react'
+import { Button } from '@stardust-ui/react'
 
 const code = (content: string): React.ReactNode => <code>{content}</code>
 
@@ -348,8 +349,8 @@ export default () => (
       `}
     />
 
-    <Segment inverted>
-      <Header>Children API vs Shorthand API</Header>
+    <Message warning>
+      <Message.Header>Children API vs Shorthand API</Message.Header>
       <p>
         Note that if Children API is used (rather than the Shortcut API), Stardust does not modify
         the children components in any way. For example, if content of {code('Menu.Item')} is
@@ -424,7 +425,7 @@ export default () => (
           </ul>
         `}
       />
-    </Segment>
+    </Message>
 
     <Header as="h4" content="Overriding behaviours" />
     <p>

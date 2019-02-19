@@ -3,9 +3,8 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { exampleIndexContext, exampleSourcesContext } from 'docs/src/utils'
-import { List, Segment } from '@stardust-ui/react'
+import { Grid, List } from 'semantic-ui-react'
 import { componentAPIs } from './ComponentSourceManager'
-
 import ContributionPrompt from './ContributionPrompt'
 
 interface ComponentExamplesProps {
@@ -75,7 +74,11 @@ export default class ComponentExamples extends React.Component<ComponentExamples
     )
   }
 
-  private renderElementWrappedInGrid = (Element: JSX.Element) => <Segment content={Element} />
+  private renderElementWrappedInGrid = (Element: JSX.Element) => (
+    <Grid>
+      <Grid.Column>{Element}</Grid.Column>
+    </Grid>
+  )
 
   private getMissingExamplePaths(displayName: string, allPaths: string[]): string[] {
     const examplesPattern = `\./${displayName}/[\\w/]+Example`

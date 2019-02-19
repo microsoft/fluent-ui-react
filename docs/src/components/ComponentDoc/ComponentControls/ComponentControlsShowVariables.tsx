@@ -1,13 +1,18 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { Icon, Menu } from 'semantic-ui-react'
 
 import { updateForKeys } from 'docs/src/hoc'
-import LabelledButton from './ComponentButton'
 
-const ComponentControlsShowVariables: any = ({ active }) => {
+const ComponentControlsShowVariables: any = ({ active, onClick }) => {
   const btnLabel = 'Theme it'
 
-  return <LabelledButton iconName="paint brush" label={btnLabel} active={active} />
+  return (
+    <Menu.Item active={active} onClick={onClick}>
+      <Icon color={active ? 'green' : 'grey'} fitted name="paint brush" size="large" />
+      {btnLabel}
+    </Menu.Item>
+  )
 }
 
 ComponentControlsShowVariables.propTypes = {

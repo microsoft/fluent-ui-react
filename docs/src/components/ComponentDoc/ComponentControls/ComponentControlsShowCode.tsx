@@ -1,11 +1,14 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { Icon, Menu } from 'semantic-ui-react'
 
 import { updateForKeys } from 'docs/src/hoc'
-import LabelledButton from './ComponentButton'
 
-const ComponentControlsShowCode: any = ({ active }) => (
-  <LabelledButton iconName="code" label="Try it" active={active} />
+const ComponentControlsShowCode: any = ({ active, onClick }) => (
+  <Menu.Item active={active} onClick={onClick}>
+    <Icon color={active ? 'green' : 'grey'} fitted name="code" size="large" />
+    Try it
+  </Menu.Item>
 )
 
 ComponentControlsShowCode.propTypes = {

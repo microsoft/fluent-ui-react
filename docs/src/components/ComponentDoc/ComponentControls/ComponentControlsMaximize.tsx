@@ -1,10 +1,25 @@
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { Icon, Menu } from 'semantic-ui-react'
+import { NavLink } from 'react-router-dom'
 
 import { updateForKeys } from 'docs/src/hoc'
-import LabelledButton from './ComponentButton'
 
-const ComponentControlsMaximize: any = () => (
-  <LabelledButton iconName="external alternate" label="Popout" active={false} />
+const ComponentControlsMaximize: any = ({ examplePath, rtl }) => (
+  <Menu.Item
+    as={NavLink}
+    to={`/maximize/${_.kebabCase(examplePath.split('/').slice(-1))}/${rtl}`}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Icon color="grey" fitted name="external alternate" size="large" />
+    Popout
+  </Menu.Item>
 )
 
-export default updateForKeys(['examplePath'])(ComponentControlsMaximize)
+ComponentControlsMaximize.propTypes = {
+  examplePath: PropTypes.string.isRequired,
+}
+
+export default updateForKeys(['examplePath', 'rtl'])(ComponentControlsMaximize)

@@ -1,7 +1,8 @@
-import { Provider, ProviderConsumer, Grid, Header } from '@stardust-ui/react'
+import { Provider, ProviderConsumer } from '@stardust-ui/react'
 import * as faker from 'faker'
 import * as _ from 'lodash'
 import * as React from 'react'
+import { Grid, Header } from 'semantic-ui-react'
 
 import ColorBox, { colorBoxStyles, colorBoxVariables } from 'docs/src/components/ColorBox'
 import ColorVariants, { colorVariantsStyles } from 'docs/src/components/ColorVariants'
@@ -13,11 +14,6 @@ const ColorPalette = () => (
       componentStyles: {
         ColorBox: colorBoxStyles,
         ColorVariants: colorVariantsStyles,
-        Header: {
-          root: {
-            fontWeight: 700,
-          },
-        },
       },
       componentVariables: {
         ColorBox: colorBoxVariables,
@@ -47,10 +43,9 @@ const ColorPalette = () => (
 
           <Grid columns={2}>
             {_.map(['black', 'white'], color => (
-              // TODO:try to use Segment here
-              <div key={color}>
+              <Grid.Column key={color}>
                 <ColorBox name={color} rounded size="big" value={colors[color]} />
-              </div>
+              </Grid.Column>
             ))}
           </Grid>
 
@@ -63,11 +58,11 @@ const ColorPalette = () => (
             naming (lightest, lighter, etc.).
           </p>
 
-          <Grid columns={2} variables={{ gridGap: '2rem' }}>
+          <Grid columns={2}>
             {_.map(naturalColors, (variants, color) => (
-              <div key={color}>
+              <Grid.Column key={color}>
                 <ColorBox name={color} rounded value={colors[color][500]} />
-              </div>
+              </Grid.Column>
             ))}
           </Grid>
 
@@ -76,9 +71,9 @@ const ColorPalette = () => (
 
           <Grid columns={2}>
             {_.map(emphasisColors, (variants, color) => (
-              <div key={color}>
+              <Grid.Column key={color}>
                 <ColorBox name={color} rounded size="big" value={colors[color][500]} />
-              </div>
+              </Grid.Column>
             ))}
           </Grid>
 
@@ -90,9 +85,9 @@ const ColorPalette = () => (
 
           <Grid columns={2}>
             {_.map(contextualColors, (variants, color) => (
-              <div key={color}>
+              <Grid.Column key={color}>
                 <ColorBox name={color} rounded size="big" value={colors[color][500]} />
-              </div>
+              </Grid.Column>
             ))}
           </Grid>
 
@@ -109,13 +104,13 @@ const ColorPalette = () => (
           ))}
 
           <Header as="h2">Color variables</Header>
-          <Grid columns={2} variables={{ gridGap: '2rem' }}>
+          <Grid columns={2}>
             {_.map(
               { ...emphasisColors, ...contextualColors, ...naturalColors },
               (variants, color) => (
-                <div key={color}>
+                <Grid.Column key={color}>
                   <ColorVariants name={color} />
-                </div>
+                </Grid.Column>
               ),
             )}
           </Grid>

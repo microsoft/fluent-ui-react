@@ -1,6 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
+import { Table } from 'semantic-ui-react'
 
 import ComponentPropDefaultValue from '../ComponentProp/ComponentPropDefaultValue'
 import ComponentPropDescription from '../ComponentProp/ComponentPropDescription'
@@ -24,23 +25,17 @@ export default class ComponentTableRow extends React.Component<any, any> {
   render() {
     const { defaultValue, description, name, required, tags, type } = this.props
     const hideRow = this.docSiteHidden(tags)
-    const rowStyle: React.CSSProperties = {
-      borderTopWidth: '1px',
-      borderTopStyle: 'solid',
-      borderTopColor: 'grey',
-    }
 
-    // TODO: use Flex or a Table component, when it will be available
     return (
-      <tr className={hideRow ? 'hidden' : ''} style={rowStyle}>
-        <td>
+      <Table.Row key={name} className={hideRow ? 'hidden' : ''}>
+        <Table.Cell collapsing>
           <ComponentPropName name={name} required={required} />
-        </td>
-        <td>
+        </Table.Cell>
+        <Table.Cell collapsing>
           <ComponentPropDefaultValue value={defaultValue} />
-        </td>
-        <td>{`{${type}}`}</td>
-        <td>
+        </Table.Cell>
+        <Table.Cell collapsing>{`{${type}}`}</Table.Cell>
+        <Table.Cell>
           <ComponentPropDescription description={description} />
           {/* TODO change these according to the react-docgen-typescript generated json */}
           {/*<ComponentPropFunctionSignature name={name} tags={tags} />*/}
@@ -50,8 +45,8 @@ export default class ComponentTableRow extends React.Component<any, any> {
           {/*type={type}*/}
           {/*values={value}*/}
           {/*/>*/}
-        </td>
-      </tr>
+        </Table.Cell>
+      </Table.Row>
     )
   }
 

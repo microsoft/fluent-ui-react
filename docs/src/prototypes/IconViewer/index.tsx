@@ -1,7 +1,9 @@
 import * as React from 'react'
-import { Provider, Grid, Divider, Header, Icon, Menu, Segment } from '@stardust-ui/react'
+import { Provider, Grid, Divider, Header, Icon } from '@stardust-ui/react'
 import themeWithProcessedIcons from 'src/themes/teams/withProcessedIcons'
 import { TeamsProcessedSvgIconSpec } from 'src/themes/teams/components/Icon/svg/types'
+
+import { Menu, Segment } from 'semantic-ui-react'
 
 const cellStyles = {
   margin: '10px 0',
@@ -50,7 +52,7 @@ class IconViewerExample extends React.Component<any, {}> {
         />
 
         <div style={{ marginTop: '15px' }}>
-          <Menu tabular styles={{ margin: '15px 0' }}>
+          <Menu tabular style={{ margin: '15px 0' }}>
             {Object.keys(this.iconFilters).map(filterName => (
               <Menu.Item
                 key={filterName}
@@ -67,7 +69,7 @@ class IconViewerExample extends React.Component<any, {}> {
                 <div>
                   <div>
                     <Header as="h3" content="Regular" textAlign="center" />
-                    <Grid columns={4} styles={{ textAlign: 'center' }}>
+                    <Grid columns={4} style={{ textAlign: 'center' }}>
                       {Object.keys(theme.icons)
                         .filter(name => name.startsWith(processedIconsNamePrefix))
                         .filter(name => this.applyCurrentFilter(theme.icons[name]))
@@ -87,7 +89,7 @@ class IconViewerExample extends React.Component<any, {}> {
                     <Divider>
                       <Header as="h3" content="Outline" textAlign="center" />
                     </Divider>
-                    <Grid columns={4} styles={{ textAlign: 'center' }}>
+                    <Grid columns={4} style={{ textAlign: 'center' }}>
                       {Object.keys(theme.icons)
                         .filter(name => name.startsWith(processedIconsNamePrefix))
                         .filter(name => this.applyCurrentFilter(theme.icons[name]))

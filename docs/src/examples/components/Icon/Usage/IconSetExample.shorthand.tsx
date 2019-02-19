@@ -13,7 +13,7 @@ const IconSetExampleShorthand = () => (
           <Divider>
             <Header as="h3" content="Regular" />
           </Divider>
-          <Grid columns={4} styles={{ textAlign: 'center' }}>
+          <Grid columns={4} style={{ textAlign: 'center' }}>
             {Object.keys(theme.icons).map(name => (
               <div key={name} style={cellStyles}>
                 <Icon name={name} />
@@ -28,7 +28,7 @@ const IconSetExampleShorthand = () => (
           <Divider>
             <Header as="h3" content="Outline" />
           </Divider>
-          <Grid columns={4} styles={{ textAlign: 'center' }}>
+          <Grid columns={4} style={{ textAlign: 'center' }}>
             {Object.keys(theme.icons).map(name => (
               <div key={`${name}-outline`} style={cellStyles}>
                 <Icon name={name} variables={{ outline: true }} />

@@ -1,34 +1,20 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Flex, Header } from '@stardust-ui/react'
+import { Container, Header, Segment } from 'semantic-ui-react'
 
 import pkg from '../../../packages/react/package.json'
 import Logo from '../components/Logo/Logo'
 
 const Introduction = () => (
-  <div style={{ margin: '0 225px', fontSize: '1.125em', maxWidth: '80ch' }}>
-    <Flex column hAlign="center" padding="padding.medium">
-      <Logo width="150px" />
-      <Header
-        as="h1"
-        styles={{
-          marginTop: '24px',
-          marginBottom: '0px',
-          fontSize: '2rem',
-        }}
-      >
+  <Container id="introduction-page" text>
+    <Segment basic textAlign="center">
+      <Logo centered size="small" />
+      <Header as="h1" textAlign="center">
         {_.capitalize(pkg.name)}
-        <Header.Description
-          styles={{
-            margin: 0,
-            fontSize: '1.14285714rem',
-          }}
-        >
-          {pkg.description}
-        </Header.Description>
+        <Header.Subheader>{pkg.description}</Header.Subheader>
       </Header>
-    </Flex>
+    </Segment>
     <p>
       Stardust UI provides extensible vanilla JavaScript solutions to component state, styling, and
       accessibility. These powerful features are exposed behind simple APIs based on natural
@@ -50,7 +36,7 @@ const Introduction = () => (
       If you want to get going right away, see the <NavLink to="quick-start">Quick Start</NavLink>{' '}
       guide.
     </p>
-  </div>
+  </Container>
 )
 
 export default Introduction

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import DocumentTitle from 'react-document-title'
-import { Header } from '@stardust-ui/react'
+import { Header } from 'semantic-ui-react'
 
 interface DocPageProps {
   title: string
@@ -11,7 +11,8 @@ interface DocPageProps {
 const DocPage = ({ title, description, children }: DocPageProps) => (
   <DocumentTitle title={`Stardust - ${title}`}>
     <div style={{ padding: '2rem', fontSize: '1.15rem', maxWidth: '80ch' }}>
-      <Header as="h1" aria-level="2" content={title} description={description} textAlign="center" />
+      <Header as="h1" content={title} subheader={description} textAlign="center" />
+
       {children}
     </div>
   </DocumentTitle>

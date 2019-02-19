@@ -2,17 +2,16 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import CodeSandboxer from 'react-codesandboxer'
 
+import { Menu } from 'semantic-ui-react'
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
 import { imports } from 'docs/src/components/Playground/renderConfig'
 import { updateForKeys } from 'docs/src/hoc'
 import { appTemplateJs } from './indexTemplates'
-import LabelledButton from '../ComponentButton'
 
 type ComponentControlsCodeSandboxProps = {
   exampleCode: string
   exampleLanguage: ComponentSourceManagerLanguage
   exampleName: string
-  active: boolean
 }
 
 type ComponentControlsCodeSandboxState = {
@@ -45,27 +44,30 @@ class ComponentControlsShowCode extends React.Component<
     this.setState({ sandboxUrl })
   }
 
-  handleClick = e => {
-    const { sandboxUrl } = this.state
-    e.preventDefault()
-    window.open(sandboxUrl)
-  }
-
   render() {
-    const { active, exampleLanguage, exampleCode, exampleName } = this.props
+    const { exampleLanguage, exampleCode, exampleName } = this.props
     const { sandboxUrl } = this.state
 
     if (exampleLanguage === 'ts') {
-      return <LabelledButton label="CodeSandbox" iconName="connectdevelop" active={active} />
+      return (
+        <Menu.Item
+          disabled
+          content="CodeSandbox"
+          icon="connectdevelop"
+          title="Export of TypeScript code is not supported"
+        />
+      )
     }
 
     if (sandboxUrl) {
       return (
-        <LabelledButton
-          label="Click to open"
-          onClick={this.handleClick}
-          iconName="checkmark"
-          active={active}
+        <Menu.Item
+          as="a"
+          content="Click to open"
+          href={sandboxUrl}
+          icon={{ color: 'green', name: 'checkmark' }}
+          target="_blank"
+          title="Open in a new tab"
         />
       )
     }
@@ -85,13 +87,18 @@ class ComponentControlsShowCode extends React.Component<
         skipRedirect
         template="create-react-app"
       >
-        {({ isLoading, isDeploying, active }) => {
+        {({ isLoading, isDeploying }) => {
           const loading = isLoading || isDeploying
+
           return (
-            <LabelledButton
-              iconName={loading ? 'spinner' : 'connectdevelop'}
-              label={loading ? 'Exporting...' : 'CodeSandbox'}
-              active={active}
+            <Menu.Item
+              as="a"
+              content={loading ? 'Exporting...' : 'CodeSandbox'}
+              icon={{
+                loading,
+                name: loading ? 'spinner' : 'connectdevelop',
+              }}
+              title="Export to CodeSandbox"
             />
           )
         }}
@@ -100,4 +107,4 @@ class ComponentControlsShowCode extends React.Component<
   }
 }
 
-export default updateForKeys(['exampleCode', 'active'])(ComponentControlsShowCode)
+export default updateForKeys(['exampleCode'])(ComponentControlsShowCode)

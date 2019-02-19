@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import { Provider, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from 'src/lib'
@@ -8,7 +7,7 @@ import Router from './routes'
 
 interface AppState {
   themeName: string
-  changeTheme: (event, data) => void
+  changeTheme: (newTheme: string) => void
 }
 
 class App extends React.Component<any, AppState> {
@@ -17,10 +16,9 @@ class App extends React.Component<any, AppState> {
   constructor(props) {
     super(props)
 
-    this.changeTheme = (event, data) => {
-      const themeName = _.camelCase(data.value)
+    this.changeTheme = newTheme => {
       this.setState({
-        themeName,
+        themeName: newTheme,
       })
     }
 
@@ -39,19 +37,10 @@ class App extends React.Component<any, AppState> {
         <Provider
           theme={mergeThemes(themes[themeName], {
             // adjust Teams' theme to Semantic UI's font size scheme
-            staticStyles: [
-              {
-                a: {
-                  textDecoration: 'none',
-                },
-                html: {
-                  fontSize: '14px',
-                },
-                body: {
-                  fontSize: '1rem',
-                },
-              },
-            ],
+            siteVariables: {
+              htmlFontSize: '14px',
+              bodyFontSize: '1rem',
+            },
           })}
         >
           <Router />

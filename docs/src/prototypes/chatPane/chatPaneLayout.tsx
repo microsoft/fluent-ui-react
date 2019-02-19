@@ -19,8 +19,8 @@ const ChatPaneLayout: React.SFC<ChatPaneLayoutProps> = ({ chat }: ChatPaneLayout
     styles={{
       backgroundColor: '#f3f2f1',
       left: 0,
-      marginLeft: '250px',
-      width: '50%',
+      paddingLeft: '250px',
+      width: '100%',
       height: '100%',
       position: 'fixed',
     }}

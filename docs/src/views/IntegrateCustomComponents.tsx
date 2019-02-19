@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
+import { Header } from 'semantic-ui-react'
 import {
   Button,
   Divider,
-  Header,
   Provider,
   createComponent,
   ComponentSlotStyle,

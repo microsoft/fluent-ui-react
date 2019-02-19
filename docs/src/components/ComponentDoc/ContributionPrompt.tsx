@@ -1,29 +1,29 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { Icon, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import { Message, Icon } from 'semantic-ui-react'
 import { constants } from 'src/lib'
 
-const wrapStyle: ICSSInJSStyle = { wordBreak: 'break-word' }
+const wrapStyle = { wordBreak: 'break-word' }
 
 const ContributionPrompt: any = ({ children }) => (
-  <Segment inverted styles={wrapStyle}>
+  <Message info icon style={wrapStyle}>
     <Icon name="bullhorn" />
-    <Text>
+    <Message.Content>
       {children && <div>{children}</div>}
       <p>
         If there's no{' '}
         <a href={`${constants.repoURL}/pulls`}>
-          pull request <Icon size="small" name="external" />
+          pull request <Icon fitted size="small" name="external" />
         </a>{' '}
         open for this, you should{' '}
         <a href={`${constants.repoURL}/blob/master/.github/CONTRIBUTING.md`}>
-          contribute <Icon size="small" name="external" />
+          contribute <Icon fitted size="small" name="external" />
         </a>{' '}
         one!
       </p>
-    </Text>
-  </Segment>
+    </Message.Content>
+  </Message>
 )
 
 ContributionPrompt.propTypes = {
