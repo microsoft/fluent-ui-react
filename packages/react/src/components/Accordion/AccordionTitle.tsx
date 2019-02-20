@@ -14,6 +14,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../types'
+import Icon from '../Icon/Icon'
 import Indicator from '../Indicator/Indicator'
 import Layout from '../Layout/Layout'
 
@@ -37,6 +38,9 @@ export interface AccordionTitleProps
 
   /** Shorthand for the active indicator. */
   indicator?: ShorthandValue
+
+  /** Shorthand for the icon. */
+  icon?: ShorthandValue
 }
 
 /**
@@ -55,6 +59,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClick: PropTypes.func,
     indicator: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthand,
   }
 
   handleClick = e => {
@@ -62,18 +67,23 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
   }
 
   renderComponent({ ElementType, classes, unhandledProps, styles }) {
-    const { children, content, indicator, active } = this.props
+    const { children, content, icon, indicator, active } = this.props
     const indicatorWithDefaults = indicator === undefined ? {} : indicator
+    const indicatorIcon = icon === undefined ? {} : icon
 
     const contentElement = (
       <Layout
-        start={Indicator.create(indicatorWithDefaults, {
-          defaultProps: {
-            direction: active ? 'bottom' : 'end',
-            styles: styles.indicator,
-            icon: 'triangle-down',
-          },
-        })}
+        start={
+          <Layout
+            start={Indicator.create(indicatorWithDefaults, {
+              defaultProps: {
+                direction: active ? 'bottom' : 'end',
+                styles: styles.indicator,
+              },
+            })}
+            main={indicatorIcon ? Icon.create(indicatorIcon) : null}
+          />
+        }
         main={rtlTextContainer.createFor({ element: content })}
       />
     )

@@ -45,6 +45,7 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
   static defaultProps = {
     as: 'span',
     direction: 'bottom',
+    icon: 'triangle-down',
   }
 
   renderComponent({ ElementType, classes, unhandledProps, rtl }) {

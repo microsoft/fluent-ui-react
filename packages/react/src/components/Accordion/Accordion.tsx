@@ -158,6 +158,7 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
     _.each(panels, (panel, index) => {
       const { content, title } = panel
       const active = this.isIndexActive(index)
+      const indented = title.hasOwnProperty('icon')
 
       children.push(
         AccordionTitle.create(title, {
@@ -168,7 +169,10 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
       )
       children.push(
         AccordionContent.create(content, {
-          defaultProps: { active },
+          defaultProps: {
+            active,
+            indented,
+          },
           render: renderPanelContent,
         }),
       )

@@ -19,6 +19,29 @@ class AccordionPanelCustomTitleExample extends React.Component {
           content: 'Here is a list of warnings discovered.',
         },
       },
+      {
+        title: {
+          content: (
+            <div>
+              <strong>Someone</strong> has added <strong>Someone Else</strong> to the team
+            </div>
+          ),
+          icon: { name: 'participant-add', variables: { outline: true } },
+        },
+        content: {
+          key: 'peopleadded',
+          content: (
+            <div>
+              <div style={{ padding: '0 0 .5em 0' }}>
+                <strong>Someone</strong> has added <strong>Someone Else</strong> to the team
+              </div>
+              <div style={{ padding: '0 0 .5em 0' }}>
+                <strong>Someone</strong> has added <strong>Someone Else</strong> to the team
+              </div>
+            </div>
+          ),
+        },
+      },
     ]
 
     return <Accordion defaultActiveIndex={[0]} panels={panels} />

@@ -20,6 +20,9 @@ export interface AccordionContentProps
   /** Whether or not the content is visible. */
   active?: boolean
 
+  /** Whether or not content should be indented */
+  indented?: boolean
+
   /**
    * Called on click.
    *
@@ -43,6 +46,7 @@ class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, an
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     onClick: PropTypes.func,
+    indented: PropTypes.bool,
   }
 
   renderComponent({ ElementType, classes, unhandledProps }) {

@@ -158,7 +158,6 @@ import processedIcons_inputvalid from './icons-input-valid'
 import processedIcons_inputinvalid from './icons-input-invalid'
 import processedIcons_info from './icons-info'
 import processedIcons_inferred from './icons-inferred'
-import processedIcons_indicator from './icons-indicator'
 import processedIcons_indent from './icons-indent'
 import processedIcons_image from './icons-image'
 import processedIcons_horizontalrule from './icons-horizontal-rule'
@@ -461,7 +460,6 @@ export default {
   processedIcons_inputinvalid,
   processedIcons_info,
   processedIcons_inferred,
-  processedIcons_indicator,
   processedIcons_indent,
   processedIcons_image,
   processedIcons_horizontalrule,
