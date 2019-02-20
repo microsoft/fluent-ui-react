@@ -8,7 +8,6 @@ import {
   commonPropTypes,
   ContentComponentProps,
   isFromKeyboard,
-  customPropTypes,
 } from '../../lib'
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'

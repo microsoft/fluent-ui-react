@@ -11,7 +11,6 @@ import {
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
-  customPropTypes,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'

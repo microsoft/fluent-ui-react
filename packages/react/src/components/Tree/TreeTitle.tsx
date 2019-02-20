@@ -11,7 +11,6 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   rtlTextContainer,
-  customPropTypes,
 } from '../../lib'
 import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'

@@ -9,7 +9,6 @@ import {
   UIComponentProps,
   ColorComponentProps,
   commonPropTypes,
-  customPropTypes,
 } from '../../lib'
 import { ReactProps } from '../../types'
 

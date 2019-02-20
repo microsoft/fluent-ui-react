@@ -1,13 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import {
-  createShorthandFactory,
-  UIComponent,
-  UIComponentProps,
-  commonPropTypes,
-  customPropTypes,
-} from '../../lib'
+import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 import { imageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
