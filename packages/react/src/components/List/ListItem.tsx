@@ -178,7 +178,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
     return (
       <Flex
         vAlign="center"
-        gap="gap.list.item"
+        gap="gap.smaller"
         as={as}
         debug={debug}
         className={classes.root}

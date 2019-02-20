@@ -28,7 +28,7 @@ export interface FlexProps {
   space?: 'around' | 'between' | 'evenly'
 
   /** Defines gap between each two adjacent child items. */
-  gap?: 'gap.small' | 'gap.medium' | 'gap.large' | 'gap.list.item'
+  gap?: 'gap.small' | 'gap.medium' | 'gap.large' | 'gap.smaller'
 
   /** Defines container's padding. */
   padding?: 'padding.medium'
