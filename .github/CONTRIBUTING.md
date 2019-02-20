@@ -120,7 +120,7 @@ You should to run `lerna create` command to create a new package
   implementation is not framework agnostic
 - please provide a meaningful description to a package in the matched field
 - use `https://github.com/stardust-ui/react/tree/master/packages/__DIRECTORY_NAME__` as `homepage`
-- our packages are published with MIT license, please follow it until you will have a specific requirements
+- our packages are currently published with MIT license, please follow it until you will have specific legal requirements
 
 ```sh
 lerna create @stardust-ui/react-proptypes react-proptypes
@@ -131,7 +131,7 @@ lerna create @stardust-ui/react-proptypes react-proptypes
 lerna notice cli v3.11.1
 package name: (@stardust-ui/react-proptypes)
 version: (0.21.1)
-description: Set of custom reusable propTypes for React components.
+description: Set of custom reusable PropTypes for React components.
 keywords:
 homepage: https://github.com/stardust-ui/react/tree/master/packages/react-proptypes
 license: (ISC) MIT
@@ -142,7 +142,7 @@ git repository: (https://github.com/stardust-ui/react.git)
 #### Update `package.json`
 
 After a package will be created we need to add necessary changes to a newly created `package.json`.
-These changes are required to get working package publishing and internal tooling.
+These changes are required to setup internal tooling and package publishing.
 
 ```diff
 -  "directories": {
@@ -171,7 +171,7 @@ These changes are required to get working package publishing and internal toolin
 +  },
 ```
 
-Don't forget to fill a correct directory name, you can also use `gulp bundle:package` to bundle your package with UMD.
+Don't forget to provide a correct directory name, you can also use `gulp bundle:package` to bundle your package with UMD.
 
 #### Create `tsconfig.json`
 
@@ -188,6 +188,8 @@ An example config:
 }
 ```
 
+This config will extend a common TS config that is used in all packages. You can add specific options for the package here.
+
 #### Run `syncpack format`
 
 Organise a new `package.json` according to a conventional format, where fields appear in a predictable order and
@@ -199,13 +201,12 @@ yarn syncpack format
 
 ### Add a new dependency
 
-Please always use [`lerna add`][16] to manage all dependencies including internal packages.
+Please always use [`lerna add`][16] to manage all dependencies including internal packages. The command bellow will add
+`@stardust-ui/react-proptypes` as production dependency to the `@stardust-ui/react` package.
 
 ```yarn
 lerna add @stardust-ui/react-proptypes packages/react
 ```
-
-The command above will add `@stardust-ui/react-proptypes` as production dependency to the `@stardust-ui/react` package.
 
 [1]: https://nodejs.org/
 [2]: https://github.com/stardust-ui/accessibility/blob/master/CONTRIBUTING.md
