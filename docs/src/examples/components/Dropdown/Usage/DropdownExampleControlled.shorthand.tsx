@@ -6,6 +6,10 @@ const inputItems = ['Bruce Wayne', 'Natasha Romanoff', 'Steven Strange', 'Alfred
 class DropdownExampleControlled extends React.Component {
   state = { open: false }
 
+  handleOpenChange = (e, { open }) => {
+    this.setState({ open })
+  }
+
   render() {
     const open = this.state.open
     return (
@@ -19,10 +23,6 @@ class DropdownExampleControlled extends React.Component {
         <Text weight="semibold" content={`Dropdown open state is: "${open}"`} />
       </Flex>
     )
-  }
-
-  handleOpenChange = (e, { open }) => {
-    this.setState({ open })
   }
 }
 

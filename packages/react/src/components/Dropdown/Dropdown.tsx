@@ -384,7 +384,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                   {this.renderItemsList(
                     styles,
                     variables,
-                    open,
                     highlightedIndex,
                     toggleMenu,
                     selectItemAtIndex,
@@ -475,7 +474,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   private renderItemsList(
     styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
-    open: boolean,
     highlightedIndex: number,
     toggleMenu: () => void,
     selectItemAtIndex: (index: number) => void,
@@ -484,6 +482,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     getInputProps: (options?: GetInputPropsOptions) => any,
   ) {
     const { search } = this.props
+    const { open } = this.state
     const { innerRef, ...accessibilityMenuProps } = getMenuProps(
       { refKey: 'innerRef' },
       { suppressRefError: true },
