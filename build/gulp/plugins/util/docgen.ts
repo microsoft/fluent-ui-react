@@ -3,8 +3,8 @@ import * as path from 'path'
 import * as ts from 'typescript'
 
 /**
- * THIS MODULE is largely based on the parser's logic introduced
- * by react-docgen-typescript library: https://github.com/styleguidist/react-docgen-typescript/blob/master/src/parser.ts
+ * THIS MODULE is largely based on the parser's logic
+ * of react-docgen-typescript library: https://github.com/styleguidist/react-docgen-typescript/blob/master/src/parser.ts
  *
  * All the essential parts are moved from there with the following changes applied:
  * - removed support for component methods pasing
