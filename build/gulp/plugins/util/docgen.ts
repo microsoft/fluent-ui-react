@@ -2,6 +2,23 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as ts from 'typescript'
 
+/**
+ * THIS MODULE is largely based on the parser's logic introduced
+ * by react-docgen-typescript library: https://github.com/styleguidist/react-docgen-typescript/blob/master/src/parser.ts
+ *
+ * All the essential parts are moved from there with the following changes applied:
+ * - removed support for component methods pasing
+ * - extended support for intersection component types
+ *
+ * The last one served as the main driver for making this split,
+ * as, otherwise, there was no possibility to extend component types
+ * with static 'create' factory method.
+ *
+ * This is a reference to the corresponding issue of react-docgen-typescript
+ * that haven't been resolved at time this module was introduced:
+ * https://github.com/styleguidist/react-docgen-typescript/issues/158
+ */
+
 // currentDirectoryName is used to trim parent fileNames
 const currentDirectoryPath = process.cwd()
 const currentDirectoryParts = currentDirectoryPath.split(path.sep)
