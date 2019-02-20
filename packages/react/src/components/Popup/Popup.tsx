@@ -138,7 +138,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       as: false,
       content: 'shorthand',
     }),
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     align: PropTypes.oneOf(ALIGNMENTS),
     defaultOpen: PropTypes.bool,
     defaultTarget: PropTypes.any,
