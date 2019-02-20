@@ -39,7 +39,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
             as="h1"
             aria-level="2"
             content={pageTitle}
-            description={`Keyboard and Screenreader options for ${match.params.name}s.`}
+            description={`Keyboard and Screenreader options for ${match.params.name} component.`}
           />
 
           {behaviorMenuItems
