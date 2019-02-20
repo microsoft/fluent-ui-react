@@ -296,13 +296,19 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
       )
     }
 
-    // loop through all body's children, except the last one - which is the popup
-    for (let index = 0; index < bodyChildren.length - 1; index++) {
-      const element = bodyChildren[index]
+    for (let index = 0; index < bodyChildren.length; index++) {
+      const currentChild = bodyChildren[index] as HTMLElement
+      const isOrHasFocusTrapZone =
+        currentChild === this._root.current || currentChild.contains(this._root.current)
+      const isAriaLiveRegion = currentChild.hasAttribute('aria-live')
 
-      if (element.getAttribute('aria-hidden') !== 'true') {
-        element.setAttribute('aria-hidden', 'true')
-        element.setAttribute(HIDDEN_FROM_ACC_TREE, 'true')
+      if (
+        !isOrHasFocusTrapZone &&
+        !isAriaLiveRegion &&
+        currentChild.getAttribute('aria-hidden') !== 'true'
+      ) {
+        currentChild.setAttribute('aria-hidden', 'true')
+        currentChild.setAttribute(HIDDEN_FROM_ACC_TREE, 'true')
       }
     }
   }
