@@ -9,7 +9,7 @@ export interface StatusVariables {
   warningTextColor: string
   errorBackgroundColor: string
   errorTextColor: string
-  verticalMenuBackgroundColor: string
+  defaultBackgroundColor: string
   defaultTextColor: string
 }
 
@@ -24,6 +24,6 @@ export default siteVariables => ({
   warningTextColor: siteVariables.warningStatusTextColor,
   errorBackgroundColor: siteVariables.errorStatusBackgroundColor,
   errorTextColor: siteVariables.errorStatusTextColor,
-  verticalMenuBackgroundColor: siteVariables.unknownStatusBackgroundColor,
+  defaultBackgroundColor: siteVariables.unknownStatusBackgroundColor,
   defaultTextColor: siteVariables.unknownStatusTextColor,
 })

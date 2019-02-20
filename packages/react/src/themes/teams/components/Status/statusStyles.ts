@@ -15,7 +15,7 @@ const getBackgroundColor = (state: string, variables: StatusVariables) => {
       return variables.errorBackgroundColor
     case 'unknown':
     default:
-      return variables.verticalMenuBackgroundColor
+      return variables.defaultBackgroundColor
   }
 }
 
