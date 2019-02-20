@@ -22,6 +22,8 @@ import codeSnippet from './codeSnippet'
 import edit from './edit'
 import emoji from './emoji'
 import error from './error'
+import filesWord from './filesWord'
+import filesWordFullColor32 from './filesWordFullColor32'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
 import format from './format'
@@ -91,6 +93,8 @@ export default {
   edit,
   emoji,
   error,
+  word: filesWord,
+  'word-color': filesWordFullColor32,
   format,
   'font-color': fontColor,
   'font-size': fontSize,
