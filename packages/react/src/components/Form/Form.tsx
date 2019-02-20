@@ -11,10 +11,18 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 import FormField from './FormField'
 
 export interface FormProps extends UIComponentProps, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** The HTML form action. */
   action?: string
 
@@ -51,12 +59,13 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
   }
 
   public static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'form',
   }
 
   public static Field = FormField
 
-  public renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
+  public renderComponent({ accessibility, ElementType, classes, unhandledProps }): React.ReactNode {
     const { action, children } = this.props
     return (
       <ElementType
@@ -64,6 +73,7 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
         action={action}
         onSubmit={this.handleSubmit}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...accessibility.attributes.root}
         {...unhandledProps}
       >
         {childrenExist(children) ? children : this.renderFields()}

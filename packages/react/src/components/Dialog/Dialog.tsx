@@ -94,7 +94,6 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
       content: true,
     }),
     actions: customPropTypes.itemShorthand,
-    accessibility: PropTypes.func,
     cancelButton: customPropTypes.itemShorthand,
     confirmButton: customPropTypes.itemShorthand,
     defaultOpen: PropTypes.bool,
