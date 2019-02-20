@@ -7,14 +7,14 @@ export interface TeamsTextVariables extends TextVariables {
 }
 
 export default (siteVariables): Partial<TeamsTextVariables> => ({
-  atMentionOtherColor: siteVariables.brand06,
-  atMentionMeColor: siteVariables.orange04,
+  atMentionOtherColor: siteVariables.colors.primary[500],
+  atMentionMeColor: siteVariables.naturalColors.darkOrange[400],
   atMentionMeFontWeight: siteVariables.fontWeightBold,
   disabledColor: siteVariables.gray06,
-  errorColor: siteVariables.red,
+  errorColor: siteVariables.colors.red[900],
   importantWeight: siteVariables.fontWeightBold,
-  importantColor: siteVariables.red,
-  successColor: siteVariables.green04,
+  importantColor: siteVariables.colors.red[900],
+  successColor: siteVariables.colors.green[900],
   timestampColor: siteVariables.gray04,
   timestampHoverColor: siteVariables.gray02,
 })

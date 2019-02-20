@@ -18,14 +18,18 @@ class MSTeamsLogo extends React.Component<LogoProps, any> {
             <div style={style}>
               {Icon.create(icon, {
                 defaultProps: {
-                  variables: { color: siteVariables.brand },
+                  variables: { color: siteVariables.colors.primary[500] },
                   size: 'largest',
                   xSpacing: 'after',
                   styles: { verticalAlign: 'middle' },
                 },
               })}
               <Text
-                styles={{ color: siteVariables.white, verticalAlign: 'middle', lineHeight: '40px' }}
+                styles={{
+                  color: siteVariables.colors.white,
+                  verticalAlign: 'middle',
+                  lineHeight: '40px',
+                }}
               >
                 {companyName}
               </Text>

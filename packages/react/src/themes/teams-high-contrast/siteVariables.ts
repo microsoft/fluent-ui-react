@@ -1,16 +1,17 @@
-import { white, green } from '../teams/siteVariables'
+import { colors, naturalColors } from '../teams/siteVariables'
 
 //
 // COLORS
 //
 export const black = '#000'
+export const white = '#fff'
 
 export const accessibleYellow = '#ffff01'
 export const accessibleGreen = '#3ff23f'
 export const accessibleCyan = '#1aebff'
 
 export const red = '#f00'
-export const green04 = green
+export const green04 = naturalColors.lightGreen[900]
 
 //
 // STATUS COLORS
@@ -24,11 +25,11 @@ export const warningStatusBackgroundColor = accessibleYellow
 export const warningStatusTextColor = black
 export const errorStatusBackgroundColor = red
 export const errorStatusTextColor = black
-export const unknownStatusBackgroundColor = white
+export const unknownStatusBackgroundColor = colors.white
 export const unknownStatusTextColor = black
 
 //
 // SEMANTIC ASSIGNMENTS
 //
 export const bodyBackground = black
-export const bodyColor = white
+export const bodyColor = colors.white

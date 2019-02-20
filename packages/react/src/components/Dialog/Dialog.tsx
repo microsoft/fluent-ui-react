@@ -24,7 +24,7 @@ import Ref from '../Ref/Ref'
 export interface DialogProps extends UIComponentProps, ContentComponentProps, ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
+   * @default dialogBehavior
    */
   accessibility?: Accessibility
 

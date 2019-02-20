@@ -3,15 +3,15 @@ import { Status } from '@stardust-ui/react'
 
 const StatusTypeExampleShorthand = () => (
   <div>
-    <Status state="success" /> <code>state="success"</code>
+    <Status state="success" title="success" /> <code>state="success"</code>
     <br />
-    <Status state="info" /> <code>state="info"</code>
+    <Status state="info" title="info" /> <code>state="info"</code>
     <br />
-    <Status state="warning" /> <code>state="warning"</code>
+    <Status state="warning" title="warning" /> <code>state="warning"</code>
     <br />
-    <Status state="error" /> <code>state="error"</code>
+    <Status state="error" title="error" /> <code>state="error"</code>
     <br />
-    <Status state="unknown" /> <code>state="unknown"</code>
+    <Status state="unknown" title="unknown" /> <code>state="unknown"</code>
   </div>
 )
 
