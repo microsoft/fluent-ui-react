@@ -21,7 +21,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Bordered"
-      description="An icon can be formatted to appear with rectangular or circular border."
+      description="An icon can be formatted to appear with rectangular border."
       examplePath="components/Icon/Variations/IconExampleBordered"
     />
     <ComponentExample
