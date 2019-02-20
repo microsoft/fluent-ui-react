@@ -12,7 +12,7 @@ const Types = () => (
     />
     <ComponentExample
       title="Controlled"
-      description="Note that if Popup is controlled, then its 'open' prop value could be changed either by parent component, or by user actions (e.g. key press) - thus it is necessary to handle 'onOpenChanged' event. Try to type some text into popup's input field and press ESC to see the effect."
+      description="Note that if Popup is controlled, then its 'open' prop value could be changed either by parent component, or by user actions (e.g. key press) - thus it is necessary to handle 'onOpenChange' event. Try to type some text into popup's input field and press ESC to see the effect."
       examplePath="components/Popup/Types/PopupControlledExample"
     />
     <ComponentExample
