@@ -22,16 +22,16 @@ const AnimationExampleIterationCount = () => (
       <Text content="5 iterations" />
       <Text content="Infinite" />
       <Animation name="spinner" iterationCount="1">
-        <Icon name="umbrella" circular />
+        <Icon name="umbrella" circular bordered />
       </Animation>
       <Animation name="spinner" iterationCount="2">
-        <Icon name="umbrella" circular />
+        <Icon name="umbrella" circular bordered />
       </Animation>
       <Animation name="spinner" iterationCount="5">
-        <Icon name="umbrella" circular />
+        <Icon name="umbrella" circular bordered />
       </Animation>
       <Animation name="spinner" iterationCount="infinite">
-        <Icon name="umbrella" circular />
+        <Icon name="umbrella" circular bordered />
       </Animation>
     </Grid>
   </Provider>
