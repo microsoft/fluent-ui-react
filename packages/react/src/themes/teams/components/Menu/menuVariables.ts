@@ -1,7 +1,6 @@
 import { pxToRem } from '../../../../lib'
 
 export interface MenuVariables {
-
   color: string
   borderColor: string
 
@@ -30,16 +29,15 @@ export interface MenuVariables {
   horizontalPadding: string
 
   verticalMenuBackgroundColor: string
-  verticalMenuItemPadding: string,
-  verticalMenuBoxShadow: string,
+  verticalMenuItemPadding: string
+  verticalMenuBoxShadow: string
 
   menuDividerHeight: string
-  menuBorderWidth: string,
+  menuBorderWidth: string
 }
 
 export default (siteVars: any): MenuVariables => {
   return {
-
     color: siteVars.gray02,
     borderColor: siteVars.gray08,
 

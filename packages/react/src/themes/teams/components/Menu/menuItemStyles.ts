@@ -65,10 +65,12 @@ const getFocusedStyles = ({
           background: v.hoverBackgroundColor,
         }),
 
-    ...(vertical && isFromKeyboard ? {
-      border: v.focusedBorder,
-      background: v.focusedBackgroundColor,
-    } : {}),
+    ...(vertical && isFromKeyboard
+      ? {
+          border: v.focusedBorder,
+          background: v.focusedBackgroundColor,
+        }
+      : {}),
   }
 }
 
@@ -302,7 +304,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         : pointing && vertical
         ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
         : vertical
-        ? { padding: v.verticalMenuItemPadding, }
+        ? { padding: v.verticalMenuItemPadding }
         : {
             padding: v.horizontalPadding,
           }),
