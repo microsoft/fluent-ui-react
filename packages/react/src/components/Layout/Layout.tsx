@@ -61,6 +61,7 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       children: false,
       content: false,
     }),

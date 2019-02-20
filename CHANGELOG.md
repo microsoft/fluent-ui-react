@@ -17,12 +17,25 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Export `lock` SVG icon @VyshnaviDasari ([#906](https://github.com/stardust-ui/react/pull/906))
+- Adding status behavior @kolaps33 ([#880](https://github.com/stardust-ui/react/pull/880))
+- Add basic animation library for Teams theme @bhamlefty @mnajdova ([#871](https://github.com/stardust-ui/react/pull/871)
+- Export `accept` and `urgent` SVG icons to the Teams Theme @joheredi([#929](https://github.com/stardust-ui/react/pull/929))
+- Add `open`, `defaultOpen` and `onOpenChange` props for `Dropdown` component (controlled mode) @Bugaa92 ([#900](https://github.com/stardust-ui/react/pull/900))
+- Add `accessibility` prop to all components that supports it @layershifter ([#927](https://github.com/stardust-ui/react/pull/927))
+
 ### Fixes
-- Fix theme switcher not applying the new theme when the component's page is changed @mnajdova ([#911](https://github.com/stardust-ui/react/pull/911))
+- Display correctly images in portrait mode inside `Avatar` @layershifter ([#899](https://github.com/stardust-ui/react/pull/899))
+- Expose `Popup`'s content Ref @sophieH29 ([#913](https://github.com/stardust-ui/react/pull/913))
+- Fix `Button` Teams theme styles to use semibold weight @notandrew ([#829](https://github.com/stardust-ui/react/pull/829))
 
 <!--------------------------------[ v0.21.1 ]------------------------------- -->
 ## [v0.21.1](https://github.com/stardust-ui/react/tree/v0.21.1) (2019-02-14)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.21.0...v0.21.1)
+
+### BREAKING CHANGES
+- Removed colors from `siteVariables` in Teams theme @mnajdova ([#858](https://github.com/stardust-ui/react/pull/858))
 
 ### Features
 - Export `arrow-up`,`arrow-down` and `chat` SVG icon @VyshnaviDasari ([#873](https://github.com/stardust-ui/react/pull/873))
@@ -43,7 +56,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### BREAKING CHANGES
 - Changed site variables' `colors.black` to be `#000` instead of `grey[900](#252424)` in Teams theme @mnajdova ([#855](https://github.com/stardust-ui/react/pull/855))
-- Removed colors from `siteVariables` in Teams theme @mnajdova ([#858](https://github.com/stardust-ui/react/pull/858))
 
 ### Features
 - Add single search flavor for `Dropdown` component @Bugaa92 ([#839](https://github.com/stardust-ui/react/pull/839))

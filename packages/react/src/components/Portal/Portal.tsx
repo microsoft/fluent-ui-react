@@ -91,6 +91,7 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
 
   public static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       animated: false,
       as: false,
       className: false,

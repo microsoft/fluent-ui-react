@@ -92,7 +92,6 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
 
-    accessibility: PropTypes.func,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
   }

@@ -2,7 +2,7 @@ import { ThemeIconSpec, ThemeIcons, FontIconSpec, SvgIconSpec } from '../types'
 
 import mergeThemes from '../../lib/mergeThemes'
 import base from '../base'
-
+import animations from './animations'
 import * as siteVariables from './siteVariables'
 import * as componentVariables from './componentVariables'
 import * as componentStyles from './componentStyles'
@@ -44,4 +44,5 @@ export default mergeThemes(base, {
   fontFaces,
   staticStyles,
   icons,
+  animations,
 })

@@ -72,6 +72,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
 
   static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       children: false,
     }),
     active: PropTypes.bool,
