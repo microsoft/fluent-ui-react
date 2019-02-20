@@ -123,7 +123,7 @@ const items = [
     menu: {
       items: [
         {
-          key: '1',
+          key: '5',
           content: 'item1',
           icon: {
             name: 'bookmark',
@@ -135,7 +135,7 @@ const items = [
           kind: 'divider',
         },
         {
-          key: '2',
+          key: '6',
           content: 'item2',
           icon: {
             name: 'mark-as-unread',
@@ -143,7 +143,7 @@ const items = [
           },
         },
         {
-          key: '3',
+          key: '7',
           content: 'item3',
           icon: {
             name: 'translation',
@@ -155,7 +155,7 @@ const items = [
           kind: 'divider',
         },
         {
-          key: '4',
+          key: '8',
           content: 'item3',
           icon: {
             name: 'trash-can',
