@@ -1,7 +1,3 @@
-// TODO: remove after switch to Babel
-import 'mdn-polyfills/Object.assign'
-import 'mdn-polyfills/String.prototype.includes'
-
 import * as customPropTypes from './customPropTypes'
 import * as commonPropTypes from './commonPropTypes'
 
