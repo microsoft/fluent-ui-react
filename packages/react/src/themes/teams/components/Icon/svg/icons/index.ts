@@ -1,5 +1,6 @@
 import { TeamsSvgIconSpec } from '../types'
 
+import accept from './accept'
 import add from './add'
 import addParticipant from './addParticipant'
 import arrowUp from './arrowUp'
@@ -67,9 +68,11 @@ import triangleDown from './triangleDown'
 import triangleRight from './triangleRight'
 import underline from './underline'
 import undo from './undo'
+import urgent from './urgent'
 import videoCameraEmphasis from './videoCameraEmphasis'
 
 export default {
+  accept,
   add,
   'arrow-up': arrowUp,
   'arrow-down': arrowDown,
@@ -137,5 +140,6 @@ export default {
   'team-create': teamCreate,
   underline,
   undo,
+  urgent,
   'video-camera-emphasis': videoCameraEmphasis,
 } as { [iconName: string]: TeamsSvgIconSpec }
