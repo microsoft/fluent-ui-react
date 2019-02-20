@@ -71,7 +71,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
 
     space: PropTypes.oneOf(['around', 'between', 'evenly']),
 
-    gap: PropTypes.oneOf(['gap.small', 'gap.medium', 'gap.large', 'gap.list.item']),
+    gap: PropTypes.oneOf(['gap.small', 'gap.medium', 'gap.large', 'gap.smaller']),
 
     padding: PropTypes.oneOf(['padding.medium']),
     fill: PropTypes.bool,

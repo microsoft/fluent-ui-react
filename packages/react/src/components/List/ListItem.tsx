@@ -191,11 +191,11 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
         {mediaElement}
         <Flex.Item grow>
           <Flex column className={ListItem.slotClassNames.main} styles={styles.main}>
-            <Flex gap="gap.list.item">
+            <Flex gap="gap.smaller">
               <Flex.Item grow>{headerElement}</Flex.Item>
               {headerMediaElement}
             </Flex>
-            <Flex gap="gap.list.item">
+            <Flex gap="gap.smaller">
               <Flex.Item grow>{contentElement}</Flex.Item>
               {contentMediaElement}
             </Flex>
