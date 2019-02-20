@@ -40,7 +40,6 @@ class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, 
 
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),
-    accessibility: customPropTypes.accessibility,
   }
 
   static defaultProps = {

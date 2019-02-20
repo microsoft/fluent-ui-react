@@ -50,7 +50,6 @@ class Divider extends UIComponent<ReactProps<DividerProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),
-    accessibility: customPropTypes.accessibility,
     fitted: PropTypes.bool,
     size: PropTypes.number,
     important: PropTypes.bool,

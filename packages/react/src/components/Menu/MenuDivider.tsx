@@ -42,7 +42,6 @@ class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ content: false, children: false, color: true }),
-    accessibility: customPropTypes.accessibility,
     primary: PropTypes.bool,
     secondary: PropTypes.bool,
     vertical: PropTypes.bool,

@@ -51,7 +51,6 @@ class Loader extends UIComponent<ReactProps<LoaderProps>> {
       content: false,
       color: true,
     }),
-    accessibility: customPropTypes.accessibility,
     indicator: customPropTypes.itemShorthand,
     label: customPropTypes.itemShorthand,
     labelPosition: PropTypes.oneOf(['above', 'below', 'start', 'end']),

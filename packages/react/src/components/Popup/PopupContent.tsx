@@ -56,7 +56,6 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
 
   public static propTypes = {
     ...commonPropTypes.createCommon(),
-    accessibility: customPropTypes.accessibility,
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
   }

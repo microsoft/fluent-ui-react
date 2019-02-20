@@ -65,7 +65,6 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: customPropTypes.accessibility,
     defaultOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     open: PropTypes.bool,

@@ -98,7 +98,6 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: customPropTypes.accessibility,
     clearable: PropTypes.bool,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fluid: PropTypes.bool,

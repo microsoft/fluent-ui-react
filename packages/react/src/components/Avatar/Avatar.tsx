@@ -56,7 +56,6 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
       children: false,
       content: false,
     }),
-    accessibility: customPropTypes.accessibility,
     name: PropTypes.string,
     image: customPropTypes.itemShorthand,
     label: customPropTypes.itemShorthand,

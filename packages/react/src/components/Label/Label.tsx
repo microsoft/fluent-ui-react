@@ -68,7 +68,6 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ color: 'complex' }),
-    accessibility: customPropTypes.accessibility,
     circular: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     iconPosition: PropTypes.oneOf(['start', 'end']),

@@ -44,7 +44,6 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
 
   public static propTypes = {
     ...commonPropTypes.createCommon(),
-    accessibility: customPropTypes.accessibility,
     buttons: customPropTypes.collectionShorthand,
     circular: PropTypes.bool,
   }

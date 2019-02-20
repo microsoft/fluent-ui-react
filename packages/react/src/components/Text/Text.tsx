@@ -79,7 +79,6 @@ class Text extends UIComponent<ReactProps<TextProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),
-    accessibility: customPropTypes.accessibility,
     atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
     disabled: PropTypes.bool,
     error: PropTypes.bool,

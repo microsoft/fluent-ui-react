@@ -53,7 +53,6 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: customPropTypes.accessibility,
     action: PropTypes.string,
     fields: customPropTypes.collectionShorthand,
     onSubmit: PropTypes.func,

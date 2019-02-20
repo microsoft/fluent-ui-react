@@ -41,7 +41,6 @@ class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
     }),
-    accessibility: customPropTypes.accessibility,
     inverted: PropTypes.bool,
     rtlAttributes: PropTypes.func,
   }

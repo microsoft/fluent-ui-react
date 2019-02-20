@@ -55,7 +55,6 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),
-    accessibility: customPropTypes.accessibility,
     description: customPropTypes.itemShorthand,
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
     rtlAttributes: PropTypes.func,

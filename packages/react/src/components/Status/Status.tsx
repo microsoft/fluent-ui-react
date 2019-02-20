@@ -51,7 +51,6 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
       children: false,
       content: false,
     }),
-    accessibility: customPropTypes.accessibility,
     color: PropTypes.string,
     icon: customPropTypes.itemShorthand,
     size: customPropTypes.size,

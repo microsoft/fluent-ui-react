@@ -54,7 +54,6 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ content: false }),
-    accessibility: customPropTypes.accessibility,
     attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
     gutter: customPropTypes.itemShorthand,
     contentPosition: PropTypes.oneOf(['start', 'end']),

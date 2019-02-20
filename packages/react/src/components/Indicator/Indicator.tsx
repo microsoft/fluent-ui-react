@@ -46,7 +46,6 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ children: false, content: false }),
-    accessibility: customPropTypes.accessibility,
     direction: PropTypes.oneOf(['start', 'end', 'top', 'bottom']),
     icon: customPropTypes.itemShorthand,
   }

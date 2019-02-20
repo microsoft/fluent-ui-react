@@ -48,7 +48,6 @@ class Grid extends UIComponent<ReactProps<GridProps>, any> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: customPropTypes.accessibility,
     columns: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     content: customPropTypes.every([
       customPropTypes.disallow(['children']),

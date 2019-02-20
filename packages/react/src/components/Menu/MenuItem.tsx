@@ -135,7 +135,6 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
-    accessibility: customPropTypes.accessibility,
     active: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,

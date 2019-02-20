@@ -63,7 +63,6 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: customPropTypes.accessibility,
     control: customPropTypes.itemShorthand,
     id: PropTypes.string,
     inline: PropTypes.bool,

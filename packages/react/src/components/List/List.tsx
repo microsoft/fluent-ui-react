@@ -71,7 +71,6 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: customPropTypes.accessibility,
     debug: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     selectable: PropTypes.bool,
