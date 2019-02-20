@@ -29,3 +29,4 @@ export { default as chatMessageBehavior } from './Behaviors/Chat/chatMessageBeha
 export { default as gridBehavior } from './Behaviors/Grid/gridBehavior'
 export { default as treeTitleBehavior } from './Behaviors/Tree/treeTitleBehavior'
 export { default as dialogBehavior } from './Behaviors/Dialog/dialogBehavior'
+export { default as statusBehavior } from './Behaviors/Status/statusBehavior'
