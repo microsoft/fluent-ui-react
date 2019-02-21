@@ -30,6 +30,7 @@ export interface PortalInnerProps extends ChildrenComponentProps {
 class PortalInner extends React.Component<ReactPropsStrict<PortalInnerProps>> {
   public static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       animated: false,
       as: false,
       className: false,

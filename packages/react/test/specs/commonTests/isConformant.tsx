@@ -1,3 +1,4 @@
+import * as faker from 'faker'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
@@ -14,11 +15,13 @@ import helpers from './commonHelpers'
 
 import * as stardust from 'src/index'
 
+import { Accessibility, AriaRole } from 'src/lib/accessibility/types'
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
 export interface Conformant {
   eventTargets?: object
+  hasAccessibilityProp?: boolean
   nestingLevel?: number
   requiredProps?: object
   exportedAtTopLevel?: boolean
@@ -40,6 +43,7 @@ export default (Component, options: Conformant = {}) => {
   const {
     eventTargets = {},
     exportedAtTopLevel = true,
+    hasAccessibilityProp = true,
     nestingLevel = 0,
     requiredProps = {},
     rendersPortal = false,
@@ -304,6 +308,30 @@ export default (Component, options: Conformant = {}) => {
       })
     })
   })
+
+  if (hasAccessibilityProp) {
+    test('defines an "accessibility" prop in Component.defaultProps', () => {
+      expect(Component.defaultProps).toHaveProperty('accessibility')
+    })
+
+    test('defines an "accessibility" prop in Component.handledProps', () => {
+      expect(Component.handledProps).toContain('accessibility')
+    })
+
+    test('spreads "attributes" on root', () => {
+      const role = faker.lorem.word() as AriaRole
+      const noopBehavior: Accessibility = () => ({
+        attributes: {
+          root: { role },
+        },
+      })
+
+      const wrapper = mount(<Component {...requiredProps} accessibility={noopBehavior} />)
+      const element = getComponent(wrapper)
+
+      expect(element.prop('role')).toBe(role)
+    })
+  }
 
   // ----------------------------------------
   // Events
