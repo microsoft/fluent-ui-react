@@ -19,5 +19,4 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'chevron-down',
 } as TeamsProcessedSvgIconSpec

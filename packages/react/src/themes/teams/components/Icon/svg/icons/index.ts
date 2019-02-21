@@ -18,6 +18,7 @@ import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
 import chat from './chat'
+import chevronDown from './chevronDown'
 import close from './close'
 import codeSnippet from './codeSnippet'
 import edit from './edit'
@@ -89,6 +90,7 @@ export default {
   'call-recording': callRecording,
   'canvas-add-page': canvasAddPage,
   chat,
+  'chevron-down': chevronDown,
   close,
   'code-snippet': codeSnippet,
   edit,
