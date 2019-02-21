@@ -83,18 +83,20 @@ task('perf:build', cb => {
 task('perf:run', async () => {
   const measures: ProfilerMeasureCycle[] = []
   const times = argv.times || DEFAULT_RUN_TIMES
+  const filter = argv.filter
+
   let browser
 
   try {
     browser = await puppeteer.launch({
-      args: ['--single-process'], // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568
+      args: ['--single-process'], // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568,
     })
 
     for (let i = 0; i < times; i++) {
       const page = await browser.newPage()
       await page.goto(`http://${config.server_host}:${config.perf_port}`)
 
-      const measuresFromStep = await page.evaluate(() => window.runMeasures())
+      const measuresFromStep = await page.evaluate(filter => window.runMeasures(filter), filter)
       measures.push(measuresFromStep)
 
       await page.close()

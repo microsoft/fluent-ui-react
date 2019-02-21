@@ -1,6 +1,6 @@
 declare global {
   interface Window {
-    runMeasures: () => Promise<ProfilerMeasureCycle>
+    runMeasures: (filter: string) => Promise<ProfilerMeasureCycle>
   }
 }
 
