@@ -30,6 +30,8 @@ class InputWithDropdown extends React.Component<{}, InputWithDropdownState> {
   state = this.initialState
 
   render() {
+    const { dropdownOpen, searchQuery } = this.state
+
     return (
       <>
         <div
@@ -38,31 +40,23 @@ class InputWithDropdown extends React.Component<{}, InputWithDropdownState> {
           onKeyUp={this.handleEditorKeyUp}
           style={editorStyle}
         />
-        {this.renderDropdown()}
+        <CustomPortal mountNodeId="dropdown-mount-node" open={dropdownOpen}>
+          <Dropdown
+            defaultOpen={true}
+            inline
+            search
+            items={atMentionItems}
+            toggleIndicator={null}
+            searchInput={{
+              input: { autoFocus: true, size: searchQuery.length + 1 },
+              onInputKeyDown: this.handleInputKeyDown,
+            }}
+            onSelectedChange={this.handleSelectedChange}
+            onSearchQueryChange={this.handleSearchQueryChange}
+            noResultsMessage="We couldn't find any matches."
+          />
+        </CustomPortal>
       </>
-    )
-  }
-
-  private renderDropdown = () => {
-    const { dropdownOpen, searchQuery } = this.state
-
-    return (
-      <CustomPortal mountNodeId="dropdown-mount-node" open={dropdownOpen}>
-        <Dropdown
-          defaultOpen={true}
-          inline
-          search
-          items={atMentionItems}
-          toggleIndicator={null}
-          searchInput={{
-            input: { autoFocus: true, size: searchQuery.length + 1 },
-            onInputKeyDown: this.handleInputKeyDown,
-          }}
-          onSelectedChange={this.handleSelectedChange}
-          onSearchQueryChange={this.handleSearchQueryChange}
-          noResultsMessage="We couldn't find any matches."
-        />
-      </CustomPortal>
     )
   }
 

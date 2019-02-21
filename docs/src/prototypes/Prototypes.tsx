@@ -9,14 +9,14 @@ interface ComponentPrototypeProps extends PrototypeSectionProps {
   description?: string
 }
 
-export const PrototypeSection: React.SFC<ComponentPrototypeProps> = props => (
+export const PrototypeSection: React.FC<ComponentPrototypeProps> = props => (
   <Box style={{ margin: 20 }}>
     {props.title && <Header as="h1">{props.title}</Header>}
     {props.children}
   </Box>
 )
 
-export const ComponentPrototype: React.SFC<ComponentPrototypeProps> = props => (
+export const ComponentPrototype: React.FC<ComponentPrototypeProps> = props => (
   <Box style={{ marginTop: 20 }}>
     {(props.title || props.description) && (
       <Segment>
