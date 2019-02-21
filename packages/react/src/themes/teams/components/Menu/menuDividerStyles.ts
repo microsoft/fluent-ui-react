@@ -7,6 +7,7 @@ const menuDividerStyles: ComponentSlotStylesInput<MenuDividerProps, MenuVariable
     const borderColor = p.primary ? v.primaryBorderColor : v.borderColor
     const borderType = p.vertical ? 'borderTop' : 'borderLeft'
 
+<<<<<<< HEAD
     return p.content
       ? {
           display: 'flex',
@@ -23,6 +24,17 @@ const menuDividerStyles: ComponentSlotStylesInput<MenuDividerProps, MenuVariable
             margin: '8px 0',
           }),
         }
+=======
+    return {
+      [borderType]: `${v.borderWidth} solid ${borderColor}`,
+      ...(!p.vertical && {
+        alignSelf: 'stretch',
+      }),
+      ...(p.vertical && {
+        margin: '8px 0',
+      }),
+    }
+>>>>>>> Streamlining menu variable names
   },
 }
 

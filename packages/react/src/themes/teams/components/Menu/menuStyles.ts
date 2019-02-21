@@ -15,7 +15,7 @@ export default {
     const { iconOnly, fluid, pointing, pills, primary, underlined, vertical } = props
 
     const solidBorder = (color: string) => ({
-      border: `${variables.menuBorderWidth} solid ${color}`,
+      border: `${variables.borderWidth} solid ${color}`,
     })
 
     return {
@@ -27,8 +27,8 @@ export default {
       ...(iconOnly && { alignItems: 'center' }),
       ...(vertical && {
         flexDirection: 'column',
-        boxShadow: variables.verticalMenuBoxShadow,
-        backgroundColor: variables.verticalMenuBackgroundColor,
+        boxShadow: variables.verticalBoxShadow,
+        backgroundColor: variables.verticalBackgroundColor,
         padding: `${pxToRem(8)} 0`,
         ...(!fluid && { width: pxToRem(200) }),
         ...(iconOnly && {

@@ -28,12 +28,12 @@ export interface MenuVariables {
   lineHeightBase: string
   horizontalPadding: string
 
-  verticalMenuBackgroundColor: string
-  verticalMenuItemPadding: string
-  verticalMenuBoxShadow: string
+  verticalBackgroundColor: string
+  verticalItemPadding: string
+  verticalBoxShadow: string
 
-  menuDividerHeight: string
-  menuBorderWidth: string
+  dividerHeight: string
+  borderWidth: string
 }
 
 export default (siteVars: any): MenuVariables => {
@@ -65,11 +65,11 @@ export default (siteVars: any): MenuVariables => {
     lineHeightBase: siteVars.lineHeightMedium,
     horizontalPadding: `${pxToRem(14)} ${pxToRem(18)} ${pxToRem(14)} ${pxToRem(18)}`,
 
-    verticalMenuBackgroundColor: siteVars.colors.white,
-    verticalMenuItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
-    verticalMenuBoxShadow: siteVars.shadowLevel3,
+    verticalBackgroundColor: siteVars.colors.white,
+    verticalItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
+    verticalBoxShadow: siteVars.shadowLevel3,
 
-    menuDividerHeight: pxToRem(1),
-    menuBorderWidth: pxToRem(1),
+    dividerHeight: pxToRem(1),
+    borderWidth: pxToRem(1),
   }
 }

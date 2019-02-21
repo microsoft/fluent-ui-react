@@ -6,9 +6,9 @@ export interface MenuVariables {
   activeBackgroundColor: string
   selectedBackgroundColor: string
 
-  verticalMenuBackgroundColor: string
-  menuDividerHeight: string
-  menuBorderWidth: string
+  verticalBackgroundColor: string
+  dividerHeight: string
+  borderWidth: string
 }
 
 export default (siteVars: any): MenuVariables => {
@@ -18,9 +18,9 @@ export default (siteVars: any): MenuVariables => {
     activeBackgroundColor: siteVars.accessibleYellow,
     selectedBackgroundColor: siteVars.accessibleCyan,
 
-    verticalMenuBackgroundColor: siteVars.colors.black,
+    verticalBackgroundColor: siteVars.colors.black,
 
-    menuDividerHeight: pxToRem(2),
-    menuBorderWidth: pxToRem(2),
+    dividerHeight: pxToRem(2),
+    borderWidth: pxToRem(2),
   }
 }

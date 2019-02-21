@@ -304,7 +304,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         : pointing && vertical
         ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
         : vertical
-        ? { padding: v.verticalMenuItemPadding }
+        ? { padding: v.verticalItemPadding }
         : {
             padding: v.horizontalPadding,
           }),
