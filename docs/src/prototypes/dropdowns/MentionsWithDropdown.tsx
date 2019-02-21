@@ -7,7 +7,7 @@ import { atMentionItems, AtMentionItem } from './dataMocks'
 import { insertTextAtCursorPosition } from './utils'
 import { CustomPortal } from './CustomPortal'
 
-interface InputWithDropdownState {
+interface MentionsWithDropdownState {
   dropdownOpen?: boolean
   searchQuery?: string
 }
@@ -19,8 +19,8 @@ const editorStyle: React.CSSProperties = {
   outline: 0,
 }
 
-class InputWithDropdown extends React.Component<{}, InputWithDropdownState> {
-  private readonly initialState: InputWithDropdownState = {
+class MentionsWithDropdown extends React.Component<{}, MentionsWithDropdownState> {
+  private readonly initialState: MentionsWithDropdownState = {
     dropdownOpen: false,
     searchQuery: '',
   }
@@ -100,4 +100,4 @@ class InputWithDropdown extends React.Component<{}, InputWithDropdownState> {
   private tryFocusEditor = () => _.invoke(this.contendEditableRef.current, 'focus')
 }
 
-export default InputWithDropdown
+export default MentionsWithDropdown

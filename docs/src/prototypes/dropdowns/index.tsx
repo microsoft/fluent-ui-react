@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 import AsyncDropdownSearch from './AsyncDropdownSearch'
-import InputWithDropdown from './InputWithDropdown'
+import MentionsWithDropdown from './MentionsWithDropdown'
 
 export default () => (
   <PrototypeSection title="Dropdowns">
@@ -15,7 +15,7 @@ export default () => (
       title="Input with Dropdown"
       description="Use the '@' key to mention people."
     >
-      <InputWithDropdown />
+      <MentionsWithDropdown />
     </ComponentPrototype>
   </PrototypeSection>
 )
