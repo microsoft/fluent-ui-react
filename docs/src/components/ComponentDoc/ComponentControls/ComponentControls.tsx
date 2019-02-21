@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 
+import { updateForKeys } from 'docs/src/hoc'
 import ComponentButton from './ComponentButton'
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
 import ComponentControlsCodeSandbox from './ComponentControlsCodeSandbox/ComponentControlsCodeSandbox'
@@ -127,4 +128,11 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
   )
 }
 
-export default React.memo(ComponentControls)
+export default updateForKeys([
+  'exampleCode',
+  'examplePath',
+  'showRtl',
+  'showCode',
+  'showTransparent',
+  'showVariables',
+])(ComponentControls, ComponentButton)
