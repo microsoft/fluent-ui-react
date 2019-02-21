@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- removed logic for adding borders by default if the `Icon` has the `circular` prop @mnajdova ([#907](https://github.com/stardust-ui/react/pull/907))
+
 ### Features
 - Export `lock` SVG icon @VyshnaviDasari ([#906](https://github.com/stardust-ui/react/pull/906))
 - Adding status behavior @kolaps33 ([#880](https://github.com/stardust-ui/react/pull/880))
