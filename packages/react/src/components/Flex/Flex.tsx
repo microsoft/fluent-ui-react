@@ -57,6 +57,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
 
   public static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       content: false,
     }),
 

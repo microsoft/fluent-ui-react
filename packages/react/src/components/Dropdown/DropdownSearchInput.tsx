@@ -68,6 +68,7 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
 
   static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       children: false,
       content: false,
     }),
