@@ -392,6 +392,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'menu-button',
+        content: 'MenuButton',
+        as: NavLink,
+        to: '/menu-button',
+        styles: menuItemStyles,
+      },
+      {
         key: 'importantmentionmessages',
         content: 'Important and mention messages',
         as: NavLink,
