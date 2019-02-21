@@ -102,7 +102,6 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
           )}/${showRtl}`,
           target: '_blank',
           rel: 'noopener noreferrer',
-          onClick: () => {},
           accessibility: toolbarButtonBehavior,
         },
         {
