@@ -1,5 +1,4 @@
 import { Menu, toolbarBehavior, toolbarButtonBehavior } from '@stardust-ui/react'
-import * as shallowEqual from 'shallowequal'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
@@ -128,4 +127,4 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
   )
 }
 
-export default React.memo(ComponentControls, shallowEqual)
+export default React.memo(ComponentControls)
