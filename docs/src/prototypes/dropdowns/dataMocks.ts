@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import { name, internet } from 'faker'
 
-export interface AtMentionItem {
+interface AtMentionItem {
   header: string
   image: string
   content: string

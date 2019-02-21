@@ -3,9 +3,9 @@ import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
 import { Dropdown, DropdownProps } from '@stardust-ui/react'
 
-import { atMentionItems, AtMentionItem } from './dataMocks'
+import { atMentionItems } from './dataMocks'
 import { insertTextAtCursorPosition } from './utils'
-import { CustomPortal } from './CustomPortal'
+import { PortalAtCursorPosition } from './PortalAtCursorPosition'
 
 interface MentionsWithDropdownState {
   dropdownOpen?: boolean
@@ -40,7 +40,7 @@ class MentionsWithDropdown extends React.Component<{}, MentionsWithDropdownState
           onKeyUp={this.handleEditorKeyUp}
           style={editorStyle}
         />
-        <CustomPortal mountNodeId="dropdown-mount-node" open={dropdownOpen}>
+        <PortalAtCursorPosition open={dropdownOpen}>
           <Dropdown
             defaultOpen={true}
             inline
@@ -51,20 +51,13 @@ class MentionsWithDropdown extends React.Component<{}, MentionsWithDropdownState
               input: { autoFocus: true, size: searchQuery.length + 1 },
               onInputKeyDown: this.handleInputKeyDown,
             }}
-            onSelectedChange={this.handleSelectedChange}
+            onOpenChange={this.handleOpenChange}
             onSearchQueryChange={this.handleSearchQueryChange}
             noResultsMessage="We couldn't find any matches."
           />
-        </CustomPortal>
+        </PortalAtCursorPosition>
       </>
     )
-  }
-
-  private hideDropdownAndRestoreEditor = (cb?: () => void) => {
-    this.setState(this.initialState, () => {
-      this.tryFocusEditor()
-      cb && cb()
-    })
   }
 
   private handleEditorKeyUp = (e: React.KeyboardEvent) => {
@@ -73,10 +66,10 @@ class MentionsWithDropdown extends React.Component<{}, MentionsWithDropdownState
     }
   }
 
-  private handleSelectedChange = (e: React.SyntheticEvent, { value }: DropdownProps) => {
-    this.hideDropdownAndRestoreEditor(() => {
-      insertTextAtCursorPosition((value as AtMentionItem).header)
-    })
+  private handleOpenChange = (e: React.SyntheticEvent, { open }: DropdownProps) => {
+    if (!open) {
+      this.resetStateAndUpdateEditor()
+    }
   }
 
   private handleSearchQueryChange = (e: React.SyntheticEvent, { searchQuery }: DropdownProps) => {
@@ -88,12 +81,25 @@ class MentionsWithDropdown extends React.Component<{}, MentionsWithDropdownState
     switch (keyCode) {
       case keyboardKey.Backspace: // 8
         if (this.state.searchQuery === '') {
-          this.hideDropdownAndRestoreEditor()
+          this.resetStateAndUpdateEditor()
         }
         break
       case keyboardKey.Escape: // 27
-        this.hideDropdownAndRestoreEditor()
+        this.resetStateAndUpdateEditor()
         break
+    }
+  }
+
+  private resetStateAndUpdateEditor = () => {
+    const { searchQuery, dropdownOpen } = this.state
+
+    if (dropdownOpen) {
+      this.setState(this.initialState, () => {
+        this.tryFocusEditor()
+
+        // after the dropdown is closed the value of the search query is inserted in the editor at cursor position
+        insertTextAtCursorPosition(searchQuery)
+      })
     }
   }
 
