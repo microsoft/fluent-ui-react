@@ -14,6 +14,8 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import Box from '../Box/Box'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 export interface ChatItemSlotClassNames {
@@ -22,6 +24,12 @@ export interface ChatItemSlotClassNames {
 }
 
 export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** Controls item's relation to other chat items. */
   attached?: boolean | 'top' | 'bottom'
 
@@ -53,12 +61,14 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
   }
 
   static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'li',
     contentPosition: 'start',
     attached: false,
   }
 
   renderComponent({
+    accessibility,
     ElementType,
     classes,
     unhandledProps,
@@ -69,6 +79,7 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
     return (
       <ElementType
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...accessibility.attributes.root}
         {...unhandledProps}
         className={classes.root}
       >

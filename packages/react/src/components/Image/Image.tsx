@@ -49,7 +49,6 @@ class Image extends UIComponent<ReactProps<ImageProps>, any> {
       children: false,
       content: false,
     }),
-    accessibility: PropTypes.func,
     avatar: PropTypes.bool,
     circular: PropTypes.bool,
     fluid: PropTypes.bool,

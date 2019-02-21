@@ -17,9 +17,16 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- removed logic for adding borders by default if the `Icon` has the `circular` prop @mnajdova ([#907](https://github.com/stardust-ui/react/pull/907))
+
 ### Features
 - Export `lock` SVG icon @VyshnaviDasari ([#906](https://github.com/stardust-ui/react/pull/906))
+- Adding status behavior @kolaps33 ([#880](https://github.com/stardust-ui/react/pull/880))
 - Add basic animation library for Teams theme @bhamlefty @mnajdova ([#871](https://github.com/stardust-ui/react/pull/871)
+- Export `accept` and `urgent` SVG icons to the Teams Theme @joheredi([#929](https://github.com/stardust-ui/react/pull/929))
+- Add `open`, `defaultOpen` and `onOpenChange` props for `Dropdown` component (controlled mode) @Bugaa92 ([#900](https://github.com/stardust-ui/react/pull/900))
+- Add `accessibility` prop to all components that supports it @layershifter ([#927](https://github.com/stardust-ui/react/pull/927))
 
 ### Fixes
 - Display correctly images in portrait mode inside `Avatar` @layershifter ([#899](https://github.com/stardust-ui/react/pull/899))

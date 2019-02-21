@@ -80,6 +80,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       children: false,
       content: false,
     }),

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import cx from 'classnames'
-import { TeamsProcessedSvgIconSpec } from '../types'
+import { TeamsSvgIconSpec } from '../types'
 import { teamsIconClassNames } from '../teamsIconClassNames'
 
 export default {
@@ -19,5 +19,4 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'accept',
-} as TeamsProcessedSvgIconSpec
+} as TeamsSvgIconSpec

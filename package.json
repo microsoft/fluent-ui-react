@@ -105,7 +105,6 @@
     "react-ace": "^5.1.2",
     "react-codesandboxer": "^3.1.1",
     "react-custom-scrollbars": "^4.2.1",
-    "react-docgen-typescript": "^1.12.2",
     "react-document-title": "^2.0.3",
     "react-dom": "^16.8.2",
     "react-element-to-jsx-string": "^14.0.2",
