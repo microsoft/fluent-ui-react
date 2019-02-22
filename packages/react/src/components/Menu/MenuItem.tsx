@@ -1,3 +1,4 @@
+import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
 import * as _ from 'lodash'
 import cx from 'classnames'
 import * as PropTypes from 'prop-types'
@@ -14,7 +15,6 @@ import {
   ContentComponentProps,
   commonPropTypes,
   isFromKeyboard,
-  EventStack,
   rtlTextContainer,
 } from '../../lib'
 import Icon from '../Icon/Icon'
@@ -165,22 +165,8 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
 
   static autoControlledProps = ['menuOpen']
 
-  private outsideClickSubscription = EventStack.noSubscription
-
   private menuRef = React.createRef<HTMLElement>()
   private itemRef = React.createRef<HTMLElement>()
-
-  public componentDidMount() {
-    this.updateOutsideClickSubscription()
-  }
-
-  public componentDidUpdate() {
-    this.updateOutsideClickSubscription()
-  }
-
-  public componentWillUnmount() {
-    this.outsideClickSubscription.unsubscribe()
-  }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
     const {
@@ -231,19 +217,22 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     )
     const maybeSubmenu =
       menu && active && menuOpen ? (
-        <Ref innerRef={this.menuRef}>
-          {Menu.create(menu, {
-            defaultProps: {
-              accessibility: submenuBehavior,
-              vertical: true,
-              primary,
-              secondary,
-              styles: styles.menu,
-              submenu: true,
-              indicator,
-            },
-          })}
-        </Ref>
+        <>
+          <Ref innerRef={this.menuRef}>
+            {Menu.create(menu, {
+              defaultProps: {
+                accessibility: submenuBehavior,
+                vertical: true,
+                primary,
+                secondary,
+                styles: styles.menu,
+                submenu: true,
+                indicator,
+              },
+            })}
+          </Ref>
+          <EventListener listener={this.outsideClickHandler} targetRef={documentRef} type="click" />
+        </>
       ) : null
 
     if (wrapper) {
@@ -280,16 +269,6 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     closeAllMenus: event => this.closeAllMenus(event, false),
     closeAllMenusAndFocusNextParentItem: event => this.closeAllMenus(event, true),
     closeMenu: event => this.closeMenu(event),
-  }
-
-  private updateOutsideClickSubscription() {
-    if (this.props.menu && this.state.menuOpen && this.outsideClickSubscription.isEmpty) {
-      setTimeout(() => {
-        this.outsideClickSubscription = EventStack.subscribe('click', this.outsideClickHandler)
-      })
-    } else {
-      this.outsideClickSubscription.unsubscribe()
-    }
   }
 
   private outsideClickHandler = e => {
