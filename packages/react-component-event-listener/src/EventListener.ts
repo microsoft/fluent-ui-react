@@ -7,18 +7,21 @@ import removeEventListener from './lib/removeEventListener'
 class EventListener extends React.PureComponent<EventListenerProps> {
   static displayName = 'EventListener'
   static propTypes = listenerPropTypes
+  static defaultProps = {
+    capture: false,
+  }
 
   componentDidMount() {
-    addEventListener(this.props.targetRef, this.props.type, this.handleEvent)
+    addEventListener(this.handleEvent, this.props as Required<EventListenerProps>)
   }
 
   componentDidUpdate(prevProps: EventListenerProps) {
-    removeEventListener(prevProps.targetRef, prevProps.type, this.handleEvent)
-    addEventListener(this.props.targetRef, this.props.type, this.handleEvent)
+    removeEventListener(this.handleEvent, prevProps as Required<EventListenerProps>)
+    addEventListener(this.handleEvent, this.props as Required<EventListenerProps>)
   }
 
   componentWillUnmount() {
-    removeEventListener(this.props.targetRef, this.props.type, this.handleEvent)
+    removeEventListener(this.handleEvent, this.props as Required<EventListenerProps>)
   }
 
   handleEvent = (e: Event) => this.props.listener(e)

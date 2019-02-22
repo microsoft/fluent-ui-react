@@ -34,4 +34,32 @@ describe('EventListener', () => {
     simulant.fire(document, 'click')
     expect(onClick).not.toHaveBeenCalled()
   })
+
+  describe('capture', () => {
+    it('passes "false" by default', () => {
+      const addEventListener = jest.spyOn(document, 'addEventListener')
+      const removeEventListener = jest.spyOn(document, 'removeEventListener')
+
+      const wrapper = mount(
+        <EventListener listener={() => {}} targetRef={documentRef} type="click" />,
+      )
+      wrapper.unmount()
+
+      expect(addEventListener).toHaveBeenCalledWith('click', expect.any(Function), false)
+      expect(removeEventListener).toHaveBeenCalledWith('click', expect.any(Function), false)
+    })
+
+    it('passes `capture` prop when it is defined', () => {
+      const addEventListener = jest.spyOn(document, 'addEventListener')
+      const removeEventListener = jest.spyOn(document, 'removeEventListener')
+
+      const wrapper = mount(
+        <EventListener capture listener={() => {}} targetRef={documentRef} type="click" />,
+      )
+      wrapper.unmount()
+
+      expect(addEventListener).toHaveBeenCalledWith('click', expect.any(Function), true)
+      expect(removeEventListener).toHaveBeenCalledWith('click', expect.any(Function), true)
+    })
+  })
 })
