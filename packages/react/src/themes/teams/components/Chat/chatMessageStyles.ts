@@ -50,6 +50,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
     ':hover': {
       [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
         opacity: 1,
+        width: 'auto',
       },
     },
   }),
@@ -62,6 +63,9 @@ const chatMessageStyles: ComponentSlotStylesInput<
     position: 'absolute',
     right: v.actionMenuPositionRight,
     top: v.actionMenuPositionTop,
+
+    // squash actions menu to prevent accidental hovers over its invisible area
+    width: 0,
   }),
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
