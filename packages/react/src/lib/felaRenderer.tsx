@@ -9,6 +9,7 @@ import { Renderer } from '../themes/types'
 
 const createRendererConfig = (options: any = {}) => ({
   devMode: process.env.NODE_ENV !== 'production',
+  selectorPrefix: '_', // https://github.com/rofrischmann/fela/issues/192
   plugins: [
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
