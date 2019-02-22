@@ -101,7 +101,6 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
     return {
       backgroundColor: v.backgroundColor,
       display: 'inline-block',
-      marginRight: v.marginRight,
       speak: 'none',
       verticalAlign: 'middle',
 

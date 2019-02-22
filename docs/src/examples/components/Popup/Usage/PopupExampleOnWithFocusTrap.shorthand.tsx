@@ -1,17 +1,17 @@
 import * as React from 'react'
-import { Button, Popup, popupFocusTrapBehavior } from '@stardust-ui/react'
+import { Button, Flex, Popup, popupFocusTrapBehavior } from '@stardust-ui/react'
 
 const contentWithButtons = {
   content: (
-    <>
+    <Flex gap="gap.small">
       <Button>First</Button>
       <Button primary>Second</Button>
-    </>
+    </Flex>
   ),
 }
 
 const PopupExampleOnWithFocusTrap = () => (
-  <div>
+  <Flex gap="gap.small">
     <Popup
       trigger={<Button icon="expand" content="Click" aria-label="Click button" />}
       content={contentWithButtons}
@@ -30,7 +30,7 @@ const PopupExampleOnWithFocusTrap = () => (
       accessibility={popupFocusTrapBehavior}
       on="focus"
     />
-  </div>
+  </Flex>
 )
 
 export default PopupExampleOnWithFocusTrap

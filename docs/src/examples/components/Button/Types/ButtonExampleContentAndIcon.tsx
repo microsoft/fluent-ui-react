@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { Button, Icon, Text } from '@stardust-ui/react'
+import { Button, Flex, Icon, Text } from '@stardust-ui/react'
 
 const ButtonExampleContentAndIcon = () => (
-  <div>
+  <Flex gap="gap.small">
     <Button icon iconPosition="before" primary>
       <Icon name="book" xSpacing="after" variables={{ color: 'white' }} />
       <Text content="Click me before" />
@@ -11,7 +11,7 @@ const ButtonExampleContentAndIcon = () => (
       <Text content="Click me after" />
       <Icon name="coffee" xSpacing="before" />
     </Button>
-  </div>
+  </Flex>
 )
 
 export default ButtonExampleContentAndIcon

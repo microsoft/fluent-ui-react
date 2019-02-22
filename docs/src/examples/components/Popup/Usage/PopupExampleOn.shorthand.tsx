@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { Button, Popup } from '@stardust-ui/react'
+import { Button, Flex, Popup } from '@stardust-ui/react'
 
 const PopupExampleOn = () => (
-  <div>
+  <Flex gap="gap.small">
     <Popup
       trigger={<Button icon="expand" content="Click" aria-label="Click button" />}
       content="Hello from popup on click!"
@@ -18,7 +18,7 @@ const PopupExampleOn = () => (
       content="Hello from popup on focus!"
       on="focus"
     />
-  </div>
+  </Flex>
 )
 
 export default PopupExampleOn

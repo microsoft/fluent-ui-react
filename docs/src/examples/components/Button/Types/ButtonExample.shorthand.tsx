@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { Button } from '@stardust-ui/react'
+import { Button, Flex } from '@stardust-ui/react'
 
 const ButtonExample = () => (
-  <div>
+  <Flex gap="gap.small">
     <Button content="Click here" />
     <Button content="See how this very long text shows up on the button" />
-  </div>
+  </Flex>
 )
 
 export default ButtonExample
