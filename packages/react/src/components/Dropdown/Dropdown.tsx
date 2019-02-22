@@ -101,7 +101,10 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   items?: ShorthandCollection
 
   /**
-   * Function to be passed to create string from selected item, if it's a shorthand object. Used when dropdown also has a search function.
+   * Function that converts an item to string. Used when dropdown has the search boolean prop set to true.
+   * By default, it:
+   * - returns the header property (if it exists on an item)
+   * - converts an item to string (if the item is a primitive)
    */
   itemToString?: (item: ShorthandValue) => string
 

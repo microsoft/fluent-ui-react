@@ -16,8 +16,8 @@ const dropdownSearchInputStyles: ComponentSlotStylesInput<
     backgroundColor: 'transparent',
     borderWidth: 0,
     ...(p.inline && {
-      paddingLeft: 0,
-      paddingRight: 0,
+      padding: 0,
+      lineHeight: 'initial',
     }),
   }),
 }
