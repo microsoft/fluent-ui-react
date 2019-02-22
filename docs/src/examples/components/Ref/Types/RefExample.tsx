@@ -23,7 +23,7 @@ class RefExample extends React.Component<{}, RefExampleState> {
     return (
       <Grid columns={2}>
         <Segment>
-          <Flex gap="gap.small">
+          <Flex gap="gap.smaller">
             <Ref innerRef={this.handleRef}>
               <Button primary>With functional ref</Button>
             </Ref>

@@ -2,8 +2,8 @@ import * as React from 'react'
 import { Button, Flex, Icon, Text } from '@stardust-ui/react'
 
 const ButtonExampleDisabled = () => (
-  <Flex column gap="gap.small">
-    <Flex gap="gap.small">
+  <Flex column gap="gap.smaller">
+    <Flex gap="gap.smaller">
       <Button disabled>Default</Button>
       <Button disabled primary>
         Primary

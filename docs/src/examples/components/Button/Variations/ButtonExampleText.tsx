@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Button, Flex, Icon, Text } from '@stardust-ui/react'
 
 const ButtonExampleText = () => (
-  <Flex gap="gap.small">
+  <Flex gap="gap.smaller">
     <Button text>
       <Icon name="book" xSpacing="after" />
       <Text content="Default" />

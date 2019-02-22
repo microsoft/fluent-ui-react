@@ -9,7 +9,7 @@ class AccordionPanelCustomContentExample extends React.Component {
         content: {
           key: 'animals',
           content: (
-            <Flex gap="gap.small">
+            <Flex gap="gap.smaller">
               <Button primary>Add pet</Button>
               <Button>Remove pet</Button>
             </Flex>

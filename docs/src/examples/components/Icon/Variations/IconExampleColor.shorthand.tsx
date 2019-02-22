@@ -5,13 +5,13 @@ import { Flex, Icon, Grid, Text, ProviderConsumer } from '@stardust-ui/react'
 const IconExampleColor = () => (
   <Grid columns="repeat(4, auto)" styles={{ alignItems: 'center' }} variables={{ gridGap: '10px' }}>
     <Text content="INHERITED COLOR:" weight="bold" />
-    <Flex gap="gap.small" style={{ color: 'violet' }}>
+    <Flex gap="gap.smaller" style={{ color: 'violet' }}>
       <Icon name="calendar" bordered />
       <Icon name="call" bordered />
       <Icon name="call-video" bordered />
     </Flex>
     <Text content="INHERITED COLOR FOR OUTLINED ICONS:" weight="bold" />
-    <Flex gap="gap.small" style={{ color: 'yellowgreen' }}>
+    <Flex gap="gap.smaller" style={{ color: 'yellowgreen' }}>
       <Icon name="calendar" bordered variables={{ outline: true }} />
       <Icon name="call" bordered variables={{ outline: true }} />
       <Icon name="call-video" bordered variables={{ outline: true }} />
@@ -19,7 +19,7 @@ const IconExampleColor = () => (
     <Text weight="bold">
       USING THE <code>color</code> VARIABLE:
     </Text>
-    <Flex gap="gap.small">
+    <Flex gap="gap.smaller">
       <Icon name="calendar" bordered variables={{ color: 'violet' }} />
       <Icon name="call" bordered variables={{ color: 'yellowgreen' }} />
       <Icon name="call-video" bordered variables={{ color: 'cornflowerblue' }} />
@@ -27,7 +27,7 @@ const IconExampleColor = () => (
     <Text weight="bold">
       USING THE <code>borderColor</code> VARIABLE:
     </Text>
-    <Flex gap="gap.small">
+    <Flex gap="gap.smaller">
       <Icon
         name="calendar"
         bordered
@@ -49,7 +49,7 @@ const IconExampleColor = () => (
     </Text>
     <ProviderConsumer
       render={({ siteVariables: { emphasisColors, naturalColors } }) => (
-        <Flex gap="gap.small">
+        <Flex gap="gap.smaller">
           {_.take(_.keys({ ...emphasisColors, ...naturalColors }), 3).map(color => (
             <Icon key={color} name="call" bordered color={color} />
           ))}

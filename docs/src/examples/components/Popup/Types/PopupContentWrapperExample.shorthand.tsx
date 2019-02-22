@@ -8,7 +8,7 @@ const PopupContentWrapperExample = () => {
   }
 
   return (
-    <Flex gap="gap.small">
+    <Flex gap="gap.smaller">
       <Popup
         content={<p style={plainContentStyle}>Plain popup content rendered 'as is'.</p>}
         trigger={<Button icon="expand" content="Popup with plain content" />}

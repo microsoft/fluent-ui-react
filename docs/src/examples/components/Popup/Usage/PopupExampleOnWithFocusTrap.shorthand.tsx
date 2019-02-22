@@ -3,7 +3,7 @@ import { Button, Flex, Popup, popupFocusTrapBehavior } from '@stardust-ui/react'
 
 const contentWithButtons = {
   content: (
-    <Flex gap="gap.small">
+    <Flex gap="gap.smaller">
       <Button>First</Button>
       <Button primary>Second</Button>
     </Flex>
@@ -11,7 +11,7 @@ const contentWithButtons = {
 }
 
 const PopupExampleOnWithFocusTrap = () => (
-  <Flex gap="gap.small">
+  <Flex gap="gap.smaller">
     <Popup
       trigger={<Button icon="expand" content="Click" aria-label="Click button" />}
       content={contentWithButtons}

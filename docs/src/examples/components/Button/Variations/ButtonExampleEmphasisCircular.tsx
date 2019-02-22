@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Button, Flex, Icon } from '@stardust-ui/react'
 
 const ButtonExampleEmphasisCircular = () => (
-  <Flex gap="gap.small">
+  <Flex gap="gap.smaller">
     <Button circular icon primary>
       <Icon name="coffee" xSpacing="none" />
     </Button>

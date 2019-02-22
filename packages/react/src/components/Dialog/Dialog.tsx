@@ -212,7 +212,7 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
             },
             overrideProps: {
               content: (
-                <Flex gap="gap.small" hAlign="end">
+                <Flex gap="gap.smaller" hAlign="end">
                   {Button.create(cancelButton, { overrideProps: this.handleCancelButtonOverrides })}
                   {Button.create(confirmButton, {
                     defaultProps: {
