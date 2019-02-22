@@ -13,7 +13,9 @@ interface MentionsWithDropdownState {
 }
 
 const editorStyle: React.CSSProperties = {
-  backgroundColor: 'lightgrey',
+  backgroundColor: '#eee',
+  borderRadius: '5px',
+  border: '1px dashed grey',
   padding: '5px',
   minHeight: '100px',
   outline: 0,
@@ -61,7 +63,7 @@ class MentionsWithDropdown extends React.Component<{}, MentionsWithDropdownState
   }
 
   private handleEditorKeyUp = (e: React.KeyboardEvent) => {
-    if (!this.state.dropdownOpen && keyboardKey.getCode(e) === keyboardKey.AtSign) {
+    if (!this.state.dropdownOpen && e.shiftKey && keyboardKey.getCode(e) === keyboardKey.AtSign) {
       this.setState({ dropdownOpen: true })
     }
   }

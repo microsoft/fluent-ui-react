@@ -2,11 +2,11 @@ import * as React from 'react'
 import { Box, Header, Segment } from '@stardust-ui/react'
 
 interface PrototypeSectionProps {
-  title?: string
+  title?: React.ReactNode
 }
 
 interface ComponentPrototypeProps extends PrototypeSectionProps {
-  description?: string
+  description?: React.ReactNode
 }
 
 export const PrototypeSection: React.FC<ComponentPrototypeProps> = props => (

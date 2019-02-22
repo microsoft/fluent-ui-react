@@ -30,7 +30,7 @@ export const insertSpanAtCursorPosition = (id: string) => {
 
 export const insertTextAtCursorPosition = (text: string) => {
   if (!text) {
-    throw '[insertTextAtCursorPosition]: text must be supplied'
+    return null
   }
 
   const range = getRangeAtCursorPosition()

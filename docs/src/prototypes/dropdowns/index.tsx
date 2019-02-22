@@ -13,7 +13,7 @@ export default () => (
     </ComponentPrototype>
     <ComponentPrototype
       title="Input with Dropdown"
-      description="Use the '@' key to mention people."
+      description="Type text into editable area below. Use the '@' key to mention people."
     >
       <MentionsWithDropdown />
     </ComponentPrototype>
