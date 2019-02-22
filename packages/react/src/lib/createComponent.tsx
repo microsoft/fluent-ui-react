@@ -12,17 +12,17 @@ export interface CreateComponentConfig<P> {
   shorthandPropName?: string
   defaultProps?: Partial<P>
   handledProps?: string[]
-  propTypes?: React.ValidationMap<P>
+  propTypes?: React.WeakValidationMap<P>
   actionHandlers?: AccessibilityActionHandlers
   focusZoneRef?: (focusZone: FocusZone) => void
   render: (config: RenderResultConfig<P>, props: P) => React.ReactNode
 }
 
-export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
+export type CreateComponentReturnType<P> = React.FC<P> & {
   create: Function
 }
 
-const createComponent = <P extends {} = {}, S extends {} = {}>({
+const createComponent = <P extends {} = {}>({
   displayName = 'StardustComponent',
   className = 'ui-stardust-component',
   shorthandPropName = 'children',

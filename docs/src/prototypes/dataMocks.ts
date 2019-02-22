@@ -7,8 +7,12 @@ interface AtMentionItem {
   content: string
 }
 
+const getUserName = () => `${name.firstName()} ${name.lastName()}`
+
+export const getUserNames = (userCount: number): string[] => _.times(userCount, getUserName)
+
 export const atMentionItems: AtMentionItem[] = _.times(10, () => ({
-  header: `${name.firstName()} ${name.lastName()}`,
+  header: getUserName(),
   image: internet.avatar(),
   content: name.title(),
 }))

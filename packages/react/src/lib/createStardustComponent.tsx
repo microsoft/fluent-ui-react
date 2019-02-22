@@ -13,18 +13,20 @@ export interface RenderStardustResultConfig {
 
 export interface CreateStardustComponentConfig<P> {
   displayName: string
-  render: (props: P & { stardust: RenderStardustResultConfig }) => React.ReactNode
+  render: (
+    props: P & React.HTMLAttributes<HTMLElement> & { stardust: RenderStardustResultConfig },
+  ) => React.ReactNode
   defaultProps?: any
   actionHandlers?: AccessibilityActionHandlers
 }
 
-const createComponent = <P extends {} = {}, S extends {} = {}>({
+const createComponent = <P extends {} = {}>({
   displayName,
   render,
   defaultProps,
   actionHandlers,
 }: CreateStardustComponentConfig<P>): React.SFC<P> => {
-  return createComponentInternal<P, S>({
+  return createComponentInternal<P>({
     displayName,
     render: (config, props) => {
       const filteredConfig = _.pick(config, ['accessibility', 'classes', 'rtl', 'styles'])

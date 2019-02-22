@@ -343,6 +343,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'controlmessage',
+        content: 'Control Messages',
+        as: NavLink,
+        to: '/prototype-control-messages',
+        styles: menuItemStyles,
+      },
+      {
         key: 'dropdowns',
         content: 'Dropdowns',
         as: NavLink,

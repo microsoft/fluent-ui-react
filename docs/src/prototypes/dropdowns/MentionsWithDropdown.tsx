@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
 import { Dropdown, DropdownProps } from '@stardust-ui/react'
 
-import { atMentionItems } from './dataMocks'
+import { atMentionItems } from '../dataMocks'
 import { insertTextAtCursorPosition } from './utils'
 import { PortalAtCursorPosition } from './PortalAtCursorPosition'
 
