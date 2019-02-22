@@ -13,18 +13,18 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         // focus styles
         ...(isFromKeyboard && {
           color: variables.activeColor,
-          background: variables.activeBackgroundColor,
+          background: variables.focusedBackgroundColor,
         }),
 
         ...(active && {
           color: variables.activeColor,
-          background: variables.selectedBackgroundColor,
+          background: variables.activeBackgroundColor,
         }),
 
         // hover styles
         ':hover': {
           color: variables.activeColor,
-          background: variables.activeBackgroundColor,
+          background: variables.focusedBackgroundColor,
         },
       }),
     }
