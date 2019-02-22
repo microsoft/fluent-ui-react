@@ -48,7 +48,7 @@ const getFocusedStyles = ({
   variables: MenuVariables
   color: string
 }): ICSSInJSStyle => {
-  const { primary, underlined, isFromKeyboard, active, vertical } = props
+  const { primary, underlined, isFromKeyboard, active, vertical, pointing } = props
   if (active && !underlined && !vertical) return {}
   return {
     ...(underlined && !isFromKeyboard
@@ -65,7 +65,7 @@ const getFocusedStyles = ({
           background: v.hoverBackgroundColor,
         }),
 
-    ...(vertical && isFromKeyboard
+    ...(vertical && isFromKeyboard && !pointing
       ? {
           border: v.focusedBorder,
           background: v.focusedBackgroundColor,
@@ -191,7 +191,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       ...(underlined && {
         display: 'flex',
         alignItems: 'center',
-        height: pxToRem(28),
+        height: pxToRem(29),
         lineHeight: v.lineHeightBase,
         padding: `0 ${pxToRem(4)}`,
         margin: `0 ${pxToRem(4)} 0 0`,
