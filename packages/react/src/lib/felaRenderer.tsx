@@ -12,7 +12,7 @@ import { Renderer } from '../themes/types'
 const blacklistedClassNames = ['fa', 'fas', 'far', 'fal', 'fab']
 
 const filterClassName = (className: string): boolean =>
-  blacklistedClassNames.indexOf(className) === -1
+  className.indexOf('ad') === -1 && blacklistedClassNames.indexOf(className) === -1
 
 const createRendererConfig = (options: any = {}) => ({
   devMode: process.env.NODE_ENV !== 'production',
