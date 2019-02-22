@@ -7,6 +7,7 @@ import { isConformant } from 'test/specs/commonTests'
 describe('Provider', () => {
   isConformant(Provider, {
     requiredProps: { theme: {}, children: <div>children</div> },
+    hasAccessibilityProp: false,
     nestingLevel: 4, // ProviderConsumer -> FelaTheme -> RendererProvider -> ThemeProvider -> ElementType
   })
 
