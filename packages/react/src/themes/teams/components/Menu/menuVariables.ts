@@ -46,16 +46,16 @@ export default (siteVars: any): MenuVariables => {
 
     hoverBackgroundColor: siteVars.gray14,
 
-    activeColor: siteVars.black,
+    activeColor: siteVars.colors.black,
     activeBackgroundColor: siteVars.gray10,
-    iconOnlyActiveColor: siteVars.brand06,
+    iconOnlyActiveColor: siteVars.colors.primary[500],
 
     primaryActiveColor: siteVars.colors.white,
     primaryActiveBackgroundColor: siteVars.brand08,
     primaryActiveBorderColor: siteVars.colors.primary[500],
 
-    primaryFocusedColor: siteVars.white,
-    primaryFocusedBackgroundColor: siteVars.brand12,
+    primaryFocusedColor: siteVars.colors.white,
+    primaryFocusedBackgroundColor: siteVars.colors.primary[200],
 
     primaryBorderColor: siteVars.gray10,
     primaryHoverBorderColor: siteVars.gray08,

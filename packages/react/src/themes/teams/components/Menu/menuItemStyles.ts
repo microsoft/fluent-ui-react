@@ -191,7 +191,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       ...(underlined && {
         display: 'flex',
         alignItems: 'center',
-        height: pxToRem(29),
+        height: pxToRem(28),
         lineHeight: v.lineHeightBase,
         padding: `0 ${pxToRem(4)}`,
         margin: `0 ${pxToRem(4)} 0 0`,

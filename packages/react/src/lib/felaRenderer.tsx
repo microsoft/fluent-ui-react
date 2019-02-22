@@ -16,6 +16,7 @@ const filterClassName = (className: string): boolean =>
 
 const createRendererConfig = (options: any = {}) => ({
   devMode: process.env.NODE_ENV !== 'production',
+  selectorPrefix: '_',
   plugins: [
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
