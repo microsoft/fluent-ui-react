@@ -91,6 +91,7 @@ class Animation extends UIComponent<ReactPropsStrict<AnimationProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       animated: false,
       content: false,
       children: 'element',

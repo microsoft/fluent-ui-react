@@ -182,6 +182,7 @@ export {
   default as popupFocusTrapBehavior,
 } from './lib/accessibility/Behaviors/Popup/popupFocusTrapBehavior'
 export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
+export { default as statusBehavior } from './lib/accessibility/Behaviors/Status/statusBehavior'
 
 //
 // Utilities
@@ -202,5 +203,9 @@ export {
 } from './lib'
 export { ShorthandRenderer } from './types'
 
+//
+// FocusZone
+//
 import { getFirstTabbable, getLastTabbable } from './lib/accessibility/FocusZone/focusUtilities'
-export const focusZoneUtilities = { getFirstTabbable, getLastTabbable }
+export const FocusZoneUtilities = { getFirstTabbable, getLastTabbable }
+export { FocusZoneDirection, FocusZoneProps } from './lib/accessibility/FocusZone/FocusZone.types'
