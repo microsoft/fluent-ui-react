@@ -65,8 +65,6 @@ class MenuButtonPrototype extends React.Component<{}, MenuButtonPrototypeState> 
                   'W3C Web Accessibility Initiative',
                   'Accessible Rich Internet Application Specification',
                   'WAI-ARIA Authoring Practices',
-                  'WAI-ARIA Implementation Guide',
-                  'Accessible Name and Description',
                 ],
               }}
               menuId="menu-example1"

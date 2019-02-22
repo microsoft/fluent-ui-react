@@ -177,7 +177,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
                     defaultProps: {
                       ...accessibilityBehavior.attributes.menu,
                       'data-placement': placement,
-                      styles: { background: '#fff' },
+                      styles: { background: '#fff', zIndex: 1 },
                       vertical: true,
                     },
                     overrideProps: {

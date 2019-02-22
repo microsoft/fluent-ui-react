@@ -2,9 +2,8 @@ import { createComponent } from '@stardust-ui/react'
 import * as React from 'react'
 
 export interface MenuButtonWrapperProps {
-  [p: string]: any
-
   children: React.ReactNode
+  onKeyDown: (e: React.KeyboardEvent) => void
 }
 
 const menuButtonWrapperStyles = {
@@ -17,11 +16,11 @@ const MenuButtonWrapper = createComponent<MenuButtonWrapperProps>({
   defaultProps: {
     styles: menuButtonWrapperStyles,
   },
-  render: ({ children, stardust, ...rest }) => {
+  render: ({ children, stardust, onKeyDown }) => {
     const { classes } = stardust
 
     return (
-      <div {...rest} className={classes.root}>
+      <div className={classes.root} onKeyDown={onKeyDown}>
         {children}
       </div>
     )
