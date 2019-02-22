@@ -108,7 +108,6 @@ class RadioGroupItem extends AutoControlledComponent<
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -160,6 +159,7 @@ class RadioGroupItem extends AutoControlledComponent<
           {Icon.create(icon || '', {
             defaultProps: {
               circular: true,
+              bordered: true,
               size: 'smaller',
               styles: styles.icon,
             },

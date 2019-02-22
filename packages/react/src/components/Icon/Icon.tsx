@@ -63,7 +63,6 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
       content: false,
       color: true,
     }),
-    accessibility: PropTypes.func,
     bordered: PropTypes.bool,
     circular: PropTypes.bool,
     disabled: PropTypes.bool,

@@ -203,5 +203,9 @@ export {
 } from './lib'
 export { ShorthandRenderer } from './types'
 
+//
+// FocusZone
+//
 import { getFirstTabbable, getLastTabbable } from './lib/accessibility/FocusZone/focusUtilities'
-export const focusZoneUtilities = { getFirstTabbable, getLastTabbable }
+export const FocusZoneUtilities = { getFirstTabbable, getLastTabbable }
+export { FocusZoneDirection, FocusZoneProps } from './lib/accessibility/FocusZone/FocusZone.types'
