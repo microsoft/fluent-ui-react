@@ -16,10 +16,10 @@ const chatMessageStyles: ComponentSlotStylesInput<
     display: 'inline-block',
     position: 'relative',
 
-    marginLeft: p.mine ? '10rem' : 0,
-    marginRight: !p.mine ? '10rem' : 0,
-    maxWidth: 'calc(100% - 10rem)',
-    minWidth: '10rem',
+    marginLeft: p.mine ? pxToRem(140) : 0,
+    marginRight: !p.mine ? pxToRem(140) : 0,
+    maxWidth: `calc(100% - ${pxToRem(140)})`,
+    minWidth: pxToRem(140),
 
     paddingLeft: v.padding,
     paddingRight: v.padding,
