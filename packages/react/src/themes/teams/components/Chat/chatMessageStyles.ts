@@ -65,6 +65,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
   }),
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    marginTop: pxToRem(5),
     ...(p.mine && screenReaderContainerStyles),
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
@@ -73,6 +74,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
   }),
 
   timestamp: ({ variables: v }) => ({
+    marginTop: pxToRem(5),
     marginBottom: v.headerMarginBottom,
     float: 'left',
   }),
