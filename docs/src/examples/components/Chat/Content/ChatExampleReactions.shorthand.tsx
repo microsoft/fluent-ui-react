@@ -3,11 +3,11 @@ import * as React from 'react'
 
 const reactions = [
   {
-    icon: 'like',
+    icon: 'thumbs up',
     count: 5,
   },
   {
-    icon: 'like',
+    icon: 'thumbs down',
     count: '1K',
   },
 ]
@@ -36,7 +36,7 @@ const items = [
     message: {
       content: (
         <Chat.Message
-          reactions={[{ icon: 'book', count: '8' }]}
+          reactions={[{ icon: 'thumbs up', count: '8' }]}
           reactionsPosition={'end'}
           content="I'm back!"
           author="John Doe"

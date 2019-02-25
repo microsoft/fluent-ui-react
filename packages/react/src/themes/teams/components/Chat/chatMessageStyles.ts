@@ -108,7 +108,6 @@ const chatMessageStyles: ComponentSlotStylesInput<
   },
   reactions: ({ variables: v }) => ({
     marginLeft: v.reactionsMarginLeft,
-    top: '-5px',
     float: 'right',
   }),
 }
