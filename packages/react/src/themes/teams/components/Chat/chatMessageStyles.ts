@@ -59,13 +59,14 @@ const chatMessageStyles: ComponentSlotStylesInput<
     backgroundColor: v.backgroundColor,
     borderRadius: v.borderRadius,
     boxShadow: v.actionMenuBoxShadow,
-    opacity: p.focused ? 1 : 0,
     position: 'absolute',
     right: v.actionMenuPositionRight,
     top: v.actionMenuPositionTop,
+    overflow: 'hidden',
 
     // squash actions menu to prevent accidental hovers over its invisible area
-    width: 0,
+    width: p.focused ? 'auto' : 0,
+    opacity: p.focused ? 1 : 0,
   }),
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
