@@ -184,6 +184,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
       children,
       content,
       timestamp,
+      reactions,
       reactionsPosition,
     } = this.props
     const childrenPropExists = childrenExist(children)
@@ -236,7 +237,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
               },
             })}
 
-            {reactionsPosition === 'start' && this.renderReactions(styles)}
+            {reactionsPosition === 'start' && reactions && this.renderReactions(styles)}
 
             {Box.create(content, {
               defaultProps: {
@@ -245,7 +246,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
               },
             })}
 
-            {reactionsPosition === 'end' && this.renderReactions(styles)}
+            {reactionsPosition === 'end' && reactions && this.renderReactions(styles)}
 
             {badgePosition === 'end' && badgeElement}
           </>
