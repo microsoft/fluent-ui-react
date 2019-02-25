@@ -67,7 +67,7 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
   renderComponent({ accessibility, ElementType, classes, unhandledProps, variables, styles }) {
     const { icon } = this.props as StatusProps
     return (
-      <ElementType {...unhandledProps} className={classes.root} {...accessibility.attributes.root}>
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
         {Icon.create(icon, {
           defaultProps: {
             size: 'smallest',
