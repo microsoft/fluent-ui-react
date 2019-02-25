@@ -12,59 +12,55 @@ const chatMessageStyles: ComponentSlotStylesInput<
   ChatMessageProps & ChatMessageState,
   ChatMessageVariables
 > = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const marginOffset = pxToRem(100)
+  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    display: 'inline-block',
+    position: 'relative',
 
-    return {
-      display: 'inline-block',
-      position: 'relative',
+    marginLeft: p.mine ? v.offset : 0,
+    marginRight: !p.mine ? v.offset : 0,
+    maxWidth: `calc(100% - ${v.offset})`,
+    minWidth: v.offset,
 
-      marginLeft: p.mine ? marginOffset : 0,
-      marginRight: !p.mine ? marginOffset : 0,
-      maxWidth: `calc(100% - ${marginOffset})`,
-      minWidth: marginOffset,
+    paddingLeft: v.padding,
+    paddingRight: v.padding,
+    paddingTop: pxToRem(8),
+    paddingBottom: pxToRem(10),
 
-      paddingLeft: v.padding,
-      paddingRight: v.padding,
-      paddingTop: pxToRem(8),
-      paddingBottom: pxToRem(10),
+    borderRadius: v.borderRadius,
+    border: v.border,
+    outline: 0,
 
-      borderRadius: v.borderRadius,
-      border: v.border,
-      outline: 0,
+    color: v.color,
+    backgroundColor: p.mine ? v.backgroundColorMine : v.backgroundColor,
 
-      color: v.color,
-      backgroundColor: p.mine ? v.backgroundColorMine : v.backgroundColor,
+    wordBreak: 'break-word',
+    wordWrap: 'break-word',
 
-      wordBreak: 'break-word',
-      wordWrap: 'break-word',
+    ...((v.hasMention || v.isImportant) && {
+      '::before': {
+        content: '""',
+        backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
+        height: '100%',
+        left: '0',
+        position: 'absolute',
+        top: '0',
+        width: pxToRem(3),
+        borderBottomLeftRadius: 'inherit',
+        borderTopLeftRadius: 'inherit',
+      },
+    }),
 
-      ...((v.hasMention || v.isImportant) && {
-        '::before': {
-          content: '""',
-          backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
-          height: '100%',
-          left: '0',
-          position: 'absolute',
-          top: '0',
-          width: pxToRem(3),
-          borderBottomLeftRadius: 'inherit',
-          borderTopLeftRadius: 'inherit',
-        },
+    ':focus': {
+      ...(p.isFromKeyboard && {
+        outline: `.2rem solid ${v.contentFocusOutlineColor}`,
       }),
-
-      ':focus': {
-        ...(p.isFromKeyboard && {
-          outline: `.2rem solid ${v.contentFocusOutlineColor}`,
-        }),
+    },
+    ':hover': {
+      [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
+        opacity: 1,
       },
-      ':hover': {
-        [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
-          opacity: 1,
-        },
-      },
-    }
-  },
+    },
+  }),
 
   actionMenu: ({ props: p, variables: v }): ICSSInJSStyle => ({
     backgroundColor: v.backgroundColor,

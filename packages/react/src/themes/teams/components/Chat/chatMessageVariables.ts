@@ -8,6 +8,7 @@ export interface ChatMessageVariables {
   backgroundColorMine: string
   borderRadius: string
   color: string
+  offset: string
   padding: string
   authorMarginRight: string
   authorFontWeight: number
@@ -30,6 +31,7 @@ export default (siteVars): ChatMessageVariables => ({
   backgroundColorMine: '#E5E5F1',
   borderRadius: pxToRem(3),
   color: 'rgb(64, 64, 64)',
+  offset: pxToRem(100),
   padding: pxToRem(16),
   authorMarginRight: pxToRem(12),
   authorFontWeight: siteVars.fontWeightBold,
