@@ -336,13 +336,9 @@ export default (Component, options: Conformant = {}) => {
       expect(element.prop('role')).toBe(role)
     })
 
-    test('attributes passed by consumer has more weight', () => {
-      const wrapper = mount(
-        <Component
-          {...{ ...requiredProps, [IS_FOCUSABLE_ATTRIBUTE]: false }}
-          accessibility={noopBehavior}
-        />,
-      )
+    test("client's attributes override the ones provided by Stardust", () => {
+      const wrapperProps = { ...requiredProps, [IS_FOCUSABLE_ATTRIBUTE]: false }
+      const wrapper = mount(<Component {...wrapperProps} accessibility={noopBehavior} />)
       const element = getComponent(wrapper)
 
       expect(element.prop(IS_FOCUSABLE_ATTRIBUTE)).toBe(false)
