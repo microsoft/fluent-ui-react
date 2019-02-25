@@ -42,7 +42,7 @@ export default (siteVars: any): MenuVariables => {
     borderColor: siteVars.gray08,
 
     focusedBorder: `solid ${pxToRem(1)} ${siteVars.gray03}`,
-    focusedBackgroundColor: siteVars.gray14,
+    focusedBackgroundColor: siteVars.gray09,
 
     hoverBackgroundColor: siteVars.gray14,
 
