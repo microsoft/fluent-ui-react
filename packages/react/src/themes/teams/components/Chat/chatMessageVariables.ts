@@ -4,7 +4,6 @@ export interface ChatMessageVariables {
   actionMenuBoxShadow: string
   actionMenuPositionRight: string
   actionMenuPositionTop: string
-  width: string
   backgroundColor: string
   backgroundColorMine: string
   borderRadius: string
@@ -26,7 +25,6 @@ export default (siteVars): ChatMessageVariables => ({
   actionMenuBoxShadow: siteVars.shadowLevel1,
   actionMenuPositionRight: pxToRem(5),
   actionMenuPositionTop: pxToRem(-30),
-  width: '100%',
   backgroundColor: siteVars.colors.white,
   backgroundColorMine: '#E5E5F1',
   borderRadius: pxToRem(3),
