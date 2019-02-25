@@ -103,6 +103,11 @@ const chatMessageStyles: ComponentSlotStylesInput<
     marginLeft: v.reactionsMarginLeft,
     float: 'right',
   }),
+  reaction: {
+    ':not(:last-child)': {
+      marginRight: pxToRem(8),
+    },
+  },
 }
 
 export default chatMessageStyles

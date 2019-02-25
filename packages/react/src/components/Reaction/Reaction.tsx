@@ -16,6 +16,11 @@ import Icon from 'src/components/Icon/Icon'
 import Text from '../Text/Text'
 import { createShorthandFactory } from 'src/lib/factories'
 
+export interface ReactionSlotClassNames {
+  icon: string
+  count: string
+}
+
 export interface ReactionProps extends UIComponentProps<ReactionProps>, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -37,6 +42,8 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>, any> {
   static create: Function
 
   static className = 'ui-reaction'
+
+  static slotClassNames: ReactionSlotClassNames
 
   static displayName = 'Reaction'
 
@@ -68,10 +75,16 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>, any> {
         ) : (
           <>
             {Icon.create(icon, {
-              defaultProps: { styles: styles.icon },
+              defaultProps: {
+                className: Reaction.slotClassNames.icon,
+                styles: styles.icon,
+              },
             })}
             {Text.create(count, {
-              defaultProps: { styles: styles.count },
+              defaultProps: {
+                className: Reaction.slotClassNames.count,
+                styles: styles.count,
+              },
             })}
           </>
         )}
@@ -81,5 +94,9 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>, any> {
 }
 
 Reaction.create = createShorthandFactory(Reaction, 'count')
+Reaction.slotClassNames = {
+  icon: `${Reaction.className}__icon`,
+  count: `${Reaction.className}__count`,
+}
 
 export default Reaction
