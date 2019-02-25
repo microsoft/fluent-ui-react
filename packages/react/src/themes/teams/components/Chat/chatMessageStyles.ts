@@ -62,7 +62,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
     position: 'absolute',
     right: v.actionMenuPositionRight,
     top: v.actionMenuPositionTop,
-    overflow: 'hidden',
+    overflow: p.focused ? 'visible' : 'hidden',
 
     // squash actions menu to prevent accidental hovers over its invisible area
     width: p.focused ? 'auto' : 0,
