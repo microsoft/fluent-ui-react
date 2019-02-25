@@ -803,9 +803,15 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private handleClear = (e: React.SyntheticEvent<HTMLElement>) => {
-    const initialState = this.getInitialAutoControlledState(this.props)
+    const { defaultHighlightedIndex, searchQuery, value } = this.getInitialAutoControlledState(
+      this.props,
+    )
 
-    this.trySetStateAndInvokeHandler('onSelectedChange', e, { value: initialState.value })
+    this.trySetStateAndInvokeHandler('onSelectedChange', e, {
+      defaultHighlightedIndex,
+      searchQuery,
+      value,
+    })
     this.tryFocusSearchInput()
     this.tryFocusTriggerButton()
   }
