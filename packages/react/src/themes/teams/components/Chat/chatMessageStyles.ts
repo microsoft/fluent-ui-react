@@ -76,6 +76,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
     ...(p.mine && screenReaderContainerStyles),
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
+    fontWeight: v.authorFontWeight,
   }),
 
   timestamp: ({ variables: v }) => ({
