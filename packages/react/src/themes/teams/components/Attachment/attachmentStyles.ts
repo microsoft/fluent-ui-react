@@ -4,7 +4,7 @@ import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../lib'
 
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
-  root: ({ props, variables: v }): ICSSInJSStyle => ({
+  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
@@ -18,13 +18,13 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
 
     outline: 0,
 
-    ...(props.isFromKeyboard && {
+    ...(p.isFromKeyboard && {
       ':focus': {
         outline: `.2rem solid ${v.focusOutlineColor}`,
       },
     }),
 
-    ...((props.actionable || props.onClick) && {
+    ...((p.actionable || p.onClick) && {
       cursor: 'pointer',
 
       ':hover': {
@@ -60,13 +60,13 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     flex: '0 0 auto',
   }),
 
-  progress: ({ props, variables: v }): ICSSInJSStyle => ({
+  progress: ({ props: p, variables: v }): ICSSInJSStyle => ({
     transition: 'width 0.2s',
     position: 'absolute',
     display: 'block',
     bottom: 0,
     left: 0,
-    width: `${props.progress}%`,
+    width: `${p.progress}%`,
     maxWidth: '100%',
     height: pxToRem(v.progressHeight),
     background: v.progressColor,
