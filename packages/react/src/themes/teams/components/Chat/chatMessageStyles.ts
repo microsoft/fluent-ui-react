@@ -68,19 +68,14 @@ const chatMessageStyles: ComponentSlotStylesInput<
     ...(p.mine && screenReaderContainerStyles),
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
-    float: 'left',
-    clear: 'left',
   }),
 
   timestamp: ({ variables: v }) => ({
     marginBottom: v.headerMarginBottom,
-    float: 'left',
   }),
 
-  content: ({ variables: v }): ICSSInJSStyle => ({
-    display: 'block',
-    float: 'left',
-    clear: 'left',
+  content: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    display: p.reactions && p.reactionsPosition === 'end' ? 'inline-block' : 'block',
     '& a:focus': {
       outline: 'none',
       color: v.contentFocusOutlineColor,
