@@ -71,7 +71,7 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>, any> {
               defaultProps: { styles: styles.icon },
             })}
             {Text.create(count, {
-              defaultProps: { styles: styles.icon },
+              defaultProps: { styles: styles.count },
             })}
           </>
         )}
