@@ -12,7 +12,7 @@ type MenuPropsAndState = MenuProps & MenuState
 
 export default {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { iconOnly, fluid, pointing, pills, primary, underlined, vertical } = props
+    const { iconOnly, fluid, pointing, pills, primary, underlined, vertical, submenu } = props
 
     const solidBorder = (color: string) => ({
       border: `${variables.borderWidth} solid ${color}`,
@@ -27,9 +27,9 @@ export default {
       ...(iconOnly && { alignItems: 'center' }),
       ...(vertical && {
         flexDirection: 'column',
-        boxShadow: variables.verticalBoxShadow,
         backgroundColor: variables.verticalBackgroundColor,
         padding: `${pxToRem(8)} 0`,
+        ...(submenu && { boxShadow: variables.verticalBoxShadow }),
         ...(!fluid && { width: pxToRem(200) }),
         ...(iconOnly && {
           display: 'inline-block',
