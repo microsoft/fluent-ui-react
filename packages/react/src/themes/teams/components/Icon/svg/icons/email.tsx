@@ -23,5 +23,4 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'email',
 } as TeamsProcessedSvgIconSpec
