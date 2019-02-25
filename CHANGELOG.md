@@ -36,6 +36,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix conflicts of generated names in Fela with FontAwesome @layershifter ([#951](https://github.com/stardust-ui/react/pull/951))
 - Call callbacks after the clear action in `Input` and `Dropdown` @layershifter ([#956](https://github.com/stardust-ui/react/pull/956))
 - Fix `ChatMessage` styles for Teams theme @kuzhelov ([#962](https://github.com/stardust-ui/react/pull/962))
+- Fix the order of applied props in `Status` component @layershifter ([#961](https://github.com/stardust-ui/react/pull/961))
 
 ### Documentation
 - Add `Editable Area with Dropdown` prototype for mentioning people using `@` character (only available in development mode) @Bugaa92 ([#931](https://github.com/stardust-ui/react/pull/931))
