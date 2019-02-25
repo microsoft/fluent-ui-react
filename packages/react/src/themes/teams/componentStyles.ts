@@ -57,6 +57,8 @@ export { default as RadioGroupItem } from './components/RadioGroup/radioGroupIte
 
 export { default as Segment } from './components/Segment/segmentStyles'
 
+export { default as Reaction } from './components/Reaction/reactionStyles'
+
 export { default as Status } from './components/Status/statusStyles'
 
 export { default as Text } from './components/Text/textStyles'

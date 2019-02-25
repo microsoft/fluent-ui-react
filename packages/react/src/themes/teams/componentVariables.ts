@@ -46,6 +46,8 @@ export { default as PopupContent } from './components/Popup/popupContentVariable
 
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemVariables'
 
+export { default as Reaction } from './components/Reaction/reactionVariables'
+
 export { default as Segment } from './components/Segment/segmentVariables'
 
 export { default as Status } from './components/Status/statusVariables'

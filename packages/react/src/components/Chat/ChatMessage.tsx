@@ -16,7 +16,7 @@ import {
   isFromKeyboard,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { ReactProps, ShorthandValue, ComponentEventHandler, ShorthandCollection } from '../../types'
 import { chatMessageBehavior, toolbarBehavior } from '../../lib/accessibility'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
@@ -25,6 +25,8 @@ import Box from '../Box/Box'
 import Label from '../Label/Label'
 import Menu from '../Menu/Menu'
 import Text from '../Text/Text'
+import { ComponentSlotStylesPrepared } from 'src/themes/types'
+import Reaction from 'src/components/Reaction/Reaction'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string
@@ -75,6 +77,11 @@ export interface ChatMessageProps
    * @param {object} data - All props.
    */
   onFocus?: ComponentEventHandler<ChatMessageProps>
+
+  /** Reactions applied to the message. */
+  reactions?: ShorthandCollection
+
+  reactionsPosition?: 'start' | 'end'
 }
 
 export interface ChatMessageState {
@@ -104,12 +111,15 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     timestamp: customPropTypes.itemShorthand,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
+    reactions: customPropTypes.collectionShorthand,
+    reactionsPosition: PropTypes.oneOf(['start', 'end']),
   }
 
   static defaultProps = {
     accessibility: chatMessageBehavior,
     as: 'div',
     badgePosition: 'end',
+    reactionsPosition: 'start',
   }
 
   public state = {
@@ -143,6 +153,22 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
+  renderReactions = (styles: ComponentSlotStylesPrepared) => {
+    const { reactions } = this.props
+    return (
+      <Box styles={styles.reactions}>
+        {_.map(reactions, reaction => {
+          return Reaction.create(reaction, {
+            defaultProps: {
+              styles: styles.reaction,
+              as: 'span',
+            },
+          })
+        })}
+      </Box>
+    )
+  }
+
   renderComponent({
     ElementType,
     classes,
@@ -150,7 +176,16 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     unhandledProps,
     styles,
   }: RenderResultConfig<ChatMessageProps>) {
-    const { actionMenu, author, badge, badgePosition, children, content, timestamp } = this.props
+    const {
+      actionMenu,
+      author,
+      badge,
+      badgePosition,
+      children,
+      content,
+      timestamp,
+      reactionsPosition,
+    } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
     const badgeElement = Label.create(badge, {
@@ -184,6 +219,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
             })}
 
             {badgePosition === 'start' && badgeElement}
+
             {Text.create(author, {
               defaultProps: {
                 size: 'small',
@@ -200,12 +236,17 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
               },
             })}
 
+            {reactionsPosition === 'start' && this.renderReactions(styles)}
+
             {Box.create(content, {
               defaultProps: {
                 className: ChatMessage.slotClassNames.content,
                 styles: styles.content,
               },
             })}
+
+            {reactionsPosition === 'end' && this.renderReactions(styles)}
+
             {badgePosition === 'end' && badgeElement}
           </>
         )}

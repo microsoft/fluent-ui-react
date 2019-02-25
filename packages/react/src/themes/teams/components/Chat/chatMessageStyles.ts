@@ -68,14 +68,19 @@ const chatMessageStyles: ComponentSlotStylesInput<
     ...(p.mine && screenReaderContainerStyles),
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
+    float: 'left',
+    clear: 'left',
   }),
 
   timestamp: ({ variables: v }) => ({
     marginBottom: v.headerMarginBottom,
+    float: 'left',
   }),
 
   content: ({ variables: v }): ICSSInJSStyle => ({
     display: 'block',
+    float: 'left',
+    clear: 'left',
     '& a:focus': {
       outline: 'none',
       color: v.contentFocusOutlineColor,
@@ -99,6 +104,11 @@ const chatMessageStyles: ComponentSlotStylesInput<
       transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
     }
   },
+  reactions: ({ variables: v }) => ({
+    marginLeft: v.reactionsMarginLeft,
+    top: '-5px',
+    float: 'right',
+  }),
 }
 
 export default chatMessageStyles
