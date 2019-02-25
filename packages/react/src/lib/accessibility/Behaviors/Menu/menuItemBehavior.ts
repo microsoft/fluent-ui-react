@@ -33,7 +33,7 @@ const menuItemBehavior: Accessibility = (props: any) => ({
     },
     root: {
       role: 'menuitem',
-      tabIndex: _.isNil(props.tabIndex) ? '0' : props.tabIndex,
+      tabIndex: '0',
       'aria-expanded': props.menu ? props.menuOpen || false : undefined,
       'aria-haspopup': props.menu ? 'true' : undefined,
       'aria-label': props['aria-label'],
