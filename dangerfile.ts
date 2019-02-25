@@ -21,7 +21,7 @@ const hasAddedLinesAfterVersionInChangelog = async (): Promise<boolean> => {
     return acc.concat(filteredLines)
   }, [])
 
-  return addedLines.some(line => line.ln >= versionLineNumber)
+  return addedLines.some(line => line.ln > versionLineNumber)
 }
 
 async function getChangedDependencies(filepath, dependenciesKey = 'dependencies') {

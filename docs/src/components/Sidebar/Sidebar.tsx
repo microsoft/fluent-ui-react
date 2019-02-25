@@ -343,10 +343,10 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
-        key: 'asyncdropdown',
-        content: 'Async Dropdown Search',
+        key: 'dropdowns',
+        content: 'Dropdowns',
         as: NavLink,
-        to: '/prototype-async-dropdown-search',
+        to: '/prototype-dropdowns',
         styles: menuItemStyles,
       },
       {

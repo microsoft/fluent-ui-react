@@ -61,12 +61,19 @@ const renderCycle = async (
   return profilerMeasure
 }
 
-window.runMeasures = async () => {
+const satisfiesFilter = (componentName: string, filter: string) => {
+  return componentName.toLowerCase().startsWith(filter.toLowerCase())
+}
+
+window.runMeasures = async (filter: string = '') => {
   const performanceMeasures: ProfilerMeasureCycle = {}
 
   for (const exampleName of performanceExampleNames) {
     // ./components/Button/Performance/Button.perf.tsx => Button.perf.tsx
     const componentName = _.last(exampleName.split('/'))
+
+    if (!satisfiesFilter(componentName, filter)) continue
+
     const Component = performanceExamplesContext(exampleName).default
 
     performanceMeasures[componentName] = await renderCycle(
