@@ -64,6 +64,8 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 
   /** Initial value for 'open' in uncontrolled mode */
   defaultOpen?: boolean
+  /** The initial value for the index of the list item to be highlighted. */
+  defaultHighlightedIndex?: number
 
   /** The initial value for the search query, if the dropdown is also a search. */
   defaultSearchQuery?: string
@@ -93,6 +95,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    * @param {DownshiftA11yStatusMessageOptions<ShorthandValue>} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
    */
   getA11yStatusMessage?: (options: DownshiftA11yStatusMessageOptions<ShorthandValue>) => string
+
+  /** The index of the list item to be highlighted. */
+  highlightedIndex?: number
 
   /** A dropdown can be formatted to appear inline in the content of other components. */
   inline?: boolean
@@ -174,6 +179,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   /** Sets search query value (controlled mode). */
   searchQuery?: string
 
+  /** The index of the list item to be highlighted by default when list opens. */
+  resetHighlightedIndex?: number
+
   /** Controls appearance of toggle indicator that shows/hides items list. */
   toggleIndicator?: ShorthandValue
 
@@ -186,10 +194,10 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 
 export interface DropdownState {
   activeSelectedIndex: number
-  defaultHighlightedIndex: number
   focused: boolean
   open: boolean
   searchQuery: string
+  highlightedIndex: number
   value: ShorthandValue | ShorthandCollection
 }
 
@@ -222,6 +230,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     clearIndicator: customPropTypes.itemShorthand,
     defaultActiveSelectedIndex: PropTypes.number,
     defaultOpen: PropTypes.bool,
+    defaultHighlightedIndex: PropTypes.number,
     defaultSearchQuery: PropTypes.string,
     defaultValue: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
@@ -230,6 +239,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     fluid: PropTypes.bool,
     getA11ySelectionMessage: PropTypes.object,
     getA11yStatusMessage: PropTypes.func,
+    highlightedIndex: PropTypes.number,
     inline: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
@@ -244,6 +254,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     placeholder: PropTypes.string,
     renderItem: PropTypes.func,
     renderSelectedItem: PropTypes.func,
+    resetHighlightedIndex: PropTypes.number,
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
@@ -270,7 +281,13 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     triggerButton: {},
   }
 
-  static autoControlledProps = ['activeSelectedIndex', 'open', 'searchQuery', 'value']
+  static autoControlledProps = [
+    'activeSelectedIndex',
+    'highlightedIndex',
+    'open',
+    'searchQuery',
+    'value',
+  ]
 
   static Item = DropdownItem
   static SearchInput = DropdownSearchInput
@@ -279,10 +296,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   getInitialAutoControlledState({ multiple, search }: DropdownProps): DropdownState {
     return {
       activeSelectedIndex: multiple ? null : undefined,
-      // used on single selection to open the dropdown with the selected option as highlighted.
-      defaultHighlightedIndex: this.props.multiple ? undefined : null,
       focused: false,
       open: false,
+      highlightedIndex: this.props.resetHighlightedIndex || null,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
     }
@@ -305,7 +321,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       itemToString,
       toggleIndicator,
     } = this.props
-    const { defaultHighlightedIndex, open, searchQuery, value } = this.state
+    const { highlightedIndex, open, searchQuery, value } = this.state
 
     return (
       <ElementType className={classes.root} {...unhandledProps}>
@@ -318,7 +334,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           itemToString={itemToString}
           selectedItem={null}
           getA11yStatusMessage={getA11yStatusMessage}
-          defaultHighlightedIndex={defaultHighlightedIndex}
+          highlightedIndex={highlightedIndex}
           onStateChange={this.handleStateChange}
         >
           {({
@@ -616,12 +632,42 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private handleStateChange = (changes: StateChangeOptions<ShorthandValue>) => {
+    // console.log(changes)
     if (changes.isOpen !== undefined && changes.isOpen !== this.state.open) {
-      this.trySetStateAndInvokeHandler('onOpenChange', null, { open: changes.isOpen })
+      const newState = { open: changes.isOpen }
+
+      if (changes.isOpen) {
+        if (changes.type === Downshift.stateChangeTypes.keyDownArrowUp) {
+          newState['highlightedIndex'] = _.isNumber(this.state.highlightedIndex)
+            ? this.state.highlightedIndex - 1
+            : this.props.items.length - 1
+        }
+        if (changes.type === Downshift.stateChangeTypes.keyDownArrowDown) {
+          newState['highlightedIndex'] = _.isNumber(this.state.highlightedIndex)
+            ? this.state.highlightedIndex + 1
+            : 0
+        }
+        if (!this.props.search) {
+          this.listRef.current.focus()
+        }
+      } else {
+        if (!this.props.multiple && !this.props.search) {
+          if (changes.selectedItem) {
+            newState['highlightedIndex'] = this.props.items.indexOf(changes.selectedItem)
+          } else if (this.state.value) {
+            newState['highlightedIndex'] = this.props.items.indexOf(this.state.value)
+          }
+        } else {
+          newState['highlightedIndex'] = this.props.resetHighlightedIndex || null
+        }
+      }
+
+      this.trySetState(newState)
+      _.invoke(this.props, 'onOpenChange', null, { ...this.props, ...newState })
     }
 
-    if (changes.isOpen && !this.props.search) {
-      this.listRef.current.focus()
+    if (_.isNumber(changes.highlightedIndex) && this.state.open) {
+      this.trySetState({ highlightedIndex: changes.highlightedIndex })
     }
   }
 
@@ -880,7 +926,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     })
 
     if (!multiple) {
-      this.setState({ defaultHighlightedIndex: items.indexOf(item) })
+      this.setState({ highlightedIndex: items.indexOf(item) })
     }
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onAdd) {
