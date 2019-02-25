@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "downshift": "^3.2.0",
+    "downshift": "^3.2.4",
     "fela": "^10.2.0",
     "fela-plugin-fallback-value": "^10.2.0",
     "fela-plugin-placeholder-prefixer": "^10.2.0",
