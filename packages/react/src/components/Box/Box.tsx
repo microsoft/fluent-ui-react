@@ -10,6 +10,7 @@ import {
 } from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 import { ReactProps } from '../../types'
+import BoxLight from './BoxLight'
 
 export interface BoxProps
   extends UIComponentProps<BoxProps>,
@@ -19,7 +20,7 @@ export interface BoxProps
 /**
  * A Box is a basic component (no default styles)
  */
-const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<BoxProps>({
+const Box: CreateComponentReturnType<ReactProps<BoxProps>> & any = createComponent<BoxProps>({
   displayName: 'Box',
 
   className: 'ui-box',
@@ -45,5 +46,6 @@ const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<Box
 })
 
 Box.create = createShorthandFactory(Box)
+Box.Light = BoxLight
 
 export default Box

@@ -1,6 +1,8 @@
 import * as webpack from 'webpack'
 import config from '../../../config'
 
+const { __DEV__ } = config.compiler_globals
+
 const { log, PluginError } = require('gulp-load-plugins')().util
 
 const webpackPlugin = (webpackConfig, cb) => {
@@ -17,7 +19,7 @@ const webpackPlugin = (webpackConfig, cb) => {
       log('Webpack compiler encountered errors.')
       throw new PluginError('webpack', errors.toString())
     }
-    if (warnings.length > 0) {
+    if (!__DEV__ && warnings.length > 0) {
       throw new PluginError('webpack', warnings.toString())
     }
 

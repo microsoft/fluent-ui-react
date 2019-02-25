@@ -4,6 +4,8 @@ import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
 
+import Memoizer from './propMemoizers'
+
 // TODO @Bugaa92: deprecated by createComponent.tsx
 class UIComponent<P, S = {}> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
@@ -17,6 +19,9 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
   static unhandledProps: string[] = []
 
   private static _handledPropsCache: string[] = undefined
+
+  private memoizer = new Memoizer()
+
   static get handledProps() {
     if (!this._handledPropsCache) {
       this._handledPropsCache = _.difference(_.keys(this.propTypes), this.unhandledProps).sort()
@@ -47,17 +52,20 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
   }
 
   render() {
-    return renderComponent({
-      className: this.childClass.className,
-      defaultProps: this.childClass.defaultProps,
-      displayName: this.childClass.displayName,
-      handledProps: this.childClass.handledProps,
-      props: this.props,
-      state: this.state,
-      actionHandlers: this.actionHandlers,
-      focusZoneRef: this.setFocusZoneRef,
-      render: this.renderComponent,
-    })
+    return renderComponent(
+      {
+        className: this.childClass.className,
+        defaultProps: this.childClass.defaultProps,
+        displayName: this.childClass.displayName,
+        handledProps: this.childClass.handledProps,
+        props: this.props,
+        state: this.state,
+        actionHandlers: this.actionHandlers,
+        focusZoneRef: this.setFocusZoneRef,
+        render: this.renderComponent,
+      },
+      this.memoizer,
+    )
   }
 
   private setFocusZoneRef = (focusZone: FocusZone): void => {

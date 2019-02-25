@@ -6,6 +6,8 @@ import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
 import { createShorthandFactory } from './factories'
 
+import Memoizer from './propMemoizers'
+
 export interface CreateComponentConfig<P> {
   displayName: string
   className?: string
@@ -38,18 +40,23 @@ const createComponent = <P extends {} = {}, S extends {} = {}>({
     ...(defaultProps as any),
   }
 
+  const memoizer = new Memoizer()
+
   const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
-    return renderComponent({
-      className,
-      defaultProps,
-      displayName,
-      handledProps: _.keys(propTypes).concat(handledProps),
-      props,
-      state: {},
-      actionHandlers,
-      focusZoneRef,
-      render: config => render(config, props),
-    })
+    return renderComponent(
+      {
+        className,
+        defaultProps,
+        displayName,
+        handledProps: _.keys(propTypes).concat(handledProps),
+        props,
+        state: {},
+        actionHandlers,
+        focusZoneRef,
+        render: config => render(config, props),
+      },
+      memoizer,
+    )
   }
 
   StardustComponent.create = createShorthandFactory(mergedDefaultProps.as, shorthandPropName)

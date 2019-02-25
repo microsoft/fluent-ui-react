@@ -72,7 +72,7 @@ task(
 // Build
 // ----------------------------------------
 
-const componentsSrc = [`${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`, '!**/Box.tsx']
+const componentsSrc = [`${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`, '!**/Box*.tsx']
 const behaviorSrc = [`${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
 const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/!(*index|.knobs).tsx`

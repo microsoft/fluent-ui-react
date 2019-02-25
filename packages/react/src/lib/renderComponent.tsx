@@ -138,7 +138,10 @@ const renderWithFocusZone = <P extends {}>(
   return render(config)
 }
 
-const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElement<P> => {
+const renderComponent = <P extends {}>(
+  config: RenderConfig<P>,
+  memoized,
+): React.ReactElement<P> => {
   const {
     className,
     defaultProps,
@@ -150,6 +153,11 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
     focusZoneRef,
     render,
   } = config
+
+  const cachedConfig = memoized.contains(props)
+  if (cachedConfig) {
+    return render(cachedConfig)
+  }
 
   return (
     <FelaTheme>
@@ -234,6 +242,8 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           rtl,
           theme,
         }
+
+        memoized.insert(props, config)
 
         if (accessibility.focusZone) {
           return renderWithFocusZone(render, accessibility.focusZone, config, focusZoneRef)
