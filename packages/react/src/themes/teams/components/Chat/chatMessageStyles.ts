@@ -75,7 +75,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
   }),
 
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    display: p.reactions && p.reactionsPosition === 'end' ? 'inline-block' : 'block',
+    display: 'block',
     '& a:focus': {
       outline: 'none',
       color: v.contentFocusOutlineColor,

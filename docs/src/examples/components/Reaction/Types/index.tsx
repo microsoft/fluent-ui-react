@@ -7,7 +7,7 @@ const Types = () => (
     <ComponentExample
       title="Default"
       description="A default Reaction."
-      examplePath="components/Reaction/Types/ReactiontExample"
+      examplePath="components/Reaction/Types/ReactionExample"
     />
   </ExampleSection>
 )
