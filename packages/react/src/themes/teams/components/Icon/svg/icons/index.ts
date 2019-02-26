@@ -13,6 +13,7 @@ import call from './call'
 import callControlPresentNew from './callControlPresentNew'
 import callControlStopPresentingNew from './callControlStopPresentingNew'
 import callEnd from './callEnd'
+import callPstnFull from './callPstnFull'
 import callRecording from './callRecording'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
@@ -92,6 +93,7 @@ export default {
   'call-video-off': callVideoOff,
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
+  'call-pstn-full': callPstnFull,
   'call-recording': callRecording,
   'canvas-add-page': canvasAddPage,
   chat,
