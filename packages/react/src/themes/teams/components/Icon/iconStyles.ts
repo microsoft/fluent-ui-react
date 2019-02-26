@@ -34,13 +34,16 @@ const getFontStyles = (
     fontFamily,
     fontSize: sizeInRems,
     lineHeight: 1,
-    textAlign: 'center',
+
+    display: 'inline-flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    width: sizeInRems,
+    height: sizeInRems,
 
     '::before': {
       content,
-      display: 'block',
-      width: sizeInRems,
-      height: sizeInRems,
     },
   }
 }
@@ -99,6 +102,8 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
     const isFontBased = !iconSpec || !iconSpec.isSvg
 
     return {
+      boxSizing: 'border-box',
+
       backgroundColor: v.backgroundColor,
       display: 'inline-block',
       speak: 'none',

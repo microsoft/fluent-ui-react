@@ -17,6 +17,7 @@ const avatarStyles: ComponentSlotStylesInput<AvatarProps, any> = {
     const sizeInRem = pxToRem(sizeToPxValue[size])
 
     return {
+      boxSizing: 'border-box',
       position: 'relative',
       backgroundColor: 'inherit',
       display: 'inline-block',
