@@ -415,7 +415,7 @@ class Sidebar extends React.Component<any, any> {
     const withPrototypes =
       process.env.NODE_ENV !== 'production'
         ? menuItems.concat(prototypesMenuItemTitle).concat(prototypesMenuItems)
-        : []
+        : menuItems
 
     const componentMenuItem = {
       key: 'components',
