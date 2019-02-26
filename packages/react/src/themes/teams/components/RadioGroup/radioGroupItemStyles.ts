@@ -6,6 +6,22 @@ import {
 import { RadioGroupItemVariables } from './radioGroupItemVariables'
 import { pxToRem } from '../../../../lib'
 
+const disabledIconStyles = v => ({
+  borderColor: v.colorDisabled,
+})
+
+const enabledHoverAndFocusIconStyles = v => ({
+  borderColor: v.iconColorBorderChecked,
+})
+
+const disabledLabelStyles = v => ({
+  color: v.colorDisabled,
+})
+
+const enabledHoverAndFocusLabelStyles = v => ({
+  color: v.labelColorChecked,
+})
+
 const radioStyles: ComponentSlotStylesInput<
   RadioGroupItemProps & RadioGroupItemState,
   RadioGroupItemVariables
@@ -24,20 +40,21 @@ const radioStyles: ComponentSlotStylesInput<
     backgroundColor: 'transparent',
     color: p.checked ? v.labelColorChecked : v.labelColorDefault,
     ':hover': {
-      color: v.labelColorChecked,
+      ...enabledHoverAndFocusLabelStyles(v),
     },
     ':focus': {
-      color: v.labelColorChecked,
+      ...enabledHoverAndFocusLabelStyles(v),
     },
     ...(p.disabled && {
-      color: v.colorDisabled,
+      ...disabledLabelStyles(v),
       ':hover': {
-        color: v.colorDisabled,
+        ...disabledLabelStyles(v),
       },
     }),
   }),
 
   icon: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    boxSizing: 'border-box',
     margin: `0 ${pxToRem(12)} 0 0`,
     backgroundColor: p.checked ? v.iconColorBackgroundChecked : 'transparent',
     height: `${pxToRem(12)}`,
@@ -47,15 +64,15 @@ const radioStyles: ComponentSlotStylesInput<
     borderWidth: `${pxToRem(1)}`,
     borderColor: p.checked ? v.iconColorBorderChecked : v.iconColorBorderDefault,
     ':hover': {
-      borderColor: v.iconColorBorderChecked,
+      ...enabledHoverAndFocusIconStyles(v),
     },
     ':focus': {
-      borderColor: v.iconColorBorderChecked,
+      ...enabledHoverAndFocusIconStyles(v),
     },
     ...(p.disabled && {
-      borderColor: v.colorDisabled,
+      ...disabledIconStyles(v),
       ':hover': {
-        borderColor: v.colorDisabled,
+        ...disabledIconStyles(v),
       },
     }),
     ...(p.isFromKeyboard && {
