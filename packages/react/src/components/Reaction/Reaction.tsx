@@ -16,6 +16,7 @@ import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
+import ReactionGroup from './ReactionGroup'
 
 export interface ReactionSlotClassNames {
   icon: string
@@ -62,6 +63,8 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>> {
     accessibility: defaultBehavior,
     as: 'span',
   }
+
+  static Group = ReactionGroup
 
   renderComponent({ accessibility, ElementType, classes, styles, unhandledProps }) {
     const { children, icon, content } = this.props
