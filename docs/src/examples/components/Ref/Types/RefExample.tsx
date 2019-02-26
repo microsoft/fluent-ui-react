@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Grid, Ref, Segment } from '@stardust-ui/react'
+import { Button, Flex, Grid, Ref, Segment } from '@stardust-ui/react'
 
 type RefExampleState = {
   isMounted: boolean
@@ -23,14 +23,16 @@ class RefExample extends React.Component<{}, RefExampleState> {
     return (
       <Grid columns={2}>
         <Segment>
-          <Ref innerRef={this.handleRef}>
-            <Button primary>With functional ref</Button>
-          </Ref>
-          <Ref innerRef={this.createdRef}>
-            <Button>
-              With <code>createRef()</code>
-            </Button>
-          </Ref>
+          <Flex gap="gap.smaller">
+            <Ref innerRef={this.handleRef}>
+              <Button primary>With functional ref</Button>
+            </Ref>
+            <Ref innerRef={this.createdRef}>
+              <Button>
+                With <code>createRef()</code>
+              </Button>
+            </Ref>
+          </Flex>
         </Segment>
 
         {isMounted && (

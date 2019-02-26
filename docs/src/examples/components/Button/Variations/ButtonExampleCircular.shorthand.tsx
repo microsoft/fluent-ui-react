@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { Button } from '@stardust-ui/react'
+import { Button, Flex } from '@stardust-ui/react'
 
 const ButtonExampleCircular = () => (
-  <div>
+  <Flex gap="gap.smaller">
     <Button circular content="C" />
     <Button circular icon="book" />
-  </div>
+  </Flex>
 )
 export default ButtonExampleCircular
