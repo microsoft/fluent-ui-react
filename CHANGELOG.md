@@ -24,7 +24,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Export `lock` SVG icon @VyshnaviDasari ([#906](https://github.com/stardust-ui/react/pull/906))
 - Adding status behavior @kolaps33 ([#880](https://github.com/stardust-ui/react/pull/880))
 - Add basic animation library for Teams theme @bhamlefty @mnajdova ([#871](https://github.com/stardust-ui/react/pull/871))
-- Export `accept` and `urgent` SVG icons to the Teams Theme @joheredi([#929](https://github.com/stardust-ui/react/pull/929))
+- Export `accept` and `urgent` SVG icons to the Teams theme @joheredi([#929](https://github.com/stardust-ui/react/pull/929))
 - Add `open`, `defaultOpen` and `onOpenChange` props for `Dropdown` component (controlled mode) @Bugaa92 ([#900](https://github.com/stardust-ui/react/pull/900))
 - Add `accessibility` prop to all components that supports it @layershifter ([#927](https://github.com/stardust-ui/react/pull/927))
 - Export `FocusZone` types @sophieH29 ([#943](https://github.com/stardust-ui/react/pull/943/))
