@@ -65,7 +65,7 @@ const getFocusedStyles = ({
           background: v.hoverBackgroundColor,
         }),
 
-    ...(vertical && isFromKeyboard && !pointing
+    ...(vertical && isFromKeyboard && !pointing && !primary
       ? {
           border: v.focusedBorder,
           background: v.focusedBackgroundColor,
