@@ -20,7 +20,7 @@ const AnimationExampleDelay = () => (
     <br />
     <Provider theme={{ animations: { spinner } }}>
       <Animation name="spinner" delay="5s">
-        <Icon name="umbrella" circular />
+        <Icon name="umbrella" circular bordered />
       </Animation>
     </Provider>
   </div>

@@ -58,12 +58,11 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
   }
 }
 
-const getBorderedStyles = (circular: boolean, boxShadowColor: string): ICSSInJSStyle => {
+const getBorderedStyles = (boxShadowColor: string): ICSSInJSStyle => {
   return {
     ...getPaddedStyle(),
 
     boxShadow: `0 0 0 .05rem ${boxShadowColor} inset`,
-    ...(circular ? { borderRadius: '50%' } : {}),
   }
 }
 
@@ -102,7 +101,6 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
     return {
       backgroundColor: v.backgroundColor,
       display: 'inline-block',
-      marginRight: v.marginRight,
       speak: 'none',
       verticalAlign: 'middle',
 
@@ -110,6 +108,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
       ...(isFontBased && {
         color: getIconColor(color, v),
+        fontWeight: 900, // required for the fontAwesome to render
 
         ...(disabled && {
           color: v.disabledColor,
@@ -118,8 +117,10 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
-      ...((bordered || v.borderColor || circular) &&
-        getBorderedStyles(circular, v.borderColor || getIconColor(color, v))),
+      ...(circular && { ...getPaddedStyle(), borderRadius: '50%' }),
+
+      ...((bordered || v.borderColor) &&
+        getBorderedStyles(v.borderColor || getIconColor(color, v))),
 
       ...(!rtl && {
         transform: `rotate(${rotate}deg)`,

@@ -82,7 +82,7 @@ jobs:
           name: Save Statistics to DB
           command: |
             if [ -n "${STATS_URI}" ]; then
-              yarn stats:save
+              yarn stats:save --tag=`git tag --points-at`
             else
               echo "STATS_URI not set, skipping"
             fi
@@ -97,8 +97,7 @@ jobs:
           command: |
             if [ -n "${npm_TOKEN}" ] && [ "${CIRCLE_BRANCH}" == "master" ]; then
               echo "//registry.npmjs.org/:_authToken=${npm_TOKEN}" > ~/project/.npmrc
-              npm version prerelease --preid="${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}.`git rev-parse --short HEAD`" --no-git-tag-version
-              npm publish --tag current
+              yarn lerna publish --canary --preid "${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}" --yes
             fi
 
   visual:

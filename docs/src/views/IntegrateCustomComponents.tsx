@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Header } from 'semantic-ui-react'
 import {
   Button,
   Divider,
+  Header,
   Provider,
   createComponent,
   ComponentSlotStyle,
@@ -21,7 +21,7 @@ interface StyledButtonProps {
   children?: ReactChildren
 }
 
-const StyledButton: React.SFC<StyledButtonProps> = createComponent<StyledButtonProps>({
+const StyledButton = createComponent<StyledButtonProps>({
   displayName: 'StyledButton',
   render({ stardust, children }) {
     const { classes } = stardust
@@ -48,7 +48,7 @@ export default () => (
 
         const StyledButton = createComponent({
           displayName: 'StyledButton',
-          render: ({stardust, className, children}) => {
+          render: ({ stardust, children }) => {
             const { classes } = stardust
             return <button className={classes.root}>{children}</button>
           }
@@ -75,8 +75,8 @@ export default () => (
             },
             componentStyles: {
               StyledButton: {
-                root: ({ props, variables, theme: { siteVariables } }) => ({
-                  backgroundColor: siteVariables.brand,
+                root: ({ variables, theme: { siteVariables } }) => ({
+                  backgroundColor: siteVariables.colors.primary[500],
                   color: variables.color,
                 }),
               },
@@ -257,14 +257,14 @@ export default () => (
     </p>
     <ExampleSnippet
       value={`
-        import { buttonBehavior } from '@stardust-ui/react'
+        import { createComponent, buttonBehavior } from '@stardust-ui/react'
 
         const StyledButton = createComponent({
           displayName: 'StyledButton',
           defaultProps: {
             accessibility: buttonBehavior
           },
-          render: ({stardust, className, children}) => {
+          render: ({ stardust, children }) => {
             const { classes, accessibility } = stardust
             return <button {...accessibility.attributes.root} className={classes.root}>{children}</button>
           }

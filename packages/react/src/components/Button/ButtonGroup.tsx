@@ -13,12 +13,21 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import Button from './Button'
+import Flex from '../Flex/Flex'
 
 export interface ButtonGroupProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** The buttons contained inside the ButtonGroup. */
   buttons?: ShorthandValue[]
 
@@ -36,12 +45,12 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
 
   public static propTypes = {
     ...commonPropTypes.createCommon(),
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     buttons: customPropTypes.collectionShorthand,
     circular: PropTypes.bool,
   }
 
   public static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'div',
   }
 
@@ -67,7 +76,7 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
     }
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
+      <Flex as={ElementType} gap="gap.smaller" {...unhandledProps} className={classes.root}>
         {_.map(buttons, (button, idx) =>
           Button.create(button, {
             defaultProps: {
@@ -76,7 +85,7 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
             },
           }),
         )}
-      </ElementType>
+      </Flex>
     )
   }
 
