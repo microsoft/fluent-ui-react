@@ -26,7 +26,7 @@ export default (siteVars): InputVariables => ({
   fontSize: siteVars.fontSizes.medium,
 
   iconPosition: 'absolute',
-  iconRight: pxToRem(2),
+  iconRight: pxToRem(10),
   iconColor: siteVars.bodyColor,
   iconLeft: pxToRem(6),
   inputPaddingWithIconAtStart: `${pxToRem(7)} ${pxToRem(12)} ${pxToRem(7)} ${pxToRem(24)}`,

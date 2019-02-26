@@ -14,6 +14,11 @@ export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 export { default as Divider } from './components/Divider/dividerVariables'
 
 export { default as Dropdown } from './components/Dropdown/dropdownVariables'
+export { default as DropdownItem } from './components/Dropdown/dropdownItemVariables'
+export { default as DropdownSearchInput } from './components/Dropdown/dropdownSearchInputVariables'
+export {
+  default as DropdownSelectedItem,
+} from './components/Dropdown/dropdownSelectedItemVariables'
 
 export { default as Flex } from './components/Flex/flexVariables'
 export { default as FlexItem } from './components/Flex/flexItemVariables'
