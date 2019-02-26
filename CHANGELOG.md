@@ -28,7 +28,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `open`, `defaultOpen` and `onOpenChange` props for `Dropdown` component (controlled mode) @Bugaa92 ([#900](https://github.com/stardust-ui/react/pull/900))
 - Add `accessibility` prop to all components that supports it @layershifter ([#927](https://github.com/stardust-ui/react/pull/927))
 - Export `FocusZone` types @sophieH29 ([#943](https://github.com/stardust-ui/react/pull/943/))
-- Export `chevron-down`, `download`, `search`, `email` and `star` SVG icons to the Teams Theme @pajindal([#955](https://github.com/stardust-ui/react/pull/955))
+- Export `chevron-down`, `download`, `search`, `email` and `star` SVG icons to the Teams theme @pajindal([#955](https://github.com/stardust-ui/react/pull/955))
 
 ### Fixes
 - Display correctly images in portrait mode inside `Avatar` @layershifter ([#899](https://github.com/stardust-ui/react/pull/899))
@@ -39,10 +39,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `ChatMessage` styles for Teams theme @kuzhelov ([#962](https://github.com/stardust-ui/react/pull/962))
 - Fix the order of applied props in `Status` component @layershifter ([#961](https://github.com/stardust-ui/react/pull/961))
 - Remove redundant margins for `Button` and `Icon` components and fix layout of `Dialog` component and affected examples @Bugaa92 ([#945](https://github.com/stardust-ui/react/pull/945))
+- Prevent appearance of `actions` slot on hover over area outside of `ChatMessage` @kuzhelov ([#953](https://github.com/stardust-ui/react/pull/953))
 - Export variables for the `DropdownItem`, `DropdownSearchInput` and `DropdownSelectedItem` components in Teams theme ([#967](https://github.com/stardust-ui/react/pull/967))
 
 ### Documentation
 - Add `Editable Area with Dropdown` prototype for mentioning people using `@` character (only available in development mode) @Bugaa92 ([#931](https://github.com/stardust-ui/react/pull/931))
+- Adjust styles of `Portal` examples @kuzhelov ([#953](https://github.com/stardust-ui/react/pull/953))
 
 <!--------------------------------[ v0.21.1 ]------------------------------- -->
 ## [v0.21.1](https://github.com/stardust-ui/react/tree/v0.21.1) (2019-02-14)
@@ -626,7 +628,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fixed missing colors in Teams' siteVariables @mnajdova ([#200](https://github.com/stardust-ui/react/pull/200))
 - Fixed Teams' siteVariables font sizes @levithomason ([#204](https://github.com/stardust-ui/react/pull/204))
 - Fixed docs examples of `Text` component @codepretty ([#205](https://github.com/stardust-ui/react/pull/205))
-- Preserve fonts and static styles in mergeThemes @levithomason ([#217](https://github.com/stardust-ui/react/pull/217))
+- Preserve fonts and static styles in `mergeThemes` @levithomason ([#217](https://github.com/stardust-ui/react/pull/217))
 
 ### Features
 - Add `state` to `props` in component styling functions @Bugaa92 ([#173](https://github.com/stardust-ui/react/pull/173))
