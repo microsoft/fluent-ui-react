@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { Icon } from '@stardust-ui/react'
+import { Flex, Icon } from '@stardust-ui/react'
 
 const IconExampleCircular = () => (
-  <div>
+  <Flex gap="gap.smaller">
     <Icon name="chess rook" circular bordered />
     <Icon name="book" circular bordered />
     <Icon name="expand" circular bordered />
@@ -14,7 +14,7 @@ const IconExampleCircular = () => (
     <Icon name="coffee" circular bordered />
     <Icon name="compass outline" circular bordered />
     <Icon name="area chart" circular bordered />
-  </div>
+  </Flex>
 )
 
 export default IconExampleCircular
