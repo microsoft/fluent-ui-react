@@ -81,6 +81,7 @@ export interface ChatMessageProps
   /** Reaction group applied to the message. */
   reactionGroup?: ShorthandValue
 
+  /** A message can format the reactions group to appear at the start or the end of the message. */
   reactionGroupPosition?: 'start' | 'end'
 }
 
