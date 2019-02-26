@@ -29,7 +29,10 @@ export default {
         flexDirection: 'column',
         backgroundColor: variables.verticalBackgroundColor,
         padding: `${pxToRem(8)} 0`,
-        ...(submenu && { boxShadow: variables.verticalBoxShadow }),
+        ...(submenu && {
+          boxShadow: variables.verticalBoxShadow,
+          borderWidth: variables.verticalBorderWidth,
+        }),
         ...(!fluid && { width: pxToRem(200) }),
         ...(iconOnly && {
           display: 'inline-block',

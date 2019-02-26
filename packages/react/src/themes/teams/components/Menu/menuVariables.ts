@@ -3,6 +3,7 @@ import { pxToRem } from '../../../../lib'
 export interface MenuVariables {
   color: string
   borderColor: string
+  verticalBorderColor: string
 
   focusedBorder: string
   focusedBackgroundColor: string
@@ -33,13 +34,16 @@ export interface MenuVariables {
   verticalBoxShadow: string
 
   dividerHeight: string
+  verticalDividerHeight: string
   borderWidth: string
+  verticalBorderWidth: string
 }
 
 export default (siteVars: any): MenuVariables => {
   return {
     color: siteVars.gray02,
     borderColor: siteVars.gray08,
+    verticalBorderColor: siteVars.gray08,
 
     focusedBorder: `solid ${pxToRem(1)} ${siteVars.gray03}`,
     focusedBackgroundColor: siteVars.gray09,
@@ -70,6 +74,8 @@ export default (siteVars: any): MenuVariables => {
     verticalBoxShadow: siteVars.shadowLevel3,
 
     dividerHeight: pxToRem(1),
+    verticalDividerHeight: pxToRem(1),
     borderWidth: pxToRem(1),
+    verticalBorderWidth: pxToRem(1),
   }
 }

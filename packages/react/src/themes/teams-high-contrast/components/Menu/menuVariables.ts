@@ -1,26 +1,16 @@
 import { pxToRem } from '../../../../lib'
+import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
 
-export interface MenuVariables {
-  color: string
-  activeColor: string
-  focusedBackgroundColor: string
-  activeBackgroundColor: string
+export default (siteVars: any): Partial<MenuVariables> => ({
+  color: siteVars.white,
+  activeColor: siteVars.black,
+  focusedBackgroundColor: siteVars.accessibleYellow,
+  activeBackgroundColor: siteVars.accessibleCyan,
 
-  verticalBackgroundColor: string
-  dividerHeight: string
-  borderWidth: string
-}
+  verticalBackgroundColor: siteVars.colors.black,
 
-export default (siteVars: any): MenuVariables => {
-  return {
-    color: siteVars.white,
-    activeColor: siteVars.black,
-    focusedBackgroundColor: siteVars.accessibleYellow,
-    activeBackgroundColor: siteVars.accessibleCyan,
-
-    verticalBackgroundColor: siteVars.colors.black,
-
-    dividerHeight: pxToRem(2),
-    borderWidth: pxToRem(2),
-  }
-}
+  dividerHeight: pxToRem(2),
+  verticalDividerHeight: pxToRem(2),
+  borderWidth: pxToRem(1),
+  verticalBorderWidth: pxToRem(2),
+})
