@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix `createComponent()` typings and documentation examples @Bugaa92 ([#954](https://github.com/stardust-ui/react/pull/954))
+
 ### Documentation
 - Fix the sidebar missing items for docsite @alinais ([#971](https://github.com/stardust-ui/react/pull/971))
 
