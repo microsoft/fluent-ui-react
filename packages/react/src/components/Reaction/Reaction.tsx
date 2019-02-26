@@ -41,7 +41,7 @@ export interface ReactionProps
 }
 
 /**
- * A segment is used to create a grouping of related content.
+ * A reaction is used to indicate user's reaction.
  */
 class Reaction extends UIComponent<ReactProps<ReactionProps>> {
   static create: Function

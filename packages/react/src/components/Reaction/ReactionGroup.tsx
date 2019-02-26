@@ -32,7 +32,7 @@ export interface ReactionGroupProps
 }
 
 /**
- * A button group presents multiple related actions.
+ * A reaction group presents multiple reactions as a group.
  */
 class ReactionGroup extends UIComponent<ReactProps<ReactionGroupProps>> {
   static create: Function
@@ -84,6 +84,7 @@ class ReactionGroup extends UIComponent<ReactProps<ReactionGroupProps>> {
     )
   }
 }
+
 ReactionGroup.create = createShorthandFactory(ReactionGroup, 'content')
 
 export default ReactionGroup
