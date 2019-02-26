@@ -634,39 +634,18 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   private handleStateChange = (changes: StateChangeOptions<ShorthandValue>) => {
     if (changes.isOpen !== undefined && changes.isOpen !== this.state.open) {
-      const newState: { highlightedIndex?: number; open: boolean } = { open: changes.isOpen }
+      const newState: { open: boolean; highlightedIndex?: number } = { open: changes.isOpen }
 
       if (changes.isOpen) {
-        if (changes.type === Downshift.stateChangeTypes.keyDownArrowUp) {
-          const itemsLength = this.getItemsFilteredBySearchQuery().length
-          newState.highlightedIndex = _.isNumber(this.state.highlightedIndex)
-            ? (() => {
-                const newIndex = this.state.highlightedIndex - 1
-                return newIndex < 0 ? itemsLength - 1 : newIndex
-              })()
-            : itemsLength - 1
-        }
-        if (changes.type === Downshift.stateChangeTypes.keyDownArrowDown) {
-          const itemsLength = this.getItemsFilteredBySearchQuery().length
-          newState.highlightedIndex = _.isNumber(this.state.highlightedIndex)
-            ? (() => {
-                const newIndex = this.state.highlightedIndex + 1
-                return newIndex >= itemsLength ? 0 : newIndex
-              })()
-            : 0
+        const highlightedIndexOnArrowKeyOpen = this.getHighlightedIndexOnArrowKeyOpen(changes)
+        if (_.isNumber(highlightedIndexOnArrowKeyOpen)) {
+          newState.highlightedIndex = highlightedIndexOnArrowKeyOpen
         }
         if (!this.props.search) {
           this.listRef.current.focus()
         }
       } else {
-        newState.highlightedIndex = this.props.highlightFirstItemOnOpen ? 0 : null
-        if (!this.props.multiple && !this.props.search) {
-          if (changes.selectedItem) {
-            newState.highlightedIndex = this.props.items.indexOf(changes.selectedItem)
-          } else if (this.state.value) {
-            newState.highlightedIndex = this.props.items.indexOf(this.state.value)
-          }
-        }
+        newState.highlightedIndex = this.getHighlightedIndexOnClose(changes)
       }
 
       this.trySetState(newState)
@@ -1074,6 +1053,42 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   private isValueEmpty = (value: ShorthandValue | ShorthandCollection) => {
     return _.isArray(value) ? value.length < 1 : !value
+  }
+
+  private getHighlightedIndexOnArrowKeyOpen = (
+    changes: StateChangeOptions<ShorthandValue>,
+  ): number => {
+    if (changes.type === Downshift.stateChangeTypes.keyDownArrowUp) {
+      const itemsLength = this.getItemsFilteredBySearchQuery().length
+      return _.isNumber(this.state.highlightedIndex)
+        ? (() => {
+            const newIndex = this.state.highlightedIndex - 1
+            return newIndex < 0 ? itemsLength - 1 : newIndex
+          })()
+        : itemsLength - 1
+    }
+    if (changes.type === Downshift.stateChangeTypes.keyDownArrowDown) {
+      const itemsLength = this.getItemsFilteredBySearchQuery().length
+      return _.isNumber(this.state.highlightedIndex)
+        ? (() => {
+            const newIndex = this.state.highlightedIndex + 1
+            return newIndex >= itemsLength ? 0 : newIndex
+          })()
+        : 0
+    }
+    return undefined
+  }
+
+  private getHighlightedIndexOnClose = (changes: StateChangeOptions<ShorthandValue>): number => {
+    if (!this.props.multiple && !this.props.search) {
+      if (changes.selectedItem) {
+        return this.props.items.indexOf(changes.selectedItem)
+      }
+      if (this.state.value) {
+        return this.props.items.indexOf(this.state.value)
+      }
+    }
+    return this.props.highlightFirstItemOnOpen ? 0 : null
   }
 }
 
