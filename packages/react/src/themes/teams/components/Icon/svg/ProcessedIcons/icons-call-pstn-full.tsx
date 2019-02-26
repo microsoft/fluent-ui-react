@@ -8,5 +8,5 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'call-pstn-full',
+  exportedAs: 'call-pstn',
 } as TeamsProcessedSvgIconSpec
