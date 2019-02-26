@@ -11,9 +11,9 @@ const Content = () => (
       examplePath="components/Chat/Content/ChatExampleActions"
     />
     <ComponentExample
-      title="Reactions"
-      description="A chat message can contain reactions."
-      examplePath="components/Chat/Content/ChatExampleReactions"
+      title="Reaction group"
+      description="A chat message can contain group of reactions."
+      examplePath="components/Chat/Content/ChatExampleReactionGroup"
     />
   </ExampleSection>
 )

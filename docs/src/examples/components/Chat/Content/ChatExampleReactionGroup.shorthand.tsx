@@ -62,6 +62,6 @@ const items = [
   },
 ]
 
-const ChatExampleReactions = () => <Chat items={items} />
+const ChatExampleReactionGroup = () => <Chat items={items} />
 
-export default ChatExampleReactions
+export default ChatExampleReactionGroup
