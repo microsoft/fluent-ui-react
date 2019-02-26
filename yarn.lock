@@ -3891,10 +3891,10 @@ dot-prop@^4.1.0, dot-prop@^4.2.0:
   dependencies:
     is-obj "^1.0.0"
 
-downshift@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/downshift/-/downshift-3.2.0.tgz#820f40575683d3fc521a9ffd409ef4a69cef531d"
-  integrity sha512-IXZ3IB7xU51R04olRGSp8GBmJhPlCL8tW5FjZrJh8e4kB4BGUWsQHZ9tNsO+qNLABieR5DIgYBZ9MncPlwZSDg==
+downshift@^3.2.6:
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/downshift/-/downshift-3.2.6.tgz#dee518a17dfe28ab9ab38fc8261d06ee87cd4589"
+  integrity sha512-g9K3W7D5yS9gnJhPFzfGcABs/Fb01+TON+Eks4gJf3Q+3CnJNzWl+oJeJOiKzB8EnHhttZSy3RhTRgKRzG/Tqg==
   dependencies:
     "@babel/runtime" "^7.1.2"
     compute-scroll-into-view "^1.0.9"
