@@ -31,6 +31,7 @@ const radioStyles: ComponentSlotStylesInput<
 
   icon: ({ props: p, variables: v }): ICSSInJSStyle => ({
     margin: `0 ${pxToRem(10)} 0 0`,
+    padding: 0,
     color: p.checked ? v.colorChecked : v.color,
     backgroundColor: p.checked ? v.colorBackgroundChecked : v.colorBackground,
     borderColor: p.checked ? v.colorBorderChecked : v.colorBorder,
