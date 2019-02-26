@@ -64,6 +64,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 
   /** Initial value for 'open' in uncontrolled mode */
   defaultOpen?: boolean
+
   /** The initial value for the index of the list item to be highlighted. */
   defaultHighlightedIndex?: number
 
