@@ -17,6 +17,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ShorthandValue, ComponentEventHandler, ShorthandCollection } from '../../types'
+import { ComponentSlotStylesPrepared } from '../../themes/types'
 import { chatMessageBehavior, toolbarBehavior } from '../../lib/accessibility'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
@@ -25,8 +26,7 @@ import Box from '../Box/Box'
 import Label from '../Label/Label'
 import Menu from '../Menu/Menu'
 import Text from '../Text/Text'
-import { ComponentSlotStylesPrepared } from 'src/themes/types'
-import Reaction from 'src/components/Reaction/Reaction'
+import Reaction from '../Reaction/Reaction'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string

@@ -113,7 +113,6 @@ const chatMessageStyles: ComponentSlotStylesInput<
     float: 'right',
   }),
   reaction: {
-    cursor: 'pointer',
     ':not(:last-child)': {
       marginRight: pxToRem(8),
     },

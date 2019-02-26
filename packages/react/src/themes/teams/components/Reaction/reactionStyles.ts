@@ -9,6 +9,7 @@ const countClassNameSelector = `& .${Reaction.slotClassNames.count}`
 
 const reactionStyles: ComponentSlotStylesInput<ReactionProps, ReactionVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    cursor: 'pointer',
     display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',

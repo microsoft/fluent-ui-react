@@ -38,7 +38,7 @@ export interface ReactionProps extends UIComponentProps<ReactionProps>, Children
 /**
  * A segment is used to create a grouping of related content.
  */
-class Reaction extends UIComponent<ReactProps<ReactionProps>, any> {
+class Reaction extends UIComponent<ReactProps<ReactionProps>> {
   static create: Function
 
   static className = 'ui-reaction'
