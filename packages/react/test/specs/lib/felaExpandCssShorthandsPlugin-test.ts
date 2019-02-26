@@ -9,7 +9,7 @@ describe('felaExpandCssShorthandsPlugin', () => {
       margin: '0px 10px',
     }
 
-    expect(expandCssShorthands(style)).toEqual({
+    expect(expandCssShorthands(style)).toMatchObject({
       display: 'block',
       marginTop: '0px',
       marginRight: '10px',
@@ -26,7 +26,7 @@ describe('felaExpandCssShorthandsPlugin', () => {
       },
     }
 
-    expect(expandCssShorthands(style)).toEqual({
+    expect(expandCssShorthands(style)).toMatchObject({
       display: 'block',
       '::before': {
         marginTop: '0px',
@@ -48,7 +48,7 @@ describe('felaExpandCssShorthandsPlugin', () => {
       },
     }
 
-    expect(expandCssShorthands(style)).toEqual({
+    expect(expandCssShorthands(style)).toMatchObject({
       display: 'block',
       '::before': {
         marginTop: '0px',
@@ -62,6 +62,21 @@ describe('felaExpandCssShorthandsPlugin', () => {
           paddingLeft: '10px',
         },
       },
+    })
+  })
+
+  test('should merge expanded prop with its shorthand', () => {
+    const style = {
+      marginTop: '3px',
+      margin: '10px',
+      marginRight: '15px',
+    }
+
+    expect(expandCssShorthands(style)).toMatchObject({
+      marginTop: '10px', // overridden by margin: '10px'
+      marginRight: '15px', // overridden by marginRight: '15px'
+      marginBottom: '10px',
+      marginLeft: '10px',
     })
   })
 })

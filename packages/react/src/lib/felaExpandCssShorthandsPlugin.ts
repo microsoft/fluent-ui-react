@@ -6,7 +6,7 @@ import * as _expand from 'css-shorthand-expand'
 const expand = (_expand as any).default || _expand
 
 export default () => {
-  const expandCssShorthands = styles => {
+  const expandCssShorthands = (styles: Object) => {
     return _.keys(styles).reduce((acc, cssPropertyName) => {
       const cssPropertyValue = styles[cssPropertyName]
 
@@ -16,7 +16,7 @@ export default () => {
 
       const expandedProps = expand(_.kebabCase(cssPropertyName), String(cssPropertyValue))
       if (expandedProps) {
-        return { ...acc, ...transformKebabCaseKeysToCamelCase(expandedProps) }
+        return { ...acc, ...convertKeysToCamelCase(expandedProps) }
       }
 
       return { ...acc, [cssPropertyName]: cssPropertyValue }
@@ -26,7 +26,7 @@ export default () => {
   return expandCssShorthands
 }
 
-const transformKebabCaseKeysToCamelCase = obj => {
+const convertKeysToCamelCase = obj => {
   return _.mapKeys(obj, (value, key) => {
     return _.camelCase(key)
   })
