@@ -7,14 +7,14 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  customPropTypes,
+  createShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
-import { customPropTypes } from 'src/lib'
-import Icon from 'src/components/Icon/Icon'
+import Icon from '../Icon/Icon'
 import Text from '../Text/Text'
-import { createShorthandFactory } from 'src/lib/factories'
 
 export interface ReactionSlotClassNames {
   icon: string
