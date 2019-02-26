@@ -1,15 +1,15 @@
 import * as React from 'react'
-import { Button, Icon } from '@stardust-ui/react'
+import { Button, Flex, Icon } from '@stardust-ui/react'
 
 const ButtonExampleEmphasisCircular = () => (
-  <div>
+  <Flex gap="gap.smaller">
     <Button circular icon primary>
       <Icon name="coffee" xSpacing="none" />
     </Button>
     <Button circular icon secondary>
       <Icon name="book" xSpacing="none" />
     </Button>
-  </div>
+  </Flex>
 )
 
 export default ButtonExampleEmphasisCircular
