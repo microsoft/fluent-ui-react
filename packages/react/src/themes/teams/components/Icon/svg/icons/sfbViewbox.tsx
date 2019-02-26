@@ -14,5 +14,4 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'sfb-viewbox',
 } as TeamsProcessedSvgIconSpec

@@ -58,6 +58,7 @@ import redo from './redo'
 import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
+import sfbViewbox from './sfbViewbox'
 import search from './search'
 import send from './send'
 import settings from './settings'
@@ -137,6 +138,7 @@ export default {
   'remove-format': removeFormat,
   reply,
   retry,
+  'sfb-viewbox': sfbViewbox,
   search,
   send,
   settings,
