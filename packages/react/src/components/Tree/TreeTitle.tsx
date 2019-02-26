@@ -42,7 +42,6 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
-    accessibility: PropTypes.func,
     open: PropTypes.bool,
     hasSubtree: PropTypes.bool,
   }

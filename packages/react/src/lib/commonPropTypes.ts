@@ -2,6 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 
 export interface CreateCommonConfig {
+  accessibility?: boolean
   animated?: boolean
   children?: boolean | 'node' | 'element'
   as?: boolean
@@ -40,6 +41,7 @@ export const complexColorPropType = PropTypes.oneOfType([
 
 export const createCommon = (config: CreateCommonConfig = {}) => {
   const {
+    accessibility = true,
     animated = true,
     as = true,
     children = 'node',
@@ -49,6 +51,9 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
     styled = true,
   } = config
   return {
+    ...(accessibility && {
+      accessibility: customPropTypes.accessibility,
+    }),
     ...(animated && {
       animation: customPropTypes.animation,
     }),

@@ -1,11 +1,11 @@
 {
   "name": "@stardust-ui/react",
   "description": "A themable React component library.",
-  "version": "0.21.1",
+  "version": "0.22.0",
   "author": "Levi Thomason <me@levithomason.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
-    "@stardust-ui/react-proptypes": "^0.21.1",
+    "@stardust-ui/react-proptypes": "^0.22.0",
     "classnames": "^2.2.5",
     "downshift": "^3.2.0",
     "fela": "^10.2.0",

@@ -452,6 +452,8 @@ export const deprecate = (help: string, validator: Function) => (
   return error
 }
 
+export const accessibility = PropTypes.oneOfType([PropTypes.func, PropTypes.object])
+
 export const size = PropTypes.oneOf([
   'smallest',
   'smaller',
