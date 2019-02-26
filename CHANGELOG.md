@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add `Reaction` and `ReactionGroup` components @mnajdova ([#959](https://github.com/stardust-ui/react/pull/959))
+- Add `reactionGroup` and `reactionGroupPosition` props to the `ChatMessage` component @mnajdova ([#959](https://github.com/stardust-ui/react/pull/959))
+
 <!--------------------------------[ v0.22.1 ]------------------------------- -->
 ## [v0.22.1](https://github.com/stardust-ui/react/tree/v0.22.1) (2019-02-26)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.22.0...v0.22.1)
