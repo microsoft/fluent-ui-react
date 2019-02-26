@@ -153,6 +153,7 @@ export { default as Tree } from './components/Tree'
 export { default as Indicator, IndicatorProps } from './components/Indicator/Indicator'
 
 export { default as Reaction, ReactionProps } from './components/Reaction/Reaction'
+export { default as ReactionGroup, ReactionGroupProps } from './components/Reaction/ReactionGroup'
 
 //
 // Accessibility

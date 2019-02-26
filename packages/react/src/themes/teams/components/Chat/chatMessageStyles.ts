@@ -108,15 +108,10 @@ const chatMessageStyles: ComponentSlotStylesInput<
       transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
     }
   },
-  reactions: ({ variables: v }) => ({
+  reactionGroup: ({ variables: v }) => ({
     marginLeft: v.reactionsMarginLeft,
     float: 'right',
   }),
-  reaction: {
-    ':not(:last-child)': {
-      marginRight: pxToRem(8),
-    },
-  },
 }
 
 export default chatMessageStyles

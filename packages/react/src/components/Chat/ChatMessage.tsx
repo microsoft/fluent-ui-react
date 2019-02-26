@@ -16,8 +16,7 @@ import {
   isFromKeyboard,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ShorthandValue, ComponentEventHandler, ShorthandCollection } from '../../types'
-import { ComponentSlotStylesPrepared } from '../../themes/types'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import { chatMessageBehavior, toolbarBehavior } from '../../lib/accessibility'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
@@ -26,7 +25,7 @@ import Box from '../Box/Box'
 import Label from '../Label/Label'
 import Menu from '../Menu/Menu'
 import Text from '../Text/Text'
-import Reaction from '../Reaction/Reaction'
+import ReactionGroup from '../Reaction/ReactionGroup'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string
@@ -34,6 +33,7 @@ export interface ChatMessageSlotClassNames {
   timestamp: string
   badge: string
   content: string
+  reactionGroup: string
 }
 
 export interface ChatMessageProps
@@ -78,10 +78,10 @@ export interface ChatMessageProps
    */
   onFocus?: ComponentEventHandler<ChatMessageProps>
 
-  /** Reactions applied to the message. */
-  reactions?: ShorthandCollection
+  /** Reaction group applied to the message. */
+  reactionGroup?: ShorthandValue
 
-  reactionsPosition?: 'start' | 'end'
+  reactionGroupPosition?: 'start' | 'end'
 }
 
 export interface ChatMessageState {
@@ -111,15 +111,15 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     timestamp: customPropTypes.itemShorthand,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
-    reactions: customPropTypes.collectionShorthand,
-    reactionsPosition: PropTypes.oneOf(['start', 'end']),
+    reactionGroup: customPropTypes.itemShorthand,
+    reactionGroupPosition: PropTypes.oneOf(['start', 'end']),
   }
 
   static defaultProps = {
     accessibility: chatMessageBehavior,
     as: 'div',
     badgePosition: 'end',
-    reactionsPosition: 'start',
+    reactionGroupPosition: 'start',
   }
 
   public state = {
@@ -153,22 +153,6 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
-  renderReactions = (styles: ComponentSlotStylesPrepared) => {
-    const { reactions } = this.props
-    return (
-      <Box styles={styles.reactions}>
-        {_.map(reactions, reaction => {
-          return Reaction.create(reaction, {
-            defaultProps: {
-              styles: styles.reaction,
-              as: 'span',
-            },
-          })
-        })}
-      </Box>
-    )
-  }
-
   renderComponent({
     ElementType,
     classes,
@@ -184,8 +168,8 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
       children,
       content,
       timestamp,
-      reactions,
-      reactionsPosition,
+      reactionGroup,
+      reactionGroupPosition,
     } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
@@ -193,6 +177,13 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
       defaultProps: {
         className: ChatMessage.slotClassNames.badge,
         styles: styles.badge,
+      },
+    })
+
+    const reactionGroupElement = ReactionGroup.create(reactionGroup, {
+      defaultProps: {
+        className: ChatMessage.slotClassNames.reactionGroup,
+        styles: styles.reactionGroup,
       },
     })
 
@@ -237,7 +228,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
               },
             })}
 
-            {reactionsPosition === 'start' && reactions && this.renderReactions(styles)}
+            {reactionGroupPosition === 'start' && reactionGroupElement}
 
             {Box.create(content, {
               defaultProps: {
@@ -246,7 +237,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
               },
             })}
 
-            {reactionsPosition === 'end' && reactions && this.renderReactions(styles)}
+            {reactionGroupPosition === 'end' && reactionGroupElement}
 
             {badgePosition === 'end' && badgeElement}
           </>
@@ -263,6 +254,7 @@ ChatMessage.slotClassNames = {
   timestamp: `${ChatMessage.className}__timestamp`,
   badge: `${ChatMessage.className}__badge`,
   content: `${ChatMessage.className}__content`,
+  reactionGroup: `${ChatMessage.className}__reactions`,
 }
 
 export default ChatMessage

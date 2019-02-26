@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as PropTypes from 'prop-types'
+
 import {
   UIComponent,
   childrenExist,
@@ -9,19 +9,23 @@ import {
   rtlTextContainer,
   customPropTypes,
   createShorthandFactory,
+  ContentComponentProps,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
 import Icon from '../Icon/Icon'
-import Text from '../Text/Text'
+import Box from '../Box/Box'
 
 export interface ReactionSlotClassNames {
   icon: string
-  count: string
+  content: string
 }
 
-export interface ReactionProps extends UIComponentProps<ReactionProps>, ChildrenComponentProps {
+export interface ReactionProps
+  extends UIComponentProps<ReactionProps>,
+    ChildrenComponentProps,
+    ContentComponentProps<ShorthandValue> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior
@@ -31,8 +35,8 @@ export interface ReactionProps extends UIComponentProps<ReactionProps>, Children
   /** A reaction can have icon for the indicator of the reaction. */
   icon?: ShorthandValue
 
-  /** A reaction can have count for the number of reaction. */
-  count?: number | string
+  /** A reaction can have content shown next to the icon. */
+  content?: ShorthandValue
 }
 
 /**
@@ -49,10 +53,9 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({
-      content: false,
+      content: 'shorthand',
     }),
     icon: customPropTypes.itemShorthand,
-    count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   }
 
   static defaultProps = {
@@ -61,7 +64,7 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>> {
   }
 
   renderComponent({ accessibility, ElementType, classes, styles, unhandledProps }) {
-    const { children, icon, count } = this.props
+    const { children, icon, content } = this.props
 
     return (
       <ElementType
@@ -80,10 +83,10 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>> {
                 styles: styles.icon,
               },
             })}
-            {Text.create(count, {
+            {Box.create(content, {
               defaultProps: {
-                className: Reaction.slotClassNames.count,
-                styles: styles.count,
+                className: Reaction.slotClassNames.content,
+                styles: styles.content,
               },
             })}
           </>
@@ -93,10 +96,10 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>> {
   }
 }
 
-Reaction.create = createShorthandFactory(Reaction, 'count')
+Reaction.create = createShorthandFactory(Reaction, 'content')
 Reaction.slotClassNames = {
   icon: `${Reaction.className}__icon`,
-  count: `${Reaction.className}__count`,
+  content: `${Reaction.className}__content`,
 }
 
 export default Reaction

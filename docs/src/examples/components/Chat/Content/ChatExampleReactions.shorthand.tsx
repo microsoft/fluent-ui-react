@@ -4,11 +4,11 @@ import * as React from 'react'
 const reactions = [
   {
     icon: 'thumbs up',
-    count: 5,
+    content: 5,
   },
   {
     icon: 'thumbs down',
-    count: '1K',
+    content: '1K',
   },
 ]
 
@@ -19,7 +19,7 @@ const items = [
     message: {
       content: (
         <Chat.Message
-          reactions={reactions}
+          reactionGroup={{ items: reactions }}
           content="Hello"
           author="John Doe"
           timestamp="Yesterday, 10:15 PM"
@@ -36,8 +36,8 @@ const items = [
     message: {
       content: (
         <Chat.Message
-          reactions={[{ icon: 'thumbs up', count: '8' }]}
-          reactionsPosition={'end'}
+          reactionGroup={{ items: [{ icon: 'thumbs up', content: '8' }] }}
+          reactionGroupPosition={'end'}
           content="I'm back!"
           author="John Doe"
           timestamp="Yesterday, 10:15 PM"
@@ -51,7 +51,7 @@ const items = [
     message: {
       content: (
         <Chat.Message
-          reactions={reactions}
+          reactionGroup={{ items: reactions }}
           content="Hi"
           author="Jane Doe"
           timestamp="Yesterday, 10:15 PM"

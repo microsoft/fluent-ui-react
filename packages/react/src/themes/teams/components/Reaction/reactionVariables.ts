@@ -1,13 +1,13 @@
 export interface ReactionVariables {
   color: string
   colorHover: string
-  countFontSize: string
+  contentFontSize: string
   fontWeightHover: string
 }
 
 export default (siteVars): ReactionVariables => ({
   color: siteVars.gray03,
   colorHover: siteVars.colors.grey[900],
-  countFontSize: siteVars.fontSizes.small,
+  contentFontSize: siteVars.fontSizes.small,
   fontWeightHover: siteVars.fontWeightBold,
 })

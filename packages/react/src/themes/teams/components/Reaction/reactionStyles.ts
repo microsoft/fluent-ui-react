@@ -5,7 +5,7 @@ import { ReactionVariables } from 'src/themes/teams/components/Reaction/reaction
 import Reaction from 'src/components/Reaction/Reaction'
 import { FontWeightProperty } from 'csstype'
 
-const countClassNameSelector = `& .${Reaction.slotClassNames.count}`
+const contentClassNameSelector = `& .${Reaction.slotClassNames.content}`
 
 const reactionStyles: ComponentSlotStylesInput<ReactionProps, ReactionVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -16,16 +16,16 @@ const reactionStyles: ComponentSlotStylesInput<ReactionProps, ReactionVariables>
     color: v.color,
     ':hover': {
       color: v.colorHover,
-      [countClassNameSelector]: {
+      [contentClassNameSelector]: {
         fontWeight: v.fontWeightHover as FontWeightProperty,
       },
     },
   }),
   icon: ({ props: p }) => ({
-    marginRight: p.count ? pxToRem(4) : pxToRem(0),
+    marginRight: p.content ? pxToRem(4) : pxToRem(0),
   }),
-  count: ({ variables: v }) => ({
-    fontSize: v.countFontSize,
+  content: ({ variables: v }) => ({
+    fontSize: v.contentFontSize,
   }),
 }
 

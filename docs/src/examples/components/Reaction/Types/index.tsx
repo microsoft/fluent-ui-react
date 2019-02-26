@@ -10,6 +10,11 @@ const Types = () => (
       description="A default Reaction."
       examplePath="components/Reaction/Types/ReactionExample"
     />
+    <ComponentExample
+      title="Reaction group"
+      description="Reactions can be grouped together."
+      examplePath="components/Reaction/Types/ReactionGroupExample"
+    />
   </ExampleSection>
 )
 
