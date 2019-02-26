@@ -634,16 +634,16 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   private handleStateChange = (changes: StateChangeOptions<ShorthandValue>) => {
     // console.log(changes)
     if (changes.isOpen !== undefined && changes.isOpen !== this.state.open) {
-      const newState = { open: changes.isOpen }
+      const newState: { highlightedIndex?: number; open: boolean } = { open: changes.isOpen }
 
       if (changes.isOpen) {
         if (changes.type === Downshift.stateChangeTypes.keyDownArrowUp) {
-          newState['highlightedIndex'] = _.isNumber(this.state.highlightedIndex)
+          newState.highlightedIndex = _.isNumber(this.state.highlightedIndex)
             ? this.state.highlightedIndex - 1
             : this.props.items.length - 1
         }
         if (changes.type === Downshift.stateChangeTypes.keyDownArrowDown) {
-          newState['highlightedIndex'] = _.isNumber(this.state.highlightedIndex)
+          newState.highlightedIndex = _.isNumber(this.state.highlightedIndex)
             ? this.state.highlightedIndex + 1
             : 0
         }
@@ -653,12 +653,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       } else {
         if (!this.props.multiple && !this.props.search) {
           if (changes.selectedItem) {
-            newState['highlightedIndex'] = this.props.items.indexOf(changes.selectedItem)
+            newState.highlightedIndex = this.props.items.indexOf(changes.selectedItem)
           } else if (this.state.value) {
-            newState['highlightedIndex'] = this.props.items.indexOf(this.state.value)
+            newState.highlightedIndex = this.props.items.indexOf(this.state.value)
           }
         } else {
-          newState['highlightedIndex'] = this.props.resetHighlightedIndex || null
+          newState.highlightedIndex = this.props.resetHighlightedIndex || null
         }
       }
 
@@ -851,7 +851,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   private handleClear = (e: React.SyntheticEvent<HTMLElement>) => {
     const {
       activeSelectedIndex,
-      defaultHighlightedIndex,
+      highlightedIndex,
       searchQuery,
       value,
     } = this.getInitialAutoControlledState(this.props)
@@ -859,13 +859,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     _.invoke(this.props, 'onSelectedChange', e, {
       ...this.props,
       activeSelectedIndex,
-      defaultHighlightedIndex,
+      highlightedIndex,
       searchQuery,
       value,
     })
 
-    this.trySetState({ activeSelectedIndex, searchQuery, value })
-    this.setState({ defaultHighlightedIndex })
+    this.trySetState({ activeSelectedIndex, highlightedIndex, searchQuery, value })
 
     this.tryFocusSearchInput()
     this.tryFocusTriggerButton()
