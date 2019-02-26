@@ -27,7 +27,7 @@ describe('Dropdown', () => {
         expect.objectContaining({ type: 'click' }),
         expect.objectContaining({
           activeSelectedIndex: undefined,
-          defaultHighlightedIndex: null,
+          highlightedIndex: null,
           searchQuery: undefined,
           value: null,
         }),
