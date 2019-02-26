@@ -96,6 +96,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    */
   getA11yStatusMessage?: (options: DownshiftA11yStatusMessageOptions<ShorthandValue>) => string
 
+  /** A dropdown can open with the first option already highlighted. */
+  highlightFirstItemOnOpen?: boolean
+
   /** The index of the list item to be highlighted. */
   highlightedIndex?: number
 
@@ -179,9 +182,6 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   /** Sets search query value (controlled mode). */
   searchQuery?: string
 
-  /** The index of the list item to be highlighted by default when list opens. */
-  resetHighlightedIndex?: number
-
   /** Controls appearance of toggle indicator that shows/hides items list. */
   toggleIndicator?: ShorthandValue
 
@@ -239,6 +239,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     fluid: PropTypes.bool,
     getA11ySelectionMessage: PropTypes.object,
     getA11yStatusMessage: PropTypes.func,
+    highlightFirstItemOnOpen: PropTypes.bool,
     highlightedIndex: PropTypes.number,
     inline: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
@@ -254,7 +255,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     placeholder: PropTypes.string,
     renderItem: PropTypes.func,
     renderSelectedItem: PropTypes.func,
-    resetHighlightedIndex: PropTypes.number,
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
@@ -298,7 +298,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       activeSelectedIndex: multiple ? null : undefined,
       focused: false,
       open: false,
-      highlightedIndex: this.props.resetHighlightedIndex || null,
+      highlightedIndex: this.props.highlightFirstItemOnOpen ? 0 : null,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
     }
@@ -658,7 +658,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           this.listRef.current.focus()
         }
       } else {
-        newState.highlightedIndex = this.props.resetHighlightedIndex || null
+        newState.highlightedIndex = this.props.highlightFirstItemOnOpen ? 0 : null
         if (!this.props.multiple && !this.props.search) {
           if (changes.selectedItem) {
             newState.highlightedIndex = this.props.items.indexOf(changes.selectedItem)
