@@ -23,7 +23,7 @@ export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
   create: Function
 }
 
-const createComponent = <P extends {} = ObjectOf<any>>({
+const createComponent = <P extends ObjectOf<any> = any>({
   displayName = 'StardustComponent',
   className = 'ui-stardust-component',
   shorthandPropName = 'children',

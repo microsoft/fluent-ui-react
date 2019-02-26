@@ -20,7 +20,7 @@ export interface CreateStardustComponentConfig<P> {
   actionHandlers?: AccessibilityActionHandlers
 }
 
-const createComponent = <P extends {} = ObjectOf<any>>({
+const createComponent = <P extends ObjectOf<any> = any>({
   displayName,
   render,
   defaultProps,
