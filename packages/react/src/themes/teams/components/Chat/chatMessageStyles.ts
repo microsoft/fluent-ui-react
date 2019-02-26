@@ -72,9 +72,9 @@ const chatMessageStyles: ComponentSlotStylesInput<
     top: v.actionMenuPositionTop,
     overflow: p.focused ? 'visible' : 'hidden',
 
-    // squash actions menu to prevent accidental hovers over its invisible area
-    width: p.focused ? 'auto' : 0,
+    // hide and squash actions menu to prevent accidental hovers over its invisible area
     opacity: p.focused ? 1 : 0,
+    width: p.focused ? 'auto' : 0,
   }),
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
