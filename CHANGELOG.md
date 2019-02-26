@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `open`, `defaultOpen` and `onOpenChange` props for `Dropdown` component (controlled mode) @Bugaa92 ([#900](https://github.com/stardust-ui/react/pull/900))
 - Add `accessibility` prop to all components that supports it @layershifter ([#927](https://github.com/stardust-ui/react/pull/927))
 - Export `FocusZone` types @sophieH29 ([#943](https://github.com/stardust-ui/react/pull/943/))
+- Export `chevron-down`, `download`, `search`, `email` and `star` SVG icons to the Teams Theme @pajindal([#955](https://github.com/stardust-ui/react/pull/955))
 
 ### Fixes
 - Display correctly images in portrait mode inside `Avatar` @layershifter ([#899](https://github.com/stardust-ui/react/pull/899))
