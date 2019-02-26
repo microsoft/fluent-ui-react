@@ -637,18 +637,20 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
       if (changes.isOpen) {
         if (changes.type === Downshift.stateChangeTypes.keyDownArrowUp) {
+          const itemsLength = this.getItemsFilteredBySearchQuery().length
           newState.highlightedIndex = _.isNumber(this.state.highlightedIndex)
             ? (() => {
                 const newIndex = this.state.highlightedIndex - 1
-                return newIndex < 0 ? this.props.items.length - 1 : newIndex
+                return newIndex < 0 ? itemsLength - 1 : newIndex
               })()
-            : this.props.items.length - 1
+            : itemsLength - 1
         }
         if (changes.type === Downshift.stateChangeTypes.keyDownArrowDown) {
+          const itemsLength = this.getItemsFilteredBySearchQuery().length
           newState.highlightedIndex = _.isNumber(this.state.highlightedIndex)
             ? (() => {
                 const newIndex = this.state.highlightedIndex + 1
-                return newIndex >= this.props.items.length ? 0 : newIndex
+                return newIndex >= itemsLength ? 0 : newIndex
               })()
             : 0
         }
