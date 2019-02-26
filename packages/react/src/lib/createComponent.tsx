@@ -13,7 +13,7 @@ export interface CreateComponentConfig<P> {
   shorthandPropName?: string
   defaultProps?: Partial<P>
   handledProps?: string[]
-  propTypes?: React.WeakValidationMap<P>
+  propTypes?: React.ValidationMap<P>
   actionHandlers?: AccessibilityActionHandlers
   focusZoneRef?: (focusZone: FocusZone) => void
   render: (config: RenderResultConfig<P>, props: P) => React.ReactNode
