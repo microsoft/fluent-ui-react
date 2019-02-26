@@ -4,13 +4,14 @@ export interface ChatMessageVariables {
   actionMenuBoxShadow: string
   actionMenuPositionRight: string
   actionMenuPositionTop: string
-  width: string
   backgroundColor: string
   backgroundColorMine: string
   borderRadius: string
   color: string
+  offset: string
   padding: string
   authorMarginRight: string
+  authorFontWeight: number
   headerMarginBottom: string
   contentFocusOutlineColor: string
   border: string
@@ -27,13 +28,14 @@ export default (siteVars): ChatMessageVariables => ({
   actionMenuBoxShadow: siteVars.shadowLevel1,
   actionMenuPositionRight: pxToRem(5),
   actionMenuPositionTop: pxToRem(-30),
-  width: '100%',
   backgroundColor: siteVars.colors.white,
   backgroundColorMine: '#E5E5F1',
   borderRadius: pxToRem(3),
   color: 'rgb(64, 64, 64)',
+  offset: pxToRem(100),
   padding: pxToRem(16),
   authorMarginRight: pxToRem(12),
+  authorFontWeight: siteVars.fontWeightBold,
   headerMarginBottom: pxToRem(2),
   contentFocusOutlineColor: siteVars.colors.primary[500],
   border: 'none',
