@@ -76,18 +76,16 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
     }
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
-        <Flex gap="gap.smaller">
-          {_.map(buttons, (button, idx) =>
-            Button.create(button, {
-              defaultProps: {
-                circular,
-                styles: this.getStyleForButtonIndex(styles, idx === 0, idx === buttons.length - 1),
-              },
-            }),
-          )}
-        </Flex>
-      </ElementType>
+      <Flex as={ElementType} gap="gap.smaller" {...unhandledProps} className={classes.root}>
+        {_.map(buttons, (button, idx) =>
+          Button.create(button, {
+            defaultProps: {
+              circular,
+              styles: this.getStyleForButtonIndex(styles, idx === 0, idx === buttons.length - 1),
+            },
+          }),
+        )}
+      </Flex>
     )
   }
 

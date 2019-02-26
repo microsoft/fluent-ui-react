@@ -81,7 +81,6 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       alignItems: 'center',
       position: 'relative',
       padding: `0 ${pxToRem(paddingLeftRightValue)}`,
-      margin: 0,
       verticalAlign: 'middle',
       cursor: 'pointer',
 
