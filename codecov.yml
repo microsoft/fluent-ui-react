@@ -1,7 +1,7 @@
 coverage:
   ignore:
     - docs/*
-    - src/lib/*
-    - src/themes/*
-    - src/styles/*
-    - test/*
+    - packges/react/src/lib/*
+    - packges/react/src/themes/*
+    - packges/react/src/styles/*
+    - packges/react/test/*

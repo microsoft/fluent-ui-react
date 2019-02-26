@@ -38,7 +38,7 @@ class AnimationExamplePlayState extends React.Component {
           <br />
           <br />
           <Animation name="spinner" playState={this.state.playState}>
-            <Icon name="umbrella" circular />
+            <Icon name="umbrella" circular bordered />
           </Animation>
         </div>
       </Provider>

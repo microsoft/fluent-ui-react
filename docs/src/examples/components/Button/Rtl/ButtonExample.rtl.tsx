@@ -1,11 +1,11 @@
-import { Button } from '@stardust-ui/react'
 import * as React from 'react'
+import { Button, Flex } from '@stardust-ui/react'
 
 const ButtonExampleRtl = () => (
-  <div>
+  <Flex gap="gap.smaller">
     <Button content="مرحبا" />
     <Button content="عالم" primary />
-  </div>
+  </Flex>
 )
 
 export default ButtonExampleRtl

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Divider, Header, Label, Portal } from '@stardust-ui/react'
+import { Button, Divider, Flex, Header, Label, Portal } from '@stardust-ui/react'
 
 class PortalExamplePortal extends React.Component {
   state = { log: [], logCount: 0 }
@@ -41,10 +41,13 @@ class PortalExamplePortal extends React.Component {
         />
         <Divider />
         <div>
-          <Button size="small" onClick={this.clearLog} content="Clear" />
-          <span>
-            Event Log <Label circular>{logCount}</Label>
-          </span>
+          <Flex gap="gap.small" vAlign="center">
+            <Button size="small" onClick={this.clearLog} content="Clear" />
+            <span>
+              Event Log <Label circular>{logCount}</Label>
+            </span>
+          </Flex>
+
           <pre>
             {log.map((e, i) => (
               <div key={i}>{e}</div>
