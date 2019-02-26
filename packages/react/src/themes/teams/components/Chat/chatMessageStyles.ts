@@ -14,19 +14,27 @@ const chatMessageStyles: ComponentSlotStylesInput<
 > = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'inline-block',
+    position: 'relative',
+
+    marginLeft: p.mine ? v.offset : 0,
+    marginRight: !p.mine ? v.offset : 0,
+    maxWidth: `calc(100% - ${v.offset})`,
+    minWidth: v.offset,
+
     paddingLeft: v.padding,
     paddingRight: v.padding,
     paddingTop: pxToRem(8),
     paddingBottom: pxToRem(10),
+
     borderRadius: v.borderRadius,
     border: v.border,
+    outline: 0,
+
     color: v.color,
     backgroundColor: p.mine ? v.backgroundColorMine : v.backgroundColor,
-    maxWidth: v.width,
-    position: 'relative',
+
     wordBreak: 'break-word',
     wordWrap: 'break-word',
-    outline: 0,
 
     ...((v.hasMention || v.isImportant) && {
       '::before': {
@@ -50,6 +58,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
     ':hover': {
       [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
         opacity: 1,
+        width: 'auto',
       },
     },
   }),
@@ -58,16 +67,21 @@ const chatMessageStyles: ComponentSlotStylesInput<
     backgroundColor: v.backgroundColor,
     borderRadius: v.borderRadius,
     boxShadow: v.actionMenuBoxShadow,
-    opacity: p.focused ? 1 : 0,
     position: 'absolute',
     right: v.actionMenuPositionRight,
     top: v.actionMenuPositionTop,
+    overflow: p.focused ? 'visible' : 'hidden',
+
+    // hide and squash actions menu to prevent accidental hovers over its invisible area
+    opacity: p.focused ? 1 : 0,
+    width: p.focused ? 'auto' : 0,
   }),
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
     ...(p.mine && screenReaderContainerStyles),
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
+    fontWeight: v.authorFontWeight,
   }),
 
   timestamp: ({ variables: v }) => ({
@@ -82,17 +96,11 @@ const chatMessageStyles: ComponentSlotStylesInput<
       textDecoration: 'underline',
     },
   }),
-  badge: ({
-    props: p,
-    variables: v,
-    theme: {
-      siteVariables: { white },
-    },
-  }) => {
+  badge: ({ props: p, variables: v }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
     return {
       backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
-      color: white,
+      color: v.badgeTextColor,
       boxShadow: v.badgeShadow,
       position: 'absolute',
       padding: pxToRem(4),

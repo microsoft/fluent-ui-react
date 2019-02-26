@@ -1,20 +1,9 @@
 {
-  "name": "@stardust-ui/react",
-  "version": "0.20.0",
-  "description": "A themable React component library.",
-  "jsnext:main": "dist/es/index.js",
-  "main": "dist/commonjs/index.js",
-  "module": "dist/es/index.js",
-  "types": "dist/es/index.d.ts",
-  "sideEffects": false,
-  "files": [
-    "dist"
-  ],
+  "private": true,
   "scripts": {
     "build": "gulp build",
-    "build:stats": "gulp stats",
+    "build:bundle": "gulp bundle:all-packages",
     "build:docs": "gulp --series dll build:docs",
-    "build:dist": "gulp --series build:dist",
     "ci": "yarn lint && yarn prettier && yarn test --strict",
     "clean:cache": "gulp clean:cache",
     "predeploy:docs": "cross-env NODE_ENV=production yarn build:docs",
@@ -29,11 +18,13 @@
     "postcommit": "git update-index --again",
     "prerelease": "yarn ci && cross-env NODE_ENV=production yarn build",
     "postrelease": "yarn deploy:docs",
-    "release:major": "yarn prerelease && ta-script npm/release major && yarn postrelease",
-    "release:minor": "yarn prerelease && ta-script npm/release minor && yarn postrelease",
-    "release:patch": "yarn prerelease && ta-script npm/release patch && yarn postrelease",
+    "release:major": "yarn prerelease && lerna publish major && yarn postrelease",
+    "release:minor": "yarn prerelease && lerna publish minor && yarn postrelease",
+    "release:patch": "yarn prerelease && lerna publish patch && yarn postrelease",
     "prestart": "yarn satisfied --fix yarn",
     "start": "gulp --series dll docs",
+    "stats:build": "gulp stats",
+    "stats:save": "gulp stats:save",
     "satisfied": "satisfied --skip-invalid",
     "pretest": "yarn satisfied",
     "test": "gulp test",
@@ -52,31 +43,6 @@
       "prettier --write",
       "git add"
     ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://github.com/stardust-ui/react.git"
-  },
-  "author": "Levi Thomason <me@levithomason.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/stardust-ui/react/issues"
-  },
-  "homepage": "https://github.com/stardust-ui/react#readme",
-  "dependencies": {
-    "classnames": "^2.2.5",
-    "downshift": "^3.2.0",
-    "fela": "^10.1.3",
-    "fela-plugin-fallback-value": "^10.1.3",
-    "fela-plugin-placeholder-prefixer": "^10.1.3",
-    "fela-plugin-prefixer": "^10.1.3",
-    "fela-plugin-rtl": "^10.1.3",
-    "keyboard-key": "^1.0.1",
-    "lodash": "^4.17.11",
-    "prop-types": "^15.6.1",
-    "react-fela": "^10.1.3",
-    "react-is": "^16.6.3",
-    "react-popper": "^1.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
@@ -112,7 +78,6 @@
     "express": "^4.15.4",
     "extract-comments": "^1.0.0",
     "faker": "^4.1.0",
-    "fbjs": "^0.8.17",
     "gh-pages": "^1.0.0",
     "glob": "^7.1.2",
     "gulp": "^4.0.0",
@@ -129,32 +94,32 @@
     "jest": "^23.6.0",
     "jest-axe": "^3.1.0",
     "json-stable-stringify-without-jsonify": "^1.0.1",
+    "lerna": "^3.10.7",
+    "lerna-alias": "^3.0.3-0",
     "lint-staged": "^7.0.2",
     "merge2": "^1.2.2",
     "normalize.css": "^8.0.0",
     "prettier": "^1.15.3",
     "puppeteer": "^1.11.0",
-    "react": "^16.0.0",
+    "react": "^16.3.0",
     "react-ace": "^5.1.2",
     "react-codesandboxer": "^3.1.1",
     "react-custom-scrollbars": "^4.2.1",
-    "react-docgen-typescript": "^1.12.2",
     "react-document-title": "^2.0.3",
-    "react-dom": "^16.0.0",
+    "react-dom": "^16.3.0",
     "react-element-to-jsx-string": "^14.0.2",
     "react-hot-loader": "^4.1.3",
     "react-router": "^4.1.2",
     "react-router-dom": "^4.1.2",
-    "react-source-render": "^2.0.0-beta.4",
+    "react-source-render": "2.0.0-beta.6",
     "react-test-renderer": "^16.0.0",
+    "request-promise-native": "^1.0.5",
     "rimraf": "^2.6.1",
     "satisfied": "^1.1.1",
-    "screener-runner": "^0.10.7",
-    "semantic-ui-css": "^2.3.1",
-    "semantic-ui-react": "^0.81.1",
+    "screener-runner": "^0.10.30",
+    "shallowequal": "^1.1.0",
     "simulant": "^0.2.2",
     "snyk": "^1.110.2",
-    "ta-scripts": "^2.5.2",
     "through2": "^2.0.3",
     "tmp": "^0.0.33",
     "ts-jest": "^23.10.4",
@@ -168,8 +133,7 @@
     "webpack-dev-middleware": "^3.4.0",
     "webpack-hot-middleware": "^2.18.2"
   },
-  "peerDependencies": {
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0"
-  }
+  "workspaces": [
+    "packages/*"
+  ]
 }

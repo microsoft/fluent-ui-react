@@ -11,10 +11,14 @@ const dropdownSearchInputStyles: ComponentSlotStylesInput<
     flexGrow: 1,
   }),
 
-  input: ({ variables: v }): ICSSInJSStyle => ({
+  input: ({ props: p }): ICSSInJSStyle => ({
     width: '100%',
-    backgroundColor: v.backgroundColor,
+    backgroundColor: 'transparent',
     borderWidth: 0,
+    ...(p.inline && {
+      padding: 0,
+      lineHeight: 'initial',
+    }),
   }),
 }
 

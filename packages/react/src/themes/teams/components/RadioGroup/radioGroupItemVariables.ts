@@ -14,13 +14,13 @@ export type RadioGroupItemVariables = {
 
 export default (siteVars: any): RadioGroupItemVariables => ({
   labelColorDefault: siteVars.gray02,
-  labelColorChecked: siteVars.black,
+  labelColorChecked: siteVars.colors.black,
 
-  iconColorBorderDefault: siteVars.brand,
-  iconColorBorderChecked: siteVars.brand,
+  iconColorBorderDefault: siteVars.colors.primary[500],
+  iconColorBorderChecked: siteVars.colors.primary[500],
 
-  iconcolorBackgroundDefault: siteVars.white,
-  iconColorBackgroundChecked: siteVars.brand,
+  iconcolorBackgroundDefault: siteVars.colors.white,
+  iconColorBackgroundChecked: siteVars.colors.primary[500],
   iconColorBoxShadowFocus: siteVars.brand07,
 
   colorDisabled: siteVars.gray06,

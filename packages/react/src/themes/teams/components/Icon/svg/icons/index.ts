@@ -1,7 +1,10 @@
 import { TeamsSvgIconSpec } from '../types'
 
+import accept from './accept'
 import add from './add'
 import addParticipant from './addParticipant'
+import arrowUp from './arrowUp'
+import arrowDown from './arrowDown'
 import bold from './bold'
 import bookmark from './bookmark'
 import bullets from './bullets'
@@ -14,9 +17,13 @@ import callRecording from './callRecording'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
+import chat from './chat'
+import chevronDown from './chevronDown'
 import close from './close'
 import codeSnippet from './codeSnippet'
+import download from './download'
 import edit from './edit'
+import email from './email'
 import emoji from './emoji'
 import error from './error'
 import fontColor from './fontColor'
@@ -31,6 +38,7 @@ import italic from './italic'
 import leave from './leave'
 import like from './like'
 import link from './link'
+import lock from './lock'
 import markAsUnread from './markAsUnread'
 import meetingNew from './meetingNew'
 import mention from './mention'
@@ -49,7 +57,9 @@ import redo from './redo'
 import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
+import search from './search'
 import send from './send'
+import star from './star'
 import sticker from './sticker'
 import strike from './strike'
 import table from './table'
@@ -63,10 +73,14 @@ import triangleDown from './triangleDown'
 import triangleRight from './triangleRight'
 import underline from './underline'
 import undo from './undo'
+import urgent from './urgent'
 import videoCameraEmphasis from './videoCameraEmphasis'
 
 export default {
+  accept,
   add,
+  'arrow-up': arrowUp,
+  'arrow-down': arrowDown,
   bold,
   bookmark,
   bullets,
@@ -79,9 +93,13 @@ export default {
   'call-control-stop-presenting-new': callControlStopPresentingNew,
   'call-recording': callRecording,
   'canvas-add-page': canvasAddPage,
+  chat,
+  'chevron-down': chevronDown,
   close,
   'code-snippet': codeSnippet,
+  download,
   edit,
+  email,
   emoji,
   error,
   format,
@@ -96,6 +114,7 @@ export default {
   leave,
   like,
   link,
+  lock,
   'mark-as-unread': markAsUnread,
   'meeting-new': meetingNew,
   mention,
@@ -115,7 +134,9 @@ export default {
   'remove-format': removeFormat,
   reply,
   retry,
+  search,
   send,
+  star,
   sticker,
   strike,
   table,
@@ -129,5 +150,6 @@ export default {
   'team-create': teamCreate,
   underline,
   undo,
+  urgent,
   'video-camera-emphasis': videoCameraEmphasis,
 } as { [iconName: string]: TeamsSvgIconSpec }

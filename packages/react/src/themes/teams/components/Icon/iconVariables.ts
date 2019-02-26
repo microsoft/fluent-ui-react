@@ -16,7 +16,6 @@ export interface IconVariables {
   disabledColor: string
 
   horizontalSpace: string
-  marginRight: string
   outline?: boolean
   sizeModifier?: IconSizeModifier
 }
@@ -29,11 +28,10 @@ export default (siteVars): IconVariables => ({
   backgroundColor: undefined,
   borderColor: undefined,
   brandColor: siteVars.brandColor,
-  secondaryColor: siteVars.white,
-  redColor: siteVars.red,
+  secondaryColor: siteVars.colors.white,
+  redColor: siteVars.colors.red[900],
   disabledColor: siteVars.gray06,
 
   horizontalSpace: pxToRem(10),
-  marginRight: pxToRem(8),
   outline: undefined,
 })
