@@ -10,6 +10,11 @@ const Variations = () => (
       examplePath="components/Menu/Variations/MenuExampleVertical"
     />
     <ComponentExample
+      title="Vertical &amp; Pointing"
+      description="A vertical menu displays elements vertically and point to show its relationship to nearby content."
+      examplePath="components/Menu/Variations/MenuExampleVerticalPointing"
+    />
+    <ComponentExample
       title="Primary"
       description="A menu can have a primary color."
       examplePath="components/Menu/Variations/MenuExamplePrimary"

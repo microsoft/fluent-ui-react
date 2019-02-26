@@ -1,23 +1,23 @@
-import { Dropdown, List, Indicator, Input, Label } from '@stardust-ui/react'
+import { Dropdown, DropdownSearchInput } from '@stardust-ui/react'
+
+const selectors = {
+  indicator: `.${Dropdown.slotClassNames.indicator}`,
+  input: `.${DropdownSearchInput.slotClassNames.input}`,
+  item: (itemIndex: number) => `.${Dropdown.slotClassNames.itemsList} li:nth-child(${itemIndex})`,
+  selectedItem: (itemIndex: number) =>
+    `.${Dropdown.slotClassNames.selectedItems} span:nth-child(${itemIndex})`,
+}
 
 const steps: ScreenerSteps = [
   (steps, keys) =>
     steps
-      .click(`.${Dropdown.className} .${Indicator.className}`)
-      .click(`.${List.className} li:nth-child(2)`)
-      .click(`.${Dropdown.className} .${Indicator.className}`)
-      .click(`.${List.className} li:nth-child(2)`)
-      .keys(`.${Input.slotClassNames.input}`, keys.leftArrow)
+      .click(selectors.indicator)
+      .click(selectors.item(2))
+      .click(selectors.indicator)
+      .click(selectors.item(2))
+      .keys(selectors.input, keys.leftArrow)
       .snapshot('Selects last selected element'),
-  (steps, keys) =>
-    steps
-      .click(`.${Dropdown.className} .${Indicator.className}`)
-      .click(`.${List.className} li:nth-child(2)`)
-      .click(`.${Dropdown.className} .${Indicator.className}`)
-      .click(`.${List.className} li:nth-child(2)`)
-      .keys(`.${Input.slotClassNames.input}`, keys.leftArrow)
-      .hover(`.${Dropdown.slotClassNames.selectedItems} .${Label.className}:nth-child(1)`)
-      .snapshot('Hovers first selected element'),
+  steps => steps.hover(selectors.selectedItem(1)).snapshot('Hovers first selected element'),
 ]
 
 export default steps
