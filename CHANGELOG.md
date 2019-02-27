@@ -31,6 +31,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix font-based `Icon` styles in Teams theme @kuzhelov ([#976](https://github.com/stardust-ui/react/pull/976))
 - Refactor the `ListItem` component to use the `Flex` components instead of `ItemLayout` @mnajdova ([#886](https://github.com/stardust-ui/react/pull/886))
 
+### Documentation
+- Add `MenuButton` prototype (only available in development mode) @layershifter ([#947](https://github.com/stardust-ui/react/pull/947))
+
 <!--------------------------------[ v0.22.1 ]------------------------------- -->
 ## [v0.22.1](https://github.com/stardust-ui/react/tree/v0.22.1) (2019-02-26)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.22.0...v0.22.1)
