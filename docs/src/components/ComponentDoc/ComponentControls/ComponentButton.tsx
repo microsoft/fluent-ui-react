@@ -12,7 +12,7 @@ const centered: ICSSInJSStyle = {
   textAlign: 'center',
 }
 
-const LabelledButton: React.SFC<LabelledButtonProps> = createComponent<LabelledButtonProps>({
+const LabelledButton = createComponent<LabelledButtonProps>({
   displayName: 'LabelledButton',
   render: ({ stardust, ...props }) => {
     const { iconName, label, active, onClick } = props
