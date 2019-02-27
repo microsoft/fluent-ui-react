@@ -1,6 +1,6 @@
 import { ComponentSlotStylesInput } from '../../../types'
-import { ReactionProps } from '@stardust-ui/react'
-import { ReactionGroupVariables } from 'src/themes/teams/components/Reaction/reactionGroupVariables'
+import { ReactionProps } from '../../../../components/Reaction/Reaction'
+import { ReactionGroupVariables } from './reactionGroupVariables'
 
 const reactionStyles: ComponentSlotStylesInput<ReactionProps, ReactionGroupVariables> = {
   root: {},

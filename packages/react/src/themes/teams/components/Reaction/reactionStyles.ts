@@ -1,9 +1,8 @@
-import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
-import { ReactionProps } from '@stardust-ui/react'
-import { pxToRem } from 'src/lib'
-import { ReactionVariables } from 'src/themes/teams/components/Reaction/reactionVariables'
-import Reaction from 'src/components/Reaction/Reaction'
 import { FontWeightProperty } from 'csstype'
+import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
+import { default as Reaction, ReactionProps } from '../../../../components/Reaction/Reaction'
+import { pxToRem } from '../../../../lib'
+import { ReactionVariables } from './reactionVariables'
 
 const contentClassNameSelector = `& .${Reaction.slotClassNames.content}`
 
