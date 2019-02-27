@@ -204,11 +204,23 @@ export {
   ContentComponentProps,
   SizeValue,
 } from './lib'
-export { ShorthandRenderer } from './types'
+export { ShorthandValue, ShorthandRenderer } from './types'
 
 //
 // FocusZone
 //
-import { getFirstTabbable, getLastTabbable } from './lib/accessibility/FocusZone/focusUtilities'
-export const FocusZoneUtilities = { getFirstTabbable, getLastTabbable }
+import {
+  getFirstTabbable,
+  getLastTabbable,
+  getNextElement,
+  getPreviousElement,
+  focusAsync,
+} from './lib/accessibility/FocusZone/focusUtilities'
+export const FocusZoneUtilities = {
+  getFirstTabbable,
+  getLastTabbable,
+  getNextElement,
+  getPreviousElement,
+  focusAsync,
+}
 export { FocusZoneDirection, FocusZoneProps } from './lib/accessibility/FocusZone/FocusZone.types'
