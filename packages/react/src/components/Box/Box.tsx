@@ -1,49 +1,28 @@
-import * as React from 'react'
-import {
-  childrenExist,
-  createShorthandFactory,
-  UIComponentProps,
-  ContentComponentProps,
-  ChildrenComponentProps,
-  commonPropTypes,
-  rtlTextContainer,
-} from '../../lib'
-import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
-import { ReactProps } from '../../types'
+import { createShorthandFactory, getClasses, felaRenderer } from '../../lib'
 
-export interface BoxProps
-  extends UIComponentProps<BoxProps>,
-    ContentComponentProps,
-    ChildrenComponentProps {}
+import { BoxClassName, BoxProps, renderBox } from './common'
 
 /**
  * A Box is a basic component (no default styles)
  */
-const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<BoxProps>({
-  displayName: 'Box',
+const BoxLight = (props: BoxProps) => {
+  const { as: ElementType = 'div', children, content, styles, ...unhandledProps } = props
 
-  className: 'ui-box',
+  const classes = getClasses(felaRenderer, { root: styles }, {} as any)
 
-  propTypes: {
-    ...commonPropTypes.createCommon(),
-  },
+  return renderBox({
+    ElementType,
+    classes,
+    children,
+    content,
+    unhandledProps,
+  })
+}
 
-  render(config, props) {
-    const { ElementType, classes, unhandledProps } = config
-    const { children, content } = props
+BoxLight.displayName = 'Box'
+BoxLight.className = BoxClassName
 
-    return (
-      <ElementType
-        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
-        {...unhandledProps}
-        className={classes.root}
-      >
-        {childrenExist(children) ? children : content}
-      </ElementType>
-    )
-  },
-})
+BoxLight.create = createShorthandFactory(BoxLight)
 
-Box.create = createShorthandFactory(Box)
-
-export default Box
+export default BoxLight
+export { BoxProps } from './common'
