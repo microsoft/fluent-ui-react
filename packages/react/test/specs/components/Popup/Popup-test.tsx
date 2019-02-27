@@ -195,5 +195,38 @@ describe('Popup', () => {
         keyboardKeyToClose: keyboardKey.Escape,
       })
     })
+    test(`close previous popup with Enter key`, done => {
+      const triggerId2 = 'triggerElement2'
+      const contentId2 = 'contentId2'
+      const container = mountWithProvider(
+        <React.Fragment>
+          <Popup
+            trigger={<span id={triggerId}> text to trigger popup </span>}
+            content={<span id={contentId} />}
+            on={'click'}
+          />
+          <Popup
+            trigger={<span id={triggerId2}> text to trigger popup </span>}
+            content={<span id={contentId2} />}
+            on={'click'}
+          />
+        </React.Fragment>,
+      )
+
+      expect(container.find(`#${contentId}`).length).toBe(0)
+      expect(container.find(`#${contentId2}`).length).toBe(0)
+
+      const popupTriggerElement = container.find(`#${triggerId}`)
+      popupTriggerElement.simulate('keydown', { keyCode: keyboardKey.Enter })
+
+      expect(container.find(`#${contentId}`).length).toBe(1)
+      expect(container.find(`#${contentId2}`).length).toBe(0)
+
+      const popupTriggerElement2 = container.find(`#${triggerId2}`)
+      popupTriggerElement2.simulate('keydown', { keyCode: keyboardKey.Enter })
+
+      expect(container.find(`#${contentId}`).length).toBe(0)
+      expect(container.find(`#${contentId2}`).length).toBe(1)
+    })
   })
 })
