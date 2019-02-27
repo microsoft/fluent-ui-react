@@ -21,7 +21,7 @@ type ScreenerRunnerSteps = {
   click(selector: string): ScreenerRunnerSteps
 
   /** This will capture a visual snapshot. */
-  snapshot(name: string): ScreenerRunnerSteps
+  snapshot(name: string, options?: any): ScreenerRunnerSteps
 
   /** this will move the mouse over the first element matching the provided css selector. */
   hover(selector: string): ScreenerRunnerSteps
@@ -36,7 +36,7 @@ type ScreenerRunnerSteps = {
   focus(selector: string): ScreenerRunnerSteps
 
   /** This will set the value of the input field matching the provided css selector. */
-  setValue(selector: string, value: string): ScreenerRunnerSteps
+  setValue(selector: string, value: string, options?: any): ScreenerRunnerSteps
 
   /** This will send the provided keys to the first element matching the provided css selector. */
   keys(selector: string, key: string): ScreenerRunnerSteps

@@ -30,6 +30,7 @@ const steps: ScreenerSteps = [
       .click(selectors.triggerButton)
       .click(selectors.item(3))
       .click(selectors.triggerButton)
+      .click(selectors.triggerButton)
       .snapshot('Closes the list'),
 ]
 
