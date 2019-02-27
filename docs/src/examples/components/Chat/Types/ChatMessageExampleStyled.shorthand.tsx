@@ -74,7 +74,7 @@ const ChatMessageExampleStyled = () => (
             backgroundColor: '#FFFF00',
           },
           reactionGroup: {
-            ...slotLabelStyles('reactiona', {}, { padding: '8px' }),
+            ...slotLabelStyles('reactions', {}, { padding: '8px' }),
             backgroundColor: '#FFFFE0',
           },
         },
