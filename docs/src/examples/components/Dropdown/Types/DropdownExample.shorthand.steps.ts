@@ -1,11 +1,16 @@
 import { Dropdown } from '@stardust-ui/react'
+import { ScreenerStepsArray } from 'docs/src/types'
 
 const selectors = {
   triggerButton: `.${Dropdown.slotClassNames.triggerButton}`,
   item: (itemIndex: number) => `.${Dropdown.slotClassNames.itemsList} li:nth-child(${itemIndex})`,
 }
 
+<<<<<<< HEAD
 const steps: ScreenerSteps = [
+=======
+const steps: ScreenerStepsArray = [
+>>>>>>> added types for screener steps and keys
   steps => steps.click(selectors.triggerButton).snapshot('Shows list'),
   steps =>
     steps
