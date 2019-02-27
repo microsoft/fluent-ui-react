@@ -99,13 +99,15 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   }): ICSSInJSStyle => {
     const iconSpec = theme.icons[name]
     const rtl = theme.rtl
-    const isFontBased = !iconSpec || !iconSpec.isSvg
+    const isFontBased = name && (!iconSpec || !iconSpec.isSvg)
 
     return {
       backgroundColor: v.backgroundColor,
       display: 'inline-block',
       speak: 'none',
       verticalAlign: 'middle',
+
+      ...(!isFontBased && { boxSizing: 'border-box' }),
 
       ...(isFontBased && getFontStyles(getIconSize(size, v.sizeModifier), name)),
 
