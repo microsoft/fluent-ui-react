@@ -25,7 +25,7 @@ import Box from '../Box/Box'
 import Label from '../Label/Label'
 import Menu from '../Menu/Menu'
 import Text from '../Text/Text'
-import ReactionGroup from '../Reaction/ReactionGroup'
+import Reaction from '../Reaction/Reaction'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string
@@ -181,7 +181,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
       },
     })
 
-    const reactionGroupElement = ReactionGroup.create(reactionGroup, {
+    const reactionGroupElement = Reaction.Group.create(reactionGroup, {
       defaultProps: {
         className: ChatMessage.slotClassNames.reactionGroup,
         styles: styles.reactionGroup,
