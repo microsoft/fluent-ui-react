@@ -43,6 +43,7 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       content: false,
     }),
     align: PropTypes.oneOf(['auto', 'start', 'end', 'center', 'baseline', 'stretch']),

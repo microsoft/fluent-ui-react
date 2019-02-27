@@ -68,6 +68,7 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
 
   static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       children: false,
       content: false,
     }),
@@ -110,9 +111,11 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
         inputRef={inputRef}
         onFocus={this.handleFocus}
         onKeyUp={this.handleKeyUp}
+        {...unhandledProps}
         wrapper={{
           styles: styles.root,
           ...accessibilityComboboxProps,
+          ...unhandledProps.wrapper,
         }}
         input={{
           type: 'text',
@@ -121,8 +124,8 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
           onBlur: this.handleInputBlur,
           onKeyDown: this.handleInputKeyDown,
           ...accessibilityInputProps,
+          ...unhandledProps.input,
         }}
-        {...unhandledProps}
       />
     )
   }

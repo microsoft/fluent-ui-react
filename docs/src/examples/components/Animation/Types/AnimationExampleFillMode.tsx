@@ -18,16 +18,16 @@ const AnimationExampleFillMode = () => (
       <Text content="Backwards" />
       <Text content="Both" />
       <Animation name="colorChanger" fillMode="none" delay="3s" iterationCount="1">
-        <Icon name="umbrella" circular />
+        <Icon name="umbrella" circular bordered />
       </Animation>
       <Animation name="colorChanger" fillMode="forwards" delay="3s" iterationCount="1">
-        <Icon name="umbrella" circular />
+        <Icon name="umbrella" circular bordered />
       </Animation>
       <Animation name="colorChanger" fillMode="backwards" delay="3s" iterationCount="1">
-        <Icon name="umbrella" circular />
+        <Icon name="umbrella" circular bordered />
       </Animation>
       <Animation name="colorChanger" fillMode="both" delay="3s" iterationCount="1">
-        <Icon name="umbrella" circular />
+        <Icon name="umbrella" circular bordered />
       </Animation>
     </Grid>
   </Provider>

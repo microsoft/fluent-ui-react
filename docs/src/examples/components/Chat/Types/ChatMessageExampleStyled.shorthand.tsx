@@ -53,10 +53,16 @@ const ChatMessageExampleStyled = () => (
         ChatMessage: {
           root: { ...slotLabelStyles('chat-message-root'), backgroundColor: '#87CEFA' },
           author: ({ props: { mine } }) => ({
-            ...(!mine && { ...slotLabelStyles('author'), backgroundColor: '#E0FFFF' }),
+            ...(!mine && {
+              ...slotLabelStyles('author', {}, { display: 'inline-block' }),
+              backgroundColor: '#E0FFFF',
+            }),
           }),
           content: { ...slotLabelStyles('content'), backgroundColor: '#F08080' },
-          timestamp: { ...slotLabelStyles('timestamp'), backgroundColor: '#FFFFE0' },
+          timestamp: {
+            ...slotLabelStyles('timestamp', {}, { display: 'inline-block' }),
+            backgroundColor: '#FFFFE0',
+          },
           badge: {
             ...slotLabelStyles(
               'badge',

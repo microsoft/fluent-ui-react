@@ -20,7 +20,7 @@ export type LoaderPosition = 'above' | 'below' | 'start' | 'end'
 export interface LoaderProps extends UIComponentProps, ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
+   * @default loaderBehavior
    */
   accessibility?: Accessibility
 
@@ -51,7 +51,6 @@ class Loader extends UIComponent<ReactProps<LoaderProps>> {
       content: false,
       color: true,
     }),
-    accessibility: PropTypes.func,
     indicator: customPropTypes.itemShorthand,
     label: customPropTypes.itemShorthand,
     labelPosition: PropTypes.oneOf(['above', 'below', 'start', 'end']),
