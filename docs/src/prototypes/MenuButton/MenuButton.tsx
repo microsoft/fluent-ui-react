@@ -89,7 +89,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
     const { menuOpen } = this.state
     const target = e.target as HTMLElement
     const isInside =
-      _.invoke(this.buttonNode, 'contains', target) && _.invoke(this.menuNode, 'contains', target)
+      _.invoke(this.buttonNode, 'contains', target) || _.invoke(this.menuNode, 'contains', target)
 
     if (menuOpen && !isInside) {
       this.setState({ lastKeyCode: null, menuOpen: false })
