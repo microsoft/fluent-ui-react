@@ -1,6 +1,9 @@
 import { pxToRem } from '../../../../lib'
 
 export interface ListItemVariables {
+  minHeight: string
+  rootPadding: string
+
   headerLineHeight: string
   headerFontSize: string
 
@@ -12,6 +15,10 @@ export interface ListItemVariables {
   // Content
   contentFontSize: string
   contentLineHeight: string
+
+  // Content media
+  contentMediaFontSize: string
+  contentMediaLineHeight: string
 
   // Selectable
   selectableFocusHoverColor: string
