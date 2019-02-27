@@ -7,7 +7,11 @@ const selectors = {
 
 const steps = [
   steps => steps.click(selectors.triggerButton).snapshot('Shows list'),
-  steps => steps.click(selectors.item(3)).snapshot('Selects an item'),
+  steps =>
+    steps
+      .click(selectors.triggerButton)
+      .click(selectors.item(3))
+      .snapshot('Selects an item'),
   steps =>
     steps
       .click(selectors.triggerButton)

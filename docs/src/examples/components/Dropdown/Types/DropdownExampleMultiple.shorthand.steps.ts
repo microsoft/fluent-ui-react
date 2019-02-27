@@ -20,6 +20,11 @@ const steps: ScreenerSteps = [
       .snapshot('Opened dropdown with two items selected'),
   steps =>
     steps
+      .click(selectors.triggerButton)
+      .click(selectors.item(3))
+      .click(selectors.triggerButton)
+      .click(selectors.item(2))
+      .click(selectors.triggerButton)
       .click(selectors.removeItemIcon(1))
       .click(selectors.triggerButton)
       .click(selectors.removeItemIcon(1))
