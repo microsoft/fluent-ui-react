@@ -23,7 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `delay` prop for `Loader` component @layershifter ([#969](https://github.com/stardust-ui/react/pull/969))
-- Add `getNextElement`, `getPreviousElement` and `focusAsync` to exported as `focusZoneUtilities` @layershifter ([#981](https://github.com/stardust-ui/react/pull/981))
+- Add `getNextElement`, `getPreviousElement` and `focusAsync` to exported as `FocusZoneUtilities` @layershifter ([#981](https://github.com/stardust-ui/react/pull/981))
 
 ### Fixes
 - Remove space between `Button.Group` items without `circular` prop @Bugaa92 ([#973](https://github.com/stardust-ui/react/pull/973))
