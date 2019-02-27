@@ -9,7 +9,7 @@ const selectors = {
     }`,
 }
 
-const steps = [
+const steps: ScreenerSteps = [
   steps =>
     steps
       .click(selectors.triggerButton)
