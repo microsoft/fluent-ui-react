@@ -68,6 +68,8 @@ const getFocusedStyles = ({
     ...(vertical && isFromKeyboard && !pointing && !primary
       ? {
           border: v.focusedBorder,
+          outline: v.focusedOutline,
+          margin: '1px',
           background: v.focusedBackgroundColor,
         }
       : {}),
@@ -177,7 +179,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       }),
 
       ...(vertical && {
-        border: 'solid 1px transparent',
+        border: 'solid 2px transparent',
       }),
 
       ...(pills && {

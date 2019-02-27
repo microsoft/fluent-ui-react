@@ -6,6 +6,7 @@ export interface MenuVariables {
   verticalBorderColor: string
 
   focusedBorder: string
+  focusedOutline: string
   focusedBackgroundColor: string
 
   hoverBackgroundColor: string
@@ -45,7 +46,8 @@ export default (siteVars: any): MenuVariables => {
     borderColor: siteVars.gray08,
     verticalBorderColor: siteVars.gray08,
 
-    focusedBorder: `solid ${pxToRem(1)} ${siteVars.gray03}`,
+    focusedBorder: `solid ${pxToRem(1)} ${siteVars.colors.white}`,
+    focusedOutline: `solid ${pxToRem(1)} ${siteVars.colors.black}`,
     focusedBackgroundColor: siteVars.gray09,
 
     hoverBackgroundColor: siteVars.gray14,
