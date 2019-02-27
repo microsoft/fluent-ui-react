@@ -12,7 +12,7 @@ const selectors = {
 }
 
 const commonSteps: ScreenerStepsArray = [
-  steps => steps.hover(selectors.item(2)).snapshot('Hovers 2nd item (hover state stylse)'),
+  steps => steps.hover(selectors.item(2)).snapshot('Hovers 2nd item (hover state styles)'),
   steps => steps.click(selectors.item(2)).snapshot('Clicks on 2nd item (active state styles)'),
 ]
 
