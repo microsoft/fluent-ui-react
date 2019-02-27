@@ -59,6 +59,7 @@ import reply from './reply'
 import retry from './retry'
 import search from './search'
 import send from './send'
+import settings from './settings'
 import star from './star'
 import sticker from './sticker'
 import strike from './strike'
@@ -136,6 +137,7 @@ export default {
   retry,
   search,
   send,
+  settings,
   star,
   sticker,
   strike,
