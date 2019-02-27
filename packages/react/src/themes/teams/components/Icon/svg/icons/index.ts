@@ -18,9 +18,12 @@ import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
 import chat from './chat'
+import chevronDown from './chevronDown'
 import close from './close'
 import codeSnippet from './codeSnippet'
+import download from './download'
 import edit from './edit'
+import email from './email'
 import emoji from './emoji'
 import error from './error'
 import fontColor from './fontColor'
@@ -54,7 +57,9 @@ import redo from './redo'
 import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
+import search from './search'
 import send from './send'
+import star from './star'
 import sticker from './sticker'
 import strike from './strike'
 import table from './table'
@@ -89,9 +94,12 @@ export default {
   'call-recording': callRecording,
   'canvas-add-page': canvasAddPage,
   chat,
+  'chevron-down': chevronDown,
   close,
   'code-snippet': codeSnippet,
+  download,
   edit,
+  email,
   emoji,
   error,
   format,
@@ -126,7 +134,9 @@ export default {
   'remove-format': removeFormat,
   reply,
   retry,
+  search,
   send,
+  star,
   sticker,
   strike,
   table,
