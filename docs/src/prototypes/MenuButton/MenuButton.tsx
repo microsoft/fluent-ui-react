@@ -12,7 +12,7 @@ import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
 import * as PopperJS from 'popper.js'
 import * as React from 'react'
-import { Manager, Reference, Popper } from 'react-popper'
+import { Manager as PopperManager, Reference as PopperReference, Popper } from 'react-popper'
 
 import { focusButton, focusMenuItem, focusNearest } from './focusUtils'
 import menuButtonBehavior from './menuButtonBehavior'
@@ -143,8 +143,8 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
 
     return (
       <MenuButtonWrapper onKeyDown={this.handleKeyDown}>
-        <Manager>
-          <Reference>
+        <PopperManager>
+          <PopperReference>
             {({ ref }) => (
               <Ref
                 innerRef={(buttonNode: HTMLButtonElement) => {
@@ -162,7 +162,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
                 })}
               </Ref>
             )}
-          </Reference>
+          </PopperReference>
           <Popper placement={placement}>
             {({ placement, ref, style }) =>
               menuOpen && (
@@ -189,7 +189,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
               )
             }
           </Popper>
-        </Manager>
+        </PopperManager>
       </MenuButtonWrapper>
     )
   }
