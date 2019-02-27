@@ -5,7 +5,7 @@ const selectors = {
   item: (itemIndex: number) => `.${Dropdown.slotClassNames.itemsList} li:nth-child(${itemIndex})`,
 }
 
-const steps = [
+const steps: ScreenerSteps = [
   steps => steps.click(selectors.triggerButton).snapshot('Shows list'),
   steps =>
     steps
@@ -20,6 +20,7 @@ const steps = [
       .snapshot('Opens with selected item highlighted'),
   steps =>
     steps
+      .click(selectors.triggerButton)
       .click(selectors.item(3))
       .click(selectors.triggerButton)
       .hover(selectors.item(2))
