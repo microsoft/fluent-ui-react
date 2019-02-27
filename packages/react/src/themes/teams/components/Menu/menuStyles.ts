@@ -31,7 +31,6 @@ export default {
         padding: `${pxToRem(8)} 0`,
         ...(submenu && {
           boxShadow: variables.verticalBoxShadow,
-          borderWidth: variables.verticalBorderWidth,
         }),
         ...(!fluid && { width: pxToRem(200) }),
         ...(iconOnly && {

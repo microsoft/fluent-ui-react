@@ -13,9 +13,4 @@ export default (siteVars: any): Partial<MenuVariables> => ({
   activeBackgroundColor: siteVars.gray08,
 
   verticalBackgroundColor: siteVars.gray10,
-
-  dividerHeight: pxToRem(1),
-  borderWidth: pxToRem(1),
-  verticalBorderWidth: pxToRem(2),
-  verticalDividerHeight: pxToRem(2),
 })
