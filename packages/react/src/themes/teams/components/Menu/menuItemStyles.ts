@@ -78,13 +78,12 @@ const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVaria
   props,
   variables: v,
 }): ICSSInJSStyle => {
-  const { iconOnly, pointing, pills, primary, underlined, vertical } = props
+  const { iconOnly, pills, primary, underlined, vertical } = props
 
   return (
     !vertical &&
     !pills &&
     !underlined &&
-    !(pointing && vertical) &&
     !iconOnly && {
       '::before': {
         position: 'absolute',
