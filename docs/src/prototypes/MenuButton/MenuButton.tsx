@@ -14,7 +14,7 @@ import * as PopperJS from 'popper.js'
 import * as React from 'react'
 import { Manager as PopperManager, Reference as PopperReference, Popper } from 'react-popper'
 
-import { focusButton, focusMenuItem, focusNearest } from './focusUtils'
+import { focusMenuItem, focusNearest } from './focusUtils'
 import menuButtonBehavior from './menuButtonBehavior'
 import MenuButtonWrapper from './MenuButtonWrapper'
 
@@ -46,14 +46,17 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
     menuOpen: false,
   }
 
-  buttonRef = React.createRef<HTMLButtonElement>()
-  menuRef = React.createRef<HTMLUListElement>()
+  buttonNode: HTMLButtonElement
+  menuNode: HTMLUListElement
 
   componentDidUpdate(_, prevState: MenuButtonState) {
     if (!prevState.menuOpen && this.state.menuOpen) {
       document.addEventListener('click', this.handleDocumentClick)
 
-      focusMenuItem(this.menuRef, this.state.lastKeyCode === keyboardKey.ArrowUp ? 'last' : 'first')
+      focusMenuItem(
+        this.menuNode,
+        this.state.lastKeyCode === keyboardKey.ArrowUp ? 'last' : 'first',
+      )
     }
 
     if (prevState.menuOpen && !this.state.menuOpen) {
@@ -62,11 +65,11 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
       switch (this.state.lastKeyCode) {
         case keyboardKey.Enter:
         case keyboardKey.Escape:
-          focusButton(this.buttonRef)
+          this.buttonNode.focus()
           break
 
         case keyboardKey.Tab:
-          focusNearest(this.buttonRef, this.state.lastShiftKey ? 'previous' : 'next')
+          focusNearest(this.buttonNode, this.state.lastShiftKey ? 'previous' : 'next')
           break
       }
     }
@@ -86,8 +89,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
     const { menuOpen } = this.state
     const target = e.target as HTMLElement
     const isInside =
-      _.invoke(this.buttonRef.current, 'contains', target) &&
-      _.invoke(this.menuRef.current, 'contains', target)
+      _.invoke(this.buttonNode, 'contains', target) && _.invoke(this.menuNode, 'contains', target)
 
     if (menuOpen && !isInside) {
       this.setState({ lastKeyCode: null, menuOpen: false })
@@ -148,8 +150,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
             {({ ref }) => (
               <Ref
                 innerRef={(buttonNode: HTMLButtonElement) => {
-                  // @ts-ignore
-                  this.buttonRef.current = buttonNode
+                  this.buttonNode = buttonNode
                   ref(buttonNode)
                 }}
               >
@@ -168,8 +169,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
               menuOpen && (
                 <Ref
                   innerRef={(menuNode: HTMLUListElement) => {
-                    // @ts-ignore
-                    this.menuRef.current = menuNode
+                    this.menuNode = menuNode
                     ref(menuNode)
                   }}
                 >
