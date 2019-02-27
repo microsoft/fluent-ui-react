@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { Avatar, Chat, Provider } from '@stardust-ui/react'
 
+const reactions = [{ icon: 'thumbs up', content: '1K' }, { icon: 'thumbs down', content: 5 }]
+
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
   status: { color: 'green', icon: 'check' },
@@ -71,6 +73,10 @@ const ChatMessageExampleStyled = () => (
             ),
             backgroundColor: '#FFFF00',
           },
+          reactionGroup: {
+            ...slotLabelStyles('reactions', {}, { padding: '8px' }),
+            backgroundColor: '#FFFFE0',
+          },
         },
       },
       componentVariables: {
@@ -94,6 +100,7 @@ const ChatMessageExampleStyled = () => (
                 mine
                 badge={{ icon: 'at' }}
                 badgePosition="start"
+                reactionGroup={{ items: reactions }}
               />
             ),
           },
@@ -110,6 +117,7 @@ const ChatMessageExampleStyled = () => (
                 author="Jane Doe"
                 timestamp="Yesterday, 10:15 PM"
                 badge={{ icon: 'exclamation' }}
+                reactionGroup={{ items: reactions }}
               />
             ),
           },
