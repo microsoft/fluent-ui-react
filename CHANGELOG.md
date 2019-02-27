@@ -18,11 +18,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Features
-- Add `delay` prop for `Loader` component @layershifter([#969](https://github.com/stardust-ui/react/pull/969))
+- Add `delay` prop for `Loader` component @layershifter ([#969](https://github.com/stardust-ui/react/pull/969))
 
 ### Fixes
 - Remove space between `Button.Group` items without `circular` prop @Bugaa92 ([#973](https://github.com/stardust-ui/react/pull/973))
 - Fix allow `Text` component when rendered as div to behave as block element in Teams theme @mnajdova ([#940](https://github.com/stardust-ui/react/pull/940))
+
+### Documentation
+- Add `MenuButton` prototype (only available in development mode) @layershifter ([#947](https://github.com/stardust-ui/react/pull/947))
 
 <!--------------------------------[ v0.22.1 ]------------------------------- -->
 ## [v0.22.1](https://github.com/stardust-ui/react/tree/v0.22.1) (2019-02-26)
