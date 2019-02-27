@@ -1,5 +1,4 @@
 import { Menu } from '@stardust-ui/react'
-import { ScreenerStepsArray } from 'docs/src/types'
 
 interface StepsOptions {
   vertical?: boolean
@@ -11,12 +10,12 @@ const selectors = {
   item: (itemIndex: number) => `${menuSelector} li:nth-child(${itemIndex}) a`,
 }
 
-const commonSteps: ScreenerStepsArray = [
+const commonSteps = [
   steps => steps.hover(selectors.item(2)).snapshot('Hovers 2nd item (hover state styles)'),
   steps => steps.click(selectors.item(2)).snapshot('Clicks on 2nd item (active state styles)'),
 ]
 
-const getSteps = ({ vertical }: StepsOptions = {}): ScreenerStepsArray => [
+const getSteps = ({ vertical }: StepsOptions = {}) => [
   ...commonSteps,
   (steps, keys) =>
     steps

@@ -79,7 +79,6 @@ const screenerConfig = {
 }
 
 function getSteps(dir, nameWithoutExtension) {
-  const stepsSpecModuleImport = `./${dir}/${nameWithoutExtension}.steps`
   const stepsSpecModulePath = `${dir}/${nameWithoutExtension}.steps.ts`
 
   if (fs.existsSync(stepsSpecModulePath)) {
