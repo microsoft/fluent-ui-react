@@ -1,5 +1,4 @@
 import {
-  Accessibility,
   AccessibilityAttributes,
   AccessibilityBehavior,
   Button,
@@ -18,10 +17,8 @@ import { Manager as PopperManager, Reference as PopperReference, Popper } from '
 
 import { focusMenuItem, focusNearest } from './focusUtils'
 import menuButtonBehavior from './menuButtonBehavior'
-import MenuButtonWrapper from './MenuButtonWrapper'
 
 export interface MenuButtonProps {
-  accessibility?: Accessibility
   button: ShorthandValue<ButtonProps>
   buttonId: string
   disabled?: boolean
@@ -38,7 +35,6 @@ export interface MenuButtonState {
 
 class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
   static defaultProps = {
-    accessibility: menuButtonBehavior,
     placement: 'bottom',
   }
 
@@ -148,15 +144,18 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
     )
 
   render() {
-    const { accessibility, button, disabled, menu, placement } = this.props
+    const { button, disabled, menu, placement } = this.props
     const { menuOpen } = this.state
-    const accessibilityBehavior: AccessibilityBehavior = accessibility({
+    const accessibilityBehavior: AccessibilityBehavior = menuButtonBehavior({
       ...this.props,
       ...this.state,
     })
 
     return (
-      <MenuButtonWrapper onKeyDown={this.handleKeyDown}>
+      <div
+        onKeyDown={this.handleKeyDown}
+        style={{ boxSizing: 'border-box', display: 'inline-block' }}
+      >
         <PopperManager>
           <PopperReference>
             {({ ref }) => (
@@ -204,7 +203,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
             }
           </Popper>
         </PopperManager>
-      </MenuButtonWrapper>
+      </div>
     )
   }
 }
