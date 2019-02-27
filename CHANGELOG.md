@@ -27,6 +27,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Remove space between `Button.Group` items without `circular` prop @Bugaa92 ([#973](https://github.com/stardust-ui/react/pull/973))
 - Fix allow `Text` component when rendered as div to behave as block element in Teams theme @mnajdova ([#940](https://github.com/stardust-ui/react/pull/940))
+- Fix font-based `Icon` styles in Teams theme @kuzhelov ([#976](https://github.com/stardust-ui/react/pull/976))
 - Refactor the `ListItem` component to use the `Flex` components instead of `ItemLayout` @mnajdova ([#886](https://github.com/stardust-ui/react/pull/886))
 
 <!--------------------------------[ v0.22.1 ]------------------------------- -->
