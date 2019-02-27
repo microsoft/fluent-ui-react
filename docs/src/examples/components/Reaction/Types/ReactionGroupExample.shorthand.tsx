@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { ReactionGroup } from '@stardust-ui/react'
+import { Reaction } from '@stardust-ui/react'
 
 const ReactionGroupExample = () => (
-  <ReactionGroup
+  <Reaction.Group
     items={[{ icon: 'thumbs up', content: 10 }, { icon: 'thumbs down', content: '2K' }]}
   />
 )
