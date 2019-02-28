@@ -438,7 +438,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const popupWrapperAttributes = {
       ...(rtl && { dir: 'rtl' }),
       ...accessibility.attributes.popup,
-      onKeyDown: (e: KeyboardEvent) => {
+      onKeyDown: (e: React.KeyboardEvent) => {
         // No need to propagate keydown events outside Popup
         // allow only keyboard actions to execute
         _.invoke(accessibility.keyHandlers.popup, 'onKeyDown', e)
