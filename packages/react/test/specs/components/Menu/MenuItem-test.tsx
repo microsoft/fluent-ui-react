@@ -11,8 +11,6 @@ describe('MenuItem', () => {
     eventTargets: {
       onClick: '.ui-menu__item__wrapper',
     },
-    // The ElementType is wrapped with Ref, which is adding two HOC in total
-    nestingLevel: 2,
     usesWrapperSlot: true,
   })
 
