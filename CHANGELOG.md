@@ -21,17 +21,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Changed types of the slot's inside the `ListItem` component (`media`, `content`, `contentMedia`, `header`, `headerMedia` and `endMedia`) from `any` to `ShorthandValue` @mnajdova ([#886](https://github.com/stardust-ui/react/pull/886))
 - Changed class names of the slots inside the `ListItem` (`ItemLayout`'s classnames were replaced with `ListItem`'s) @mnajdova ([#886](https://github.com/stardust-ui/react/pull/886))
 
-### Features
-- Add `delay` prop for `Loader` component @layershifter ([#969](https://github.com/stardust-ui/react/pull/969))
-- Add `getNextElement`, `getPreviousElement` and `focusAsync` to exported as `FocusZoneUtilities` @layershifter ([#981](https://github.com/stardust-ui/react/pull/981))
-
 ### Fixes
 - Remove space between `Button.Group` items without `circular` prop @Bugaa92 ([#973](https://github.com/stardust-ui/react/pull/973))
 - Fix allow `Text` component when rendered as div to behave as block element in Teams theme @mnajdova ([#940](https://github.com/stardust-ui/react/pull/940))
+- Correctly apply static styles if the first `Provider` rendered is RTL @miroslavstastny ([#960](https://github.com/stardust-ui/react/pull/960))
 - Fix font-based `Icon` styles in Teams theme @kuzhelov ([#976](https://github.com/stardust-ui/react/pull/976))
 - Refactor the `ListItem` component to use the `Flex` components instead of `ItemLayout` @mnajdova ([#886](https://github.com/stardust-ui/react/pull/886))
+- Fixed distance of the `content` and `reactionGroup` from the `badge` in the `ChatMessage` component for Teams theme @mnajdova ([#986](https://github.com/stardust-ui/react/pull/986))
 
 ### Features
+- Add `delay` prop for `Loader` component @layershifter ([#969](https://github.com/stardust-ui/react/pull/969))
+- Add `getNextElement`, `getPreviousElement` and `focusAsync` to exported as `FocusZoneUtilities` @layershifter ([#981](https://github.com/stardust-ui/react/pull/981))
 - Add `Reaction` and `ReactionGroup` components @mnajdova ([#959](https://github.com/stardust-ui/react/pull/959))
 - Add `reactionGroup` and `reactionGroupPosition` props to the `ChatMessage` component @mnajdova ([#959](https://github.com/stardust-ui/react/pull/959))
 
