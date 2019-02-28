@@ -37,7 +37,7 @@ const createRendererConfig = (options: any = {}) => ({
   ...(options.rendererId ? { rendererId: options.rendererId } : {}),
 })
 
-// { rendererId: 'default' } is a temporary workaround for https://github.com/stardust-ui/react/issues/948#issuecomment-466404630
+// TODO: { rendererId: 'default' } is a temporary workaround for https://github.com/stardust-ui/react/issues/948#issuecomment-466404630
 export const felaRenderer: Renderer = createRenderer(
   createRendererConfig({ rendererId: 'default' }),
 )
