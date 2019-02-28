@@ -78,10 +78,10 @@ export default (Component, options: Conformant = {}) => {
     if (usesWrapperSlot) {
       /**
        * If there is a wrapper slot, then again, we need to get rid of all three HOC components:
-       * ThemeProvider, Wrapper (Slot), and FelaTheme in order to be able to get to the actual
+       * ThemeProvider and Wrapper (Slot) in order to be able to get to the actual
        * rendered result of the component we are testing
        */
-      _.times(3, () => {
+      _.times(2, () => {
         component = component.childAt(0)
       })
     }
