@@ -231,7 +231,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         {this.state.open &&
           Popup.isBrowserContext &&
           popupContent &&
-          ReactDOM.createPortal(popupContent, inline ? this.triggerDomElement : document.body)}
+          (inline ? popupContent : ReactDOM.createPortal(popupContent, document.body))}
       </>
     )
   }
