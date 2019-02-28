@@ -4,19 +4,14 @@ interface StepsOptions {
   vertical?: boolean
 }
 
-const menuSelector = `.${Menu.className}`
 const selectors = {
-  menu: menuSelector,
-  item: (itemIndex: number) => `${menuSelector} li:nth-child(${itemIndex}) a`,
+  menu: `.${Menu.className}`,
+  item: (itemIndex: number) => `.${Menu.className} li:nth-child(${itemIndex}) a`,
 }
 
-const commonSteps = [
+const getScreenerSteps = ({ vertical }: StepsOptions = {}) => [
   steps => steps.hover(selectors.item(2)).snapshot('Hovers 2nd item (hover state styles)'),
   steps => steps.click(selectors.item(2)).snapshot('Clicks on 2nd item (active state styles)'),
-]
-
-const getScreenerSteps = ({ vertical }: StepsOptions = {}) => [
-  ...commonSteps,
   (steps, keys) =>
     steps
       .keys(selectors.item(2), vertical ? keys.downArrow : keys.rightArrow)
