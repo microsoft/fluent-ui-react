@@ -88,7 +88,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
     marginBottom: v.headerMarginBottom,
   }),
 
-  content: ({ variables: v }): ICSSInJSStyle => ({
+  content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
     '& a:focus': {
       outline: 'none',
@@ -113,6 +113,10 @@ const chatMessageStyles: ComponentSlotStylesInput<
       transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
     }
   },
+  reactionGroup: ({ variables: v }) => ({
+    marginLeft: v.reactionGroupMarginLeft,
+    float: 'right',
+  }),
 }
 
 export default chatMessageStyles
