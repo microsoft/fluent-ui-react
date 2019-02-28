@@ -185,7 +185,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     close: e => this.close(e),
     toggle: e => {
       e.preventDefault()
-      this.trySetOpen(!this.state.open, e)
       _.invoke(this.triggerDomElement, 'click', e)
     },
     open: e => {
