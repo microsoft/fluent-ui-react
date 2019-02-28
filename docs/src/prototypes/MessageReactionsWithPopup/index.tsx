@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Avatar, Chat, Popup, Menu, popupFocusTrapBehavior } from '@stardust-ui/react'
+import { Avatar, Chat, Popup, Menu } from '@stardust-ui/react'
 
 const reactions = [{ icon: 'thumbs up', content: '1K' }, { icon: 'thumbs down', content: 2 }]
 const reactionsWithPopup = _.map(reactions, reaction => render =>
@@ -8,9 +8,8 @@ const reactionsWithPopup = _.map(reactions, reaction => render =>
     <Popup
       trigger={<Component as="button" {...props} />}
       inline
-      accessibility={popupFocusTrapBehavior}
       content={{
-        content: <Menu items={['Jane Doe', 'John Doe']} vertical />,
+        content: <Menu items={['Jane Doe', 'John Doe']} vertical data-is-focusable={true} />,
       }}
       on="hover"
     />
