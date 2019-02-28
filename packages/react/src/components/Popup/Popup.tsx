@@ -259,7 +259,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
           e => {
             const keyCode = keyboardKey.getCode(e)
 
-            const matchingKey = keyCode === keyboardKey.Enter || keyboardKey.Space
+            const matchingKey = keyCode === keyboardKey.Enter || keyboardKey.Spacebar
             const isOutsidePopupElement =
               this.popupDomElement && !this.popupDomElement.contains(e.target)
             const isOutsideTriggerElement =
