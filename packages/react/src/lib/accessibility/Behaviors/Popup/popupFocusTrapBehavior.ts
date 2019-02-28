@@ -8,11 +8,17 @@ import popupBehavior from './popupBehavior'
  *
  * @specification
  * Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Does not set the attribute otherwise.
+ * Adds attribute 'aria-modal=true' to 'popup' component's part.
  * Traps focus inside component.
  */
-const popupFocusTrapBehavior: Accessibility = (props: any) => ({
-  ...popupBehavior(props),
-  focusTrap: true,
-})
+const popupFocusTrapBehavior: Accessibility = (props: any) => {
+  const behaviorData = popupBehavior(props)
+  behaviorData.attributes.popup = {
+    'aria-modal': true,
+  }
+  behaviorData.focusTrap = true
+
+  return behaviorData
+}
 
 export default popupFocusTrapBehavior
