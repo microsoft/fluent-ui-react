@@ -241,12 +241,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         this.outsideClickSubscription = EventStack.subscribe(
           'click',
           e => {
-            const isOutsidePopupElement =
-              this.popupDomElement && !this.popupDomElement.contains(e.target)
-            const isOutsideTriggerElement =
-              this.triggerDomElement && !this.triggerDomElement.contains(e.target)
-
-            if (isOutsidePopupElement && isOutsideTriggerElement) {
+            if (this.isOutsidePopupElementAndOutsideTriggerElement(e)) {
               this.state.open && this.trySetOpen(false, e)
             }
           },
@@ -260,12 +255,8 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
             const keyCode = keyboardKey.getCode(e)
 
             const matchingKey = keyCode === keyboardKey.Enter || keyboardKey.Spacebar
-            const isOutsidePopupElement =
-              this.popupDomElement && !this.popupDomElement.contains(e.target)
-            const isOutsideTriggerElement =
-              this.triggerDomElement && !this.triggerDomElement.contains(e.target)
 
-            if (matchingKey && isOutsidePopupElement && isOutsideTriggerElement) {
+            if (matchingKey && this.isOutsidePopupElementAndOutsideTriggerElement(e)) {
               this.state.open && this.trySetOpen(false, e)
             }
           },
@@ -278,6 +269,13 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       this.outsideClickSubscription.unsubscribe()
       this.outsideKeySubscription.unsubscribe()
     }
+  }
+
+  private isOutsidePopupElementAndOutsideTriggerElement(e) {
+    const isOutsidePopupElement = this.popupDomElement && !this.popupDomElement.contains(e.target)
+    const isOutsideTriggerElement =
+      this.triggerDomElement && !this.triggerDomElement.contains(e.target)
+    return isOutsidePopupElement && isOutsideTriggerElement
   }
 
   private getTriggerProps(triggerElement) {
