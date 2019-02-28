@@ -648,8 +648,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         newState.highlightedIndex = this.getHighlightedIndexOnClose()
       }
 
-      this.trySetState(newState)
-      _.invoke(this.props, 'onOpenChange', null, { ...this.props, ...newState })
+      this.trySetStateAndInvokeHandler('onOpenChange', null, { ...this.props, ...newState })
     }
 
     if (_.isNumber(changes.highlightedIndex) && this.state.open) {
@@ -1058,37 +1057,43 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   private getHighlightedIndexOnArrowKeyOpen = (
     changes: StateChangeOptions<ShorthandValue>,
   ): number => {
-    // if open by ArrowUp, index should change by -1.
-    if (changes.type === Downshift.stateChangeTypes.keyDownArrowUp) {
-      const itemsLength = this.getItemsFilteredBySearchQuery().length
-      if (_.isNumber(this.state.highlightedIndex)) {
-        const newIndex = this.state.highlightedIndex - 1
-        return newIndex < 0 ? itemsLength - 1 : newIndex
-      }
-      return itemsLength - 1
+    const itemsLength = this.getItemsFilteredBySearchQuery().length
+    switch (changes.type) {
+      // if open by ArrowUp, index should change by -1.
+      case Downshift.stateChangeTypes.keyDownArrowUp:
+        if (_.isNumber(this.state.highlightedIndex)) {
+          const newIndex = this.state.highlightedIndex - 1
+          return newIndex < 0 ? itemsLength - 1 : newIndex
+        }
+        return itemsLength - 1
+      // if open by ArrowDown, index should change by +1.
+      case Downshift.stateChangeTypes.keyDownArrowDown:
+        if (_.isNumber(this.state.highlightedIndex)) {
+          const newIndex = this.state.highlightedIndex + 1
+          return newIndex >= itemsLength ? 0 : newIndex
+        }
+        return 0
+      default:
+        return undefined
     }
-    // if open by ArrowDown, index should change by +1.
-    if (changes.type === Downshift.stateChangeTypes.keyDownArrowDown) {
-      const itemsLength = this.getItemsFilteredBySearchQuery().length
-      if (_.isNumber(this.state.highlightedIndex)) {
-        const newIndex = this.state.highlightedIndex + 1
-        return newIndex >= itemsLength ? 0 : newIndex
-      }
-      return 0
-    }
-    // if not opened by Arrow, index should not change at all.
-    return undefined
   }
 
   private getHighlightedIndexOnClose = (): number => {
-    if (!this.props.multiple && !this.props.search) {
+    const { highlightFirstItemOnOpen, items, multiple, search } = this.props
+    const { value } = this.state
+
+    if (!multiple && !search && value) {
       // in single selection, if there is a selected item, highlight it.
-      if (this.state.value) {
-        return this.props.items.indexOf(this.state.value)
-      }
+      return items.indexOf(value)
     }
-    // otherwise, should open on first index if prop is provided, or highlight nothing if not.
-    return this.props.highlightFirstItemOnOpen ? 0 : null
+
+    if (highlightFirstItemOnOpen) {
+      // otherwise, if highlightFirstItemOnOpen prop is provied, highlight first item.
+      return 0
+    }
+
+    // otherwise, highlight no item.
+    return null
   }
 }
 
