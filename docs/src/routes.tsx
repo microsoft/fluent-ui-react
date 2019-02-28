@@ -90,6 +90,12 @@ const Router = () => (
             path="/menu-button"
             component={require('./prototypes/MenuButton/index').default}
           />,
+          <DocsLayout
+            exact
+            key="/message-reactions-with-popup"
+            path="/message-reactions-with-popup"
+            component={require('./prototypes/MessageReactionsWithPopup/index').default}
+          />,
         ]}
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />

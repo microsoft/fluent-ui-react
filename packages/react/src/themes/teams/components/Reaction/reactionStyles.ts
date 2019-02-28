@@ -9,6 +9,9 @@ const contentClassNameSelector = `& .${Reaction.slotClassNames.content}`
 const reactionStyles: ComponentSlotStylesInput<ReactionProps, ReactionVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     cursor: 'pointer',
+    background: 'transparent',
+    border: pxToRem(0),
+    padding: pxToRem(0),
     display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',

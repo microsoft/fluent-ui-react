@@ -406,6 +406,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'message-reactions-with-popup',
+        content: 'Message reactions with popup',
+        as: NavLink,
+        to: '/message-reactions-with-popup',
+        styles: menuItemStyles,
+      },
+      {
         key: 'colorpalette',
         content: 'Color Palette',
         as: NavLink,
