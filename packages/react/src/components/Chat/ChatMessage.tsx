@@ -33,7 +33,7 @@ export interface ChatMessageSlotClassNames {
   timestamp: string
   badge: string
   content: string
-  reactionGroup: string
+  reactions: string
 }
 
 export interface ChatMessageProps
@@ -79,10 +79,10 @@ export interface ChatMessageProps
   onFocus?: ComponentEventHandler<ChatMessageProps>
 
   /** Reaction group applied to the message. */
-  reactionGroup?: ShorthandValue
+  reactions?: ShorthandValue
 
   /** A message can format the reactions group to appear at the start or the end of the message. */
-  reactionGroupPosition?: 'start' | 'end'
+  reactionsPosition?: 'start' | 'end'
 }
 
 export interface ChatMessageState {
@@ -112,15 +112,15 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     timestamp: customPropTypes.itemShorthand,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
-    reactionGroup: customPropTypes.itemShorthand,
-    reactionGroupPosition: PropTypes.oneOf(['start', 'end']),
+    reactions: customPropTypes.itemShorthand,
+    reactionsPosition: PropTypes.oneOf(['start', 'end']),
   }
 
   static defaultProps = {
     accessibility: chatMessageBehavior,
     as: 'div',
     badgePosition: 'end',
-    reactionGroupPosition: 'start',
+    reactionsPosition: 'start',
   }
 
   public state = {
@@ -169,8 +169,8 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
       children,
       content,
       timestamp,
-      reactionGroup,
-      reactionGroupPosition,
+      reactions,
+      reactionsPosition,
     } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
@@ -181,10 +181,10 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
       },
     })
 
-    const reactionGroupElement = Reaction.Group.create(reactionGroup, {
+    const reactionsElement = Reaction.Group.create(reactions, {
       defaultProps: {
-        className: ChatMessage.slotClassNames.reactionGroup,
-        styles: styles.reactionGroup,
+        className: ChatMessage.slotClassNames.reactions,
+        styles: styles.reactions,
       },
     })
 
@@ -229,7 +229,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
               },
             })}
 
-            {reactionGroupPosition === 'start' && reactionGroupElement}
+            {reactionsPosition === 'start' && reactionsElement}
 
             {Box.create(content, {
               defaultProps: {
@@ -238,7 +238,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
               },
             })}
 
-            {reactionGroupPosition === 'end' && reactionGroupElement}
+            {reactionsPosition === 'end' && reactionsElement}
 
             {badgePosition === 'end' && badgeElement}
           </>
@@ -255,7 +255,7 @@ ChatMessage.slotClassNames = {
   timestamp: `${ChatMessage.className}__timestamp`,
   badge: `${ChatMessage.className}__badge`,
   content: `${ChatMessage.className}__content`,
-  reactionGroup: `${ChatMessage.className}__reactions`,
+  reactions: `${ChatMessage.className}__reactions`,
 }
 
 export default ChatMessage

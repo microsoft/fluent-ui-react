@@ -117,8 +117,8 @@ const chatMessageStyles: ComponentSlotStylesInput<
       transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
     }
   },
-  reactionGroup: ({ props: p, variables: v }) => ({
-    marginLeft: v.reactionGroupMarginLeft,
+  reactions: ({ props: p, variables: v }) => ({
+    marginLeft: v.reactionsMarginLeft,
     ...(p.badge &&
       p.badgePosition === 'end' && {
         marginRight: pxToRem(2),

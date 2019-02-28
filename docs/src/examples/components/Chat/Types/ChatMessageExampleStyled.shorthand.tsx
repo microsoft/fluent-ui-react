@@ -73,7 +73,7 @@ const ChatMessageExampleStyled = () => (
             ),
             backgroundColor: '#FFFF00',
           },
-          reactionGroup: {
+          reactions: {
             ...slotLabelStyles('reactions', {}, { padding: '8px' }),
             backgroundColor: '#FFFFE0',
           },
@@ -100,7 +100,7 @@ const ChatMessageExampleStyled = () => (
                 mine
                 badge={{ icon: 'at' }}
                 badgePosition="start"
-                reactionGroup={{ items: reactions }}
+                reactions={reactions}
               />
             ),
           },
@@ -117,7 +117,7 @@ const ChatMessageExampleStyled = () => (
                 author="Jane Doe"
                 timestamp="Yesterday, 10:15 PM"
                 badge={{ icon: 'exclamation' }}
-                reactionGroup={{ items: reactions }}
+                reactions={reactions}
               />
             ),
           },
