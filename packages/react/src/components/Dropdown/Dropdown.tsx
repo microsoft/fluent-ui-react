@@ -44,7 +44,7 @@ import Icon, { IconProps } from '../Icon/Icon'
 export interface DropdownSlotClassNames {
   clearIndicator: string
   container: string
-  indicator: string
+  toggleIndicator: string
   itemsList: string
   selectedItems: string
   triggerButton: string
@@ -376,7 +376,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                       })
                     : Indicator.create(toggleIndicator, {
                         defaultProps: {
-                          className: Dropdown.slotClassNames.indicator,
+                          className: Dropdown.slotClassNames.toggleIndicator,
                           direction: open ? 'top' : 'bottom',
                           styles: styles.toggleIndicator,
                         },
@@ -1030,7 +1030,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 Dropdown.slotClassNames = {
   clearIndicator: `${Dropdown.className}__clear-indicator`,
   container: `${Dropdown.className}__container`,
-  indicator: `${Dropdown.className}__indicator`,
+  toggleIndicator: `${Dropdown.className}__toggle-indicator`,
   itemsList: `${Dropdown.className}__items-list`,
   selectedItems: `${Dropdown.className}__selected-items`,
   triggerButton: `${Dropdown.className}__trigger-button`,

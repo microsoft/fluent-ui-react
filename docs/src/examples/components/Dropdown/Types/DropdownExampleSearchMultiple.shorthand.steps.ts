@@ -1,7 +1,7 @@
 import { Dropdown, DropdownSearchInput } from '@stardust-ui/react'
 
 const selectors = {
-  indicator: `.${Dropdown.slotClassNames.indicator}`,
+  toggleIndicator: `.${Dropdown.slotClassNames.toggleIndicator}`,
   input: `.${DropdownSearchInput.slotClassNames.input}`,
   item: (itemIndex: number) => `.${Dropdown.slotClassNames.itemsList} li:nth-child(${itemIndex})`,
   selectedItem: (itemIndex: number) =>
@@ -11,9 +11,9 @@ const selectors = {
 const steps: ScreenerSteps = [
   (steps, keys) =>
     steps
-      .click(selectors.indicator)
+      .click(selectors.toggleIndicator)
       .click(selectors.item(2))
-      .click(selectors.indicator)
+      .click(selectors.toggleIndicator)
       .click(selectors.item(2))
       .keys(selectors.input, keys.leftArrow)
       .snapshot('Selects last selected element'),
