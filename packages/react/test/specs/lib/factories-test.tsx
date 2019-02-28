@@ -14,6 +14,7 @@ type ShorthandConfig = {
   Component?: React.ReactType
   defaultProps?: Props
   mappedProp?: string
+  mappedPropAsArray?: string
   overrideProps?: Props & ((props: Props) => Props) | Props
   generateKey?: boolean
   value?: ShorthandValue
@@ -27,12 +28,13 @@ const getShorthand = ({
   Component = 'div',
   defaultProps,
   mappedProp = '',
+  mappedPropAsArray = '',
   overrideProps,
   generateKey,
   value,
   render,
 }: ShorthandConfig) =>
-  createShorthand(Component, mappedProp, value, {
+  createShorthand(Component, mappedProp, mappedPropAsArray, value, {
     defaultProps,
     overrideProps,
     generateKey,
