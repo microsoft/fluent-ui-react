@@ -12,6 +12,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  createShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
@@ -38,6 +39,8 @@ export interface ButtonGroupProps
  * A button group presents multiple related actions.
  */
 class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
+  public static create: Function
+
   public static displayName = 'ButtonGroup'
 
   public static className = 'ui-buttons'
@@ -102,5 +105,7 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
     return resultStyles
   }
 }
+
+ButtonGroup.create = createShorthandFactory(ButtonGroup, 'content', 'buttons')
 
 export default ButtonGroup

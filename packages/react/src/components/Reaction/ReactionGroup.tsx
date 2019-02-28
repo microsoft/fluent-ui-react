@@ -85,6 +85,6 @@ class ReactionGroup extends UIComponent<ReactProps<ReactionGroupProps>> {
   }
 }
 
-ReactionGroup.create = createShorthandFactory(ReactionGroup, 'content')
+ReactionGroup.create = createShorthandFactory(ReactionGroup, 'content', 'items')
 
 export default ReactionGroup
