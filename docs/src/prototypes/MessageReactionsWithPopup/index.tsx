@@ -8,7 +8,7 @@ const reactionsWithPopup = _.map(reactions, reaction => render =>
     <Popup
       trigger={<Component as="button" {...props} />}
       content={{
-        content: <List items={['Marija Najdova', 'John Doe']} />,
+        content: <List items={['Jane Doe', 'John Doe']} />,
       }}
       on="hover"
     />
