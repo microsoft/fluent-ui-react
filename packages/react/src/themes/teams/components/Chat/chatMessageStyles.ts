@@ -95,13 +95,9 @@ const chatMessageStyles: ComponentSlotStylesInput<
       color: v.contentFocusOutlineColor,
       textDecoration: 'underline',
     },
-    // if there is badge on the end of the message and there is no reactions,
-    // or there are reactions, but they are positioned are before the content,
-    // then the content should have right margin of 4px
     ...(p.badge &&
-      p.badgePosition === 'end' &&
-      (!p.reactionGroup || p.reactionGroupPosition === 'start') && {
-        paddingRight: pxToRem(4),
+      p.badgePosition === 'end' && {
+        marginRight: pxToRem(4),
       }),
   }),
   badge: ({ props: p, variables: v }) => {
