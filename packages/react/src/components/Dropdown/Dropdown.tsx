@@ -101,7 +101,10 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   items?: ShorthandCollection
 
   /**
-   * Function to be passed to create string from selected item, if it's a shorthand object. Used when dropdown also has a search function.
+   * Function that converts an item to string. Used when dropdown has the search boolean prop set to true.
+   * By default, it:
+   * - returns the header property (if it exists on an item)
+   * - converts an item to string (if the item is a primitive)
    */
   itemToString?: (item: ShorthandValue) => string
 
@@ -364,9 +367,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                           xSpacing: 'none',
                         },
                         overrideProps: (predefinedProps: IconProps) => ({
-                          onClick: (e, iconProps: IconProps) => {
+                          onClick: (e: React.SyntheticEvent<HTMLElement>, iconProps: IconProps) => {
                             _.invoke(predefinedProps, 'onClick', e, iconProps)
-                            this.handleClear()
+                            this.handleClear(e)
                           },
                         }),
                       })
@@ -799,10 +802,24 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
   }
 
-  private handleClear = () => {
-    const initialState = this.getInitialAutoControlledState(this.props)
+  private handleClear = (e: React.SyntheticEvent<HTMLElement>) => {
+    const {
+      activeSelectedIndex,
+      defaultHighlightedIndex,
+      searchQuery,
+      value,
+    } = this.getInitialAutoControlledState(this.props)
 
-    this.setState({ value: initialState.value })
+    _.invoke(this.props, 'onSelectedChange', e, {
+      ...this.props,
+      activeSelectedIndex,
+      defaultHighlightedIndex,
+      searchQuery,
+      value,
+    })
+
+    this.trySetState({ activeSelectedIndex, searchQuery, value })
+    this.setState({ defaultHighlightedIndex })
 
     this.tryFocusSearchInput()
     this.tryFocusTriggerButton()

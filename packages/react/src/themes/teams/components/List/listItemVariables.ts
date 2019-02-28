@@ -1,4 +1,9 @@
+import { pxToRem } from '../../../../lib'
+
 export interface ListItemVariables {
+  minHeight: string
+  rootPadding: string
+
   headerLineHeight: string
   headerFontSize: string
 
@@ -11,6 +16,10 @@ export interface ListItemVariables {
   contentFontSize: string
   contentLineHeight: string
 
+  // Content media
+  contentMediaFontSize: string
+  contentMediaLineHeight: string
+
   // Selectable
   selectableFocusHoverColor: string
   selectableFocusHoverBackgroundColor: string
@@ -21,6 +30,9 @@ export interface ListItemVariables {
 
 export default (siteVariables: any): ListItemVariables => {
   return {
+    minHeight: pxToRem(48),
+    rootPadding: `0 ${pxToRem(18)} 0 ${pxToRem(20)}`,
+
     // Header
     // TODO: prod app uses 17.5px here, it should be 16px per the design guide!
     headerLineHeight: siteVariables.lineHeightSmall,
@@ -34,6 +46,10 @@ export default (siteVariables: any): ListItemVariables => {
     // Content
     contentFontSize: siteVariables.fontSizes.small,
     contentLineHeight: siteVariables.lineHeightSmall,
+
+    // Content Media
+    contentMediaFontSize: siteVariables.fontSizes.small,
+    contentMediaLineHeight: siteVariables.lineHeightSmall,
 
     // Selectable
     selectableFocusHoverColor: siteVariables.white,

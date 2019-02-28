@@ -343,10 +343,10 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
-        key: 'asyncdropdown',
-        content: 'Async Dropdown Search',
+        key: 'dropdowns',
+        content: 'Dropdowns',
         as: NavLink,
-        to: '/prototype-async-dropdown-search',
+        to: '/prototype-dropdowns',
         styles: menuItemStyles,
       },
       {
@@ -392,6 +392,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'menu-button',
+        content: 'MenuButton',
+        as: NavLink,
+        to: '/menu-button',
+        styles: menuItemStyles,
+      },
+      {
         key: 'importantmentionmessages',
         content: 'Important and mention messages',
         as: NavLink,
@@ -415,7 +422,7 @@ class Sidebar extends React.Component<any, any> {
     const withPrototypes =
       process.env.NODE_ENV !== 'production'
         ? menuItems.concat(prototypesMenuItemTitle).concat(prototypesMenuItems)
-        : []
+        : menuItems
 
     const componentMenuItem = {
       key: 'components',
