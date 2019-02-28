@@ -15,7 +15,7 @@ const commonSteps = [
   steps => steps.click(selectors.item(2)).snapshot('Clicks on 2nd item (active state styles)'),
 ]
 
-const getSteps = ({ vertical }: StepsOptions = {}) => [
+const getScreenerSteps = ({ vertical }: StepsOptions = {}) => [
   ...commonSteps,
   (steps, keys) =>
     steps
@@ -27,4 +27,4 @@ const getSteps = ({ vertical }: StepsOptions = {}) => [
       .snapshot('Navigates to previous item (active and focus state styles)'),
 ]
 
-export default getSteps
+export default getScreenerSteps

@@ -1,3 +1,3 @@
-import getSteps from '../commonSteps'
+import getScreenerSteps from '../commonScreenerSteps'
 
-export default getSteps({ vertical: true })
+export default getScreenerSteps({ vertical: true })
