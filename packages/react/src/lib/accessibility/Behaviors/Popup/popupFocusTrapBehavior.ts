@@ -13,7 +13,8 @@ import popupBehavior from './popupBehavior'
  */
 const popupFocusTrapBehavior: Accessibility = (props: any) => {
   const behaviorData = popupBehavior(props)
-  behaviorData.attributes.popup = {
+  behaviorData.attributes.popup = behaviorData.attributes.popup || {}
+  behaviorData.attributes.popup['aria-modal'] = true
     'aria-modal': true,
   }
   behaviorData.focusTrap = true
