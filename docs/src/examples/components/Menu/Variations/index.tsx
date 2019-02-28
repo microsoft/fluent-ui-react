@@ -11,7 +11,6 @@ const Variations = () => (
     />
     <ComponentExample
       title="Vertical &amp; Pointing"
-      description="A vertical menu displays elements vertically and point to show its relationship to nearby content."
       examplePath="components/Menu/Variations/MenuExampleVerticalPointing"
     />
     <ComponentExample
