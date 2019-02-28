@@ -704,6 +704,24 @@ describe('factories', () => {
       })
     })
 
+    describe('from an array', () => {
+      const mappedPropAsArray = 'test-mapped-prop-ar-array'
+      const value = ['test-value']
+
+      describe(`when sending mappedPropAsArray`, () => {
+        const testMsg = `spreads { ${mappedPropAsArray}: '${value}' }`
+
+        describe(`and an unsupported tag as 'as' prop to defaultProps`, () => {
+          test(testMsg, () => {
+            testCreateShorthand(
+              { mappedPropAsArray, value, defaultProps: { as: 'unsupported' } },
+              { as: 'unsupported', [mappedPropAsArray]: value },
+            )
+          })
+        })
+      })
+    })
+
     describe('style', () => {
       test('merges style prop', () => {
         const defaultProps = { style: { left: 5 } }
