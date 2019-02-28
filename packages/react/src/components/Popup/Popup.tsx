@@ -113,6 +113,9 @@ export interface PopupProps
 
   /** Ref for Popup content DOM node. */
   contentRef?: React.Ref<HTMLElement>
+
+  /** Whether the Popup should be rendered inline with the trigger or in the body. */
+  inline?: boolean
 }
 
 export interface PopupState {
@@ -219,6 +222,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     accessibility,
   }: RenderResultConfig<PopupProps>): React.ReactNode {
     const popupContent = this.renderPopupContent(classes.popup, rtl, accessibility)
+    const { inline } = this.props
 
     return (
       <>
@@ -227,7 +231,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         {this.state.open &&
           Popup.isBrowserContext &&
           popupContent &&
-          ReactDOM.createPortal(popupContent, document.body)}
+          ReactDOM.createPortal(popupContent, inline ? this.triggerDomElement : document.body)}
       </>
     )
   }

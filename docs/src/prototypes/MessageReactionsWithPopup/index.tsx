@@ -7,9 +7,10 @@ const reactionsWithPopup = _.map(reactions, reaction => render =>
   render(reaction, (Component, props) => (
     <Popup
       trigger={<Component as="button" {...props} />}
+      inline
       accessibility={popupFocusTrapBehavior}
       content={{
-        content: <Menu items={['Jane Doe', 'John Doe']} />,
+        content: <Menu items={['Jane Doe', 'John Doe']} vertical />,
       }}
       on="hover"
     />
