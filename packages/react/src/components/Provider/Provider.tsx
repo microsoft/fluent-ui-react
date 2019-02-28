@@ -7,6 +7,7 @@ import { RendererProvider, ThemeProvider } from 'react-fela'
 
 import {
   felaRenderer as felaLtrRenderer,
+  felaRtlRenderer,
   isBrowser,
   mergeThemes,
   updateCachedRemSize,
@@ -65,9 +66,19 @@ class Provider extends React.Component<ProviderProps> {
 
   static Consumer = ProviderConsumer
 
+  static _topLevelFelaRenderer = undefined
+
+  private get topLevelFelaRenderer() {
+    if (!Provider._topLevelFelaRenderer) {
+      Provider._topLevelFelaRenderer = this.props.theme.rtl ? felaRtlRenderer : felaLtrRenderer
+    }
+    return Provider._topLevelFelaRenderer
+  }
+
   renderStaticStyles = (mergedTheme: ThemePrepared) => {
     // RTL WARNING
-    // This function sets static styles which are global and renderer agnostic
+    // This function sets static styles which are global and renderer agnostic.
+    // Top level fela renderer (the first one rendered) is used to render static styles.
     // With current implementation, static styles cannot differ between LTR and RTL
     // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
 
@@ -78,13 +89,13 @@ class Provider extends React.Component<ProviderProps> {
 
     const renderObject = (object: StaticStyleObject) => {
       _.forEach(object, (style, selector) => {
-        felaLtrRenderer.renderStatic(style as IStyle, selector)
+        this.topLevelFelaRenderer.renderStatic(style as IStyle, selector)
       })
     }
 
     staticStyles.forEach((staticStyle: StaticStyle) => {
       if (typeof staticStyle === 'string') {
-        felaLtrRenderer.renderStatic(staticStyle)
+        this.topLevelFelaRenderer.renderStatic(staticStyle)
       } else if (_.isPlainObject(staticStyle)) {
         renderObject(staticStyle as StaticStyleObject)
       } else if (_.isFunction(staticStyle)) {
@@ -100,7 +111,8 @@ class Provider extends React.Component<ProviderProps> {
 
   renderFontFaces = () => {
     // RTL WARNING
-    // This function sets static styles which are global and renderer agnostic
+    // This function sets static styles which are global and renderer agnostic.
+    // Top level fela renderer (the first one rendered) is used to render static styles.
     // With current implementation, static styles cannot differ between LTR and RTL
     // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
 
@@ -112,7 +124,7 @@ class Provider extends React.Component<ProviderProps> {
       if (!_.isPlainObject(font)) {
         throw new Error(`fontFaces must be objects, got: ${typeof font}`)
       }
-      felaLtrRenderer.renderFont(font.name, font.paths, font.style)
+      this.topLevelFelaRenderer.renderFont(font.name, font.paths, font.style)
     }
 
     fontFaces.forEach((font: FontFace) => {

@@ -88,13 +88,17 @@ const chatMessageStyles: ComponentSlotStylesInput<
     marginBottom: v.headerMarginBottom,
   }),
 
-  content: ({ variables: v }): ICSSInJSStyle => ({
+  content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
     '& a:focus': {
       outline: 'none',
       color: v.contentFocusOutlineColor,
       textDecoration: 'underline',
     },
+    ...(p.badge &&
+      p.badgePosition === 'end' && {
+        marginRight: pxToRem(4),
+      }),
   }),
   badge: ({ props: p, variables: v }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
@@ -113,6 +117,14 @@ const chatMessageStyles: ComponentSlotStylesInput<
       transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
     }
   },
+  reactionGroup: ({ props: p, variables: v }) => ({
+    marginLeft: v.reactionGroupMarginLeft,
+    ...(p.badge &&
+      p.badgePosition === 'end' && {
+        marginRight: pxToRem(2),
+      }),
+    float: 'right',
+  }),
 }
 
 export default chatMessageStyles
