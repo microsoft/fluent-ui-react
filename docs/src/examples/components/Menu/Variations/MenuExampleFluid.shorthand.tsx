@@ -7,6 +7,6 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-const MenuExampleFluid = () => <Menu defaultActiveIndex={0} items={items} vertical fluid />
+const MenuExampleFluid = () => <Menu defaultActiveIndex={0} items={items} vertical fluid primary />
 
 export default MenuExampleFluid
