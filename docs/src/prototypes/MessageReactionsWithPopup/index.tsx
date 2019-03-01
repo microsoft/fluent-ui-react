@@ -7,7 +7,14 @@ const reactions = [{ icon: 'thumbs up', content: '1K' }, { icon: 'thumbs down', 
 const reactionsWithPopup = _.map(reactions, reaction => render =>
   render(reaction, (Component, props) => (
     <Popup
-      trigger={<Component as="button" {...props} />}
+      trigger={
+        <Component
+          as="button"
+          {...props}
+          aria-label={getAriaLabel(reaction.content, reaction.icon)}
+          aria-haspopup="true"
+        />
+      }
       inline
       content={{
         content: (
@@ -25,6 +32,13 @@ const reactionsWithPopup = _.map(reactions, reaction => render =>
     />
   )),
 )
+
+const getAriaLabel = (numberOfPersons, emojiType) => {
+  if (numberOfPersons === 1) {
+    return `One person reacted to this message with a ${emojiType} emoji. Open menu to see person who reacted.`
+  }
+  return `${numberOfPersons} people reacted this message with a ${emojiType} emoji. Open menu to see people who reacted.`
+}
 
 const actionMenu = {
   iconOnly: true,

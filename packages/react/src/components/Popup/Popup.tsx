@@ -364,13 +364,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         this.setPopupOpen(true, e)
         predefinedProps && _.invoke(predefinedProps, 'onClick', e, contentProps)
       }
-      // TODO: check why this was not added in the first place...
-      contentProps.onBlur = (e, contentProps) => {
-        if (this.shouldBlurClose(e)) {
-          this.trySetOpen(false, e)
-        }
-        predefinedProps && _.invoke(predefinedProps, 'onBlur', e, contentProps)
-      }
     }
 
     return contentProps
