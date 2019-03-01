@@ -10,14 +10,14 @@ const selectors = {
 }
 
 const getScreenerSteps = ({ vertical }: StepsOptions = {}): ScreenerSteps => [
-  steps => steps.hover(selectors.item(2)).snapshot('Hovers 2nd item (hover state styles)'),
-  steps => steps.click(selectors.item(2)).snapshot('Clicks on 2nd item (active state styles)'),
   (steps, keys) =>
     steps
+      .hover(selectors.item(2))
+      .snapshot('Hovers 2nd item (hover state styles)')
+      .click(selectors.item(2))
+      .snapshot('Clicks on 2nd item (active state styles)')
       .keys(selectors.item(2), vertical ? keys.downArrow : keys.rightArrow)
-      .snapshot('Navigates to next item (focus state styles)'),
-  (steps, keys) =>
-    steps
+      .snapshot('Navigates to next item (focus state styles)')
       .keys(selectors.item(3), vertical ? keys.upArrow : keys.leftArrow)
       .snapshot('Navigates to previous item (active and focus state styles)'),
 ]
