@@ -8,7 +8,6 @@ import { ThemeProvider, FelaTheme } from 'react-fela'
 
 import Ref from 'src/components/Ref/Ref'
 import RefFindNode from 'src/components/Ref/RefFindNode'
-import Box from 'src/components/Box/Box'
 
 import { getDisplayName } from 'src/lib'
 import isExportedAtTopLevel from './isExportedAtTopLevel'
@@ -32,7 +31,7 @@ export interface Conformant {
   requiredProps?: object
   exportedAtTopLevel?: boolean
   rendersPortal?: boolean
-  usesWrapperSlot?: boolean
+  wrapperComponent?: React.ReactType
 }
 
 /**
@@ -52,7 +51,7 @@ export default (Component, options: Conformant = {}) => {
     hasAccessibilityProp = true,
     requiredProps = {},
     rendersPortal = false,
-    usesWrapperSlot = false,
+    wrapperComponent = null,
   } = options
   const { throwError } = helpers('isConformant', Component)
 
@@ -60,20 +59,17 @@ export default (Component, options: Conformant = {}) => {
 
   const helperComponentNames = [
     ...[ThemeProvider, FelaTheme, Ref, RefFindNode],
-    ...(usesWrapperSlot && [Box]),
+    ...(wrapperComponent ? [wrapperComponent] : []),
   ].map(getDisplayName)
 
   const toNextNonTrivialChild = (from: ReactWrapper) => {
-    let current = from.childAt(0)
+    const current = from.childAt(0)
 
     if (!current) return current
 
-    while (helperComponentNames.indexOf(current.name()) >= 0) {
-      current = current.childAt(0)
-      if (!current) return current
-    }
-
-    return current
+    return helperComponentNames.indexOf(current.name()) === -1
+      ? current
+      : toNextNonTrivialChild(current)
   }
 
   const getComponent = (wrapper: ReactWrapper) => {
@@ -91,7 +87,7 @@ export default (Component, options: Conformant = {}) => {
 
     // in that case 'topLevelChildElement' we've found so far is a wrapper's topmost child
     // thus, we should continue search
-    return usesWrapperSlot ? toNextNonTrivialChild(topLevelChildElement) : topLevelChildElement
+    return wrapperComponent ? toNextNonTrivialChild(topLevelChildElement) : topLevelChildElement
   }
 
   // make sure components are properly exported
@@ -468,7 +464,7 @@ export default (Component, options: Conformant = {}) => {
         .find('[className]')
         .hostNodes()
         .filterWhere(c => !c.prop(FOCUSZONE_WRAP_ATTRIBUTE)) // filter out FocusZone wrap <div>
-        .at(usesWrapperSlot ? 1 : 0)
+        .at(wrapperComponent ? 1 : 0)
         .prop('className')
       return classes
     }
