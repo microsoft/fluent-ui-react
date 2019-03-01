@@ -2,7 +2,7 @@ import { createShorthandFactory } from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 import { ReactProps } from '../../types'
 
-import { BoxClassName, BoxProps, boxPropTypes, renderBox } from './common'
+import { BoxClassName, BoxProps, boxPropTypes, renderBox } from './boxCommon'
 
 /**
  * A Box is a basic component (no default styles)
@@ -31,4 +31,4 @@ const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<Box
 Box.create = createShorthandFactory(Box)
 
 export default Box
-export { BoxProps } from './common'
+export { BoxProps } from './boxCommon'

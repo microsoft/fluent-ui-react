@@ -27,6 +27,8 @@ export const boxPropTypes = {
   theme: PropTypes.any,
 }
 
+export const handledBoxProps = Object.keys(boxPropTypes)
+
 export const renderBox = ({
   ElementType,
   unhandledProps,

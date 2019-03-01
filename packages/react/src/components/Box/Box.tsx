@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { createShorthandFactory, callable, getUnhandledProps } from '../../lib'
 
-import { BoxClassName, BoxProps, boxPropTypes, renderBox } from './common'
+import { BoxClassName, BoxProps, boxPropTypes, handledBoxProps, renderBox } from './boxCommon'
 import { FelaTheme } from 'react-fela'
 import { IRenderer as FelaRenderer } from 'fela'
 import cx from 'classnames'
@@ -16,7 +16,7 @@ type BoxRenderConfig = {
 const render = ({ ElementType, props, renderer }: BoxRenderConfig) => {
   const { styles, className: predefinedClasses, content, children } = props
 
-  const unhandledProps = getUnhandledProps({ handledProps }, props)
+  const unhandledProps = getUnhandledProps({ handledBoxProps }, props)
   const classes = {
     root: renderer.renderRule(callable(styles), props),
   }
@@ -58,8 +58,6 @@ const Box: React.FunctionComponent<BoxProps> & { create: Function } = props => {
   )
 }
 
-const handledProps = Object.keys(boxPropTypes)
-
 Box.propTypes = boxPropTypes
 Box.defaultProps = {
   as: 'div',
@@ -70,4 +68,4 @@ Box.displayName = 'Box'
 Box.create = createShorthandFactory(Box)
 
 export default Box
-export { BoxProps } from './common'
+export { BoxProps } from './boxCommon'
