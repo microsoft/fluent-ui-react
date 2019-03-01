@@ -2,6 +2,7 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../lib'
+import Button from '../../../../components/Button/Button'
 
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -15,6 +16,9 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     marginRight: pxToRem(2),
     background: v.backgroundColor,
     color: v.textColor,
+    boxShadow: v.boxShadow,
+    border: v.border,
+    borderRadius: v.borderRadius,
 
     outline: 0,
 
@@ -29,6 +33,11 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
 
       ':hover': {
         background: v.backgroundColorHover,
+        color: v.textColorHover,
+
+        [`& .${Button.className}`]: {
+          color: v.actionColorContrastOverride,
+        },
       },
     }),
   }),
@@ -56,8 +65,13 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     marginRight: v.iconSpace,
   }),
 
-  action: (): ICSSInJSStyle => ({
+  action: ({ variables: v }): ICSSInJSStyle => ({
     flex: '0 0 auto',
+    border: '1px solid transparent',
+
+    ':hover': {
+      borderColor: v.actionColorContrastOverride,
+    },
   }),
 
   progress: ({ props: p, variables: v }): ICSSInJSStyle => ({

@@ -13,7 +13,7 @@ class AttachmentActionExampleShorthand extends React.Component {
         />
         <Attachment
           header="Document.docx"
-          action={{ icon: 'ellipsis horizontal', onClick: this.handleClick('Show more') }}
+          action={{ icon: 'more', onClick: this.handleClick('Show more') }}
         />
       </div>
     )
