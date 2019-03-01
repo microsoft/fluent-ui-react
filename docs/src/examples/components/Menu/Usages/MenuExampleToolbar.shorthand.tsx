@@ -74,18 +74,96 @@ const items = [
     accessibility: toolbarButtonBehavior,
     'aria-label': 'More options',
     indicator: false,
-    menu: [
-      { key: '1', content: 'item1' },
-      {
-        key: '2',
-        content: 'item2',
-      },
-      {
-        key: '3',
-        content: 'item3',
-        menu: [{ key: '1', content: 'item3.1' }, { key: '2', content: 'item3.2' }],
-      },
-    ],
+    menu: {
+      items: [
+        {
+          key: '1',
+          content: 'item1',
+          icon: {
+            name: 'bookmark',
+            variables: { outline: true },
+          },
+        },
+        {
+          key: '2',
+          content: 'item2',
+          icon: {
+            name: 'mark-as-unread',
+            variables: { outline: true },
+          },
+        },
+        {
+          key: '3',
+          content: 'item3',
+          icon: {
+            name: 'translation',
+            variables: { outline: true },
+          },
+        },
+        {
+          key: '4',
+          content: 'item3',
+          icon: {
+            name: 'trash-can',
+            variables: { outline: true },
+          },
+        },
+      ],
+    },
+  },
+  {
+    key: 'menuButton2',
+    icon: {
+      name: 'more',
+      variables: { outline: true },
+    },
+    accessibility: toolbarButtonBehavior,
+    'aria-label': 'More options',
+    indicator: false,
+    menu: {
+      items: [
+        {
+          key: '5',
+          content: 'item1',
+          icon: {
+            name: 'bookmark',
+            variables: { outline: true },
+          },
+        },
+        {
+          key: 'divider',
+          kind: 'divider',
+        },
+        {
+          key: '6',
+          content: 'item2',
+          icon: {
+            name: 'mark-as-unread',
+            variables: { outline: true },
+          },
+        },
+        {
+          key: '7',
+          content: 'item3',
+          icon: {
+            name: 'translation',
+            variables: { outline: true },
+          },
+        },
+        {
+          key: 'divider2',
+          kind: 'divider',
+        },
+        {
+          key: '8',
+          content: 'item3',
+          icon: {
+            name: 'trash-can',
+            variables: { outline: true },
+          },
+        },
+      ],
+    },
   },
 ]
 

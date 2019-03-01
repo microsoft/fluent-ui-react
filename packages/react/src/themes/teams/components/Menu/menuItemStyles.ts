@@ -69,7 +69,7 @@ const getFocusedStyles = ({
       ? {
           border: v.focusedBorder,
           outline: v.focusedOutline,
-          margin: '1px',
+          margin: pxToRem(1),
           background: v.focusedBackgroundColor,
         }
       : {}),
