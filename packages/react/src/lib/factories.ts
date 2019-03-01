@@ -192,14 +192,16 @@ function createShorthandFromValue({
   // Merge props
   const props = { ...defaultProps, ...usersProps, ...overrideProps }
 
+  const mappedHTMLProps = mappedProps[overrideProps.as || defaultProps.as]
+
   // Map prop for primitive value
   if (valIsPrimitive) {
-    props[mappedProps[overrideProps.as || defaultProps.as] || mappedProp || 'children'] = value
+    props[mappedHTMLProps || mappedProp || 'children'] = value
   }
 
   // Map prop for array value
   if (valIsArrayObject) {
-    props[mappedProps[overrideProps.as || defaultProps.as] || mappedArrayProp || 'children'] = value
+    props[mappedHTMLProps || mappedArrayProp || 'children'] = value
   }
 
   // Merge className
