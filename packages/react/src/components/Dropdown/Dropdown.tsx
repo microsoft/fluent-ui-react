@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import cx from 'classnames'
+import * as keyboardKey from 'keyboard-key'
 
 import {
   Extendable,
@@ -29,7 +30,6 @@ import {
   handleRef,
   UIComponentProps,
 } from '../../lib'
-import keyboardKey from 'keyboard-key'
 import Indicator, { IndicatorProps } from '../Indicator/Indicator'
 import List from '../List/List'
 import Ref from '../Ref/Ref'
@@ -634,7 +634,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   private handleStateChange = (changes: StateChangeOptions<ShorthandValue>) => {
     if (changes.isOpen !== undefined && changes.isOpen !== this.state.open) {
-      const newState: { open: boolean; highlightedIndex?: number } = { open: changes.isOpen }
+      const newState = { open: changes.isOpen, highlightedIndex: this.state.highlightedIndex }
 
       if (changes.isOpen) {
         const highlightedIndexOnArrowKeyOpen = this.getHighlightedIndexOnArrowKeyOpen(changes)
@@ -648,10 +648,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         newState.highlightedIndex = this.getHighlightedIndexOnClose()
       }
 
-      this.trySetStateAndInvokeHandler('onOpenChange', null, { ...this.props, ...newState })
+      this.trySetStateAndInvokeHandler('onOpenChange', null, newState)
     }
 
-    if (_.isNumber(changes.highlightedIndex) && this.state.open) {
+    if (this.state.open && _.isNumber(changes.highlightedIndex)) {
       this.trySetState({ highlightedIndex: changes.highlightedIndex })
     }
   }
