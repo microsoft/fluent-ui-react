@@ -5,8 +5,7 @@ import { BoxClassName, BoxProps, boxPropTypes, renderBox } from './common'
 import { FelaTheme } from 'react-fela'
 import { IRenderer as FelaRenderer } from 'fela'
 import cx from 'classnames'
-
-const withThemeContext = render => <FelaTheme>{(theme: any) => render(theme)}</FelaTheme>
+import { ThemePrepared } from 'src/themes/types'
 
 type BoxRenderConfig = {
   ElementType: React.ReactType
@@ -38,21 +37,25 @@ const render = ({ ElementType, props, renderer }: BoxRenderConfig) => {
 const Box: React.FunctionComponent<BoxProps> & { create: Function } = props => {
   const { as: ElementType, theme } = props
 
-  if (!theme) {
-    return withThemeContext(theme =>
-      render({
-        ElementType,
-        props,
-        renderer: theme.renderer,
-      }),
-    )
+  if (theme) {
+    return render({
+      ElementType,
+      props,
+      renderer: theme.renderer,
+    })
   }
 
-  return render({
-    ElementType,
-    props,
-    renderer: theme.renderer,
-  })
+  return (
+    <FelaTheme>
+      {(theme: ThemePrepared) =>
+        render({
+          ElementType,
+          props,
+          renderer: theme.renderer,
+        })
+      }
+    </FelaTheme>
+  )
 }
 
 const handledProps = Object.keys(boxPropTypes)
