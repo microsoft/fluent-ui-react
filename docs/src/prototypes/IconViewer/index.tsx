@@ -94,7 +94,7 @@ class IconViewerExample extends React.Component<any, {}> {
                         .sort()
                         .map(name => (
                           <div key={`${name}-outline`} style={cellStyles}>
-                            <Icon name={name} variables={{ outline: true }} />
+                            <Icon name={name} outline />
                             <br />
                             <code>{name.replace(processedIconsNamePrefix, '')} outline</code>
                             <br />
