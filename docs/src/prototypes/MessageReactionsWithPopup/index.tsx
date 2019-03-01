@@ -1,44 +1,12 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Avatar, Chat, Popup, Menu } from '@stardust-ui/react'
-import { AutoFocusZone } from 'src/lib/accessibility/FocusZone/AutoFocusZone'
+import { Avatar, Chat } from '@stardust-ui/react'
+import ReactionPopup from './ReactionPopup'
 
 const reactions = [{ icon: 'thumbs up', content: '1K' }, { icon: 'thumbs down', content: 2 }]
 const reactionsWithPopup = _.map(reactions, reaction => render =>
-  render(reaction, (Component, props) => (
-    <Popup
-      trigger={
-        <Component
-          as="button"
-          {...props}
-          aria-label={getAriaLabel(reaction.content, reaction.icon)}
-          aria-haspopup="true"
-        />
-      }
-      inline
-      content={{
-        content: (
-          <AutoFocusZone firstFocusableSelector={'ui-menu__item:first-child'}>
-            <Menu
-              items={['Jane Doe', 'John Doe']}
-              vertical
-              data-is-focusable={true}
-              variables={{ borderColor: 'transparent' }}
-            />
-          </AutoFocusZone>
-        ),
-      }}
-      on="hover"
-    />
-  )),
+  render(reaction, (Component, props) => <ReactionPopup Component={Component} props={props} />),
 )
-
-const getAriaLabel = (numberOfPersons, emojiType) => {
-  if (numberOfPersons === 1) {
-    return `One person reacted to this message with a ${emojiType} emoji. Open menu to see person who reacted.`
-  }
-  return `${numberOfPersons} people reacted this message with a ${emojiType} emoji. Open menu to see people who reacted.`
-}
 
 const actionMenu = {
   iconOnly: true,
