@@ -9,7 +9,6 @@ const fs = require('fs')
 const tsPaths = require('tsconfig-paths')
 const Keys = require('screener-runner/src/keys')
 const Steps = require('screener-runner/src/steps')
-const keys = require('screener-runner/src/keys')
 
 const { default: config } = require('./config')
 const { compilerOptions } = require('./build/tsconfig.common.json')

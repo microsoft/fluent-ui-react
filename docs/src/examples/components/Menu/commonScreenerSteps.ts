@@ -9,7 +9,7 @@ const selectors = {
   item: (itemIndex: number) => `.${Menu.className} li:nth-child(${itemIndex}) a`,
 }
 
-const getScreenerSteps = ({ vertical }: StepsOptions = {}) => [
+const getScreenerSteps = ({ vertical }: StepsOptions = {}): ScreenerSteps => [
   steps => steps.hover(selectors.item(2)).snapshot('Hovers 2nd item (hover state styles)'),
   steps => steps.click(selectors.item(2)).snapshot('Clicks on 2nd item (active state styles)'),
   (steps, keys) =>
