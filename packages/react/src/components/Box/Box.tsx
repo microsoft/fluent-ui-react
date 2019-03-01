@@ -55,7 +55,7 @@ const Box: React.FunctionComponent<BoxProps> & { create: Function } = props => {
   })
 }
 
-const handledProps = Object.keys(Box.propTypes)
+const handledProps = Object.keys(boxPropTypes)
 
 Box.propTypes = boxPropTypes
 Box.defaultProps = {
