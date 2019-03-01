@@ -14,14 +14,14 @@ type BoxRenderConfig = {
   renderer: FelaRenderer
 }
 
-const render = ({ ElementType, props, renderer }: BoxRenderConfig): React.ReactNode => {
+const render = ({ ElementType, props, renderer }: BoxRenderConfig) => {
   const { styles, className: predefinedClasses, content, children } = props
 
-  const unhandledProps = getUnhandledProps(BoxLight, props)
+  const unhandledProps = getUnhandledProps({ handledProps }, props)
   const classes = {
     root: renderer.renderRule(callable(styles), props),
   }
-  classes.root = cx(predefinedClasses, classes.root)
+  classes.root = cx(BoxClassName, predefinedClasses, classes.root)
 
   return renderBox({
     ElementType,
@@ -35,7 +35,7 @@ const render = ({ ElementType, props, renderer }: BoxRenderConfig): React.ReactN
 /**
  * A Box is a basic component (no default styles)
  */
-const BoxLight = (props: BoxProps) => {
+const Box: React.FunctionComponent<BoxProps> & { create: Function } = props => {
   const { as: ElementType, theme } = props
 
   if (!theme) {
@@ -55,17 +55,16 @@ const BoxLight = (props: BoxProps) => {
   })
 }
 
-BoxLight.propTypes = boxPropTypes
-BoxLight.handledProps = Object.keys(BoxLight.propTypes)
+const handledProps = Object.keys(Box.propTypes)
 
-BoxLight.defaultProps = {
+Box.propTypes = boxPropTypes
+Box.defaultProps = {
   as: 'div',
 }
 
-BoxLight.displayName = 'Box'
-BoxLight.className = BoxClassName
+Box.displayName = 'Box'
 
-BoxLight.create = createShorthandFactory(BoxLight as any)
+Box.create = createShorthandFactory(Box)
 
-export default BoxLight
+export default Box
 export { BoxProps } from './common'

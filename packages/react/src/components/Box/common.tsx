@@ -24,10 +24,16 @@ export interface BoxProps
 
 export const boxPropTypes = {
   ...commonPropTypes.createCommon(),
-  theme: PropTypes.object,
+  theme: PropTypes.any,
 }
 
-export const renderBox = ({ ElementType, unhandledProps, classes, children, content }) => (
+export const renderBox = ({
+  ElementType,
+  unhandledProps,
+  classes,
+  children,
+  content,
+}): React.ReactElement<BoxProps> => (
   <ElementType
     {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
     {...unhandledProps}

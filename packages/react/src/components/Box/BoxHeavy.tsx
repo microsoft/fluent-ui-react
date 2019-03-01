@@ -12,7 +12,6 @@ const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<Box
 
   className: BoxClassName,
 
-  // @ts-ignore
   propTypes: boxPropTypes,
 
   render(config, props) {
