@@ -1,4 +1,5 @@
 import { task, series } from 'gulp'
+import { argv } from 'yargs'
 
 import sh from '../sh'
 import config from '../../../config'
@@ -10,6 +11,9 @@ const { paths } = config
 // ----------------------------------------
 
 task('screener:runner', cb => {
+  // screener-runner doesn't allow to pass custom options
+  if (argv.filter) process.env.SCREENER_FILTER = argv.filter
+
   // kill the server when done
   sh(`screener-runner --conf ${paths.base('screener.config.js')}`)
     .then(() => {
