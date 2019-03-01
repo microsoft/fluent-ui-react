@@ -51,14 +51,15 @@ export function createShorthand({
   mappedProp,
   mappedArrayProp,
   valueOrRenderCallback,
-  options = CREATE_SHORTHAND_DEFAULT_OPTIONS,
+  options: optionsPram,
 }: {
   Component: React.ReactType
   mappedProp?: string
   mappedArrayProp?: string
   valueOrRenderCallback?: ShorthandValue | ShorthandRenderCallback
-  options: CreateShorthandOptions
+  options?: CreateShorthandOptions
 }): React.ReactElement<Props> | null | undefined {
+  const options = optionsPram || CREATE_SHORTHAND_DEFAULT_OPTIONS
   const valIsRenderFunction =
     typeof valueOrRenderCallback === 'function' && !React.isValidElement(valueOrRenderCallback)
   if (valIsRenderFunction) {
@@ -116,10 +117,6 @@ export function createShorthandFactory({
   mappedArrayProp,
 }: CreateShorthandFactoryConfigInner<any>) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
-    console.log(`Component: ${Component}`)
-    console.log(`Type of component: ${typeof Component}`)
-    console.log(`mappedArrayProp: : ${mappedArrayProp}`)
-    console.log(`Type of component: ${typeof Component}`)
     throw new Error('createShorthandFactory() Component must be a string or function.')
   }
 
