@@ -33,7 +33,7 @@ const render = ({ ElementType, props, renderer }: BoxRenderConfig): React.ReactN
 }
 
 /**
- * A Box is a basic component (ndo default styles)
+ * A Box is a basic component (no default styles)
  */
 const BoxLight = (props: BoxProps) => {
   const { as: ElementType, theme } = props
