@@ -134,43 +134,49 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
-  renderComponent({ classes, accessibility, unhandledProps, styles }) {
+  renderComponent({ classes, accessibility, unhandledProps, styles, theme }) {
     const { as, debug, endMedia, media, content, contentMedia, header, headerMedia } = this.props
 
     const contentElement = Box.create(content, {
       defaultProps: {
         className: ListItem.slotClassNames.content,
         styles: styles.content,
+        theme,
       },
     })
     const contentMediaElement = Box.create(contentMedia, {
       defaultProps: {
         className: ListItem.slotClassNames.contentMedia,
         styles: styles.contentMedia,
+        theme,
       },
     })
     const headerElement = Box.create(header, {
       defaultProps: {
         className: ListItem.slotClassNames.header,
         styles: styles.header,
+        theme,
       },
     })
     const headerMediaElement = Box.create(headerMedia, {
       defaultProps: {
         className: ListItem.slotClassNames.headerMedia,
         styles: styles.headerMedia,
+        theme,
       },
     })
     const endMediaElement = Box.create(endMedia, {
       defaultProps: {
         className: ListItem.slotClassNames.endMedia,
         styles: styles.endMedia,
+        theme,
       },
     })
     const mediaElement = Box.create(media, {
       defaultProps: {
         className: ListItem.slotClassNames.media,
         styles: styles.media,
+        theme,
       },
     })
 

@@ -1,22 +1,26 @@
-import { createShorthandFactory, getClasses, felaRenderer } from '../../lib'
+import * as React from 'react'
+import { createShorthandFactory, callable, getUnhandledProps } from '../../lib'
 
-import { BoxClassName, BoxProps, renderBox } from './common'
+import { BoxClassName, BoxProps, boxPropTypes, renderBox } from './common'
+import { FelaTheme } from 'react-fela'
+import { IRenderer as FelaRenderer } from 'fela'
 import cx from 'classnames'
 
-/**
- * A Box is a basic component (no default styles)
- */
-const BoxLight = (props: BoxProps) => {
-  const {
-    as: ElementType = 'div',
-    children,
-    className: predefinedClasses,
-    content,
-    styles,
-    ...unhandledProps
-  } = props
+const withThemeContext = render => <FelaTheme>{(theme: any) => render(theme)}</FelaTheme>
 
-  const classes = getClasses(felaRenderer, { root: styles }, {} as any)
+type BoxRenderConfig = {
+  ElementType: React.ReactType
+  props: BoxProps
+  renderer: FelaRenderer
+}
+
+const render = ({ ElementType, props, renderer }: BoxRenderConfig): React.ReactNode => {
+  const { styles, className: predefinedClasses, content, children } = props
+
+  const unhandledProps = getUnhandledProps(BoxLight, props)
+  const classes = {
+    root: renderer.renderRule(callable(styles), props),
+  }
   classes.root = cx(predefinedClasses, classes.root)
 
   return renderBox({
@@ -28,10 +32,40 @@ const BoxLight = (props: BoxProps) => {
   })
 }
 
+/**
+ * A Box is a basic component (ndo default styles)
+ */
+const BoxLight = (props: BoxProps) => {
+  const { as: ElementType, theme } = props
+
+  if (!theme) {
+    return withThemeContext(theme =>
+      render({
+        ElementType,
+        props,
+        renderer: theme.renderer,
+      }),
+    )
+  }
+
+  return render({
+    ElementType,
+    props,
+    renderer: theme.renderer,
+  })
+}
+
+BoxLight.propTypes = boxPropTypes
+BoxLight.handledProps = Object.keys(BoxLight.propTypes)
+
+BoxLight.defaultProps = {
+  as: 'div',
+}
+
 BoxLight.displayName = 'Box'
 BoxLight.className = BoxClassName
 
-BoxLight.create = createShorthandFactory(BoxLight)
+BoxLight.create = createShorthandFactory(BoxLight as any)
 
 export default BoxLight
 export { BoxProps } from './common'

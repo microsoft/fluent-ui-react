@@ -1,8 +1,8 @@
-import { createShorthandFactory, commonPropTypes } from '../../lib'
+import { createShorthandFactory } from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 import { ReactProps } from '../../types'
 
-import { BoxClassName, BoxProps, renderBox } from './common'
+import { BoxClassName, BoxProps, boxPropTypes, renderBox } from './common'
 
 /**
  * A Box is a basic component (no default styles)
@@ -12,9 +12,8 @@ const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<Box
 
   className: BoxClassName,
 
-  propTypes: {
-    ...commonPropTypes.createCommon(),
-  },
+  // @ts-ignore
+  propTypes: boxPropTypes,
 
   render(config, props) {
     const { ElementType, classes, unhandledProps } = config

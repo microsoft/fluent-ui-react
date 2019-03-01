@@ -1,7 +1,9 @@
 import * as React from 'react'
+import * as PropTypes from 'prop-types'
 
 import {
   childrenExist,
+  commonPropTypes,
   UIComponentProps,
   ContentComponentProps,
   ChildrenComponentProps,
@@ -9,13 +11,21 @@ import {
 } from '../../lib'
 
 import cx from 'classnames'
+import { ThemePrepared } from 'src/themes/types'
 
 export const BoxClassName = 'ui-box'
 
 export interface BoxProps
   extends UIComponentProps<BoxProps>,
     ContentComponentProps,
-    ChildrenComponentProps {}
+    ChildrenComponentProps {
+  theme?: ThemePrepared
+}
+
+export const boxPropTypes = {
+  ...commonPropTypes.createCommon(),
+  theme: PropTypes.object,
+}
 
 export const renderBox = ({ ElementType, unhandledProps, classes, children, content }) => (
   <ElementType
