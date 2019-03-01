@@ -90,7 +90,10 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
 
   componentDidUpdate(prevProps: DropdownSelectedItemProps) {
     if (!prevProps.active && this.props.active) {
+      this.itemRef.current.setAttribute('tabindex', '0')
       this.itemRef.current.focus()
+    } else if (prevProps.active && !this.props.active) {
+      this.itemRef.current.setAttribute('tabindex', '-1')
     }
   }
 
