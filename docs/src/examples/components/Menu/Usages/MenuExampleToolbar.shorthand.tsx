@@ -98,6 +98,7 @@ class MenuExampleToolbarShorthand extends React.Component {
         defaultActiveIndex={0}
         items={items}
         iconOnly
+        primary
         accessibility={toolbarBehavior}
         aria-label="Compose Editor"
       />
