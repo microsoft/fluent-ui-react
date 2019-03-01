@@ -34,7 +34,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Call update `node` if it was changed for `Ref` component @layershifter ([#993](https://github.com/stardust-ui/react/pull/993))
 - Close previous `Popup` on enter key @jongsue ([#985](https://github.com/stardust-ui/react/pull/985))
 - Fixed color of the `timestamp` in `ChatMessages` marked as `mine` in Teams theme @mnajdova ([#1010](https://github.com/stardust-ui/react/pull/1010))
+<<<<<<< HEAD
 - Updated table `Icon` & search `Icon` ([#1011](https://github.com/stardust-ui/react/pull/1011))
+=======
+- Improve `Menu` styling, vertical menu in particular ([#934](https://github.com/stardust-ui/react/pull/934))
+>>>>>>> Changelog entry change
 
 ### Features
 - Add `delay` prop for `Loader` component @layershifter ([#969](https://github.com/stardust-ui/react/pull/969))
@@ -76,7 +80,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Remove redundant margins for `Button` and `Icon` components and fix layout of `Dialog` component and affected examples @Bugaa92 ([#945](https://github.com/stardust-ui/react/pull/945))
 - Prevent appearance of `actions` slot on hover over area outside of `ChatMessage` @kuzhelov ([#953](https://github.com/stardust-ui/react/pull/953))
 - Export variables for the `DropdownItem`, `DropdownSearchInput` and `DropdownSelectedItem` components in Teams theme ([#967](https://github.com/stardust-ui/react/pull/967))
-- Improve `Menu` styling, vertical menu in particular ([#934](https://github.com/stardust-ui/react/pull/934))
 
 ### Features
 - Export `lock` SVG icon @VyshnaviDasari ([#906](https://github.com/stardust-ui/react/pull/906))
