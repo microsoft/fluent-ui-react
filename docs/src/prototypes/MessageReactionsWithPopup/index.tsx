@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import { Avatar, Chat, Popup, Menu } from '@stardust-ui/react'
+import { AutoFocusZone } from 'src/lib/accessibility/FocusZone/AutoFocusZone'
 
 const reactions = [{ icon: 'thumbs up', content: '1K' }, { icon: 'thumbs down', content: 2 }]
 const reactionsWithPopup = _.map(reactions, reaction => render =>
@@ -9,7 +10,11 @@ const reactionsWithPopup = _.map(reactions, reaction => render =>
       trigger={<Component as="button" {...props} />}
       inline
       content={{
-        content: <Menu items={['Jane Doe', 'John Doe']} vertical data-is-focusable={true} />,
+        content: (
+          <AutoFocusZone firstFocusableSelector={'ui-menu__item:first-child'}>
+            <Menu items={['Jane Doe', 'John Doe']} vertical data-is-focusable={true} />
+          </AutoFocusZone>
+        ),
       }}
       on="hover"
     />
