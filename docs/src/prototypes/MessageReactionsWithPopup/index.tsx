@@ -12,7 +12,12 @@ const reactionsWithPopup = _.map(reactions, reaction => render =>
       content={{
         content: (
           <AutoFocusZone firstFocusableSelector={'ui-menu__item:first-child'}>
-            <Menu items={['Jane Doe', 'John Doe']} vertical data-is-focusable={true} />
+            <Menu
+              items={['Jane Doe', 'John Doe']}
+              vertical
+              data-is-focusable={true}
+              variables={{ borderColor: 'transparent' }}
+            />
           </AutoFocusZone>
         ),
       }}
