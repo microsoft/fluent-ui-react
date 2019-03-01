@@ -205,6 +205,6 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   }
 }
 
-Menu.create = createShorthandFactory(Menu, 'children', 'items')
+Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items' })
 
 export default Menu

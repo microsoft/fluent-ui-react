@@ -248,7 +248,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   }
 }
 
-ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
+ChatMessage.create = createShorthandFactory({ Component: ChatMessage, mappedProp: 'content' })
 ChatMessage.slotClassNames = {
   actionMenu: `${ChatMessage.className}__actions`,
   author: `${ChatMessage.className}__author`,

@@ -122,6 +122,6 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
   }
 }
 
-Icon.create = createShorthandFactory(Icon, 'name')
+Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name' })
 
 export default Icon

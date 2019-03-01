@@ -158,6 +158,9 @@ DropdownSelectedItem.slotClassNames = {
   removeIcon: `${DropdownSelectedItem.className}__remove-icon`,
 }
 
-DropdownSelectedItem.create = createShorthandFactory(DropdownSelectedItem, 'header')
+DropdownSelectedItem.create = createShorthandFactory({
+  Component: DropdownSelectedItem,
+  mappedProp: 'header',
+})
 
 export default DropdownSelectedItem

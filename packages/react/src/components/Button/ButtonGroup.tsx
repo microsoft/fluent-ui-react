@@ -106,6 +106,10 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
   }
 }
 
-ButtonGroup.create = createShorthandFactory(ButtonGroup, 'content', 'buttons')
+ButtonGroup.create = createShorthandFactory({
+  Component: ButtonGroup,
+  mappedProp: 'content',
+  mappedArrayProp: 'buttons',
+})
 
 export default ButtonGroup

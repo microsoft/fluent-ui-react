@@ -131,6 +131,6 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
   }
 }
 
-DropdownSearchInput.create = createShorthandFactory(DropdownSearchInput)
+DropdownSearchInput.create = createShorthandFactory({ Component: DropdownSearchInput })
 
 export default DropdownSearchInput
