@@ -17,5 +17,5 @@ declare module '*.json' {
 
 declare interface Window {
   prettierPlugins: any
-  resetExternalLayout: () => void
+  resetExternalLayout?: () => void
 }

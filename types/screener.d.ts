@@ -16,45 +16,48 @@ type ScreenerRunnerKeys = {
   downArrow: string
 }
 
-type ScreenerRunnerSteps = {
+type ScreenerStepBuilder = {
+  /** This executes custom JS code against the client browser the test is running in. */
+  executeScript(code): ScreenerStepBuilder
+
   /** This will click on the first element matching the provided css selector. */
-  click(selector: string): ScreenerRunnerSteps
+  click(selector: string): ScreenerStepBuilder
 
   /** This will capture a visual snapshot. */
-  snapshot(name: string, options?: any): ScreenerRunnerSteps
+  snapshot(name: string, options?: any): ScreenerStepBuilder
 
   /** this will move the mouse over the first element matching the provided css selector. */
-  hover(selector: string): ScreenerRunnerSteps
+  hover(selector: string): ScreenerStepBuilder
 
   /** This will press and hold the mouse button over the first element matching the provided css selector. */
-  mouseDown(selector: string): ScreenerRunnerSteps
+  mouseDown(selector: string): ScreenerStepBuilder
 
   /** This will release the mouse button. selector is optional. */
-  mouseUp(selector: string): ScreenerRunnerSteps
+  mouseUp(selector: string): ScreenerStepBuilder
 
   /** This will set cursor focus on the first element matching the provided css selector. */
-  focus(selector: string): ScreenerRunnerSteps
+  focus(selector: string): ScreenerStepBuilder
 
   /** This will set the value of the input field matching the provided css selector. */
-  setValue(selector: string, value: string, options?: any): ScreenerRunnerSteps
+  setValue(selector: string, value: string, options?: any): ScreenerStepBuilder
 
   /** This will send the provided keys to the first element matching the provided css selector. */
-  keys(selector: string, key: string): ScreenerRunnerSteps
+  keys(selector: string, key: string): ScreenerStepBuilder
 
   /** This will pause execution for the specified number of ms.*/
-  wait(ms: number): ScreenerRunnerSteps
+  wait(ms: number): ScreenerStepBuilder
 
   /** This will override the global cssAnimations option for the current UI state. Set to true to enable CSS Animations, and set to false to disable.*/
-  cssAnimations(isEnabled: boolean): ScreenerRunnerSteps
+  cssAnimations(isEnabled: boolean): ScreenerStepBuilder
 
   /** This will set the current UI state to right-to-left direction. */
-  rtl(): ScreenerRunnerSteps
+  rtl(): ScreenerStepBuilder
 
   /** This will set the current UI state to left-to-right direction. */
-  ltr(): ScreenerRunnerSteps
+  ltr(): ScreenerStepBuilder
 
   /** This will return the steps to be run. */
-  end(): ScreenerRunnerSteps
+  end(): ScreenerStepBuilder
 }
 
 //
@@ -63,4 +66,4 @@ type ScreenerRunnerSteps = {
 
 declare type ScreenerSteps = ScreenerStep[]
 
-type ScreenerStep = (steps: ScreenerRunnerSteps, keys: ScreenerRunnerKeys) => ScreenerRunnerSteps
+type ScreenerStep = (steps: ScreenerStepBuilder, keys: ScreenerRunnerKeys) => ScreenerStepBuilder
