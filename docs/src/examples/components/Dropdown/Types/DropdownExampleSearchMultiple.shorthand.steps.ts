@@ -16,8 +16,9 @@ const steps: ScreenerSteps = [
       .click(selectors.toggleIndicator)
       .click(selectors.item(2))
       .keys(selectors.input, keys.leftArrow)
-      .snapshot('Selects last selected element'),
-  steps => steps.hover(selectors.selectedItem(1)).snapshot('Hovers first selected element'),
+      .snapshot('Selects last selected element')
+      .hover(selectors.selectedItem(1))
+      .snapshot('Hovers first selected element'),
 ]
 
 export default steps
