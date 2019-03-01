@@ -6,6 +6,7 @@ import Button from '../../../../components/Button/Button'
 
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    boxSizing: 'border-box',
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
@@ -21,6 +22,10 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     borderRadius: v.borderRadius,
 
     outline: 0,
+
+    '& *': {
+      boxSizing: `border-box`,
+    },
 
     ...(p.isFromKeyboard && {
       ':focus': {
@@ -44,6 +49,7 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
 
   content: (): ICSSInJSStyle => ({
     flex: 1,
+    margin: '-2px 0',
   }),
 
   header: ({ variables: v }): ICSSInJSStyle => ({
@@ -68,6 +74,7 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
   action: ({ variables: v }): ICSSInJSStyle => ({
     flex: '0 0 auto',
     border: '1px solid transparent',
+    margin: '-1px', // negative margin should match border width.
 
     ':hover': {
       borderColor: v.actionColorContrastOverride,

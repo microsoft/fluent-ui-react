@@ -30,9 +30,8 @@ export type AttachmentVariables = {
 
 export default (siteVariables: any): AttachmentVariables => {
   return {
-    padding: pxToRem(8),
+    padding: `${pxToRem(7)} ${pxToRem(3)} ${pxToRem(7)} ${pxToRem(11)}`, // padding set to 1px less to account for 1px border
     iconSpace: pxToRem(12),
-
     border: `1px solid ${siteVariables.gray08}`,
     borderRadius: '3px',
     backgroundColor: siteVariables.gray10,
