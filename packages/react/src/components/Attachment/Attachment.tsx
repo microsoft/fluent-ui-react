@@ -5,7 +5,7 @@ import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import {
   UIComponent,
   customPropTypes,
-  // createShorthandFactory,
+  createShorthandFactory,
   commonPropTypes,
   isFromKeyboard,
 } from '../../lib'
