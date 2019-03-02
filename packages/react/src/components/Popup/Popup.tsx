@@ -182,7 +182,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   protected actionHandlers: AccessibilityActionHandlers = {
     closeAndFocusTrigger: e => {
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
-      e.stopPropagation()
     },
     close: e => this.close(e),
     toggle: e => {
@@ -460,8 +459,12 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const popupWrapperAttributes = {
       ...(rtl && { dir: 'rtl' }),
       ...accessibility.attributes.popup,
-      ...accessibility.keyHandlers.popup,
-
+      onKeyDown: (e: React.KeyboardEvent) => {
+        // No need to propagate keydown events outside Popup
+        // allow only keyboard actions to execute
+        _.invoke(accessibility.keyHandlers.popup, 'onKeyDown', e)
+        e.stopPropagation()
+      },
       className: popupPositionClasses,
       style: popupPlacementStyles,
       ...this.getContentProps(),

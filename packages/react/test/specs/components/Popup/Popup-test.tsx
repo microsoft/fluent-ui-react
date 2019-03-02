@@ -62,11 +62,19 @@ describe('Popup', () => {
         on={onProp}
       />,
     )
+    // check popup open on key press
     const popupTriggerElement = popup.find(`#${triggerId}`)
     popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToOpen })
 
     expect(getPopupContent(popup).exists()).toBe(true)
 
+    // when popup open, check that stopPropagation is called when keyboard events are invoked
+    const stopPropagation = jest.fn()
+    const popupContentElement = getPopupContent(popup)
+    popupContentElement.simulate('keyDown', { stopPropagation })
+    expect(stopPropagation).toHaveBeenCalledTimes(1)
+
+    // check popup closes on Esc
     popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToClose })
     expect(getPopupContent(popup).exists()).toBe(false)
   }

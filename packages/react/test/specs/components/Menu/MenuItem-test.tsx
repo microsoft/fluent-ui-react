@@ -3,6 +3,7 @@ import * as React from 'react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
 import { mountWithProviderAndGetComponent } from 'test/utils'
 import MenuItem from 'src/components/Menu/MenuItem'
+import Box from 'src/components/Box/Box'
 import { toolbarButtonBehavior, tabBehavior } from '../../../../src/lib/accessibility'
 import { Accessibility } from '../../../../src/lib/accessibility/types'
 
@@ -11,9 +12,7 @@ describe('MenuItem', () => {
     eventTargets: {
       onClick: '.ui-menu__item__wrapper',
     },
-    // The ElementType is wrapped with Ref, which is adding two HOC in total
-    nestingLevel: 2,
-    usesWrapperSlot: true,
+    wrapperComponent: Box,
   })
 
   it('content renders as `li > a`', () => {
