@@ -23,10 +23,6 @@ export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
     focusPreviouslyFocusedInnerElement: PropTypes.bool,
   }
 
-  static defaultProps: AutoFocusZoneProps = {
-    as: 'div',
-  }
-
   public componentDidMount(): void {
     const { disableFirstFocus = false } = this.props
 
@@ -42,10 +38,7 @@ export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
     )
     // TODO: Remove `as` there after the issue will be resolved:
     // https://github.com/Microsoft/TypeScript/issues/28768
-    const ElementType = getElementType(
-      { defaultProps: AutoFocusZone.defaultProps },
-      this.props,
-    ) as React.ComponentClass<AutoFocusZoneProps>
+    const ElementType = getElementType({}, this.props) as React.ComponentClass<AutoFocusZoneProps>
 
     return (
       <Ref innerRef={this._root}>
