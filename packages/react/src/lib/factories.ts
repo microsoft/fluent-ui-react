@@ -149,7 +149,7 @@ function createShorthandFromValue({
 
   const valIsPrimitive = typeof value === 'string' || typeof value === 'number'
   const valIsPropsObject = _.isPlainObject(value)
-  const valIsArrayObject = _.isArray(value)
+  const valIsArray = _.isArray(value)
   const valIsReactElement = React.isValidElement(value)
 
   // unhandled type warning
@@ -157,7 +157,7 @@ function createShorthandFromValue({
     process.env.NODE_ENV !== 'production' &&
     !valIsPrimitive &&
     !valIsPropsObject &&
-    !valIsArrayObject &&
+    !valIsArray &&
     !valIsReactElement &&
     !valIsNoop
   ) {
@@ -199,7 +199,7 @@ function createShorthandFromValue({
   }
 
   // Map prop for array value
-  if (valIsArrayObject) {
+  if (valIsArray) {
     props[mappedHTMLProps || mappedArrayProp || 'children'] = value
   }
 
@@ -249,7 +249,7 @@ function createShorthandFromValue({
   if (valIsReactElement) return React.cloneElement(value as React.ReactElement<Props>, props)
 
   // Create ReactElements from built up props
-  if (valIsPrimitive || valIsPropsObject || valIsArrayObject) {
+  if (valIsPrimitive || valIsPropsObject || valIsArray) {
     return React.createElement(Component, props)
   }
 
