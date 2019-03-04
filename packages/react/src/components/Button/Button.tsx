@@ -180,6 +180,6 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
   }
 }
 
-Button.create = createShorthandFactory(Button, 'content')
+Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
 
 export default Button

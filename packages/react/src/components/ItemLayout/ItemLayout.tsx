@@ -222,7 +222,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
   }
 }
 
-ItemLayout.create = createShorthandFactory(ItemLayout, 'content')
+ItemLayout.create = createShorthandFactory({ Component: ItemLayout, mappedProp: 'content' })
 ItemLayout.slotClassNames = {
   header: `${ItemLayout.className}__header`,
   headerMedia: `${ItemLayout.className}__headerMedia`,
