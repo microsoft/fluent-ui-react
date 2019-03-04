@@ -33,11 +33,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fixed emoji `Icon` spacing issue and added settings `Icon` ([#991](https://github.com/stardust-ui/react/pull/991))
 - Call update `node` if it was changed for `Ref` component @layershifter ([#993](https://github.com/stardust-ui/react/pull/993))
 - Close previous `Popup` on enter key @jongsue ([#985](https://github.com/stardust-ui/react/pull/985))
+<<<<<<< HEAD
 - Fixed color of the `timestamp` in `ChatMessages` marked as `mine` in Teams theme @mnajdova ([#1010](https://github.com/stardust-ui/react/pull/1010))
 <<<<<<< HEAD
 - Updated table `Icon` & search `Icon` ([#1011](https://github.com/stardust-ui/react/pull/1011))
 =======
 - Improve `Menu` styling, vertical menu in particular ([#934](https://github.com/stardust-ui/react/pull/934))
+<<<<<<< HEAD
+=======
+=======
+- Improve `Menu` styling, vertical menu in Teams theme ([#934](https://github.com/stardust-ui/react/pull/934))
+>>>>>>> Changelog entry change
 >>>>>>> Changelog entry change
 
 ### Features
