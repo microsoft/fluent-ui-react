@@ -142,6 +142,6 @@ DropdownSearchInput.slotClassNames = {
   wrapper: `${DropdownSearchInput.className}__wrapper`,
 }
 
-DropdownSearchInput.create = createShorthandFactory(DropdownSearchInput)
+DropdownSearchInput.create = createShorthandFactory({ Component: DropdownSearchInput })
 
 export default DropdownSearchInput
