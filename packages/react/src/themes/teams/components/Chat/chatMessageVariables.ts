@@ -22,6 +22,7 @@ export interface ChatMessageVariables {
   isImportantColor: string
   badgeTextColor: string
   reactionGroupMarginLeft: string
+  timestampColorMine: string
 }
 
 export default (siteVars): ChatMessageVariables => ({
@@ -46,4 +47,5 @@ export default (siteVars): ChatMessageVariables => ({
   isImportantColor: siteVars.colors.red[900],
   badgeTextColor: siteVars.colors.white,
   reactionGroupMarginLeft: pxToRem(12),
+  timestampColorMine: siteVars.gray02,
 })
