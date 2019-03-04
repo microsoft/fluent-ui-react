@@ -66,52 +66,6 @@ const items = [
     'aria-label': 'Book Tool',
   },
   {
-    key: 'menuButton',
-    icon: {
-      name: 'more',
-      outline: true,
-    },
-    accessibility: toolbarButtonBehavior,
-    'aria-label': 'More options',
-    indicator: false,
-    menu: {
-      items: [
-        {
-          key: '1',
-          content: 'item1',
-          icon: {
-            name: 'bookmark',
-            outline: true,
-          },
-        },
-        {
-          key: '2',
-          content: 'item2',
-          icon: {
-            name: 'mark-as-unread',
-            outline: true,
-          },
-        },
-        {
-          key: '3',
-          content: 'item3',
-          icon: {
-            name: 'translation',
-            outline: true,
-          },
-        },
-        {
-          key: '4',
-          content: 'item3',
-          icon: {
-            name: 'trash-can',
-            outline: true,
-          },
-        },
-      ],
-    },
-  },
-  {
     key: 'menuButton2',
     icon: {
       name: 'more',
