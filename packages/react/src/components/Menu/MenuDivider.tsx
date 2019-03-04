@@ -9,12 +9,11 @@ import {
   UIComponentProps,
   ColorComponentProps,
   commonPropTypes,
-  customPropTypes,
   childrenExist,
   ChildrenComponentProps,
   ContentComponentProps,
 } from '../../lib'
-import { ReactProps, ShorthandValue } from '../../types'
+import { ReactProps } from '../../types'
 
 export interface MenuDividerProps
   extends UIComponentProps,
@@ -27,7 +26,6 @@ export interface MenuDividerProps
    */
   accessibility?: Accessibility
 
-  icon?: ShorthandValue
   vertical?: boolean
   primary?: boolean
   secondary?: boolean
@@ -36,7 +34,7 @@ export interface MenuDividerProps
 /**
  * A menu divider visually segments menu items inside menu.
  */
-class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>, any> {
+class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>> {
   static displayName = 'MenuDivider'
 
   static create: Function
@@ -50,7 +48,6 @@ class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),
-    icon: customPropTypes.itemShorthand,
     primary: PropTypes.bool,
     secondary: PropTypes.bool,
     vertical: PropTypes.bool,
