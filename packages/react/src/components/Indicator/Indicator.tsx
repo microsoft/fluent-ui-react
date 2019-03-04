@@ -83,6 +83,6 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
   }
 }
 
-Indicator.create = createShorthandFactory(Indicator)
+Indicator.create = createShorthandFactory({ Component: Indicator, mappedProp: 'icon' })
 
 export default Indicator

@@ -129,6 +129,6 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
   }
 }
 
-FormField.create = createShorthandFactory(FormField, 'label')
+FormField.create = createShorthandFactory({ Component: FormField, mappedProp: 'label' })
 
 export default FormField

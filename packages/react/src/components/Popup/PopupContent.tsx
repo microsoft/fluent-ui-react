@@ -94,6 +94,6 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
   }
 }
 
-PopupContent.create = createShorthandFactory(PopupContent, 'content')
+PopupContent.create = createShorthandFactory({ Component: PopupContent, mappedProp: 'content' })
 
 export default PopupContent
