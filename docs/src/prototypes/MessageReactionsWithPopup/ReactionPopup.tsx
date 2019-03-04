@@ -47,7 +47,7 @@ class ReactionPopup extends React.Component<any, any> {
             <Component
               as="button"
               {...props}
-              aria-label={getAriaLabel(this.props.content, this.props.icon)}
+              aria-label={getAriaLabel(props.content, props.icon)}
               aria-haspopup="true"
             />
           }
