@@ -7,6 +7,8 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-const MenuExampleUnderlined = () => <Menu defaultActiveIndex={0} items={items} underlined primary />
+const MenuExampleVerticalPointing = () => (
+  <Menu defaultActiveIndex={0} items={items} vertical pointing />
+)
 
-export default MenuExampleUnderlined
+export default MenuExampleVerticalPointing
