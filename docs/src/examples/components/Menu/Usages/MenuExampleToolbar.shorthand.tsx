@@ -81,7 +81,7 @@ const items = [
           content: 'item1',
           icon: {
             name: 'bookmark',
-            variables: { outline: true },
+            outline: true,
           },
         },
         {
@@ -89,7 +89,7 @@ const items = [
           content: 'item2',
           icon: {
             name: 'mark-as-unread',
-            variables: { outline: true },
+            outline: true,
           },
         },
         {
@@ -97,7 +97,7 @@ const items = [
           content: 'item3',
           icon: {
             name: 'translation',
-            variables: { outline: true },
+            outline: true,
           },
         },
         {
@@ -105,7 +105,7 @@ const items = [
           content: 'item3',
           icon: {
             name: 'trash-can',
-            variables: { outline: true },
+            outline: true,
           },
         },
       ],
@@ -115,7 +115,7 @@ const items = [
     key: 'menuButton2',
     icon: {
       name: 'more',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'More options',
@@ -127,7 +127,7 @@ const items = [
           content: 'item1',
           icon: {
             name: 'bookmark',
-            variables: { outline: true },
+            outline: true,
           },
         },
         {
@@ -139,7 +139,7 @@ const items = [
           content: 'item2',
           icon: {
             name: 'mark-as-unread',
-            variables: { outline: true },
+            outline: true,
           },
         },
         {
@@ -147,7 +147,7 @@ const items = [
           content: 'item3',
           icon: {
             name: 'translation',
-            variables: { outline: true },
+            outline: true,
           },
         },
         {
@@ -159,7 +159,7 @@ const items = [
           content: 'item3',
           icon: {
             name: 'trash-can',
-            variables: { outline: true },
+            outline: true,
           },
         },
       ],
