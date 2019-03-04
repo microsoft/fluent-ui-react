@@ -4,10 +4,11 @@ import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 
-import { ThemeProvider, FelaTheme } from 'react-fela'
+import { ThemeProvider, FelaTheme, RendererProvider } from 'react-fela'
 
 import Ref from 'src/components/Ref/Ref'
 import RefFindNode from 'src/components/Ref/RefFindNode'
+import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
 
 import isExportedAtTopLevel from './isExportedAtTopLevel'
 import {
@@ -60,7 +61,7 @@ export default (Component, options: Conformant = {}) => {
   const componentType = typeof Component
 
   const helperComponentNames = [
-    ...[ThemeProvider, FelaTheme, Ref, RefFindNode],
+    ...[ThemeProvider, RendererProvider, ProviderConsumer, FelaTheme, Ref, RefFindNode],
     ...(wrapperComponent ? [wrapperComponent] : []),
   ].map(getDisplayName)
 

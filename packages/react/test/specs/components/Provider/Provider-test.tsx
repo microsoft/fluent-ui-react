@@ -9,7 +9,6 @@ describe('Provider', () => {
     requiredProps: { theme: {}, children: <div>children</div> },
     hasAccessibilityProp: false,
     isStyled: false,
-    nestingLevel: 4, // ProviderConsumer -> FelaTheme -> RendererProvider -> ThemeProvider -> ElementType
   })
 
   test('is exported', () => {
