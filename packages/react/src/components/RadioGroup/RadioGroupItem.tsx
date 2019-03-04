@@ -185,6 +185,6 @@ class RadioGroupItem extends AutoControlledComponent<
   }
 }
 
-RadioGroupItem.create = createShorthandFactory(RadioGroupItem)
+RadioGroupItem.create = createShorthandFactory({ Component: RadioGroupItem, mappedProp: 'label' })
 
 export default RadioGroupItem

@@ -57,6 +57,6 @@ class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>, any> {
   }
 }
 
-MenuDivider.create = createShorthandFactory(MenuDivider, 'color')
+MenuDivider.create = createShorthandFactory({ Component: MenuDivider, mappedProp: 'color' })
 
 export default MenuDivider
