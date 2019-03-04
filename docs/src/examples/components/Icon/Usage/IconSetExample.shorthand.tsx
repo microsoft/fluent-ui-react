@@ -31,7 +31,7 @@ const IconSetExampleShorthand = () => (
           <Grid columns={4} styles={{ textAlign: 'center' }}>
             {Object.keys(theme.icons).map(name => (
               <div key={`${name}-outline`} style={cellStyles}>
-                <Icon name={name} variables={{ outline: true }} />
+                <Icon name={name} outline />
                 <br />
                 <code>{name} outline</code>
               </div>

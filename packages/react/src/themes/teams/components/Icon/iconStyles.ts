@@ -139,19 +139,19 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
     }),
   }),
 
-  outlinePart: ({ variables: v }): ICSSInJSStyle => {
+  outlinePart: ({ props: p }): ICSSInJSStyle => {
     return {
       display: 'none',
 
-      ...(v.outline && {
+      ...(p.outline && {
         display: 'block',
       }),
     }
   },
 
-  filledPart: ({ variables: v }): ICSSInJSStyle => {
+  filledPart: ({ props: p }): ICSSInJSStyle => {
     return {
-      ...(v.outline && {
+      ...(p.outline && {
         display: 'none',
       }),
     }
