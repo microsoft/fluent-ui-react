@@ -18,6 +18,7 @@ import {
 import Icon from '../Icon/Icon'
 import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
+import Text from '../Text/Text'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
@@ -54,6 +55,12 @@ export interface LabelProps
 
   /** A Label can position its image at the start or end of the layout. */
   imagePosition?: 'start' | 'end'
+
+  /** A label can look and feel like a badge. */
+  badge?: boolean
+
+  /** A Label can have an additional section for text. */
+  additionalContent?: string
 }
 
 /**
@@ -74,6 +81,8 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     image: customPropTypes.itemShorthand,
     imagePosition: PropTypes.oneOf(['start', 'end']),
     fluid: PropTypes.bool,
+    badge: PropTypes.bool,
+    additionalContent: PropTypes.string,
   }
 
   static defaultProps = {
@@ -92,7 +101,15 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   }
 
   renderComponent({ accessibility, ElementType, classes, unhandledProps, variables, styles }) {
-    const { children, content, icon, iconPosition, image, imagePosition } = this.props
+    const {
+      children,
+      content,
+      additionalContent,
+      icon,
+      iconPosition,
+      image,
+      imagePosition,
+    } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -120,14 +137,28 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
       },
       overrideProps: this.handleIconOverrides,
     })
+    const additionalContentElement = additionalContent
+      ? Text.create(additionalContent, {
+          defaultProps: {
+            styles: styles.additionalContent,
+            variables: variables.additionalContent,
+          },
+        })
+      : null
 
     const startImage = imagePosition === 'start' && imageElement
     const startIcon = iconPosition === 'start' && iconElement
     const endIcon = iconPosition === 'end' && iconElement
     const endImage = imagePosition === 'end' && imageElement
-
     const hasStartElement = startImage || startIcon
     const hasEndElement = endIcon || endImage
+
+    const main = (
+      <span>
+        {content}
+        {additionalContentElement}
+      </span>
+    )
 
     return (
       <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
@@ -140,7 +171,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
               </>
             )
           }
-          main={content}
+          main={main}
           end={
             hasEndElement && (
               <>

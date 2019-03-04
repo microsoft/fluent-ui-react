@@ -14,6 +14,11 @@ const Variations = () => (
       description="A Label can have different colors."
       examplePath="components/Label/Variations/LabelExampleColor"
     />
+    <ComponentExample
+      title="Badge"
+      description="A Label can have the look of a Badge."
+      examplePath="components/Label/Variations/LabelExampleBadge"
+    />
   </ExampleSection>
 )
 
