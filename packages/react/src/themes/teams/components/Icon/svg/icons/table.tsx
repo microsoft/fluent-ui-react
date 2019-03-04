@@ -5,18 +5,16 @@ import { teamsIconClassNames } from '../teamsIconClassNames'
 
 export default {
   icon: ({ classes }) => (
-    <svg
-      role="presentation"
-      focusable="false"
-      viewBox="8 8 16 16"
-      className={classes.svg}
-      aria-labelledby="icons_insert_table"
-    >
+    <svg role="presentation" focusable="false" viewBox="8 8 16 16" className={classes.svg}>
       <g>
-        <path d="M23 8H9a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1zm-9 10v-4h4v4h-4zm4 1v4h-4v-4h4zm-4-6V9h4v4h-4zM9 9h4v4H9V9zm4 5v4H9v-4h4zm-4 5h4v4H9v-4zm10 4v-4h4v4h-4zm4-5h-4v-4h4v4zm-4-5V9h4v4h-4z" />
-        <g className={cx(teamsIconClassNames.filled, classes.filledPart)}>
-          <path d="M14 19h4v5h-4zM14 8h4v5h-4zM8 14h5v4H8zM19 13h5V9a1 1 0 0 0-1-1h-4v5zM14 14h4v4h-4zM13 19H8v4a1 1 0 0 0 1 1h4v-5zM19 14h5v4h-5zM19 19v5h4a1 1 0 0 0 1-1v-4h-5zM13 13V8H9a1 1 0 0 0-1 1v4h5z" />
-        </g>
+        <path
+          className={cx(teamsIconClassNames.outline, classes.outlinePart)}
+          d="M23,8a1,1,0,0,1,1,1V23a1,1,0,0,1-1,1H9a1,1,0,0,1-1-1V9A1,1,0,0,1,9,8ZM9,19v4h4V19Zm5,0v4h4V19ZM9,14v4h4V14Zm5,0v4h4V14ZM9,9v4h4V9ZM19,19v4h4V19ZM14,9v4h4V9Zm5,5v4h4V14Zm0-5v4h4V9Z"
+        />
+        <path
+          className={cx(teamsIconClassNames.filled, classes.filledPart)}
+          d="M23,8a1,1,0,0,1,1,1v4H19V8ZM13,24H9a1,1,0,0,1-1-1V19h5Zm5,0H14V19h4Zm-5-6H8V14h5Zm5,0H14V14h4Zm6,5a1,1,0,0,1-1,1H19V19h5ZM13,13H8V9A1,1,0,0,1,9,8h4Zm5,0H14V8h4Zm6,5H19V14h5Z"
+        />
       </g>
     </svg>
   ),
