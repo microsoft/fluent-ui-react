@@ -6,7 +6,7 @@ const items = [
     key: 'format',
     icon: {
       name: 'format',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Format Tool',
@@ -15,7 +15,7 @@ const items = [
     key: 'paperclip',
     icon: {
       name: 'paperclip',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Paperclip Tool',
@@ -24,7 +24,7 @@ const items = [
     key: 'emoji',
     icon: {
       name: 'emoji',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Emoji Tool',
@@ -33,7 +33,7 @@ const items = [
     key: 'giphy',
     icon: {
       name: 'giphy',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Giphy tool',
@@ -42,7 +42,7 @@ const items = [
     key: 'sticker',
     icon: {
       name: 'sticker',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Sticker Tool',
@@ -51,7 +51,7 @@ const items = [
     key: 'meetup',
     icon: {
       name: 'video-camera-emphasis',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Meetup Tool',
@@ -60,7 +60,7 @@ const items = [
     key: 'book',
     icon: {
       name: 'book',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Book Tool',
@@ -69,7 +69,7 @@ const items = [
     key: 'menuButton',
     icon: {
       name: 'more',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'More options',
@@ -96,6 +96,7 @@ class MenuExampleToolbarShorthand extends React.Component {
         defaultActiveIndex={0}
         items={items}
         iconOnly
+        primary
         accessibility={toolbarBehavior}
         aria-label="Compose Editor"
       />
