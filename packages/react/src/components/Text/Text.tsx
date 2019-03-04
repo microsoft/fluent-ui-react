@@ -112,6 +112,6 @@ class Text extends UIComponent<ReactProps<TextProps>, any> {
   }
 }
 
-Text.create = createShorthandFactory(Text, 'content')
+Text.create = createShorthandFactory({ Component: Text, mappedProp: 'content' })
 
 export default Text
