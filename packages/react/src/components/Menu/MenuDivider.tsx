@@ -12,6 +12,7 @@ import {
   childrenExist,
   ChildrenComponentProps,
   ContentComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 import { ReactProps } from '../../types'
 
@@ -57,7 +58,12 @@ class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>> {
     const { children, content } = this.props
 
     return (
-      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )
