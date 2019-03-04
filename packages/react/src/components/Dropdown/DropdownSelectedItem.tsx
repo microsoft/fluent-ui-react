@@ -68,7 +68,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
   static displayName = 'DropdownSelectedItem'
   static create: Function
   static slotClassNames: DropdownSelectedItemSlotClassNames
-  static className = 'ui-dropdown__selected-item'
+  static className = 'ui-dropdown__selecteditem'
 
   static propTypes = {
     ...commonPropTypes.createCommon({
