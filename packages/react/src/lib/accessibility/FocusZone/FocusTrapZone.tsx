@@ -16,7 +16,6 @@ import {
 
 import { FocusTrapZoneProps } from './FocusTrapZone.types'
 import getUnhandledProps from '../../getUnhandledProps'
-import getElementType from '../../getElementType'
 import { AutoFocusZone } from 'src/lib/accessibility/FocusZone/AutoFocusZone'
 
 /** FocusTrapZone is used to trap the focus in any html element placed in body
@@ -54,46 +53,42 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
 
   public componentDidMount(): void {
     FocusTrapZone._focusStack.push(this)
-    const { disableFirstFocus = false } = this.props
 
     this.windowElement = getWindow(this._root.current)
     this._previouslyFocusedElementOutsideTrapZone = this._getPreviouslyFocusedElementOutsideTrapZone()
-
-    if (
-      !this._root.current.contains(this._previouslyFocusedElementOutsideTrapZone) &&
-      !disableFirstFocus
-    ) {
-      this._findElementAndFocusAsync()
-    }
 
     this._hideContentFromAccessibilityTree()
     this._subscribeToEvents()
   }
 
   public render(): JSX.Element {
-    const { className, ariaLabelledBy } = this.props
+    const {
+      className,
+      ariaLabelledBy,
+      as,
+      firstFocusableSelector,
+      disableFirstFocus,
+      focusPreviouslyFocusedInnerElement,
+    } = this.props
     const unhandledProps = getUnhandledProps(
       { handledProps: [..._.keys(FocusTrapZone.propTypes)] },
       this.props,
     )
-    // TODO: Remove `as` there after the issue will be resolved:
-    // https://github.com/Microsoft/TypeScript/issues/28768
-    const ElementType = getElementType(
-      { defaultProps: FocusTrapZone.defaultProps },
-      this.props,
-    ) as React.ComponentClass<FocusTrapZoneProps>
 
     return (
-      <ElementType
+      <AutoFocusZone
         {...unhandledProps}
+        as={as}
         className={className}
         ref={this.createRef}
-        aria-labelledby={ariaLabelledBy}
+        ariaLabelledBy={ariaLabelledBy}
+        firstFocusableSelector={firstFocusableSelector}
+        disableFirstFocus={disableFirstFocus}
+        focusPreviouslyFocusedInnerElement={focusPreviouslyFocusedInnerElement}
         onKeyDown={this._onKeyboardHandler}
-        onFocusCapture={this._onFocusCapture}
       >
         {this.props.children}
-      </ElementType>
+      </AutoFocusZone>
     )
   }
 
@@ -161,15 +156,6 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
         )
 
     firstFocusableChild && focusAsync(firstFocusableChild)
-  }
-
-  private _onFocusCapture = (ev: React.FocusEvent<HTMLDivElement>) => {
-    this.props.onFocusCapture && this.props.onFocusCapture(ev)
-    if (ev.target !== ev.currentTarget) {
-      // every time focus changes within the trap zone, remember the focused element so that
-      // it can be restored if focus leaves the pane and returns via keystroke (i.e. via a call to this.focus(true))
-      this._previouslyFocusedElementInTrapZone = ev.target as HTMLElement
-    }
   }
 
   private _onKeyboardHandler = (ev: React.KeyboardEvent<HTMLDivElement>): void => {
