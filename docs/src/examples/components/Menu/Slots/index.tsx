@@ -24,10 +24,7 @@ const Slots = () => (
       description="A menu can have divider between some items."
       examplePath="components/Menu/Slots/MenuExampleDivider"
     />
-    <ComponentExample
-      title="Divider"
-      examplePath="components/Menu/Slots/MenuExampleDividerHorizontal"
-    />
+    <ComponentExample examplePath="components/Menu/Slots/MenuExampleDividerHorizontal" />
   </ExampleSection>
 )
 
