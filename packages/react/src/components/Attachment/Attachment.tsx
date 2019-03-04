@@ -163,6 +163,6 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentStat
   }
 }
 
-Attachment.create = createShorthandFactory(Attachment, 'header')
+Attachment.create = createShorthandFactory({ Component: Attachment, mappedProp: 'header' })
 
 export default Attachment
