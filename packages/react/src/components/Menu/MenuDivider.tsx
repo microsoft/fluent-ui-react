@@ -9,10 +9,18 @@ import {
   UIComponentProps,
   ColorComponentProps,
   commonPropTypes,
+  childrenExist,
+  ChildrenComponentProps,
+  ContentComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 import { ReactProps } from '../../types'
 
-export interface MenuDividerProps extends UIComponentProps, ColorComponentProps {
+export interface MenuDividerProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    ContentComponentProps,
+    ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuDividerBehavior
@@ -27,7 +35,7 @@ export interface MenuDividerProps extends UIComponentProps, ColorComponentProps 
 /**
  * A menu divider visually segments menu items inside menu.
  */
-class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>, any> {
+class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>> {
   static displayName = 'MenuDivider'
 
   static create: Function
@@ -40,19 +48,24 @@ class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>, any> {
   }
 
   static propTypes = {
-    ...commonPropTypes.createCommon({ content: false, children: false, color: true }),
+    ...commonPropTypes.createCommon({ color: true }),
     primary: PropTypes.bool,
     secondary: PropTypes.bool,
     vertical: PropTypes.bool,
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
+    const { children, content } = this.props
+
     return (
       <ElementType
         {...accessibility.attributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
         {...unhandledProps}
         className={classes.root}
-      />
+      >
+        {childrenExist(children) ? children : content}
+      </ElementType>
     )
   }
 }
