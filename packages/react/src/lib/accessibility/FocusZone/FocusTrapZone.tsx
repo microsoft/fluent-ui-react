@@ -17,7 +17,7 @@ import {
 import { FocusTrapZoneProps } from './FocusTrapZone.types'
 import getUnhandledProps from '../../getUnhandledProps'
 import getElementType from '../../getElementType'
-import * as customPropTypes from '../../customPropTypes'
+import { AutoFocusZone } from 'src/lib/accessibility/FocusZone/AutoFocusZone'
 
 /** FocusTrapZone is used to trap the focus in any html element placed in body
  *  and hide other elements outside of Focus Trap Zone from accessibility tree.
@@ -37,14 +37,11 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
     !this.props.isClickableOutsideFocusTrap || !this.props.focusTriggerOnOutsideClick
 
   static propTypes = {
-    as: customPropTypes.as,
-    className: PropTypes.string,
+    ...AutoFocusZone.propTypes,
     elementToFocusOnDismiss: PropTypes.object,
-    ariaLabelledBy: PropTypes.string,
     isClickableOutsideFocusTrap: PropTypes.bool,
     ignoreExternalFocusing: PropTypes.bool,
     forceFocusInsideTrap: PropTypes.bool,
-    firstFocusableSelector: PropTypes.string,
     disableFirstFocus: PropTypes.bool,
     focusPreviouslyFocusedInnerElement: PropTypes.bool,
     focusTriggerOnOutsideClick: PropTypes.bool,

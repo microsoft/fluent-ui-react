@@ -1,17 +1,9 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import * as keyboardKey from 'keyboard-key'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
-import { EventStack } from '../..'
 
-import {
-  getNextElement,
-  getFirstTabbable,
-  getLastTabbable,
-  getWindow,
-  focusAsync,
-} from './focusUtilities'
+import { getNextElement, focusAsync } from './focusUtilities'
 
 import { AutoFocusZoneProps } from './AutoFocusZone.types'
 import getUnhandledProps from '../../getUnhandledProps'
@@ -20,43 +12,27 @@ import * as customPropTypes from '../../customPropTypes'
 
 /** AutoFocusZone is used to focus the first element inside it's children */
 export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
-  private static _focusStack: AutoFocusZone[] = []
   private _root: { current: HTMLElement | null } = { current: null }
   private _previouslyFocusedElementOutsideTrapZone: HTMLElement
   private _previouslyFocusedElementInTrapZone?: HTMLElement
-  private windowElement: Window | null
-
-  private _focusSubscription = EventStack.noSubscription
-  private _clickSubscription = EventStack.noSubscription
 
   private createRef = elem => (this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement)
-  private shouldHandleOutsideClick = () =>
-    !this.props.isClickableOutsideFocusTrap || !this.props.focusTriggerOnOutsideClick
 
   static propTypes = {
     as: customPropTypes.as,
     className: PropTypes.string,
-    elementToFocusOnDismiss: PropTypes.object,
     ariaLabelledBy: PropTypes.string,
-    isClickableOutsideFocusTrap: PropTypes.bool,
-    ignoreExternalFocusing: PropTypes.bool,
-    forceFocusInsideTrap: PropTypes.bool,
     firstFocusableSelector: PropTypes.string,
     disableFirstFocus: PropTypes.bool,
     focusPreviouslyFocusedInnerElement: PropTypes.bool,
-    focusTriggerOnOutsideClick: PropTypes.bool,
   }
 
   static defaultProps: AutoFocusZoneProps = {
     as: 'div',
-    isClickableOutsideFocusTrap: true,
   }
 
   public componentDidMount(): void {
-    AutoFocusZone._focusStack.push(this)
     const { disableFirstFocus = false } = this.props
-
-    this.windowElement = getWindow(this._root.current)
 
     if (
       !this._root.current.contains(this._previouslyFocusedElementOutsideTrapZone) &&
@@ -64,7 +40,6 @@ export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
     ) {
       this._findElementAndFocusAsync()
     }
-    this._subscribeToEvents()
   }
 
   public render(): JSX.Element {
@@ -86,20 +61,11 @@ export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
         className={className}
         ref={this.createRef}
         aria-labelledby={ariaLabelledBy}
-        onKeyDown={this._onKeyboardHandler}
         onFocusCapture={this._onFocusCapture}
       >
         {this.props.children}
       </ElementType>
     )
-  }
-
-  public componentWillUnmount(): void {
-    AutoFocusZone._focusStack = AutoFocusZone._focusStack.filter((value: AutoFocusZone) => {
-      return this !== value
-    })
-
-    this._unsubscribeFromEvents()
   }
 
   private _findElementAndFocusAsync = () => {
@@ -142,104 +108,6 @@ export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
       // every time focus changes within the trap zone, remember the focused element so that
       // it can be restored if focus leaves the pane and returns via keystroke (i.e. via a call to this.focus(true))
       this._previouslyFocusedElementInTrapZone = ev.target as HTMLElement
-    }
-  }
-
-  private _onKeyboardHandler = (ev: React.KeyboardEvent<HTMLDivElement>): void => {
-    this.props.onKeyDown && this.props.onKeyDown(ev)
-
-    if (
-      ev.isDefaultPrevented() ||
-      keyboardKey.getCode(ev) !== keyboardKey.Tab ||
-      !this._root.current
-    ) {
-      return
-    }
-
-    const _firstTabbableChild = getFirstTabbable(
-      this._root.current,
-      this._root.current.firstChild as HTMLElement,
-      true,
-    )
-    const _lastTabbableChild = getLastTabbable(
-      this._root.current,
-      this._root.current.lastChild as HTMLElement,
-      true,
-    )
-
-    if (ev.shiftKey && _firstTabbableChild === ev.target) {
-      focusAsync(_lastTabbableChild)
-      ev.preventDefault()
-      ev.stopPropagation()
-    } else if (!ev.shiftKey && _lastTabbableChild === ev.target) {
-      focusAsync(_firstTabbableChild)
-      ev.preventDefault()
-      ev.stopPropagation()
-    }
-  }
-
-  private _forceFocusInTrap = (ev: Event, triggeredElement: HTMLElement) => {
-    if (
-      AutoFocusZone._focusStack.length &&
-      this === AutoFocusZone._focusStack[AutoFocusZone._focusStack.length - 1]
-    ) {
-      if (!this._root.current.contains(triggeredElement)) {
-        this._findElementAndFocusAsync()
-        ev.preventDefault()
-        ev.stopPropagation()
-      }
-    }
-  }
-
-  private _handleOutsideFocus = (ev: FocusEvent): void => {
-    const focusedElement = document.activeElement as HTMLElement
-    focusedElement && this._forceFocusInTrap(ev, focusedElement)
-  }
-
-  private _handleOutsideClick = (ev: MouseEvent): void => {
-    const clickedElement = ev.target as HTMLElement
-    const { isClickableOutsideFocusTrap, focusTriggerOnOutsideClick } = this.props
-
-    if (!isClickableOutsideFocusTrap) {
-      clickedElement && this._forceFocusInTrap(ev, clickedElement)
-    } else if (!focusTriggerOnOutsideClick) {
-      const isOutsideAutoFocusZone =
-        this._root.current && !this._root.current.contains(clickedElement)
-      const isOutsideTriggerElement =
-        this._previouslyFocusedElementOutsideTrapZone &&
-        !this._previouslyFocusedElementOutsideTrapZone.contains(clickedElement)
-      if (isOutsideAutoFocusZone && isOutsideTriggerElement) {
-        // set it to NULL, so the trigger will not be focused on componentWillUnmount
-        this._previouslyFocusedElementOutsideTrapZone = null
-      }
-    }
-  }
-
-  private _subscribeToEvents = () => {
-    if (this.props.forceFocusInsideTrap) {
-      this._focusSubscription.unsubscribe()
-      this._focusSubscription = EventStack.subscribe('focus', this._handleOutsideFocus, {
-        target: this.windowElement,
-        useCapture: true,
-      })
-    }
-
-    if (this.shouldHandleOutsideClick()) {
-      this._clickSubscription.unsubscribe()
-      this._clickSubscription = EventStack.subscribe('click', this._handleOutsideClick, {
-        target: this.windowElement,
-        useCapture: true,
-      })
-    }
-  }
-
-  private _unsubscribeFromEvents = () => {
-    if (this.props.forceFocusInsideTrap) {
-      this._focusSubscription.unsubscribe()
-    }
-
-    if (this.shouldHandleOutsideClick()) {
-      this._clickSubscription.unsubscribe()
     }
   }
 }
