@@ -7,7 +7,7 @@ import TreeTitle from './TreeTitle'
 import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import {
-  AutoControlledComponent,
+  UIComponent,
   childrenExist,
   customPropTypes,
   createShorthandFactory,
@@ -52,14 +52,12 @@ export interface TreeItemState {
   open?: boolean
 }
 
-class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeItemState> {
+class TreeItem extends UIComponent<ReactProps<TreeItemProps>, TreeItemState> {
   static create: Function
 
   static className = 'ui-tree__item'
 
   static displayName = 'TreeItem'
-
-  static autoControlledProps = ['open']
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -67,9 +65,12 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
     }),
     defaultOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
+    index: PropTypes.number,
+    exclusive: PropTypes.bool,
     open: PropTypes.bool,
     renderItemTitle: PropTypes.func,
     treeItemRtlAttributes: PropTypes.func,
+    onClick: PropTypes.func,
     title: customPropTypes.itemShorthand,
   }
 
@@ -78,19 +79,24 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
     accessibility: defaultBehavior,
   }
 
+  public state = {
+    open: false,
+  }
+
   handleTitleOverrides = predefinedProps => ({
     onClick: (e, titleProps) => {
       e.preventDefault()
-      this.trySetState({
+      this.setState({
         open: !this.state.open,
       })
       _.invoke(predefinedProps, 'onClick', e, titleProps)
+      _.invoke(this.props, 'onClick', e, this.props.index, titleProps)
     },
   })
 
   renderContent() {
     const { items, title, renderItemTitle } = this.props
-    const { open } = this.state
+    const open = this.props.exclusive ? this.props.open : this.state.open
 
     const hasSubtree = !!(items && items.length)
 
@@ -104,7 +110,9 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
           render: renderItemTitle,
           overrideProps: this.handleTitleOverrides,
         })}
-        {hasSubtree && open && <Tree items={items} renderItemTitle={renderItemTitle} />}
+        {hasSubtree && open && (
+          <Tree items={items} renderItemTitle={renderItemTitle} exclusive={this.props.exclusive} />
+        )}
       </>
     )
   }

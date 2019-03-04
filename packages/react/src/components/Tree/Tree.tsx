@@ -50,9 +50,14 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
+    exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
     rtlAttributes: PropTypes.func,
+  }
+
+  state = {
+    selectedIndex: -1,
   }
 
   public static defaultProps = {
@@ -60,13 +65,23 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     accessibility: defaultBehavior,
   }
 
-  renderContent() {
-    const { items, renderItemTitle } = this.props
+  clickHandler = (e, index) => {
+    this.setState({
+      selectedIndex: index,
+    })
+  }
 
-    return _.map(items, item =>
+  renderContent() {
+    const { items, renderItemTitle, exclusive } = this.props
+
+    return _.map(items, (item, index) =>
       TreeItem.create(item, {
         defaultProps: {
+          index,
+          exclusive,
           renderItemTitle,
+          open: index === this.state.selectedIndex,
+          onClick: this.clickHandler,
         },
       }),
     )

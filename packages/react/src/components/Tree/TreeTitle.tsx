@@ -61,11 +61,11 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
 
     return (
       <ElementType
-        className={classes.root}
-        onClick={this.handleClick}
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
         {...unhandledProps}
+        className={classes.root}
+        onClick={this.handleClick}
       >
         {childrenExist(children) ? children : content}
       </ElementType>
