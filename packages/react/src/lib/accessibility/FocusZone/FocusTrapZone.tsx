@@ -21,7 +21,7 @@ import { AutoFocusZone } from 'src/lib/accessibility/FocusZone/AutoFocusZone'
 /** FocusTrapZone is used to trap the focus in any html element placed in body
  *  and hide other elements outside of Focus Trap Zone from accessibility tree.
  *  Pressing tab will circle focus within the inner focusable elements of the FocusTrapZone. */
-export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
+export class FocusTrapZone extends React.Component<FocusTrapZoneProps> {
   private static _focusStack: FocusTrapZone[] = []
   private _root: { current: HTMLElement | null } = { current: null }
   private _previouslyFocusedElementOutsideTrapZone: HTMLElement
@@ -63,8 +63,6 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
 
   public render(): JSX.Element {
     const {
-      className,
-      ariaLabelledBy,
       as,
       firstFocusableSelector,
       disableFirstFocus,
@@ -79,9 +77,7 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
       <AutoFocusZone
         {...unhandledProps}
         as={as}
-        className={className}
         ref={this.createRef}
-        ariaLabelledBy={ariaLabelledBy}
         firstFocusableSelector={firstFocusableSelector}
         disableFirstFocus={disableFirstFocus}
         focusPreviouslyFocusedInnerElement={focusPreviouslyFocusedInnerElement}

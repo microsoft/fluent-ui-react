@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
@@ -9,19 +8,16 @@ import { AutoFocusZoneProps } from './AutoFocusZone.types'
 import getUnhandledProps from '../../getUnhandledProps'
 import getElementType from '../../getElementType'
 import * as customPropTypes from '../../customPropTypes'
+import { callable } from '../../index'
+import Ref from '../../../components/Ref/Ref'
 
 /** AutoFocusZone is used to focus the first element inside it's children */
 export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
-  private _root: { current: HTMLElement | null } = { current: null }
-  private _previouslyFocusedElementOutsideTrapZone: HTMLElement
+  private _root = React.createRef<HTMLElement>()
   private _previouslyFocusedElementInTrapZone?: HTMLElement
-
-  private createRef = elem => (this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement)
 
   static propTypes = {
     as: customPropTypes.as,
-    className: PropTypes.string,
-    ariaLabelledBy: PropTypes.string,
     firstFocusableSelector: PropTypes.string,
     disableFirstFocus: PropTypes.bool,
     focusPreviouslyFocusedInnerElement: PropTypes.bool,
@@ -34,16 +30,12 @@ export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
   public componentDidMount(): void {
     const { disableFirstFocus = false } = this.props
 
-    if (
-      !this._root.current.contains(this._previouslyFocusedElementOutsideTrapZone) &&
-      !disableFirstFocus
-    ) {
+    if (!disableFirstFocus) {
       this._findElementAndFocusAsync()
     }
   }
 
   public render(): JSX.Element {
-    const { className, ariaLabelledBy } = this.props
     const unhandledProps = getUnhandledProps(
       { handledProps: [..._.keys(AutoFocusZone.propTypes)] },
       this.props,
@@ -56,15 +48,11 @@ export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
     ) as React.ComponentClass<AutoFocusZoneProps>
 
     return (
-      <ElementType
-        {...unhandledProps}
-        className={className}
-        ref={this.createRef}
-        aria-labelledby={ariaLabelledBy}
-        onFocusCapture={this._onFocusCapture}
-      >
-        {this.props.children}
-      </ElementType>
+      <Ref innerRef={this._root}>
+        <ElementType {...unhandledProps} onFocusCapture={this._onFocusCapture}>
+          {this.props.children}
+        </ElementType>
+      </Ref>
     )
   }
 
@@ -82,11 +70,7 @@ export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
       return
     }
 
-    const focusSelector =
-      firstFocusableSelector &&
-      (typeof firstFocusableSelector === 'string'
-        ? firstFocusableSelector
-        : firstFocusableSelector())
+    const focusSelector = callable(firstFocusableSelector)()
 
     const firstFocusableChild = focusSelector
       ? (this._root.current.querySelector(`.${focusSelector}`) as HTMLElement)

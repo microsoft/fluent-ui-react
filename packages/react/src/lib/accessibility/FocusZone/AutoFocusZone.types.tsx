@@ -7,16 +7,6 @@ export interface AutoFocusZoneProps extends React.HTMLAttributes<HTMLDivElement>
   as?: React.ReactType
 
   /**
-   * Additional CSS class name(s) to apply.
-   */
-  className?: string
-
-  /**
-   * Sets the aria-labelledby attribute.
-   */
-  ariaLabelledBy?: string
-
-  /**
    * Indicates the selector for first focusable item.  Only applies if focusPreviouslyFocusedInnerElement == false.
    */
   firstFocusableSelector?: string | (() => string)
