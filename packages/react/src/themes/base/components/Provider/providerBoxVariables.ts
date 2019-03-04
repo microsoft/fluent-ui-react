@@ -1,9 +1,9 @@
-export interface ProviderVariables {
+export interface ProviderBoxVariables {
   background: string
   color: string
 }
 
-export default (siteVariables): ProviderVariables => ({
+export default (siteVariables): ProviderBoxVariables => ({
   background: siteVariables.bodyBackground,
   color: siteVariables.bodyColor,
 })

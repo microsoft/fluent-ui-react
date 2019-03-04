@@ -26,6 +26,8 @@ import {
 
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
+import ProviderBox from './ProviderBox'
+import { ReactProps } from '../../types'
 
 export interface ProviderProps {
   theme: ThemeInput
@@ -35,7 +37,7 @@ export interface ProviderProps {
 /**
  * The Provider passes the CSS in JS renderer and theme to your components.
  */
-class Provider extends UIComponent<ProviderProps> {
+class Provider extends UIComponent<ReactProps<ProviderProps>> {
   static className = 'ui-provider'
 
   static displayName = 'Provider'
@@ -45,6 +47,7 @@ class Provider extends UIComponent<ProviderProps> {
       animated: false,
       color: false,
       content: false,
+      styled: false,
     }),
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
@@ -73,7 +76,12 @@ class Provider extends UIComponent<ProviderProps> {
     children: PropTypes.element.isRequired,
   }
 
+  static defaultProps = {
+    as: ProviderBox,
+  }
+
   static Consumer = ProviderConsumer
+  static Box = ProviderBox
 
   staticStylesRendered: boolean = false
 
@@ -165,7 +173,10 @@ class Provider extends UIComponent<ProviderProps> {
 
           const rtlProps: { dir?: 'rtl' | 'ltr' } = {}
           // only add dir attribute for top level provider or when direction changes from parent to child
-          if (!incomingTheme || incomingTheme.rtl !== outgoingTheme.rtl) {
+          if (
+            !incomingTheme ||
+            (incomingTheme.rtl !== outgoingTheme.rtl && _.isBoolean(outgoingTheme.rtl))
+          ) {
             rtlProps.dir = outgoingTheme.rtl ? 'rtl' : 'ltr'
           }
 

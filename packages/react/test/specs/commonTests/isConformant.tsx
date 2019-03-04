@@ -27,6 +27,7 @@ export interface Conformant {
   exportedAtTopLevel?: boolean
   rendersPortal?: boolean
   usesWrapperSlot?: boolean
+  isStyled?: boolean
 }
 
 /**
@@ -48,6 +49,7 @@ export default (Component, options: Conformant = {}) => {
     requiredProps = {},
     rendersPortal = false,
     usesWrapperSlot = false,
+    isStyled = true,
   } = options
   const { throwError } = helpers('isConformant', Component)
 
@@ -278,13 +280,15 @@ export default (Component, options: Conformant = {}) => {
       expect(Array.isArray(Component.handledProps)).toEqual(true)
     })
 
-    test(`has 'styles' as handled prop`, () => {
-      expect(Component.handledProps).toContain('styles')
-    })
+    if (isStyled) {
+      test(`has 'styles' as handled prop`, () => {
+        expect(Component.handledProps).toContain('styles')
+      })
 
-    test(`has 'variables' as handled prop`, () => {
-      expect(Component.handledProps).toContain('variables')
-    })
+      test(`has 'variables' as handled prop`, () => {
+        expect(Component.handledProps).toContain('variables')
+      })
+    }
 
     test('Component.handledProps includes all handled props', () => {
       const computedProps = _.union(
