@@ -3,6 +3,7 @@ import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../lib'
 import Button from '../../../../components/Button/Button'
+import Icon from '../../../../components/Icon/Icon'
 
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -75,6 +76,10 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     flex: '0 0 auto',
     border: '1px solid transparent',
     margin: '-1px', // negative margin should match border width.
+
+    [`& .${Icon.className}`]: {
+      color: v.textColor, // this breaks the color change on hover
+    },
 
     ':hover': {
       borderColor: v.actionColorContrastOverride,
