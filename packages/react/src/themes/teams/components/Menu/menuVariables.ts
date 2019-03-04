@@ -33,6 +33,8 @@ export interface MenuVariables {
   verticalBackgroundColor: string
   verticalItemPadding: string
   verticalBoxShadow: string
+  verticalDividerMargin: string
+  verticalItemBorder: string
 
   dividerHeight: string
   borderWidth: string
@@ -72,6 +74,8 @@ export default (siteVars: any): MenuVariables => {
     verticalBackgroundColor: siteVars.colors.white,
     verticalItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
     verticalBoxShadow: siteVars.shadowLevel3,
+    verticalDividerMargin: `${pxToRem(8)} 0`,
+    verticalItemBorder: `solid ${pxToRem(2)} transparent`,
 
     dividerHeight: pxToRem(1),
     borderWidth: pxToRem(1),

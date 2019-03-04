@@ -31,7 +31,7 @@ const menuDividerStyles: ComponentSlotStylesInput<MenuDividerProps, MenuVariable
         alignSelf: 'stretch',
       }),
       ...(p.vertical && {
-        margin: '8px 0',
+        margin: v.verticalDividerMargin,
       }),
     }
 >>>>>>> Streamlining menu variable names

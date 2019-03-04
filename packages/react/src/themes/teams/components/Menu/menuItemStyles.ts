@@ -92,7 +92,7 @@ const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVaria
         content: '""',
         top: 0,
         right: 0,
-        width: '1px',
+        width: pxToRem(1),
         height: '100%',
         ...(primary ? { background: v.primaryBorderColor } : { background: v.borderColor }),
       },
@@ -179,7 +179,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       }),
 
       ...(vertical && {
-        border: 'solid 2px transparent',
+        border: v.verticalItemBorder,
       }),
 
       ...(pills && {
@@ -274,7 +274,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  root: ({ props, variables: v }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const {
       active,
       iconOnly,
@@ -284,7 +284,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       underlined,
       vertical,
       disabled,
-    } = props
+    } = p
 
     return {
       color: 'inherit',
@@ -403,11 +403,11 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  menu: ({ props: { vertical }, variables: v }) => ({
+  menu: ({ props: p }) => ({
     zIndex: '1000',
     position: 'absolute',
-    top: vertical ? '0' : '100%',
-    left: vertical ? '100%' : '0',
+    top: p.vertical ? '0' : '100%',
+    left: p.vertical ? '100%' : '0',
   }),
 
   indicator: () => ({
