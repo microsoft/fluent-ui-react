@@ -51,7 +51,7 @@ export function createShorthand({
   mappedProp,
   mappedArrayProp,
   valueOrRenderCallback,
-  options: optionsPram,
+  options = CREATE_SHORTHAND_DEFAULT_OPTIONS,
 }: {
   Component: React.ReactType
   mappedProp?: string
@@ -59,7 +59,6 @@ export function createShorthand({
   valueOrRenderCallback?: ShorthandValue | ShorthandRenderCallback
   options?: CreateShorthandOptions
 }): React.ReactElement<Props> | null | undefined {
-  const options = optionsPram || CREATE_SHORTHAND_DEFAULT_OPTIONS
   const valIsRenderFunction =
     typeof valueOrRenderCallback === 'function' && !React.isValidElement(valueOrRenderCallback)
   if (valIsRenderFunction) {
