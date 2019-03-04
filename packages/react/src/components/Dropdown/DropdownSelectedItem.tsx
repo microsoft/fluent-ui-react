@@ -90,10 +90,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
 
   componentDidUpdate(prevProps: DropdownSelectedItemProps) {
     if (!prevProps.active && this.props.active) {
-      this.itemRef.current.setAttribute('tabindex', '0')
       this.itemRef.current.focus()
-    } else if (prevProps.active && !this.props.active) {
-      this.itemRef.current.setAttribute('tabindex', '-1')
     }
   }
 
@@ -124,7 +121,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
     unhandledProps,
     styles,
   }: RenderResultConfig<DropdownSelectedItemProps>) {
-    const { header, icon, image } = this.props
+    const { active, header, icon, image } = this.props
 
     const iconElement = Icon.create(icon, {
       defaultProps: {
@@ -142,7 +139,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
     return (
       <Ref innerRef={this.itemRef}>
         <Label
-          tabIndex={-1}
+          tabIndex={active ? 0 : -1}
           styles={styles.root}
           circular
           onClick={this.handleClick}
