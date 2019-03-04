@@ -1,8 +1,8 @@
 import * as React from 'react'
 import keyboardKey from 'keyboard-key'
 import { Popup, Menu, Ref } from '@stardust-ui/react'
-import { AutoFocusZone } from 'src/lib/accessibility/FocusZone/AutoFocusZone'
 import { focusNearest } from 'docs/src/prototypes/MenuButton/focusUtils'
+import customPopupAutoFocusBehavior from './customPopupAutoFocusBehavior'
 
 const getAriaLabel = (numberOfPersons, emojiType) => {
   if (numberOfPersons === 1) {
@@ -59,21 +59,20 @@ class ReactionPopup extends React.Component<any, any> {
                   this.popup = popupNode
                 }}
               >
-                <AutoFocusZone firstFocusableSelector={'ui-menu__item:first-child'}>
-                  <Menu
-                    items={['Jane Doe', 'John Doe']}
-                    vertical
-                    data-is-focusable={true}
-                    variables={{ borderColor: 'transparent' }}
-                    onKeyDown={this.handleKeyDownOnMenu}
-                  />
-                </AutoFocusZone>
+                <Menu
+                  items={['Jane Doe', 'John Doe']}
+                  vertical
+                  data-is-focusable={true}
+                  variables={{ borderColor: 'transparent' }}
+                  onKeyDown={this.handleKeyDownOnMenu}
+                />
               </Ref>
             ),
           }}
           open={this.state.open}
           onOpenChange={this.handleOpenChange}
           on={'hover'}
+          accessibility={customPopupAutoFocusBehavior}
         />
       </Ref>
     )
