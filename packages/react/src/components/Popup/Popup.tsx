@@ -63,6 +63,9 @@ export interface PopupProps
   /** Initial value for 'open'. */
   defaultOpen?: boolean
 
+  /** Whether the Popup should be rendered inline with the trigger or in the body. */
+  inline?: boolean
+
   /** Delay in ms for the mouse leave event, before the popup will be closed. */
   mouseLeaveDelay?: number
 
@@ -220,6 +223,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     rtl,
     accessibility,
   }: RenderResultConfig<PopupProps>): React.ReactNode {
+    const { inline } = this.props
     const popupContent = this.renderPopupContent(classes.popup, rtl, accessibility)
 
     return (
@@ -229,7 +233,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         {this.state.open &&
           Popup.isBrowserContext &&
           popupContent &&
-          ReactDOM.createPortal(popupContent, document.body)}
+          (inline ? popupContent : ReactDOM.createPortal(popupContent, document.body))}
       </>
     )
   }
