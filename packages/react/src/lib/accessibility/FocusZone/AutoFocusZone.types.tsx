@@ -7,7 +7,7 @@ export interface AutoFocusZoneProps extends React.HTMLAttributes<HTMLDivElement>
   as?: React.ReactType
 
   /**
-   * Indicates the selector for first focusable item.  Only applies if focusPreviouslyFocusedInnerElement == false.
+   * Indicates the selector for first focusable item.
    */
   firstFocusableSelector?: string | (() => string)
 }

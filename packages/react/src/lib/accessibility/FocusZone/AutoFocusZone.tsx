@@ -11,7 +11,7 @@ import * as customPropTypes from '../../customPropTypes'
 import callable from '../../callable'
 import Ref from '../../../components/Ref/Ref'
 
-/** AutoFocusZone is used to focus the first element inside it's children. */
+/** AutoFocusZone is used to focus inner element on mount. */
 export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
   private root = React.createRef<HTMLElement>()
 
