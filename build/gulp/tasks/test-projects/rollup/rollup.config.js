@@ -45,6 +45,7 @@ export default {
           'ArrowUp',
           'ArrowLeft',
           'ArrowRight',
+          'Backspace',
           'End',
           'Enter',
           'Escape',
