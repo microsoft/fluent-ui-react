@@ -16,7 +16,12 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ShorthandRenderFunction, ShorthandValue } from '../../types'
+import {
+  ComponentEventHandler,
+  ReactProps,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../types'
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -25,11 +30,17 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
    */
   accessibility?: Accessibility
 
+  /** Only allow one subtree to be open at a time. */
+  exclusive?: boolean
+
   /** Initial open value. */
   defaultOpen?: boolean
 
   /** Array of props for sub tree. */
   items?: ShorthandValue[]
+
+  /** Callback for toggling the current tree item as open element in the menu. */
+  onOpenChanged?: ComponentEventHandler<TreeItemProps>
 
   /** Whether or not the subtree of the item is in the open state. */
   open?: boolean
@@ -67,10 +78,10 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>, TreeItemState> {
     items: customPropTypes.collectionShorthand,
     index: PropTypes.number,
     exclusive: PropTypes.bool,
+    onOpenChanged: PropTypes.func,
     open: PropTypes.bool,
     renderItemTitle: PropTypes.func,
     treeItemRtlAttributes: PropTypes.func,
-    onClick: PropTypes.func,
     title: customPropTypes.itemShorthand,
   }
 
@@ -89,15 +100,14 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>, TreeItemState> {
       this.setState({
         open: !this.state.open,
       })
+      _.invoke(this.props, 'onOpenChanged', e, this.props)
       _.invoke(predefinedProps, 'onClick', e, titleProps)
-      _.invoke(this.props, 'onClick', e, this.props.index, titleProps)
     },
   })
 
   renderContent() {
     const { items, title, renderItemTitle } = this.props
     const open = this.props.exclusive ? this.props.open : this.state.open
-
     const hasSubtree = !!(items && items.length)
 
     return (

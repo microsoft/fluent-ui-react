@@ -23,6 +23,9 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    */
   accessibility?: Accessibility
 
+  /** Only allow one subtree to be open at a time. */
+  exclusive?: boolean
+
   /** Shorthand array of props for Tree. */
   items: ShorthandValue[]
 
@@ -57,7 +60,7 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
   }
 
   state = {
-    selectedIndex: -1,
+    clickedIndex: -1,
   }
 
   public static defaultProps = {
@@ -65,11 +68,15 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     accessibility: defaultBehavior,
   }
 
-  clickHandler = (e, index) => {
-    this.setState({
-      selectedIndex: index,
-    })
-  }
+  handleTreeItemOverrides = predefinedProps => ({
+    onOpenChanged: (e, treeItemProps) => {
+      const { index } = treeItemProps
+      this.setState({
+        clickedIndex: index,
+      })
+      _.invoke(predefinedProps, 'onOpenChanged', e, treeItemProps)
+    },
+  })
 
   renderContent() {
     const { items, renderItemTitle, exclusive } = this.props
@@ -80,9 +87,9 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
           index,
           exclusive,
           renderItemTitle,
-          open: index === this.state.selectedIndex,
-          onClick: this.clickHandler,
+          open: exclusive ? index === this.state.clickedIndex : false,
         },
+        overrideProps: this.handleTreeItemOverrides,
       }),
     )
   }
