@@ -1,7 +1,6 @@
 import * as React from 'react'
 import keyboardKey from 'keyboard-key'
 import { Popup, Menu, Ref, popupAutoFocusBehavior } from '@stardust-ui/react'
-import { focusNearest } from 'docs/src/prototypes/MenuButton/focusUtils'
 
 const getAriaLabel = (numberOfPersons, emojiType) => {
   if (numberOfPersons === 1) {
@@ -22,8 +21,6 @@ class ReactionPopup extends React.Component<any, any> {
   handleKeyDownOnMenu = (e, props) => {
     if ((e.shiftKey && e.keyCode === keyboardKey.Tab) || e.keyCode === keyboardKey.Tab) {
       this.setState({ open: false })
-      // Imported from the MenuButton prototype
-      focusNearest(this.reactionNode, e.shiftKey ? 'previous' : 'next')
     }
   }
 
