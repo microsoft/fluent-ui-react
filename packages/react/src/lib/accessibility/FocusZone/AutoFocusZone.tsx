@@ -8,17 +8,19 @@ import { AutoFocusZoneProps } from './AutoFocusZone.types'
 import getUnhandledProps from '../../getUnhandledProps'
 import getElementType from '../../getElementType'
 import * as customPropTypes from '../../customPropTypes'
-import { callable } from '../../index'
+import callable from '../../callable'
 import Ref from '../../../components/Ref/Ref'
 
-/** AutoFocusZone is used to focus the first element inside it's children */
+/** AutoFocusZone is used to focus the first element inside it's children. */
 export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
   private root = React.createRef<HTMLElement>()
 
   static propTypes = {
     as: customPropTypes.as,
-    firstFocusableSelector: PropTypes.string,
+    firstFocusableSelector: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   }
+
+  static handledProps = _.keys(AutoFocusZone.propTypes)
 
   public componentDidMount(): void {
     this.findElementAndFocusAsync()
@@ -26,7 +28,7 @@ export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
 
   public render(): JSX.Element {
     const unhandledProps = getUnhandledProps(
-      { handledProps: [..._.keys(AutoFocusZone.propTypes)] },
+      { handledProps: AutoFocusZone.handledProps },
       this.props,
     )
 
