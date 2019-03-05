@@ -13,7 +13,6 @@ import { NavLink } from 'react-router-dom'
 
 import { constants } from 'src/lib'
 import { fontWeightBold } from 'src/themes/teams/siteVariables'
-import { NONAME } from 'dns'
 
 type ComponentMenuItem = { displayName: string; type: string }
 
