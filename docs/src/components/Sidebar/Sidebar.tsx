@@ -179,7 +179,7 @@ class Sidebar extends React.Component<any, any> {
     const navBarStyles: ICSSInJSStyle = {
       color: '#ffffff80',
       padding: '0px',
-      background: '#201f1f',
+      backgroundColor: '#201f1f',
     }
 
     const logoStyles: ICSSInJSStyle = {
