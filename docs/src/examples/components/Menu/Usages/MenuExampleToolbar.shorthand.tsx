@@ -87,6 +87,7 @@ const items = [
         {
           key: 'divider',
           kind: 'divider',
+          isInSubMenu: true,
         },
         {
           key: '6',
@@ -107,6 +108,7 @@ const items = [
         {
           key: 'divider2',
           kind: 'divider',
+          isInSubMenu: true,
         },
         {
           key: '8',
