@@ -24,6 +24,7 @@ export { default as radioGroupBehavior } from './Behaviors/Radio/radioGroupBehav
 export { default as radioGroupItemBehavior } from './Behaviors/Radio/radioGroupItemBehavior'
 export { default as popupBehavior } from './Behaviors/Popup/popupBehavior'
 export { default as popupFocusTrapBehavior } from './Behaviors/Popup/popupFocusTrapBehavior'
+export { default as popupAutoFocusBehavior } from './Behaviors/Popup/popupAutoFocusBehavior'
 export { default as chatBehavior } from './Behaviors/Chat/chatBehavior'
 export { default as chatMessageBehavior } from './Behaviors/Chat/chatMessageBehavior'
 export { default as gridBehavior } from './Behaviors/Grid/gridBehavior'
