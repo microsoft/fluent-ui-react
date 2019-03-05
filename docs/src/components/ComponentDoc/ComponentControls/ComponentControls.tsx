@@ -1,4 +1,10 @@
-import { Menu, toolbarBehavior, toolbarButtonBehavior } from '@stardust-ui/react'
+import {
+  Menu,
+  Provider,
+  ThemeInput,
+  toolbarBehavior,
+  toolbarButtonBehavior,
+} from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
@@ -25,6 +31,27 @@ type ComponentControlsProps = {
   showVariables: boolean
 }
 
+const controlsTheme: ThemeInput = {
+  componentStyles: {
+    MenuItem: {
+      root: {
+        padding: '0.25rem',
+      },
+      wrapper: {
+        display: 'inline-table',
+        ':last-child': {
+          margin: 0,
+        },
+      },
+    },
+    Text: {
+      root: {
+        whiteSpace: 'nowrap',
+      },
+    },
+  },
+}
+
 const ComponentControls: React.FC<ComponentControlsProps> = props => {
   const {
     anchorName,
@@ -40,90 +67,96 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
     onShowRtl,
     onShowTransparent,
     onShowVariables,
+    ...rest
   } = props
 
   return (
-    <Menu
-      fluid
-      color="green"
-      icon="labeled"
-      size="tiny"
-      pills
-      accessibility={toolbarBehavior}
-      items={[
-        {
-          key: 'show-code',
-          content: <ComponentButton iconName="code" label="Try it" active={showCode} />,
-          onClick: onShowCode,
-          accessibility: toolbarButtonBehavior,
-        },
-        {
-          key: 'show-codesandbox',
-          content: (
-            <ComponentControlsCodeSandbox
-              exampleCode={exampleCode}
-              exampleLanguage={exampleLanguage}
-              exampleName={examplePath}
-            />
-          ),
-          accessibility: toolbarButtonBehavior,
-        },
-        {
-          key: 'show-variables',
-          content: (
-            <ComponentButton iconName="paint brush" label="Theme it" active={showVariables} />
-          ),
-          onClick: onShowVariables,
-          accessibility: toolbarButtonBehavior,
-        },
-        {
-          key: 'show-transparent',
-          content: (
-            <ComponentButton iconName="adjust" label="Transparent" active={showTransparent} />
-          ),
-          onClick: onShowTransparent,
-          accessibility: toolbarButtonBehavior,
-        },
-        {
-          key: 'show-rtl',
-          content: <ComponentButton iconName="align right" label="RTL" active={showRtl} />,
-          onClick: onShowRtl,
-          accessibility: toolbarButtonBehavior,
-        },
-        {
-          key: 'maximize',
-          content: <ComponentButton iconName="external alternate" label="Popout" active={false} />,
-          as: NavLink,
-          to: `/maximize/${_.kebabCase(
-            examplePath
-              .split('/')
-              .slice(-1)
-              .pop(),
-          )}/${showRtl}`,
-          target: '_blank',
-          rel: 'noopener noreferrer',
-          accessibility: toolbarButtonBehavior,
-        },
-        {
-          key: 'copy-link',
-          content: (
-            <CopyToClipboard
-              render={(active, onClick) => (
-                <ComponentButton
-                  iconName="linkify"
-                  label={active ? 'Copied!' : 'Permalink'}
-                  active={active}
-                  onClick={onClick}
-                />
-              )}
-              value={anchorName}
-            />
-          ),
-          onClick: onCopyLink,
-          accessibility: toolbarButtonBehavior,
-        },
-      ]}
-    />
+    <Provider theme={controlsTheme}>
+      <Menu
+        {...rest}
+        fluid
+        color="green"
+        icon="labeled"
+        size="tiny"
+        pills
+        accessibility={toolbarBehavior}
+        items={[
+          {
+            key: 'show-code',
+            content: <ComponentButton iconName="code" label="Try it" active={showCode} />,
+            onClick: onShowCode,
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'show-codesandbox',
+            content: (
+              <ComponentControlsCodeSandbox
+                exampleCode={exampleCode}
+                exampleLanguage={exampleLanguage}
+                exampleName={examplePath}
+              />
+            ),
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'show-variables',
+            content: (
+              <ComponentButton iconName="paint brush" label="Theme it" active={showVariables} />
+            ),
+            onClick: onShowVariables,
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'show-transparent',
+            content: (
+              <ComponentButton iconName="adjust" label="Transparent" active={showTransparent} />
+            ),
+            onClick: onShowTransparent,
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'show-rtl',
+            content: <ComponentButton iconName="align right" label="RTL" active={showRtl} />,
+            onClick: onShowRtl,
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'maximize',
+            content: (
+              <ComponentButton iconName="external alternate" label="Popout" active={false} />
+            ),
+            as: NavLink,
+            to: `/maximize/${_.kebabCase(
+              examplePath
+                .split('/')
+                .slice(-1)
+                .pop(),
+            )}/${showRtl}`,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'copy-link',
+            content: (
+              <CopyToClipboard
+                render={(active, onClick) => (
+                  <ComponentButton
+                    iconName="linkify"
+                    label={active ? 'Copied!' : 'Permalink'}
+                    active={active}
+                    onClick={onClick}
+                  />
+                )}
+                value={anchorName}
+              />
+            ),
+            onClick: onCopyLink,
+            accessibility: toolbarButtonBehavior,
+          },
+        ]}
+      />
+    </Provider>
   )
 }
 

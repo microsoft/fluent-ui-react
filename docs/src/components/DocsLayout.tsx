@@ -1,14 +1,13 @@
+import { Provider, themes } from '@stardust-ui/react'
 import AnchorJS from 'anchor-js'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router'
-import { Route } from 'react-router-dom'
 
+import { Route } from 'react-router-dom'
 import Sidebar from 'docs/src/components/Sidebar/Sidebar'
-import style from 'docs/src/Style'
 import { scrollToAnchor } from 'docs/src/utils'
 import { getUnhandledProps, mergeThemes } from 'src/lib'
-import { Provider, themes } from '@stardust-ui/react'
 
 const anchors = new AnchorJS({
   icon: '#',
@@ -59,12 +58,11 @@ class DocsLayout extends React.Component<any, any> {
   }
 
   renderChildren = props => {
-    const { component: Children, render, sidebar } = this.props
-    const mainStyle = sidebar ? style.sidebarMain : style.main
+    const { component: Children, render } = this.props
 
     if (render) return render()
     return (
-      <div style={style.container}>
+      <>
         <Provider
           theme={mergeThemes(themes.teamsDark, {
             // adjust Teams' theme to Semantic UI's font size scheme
@@ -79,12 +77,12 @@ class DocsLayout extends React.Component<any, any> {
             },
           })}
         >
-          <Sidebar style={style.menu} />
+          <Sidebar />
         </Provider>
-        <div style={mainStyle} role="main">
+        <div role="main" style={{ display: 'flex', flex: '1 0 auto', paddingLeft: 250 }}>
           <Children {...props} />
         </div>
-      </div>
+      </>
     )
   }
 
