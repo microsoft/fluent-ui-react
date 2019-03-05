@@ -81,6 +81,6 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
   }
 }
 
-Status.create = createShorthandFactory(Status, 'state')
+Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' })
 
 export default Status

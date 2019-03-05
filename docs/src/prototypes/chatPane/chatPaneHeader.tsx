@@ -93,13 +93,14 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
           <Icon
             key={`${index}-${name}`}
             name={name}
+            outline
             tabIndex={0}
             styles={{
               fontWeight: 100,
               margin: 'auto',
               ...(!index && { margin: 'auto 1.6rem auto auto' }),
             }}
-            variables={siteVars => ({ color: siteVars.gray04, outline: true })}
+            variables={siteVars => ({ color: siteVars.gray04 })}
           />
         ))}
       </div>

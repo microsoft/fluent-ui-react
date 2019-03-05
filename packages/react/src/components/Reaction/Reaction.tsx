@@ -99,7 +99,7 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>> {
   }
 }
 
-Reaction.create = createShorthandFactory(Reaction, 'content')
+Reaction.create = createShorthandFactory({ Component: Reaction, mappedProp: 'content' })
 Reaction.slotClassNames = {
   icon: `${Reaction.className}__icon`,
   content: `${Reaction.className}__content`,

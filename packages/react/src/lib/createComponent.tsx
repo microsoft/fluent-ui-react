@@ -53,7 +53,10 @@ const createComponent = <P extends ObjectOf<any> = any>({
     })
   }
 
-  StardustComponent.create = createShorthandFactory(mergedDefaultProps.as, shorthandPropName)
+  StardustComponent.create = createShorthandFactory({
+    Component: mergedDefaultProps.as,
+    mappedProp: shorthandPropName,
+  })
 
   StardustComponent.displayName = displayName
 
