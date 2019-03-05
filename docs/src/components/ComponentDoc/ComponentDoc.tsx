@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router'
-import { Flex, Header, Icon, Dropdown, Text, themes } from '@stardust-ui/react'
+import { Flex, Header, Icon, Dropdown, Text, themes, Grid, Ref } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
@@ -90,7 +90,7 @@ class ComponentDoc extends React.Component<any, any> {
     const { activePath } = this.state
 
     return (
-      <div style={{ paddingLeft: '20px' }}>
+      <div style={{ padding: '20px' }}>
         <Flex column>
           <Flex.Item padding="padding.medium">
             <ThemeContext.Consumer>
@@ -137,27 +137,28 @@ class ComponentDoc extends React.Component<any, any> {
             </>
           </Flex.Item>
         </Flex>
-        <Flex styles={{ width: '75%' }} column>
-          <Flex.Item>
-            <div ref={this.handleExamplesRef}>
-              <ExampleContext.Provider
-                value={{
-                  activeAnchorName: activePath,
-                  onExamplePassed: this.handleExamplePassed,
-                }}
-              >
-                <ComponentExamples displayName={info.displayName} />
-              </ExampleContext.Provider>
-            </div>
-          </Flex.Item>
+        <Grid columns="auto 300px">
+          <Flex column>
+            <Flex.Item>
+              <Ref innerRef={this.handleExamplesRef}>
+                <ExampleContext.Provider
+                  value={{
+                    activeAnchorName: activePath,
+                    onExamplePassed: this.handleExamplePassed,
+                  }}
+                >
+                  <ComponentExamples displayName={info.displayName} />
+                </ExampleContext.Provider>
+              </Ref>
+            </Flex.Item>
 
-          <Flex.Item>
-            <div style={exampleEndStyle}>
-              This is the bottom <Icon name="pointing down" />
-            </div>
-          </Flex.Item>
+            <Flex.Item>
+              <div style={exampleEndStyle}>
+                This is the bottom <Icon name="pointing down" />
+              </div>
+            </Flex.Item>
 
-          {/* TODO: bring back the right floating menu
+            {/* TODO: bring back the right floating menu
             <Box styles={{ width: '25%', paddingLeft: '14px' }}>
               <ComponentSidebar
                 activePath={activePath}
@@ -167,7 +168,8 @@ class ComponentDoc extends React.Component<any, any> {
               />
             </Box>
           */}
-        </Flex>
+          </Flex>
+        </Grid>
       </div>
     )
   }

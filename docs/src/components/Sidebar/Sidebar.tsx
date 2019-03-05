@@ -128,12 +128,32 @@ class Sidebar extends React.Component<any, any> {
       width: '250px',
       position: 'fixed',
       overflowY: 'scroll',
-      top: '0px',
-      bottom: '0px',
-      paddingLeft: '0em',
-      paddingRight: '0em',
-      paddingTop: '0em',
-      paddingBottom: '0em',
+      top: 0,
+      left: 0,
+      padding: 0,
+      maxHeight: '100vh',
+
+      '::-webkit-scrollbar': {
+        '-webkit-appearance': 'none',
+        height: '10px',
+        width: '10px',
+      },
+      '::-webkit-scrollbar-track': {
+        background: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: 0,
+      },
+      '::-webkit-scrollbar-thumb': {
+        cursor: 'pointer',
+        borderRadius: '5px',
+        background: 'rgba(255, 255, 255, 0.25)',
+        transition: 'color 0.2s ease',
+      },
+      '::-webkit-scrollbar-thumb:window-inactive': {
+        background: 'rgba(255, 255, 255, 0.15)',
+      },
+      '::-webkit-scrollbar-thumb:hover': {
+        background: 'rgba(255, 255, 255, 0.35)',
+      },
     }
 
     const menuSectionStyles: ICSSInJSStyle = {
@@ -449,25 +469,20 @@ class Sidebar extends React.Component<any, any> {
 
     // TODO: bring back the active elements indicators
     return (
-      <Segment
-        styles={sidebarStyles}
-        content={
-          <>
-            <Segment styles={menuSectionStyles}>
-              <Logo width="32px" styles={logoStyles} />
-              <Text
-                role="heading"
-                aria-level="1"
-                color="white"
-                content="Stardust UI React &nbsp;"
-                styles={logoStyles}
-              />
-              <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
-            </Segment>
-            <Menu vertical fluid pills styles={navBarStyles} items={allItems} />
-          </>
-        }
-      />
+      <Segment styles={sidebarStyles}>
+        <Segment styles={menuSectionStyles}>
+          <Logo width="32px" styles={logoStyles} />
+          <Text
+            role="heading"
+            aria-level="1"
+            color="white"
+            content="Stardust UI React &nbsp;"
+            styles={logoStyles}
+          />
+          <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
+        </Segment>
+        <Menu vertical fluid pills styles={navBarStyles} items={allItems} />
+      </Segment>
     )
   }
 }
