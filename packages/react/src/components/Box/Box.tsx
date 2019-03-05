@@ -44,6 +44,6 @@ const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<Box
   },
 })
 
-Box.create = createShorthandFactory(Box)
+Box.create = createShorthandFactory({ Component: Box })
 
 export default Box

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
+import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
@@ -169,6 +170,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   private static isBrowserContext = isBrowser()
 
   private outsideClickSubscription = EventStack.noSubscription
+  private outsideKeySubscription = EventStack.noSubscription
 
   private triggerDomElement = null
   // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
@@ -193,7 +195,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   }
 
   public componentDidMount() {
-    this.updateOutsideClickSubscription()
+    this.updateOutsideHandleSubscription()
 
     if (!this.state.open) {
       this.popupDomElement = null
@@ -201,7 +203,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   }
 
   public componentDidUpdate() {
-    this.updateOutsideClickSubscription()
+    this.updateOutsideHandleSubscription()
 
     if (!this.state.open) {
       this.popupDomElement = null
@@ -210,6 +212,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
   public componentWillUnmount() {
     this.outsideClickSubscription.unsubscribe()
+    this.outsideKeySubscription.unsubscribe()
   }
 
   public renderComponent({
@@ -231,18 +234,28 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     )
   }
 
-  private updateOutsideClickSubscription() {
+  private updateOutsideHandleSubscription() {
     if (this.state.open && this.outsideClickSubscription.isEmpty) {
       setTimeout(() => {
         this.outsideClickSubscription = EventStack.subscribe(
           'click',
           e => {
-            const isOutsidePopupElement =
-              this.popupDomElement && !this.popupDomElement.contains(e.target)
-            const isOutsideTriggerElement =
-              this.triggerDomElement && !this.triggerDomElement.contains(e.target)
+            if (this.isOutsidePopupElementAndOutsideTriggerElement(e)) {
+              this.state.open && this.trySetOpen(false, e)
+            }
+          },
+          {
+            useCapture: true,
+          },
+        )
+        this.outsideKeySubscription = EventStack.subscribe(
+          'keydown',
+          e => {
+            const keyCode = keyboardKey.getCode(e)
 
-            if (isOutsidePopupElement && isOutsideTriggerElement) {
+            const matchingKey = keyCode === keyboardKey.Enter || keyboardKey.Spacebar
+
+            if (matchingKey && this.isOutsidePopupElementAndOutsideTriggerElement(e)) {
               this.state.open && this.trySetOpen(false, e)
             }
           },
@@ -253,7 +266,15 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       })
     } else {
       this.outsideClickSubscription.unsubscribe()
+      this.outsideKeySubscription.unsubscribe()
     }
+  }
+
+  private isOutsidePopupElementAndOutsideTriggerElement(e) {
+    const isOutsidePopupElement = this.popupDomElement && !this.popupDomElement.contains(e.target)
+    const isOutsideTriggerElement =
+      this.triggerDomElement && !this.triggerDomElement.contains(e.target)
+    return isOutsidePopupElement && isOutsideTriggerElement
   }
 
   private getTriggerProps(triggerElement) {

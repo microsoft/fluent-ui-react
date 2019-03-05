@@ -85,6 +85,6 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
   }
 }
 
-DropdownItem.create = createShorthandFactory(DropdownItem, 'header')
+DropdownItem.create = createShorthandFactory({ Component: DropdownItem, mappedProp: 'header' })
 
 export default DropdownItem

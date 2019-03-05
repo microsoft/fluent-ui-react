@@ -11,11 +11,7 @@ const steps: ScreenerSteps = [
     steps
       .click(selectors.triggerButton)
       .click(selectors.item(3))
-      .snapshot('Selects an item'),
-  steps =>
-    steps
-      .click(selectors.triggerButton)
-      .click(selectors.item(3))
+      .snapshot('Selects an item')
       .click(selectors.clearIndicator)
       .snapshot('Clears the value'),
 ]

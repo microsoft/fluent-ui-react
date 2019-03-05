@@ -8,7 +8,7 @@ import {
   Alignment,
 } from 'src/components/Popup/positioningHelper'
 import Popup, { PopupEvents } from 'src/components/Popup/Popup'
-import { mountWithProvider } from '../../../utils'
+import { domEvent, mountWithProvider } from '../../../utils'
 import * as keyboardKey from 'keyboard-key'
 import { ReactWrapper } from 'enzyme'
 
@@ -65,7 +65,8 @@ describe('Popup', () => {
     // check popup open on key press
     const popupTriggerElement = popup.find(`#${triggerId}`)
     popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToOpen })
-    expect(getPopupContent(popup).length).toBe(1)
+
+    expect(getPopupContent(popup).exists()).toBe(true)
 
     // when popup open, check that stopPropagation is called when keyboard events are invoked
     const stopPropagation = jest.fn()
@@ -75,7 +76,7 @@ describe('Popup', () => {
 
     // check popup closes on Esc
     popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToClose })
-    expect(getPopupContent(popup).length).toBe(0)
+    expect(getPopupContent(popup).exists()).toBe(false)
   }
 
   describe('handles Popup position correctly in ltr', () => {
@@ -202,6 +203,48 @@ describe('Popup', () => {
         keyboardKeyToOpen: keyboardKey.Spacebar,
         keyboardKeyToClose: keyboardKey.Escape,
       })
+    })
+    test(`close previous popup with Enter key`, () => {
+      jest.useFakeTimers()
+
+      const attachTo = document.createElement('div')
+      document.body.appendChild(attachTo)
+
+      const triggerId2 = 'triggerElement2'
+      const contentId2 = 'contentId2'
+      const wrapper = mountWithProvider(
+        <React.Fragment>
+          <Popup
+            trigger={<span id={triggerId}>text to trigger popup</span>}
+            content={<span id={contentId} />}
+            on="click"
+          />
+          <Popup
+            trigger={<span id={triggerId2}>text to trigger popup</span>}
+            content={<span id={contentId2} />}
+            on="click"
+          />
+        </React.Fragment>,
+        { attachTo },
+      )
+
+      expect(wrapper.find(`#${contentId}`).exists()).toBe(false)
+      expect(wrapper.find(`#${contentId2}`).exists()).toBe(false)
+
+      domEvent.keyDown(`#${triggerId}`, { keyCode: keyboardKey.Enter })
+      wrapper.update() // as event comes outside enzyme, we should trigger update
+      jest.runAllTimers() // we use setTimeout in `updateOutsideHandleSubscription()`
+
+      expect(wrapper.find(`#${contentId}`).exists()).toBe(true)
+      expect(wrapper.find(`#${contentId2}`).exists()).toBe(false)
+
+      domEvent.keyDown(`#${triggerId2}`, { keyCode: keyboardKey.Enter })
+      wrapper.update()
+
+      expect(wrapper.find(`#${contentId}`).exists()).toBe(false)
+      expect(wrapper.find(`#${contentId2}`).exists()).toBe(true)
+
+      document.body.removeChild(attachTo)
     })
   })
 })
