@@ -134,12 +134,14 @@ class Sidebar extends React.Component<any, any> {
       paddingRight: '0em',
       paddingTop: '0em',
       paddingBottom: '0em',
+      background: '#201f1f',
     }
 
     const menuSectionStyles: ICSSInJSStyle = {
       fontWeight: fontWeightBold,
       margin: '0 0 .5rem',
       padding: '0 1.2857rem',
+      background: '#201f1f',
       color: 'white',
       ':hover': {
         background: 'none',
@@ -157,6 +159,7 @@ class Sidebar extends React.Component<any, any> {
       fontSize: '0.85714286em',
       fontWeight: 400,
       color: '#ffffff80',
+      background: '#201f1f',
       ':hover': {
         color: 'white',
         backgroundColor: 'none',
@@ -170,11 +173,13 @@ class Sidebar extends React.Component<any, any> {
     const dividerStyles: ICSSInJSStyle = {
       marginTop: '.5em',
       paddingBottom: '.5em',
+      background: '#201f1f',
     }
 
     const navBarStyles: ICSSInJSStyle = {
       color: '#ffffff80',
       padding: '0px',
+      backgroundColor: '#201f1f',
     }
 
     const logoStyles: ICSSInJSStyle = {

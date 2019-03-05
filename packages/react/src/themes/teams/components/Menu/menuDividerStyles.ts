@@ -19,6 +19,10 @@ const menuDividerStyles: ComponentSlotStylesInput<MenuDividerProps, MenuVariable
           ...(!p.vertical && {
             alignSelf: 'stretch',
           }),
+          ...(p.vertical &&
+            p.inSubmenu && {
+              margin: '8px 0',
+            }),
         }
   },
 }

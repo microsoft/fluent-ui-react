@@ -17,7 +17,7 @@ const underlinedItem = (color: string): ICSSInJSStyle => ({
 })
 
 const getActionStyles = ({
-  props: { primary, underlined, iconOnly, isFromKeyboard },
+  props: { primary, underlined, iconOnly },
   variables: v,
   color,
 }: {
@@ -48,8 +48,8 @@ const getFocusedStyles = ({
   variables: MenuVariables
   color: string
 }): ICSSInJSStyle => {
-  const { primary, underlined, isFromKeyboard, active } = props
-  if (active && !underlined) return {}
+  const { primary, underlined, isFromKeyboard, active, vertical, pointing } = props
+  if (active && !underlined && !vertical) return {}
   return {
     ...(underlined && !isFromKeyboard
       ? {
@@ -62,8 +62,17 @@ const getFocusedStyles = ({
         }
       : {
           color,
-          background: v.focusedBackgroundColor,
+          background: v.hoverBackgroundColor,
         }),
+
+    ...(vertical && isFromKeyboard && !pointing && !primary
+      ? {
+          border: v.focusedBorder,
+          outline: v.focusedOutline,
+          margin: pxToRem(1),
+          background: v.focusedBackgroundColor,
+        }
+      : {}),
   }
 }
 
@@ -71,19 +80,20 @@ const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVaria
   props,
   variables: v,
 }): ICSSInJSStyle => {
-  const { iconOnly, pointing, pills, primary, underlined, vertical } = props
+  const { iconOnly, pills, primary, underlined, vertical } = props
 
   return (
+    !vertical &&
     !pills &&
     !underlined &&
-    !(pointing && vertical) &&
     !iconOnly && {
       '::before': {
         position: 'absolute',
         content: '""',
         top: 0,
         right: 0,
-        ...(vertical ? { width: '100%', height: '1px' } : { width: '1px', height: '100%' }),
+        width: pxToRem(1),
+        height: '100%',
         ...(primary ? { background: v.primaryBorderColor } : { background: v.borderColor }),
       },
     }
@@ -168,6 +178,10 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         background: 'salmon',
       }),
 
+      ...(vertical && {
+        border: v.verticalItemBorder,
+      }),
+
       ...(pills && {
         ...(vertical
           ? { margin: `0 0 ${verticalPillsBottomMargin} 0` }
@@ -240,8 +254,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           !(pointing && vertical) &&
           !underlined && {
             ...(vertical && {
-              borderTopRightRadius: pxToRem(3),
-              borderTopLeftRadius: pxToRem(3),
               '::before': {
                 display: 'none',
               },
@@ -249,18 +261,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             ...(!vertical && {
               borderBottomLeftRadius: pxToRem(3),
               borderTopLeftRadius: pxToRem(3),
-            }),
-          }),
-      },
-
-      ':last-child': {
-        ...(!pills &&
-          !iconOnly &&
-          !(pointing && vertical) &&
-          !underlined && {
-            ...(vertical && {
-              borderBottomRightRadius: pxToRem(3),
-              borderBottomLeftRadius: pxToRem(3),
             }),
           }),
       },
@@ -274,7 +274,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  root: ({ props, variables: v, theme }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const {
       active,
       iconOnly,
@@ -284,7 +284,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       underlined,
       vertical,
       disabled,
-    } = props
+    } = p
 
     return {
       color: 'inherit',
@@ -304,6 +304,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         ? { padding: `${pxToRem(4)} 0` }
         : pointing && vertical
         ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
+        : vertical
+        ? { padding: v.verticalItemPadding }
         : {
             padding: v.horizontalPadding,
           }),
@@ -401,11 +403,11 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  menu: ({ props: { vertical } }) => ({
+  menu: ({ props: p }) => ({
     zIndex: '1000',
     position: 'absolute',
-    top: vertical ? '0' : '100%',
-    left: vertical ? '100%' : '0',
+    top: p.vertical ? '0' : '100%',
+    left: p.vertical ? '100%' : '0',
   }),
 
   indicator: () => ({
