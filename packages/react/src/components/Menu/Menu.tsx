@@ -166,6 +166,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
             vertical,
             variables,
             styles: styles.divider,
+            inSubmenu: submenu,
           },
         })
       }
