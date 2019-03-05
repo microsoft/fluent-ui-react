@@ -1,4 +1,4 @@
-import { Divider, Dropdown, DropdownProps, Header, Loader, Segment } from '@stardust-ui/react'
+import { Dropdown, DropdownProps, Flex, Label, Loader } from '@stardust-ui/react'
 import * as faker from 'faker'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -54,12 +54,13 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
 
   fetchItems = () => {
     clearTimeout(this.searchTimer)
-    this.setState({ loading: true })
+    if (this.state.items.length > 10) return
 
+    this.setState({ loading: true })
     this.searchTimer = setTimeout(() => {
       this.setState(prevState => ({
         loading: false,
-        items: [...prevState.items, ..._.times<Entry>(10, createEntry)],
+        items: [...prevState.items, ..._.times<Entry>(2, createEntry)],
       }))
     }, 2000)
   }
@@ -68,13 +69,8 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
     const { items, loading, searchQuery, value } = this.state
 
     return (
-      <div style={{ margin: 20 }}>
-        <Segment>
-          <Header content="Async Dropdown Search" />
-          <p>Use the field to perform a simulated search.</p>
-        </Segment>
-
-        <Segment>
+      <Flex gap="gap.medium">
+        <Flex.Item size="size.quarter">
           <Dropdown
             fluid
             items={items}
@@ -90,11 +86,16 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
             searchQuery={searchQuery}
             toggleIndicator={false}
             value={value}
+            noResultsMessage="We couldn't find any matches"
           />
-          <Divider />
-          <CodeSnippet mode="json" value={this.state} />
-        </Segment>
-      </div>
+        </Flex.Item>
+        <Flex.Item grow>
+          <div>
+            <Label color="black">Dropdown State</Label>
+            <CodeSnippet mode="json" value={this.state} />
+          </div>
+        </Flex.Item>
+      </Flex>
     )
   }
 }

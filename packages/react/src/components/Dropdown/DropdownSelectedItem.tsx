@@ -72,6 +72,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
 
   static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       children: false,
     }),
     active: PropTypes.bool,
@@ -157,6 +158,9 @@ DropdownSelectedItem.slotClassNames = {
   removeIcon: `${DropdownSelectedItem.className}__remove-icon`,
 }
 
-DropdownSelectedItem.create = createShorthandFactory(DropdownSelectedItem, 'header')
+DropdownSelectedItem.create = createShorthandFactory({
+  Component: DropdownSelectedItem,
+  mappedProp: 'header',
+})
 
 export default DropdownSelectedItem

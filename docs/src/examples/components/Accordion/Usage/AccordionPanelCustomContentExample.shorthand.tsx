@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Accordion, Button } from '@stardust-ui/react'
+import { Accordion, Button, Flex } from '@stardust-ui/react'
 
 class AccordionPanelCustomContentExample extends React.Component {
   render() {
@@ -9,10 +9,10 @@ class AccordionPanelCustomContentExample extends React.Component {
         content: {
           key: 'animals',
           content: (
-            <div>
+            <Flex gap="gap.smaller">
               <Button primary>Add pet</Button>
               <Button>Remove pet</Button>
-            </div>
+            </Flex>
           ),
         },
       },

@@ -22,6 +22,6 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-const MenuExampleVertical = () => <Menu defaultActiveIndex={0} items={items} vertical />
+const MenuExampleVertical = () => <Menu defaultActiveIndex={0} items={items} vertical primary />
 
 export default MenuExampleVertical

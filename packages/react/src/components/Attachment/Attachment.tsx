@@ -75,7 +75,6 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentStat
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: PropTypes.func,
     action: customPropTypes.itemShorthand,
     actionable: PropTypes.bool,
     description: customPropTypes.itemShorthand,
@@ -164,6 +163,6 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentStat
   }
 }
 
-Attachment.create = createShorthandFactory(Attachment, 'header')
+Attachment.create = createShorthandFactory({ Component: Attachment, mappedProp: 'header' })
 
 export default Attachment

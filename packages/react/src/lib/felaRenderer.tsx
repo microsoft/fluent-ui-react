@@ -7,6 +7,13 @@ import rtl from 'fela-plugin-rtl'
 
 import { Renderer } from '../themes/types'
 
+// Blacklist contains a list of classNames that are used by FontAwesome
+// https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use
+const blacklistedClassNames = ['fa', 'fas', 'far', 'fal', 'fab']
+
+const filterClassName = (className: string): boolean =>
+  className.indexOf('ad') === -1 && blacklistedClassNames.indexOf(className) === -1
+
 const createRendererConfig = (options: any = {}) => ({
   devMode: process.env.NODE_ENV !== 'production',
   plugins: [
@@ -24,12 +31,16 @@ const createRendererConfig = (options: any = {}) => ({
     felaPluginFallbackValue(),
     ...(options.isRtl ? [rtl()] : []),
   ],
+  filterClassName,
   enhancers: [],
   ...(options.isRtl ? { selectorPrefix: 'rtl_' } : {}),
   ...(options.rendererId ? { rendererId: options.rendererId } : {}),
 })
 
-export const felaRenderer: Renderer = createRenderer(createRendererConfig())
+// TODO: { rendererId: 'default' } is a temporary workaround for https://github.com/stardust-ui/react/issues/948#issuecomment-466404630
+export const felaRenderer: Renderer = createRenderer(
+  createRendererConfig({ rendererId: 'default' }),
+)
 export const felaRtlRenderer: Renderer = createRenderer(
   createRendererConfig({ isRtl: true, rendererId: 'rtl' }),
 )

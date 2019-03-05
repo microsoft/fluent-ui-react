@@ -19,6 +19,7 @@ import Icon from '../Icon/Icon'
 import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
 import {
   ComplexColorPropType,
@@ -30,6 +31,10 @@ export interface LabelProps
     ChildrenComponentProps,
     ContentComponentProps,
     ColorComponentProps<ComplexColorPropType<ColorValuesWithPrimitiveColors>> {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
   accessibility?: Accessibility
 
   /** A Label can be circular. */
@@ -72,6 +77,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   }
 
   static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'span',
     imagePosition: 'start',
     iconPosition: 'end',
@@ -85,13 +91,14 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, variables, styles }) {
+  renderComponent({ accessibility, ElementType, classes, unhandledProps, variables, styles }) {
     const { children, content, icon, iconPosition, image, imagePosition } = this.props
 
     if (childrenExist(children)) {
       return (
         <ElementType
           {...rtlTextContainer.getAttributes({ forElements: [children] })}
+          {...accessibility.attributes.root}
           {...unhandledProps}
           className={classes.root}
         >
@@ -123,7 +130,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     const hasEndElement = endIcon || endImage
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
         <Layout
           start={
             hasStartElement && (
@@ -149,6 +156,6 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   }
 }
 
-Label.create = createShorthandFactory(Label, 'content')
+Label.create = createShorthandFactory({ Component: Label, mappedProp: 'content' })
 
 export default Label

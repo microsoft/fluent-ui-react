@@ -1,10 +1,13 @@
 require('ts-node').register()
 
+const chalk = require('chalk')
 const _ = require('lodash')
 const glob = require('glob')
+const minimatch = require('minimatch')
 const path = require('path')
 const fs = require('fs')
 const tsPaths = require('tsconfig-paths')
+const Keys = require('screener-runner/src/keys')
 const Steps = require('screener-runner/src/steps')
 
 const { default: config } = require('./config')
@@ -16,6 +19,17 @@ tsPaths.register({
 })
 
 const SCREENER_HOST_URL = `${config.server_host}:${config.server_port}`
+
+const examplePaths = glob.sync('docs/src/examples/**/*.tsx', {
+  ignore: ['**/index.tsx', '**/*.knobs.tsx'],
+})
+const pathFilter = process.env.SCREENER_FILTER
+const filteredPaths = minimatch.match(examplePaths, pathFilter || '*', { matchBase: true })
+
+if (pathFilter) {
+  console.log(chalk.bgGreen.black(' --filter '), pathFilter)
+  filteredPaths.forEach(filteredPath => console.log(`${_.repeat(' ', 10)} ${filteredPath}`))
+}
 
 // https://github.com/screener-io/screener-runner
 const screenerConfig = {
@@ -41,38 +55,40 @@ const screenerConfig = {
   },
 
   // screenshot every example in maximized mode
-  states: glob
-    .sync('docs/src/examples/**/*.tsx', { ignore: ['**/index.tsx', '**/*.knobs.tsx'] })
-    .reduce((states, examplePath) => {
-      const {
-        name: exampleNameWithoutExtension,
-        base: exampleNameWithExtension,
-        dir: exampleDir,
-      } = path.parse(examplePath)
+  states: filteredPaths.reduce((states, examplePath) => {
+    const {
+      name: exampleNameWithoutExtension,
+      base: exampleNameWithExtension,
+      dir: exampleDir,
+    } = path.parse(examplePath)
 
-      const rtl = exampleNameWithExtension.endsWith('.rtl.tsx')
-      const exampleUrl = _.kebabCase(exampleNameWithoutExtension)
+    const rtl = exampleNameWithExtension.endsWith('.rtl.tsx')
+    const exampleUrl = _.kebabCase(exampleNameWithoutExtension)
 
-      states.push({
-        url: `http://${SCREENER_HOST_URL}/maximize/${exampleUrl}/${rtl}`,
-        name: exampleNameWithExtension,
+    states.push({
+      url: `http://${SCREENER_HOST_URL}/maximize/${exampleUrl}/${rtl}`,
+      name: exampleNameWithExtension,
 
-        // https://www.npmjs.com/package/screener-runner#testing-interactions
-        steps: getSteps(exampleDir, exampleNameWithoutExtension),
-      })
+      // https://www.npmjs.com/package/screener-runner#testing-interactions
+      steps: getSteps(exampleDir, exampleNameWithoutExtension),
+    })
 
-      return states
-    }, []),
+    return states
+  }, []),
 }
 
 function getSteps(dir, nameWithoutExtension) {
   const stepsSpecModulePath = `${dir}/${nameWithoutExtension}.steps.ts`
 
-  return fs.existsSync(stepsSpecModulePath)
-    ? require(`./${dir}/${nameWithoutExtension}.steps`)
-        .default.reduce((stepsAcc, steps) => steps(stepsAcc), new Steps())
-        .end()
-    : undefined
+  if (fs.existsSync(stepsSpecModulePath)) {
+    const stepsDefinition = require(`./${dir}/${nameWithoutExtension}.steps`).default
+
+    return stepsDefinition
+      .reduce((stepsAcc, steps) => {
+        return steps(stepsAcc, Keys).executeScript(`window.resetExternalLayout()`)
+      }, new Steps())
+      .end()
+  }
 }
 
 if (process.env.CI) {

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Provider, Grid, Divider, Header, Icon, Menu, Segment } from '@stardust-ui/react'
+import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 import themeWithProcessedIcons from 'src/themes/teams/withProcessedIcons'
 import { TeamsProcessedSvgIconSpec } from 'src/themes/teams/components/Icon/svg/types'
 
@@ -13,9 +14,20 @@ const renderStardustIconName = (icon, isOutline = false) => {
   const maybeExportedAs = (icon as any).exportedAs
   return (
     maybeExportedAs && (
-      <code style={{ color: 'red' }}>
-        => {maybeExportedAs} {isOutline && 'outline'}
-      </code>
+      <>
+        <code style={{ color: 'red' }}>
+          => {maybeExportedAs} {isOutline && 'outline'}
+        </code>
+        <br />
+        <CopyToClipboard
+          render={(active, onClick) => (
+            <button onClick={onClick} style={{ fontSize: 10 }} title="Copy usage">
+              {active ? '✔' : 'Copy'}
+            </button>
+          )}
+          value={`<Icon name="${maybeExportedAs}" ${isOutline ? 'outline' : ''} />`}
+        />
+      </>
     )
   )
 }
@@ -53,8 +65,8 @@ class IconViewerExample extends React.Component<any, {}> {
           <Menu tabular styles={{ margin: '15px 0' }}>
             {Object.keys(this.iconFilters).map(filterName => (
               <Menu.Item
+                content={filterName}
                 key={filterName}
-                name={filterName}
                 active={this.state.filter === filterName}
                 onClick={() => this.setState({ filter: filterName })}
               />
@@ -94,7 +106,7 @@ class IconViewerExample extends React.Component<any, {}> {
                         .sort()
                         .map(name => (
                           <div key={`${name}-outline`} style={cellStyles}>
-                            <Icon name={name} variables={{ outline: true }} />
+                            <Icon name={name} outline />
                             <br />
                             <code>{name.replace(processedIconsNamePrefix, '')} outline</code>
                             <br />

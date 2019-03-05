@@ -106,7 +106,6 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     text: PropTypes.bool,
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
-    accessibility: PropTypes.func,
   }
 
   public static defaultProps = {
@@ -181,6 +180,6 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
   }
 }
 
-Button.create = createShorthandFactory(Button, 'content')
+Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
 
 export default Button

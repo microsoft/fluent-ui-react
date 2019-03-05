@@ -1,5 +1,6 @@
 import { TeamsSvgIconSpec } from '../types'
 
+import accept from './accept'
 import add from './add'
 import addParticipant from './addParticipant'
 import arrowUp from './arrowUp'
@@ -17,9 +18,12 @@ import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
 import chat from './chat'
+import chevronDown from './chevronDown'
 import close from './close'
 import codeSnippet from './codeSnippet'
+import download from './download'
 import edit from './edit'
+import email from './email'
 import emoji from './emoji'
 import error from './error'
 import filesWord from './filesWord'
@@ -55,7 +59,10 @@ import redo from './redo'
 import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
+import search from './search'
 import send from './send'
+import settings from './settings'
+import star from './star'
 import sticker from './sticker'
 import strike from './strike'
 import table from './table'
@@ -69,9 +76,11 @@ import triangleDown from './triangleDown'
 import triangleRight from './triangleRight'
 import underline from './underline'
 import undo from './undo'
+import urgent from './urgent'
 import videoCameraEmphasis from './videoCameraEmphasis'
 
 export default {
+  accept,
   add,
   'arrow-up': arrowUp,
   'arrow-down': arrowDown,
@@ -88,9 +97,12 @@ export default {
   'call-recording': callRecording,
   'canvas-add-page': canvasAddPage,
   chat,
+  'chevron-down': chevronDown,
   close,
   'code-snippet': codeSnippet,
+  download,
   edit,
+  email,
   emoji,
   error,
   word: filesWord,
@@ -127,7 +139,10 @@ export default {
   'remove-format': removeFormat,
   reply,
   retry,
+  search,
   send,
+  settings,
+  star,
   sticker,
   strike,
   table,
@@ -141,5 +156,6 @@ export default {
   'team-create': teamCreate,
   underline,
   undo,
+  urgent,
   'video-camera-emphasis': videoCameraEmphasis,
 } as { [iconName: string]: TeamsSvgIconSpec }

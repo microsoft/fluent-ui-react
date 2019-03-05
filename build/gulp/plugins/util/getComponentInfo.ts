@@ -4,7 +4,7 @@ import * as fs from 'fs'
 import parseDefaultValue from './parseDefaultValue'
 import parseDocblock from './parseDocblock'
 import parseType from './parseType'
-import * as reactDocgenTypescript from 'react-docgen-typescript'
+import * as docgen from './docgen'
 
 interface BehaviorInfo {
   name: string
@@ -24,8 +24,7 @@ const getComponentInfo = (filepath: string) => {
   // "element" for "src/elements/Button/Button.js"
   const componentType = path.basename(path.dirname(dir)).replace(/s$/, '')
 
-  // start with react-docgen-typescript info
-  const components = reactDocgenTypescript.withDefaultConfig().parse(absPath)
+  const components = docgen.withDefaultConfig().parse(absPath)
 
   if (!components.length) {
     throw new Error(`Could not find a component definition in "${filepath}".`)
@@ -39,9 +38,6 @@ const getComponentInfo = (filepath: string) => {
     )
   }
   const info: any = components[0]
-
-  // remove keys we don't use
-  delete info.methods
 
   // add exported Component info
   const Component = require(absPath).default

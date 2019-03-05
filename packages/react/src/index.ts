@@ -152,6 +152,9 @@ export { default as Tree } from './components/Tree'
 
 export { default as Indicator, IndicatorProps } from './components/Indicator/Indicator'
 
+export { default as Reaction, ReactionProps } from './components/Reaction/Reaction'
+export { default as ReactionGroup, ReactionGroupProps } from './components/Reaction/ReactionGroup'
+
 //
 // Accessibility
 //
@@ -201,7 +204,23 @@ export {
   ContentComponentProps,
   SizeValue,
 } from './lib'
-export { ShorthandRenderer } from './types'
+export { ShorthandValue, ShorthandRenderer } from './types'
 
-import { getFirstTabbable, getLastTabbable } from './lib/accessibility/FocusZone/focusUtilities'
-export const focusZoneUtilities = { getFirstTabbable, getLastTabbable }
+//
+// FocusZone
+//
+import {
+  getFirstTabbable,
+  getLastTabbable,
+  getNextElement,
+  getPreviousElement,
+  focusAsync,
+} from './lib/accessibility/FocusZone/focusUtilities'
+export const FocusZoneUtilities = {
+  getFirstTabbable,
+  getLastTabbable,
+  getNextElement,
+  getPreviousElement,
+  focusAsync,
+}
+export { FocusZoneDirection, FocusZoneProps } from './lib/accessibility/FocusZone/FocusZone.types'

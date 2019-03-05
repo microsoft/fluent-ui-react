@@ -199,13 +199,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     })
   }
 
-  handleShowRtlClick = e => {
+  handleShowRtlClick = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     this.setState(prevState => ({ showRtl: !prevState.showRtl }))
   }
 
-  handleShowCodeClick = e => {
+  handleShowCodeClick = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     const { showCode } = this.state
@@ -213,7 +213,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.setState({ showCode: !showCode }, this.updateHash)
   }
 
-  handleShowVariablesClick = e => {
+  handleShowVariablesClick = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     const { showVariables } = this.state
@@ -221,7 +221,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.setState({ showVariables: !showVariables }, this.updateHash)
   }
 
-  handleShowTransparentClick = e => {
+  handleShowTransparentClick = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     const { showTransparent } = this.state
@@ -369,11 +369,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       {
         active: currentCodeLanguage === 'js',
         content: 'JavaScript',
+        key: 'js',
         onClick: this.handleCodeLanguageChange('js'),
       },
       {
         active: currentCodeLanguage === 'ts',
         content: 'TypeScript',
+        key: 'ts',
         onClick: this.handleCodeLanguageChange('ts'),
       },
     ]
@@ -433,12 +435,14 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         icon: canCodeBeFormatted ? 'magic' : 'check', // (error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')
         // active: !!error,
         content: 'Prettier',
+        key: 'prettier',
         onClick: handleCodeFormat,
         disabled: !canCodeBeFormatted,
       },
       {
         icon: 'refresh',
         content: 'Reset',
+        key: 'reset',
         onClick: this.resetSourceCode,
         disabled: !wasCodeChanged,
       },
@@ -446,6 +450,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         active: copiedCode, // to show the color
         icon: copiedCode ? { color: 'green', name: 'check' } : 'copy',
         content: 'Copy',
+        key: 'copy',
         onClick: this.copySourceCode,
       },
       {
@@ -648,7 +653,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                     showRtl={showRtl}
                     showTransparent={showTransparent}
                     showVariables={showVariables}
-                    visible
                   />
                 </div>
               </div>

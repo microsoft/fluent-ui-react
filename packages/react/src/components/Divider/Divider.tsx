@@ -12,6 +12,8 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps } from '../../types'
 
 export interface DividerProps
@@ -19,6 +21,12 @@ export interface DividerProps
     ChildrenComponentProps,
     ColorComponentProps,
     ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** A divider can be fitted, without any space above or below it.  */
   fitted?: boolean
 
@@ -47,15 +55,17 @@ class Divider extends UIComponent<ReactProps<DividerProps>, any> {
   }
 
   static defaultProps = {
+    accessibility: defaultBehavior,
     size: 0,
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  renderComponent({ accessibility, ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
 
     return (
       <ElementType
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...accessibility.attributes.root}
         {...unhandledProps}
         className={classes.root}
       >
@@ -65,7 +75,7 @@ class Divider extends UIComponent<ReactProps<DividerProps>, any> {
   }
 }
 
-Divider.create = createShorthandFactory(Divider, 'content')
+Divider.create = createShorthandFactory({ Component: Divider, mappedProp: 'content' })
 
 export default Divider
 

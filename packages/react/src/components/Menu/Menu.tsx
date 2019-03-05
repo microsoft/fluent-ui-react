@@ -94,7 +94,6 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: PropTypes.func,
     activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     fluid: PropTypes.bool,
@@ -206,6 +205,6 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   }
 }
 
-Menu.create = createShorthandFactory(Menu, 'items')
+Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items' })
 
 export default Menu

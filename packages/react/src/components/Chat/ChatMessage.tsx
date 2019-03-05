@@ -25,6 +25,7 @@ import Box from '../Box/Box'
 import Label from '../Label/Label'
 import Menu from '../Menu/Menu'
 import Text from '../Text/Text'
+import Reaction from '../Reaction/Reaction'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string
@@ -32,6 +33,7 @@ export interface ChatMessageSlotClassNames {
   timestamp: string
   badge: string
   content: string
+  reactionGroup: string
 }
 
 export interface ChatMessageProps
@@ -75,6 +77,12 @@ export interface ChatMessageProps
    * @param {object} data - All props.
    */
   onFocus?: ComponentEventHandler<ChatMessageProps>
+
+  /** Reaction group applied to the message. */
+  reactionGroup?: ShorthandValue
+
+  /** A message can format the reactions group to appear at the start or the end of the message. */
+  reactionGroupPosition?: 'start' | 'end'
 }
 
 export interface ChatMessageState {
@@ -96,7 +104,6 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
 
   static propTypes = {
     ...commonPropTypes.createCommon({ content: 'shorthand' }),
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     actionMenu: customPropTypes.itemShorthand,
     author: customPropTypes.itemShorthand,
     badge: customPropTypes.itemShorthand,
@@ -105,12 +112,15 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     timestamp: customPropTypes.itemShorthand,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
+    reactionGroup: customPropTypes.itemShorthand,
+    reactionGroupPosition: PropTypes.oneOf(['start', 'end']),
   }
 
   static defaultProps = {
     accessibility: chatMessageBehavior,
     as: 'div',
     badgePosition: 'end',
+    reactionGroupPosition: 'start',
   }
 
   public state = {
@@ -151,13 +161,30 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     unhandledProps,
     styles,
   }: RenderResultConfig<ChatMessageProps>) {
-    const { actionMenu, author, badge, badgePosition, children, content, timestamp } = this.props
+    const {
+      actionMenu,
+      author,
+      badge,
+      badgePosition,
+      children,
+      content,
+      timestamp,
+      reactionGroup,
+      reactionGroupPosition,
+    } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
     const badgeElement = Label.create(badge, {
       defaultProps: {
         className: ChatMessage.slotClassNames.badge,
         styles: styles.badge,
+      },
+    })
+
+    const reactionGroupElement = Reaction.Group.create(reactionGroup, {
+      defaultProps: {
+        className: ChatMessage.slotClassNames.reactionGroup,
+        styles: styles.reactionGroup,
       },
     })
 
@@ -185,6 +212,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
             })}
 
             {badgePosition === 'start' && badgeElement}
+
             {Text.create(author, {
               defaultProps: {
                 size: 'small',
@@ -201,12 +229,17 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
               },
             })}
 
+            {reactionGroupPosition === 'start' && reactionGroupElement}
+
             {Box.create(content, {
               defaultProps: {
                 className: ChatMessage.slotClassNames.content,
                 styles: styles.content,
               },
             })}
+
+            {reactionGroupPosition === 'end' && reactionGroupElement}
+
             {badgePosition === 'end' && badgeElement}
           </>
         )}
@@ -215,13 +248,14 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   }
 }
 
-ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
+ChatMessage.create = createShorthandFactory({ Component: ChatMessage, mappedProp: 'content' })
 ChatMessage.slotClassNames = {
   actionMenu: `${ChatMessage.className}__actions`,
   author: `${ChatMessage.className}__author`,
   timestamp: `${ChatMessage.className}__timestamp`,
   badge: `${ChatMessage.className}__badge`,
   content: `${ChatMessage.className}__content`,
+  reactionGroup: `${ChatMessage.className}__reactions`,
 }
 
 export default ChatMessage
