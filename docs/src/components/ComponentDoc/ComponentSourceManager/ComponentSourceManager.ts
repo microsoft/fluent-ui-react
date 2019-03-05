@@ -33,10 +33,8 @@ export type ComponentSourceManagerState = {
 
   componentAPIs: ComponentSourceManagerAPIs
   currentCode?: string
-  formattedCode?: string
   originalCode?: string
 
-  canCodeBeFormatted: boolean
   wasCodeChanged: boolean
 }
 
@@ -63,7 +61,6 @@ export default class ComponentSourceManager extends React.Component<
       currentCodePath: '',
 
       componentAPIs,
-      canCodeBeFormatted: false,
       wasCodeChanged: false,
     }
   }
@@ -81,20 +78,11 @@ export default class ComponentSourceManager extends React.Component<
     const currentCode = typeof storedCode === 'string' ? storedCode : originalCode
     const currentCodePath = examplePath + componentAPIs[currentCodeAPI].fileSuffix
 
-    const prettierParser = currentCodeLanguage === 'ts' ? 'typescript' : 'babylon'
-    let formattedCode
-
-    try {
-      formattedCode = formatCode(currentCode, prettierParser)
-    } catch (e) {}
-
     return {
       currentCode,
       currentCodePath,
-      formattedCode,
       originalCode,
 
-      canCodeBeFormatted: !!formattedCode ? currentCode !== formattedCode : false,
       wasCodeChanged: originalCode !== currentCode,
     }
   }
@@ -111,7 +99,12 @@ export default class ComponentSourceManager extends React.Component<
   }
 
   handleCodeFormat = (): void => {
-    this.setState(prevState => ({ currentCode: prevState.formattedCode }))
+    const { currentCode, currentCodeLanguage } = this.state
+    const prettierParser = currentCodeLanguage === 'ts' ? 'typescript' : 'babylon'
+
+    try {
+      this.setState({ currentCode: formatCode(currentCode, prettierParser) })
+    } catch (e) {}
   }
 
   handleCodeReset = (): void => {

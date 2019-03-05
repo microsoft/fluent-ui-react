@@ -31,6 +31,7 @@ import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
 import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import CodeSnippet from '../../CodeSnippet'
+import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 
 export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
@@ -50,7 +51,6 @@ interface ComponentExampleState {
   showRtl: boolean
   showTransparent: boolean
   showVariables: boolean
-  copiedCode: boolean
 }
 
 const childrenStyle: React.CSSProperties = {
@@ -82,7 +82,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showRtl: examplePath && examplePath.endsWith('rtl') ? true : false,
       showTransparent: false,
       showVariables: false,
-      copiedCode: false,
     }
   }
 
@@ -176,13 +175,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const { title } = this.props
 
     if (title) this.props.onExamplePassed(this.anchorName)
-  }
-
-  copySourceCode = () => {
-    copyToClipboard(this.props.currentCode)
-
-    this.setState({ copiedCode: true })
-    setTimeout(() => this.setState({ copiedCode: false }), 1000)
   }
 
   resetSourceCode = () => {
@@ -336,13 +328,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   renderCodeEditorMenu = (): JSX.Element => {
     const {
+      currentCode,
       currentCodeLanguage,
       currentCodePath,
-      canCodeBeFormatted,
       handleCodeFormat,
       wasCodeChanged,
     } = this.props
-    const { copiedCode } = this.state
 
     const codeEditorStyle: ICSSInJSStyle = {
       position: 'relative',
@@ -375,12 +366,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     const menuItems = [
       {
-        icon: canCodeBeFormatted ? 'magic' : 'check', // (error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')
+        icon: wasCodeChanged ? 'magic' : 'check', // (error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')
         // active: !!error,
         content: 'Prettier',
         key: 'prettier',
         onClick: handleCodeFormat,
-        disabled: !canCodeBeFormatted,
+        disabled: !wasCodeChanged,
       },
       {
         icon: 'refresh',
@@ -389,13 +380,21 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         onClick: this.resetSourceCode,
         disabled: !wasCodeChanged,
       },
-      {
-        active: copiedCode, // to show the color
-        icon: copiedCode ? { color: 'green', name: 'check' } : 'copy',
-        content: 'Copy',
-        key: 'copy',
-        onClick: this.copySourceCode,
-      },
+      render =>
+        render({ content: 'Copy' }, (Component, props) => (
+          <CopyToClipboard
+            key="copy"
+            render={(active, onClick) => (
+              <Component
+                {...props}
+                active={active}
+                icon={active ? 'check' : 'copy'}
+                onClick={onClick}
+              />
+            )}
+            value={currentCode}
+          />
+        )),
       {
         disabled: currentCodeLanguage !== 'ts',
         icon: 'github',
@@ -403,6 +402,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         href: ghEditHref,
         rel: 'noopener noreferrer',
         target: '_blank',
+        title: currentCodeLanguage !== 'ts' ? 'You can edit source only in TypeScript' : undefined,
         key: 'withtslanguage',
       },
     ]
