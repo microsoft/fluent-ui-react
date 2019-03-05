@@ -30,7 +30,7 @@ export interface MenuDividerProps
   vertical?: boolean
   primary?: boolean
   secondary?: boolean
-  isInSubMenu?: boolean
+  inSubmenu?: boolean
 }
 
 /**
@@ -53,7 +53,7 @@ class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>> {
     primary: PropTypes.bool,
     secondary: PropTypes.bool,
     vertical: PropTypes.bool,
-    isInSubMenu: PropTypes.bool,
+    inSubmenu: PropTypes.bool,
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
