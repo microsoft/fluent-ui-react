@@ -16,12 +16,13 @@ import {
 
 import { FocusTrapZoneProps } from './FocusTrapZone.types'
 import getUnhandledProps from '../../getUnhandledProps'
-import { AutoFocusZone } from 'src/lib/accessibility/FocusZone/AutoFocusZone'
+import getElementType from '../../getElementType'
+import * as customPropTypes from '../../customPropTypes'
 
 /** FocusTrapZone is used to trap the focus in any html element placed in body
  *  and hide other elements outside of Focus Trap Zone from accessibility tree.
  *  Pressing tab will circle focus within the inner focusable elements of the FocusTrapZone. */
-export class FocusTrapZone extends React.Component<FocusTrapZoneProps> {
+export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   private static _focusStack: FocusTrapZone[] = []
   private _root: { current: HTMLElement | null } = { current: null }
   private _previouslyFocusedElementOutsideTrapZone: HTMLElement
@@ -36,11 +37,14 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps> {
     !this.props.isClickableOutsideFocusTrap || !this.props.focusTriggerOnOutsideClick
 
   static propTypes = {
-    ...AutoFocusZone.propTypes,
+    as: customPropTypes.as,
+    className: PropTypes.string,
     elementToFocusOnDismiss: PropTypes.object,
+    ariaLabelledBy: PropTypes.string,
     isClickableOutsideFocusTrap: PropTypes.bool,
     ignoreExternalFocusing: PropTypes.bool,
     forceFocusInsideTrap: PropTypes.bool,
+    firstFocusableSelector: PropTypes.string,
     disableFirstFocus: PropTypes.bool,
     focusPreviouslyFocusedInnerElement: PropTypes.bool,
     focusTriggerOnOutsideClick: PropTypes.bool,
@@ -53,38 +57,46 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps> {
 
   public componentDidMount(): void {
     FocusTrapZone._focusStack.push(this)
+    const { disableFirstFocus = false } = this.props
 
     this.windowElement = getWindow(this._root.current)
     this._previouslyFocusedElementOutsideTrapZone = this._getPreviouslyFocusedElementOutsideTrapZone()
+
+    if (
+      !this._root.current.contains(this._previouslyFocusedElementOutsideTrapZone) &&
+      !disableFirstFocus
+    ) {
+      this._findElementAndFocusAsync()
+    }
 
     this._hideContentFromAccessibilityTree()
     this._subscribeToEvents()
   }
 
   public render(): JSX.Element {
-    const {
-      as,
-      firstFocusableSelector,
-      disableFirstFocus,
-      focusPreviouslyFocusedInnerElement,
-    } = this.props
+    const { className, ariaLabelledBy } = this.props
     const unhandledProps = getUnhandledProps(
       { handledProps: [..._.keys(FocusTrapZone.propTypes)] },
       this.props,
     )
+    // TODO: Remove `as` there after the issue will be resolved:
+    // https://github.com/Microsoft/TypeScript/issues/28768
+    const ElementType = getElementType(
+      { defaultProps: FocusTrapZone.defaultProps },
+      this.props,
+    ) as React.ComponentClass<FocusTrapZoneProps>
 
     return (
-      <AutoFocusZone
+      <ElementType
         {...unhandledProps}
-        as={as}
+        className={className}
         ref={this.createRef}
-        firstFocusableSelector={firstFocusableSelector}
-        disableFirstFocus={disableFirstFocus}
-        focusPreviouslyFocusedInnerElement={focusPreviouslyFocusedInnerElement}
+        aria-labelledby={ariaLabelledBy}
         onKeyDown={this._onKeyboardHandler}
+        onFocusCapture={this._onFocusCapture}
       >
         {this.props.children}
-      </AutoFocusZone>
+      </ElementType>
     )
   }
 
@@ -152,6 +164,15 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps> {
         )
 
     firstFocusableChild && focusAsync(firstFocusableChild)
+  }
+
+  private _onFocusCapture = (ev: React.FocusEvent<HTMLDivElement>) => {
+    this.props.onFocusCapture && this.props.onFocusCapture(ev)
+    if (ev.target !== ev.currentTarget) {
+      // every time focus changes within the trap zone, remember the focused element so that
+      // it can be restored if focus leaves the pane and returns via keystroke (i.e. via a call to this.focus(true))
+      this._previouslyFocusedElementInTrapZone = ev.target as HTMLElement
+    }
   }
 
   private _onKeyboardHandler = (ev: React.KeyboardEvent<HTMLDivElement>): void => {
@@ -275,19 +296,13 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps> {
       )
     }
 
-    for (let index = 0; index < bodyChildren.length; index++) {
-      const currentChild = bodyChildren[index] as HTMLElement
-      const isOrHasFocusTrapZone =
-        currentChild === this._root.current || currentChild.contains(this._root.current)
-      const isAriaLiveRegion = currentChild.hasAttribute('aria-live')
+    // loop through all body's children, except the last one - which is the popup
+    for (let index = 0; index < bodyChildren.length - 1; index++) {
+      const element = bodyChildren[index]
 
-      if (
-        !isOrHasFocusTrapZone &&
-        !isAriaLiveRegion &&
-        currentChild.getAttribute('aria-hidden') !== 'true'
-      ) {
-        currentChild.setAttribute('aria-hidden', 'true')
-        currentChild.setAttribute(HIDDEN_FROM_ACC_TREE, 'true')
+      if (element.getAttribute('aria-hidden') !== 'true') {
+        element.setAttribute('aria-hidden', 'true')
+        element.setAttribute(HIDDEN_FROM_ACC_TREE, 'true')
       }
     }
   }

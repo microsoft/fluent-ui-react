@@ -26,7 +26,7 @@ import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './posi
 import PopupContent from './PopupContent'
 
 import { popupBehavior } from '../../lib/accessibility'
-import { FocusTrapZone, FocusTrapZoneProps, AutoFocusZone } from '../../lib/accessibility/FocusZone'
+import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 
 import {
   Accessibility,
@@ -455,17 +455,11 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       ...popupWrapperAttributes,
     } as FocusTrapZoneProps
 
-    const autoFocusProps = {
-      ...(typeof accessibility.autoFocus === 'boolean' ? {} : accessibility.autoFocus),
-      ...popupWrapperAttributes,
-    } as FocusTrapZoneProps
-
     /**
      * if there is no focus trap wrapper, we should apply
      * HTML attributes and positioning to popup content directly
      */
-    const popupContentAttributes =
-      accessibility.focusTrap || accessibility.autoFocus ? {} : popupWrapperAttributes
+    const popupContentAttributes = accessibility.focusTrap ? {} : popupWrapperAttributes
 
     const popupContent = React.isValidElement(content)
       ? React.cloneElement(content, popupContentAttributes)
@@ -484,8 +478,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       >
         {accessibility.focusTrap ? (
           <FocusTrapZone {...focusTrapProps}>{popupContent}</FocusTrapZone>
-        ) : accessibility.autoFocus ? (
-          <AutoFocusZone {...autoFocusProps}>{popupContent}</AutoFocusZone>
         ) : (
           popupContent
         )}
