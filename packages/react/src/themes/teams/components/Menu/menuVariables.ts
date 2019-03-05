@@ -36,6 +36,8 @@ export interface MenuVariables {
   verticalDividerMargin: string
   verticalItemBorder: string
 
+  underlinedBottomBorderWidth: string
+
   dividerHeight: string
   borderWidth: string
 }
@@ -76,6 +78,8 @@ export default (siteVars: any): MenuVariables => {
     verticalBoxShadow: siteVars.shadowLevel3,
     verticalDividerMargin: `${pxToRem(8)} 0`,
     verticalItemBorder: `solid ${pxToRem(2)} transparent`,
+
+    underlinedBottomBorderWidth: pxToRem(2),
 
     dividerHeight: pxToRem(1),
     borderWidth: pxToRem(1),

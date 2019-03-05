@@ -45,7 +45,7 @@ export default {
           borderRadius: pxToRem(4),
         }),
       ...(underlined && {
-        borderBottom: `2px solid ${v.primaryUnderlinedBorderColor}`,
+        borderBottom: `${v.underlinedBottomBorderWidth} solid ${v.primaryUnderlinedBorderColor}`,
       }),
     }
   },
