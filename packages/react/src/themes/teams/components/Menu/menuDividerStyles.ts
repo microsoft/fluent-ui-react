@@ -7,12 +7,19 @@ const menuDividerStyles: ComponentSlotStylesInput<MenuDividerProps, MenuVariable
     const borderColor = p.primary ? v.primaryBorderColor : v.borderColor
     const borderType = p.vertical ? 'borderTop' : 'borderLeft'
 
-    return {
-      [borderType]: `1px solid ${borderColor}`,
-      ...(!p.vertical && {
-        alignSelf: 'stretch',
-      }),
-    }
+    return p.content
+      ? {
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          textAlign: 'center',
+        }
+      : {
+          [borderType]: `1px solid ${borderColor}`,
+          ...(!p.vertical && {
+            alignSelf: 'stretch',
+          }),
+        }
   },
 }
 
