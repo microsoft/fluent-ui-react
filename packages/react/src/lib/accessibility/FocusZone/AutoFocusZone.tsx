@@ -12,7 +12,7 @@ import callable from '../../callable'
 import Ref from '../../../components/Ref/Ref'
 
 /** AutoFocusZone is used to focus the first element inside it's children. */
-export class AutoFocusZone extends React.Component<AutoFocusZoneProps, {}> {
+export class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
   private root = React.createRef<HTMLElement>()
 
   static propTypes = {
