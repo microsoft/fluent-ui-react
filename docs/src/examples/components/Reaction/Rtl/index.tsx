@@ -5,7 +5,7 @@ import PerformanceSection from 'docs/src/components/ComponentDoc/PerformanceSect
 
 const Rtl = () => (
   <PerformanceSection title="Rtl">
-    <ComponentExample examplePath="components/Divider/Rtl/DividerExample.rtl" />
+    <ComponentExample examplePath="components/Reaction/Rtl/ReactionExample.rtl" />
   </PerformanceSection>
 )
 

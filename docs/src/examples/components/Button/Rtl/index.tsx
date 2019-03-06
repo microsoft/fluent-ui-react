@@ -5,11 +5,7 @@ import PerformanceSection from 'docs/src/components/ComponentDoc/PerformanceSect
 
 const Rtl = () => (
   <PerformanceSection title="Rtl">
-    <ComponentExample
-      title="Default"
-      description="A default rtl example."
-      examplePath="components/Button/Rtl/ButtonExample.rtl"
-    />
+    <ComponentExample examplePath="components/Button/Rtl/ButtonExample.rtl" />
   </PerformanceSection>
 )
 
