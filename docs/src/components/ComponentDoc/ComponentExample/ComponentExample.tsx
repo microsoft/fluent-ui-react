@@ -31,6 +31,7 @@ import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
 import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import CodeSnippet from '../../CodeSnippet'
+import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 
 export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
@@ -50,7 +51,6 @@ interface ComponentExampleState {
   showRtl: boolean
   showTransparent: boolean
   showVariables: boolean
-  copiedCode: boolean
 }
 
 const childrenStyle: React.CSSProperties = {
@@ -82,7 +82,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showRtl: examplePath && examplePath.endsWith('rtl') ? true : false,
       showTransparent: false,
       showVariables: false,
-      copiedCode: false,
     }
   }
 
@@ -176,13 +175,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const { title } = this.props
 
     if (title) this.props.onExamplePassed(this.anchorName)
-  }
-
-  copySourceCode = () => {
-    copyToClipboard(this.props.currentCode)
-
-    this.setState({ copiedCode: true })
-    setTimeout(() => this.setState({ copiedCode: false }), 1000)
   }
 
   resetSourceCode = () => {
@@ -336,13 +328,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   renderCodeEditorMenu = (): JSX.Element => {
     const {
+      canCodeBeFormatted,
+      currentCode,
       currentCodeLanguage,
       currentCodePath,
-      canCodeBeFormatted,
       handleCodeFormat,
       wasCodeChanged,
     } = this.props
-    const { copiedCode } = this.state
 
     const codeEditorStyle: ICSSInJSStyle = {
       position: 'relative',
@@ -351,16 +343,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       border: '0',
       paddingTop: '.5rem',
       float: 'right',
-      color: '#ffffff80',
       borderBottom: 0,
-      ':hover': {
-        borderBottom: 0,
-        color: 'white',
-      },
-      ':focus': {
-        borderBottom: 0,
-        color: 'white',
-      },
     }
 
     // get component name from file path:
@@ -389,13 +372,21 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         onClick: this.resetSourceCode,
         disabled: !wasCodeChanged,
       },
-      {
-        active: copiedCode, // to show the color
-        icon: copiedCode ? { color: 'green', name: 'check' } : 'copy',
-        content: 'Copy',
-        key: 'copy',
-        onClick: this.copySourceCode,
-      },
+      render =>
+        render({ content: 'Copy' }, (Component, props) => (
+          <CopyToClipboard
+            key="copy"
+            render={(active, onClick) => (
+              <Component
+                {...props}
+                active={active}
+                icon={active ? 'check' : 'copy'}
+                onClick={onClick}
+              />
+            )}
+            value={currentCode}
+          />
+        )),
       {
         disabled: currentCodeLanguage !== 'ts',
         icon: 'github',
@@ -403,6 +394,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         href: ghEditHref,
         rel: 'noopener noreferrer',
         target: '_blank',
+        title: currentCodeLanguage !== 'ts' ? 'You can edit source only in TypeScript' : undefined,
         key: 'withtslanguage',
       },
     ]
@@ -412,11 +404,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         size="small"
         primary
         underlined
+        activeIndex={-1}
         styles={codeEditorStyle}
         variables={{
           activeColor: 'white',
-          disabledColor: '#ffffff80',
-          color: '#ffffff80',
+          disabledColor: '#ffffff60',
+          color: '#ffffffb0',
         }}
         items={menuItems}
       />
