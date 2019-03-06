@@ -51,6 +51,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Allow arrays as shorthand for the Components containing prop of type `CollectionShorthand` @mnajdova ([#996](https://github.com/stardust-ui/react/pull/996))
 - Allow to pass `children` and `content` to `MenuDivider` @layershifter ([#1009](https://github.com/stardust-ui/react/pull/1009))
 - Add `AutoFocusZone` component, for focusing inner element on mount @mnajdova ([#1015](https://github.com/stardust-ui/react/pull/1015))
+- Add `Label` type `Badge` @jaanus03 ([#1020](https://github.com/stardust-ui/react/pull/1020))
 
 ### Documentation
 - Add `MenuButton` prototype (only available in development mode) @layershifter ([#947](https://github.com/stardust-ui/react/pull/947))
