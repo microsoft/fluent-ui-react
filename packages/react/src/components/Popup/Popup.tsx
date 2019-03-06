@@ -62,6 +62,9 @@ export interface PopupProps
   /** Alignment for the popup. */
   align?: Alignment
 
+  /** If this prop is used, the Popup will propagate the key down event, otherwise it won't. */
+  allowKeyDownPropagation?: boolean
+
   /** Additional CSS class name(s) to apply.  */
   className?: string
 
@@ -148,6 +151,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       content: 'shorthand',
     }),
     align: PropTypes.oneOf(ALIGNMENTS),
+    allowKeyDownPropagation: PropTypes.bool,
     defaultOpen: PropTypes.bool,
     defaultTarget: PropTypes.any,
     inline: PropTypes.bool,
@@ -463,7 +467,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
     { ref, scheduleUpdate, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
-    const { content: propsContent, renderContent, contentRef } = this.props
+    const { content: propsContent, renderContent, contentRef, allowKeyDownPropagation } = this.props
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
 
     const popupWrapperAttributes = {
@@ -473,7 +477,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         // No need to propagate keydown events outside Popup
         // allow only keyboard actions to execute
         _.invoke(accessibility.keyHandlers.popup, 'onKeyDown', e)
-        e.stopPropagation()
+        !allowKeyDownPropagation && e.stopPropagation()
       },
       className: popupPositionClasses,
       style: popupPlacementStyles,
