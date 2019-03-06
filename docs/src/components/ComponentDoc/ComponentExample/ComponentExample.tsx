@@ -18,7 +18,7 @@ import {
 } from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
-import { callable, constants, pxToRem } from 'src/lib'
+import { callable, constants } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
 import ExampleContext, { ExampleContextValue } from 'docs/src/context/ExampleContext'
@@ -56,7 +56,6 @@ interface ComponentExampleState {
 const childrenStyle: React.CSSProperties = {
   paddingTop: 0,
   paddingBottom: '10px',
-  maxWidth: pxToRem(500),
 }
 
 /**
@@ -79,7 +78,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       knobs: this.getDefaultKnobsValue(),
       showCode: this.isActiveHash(),
       componentVariables: {},
-      showRtl: examplePath && examplePath.endsWith('rtl') ? true : false,
+      showRtl: examplePath && examplePath.endsWith('rtl'),
       showTransparent: false,
       showVariables: false,
     }

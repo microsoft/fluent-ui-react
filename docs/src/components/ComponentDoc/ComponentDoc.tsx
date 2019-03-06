@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router'
-import { Flex, Header, Icon, Dropdown, Text, themes, Grid, Ref } from '@stardust-ui/react'
+import { Flex, Header, Icon, Dropdown, Text, themes, Grid } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
@@ -137,28 +137,23 @@ class ComponentDoc extends React.Component<any, any> {
             </>
           </Flex.Item>
         </Flex>
-        <Grid columns="auto 300px">
-          <Flex column>
-            <Flex.Item>
-              <Ref innerRef={this.handleExamplesRef}>
-                <ExampleContext.Provider
-                  value={{
-                    activeAnchorName: activePath,
-                    onExamplePassed: this.handleExamplePassed,
-                  }}
-                >
-                  <ComponentExamples displayName={info.displayName} />
-                </ExampleContext.Provider>
-              </Ref>
-            </Flex.Item>
+        <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
+          <div ref={this.handleExamplesRef}>
+            <ExampleContext.Provider
+              value={{
+                activeAnchorName: activePath,
+                onExamplePassed: this.handleExamplePassed,
+              }}
+            >
+              <ComponentExamples displayName={info.displayName} />
+            </ExampleContext.Provider>
 
-            <Flex.Item>
-              <div style={exampleEndStyle}>
-                This is the bottom <Icon name="pointing down" />
-              </div>
-            </Flex.Item>
+            <div style={exampleEndStyle}>
+              This is the bottom <Icon name="pointing down" />
+            </div>
+          </div>
 
-            {/* TODO: bring back the right floating menu
+          {/* TODO: bring back the right floating menu
             <Box styles={{ width: '25%', paddingLeft: '14px' }}>
               <ComponentSidebar
                 activePath={activePath}
@@ -168,7 +163,6 @@ class ComponentDoc extends React.Component<any, any> {
               />
             </Box>
           */}
-          </Flex>
         </Grid>
       </div>
     )
