@@ -150,6 +150,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     align: PropTypes.oneOf(ALIGNMENTS),
     defaultOpen: PropTypes.bool,
     defaultTarget: PropTypes.any,
+    inline: PropTypes.bool,
     mouseLeaveDelay: PropTypes.number,
     on: PropTypes.oneOfType([
       PropTypes.oneOf(['hover', 'click', 'focus']),
