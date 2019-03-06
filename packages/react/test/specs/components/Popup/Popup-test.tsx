@@ -251,9 +251,9 @@ describe('Popup', () => {
   describe('inline', () => {
     test('renders the content in the document body the inline prop is not provided', () => {
       mountWithProvider(<Popup trigger={<button />} content="Content" open={true} />)
-      expect(document.body.firstElementChild.classList.contains(Popup.Content.className)).toEqual(
-        true,
-      )
+      const contentElement = document.body.firstElementChild
+
+      expect(contentElement.classList.contains(Popup.Content.className)).toEqual(true)
     })
 
     test('renders the content next to the trigger element if the inline prop is provided', () => {
