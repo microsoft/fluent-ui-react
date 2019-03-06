@@ -47,8 +47,6 @@ const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) =
   </Component>
 )
 
-const TreeExclusiveExample = () => (
-  <Tree items={items} renderItemTitle={titleRenderer} exclusive={true} />
-)
+const TreeExclusiveExample = () => <Tree items={items} renderItemTitle={titleRenderer} exclusive />
 
 export default TreeExclusiveExample

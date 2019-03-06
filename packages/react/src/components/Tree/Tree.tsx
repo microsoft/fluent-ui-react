@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import TreeItem from './TreeItem'
+import TreeItem, { TreeItemProps } from './TreeItem'
 import {
   UIComponent,
   childrenExist,
@@ -60,7 +60,7 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
   }
 
   state = {
-    clickedIndex: -1,
+    activeIndex: -1,
   }
 
   public static defaultProps = {
@@ -69,12 +69,12 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
   }
 
   handleTreeItemOverrides = predefinedProps => ({
-    onOpenChanged: (e, treeItemProps) => {
+    onOpenChange: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
       const { index } = treeItemProps
       this.setState({
-        clickedIndex: index,
+        activeIndex: index,
       })
-      _.invoke(predefinedProps, 'onOpenChanged', e, treeItemProps)
+      _.invoke(predefinedProps, 'onOpenChange', e, treeItemProps)
     },
   })
 
@@ -87,7 +87,7 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
           index,
           exclusive,
           renderItemTitle,
-          open: exclusive ? index === this.state.clickedIndex : false,
+          open: exclusive ? index === this.state.activeIndex : false,
         },
         overrideProps: this.handleTreeItemOverrides,
       }),
