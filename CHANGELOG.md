@@ -16,6 +16,8 @@
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Features
+- Add `Label` type `Badge` @jaanus03 ([#1020](https://github.com/stardust-ui/react/pull/1020))
 
 <!--------------------------------[ v0.23.0 ]------------------------------- -->
 ## [v0.23.0](https://github.com/stardust-ui/react/tree/v0.23.0) (2019-03-06)
