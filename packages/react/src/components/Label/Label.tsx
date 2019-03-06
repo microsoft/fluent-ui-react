@@ -19,6 +19,7 @@ import Icon from '../Icon/Icon'
 import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import Text from '../Text/Text'
+import Box from '../Box/Box'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
@@ -56,7 +57,7 @@ export interface LabelProps
   /** A Label can position its image at the start or end of the layout. */
   imagePosition?: 'start' | 'end'
 
-  /** A label can look and feel like a badge. */
+  /** A Label can look and feel like a badge. */
   badge?: boolean
 
   /** A Label can have an additional section for text. */
@@ -153,12 +154,9 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     const hasStartElement = startImage || startIcon
     const hasEndElement = endIcon || endImage
 
-    const main = (
-      <span>
-        {content}
-        {additionalContentElement}
-      </span>
-    )
+    const main = Box.create([content, additionalContentElement], {
+      defaultProps: { as: 'span' },
+    })
 
     return (
       <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
