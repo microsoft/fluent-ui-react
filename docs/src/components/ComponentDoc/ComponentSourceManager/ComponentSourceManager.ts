@@ -33,8 +33,10 @@ export type ComponentSourceManagerState = {
 
   componentAPIs: ComponentSourceManagerAPIs
   currentCode?: string
+  formattedCode?: string
   originalCode?: string
 
+  canCodeBeFormatted: boolean
   wasCodeChanged: boolean
 }
 
@@ -61,6 +63,7 @@ export default class ComponentSourceManager extends React.Component<
       currentCodePath: '',
 
       componentAPIs,
+      canCodeBeFormatted: false,
       wasCodeChanged: false,
     }
   }
@@ -70,7 +73,13 @@ export default class ComponentSourceManager extends React.Component<
     state: ComponentSourceManagerState,
   ): Partial<ComponentSourceManagerState> {
     const { examplePath } = props
-    const { componentAPIs, currentCodeAPI, currentCodeLanguage, currentCode: storedCode } = state
+    const {
+      componentAPIs,
+      currentCodeAPI,
+      currentCodeLanguage,
+      currentCode: storedCode,
+      formattedCode,
+    } = state
 
     const sourceCodes = componentAPIs[currentCodeAPI].sourceCode
     const originalCode = sourceCodes[currentCodeLanguage]
@@ -78,12 +87,16 @@ export default class ComponentSourceManager extends React.Component<
     const currentCode = typeof storedCode === 'string' ? storedCode : originalCode
     const currentCodePath = examplePath + componentAPIs[currentCodeAPI].fileSuffix
 
+    const wasCodeChanged = originalCode !== currentCode
+    const canCodeBeFormatted = wasCodeChanged && currentCode !== formattedCode
+
     return {
       currentCode,
       currentCodePath,
       originalCode,
 
-      wasCodeChanged: originalCode !== currentCode,
+      canCodeBeFormatted,
+      wasCodeChanged,
     }
   }
 
@@ -103,12 +116,14 @@ export default class ComponentSourceManager extends React.Component<
     const prettierParser = currentCodeLanguage === 'ts' ? 'typescript' : 'babylon'
 
     try {
-      this.setState({ currentCode: formatCode(currentCode, prettierParser) })
+      const formattedCode = formatCode(currentCode, prettierParser)
+
+      this.setState({ currentCode: formattedCode, formattedCode })
     } catch (e) {}
   }
 
   handleCodeReset = (): void => {
-    this.setState({ currentCode: undefined })
+    this.setState({ currentCode: undefined, formattedCode: undefined })
   }
 
   handleLanguageChange = (newLanguage: ComponentSourceManagerLanguage): void => {

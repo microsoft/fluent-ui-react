@@ -328,6 +328,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   renderCodeEditorMenu = (): JSX.Element => {
     const {
+      canCodeBeFormatted,
       currentCode,
       currentCodeLanguage,
       currentCodePath,
@@ -342,16 +343,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       border: '0',
       paddingTop: '.5rem',
       float: 'right',
-      color: '#ffffff80',
       borderBottom: 0,
-      ':hover': {
-        borderBottom: 0,
-        color: 'white',
-      },
-      ':focus': {
-        borderBottom: 0,
-        color: 'white',
-      },
     }
 
     // get component name from file path:
@@ -366,12 +358,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     const menuItems = [
       {
-        icon: wasCodeChanged ? 'magic' : 'check', // (error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')
+        icon: canCodeBeFormatted ? 'magic' : 'check', // (error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')
         // active: !!error,
         content: 'Prettier',
         key: 'prettier',
         onClick: handleCodeFormat,
-        disabled: !wasCodeChanged,
+        disabled: !canCodeBeFormatted,
       },
       {
         icon: 'refresh',
@@ -412,11 +404,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         size="small"
         primary
         underlined
+        activeIndex={-1}
         styles={codeEditorStyle}
         variables={{
           activeColor: 'white',
-          disabledColor: '#ffffff80',
-          color: '#ffffff80',
+          disabledColor: '#ffffff60',
+          color: '#ffffffb0',
         }}
         items={menuItems}
       />
