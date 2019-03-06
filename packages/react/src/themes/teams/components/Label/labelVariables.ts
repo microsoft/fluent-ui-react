@@ -15,6 +15,7 @@ export interface LabelVariables {
   badgeHeight: string
   badgeLineheight: string
   badgeColor: string
+  badgeBackgroundColor: string
   badgeBorderRadius: string
   badgePadding: string
   badgePaddingWithoutAdditionalContent: string
@@ -47,6 +48,7 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
     badgeHeight: pxToRem(24),
     badgeLineheight: pxToRem(24),
     badgeColor: siteVars.colors.black,
+    badgeBackgroundColor: siteVars.gray10,
     badgeBorderRadius: pxToRem(2),
     badgePadding: `0 ${pxToRem(8)}`,
     badgePaddingWithoutAdditionalContent: `0 ${pxToRem(10)} 0 ${pxToRem(8)}`,

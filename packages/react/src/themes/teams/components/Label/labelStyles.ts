@@ -33,6 +33,7 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
         lineHeight: v.badgeLineheight,
         color: p.color ? colors.foreground : v.badgeColor,
         borderRadius: v.badgeBorderRadius,
+        backgroundColor: p.color ? colors.background : v.badgeBackgroundColor,
         padding: p.additionalContent ? v.badgePadding : v.badgePaddingWithoutAdditionalContent,
         ...(!p.icon && {
           padding: v.badgePaddingWithoutIcon,
