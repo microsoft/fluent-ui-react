@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Button, Popup } from '@stardust-ui/react'
 
-const PopupExample = () => (
+const PopupExampleInline = () => (
   <Popup
     trigger={<Button icon="expand" />}
     content="This popup is rendered next to the trigger."
@@ -9,4 +9,4 @@ const PopupExample = () => (
   />
 )
 
-export default PopupExample
+export default PopupExampleInline
