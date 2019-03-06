@@ -247,4 +247,23 @@ describe('Popup', () => {
       document.body.removeChild(attachTo)
     })
   })
+
+  describe('inline', () => {
+    test('renders the content in the document body the inline prop is not provided', () => {
+      mountWithProvider(<Popup trigger={<button />} content="Content" open={true} />)
+      const contentElement = document.body.firstElementChild
+
+      expect(contentElement.classList.contains(Popup.Content.className)).toEqual(true)
+    })
+
+    test('renders the content next to the trigger element if the inline prop is provided', () => {
+      const wrapper = mountWithProvider(
+        <Popup trigger={<button id={triggerId} />} inline content="Content" open={true} />,
+      )
+      const contentElement = wrapper.getDOMNode().nextSibling as HTMLDivElement
+
+      expect(wrapper.find(Popup.Content).exists()).toEqual(true)
+      expect(contentElement.classList.contains(Popup.Content.className)).toEqual(true)
+    })
+  })
 })
