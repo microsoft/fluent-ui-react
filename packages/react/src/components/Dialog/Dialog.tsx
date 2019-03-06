@@ -20,6 +20,7 @@ import Box, { BoxProps } from '../Box/Box'
 import Header from '../Header/Header'
 import Portal from '../Portal/Portal'
 import Ref from '../Ref/Ref'
+import Flex from '../Flex/Flex'
 
 export interface DialogProps extends UIComponentProps, ContentComponentProps, ColorComponentProps {
   /**
@@ -94,7 +95,6 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
       content: true,
     }),
     actions: customPropTypes.itemShorthand,
-    accessibility: PropTypes.func,
     cancelButton: customPropTypes.itemShorthand,
     confirmButton: customPropTypes.itemShorthand,
     defaultOpen: PropTypes.bool,
@@ -212,7 +212,7 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
             },
             overrideProps: {
               content: (
-                <>
+                <Flex gap="gap.smaller" hAlign="end">
                   {Button.create(cancelButton, { overrideProps: this.handleCancelButtonOverrides })}
                   {Button.create(confirmButton, {
                     defaultProps: {
@@ -220,7 +220,7 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
                     },
                     overrideProps: this.handleConfirmButtonOverrides,
                   })}
-                </>
+                </Flex>
               ),
             },
           })}

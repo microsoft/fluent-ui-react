@@ -10,12 +10,20 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
 import Text from '../Text/Text'
 import Input from '../Input/Input'
 import Box from '../Box/Box'
 
 export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** A control for the form field. */
   control?: ShorthandValue
 
@@ -66,6 +74,7 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
   }
 
   public static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'div',
     control: { as: Input },
   }
@@ -108,7 +117,7 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
     )
 
     return (
-      <ElementType className={classes.root} {...unhandledProps}>
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )
@@ -120,6 +129,6 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
   }
 }
 
-FormField.create = createShorthandFactory(FormField, 'label')
+FormField.create = createShorthandFactory({ Component: FormField, mappedProp: 'label' })
 
 export default FormField

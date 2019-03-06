@@ -1,35 +1,55 @@
-import * as React from 'react'
-import { Menu, toolbarBehavior, toolbarButtonBehavior } from '@stardust-ui/react'
-import { NavLink } from 'react-router-dom'
+import {
+  Menu,
+  Provider,
+  ThemeInput,
+  toolbarBehavior,
+  toolbarButtonBehavior,
+} from '@stardust-ui/react'
 import * as _ from 'lodash'
+import * as React from 'react'
+import { NavLink } from 'react-router-dom'
 
 import { updateForKeys } from 'docs/src/hoc'
 import ComponentButton from './ComponentButton'
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
 import ComponentControlsCodeSandbox from './ComponentControlsCodeSandbox/ComponentControlsCodeSandbox'
-import ComponentControlsShowCode from './ComponentControlsShowCode'
-import ComponentControlsCopyLink from './ComponentControlsCopyLink'
-import ComponentControlsShowVariables from './ComponentControlsShowVariables'
-import ComponentControlsMaximize from './ComponentControlsMaximize'
-import ComponentControlsShowTransparent from './ComponentControlsShowTransparent'
-import ComponentControlsRtl from './ComponentControlsRtl'
+import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 
 type ComponentControlsProps = {
   exampleCode: string
   exampleLanguage: ComponentSourceManagerLanguage
   examplePath: string
   anchorName: string
-  onCopyLink: () => void
-  onMaximize: () => void
-  onShowCode: () => void
-  onShowRtl: () => void
-  onShowTransparent: () => void
-  onShowVariables: () => void
+  onCopyLink: (e: React.SyntheticEvent) => void
+  onShowCode: (e: React.SyntheticEvent) => void
+  onShowRtl: (e: React.SyntheticEvent) => void
+  onShowTransparent: (e: React.SyntheticEvent) => void
+  onShowVariables: (e: React.SyntheticEvent) => void
   showCode: boolean
   showRtl: boolean
   showTransparent: boolean
   showVariables: boolean
-  visible: boolean
+}
+
+const controlsTheme: ThemeInput = {
+  componentStyles: {
+    MenuItem: {
+      root: {
+        padding: '0.25rem',
+      },
+      wrapper: {
+        display: 'inline-table',
+        ':last-child': {
+          margin: 0,
+        },
+      },
+    },
+    Text: {
+      root: {
+        whiteSpace: 'nowrap',
+      },
+    },
+  },
 }
 
 const ComponentControls: React.FC<ComponentControlsProps> = props => {
@@ -47,76 +67,96 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
     onShowRtl,
     onShowTransparent,
     onShowVariables,
-    onMaximize,
+    ...rest
   } = props
 
   return (
-    <Menu
-      fluid
-      color="green"
-      icon="labeled"
-      size="tiny"
-      pills
-      accessibility={toolbarBehavior}
-      items={[
-        {
-          key: 'show-code',
-          content: <ComponentControlsShowCode active={showCode} />,
-          onClick: onShowCode,
-          accessibility: toolbarButtonBehavior,
-        },
-        {
-          key: 'show-codesandbox',
-          content: (
-            <ComponentControlsCodeSandbox
-              exampleCode={exampleCode}
-              exampleLanguage={exampleLanguage}
-              exampleName={examplePath}
-            />
-          ),
-          accessibility: toolbarButtonBehavior,
-        },
-        {
-          key: 'show-variables',
-          content: <ComponentControlsShowVariables active={showVariables} />,
-          onClick: onShowVariables,
-          accessibility: toolbarButtonBehavior,
-        },
-        {
-          key: 'show-transparent',
-          content: <ComponentControlsShowTransparent active={showTransparent} />,
-          onClick: onShowTransparent,
-          accessibility: toolbarButtonBehavior,
-        },
-        {
-          key: 'show-rtl',
-          content: <ComponentControlsRtl active={showRtl} />,
-          onClick: onShowRtl,
-          accessibility: toolbarButtonBehavior,
-        },
-        {
-          key: 'maximize',
-          content: <ComponentControlsMaximize />,
-          as: NavLink,
-          to: `/maximize/${_.kebabCase(
-            examplePath
-              .split('/')
-              .slice(-1)
-              .pop(),
-          )}/${showRtl}`,
-          target: '_blank',
-          rel: 'noopener noreferrer',
-          onClick: onMaximize,
-          accessibility: toolbarButtonBehavior,
-        },
-        {
-          key: 'copy-link',
-          content: <ComponentControlsCopyLink anchorName={anchorName} />,
-          onClick: onCopyLink,
-          accessibility: toolbarButtonBehavior,
-        },
-      ]}
-    />
+    <Provider theme={controlsTheme}>
+      <Menu
+        {...rest}
+        fluid
+        color="green"
+        icon="labeled"
+        size="tiny"
+        pills
+        accessibility={toolbarBehavior}
+        items={[
+          {
+            key: 'show-code',
+            content: <ComponentButton iconName="code" label="Try it" active={showCode} />,
+            onClick: onShowCode,
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'show-codesandbox',
+            content: (
+              <ComponentControlsCodeSandbox
+                exampleCode={exampleCode}
+                exampleLanguage={exampleLanguage}
+                exampleName={examplePath}
+              />
+            ),
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'show-variables',
+            content: (
+              <ComponentButton iconName="paint brush" label="Theme it" active={showVariables} />
+            ),
+            onClick: onShowVariables,
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'show-transparent',
+            content: (
+              <ComponentButton iconName="adjust" label="Transparent" active={showTransparent} />
+            ),
+            onClick: onShowTransparent,
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'show-rtl',
+            content: <ComponentButton iconName="align right" label="RTL" active={showRtl} />,
+            onClick: onShowRtl,
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'maximize',
+            content: (
+              <ComponentButton iconName="external alternate" label="Popout" active={false} />
+            ),
+            as: NavLink,
+            to: `/maximize/${_.kebabCase(
+              examplePath
+                .split('/')
+                .slice(-1)
+                .pop(),
+            )}/${showRtl}`,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'copy-link',
+            content: (
+              <CopyToClipboard
+                render={(active, onClick) => (
+                  <ComponentButton
+                    iconName="linkify"
+                    label={active ? 'Copied!' : 'Permalink'}
+                    active={active}
+                    onClick={onClick}
+                  />
+                )}
+                value={anchorName}
+              />
+            ),
+            onClick: onCopyLink,
+            accessibility: toolbarButtonBehavior,
+          },
+        ]}
+      />
+    </Provider>
   )
 }
 
@@ -127,5 +167,4 @@ export default updateForKeys([
   'showCode',
   'showTransparent',
   'showVariables',
-  'visible',
 ])(ComponentControls, ComponentButton)

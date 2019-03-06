@@ -1,8 +1,10 @@
 import createComponentInternal from './createComponent'
 import * as React from 'react'
 import * as _ from 'lodash'
+
 import { ComponentSlotClasses, ComponentSlotStylesPrepared } from '../themes/types'
 import { AccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/types'
+import { ObjectOf } from '../types'
 
 export interface RenderStardustResultConfig {
   accessibility: AccessibilityBehavior
@@ -18,13 +20,13 @@ export interface CreateStardustComponentConfig<P> {
   actionHandlers?: AccessibilityActionHandlers
 }
 
-const createComponent = <P extends {} = {}, S extends {} = {}>({
+const createComponent = <P extends ObjectOf<any> = any>({
   displayName,
   render,
   defaultProps,
   actionHandlers,
-}: CreateStardustComponentConfig<P>): React.SFC<P> => {
-  return createComponentInternal<P, S>({
+}: CreateStardustComponentConfig<P>): React.FC<P> => {
+  return createComponentInternal<P>({
     displayName,
     render: (config, props) => {
       const filteredConfig = _.pick(config, ['accessibility', 'classes', 'rtl', 'styles'])

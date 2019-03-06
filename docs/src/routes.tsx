@@ -62,9 +62,9 @@ const Router = () => (
           />,
           <DocsLayout
             exact
-            key="/prototype-async-dropdown-search"
-            path="/prototype-async-dropdown-search"
-            component={require('./prototypes/AsyncDropdownSearch/index').default}
+            key="/prototype-dropdowns"
+            path="/prototype-dropdowns"
+            component={require('./prototypes/dropdowns/index').default}
           />,
           <DocsLayout
             exact
@@ -83,6 +83,12 @@ const Router = () => (
             key="/important-and-mention-messages"
             path="/important-and-mention-messages"
             component={require('./prototypes/ImportantAndMentionMessages/index').default}
+          />,
+          <DocsLayout
+            exact
+            key="/menu-button"
+            path="/menu-button"
+            component={require('./prototypes/MenuButton/index').default}
           />,
         ]}
         <DocsLayout exact path="/accessibility" component={Accessibility} />

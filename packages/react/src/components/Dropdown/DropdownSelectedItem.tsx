@@ -68,10 +68,11 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
   static displayName = 'DropdownSelectedItem'
   static create: Function
   static slotClassNames: DropdownSelectedItemSlotClassNames
-  static className = 'ui-dropdown__selected-item'
+  static className = 'ui-dropdown__selecteditem'
 
   static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       children: false,
     }),
     active: PropTypes.bool,
@@ -120,7 +121,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
     unhandledProps,
     styles,
   }: RenderResultConfig<DropdownSelectedItemProps>) {
-    const { header, icon, image } = this.props
+    const { active, header, icon, image } = this.props
 
     const iconElement = Icon.create(icon, {
       defaultProps: {
@@ -138,7 +139,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
     return (
       <Ref innerRef={this.itemRef}>
         <Label
-          tabIndex={-1}
+          tabIndex={active ? 0 : -1}
           styles={styles.root}
           circular
           onClick={this.handleClick}
@@ -157,6 +158,9 @@ DropdownSelectedItem.slotClassNames = {
   removeIcon: `${DropdownSelectedItem.className}__remove-icon`,
 }
 
-DropdownSelectedItem.create = createShorthandFactory(DropdownSelectedItem, 'header')
+DropdownSelectedItem.create = createShorthandFactory({
+  Component: DropdownSelectedItem,
+  mappedProp: 'header',
+})
 
 export default DropdownSelectedItem

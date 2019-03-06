@@ -13,6 +13,11 @@ import { ComponentEventHandler, ReactProps } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
 
+export interface DropdownSearchInputSlotClassNames {
+  input: string
+  wrapper: string
+}
+
 export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearchInputProps> {
   /** A dropdown search input can be formatted to appear inline in the context of a Dropdown. */
   inline?: boolean
@@ -61,13 +66,13 @@ export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearc
  */
 class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProps>, any> {
   static displayName = 'DropdownSearchInput'
-
   static create: Function
-
+  static slotClassNames: DropdownSearchInputSlotClassNames
   static className = 'ui-dropdown__searchinput'
 
   static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       children: false,
       content: false,
     }),
@@ -110,24 +115,33 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
         inputRef={inputRef}
         onFocus={this.handleFocus}
         onKeyUp={this.handleKeyUp}
+        {...unhandledProps}
         wrapper={{
+          className: DropdownSearchInput.slotClassNames.wrapper,
           styles: styles.root,
           ...accessibilityComboboxProps,
+          ...unhandledProps.wrapper,
         }}
         input={{
           type: 'text',
+          className: DropdownSearchInput.slotClassNames.input,
           styles: styles.input,
           placeholder,
           onBlur: this.handleInputBlur,
           onKeyDown: this.handleInputKeyDown,
           ...accessibilityInputProps,
+          ...unhandledProps.input,
         }}
-        {...unhandledProps}
       />
     )
   }
 }
 
-DropdownSearchInput.create = createShorthandFactory(DropdownSearchInput)
+DropdownSearchInput.slotClassNames = {
+  input: `${DropdownSearchInput.className}__input`,
+  wrapper: `${DropdownSearchInput.className}__wrapper`,
+}
+
+DropdownSearchInput.create = createShorthandFactory({ Component: DropdownSearchInput })
 
 export default DropdownSearchInput

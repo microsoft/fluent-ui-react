@@ -37,6 +37,9 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
   /** Name of the icon. */
   name?: string
 
+  /** An icon can provide an outline variant. */
+  outline?: boolean
+
   /** An icon can be rotated by the degree specified as number. */
   rotate?: number
 
@@ -63,11 +66,11 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
       content: false,
       color: true,
     }),
-    accessibility: PropTypes.func,
     bordered: PropTypes.bool,
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
     name: PropTypes.string,
+    outline: PropTypes.bool,
     rotate: PropTypes.number,
     size: customPropTypes.size,
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
@@ -123,6 +126,6 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
   }
 }
 
-Icon.create = createShorthandFactory(Icon, 'name')
+Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name' })
 
 export default Icon

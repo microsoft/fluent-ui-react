@@ -46,13 +46,10 @@ interface ComponentExampleState {
   knobs: Object
   themeName: string
   componentVariables: Object
-  handleMouseLeave: () => void
-  handleMouseMove: () => void
   showCode: boolean
   showRtl: boolean
   showTransparent: boolean
   showVariables: boolean
-  isHovering: boolean
   copiedCode: boolean
 }
 
@@ -71,41 +68,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   kebabExamplePath: string
   KnobsComponent: any
 
-  /*
-  state = {
-    knobs: {},
-    themeName: 'teams',
-    componentVariables: {},
-    handleMouseLeave: _.noop,
-    handleMouseMove: _.noop,
-    showCode: false,
-    showRtl: false,
-    showTransparent: false,
-    showVariables: false,
-    isHovering: false,
-    copiedCode: false,
-  }
-
-  static contextTypes = {
-    onPassed: PropTypes.func,
-  }
-
-  static propTypes = {
-    children: PropTypes.node,
-    description: PropTypes.node,
-    examplePath: PropTypes.string.isRequired,
-    history: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
-    title: PropTypes.node,
-    themeName: PropTypes.string,
-    exampleTheme: PropTypes.string,
-  }
-
-  componentWillMount() {
-    const { examplePath } = this.props
-    this.anchorName = examplePathToHash(examplePath)
-*/
   constructor(props) {
     super(props)
 
@@ -114,15 +76,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.anchorName = examplePathToHash(examplePath)
     this.state = {
       themeName,
-      handleMouseLeave: this.handleMouseLeave,
-      handleMouseMove: this.handleMouseMove,
       knobs: this.getDefaultKnobsValue(),
       showCode: this.isActiveHash(),
       componentVariables: {},
       showRtl: examplePath && examplePath.endsWith('rtl') ? true : false,
       showTransparent: false,
       showVariables: false,
-      isHovering: false,
       copiedCode: false,
     }
   }
@@ -183,29 +142,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     copyToClipboard(window.location.href)
   }
 
-  handleMouseLeave = () => {
-    this.setState({
-      isHovering: false,
-      handleMouseLeave: undefined,
-      handleMouseMove: this.handleMouseMove,
-    })
-  }
-
-  handleMouseMove = () => {
-    this.setState({
-      isHovering: true,
-      handleMouseLeave: this.handleMouseLeave,
-      handleMouseMove: undefined,
-    })
-  }
-
-  handleShowRtlClick = e => {
+  handleShowRtlClick = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     this.setState(prevState => ({ showRtl: !prevState.showRtl }))
   }
 
-  handleShowCodeClick = e => {
+  handleShowCodeClick = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     const { showCode } = this.state
@@ -213,7 +156,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.setState({ showCode: !showCode }, this.updateHash)
   }
 
-  handleShowVariablesClick = e => {
+  handleShowVariablesClick = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     const { showVariables } = this.state
@@ -221,7 +164,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.setState({ showVariables: !showVariables }, this.updateHash)
   }
 
-  handleShowTransparentClick = e => {
+  handleShowTransparentClick = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     const { showTransparent } = this.state
@@ -369,11 +312,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       {
         active: currentCodeLanguage === 'js',
         content: 'JavaScript',
+        key: 'js',
         onClick: this.handleCodeLanguageChange('js'),
       },
       {
         active: currentCodeLanguage === 'ts',
         content: 'TypeScript',
+        key: 'ts',
         onClick: this.handleCodeLanguageChange('ts'),
       },
     ]
@@ -433,12 +378,14 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         icon: canCodeBeFormatted ? 'magic' : 'check', // (error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')
         // active: !!error,
         content: 'Prettier',
+        key: 'prettier',
         onClick: handleCodeFormat,
         disabled: !canCodeBeFormatted,
       },
       {
         icon: 'refresh',
         content: 'Reset',
+        key: 'reset',
         onClick: this.resetSourceCode,
         disabled: !wasCodeChanged,
       },
@@ -446,6 +393,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         active: copiedCode, // to show the color
         icon: copiedCode ? { color: 'green', name: 'check' } : 'copy',
         content: 'Copy',
+        key: 'copy',
         onClick: this.copySourceCode,
       },
       {
@@ -606,15 +554,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       description,
       title,
     } = this.props
-    const {
-      handleMouseLeave,
-      handleMouseMove,
-      knobs,
-      showCode,
-      showRtl,
-      showTransparent,
-      showVariables,
-    } = this.state
+    const { knobs, showCode, showRtl, showTransparent, showVariables } = this.state
 
     return (
       <Flex column>
@@ -623,17 +563,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             {/* Ensure anchor links don't occlude card shadow effect */}
             {/* <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} /> */}
 
-            <Segment
-              width={19}
-              styles={{ borderBottom: '1px solid #ddd' }}
-              onMouseLeave={handleMouseLeave}
-              onMouseMove={handleMouseMove}
-            >
-              <div style={{ display: 'flex' }}>
-                <div style={{ flex: '1' }}>
-                  <ComponentExampleTitle description={description} title={title} />
-                </div>
-                <div style={{ flex: '0 0 auto' }}>
+            <Segment styles={{ borderBottom: '1px solid #ddd' }}>
+              <Flex>
+                <ComponentExampleTitle description={description} title={title} />
+
+                <Flex.Item push>
                   <ComponentControls
                     anchorName={this.anchorName}
                     exampleCode={currentCode}
@@ -648,10 +582,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                     showRtl={showRtl}
                     showTransparent={showTransparent}
                     showVariables={showVariables}
-                    visible
                   />
-                </div>
-              </div>
+                </Flex.Item>
+              </Flex>
+
               {this.renderKnobs()}
             </Segment>
 

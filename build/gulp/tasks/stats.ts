@@ -148,7 +148,10 @@ function readCurrentBundleStats() {
 }
 
 task('stats:save', async () => {
-  const commandLineArgs = _.pick(argv, ['sha', 'branch', 'tag', 'pr', 'build'])
+  const commandLineArgs = _.pickBy(
+    _.pick(argv, ['sha', 'branch', 'tag', 'pr', 'build']),
+    val => val !== '', // ignore empty strings
+  )
   const bundleStats = readCurrentBundleStats()
   const perfStats = readSummaryPerfStats()
 

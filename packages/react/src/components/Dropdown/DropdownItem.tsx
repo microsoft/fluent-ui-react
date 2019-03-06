@@ -49,6 +49,7 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({
+      accessibility: false,
       children: false,
       content: false,
     }),
@@ -84,6 +85,6 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
   }
 }
 
-DropdownItem.create = createShorthandFactory(DropdownItem, 'header')
+DropdownItem.create = createShorthandFactory({ Component: DropdownItem, mappedProp: 'header' })
 
 export default DropdownItem

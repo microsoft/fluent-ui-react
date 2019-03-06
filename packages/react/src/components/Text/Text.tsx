@@ -14,7 +14,8 @@ import {
   rtlTextContainer,
   SizeValue,
 } from '../../lib'
-
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps } from '../../types'
 
 export interface TextProps
@@ -22,6 +23,12 @@ export interface TextProps
     ContentComponentProps,
     ChildrenComponentProps,
     ColorComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
   atMention?: boolean | 'me'
 
@@ -85,16 +92,18 @@ class Text extends UIComponent<ReactProps<TextProps>, any> {
   }
 
   static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'span',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
+  renderComponent({ accessibility, ElementType, classes, unhandledProps }): React.ReactNode {
     const { children, content } = this.props
 
     return (
       <ElementType
         className={classes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...accessibility.attributes.root}
         {...unhandledProps}
       >
         {childrenExist(children) ? children : content}
@@ -103,6 +112,6 @@ class Text extends UIComponent<ReactProps<TextProps>, any> {
   }
 }
 
-Text.create = createShorthandFactory(Text, 'content')
+Text.create = createShorthandFactory({ Component: Text, mappedProp: 'content' })
 
 export default Text

@@ -11,13 +11,21 @@ import {
   ColorComponentProps,
   rtlTextContainer,
 } from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps } from '../../types'
 
 export interface HeaderDescriptionProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps,
-    ColorComponentProps {}
+    ColorComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+}
 
 /**
  * A header's description provides more detailed information.
@@ -34,14 +42,16 @@ class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, 
   }
 
   static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'p',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  renderComponent({ accessibility, ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
     return (
       <ElementType
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...accessibility.attributes.root}
         {...unhandledProps}
         className={classes.root}
       >
@@ -51,6 +61,9 @@ class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, 
   }
 }
 
-HeaderDescription.create = createShorthandFactory(HeaderDescription, 'content')
+HeaderDescription.create = createShorthandFactory({
+  Component: HeaderDescription,
+  mappedProp: 'content',
+})
 
 export default HeaderDescription

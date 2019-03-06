@@ -51,7 +51,6 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
       children: false,
       content: false,
     }),
-    accessibility: PropTypes.func,
     color: PropTypes.string,
     icon: customPropTypes.itemShorthand,
     size: customPropTypes.size,
@@ -68,7 +67,7 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
   renderComponent({ accessibility, ElementType, classes, unhandledProps, variables, styles }) {
     const { icon } = this.props as StatusProps
     return (
-      <ElementType {...unhandledProps} className={classes.root} {...accessibility.attributes.root}>
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
         {Icon.create(icon, {
           defaultProps: {
             size: 'smallest',
@@ -82,6 +81,6 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
   }
 }
 
-Status.create = createShorthandFactory(Status, 'state')
+Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' })
 
 export default Status

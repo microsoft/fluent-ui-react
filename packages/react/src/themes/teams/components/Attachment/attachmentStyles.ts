@@ -4,72 +4,72 @@ import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../lib'
 
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
-  root: ({ props, variables }): ICSSInJSStyle => ({
+  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
     width: pxToRem(300),
     minHeight: pxToRem(48),
-    padding: pxToRem(8),
+    padding: v.padding,
     marginBottom: pxToRem(2),
     marginRight: pxToRem(2),
-    background: variables.backgroundColor,
-    color: variables.textColor,
+    background: v.backgroundColor,
+    color: v.textColor,
 
     outline: 0,
 
-    ...(props.isFromKeyboard && {
+    ...(p.isFromKeyboard && {
       ':focus': {
-        outline: `.2rem solid ${variables.focusOutlineColor}`,
+        outline: `.2rem solid ${v.focusOutlineColor}`,
       },
     }),
 
-    ...((props.actionable || props.onClick) && {
+    ...((p.actionable || p.onClick) && {
       cursor: 'pointer',
 
       ':hover': {
-        background: variables.backgroundColorHover,
+        background: v.backgroundColorHover,
       },
     }),
   }),
 
-  content: ({ props }): ICSSInJSStyle => ({
+  content: (): ICSSInJSStyle => ({
     flex: 1,
   }),
 
-  header: ({ props, variables }): ICSSInJSStyle => ({
-    fontSize: variables.headerFontSize,
-    fontWeight: variables.headerFontWeight,
-    lineHeight: variables.headerLineHeight,
+  header: ({ variables: v }): ICSSInJSStyle => ({
+    fontSize: v.headerFontSize,
+    fontWeight: v.headerFontWeight,
+    lineHeight: v.headerLineHeight,
   }),
 
-  description: ({ props, variables }): ICSSInJSStyle => ({
+  description: ({ variables: v }): ICSSInJSStyle => ({
     display: 'block',
     opacity: 0.5,
-    fontSize: variables.descriptionFontSize,
-    fontWeight: variables.descriptionFontWeight,
-    lineHeight: variables.descriptionLineHeight,
+    fontSize: v.descriptionFontSize,
+    fontWeight: v.descriptionFontWeight,
+    lineHeight: v.descriptionLineHeight,
   }),
 
-  icon: ({ props, variables }): ICSSInJSStyle => ({
+  icon: ({ variables: v }): ICSSInJSStyle => ({
     flex: '0 0 auto',
-    marginRight: variables.iconSpace,
+    marginRight: v.iconSpace,
   }),
 
-  action: ({ props }): ICSSInJSStyle => ({
+  action: (): ICSSInJSStyle => ({
     flex: '0 0 auto',
   }),
 
-  progress: ({ props, variables }): ICSSInJSStyle => ({
+  progress: ({ props: p, variables: v }): ICSSInJSStyle => ({
     transition: 'width 0.2s',
     position: 'absolute',
     display: 'block',
     bottom: 0,
     left: 0,
-    width: `${props.progress}%`,
+    width: `${p.progress}%`,
     maxWidth: '100%',
-    height: pxToRem(variables.progressHeight),
-    background: variables.progressColor,
+    height: pxToRem(v.progressHeight),
+    background: v.progressColor,
   }),
 }
 

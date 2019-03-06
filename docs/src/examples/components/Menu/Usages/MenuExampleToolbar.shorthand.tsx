@@ -6,7 +6,7 @@ const items = [
     key: 'format',
     icon: {
       name: 'format',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Format Tool',
@@ -15,7 +15,7 @@ const items = [
     key: 'paperclip',
     icon: {
       name: 'paperclip',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Paperclip Tool',
@@ -24,7 +24,7 @@ const items = [
     key: 'emoji',
     icon: {
       name: 'emoji',
-      variables: { outline: true },
+      outline: true,
     },
     disabled: true,
     accessibility: toolbarButtonBehavior,
@@ -34,7 +34,7 @@ const items = [
     key: 'giphy',
     icon: {
       name: 'giphy',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Giphy tool',
@@ -43,16 +43,17 @@ const items = [
     key: 'sticker',
     icon: {
       name: 'sticker',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Sticker Tool',
   },
   {
     key: 'meetup',
+    disabled: true,
     icon: {
       name: 'video-camera-emphasis',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Meetup Tool',
@@ -61,16 +62,16 @@ const items = [
     key: 'book',
     icon: {
       name: 'book',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Book Tool',
   },
   {
-    key: 'menuButton',
+    key: 'menuButton2',
     icon: {
       name: 'more',
-      variables: { outline: true },
+      outline: true,
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'More options',
@@ -78,30 +79,45 @@ const items = [
     menu: {
       items: [
         {
-          key: '1',
+          key: '5',
           content: 'item1',
           icon: {
-            name: 'read-aloud',
-            variables: { outline: true },
+            name: 'bookmark',
+            outline: true,
           },
         },
         {
-          key: '2',
+          key: 'divider',
+          kind: 'divider',
+        },
+        {
+          key: '6',
           content: 'item2',
+          icon: {
+            name: 'mark-as-unread',
+            outline: true,
+          },
+        },
+        {
+          key: '7',
+          content: 'item3',
           disabled: true,
           icon: {
             name: 'translation',
-            variables: { outline: true },
+            outline: true,
           },
         },
         {
-          key: '3',
+          key: 'divider2',
+          kind: 'divider',
+        },
+        {
+          key: '8',
           content: 'item3',
           icon: {
-            name: 'link',
-            variables: { outline: true },
+            name: 'trash-can',
+            outline: true,
           },
-          menu: { items: [{ key: '1', content: 'item3.1' }, { key: '2', content: 'item3.2' }] },
         },
       ],
     },
@@ -115,6 +131,7 @@ class MenuExampleToolbarShorthand extends React.Component {
         defaultActiveIndex={0}
         items={items}
         iconOnly
+        primary
         accessibility={toolbarBehavior}
         aria-label="Compose Editor"
       />
