@@ -1,6 +1,7 @@
 import * as React from 'react'
 import keyboardKey from 'keyboard-key'
-import { Popup, Menu, Ref } from '@stardust-ui/react'
+import { Popup, Menu, Ref, Reaction, popupAutoFocusBehavior } from '@stardust-ui/react'
+import { focusNearest } from './focusUtils'
 
 const getAriaLabel = (numberOfPersons, emojiType) => {
   if (numberOfPersons === 1) {
@@ -16,11 +17,10 @@ class ReactionPopup extends React.Component<any, any> {
 
   reactionNode: HTMLButtonElement
 
-  popup: HTMLElement
-
   handleKeyDownOnMenu = (e, props) => {
     if ((e.shiftKey && e.keyCode === keyboardKey.Tab) || e.keyCode === keyboardKey.Tab) {
       this.setState({ open: false })
+      focusNearest(this.reactionNode, e.shiftKey ? 'previous' : 'next')
     }
   }
 
@@ -31,7 +31,7 @@ class ReactionPopup extends React.Component<any, any> {
   }
 
   render() {
-    const { Component, props } = this.props
+    const { icon, content } = this.props
     return (
       <Ref
         innerRef={(reactionNode: HTMLButtonElement) => {
@@ -40,34 +40,28 @@ class ReactionPopup extends React.Component<any, any> {
       >
         <Popup
           trigger={
-            <Component
+            <Reaction
+              {...this.props}
               as="button"
-              {...props}
-              aria-label={getAriaLabel(props.content, props.icon)}
+              aria-label={getAriaLabel(content, icon)}
               aria-haspopup="true"
             />
           }
           inline
           content={{
             content: (
-              <Ref
-                innerRef={(popupNode: HTMLElement) => {
-                  this.popup = popupNode
-                }}
-              >
-                <Menu
-                  items={['Jane Doe', 'John Doe']}
-                  vertical
-                  variables={{ borderColor: 'transparent' }}
-                  onKeyDown={this.handleKeyDownOnMenu}
-                />
-              </Ref>
+              <Menu
+                items={['Jane Doe', 'John Doe']}
+                vertical
+                variables={{ borderColor: 'transparent' }}
+                onKeyDown={this.handleKeyDownOnMenu}
+              />
             ),
           }}
           open={this.state.open}
           onOpenChange={this.handleOpenChange}
           on={'hover'}
-          // accessibility={popupAutoFocusBehavior}
+          accessibility={popupAutoFocusBehavior}
         />
       </Ref>
     )

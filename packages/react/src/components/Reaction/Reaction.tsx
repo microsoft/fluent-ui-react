@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 
 import {
   UIComponent,
@@ -17,6 +18,9 @@ import { ReactProps, ShorthandValue } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 import ReactionGroup from './ReactionGroup'
+import { isFromKeyboard } from 'src/lib'
+import { ComponentEventHandler } from 'src/types'
+import * as PropTypes from 'prop-types'
 
 export interface ReactionSlotClassNames {
   icon: string
@@ -38,12 +42,22 @@ export interface ReactionProps
 
   /** A reaction can have content shown next to the icon. */
   content?: ShorthandValue
+
+  /**
+   * Called after user's focus.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onFocus?: ComponentEventHandler<ReactionProps>
 }
 
+export interface ReactionState {
+  isFromKeyboard: boolean
+}
 /**
  * A reaction is used to indicate user's reaction.
  */
-class Reaction extends UIComponent<ReactProps<ReactionProps>> {
+class Reaction extends UIComponent<ReactProps<ReactionProps>, ReactionState> {
   static create: Function
 
   static className = 'ui-reaction'
@@ -57,6 +71,7 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>> {
       content: 'shorthand',
     }),
     icon: customPropTypes.itemShorthand,
+    onFocus: PropTypes.func,
   }
 
   static defaultProps = {
@@ -65,6 +80,10 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>> {
   }
 
   static Group = ReactionGroup
+
+  public state = {
+    isFromKeyboard: false,
+  }
 
   renderComponent({ accessibility, ElementType, classes, styles, unhandledProps }) {
     const { children, icon, content } = this.props
@@ -75,6 +94,7 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>> {
         {...accessibility.attributes.root}
         {...unhandledProps}
         className={classes.root}
+        onFocus={this.handleFocus}
       >
         {childrenExist(children) ? (
           children
@@ -96,6 +116,11 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>> {
         )}
       </ElementType>
     )
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: isFromKeyboard() })
+    _.invoke(this.props, 'onFocus', e, this.props)
   }
 }
 

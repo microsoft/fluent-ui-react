@@ -5,7 +5,7 @@ import ReactionPopup from './ReactionPopup'
 
 const reactions = [{ icon: 'thumbs up', content: '1K' }, { icon: 'thumbs down', content: 2 }]
 const reactionsWithPopup = _.map(reactions, reaction => render =>
-  render(reaction, (Component, props) => <ReactionPopup Component={Component} props={props} />),
+  render(reaction, (Component, props) => <ReactionPopup {...props} />),
 )
 
 const actionMenu = {
