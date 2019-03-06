@@ -87,7 +87,7 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
           index,
           exclusive,
           renderItemTitle,
-          open: exclusive ? index === this.state.activeIndex : false,
+          open: exclusive ? index === this.state.activeIndex : undefined,
         },
         overrideProps: this.handleTreeItemOverrides,
       }),
