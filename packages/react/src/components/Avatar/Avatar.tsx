@@ -127,6 +127,6 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
   }
 }
 
-Avatar.create = createShorthandFactory(Avatar, 'name')
+Avatar.create = createShorthandFactory({ Component: Avatar, mappedProp: 'name' })
 
 export default Avatar

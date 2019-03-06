@@ -61,6 +61,9 @@ class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, 
   }
 }
 
-HeaderDescription.create = createShorthandFactory(HeaderDescription, 'content')
+HeaderDescription.create = createShorthandFactory({
+  Component: HeaderDescription,
+  mappedProp: 'content',
+})
 
 export default HeaderDescription

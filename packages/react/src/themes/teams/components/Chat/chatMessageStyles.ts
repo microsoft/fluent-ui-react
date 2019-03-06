@@ -84,8 +84,11 @@ const chatMessageStyles: ComponentSlotStylesInput<
     fontWeight: v.authorFontWeight,
   }),
 
-  timestamp: ({ variables: v }) => ({
+  timestamp: ({ props: p, variables: v }) => ({
     marginBottom: v.headerMarginBottom,
+    ...(p.mine && {
+      color: v.timestampColorMine,
+    }),
   }),
 
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({

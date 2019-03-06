@@ -31,6 +31,7 @@ import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
 import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import CodeSnippet from '../../CodeSnippet'
+import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 
 export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
@@ -46,14 +47,10 @@ interface ComponentExampleState {
   knobs: Object
   themeName: string
   componentVariables: Object
-  handleMouseLeave: () => void
-  handleMouseMove: () => void
   showCode: boolean
   showRtl: boolean
   showTransparent: boolean
   showVariables: boolean
-  isHovering: boolean
-  copiedCode: boolean
 }
 
 const childrenStyle: React.CSSProperties = {
@@ -71,41 +68,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   kebabExamplePath: string
   KnobsComponent: any
 
-  /*
-  state = {
-    knobs: {},
-    themeName: 'teams',
-    componentVariables: {},
-    handleMouseLeave: _.noop,
-    handleMouseMove: _.noop,
-    showCode: false,
-    showRtl: false,
-    showTransparent: false,
-    showVariables: false,
-    isHovering: false,
-    copiedCode: false,
-  }
-
-  static contextTypes = {
-    onPassed: PropTypes.func,
-  }
-
-  static propTypes = {
-    children: PropTypes.node,
-    description: PropTypes.node,
-    examplePath: PropTypes.string.isRequired,
-    history: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
-    title: PropTypes.node,
-    themeName: PropTypes.string,
-    exampleTheme: PropTypes.string,
-  }
-
-  componentWillMount() {
-    const { examplePath } = this.props
-    this.anchorName = examplePathToHash(examplePath)
-*/
   constructor(props) {
     super(props)
 
@@ -114,16 +76,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.anchorName = examplePathToHash(examplePath)
     this.state = {
       themeName,
-      handleMouseLeave: this.handleMouseLeave,
-      handleMouseMove: this.handleMouseMove,
       knobs: this.getDefaultKnobsValue(),
       showCode: this.isActiveHash(),
       componentVariables: {},
       showRtl: examplePath && examplePath.endsWith('rtl') ? true : false,
       showTransparent: false,
       showVariables: false,
-      isHovering: false,
-      copiedCode: false,
     }
   }
 
@@ -183,22 +141,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     copyToClipboard(window.location.href)
   }
 
-  handleMouseLeave = () => {
-    this.setState({
-      isHovering: false,
-      handleMouseLeave: undefined,
-      handleMouseMove: this.handleMouseMove,
-    })
-  }
-
-  handleMouseMove = () => {
-    this.setState({
-      isHovering: true,
-      handleMouseLeave: this.handleMouseLeave,
-      handleMouseMove: undefined,
-    })
-  }
-
   handleShowRtlClick = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
@@ -233,13 +175,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const { title } = this.props
 
     if (title) this.props.onExamplePassed(this.anchorName)
-  }
-
-  copySourceCode = () => {
-    copyToClipboard(this.props.currentCode)
-
-    this.setState({ copiedCode: true })
-    setTimeout(() => this.setState({ copiedCode: false }), 1000)
   }
 
   resetSourceCode = () => {
@@ -393,13 +328,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   renderCodeEditorMenu = (): JSX.Element => {
     const {
+      canCodeBeFormatted,
+      currentCode,
       currentCodeLanguage,
       currentCodePath,
-      canCodeBeFormatted,
       handleCodeFormat,
       wasCodeChanged,
     } = this.props
-    const { copiedCode } = this.state
 
     const codeEditorStyle: ICSSInJSStyle = {
       position: 'relative',
@@ -408,16 +343,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       border: '0',
       paddingTop: '.5rem',
       float: 'right',
-      color: '#ffffff80',
       borderBottom: 0,
-      ':hover': {
-        borderBottom: 0,
-        color: 'white',
-      },
-      ':focus': {
-        borderBottom: 0,
-        color: 'white',
-      },
     }
 
     // get component name from file path:
@@ -446,13 +372,21 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         onClick: this.resetSourceCode,
         disabled: !wasCodeChanged,
       },
-      {
-        active: copiedCode, // to show the color
-        icon: copiedCode ? { color: 'green', name: 'check' } : 'copy',
-        content: 'Copy',
-        key: 'copy',
-        onClick: this.copySourceCode,
-      },
+      render =>
+        render({ content: 'Copy' }, (Component, props) => (
+          <CopyToClipboard
+            key="copy"
+            render={(active, onClick) => (
+              <Component
+                {...props}
+                active={active}
+                icon={active ? 'check' : 'copy'}
+                onClick={onClick}
+              />
+            )}
+            value={currentCode}
+          />
+        )),
       {
         disabled: currentCodeLanguage !== 'ts',
         icon: 'github',
@@ -460,6 +394,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         href: ghEditHref,
         rel: 'noopener noreferrer',
         target: '_blank',
+        title: currentCodeLanguage !== 'ts' ? 'You can edit source only in TypeScript' : undefined,
         key: 'withtslanguage',
       },
     ]
@@ -469,11 +404,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         size="small"
         primary
         underlined
+        activeIndex={-1}
         styles={codeEditorStyle}
         variables={{
           activeColor: 'white',
-          disabledColor: '#ffffff80',
-          color: '#ffffff80',
+          disabledColor: '#ffffff60',
+          color: '#ffffffb0',
         }}
         items={menuItems}
       />
@@ -611,15 +547,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       description,
       title,
     } = this.props
-    const {
-      handleMouseLeave,
-      handleMouseMove,
-      knobs,
-      showCode,
-      showRtl,
-      showTransparent,
-      showVariables,
-    } = this.state
+    const { knobs, showCode, showRtl, showTransparent, showVariables } = this.state
 
     return (
       <Flex column>
@@ -628,17 +556,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             {/* Ensure anchor links don't occlude card shadow effect */}
             {/* <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} /> */}
 
-            <Segment
-              width={19}
-              styles={{ borderBottom: '1px solid #ddd' }}
-              onMouseLeave={handleMouseLeave}
-              onMouseMove={handleMouseMove}
-            >
-              <div style={{ display: 'flex' }}>
-                <div style={{ flex: '1' }}>
-                  <ComponentExampleTitle description={description} title={title} />
-                </div>
-                <div style={{ flex: '0 0 auto' }}>
+            <Segment styles={{ borderBottom: '1px solid #ddd' }}>
+              <Flex>
+                <ComponentExampleTitle description={description} title={title} />
+
+                <Flex.Item push>
                   <ComponentControls
                     anchorName={this.anchorName}
                     exampleCode={currentCode}
@@ -654,8 +576,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                     showTransparent={showTransparent}
                     showVariables={showVariables}
                   />
-                </div>
-              </div>
+                </Flex.Item>
+              </Flex>
+
               {this.renderKnobs()}
             </Segment>
 

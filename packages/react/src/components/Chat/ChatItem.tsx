@@ -108,7 +108,7 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
   }
 }
 
-ChatItem.create = createShorthandFactory(ChatItem, 'message')
+ChatItem.create = createShorthandFactory({ Component: ChatItem, mappedProp: 'message' })
 ChatItem.slotClassNames = {
   message: `${ChatItem.className}__message`,
   gutter: `${ChatItem.className}__gutter`,
