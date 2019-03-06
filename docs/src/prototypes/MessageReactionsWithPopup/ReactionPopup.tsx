@@ -1,7 +1,7 @@
 import * as React from 'react'
 import keyboardKey from 'keyboard-key'
 import { Popup, Menu, Ref, Reaction, popupAutoFocusBehavior } from '@stardust-ui/react'
-import { focusNearest } from './focusUtils'
+// import { focusNearest } from './focusUtils'
 
 const getAriaLabel = (numberOfPersons, emojiType) => {
   if (numberOfPersons === 1) {
@@ -15,29 +15,23 @@ class ReactionPopup extends React.Component<any, any> {
     open: false,
   }
 
-  reactionNode: HTMLButtonElement
+  reactionNode = React.createRef<HTMLButtonElement>()
 
   handleKeyDownOnMenu = (e, props) => {
     if ((e.shiftKey && e.keyCode === keyboardKey.Tab) || e.keyCode === keyboardKey.Tab) {
       this.setState({ open: false })
-      focusNearest(this.reactionNode, e.shiftKey ? 'previous' : 'next')
+      // focusNearest(this.reactionNode.current, e.shiftKey ? 'previous' : 'next')
     }
   }
 
   handleOpenChange = (e, { open }) => {
-    this.setState({
-      open,
-    })
+    this.setState({ open })
   }
 
   render() {
     const { icon, content } = this.props
     return (
-      <Ref
-        innerRef={(reactionNode: HTMLButtonElement) => {
-          this.reactionNode = reactionNode
-        }}
-      >
+      <Ref innerRef={this.reactionNode}>
         <Popup
           trigger={
             <Reaction
@@ -47,7 +41,6 @@ class ReactionPopup extends React.Component<any, any> {
               aria-haspopup="true"
             />
           }
-          inline
           content={{
             content: (
               <Menu
@@ -58,9 +51,10 @@ class ReactionPopup extends React.Component<any, any> {
               />
             ),
           }}
+          inline
+          on="hover"
           open={this.state.open}
           onOpenChange={this.handleOpenChange}
-          on={'hover'}
           accessibility={popupAutoFocusBehavior}
         />
       </Ref>

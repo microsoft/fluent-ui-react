@@ -4,9 +4,11 @@ import { Avatar, Chat } from '@stardust-ui/react'
 import ReactionPopup from './ReactionPopup'
 
 const reactions = [{ icon: 'thumbs up', content: '1K' }, { icon: 'thumbs down', content: 2 }]
-const reactionsWithPopup = _.map(reactions, reaction => render =>
-  render(reaction, (Component, props) => <ReactionPopup {...props} />),
-)
+
+const reactionsWithPopup = _.map(reactions, reaction => ({
+  as: ReactionPopup,
+  ...reaction,
+}))
 
 const actionMenu = {
   iconOnly: true,
