@@ -46,7 +46,7 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
     width: v.height,
   }),
 
-  icon: ({ props: p, colors }): ICSSInJSStyle => {
+  icon: ({ props: p, variables: v, colors }): ICSSInJSStyle => {
     return {
       ...(p.icon &&
         typeof p.icon === 'object' &&
@@ -56,18 +56,19 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
 
       // Label type: Badge
       ...(p.badge && {
-        marginRight: '5px',
-        color: p.color ? colors.foreground : 'black',
+        ...(p.iconPosition === 'start'
+          ? { marginRight: v.badgeIconMargin }
+          : { marginLeft: v.badgeIconMargin }),
+        color: p.color ? colors.foreground : v.badgeColor,
       }),
     }
   },
 
   additionalContent: ({ variables: v, props: p, colors }): ICSSInJSStyle => ({
-    borderLeft: `solid ${pxToRem(1)}`,
+    borderLeft: v.additionalContentLeftBorder,
     borderColor: p.color ? colors.foreground : v.additionalContentBorderColor,
-    height: pxToRem(16),
-    marginLeft: '6px',
-    paddingLeft: '6px',
+    marginLeft: v.additionalContentMarginLeft,
+    paddingLeft: v.additionalContentPaddingLeft,
   }),
 }
 
