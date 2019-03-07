@@ -18,13 +18,13 @@ export interface LabelVariables {
   badgeBackgroundColor: string
   badgeBorderRadius: string
   badgePadding: string
-  badgePaddingWithoutAdditionalContent: string
+  badgePaddingWithoutdetail: string
   badgePaddingWithoutIcon: string
   badgeIconMargin: string
-  additionalContentBorderColor: string
-  additionalContentLeftBorder: string
-  additionalContentMarginLeft: string
-  additionalContentPaddingLeft: string
+  detailBorderColor: string
+  detailLeftBorder: string
+  detailMarginLeft: string
+  detailPaddingLeft: string
 }
 
 export default (siteVars: SiteVariablesPrepared): LabelVariables => {
@@ -51,12 +51,12 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
     badgeBackgroundColor: siteVars.gray10,
     badgeBorderRadius: pxToRem(2),
     badgePadding: `0 ${pxToRem(8)}`,
-    badgePaddingWithoutAdditionalContent: `0 ${pxToRem(10)} 0 ${pxToRem(8)}`,
+    badgePaddingWithoutdetail: `0 ${pxToRem(10)} 0 ${pxToRem(8)}`,
     badgePaddingWithoutIcon: `0 ${pxToRem(10)}`,
     badgeIconMargin: pxToRem(5),
-    additionalContentBorderColor: siteVars.gray06,
-    additionalContentLeftBorder: `solid ${pxToRem(1)}`,
-    additionalContentMarginLeft: pxToRem(6),
-    additionalContentPaddingLeft: pxToRem(6),
+    detailBorderColor: siteVars.gray06,
+    detailLeftBorder: `solid ${pxToRem(1)}`,
+    detailMarginLeft: pxToRem(6),
+    detailPaddingLeft: pxToRem(6),
   }
 }

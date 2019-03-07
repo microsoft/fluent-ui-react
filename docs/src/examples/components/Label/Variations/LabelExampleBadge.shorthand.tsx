@@ -5,7 +5,7 @@ const LabelExampleBadgeShorthand = () => (
   <>
     <Label
       content="Badge with icon"
-      additionalContent="and additional text"
+      detail="and additional text"
       icon={{ name: 'emoji', outline: true }}
       iconPosition="start"
       badge

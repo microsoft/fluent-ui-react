@@ -34,7 +34,7 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
         color: p.color ? colors.foreground : v.badgeColor,
         borderRadius: v.badgeBorderRadius,
         backgroundColor: p.color ? colors.background : v.badgeBackgroundColor,
-        padding: p.additionalContent ? v.badgePadding : v.badgePaddingWithoutAdditionalContent,
+        padding: p.detail ? v.badgePadding : v.badgePaddingWithoutdetail,
         ...(!p.icon && {
           padding: v.badgePaddingWithoutIcon,
         }),
@@ -65,11 +65,11 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
     }
   },
 
-  additionalContent: ({ variables: v, props: p, colors }): ICSSInJSStyle => ({
-    borderLeft: v.additionalContentLeftBorder,
-    borderColor: p.color ? colors.foreground : v.additionalContentBorderColor,
-    marginLeft: v.additionalContentMarginLeft,
-    paddingLeft: v.additionalContentPaddingLeft,
+  detail: ({ variables: v, props: p, colors }): ICSSInJSStyle => ({
+    borderLeft: v.detailLeftBorder,
+    borderColor: p.color ? colors.foreground : v.detailBorderColor,
+    marginLeft: v.detailMarginLeft,
+    paddingLeft: v.detailPaddingLeft,
   }),
 }
 

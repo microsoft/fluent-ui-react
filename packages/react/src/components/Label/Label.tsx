@@ -61,7 +61,7 @@ export interface LabelProps
   badge?: boolean
 
   /** A Label can have an additional section for text. */
-  additionalContent?: string
+  detail?: string
 }
 
 /**
@@ -83,7 +83,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     imagePosition: PropTypes.oneOf(['start', 'end']),
     fluid: PropTypes.bool,
     badge: PropTypes.bool,
-    additionalContent: PropTypes.string,
+    detail: PropTypes.string,
   }
 
   static defaultProps = {
@@ -102,15 +102,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   }
 
   renderComponent({ accessibility, ElementType, classes, unhandledProps, variables, styles }) {
-    const {
-      children,
-      content,
-      additionalContent,
-      icon,
-      iconPosition,
-      image,
-      imagePosition,
-    } = this.props
+    const { children, content, detail, icon, iconPosition, image, imagePosition } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -138,14 +130,12 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
       },
       overrideProps: this.handleIconOverrides,
     })
-    const additionalContentElement = additionalContent
-      ? Text.create(additionalContent, {
-          defaultProps: {
-            styles: styles.additionalContent,
-            variables: variables.additionalContent,
-          },
-        })
-      : null
+    const detailElement = Text.create(detail, {
+      defaultProps: {
+        styles: styles.detail,
+        variables: variables.detail,
+      },
+    })
 
     const startImage = imagePosition === 'start' && imageElement
     const startIcon = iconPosition === 'start' && iconElement
@@ -154,7 +144,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     const hasStartElement = startImage || startIcon
     const hasEndElement = endIcon || endImage
 
-    const main = Box.create([content, additionalContentElement], {
+    const main = Box.create([content, detailElement], {
       defaultProps: { as: 'span' },
     })
 
