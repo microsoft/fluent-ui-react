@@ -7,7 +7,7 @@ import TreeTitle from './TreeTitle'
 import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import {
-  AutoControlledComponent,
+  UIComponent,
   childrenExist,
   customPropTypes,
   createShorthandFactory,
@@ -62,11 +62,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   title?: ShorthandValue
 }
 
-export interface TreeItemState {
-  open?: boolean
-}
-
-class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeItemState> {
+class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
   static create: Function
 
   static className = 'ui-tree__item'
@@ -95,27 +91,16 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
     accessibility: defaultBehavior,
   }
 
-  getInitialAutoControlledState({ open }) {
-    return { open: !!open }
-  }
-
   handleTitleOverrides = (predefinedProps: TreeItemProps) => ({
     onClick: (e, titleProps) => {
       e.preventDefault()
-      this.trySetState({
-        open: !this.state.open,
-      })
-
-      if (this.props.exclusive) {
-        _.invoke(this.props, 'onOpenChange', e, this.props)
-      }
+      _.invoke(this.props, 'onOpenChange', e, this.props)
       _.invoke(predefinedProps, 'onClick', e, titleProps)
     },
   })
 
   renderContent() {
-    const { items, title, renderItemTitle, exclusive } = this.props
-    const open = exclusive ? this.props.open : this.state.open
+    const { items, title, renderItemTitle, open } = this.props
     const hasSubtree = !!(items && items.length)
 
     return (

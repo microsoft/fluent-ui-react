@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import TreeItem, { TreeItemProps } from './TreeItem'
 import {
-  UIComponent,
+  AutoControlledComponent,
   childrenExist,
   commonPropTypes,
   customPropTypes,
@@ -17,11 +17,17 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 
 export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
+  /** Index of the currently active subtree. */
+  activeIndex?: number[] | number
+
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior
    */
   accessibility?: Accessibility
+
+  /** Initial activeIndex value. */
+  defaultActiveIndex?: number[] | number
 
   /** Only allow one subtree to be open at a time. */
   exclusive?: boolean
@@ -42,7 +48,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
 /**
  * Allows users to display data organised in tree-hierarchy.
  */
-class Tree extends UIComponent<ReactProps<TreeProps>> {
+class Tree extends AutoControlledComponent<ReactProps<TreeProps>, any> {
   static create: Function
 
   static className = 'ui-tree'
@@ -53,14 +59,18 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
+    activeIndex: customPropTypes.every([
+      customPropTypes.disallow(['children']),
+      PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
+    ]),
+    defaultActiveIndex: customPropTypes.every([
+      customPropTypes.disallow(['children']),
+      PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
+    ]),
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
     rtlAttributes: PropTypes.func,
-  }
-
-  state = {
-    activeIndex: -1,
   }
 
   public static defaultProps = {
@@ -68,11 +78,28 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     accessibility: defaultBehavior,
   }
 
+  static autoControlledProps = ['activeIndex']
+
+  getInitialAutoControlledState({ defaultActiveIndex, exclusive }) {
+    return {
+      activeIndex: defaultActiveIndex === undefined ? (exclusive ? -1 : []) : defaultActiveIndex,
+    }
+  }
+
+  computeNewIndex = index => {
+    const { activeIndex } = this.state
+    const { exclusive } = this.props
+
+    if (exclusive) return index === activeIndex ? -1 : index
+    // check to see if index is in array, and remove it, if not then add it
+    return _.includes(activeIndex, index) ? _.without(activeIndex, index) : [...activeIndex, index]
+  }
+
   handleTreeItemOverrides = predefinedProps => ({
     onOpenChange: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
       const { index } = treeItemProps
-      this.setState({
-        activeIndex: index,
+      this.trySetState({
+        activeIndex: this.computeNewIndex(index),
       })
       _.invoke(predefinedProps, 'onOpenChange', e, treeItemProps)
     },
@@ -87,7 +114,9 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
           index,
           exclusive,
           renderItemTitle,
-          open: exclusive ? index === this.state.activeIndex : undefined,
+          open: exclusive
+            ? index === this.state.activeIndex
+            : _.includes(this.state.activeIndex, index),
         },
         overrideProps: this.handleTreeItemOverrides,
       }),
