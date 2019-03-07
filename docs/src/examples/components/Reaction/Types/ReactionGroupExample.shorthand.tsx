@@ -3,7 +3,10 @@ import { Reaction } from '@stardust-ui/react'
 
 const ReactionGroupExample = () => (
   <Reaction.Group
-    items={[{ icon: 'thumbs up', content: '2K' }, { icon: 'thumbs down', content: 10 }]}
+    items={[
+      { icon: 'thumbs up', content: '2K', key: 'up' },
+      { icon: 'thumbs down', content: 10, key: 'down' },
+    ]}
   />
 )
 
