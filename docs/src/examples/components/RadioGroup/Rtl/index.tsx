@@ -5,7 +5,7 @@ import NonPublicSection from 'docs/src/components/ComponentDoc/NonPublicSection'
 
 const Rtl = () => (
   <NonPublicSection title="Rtl">
-    <ComponentExample examplePath="components/Button/Rtl/ButtonExample.rtl" />
+    <ComponentExample examplePath="components/RadioGroup/Rtl/RadioGroupExample.rtl" />
   </NonPublicSection>
 )
 
