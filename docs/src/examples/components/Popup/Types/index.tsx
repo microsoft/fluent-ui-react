@@ -30,6 +30,11 @@ const Types = () => (
       description="By default Popup uses trigger element as the one it is displayed for, but it is possible to provide any DOM element as popup's target."
       examplePath="components/Popup/Types/PopupCustomTargetExample"
     />
+    <ComponentExample
+      title="Inline"
+      description="The content of the popup can be rendered next to the trigger element instead of the body."
+      examplePath="components/Popup/Types/PopupExampleInline"
+    />
   </ExampleSection>
 )
 
