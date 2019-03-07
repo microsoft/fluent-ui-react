@@ -1,7 +1,7 @@
 {
   "name": "@stardust-ui/react-proptypes",
   "description": "Set of custom reusable PropTypes for React components, some of them are specific for Stardust UI.",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "author": "Oleksandr Fediashov <olfedias@microsoft.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
