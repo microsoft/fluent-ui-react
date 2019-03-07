@@ -94,6 +94,7 @@ const webpackConfig: any = {
     }),
   ],
   resolve: {
+    modules: ['node_modules', 'node_modules_fela'],
     extensions: ['.ts', '.tsx', '.js', '.json'],
     alias: {
       ...lernaAliases(),

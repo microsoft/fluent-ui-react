@@ -6,6 +6,7 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  isBrowser,
   rtlTextContainer,
 } from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
@@ -32,6 +33,12 @@ const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<Box
   render(config, props) {
     const { ElementType, classes, unhandledProps } = config
     const { children, content } = props
+
+    // TODO: Heads up!  This assumes a single renderm, we're trying to count "mount"...
+    if (isBrowser()) {
+      window.componentCount.TOTAL++
+      window.componentCount.Box = (window.componentCount.Box || 0) + 1
+    }
 
     return (
       <ElementType

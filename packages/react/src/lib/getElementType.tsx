@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Props } from '../types'
+import * as perf from './perf'
 
 /**
  * Returns a createElement() type based on the props of the Component.
@@ -10,7 +11,7 @@ import { Props } from '../types'
  * @param {function} [getDefault] A function that returns a default element type.
  * @returns {string|function} A ReactElement type
  */
-function getElementType(
+const getElementType = perf.time('getElementType', function getElementType(
   Component: { defaultProps?: Props },
   props: Props,
   getDefault?: () => React.ElementType,
@@ -39,6 +40,6 @@ function getElementType(
   // use defaultProp or 'div'
 
   return defaultProps.as || 'div'
-}
+})
 
 export default getElementType

@@ -6,6 +6,8 @@ import { ThemeContext } from 'react-fela'
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
+import { isBrowser } from 'src/lib'
+import * as perf from 'src/lib/perf'
 
 // TODO @Bugaa92: deprecated by createComponent.tsx
 class UIComponent<P, S = {}> extends React.Component<P, S> {
@@ -43,6 +45,12 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
       }
     }
 
+    if (isBrowser()) {
+      window.componentCount.TOTAL++
+      window.componentCount[this.childClass.displayName] =
+        (window.componentCount[this.childClass.displayName] || 0) + 1
+    }
+
     this.renderComponent = this.renderComponent.bind(this)
   }
 
@@ -62,8 +70,8 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
         actionHandlers: this.actionHandlers,
         focusZoneRef: this.setFocusZoneRef,
         render: this.renderComponent,
-      },
-      this.context,
+      }
+      perf.flags.SKIP_CONTEXT ? {} : this.context,
     )
   }
 

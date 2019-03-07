@@ -1,16 +1,18 @@
 import { createRenderer } from 'fela'
 import felaSanitizeCss from './felaSanitizeCssPlugin'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
+import monolithic from 'fela-monolithic'
 import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
 import felaPluginPrefixer from 'fela-plugin-prefixer'
 import rtl from 'fela-plugin-rtl'
 
 import { Renderer } from '../themes/types'
+import * as perf from 'src/lib/perf'
 
 let felaDevMode = false
 
 try {
-  felaDevMode = !!window.localStorage.felaDevMode
+  felaDevMode = perf.flags.FELA_RENDERER_DEV_MODE
 } catch {}
 
 if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
@@ -43,23 +45,25 @@ const filterClassName = (className: string): boolean =>
 
 const createRendererConfig = (options: any = {}) => ({
   devMode: felaDevMode,
-  plugins: [
-    // is necessary to prevent accidental style typos
-    // from breaking ALL the styles on the page
-    felaSanitizeCss({
-      skip: ['content'],
-    }),
+  plugins: perf.flags.SKIP_FELA_PLUGINS
+    ? []
+    : [
+        // is necessary to prevent accidental style typos
+        // from breaking ALL the styles on the page
+        felaSanitizeCss({
+          skip: ['content'],
+        }),
 
-    felaPluginPlaceholderPrefixer(),
-    felaPluginPrefixer(),
+      felaPluginPlaceholderPrefixer(),
+      felaPluginPrefixer(),
 
-    // Heads up!
-    // This is required after fela-plugin-prefixer to resolve the array of fallback values prefixer produces.
-    felaPluginFallbackValue(),
-    ...(options.isRtl ? [rtl()] : []),
-  ],
+      // Heads up!
+      // This is required after fela-plugin-prefixer to resolve the array of fallback values prefixer produces.
+      felaPluginFallbackValue(),
+      ...(options.isRtl ? [rtl()] : []),
+    ],
   filterClassName,
-  enhancers: [],
+  enhancers: [perf.flags.USE_FELA_MONOLITHIC && monolithic()].filter(Boolean),
   ...(options.isRtl ? { selectorPrefix: 'rtl_' } : {}),
   ...(options.rendererId ? { rendererId: options.rendererId } : {}),
 })

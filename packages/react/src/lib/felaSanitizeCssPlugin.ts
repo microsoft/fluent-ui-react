@@ -1,3 +1,5 @@
+import * as perf from 'src/lib/perf'
+
 /**
  * Checks whether provided CSS property value is safe for being rendered by Fela engine.
  */
@@ -35,7 +37,7 @@ const isValidCssValue = (value: any) => {
   return openingBracketsStack.length === 0
 }
 
-export default (config?: { skip?: string[] }) => {
+export default perf.time('[fela-plugin]: sanitize', (config?: { skip?: string[] }) => {
   const cssPropertiesToSkip = [...((config && config.skip) || [])]
 
   const sanitizeCssStyleObject = styles => {
@@ -61,4 +63,4 @@ export default (config?: { skip?: string[] }) => {
   }
 
   return sanitizeCssStyleObject
-}
+})

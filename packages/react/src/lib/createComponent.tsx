@@ -9,6 +9,7 @@ import { FocusZone } from './accessibility/FocusZone'
 import { createShorthandFactory } from './factories'
 import { ObjectOf } from '../types'
 import { ThemePrepared } from '../themes/types'
+import * as perf from 'src/lib/perf'
 
 export interface CreateComponentConfig<P> {
   displayName: string
@@ -43,7 +44,8 @@ const createComponent = <P extends ObjectOf<any> = any>({
   }
 
   const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
-    const theme: ThemePrepared = React.useContext(ThemeContext)
+    // @ts-ignore
+    const theme: ThemePrepared = perf.flags.SKIP_CONTEXT ? {} : React.useContext(ThemeContext)
 
     return renderComponent(
       {

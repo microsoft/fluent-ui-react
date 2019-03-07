@@ -16,6 +16,7 @@ declare module '*.json' {
 }
 
 declare interface Window {
+  [key: string]: any
   prettierPlugins: any
   resetExternalLayout?: () => void
   switchTheme?: (themeName: string) => void

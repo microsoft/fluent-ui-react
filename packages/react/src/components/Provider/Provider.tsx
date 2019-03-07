@@ -27,6 +27,7 @@ import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
 import ProviderBox from './ProviderBox'
 import { Extendable } from '../../types'
+import * as perf from 'src/lib/perf'
 
 export interface ProviderProps extends ChildrenComponentProps {
   theme: ThemeInput
@@ -143,6 +144,10 @@ class Provider extends React.Component<Extendable<ProviderProps>> {
 
   render() {
     const { theme, children, ...unhandledProps } = this.props
+
+    if (perf.flags.SKIP_CONTEXT) {
+      return children
+    }
 
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md

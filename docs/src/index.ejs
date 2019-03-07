@@ -23,6 +23,8 @@
         history.replaceState(null, null, redirect)
       }
     })()
+    performance.clearMarks = () => null
+    performance.clearMeasures = () => null
   </script>
 </head>
 <body>

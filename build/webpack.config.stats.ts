@@ -69,6 +69,7 @@ const makeConfig = (srcPath, name) => ({
     new webpack.DefinePlugin(config.compiler_globals),
   ],
   resolve: {
+    modules: ['node_modules', 'node_modules_fela'],
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   performance: {

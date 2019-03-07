@@ -8,6 +8,7 @@
 
 coverage/
 dist/
+!node_modules_fela/rtl-css-js/dist/
 docs/src/componentInfo
 docs/src/componentMenu.json
 docs/src/behaviorMenu.json

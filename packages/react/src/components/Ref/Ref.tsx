@@ -23,6 +23,15 @@ const Ref: React.FunctionComponent<ReactProps<RefProps>> = props => {
   const child = React.Children.only(children)
   const ElementType = isForwardRef(child) ? RefForward : RefFindNode
 
+  const window: any = {
+    componentCount: { TOTAL: 0, Box: 0 },
+    localStorage: { setItem: () => null, getItem: () => null },
+  }
+
+  // TODO: Heads up!  This assumes a single renderm, we're trying to count "mount"...
+  window.componentCount.TOTAL++
+  window.componentCount.Ref = (window.componentCount.Ref || 0) + 1
+
   return <ElementType innerRef={innerRef}>{child}</ElementType>
 }
 
