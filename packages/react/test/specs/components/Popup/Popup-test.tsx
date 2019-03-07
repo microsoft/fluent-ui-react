@@ -265,7 +265,7 @@ describe('Popup', () => {
   })
 
   describe('keyboard event propagation', () => {
-    const expectPopupToStopPropagation = (
+    const expectPopupToHandleStopPropagation = (
       behavior: Accessibility,
       shouldStopPropagation: boolean,
     ) => {
@@ -277,30 +277,24 @@ describe('Popup', () => {
         />,
       )
 
-      // check popup open on key press
+      // open popup
       const popupTriggerElement = popup.find(`#${triggerId}`)
       popupTriggerElement.simulate('keydown', { keyCode: keyboardKey.Enter })
-
-      expect(getPopupContent(popup).exists()).toBe(true)
 
       // when popup open, check that stopPropagation is called when keyboard events are invoked
       const stopPropagation = jest.fn()
       const popupContentElement = getPopupContent(popup)
       popupContentElement.simulate('keyDown', { stopPropagation })
-      if (shouldStopPropagation) {
-        expect(stopPropagation).toHaveBeenCalledTimes(1)
-      } else {
-        expect(stopPropagation).not.toBeCalled()
-      }
+      expect(stopPropagation).toHaveBeenCalledTimes(shouldStopPropagation ? 1 : 0)
     }
     test('stops when focus trap behavior is used', () => {
-      expectPopupToStopPropagation(popupFocusTrapBehavior, true)
+      expectPopupToHandleStopPropagation(popupFocusTrapBehavior, true)
     })
     test('stops when dialog behavior is used', () => {
-      expectPopupToStopPropagation(dialogBehavior, true)
+      expectPopupToHandleStopPropagation(dialogBehavior, true)
     })
     test('does not stop when default behavior is used', () => {
-      expectPopupToStopPropagation(popupBehavior, false)
+      expectPopupToHandleStopPropagation(popupBehavior, false)
     })
   })
 })
