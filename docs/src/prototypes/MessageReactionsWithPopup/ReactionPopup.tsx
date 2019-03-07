@@ -47,7 +47,6 @@ class ReactionPopup extends React.Component<any, any> {
           ),
         }}
         inline
-        allowKeyDownPropagation
         on="hover"
         open={this.state.open}
         onOpenChange={this.handleOpenChange}
