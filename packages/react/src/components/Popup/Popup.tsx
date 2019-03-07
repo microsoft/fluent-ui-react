@@ -469,12 +469,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const popupWrapperAttributes = {
       ...(rtl && { dir: 'rtl' }),
       ...accessibility.attributes.popup,
-      onKeyDown: (e: React.KeyboardEvent) => {
-        // No need to propagate keydown events outside Popup
-        // allow only keyboard actions to execute
-        _.invoke(accessibility.keyHandlers.popup, 'onKeyDown', e)
-        e.stopPropagation()
-      },
+      ...accessibility.keyHandlers.popup,
       className: popupPositionClasses,
       style: popupPlacementStyles,
       ...this.getContentProps(),
@@ -483,6 +478,13 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const focusTrapProps = {
       ...(typeof accessibility.focusTrap === 'boolean' ? {} : accessibility.focusTrap),
       ...popupWrapperAttributes,
+      onKeyDown: (e: React.KeyboardEvent) => {
+        // No need to propagate keydown events outside Popup
+        // when focus trap behavior is used
+        // allow only keyboard actions to execute
+        _.invoke(accessibility.keyHandlers.popup, 'onKeyDown', e)
+        e.stopPropagation()
+      },
     } as FocusTrapZoneProps
 
     const autoFocusProps = {
