@@ -293,10 +293,10 @@ describe('Popup', () => {
         expect(stopPropagation).not.toBeCalled()
       }
     }
-    test('stop when focus trap behavior is used', () => {
+    test('stops when focus trap behavior is used', () => {
       expectPopupToStopPropagation(popupFocusTrapBehavior, true)
     })
-    test('stop when dialog behavior is used', () => {
+    test('stops when dialog behavior is used', () => {
       expectPopupToStopPropagation(dialogBehavior, true)
     })
     test('does not stop when default behavior is used', () => {
