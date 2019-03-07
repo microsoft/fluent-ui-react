@@ -9,27 +9,38 @@ import {
   ContentComponentProps,
   isFromKeyboard,
 } from '../../lib'
-import ItemLayout from '../ItemLayout/ItemLayout'
+import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ReactProps, ComponentEventHandler } from '../../types'
+import { ShorthandValue, ReactProps, ComponentEventHandler } from '../../types'
+import Box from '../Box/Box'
 
-export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
+export interface ListItemSlotClassNames {
+  header: string
+  headerMedia: string
+  main: string
+  content: string
+  contentMedia: string
+  media: string
+  endMedia: string
+}
+
+export interface ListItemProps extends UIComponentProps, ContentComponentProps<ShorthandValue> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default listItemBehavior
    * */
   accessibility?: Accessibility
-  contentMedia?: any
+  contentMedia?: ShorthandValue
   /** Toggle debug mode. */
   debug?: boolean
-  header?: any
-  endMedia?: any
-  headerMedia?: any
+  header?: ShorthandValue
+  endMedia?: ShorthandValue
+  headerMedia?: ShorthandValue
 
   /** A list item can appear more important and draw the user's attention. */
   important?: boolean
-  media?: any
+  media?: ShorthandValue
 
   index?: number
   /** A list item can indicate that it can be selected. */
@@ -68,6 +79,8 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
   static displayName = 'ListItem'
 
   static className = 'ui-list__item'
+
+  static slotClassNames: ListItemSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -122,47 +135,86 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
   }
 
   renderComponent({ classes, accessibility, unhandledProps, styles }) {
-    const {
-      as,
-      debug,
-      endMedia,
-      media,
-      content,
-      contentMedia,
-      header,
-      headerMedia,
-      truncateContent,
-      truncateHeader,
-    } = this.props
+    const { as, debug, endMedia, media, content, contentMedia, header, headerMedia } = this.props
+
+    const contentElement = Box.create(content, {
+      defaultProps: {
+        className: ListItem.slotClassNames.content,
+        styles: styles.content,
+      },
+    })
+    const contentMediaElement = Box.create(contentMedia, {
+      defaultProps: {
+        className: ListItem.slotClassNames.contentMedia,
+        styles: styles.contentMedia,
+      },
+    })
+    const headerElement = Box.create(header, {
+      defaultProps: {
+        className: ListItem.slotClassNames.header,
+        styles: styles.header,
+      },
+    })
+    const headerMediaElement = Box.create(headerMedia, {
+      defaultProps: {
+        className: ListItem.slotClassNames.headerMedia,
+        styles: styles.headerMedia,
+      },
+    })
+    const endMediaElement = Box.create(endMedia, {
+      defaultProps: {
+        className: ListItem.slotClassNames.endMedia,
+        styles: styles.endMedia,
+      },
+    })
+    const mediaElement = Box.create(media, {
+      defaultProps: {
+        className: ListItem.slotClassNames.media,
+        styles: styles.media,
+      },
+    })
 
     return (
-      <ItemLayout
+      <Flex
+        vAlign="center"
+        gap="gap.smaller"
         as={as}
-        className={classes.root}
-        rootCSS={styles.root}
-        content={content}
-        contentMedia={contentMedia}
         debug={debug}
-        endMedia={endMedia}
-        header={header}
-        headerMedia={headerMedia}
-        media={media}
-        mediaCSS={styles.media}
-        truncateContent={truncateContent}
-        truncateHeader={truncateHeader}
-        headerCSS={styles.header}
-        headerMediaCSS={styles.headerMedia}
-        contentCSS={styles.content}
+        className={classes.root}
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...unhandledProps}
-      />
+      >
+        {mediaElement}
+        <Flex.Item grow>
+          <Flex column className={ListItem.slotClassNames.main} styles={styles.main}>
+            <Flex gap="gap.smaller">
+              <Flex.Item grow>{headerElement}</Flex.Item>
+              {headerMediaElement}
+            </Flex>
+            <Flex gap="gap.smaller">
+              <Flex.Item grow>{contentElement}</Flex.Item>
+              {contentMediaElement}
+            </Flex>
+          </Flex>
+        </Flex.Item>
+        {endMediaElement}
+      </Flex>
     )
   }
 }
 
-ListItem.create = createShorthandFactory(ListItem, 'content')
+ListItem.create = createShorthandFactory({ Component: ListItem, mappedProp: 'content' })
+ListItem.slotClassNames = {
+  header: `${ListItem.className}__header`,
+  headerMedia: `${ListItem.className}__headerMedia`,
+  main: `${ListItem.className}__main`,
+  content: `${ListItem.className}__content`,
+  contentMedia: `${ListItem.className}__contentMedia`,
+  media: `${ListItem.className}__media`,
+  endMedia: `${ListItem.className}__endMedia`,
+}
 
 export default ListItem

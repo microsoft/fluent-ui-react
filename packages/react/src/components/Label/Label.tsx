@@ -156,6 +156,6 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   }
 }
 
-Label.create = createShorthandFactory(Label, 'content')
+Label.create = createShorthandFactory({ Component: Label, mappedProp: 'content' })
 
 export default Label

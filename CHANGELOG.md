@@ -17,6 +17,57 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add `inline` prop in the `Popup` for rendering the content next to the trigger element @mnajdova ([#1017](https://github.com/stardust-ui/react/pull/1017))
+
+<!--------------------------------[ v0.23.0 ]------------------------------- -->
+## [v0.23.0](https://github.com/stardust-ui/react/tree/v0.23.0) (2019-03-06)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.22.1...v0.23.0)
+
+### BREAKING CHANGES
+- Changed types of the slot's inside the `ListItem` component (`media`, `content`, `contentMedia`, `header`, `headerMedia` and `endMedia`) from `any` to `ShorthandValue` @mnajdova ([#886](https://github.com/stardust-ui/react/pull/886))
+- Changed class names of the slots inside the `ListItem` (`ItemLayout`'s classnames were replaced with `ListItem`'s) @mnajdova ([#886](https://github.com/stardust-ui/react/pull/886))
+- Replace the `outline` variable with the `outline` prop in `Icon` @layershifter ([#1002](https://github.com/stardust-ui/react/pull/1002))
+
+### Fixes
+- Remove space between `Button.Group` items without `circular` prop @Bugaa92 ([#973](https://github.com/stardust-ui/react/pull/973))
+- Fix allow `Text` component when rendered as div to behave as block element in Teams theme @mnajdova ([#940](https://github.com/stardust-ui/react/pull/940))
+- Correctly apply static styles if the first `Provider` rendered is RTL @miroslavstastny ([#960](https://github.com/stardust-ui/react/pull/960))
+- Fix font-based `Icon` styles in Teams theme @kuzhelov ([#976](https://github.com/stardust-ui/react/pull/976))
+- Refactor the `ListItem` component to use the `Flex` components instead of `ItemLayout` @mnajdova ([#886](https://github.com/stardust-ui/react/pull/886))
+- Fixed distance of the `content` and `reactionGroup` from the `badge` in the `ChatMessage` component for Teams theme @mnajdova ([#986](https://github.com/stardust-ui/react/pull/986))
+- Do not propagate keyboard events outside `Popup`'s content @sophieH29 ([#987](https://github.com/stardust-ui/react/pull/987/))
+- Fixed emoji `Icon` spacing issue and added settings `Icon` ([#991](https://github.com/stardust-ui/react/pull/991))
+- Call update `node` if it was changed for `Ref` component @layershifter ([#993](https://github.com/stardust-ui/react/pull/993))
+- Close previous `Popup` on enter key @jongsue ([#985](https://github.com/stardust-ui/react/pull/985))
+- Fixed Shift+Tab navigation from `DropdownSelectedItem` @silviuavram ([#1004](https://github.com/stardust-ui/react/pull/1004))
+- Fixed color of the `timestamp` in `ChatMessages` marked as `mine` in Teams theme @mnajdova ([#1010](https://github.com/stardust-ui/react/pull/1010))
+- Updated table `Icon` & search `Icon` ([#1011](https://github.com/stardust-ui/react/pull/1011))
+- Improve `Menu` styling, vertical menu in Teams theme ([#934](https://github.com/stardust-ui/react/pull/934))
+
+### Features
+- Add `delay` prop for `Loader` component @layershifter ([#969](https://github.com/stardust-ui/react/pull/969))
+- Add `getNextElement`, `getPreviousElement` and `focusAsync` to exported as `FocusZoneUtilities` @layershifter ([#981](https://github.com/stardust-ui/react/pull/981))
+- Add `Reaction` and `ReactionGroup` components @mnajdova ([#959](https://github.com/stardust-ui/react/pull/959))
+- Add `reactionGroup` and `reactionGroupPosition` props to the `ChatMessage` component @mnajdova ([#959](https://github.com/stardust-ui/react/pull/959))
+- Set `aria-modal` attribute for both Dialog and Popup with focus trap @sophieH29 ([#995](https://github.com/stardust-ui/react/pull/995))
+- Allow arrays as shorthand for the Components containing prop of type `CollectionShorthand` @mnajdova ([#996](https://github.com/stardust-ui/react/pull/996))
+- Allow to pass `children` and `content` to `MenuDivider` @layershifter ([#1009](https://github.com/stardust-ui/react/pull/1009))
+- Add `AutoFocusZone` component, for focusing inner element on mount @mnajdova ([#1015](https://github.com/stardust-ui/react/pull/1015))
+
+### Documentation
+- Add `MenuButton` prototype (only available in development mode) @layershifter ([#947](https://github.com/stardust-ui/react/pull/947))
+
+<!--------------------------------[ v0.22.1 ]------------------------------- -->
+## [v0.22.1](https://github.com/stardust-ui/react/tree/v0.22.1) (2019-02-26)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.22.0...v0.22.1)
+
+### Fixes
+- Fix `createComponent()` typings and documentation examples @Bugaa92 ([#954](https://github.com/stardust-ui/react/pull/954))
+
+### Documentation
+- Fix the sidebar missing items for docsite @alinais ([#971](https://github.com/stardust-ui/react/pull/971))
+
 <!--------------------------------[ v0.22.0 ]------------------------------- -->
 ## [v0.22.0](https://github.com/stardust-ui/react/tree/v0.22.0) (2019-02-26)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.21.1...v0.22.0)

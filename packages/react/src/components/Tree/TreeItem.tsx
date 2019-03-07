@@ -125,6 +125,6 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
   }
 }
 
-TreeItem.create = createShorthandFactory(TreeItem, 'title')
+TreeItem.create = createShorthandFactory({ Component: TreeItem, mappedProp: 'title' })
 
 export default TreeItem

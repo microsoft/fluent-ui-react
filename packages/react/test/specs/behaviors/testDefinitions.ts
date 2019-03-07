@@ -438,6 +438,23 @@ definitions.push({
   },
 })
 
+// [AutoFocusZone] Automatically focus the first focusable element inside component
+definitions.push({
+  regexp: /Automatically focus the first focusable element inside component/,
+  testMethod: (parameters: TestMethod) => {
+    const autofocusZoneProps = parameters.behavior({}).autoFocus
+
+    expect(autofocusZoneProps).toBeDefined()
+
+    if (typeof autofocusZoneProps === 'boolean') {
+      expect(autofocusZoneProps).toBe(true)
+    } else {
+      expect(autofocusZoneProps).not.toBeNull()
+      expect(typeof autofocusZoneProps).toBe('object')
+    }
+  },
+})
+
 // Triggers 'click' action with 'Enter' or 'Spacebar' on 'root'.
 definitions.push({
   regexp: /Triggers '(\w+)' action with '(\w+)' or '(\w+)' on '(\w+)'\./g,

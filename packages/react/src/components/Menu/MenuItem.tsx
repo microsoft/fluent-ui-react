@@ -381,7 +381,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   }
 }
 
-MenuItem.create = createShorthandFactory(MenuItem, 'content')
+MenuItem.create = createShorthandFactory({ Component: MenuItem, mappedProp: 'content' })
 MenuItem.slotClassNames = {
   wrapper: `${MenuItem.className}__wrapper`,
 }
