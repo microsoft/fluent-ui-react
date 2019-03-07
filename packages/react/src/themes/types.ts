@@ -2,6 +2,7 @@ import * as CSSType from 'csstype'
 import { IRenderer as FelaRenderer } from 'fela'
 import * as React from 'react'
 import { Extendable, ObjectOf, ObjectOrFunc } from '../types'
+import { themes } from '..'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -244,7 +245,7 @@ export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
 export type StaticStyles = StaticStyle[]
 
 export interface ThemeAnimation<KP = {}> {
-  keyframe: ((KP) => object) | object | string
+  keyframe: ((kp: KP) => object) | object | string
   delay?: string
   direction?: string
   duration?: string
@@ -258,6 +259,8 @@ export interface ThemeAnimation<KP = {}> {
 // ========================================================
 // Theme
 // ========================================================
+export type ThemeName = keyof typeof themes
+
 export interface ThemeInput {
   siteVariables?: SiteVariablesInput
   componentVariables?: ThemeComponentVariablesInput

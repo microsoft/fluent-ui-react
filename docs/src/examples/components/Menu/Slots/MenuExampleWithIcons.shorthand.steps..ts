@@ -1,3 +1,3 @@
-import getScreenerSteps from '../commonScreenerSteps'
+import { getScreenerSteps } from '../commonScreenerSteps'
 
 export default getScreenerSteps()

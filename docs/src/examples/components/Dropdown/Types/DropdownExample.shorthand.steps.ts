@@ -1,4 +1,5 @@
 import { Dropdown } from '@stardust-ui/react'
+import { applyCommonThemesBeforeStep } from '../../../screenerStepsUtils'
 
 const selectors = {
   triggerButton: `.${Dropdown.slotClassNames.triggerButton}`,
@@ -7,7 +8,7 @@ const selectors = {
 
 const steps: ScreenerSteps = [
   steps => steps.click(selectors.triggerButton).snapshot('Shows list'),
-  steps =>
+  ...applyCommonThemesBeforeStep(steps =>
     steps
       .click(selectors.triggerButton)
       .click(selectors.item(3))
@@ -18,6 +19,7 @@ const steps: ScreenerSteps = [
       .snapshot('Highlights another item')
       .click(selectors.triggerButton)
       .snapshot('Closes the list'),
+  ),
 ]
 
 export default steps

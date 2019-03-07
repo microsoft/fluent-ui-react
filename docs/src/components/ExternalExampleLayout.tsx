@@ -1,4 +1,4 @@
-import { Provider } from '@stardust-ui/react'
+import { Provider, themes, ThemeInput, ThemeName } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { match } from 'react-router'
@@ -24,6 +24,7 @@ type ExternalExampleLayoutProps = {
 
 type ExternalExampleLayoutState = {
   renderId: number
+  themeName: ThemeName
 }
 
 class ExternalExampleLayout extends React.Component<
@@ -32,15 +33,18 @@ class ExternalExampleLayout extends React.Component<
 > {
   state = {
     renderId: 0,
+    themeName: undefined,
   }
 
   componentDidMount() {
     window.resetExternalLayout = () =>
       this.setState(prevState => ({ renderId: prevState.renderId + 1 }))
+
+    window.switchTheme = (themeName: ThemeName) => this.setState({ themeName })
   }
 
   render() {
-    const { exampleName, rtl } = this.props.match.params
+    const { exampleName } = this.props.match.params
     const exampleFilename = exampleKebabNameToSourceFilename(exampleName)
 
     const examplePath = _.find(examplePaths, path => {
@@ -49,15 +53,16 @@ class ExternalExampleLayout extends React.Component<
     })
 
     if (!examplePath) return <PageNotFound />
+
     const exampleSource: ExampleSource = exampleSourcesContext(examplePath)
-    const isRtlEnabled = rtl === 'true'
+    const theme = this.getTheme()
 
     return (
-      <Provider key={this.state.renderId} theme={{ rtl: isRtlEnabled }}>
+      <Provider key={this.state.renderId} theme={theme}>
         <Provider.Consumer
           render={({ siteVariables }) => (
             <div
-              dir={isRtlEnabled ? 'rtl' : undefined}
+              dir={theme.rtl ? 'rtl' : undefined}
               style={{
                 color: siteVariables.bodyColor,
                 backgroundColor: siteVariables.bodyBackground,
@@ -86,6 +91,14 @@ class ExternalExampleLayout extends React.Component<
         />
       </Provider>
     )
+  }
+
+  private getTheme = (): ThemeInput => {
+    const { themeName } = this.state
+    const theme: ThemeInput = (themeName && themes[themeName]) || {}
+
+    theme.rtl = this.props.match.params.rtl === 'true'
+    return theme
   }
 }
 
