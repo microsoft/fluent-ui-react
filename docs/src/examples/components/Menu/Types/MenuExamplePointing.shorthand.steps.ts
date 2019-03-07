@@ -1,3 +1,3 @@
-import getScreenerSteps from '../commonScreenerSteps'
+import { getScreenerStepsForCommonThemes } from '../commonScreenerSteps'
 
-export default getScreenerSteps()
+export default getScreenerStepsForCommonThemes()
