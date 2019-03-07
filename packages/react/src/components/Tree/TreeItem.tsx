@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import Tree from './Tree'
-import TreeTitle from './TreeTitle'
+import TreeTitle, { TreeTitleProps } from './TreeTitle'
 import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import {
@@ -91,7 +91,7 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
     accessibility: defaultBehavior,
   }
 
-  handleTitleOverrides = (predefinedProps: TreeItemProps) => ({
+  handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
     onClick: (e, titleProps) => {
       e.preventDefault()
       _.invoke(this.props, 'onTitleClick', e, this.props)
