@@ -104,10 +104,7 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
     onTitleClick: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      const { index } = treeItemProps
-      this.trySetState({
-        activeIndex: this.computeNewIndex(index),
-      })
+      this.trySetState({ activeIndex: this.computeNewIndex(treeItemProps.index) })
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
   })

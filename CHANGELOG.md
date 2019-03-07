@@ -19,7 +19,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `inline` prop in the `Popup` for rendering the content next to the trigger element @mnajdova ([#1017](https://github.com/stardust-ui/react/pull/1017))
-
 - Add `exclusive` prop in the `Tree` for expanding one tree item at a time
 @priyankar205 ([#1018](https://github.com/stardust-ui/react/pull/1018))
 
