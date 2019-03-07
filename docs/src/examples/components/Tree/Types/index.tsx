@@ -15,7 +15,7 @@ const Types = () => (
       examplePath="components/Tree/Types/TreeTitleCustomizationExample"
     />
     <ComponentExample
-      title="Exclusive Flag"
+      title="Exclusive"
       description="A Tree with only one subtree open at a time."
       examplePath="components/Tree/Types/TreeExclusiveExample"
     />

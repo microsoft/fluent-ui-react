@@ -7,6 +7,7 @@ import {
   AutoControlledComponent,
   childrenExist,
   commonPropTypes,
+  createShorthandFactory,
   customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
@@ -45,10 +46,14 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   renderItemTitle?: ShorthandRenderFunction
 }
 
+export interface TreeState {
+  activeIndex: number[] | number
+}
+
 /**
  * Allows users to display data organised in tree-hierarchy.
  */
-class Tree extends AutoControlledComponent<ReactProps<TreeProps>, any> {
+class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
   static create: Function
 
   static className = 'ui-tree'
@@ -80,43 +85,44 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, any> {
 
   static autoControlledProps = ['activeIndex']
 
-  getInitialAutoControlledState({ defaultActiveIndex, exclusive }) {
+  getInitialAutoControlledState({ defaultActiveIndex, exclusive }): TreeState {
     return {
       activeIndex: defaultActiveIndex === undefined ? (exclusive ? -1 : []) : defaultActiveIndex,
     }
   }
 
-  computeNewIndex = index => {
+  computeNewIndex = (index: number) => {
     const { activeIndex } = this.state
     const { exclusive } = this.props
 
-    if (exclusive) return index === activeIndex ? -1 : index
+    if (exclusive) return index
     // check to see if index is in array, and remove it, if not then add it
-    return _.includes(activeIndex, index) ? _.without(activeIndex, index) : [...activeIndex, index]
+    return _.includes(activeIndex as number[], index)
+      ? _.without(activeIndex as number[], index)
+      : [...(activeIndex as number[]), index]
   }
 
-  handleTreeItemOverrides = predefinedProps => ({
-    onOpenChange: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
+  handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
+    onTitleClick: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
       const { index } = treeItemProps
       this.trySetState({
         activeIndex: this.computeNewIndex(index),
       })
-      _.invoke(predefinedProps, 'onOpenChange', e, treeItemProps)
+      _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
   })
 
   renderContent() {
     const { items, renderItemTitle, exclusive } = this.props
+    const { activeIndex } = this.state
 
-    return _.map(items, (item, index) =>
+    return _.map(items, (item: ShorthandValue, index: number) =>
       TreeItem.create(item, {
         defaultProps: {
           index,
           exclusive,
           renderItemTitle,
-          open: exclusive
-            ? index === this.state.activeIndex
-            : _.includes(this.state.activeIndex, index),
+          open: exclusive ? index === activeIndex : _.includes(activeIndex as number[], index),
         },
         overrideProps: this.handleTreeItemOverrides,
       }),
@@ -138,5 +144,7 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, any> {
     )
   }
 }
+
+Tree.create = createShorthandFactory({ Component: Tree, mappedArrayProp: 'items' })
 
 export default Tree

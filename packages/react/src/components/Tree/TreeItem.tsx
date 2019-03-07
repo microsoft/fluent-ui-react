@@ -43,7 +43,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   items?: ShorthandValue[]
 
   /** Callback for toggling the current tree item as open element in the menu. */
-  onOpenChange?: ComponentEventHandler<TreeItemProps>
+  onTitleClick?: ComponentEventHandler<TreeItemProps>
 
   /** Whether or not the subtree of the item is in the open state. */
   open?: boolean
@@ -79,7 +79,7 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
     items: customPropTypes.collectionShorthand,
     index: PropTypes.number,
     exclusive: PropTypes.bool,
-    onOpenChange: PropTypes.func,
+    onTitleClick: PropTypes.func,
     open: PropTypes.bool,
     renderItemTitle: PropTypes.func,
     treeItemRtlAttributes: PropTypes.func,
@@ -94,13 +94,13 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
   handleTitleOverrides = (predefinedProps: TreeItemProps) => ({
     onClick: (e, titleProps) => {
       e.preventDefault()
-      _.invoke(this.props, 'onOpenChange', e, this.props)
+      _.invoke(this.props, 'onTitleClick', e, this.props)
       _.invoke(predefinedProps, 'onClick', e, titleProps)
     },
   })
 
   renderContent() {
-    const { items, title, renderItemTitle, open } = this.props
+    const { items, title, renderItemTitle, open, exclusive } = this.props
     const hasSubtree = !!(items && items.length)
 
     return (
@@ -113,13 +113,13 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
           render: renderItemTitle,
           overrideProps: this.handleTitleOverrides,
         })}
-        {hasSubtree && open && (
-          <Tree
-            items={items}
-            renderItemTitle={renderItemTitle}
-            exclusive={!!this.props.exclusive}
-          />
-        )}
+        {open &&
+          Tree.create(items, {
+            defaultProps: {
+              exclusive,
+              renderItemTitle,
+            },
+          })}
       </>
     )
   }
