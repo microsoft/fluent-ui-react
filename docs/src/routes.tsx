@@ -32,10 +32,11 @@ const Router = () => (
           />,
           <DocsLayout
             exact
-            key="/prototype-chat-message-with-popover"
-            path="/prototype-chat-message-with-popover"
-            component={require('./prototypes/chatMessageWithPopover/index').default}
+            key="/prototype-chat-messages"
+            path="/prototype-chat-messages"
+            component={require('./prototypes/chatMessages/index').default}
           />,
+          ,
           <DocsLayout
             exact
             key="/prototype-async-shorthand"
@@ -80,21 +81,9 @@ const Router = () => (
           />,
           <DocsLayout
             exact
-            key="/important-and-mention-messages"
-            path="/important-and-mention-messages"
-            component={require('./prototypes/ImportantAndMentionMessages/index').default}
-          />,
-          <DocsLayout
-            exact
             key="/menu-button"
             path="/menu-button"
             component={require('./prototypes/MenuButton/index').default}
-          />,
-          <DocsLayout
-            exact
-            key="/message-reactions-with-popup"
-            path="/message-reactions-with-popup"
-            component={require('./prototypes/MessageReactionsWithPopup/index').default}
           />,
         ]}
         <DocsLayout exact path="/accessibility" component={Accessibility} />

@@ -361,10 +361,10 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
-        key: 'chatmessagepopover',
-        content: 'Chat message with popover',
+        key: 'chatMssages',
+        content: 'Chat Messages',
         as: NavLink,
-        to: '/prototype-chat-message-with-popover',
+        to: '/prototype-chat-messages',
         styles: menuItemStyles,
       },
       {
@@ -421,20 +421,6 @@ class Sidebar extends React.Component<any, any> {
         content: 'MenuButton',
         as: NavLink,
         to: '/menu-button',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'importantmentionmessages',
-        content: 'Important and mention messages',
-        as: NavLink,
-        to: '/important-and-mention-messages',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'message-reactions-with-popup',
-        content: 'Message reactions with popup',
-        as: NavLink,
-        to: '/message-reactions-with-popup',
         styles: menuItemStyles,
       },
       {
