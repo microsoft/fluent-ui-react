@@ -655,9 +655,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     return filteredItems
   }
 
-  private createA11ySelectionMessageContainer = () => {
+  private createA11ySelectionMessageContainer = (): HTMLDivElement => {
     if (document.getElementById(Dropdown.a11ySelectionMessageContainerId)) {
-      return
+      return null
     }
 
     const statusDiv = document.createElement('div')
@@ -668,12 +668,14 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     statusDiv.setAttribute('aria-relevant', 'additions text')
     Object.assign(statusDiv.style, screenReaderContainerStyles)
     document.body.appendChild(statusDiv)
+    return statusDiv
   }
 
   private setA11ySelectionStatus = (statusMessage: string) => {
-    const statusDiv = document.getElementById(Dropdown.a11ySelectionMessageContainerId)
+    const statusDiv =
+      document.getElementById(Dropdown.a11ySelectionMessageContainerId) ||
+      this.createA11ySelectionMessageContainer()
 
-    !statusDiv && this.createA11ySelectionMessageContainer()
     statusDiv.textContent = statusMessage
   }
 
