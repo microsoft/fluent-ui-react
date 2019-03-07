@@ -85,21 +85,26 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
 
   static autoControlledProps = ['activeIndex']
 
-  getInitialAutoControlledState({ defaultActiveIndex, exclusive }): TreeState {
+  getInitialAutoControlledState({ exclusive }): TreeState {
     return {
-      activeIndex: defaultActiveIndex === undefined ? (exclusive ? -1 : []) : defaultActiveIndex,
+      activeIndex: exclusive ? -1 : [],
     }
   }
 
-  computeNewIndex = (index: number) => {
+  getActiveIndexAsArray() {
     const { activeIndex } = this.state
+    return _.isArray(activeIndex) ? activeIndex : [activeIndex]
+  }
+
+  computeNewIndex = (index: number) => {
     const { exclusive } = this.props
 
     if (exclusive) return index
+    const activeIndexAsArray = this.getActiveIndexAsArray()
     // check to see if index is in array, and remove it, if not then add it
-    return _.includes(activeIndex as number[], index)
-      ? _.without(activeIndex as number[], index)
-      : [...(activeIndex as number[]), index]
+    return _.includes(activeIndexAsArray as number[], index)
+      ? _.without(activeIndexAsArray as number[], index)
+      : [...(activeIndexAsArray as number[]), index]
   }
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
@@ -112,6 +117,7 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
   renderContent() {
     const { items, renderItemTitle, exclusive } = this.props
     const { activeIndex } = this.state
+    const activeIndexAsArray = this.getActiveIndexAsArray()
 
     return _.map(items, (item: ShorthandValue, index: number) =>
       TreeItem.create(item, {
@@ -119,7 +125,9 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
           index,
           exclusive,
           renderItemTitle,
-          open: exclusive ? index === activeIndex : _.includes(activeIndex as number[], index),
+          open: exclusive
+            ? index === activeIndex
+            : _.includes(activeIndexAsArray as number[], index),
         },
         overrideProps: this.handleTreeItemOverrides,
       }),
