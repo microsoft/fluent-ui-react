@@ -13,12 +13,6 @@ const inputItems = [
   'Selina Kyle',
 ]
 
-const DropdownExample = () => (
-  <Dropdown
-    items={inputItems}
-    placeholder="Select your hero"
-    getA11ySelectionMessage={{ onAdd: item => `${item} has been selected.` }}
-  />
-)
+const DropdownExample = () => <Dropdown items={inputItems} placeholder="Select your hero" />
 
 export default DropdownExample
