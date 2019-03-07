@@ -79,7 +79,7 @@ class DocsLayout extends React.Component<any, any> {
         >
           <Sidebar />
         </Provider>
-        <div role="main" style={{ display: 'flex', flex: '1 0 auto', paddingLeft: 250 }}>
+        <div role="main" style={{ marginLeft: 250 }}>
           <Children {...props} />
         </div>
       </>
