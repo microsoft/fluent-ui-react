@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `inline` prop in the `Popup` for rendering the content next to the trigger element @mnajdova ([#1017](https://github.com/stardust-ui/react/pull/1017))
+- Export `call-pstn` and `skype-logo` SVG icons to the Teams theme @thewulf7([#929](https://github.com/stardust-ui/react/pull/968))
 
 <!--------------------------------[ v0.23.0 ]------------------------------- -->
 ## [v0.23.0](https://github.com/stardust-ui/react/tree/v0.23.0) (2019-03-06)

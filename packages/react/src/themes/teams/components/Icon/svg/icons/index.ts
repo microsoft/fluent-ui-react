@@ -13,6 +13,7 @@ import call from './call'
 import callControlPresentNew from './callControlPresentNew'
 import callControlStopPresentingNew from './callControlStopPresentingNew'
 import callEnd from './callEnd'
+import callPstn from './callPstn'
 import callRecording from './callRecording'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
@@ -57,6 +58,7 @@ import redo from './redo'
 import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
+import skypeLogo from './skypeLogo'
 import search from './search'
 import send from './send'
 import settings from './settings'
@@ -92,6 +94,7 @@ export default {
   'call-video-off': callVideoOff,
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
+  'call-pstn': callPstn,
   'call-recording': callRecording,
   'canvas-add-page': canvasAddPage,
   chat,
@@ -135,6 +138,7 @@ export default {
   'remove-format': removeFormat,
   reply,
   retry,
+  'skype-logo': skypeLogo,
   search,
   send,
   settings,
