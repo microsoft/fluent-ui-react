@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
 
 import {
   UIComponent,
@@ -11,16 +12,14 @@ import {
   customPropTypes,
   createShorthandFactory,
   ContentComponentProps,
+  isFromKeyboard,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 import ReactionGroup from './ReactionGroup'
-import { isFromKeyboard } from 'src/lib'
-import { ComponentEventHandler } from 'src/types'
-import * as PropTypes from 'prop-types'
 
 export interface ReactionSlotClassNames {
   icon: string
