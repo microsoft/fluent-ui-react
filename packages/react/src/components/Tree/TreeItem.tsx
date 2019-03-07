@@ -42,7 +42,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   /** Array of props for sub tree. */
   items?: ShorthandValue[]
 
-  /** Callback for toggling the current tree item as open element in the menu. */
+  /** Called when a tree title is clicked. */
   onTitleClick?: ComponentEventHandler<TreeItemProps>
 
   /** Whether or not the subtree of the item is in the open state. */
