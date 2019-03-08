@@ -28,7 +28,7 @@ import email from './email'
 import emoji from './emoji'
 import error from './error'
 import filesWord from './filesWord'
-import filesWordFullColor32 from './filesWordFullColor32'
+import filesWordBrand from './filesWordBrand'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
 import format from './format'
@@ -109,7 +109,7 @@ export default {
   emoji,
   error,
   word: filesWord,
-  'word-color': filesWordFullColor32,
+  'word-color': filesWordBrand,
   format,
   'font-color': fontColor,
   'font-size': fontSize,
