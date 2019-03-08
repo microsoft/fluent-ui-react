@@ -25,6 +25,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Export `call-pstn` and `skype-logo` SVG icons to the Teams theme @thewulf7([#929](https://github.com/stardust-ui/react/pull/968))
 - Export some Office brand SVG icons to the Teams theme, including `word`, `word-color`, `excel`, `excel-color`, `powerpoint`, `powerpoint-color`, `onenote`, `onenote-color` @codepretty ([#938](https://github.com/stardust-ui/react/pull/938))
 
+### Documentation
+- Add disabled state to menu as toolbar doc example @codepretty ([#933](https://github.com/stardust-ui/react/pull/933))
+
 <!--------------------------------[ v0.23.0 ]------------------------------- -->
 ## [v0.23.0](https://github.com/stardust-ui/react/tree/v0.23.0) (2019-03-06)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.22.1...v0.23.0)
