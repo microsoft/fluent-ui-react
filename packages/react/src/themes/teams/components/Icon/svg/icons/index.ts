@@ -27,6 +27,14 @@ import edit from './edit'
 import email from './email'
 import emoji from './emoji'
 import error from './error'
+import filesExcel from './filesExcel'
+import filesExcelBrand from './filesExcelBrand'
+import filesOneNote from './filesOneNote'
+import filesOneNoteBrand from './filesOneNoteBrand'
+import filesPowerPoint from './filesPowerPoint'
+import filesPowerPointBrand from './filesPowerPointBrand'
+import filesWord from './filesWord'
+import filesWordBrand from './filesWordBrand'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
 import format from './format'
@@ -158,4 +166,15 @@ export default {
   undo,
   urgent,
   'video-camera-emphasis': videoCameraEmphasis,
+
+  // Office icons
+  word: filesWord,
+  excel: filesExcel,
+  powerpoint: filesPowerPoint,
+  onenote: filesOneNote,
+
+  'word-color': filesWordBrand,
+  'excel-color': filesExcelBrand,
+  'powerpoint-color': filesPowerPointBrand,
+  'onenote-color': filesOneNoteBrand,
 } as { [iconName: string]: TeamsSvgIconSpec }

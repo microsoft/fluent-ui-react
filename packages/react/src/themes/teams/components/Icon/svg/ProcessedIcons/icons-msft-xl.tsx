@@ -10,4 +10,5 @@ export default {
     </svg>
   ),
   styles: {},
+  exportedAs: 'excel, excel-color',
 } as TeamsProcessedSvgIconSpec
