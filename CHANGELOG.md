@@ -17,6 +17,16 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Do not propagate keyboard events outside `Popup`'s content only when focus trap is used @sophieH29 ([#1028](https://github.com/stardust-ui/react/pull/1028))
+
+### Features
+- Add `inline` prop in the `Popup` for rendering the content next to the trigger element @mnajdova ([#1017](https://github.com/stardust-ui/react/pull/1017))
+
+<!--------------------------------[ v0.23.0 ]------------------------------- -->
+## [v0.23.0](https://github.com/stardust-ui/react/tree/v0.23.0) (2019-03-06)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.22.1...v0.23.0)
+
 ### BREAKING CHANGES
 - Changed types of the slot's inside the `ListItem` component (`media`, `content`, `contentMedia`, `header`, `headerMedia` and `endMedia`) from `any` to `ShorthandValue` @mnajdova ([#886](https://github.com/stardust-ui/react/pull/886))
 - Changed class names of the slots inside the `ListItem` (`ItemLayout`'s classnames were replaced with `ListItem`'s) @mnajdova ([#886](https://github.com/stardust-ui/react/pull/886))
