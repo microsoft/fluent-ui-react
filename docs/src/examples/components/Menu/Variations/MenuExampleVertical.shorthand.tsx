@@ -7,9 +7,7 @@ const items = [
     content: 'Editorials',
     icon: {
       name: 'bookmark',
-      variables: {
-        outline: true,
-      },
+      outline: true,
     },
   },
   {
