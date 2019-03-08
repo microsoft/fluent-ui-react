@@ -40,6 +40,7 @@ import Button from '../Button/Button'
 import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 import ListItem from '../List/ListItem'
 import Icon, { IconProps } from '../Icon/Icon'
+import Portal from '../Portal/Portal'
 
 export interface DropdownSlotClassNames {
   clearIndicator: string
@@ -187,6 +188,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 
 export interface DropdownState {
   activeSelectedIndex: number
+  a11ySelectionStatus: string
   defaultHighlightedIndex: number
   focused: boolean
   open: boolean
@@ -272,7 +274,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   static autoControlledProps = ['activeSelectedIndex', 'open', 'searchQuery', 'value']
-  static a11ySelectionMessageContainerId = 'stardust-dropdown-a11y-status'
 
   static Item = DropdownItem
   static SearchInput = DropdownSearchInput
@@ -281,18 +282,13 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   getInitialAutoControlledState({ multiple, search }: DropdownProps): DropdownState {
     return {
       activeSelectedIndex: multiple ? null : undefined,
+      a11ySelectionStatus: '',
       // used on single selection to open the dropdown with the selected option as highlighted.
       defaultHighlightedIndex: this.props.multiple ? undefined : null,
       focused: false,
       open: false,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
-    }
-  }
-
-  componentDidMount() {
-    if (this.props.getA11ySelectionMessage) {
-      this.createA11ySelectionMessageContainer()
     }
   }
 
@@ -409,6 +405,16 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             )
           }}
         </Downshift>
+        <Portal open={!!this.props.getA11ySelectionMessage}>
+          <div
+            role="status"
+            aria-live="polite"
+            aria-relevant="additions text"
+            style={screenReaderContainerStyles}
+          >
+            {this.state.a11ySelectionStatus}
+          </div>
+        </Portal>
       </ElementType>
     )
   }
@@ -655,30 +661,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     return filteredItems
   }
 
-  private createA11ySelectionMessageContainer = (): HTMLDivElement => {
-    if (document.getElementById(Dropdown.a11ySelectionMessageContainerId)) {
-      return null
-    }
-
-    const statusDiv = document.createElement('div')
-
-    statusDiv.setAttribute('id', Dropdown.a11ySelectionMessageContainerId)
-    statusDiv.setAttribute('role', 'status')
-    statusDiv.setAttribute('aria-live', 'polite')
-    statusDiv.setAttribute('aria-relevant', 'additions text')
-    Object.assign(statusDiv.style, screenReaderContainerStyles)
-    document.body.appendChild(statusDiv)
-    return statusDiv
-  }
-
-  private setA11ySelectionStatus = (statusMessage: string) => {
-    const statusDiv =
-      document.getElementById(Dropdown.a11ySelectionMessageContainerId) ||
-      this.createA11ySelectionMessageContainer()
-
-    statusDiv.textContent = statusMessage
-  }
-
   private isSelectedItemActive = (index: number): boolean => {
     return index === this.state.activeSelectedIndex
   }
@@ -900,7 +882,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onAdd) {
-      this.setA11ySelectionStatus(getA11ySelectionMessage.onAdd(item))
+      this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onAdd(item) })
     }
 
     if (multiple) {
@@ -985,7 +967,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onRemove) {
-      this.setA11ySelectionStatus(getA11ySelectionMessage.onRemove(poppedItem))
+      this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onRemove(poppedItem) })
     }
 
     this.trySetStateAndInvokeHandler('onSelectedChange', null, { value })
