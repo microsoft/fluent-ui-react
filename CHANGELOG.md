@@ -23,6 +23,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add `inline` prop in the `Popup` for rendering the content next to the trigger element @mnajdova ([#1017](https://github.com/stardust-ui/react/pull/1017))
 
+### Documentation
+- Add disabled state to menu as toolbar doc example @codepretty ([#933](https://github.com/stardust-ui/react/pull/933))
+
 <!--------------------------------[ v0.23.0 ]------------------------------- -->
 ## [v0.23.0](https://github.com/stardust-ui/react/tree/v0.23.0) (2019-03-06)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.22.1...v0.23.0)
@@ -103,9 +106,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Documentation
 - Add `Editable Area with Dropdown` prototype for mentioning people using `@` character (only available in development mode) @Bugaa92 ([#931](https://github.com/stardust-ui/react/pull/931))
 - Adjust styles of `Portal` examples @kuzhelov ([#953](https://github.com/stardust-ui/react/pull/953))
-
-### Documentation
-- Add disabled state to menu as toolbar doc example @codepretty ([#933](https://github.com/stardust-ui/react/pull/933))
 
 <!--------------------------------[ v0.21.1 ]------------------------------- -->
 ## [v0.21.1](https://github.com/stardust-ui/react/tree/v0.21.1) (2019-02-14)
