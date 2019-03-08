@@ -52,7 +52,6 @@ import paperclip from './paperclip'
 import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
 import quote from './quote'
-import readAloud from './readAloud'
 import redbang from './redbang'
 import redo from './redo'
 import removeFormat from './removeFormat'
@@ -131,7 +130,6 @@ export default {
   'participant-remove': participantRemove,
   'phone-clock': phoneClock,
   quote,
-  'read-aloud': readAloud,
   redbang,
   redo,
   'remove-format': removeFormat,

@@ -50,7 +50,6 @@ const items = [
   },
   {
     key: 'meetup',
-    disabled: true,
     icon: {
       name: 'video-camera-emphasis',
       outline: true,
