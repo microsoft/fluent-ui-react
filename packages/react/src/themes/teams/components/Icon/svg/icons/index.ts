@@ -27,6 +27,8 @@ import edit from './edit'
 import email from './email'
 import emoji from './emoji'
 import error from './error'
+import filesExcel from './filesExcel'
+import filesExcelBrand from './filesExcelBrand'
 import filesWord from './filesWord'
 import filesWordBrand from './filesWordBrand'
 import fontColor from './fontColor'
@@ -108,8 +110,6 @@ export default {
   email,
   emoji,
   error,
-  word: filesWord,
-  'word-color': filesWordBrand,
   format,
   'font-color': fontColor,
   'font-size': fontSize,
@@ -162,4 +162,11 @@ export default {
   undo,
   urgent,
   'video-camera-emphasis': videoCameraEmphasis,
+
+  // Office icons
+  word: filesWord,
+  excel: filesExcel,
+
+  'word-color': filesWordBrand,
+  'excel-color': filesExcelBrand,
 } as { [iconName: string]: TeamsSvgIconSpec }
