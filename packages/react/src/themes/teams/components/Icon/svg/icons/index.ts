@@ -29,6 +29,8 @@ import emoji from './emoji'
 import error from './error'
 import filesExcel from './filesExcel'
 import filesExcelBrand from './filesExcelBrand'
+import filesPowerPoint from './filesPowerPoint'
+import filesPowerPointBrand from './filesPowerPointBrand'
 import filesWord from './filesWord'
 import filesWordBrand from './filesWordBrand'
 import fontColor from './fontColor'
@@ -166,7 +168,9 @@ export default {
   // Office icons
   word: filesWord,
   excel: filesExcel,
+  powerpoint: filesPowerPoint,
 
   'word-color': filesWordBrand,
   'excel-color': filesExcelBrand,
+  'powerpoint-color': filesPowerPointBrand,
 } as { [iconName: string]: TeamsSvgIconSpec }
