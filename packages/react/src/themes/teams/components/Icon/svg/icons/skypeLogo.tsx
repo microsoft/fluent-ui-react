@@ -8,5 +8,4 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'skype-logo',
 } as TeamsProcessedSvgIconSpec
