@@ -38,7 +38,11 @@ describe('Dropdown', () => {
   describe('getA11ySelectionMessage', () => {
     it('creates message container element', () => {
       mountWithProvider(<Dropdown options={[]} getA11ySelectionMessage={{}} />)
-      expect(document.querySelector(`#${Dropdown.a11ySelectionMessageContainerId}`)).toBeTruthy()
+      expect(
+        document.querySelector(
+          `[role="status"][aria-live="polite"][aria-relevant="additions text"]`,
+        ),
+      ).toBeTruthy()
     })
   })
 })
