@@ -1,13 +1,10 @@
-export interface MenuVariables {
-  color: string
-  activeColor: string
-  activeBackgroundColor: string
-}
+import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
 
-export default (siteVars: any): MenuVariables => {
-  return {
-    color: siteVars.white,
-    activeColor: siteVars.black,
-    activeBackgroundColor: siteVars.accessibleYellow,
-  }
-}
+export default (siteVars: any): Partial<MenuVariables> => ({
+  color: siteVars.white,
+  activeColor: siteVars.black,
+  focusedBackgroundColor: siteVars.accessibleYellow,
+  activeBackgroundColor: siteVars.accessibleCyan,
+
+  verticalBackgroundColor: siteVars.colors.black,
+})

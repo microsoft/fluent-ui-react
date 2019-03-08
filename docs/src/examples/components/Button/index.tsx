@@ -8,7 +8,7 @@ import Rtl from './Rtl'
 import Performance from './Performance'
 
 const ButtonExamples = () => (
-  <div>
+  <>
     <Types />
     <States />
     <Variations />
@@ -16,7 +16,7 @@ const ButtonExamples = () => (
     <Usage />
     <Rtl />
     <Performance />
-  </div>
+  </>
 )
 
 export default ButtonExamples
