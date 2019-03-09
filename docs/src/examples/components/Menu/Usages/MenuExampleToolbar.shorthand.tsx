@@ -26,6 +26,7 @@ const items = [
       name: 'emoji',
       outline: true,
     },
+    disabled: true,
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Emoji Tool',
   },
@@ -99,6 +100,7 @@ const items = [
         {
           key: '7',
           content: 'item3',
+          disabled: true,
           icon: {
             name: 'translation',
             outline: true,
@@ -128,7 +130,6 @@ class MenuExampleToolbarShorthand extends React.Component {
         defaultActiveIndex={0}
         items={items}
         iconOnly
-        primary
         accessibility={toolbarBehavior}
         aria-label="Compose Editor"
       />
