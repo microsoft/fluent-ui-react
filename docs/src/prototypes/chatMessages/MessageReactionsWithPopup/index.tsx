@@ -3,20 +3,14 @@ import * as _ from 'lodash'
 import { Avatar, Chat } from '@stardust-ui/react'
 import ReactionPopup from './ReactionPopup'
 
-const getAriaLabel = ({ content: numberOfPersons, icon: emojiType }) => {
-  if (numberOfPersons === 1) {
-    return `One person reacted to this message with a ${emojiType} emoji. Open menu to see person who reacted.`
-  }
-  return `${numberOfPersons} people reacted this message with a ${emojiType} emoji. Open menu to see people who reacted.`
-}
+const reactions = [
+  { icon: 'thumbs up', content: '1K', key: 'likes' },
+  { icon: 'thumbs down', content: 2, key: 'dislikes' },
+]
 
-const reactions = [{ icon: 'thumbs up', content: '1K' }, { icon: 'thumbs down', content: 2 }]
-
-const reactionsWithPopup = _.map(reactions, reaction => ({
-  as: ReactionPopup,
-  ...reaction,
-  'aria-label': getAriaLabel(reaction),
-}))
+const reactionsWithPopup = _.map(reactions, reaction => render =>
+  render(reaction, (Component, props) => <ReactionPopup {...props} />),
+)
 
 const actionMenu = {
   iconOnly: true,

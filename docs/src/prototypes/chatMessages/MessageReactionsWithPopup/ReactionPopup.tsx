@@ -1,8 +1,15 @@
 import * as React from 'react'
 import keyboardKey from 'keyboard-key'
-import { Popup, Menu, Reaction, popupAutoFocusBehavior } from '@stardust-ui/react'
+import { Popup, Menu, Reaction, ReactionProps, popupAutoFocusBehavior } from '@stardust-ui/react'
 
-class ReactionPopup extends React.Component<any, any> {
+const getAriaLabel = ({ content: numberOfPersons, icon: emojiType }: ReactionProps) => {
+  if (numberOfPersons === 1) {
+    return `One person reacted to this message with a ${emojiType} emoji. Open menu to see person who reacted.`
+  }
+  return `${numberOfPersons} people reacted this message with a ${emojiType} emoji. Open menu to see people who reacted.`
+}
+
+class ReactionPopup extends React.Component<ReactionProps, any> {
   state = {
     open: false,
   }
@@ -20,7 +27,14 @@ class ReactionPopup extends React.Component<any, any> {
   render() {
     return (
       <Popup
-        trigger={<Reaction {...this.props} as="button" aria-haspopup="true" />}
+        trigger={
+          <Reaction
+            as="button"
+            aria-haspopup="true"
+            {...this.props}
+            aria-label={getAriaLabel(this.props)}
+          />
+        }
         content={{
           content: (
             <Menu
