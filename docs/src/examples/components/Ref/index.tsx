@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Types from './Types'
 
-const RefExamples: React.SFC = () => (
+const RefExamples = () => (
   <div>
     <Types />
   </div>
