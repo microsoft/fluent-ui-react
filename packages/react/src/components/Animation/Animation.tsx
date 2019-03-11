@@ -124,7 +124,8 @@ class Animation extends UIComponent<ReactProps<AnimationProps>, any> {
 
     const animationStyle = createAnimationStyles(animation, theme)
 
-    const child = childrenExist(children) && React.Children.only(children)
+    const child =
+      childrenExist(children) && (React.Children.only(children) as React.ReactElement<any>)
     const result = child
       ? React.cloneElement(child, {
           style: { ...animationStyle, ...(child.props && child.props.style) },
