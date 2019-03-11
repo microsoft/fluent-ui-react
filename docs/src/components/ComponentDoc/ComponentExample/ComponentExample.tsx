@@ -15,7 +15,6 @@ import {
   themes,
   Grid,
   ICSSInJSStyle,
-  ThemeName,
 } from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
@@ -41,12 +40,12 @@ export interface ComponentExampleProps
   title: React.ReactNode
   description?: React.ReactNode
   examplePath: string
-  themeName?: ThemeName
+  themeName?: string
 }
 
 interface ComponentExampleState {
   knobs: Object
-  themeName: ThemeName
+  themeName: string
   componentVariables: Object
   showCode: boolean
   showRtl: boolean
