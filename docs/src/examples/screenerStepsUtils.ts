@@ -1,20 +1,22 @@
-import { ThemeName } from '@stardust-ui/react'
+const commonThemes: ScreenerThemeName[] = ['teams', 'teamsDark', 'teamsHighContrast']
 
-const commonThemes: ThemeName[] = ['teams', 'teamsDark', 'teamsHighContrast']
-
-const getStepsForTheme = (sb: ScreenerStepBuilder, themeName: ThemeName): ScreenerStepBuilder =>
+const getStepsForTheme = (
+  sb: ScreenerStepBuilder,
+  themeName: ScreenerThemeName,
+): ScreenerStepBuilder =>
   themeName ? sb.switchTheme(themeName).snapshot(`Switched to ${themeName} theme`) : sb
 
-const getThemeStep = (themeName: ThemeName): ScreenerStep => sb => getStepsForTheme(sb, themeName)
+const getThemeStep = (themeName: ScreenerThemeName): ScreenerStep => sb =>
+  getStepsForTheme(sb, themeName)
 
-const applyThemeBeforeStep = (step: ScreenerStep, themeName: ThemeName): ScreenerStep => (
+const applyThemeBeforeStep = (step: ScreenerStep, themeName: ScreenerThemeName): ScreenerStep => (
   sb,
   keys,
 ) => step(getStepsForTheme(sb, themeName), keys)
 
 const applyThemesBeforeStep = (
   step: ScreenerStep,
-  appliedThemes: ThemeName | ThemeName[],
+  appliedThemes: ScreenerThemeName | ScreenerThemeName[],
 ): ScreenerSteps => {
   const themes = typeof appliedThemes === 'string' ? [appliedThemes] : appliedThemes
   return themes.map(themeName => applyThemeBeforeStep(step, themeName))

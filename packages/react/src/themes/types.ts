@@ -2,7 +2,6 @@ import * as CSSType from 'csstype'
 import { IRenderer as FelaRenderer } from 'fela'
 import * as React from 'react'
 import { Extendable, ObjectOf, ObjectOrFunc } from '../types'
-import { themes } from '..'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -259,8 +258,6 @@ export interface ThemeAnimation<KP = {}> {
 // ========================================================
 // Theme
 // ========================================================
-export type ThemeName = keyof typeof themes
-
 export interface ThemeInput {
   siteVariables?: SiteVariablesInput
   componentVariables?: ThemeComponentVariablesInput

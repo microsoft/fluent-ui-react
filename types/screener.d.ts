@@ -1,4 +1,4 @@
-import { ThemeName } from '@stardust-ui/react/src'
+import { themes } from '@stardust-ui/react'
 
 //
 // Typings for `screener-runner`
@@ -19,6 +19,8 @@ type ScreenerRunnerKeys = {
 }
 
 declare global {
+  type ScreenerThemeName = keyof typeof themes
+
   type ScreenerStepBuilder = {
     /** This executes custom JS code against the client browser the test is running in. */
     executeScript(code: string): ScreenerStepBuilder
@@ -63,7 +65,7 @@ declare global {
     end(): ScreenerStepBuilder
 
     /** This will switch the theme */
-    switchTheme(themeName: ThemeName): ScreenerStepBuilder
+    switchTheme(themeName: ScreenerThemeName): ScreenerStepBuilder
   }
 
   //

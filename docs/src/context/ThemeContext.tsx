@@ -1,7 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { themes, ThemeName } from '@stardust-ui/react'
+import { themes } from '@stardust-ui/react'
 
+type ThemeName = keyof typeof themes
 type ThemeOption = { text: string; value: ThemeName }
 
 const themeOptions: ThemeOption[] = Object.keys(themes).map(key => ({

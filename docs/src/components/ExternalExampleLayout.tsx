@@ -1,4 +1,4 @@
-import { Provider, themes, ThemeInput, ThemeName } from '@stardust-ui/react'
+import { Provider, themes, ThemeInput } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { match } from 'react-router'
@@ -24,7 +24,7 @@ type ExternalExampleLayoutProps = {
 
 type ExternalExampleLayoutState = {
   renderId: number
-  themeName: ThemeName
+  themeName: string
 }
 
 class ExternalExampleLayout extends React.Component<
@@ -40,7 +40,7 @@ class ExternalExampleLayout extends React.Component<
     window.resetExternalLayout = () =>
       this.setState(prevState => ({ renderId: prevState.renderId + 1 }))
 
-    window.switchTheme = (themeName: ThemeName) => this.setState({ themeName })
+    window.switchTheme = (themeName: string) => this.setState({ themeName })
   }
 
   render() {
