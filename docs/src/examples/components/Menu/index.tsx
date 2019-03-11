@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import Rtl from './Rtl'
 import Types from './Types'
 import Slots from './Slots'
 import States from './States'
@@ -13,6 +14,7 @@ const MenuExamples = () => (
     <States />
     <Variations />
     <Usages />
+    <Rtl />
   </div>
 )
 

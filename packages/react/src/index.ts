@@ -152,7 +152,7 @@ export { default as Tree } from './components/Tree'
 
 export { default as Indicator, IndicatorProps } from './components/Indicator/Indicator'
 
-export { default as Reaction, ReactionProps } from './components/Reaction/Reaction'
+export { default as Reaction, ReactionProps, ReactionState } from './components/Reaction/Reaction'
 export { default as ReactionGroup, ReactionGroupProps } from './components/Reaction/ReactionGroup'
 
 //
@@ -184,6 +184,9 @@ export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/grid
 export {
   default as popupFocusTrapBehavior,
 } from './lib/accessibility/Behaviors/Popup/popupFocusTrapBehavior'
+export {
+  default as popupAutoFocusBehavior,
+} from './lib/accessibility/Behaviors/Popup/popupAutoFocusBehavior'
 export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
 export { default as statusBehavior } from './lib/accessibility/Behaviors/Status/statusBehavior'
 

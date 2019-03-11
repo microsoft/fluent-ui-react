@@ -40,6 +40,7 @@ import Button from '../Button/Button'
 import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 import ListItem from '../List/ListItem'
 import Icon, { IconProps } from '../Icon/Icon'
+import Portal from '../Portal/Portal'
 
 export interface DropdownSlotClassNames {
   clearIndicator: string
@@ -78,7 +79,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   /** A dropdown can take the width of its container. */
   fluid?: boolean
 
-  /** Object with callbacks for creating announcements on multiple selection add and remove actions. */
+  /** Object with callbacks for generating announcements for item selection and removal. */
   getA11ySelectionMessage?: {
     /**
      * Callback that creates custom accessibility message a screen reader narrates on item added to selection.
@@ -195,6 +196,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 }
 
 export interface DropdownState {
+  a11ySelectionStatus: string
   activeSelectedIndex: number
   focused: boolean
   open: boolean
@@ -297,6 +299,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   getInitialAutoControlledState({ multiple, search }: DropdownProps): DropdownState {
     return {
+      a11ySelectionStatus: '',
       activeSelectedIndex: multiple ? null : undefined,
       focused: false,
       open: false,
@@ -419,6 +422,16 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             )
           }}
         </Downshift>
+        <Portal open={!!this.props.getA11ySelectionMessage}>
+          <div
+            role="status"
+            aria-live="polite"
+            aria-relevant="additions text"
+            style={screenReaderContainerStyles}
+          >
+            {this.state.a11ySelectionStatus}
+          </div>
+        </Portal>
       </ElementType>
     )
   }
@@ -679,23 +692,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     return filteredItems
   }
 
-  private setA11yStatus = (statusMessage: string) => {
-    const elementId = 'stardust-dropdown-a11y-status'
-    let statusDiv = document.getElementById(elementId)
-
-    if (!statusDiv) {
-      statusDiv = document.createElement('div')
-      statusDiv.setAttribute('id', elementId)
-      statusDiv.setAttribute('role', 'status')
-      statusDiv.setAttribute('aria-live', 'polite')
-      statusDiv.setAttribute('aria-relevant', 'additions text')
-      Object.assign(statusDiv.style, screenReaderContainerStyles)
-      document.body.appendChild(statusDiv)
-    }
-
-    statusDiv.textContent = statusMessage
-  }
-
   private isSelectedItemActive = (index: number): boolean => {
     return index === this.state.activeSelectedIndex
   }
@@ -916,7 +912,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onAdd) {
-      this.setA11yStatus(getA11ySelectionMessage.onAdd(item))
+      this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onAdd(item) })
     }
 
     if (multiple) {
@@ -1001,7 +997,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onRemove) {
-      this.setA11yStatus(getA11ySelectionMessage.onRemove(poppedItem))
+      this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onRemove(poppedItem) })
     }
 
     this.trySetStateAndInvokeHandler('onSelectedChange', null, { value })

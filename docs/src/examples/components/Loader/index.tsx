@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import Performance from './Performance'
+import Rtl from './Rtl'
 import Types from './Types'
 import Usage from './Usage'
 import Variations from './Variations'
@@ -11,6 +12,7 @@ const LoaderExamples = () => (
     <Variations />
     <Usage />
     <Performance />
+    <Rtl />
   </>
 )
 

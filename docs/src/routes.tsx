@@ -32,10 +32,11 @@ const Router = () => (
           />,
           <DocsLayout
             exact
-            key="/prototype-chat-message-with-popover"
-            path="/prototype-chat-message-with-popover"
-            component={require('./prototypes/chatMessageWithPopover/index').default}
+            key="/prototype-chat-messages"
+            path="/prototype-chat-messages"
+            component={require('./prototypes/chatMessages/index').default}
           />,
+          ,
           <DocsLayout
             exact
             key="/prototype-async-shorthand"
@@ -77,12 +78,6 @@ const Router = () => (
             key="/icon-viewer"
             path="/icon-viewer"
             component={require('./prototypes/IconViewer/index').default}
-          />,
-          <DocsLayout
-            exact
-            key="/important-and-mention-messages"
-            path="/important-and-mention-messages"
-            component={require('./prototypes/ImportantAndMentionMessages/index').default}
           />,
           <DocsLayout
             exact

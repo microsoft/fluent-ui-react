@@ -13,6 +13,7 @@ import call from './call'
 import callControlPresentNew from './callControlPresentNew'
 import callControlStopPresentingNew from './callControlStopPresentingNew'
 import callEnd from './callEnd'
+import callPstn from './callPstn'
 import callRecording from './callRecording'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
@@ -26,6 +27,14 @@ import edit from './edit'
 import email from './email'
 import emoji from './emoji'
 import error from './error'
+import filesExcel from './filesExcel'
+import filesExcelBrand from './filesExcelBrand'
+import filesOneNote from './filesOneNote'
+import filesOneNoteBrand from './filesOneNoteBrand'
+import filesPowerPoint from './filesPowerPoint'
+import filesPowerPointBrand from './filesPowerPointBrand'
+import filesWord from './filesWord'
+import filesWordBrand from './filesWordBrand'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
 import format from './format'
@@ -57,6 +66,7 @@ import redo from './redo'
 import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
+import skypeLogo from './skypeLogo'
 import search from './search'
 import send from './send'
 import settings from './settings'
@@ -92,6 +102,7 @@ export default {
   'call-video-off': callVideoOff,
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
+  'call-pstn': callPstn,
   'call-recording': callRecording,
   'canvas-add-page': canvasAddPage,
   chat,
@@ -135,6 +146,7 @@ export default {
   'remove-format': removeFormat,
   reply,
   retry,
+  'skype-logo': skypeLogo,
   search,
   send,
   settings,
@@ -154,4 +166,15 @@ export default {
   undo,
   urgent,
   'video-camera-emphasis': videoCameraEmphasis,
+
+  // Office icons
+  word: filesWord,
+  excel: filesExcel,
+  powerpoint: filesPowerPoint,
+  onenote: filesOneNote,
+
+  'word-color': filesWordBrand,
+  'excel-color': filesExcelBrand,
+  'powerpoint-color': filesPowerPointBrand,
+  'onenote-color': filesOneNoteBrand,
 } as { [iconName: string]: TeamsSvgIconSpec }
