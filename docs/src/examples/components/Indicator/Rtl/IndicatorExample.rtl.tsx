@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Indicator, Flex } from '@stardust-ui/react'
 
-const IndicatorExampleDirection = () => (
+const IndicatorExampleRtl = () => (
   <Flex gap="gap.smaller">
     <Indicator direction="end" />
     <Indicator direction="bottom" />
@@ -10,4 +10,4 @@ const IndicatorExampleDirection = () => (
   </Flex>
 )
 
-export default IndicatorExampleDirection
+export default IndicatorExampleRtl
