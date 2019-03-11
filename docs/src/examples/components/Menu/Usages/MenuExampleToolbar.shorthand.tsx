@@ -26,6 +26,7 @@ const items = [
       name: 'emoji',
       outline: true,
     },
+    disabled: true,
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Emoji Tool',
   },
@@ -66,7 +67,7 @@ const items = [
     'aria-label': 'Book Tool',
   },
   {
-    key: 'menuButton',
+    key: 'menuButton2',
     icon: {
       name: 'more',
       outline: true,
@@ -74,18 +75,51 @@ const items = [
     accessibility: toolbarButtonBehavior,
     'aria-label': 'More options',
     indicator: false,
-    menu: [
-      { key: '1', content: 'item1' },
-      {
-        key: '2',
-        content: 'item2',
-      },
-      {
-        key: '3',
-        content: 'item3',
-        menu: [{ key: '1', content: 'item3.1' }, { key: '2', content: 'item3.2' }],
-      },
-    ],
+    menu: {
+      items: [
+        {
+          key: '5',
+          content: 'item1',
+          icon: {
+            name: 'bookmark',
+            outline: true,
+          },
+        },
+        {
+          key: 'divider',
+          kind: 'divider',
+        },
+        {
+          key: '6',
+          content: 'item2',
+          icon: {
+            name: 'mark-as-unread',
+            outline: true,
+          },
+        },
+        {
+          key: '7',
+          content: 'item3',
+          disabled: true,
+          icon: {
+            name: 'translation',
+            outline: true,
+          },
+        },
+        {
+          key: 'divider2',
+          kind: 'divider',
+        },
+        {
+          key: '8',
+          content: 'item3',
+          icon: {
+            name: 'trash-can',
+            outline: true,
+          },
+        },
+      ],
+    },
   },
 ]
 
@@ -96,7 +130,6 @@ class MenuExampleToolbarShorthand extends React.Component {
         defaultActiveIndex={0}
         items={items}
         iconOnly
-        primary
         accessibility={toolbarBehavior}
         aria-label="Compose Editor"
       />

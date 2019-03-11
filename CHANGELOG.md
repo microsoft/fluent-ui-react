@@ -17,6 +17,25 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Do not propagate keyboard events outside `Popup`'s content only when focus trap is used @sophieH29 ([#1028](https://github.com/stardust-ui/react/pull/1028))
+- Narrate the first adding/selection of a `Dropdown` item using aria live @silviuavram ([#1032](https://github.com/stardust-ui/react/pull/1032))
+
+### Features
+- Add `inline` prop in the `Popup` for rendering the content next to the trigger element @mnajdova ([#1017](https://github.com/stardust-ui/react/pull/1017))
+- Add `exclusive` prop in the `Tree` for expanding one tree item at a time
+@priyankar205 ([#1018](https://github.com/stardust-ui/react/pull/1018))
+- Export `call-pstn` and `skype-logo` SVG icons to the Teams theme @thewulf7([#929](https://github.com/stardust-ui/react/pull/968))
+- Export some Office brand SVG icons to the Teams theme, including `word`, `word-color`, `excel`, `excel-color`, `powerpoint`, `powerpoint-color`, `onenote`, `onenote-color` @codepretty ([#938](https://github.com/stardust-ui/react/pull/938))
+- Fix broken border in `Input` when it's focused in Teams theme @layershifter ([#1041](https://github.com/stardust-ui/react/pull/1041))
+
+### Documentation
+- Add disabled state to menu as toolbar doc example @codepretty ([#933](https://github.com/stardust-ui/react/pull/933))
+
+<!--------------------------------[ v0.23.0 ]------------------------------- -->
+## [v0.23.0](https://github.com/stardust-ui/react/tree/v0.23.0) (2019-03-06)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.22.1...v0.23.0)
+
 ### BREAKING CHANGES
 - Changed types of the slot's inside the `ListItem` component (`media`, `content`, `contentMedia`, `header`, `headerMedia` and `endMedia`) from `any` to `ShorthandValue` @mnajdova ([#886](https://github.com/stardust-ui/react/pull/886))
 - Changed class names of the slots inside the `ListItem` (`ItemLayout`'s classnames were replaced with `ListItem`'s) @mnajdova ([#886](https://github.com/stardust-ui/react/pull/886))
@@ -33,8 +52,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fixed emoji `Icon` spacing issue and added settings `Icon` ([#991](https://github.com/stardust-ui/react/pull/991))
 - Call update `node` if it was changed for `Ref` component @layershifter ([#993](https://github.com/stardust-ui/react/pull/993))
 - Close previous `Popup` on enter key @jongsue ([#985](https://github.com/stardust-ui/react/pull/985))
+- Fixed Shift+Tab navigation from `DropdownSelectedItem` @silviuavram ([#1004](https://github.com/stardust-ui/react/pull/1004))
 - Fixed color of the `timestamp` in `ChatMessages` marked as `mine` in Teams theme @mnajdova ([#1010](https://github.com/stardust-ui/react/pull/1010))
 - Updated themeing for `Attachment` for Teams, Teams Dark and Teams Contrast @bcalvery ([#1033]https://github.com/stardust-ui/react/pull/1033)
+- Updated table `Icon` & search `Icon` ([#1011](https://github.com/stardust-ui/react/pull/1011))
+- Improve `Menu` styling, vertical menu in Teams theme ([#934](https://github.com/stardust-ui/react/pull/934))
 
 ### Features
 - Add `delay` prop for `Loader` component @layershifter ([#969](https://github.com/stardust-ui/react/pull/969))
@@ -44,6 +66,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Set `aria-modal` attribute for both Dialog and Popup with focus trap @sophieH29 ([#995](https://github.com/stardust-ui/react/pull/995))
 - Allow arrays as shorthand for the Components containing prop of type `CollectionShorthand` @mnajdova ([#996](https://github.com/stardust-ui/react/pull/996))
 - Allow to pass `children` and `content` to `MenuDivider` @layershifter ([#1009](https://github.com/stardust-ui/react/pull/1009))
+- Add `AutoFocusZone` component, for focusing inner element on mount @mnajdova ([#1015](https://github.com/stardust-ui/react/pull/1015))
 
 ### Documentation
 - Add `MenuButton` prototype (only available in development mode) @layershifter ([#947](https://github.com/stardust-ui/react/pull/947))

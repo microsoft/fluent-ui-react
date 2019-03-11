@@ -57,7 +57,7 @@ export const EDITOR_BACKGROUND_COLOR = '#1D1F21'
 export const EDITOR_GUTTER_COLOR = '#26282d'
 
 class Editor extends React.Component<EditorProps> {
-  editorRef: any
+  editorRef = React.createRef<any>()
   name = `docs-editor-${_.uniqueId()}`
 
   static propTypes = {
@@ -102,18 +102,29 @@ class Editor extends React.Component<EditorProps> {
 
     // focus editor when editor it becomes active
     if (active !== previousPros.active && active) {
-      this.editorRef.editor.focus()
+      this.editorRef.current.editor.focus()
     }
   }
 
+  handleChange = _.debounce((value: string, e) => {
+    _.invoke(this.props, 'onChange', value, e)
+  }, 200)
+
   setCursorVisibility = visible => {
-    const cursor = this.editorRef.editor.renderer.$cursorLayer.element
+    const cursor = this.editorRef.current.editor.renderer.$cursorLayer.element
 
     cursor.style.display = visible ? '' : 'none'
   }
 
   render() {
-    return <AceEditor {...this.props} name={this.name} ref={c => (this.editorRef = c)} />
+    return (
+      <AceEditor
+        {...this.props}
+        name={this.name}
+        onChange={this.handleChange}
+        ref={this.editorRef}
+      />
+    )
   }
 }
 
