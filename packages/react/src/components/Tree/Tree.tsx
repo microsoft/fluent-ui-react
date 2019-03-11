@@ -91,7 +91,7 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
     }
   }
 
-  getActiveIndexAsArray() {
+  getActiveIndexes(): number[] {
     const { activeIndex } = this.state
     return _.isArray(activeIndex) ? activeIndex : [activeIndex]
   }
@@ -100,11 +100,11 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
     const { exclusive } = this.props
 
     if (exclusive) return index
-    const activeIndexAsArray = this.getActiveIndexAsArray()
+    const activeIndexes = this.getActiveIndexes()
     // check to see if index is in array, and remove it, if not then add it
-    return _.includes(activeIndexAsArray as number[], index)
-      ? _.without(activeIndexAsArray as number[], index)
-      : [...(activeIndexAsArray as number[]), index]
+    return _.includes(activeIndexes, index)
+      ? _.without(activeIndexes, index)
+      : [...activeIndexes, index]
   }
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
@@ -117,7 +117,7 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
   renderContent() {
     const { items, renderItemTitle, exclusive } = this.props
     const { activeIndex } = this.state
-    const activeIndexAsArray = this.getActiveIndexAsArray()
+    const activeIndexes = this.getActiveIndexes()
 
     return _.map(items, (item: ShorthandValue, index: number) =>
       TreeItem.create(item, {
@@ -125,9 +125,7 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
           index,
           exclusive,
           renderItemTitle,
-          open: exclusive
-            ? index === activeIndex
-            : _.includes(activeIndexAsArray as number[], index),
+          open: exclusive ? index === activeIndex : _.includes(activeIndexes, index),
         },
         overrideProps: this.handleTreeItemOverrides,
       }),
