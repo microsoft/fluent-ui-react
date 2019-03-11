@@ -1,4 +1,4 @@
-import { AttachmentVariables } from '../../../teams/components/Attachment/AttachmentVariables'
+import { AttachmentVariables } from '../../../teams/components/Attachment/attachmentVariables'
 
 export default (siteVariables: any): Partial<AttachmentVariables> => {
   return {
