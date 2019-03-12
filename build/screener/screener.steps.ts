@@ -5,11 +5,11 @@ import * as keys from 'screener-runner/src/keys'
 
 const DEFAULT_THEMES: ScreenerThemes = ['teams']
 
-Steps.prototype.resetExternalLayout = function () {
+Steps.prototype.resetExternalLayout = function resetExternalLayout() {
   return this.executeScript(`window.resetExternalLayout()`)
 }
 
-Steps.prototype.switchTheme = function (themeName: ScreenerThemeName) {
+Steps.prototype.switchTheme = function switchTheme(themeName: ScreenerThemeName) {
   return this.executeScript(`window.switchTheme("${themeName}")`)
 }
 
