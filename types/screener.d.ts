@@ -44,10 +44,10 @@ type ScreenerStepBuilder = {
   /** This will send the provided keys to the first element matching the provided css selector. */
   keys(selector: string, key: string): ScreenerStepBuilder
 
-  /** This will pause execution for the specified number of ms.*/
+  /** This will pause execution for the specified number of ms. */
   wait(ms: number): ScreenerStepBuilder
 
-  /** This will override the global cssAnimations option for the current UI state. Set to true to enable CSS Animations, and set to false to disable.*/
+  /** This will override the global cssAnimations option for the current UI state. Set to true to enable CSS Animations, and set to false to disable. */
   cssAnimations(isEnabled: boolean): ScreenerStepBuilder
 
   /** This will set the current UI state to right-to-left direction. */

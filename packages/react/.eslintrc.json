@@ -1,0 +1,16 @@
+{
+  "extends": ["../../.eslintrc.json"],
+  "rules": {
+    "no-useless-constructor": "off"
+  },
+  "overrides": [
+    {
+      "files": "**/icons/*.tsx",
+      "rules": {
+        "react/no-unknown-property": "off",
+        "react/prop-types": "off"
+      }
+    }
+  ],
+  "root": true
+}

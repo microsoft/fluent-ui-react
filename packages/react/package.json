@@ -21,7 +21,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "gulp bundle:package --package react"
+    "build": "gulp bundle:package --package react",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "lint:fix": "yarn eslint --fix"
   },
   "dependencies": {
     "classnames": "^2.2.5",
