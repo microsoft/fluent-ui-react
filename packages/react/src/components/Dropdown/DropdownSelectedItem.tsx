@@ -25,7 +25,7 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
   active?: boolean
 
   /** Header of the selected item. */
-  header?: string
+  header?: ShorthandValue
 
   /** Icon of the selected item. */
   icon?: ShorthandValue
@@ -76,7 +76,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
       children: false,
     }),
     active: PropTypes.bool,
-    header: PropTypes.string,
+    header: customPropTypes.itemShorthand,
     icon: customPropTypes.itemShorthand,
     image: customPropTypes.itemShorthand,
     onClick: PropTypes.func,

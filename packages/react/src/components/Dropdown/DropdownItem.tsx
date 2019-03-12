@@ -19,10 +19,10 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   active?: boolean
 
   /** Item's content. */
-  content?: string
+  content?: ShorthandValue
 
   /** Item's header. */
-  header?: string
+  header?: ShorthandValue
 
   /** Item's image. */
   image?: ShorthandValue
@@ -55,8 +55,8 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
     }),
     accessibilityItemProps: PropTypes.object,
     active: PropTypes.bool,
-    content: PropTypes.string,
-    header: PropTypes.string,
+    content: customPropTypes.itemShorthand,
+    header: customPropTypes.itemShorthand,
     image: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
   }
