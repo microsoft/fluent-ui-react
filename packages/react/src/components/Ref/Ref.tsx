@@ -13,10 +13,10 @@ export interface RefProps extends ChildrenComponentProps<React.ReactElement<any>
    *
    * @param {HTMLElement} node - Referred node.
    */
-  innerRef?: React.Ref<any>
+  innerRef: React.Ref<any>
 }
 
-const Ref: React.SFC<ReactPropsStrict<RefProps>> = props => {
+const Ref: React.FunctionComponent<ReactPropsStrict<RefProps>> = props => {
   const { children, innerRef } = props
 
   const child = React.Children.only(children)
@@ -28,7 +28,7 @@ const Ref: React.SFC<ReactPropsStrict<RefProps>> = props => {
 Ref.displayName = 'Ref'
 Ref.propTypes = {
   children: PropTypes.element.isRequired,
-  innerRef: customPropTypes.ref as PropTypes.Requireable<any>,
+  innerRef: customPropTypes.ref.isRequired as PropTypes.Validator<React.Ref<any>>,
 }
 
 export default Ref

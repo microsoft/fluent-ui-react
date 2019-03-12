@@ -1,12 +1,15 @@
 import * as React from 'react'
+
+import Rtl from './Rtl'
 import Types from './Types'
 import Usage from './Usage'
 
 const AccordionExamples = () => (
-  <div>
+  <>
     <Types />
     <Usage />
-  </div>
+    <Rtl />
+  </>
 )
 
 export default AccordionExamples
