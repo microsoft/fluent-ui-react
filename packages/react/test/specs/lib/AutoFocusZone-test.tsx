@@ -53,7 +53,7 @@ describe('AutoFocusZone', () => {
   describe('Focusing the ATZ', () => {
     function setupTest(firstFocusableSelector?: string) {
       let autoFocusZoneRef: AutoFocusZone | null = null
-      const topLevelDiv = ReactTestUtils.renderIntoDocument(
+      const topLevelDiv = ReactTestUtils.renderIntoDocument<{}>(
         <div onFocusCapture={_onFocus}>
           <AutoFocusZone
             data-is-focusable={true}

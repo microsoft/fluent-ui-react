@@ -80,9 +80,8 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
       })
     }
 
-    return _.isNil(children)
-      ? children
-      : applyStyles(React.Children.only(children), styles, classes)
+    if (_.isNil(children)) return children
+    return applyStyles(React.Children.only(children) as React.ReactElement<any>, styles, classes)
   }
 }
 
