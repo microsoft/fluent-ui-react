@@ -7,9 +7,9 @@ const selectors = {
 
 const config: ScreenerTestsConfig = {
   steps: [
-    sb => sb.click(selectors.triggerButton).snapshot('Shows list'),
-    sb =>
-      sb
+    builder => builder.click(selectors.triggerButton).snapshot('Shows list'),
+    builder =>
+      builder
         .click(selectors.triggerButton)
         .click(selectors.item(3))
         .snapshot('Selects an item')

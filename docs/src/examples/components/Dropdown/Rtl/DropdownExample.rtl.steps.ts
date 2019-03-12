@@ -7,8 +7,8 @@ const selectors = {
 
 export const config: ScreenerTestsConfig = {
   steps: [
-    sb =>
-      sb
+    builder =>
+      builder
         .click(selectors.triggerButton)
         .snapshot('RTL: Shows list')
         .click(selectors.item(3))

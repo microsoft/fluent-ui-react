@@ -129,7 +129,7 @@ This default test only checks the rendering for the component in its initial sta
 - the test file should be placed at the same location as the component example under test.
 - the test file should be named exactly as the component example file. If `DropdownExample.shorthand.tsx` is to be tested, the screener test file should be named `DropdownExample.shorthand.steps.ts`.
 - the tests should be written as a config file that can contains the following props:
-  - `steps`: an array of callbacks that accept a `sb` (step builder) parameter, as all of them will be chained in `screener.config`. The `sb` parameter is actually the `Steps` object from screener, instantiated in `screener.config`.
+  - `steps`: an array of callbacks that accept a `builder` (step builder) parameter, as all of them will be chained in `screener.config`. The `builder` parameter is actually the `Steps` object from screener, instantiated in `screener.config`.
   - `themes`: an array of strings representing the theme applied to the component when taking the screenshot; by default, all screenshots are taken for `themes` theme.
 
 #### Example for a test file:
@@ -140,10 +140,10 @@ import { Dropdown } from '@stardust-ui/react'
 const config: ScreenerTestsConfig = {
   themes: ['teams', 'teamsDark', 'teamsHighContrast'],
   steps: [
-    sb => sb.click(`.${Dropdown.slotClassNames.triggerButton}`)
+    builder => builder.click(`.${Dropdown.slotClassNames.triggerButton}`)
       .snapshot('Opens dropdown list'),
-    sb =>
-      sb
+    builder =>
+      builder
         .click(`.${Dropdown.slotClassNames.triggerButton}`)
         .hover(`.${Dropdown.slotClassNames.itemsList} li:nth-child(2)`)
         .snapshot('Highlights an item'),
