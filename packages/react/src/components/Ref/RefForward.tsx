@@ -9,7 +9,7 @@ export interface RefForwardProps extends ChildrenComponentProps<React.ReactEleme
    *
    * @param {HTMLElement} node - Referred node.
    */
-  innerRef?: React.Ref<any>
+  innerRef: React.Ref<any>
 }
 
 export default class RefForward extends React.Component<RefForwardProps> {

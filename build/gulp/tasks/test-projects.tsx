@@ -151,4 +151,7 @@ task('test:projects:rollup', async () => {
   logger(`✔️Example project was successfully built: ${tmpDirectory}`)
 })
 
-task('test:projects', series('dll', 'bundle:all-packages', parallel('test:projects:cra-ts')))
+task(
+  'test:projects',
+  series('dll', 'bundle:all-packages', parallel('test:projects:cra-ts', 'test:projects:rollup')),
+)
