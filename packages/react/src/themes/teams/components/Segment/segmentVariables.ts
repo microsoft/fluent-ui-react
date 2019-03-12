@@ -15,7 +15,7 @@ export default (siteVariables): SegmentVariables => {
 
   return {
     colors: mapColorsToScheme(siteVariables, colorVariant),
-    color: siteVariables.black,
+    color: siteVariables.bodyColor,
     backgroundColor: siteVariables.bodyBackground,
     padding: '1em',
     borderRadius: 0,

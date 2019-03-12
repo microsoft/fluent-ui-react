@@ -1,13 +1,13 @@
+import { Provider, themes } from '@stardust-ui/react'
 import AnchorJS from 'anchor-js'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router'
-import { Route } from 'react-router-dom'
 
+import { Route } from 'react-router-dom'
 import Sidebar from 'docs/src/components/Sidebar/Sidebar'
-import style from 'docs/src/Style'
 import { scrollToAnchor } from 'docs/src/utils'
-import { getUnhandledProps } from 'src/lib'
+import { getUnhandledProps, mergeThemes } from 'src/lib'
 
 const anchors = new AnchorJS({
   icon: '#',
@@ -58,17 +58,31 @@ class DocsLayout extends React.Component<any, any> {
   }
 
   renderChildren = props => {
-    const { component: Children, render, sidebar } = this.props
-    const mainStyle = sidebar ? style.sidebarMain : style.main
+    const { component: Children, render } = this.props
 
     if (render) return render()
     return (
-      <div style={style.container}>
-        <Sidebar style={style.menu} />
-        <div style={mainStyle}>
+      <>
+        <Provider
+          theme={mergeThemes(themes.teamsDark, {
+            // adjust Teams' theme to Semantic UI's font size scheme
+            componentVariables: {
+              MenuDivider: {
+                borderColor: '#ffffff80',
+              },
+              MenuItem: {
+                activeBackgroundColor: 'none',
+                focusedBackgroundColor: 'none',
+              },
+            },
+          })}
+        >
+          <Sidebar />
+        </Provider>
+        <div role="main" style={{ marginLeft: 250 }}>
           <Children {...props} />
         </div>
-      </div>
+      </>
     )
   }
 

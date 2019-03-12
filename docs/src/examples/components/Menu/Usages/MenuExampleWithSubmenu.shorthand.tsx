@@ -11,12 +11,12 @@ const items = [
         {
           key: '2',
           content: 'item2',
-          menu: { items: [{ key: '1', content: 'item2.1' }, { key: '2', content: 'item2.2' }] },
+          menu: [{ key: '1', content: 'item2.1' }, { key: '2', content: 'item2.2' }],
         },
         {
           key: '3',
           content: 'item3',
-          menu: { items: [{ key: '1', content: 'item3.1' }, { key: '2', content: 'item3.2' }] },
+          menu: [{ key: '1', content: 'item3.1' }, { key: '2', content: 'item3.2' }],
         },
       ],
     },
@@ -30,7 +30,7 @@ const items = [
         {
           key: '2',
           content: 'item2',
-          menu: { items: [{ key: '1', content: 'item2.1' }, { key: '2', content: 'item2.2' }] },
+          menu: [{ key: '1', content: 'item2.1' }, { key: '2', content: 'item2.2' }],
         },
       ],
     },

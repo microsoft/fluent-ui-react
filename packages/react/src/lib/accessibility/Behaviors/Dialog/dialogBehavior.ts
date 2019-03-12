@@ -16,8 +16,8 @@ import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
 const dialogBehavior: Accessibility = (props: any) => {
   const behaviorData = popupFocusTrapBehavior(props)
   behaviorData.attributes.popup = {
+    ...behaviorData.attributes.popup,
     role: 'dialog',
-    'aria-modal': true,
   }
 
   return behaviorData

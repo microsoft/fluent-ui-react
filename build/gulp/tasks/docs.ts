@@ -6,7 +6,6 @@ import * as remember from 'gulp-remember'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as rimraf from 'rimraf'
-import * as through2 from 'through2'
 import * as webpack from 'webpack'
 import * as WebpackDevMiddleware from 'webpack-dev-middleware'
 import * as WebpackHotMiddleware from 'webpack-hot-middleware'
@@ -15,6 +14,7 @@ import sh from '../sh'
 import config from '../../../config'
 import gulpComponentMenu from '../plugins/gulp-component-menu'
 import gulpComponentMenuBehaviors from '../plugins/gulp-component-menu-behaviors'
+import gulpDoctoc from '../plugins/gulp-doctoc'
 import gulpExampleMenu from '../plugins/gulp-example-menu'
 import gulpExampleSource from '../plugins/gulp-example-source'
 import gulpReactDocgen from '../plugins/gulp-react-docgen'
@@ -72,8 +72,8 @@ task(
 // Build
 // ----------------------------------------
 
-const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`, '!**/Box.tsx']
-const behaviorSrc = [`${paths.posix.src()}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
+const componentsSrc = [`${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`, '!**/Box.tsx']
+const behaviorSrc = [`${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
 const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/!(*index|.knobs).tsx`
 const markdownSrc = [
@@ -143,11 +143,8 @@ task('build:docs:images', () =>
 
 task('build:docs:toc', () =>
   src(markdownSrc, { since: lastRun('build:docs:toc') }).pipe(
-    through2.obj((file, enc, done) => {
-      sh(`doctoc ${file.path} --github --maxlevel 4`)
-        .then(() => sh(`git add ${file.path}`))
-        .then(done)
-        .catch(done)
+    cache(gulpDoctoc(), {
+      name: 'md-docs',
     }),
   ),
 )
@@ -245,7 +242,7 @@ task('watch:docs', cb => {
     .on('unlink', path => handleWatchUnlink('component-menu-behaviors', path))
 
   // rebuild images
-  watch(`${config.paths.src()}/**/*.{png,jpg,gif}`, series('build:docs:images')).on(
+  watch(`${config.paths.docsSrc()}/**/*.{png,jpg,gif}`, series('build:docs:images')).on(
     'change',
     handleWatchChange,
   )

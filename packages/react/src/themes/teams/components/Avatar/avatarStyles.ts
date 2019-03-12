@@ -17,6 +17,7 @@ const avatarStyles: ComponentSlotStylesInput<AvatarProps, any> = {
     const sizeInRem = pxToRem(sizeToPxValue[size])
 
     return {
+      boxSizing: 'border-box',
       position: 'relative',
       backgroundColor: 'inherit',
       display: 'inline-block',
@@ -26,14 +27,20 @@ const avatarStyles: ComponentSlotStylesInput<AvatarProps, any> = {
     }
   },
   image: ({ variables: v }): ICSSInJSStyle => ({
-    verticalAlign: 'top',
-    borderStyle: 'solid',
+    boxSizing: 'border-box',
     borderColor: v.avatarBorderColor,
+    borderStyle: 'solid',
     borderWidth: `${v.avatarBorderWidth}px`,
+
+    height: '100%',
+    objectFit: 'cover',
+    verticalAlign: 'top',
+    width: '100%',
   }),
   label: ({ props: { size } }): ICSSInJSStyle => {
     const sizeInRem = pxToRem(sizeToPxValue[size])
     return {
+      boxSizing: 'border-box',
       display: 'inline-block',
       width: sizeInRem,
       height: sizeInRem,

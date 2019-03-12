@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { Avatar, Chat, Provider } from '@stardust-ui/react'
 
+const reactions = [{ icon: 'thumbs up', content: '1K' }, { icon: 'thumbs down', content: 5 }]
+
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
   status: { color: 'green', icon: 'check' },
@@ -53,10 +55,16 @@ const ChatMessageExampleStyled = () => (
         ChatMessage: {
           root: { ...slotLabelStyles('chat-message-root'), backgroundColor: '#87CEFA' },
           author: ({ props: { mine } }) => ({
-            ...(!mine && { ...slotLabelStyles('author'), backgroundColor: '#E0FFFF' }),
+            ...(!mine && {
+              ...slotLabelStyles('author', {}, { display: 'inline-block' }),
+              backgroundColor: '#E0FFFF',
+            }),
           }),
           content: { ...slotLabelStyles('content'), backgroundColor: '#F08080' },
-          timestamp: { ...slotLabelStyles('timestamp'), backgroundColor: '#FFFFE0' },
+          timestamp: {
+            ...slotLabelStyles('timestamp', {}, { display: 'inline-block' }),
+            backgroundColor: '#FFFFE0',
+          },
           badge: {
             ...slotLabelStyles(
               'badge',
@@ -64,6 +72,10 @@ const ChatMessageExampleStyled = () => (
               { position: 'absolute', overflow: 'visible' },
             ),
             backgroundColor: '#FFFF00',
+          },
+          reactionGroup: {
+            ...slotLabelStyles('reactions', {}, { padding: '8px' }),
+            backgroundColor: '#FFFFE0',
           },
         },
       },
@@ -88,6 +100,7 @@ const ChatMessageExampleStyled = () => (
                 mine
                 badge={{ icon: 'at' }}
                 badgePosition="start"
+                reactionGroup={reactions}
               />
             ),
           },
@@ -104,6 +117,7 @@ const ChatMessageExampleStyled = () => (
                 author="Jane Doe"
                 timestamp="Yesterday, 10:15 PM"
                 badge={{ icon: 'exclamation' }}
+                reactionGroup={reactions}
               />
             ),
           },

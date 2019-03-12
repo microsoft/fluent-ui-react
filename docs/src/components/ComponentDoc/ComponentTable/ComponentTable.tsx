@@ -1,23 +1,27 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Table } from 'semantic-ui-react'
 
 import ComponentTableHeader from './ComponentTableHeader'
 import ComponentTableRow from './ComponentTableRow'
 
+const tableStyles: React.CSSProperties = {
+  textAlign: 'left',
+  borderCollapse: 'collapse',
+}
 /**
  * Displays a table of a Component's PropTypes.
+ * TODO: use Flex or a Table component, when it will be available
  */
 const ComponentTable: any = ({ props }) => (
-  <Table compact="very" basic="very">
+  <table style={tableStyles}>
     <ComponentTableHeader />
-    <Table.Body>
+    <tbody>
       {_.map(props, propDef => (
         <ComponentTableRow {...propDef} key={propDef.name} />
       ))}
-    </Table.Body>
-  </Table>
+    </tbody>
+  </table>
 )
 
 ComponentTable.propTypes = {

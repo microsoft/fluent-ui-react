@@ -9,7 +9,7 @@ const selectors = {
     }`,
 }
 
-const steps = [
+const steps: ScreenerSteps = [
   steps =>
     steps
       .click(selectors.triggerButton)
@@ -17,9 +17,7 @@ const steps = [
       .click(selectors.triggerButton)
       .click(selectors.item(2))
       .click(selectors.triggerButton)
-      .snapshot('Opened dropdown with two items selected'),
-  steps =>
-    steps
+      .snapshot('Opened dropdown with two items selected')
       .click(selectors.removeItemIcon(1))
       .click(selectors.triggerButton)
       .click(selectors.removeItemIcon(1))

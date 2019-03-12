@@ -12,13 +12,22 @@ import {
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  createShorthandFactory,
 } from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import Button from './Button'
 
 export interface ButtonGroupProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** The buttons contained inside the ButtonGroup. */
   buttons?: ShorthandValue[]
 
@@ -30,18 +39,20 @@ export interface ButtonGroupProps
  * A button group presents multiple related actions.
  */
 class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
+  public static create: Function
+
   public static displayName = 'ButtonGroup'
 
   public static className = 'ui-buttons'
 
   public static propTypes = {
     ...commonPropTypes.createCommon(),
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     buttons: customPropTypes.collectionShorthand,
     circular: PropTypes.bool,
   }
 
   public static defaultProps = {
+    accessibility: defaultBehavior,
     as: 'div',
   }
 
@@ -94,5 +105,11 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
     return resultStyles
   }
 }
+
+ButtonGroup.create = createShorthandFactory({
+  Component: ButtonGroup,
+  mappedProp: 'content',
+  mappedArrayProp: 'buttons',
+})
 
 export default ButtonGroup

@@ -2,11 +2,12 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import TreeItem from './TreeItem'
+import TreeItem, { TreeItemProps } from './TreeItem'
 import {
-  UIComponent,
+  AutoControlledComponent,
   childrenExist,
   commonPropTypes,
+  createShorthandFactory,
   customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
@@ -17,11 +18,20 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 
 export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
+  /** Index of the currently active subtree. */
+  activeIndex?: number[] | number
+
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior
    */
   accessibility?: Accessibility
+
+  /** Initial activeIndex value. */
+  defaultActiveIndex?: number[] | number
+
+  /** Only allow one subtree to be open at a time. */
+  exclusive?: boolean
 
   /** Shorthand array of props for Tree. */
   items: ShorthandValue[]
@@ -36,10 +46,14 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   renderItemTitle?: ShorthandRenderFunction
 }
 
+export interface TreeState {
+  activeIndex: number[] | number
+}
+
 /**
  * Allows users to display data organised in tree-hierarchy.
  */
-class Tree extends UIComponent<ReactProps<TreeProps>> {
+class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
   static create: Function
 
   static className = 'ui-tree'
@@ -50,7 +64,15 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: PropTypes.func,
+    activeIndex: customPropTypes.every([
+      customPropTypes.disallow(['children']),
+      PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
+    ]),
+    defaultActiveIndex: customPropTypes.every([
+      customPropTypes.disallow(['children']),
+      PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
+    ]),
+    exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
     rtlAttributes: PropTypes.func,
@@ -61,14 +83,51 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     accessibility: defaultBehavior,
   }
 
-  renderContent() {
-    const { items, renderItemTitle } = this.props
+  static autoControlledProps = ['activeIndex']
 
-    return _.map(items, item =>
+  getInitialAutoControlledState({ exclusive }): TreeState {
+    return {
+      activeIndex: exclusive ? -1 : [],
+    }
+  }
+
+  getActiveIndexes(): number[] {
+    const { activeIndex } = this.state
+    return _.isArray(activeIndex) ? activeIndex : [activeIndex]
+  }
+
+  computeNewIndex = (index: number) => {
+    const { exclusive } = this.props
+
+    if (exclusive) return index
+    const activeIndexes = this.getActiveIndexes()
+    // check to see if index is in array, and remove it, if not then add it
+    return _.includes(activeIndexes, index)
+      ? _.without(activeIndexes, index)
+      : [...activeIndexes, index]
+  }
+
+  handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
+    onTitleClick: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
+      this.trySetState({ activeIndex: this.computeNewIndex(treeItemProps.index) })
+      _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
+    },
+  })
+
+  renderContent() {
+    const { items, renderItemTitle, exclusive } = this.props
+    const { activeIndex } = this.state
+    const activeIndexes = this.getActiveIndexes()
+
+    return _.map(items, (item: ShorthandValue, index: number) =>
       TreeItem.create(item, {
         defaultProps: {
+          index,
+          exclusive,
           renderItemTitle,
+          open: exclusive ? index === activeIndex : _.includes(activeIndexes, index),
         },
+        overrideProps: this.handleTreeItemOverrides,
       }),
     )
   }
@@ -88,5 +147,7 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     )
   }
 }
+
+Tree.create = createShorthandFactory({ Component: Tree, mappedArrayProp: 'items' })
 
 export default Tree

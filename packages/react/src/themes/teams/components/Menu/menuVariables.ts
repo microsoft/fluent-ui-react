@@ -2,13 +2,19 @@ import { pxToRem } from '../../../../lib'
 
 export interface MenuVariables {
   color: string
+  borderColor: string
+  verticalBorderColor: string
+
+  focusedBorder: string
+  focusedOutline: string
+  focusedBackgroundColor: string
+
+  hoverBackgroundColor: string
 
   activeColor: string
   activeBackgroundColor: string
-  focusedBackgroundColor: string
-  borderColor: string
-
   iconOnlyActiveColor: string
+
   primaryActiveColor: string
   primaryActiveBackgroundColor: string
   primaryActiveBorderColor: string
@@ -21,38 +27,61 @@ export interface MenuVariables {
   primaryUnderlinedBorderColor: string
 
   disabledColor: string
-
   lineHeightBase: string
-
   horizontalPadding: string
+
+  verticalBackgroundColor: string
+  verticalItemPadding: string
+  verticalBoxShadow: string
+  verticalDividerMargin: string
+  verticalItemBorder: string
+
+  underlinedBottomBorderWidth: string
+
+  dividerHeight: string
+  borderWidth: string
 }
 
 export default (siteVars: any): MenuVariables => {
   return {
     color: siteVars.gray02,
-
-    iconOnlyActiveColor: siteVars.brand06,
-
-    activeColor: siteVars.black,
-    activeBackgroundColor: siteVars.gray10,
-    focusedBackgroundColor: siteVars.gray14,
     borderColor: siteVars.gray08,
+    verticalBorderColor: siteVars.gray08,
 
-    primaryActiveColor: siteVars.white,
+    focusedBorder: `solid ${pxToRem(1)} ${siteVars.colors.white}`,
+    focusedOutline: `solid ${pxToRem(1)} ${siteVars.colors.black}`,
+    focusedBackgroundColor: siteVars.gray09,
+
+    hoverBackgroundColor: siteVars.gray14,
+
+    activeColor: siteVars.colors.black,
+    activeBackgroundColor: siteVars.gray10,
+    iconOnlyActiveColor: siteVars.colors.primary[500],
+
+    primaryActiveColor: siteVars.colors.white,
     primaryActiveBackgroundColor: siteVars.brand08,
-    primaryActiveBorderColor: siteVars.brand,
+    primaryActiveBorderColor: siteVars.colors.primary[500],
 
-    primaryFocusedColor: siteVars.white,
-    primaryFocusedBackgroundColor: siteVars.brand12,
+    primaryFocusedColor: siteVars.colors.white,
+    primaryFocusedBackgroundColor: siteVars.colors.primary[200],
 
-    primaryBorderColor: siteVars.brand08,
+    primaryBorderColor: siteVars.gray10,
     primaryHoverBorderColor: siteVars.gray08,
     primaryUnderlinedBorderColor: siteVars.gray08,
 
     disabledColor: siteVars.gray06,
-
     lineHeightBase: siteVars.lineHeightMedium,
-
     horizontalPadding: `${pxToRem(14)} ${pxToRem(18)} ${pxToRem(14)} ${pxToRem(18)}`,
+
+    verticalBackgroundColor: siteVars.colors.white,
+    verticalItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
+    verticalBoxShadow: siteVars.shadowLevel3,
+    verticalDividerMargin: `${pxToRem(8)} 0`,
+    verticalItemBorder: `solid ${pxToRem(2)} transparent`,
+
+    underlinedBottomBorderWidth: pxToRem(2),
+
+    dividerHeight: pxToRem(1),
+    borderWidth: pxToRem(1),
   }
 }

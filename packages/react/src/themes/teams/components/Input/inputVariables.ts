@@ -26,13 +26,13 @@ export default (siteVars): InputVariables => ({
   fontSize: siteVars.fontSizes.medium,
 
   iconPosition: 'absolute',
-  iconRight: pxToRem(2),
+  iconRight: pxToRem(10),
   iconColor: siteVars.bodyColor,
   iconLeft: pxToRem(6),
   inputPaddingWithIconAtStart: `${pxToRem(7)} ${pxToRem(12)} ${pxToRem(7)} ${pxToRem(24)}`,
   inputPaddingWithIconAtEnd: `${pxToRem(7)} ${pxToRem(24)} ${pxToRem(7)} ${pxToRem(12)}`,
 
   inputPadding: `${pxToRem(7)} ${pxToRem(12)}`,
-  inputFocusBorderBottomColor: siteVars.brand,
+  inputFocusBorderBottomColor: siteVars.colors.primary[500],
   inputFocusBorderRadius: `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`,
 })

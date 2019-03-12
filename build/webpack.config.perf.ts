@@ -1,4 +1,5 @@
 import * as CopyWebpackPlugin from 'copy-webpack-plugin'
+import { webpack as lernaAliases } from 'lerna-alias'
 import * as webpack from 'webpack'
 
 import config from '../config'
@@ -55,9 +56,9 @@ const webpackConfig: any = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
     alias: {
-      '@stardust-ui/react': paths.src(),
+      ...lernaAliases(),
       docs: paths.base('docs'),
-      src: paths.src(),
+      src: paths.packageSrc('react'),
     },
   },
   performance: {

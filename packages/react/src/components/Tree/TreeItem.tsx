@@ -3,11 +3,11 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import Tree from './Tree'
-import TreeTitle from './TreeTitle'
+import TreeTitle, { TreeTitleProps } from './TreeTitle'
 import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import {
-  AutoControlledComponent,
+  UIComponent,
   childrenExist,
   customPropTypes,
   createShorthandFactory,
@@ -16,7 +16,12 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ShorthandRenderFunction, ShorthandValue } from '../../types'
+import {
+  ComponentEventHandler,
+  ReactProps,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../types'
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -25,11 +30,20 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
    */
   accessibility?: Accessibility
 
+  /** Only allow one subtree to be open at a time. */
+  exclusive?: boolean
+
   /** Initial open value. */
   defaultOpen?: boolean
 
+  /** The index of the item among its sibbling */
+  index: number
+
   /** Array of props for sub tree. */
   items?: ShorthandValue[]
+
+  /** Called when a tree title is clicked. */
+  onTitleClick?: ComponentEventHandler<TreeItemProps>
 
   /** Whether or not the subtree of the item is in the open state. */
   open?: boolean
@@ -48,11 +62,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   title?: ShorthandValue
 }
 
-export interface TreeItemState {
-  open?: boolean
-}
-
-class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeItemState> {
+class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
   static create: Function
 
   static className = 'ui-tree__item'
@@ -65,9 +75,11 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    accessibility: PropTypes.func,
     defaultOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
+    index: PropTypes.number,
+    exclusive: PropTypes.bool,
+    onTitleClick: PropTypes.func,
     open: PropTypes.bool,
     renderItemTitle: PropTypes.func,
     treeItemRtlAttributes: PropTypes.func,
@@ -79,20 +91,16 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
     accessibility: defaultBehavior,
   }
 
-  handleTitleOverrides = predefinedProps => ({
+  handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
     onClick: (e, titleProps) => {
       e.preventDefault()
-      this.trySetState({
-        open: !this.state.open,
-      })
+      _.invoke(this.props, 'onTitleClick', e, this.props)
       _.invoke(predefinedProps, 'onClick', e, titleProps)
     },
   })
 
   renderContent() {
-    const { items, title, renderItemTitle } = this.props
-    const { open } = this.state
-
+    const { items, title, renderItemTitle, open, exclusive } = this.props
     const hasSubtree = !!(items && items.length)
 
     return (
@@ -105,7 +113,13 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
           render: renderItemTitle,
           overrideProps: this.handleTitleOverrides,
         })}
-        {hasSubtree && open && <Tree items={items} renderItemTitle={renderItemTitle} />}
+        {open &&
+          Tree.create(items, {
+            defaultProps: {
+              exclusive,
+              renderItemTitle,
+            },
+          })}
       </>
     )
   }
@@ -126,6 +140,6 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
   }
 }
 
-TreeItem.create = createShorthandFactory(TreeItem, 'title')
+TreeItem.create = createShorthandFactory({ Component: TreeItem, mappedProp: 'title' })
 
 export default TreeItem

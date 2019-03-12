@@ -16,8 +16,7 @@ describe('Ref', () => {
     })
 
     it('renders RefFindNode when a component is passed', () => {
-      const innerRef = React.createRef()
-      const wrapper = shallow(
+y      const wrapper = shallow(
         <Ref innerRef={innerRef}>
           <CompositeClass />
         </Ref>,

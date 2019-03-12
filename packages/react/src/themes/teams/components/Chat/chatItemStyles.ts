@@ -8,6 +8,7 @@ import { screenReaderContainerStyles } from '../../../../lib/accessibility/Style
 const chatMessageClassNameSelector = `& .${ChatMessage.className}`
 const chatMessageAuthorClassNameSelector = `& .${ChatMessage.slotClassNames.author}`
 const chatMessageTimestampClassNameSelector = `& .${ChatMessage.slotClassNames.timestamp}`
+const chatMessageContentClassNameSelector = `& .${ChatMessage.slotClassNames.content}`
 
 const getPositionStyles = (props: ChatItemProps) => ({
   float: props.contentPosition === 'end' ? 'right' : 'left',
@@ -22,6 +23,9 @@ const getChatMessageEvaluatedStyles = (p: ChatItemProps) => ({
       paddingTop: pxToRem(5),
       paddingBottom: pxToRem(7),
       ...getPositionStyles(p),
+      [chatMessageContentClassNameSelector]: {
+        display: 'inline-block',
+      },
     },
   }),
   ...(p.attached === 'top' && {
@@ -36,6 +40,9 @@ const getChatMessageEvaluatedStyles = (p: ChatItemProps) => ({
       paddingTop: pxToRem(5),
       paddingBottom: pxToRem(7),
       ...getPositionStyles(p),
+      [chatMessageContentClassNameSelector]: {
+        display: 'inline-block',
+      },
     },
   }),
 })
@@ -43,13 +50,13 @@ const getChatMessageEvaluatedStyles = (p: ChatItemProps) => ({
 const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'relative',
-    ...((!p.attached || p.attached === 'top') && { marginTop: pxToRem(16) }),
+    ...((!p.attached || p.attached === 'top') && { paddingTop: pxToRem(16) }),
     ...((p.attached === 'bottom' || p.attached === true) && {
-      marginTop: pxToRem(2),
+      paddingTop: pxToRem(2),
       [chatMessageAuthorClassNameSelector]: screenReaderContainerStyles,
       [chatMessageTimestampClassNameSelector]: screenReaderContainerStyles,
     }),
-    marginBottom: 0,
+    paddingBottom: 0,
   }),
 
   gutter: ({ props: p, variables: v }): ICSSInJSStyle => ({

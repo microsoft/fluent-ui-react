@@ -1,24 +1,37 @@
 import { pxToRem } from '../../../../lib'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { ListItemProps, ListItemState } from '../../../../components/List/ListItem'
+import {
+  default as ListItem,
+  ListItemProps,
+  ListItemState,
+} from '../../../../components/List/ListItem'
 
 type ListItemPropsAndState = ListItemProps & ListItemState
+
+const truncateStyle = {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+}
 
 const selectableHoverStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
   background: v.selectableFocusHoverBackgroundColor,
   color: v.selectableFocusHoverColor,
   cursor: 'pointer',
 
-  '& .ui-item-layout__header': { color: 'inherit' },
-  '& .ui-item-layout__content': { color: 'inherit' },
+  [`& .${ListItem.slotClassNames.header}`]: { color: 'inherit' },
+  [`& .${ListItem.slotClassNames.content}`]: { color: 'inherit' },
 
   // hide the header media and content media on hover
-  '& .ui-item-layout__headerMedia': { ...screenReaderContainerStyles, color: 'inherit' },
-  '& .ui-item-layout__contentMedia': { display: 'none', color: 'inherit' },
+  [`& .${ListItem.slotClassNames.headerMedia}`]: {
+    ...screenReaderContainerStyles,
+    color: 'inherit',
+  },
+  [`& .${ListItem.slotClassNames.contentMedia}`]: { display: 'none', color: 'inherit' },
 
   // show the end media on hover
-  '& .ui-item-layout__endMedia': { display: 'block', color: 'inherit' },
+  [`& .${ListItem.slotClassNames.endMedia}`]: { display: 'block', color: 'inherit' },
 })
 
 const selectableFocusStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
@@ -38,11 +51,13 @@ const selectedStyle = variables => ({
 
 const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    minHeight: v.minHeight,
+    padding: v.rootPadding,
     ...(p.selectable && {
       position: 'relative',
 
       // hide the end media by default
-      '& .ui-item-layout__endMedia': { display: 'none' },
+      [`& .${ListItem.slotClassNames.endMedia}`]: { display: 'none' },
 
       '&:hover': selectableHoverStyle(p, v),
       '&:focus': selectableFocusStyle(p, v),
@@ -64,17 +79,30 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
       },
     }),
   }),
-  header: ({ variables: v }): ICSSInJSStyle => ({
+  header: ({ props: p, variables: v }) => ({
     fontSize: v.headerFontSize,
     lineHeight: v.headerLineHeight,
+    ...(p.truncateHeader && truncateStyle),
   }),
   headerMedia: ({ variables: v }): ICSSInJSStyle => ({
     fontSize: v.headerMediaFontSize,
     lineHeight: v.headerMediaLineHeight,
+    alignSelf: 'flex-end',
   }),
-  content: ({ variables: v }) => ({
+  content: ({ props: p, variables: v }) => ({
     fontSize: v.contentFontSize,
     lineHeight: v.contentLineHeight,
+    ...(p.truncateContent && truncateStyle),
+  }),
+  contentMedia: ({ props: p, variables: v }) => ({
+    fontSize: v.contentMediaFontSize,
+    lineHeight: v.contentMediaLineHeight,
+  }),
+  endMedia: ({ props: p }) => ({
+    ...(p.selectable && { display: 'none' }),
+  }),
+  main: () => ({
+    minWidth: 0, // needed for the truncate styles to work
   }),
 }
 

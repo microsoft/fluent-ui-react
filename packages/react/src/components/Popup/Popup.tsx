@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
+import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
@@ -15,6 +16,8 @@ import {
   StyledComponentProps,
   commonPropTypes,
   isFromKeyboard,
+  customPropTypes,
+  handleRef,
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 
@@ -24,7 +27,12 @@ import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './posi
 import PopupContent from './PopupContent'
 
 import { popupBehavior } from '../../lib/accessibility'
-import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
+import {
+  AutoFocusZone,
+  AutoFocusZoneProps,
+  FocusTrapZone,
+  FocusTrapZoneProps,
+} from '../../lib/accessibility/FocusZone'
 
 import {
   Accessibility,
@@ -59,6 +67,9 @@ export interface PopupProps
 
   /** Initial value for 'open'. */
   defaultOpen?: boolean
+
+  /** Whether the Popup should be rendered inline with the trigger or in the body. */
+  inline?: boolean
 
   /** Delay in ms for the mouse leave event, before the popup will be closed. */
   mouseLeaveDelay?: number
@@ -108,6 +119,9 @@ export interface PopupProps
 
   /** Element to be rendered in-place where the popup is defined. */
   trigger?: JSX.Element
+
+  /** Ref for Popup content DOM node. */
+  contentRef?: React.Ref<HTMLElement>
 }
 
 export interface PopupState {
@@ -133,10 +147,10 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       as: false,
       content: 'shorthand',
     }),
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     align: PropTypes.oneOf(ALIGNMENTS),
     defaultOpen: PropTypes.bool,
     defaultTarget: PropTypes.any,
+    inline: PropTypes.bool,
     mouseLeaveDelay: PropTypes.number,
     on: PropTypes.oneOfType([
       PropTypes.oneOf(['hover', 'click', 'focus']),
@@ -149,6 +163,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     renderContent: PropTypes.func,
     target: PropTypes.any,
     trigger: PropTypes.any,
+    contentRef: customPropTypes.ref,
   }
 
   public static defaultProps: PopupProps = {
@@ -164,6 +179,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   private static isBrowserContext = isBrowser()
 
   private outsideClickSubscription = EventStack.noSubscription
+  private outsideKeySubscription = EventStack.noSubscription
 
   private triggerDomElement = null
   // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
@@ -174,8 +190,8 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
   protected actionHandlers: AccessibilityActionHandlers = {
     closeAndFocusTrigger: e => {
-      this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
       e.stopPropagation()
+      this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
     },
     close: e => this.close(e),
     toggle: e => {
@@ -189,7 +205,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   }
 
   public componentDidMount() {
-    this.updateOutsideClickSubscription()
+    this.updateOutsideHandleSubscription()
 
     if (!this.state.open) {
       this.popupDomElement = null
@@ -197,7 +213,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   }
 
   public componentDidUpdate() {
-    this.updateOutsideClickSubscription()
+    this.updateOutsideHandleSubscription()
 
     if (!this.state.open) {
       this.popupDomElement = null
@@ -206,6 +222,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
   public componentWillUnmount() {
     this.outsideClickSubscription.unsubscribe()
+    this.outsideKeySubscription.unsubscribe()
   }
 
   public renderComponent({
@@ -213,6 +230,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     rtl,
     accessibility,
   }: RenderResultConfig<PopupProps>): React.ReactNode {
+    const { inline } = this.props
     const popupContent = this.renderPopupContent(classes.popup, rtl, accessibility)
 
     return (
@@ -222,23 +240,33 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         {this.state.open &&
           Popup.isBrowserContext &&
           popupContent &&
-          ReactDOM.createPortal(popupContent, document.body)}
+          (inline ? popupContent : ReactDOM.createPortal(popupContent, document.body))}
       </>
     )
   }
 
-  private updateOutsideClickSubscription() {
+  private updateOutsideHandleSubscription() {
     if (this.state.open && this.outsideClickSubscription.isEmpty) {
       setTimeout(() => {
         this.outsideClickSubscription = EventStack.subscribe(
           'click',
           e => {
-            const isOutsidePopupElement =
-              this.popupDomElement && !this.popupDomElement.contains(e.target)
-            const isOutsideTriggerElement =
-              this.triggerDomElement && !this.triggerDomElement.contains(e.target)
+            if (this.isOutsidePopupElementAndOutsideTriggerElement(e)) {
+              this.state.open && this.trySetOpen(false, e)
+            }
+          },
+          {
+            useCapture: true,
+          },
+        )
+        this.outsideKeySubscription = EventStack.subscribe(
+          'keydown',
+          e => {
+            const keyCode = keyboardKey.getCode(e)
 
-            if (isOutsidePopupElement && isOutsideTriggerElement) {
+            const matchingKey = keyCode === keyboardKey.Enter || keyboardKey.Spacebar
+
+            if (matchingKey && this.isOutsidePopupElementAndOutsideTriggerElement(e)) {
               this.state.open && this.trySetOpen(false, e)
             }
           },
@@ -249,7 +277,15 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       })
     } else {
       this.outsideClickSubscription.unsubscribe()
+      this.outsideKeySubscription.unsubscribe()
     }
+  }
+
+  private isOutsidePopupElementAndOutsideTriggerElement(e) {
+    const isOutsidePopupElement = this.popupDomElement && !this.popupDomElement.contains(e.target)
+    const isOutsideTriggerElement =
+      this.triggerDomElement && !this.triggerDomElement.contains(e.target)
+    return isOutsidePopupElement && isOutsideTriggerElement
   }
 
   private getTriggerProps(triggerElement) {
@@ -428,14 +464,13 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
     { ref, scheduleUpdate, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
-    const { content: propsContent, renderContent } = this.props
+    const { content: propsContent, renderContent, contentRef } = this.props
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
 
     const popupWrapperAttributes = {
       ...(rtl && { dir: 'rtl' }),
       ...accessibility.attributes.popup,
       ...accessibility.keyHandlers.popup,
-
       className: popupPositionClasses,
       style: popupPlacementStyles,
       ...this.getContentProps(),
@@ -444,13 +479,26 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const focusTrapProps = {
       ...(typeof accessibility.focusTrap === 'boolean' ? {} : accessibility.focusTrap),
       ...popupWrapperAttributes,
+      onKeyDown: (e: React.KeyboardEvent) => {
+        // No need to propagate keydown events outside Popup
+        // when focus trap behavior is used
+        // allow only keyboard actions to execute
+        _.invoke(accessibility.keyHandlers.popup, 'onKeyDown', e)
+        e.stopPropagation()
+      },
     } as FocusTrapZoneProps
 
+    const autoFocusProps = {
+      ...(typeof accessibility.autoFocus === 'boolean' ? {} : accessibility.autoFocus),
+      ...popupWrapperAttributes,
+    } as AutoFocusZoneProps
+
     /**
-     * if there is no focus trap wrapper, we should apply
+     * if there is no focus trap  or auto focus wrapper, we should apply
      * HTML attributes and positioning to popup content directly
      */
-    const popupContentAttributes = accessibility.focusTrap ? {} : popupWrapperAttributes
+    const popupContentAttributes =
+      accessibility.focusTrap || accessibility.autoFocus ? {} : popupWrapperAttributes
 
     const popupContent = React.isValidElement(content)
       ? React.cloneElement(content, popupContentAttributes)
@@ -464,10 +512,13 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         innerRef={domElement => {
           ref(domElement)
           this.popupDomElement = domElement
+          handleRef(contentRef, domElement)
         }}
       >
         {accessibility.focusTrap ? (
           <FocusTrapZone {...focusTrapProps}>{popupContent}</FocusTrapZone>
+        ) : accessibility.autoFocus ? (
+          <AutoFocusZone {...autoFocusProps}>{popupContent}</AutoFocusZone>
         ) : (
           popupContent
         )}

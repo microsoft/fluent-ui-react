@@ -31,7 +31,7 @@ const makeConfig = (srcPath, name) => ({
   mode: 'production',
   name: 'client',
   target: 'web',
-  entry: paths.dist(path.join('es', srcPath)),
+  entry: paths.packageDist('react', path.join('es', srcPath)),
   output: {
     filename: `${name}.js`,
     path: paths.base('stats'),
@@ -85,12 +85,12 @@ export default [
 
   // individual components
   ...fs
-    .readdirSync(paths.src('components'))
+    .readdirSync(paths.packageSrc('react', 'components'))
     .map(dir => makeConfig(`components/${dir}/${dir}`, `component-${dir}`)),
 
   // individual themes
   ...fs
-    .readdirSync(paths.src('themes'))
+    .readdirSync(paths.packageSrc('react', 'themes'))
     .filter(dir => !/.*\.\w+$/.test(dir))
     .map(dir => makeConfig(`themes/${dir}`, `theme-${dir}`)),
 ]

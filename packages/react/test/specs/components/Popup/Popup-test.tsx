@@ -8,7 +8,10 @@ import {
   Alignment,
 } from 'src/components/Popup/positioningHelper'
 import Popup, { PopupEvents } from 'src/components/Popup/Popup'
-import { mountWithProvider } from '../../../utils'
+import { Accessibility } from 'src/lib/accessibility/types'
+import { popupFocusTrapBehavior, popupBehavior, dialogBehavior } from 'src/lib/accessibility/index'
+
+import { domEvent, mountWithProvider } from '../../../utils'
 import * as keyboardKey from 'keyboard-key'
 import { ReactWrapper } from 'enzyme'
 
@@ -62,12 +65,15 @@ describe('Popup', () => {
         on={onProp}
       />,
     )
+    // check popup open on key press
     const popupTriggerElement = popup.find(`#${triggerId}`)
     popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToOpen })
-    expect(getPopupContent(popup).length).toBe(1)
 
+    expect(getPopupContent(popup).exists()).toBe(true)
+
+    // check popup closes on Esc
     popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToClose })
-    expect(getPopupContent(popup).length).toBe(0)
+    expect(getPopupContent(popup).exists()).toBe(false)
   }
 
   describe('handles Popup position correctly in ltr', () => {
@@ -194,6 +200,101 @@ describe('Popup', () => {
         keyboardKeyToOpen: keyboardKey.Spacebar,
         keyboardKeyToClose: keyboardKey.Escape,
       })
+    })
+    test(`close previous popup with Enter key`, () => {
+      jest.useFakeTimers()
+
+      const attachTo = document.createElement('div')
+      document.body.appendChild(attachTo)
+
+      const triggerId2 = 'triggerElement2'
+      const contentId2 = 'contentId2'
+      const wrapper = mountWithProvider(
+        <React.Fragment>
+          <Popup
+            trigger={<span id={triggerId}>text to trigger popup</span>}
+            content={<span id={contentId} />}
+            on="click"
+          />
+          <Popup
+            trigger={<span id={triggerId2}>text to trigger popup</span>}
+            content={<span id={contentId2} />}
+            on="click"
+          />
+        </React.Fragment>,
+        { attachTo },
+      )
+
+      expect(wrapper.find(`#${contentId}`).exists()).toBe(false)
+      expect(wrapper.find(`#${contentId2}`).exists()).toBe(false)
+
+      domEvent.keyDown(`#${triggerId}`, { keyCode: keyboardKey.Enter })
+      wrapper.update() // as event comes outside enzyme, we should trigger update
+      jest.runAllTimers() // we use setTimeout in `updateOutsideHandleSubscription()`
+
+      expect(wrapper.find(`#${contentId}`).exists()).toBe(true)
+      expect(wrapper.find(`#${contentId2}`).exists()).toBe(false)
+
+      domEvent.keyDown(`#${triggerId2}`, { keyCode: keyboardKey.Enter })
+      wrapper.update()
+
+      expect(wrapper.find(`#${contentId}`).exists()).toBe(false)
+      expect(wrapper.find(`#${contentId2}`).exists()).toBe(true)
+
+      document.body.removeChild(attachTo)
+    })
+  })
+
+  describe('inline', () => {
+    test('renders the content in the document body the inline prop is not provided', () => {
+      mountWithProvider(<Popup trigger={<button />} content="Content" open={true} />)
+      const contentElement = document.body.firstElementChild
+
+      expect(contentElement.classList.contains(Popup.Content.className)).toEqual(true)
+    })
+
+    test('renders the content next to the trigger element if the inline prop is provided', () => {
+      const wrapper = mountWithProvider(
+        <Popup trigger={<button id={triggerId} />} inline content="Content" open={true} />,
+      )
+      const contentElement = wrapper.getDOMNode().nextSibling as HTMLDivElement
+
+      expect(wrapper.find(Popup.Content).exists()).toEqual(true)
+      expect(contentElement.classList.contains(Popup.Content.className)).toEqual(true)
+    })
+  })
+
+  describe('keyboard event propagation', () => {
+    const expectPopupToHandleStopPropagation = (
+      behavior: Accessibility,
+      shouldStopPropagation: boolean,
+    ) => {
+      const popup = mountWithProvider(
+        <Popup
+          trigger={<span id={triggerId}> text to trigger popup </span>}
+          content={<span id={contentId} />}
+          accessibility={behavior}
+        />,
+      )
+
+      // open popup
+      const popupTriggerElement = popup.find(`#${triggerId}`)
+      popupTriggerElement.simulate('keydown', { keyCode: keyboardKey.Enter })
+
+      // when popup open, check that stopPropagation is called when keyboard events are invoked
+      const stopPropagation = jest.fn()
+      const popupContentElement = getPopupContent(popup)
+      popupContentElement.simulate('keyDown', { stopPropagation })
+      expect(stopPropagation).toHaveBeenCalledTimes(shouldStopPropagation ? 1 : 0)
+    }
+    test('stops when focus trap behavior is used', () => {
+      expectPopupToHandleStopPropagation(popupFocusTrapBehavior, true)
+    })
+    test('stops when dialog behavior is used', () => {
+      expectPopupToHandleStopPropagation(dialogBehavior, true)
+    })
+    test('does not stop when default behavior is used', () => {
+      expectPopupToHandleStopPropagation(popupBehavior, false)
     })
   })
 })

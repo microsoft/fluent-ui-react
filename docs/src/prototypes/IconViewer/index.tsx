@@ -1,9 +1,8 @@
 import * as React from 'react'
-import { Provider, Grid, Divider, Header, Icon } from '@stardust-ui/react'
+import { Provider, Grid, Divider, Header, Icon, Menu, Segment } from '@stardust-ui/react'
+import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 import themeWithProcessedIcons from 'src/themes/teams/withProcessedIcons'
 import { TeamsProcessedSvgIconSpec } from 'src/themes/teams/components/Icon/svg/types'
-
-import { Menu, Segment } from 'semantic-ui-react'
 
 const cellStyles = {
   margin: '10px 0',
@@ -15,9 +14,20 @@ const renderStardustIconName = (icon, isOutline = false) => {
   const maybeExportedAs = (icon as any).exportedAs
   return (
     maybeExportedAs && (
-      <code style={{ color: 'red' }}>
-        => {maybeExportedAs} {isOutline && 'outline'}
-      </code>
+      <>
+        <code style={{ color: 'red' }}>
+          => {maybeExportedAs} {isOutline && 'outline'}
+        </code>
+        <br />
+        <CopyToClipboard
+          render={(active, onClick) => (
+            <button onClick={onClick} style={{ fontSize: 10 }} title="Copy usage">
+              {active ? '✔' : 'Copy'}
+            </button>
+          )}
+          value={`<Icon name="${maybeExportedAs}" ${isOutline ? 'outline' : ''} />`}
+        />
+      </>
     )
   )
 }
@@ -52,11 +62,11 @@ class IconViewerExample extends React.Component<any, {}> {
         />
 
         <div style={{ marginTop: '15px' }}>
-          <Menu tabular style={{ margin: '15px 0' }}>
+          <Menu tabular styles={{ margin: '15px 0' }}>
             {Object.keys(this.iconFilters).map(filterName => (
               <Menu.Item
+                content={filterName}
                 key={filterName}
-                name={filterName}
                 active={this.state.filter === filterName}
                 onClick={() => this.setState({ filter: filterName })}
               />
@@ -69,7 +79,7 @@ class IconViewerExample extends React.Component<any, {}> {
                 <div>
                   <div>
                     <Header as="h3" content="Regular" textAlign="center" />
-                    <Grid columns={4} style={{ textAlign: 'center' }}>
+                    <Grid columns={4} styles={{ textAlign: 'center' }}>
                       {Object.keys(theme.icons)
                         .filter(name => name.startsWith(processedIconsNamePrefix))
                         .filter(name => this.applyCurrentFilter(theme.icons[name]))
@@ -89,14 +99,14 @@ class IconViewerExample extends React.Component<any, {}> {
                     <Divider>
                       <Header as="h3" content="Outline" textAlign="center" />
                     </Divider>
-                    <Grid columns={4} style={{ textAlign: 'center' }}>
+                    <Grid columns={4} styles={{ textAlign: 'center' }}>
                       {Object.keys(theme.icons)
                         .filter(name => name.startsWith(processedIconsNamePrefix))
                         .filter(name => this.applyCurrentFilter(theme.icons[name]))
                         .sort()
                         .map(name => (
                           <div key={`${name}-outline`} style={cellStyles}>
-                            <Icon name={name} variables={{ outline: true }} />
+                            <Icon name={name} outline />
                             <br />
                             <code>{name.replace(processedIconsNamePrefix, '')} outline</code>
                             <br />

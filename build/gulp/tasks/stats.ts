@@ -3,6 +3,8 @@ import { task, parallel, series } from 'gulp'
 import * as _ from 'lodash'
 import * as webpack from 'webpack'
 import * as stableStringify from 'json-stable-stringify-without-jsonify'
+import { argv } from 'yargs'
+import * as requestHttp from 'request-promise-native'
 
 import config from '../../../config'
 
@@ -101,7 +103,18 @@ function updateStatsFile(filePath: string, currentBundleStats: any) {
   )
 }
 
-task('build:stats:bundle', async () => {
+function writeCurrentStats(filePath: string, currentBundleStats: any) {
+  const statsData = _.chain(currentBundleStats)
+    .keyBy('name')
+    .mapValues(result => ({ size: result.size }))
+    .value()
+
+  fs.writeFileSync(filePath, JSON.stringify(statsData, null, 2))
+}
+
+const currentStatsFilePath = paths.docsSrc('currentBundleStats.json')
+
+task('stats:build:bundle', async () => {
   process.env.NODE_ENV = 'build'
   const webpackStatsConfig = require('../../webpack.config.stats').default
 
@@ -112,12 +125,61 @@ task('build:stats:bundle', async () => {
     .value()
 
   updateStatsFile(paths.docsSrc('bundleStats.json'), results)
+  writeCurrentStats(currentStatsFilePath, results)
 })
 
 task(
   'stats',
-  series(
-    parallel(series('clean:dist:es', 'build:dist:es'), 'build:docs:component-info'),
-    'build:stats:bundle',
-  ),
+  series(parallel('bundle:all-packages', 'build:docs:component-info'), 'stats:build:bundle'),
 )
+
+function readSummaryPerfStats() {
+  return _.chain(require(paths.perfDist('result.json')))
+    .mapKeys((value, key) => _.camelCase(key)) // mongodb does not allow dots in keys
+    .mapValues(result => ({
+      actualTime: _.omit(result.actualTime, 'values'),
+      baseTime: _.omit(result.baseTime, 'values'),
+    }))
+    .value()
+}
+
+function readCurrentBundleStats() {
+  return _.mapKeys(require(currentStatsFilePath), (value, key) => _.camelCase(key)) // mongodb does not allow dots in keys
+}
+
+task('stats:save', async () => {
+  const commandLineArgs = _.pickBy(
+    _.pick(argv, ['sha', 'branch', 'tag', 'pr', 'build']),
+    val => val !== '', // ignore empty strings
+  )
+  const bundleStats = readCurrentBundleStats()
+  const perfStats = readSummaryPerfStats()
+
+  const statsPayload = {
+    sha: process.env.CIRCLE_SHA1,
+    branch: process.env.CIRCLE_BRANCH,
+    pr: process.env.CIRCLE_PULL_REQUEST, // optional
+    build: process.env.CIRCLE_BUILD_NUM,
+    ...commandLineArgs, // allow command line overwrites
+    bundleSize: bundleStats,
+    performance: perfStats,
+    ts: new Date(),
+  }
+
+  // payload sanity check
+  _.forEach(['sha', 'branch', 'build', 'bundleSize', 'performance'], fieldName => {
+    if (statsPayload[fieldName] === undefined) {
+      throw `Required field '${fieldName}' not set in stats payload`
+    }
+  })
+
+  const options = {
+    method: 'POST',
+    uri: process.env.STATS_URI,
+    body: statsPayload,
+    json: true,
+  }
+
+  const response = await requestHttp(options)
+  console.log(response)
+})

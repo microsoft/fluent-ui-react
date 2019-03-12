@@ -1,26 +1,49 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { MenuVariables } from './menuVariables'
+import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
-  wrapper: ({ props, variables }): ICSSInJSStyle => {
-    const { iconOnly, isFromKeyboard } = props
+  wrapper: ({ props: p, variables: v }): ICSSInJSStyle => {
+    const { iconOnly, isFromKeyboard, vertical, active, underlined, primary } = p
 
     return {
-      ...(iconOnly && {
-        // focus styles
+      ':hover': {
+        color: v.activeColor,
+        ...(!active && {
+          background: v.focusedBackgroundColor,
+        }),
+      },
+
+      ...(active && {
+        background: v.activeBackgroundColor,
+        color: v.activeColor,
+      }),
+
+      ...((iconOnly || vertical) && {
         ...(isFromKeyboard && {
-          color: variables.activeColor,
-          background: variables.activeBackgroundColor,
+          color: v.activeColor,
+          background: v.focusedBackgroundColor,
         }),
 
-        // hover styles
+        ...(active && {
+          color: v.activeColor,
+          background: v.activeBackgroundColor,
+        }),
+
         ':hover': {
-          color: variables.activeColor,
-          background: variables.activeBackgroundColor,
+          color: v.activeColor,
+          background: v.focusedBackgroundColor,
         },
+      }),
+
+      ...((underlined || primary) && {
+        ...(!active && {
+          ':hover': {
+            color: v.color,
+          },
+        }),
       }),
     }
   },

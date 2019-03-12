@@ -26,7 +26,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
         content={
           <Icon
             name="team-create"
-            variables={siteVars => ({ color: siteVars.white, margin: 'auto 8px' })}
+            variables={siteVars => ({ color: siteVars.colors.white, margin: 'auto 8px' })}
           />
         }
         styles={({ variables: v }) => ({
@@ -36,7 +36,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
           height: '40px',
           padding: 0,
         })}
-        variables={siteVars => ({ backgroundColor: siteVars.brand })}
+        variables={siteVars => ({ backgroundColor: siteVars.colors.primary[500] })}
       />
     )
   }
@@ -83,7 +83,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
             key: `${index}-${name}`,
             icon: {
               name,
-              variables: siteVars => ({ color: siteVars.white, margin: 'auto 8px' }),
+              variables: siteVars => ({ color: siteVars.colors.white, margin: 'auto 8px' }),
             },
             primary: true,
           }))}
@@ -93,13 +93,14 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
           <Icon
             key={`${index}-${name}`}
             name={name}
+            outline
             tabIndex={0}
             styles={{
               fontWeight: 100,
               margin: 'auto',
               ...(!index && { margin: 'auto 1.6rem auto auto' }),
             }}
-            variables={siteVars => ({ color: siteVars.gray04, outline: true })}
+            variables={siteVars => ({ color: siteVars.gray04 })}
           />
         ))}
       </div>
