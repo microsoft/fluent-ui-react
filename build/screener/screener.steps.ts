@@ -23,7 +23,7 @@ const getScreenerSteps = (stepsModulePath: string): any[] => {
     .default as ScreenerTestsConfig
 
   _.forEach(themes, themeName => {
-    stepsBuilder.switchTheme(themeName).snapshot(`Theme: `, themeName)
+    stepsBuilder.switchTheme(themeName).snapshot(`Theme: ${themeName}`)
 
     _.forEach(screenerSteps, (screenerStep: ScreenerStep) => {
       screenerStep(stepsBuilder, keys)
