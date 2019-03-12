@@ -20,6 +20,7 @@ type ScreenerRunnerKeys = {
 
 declare global {
   type ScreenerThemeName = keyof typeof themes
+  type ScreenerThemes = ScreenerThemeName[]
 
   type ScreenerStepBuilder = {
     /** This executes custom JS code against the client browser the test is running in. */
@@ -62,17 +63,24 @@ declare global {
     ltr(): ScreenerStepBuilder
 
     /** This will return the steps to be run. */
-    end(): ScreenerStepBuilder
+    end(): any[]
 
     /** This will switch the theme */
     switchTheme(themeName: ScreenerThemeName): ScreenerStepBuilder
+
+    /** This will reset the layout */
+    resetExternalLayout(): ScreenerStepBuilder
   }
 
   //
   // Typings for `*.steps.tsx`
   //
 
+  type ScreenerStep = (steps: ScreenerStepBuilder, keys: ScreenerRunnerKeys) => ScreenerStepBuilder
   type ScreenerSteps = ScreenerStep[]
 
-  type ScreenerStep = (steps: ScreenerStepBuilder, keys: ScreenerRunnerKeys) => ScreenerStepBuilder
+  type ScreenerTestsConfig = {
+    steps?: ScreenerSteps
+    themes?: ScreenerThemes
+  }
 }

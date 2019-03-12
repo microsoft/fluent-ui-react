@@ -1,3 +1,5 @@
-import { getScreenerSteps } from '../commonScreenerSteps'
+import getScreenerSteps from '../commonScreenerSteps'
 
-export default getScreenerSteps({ vertical: true })
+const config: ScreenerTestsConfig = { steps: getScreenerSteps({ vertical: true }) }
+
+export default config
