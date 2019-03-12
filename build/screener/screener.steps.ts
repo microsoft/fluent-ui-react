@@ -1,4 +1,15 @@
 import * as _ from 'lodash'
+import * as fs from 'fs'
+import * as Steps from 'screener-runner/src/steps'
+import * as keys from 'screener-runner/src/keys'
+
+Steps.prototype.resetExternalLayout = function () {
+  return this.executeScript(`window.resetExternalLayout()`)
+}
+
+Steps.prototype.switchTheme = function (themeName: ScreenerThemeName) {
+  return this.executeScript(`window.switchTheme("${themeName}")`)
+}
 
 const getStepsForTheme = (
   sb: ScreenerStepBuilder,
@@ -22,16 +33,13 @@ const applyThemeBeforeStep = (step: ScreenerStep, themeName: ScreenerThemeName):
  *   steps => steps.switchTheme('teamsHighContrast').snapshot('Teams High Contrast theme').hover('#sel').snapshot('snapshot name'),
  * ]
  */
-export const applyThemesBeforeStep = (
-  step: ScreenerStep,
-  themes: ScreenerThemeName[],
-): ScreenerStep =>
-  themes && themes.length > 0
-    ? (sb, keys) =>
-        themes
-          .map(themeName => applyThemeBeforeStep(step, themeName))
-          .reduce((stepAcc, currentStep) => currentStep(stepAcc, keys), sb)
-    : step
+const applyThemesBeforeStep = (step: ScreenerStep, themes: ScreenerThemeName[]): ScreenerStep => {
+  if (!themes || themes.length < 1) return step
+  return (sb, keys) =>
+    themes
+      .map(themeName => applyThemeBeforeStep(step, themeName))
+      .reduce((stepAcc, currentStep) => currentStep(stepAcc, keys), sb)
+}
 
 /**
  * Resets the layout after each element in [steps] and reduces it to one step
@@ -46,7 +54,20 @@ export const applyThemesBeforeStep = (
  *  steps.click('#sel2').resetExternalLayout(),
  *  steps.click('#sel3').resetExternalLayout(),
  */
-export const reduceSteps = (steps: ScreenerSteps): ScreenerStep => (sb, keys) =>
-  steps && steps.length > 0
-    ? steps.reduce((stepsAcc, steps) => steps(stepsAcc, keys).resetExternalLayout(), sb)
-    : sb
+const reduceSteps = (steps: ScreenerSteps): ScreenerStep => (sb, keys) => {
+  if (!steps || steps.length < 1) return sb
+  return steps.reduce((stepsAcc, steps) => steps(stepsAcc, keys).resetExternalLayout(), sb)
+}
+
+const getScreenerSteps = (stepsModulePath: string): any[] => {
+  if (!fs.existsSync(`${stepsModulePath}.ts`)) {
+    return undefined
+  }
+
+  const { steps, themes } = require(stepsModulePath).default as ScreenerTestsConfig
+  const themedStep = applyThemesBeforeStep(reduceSteps(steps), themes)
+
+  return themedStep(new Steps(), keys).end()
+}
+
+export default getScreenerSteps

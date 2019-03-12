@@ -5,7 +5,7 @@ import * as minimatch from 'minimatch'
 import * as path from 'path'
 import * as tsPaths from 'tsconfig-paths'
 
-import getSteps from './steps'
+import getScreenerSteps from './screener.steps'
 import config from '../../config'
 const { compilerOptions } = require('../../build/tsconfig.common.json')
 
@@ -44,7 +44,7 @@ const getStateForPath = (examplePath: string) => {
     name: exampleNameWithExtension,
 
     // https://www.npmjs.com/package/screener-runner#testing-interactions
-    steps: getSteps(`${exampleDir}/${exampleNameWithoutExtension}.steps`),
+    steps: getScreenerSteps(`${exampleDir}/${exampleNameWithoutExtension}.steps`),
   }
 }
 
