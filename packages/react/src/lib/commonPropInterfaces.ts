@@ -18,6 +18,8 @@ export interface AnimatedComponentProps {
 export interface UIComponentProps<P = any, V = any>
   extends StyledComponentProps<P, V>,
     AnimatedComponentProps {
+  [key: string]: any
+
   /** An element type to render as (string or function). */
   as?: any
 

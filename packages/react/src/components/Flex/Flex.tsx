@@ -9,6 +9,8 @@ import FlexItem from './FlexItem'
 import FlexGap from './FlexGap'
 
 export interface FlexProps {
+  [key: string]: any
+
   /** Defines if container should be inline element. */
   inline?: boolean
 
