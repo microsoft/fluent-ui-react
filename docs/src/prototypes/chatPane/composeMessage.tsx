@@ -9,8 +9,6 @@ import {
 } from '@stardust-ui/react'
 import style from './chatProtoStyle'
 
-type ToolbarProps = MenuItemProps & { key: string; 'aria-label'?: string }
-
 class ComposeMessage extends React.Component {
   public render() {
     return (
@@ -49,7 +47,7 @@ class ComposeMessage extends React.Component {
   }
 
   private renderToolbar(): React.ReactNode {
-    const items: (ToolbarProps | JSX.Element)[] = [
+    const items: MenuItemProps[] = [
       'compose',
       'attach',
       'smile',
@@ -74,10 +72,7 @@ class ComposeMessage extends React.Component {
     )
   }
 
-  private getMenuItem(
-    name: string,
-    index: number,
-  ): MenuItemProps & { key: string; 'aria-label': string } {
+  private getMenuItem(name: string, index: number): MenuItemProps {
     return {
       key: `${index}-${name}`,
       icon: {
