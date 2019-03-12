@@ -128,7 +128,7 @@ For some components, it is necessary to write screenshot tests in order to check
 This default test only checks the rendering for the component in its initial state. In order to test the rendering of more complex components, such as a `Dropdown`, screener provides an [api](https://www.npmjs.com/package/screener-runner) to execute actions on the DOM, in a way similar to end-to-end tests. These tests are executed by Screener as long as both the tests and their files respect the conventions:
 - the test file should be placed at the same location as the component example under test.
 - the test file should be named exactly as the component example file. If `DropdownExample.shorthand.tsx` is to be tested, the screener test file should be named `DropdownExample.shorthand.steps.ts`.
-- the tests should be written as a config file that can contains the following props:
+- the tests should be written as a config file that can contain the following props:
   - `steps`: an array of callbacks that accept a `builder` (step builder) parameter, as all of them will be chained in `screener.config`. The `builder` parameter is actually the `Steps` object from screener, instantiated in `screener.config`.
   - `themes`: an array of strings representing the theme applied to the component when taking the screenshot; by default, all screenshots are taken for `themes` theme.
 
