@@ -11,19 +11,26 @@ import {
 type MenuPropsAndState = MenuProps & MenuState
 
 export default {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
     const { iconOnly, fluid, pointing, pills, primary, underlined, vertical, submenu } = p
+    const colorScheme = theme.siteVariables.colorScheme[p.color]
+    // const verticalScheme = v[p.vertical].colorScheme
+
+    console.log(colorScheme)
 
     return {
       display: 'flex',
       minHeight: pxToRem(24),
       margin: 0,
       padding: 0,
+      color: v.color || colorScheme.foregroundUndefined,
+      backgroundColor: v.backgroundColor || colorScheme.backgroundUndefined,
       listStyleType: 'none',
       ...(iconOnly && { alignItems: 'center' }),
       ...(vertical && {
         flexDirection: 'column',
-        backgroundColor: v.verticalBackgroundColor,
+        color: v.verticalColor || colorScheme.foregroundUndefined,
+        backgroundColor: v.verticalBackgroundColor || theme.siteVariables.colors.white,
         padding: `${pxToRem(8)} 0`,
         ...(submenu && {
           boxShadow: v.verticalBoxShadow,
@@ -40,12 +47,12 @@ export default {
         !underlined && {
           border: `${v.borderWidth} solid ${v.borderColor}`,
           ...(primary && {
-            border: `${v.borderWidth} solid ${v.primaryBorderColor}`,
+            border: `${v.borderWidth} solid ${v.borderColor}`,
           }),
           borderRadius: pxToRem(4),
         }),
       ...(underlined && {
-        borderBottom: `${v.underlinedBottomBorderWidth} solid ${v.primaryUnderlinedBorderColor}`,
+        borderBottom: `${v.underlinedBottomBorderWidth} solid ${v.underlinedBorderColor}`,
       }),
     }
   },

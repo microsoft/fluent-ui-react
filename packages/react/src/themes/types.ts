@@ -17,19 +17,18 @@ import { Extendable, ObjectOf, ObjectOrFunc } from '../types'
 /**
  * A type for a palette for a single color.
  */
-export type ColorVariants = {
-  50: string
-  100: string
-  200: string
-  300: string
-  400: string
-  500: string
-  600: string
-  700: string
-  800: string
-  900: string
-}
-
+export type ColorVariants = Extendable<{
+  50?: string
+  100?: string
+  200?: string
+  300?: string
+  400?: string
+  500?: string
+  600?: string
+  700?: string
+  800?: string
+  900?: string
+}>
 /**
  * A type for a predefined natural colors.
  */
@@ -100,6 +99,7 @@ export type ColorPalette = ExtendablePalette<
  * A type for the generic color scheme of a component based on CSS property names
  */
 export type ColorScheme = {
+  [key: string]: any
   foreground: string
   background: string
   border: string

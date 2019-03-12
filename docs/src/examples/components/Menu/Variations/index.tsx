@@ -14,9 +14,9 @@ const Variations = () => (
       examplePath="components/Menu/Variations/MenuExampleVerticalPointing"
     />
     <ComponentExample
-      title="Primary"
-      description="A menu can have a primary color."
-      examplePath="components/Menu/Variations/MenuExamplePrimary"
+      title="Color"
+      description="A menu can apply different colors."
+      examplePath="components/Menu/Variations/MenuExampleColor"
     />
     <ComponentExample
       title="Fluid"

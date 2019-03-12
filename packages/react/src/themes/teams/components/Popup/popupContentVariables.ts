@@ -11,7 +11,7 @@ export interface PopupContentVariables {
 export default (siteVars: any): PopupContentVariables => {
   return {
     backgroundColor: siteVars.colors.white,
-    borderColor: siteVars.gray06,
+    borderColor: siteVars.colors.grey.light06,
     padding: `${pxToRem(10)} ${pxToRem(14)}`,
   }
 }

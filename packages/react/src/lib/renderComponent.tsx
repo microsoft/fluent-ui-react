@@ -203,6 +203,9 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
         const unhandledProps = getUnhandledProps({ handledProps }, props)
 
         const colors = generateColorScheme(stateAndProps.color, resolvedVariables.colorScheme)
+        // const scheme = {
+        //   background:
+        // }
 
         const styleParam: ComponentStyleFunctionParam = {
           props: stateAndProps,

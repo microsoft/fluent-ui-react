@@ -1,8 +1,8 @@
 export default (siteVars: any) => {
   return {
-    backgroundColor: siteVars.gray10,
-    fontColor: siteVars.gray02,
+    backgroundColor: siteVars.colors.grey.dark10,
+    fontColor: siteVars.colors.grey.dark02,
     inputFocusBorderColor: siteVars.brand,
-    iconColor: siteVars.gray02,
+    iconColor: siteVars.colors.grey.dark02,
   }
 }

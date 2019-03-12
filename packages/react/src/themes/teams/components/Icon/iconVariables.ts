@@ -29,7 +29,7 @@ export default (siteVars): IconVariables => ({
   brandColor: siteVars.brandColor,
   secondaryColor: siteVars.colors.white,
   redColor: siteVars.colors.red[900],
-  disabledColor: siteVars.gray06,
+  disabledColor: siteVars.colors.grey.light06,
 
   horizontalSpace: pxToRem(10),
 })

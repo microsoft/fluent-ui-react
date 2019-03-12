@@ -11,7 +11,7 @@ export interface ReactionVariables {
 }
 
 export default (siteVars): ReactionVariables => ({
-  color: siteVars.gray03,
+  color: siteVars.colors.grey.light03,
   colorHover: siteVars.colors.grey[900],
   contentFontSize: siteVars.fontSizes.small,
   fontWeightHover: siteVars.fontWeightBold,

@@ -39,16 +39,26 @@ export const naturalColors: NaturalColors = {
     900: '#237B4B', // siteVariables.green04
   },
   grey: {
-    50: '#FFFFFF', // siteVariables.white
-    100: '#E6E6E6',
-    200: '#CDCCCC',
-    300: '#B8B8B8',
-    400: '#A2A2A2',
-    500: '#8C8C8C',
-    600: '#747373',
-    700: '#5F5E5E',
-    800: '#404040',
-    900: '#252424', // siteVariables.black
+    fullWhite: '#ffffff',
+    // fullBlack: '#000000',
+
+    light02: '#484644',
+    light03: '#605E5C',
+    light04: '#979593',
+    light06: '#C8C6C4',
+    light08: '#E1DFDD',
+    light09: '#EDEBE9',
+    light10: '#F3F2F1',
+    light14: '#FAF9F8',
+
+    dark02: '#c8c6c4',
+    dark03: '#b3b0ad',
+    dark04: '#8a8886',
+    dark06: '#605e5c',
+    // dark08: '#484644',
+    dark09: '#3b3a39',
+    dark10: '#323130',
+    dark14: '#292828',
   },
   orange: {
     50: '#FEF9F7',
@@ -166,40 +176,117 @@ export const colors: ColorPalette = {
 
   // Primitive colors
   black: '#000',
-  white: naturalColors.grey[50], // siteVariables.white
-}
-
-const primitiveColorsScheme: Record<keyof PrimitiveColors, ColorScheme> = {
-  black: {
-    foreground: colors.white,
-    border: colors.white,
-    shadow: colors.white,
-    background: colors.black,
-  },
-  white: {
-    foreground: colors.black,
-    border: colors.black,
-    shadow: colors.black,
-    background: colors.white,
-  },
+  white: naturalColors.grey.light14, // siteVariables.white
 }
 
 export const colorScheme: ColorSchemeMapping = {
-  ...primitiveColorsScheme,
-  ..._.mapValues(emphasisAndNaturalColors, (colorVariants, colorName) => {
-    const foreground = isLightBackground(colorName) ? colors.black : colorVariants[50]
+  undefined: {
+    foregroundUndefined: colors.grey.light14,
+    backgroundUndefined: colors.grey.light02,
+    borderUndefined: colors.grey.light02,
+    shadowUndefined: colors.grey.light02,
 
-    return {
-      foreground,
-      border: foreground,
-      shadow: foreground,
-      background: colorVariants[500],
-      default: {
-        foreground: colors.grey[600],
-        border: colors.grey[600],
-        shadow: colors.grey[600],
-        background: colors.grey[100],
-      },
-    }
-  }),
+    foregroundHover: colors.grey.light14,
+    backgroundHover: colors.grey.light02,
+    borderHover: colors.grey.light02,
+    shadowHover: colors.grey.light02,
+
+    foregroundActive: colors.grey.light14,
+    backgroundActive: colors.grey.light02,
+    borderActive: colors.grey.light02,
+    shadowActive: colors.grey.light02,
+
+    foregroundFocus: colors.grey.light14,
+    backgroundFocus: colors.grey.light02,
+    borderFocus: colors.grey.light02,
+    shadowFocus: colors.grey.light02,
+
+    foregroundFocusWithin: colors.grey.light14,
+    backgroundFocusWithin: colors.grey.light02,
+    borderFocusWithin: colors.grey.light02,
+    shadowFocusWithin: colors.grey.light02,
+
+    foregroundDisabled: colors.grey.light14,
+    backgroundDisabled: colors.grey.light02,
+    borderDisabled: colors.grey.light02,
+    shadowDisabled: colors.grey.light02,
+  },
+
+  red: {
+    // red02: colors.red[500],
+    // red57: colors.red[500],
+    // lightUndefined: colors.red[50],
+    // lightUndefined: colors.red[50],
+    // lightUndefined: colors.red[50],
+    // lightUndefined: colors.red[50],
+    // lightUndefined: colors.red[50],
+    // lightUndefined: colors.red[50],
+    // lightUndefined: colors.red[50],
+    // Undefined: colors.red[50],
+    // darkUndefined: colors.red[50],
+    // darkerUndefined: colors.red[500],
+    // darkestUndefined: colors.red[500],
+
+    foregroundUndefined: colors.red[50],
+    backgroundUndefined: colors.red[500],
+    borderUndefined: colors.red[500],
+    shadowUndefined: colors.red[500],
+
+    foregroundHover: colors.red[50],
+    backgroundHover: colors.red[500],
+    borderHover: colors.red[500],
+    shadowHover: colors.red[500],
+
+    foregroundActive: colors.red[50],
+    backgroundActive: colors.red[500],
+    borderActive: colors.red[500],
+    shadowActive: colors.red[500],
+
+    foregroundFocus: colors.red[50],
+    backgroundFocus: colors.red[500],
+    borderFocus: colors.red[500],
+    shadowFocus: colors.red[500],
+
+    foregroundFocusWithin: colors.red[50],
+    backgroundFocusWithin: colors.red[500],
+    borderFocusWithin: colors.red[500],
+    shadowFocusWithin: colors.red[500],
+
+    foregroundDisabled: colors.red[50],
+    backgroundDisabled: colors.red[500],
+    borderDisabled: colors.red[500],
+    shadowDisabled: colors.red[500],
+  },
+
+  green: {
+    foregroundUndefined: colors.green[50],
+    backgroundUndefined: colors.green[500],
+    borderUndefined: colors.green[500],
+    shadowUndefined: colors.green[500],
+
+    foregroundHover: colors.green[50],
+    backgroundHover: colors.green[500],
+    borderHover: colors.green[500],
+    shadowHover: colors.green[500],
+
+    foregroundActive: colors.green[50],
+    backgroundActive: colors.green[500],
+    borderActive: colors.green[500],
+    shadowActive: colors.green[500],
+
+    foregroundFocus: colors.green[50],
+    backgroundFocus: colors.green[500],
+    borderFocus: colors.green[500],
+    shadowFocus: colors.green[500],
+
+    foregroundFocusWithin: colors.green[50],
+    backgroundFocusWithin: colors.green[500],
+    borderFocusWithin: colors.green[500],
+    shadowFocusWithin: colors.green[500],
+
+    foregroundDisabled: colors.green[50],
+    backgroundDisabled: colors.green[500],
+    borderDisabled: colors.green[500],
+    shadowDisabled: colors.green[500],
+  },
 }

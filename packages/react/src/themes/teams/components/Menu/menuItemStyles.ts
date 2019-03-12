@@ -31,12 +31,12 @@ const getActionStyles = ({
       }
     : primary
     ? {
-        color: v.primaryActiveColor,
-        background: v.primaryActiveBackgroundColor,
+        color: 'inherit',
+        background: v.backgroundColorActive,
       }
     : {
         color,
-        background: v.activeBackgroundColor,
+        background: v.backgroundColorActive,
       }
 
 const getFocusedStyles = ({
@@ -57,20 +57,24 @@ const getFocusedStyles = ({
         }
       : primary
       ? {
-          color: v.primaryFocusedColor,
-          background: v.primaryFocusedBackgroundColor,
+          color: 'inherit',
+          background: v.backgroundColorFocus,
         }
       : {
           color,
-          background: v.hoverBackgroundColor,
+          background: v.backgroundColorHover,
         }),
 
     ...(vertical && isFromKeyboard && !pointing && !primary
       ? {
-          border: v.focusedBorder,
-          outline: v.focusedOutline,
+          borderWidth: 1,
+          borderStyle: 'solid',
+          borderColor: v.borderColorFocus,
+          outlineWidth: 1,
+          outlineStyle: 'solid',
+          outlineColor: v.outlineFocus,
           margin: pxToRem(1),
-          background: v.focusedBackgroundColor,
+          background: v.backgroundColorFocus,
         }
       : {}),
   }
@@ -94,7 +98,7 @@ const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVaria
         right: 0,
         width: pxToRem(1),
         height: '100%',
-        ...(primary ? { background: v.primaryBorderColor } : { background: v.borderColor }),
+        ...(primary ? { background: v.borderColor } : { background: v.borderColor }),
       },
     }
   )
@@ -112,10 +116,10 @@ const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariab
   let borders: ICSSInJSStyle
 
   if (primary) {
-    backgroundColor = v.primaryActiveBackgroundColor
-    borderColor = v.primaryBorderColor
+    backgroundColor = v.backgroundColorActive
+    borderColor = v.borderColor
   } else {
-    backgroundColor = v.activeBackgroundColor
+    backgroundColor = v.backgroundColorActive
     borderColor = v.borderColor
   }
 
@@ -168,7 +172,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     } = props
 
     return {
-      color: v.color,
+      color: 'inherit',
       lineHeight: 1,
       position: 'relative',
       verticalAlign: 'middle',
@@ -216,13 +220,13 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       // active styles
       ...(active && {
-        ...getActionStyles({ props, variables: v, color: v.color }),
+        ...getActionStyles({ props, variables: v, color: 'inherit' }),
 
         ...(pointing &&
           (vertical
             ? pointing === 'end'
-              ? { borderRight: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
-              : { borderLeft: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
+              ? { borderRight: `${pxToRem(3)} solid ${v.borderColorActive}` }
+              : { borderLeft: `${pxToRem(3)} solid ${v.borderColorActive}` }
             : pointingBeak({ props, variables: v, theme, colors }))),
       }),
 
@@ -231,21 +235,21 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
         // focus styles
         ...(isFromKeyboard && {
-          color: v.iconOnlyActiveColor,
+          color: 'inherit',
         }),
 
         // hover styles
         ':hover': {
-          color: v.iconOnlyActiveColor,
+          color: 'inherit',
         },
       }),
 
       ...(!iconOnly && {
         // focus styles
-        ...(isFromKeyboard && getFocusedStyles({ props, variables: v, color: v.activeColor })),
+        ...(isFromKeyboard && getFocusedStyles({ props, variables: v, color: 'inherit' })),
 
         // hover styles
-        ':hover': getFocusedStyles({ props, variables: v, color: v.activeColor }),
+        ':hover': getFocusedStyles({ props, variables: v, color: 'inherit' }),
       }),
 
       ':first-child': {
@@ -266,7 +270,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       },
 
       ...(disabled && {
-        color: v.disabledColor,
+        color: 'inherit',
         ':hover': {
           // empty - overwrite all existing hover styles
         },
@@ -322,23 +326,23 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       ...(active &&
         (primary
           ? {
-              ...(iconOnly && { color: v.primaryActiveBorderColor }),
+              ...(iconOnly && { color: 'inherit' }),
 
               ...(underlined && {
-                color: v.primaryActiveBorderColor,
-                ...underlinedItem(v.primaryActiveBorderColor),
+                color: 'inherit',
+                ...underlinedItem(v.borderColorActive),
               }),
             }
           : underlined && {
               fontWeight: 700,
-              ...underlinedItem(v.activeColor),
+              ...underlinedItem(v.colorActive),
             })),
 
       // focus styles
       ...(isFromKeyboard && {
         ...(iconOnly && {
           borderRadius: '50%',
-          borderColor: v.iconOnlyActiveColor,
+          borderColor: v.iconOnlyColorActive,
 
           [`& .${teamsIconClassNames.filled}`]: {
             display: 'block',
@@ -352,18 +356,18 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         ...(primary
           ? {
               ...(iconOnly && {
-                color: v.primaryActiveBorderColor,
-                borderColor: v.primaryActiveBorderColor,
+                color: 'inherit',
+                borderColor: v.borderColorActive,
               }),
 
-              ...(underlined && { color: v.primaryActiveColor }),
+              ...(underlined && { color: 'inherit' }),
 
-              ...(underlined && active && underlinedItem(v.primaryActiveColor)),
+              ...(underlined && active && underlinedItem(v.colorActive)),
             }
           : {
               ...(underlined && { fontWeight: 700 }),
 
-              ...(underlined && active && underlinedItem(v.activeColor)),
+              ...(underlined && active && underlinedItem(v.colorActive)),
             }),
       }),
 
@@ -387,10 +391,10 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
         ...(primary
           ? {
-              ...(iconOnly && { color: v.primaryActiveBorderColor }),
-              ...(!active && underlined && underlinedItem(v.primaryHoverBorderColor as string)),
+              ...(iconOnly && { color: 'inherit' }),
+              ...(!active && underlined && underlinedItem(v.borderColorHover as string)),
             }
-          : !active && underlined && underlinedItem(v.activeBackgroundColor)),
+          : !active && underlined && underlinedItem(v.backgroundColorActive)),
       },
 
       ...(disabled && {

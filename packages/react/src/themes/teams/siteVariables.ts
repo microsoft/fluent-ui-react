@@ -11,14 +11,14 @@ export const htmlFontSize = '10px' // what 1rem represents
 //
 export { colors, contextualColors, emphasisColors, naturalColors, colorScheme } from './colors'
 
-export const gray02 = '#484644' // no mapping color
-export const gray03 = '#605E5C' // no mapping color
-export const gray04 = '#979593' // no mapping color
-export const gray06 = '#C8C6C4' // no mapping color
-export const gray08 = '#E1DFDD' // no mapping color
-export const gray09 = '#EDEBE9' // no mapping color
-export const gray10 = '#F3F2F1' // no mapping color
-export const gray14 = '#FAF9F8' // no mapping color
+// export const grey02 = '#484644' // no mapping color
+// export const grey03 = '#605E5C' // no mapping color
+// export const grey04 = '#979593' // no mapping color
+// export const grey06 = '#C8C6C4' // no mapping color
+// export const grey08 = '#E1DFDD' // no mapping color
+// export const grey09 = '#EDEBE9' // no mapping color
+// export const grey10 = '#F3F2F1' // no mapping color
+// export const grey14 = '#FAF9F8' // no mapping color
 
 export const brand04 = '#464775' // no mapping color
 export const brand08 = '#8B8CC7' // no mapping color
@@ -52,15 +52,15 @@ export const fontSizes = {
 // STATUS COLORS
 //
 export const successStatusBackgroundColor = naturalColors.lightGreen[900]
-export const successStatusTextColor = colors.grey[50]
+export const successStatusTextColor = colors.grey.fullWhite
 export const infoStatusBackgroundColor = 'blue'
-export const infoStatusTextColor = colors.grey[50]
+export const infoStatusTextColor = colors.grey.fullWhite
 export const warningStatusBackgroundColor = colors.yellow[900]
-export const warningStatusTextColor = colors.grey[50]
+export const warningStatusTextColor = colors.grey.fullWhite
 export const errorStatusBackgroundColor = colors.red[900]
-export const errorStatusTextColor = colors.grey[50]
-export const unknownStatusBackgroundColor = gray04
-export const unknownStatusTextColor = colors.grey[50]
+export const errorStatusTextColor = colors.grey.fullWhite
+export const unknownStatusBackgroundColor = colors.grey.light04
+export const unknownStatusTextColor = colors.grey.fullWhite
 
 //
 // FONT WEIGHTS

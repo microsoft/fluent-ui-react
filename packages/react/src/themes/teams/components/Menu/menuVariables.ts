@@ -1,35 +1,32 @@
 import { pxToRem } from '../../../../lib'
+import { ColorScheme } from 'src/themes/types'
 
 export interface MenuVariables {
   color: string
-  borderColor: string
   verticalBorderColor: string
 
-  focusedBorder: string
-  focusedOutline: string
-  focusedBackgroundColor: string
+  backgroundColor: string
+  backgroundColorFocus: string
+  backgroundColorHover: string
+  backgroundColorActive: string
 
-  hoverBackgroundColor: string
+  borderColor: string
+  borderColorHover: string
+  borderColorActive: string
+  borderColorFocus: string
 
-  activeColor: string
-  activeBackgroundColor: string
-  iconOnlyActiveColor: string
+  outlineFocus: string
+  colorActive: string
+  iconOnlyColorActive: string
 
-  primaryActiveColor: string
-  primaryActiveBackgroundColor: string
-  primaryActiveBorderColor: string
+  colorFocus: string
+  underlinedBorderColor: string
 
-  primaryFocusedColor: string
-  primaryFocusedBackgroundColor: string
-
-  primaryBorderColor: string
-  primaryHoverBorderColor: string
-  primaryUnderlinedBorderColor: string
-
-  disabledColor: string
+  colorDisabled: string
   lineHeightBase: string
   horizontalPadding: string
 
+  verticalColor: string
   verticalBackgroundColor: string
   verticalItemPadding: string
   verticalBoxShadow: string
@@ -44,36 +41,34 @@ export interface MenuVariables {
 
 export default (siteVars: any): MenuVariables => {
   return {
-    color: siteVars.gray02,
-    borderColor: siteVars.gray08,
-    verticalBorderColor: siteVars.gray08,
+    color: siteVars.colors.grey.light02,
+    colorActive: siteVars.colors.black,
+    colorFocus: siteVars.colors.white,
+    colorDisabled: siteVars.colors.grey.light06,
 
-    focusedBorder: `solid ${pxToRem(1)} ${siteVars.colors.white}`,
-    focusedOutline: `solid ${pxToRem(1)} ${siteVars.colors.black}`,
-    focusedBackgroundColor: siteVars.gray09,
+    verticalBorderColor: siteVars.colors.grey.light08,
 
-    hoverBackgroundColor: siteVars.gray14,
+    borderColor: siteVars.colors.grey.light10,
+    borderColorHover: siteVars.colors.grey.light08,
+    borderColorActive: siteVars.colors.primary[500],
+    borderColorFocus: siteVars.colors.white,
 
-    activeColor: siteVars.colors.black,
-    activeBackgroundColor: siteVars.gray10,
-    iconOnlyActiveColor: siteVars.colors.primary[500],
+    outlineFocus: siteVars.colors.black,
 
-    primaryActiveColor: siteVars.colors.white,
-    primaryActiveBackgroundColor: siteVars.brand08,
-    primaryActiveBorderColor: siteVars.colors.primary[500],
+    backgroundColor: undefined,
+    backgroundColorFocus: siteVars.colors.grey.light09,
+    backgroundColorHover: siteVars.colors.grey.light14,
+    backgroundColorActive: siteVars.colors.grey.light10,
 
-    primaryFocusedColor: siteVars.colors.white,
-    primaryFocusedBackgroundColor: siteVars.colors.primary[200],
+    iconOnlyColorActive: siteVars.colors.primary[500],
 
-    primaryBorderColor: siteVars.gray10,
-    primaryHoverBorderColor: siteVars.gray08,
-    primaryUnderlinedBorderColor: siteVars.gray08,
+    underlinedBorderColor: siteVars.colors.grey.light08,
 
-    disabledColor: siteVars.gray06,
     lineHeightBase: siteVars.lineHeightMedium,
     horizontalPadding: `${pxToRem(14)} ${pxToRem(18)} ${pxToRem(14)} ${pxToRem(18)}`,
 
-    verticalBackgroundColor: siteVars.colors.white,
+    verticaldColor: undefined,
+    verticalBackgroundColor: undefined,
     verticalItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
     verticalBoxShadow: siteVars.shadowLevel3,
     verticalDividerMargin: `${pxToRem(8)} 0`,

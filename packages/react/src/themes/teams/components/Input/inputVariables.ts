@@ -18,11 +18,11 @@ export interface InputVariables {
 }
 
 export default (siteVars): InputVariables => ({
-  backgroundColor: siteVars.gray10,
+  backgroundColor: siteVars.colors.grey.light10,
   borderRadius: `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`,
   borderWidth: `0 0 ${pxToRem(2)} 0`,
 
-  fontColor: siteVars.gray02,
+  fontColor: siteVars.colors.grey.light02,
   fontSize: siteVars.fontSizes.medium,
 
   iconPosition: 'absolute',

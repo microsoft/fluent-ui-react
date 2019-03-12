@@ -26,8 +26,8 @@ export default siteVariables => ({
   padding: pxToRem(8),
   iconSpace: pxToRem(12),
 
-  backgroundColor: siteVariables.gray09,
-  backgroundColorHover: siteVariables.gray08,
+  backgroundColor: siteVariables.colors.grey.light09,
+  backgroundColorHover: siteVariables.colors.grey.light08,
   textColor: siteVariables.colors.grey[900],
 
   progressColor: siteVariables.naturalColors.lightGreen[900],

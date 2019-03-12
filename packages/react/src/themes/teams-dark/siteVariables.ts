@@ -5,14 +5,14 @@ import { colors, naturalColors } from '../teams/siteVariables'
 //
 export const black = '#201f1f' // no mapping color
 
-export const gray02 = '#c8c6c4' // light theme gray06
-export const gray03 = '#b3b0ad' // no mapping color
-export const gray04 = '#8a8886' // no mapping color
-export const gray06 = '#605e5c' // light theme gray03
-export const gray08 = '#484644' // light theme gray02
-export const gray09 = '#3b3a39' // no mapping color
-export const gray10 = '#323130' // no mapping color
-export const gray14 = '#292828' // no mapping color
+// export const gray02 = '#c8c6c4' // light theme gray06
+// export const gray03 = '#b3b0ad' // no mapping color
+// export const gray04 = '#8a8886' // no mapping color
+// export const gray06 = '#605e5c' // light theme gray03
+// export const gray08 = '#484644' // light theme gray02
+// export const gray09 = '#3b3a39' // no mapping color
+// export const gray10 = '#323130' // no mapping color
+// export const gray14 = '#292828' // no mapping color
 
 export const brand = '#6264A7' // light theme brand - primary[500]
 export const brand02 = '#e2e2f6' // light theme brand14 - primary[100]

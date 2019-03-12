@@ -3,8 +3,6 @@ import { colors, naturalColors } from '../teams/siteVariables'
 //
 // COLORS
 //
-export const black = '#000'
-export const white = '#fff'
 
 export const accessibleYellow = '#ffff01'
 export const accessibleGreen = '#3ff23f'
@@ -18,18 +16,18 @@ export const green04 = naturalColors.lightGreen[900]
 //
 // TODO: bcalvery - color alone is not an adequate means for differentiating in an accessible way.
 export const successStatusBackgroundColor = accessibleGreen
-export const successStatusTextColor = black
+export const successStatusTextColor = colors.grey.fullBlack
 export const infoStatusBackgroundColor = accessibleCyan
-export const infoStatusTextColor = black
+export const infoStatusTextColor = colors.grey.fullBlack
 export const warningStatusBackgroundColor = accessibleYellow
-export const warningStatusTextColor = black
+export const warningStatusTextColor = colors.grey.fullBlack
 export const errorStatusBackgroundColor = red
-export const errorStatusTextColor = black
+export const errorStatusTextColor = colors.grey.fullBlack
 export const unknownStatusBackgroundColor = colors.white
-export const unknownStatusTextColor = black
+export const unknownStatusTextColor = colors.grey.fullBlack
 
 //
 // SEMANTIC ASSIGNMENTS
 //
-export const bodyBackground = black
+export const bodyBackground = colors.grey.fullBlack
 export const bodyColor = colors.white

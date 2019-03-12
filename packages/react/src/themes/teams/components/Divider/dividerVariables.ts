@@ -19,8 +19,8 @@ export default (siteVars: any): DividerVariables => {
 
   return {
     colors: mapColorsToScheme(siteVars, colorVariant),
-    dividerColor: siteVars.gray09,
-    textColor: siteVars.gray03,
+    dividerColor: siteVars.colors.grey.light09,
+    textColor: siteVars.colors.grey.light03,
     textFontSize: siteVars.fontSizeSmall,
     textLineHeight: siteVars.lineHeightSmall,
     importantFontWeight: siteVars.fontWeightBold,
