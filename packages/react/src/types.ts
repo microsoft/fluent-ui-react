@@ -8,6 +8,27 @@ export type Extendable<T, V = any> = T & {
   [key: string]: V
 }
 
+/**
+ * for types T = 'key1' | 'key2' | 'key3' and U, type GeneratedType = PartialRecord<T, U> generates:
+ * type GeneratedType = {
+ *  key1?: U
+ *  key2?: U
+ *  key3?: U
+ * }
+ */
+export type PartialRecord<T extends keyof any, U> = Partial<Record<T, U>>
+
+/**
+ * for types T = 'key1' | 'key2' | 'key3' and U, type GeneratedType = ExtendableRecord<T, U> generates:
+ * type GeneratedType = {
+ *  [key: string]: U | undefined
+ *  key1?: U
+ *  key2?: U
+ *  key3?: U
+ * }
+ */
+export type ExtendableRecord<T extends keyof any, U> = Extendable<PartialRecord<T, U>, U>
+
 export type Nullable<T> = T | null
 export type NullableIfUndefined<T> = T extends undefined ? Nullable<T> : T
 

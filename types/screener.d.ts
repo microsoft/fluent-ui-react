@@ -1,4 +1,5 @@
-import { themes } from '@stardust-ui/react'
+import { themes, ComponentName } from '@stardust-ui/react'
+import { PartialRecord } from 'src/types'
 
 //
 // Typings for `screener-runner`
@@ -17,6 +18,9 @@ type ScreenerRunnerKeys = {
   rightArrow: string
   downArrow: string
 }
+
+type ObjectOfAny = Record<string, any>
+type TestPropsPermutation = string | ObjectOfAny
 
 declare global {
   type ScreenerThemeName = keyof typeof themes
@@ -80,7 +84,11 @@ declare global {
   type ScreenerSteps = ScreenerStep[]
 
   type ScreenerTestsConfig = {
+    commonProps?: ObjectOfAny
+    testProps?: TestPropsPermutation[]
     steps?: ScreenerSteps
     themes?: ScreenerThemes
   }
+
+  type ScreenerComponentsTestsConfig = PartialRecord<ComponentName, ScreenerTestsConfig>
 }

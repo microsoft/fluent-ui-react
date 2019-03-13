@@ -1,7 +1,7 @@
 import * as CSSType from 'csstype'
 import { IRenderer as FelaRenderer } from 'fela'
 import * as React from 'react'
-import { Extendable, ObjectOf, ObjectOrFunc } from '../types'
+import { Extendable, ExtendableRecord, ObjectOf, ObjectOrFunc } from '../types'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -79,7 +79,7 @@ export type ColorNames = keyof (EmphasisColorsStrict & NaturalColorsStrict)
 /**
  * A type for an extendable set of ColorNames properties of type T
  */
-export type ColorValues<T> = Extendable<Partial<Record<ColorNames, T>>, T>
+export type ColorValues<T> = ExtendableRecord<ColorNames, T>
 
 /**
  * A type for a base colors.
@@ -290,177 +290,57 @@ export interface ThemePrepared {
   animations: { [key: string]: ThemeAnimation }
 }
 
-export interface ThemeComponentStylesInput {
-  [key: string]: ComponentSlotStylesInput | undefined
+export type ComponentName =
+  | 'Accordion'
+  | 'Alert'
+  | 'Animation'
+  | 'Attachment'
+  | 'Avatar'
+  | 'Button'
+  | 'ButtonGroup'
+  | 'Chat'
+  | 'ChatItem'
+  | 'ChatMessage'
+  | 'Divider'
+  | 'Dropdown'
+  | 'DropdownItem'
+  | 'DropdownSearchInput'
+  | 'Form'
+  | 'FormField'
+  | 'Grid'
+  | 'Header'
+  | 'HeaderDescription'
+  | 'Icon'
+  | 'Image'
+  | 'Input'
+  | 'ItemLayout'
+  | 'Label'
+  | 'Layout'
+  | 'List'
+  | 'ListItem'
+  | 'Menu'
+  | 'MenuItem'
+  | 'Portal'
+  | 'Popup'
+  | 'PopupContent'
+  | 'RadioGroup'
+  | 'RadioGroupItem'
+  | 'Reaction'
+  | 'ReactionGroup'
+  | 'Segment'
+  | 'Status'
+  | 'Text'
 
-  Accordion?: ComponentSlotStylesInput
-  Alert?: ComponentSlotStylesInput
-  Animation?: ComponentSlotStylesInput
-  Attachment?: ComponentSlotStylesInput
-  Avatar?: ComponentSlotStylesInput
-  Button?: ComponentSlotStylesInput
-  ButtonGroup?: ComponentSlotStylesInput
-  Chat?: ComponentSlotStylesInput
-  ChatItem?: ComponentSlotStylesInput
-  ChatMessage?: ComponentSlotStylesInput
-  Divider?: ComponentSlotStylesInput
-  Dropdown?: ComponentSlotStylesInput
-  DropdownItem?: ComponentSlotStylesInput
-  DropdownSearchInput?: ComponentSlotStylesInput
-  Form?: ComponentSlotStylesInput
-  FormField?: ComponentSlotStylesInput
-  Grid?: ComponentSlotStylesInput
-  Header?: ComponentSlotStylesInput
-  HeaderDescription?: ComponentSlotStylesInput
-  Icon?: ComponentSlotStylesInput
-  Image?: ComponentSlotStylesInput
-  Input?: ComponentSlotStylesInput
-  ItemLayout?: ComponentSlotStylesInput
-  Label?: ComponentSlotStylesInput
-  Layout?: ComponentSlotStylesInput
-  List?: ComponentSlotStylesInput
-  ListItem?: ComponentSlotStylesInput
-  Menu?: ComponentSlotStylesInput
-  MenuItem?: ComponentSlotStylesInput
-  Portal?: ComponentSlotStylesInput
-  Popup?: ComponentSlotStylesInput
-  PopupContent?: ComponentSlotStylesInput
-  RadioGroup?: ComponentSlotStylesInput
-  RadioGroupItem?: ComponentSlotStylesInput
-  Reaction?: ComponentSlotStylesInput
-  ReactionGroup?: ComponentSlotStylesInput
-  Segment?: ComponentSlotStylesInput
-  Status?: ComponentSlotStylesInput
-  Text?: ComponentSlotStylesInput
-}
-
-export interface ThemeComponentStylesPrepared {
-  [key: string]: ComponentSlotStylesPrepared | undefined
-
-  Accordion?: ComponentSlotStylesPrepared
-  Alert?: ComponentSlotStylesPrepared
-  Animation?: ComponentSlotStylesPrepared
-  Attachment?: ComponentSlotStylesPrepared
-  Avatar?: ComponentSlotStylesPrepared
-  Button?: ComponentSlotStylesPrepared
-  ButtonGroup?: ComponentSlotStylesPrepared
-  Chat?: ComponentSlotStylesPrepared
-  ChatItem?: ComponentSlotStylesPrepared
-  ChatMessage?: ComponentSlotStylesPrepared
-  Divider?: ComponentSlotStylesPrepared
-  Dropdown?: ComponentSlotStylesPrepared
-  DropdownItem?: ComponentSlotStylesPrepared
-  DropdownSearchInput?: ComponentSlotStylesPrepared
-  Form?: ComponentSlotStylesPrepared
-  FormField?: ComponentSlotStylesPrepared
-  Grid?: ComponentSlotStylesPrepared
-  Header?: ComponentSlotStylesPrepared
-  HeaderDescription?: ComponentSlotStylesPrepared
-  Icon?: ComponentSlotStylesPrepared
-  Image?: ComponentSlotStylesPrepared
-  Input?: ComponentSlotStylesPrepared
-  ItemLayout?: ComponentSlotStylesPrepared
-  Label?: ComponentSlotStylesPrepared
-  Layout?: ComponentSlotStylesPrepared
-  List?: ComponentSlotStylesPrepared
-  ListItem?: ComponentSlotStylesPrepared
-  Menu?: ComponentSlotStylesPrepared
-  MenuItem?: ComponentSlotStylesPrepared
-  Portal?: ComponentSlotStylesPrepared
-  Popup?: ComponentSlotStylesPrepared
-  PopupContent?: ComponentSlotStylesPrepared
-  RadioGroup?: ComponentSlotStylesPrepared
-  RadioGroupItem?: ComponentSlotStylesPrepared
-  Reaction?: ComponentSlotStylesPrepared
-  ReactionGroup?: ComponentSlotStylesPrepared
-  Segment?: ComponentSlotStylesPrepared
-  Status?: ComponentSlotStylesPrepared
-  Text?: ComponentSlotStylesPrepared
-}
-
-export interface ThemeComponentVariablesInput {
-  [key: string]: any
-
-  Accordion?: ComponentVariablesInput
-  Alert?: ComponentVariablesInput
-  Animation?: ComponentVariablesInput
-  Attachment?: ComponentVariablesInput
-  Avatar?: ComponentVariablesInput
-  Button?: ComponentVariablesInput
-  ButtonGroup?: ComponentVariablesInput
-  Chat?: ComponentVariablesInput
-  ChatItem?: ComponentVariablesInput
-  ChatMessage?: ComponentVariablesInput
-  Divider?: ComponentVariablesInput
-  Dropdown?: ComponentVariablesInput
-  Form?: ComponentVariablesInput
-  FormField?: ComponentVariablesInput
-  Grid?: ComponentVariablesInput
-  Header?: ComponentVariablesInput
-  HeaderDescription?: ComponentVariablesInput
-  Icon?: ComponentVariablesInput
-  Image?: ComponentVariablesInput
-  Input?: ComponentVariablesInput
-  ItemLayout?: ComponentVariablesInput
-  Label?: ComponentVariablesInput
-  Layout?: ComponentVariablesInput
-  List?: ComponentVariablesInput
-  ListItem?: ComponentVariablesInput
-  Menu?: ComponentVariablesInput
-  MenuItem?: ComponentVariablesInput
-  Portal?: ComponentVariablesInput
-  Popup?: ComponentVariablesInput
-  PopupContent?: ComponentVariablesInput
-  RadioGroup?: ComponentVariablesInput
-  RadioGroupItem?: ComponentVariablesInput
-  Reaction?: ComponentVariablesInput
-  ReactionGroup?: ComponentVariablesInput
-  Segment?: ComponentVariablesInput
-  Status?: ComponentVariablesInput
-  Text?: ComponentVariablesInput
-}
-
-export interface ThemeComponentVariablesPrepared {
-  [key: string]: any
-
-  Accordion?: ComponentVariablesPrepared
-  Alert?: ComponentVariablesPrepared
-  Animation?: ComponentVariablesPrepared
-  Attachment?: ComponentVariablesPrepared
-  Avatar?: ComponentVariablesPrepared
-  Button?: ComponentVariablesPrepared
-  ButtonGroup?: ComponentVariablesPrepared
-  Chat?: ComponentVariablesPrepared
-  ChatItem?: ComponentVariablesPrepared
-  ChatMessage?: ComponentVariablesPrepared
-  Divider?: ComponentVariablesPrepared
-  Dropdown?: ComponentVariablesPrepared
-  Form?: ComponentVariablesPrepared
-  FormField?: ComponentVariablesPrepared
-  Grid?: ComponentVariablesPrepared
-  Header?: ComponentVariablesPrepared
-  HeaderDescription?: ComponentVariablesPrepared
-  Icon?: ComponentVariablesPrepared
-  Image?: ComponentVariablesPrepared
-  Input?: ComponentVariablesPrepared
-  ItemLayout?: ComponentVariablesPrepared
-  Label?: ComponentVariablesPrepared
-  Layout?: ComponentVariablesPrepared
-  List?: ComponentVariablesPrepared
-  ListItem?: ComponentVariablesPrepared
-  Menu?: ComponentVariablesPrepared
-  MenuItem?: ComponentVariablesPrepared
-  Portal?: ComponentVariablesPrepared
-  Popup?: ComponentVariablesPrepared
-  PopupContent?: ComponentVariablesPrepared
-  RadioGroup?: ComponentVariablesPrepared
-  RadioGroupItem?: ComponentVariablesPrepared
-  Reaction?: ComponentVariablesPrepared
-  ReactionGroup?: ComponentVariablesPrepared
-  Segment?: ComponentVariablesPrepared
-  Status?: ComponentVariablesPrepared
-  Text?: ComponentVariablesPrepared
-}
+export type ThemeComponentStylesInput = ExtendableRecord<ComponentName, ComponentSlotStylesInput>
+export type ThemeComponentStylesPrepared = ExtendableRecord<
+  ComponentName,
+  ComponentSlotStylesPrepared
+>
+export type ThemeComponentVariablesInput = ExtendableRecord<ComponentName, ComponentVariablesInput>
+export type ThemeComponentVariablesPrepared = ExtendableRecord<
+  ComponentName,
+  ComponentVariablesPrepared
+>
 
 export interface Renderer extends FelaRenderer {}
 

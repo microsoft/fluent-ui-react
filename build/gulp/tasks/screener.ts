@@ -3,12 +3,18 @@ import { argv } from 'yargs'
 
 import sh from '../sh'
 import config from '../../../config'
+import createScreenshotFiles from 'build/screener/createScreenshotFiles'
 
 const { paths } = config
 
 // ----------------------------------------
 // Visual
 // ----------------------------------------
+
+task('screener:createScreenshotFiles', cb => {
+  createScreenshotFiles()
+  cb()
+})
 
 task('screener:runner', cb => {
   // screener-runner doesn't allow to pass custom options
@@ -30,4 +36,4 @@ task('screener:runner', cb => {
 // Default
 // ----------------------------------------
 
-task('screener', series('dll', 'build:docs', 'serve:docs', 'screener:runner'))
+task('screener', series('screener:createScreenshotFiles')) // , 'dll', 'build:docs', 'serve:docs', 'screener:runner'))
