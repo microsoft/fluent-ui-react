@@ -159,7 +159,7 @@ export default config
 - an actual assertion is performed by taking a `.snapshot(<Your test name here>)`, as the assertion is performed by comparing the screenshot with the one taken on the previous run and considered correct.
 - a test can have as many snapshots as needed.
 - before the snapshot is taken, steps are added to reach the state of assertion, with methods from `screener-runner` API (`.click(<selector>)`, `.hover(<selector>)`etc.)
-- tests perform any cleanup by default. This means each test is independent of the state of the component from previous tests.
+- tests perform cleanup by default. This means each test is independent of the state of the component from previous tests.
 
 ### Run Screener tests
 In order to run the tests locally, make sure to have a Screener API key saved in the environment variables on your machine. For instance, on MacOS/Linux you can use `export SCREENER_API_KEY=<Your screener key here>`.
