@@ -1,4 +1,4 @@
-export type RadioGroupItemVariables = {
+export interface RadioGroupItemVariables {
   labelColorDefault: string
   labelColorChecked: string
 

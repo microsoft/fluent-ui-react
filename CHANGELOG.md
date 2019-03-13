@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Narrate the first adding/selection of a `Dropdown` item using aria live @silviuavram ([#1032](https://github.com/stardust-ui/react/pull/1032))
 - `*Props` interfaces accept additional props @layershifter ([#1042](https://github.com/stardust-ui/react/pull/1042))
 - `chatBehavior` - Use `FocusZone`'s Embed mode instead of Wrap mode @sophieH29 ([#1044](https://github.com/stardust-ui/react/pull/1044))
+- Fix `RadioButtonGroup` Teams theme styles to be correct @notandrew ([#830](https://github.com/stardust-ui/react/pull/830))
 
 ### Features
 - Add `inline` prop in the `Popup` for rendering the content next to the trigger element @mnajdova ([#1017](https://github.com/stardust-ui/react/pull/1017))
