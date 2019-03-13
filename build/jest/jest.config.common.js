@@ -21,6 +21,9 @@ module.exports = {
   globals: {
     'ts-jest': {
       tsConfig: `<rootDir>/build/tsconfig.test.json`,
+      diagnostics: {
+        ignoreCodes: 151001,
+      },
     },
   },
 }
