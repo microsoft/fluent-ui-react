@@ -107,7 +107,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       speak: 'none',
       verticalAlign: 'middle',
 
-      ...(!isFontBased && { boxSizing: 'border-box' }),
+      ...(isFontBased && { boxSizing: 'content-box' }),
 
       ...(isFontBased && getFontStyles(getIconSize(size, v.sizeModifier), name)),
 
