@@ -1,7 +1,7 @@
 declare module 'simulant' {
   namespace event {
-    function fire(el: HTMLElement, event: Event): void
-    function fire(el: HTMLElement, event: 'string', payload?: { [key: string]: any }): void
+    function fire(el: Node, event: Event): void
+    function fire(el: Node, event: string, payload?: { [key: string]: any }): void
   }
 
   function event(window: Window, eventName: string, payload?: { [key: string]: any }): Event
