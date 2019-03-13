@@ -130,7 +130,7 @@ This default test only checks the rendering for the component in its initial sta
 - the test file should be named exactly as the component example file. If `DropdownExample.shorthand.tsx` is to be tested, the screener test file should be named `DropdownExample.shorthand.steps.ts`.
 - the tests should be written as a config file that can contain the following props:
   - `steps`: an array of callbacks that accept a `builder` (step builder) parameter, as all of them will be chained in `screener.config.js`. The `builder` parameter is actually the `Steps` object from screener, instantiated in `screener.config.js`.
-  - `themes`: an array of strings representing the theme applied to the component when taking the screenshot; by default, all screenshots are taken for `themes` theme.
+  - `themes`: an array of strings representing the theme applied to the component when taking the screenshot; by default, all screenshots are taken for `Teams` theme.
 
 #### Example for a test file:
 
