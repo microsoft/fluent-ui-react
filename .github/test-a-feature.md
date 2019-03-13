@@ -164,7 +164,7 @@ export default config
 ### Run Screener tests
 In order to run the tests locally, make sure to have a Screener API key saved in the environment variables on your machine. For instance, on MacOS/Linux you can use `export SCREENER_API_KEY=<Your screener key here>`.
 
-When ran locally, not all the tests may be needed to run, only the ones added/edited. This can be achieved by changing the regexp in `screener.config.ts`, where the `states` property is created. Make sure not to commit that change though! Results can be viewed in the Screener online dashboard, among all the other runs (for master, pull requests, etc.)
+When ran locally, not all the tests may be needed to run, only the ones added/edited. This can be achieved by changing the regexp in `screener.config.js`, where the `states` property is created. Make sure not to commit that change though! Results can be viewed in the Screener online dashboard, among all the other runs (for master, pull requests, etc.)
 
 #### Local run command
 
