@@ -29,6 +29,15 @@ body {
 }
 
 /**
+ * Adds consistency to the elements size.
+ */
+*, *:after, *:before {
+  -webkit-box-sizing:border-box;
+     -moz-box-sizing:border-box;
+          box-sizing:border-box;
+  }
+
+/**
  * Correct the font size and margin on \`h1\` elements within \`section\` and
  * \`article\` contexts in Chrome, Firefox, and Safari.
  */
