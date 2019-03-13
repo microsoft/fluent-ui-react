@@ -62,6 +62,9 @@ export interface LabelProps
 
   /** A Label can have an additional section for text. */
   detail?: string
+
+  /** A Label can have different sizes */
+  size?: string
 }
 
 /**
@@ -84,6 +87,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     fluid: PropTypes.bool,
     badge: PropTypes.bool,
     detail: PropTypes.string,
+    size: PropTypes.oneOf(['mini', 'tiny', 'small', 'medium', 'large', 'big', 'huge', 'massive']),
   }
 
   static defaultProps = {

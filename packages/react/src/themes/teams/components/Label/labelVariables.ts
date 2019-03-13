@@ -6,10 +6,11 @@ type LabelColorScheme = Pick<ColorScheme, 'foreground' | 'background'>
 export interface LabelVariables {
   colorScheme: ColorValues<LabelColorScheme>
   circularRadius: string
-  padding: string
+  padding: { [name: string]: string }
   startPaddingLeft: string
   endPaddingRight: string
-  height: string
+  margin: string
+  height: { [name: string]: string }
   iconColor: string
 
   badgeHeight: string
@@ -36,10 +37,29 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
       background: 'rgb(232, 232, 232)',
     }),
     circularRadius: pxToRem(9999),
-    padding: `0 ${pxToRem(4)} 0 ${pxToRem(4)}`,
+    padding: {
+      mini: `0 ${pxToRem(4)} 0 ${pxToRem(4)}`,
+      tiny: `0 ${pxToRem(6)} 0 ${pxToRem(6)}`,
+      small: `0 ${pxToRem(8)} 0 ${pxToRem(8)}`,
+      medium: `0 ${pxToRem(10)} 0 ${pxToRem(10)}`,
+      large: `0 ${pxToRem(12)} 0 ${pxToRem(12)}`,
+      big: `0 ${pxToRem(14)} 0 ${pxToRem(14)}`,
+      huge: `0 ${pxToRem(16)} 0 ${pxToRem(16)}`,
+      massive: `0 ${pxToRem(18)} 0 ${pxToRem(18)}`,
+    },
     startPaddingLeft: '0px',
     endPaddingRight: '0px',
-    height: pxToRem(20),
+    margin: `0 ${pxToRem(2)}`,
+    height: {
+      mini: `${pxToRem(20)}`,
+      tiny: `${pxToRem(24)}`,
+      small: `${pxToRem(28)}`,
+      medium: `${pxToRem(32)}`,
+      large: `${pxToRem(36)}`,
+      big: `${pxToRem(40)}`,
+      huge: `${pxToRem(44)}`,
+      massive: `${pxToRem(48)}`,
+    },
 
     // variables for 'icon' part
     iconColor: color,

@@ -12,13 +12,14 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
       display: 'inline-flex',
       alignItems: 'center',
       overflow: 'hidden',
-      height: v.height,
-      lineHeight: v.height,
+      height: v.height.mini,
+      lineHeight: v.height.mini,
       color: colors.foreground,
       backgroundColor: colors.background,
       fontSize: pxToRem(14),
       borderRadius: pxToRem(3),
-      padding: v.padding,
+      padding: v.padding.mini,
+      margin: v.margin,
       ...(p.image &&
         (p.imagePosition === 'start'
           ? { paddingLeft: v.startPaddingLeft }
@@ -39,12 +40,19 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
           padding: v.badgePaddingWithoutIcon,
         }),
       }),
+
+      // Size
+      ...(p.size && {
+        padding: v.padding[p.size],
+        height: v.height[p.size],
+        lineHeight: v.height[p.size],
+      }),
     }
   },
 
   image: ({ variables: v }): ICSSInJSStyle => ({
-    height: v.height,
-    width: v.height,
+    height: v.height.mini,
+    width: v.height.mini,
   }),
 
   icon: ({ props: p, variables: v, colors }): ICSSInJSStyle => {
