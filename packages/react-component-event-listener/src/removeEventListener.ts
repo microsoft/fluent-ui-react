@@ -6,7 +6,7 @@ const removeEventListener = (
   type: EventTypes,
   listener: EventHandler<EventTypes>,
 ) => {
-  const isSupported = targetRef && targetRef.current && typeof targetRef.current.removeEventListener
+  const isSupported = targetRef && targetRef.current && targetRef.current.removeEventListener
 
   if (isSupported) {
     targetRef.current!.removeEventListener(type, listener)
