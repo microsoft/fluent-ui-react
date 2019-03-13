@@ -12,7 +12,7 @@ class EventListener extends React.PureComponent<EventListenerProps> {
     addEventListener(this.props.targetRef, this.props.type, this.handleEvent)
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: EventListenerProps) {
     removeEventListener(prevProps.targetRef, prevProps.type, this.handleEvent)
     addEventListener(this.props.targetRef, this.props.type, this.handleEvent)
   }
@@ -21,7 +21,7 @@ class EventListener extends React.PureComponent<EventListenerProps> {
     removeEventListener(this.props.targetRef, this.props.type, this.handleEvent)
   }
 
-  handleEvent = e => this.props.listener(e)
+  handleEvent = (e: Event) => this.props.listener(e)
 
   render() {
     return null

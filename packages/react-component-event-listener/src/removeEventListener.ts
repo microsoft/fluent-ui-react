@@ -6,15 +6,15 @@ const removeEventListener = (
   type: EventTypes,
   listener: EventHandler<EventTypes>,
 ) => {
-  const isSupported = targetRef && targetRef.current && targetRef.current.removeEventListener
+  const isSupported = targetRef && targetRef.current && typeof targetRef.current.removeEventListener
 
   if (isSupported) {
-    targetRef.current.removeEventListener(type, listener)
+    targetRef.current!.removeEventListener(type, listener)
   }
 
   if (process.env.NODE_ENV !== 'production') {
     if (!isSupported) {
-      console.log(
+      console.error(
         '@stardust-ui/react-component-event-listener: Passed `targetRef` is not valid or does not support `removeEventListener()` method.',
       )
     }

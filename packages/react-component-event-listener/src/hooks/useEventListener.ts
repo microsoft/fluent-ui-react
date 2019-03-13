@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+import addEventListener from '../addEventListener'
+import removeEventListener from '../removeEventListener'
 import { EventTypes } from '../types'
 import { UseListenerHookOptions } from './types'
 
@@ -13,8 +15,8 @@ const useEventListener = <N extends Node, T extends EventTypes>(
 
   React.useEffect(
     () => {
-      targetRef.current.addEventListener(type, handler)
-      return () => targetRef.current.removeEventListener(type, handler)
+      addEventListener(targetRef, type, handler)
+      return () => removeEventListener(targetRef, type, handler)
     },
     [type],
   )

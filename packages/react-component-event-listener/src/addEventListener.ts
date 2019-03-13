@@ -9,12 +9,12 @@ const addEventListener = (
   const isSupported = targetRef && targetRef.current && targetRef.current.addEventListener
 
   if (isSupported) {
-    targetRef.current.addEventListener(type, listener)
+    targetRef.current!.addEventListener(type, listener)
   }
 
   if (process.env.NODE_ENV !== 'production') {
     if (!isSupported) {
-      console.log(
+      console.error(
         '@stardust-ui/react-component-event-listener: Passed `targetRef` is not valid or does not support `addEventListener()` method.',
       )
     }

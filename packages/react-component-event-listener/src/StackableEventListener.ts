@@ -14,7 +14,7 @@ class StackableEventListener extends React.PureComponent<EventListenerProps> {
     addEventListener(this.props.targetRef, this.props.type, this.handleEvent)
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: EventListenerProps) {
     listenerRegistries.remove(this.props.type, this.handleEvent)
     removeEventListener(prevProps.targetRef, prevProps.type, this.handleEvent)
 
@@ -27,7 +27,7 @@ class StackableEventListener extends React.PureComponent<EventListenerProps> {
     removeEventListener(this.props.targetRef, this.props.type, this.handleEvent)
   }
 
-  handleEvent = e => {
+  handleEvent = (e: Event) => {
     if (listenerRegistries.isDispatchable(this.props.type, this.handleEvent)) {
       return this.props.listener(e)
     }
