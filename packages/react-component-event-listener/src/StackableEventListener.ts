@@ -28,7 +28,7 @@ class StackableEventListener extends React.PureComponent<EventListenerProps> {
   }
 
   handleEvent = e => {
-    if (listenerRegistries.dispatchable(this.props.type, this.handleEvent)) {
+    if (listenerRegistries.isDispatchable(this.props.type, this.handleEvent)) {
       return this.props.listener(e)
     }
   }
