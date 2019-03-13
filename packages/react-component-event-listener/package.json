@@ -21,7 +21,7 @@
   },
   "repository": "stardust-ui/react.git",
   "scripts": {
-    "build": "gulp bundle:package:no-umd --package react-component-event-listener"
+    "build": "cross-env TS_NODE_PROJECT=../../tsconfig.json gulp bundle:package:no-umd --package react-component-event-listener"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"
