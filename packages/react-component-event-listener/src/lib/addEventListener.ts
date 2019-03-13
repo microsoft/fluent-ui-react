@@ -10,7 +10,7 @@ const addEventListener = (
     targetRef && !!targetRef.current && !!targetRef.current.addEventListener
 
   if (isSupported) {
-     (targetRef.current as NonNullable<Node>).addEventListener(type, listener)
+    ;(targetRef.current as NonNullable<Node>).addEventListener(type, listener)
   }
 
   if (process.env.NODE_ENV !== 'production') {

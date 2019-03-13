@@ -10,7 +10,7 @@ const removeEventListener = (
     targetRef && !!targetRef.current && !!targetRef.current.removeEventListener
 
   if (isSupported) {
-     (targetRef.current as NonNullable<Node>).removeEventListener(type, listener)
+    ;(targetRef.current as NonNullable<Node>).removeEventListener(type, listener)
   }
 
   if (process.env.NODE_ENV !== 'production') {

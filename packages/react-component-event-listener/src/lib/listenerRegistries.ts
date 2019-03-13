@@ -10,12 +10,12 @@ export const add = (type: EventTypes, listener: EventHandler<EventTypes>): void 
     registries[type] = new Set()
   }
 
-   (registries[type] as ListenerRegistrySet).add(listener)
+  ;(registries[type] as ListenerRegistrySet).add(listener)
 }
 
 export const remove = (type: EventTypes, listener: EventHandler<EventTypes>): void => {
   if (registries[type] !== undefined) {
-     (registries[type] as ListenerRegistrySet).delete(listener)
+    ;(registries[type] as ListenerRegistrySet).delete(listener)
 
     if ((registries[type] as ListenerRegistrySet).size === 0) {
       delete registries[type]
