@@ -1,15 +1,16 @@
 import * as React from 'react'
-import { EventHandler, EventTypes } from './types'
+import { EventHandler, EventTypes } from '../types'
 
 const removeEventListener = (
   targetRef: React.RefObject<Node>,
   type: EventTypes,
   listener: EventHandler<EventTypes>,
 ) => {
-  const isSupported = targetRef && targetRef.current && targetRef.current.removeEventListener
+  const isSupported: boolean =
+    targetRef && !!targetRef.current && !!targetRef.current.removeEventListener
 
   if (isSupported) {
-    targetRef.current!.removeEventListener(type, listener)
+     (targetRef.current as NonNullable<Node>).removeEventListener(type, listener)
   }
 
   if (process.env.NODE_ENV !== 'production') {

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import addEventListener from '../addEventListener'
-import removeEventListener from '../removeEventListener'
+import addEventListener from '../lib/addEventListener'
+import removeEventListener from '../lib/removeEventListener'
 import { EventTypes } from '../types'
 import { UseListenerHookOptions } from './types'
 

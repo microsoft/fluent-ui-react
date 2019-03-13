@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-import addEventListener from './addEventListener'
-import removeEventListener from './removeEventListener'
+import addEventListener from './lib/addEventListener'
+import removeEventListener from './lib/removeEventListener'
 import { EventListenerProps, listenerPropTypes } from './types'
-import * as listenerRegistries from './listenerRegistries'
+import * as listenerRegistries from './lib/listenerRegistries'
 
 class StackableEventListener extends React.PureComponent<EventListenerProps> {
   static displayName = 'StackableEventListener'

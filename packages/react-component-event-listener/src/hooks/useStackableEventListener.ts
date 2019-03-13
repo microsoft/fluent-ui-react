@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-import addEventListener from '../addEventListener'
-import removeEventListener from '../removeEventListener'
+import addEventListener from '../lib/addEventListener'
+import removeEventListener from '../lib/removeEventListener'
 import { EventTypes } from '../types'
-import * as listenerRegistries from '../listenerRegistries'
+import * as listenerRegistries from '../lib/listenerRegistries'
 import { UseListenerHookOptions } from './types'
 
 const useStackableEventListener = <N extends Node, T extends EventTypes>(

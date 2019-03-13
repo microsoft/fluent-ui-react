@@ -1,4 +1,4 @@
-import { EventHandler, EventTypes } from './types'
+import { EventHandler, EventTypes } from '../types'
 
 type ListenerRegistrySet = Set<EventHandler<EventTypes>>
 type ListenerRegistries = Partial<Record<EventTypes, ListenerRegistrySet>>
@@ -10,14 +10,14 @@ export const add = (type: EventTypes, listener: EventHandler<EventTypes>): void 
     registries[type] = new Set()
   }
 
-  registries[type]!.add(listener)
+   (registries[type] as ListenerRegistrySet).add(listener)
 }
 
 export const remove = (type: EventTypes, listener: EventHandler<EventTypes>): void => {
   if (registries[type] !== undefined) {
-    registries[type]!.delete(listener)
+     (registries[type] as ListenerRegistrySet).delete(listener)
 
-    if (registries[type]!.size === 0) {
+    if ((registries[type] as ListenerRegistrySet).size === 0) {
       delete registries[type]
     }
   }
@@ -25,7 +25,7 @@ export const remove = (type: EventTypes, listener: EventHandler<EventTypes>): vo
 
 export const isDispatchable = (type: EventTypes, listener: EventHandler<EventTypes>): boolean => {
   if (registries[type] !== undefined) {
-    const lastAddedHandler = Array.from(registries[type]!).pop()
+    const lastAddedHandler = Array.from(registries[type] as ListenerRegistrySet).pop()
 
     return listener === lastAddedHandler
   }

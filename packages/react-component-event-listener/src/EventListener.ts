@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import addEventListener from './addEventListener'
+import addEventListener from './lib/addEventListener'
 import { EventListenerProps, listenerPropTypes } from './types'
-import removeEventListener from './removeEventListener'
+import removeEventListener from './lib/removeEventListener'
 
 class EventListener extends React.PureComponent<EventListenerProps> {
   static displayName = 'EventListener'
