@@ -40,13 +40,15 @@ import Button from '../Button/Button'
 import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 import ListItem from '../List/ListItem'
 import Icon, { IconProps } from '../Icon/Icon'
+import Portal from '../Portal/Portal'
 
 export interface DropdownSlotClassNames {
-  container: string
   clearIndicator: string
-  triggerButton: string
+  container: string
+  toggleIndicator: string
   itemsList: string
   selectedItems: string
+  triggerButton: string
 }
 
 export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownState> {
@@ -74,7 +76,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   /** A dropdown can take the width of its container. */
   fluid?: boolean
 
-  /** Object with callbacks for creating announcements on multiple selection add and remove actions. */
+  /** Object with callbacks for generating announcements for item selection and removal. */
   getA11ySelectionMessage?: {
     /**
      * Callback that creates custom accessibility message a screen reader narrates on item added to selection.
@@ -186,6 +188,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 
 export interface DropdownState {
   activeSelectedIndex: number
+  a11ySelectionStatus: string
   defaultHighlightedIndex: number
   focused: boolean
   open: boolean
@@ -279,6 +282,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   getInitialAutoControlledState({ multiple, search }: DropdownProps): DropdownState {
     return {
       activeSelectedIndex: multiple ? null : undefined,
+      a11ySelectionStatus: '',
       // used on single selection to open the dropdown with the selected option as highlighted.
       defaultHighlightedIndex: this.props.multiple ? undefined : null,
       focused: false,
@@ -375,6 +379,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                       })
                     : Indicator.create(toggleIndicator, {
                         defaultProps: {
+                          className: Dropdown.slotClassNames.toggleIndicator,
                           direction: open ? 'top' : 'bottom',
                           styles: styles.toggleIndicator,
                         },
@@ -400,6 +405,16 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             )
           }}
         </Downshift>
+        <Portal open={!!this.props.getA11ySelectionMessage}>
+          <div
+            role="status"
+            aria-live="polite"
+            aria-relevant="additions text"
+            style={screenReaderContainerStyles}
+          >
+            {this.state.a11ySelectionStatus}
+          </div>
+        </Portal>
       </ElementType>
     )
   }
@@ -646,23 +661,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     return filteredItems
   }
 
-  private setA11yStatus = (statusMessage: string) => {
-    const elementId = 'stardust-dropdown-a11y-status'
-    let statusDiv = document.getElementById(elementId)
-
-    if (!statusDiv) {
-      statusDiv = document.createElement('div')
-      statusDiv.setAttribute('id', elementId)
-      statusDiv.setAttribute('role', 'status')
-      statusDiv.setAttribute('aria-live', 'polite')
-      statusDiv.setAttribute('aria-relevant', 'additions text')
-      Object.assign(statusDiv.style, screenReaderContainerStyles)
-      document.body.appendChild(statusDiv)
-    }
-
-    statusDiv.textContent = statusMessage
-  }
-
   private isSelectedItemActive = (index: number): boolean => {
     return index === this.state.activeSelectedIndex
   }
@@ -884,7 +882,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onAdd) {
-      this.setA11yStatus(getA11ySelectionMessage.onAdd(item))
+      this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onAdd(item) })
     }
 
     if (multiple) {
@@ -969,7 +967,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onRemove) {
-      this.setA11yStatus(getA11ySelectionMessage.onRemove(poppedItem))
+      this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onRemove(poppedItem) })
     }
 
     this.trySetStateAndInvokeHandler('onSelectedChange', null, { value })
@@ -1026,11 +1024,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 }
 
 Dropdown.slotClassNames = {
-  container: `${Dropdown.className}__container`,
   clearIndicator: `${Dropdown.className}__clear-indicator`,
-  triggerButton: `${Dropdown.className}__trigger-button`,
+  container: `${Dropdown.className}__container`,
+  toggleIndicator: `${Dropdown.className}__toggle-indicator`,
   itemsList: `${Dropdown.className}__items-list`,
   selectedItems: `${Dropdown.className}__selected-items`,
+  triggerButton: `${Dropdown.className}__trigger-button`,
 }
 
 export default Dropdown

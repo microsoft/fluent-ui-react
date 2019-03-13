@@ -97,6 +97,6 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
   }
 }
 
-Header.create = createShorthandFactory(Header, 'content')
+Header.create = createShorthandFactory({ Component: Header, mappedProp: 'content' })
 
 export default Header

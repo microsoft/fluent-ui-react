@@ -135,11 +135,14 @@ This default test only checks the rendering for the component in its initial sta
 ```tsx
 import { Dropdown } from '@stardust-ui/react'
 
-const steps = [
+const steps: ScreenerSteps = [
   steps => steps.click(`.${Dropdown.slotClassNames.triggerButton}`)
     .snapshot('Opens dropdown list'),
-  steps => steps.hover(`.${Dropdown.slotClassNames.itemsList} li:nth-child(2)`)
-    .snapshot('Highlights an item'),
+  steps => 
+    steps
+      .click(`.${Dropdown.slotClassNames.triggerButton}`)
+      .hover(`.${Dropdown.slotClassNames.itemsList} li:nth-child(2)`)
+      .snapshot('Highlights an item'),
 ]
 
 export default steps

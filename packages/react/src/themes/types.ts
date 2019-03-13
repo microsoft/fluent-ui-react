@@ -326,6 +326,8 @@ export interface ThemeComponentStylesInput {
   PopupContent?: ComponentSlotStylesInput
   RadioGroup?: ComponentSlotStylesInput
   RadioGroupItem?: ComponentSlotStylesInput
+  Reaction?: ComponentSlotStylesInput
+  ReactionGroup?: ComponentSlotStylesInput
   Segment?: ComponentSlotStylesInput
   Status?: ComponentSlotStylesInput
   Text?: ComponentSlotStylesInput
@@ -367,6 +369,8 @@ export interface ThemeComponentStylesPrepared {
   PopupContent?: ComponentSlotStylesPrepared
   RadioGroup?: ComponentSlotStylesPrepared
   RadioGroupItem?: ComponentSlotStylesPrepared
+  Reaction?: ComponentSlotStylesPrepared
+  ReactionGroup?: ComponentSlotStylesPrepared
   Segment?: ComponentSlotStylesPrepared
   Status?: ComponentSlotStylesPrepared
   Text?: ComponentSlotStylesPrepared
@@ -406,6 +410,8 @@ export interface ThemeComponentVariablesInput {
   PopupContent?: ComponentVariablesInput
   RadioGroup?: ComponentVariablesInput
   RadioGroupItem?: ComponentVariablesInput
+  Reaction?: ComponentVariablesInput
+  ReactionGroup?: ComponentVariablesInput
   Segment?: ComponentVariablesInput
   Status?: ComponentVariablesInput
   Text?: ComponentVariablesInput
@@ -445,6 +451,8 @@ export interface ThemeComponentVariablesPrepared {
   PopupContent?: ComponentVariablesPrepared
   RadioGroup?: ComponentVariablesPrepared
   RadioGroupItem?: ComponentVariablesPrepared
+  Reaction?: ComponentVariablesPrepared
+  ReactionGroup?: ComponentVariablesPrepared
   Segment?: ComponentVariablesPrepared
   Status?: ComponentVariablesPrepared
   Text?: ComponentVariablesPrepared

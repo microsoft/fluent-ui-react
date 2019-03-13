@@ -5,6 +5,7 @@ import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
 import { createShorthandFactory } from './factories'
+import { ObjectOf } from '../types'
 
 export interface CreateComponentConfig<P> {
   displayName: string
@@ -12,7 +13,7 @@ export interface CreateComponentConfig<P> {
   shorthandPropName?: string
   defaultProps?: Partial<P>
   handledProps?: string[]
-  propTypes?: React.ValidationMap<P>
+  propTypes?: React.WeakValidationMap<P>
   actionHandlers?: AccessibilityActionHandlers
   focusZoneRef?: (focusZone: FocusZone) => void
   render: (config: RenderResultConfig<P>, props: P) => React.ReactNode
@@ -22,7 +23,7 @@ export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
   create: Function
 }
 
-const createComponent = <P extends {} = {}, S extends {} = {}>({
+const createComponent = <P extends ObjectOf<any> = any>({
   displayName = 'StardustComponent',
   className = 'ui-stardust-component',
   shorthandPropName = 'children',
@@ -52,7 +53,10 @@ const createComponent = <P extends {} = {}, S extends {} = {}>({
     })
   }
 
-  StardustComponent.create = createShorthandFactory(mergedDefaultProps.as, shorthandPropName)
+  StardustComponent.create = createShorthandFactory({
+    Component: mergedDefaultProps.as,
+    mappedProp: shorthandPropName,
+  })
 
   StardustComponent.displayName = displayName
 

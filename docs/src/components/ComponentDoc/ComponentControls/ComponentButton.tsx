@@ -1,4 +1,4 @@
-import { createComponent, Icon, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import { createComponent, Icon, Text, Flex } from '@stardust-ui/react'
 import * as React from 'react'
 
 interface LabelledButtonProps {
@@ -8,23 +8,15 @@ interface LabelledButtonProps {
   onClick?: (event: React.SyntheticEvent) => void
 }
 
-const centered: ICSSInJSStyle = {
-  textAlign: 'center',
-}
-
-const LabelledButton: React.SFC<LabelledButtonProps> = createComponent<LabelledButtonProps>({
+const LabelledButton = createComponent<LabelledButtonProps>({
   displayName: 'LabelledButton',
   render: ({ stardust, ...props }) => {
-    const { iconName, label, active, onClick } = props
+    const { iconName, label, onClick } = props
     return (
-      <div style={centered} onClick={onClick}>
-        <Icon
-          name={iconName}
-          styles={{ color: active ? 'green' : 'grey', marginBottom: '10px', border: 0 }}
-        />
-        <br />
-        <Text content={label} styles={{ color: active ? 'green' : 'grey' }} />
-      </div>
+      <Flex column gap="gap.small" hAlign="center" onClick={onClick}>
+        <Icon name={iconName} size="large" />
+        <Text as="div" content={label} size="small" />
+      </Flex>
     )
   },
 })

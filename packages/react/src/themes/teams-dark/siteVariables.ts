@@ -31,11 +31,6 @@ export const red08 = '#4f232b' // no mapping color
 export const green04 = naturalColors.lightGreen[900]
 
 //
-// SHADOW LEVELS
-//
-export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(255, 255, 255, 0.1)'
-
-//
 // SEMANTIC ASSIGNMENTS
 //
 export const bodyBackground = black

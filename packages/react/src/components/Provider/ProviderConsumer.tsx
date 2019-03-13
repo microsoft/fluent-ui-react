@@ -16,7 +16,7 @@ export interface ProviderConsumerProps {
 /**
  * The Provider's Consumer is for accessing theme.
  */
-const ProviderConsumer: React.SFC<ProviderConsumerProps> = ({ render }) => (
+const ProviderConsumer: React.FunctionComponent<ProviderConsumerProps> = ({ render }) => (
   <FelaTheme>{render}</FelaTheme>
 )
 

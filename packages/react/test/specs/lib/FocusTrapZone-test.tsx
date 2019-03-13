@@ -98,7 +98,7 @@ describe('FocusTrapZone', () => {
     it('can tab across FocusZones with different button structures', async () => {
       expect.assertions(3)
 
-      const topLevelDiv = ReactTestUtils.renderIntoDocument(
+      const topLevelDiv = ReactTestUtils.renderIntoDocument<{}>(
         <div onFocusCapture={_onFocus}>
           <FocusTrapZone forceFocusInsideTrap={false}>
             <FocusZone direction={FocusZoneDirection.horizontal} data-is-visible={true}>
@@ -159,7 +159,7 @@ describe('FocusTrapZone', () => {
     it('can tab across a FocusZone with different button structures', async () => {
       expect.assertions(3)
 
-      const topLevelDiv = ReactTestUtils.renderIntoDocument(
+      const topLevelDiv = ReactTestUtils.renderIntoDocument<{}>(
         <div onFocusCapture={_onFocus}>
           <FocusTrapZone forceFocusInsideTrap={false}>
             <div data-is-visible={true}>
@@ -213,7 +213,7 @@ describe('FocusTrapZone', () => {
     it('can trap focus when FTZ bookmark elements are FocusZones, and those elements have inner elements focused that are not the first inner element', async () => {
       expect.assertions(4)
 
-      const topLevelDiv = ReactTestUtils.renderIntoDocument(
+      const topLevelDiv = ReactTestUtils.renderIntoDocument<{}>(
         <div onFocusCapture={_onFocus}>
           <button className={'z1'}>z1</button>
           <FocusTrapZone forceFocusInsideTrap={false}>
@@ -280,7 +280,7 @@ describe('FocusTrapZone', () => {
 
   describe('Tab and shift-tab do nothing (keep focus where it is) when the FTZ contains 0 tabbable items', () => {
     function setupTest() {
-      const topLevelDiv = ReactTestUtils.renderIntoDocument(
+      const topLevelDiv = ReactTestUtils.renderIntoDocument<{}>(
         <div onFocusCapture={_onFocus}>
           <button className={'z1'}>z1</button>
           <FocusTrapZone forceFocusInsideTrap={false}>
@@ -350,7 +350,7 @@ describe('FocusTrapZone', () => {
   describe('Focusing the FTZ', () => {
     function setupTest(focusPreviouslyFocusedInnerElement: boolean) {
       let focusTrapZoneRef: FocusTrapZone | null = null
-      const topLevelDiv = ReactTestUtils.renderIntoDocument(
+      const topLevelDiv = ReactTestUtils.renderIntoDocument<{}>(
         <div onFocusCapture={_onFocus}>
           <FocusTrapZone
             forceFocusInsideTrap={false}
@@ -450,7 +450,7 @@ describe('FocusTrapZone', () => {
 
     it('FocusTrapZone maintains a proper stack of FocusTrapZones as more are mounted/unmounted.', async () => {
       let focusTrapZoneFocusStack: FocusTrapZone[] = getFocusStack()
-      const topLevelDiv = ReactTestUtils.renderIntoDocument(
+      const topLevelDiv = ReactTestUtils.renderIntoDocument<{}>(
         <div>
           <FocusTrapZoneTestComponent />
         </div>,
