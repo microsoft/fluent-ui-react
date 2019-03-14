@@ -4,7 +4,6 @@ import { ImageProps } from '../../../../components/Image/Image'
 
 export default {
   root: ({ props, variables }): ICSSInJSStyle => ({
-    boxSizing: 'border-box',
     display: 'inline-block',
     verticalAlign: 'middle',
     width: (props.fluid && '100%') || variables.width,
