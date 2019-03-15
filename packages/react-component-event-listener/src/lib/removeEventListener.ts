@@ -1,21 +1,19 @@
-import * as React from 'react'
-import { EventHandler, EventTypes } from '../types'
+import { EventHandler, EventTypes, ListenerActionOptions } from '../types'
 
 const removeEventListener = (
-  targetRef: React.RefObject<Node>,
-  type: EventTypes,
   listener: EventHandler<EventTypes>,
+  options: ListenerActionOptions,
 ) => {
-  const isSupported: boolean =
-    targetRef && !!targetRef.current && !!targetRef.current.removeEventListener
+  const { targetRef, type, capture } = options
+  const isSupported = targetRef && !!targetRef.current && !!targetRef.current.removeEventListener
 
   if (isSupported) {
-    ;(targetRef.current as NonNullable<Node>).removeEventListener(type, listener)
+    ;(targetRef.current as NonNullable<Node>).removeEventListener(type, listener, capture)
   }
 
   if (process.env.NODE_ENV !== 'production') {
     if (!isSupported) {
-      console.error(
+      throw new Error(
         '@stardust-ui/react-component-event-listener: Passed `targetRef` is not valid or does not support `removeEventListener()` method.',
       )
     }
