@@ -39,16 +39,16 @@ export const naturalColors: NaturalColors = {
     900: '#237B4B', // siteVariables.green04
   },
   grey: {
-    50: '#FFFFFF', // siteVariables.white
-    100: '#E6E6E6',
-    200: '#CDCCCC',
-    300: '#B8B8B8',
-    400: '#A2A2A2',
-    500: '#8C8C8C',
-    600: '#747373',
-    700: '#5F5E5E',
-    800: '#404040',
-    900: '#252424', // siteVariables.black
+    50: '#FFFFFF', // $app-white
+    100: '#FAF9F8', // $app-gray14
+    200: '#F3F2F1', // $app-gray10
+    300: '#EDEBE9', // $app-gray09
+    400: '#E1DFDD', // $app-gray08
+    500: '#C8C6C4', // $app-gray06
+    600: '#979593', // $app-gray04
+    700: '#605E5C', // $app-gray03
+    800: '#484644', // $app-gray02
+    900: '#252424', // $app-black
   },
   orange: {
     50: '#FEF9F7',
@@ -75,8 +75,8 @@ export const naturalColors: NaturalColors = {
     900: '#B34A84',
   },
   red: {
-    50: '#F2D1D7',
-    100: '#ECBDC5',
+    50: '#FCF4F6', // $app-red-10
+    100: '#F3D6DB', // $app-red-08
     200: '#E8AFB9',
     300: '#E39EAA',
     400: '#DE8D9B',
@@ -84,7 +84,7 @@ export const naturalColors: NaturalColors = {
     600: '#D56B7E',
     700: '#D05B70',
     800: '#CC4B61',
-    900: '#C4314B', // siteVariables.red
+    900: '#C4314B', // $app-red
   },
   yellow: {
     50: '#FEF5D0',
@@ -96,7 +96,7 @@ export const naturalColors: NaturalColors = {
     600: '#FAE06C',
     700: '#F9DC58',
     800: '#F9D844',
-    900: '#F8D22A', // siteVariables.yellow
+    900: '#F8D22A', // $app-yellow
   },
   darkOrange: {
     50: '#F9ECEA',
