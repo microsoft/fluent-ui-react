@@ -1,12 +1,16 @@
 const { jest: lernaAliases } = require('lerna-alias')
 
+const setupTestFrameworkScriptFile = process.env.CI
+  ? `${__dirname}/setup.strict.ts`
+  : `${__dirname}/setup.common.ts`
+
 module.exports = {
   rootDir: `${__dirname}/../../`,
   coverageDirectory: './coverage/',
   coverageReporters: ['json', 'lcov'],
   testRegex: '/test/.*-test\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
-  setupTestFrameworkScriptFile: `${__dirname}/setup.common.ts`,
+  setupTestFrameworkScriptFile,
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
