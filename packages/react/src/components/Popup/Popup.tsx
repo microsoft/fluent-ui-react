@@ -467,6 +467,23 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       <Unstable_NestingAuto>
         {(getRefs, nestingRef) => (
           <>
+            <Ref
+              innerRef={domElement => {
+                ref(domElement)
+                this.popupDomElement = domElement
+                handleRef(contentRef, domElement)
+                handleRef(nestingRef, domElement)
+              }}
+            >
+              {accessibility.focusTrap ? (
+                <FocusTrapZone {...focusTrapProps}>{popupContent}</FocusTrapZone>
+              ) : accessibility.autoFocus ? (
+                <AutoFocusZone {...autoFocusProps}>{popupContent}</AutoFocusZone>
+              ) : (
+                popupContent
+              )}
+            </Ref>
+
             <EventListener
               listener={this.handleDocumentClick(getRefs)}
               targetRef={documentRef}
@@ -491,23 +508,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
               targetRef={documentRef}
               type="keydown"
             />
-
-            <Ref
-              innerRef={domElement => {
-                ref(domElement)
-                this.popupDomElement = domElement
-                handleRef(contentRef, domElement)
-                handleRef(nestingRef, domElement)
-              }}
-            >
-              {accessibility.focusTrap ? (
-                <FocusTrapZone {...focusTrapProps}>{popupContent}</FocusTrapZone>
-              ) : accessibility.autoFocus ? (
-                <AutoFocusZone {...autoFocusProps}>{popupContent}</AutoFocusZone>
-              ) : (
-                popupContent
-              )}
-            </Ref>
           </>
         )}
       </Unstable_NestingAuto>
