@@ -45,6 +45,9 @@ const menuItemBehavior: Accessibility = (props: any) => ({
         ? true
         : undefined,
       [IS_FOCUSABLE_ATTRIBUTE]: !props['disabled'],
+      'aria-posinset':
+        props.index !== undefined && props.index !== null ? props.index + 1 : props.index,
+      'aria-setsize': props.itemsCount,
     },
   },
 

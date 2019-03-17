@@ -152,6 +152,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
       indicator,
     } = this.props
     const { activeIndex } = this.state
+    const itemsCount = items.length
 
     return _.map(items, (item, index) => {
       const active =
@@ -182,6 +183,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
           variables,
           vertical,
           index,
+          itemsCount,
           active,
           inSubmenu: submenu,
           indicator,

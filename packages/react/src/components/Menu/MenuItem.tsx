@@ -57,6 +57,9 @@ export interface MenuItemProps
   /** MenuItem index inside Menu. */
   index?: number
 
+  /** MenuItem count inside Menu. */
+  itemsCount?: number
+
   /**
    * Called on click. When passed, the component will render as an `a`
    * tag by default instead of a `div`.
@@ -140,6 +143,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     icon: customPropTypes.itemShorthand,
     iconOnly: PropTypes.bool,
     index: PropTypes.number,
+    itemsCount: PropTypes.number,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     pills: PropTypes.bool,
