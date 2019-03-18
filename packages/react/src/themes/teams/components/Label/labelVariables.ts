@@ -1,11 +1,8 @@
-import { pxToRem, getColorSchemeWithCustomDefaults } from '../../../../lib'
-import { ColorValues, ColorScheme, SiteVariablesPrepared } from '../../../types'
-import { colors } from 'src/themes/teams/colors'
-
-type LabelColorScheme = Pick<ColorScheme, 'foreground' | 'background'>
+import { pxToRem } from '../../../../lib'
+import { SiteVariablesPrepared } from '../../../types'
 
 export interface LabelVariables {
-  colorScheme: ColorValues<LabelColorScheme>
+  colorScheme: any
   circularRadius: string
   padding: string
   startPaddingLeft: string

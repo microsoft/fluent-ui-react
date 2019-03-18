@@ -1,14 +1,4 @@
-import * as _ from 'lodash'
-
-import {
-  ColorPalette,
-  ContextualColors,
-  EmphasisColors,
-  NaturalColors,
-  ColorSchemeMapping,
-  PrimitiveColors,
-  ColorScheme,
-} from '../types'
+import { ColorPalette, ContextualColors, EmphasisColors, NaturalColors } from '../types'
 
 export const emphasisColors: EmphasisColors = {
   primary: {
@@ -167,8 +157,8 @@ const emphasisAndNaturalColors: EmphasisColors & NaturalColors = {
   ...naturalColors,
 }
 
-const lightBackgroundColors = ['orange', 'yellow', 'lightGreen', 'postOrange']
-const isLightBackground = (colorName: string) => _.includes(lightBackgroundColors, colorName)
+// const lightBackgroundColors = ['orange', 'yellow', 'lightGreen', 'postOrange']
+// const isLightBackground = (colorName: string) => _.includes(lightBackgroundColors, colorName)
 
 export const colors: ColorPalette = {
   ...emphasisAndNaturalColors,
@@ -179,7 +169,8 @@ export const colors: ColorPalette = {
   white: naturalColors.grey.light14, // siteVariables.white
 }
 
-export const colorScheme: ColorSchemeMapping = {
+// TODO: update typings
+export const colorScheme: any = {
   undefined: {
     foregroundUndefined: colors.grey.light14,
     backgroundUndefined: colors.grey.light02,

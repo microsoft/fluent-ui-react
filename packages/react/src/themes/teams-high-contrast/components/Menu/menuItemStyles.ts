@@ -10,31 +10,31 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
     return {
       ':hover': {
-        color: v.activeColor,
+        color: v.colorActive,
         ...(!active && {
-          background: v.focusedBackgroundColor,
+          background: v.backgroundColorFocus,
         }),
       },
 
       ...(active && {
-        background: v.activeBackgroundColor,
-        color: v.activeColor,
+        background: v.backgroundColorActive,
+        color: v.colorActive,
       }),
 
       ...((iconOnly || vertical) && {
         ...(isFromKeyboard && {
-          color: v.activeColor,
-          background: v.focusedBackgroundColor,
+          color: v.colorActive,
+          background: v.backgroundColorFocus,
         }),
 
         ...(active && {
-          color: v.activeColor,
-          background: v.activeBackgroundColor,
+          color: v.colorActive,
+          background: v.backgroundColorActive,
         }),
 
         ':hover': {
-          color: v.activeColor,
-          background: v.focusedBackgroundColor,
+          color: v.colorActive,
+          background: v.backgroundColorFocus,
         },
       }),
 
