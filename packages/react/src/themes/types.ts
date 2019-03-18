@@ -91,8 +91,8 @@ export type PrimitiveColors = Partial<{
 type ExtendablePalette<T> = T &
   { [K in keyof T]?: K extends keyof PrimitiveColors ? string : ColorVariants }
 
-export type ColorPalette = ExtendablePalette<
-  EmphasisColorsStrict & ContextualColorsStrict & NaturalColorsStrict & PrimitiveColors
+export type ColorPalette<T = {}> = ExtendablePalette<
+  EmphasisColorsStrict & ContextualColorsStrict & NaturalColorsStrict & PrimitiveColors & T
 >
 
 /**

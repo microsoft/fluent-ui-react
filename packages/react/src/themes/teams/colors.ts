@@ -1,4 +1,5 @@
 import { ColorPalette, ContextualColors, EmphasisColors, NaturalColors } from '../types'
+import { ColorVariants } from 'src/themes/types'
 
 export const emphasisColors: EmphasisColors = {
   primary: {
@@ -157,10 +158,14 @@ const emphasisAndNaturalColors: EmphasisColors & NaturalColors = {
   ...naturalColors,
 }
 
-// const lightBackgroundColors = ['orange', 'yellow', 'lightGreen', 'postOrange']
-// const isLightBackground = (colorName: string) => _.includes(lightBackgroundColors, colorName)
+export type ThemeColors = Partial<{
+  darkOrange: ColorVariants
+  postOrange: ColorVariants
+  lightGreen: ColorVariants
+  magenta: ColorVariants
+}>
 
-export const colors: ColorPalette = {
+export const colors: ColorPalette<ThemeColors> = {
   ...emphasisAndNaturalColors,
   ...contextualColors,
 
@@ -202,7 +207,223 @@ export const colorScheme: any = {
     borderDisabled: colors.grey.light02,
     shadowDisabled: colors.grey.light02,
   },
+  black: {
+    foregroundDefault: colors.white,
+    backgroundDefault: colors.black,
+    borderDefault: colors.black,
+    shadowDefault: colors.black,
 
+    foregroundHover: colors.white,
+    backgroundHover: colors.black,
+    borderHover: colors.black,
+    shadowHover: colors.black,
+
+    foregroundActive: colors.white,
+    backgroundActive: colors.black,
+    borderActive: colors.black,
+    shadowActive: colors.black,
+
+    foregroundFocus: colors.white,
+    backgroundFocus: colors.black,
+    borderFocus: colors.black,
+    shadowFocus: colors.black,
+
+    foregroundFocusWithin: colors.white,
+    backgroundFocusWithin: colors.black,
+    borderFocusWithin: colors.black,
+    shadowFocusWithin: colors.black,
+
+    foregroundDisabled: colors.white,
+    backgroundDisabled: colors.black,
+    borderDisabled: colors.black,
+    shadowDisabled: colors.black,
+  },
+  white: {
+    foregroundDefault: colors.black,
+    backgroundDefault: colors.white,
+    borderDefault: colors.white,
+    shadowDefault: colors.white,
+
+    foregroundHover: colors.black,
+    backgroundHover: colors.white,
+    borderHover: colors.white,
+    shadowHover: colors.white,
+
+    foregroundActive: colors.black,
+    backgroundActive: colors.white,
+    borderActive: colors.white,
+    shadowActive: colors.white,
+
+    foregroundFocus: colors.black,
+    backgroundFocus: colors.white,
+    borderFocus: colors.white,
+    shadowFocus: colors.white,
+
+    foregroundFocusWithin: colors.black,
+    backgroundFocusWithin: colors.white,
+    borderFocusWithin: colors.white,
+    shadowFocusWithin: colors.white,
+
+    foregroundDisabled: colors.black,
+    backgroundDisabled: colors.white,
+    borderDisabled: colors.white,
+    shadowDisabled: colors.white,
+  },
+  primary: {
+    foregroundDefault: colors.primary[50],
+    backgroundDefault: colors.primary[500],
+    borderDefault: colors.primary[500],
+    shadowDefault: colors.primary[500],
+
+    foregroundHover: colors.primary[50],
+    backgroundHover: colors.primary[500],
+    borderHover: colors.primary[500],
+    shadowHover: colors.primary[500],
+
+    foregroundActive: colors.primary[50],
+    backgroundActive: colors.primary[500],
+    borderActive: colors.primary[500],
+    shadowActive: colors.primary[500],
+
+    foregroundFocus: colors.primary[50],
+    backgroundFocus: colors.primary[500],
+    borderFocus: colors.primary[500],
+    shadowFocus: colors.primary[500],
+
+    foregroundFocusWithin: colors.primary[50],
+    backgroundFocusWithin: colors.primary[500],
+    borderFocusWithin: colors.primary[500],
+    shadowFocusWithin: colors.primary[500],
+
+    foregroundDisabled: colors.primary[50],
+    backgroundDisabled: colors.primary[500],
+    borderDisabled: colors.primary[500],
+    shadowDisabled: colors.primary[500],
+  },
+  grey: {
+    foregroundDefault: colors.grey.light14,
+    backgroundDefault: colors.grey.light02,
+    borderDefault: colors.grey.light02,
+    shadowDefault: colors.grey.light02,
+
+    foregroundHover: colors.grey.light14,
+    backgroundHover: colors.grey.light02,
+    borderHover: colors.grey.light02,
+    shadowHover: colors.grey.light02,
+
+    foregroundActive: colors.grey.light14,
+    backgroundActive: colors.grey.light02,
+    borderActive: colors.grey.light02,
+    shadowActive: colors.grey.light02,
+
+    foregroundFocus: colors.grey.light14,
+    backgroundFocus: colors.grey.light02,
+    borderFocus: colors.grey.light02,
+    shadowFocus: colors.grey.light02,
+
+    foregroundFocusWithin: colors.grey.light14,
+    backgroundFocusWithin: colors.grey.light02,
+    borderFocusWithin: colors.grey.light02,
+    shadowFocusWithin: colors.grey.light02,
+
+    foregroundDisabled: colors.grey.light14,
+    backgroundDisabled: colors.grey.light02,
+    borderDisabled: colors.grey.light02,
+    shadowDisabled: colors.grey.light02,
+  },
+  green: {
+    foregroundDefault: colors.green[50],
+    backgroundDefault: colors.green[500],
+    borderDefault: colors.green[500],
+    shadowDefault: colors.green[500],
+
+    foregroundHover: colors.green[50],
+    backgroundHover: colors.green[500],
+    borderHover: colors.green[500],
+    shadowHover: colors.green[500],
+
+    foregroundActive: colors.green[50],
+    backgroundActive: colors.green[500],
+    borderActive: colors.green[500],
+    shadowActive: colors.green[500],
+
+    foregroundFocus: colors.green[50],
+    backgroundFocus: colors.green[500],
+    borderFocus: colors.green[500],
+    shadowFocus: colors.green[500],
+
+    foregroundFocusWithin: colors.green[50],
+    backgroundFocusWithin: colors.green[500],
+    borderFocusWithin: colors.green[500],
+    shadowFocusWithin: colors.green[500],
+
+    foregroundDisabled: colors.green[50],
+    backgroundDisabled: colors.green[500],
+    borderDisabled: colors.green[500],
+    shadowDisabled: colors.green[500],
+  },
+  orange: {
+    foregroundDefault: colors.black,
+    backgroundDefault: colors.orange[500],
+    borderDefault: colors.orange[500],
+    shadowDefault: colors.orange[500],
+
+    foregroundHover: colors.black,
+    backgroundHover: colors.orange[500],
+    borderHover: colors.orange[500],
+    shadowHover: colors.orange[500],
+
+    foregroundActive: colors.black,
+    backgroundActive: colors.orange[500],
+    borderActive: colors.orange[500],
+    shadowActive: colors.orange[500],
+
+    foregroundFocus: colors.black,
+    backgroundFocus: colors.orange[500],
+    borderFocus: colors.orange[500],
+    shadowFocus: colors.orange[500],
+
+    foregroundFocusWithin: colors.black,
+    backgroundFocusWithin: colors.orange[500],
+    borderFocusWithin: colors.orange[500],
+    shadowFocusWithin: colors.orange[500],
+
+    foregroundDisabled: colors.black,
+    backgroundDisabled: colors.orange[500],
+    borderDisabled: colors.orange[500],
+    shadowDisabled: colors.orange[500],
+  },
+  pink: {
+    foregroundDefault: colors.pink[50],
+    backgroundDefault: colors.pink[500],
+    borderDefault: colors.pink[500],
+    shadowDefault: colors.pink[500],
+
+    foregroundHover: colors.pink[50],
+    backgroundHover: colors.pink[500],
+    borderHover: colors.pink[500],
+    shadowHover: colors.pink[500],
+
+    foregroundActive: colors.pink[50],
+    backgroundActive: colors.pink[500],
+    borderActive: colors.pink[500],
+    shadowActive: colors.pink[500],
+
+    foregroundFocus: colors.pink[50],
+    backgroundFocus: colors.pink[500],
+    borderFocus: colors.pink[500],
+    shadowFocus: colors.pink[500],
+
+    foregroundFocusWithin: colors.pink[50],
+    backgroundFocusWithin: colors.pink[500],
+    borderFocusWithin: colors.pink[500],
+    shadowFocusWithin: colors.pink[500],
+
+    foregroundDisabled: colors.pink[50],
+    backgroundDisabled: colors.pink[500],
+    borderDisabled: colors.pink[500],
+    shadowDisabled: colors.pink[500],
+  },
   red: {
     // red02: colors.red[500],
     // red57: colors.red[500],
@@ -248,36 +469,159 @@ export const colorScheme: any = {
     borderDisabled: colors.red[500],
     shadowDisabled: colors.red[500],
   },
+  yellow: {
+    foregroundDefault: colors.black,
+    backgroundDefault: colors.yellow[500],
+    borderDefault: colors.yellow[500],
+    shadowDefault: colors.yellow[500],
 
-  green: {
-    foregroundDefault: colors.green[50],
-    backgroundDefault: colors.green[500],
-    borderDefault: colors.green[500],
-    shadowDefault: colors.green[500],
+    foregroundHover: colors.black,
+    backgroundHover: colors.yellow[500],
+    borderHover: colors.yellow[500],
+    shadowHover: colors.yellow[500],
 
-    foregroundHover: colors.green[50],
-    backgroundHover: colors.green[500],
-    borderHover: colors.green[500],
-    shadowHover: colors.green[500],
+    foregroundActive: colors.black,
+    backgroundActive: colors.yellow[500],
+    borderActive: colors.yellow[500],
+    shadowActive: colors.yellow[500],
 
-    foregroundActive: colors.green[50],
-    backgroundActive: colors.green[500],
-    borderActive: colors.green[500],
-    shadowActive: colors.green[500],
+    foregroundFocus: colors.black,
+    backgroundFocus: colors.yellow[500],
+    borderFocus: colors.yellow[500],
+    shadowFocus: colors.yellow[500],
 
-    foregroundFocus: colors.green[50],
-    backgroundFocus: colors.green[500],
-    borderFocus: colors.green[500],
-    shadowFocus: colors.green[500],
+    foregroundFocusWithin: colors.black,
+    backgroundFocusWithin: colors.yellow[500],
+    borderFocusWithin: colors.yellow[500],
+    shadowFocusWithin: colors.yellow[500],
 
-    foregroundFocusWithin: colors.green[50],
-    backgroundFocusWithin: colors.green[500],
-    borderFocusWithin: colors.green[500],
-    shadowFocusWithin: colors.green[500],
+    foregroundDisabled: colors.black,
+    backgroundDisabled: colors.yellow[500],
+    borderDisabled: colors.yellow[500],
+    shadowDisabled: colors.yellow[500],
+  },
+  darkOrange: {
+    foregroundDefault: colors.darkOrange[50],
+    backgroundDefault: colors.darkOrange[500],
+    borderDefault: colors.darkOrange[500],
+    shadowDefault: colors.darkOrange[500],
 
-    foregroundDisabled: colors.green[50],
-    backgroundDisabled: colors.green[500],
-    borderDisabled: colors.green[500],
-    shadowDisabled: colors.green[500],
+    foregroundHover: colors.darkOrange[50],
+    backgroundHover: colors.darkOrange[500],
+    borderHover: colors.darkOrange[500],
+    shadowHover: colors.darkOrange[500],
+
+    foregroundActive: colors.darkOrange[50],
+    backgroundActive: colors.darkOrange[500],
+    borderActive: colors.darkOrange[500],
+    shadowActive: colors.darkOrange[500],
+
+    foregroundFocus: colors.darkOrange[50],
+    backgroundFocus: colors.darkOrange[500],
+    borderFocus: colors.darkOrange[500],
+    shadowFocus: colors.darkOrange[500],
+
+    foregroundFocusWithin: colors.darkOrange[50],
+    backgroundFocusWithin: colors.darkOrange[500],
+    borderFocusWithin: colors.darkOrange[500],
+    shadowFocusWithin: colors.darkOrange[500],
+
+    foregroundDisabled: colors.darkOrange[50],
+    backgroundDisabled: colors.darkOrange[500],
+    borderDisabled: colors.darkOrange[500],
+    shadowDisabled: colors.darkOrange[500],
+  },
+  lightGreen: {
+    foregroundDefault: colors.black,
+    backgroundDefault: colors.lightGreen[500],
+    borderDefault: colors.lightGreen[500],
+    shadowDefault: colors.lightGreen[500],
+
+    foregroundHover: colors.black,
+    backgroundHover: colors.lightGreen[500],
+    borderHover: colors.lightGreen[500],
+    shadowHover: colors.lightGreen[500],
+
+    foregroundActive: colors.black,
+    backgroundActive: colors.lightGreen[500],
+    borderActive: colors.lightGreen[500],
+    shadowActive: colors.lightGreen[500],
+
+    foregroundFocus: colors.black,
+    backgroundFocus: colors.lightGreen[500],
+    borderFocus: colors.lightGreen[500],
+    shadowFocus: colors.lightGreen[500],
+
+    foregroundFocusWithin: colors.black,
+    backgroundFocusWithin: colors.lightGreen[500],
+    borderFocusWithin: colors.lightGreen[500],
+    shadowFocusWithin: colors.lightGreen[500],
+
+    foregroundDisabled: colors.black,
+    backgroundDisabled: colors.lightGreen[500],
+    borderDisabled: colors.lightGreen[500],
+    shadowDisabled: colors.lightGreen[500],
+  },
+  magenta: {
+    foregroundDefault: colors.magenta[50],
+    backgroundDefault: colors.magenta[500],
+    borderDefault: colors.magenta[500],
+    shadowDefault: colors.magenta[500],
+
+    foregroundHover: colors.magenta[50],
+    backgroundHover: colors.magenta[500],
+    borderHover: colors.magenta[500],
+    shadowHover: colors.magenta[500],
+
+    foregroundActive: colors.magenta[50],
+    backgroundActive: colors.magenta[500],
+    borderActive: colors.magenta[500],
+    shadowActive: colors.magenta[500],
+
+    foregroundFocus: colors.magenta[50],
+    backgroundFocus: colors.magenta[500],
+    borderFocus: colors.magenta[500],
+    shadowFocus: colors.magenta[500],
+
+    foregroundFocusWithin: colors.magenta[50],
+    backgroundFocusWithin: colors.magenta[500],
+    borderFocusWithin: colors.magenta[500],
+    shadowFocusWithin: colors.magenta[500],
+
+    foregroundDisabled: colors.magenta[50],
+    backgroundDisabled: colors.magenta[500],
+    borderDisabled: colors.magenta[500],
+    shadowDisabled: colors.magenta[500],
+  },
+  postOrange: {
+    foregroundDefault: colors.black,
+    backgroundDefault: colors.postOrange[500],
+    borderDefault: colors.postOrange[500],
+    shadowDefault: colors.postOrange[500],
+
+    foregroundHover: colors.black,
+    backgroundHover: colors.postOrange[500],
+    borderHover: colors.postOrange[500],
+    shadowHover: colors.postOrange[500],
+
+    foregroundActive: colors.black,
+    backgroundActive: colors.postOrange[500],
+    borderActive: colors.postOrange[500],
+    shadowActive: colors.postOrange[500],
+
+    foregroundFocus: colors.black,
+    backgroundFocus: colors.postOrange[500],
+    borderFocus: colors.postOrange[500],
+    shadowFocus: colors.postOrange[500],
+
+    foregroundFocusWithin: colors.black,
+    backgroundFocusWithin: colors.postOrange[500],
+    borderFocusWithin: colors.postOrange[500],
+    shadowFocusWithin: colors.postOrange[500],
+
+    foregroundDisabled: colors.black,
+    backgroundDisabled: colors.postOrange[500],
+    borderDisabled: colors.postOrange[500],
+    shadowDisabled: colors.postOrange[500],
   },
 }
