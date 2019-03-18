@@ -83,8 +83,8 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     flexGrow: 1,
   }),
 
-  icon: (): ICSSInJSStyle => ({
-    /** TODO */
+  closeButton: ({ variables: v }): ICSSInJSStyle => ({
+    color: v.closeButtonColor || 'currentColor',
   }),
 }
 

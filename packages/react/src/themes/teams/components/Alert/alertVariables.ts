@@ -12,6 +12,7 @@ export interface AlertVariables {
   fontWeight: FontWeightProperty
   minHeight: string
   padding: string
+  closeButtonColor: string
 }
 
 export default (siteVars: SiteVariablesPrepared): AlertVariables => {
@@ -26,5 +27,6 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     fontWeight: siteVars.fontWeightSemibold,
     minHeight: pxToRem(32),
     padding: `0 0 0 ${pxToRem(8)}`,
+    closeButtonColor: undefined,
   }
 }
