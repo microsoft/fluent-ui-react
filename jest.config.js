@@ -1,5 +1,5 @@
+const commonConfig = require('@stardust-ui/internal-tooling/jest')
 const { rollup: lernaAliases } = require('lerna-alias')
-const commonConfig = require('./build/jest/jest.config.common')
 
 // packages/react/src -> packages/react,
 // as lernaAliases append 'src' by default

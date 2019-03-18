@@ -1,16 +1,12 @@
 const { jest: lernaAliases } = require('lerna-alias')
 
-const setupFilesAfterEnv = [
-  process.env.CI ? `${__dirname}/setup.strict.ts` : `${__dirname}/setup.common.ts`,
-]
-
 module.exports = {
   rootDir: `${__dirname}/../../`,
   coverageDirectory: './coverage/',
   coverageReporters: ['json', 'lcov'],
   testRegex: '/test/.*-test\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
-  setupFilesAfterEnv,
+  setupFilesAfterEnv: [`${__dirname}/setupTests.js`],
   moduleNameMapper: {
     ...lernaAliases(),
     'docs/(.*)$': `<rootDir>/docs/$1`,
@@ -20,14 +16,6 @@ module.exports = {
     'test/(.*)$': `<rootDir>/packages/react/test/$1`,
   },
   transform: {
-    '^.+\\.tsx?$': `${__dirname}/jest.transform.js`,
-  },
-  globals: {
-    'ts-jest': {
-      tsConfig: `<rootDir>/build/tsconfig.test.json`,
-      diagnostics: {
-        ignoreCodes: 151001,
-      },
-    },
+    '^.+\\.tsx?$': 'babel-jest',
   },
 }
