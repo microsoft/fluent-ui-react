@@ -51,7 +51,7 @@ export const fontSizes = {
 //
 // STATUS COLORS
 //
-export const successStatusBackgroundColor = naturalColors.lightGreen[900]
+export const successStatusBackgroundColor = naturalColors.green[900]
 export const successStatusTextColor = colors.grey[50]
 export const infoStatusBackgroundColor = 'blue'
 export const infoStatusTextColor = colors.grey[50]

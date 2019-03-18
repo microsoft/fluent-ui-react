@@ -28,7 +28,7 @@ export const magenta = '#cf6098' // no mapping color
 export const orchid = '#ae3d84' // no mapping color
 export const red = '#d74654' // no mapping color
 export const red08 = '#4f232b' // no mapping color
-export const green04 = naturalColors.lightGreen[900]
+export const green04 = naturalColors.green[900]
 
 //
 // SEMANTIC ASSIGNMENTS

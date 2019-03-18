@@ -11,7 +11,7 @@ export const accessibleGreen = '#3ff23f'
 export const accessibleCyan = '#1aebff'
 
 export const red = '#f00'
-export const green04 = naturalColors.lightGreen[900]
+export const green04 = naturalColors.green[900]
 
 //
 // STATUS COLORS

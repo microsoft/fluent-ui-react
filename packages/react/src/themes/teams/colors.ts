@@ -12,139 +12,155 @@ import {
 
 export const emphasisColors: EmphasisColors = {
   primary: {
-    50: '#F4F4FC', // siteVariables.brand16
-    100: '#E2E2F6', // siteVariables.brand14
-    200: '#BDBDE6', // siteVariables.brand12
-    300: '#8F90C1',
-    400: '#6E70AE',
-    500: '#6264A7', // siteVariables.brand, siteVariables.brand06 (same color?)
-    600: '#55578D',
-    700: '#4A4C78',
-    800: '#414265',
-    900: '#33344A', // siteVariables.brand02
+    50: '#F4F4FC', // brand16
+    100: '#E2E2F1', // brand15
+    200: '#E2E2F6', // brand14, brand02-dark
+    300: '#BDBDE6', // brand12, brand04-dark
+    400: '#8b8cc7', // brand08, brand08-dark
+    500: '#6264A7', // brand00, brand06, brand12-dark
+    600: '#585a96', // brand05
+    700: '#464775', // brand04, brand14-dark
+    800: '#3A3B55', // brand15-dark
+    900: '#33344A', // brand02, brand16-dark
   },
 }
 
 export const naturalColors: NaturalColors = {
-  green: {
-    50: '#D3E4DB',
-    100: '#C4DCCF',
-    200: '#B3D1C1',
-    300: '#9DC4AF',
-    400: '#8CBAA1',
-    500: '#7BB093',
-    600: '#68A584',
-    700: '#579A75',
-    800: '#458F67',
-    900: '#237B4B', // siteVariables.green04
-  },
   grey: {
-    50: '#FFFFFF', // siteVariables.white
-    100: '#E6E6E6',
-    200: '#CDCCCC',
-    300: '#B8B8B8',
-    400: '#A2A2A2',
-    500: '#8C8C8C',
-    600: '#747373',
-    700: '#5F5E5E',
-    800: '#404040',
-    900: '#252424', // siteVariables.black
+    50: '#FAF9F8', // gray14
+    100: '#F9F8F7', // gray14-agnostic
+    200: '#F7F7F7', // gray19
+    300: '#F3F2F1', // gray10
+    400: '#EDEBE9', // gray09
+    500: '#E1DFDD', // gray08
+    600: '#C8C6C4', // gray06, gray02-dark
+    700: '#B3B0AD', // gray03-dark
+    800: '#B5B4B3', // gray20-agnostic
+    900: '#979593', // gray04
+  },
+  darkgrey: {
+    50: '#8A8886', // gray04-dark
+    100: '#605e5c', // gray03, gray06-dark
+    200: '#57575B', // gray15-dark
+    300: '#484644', // gray02, gary08-dark
+    400: '#3B3A39', // gray09-dark, gray12-dark
+    500: '#3B3A3A', // app-bar-darktheme
+    600: '#2D2C2C', // gray10-dark
+    700: '#292828', // gray14-dark
+    800: '#252424', // siteVariables.black
+    900: '#201f1f', // app-black-darktheme
+  },
+  green: {
+    50: '#fff',
+    100: '#fff',
+    200: '#fff',
+    300: '#3ff23f', // acc-disabled-color
+    400: '#fff',
+    500: '#92c353', // green
+    600: '#fff',
+    700: '#fff',
+    800: '#fff',
+    900: '#237B4B', // green04
   },
   orange: {
-    50: '#FEF9F7',
-    100: '#FDF0EB',
-    200: '#FAE3DA',
-    300: '#F8D3C5',
-    400: '#F5C6B3',
-    500: '#F4B8A1',
-    600: '#F2AD92',
-    700: '#F0A081',
-    800: '#ED8E6A',
-    900: '#E97548',
+    50: '#da846b', // post-orange02-dark
+    100: '#833122', // orange01
+    150: '#f7bbad', // post-orange12-dark
+    200: '#a33d2a', // orange02
+    300: '#bd432c', // orange03
+    400: '#cc4a31', // orange04, orange-dark
+    500: '#e97548', // orange, orange04-dark
+    600: '#efdbd3', // orange14
+    650: '#f8ded7', // post-orange08
+    700: '#f9ecea', // orange16
+    800: '#f8ded7', // post-orange08
+    900: '#c7431d', // post-orange02
+  },
+  brown: {
+    50: '#fff',
+    100: '#7c5811', // post-gold02
+    200: '#fff',
+    300: '#664134', // orange14-dark
+    400: '#fff',
+    500: '#51332c', // orange16-dark
+    600: '#fff',
+    700: '#482f26', // post-orange08-dark
+    800: '#fff',
+    900: '#fff',
   },
   pink: {
-    50: '#E8BDD5',
-    100: '#E1ABC8',
-    200: '#DA9EBF',
-    300: '#D693B8',
-    400: '#D28BB2',
-    500: '#CA7BA6',
-    600: '#C775A3',
-    700: '#C06597',
-    800: '#BA598F',
-    900: '#B34A84',
+    50: '#fff',
+    100: '#fa70d8', // magenta01
+    200: '#d092ba', // post-pink02
+    300: '#943670', // orchid
+    400: '#ae3d84', // orchid-dark
+    500: '#b24782', // magenta
+    600: '#e8cadd', // post-pink08
+    700: '#a85883', // mulberry
+    800: '#530738', // post-pink02
+    850: '#ab3590', // app-oof
+    900: '#cf6098', // magenta-dark
+    950: '#3e1f32', // post-pink08
   },
   red: {
-    50: '#F2D1D7',
-    100: '#ECBDC5',
-    200: '#E8AFB9',
-    300: '#E39EAA',
-    400: '#DE8D9B',
-    500: '#D97B8C',
-    600: '#D56B7E',
-    700: '#D05B70',
-    800: '#CC4B61',
-    900: '#C4314B', // siteVariables.red
+    50: '#fcf4f6', // red10
+    100: '#f3d6db', // red08
+    200: '#8e192e', // red02
+    300: '#a72037', // red04
+    400: '#c4314b', // red06
+    500: '#C4314B', // red
+    600: '#ed1b3e', // red-deep
+    700: '#4f232b', // red08-dark
+    800: '#1e060c', // red10-dark
+    900: '#d74654', // red-dark
   },
   yellow: {
-    50: '#FEF5D0',
-    100: '#FDF1BE',
-    200: '#FDEEAE',
-    300: '#FBEA9D',
-    400: '#FCE78E',
-    500: '#FAE37C',
-    600: '#FAE06C',
-    700: '#F9DC58',
-    800: '#F9D844',
-    900: '#F8D22A', // siteVariables.yellow
+    50: '#fff4d6', // lightyellow
+    100: '#fff',
+    200: '#fbf5d9', // message-highlight-color
+    300: '#fff',
+    400: '#f1d499', // post-gold02-dark
+    500: '#F8D22A', // siteVariables.yellow
+    600: '#ffff01', // acc-hyperlink-color
+    700: '#f9ec00', // acc-critical-ufd-icon-color
+    800: '#f8eacd', // post-gold08
+    900: '#4e4f22', // post-gold08-dark
   },
-  darkOrange: {
-    50: '#F9ECEA',
-    100: '#ECBCB3',
-    200: '#E29C8F',
-    300: '#D97B69',
-    400: '#CC4A31', // siteVariables.orange04
-    500: '#C5472F',
-    600: '#B7432D',
-    700: '#A73D29',
-    800: '#983927',
-    900: '#833122',
+  purple: {
+    50: '#fff',
+    100: '#ada8d1', // post-purple02-dark
+    200: '#d6d4e8', // post-purple08
+    300: '#fff',
+    400: '#fff',
+    500: '#fff',
+    600: '#fff',
+    700: '#2c293d', // post-purple08-dark
+    800: '#fff',
+    900: '#272154', // post-purple02
   },
-  lightGreen: {
-    50: '#E7F2D9',
-    100: '#DFEECD',
-    200: '#D8EAC1',
-    300: '#CDE3B0',
-    400: '#C6DFA4',
-    500: '#BDDB96',
-    600: '#B4D689',
-    700: '#ACD17B',
-    800: '#A1CC6B',
-    900: '#92C353', // siteVariables.green
+  blue: {
+    50: '#fff',
+    100: '#7fa3d0', // post-blue02-dark
+    200: '#cddaea', // post-blue08
+    300: '#fff',
+    400: '#fff',
+    500: '#fff',
+    600: '#fff',
+    700: '#164279', // post-blue02
+    800: '#222f3f', // post-blue08-dark
+    900: '#57d4ff', // blue02-dark
   },
-  magenta: {
-    50: '#E8D4E0',
-    100: '#DEC0D2',
-    200: '#D4ADC5',
-    300: '#CDA0BC',
-    400: '#C491B0',
-    500: '#BB7FA4',
-    600: '#B26E98',
-    700: '#AA5F8D',
-    800: '#A14F82',
-    900: '#953872',
-  },
-  postOrange: {
-    50: '#FDF6F7',
-    100: '#FBF2F3',
-    200: '#FAEEEF',
-    300: '#F9ECED',
-    400: '#F8E9EA',
-    500: '#F7E5E6',
-    600: '#F7E2E4',
-    700: '#F5DEE0',
-    800: '#F5DBDD',
-    900: '#F3D6D8',
+  teal: {
+    50: '#fff',
+    100: '#166467', // post-teal02
+    200: '#fff',
+    300: '#1aebff', // acc-selection-background-color
+    400: '#fff',
+    500: '#cde3e4', // post-teal08
+    600: '#fff',
+    700: '#6baeb1', // post-teal02-dark
+    800: '#fff',
+    900: '#233839', // post-teal08-dark
   },
 }
 
@@ -157,7 +173,7 @@ const emphasisAndNaturalColors: EmphasisColors & NaturalColors = {
   ...naturalColors,
 }
 
-const lightBackgroundColors = ['orange', 'yellow', 'lightGreen', 'postOrange']
+const lightBackgroundColors = ['orange', 'yellow']
 const isLightBackground = (colorName: string) => _.includes(lightBackgroundColors, colorName)
 
 export const colors: ColorPalette = {
@@ -166,7 +182,7 @@ export const colors: ColorPalette = {
 
   // Primitive colors
   black: '#000',
-  white: naturalColors.grey[50], // siteVariables.white
+  white: '#FFF', // siteVariables.white
 }
 
 const primitiveColorsScheme: Record<keyof PrimitiveColors, ColorScheme> = {
