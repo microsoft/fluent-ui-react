@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { isBrowser, ChildrenComponentProps, commonPropTypes } from '../../lib'
-import { ReactPropsStrict } from '../../types'
+import { ReactProps } from '../../types'
 
 export interface PortalInnerProps extends ChildrenComponentProps {
   /** Existing element the portal should be bound to. */
@@ -27,7 +27,7 @@ export interface PortalInnerProps extends ChildrenComponentProps {
 /**
  * An inner component that allows you to render children outside their parent.
  */
-class PortalInner extends React.Component<ReactPropsStrict<PortalInnerProps>> {
+class PortalInner extends React.Component<ReactProps<PortalInnerProps>> {
   public static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,

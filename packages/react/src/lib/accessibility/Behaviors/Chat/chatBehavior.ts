@@ -17,7 +17,7 @@ const ChatBehavior: Accessibility = (props: any) => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Wrap,
+    mode: FocusZoneMode.Embed,
     props: {
       shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.Enter,
       direction: FocusZoneDirection.vertical,
