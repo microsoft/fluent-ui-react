@@ -36,7 +36,7 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
   checkedChanged?: ComponentEventHandler<RadioGroupItemProps>
 
   /** The label of the radio item. */
-  label?: React.ReactNode
+  label?: ShorthandValue
 
   /** Initial checked value. */
   defaultChecked?: boolean
@@ -111,7 +111,7 @@ class RadioGroupItem extends AutoControlledComponent<
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
-    label: customPropTypes.nodeContent,
+    label: customPropTypes.itemShorthand,
     name: PropTypes.string,
     onBlur: PropTypes.func,
     onClick: PropTypes.func,
