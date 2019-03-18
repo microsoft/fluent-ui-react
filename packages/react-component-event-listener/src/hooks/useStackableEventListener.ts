@@ -9,7 +9,7 @@ import { UseListenerHookOptions } from './types'
 const useStackableEventListener = <N extends Node, T extends EventTypes>(
   options: UseListenerHookOptions<N, T>,
 ): void => {
-  const { listener, targetRef, type } = options
+  const { listener, type } = options
   const handler = React.useCallback((event: DocumentEventMap[T]) => {
     if (listenerRegistries.isDispatchable(type, handler)) {
       return listener(event)
@@ -18,11 +18,11 @@ const useStackableEventListener = <N extends Node, T extends EventTypes>(
 
   React.useEffect(() => {
     listenerRegistries.add(type, handler)
-    addEventListener(targetRef, type, handler)
+    addEventListener(handler, options)
 
     return () => {
       listenerRegistries.remove(type, handler)
-      removeEventListener(targetRef, type, handler)
+      removeEventListener(handler, options)
     }
   }, [])
 }

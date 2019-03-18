@@ -1,21 +1,16 @@
-import * as React from 'react'
-import { EventHandler, EventTypes } from '../types'
+import { EventHandler, EventTypes, ListenerActionOptions } from '../types'
 
-const addEventListener = (
-  targetRef: React.RefObject<Node>,
-  type: EventTypes,
-  listener: EventHandler<EventTypes>,
-) => {
-  const isSupported: boolean =
-    targetRef && !!targetRef.current && !!targetRef.current.addEventListener
+const addEventListener = (listener: EventHandler<EventTypes>, options: ListenerActionOptions) => {
+  const { targetRef, type, capture } = options
+  const isSupported = targetRef && !!targetRef.current && !!targetRef.current.addEventListener
 
   if (isSupported) {
-    ;(targetRef.current as NonNullable<Node>).addEventListener(type, listener)
+    ;(targetRef.current as NonNullable<Node>).addEventListener(type, listener, capture)
   }
 
   if (process.env.NODE_ENV !== 'production') {
     if (!isSupported) {
-      console.error(
+      throw new Error(
         '@stardust-ui/react-component-event-listener: Passed `targetRef` is not valid or does not support `addEventListener()` method.',
       )
     }
