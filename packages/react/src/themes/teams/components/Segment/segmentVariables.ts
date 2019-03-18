@@ -1,8 +1,5 @@
-import { ColorValues } from '../../../types'
-import { mapColorsToScheme } from '../../../../lib'
-
 export interface SegmentVariables {
-  colors: ColorValues<string>
+  colorScheme: any
   color: string
   backgroundColor: string
   padding: string
@@ -11,10 +8,8 @@ export interface SegmentVariables {
 }
 
 export default (siteVariables): SegmentVariables => {
-  const colorVariant = 500
-
   return {
-    colors: mapColorsToScheme(siteVariables, colorVariant),
+    colorScheme: siteVariables.colorScheme,
     color: siteVariables.bodyColor,
     backgroundColor: siteVariables.bodyBackground,
     padding: '1em',

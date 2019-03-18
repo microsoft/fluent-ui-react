@@ -6,7 +6,7 @@ import { SegmentVariables } from './segmentVariables'
 
 const segmentStyles: ComponentSlotStylesInput<SegmentProps, SegmentVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const segmentColor = _.get(v.colors, p.color)
+    const colors = v.colorScheme[p.color || 'default']
 
     return {
       padding: v.padding,
@@ -15,10 +15,10 @@ const segmentStyles: ComponentSlotStylesInput<SegmentProps, SegmentVariables> = 
       boxShadow: `0 1px 1px 1px ${v.boxShadowColor}`,
       color: v.color,
       backgroundColor: v.backgroundColor,
-      borderColor: segmentColor,
+      ...(p.color && { borderColor: colors.borderDefault }),
       ...(p.inverted && {
         color: v.backgroundColor,
-        backgroundColor: segmentColor || v.color,
+        backgroundColor: p.color ? colors.borderDefault : v.color,
       }),
     }
   },
