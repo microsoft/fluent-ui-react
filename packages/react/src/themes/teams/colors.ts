@@ -50,6 +50,7 @@ export const naturalColors: NaturalColors = {
     dark09: '#3b3a39',
     dark10: '#323130',
     dark14: '#292828',
+    900: '#252424',
   },
   orange: {
     50: '#FEF9F7',
