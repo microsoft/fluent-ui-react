@@ -152,7 +152,13 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
       indicator,
     } = this.props
     const { activeIndex } = this.state
-    const itemsCount = items.length
+    let itemsCount = 0
+    _.forEach(items, item => {
+      if (getKindProp(item, 'item') !== 'divider') {
+        itemsCount++
+      }
+    })
+    let itemPosition = 0
 
     return _.map(items, (item, index) => {
       const active =
@@ -172,6 +178,8 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
         })
       }
 
+      itemPosition++
+
       return MenuItem.create(item, {
         defaultProps: {
           iconOnly,
@@ -183,6 +191,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
           variables,
           vertical,
           index,
+          itemPosition,
           itemsCount,
           active,
           inSubmenu: submenu,

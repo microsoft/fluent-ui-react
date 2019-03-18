@@ -57,6 +57,9 @@ export interface MenuItemProps
   /** MenuItem index inside Menu. */
   index?: number
 
+  /** MenuItem position inside Menu (skipping separators). */
+  itemPosition?: number
+
   /** MenuItem count inside Menu. */
   itemsCount?: number
 
@@ -143,6 +146,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     icon: customPropTypes.itemShorthand,
     iconOnly: PropTypes.bool,
     index: PropTypes.number,
+    itemPosition: PropTypes.number,
     itemsCount: PropTypes.number,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
