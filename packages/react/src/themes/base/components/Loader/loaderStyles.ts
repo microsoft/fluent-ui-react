@@ -52,6 +52,8 @@ export default {
       borderStyle: 'solid',
       borderWidth: v.borderSizes[p.size],
 
+      boxSizing: 'border-box',
+
       width: v.indicatorSizes[p.size],
       height: v.indicatorSizes[p.size],
     }
