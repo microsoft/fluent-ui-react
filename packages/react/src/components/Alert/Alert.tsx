@@ -15,9 +15,13 @@ import { RenderResultConfig } from 'src/lib/renderComponent'
 import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
-import { Box, Icon } from '../..'
+import Box from '../Box/Box'
+import Button, { ButtonProps } from '../Button/Button'
 
-export type AlertSlotClassNames = Record<'content' | 'closeIcon', string>
+export interface AlertSlotClassNames {
+  content: string
+  closeButton: string
+}
 
 export interface AlertProps extends UIComponentProps, ContentComponentProps {
   /**
@@ -29,8 +33,8 @@ export interface AlertProps extends UIComponentProps, ContentComponentProps {
   /** Controls Alert's relation to neighboring items. */
   attached?: boolean | 'top' | 'bottom'
 
-  /** Icon used for dismissing the Alert, 'close' by default. */
-  closeIcon?: ShorthandValue
+  /** Button used for dismissing the Alert. */
+  closeButton?: ShorthandValue<ButtonProps>
 
   /** An alert may be formatted to display a danger message. */
   danger?: boolean
@@ -55,19 +59,19 @@ export interface AlertProps extends UIComponentProps, ContentComponentProps {
 /**
  * A Alert displays information that explains nearby content.
  */
-class Alert extends UIComponent<ReactProps<AlertProps>, {}> {
+class Alert extends UIComponent<ReactProps<AlertProps>> {
   static displayName = 'Alert'
   static className = 'ui-alert'
 
   static slotClassNames: AlertSlotClassNames = {
     content: `${Alert.className}__content`,
-    closeIcon: `${Alert.className}__closeIcon`,
+    closeButton: `${Alert.className}__closeButton`,
   }
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
     attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
-    closeIcon: customPropTypes.itemShorthand,
+    closeButton: customPropTypes.itemShorthand,
     danger: PropTypes.bool,
     info: PropTypes.bool,
     onClose: PropTypes.func,
@@ -77,7 +81,7 @@ class Alert extends UIComponent<ReactProps<AlertProps>, {}> {
 
   static defaultProps = {
     accessibility: defaultBehavior,
-    closeIcon: 'close',
+    closeButton: { icon: 'close' },
   }
 
   renderComponent(config: RenderResultConfig<AlertProps>) {
@@ -95,8 +99,8 @@ class Alert extends UIComponent<ReactProps<AlertProps>, {}> {
     )
   }
 
-  private renderContent = ({ styles, variables }: RenderResultConfig<AlertProps>) => {
-    const { closeIcon, content, onClose } = this.props
+  renderContent = ({ styles }: RenderResultConfig<AlertProps>) => {
+    const { closeButton, content, onClose } = this.props
     return (
       <>
         {Box.create(content, {
@@ -106,28 +110,28 @@ class Alert extends UIComponent<ReactProps<AlertProps>, {}> {
           },
         })}
         {onClose &&
-          Icon.create(closeIcon, {
+          Button.create(closeButton, {
             defaultProps: {
-              className: Alert.slotClassNames.closeIcon,
-              styles: styles.icon,
-              variables: variables.icon,
+              iconOnly: true,
+              text: true,
+              className: Alert.slotClassNames.closeButton,
+              styles: styles.closeButton,
             },
-            overrideProps: this.handleCloseIconOverrides,
+            overrideProps: this.handleCloseButtonOverrides,
           })}
       </>
     )
   }
 
-  private handleCloseIconOverrides = (predefinedProps: AlertProps) => ({
-    onClick: (e: React.SyntheticEvent) => {
+  handleCloseButtonOverrides = (predefinedProps: ButtonProps) => ({
+    onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
       this.handleOnClose(e)
-      _.invoke(predefinedProps, 'onClick', e, this.props)
+      _.invoke(predefinedProps, 'onClick', e, buttonProps)
     },
-    ...(predefinedProps.onClick && { tabIndex: '0' }),
   })
 
-  private handleOnClose = (e: React.SyntheticEvent) => {
-    _.invoke(this.props, 'onClose', e, { ...this.props })
+  handleOnClose = (e: React.SyntheticEvent) => {
+    _.invoke(this.props, 'onClose', e, this.props)
   }
 }
 

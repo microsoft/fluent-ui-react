@@ -59,11 +59,13 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
     return {
       display: 'flex',
+      alignItems: 'center',
       position: 'relative',
       width: '100%',
       boxSizing: 'border-box',
-      border: '1px solid',
+      border: v.border,
       borderRadius: v.borderRadius,
+      minHeight: v.minHeight,
       padding: v.padding,
       fontWeight: v.fontWeight,
 
