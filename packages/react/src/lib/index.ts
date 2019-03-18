@@ -20,6 +20,7 @@ export { default as constants } from './constants'
 export { default as getClasses } from './getClasses'
 export { default as getElementType } from './getElementType'
 export { default as getUnhandledProps } from './getUnhandledProps'
+export { default as mergeAccessibilityProps } from './mergeAccessibilityProps'
 export { default as mergeThemes } from './mergeThemes'
 export { default as renderComponent, RenderResultConfig } from './renderComponent'
 

@@ -18,6 +18,7 @@ import {
   isFromKeyboard,
   customPropTypes,
   handleRef,
+  mergeAccessibilityProps,
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 
@@ -417,11 +418,10 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
             this.triggerDomElement = domNode
           }}
         >
-          {React.cloneElement(triggerElement, {
-            ...triggerProps,
-            ...accessibility.attributes.trigger,
-            ...accessibility.keyHandlers.trigger,
-          })}
+          {React.cloneElement(
+            triggerElement,
+            mergeAccessibilityProps(accessibility, 'trigger', triggerProps),
+          )}
         </Ref>
       )
     )
