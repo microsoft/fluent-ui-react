@@ -84,19 +84,15 @@ class Alert extends UIComponent<ReactProps<AlertProps>> {
     closeButton: { icon: 'close' },
   }
 
-  renderComponent(config: RenderResultConfig<AlertProps>) {
-    const { accessibility, classes, ElementType, unhandledProps } = config
-    const { children, content } = this.props
-    return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
-        {...unhandledProps}
-      >
-        {childrenExist(children) ? children : this.renderContent(config)}
-      </ElementType>
-    )
+  handleCloseButtonOverrides = (predefinedProps: ButtonProps) => ({
+    onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+      this.handleOnClose(e)
+      _.invoke(predefinedProps, 'onClick', e, buttonProps)
+    },
+  })
+
+  handleOnClose = (e: React.SyntheticEvent) => {
+    _.invoke(this.props, 'onClose', e, this.props)
   }
 
   renderContent = ({ styles }: RenderResultConfig<AlertProps>) => {
@@ -123,15 +119,19 @@ class Alert extends UIComponent<ReactProps<AlertProps>> {
     )
   }
 
-  handleCloseButtonOverrides = (predefinedProps: ButtonProps) => ({
-    onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
-      this.handleOnClose(e)
-      _.invoke(predefinedProps, 'onClick', e, buttonProps)
-    },
-  })
-
-  handleOnClose = (e: React.SyntheticEvent) => {
-    _.invoke(this.props, 'onClose', e, this.props)
+  renderComponent(config: RenderResultConfig<AlertProps>) {
+    const { accessibility, classes, ElementType, unhandledProps } = config
+    const { children, content } = this.props
+    return (
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...unhandledProps}
+      >
+        {childrenExist(children) ? children : this.renderContent(config)}
+      </ElementType>
+    )
   }
 }
 
