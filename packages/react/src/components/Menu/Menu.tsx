@@ -152,12 +152,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
       indicator,
     } = this.props
     const { activeIndex } = this.state
-    let itemsCount = 0
-    _.forEach(items, item => {
-      if (getKindProp(item, 'item') !== 'divider') {
-        itemsCount++
-      }
-    })
+    const itemsCount = _.filter(items, item => getKindProp(item, 'item') !== 'divider').length
     let itemPosition = 0
 
     return _.map(items, (item, index) => {
