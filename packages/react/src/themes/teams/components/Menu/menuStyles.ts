@@ -13,23 +13,23 @@ type MenuPropsAndState = MenuProps & MenuState
 export default {
   root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
     const { iconOnly, fluid, pointing, pills, primary, underlined, vertical, submenu } = p
-    const colorScheme = theme.siteVariables.colorScheme[p.color]
+    const colorScheme = theme.siteVariables.colorScheme[p.color || 'default']
     // const verticalScheme = v[p.vertical].colorScheme
 
-    console.log(colorScheme)
+    // console.log(colorScheme)
 
     return {
       display: 'flex',
       minHeight: pxToRem(24),
       margin: 0,
       padding: 0,
-      color: v.color || colorScheme.foregroundUndefined,
-      backgroundColor: v.backgroundColor || colorScheme.backgroundUndefined,
+      color: v.color || colorScheme.foregroundDefault,
+      backgroundColor: v.backgroundColor || 'inherit',
       listStyleType: 'none',
       ...(iconOnly && { alignItems: 'center' }),
       ...(vertical && {
         flexDirection: 'column',
-        color: v.verticalColor || colorScheme.foregroundUndefined,
+        color: v.verticalColor || colorScheme.foregroundDefault,
         backgroundColor: v.verticalBackgroundColor || theme.siteVariables.colors.white,
         padding: `${pxToRem(8)} 0`,
         ...(submenu && {

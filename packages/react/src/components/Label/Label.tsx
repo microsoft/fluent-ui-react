@@ -21,16 +21,12 @@ import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
-import {
-  ComplexColorPropType,
-  ColorValuesWithPrimitiveColors,
-} from '../../lib/commonPropInterfaces'
 
 export interface LabelProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps,
-    ColorComponentProps<ComplexColorPropType<ColorValuesWithPrimitiveColors>> {
+    ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior

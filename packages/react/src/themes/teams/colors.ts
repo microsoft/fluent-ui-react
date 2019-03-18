@@ -171,11 +171,11 @@ export const colors: ColorPalette = {
 
 // TODO: update typings
 export const colorScheme: any = {
-  undefined: {
-    foregroundUndefined: colors.grey.light14,
-    backgroundUndefined: colors.grey.light02,
-    borderUndefined: colors.grey.light02,
-    shadowUndefined: colors.grey.light02,
+  default: {
+    foregroundDefault: colors.grey.light14,
+    backgroundDefault: colors.grey.light02,
+    borderDefault: colors.grey.light02,
+    shadowDefault: colors.grey.light02,
 
     foregroundHover: colors.grey.light14,
     backgroundHover: colors.grey.light02,
@@ -206,22 +206,22 @@ export const colorScheme: any = {
   red: {
     // red02: colors.red[500],
     // red57: colors.red[500],
-    // lightUndefined: colors.red[50],
-    // lightUndefined: colors.red[50],
-    // lightUndefined: colors.red[50],
-    // lightUndefined: colors.red[50],
-    // lightUndefined: colors.red[50],
-    // lightUndefined: colors.red[50],
-    // lightUndefined: colors.red[50],
-    // Undefined: colors.red[50],
-    // darkUndefined: colors.red[50],
-    // darkerUndefined: colors.red[500],
-    // darkestUndefined: colors.red[500],
+    // lightDefault: colors.red[50],
+    // lightDefault: colors.red[50],
+    // lightDefault: colors.red[50],
+    // lightDefault: colors.red[50],
+    // lightDefault: colors.red[50],
+    // lightDefault: colors.red[50],
+    // lightDefault: colors.red[50],
+    // Default: colors.red[50],
+    // darkDefault: colors.red[50],
+    // darkerDefault: colors.red[500],
+    // darkestDefault: colors.red[500],
 
-    foregroundUndefined: colors.red[50],
-    backgroundUndefined: colors.red[500],
-    borderUndefined: colors.red[500],
-    shadowUndefined: colors.red[500],
+    foregroundDefault: colors.red[50],
+    backgroundDefault: colors.red[500],
+    borderDefault: colors.red[500],
+    shadowDefault: colors.red[500],
 
     foregroundHover: colors.red[50],
     backgroundHover: colors.red[500],
@@ -250,10 +250,10 @@ export const colorScheme: any = {
   },
 
   green: {
-    foregroundUndefined: colors.green[50],
-    backgroundUndefined: colors.green[500],
-    borderUndefined: colors.green[500],
-    shadowUndefined: colors.green[500],
+    foregroundDefault: colors.green[50],
+    backgroundDefault: colors.green[500],
+    borderDefault: colors.green[500],
+    shadowDefault: colors.green[500],
 
     foregroundHover: colors.green[50],
     backgroundHover: colors.green[500],
