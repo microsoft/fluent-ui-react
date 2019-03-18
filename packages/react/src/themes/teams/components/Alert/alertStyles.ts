@@ -18,17 +18,17 @@ const getIntentColorsFromProps = (
 
   if (p.danger) {
     return {
-      color: colors.red[900], // $app-red
-      backgroundColor: colors.red[50], // $app-red-10
-      borderColor: colors.red[100], // $app-red-08
+      color: siteVars.red,
+      backgroundColor: siteVars.red10,
+      borderColor: siteVars.red08,
     }
   }
 
   if (p.info) {
     return {
-      color: colors.grey[900], // $app-black
-      backgroundColor: colors.grey[300], // $app-gray09
-      borderColor: colors.grey[400], // $app-gray08
+      color: colors.grey[900],
+      backgroundColor: siteVars.gray09,
+      borderColor: siteVars.gray08,
     }
   }
 
@@ -42,7 +42,7 @@ const getIntentColorsFromProps = (
 
   if (p.warning) {
     return {
-      color: colors.grey[700],
+      color: siteVars.gray03,
       backgroundColor: colors.grey[50], // $app-white
       borderColor: colors.yellow[900], // $app-yellow
     }

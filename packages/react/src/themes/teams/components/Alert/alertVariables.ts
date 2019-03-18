@@ -21,8 +21,8 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     border: `${pxToRem(1)} solid`,
     borderRadius: pxToRem(3),
     backgroundColor: colors.grey[50], // $app-white
-    borderColor: colors.grey[500], // $app-gray02
-    color: colors.grey[800], // $app-black
+    borderColor: siteVars.gray06,
+    color: siteVars.gray02,
     fontWeight: siteVars.fontWeightSemibold,
     minHeight: pxToRem(32),
     padding: `0 0 0 ${pxToRem(8)}`,

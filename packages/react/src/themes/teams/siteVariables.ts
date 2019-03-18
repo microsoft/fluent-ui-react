@@ -1,5 +1,5 @@
 import { pxToRem } from '../../lib'
-import { colors } from './colors'
+import { colors, naturalColors } from './colors'
 
 //
 // VARIABLES
@@ -11,24 +11,24 @@ export const htmlFontSize = '10px' // what 1rem represents
 //
 export { colors, contextualColors, emphasisColors, naturalColors, colorScheme } from './colors'
 
-export const gray02 = colors.grey[800]
-export const gray03 = colors.grey[700]
-export const gray04 = colors.grey[600]
-export const gray06 = colors.grey[500]
-export const gray08 = colors.grey[400]
-export const gray09 = colors.grey[300]
-export const gray10 = colors.grey[200]
-export const gray14 = colors.grey[100]
-
-export const red = colors.red[900]
-export const red08 = colors.red[100]
-export const red10 = colors.red[50]
+export const gray02 = '#484644' // no mapping color
+export const gray03 = '#605E5C' // no mapping color
+export const gray04 = '#979593' // no mapping color
+export const gray06 = '#C8C6C4' // no mapping color
+export const gray08 = '#E1DFDD' // no mapping color
+export const gray09 = '#EDEBE9' // no mapping color
+export const gray10 = '#F3F2F1' // no mapping color
+export const gray14 = '#FAF9F8' // no mapping color
 
 export const brand04 = '#464775' // no mapping color
 export const brand08 = '#8B8CC7' // no mapping color
 
 export const magenta = '#B24782' // no mapping color
 export const orchid = '#943670' // no mapping color
+
+export const red = colors.red[900] // no mapping color $app-red
+export const red08 = '#FCF4F6' // no mapping color $app-red-08
+export const red10 = '#F3D6DB' // no mapping color $app-red-10
 
 //
 // SHADOW LEVELS
@@ -54,16 +54,17 @@ export const fontSizes = {
 //
 // STATUS COLORS
 //
-export const successStatusBackgroundColor = colors.grey[50] // $app-white
-export const successStatusTextColor = colors.green[900] // $app-green-04
-export const infoStatusBackgroundColor = colors.grey[300] // $app-gray09
-export const infoStatusTextColor = colors.grey[900] // $app-black
-export const warningStatusBackgroundColor = colors.grey[50] // $app-white
-export const warningStatusTextColor = colors.grey[700]
-export const errorStatusBackgroundColor = colors.red[50] // $app-red-10
-export const errorStatusTextColor = colors.red[900] // $app-red
-export const unknownStatusBackgroundColor = colors.grey[50] // $app-white
-export const unknownStatusTextColor = gray04
+export const successStatusBackgroundColor = naturalColors.lightGreen[900]
+export const successStatusTextColor = colors.grey[50]
+export const infoStatusBackgroundColor = 'blue'
+export const infoStatusTextColor = colors.grey[50]
+export const warningStatusBackgroundColor = colors.yellow[900]
+export const warningStatusTextColor = colors.grey[50]
+export const errorStatusBackgroundColor = colors.red[900]
+export const errorStatusTextColor = colors.grey[50]
+export const unknownStatusBackgroundColor = gray04
+export const unknownStatusTextColor = colors.grey[50]
+
 //
 // FONT WEIGHTS
 //
