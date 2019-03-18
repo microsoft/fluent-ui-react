@@ -53,7 +53,7 @@ jobs:
           command: yarn prettier
       - run:
           name: Unit Tests
-          command: yarn test --strict --maxWorkers=4
+          command: yarn test --maxWorkers=2
       - run:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)
