@@ -18,7 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING CHANGES
-- added `box-sizing: border-box` to all elements, as well as before and after pseudo elements in Teams theme @mnajdova ([]())
+- added `box-sizing: border-box` to all elements, as well as before and after pseudo elements in Teams theme @mnajdova ([#1057](https://github.com/stardust-ui/react/pull/1057))
 
 <!--------------------------------[ v0.23.1 ]------------------------------- -->
 ## [v0.23.1](https://github.com/stardust-ui/react/tree/v0.23.1) (2019-03-13)
