@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import traverse from 'babel-traverse'
+import traverse from '@babel/traverse'
 
 import parseBuffer from './parseBuffer'
 
