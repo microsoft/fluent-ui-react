@@ -56,35 +56,33 @@ const getIntentColorsFromProps = (
 }
 
 const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
-  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
-    return {
-      display: 'flex',
-      alignItems: 'center',
-      position: 'relative',
-      width: '100%',
-      boxSizing: 'border-box',
-      border: v.border,
-      borderRadius: v.borderRadius,
-      minHeight: v.minHeight,
-      padding: v.padding,
-      fontWeight: v.fontWeight,
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
+    display: 'flex',
+    alignItems: 'center',
+    position: 'relative',
+    width: '100%',
+    boxSizing: 'border-box',
+    border: v.border,
+    borderRadius: v.borderRadius,
+    minHeight: v.minHeight,
+    padding: v.padding,
+    fontWeight: v.fontWeight,
 
-      ...getIntentColorsFromProps(p, v, siteVariables),
+    ...getIntentColorsFromProps(p, v, siteVariables),
 
-      ...((p.attached === 'top' || p.attached === true) && {
-        borderRadius: `${v.borderRadius} ${v.borderRadius} 0 0`,
-      }),
+    ...((p.attached === 'top' || p.attached === true) && {
+      borderRadius: `${v.borderRadius} ${v.borderRadius} 0 0`,
+    }),
 
-      ...(p.attached === 'bottom' && { borderRadius: `0 0 ${v.borderRadius} ${v.borderRadius}` }),
-    }
-  },
+    ...(p.attached === 'bottom' && { borderRadius: `0 0 ${v.borderRadius} ${v.borderRadius}` }),
+  }),
 
   content: (): ICSSInJSStyle => ({
     flexGrow: 1,
   }),
 
-  closeButton: ({ variables: v }): ICSSInJSStyle => ({
-    color: v.closeButtonColor || 'currentColor',
+  action: ({ variables: v }): ICSSInJSStyle => ({
+    color: v.actionColor || 'currentColor',
   }),
 }
 
