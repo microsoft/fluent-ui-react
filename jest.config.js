@@ -6,5 +6,6 @@ const stardustPackages = lernaAlises({ sourceDirectory: false })
 const projects = Object.keys(stardustPackages).map(packageName => stardustPackages[packageName])
 
 module.exports = {
+  coverageReporters: ['clover', 'lcov'],
   projects,
 }
