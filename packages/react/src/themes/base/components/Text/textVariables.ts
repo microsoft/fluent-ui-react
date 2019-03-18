@@ -1,8 +1,5 @@
-import { ColorValues } from '../../../types'
-import { mapColorsToScheme } from '../../../../lib'
-
 export interface TextVariables {
-  colors: ColorValues<string>
+  colorScheme: any
 
   atMentionMeColor: string
   atMentionOtherColor: string
@@ -37,11 +34,8 @@ export interface TextVariables {
 }
 
 export default (siteVariables): TextVariables => {
-  const colorVariant = 500
-
   return {
-    colors: mapColorsToScheme(siteVariables, colorVariant),
-
+    colorScheme: siteVariables.colorScheme,
     atMentionMeColor: siteVariables.colors.pink[500],
     atMentionOtherColor: siteVariables.colors.grey[600],
     importantColor: siteVariables.colors.red[500],

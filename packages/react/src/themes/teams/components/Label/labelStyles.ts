@@ -8,7 +8,7 @@ import { LabelVariables } from './labelVariables'
 const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const colors = v.colorScheme[p.color || 'default']
-    console.log(colors)
+
     return {
       display: 'inline-flex',
       alignItems: 'center',

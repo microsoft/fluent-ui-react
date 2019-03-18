@@ -7,7 +7,12 @@ export default {
     props: { atMention, color, important, timestamp },
     variables: v,
   }: ComponentStyleFunctionParam<TextProps, TeamsTextVariables>): ICSSInJSStyle => {
+    const colors = v.colorScheme[color || 'default']
     return {
+      ...(color && {
+        // TODO: consider adding valuable color scheme values
+        color: colors.backgroundDefault,
+      }),
       ...(atMention === 'me' && {
         fontWeight: v.atMentionMeFontWeight,
       }),

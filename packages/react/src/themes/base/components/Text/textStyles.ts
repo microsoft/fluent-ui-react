@@ -35,7 +35,6 @@ export default {
         color: v.atMentionMeColor,
       }),
       ...(truncated && { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
-      ...(color && { color: _.get(v.colors, color) }),
       ...(disabled && { color: v.disabledColor }),
       ...(error && { color: v.errorColor }),
       ...(success && { color: v.successColor }),
