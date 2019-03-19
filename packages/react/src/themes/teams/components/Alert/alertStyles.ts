@@ -81,8 +81,11 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     flexGrow: 1,
   }),
 
-  action: ({ variables: v }): ICSSInJSStyle => ({
+  action: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
+    height: v.actionSize,
+    minWidth: v.actionSize,
     color: v.actionColor || 'currentColor',
+    ...(p.info && { color: siteVariables.gray02 }),
   }),
 }
 
