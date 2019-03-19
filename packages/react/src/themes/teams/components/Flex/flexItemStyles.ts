@@ -18,6 +18,10 @@ const flexItemStyles: ComponentSlotStylesInput<FlexItemProps, FlexItemVariables>
       ...(p.grow === true && { flexGrow: 1 }),
 
       ...p.itemStyles,
+
+      ...(p.gap &&
+        (p.flexDirection === 'column' ? { marginTop: v[p.gap] } : { marginLeft: v[p.gap] })),
+
       ...(p.push &&
         (p.flexDirection === 'column' ? { marginTop: 'auto' } : { marginLeft: 'auto' })),
     }

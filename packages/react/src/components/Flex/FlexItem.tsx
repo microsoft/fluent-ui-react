@@ -19,6 +19,9 @@ export interface FlexItemProps {
    * */
   grow?: boolean | number
 
+  /** Defines gap between each two adjacent child items. */
+  gap?: 'gap.smaller' | 'gap.small' | 'gap.medium' | 'gap.large'
+
   /**
    * Controls item's ability to shrink.
    * */
@@ -53,6 +56,8 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
     shrink: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 
     push: PropTypes.bool,
+
+    gap: PropTypes.oneOf(['gap.smaller', 'gap.small', 'gap.medium', 'gap.large']),
 
     /**
      * Will be automatically set by parent Flex component
