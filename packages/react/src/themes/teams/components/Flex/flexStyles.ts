@@ -33,13 +33,11 @@ const flexStyles: ComponentSlotStylesInput<FlexProps, FlexVariables> = {
     ...(p.padding && { padding: v[p.padding] }),
   }),
 
-  gap: ({ props: p, variables: v }) => {
-    const gapValue = v[p.gap]
-
-    return {
-      ...(p.column ? { height: gapValue } : { width: gapValue }),
-    }
-  },
+  gap: ({ props: p, variables: v }) => ({
+    ...(p.gap && {
+      [p.column ? 'marginTop' : 'marginLeft']: v[p.gap],
+    }),
+  }),
 }
 
 export default flexStyles

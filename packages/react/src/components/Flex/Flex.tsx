@@ -6,7 +6,6 @@ import cx from 'classnames'
 import { UIComponent, commonPropTypes } from '../../lib'
 import { ReactProps } from '../../types'
 import FlexItem from './FlexItem'
-import FlexGap from './FlexGap'
 
 export interface FlexProps {
   [key: string]: any
@@ -48,8 +47,6 @@ export interface FlexProps {
 class Flex extends UIComponent<ReactProps<FlexProps>> {
   static Item = FlexItem
 
-  static Gap = FlexGap
-
   static displayName = 'Flex'
   static className = 'ui-flex'
 
@@ -82,39 +79,37 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
     debug: PropTypes.bool,
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
+  renderComponent({ ElementType, classes, styles, unhandledProps }): React.ReactNode {
     return (
       <ElementType className={classes.root} {...unhandledProps}>
-        {this.renderChildren(classes.gap)}
+        {this.renderChildren(styles.gap, classes.gap)}
       </ElementType>
     )
   }
 
-  renderChildren = (gapClasses: string) => {
-    const { column, gap, children } = this.props
+  renderChildren = (gapStyles, gapClasses: string) => {
+    const { column, children } = this.props
 
     let isFirstElement = true
     return React.Children.map(children, (child: any) => {
       const isFlexItemElement: boolean = _.get(child, 'type.__isFlexItem')
+
       const maybeChildElement = isFlexItemElement
         ? React.cloneElement(child, {
             flexDirection: column ? 'column' : 'row',
+            styles: !isFirstElement ? gapStyles : {},
+          })
+        : child
+        ? React.cloneElement(child, {
+            className: cx(child.className, !isFirstElement ? gapClasses : ''),
           })
         : child
 
-      const renderGap = !isFirstElement
       if (maybeChildElement) {
         isFirstElement = false
       }
 
-      return (
-        maybeChildElement && (
-          <>
-            {renderGap && gap && <Flex.Gap className={cx(`${Flex.className}__gap`, gapClasses)} />}
-            {maybeChildElement}
-          </>
-        )
-      )
+      return maybeChildElement
     })
   }
 }
