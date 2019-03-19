@@ -20,6 +20,9 @@
     "react-is": "^16.6.3",
     "react-popper": "^1.3.2"
   },
+  "devDependencies": {
+    "@stardust-ui/internal-tooling": "^0.23.1"
+  },
   "files": [
     "dist"
   ],

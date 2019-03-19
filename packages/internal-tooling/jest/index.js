@@ -1,7 +1,7 @@
 const { jest: lernaAliases } = require('lerna-alias')
 
 module.exports = {
-  rootDir: `${__dirname}/../../`,
+  rootDir: `${__dirname}/../../../`,
   coverageDirectory: './coverage/',
   coverageReporters: ['json', 'lcov'],
   testRegex: '/test/.*-test\\.tsx?$',
@@ -16,6 +16,6 @@ module.exports = {
     'test/(.*)$': `<rootDir>/packages/react/test/$1`,
   },
   transform: {
-    '^.+\\.tsx?$': 'babel-jest',
+    '^.+\\.tsx?$': `${__dirname}/transform.js`,
   },
 }
