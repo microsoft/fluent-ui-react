@@ -6,6 +6,7 @@ import * as _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
 import {
+  applyAccessibilityKeyHandlers,
   childrenExist,
   AutoControlledComponent,
   EventStack,
@@ -18,7 +19,6 @@ import {
   isFromKeyboard,
   customPropTypes,
   handleRef,
-  mergeAccessibilityProps,
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 
@@ -418,10 +418,11 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
             this.triggerDomElement = domNode
           }}
         >
-          {React.cloneElement(
-            triggerElement,
-            mergeAccessibilityProps(accessibility, 'trigger', triggerProps),
-          )}
+          {React.cloneElement(triggerElement, {
+            ...accessibility.attributes.trigger,
+            ...triggerProps,
+            ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.trigger, triggerProps),
+          })}
         </Ref>
       )
     )
