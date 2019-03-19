@@ -30,9 +30,6 @@ export const naturalColors: NaturalColors = {
     900: '#237B4B', // siteVariables.green04
   },
   grey: {
-    fullWhite: '#ffffff',
-    // fullBlack: '#000000',
-
     light02: '#484644',
     light03: '#605E5C',
     light04: '#979593',
@@ -46,10 +43,11 @@ export const naturalColors: NaturalColors = {
     dark03: '#b3b0ad',
     dark04: '#8a8886',
     dark06: '#605e5c',
-    // dark08: '#484644',
+    dark08: '#484644',
     dark09: '#3b3a39',
     dark10: '#323130',
     dark14: '#292828',
+
     50: '#FFFFFF', // siteVariables.white
     100: '#E6E6E6',
     200: '#CDCCCC',
@@ -181,7 +179,7 @@ export const colors: ColorPalette<ThemeColors> = {
 
   // Primitive colors
   black: '#000',
-  white: naturalColors.grey.light14, // siteVariables.white
+  white: '#fff', // siteVariables.white
 }
 
 // TODO: update typings

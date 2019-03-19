@@ -52,15 +52,15 @@ export const fontSizes = {
 // STATUS COLORS
 //
 export const successStatusBackgroundColor = naturalColors.lightGreen[900]
-export const successStatusTextColor = colors.grey.fullWhite
+export const successStatusTextColor = colors.white
 export const infoStatusBackgroundColor = 'blue'
-export const infoStatusTextColor = colors.grey.fullWhite
+export const infoStatusTextColor = colors.white
 export const warningStatusBackgroundColor = colors.yellow[900]
-export const warningStatusTextColor = colors.grey.fullWhite
+export const warningStatusTextColor = colors.white
 export const errorStatusBackgroundColor = colors.red[900]
-export const errorStatusTextColor = colors.grey.fullWhite
+export const errorStatusTextColor = colors.white
 export const unknownStatusBackgroundColor = colors.grey.light04
-export const unknownStatusTextColor = colors.grey.fullWhite
+export const unknownStatusTextColor = colors.white
 
 //
 // FONT WEIGHTS
@@ -88,6 +88,6 @@ export const bodyMargin = 0
 export const bodyFontFamily =
   '"Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif'
 export const bodyFontSize = '1.4rem'
-export const bodyBackground = colors.grey.fullWhite
+export const bodyBackground = colors.white
 export const bodyColor = colors.grey[900]
 export const bodyLineHeight = lineHeightMedium

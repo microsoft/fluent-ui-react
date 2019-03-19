@@ -7,6 +7,9 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     colorHover: siteVars.colors.white,
     colorFocus: siteVars.colors.white,
     backgroundColor: 'transparent',
+    backgroundColorHover: siteVars.colors.grey.dark14,
+    backgroundColorFocus: siteVars.colors.grey.dark08,
+    backgroundColorActive: siteVars.colors.grey.dark08,
     borderColorFocus: siteVars.black,
     borderColorFocusIndicator: siteVars.colors.white,
 
