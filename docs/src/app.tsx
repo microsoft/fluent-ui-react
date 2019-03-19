@@ -3,33 +3,15 @@ import * as _ from 'lodash'
 import { Provider, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from 'src/lib'
-import { ThemeContext } from './context/ThemeContext'
+import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
 import Router from './routes'
 
-interface AppState {
-  themeName: string
-  changeTheme: (event, data) => void
-}
-
-class App extends React.Component<any, AppState> {
-  private changeTheme
-
-  constructor(props) {
-    super(props)
-
-    this.changeTheme = (event, data) => {
-      const themeName = _.camelCase(data.value)
-      this.setState({
-        themeName,
-      })
-    }
-
-    // State also contains the updater function so it will
-    // be passed down into the context provider
-    this.state = {
-      themeName: 'teams',
-      changeTheme: this.changeTheme,
-    }
+class App extends React.Component<any, ThemeContextData> {
+  // State also contains the updater function so it will
+  // be passed down into the context provider
+  state: ThemeContextData = {
+    ...themeContextDefaults,
+    changeTheme: (e, { value: item }) => this.setState({ themeName: item.value }),
   }
 
   render() {

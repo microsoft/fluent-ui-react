@@ -10,20 +10,14 @@ const radioStyles: ComponentSlotStylesInput<
   RadioGroupItemProps & RadioGroupItemState,
   RadioGroupItemVariables
 > = {
-  root: ({ props }): ICSSInJSStyle => ({
-    outline: 0,
-    ...(!props.vertical && {
-      display: 'inline-block',
-    }),
-  }),
-
-  label: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    cursor: 'pointer',
-    display: 'inline-flex',
+  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     alignItems: 'baseline',
+    cursor: 'pointer',
+    display: p.vertical ? 'flex' : 'inline-flex',
     fontWeight: 400,
     minHeight: '2.5rem',
-    backgroundColor: 'transparent',
+    outline: 0,
+    padding: v.padding,
     ...(p.disabled && {
       color: v.colorDisabled,
     }),
