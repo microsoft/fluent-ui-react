@@ -2,6 +2,8 @@ export { default as Accordion } from './components/Accordion/accordionStyles'
 export { default as AccordionContent } from './components/Accordion/accordionContentStyles'
 export { default as AccordionTitle } from './components/Accordion/accordionTitleStyles'
 
+export { default as Alert } from './components/Alert/alertStyles'
+
 export { default as Attachment } from './components/Attachment/attachmentStyles'
 
 export { default as Avatar } from './components/Avatar/avatarStyles'
