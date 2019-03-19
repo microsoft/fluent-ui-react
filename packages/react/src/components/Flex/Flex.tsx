@@ -79,23 +79,22 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
   renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
     return (
       <ElementType className={classes.root} {...unhandledProps}>
-        {this.renderChildren(classes.gap)}
+        {this.renderChildren()}
       </ElementType>
     )
   }
 
-  renderChildren = (gapClasses: string) => {
+  renderChildren = () => {
     const { column, children } = this.props
 
     return React.Children.map(children, (child: any) => {
       const isFlexItemElement: boolean = _.get(child, 'type.__isFlexItem')
-      const maybeChildElement = isFlexItemElement
+
+      return isFlexItemElement
         ? React.cloneElement(child, {
             flexDirection: column ? 'column' : 'row',
           })
         : child
-
-      return maybeChildElement
     })
   }
 }
