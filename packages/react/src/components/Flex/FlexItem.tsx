@@ -103,8 +103,6 @@ const applyStyles = (
     })
   }
 
-  console.log(element)
-  console.log(mergeStyles(styles.root || {}, element.props.styles))
   // assuming element is Stardust element
   return React.cloneElement(element, {
     styles: mergeStyles(styles.root || {}, element.props.styles),
