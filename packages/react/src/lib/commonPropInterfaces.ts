@@ -45,15 +45,6 @@ export type ColorValue =
 
 export type ColorValuesWithPrimitiveColors = ColorValue | 'black' | 'white'
 
-export type ComplexColorPropType<TColorValue = ColorValue> =
-  | {
-      foreground?: TColorValue
-      background?: TColorValue
-      border?: TColorValue
-      shadow?: TColorValue
-    }
-  | TColorValue
-
 export interface ColorComponentProps<TColor = ColorValue> {
   /** A component can have a color. */
   color?: TColor

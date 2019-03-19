@@ -159,22 +159,40 @@ export const colors: ColorPalette = {
   white: '#fff',
 }
 
-export const colorScheme: ColorSchemeMapping = _.mapValues(
-  emphasisAndNaturalColors,
-  (colorVariants, colorName) => {
+export const colorScheme: ColorSchemeMapping = {
+  ..._.mapValues(emphasisAndNaturalColors, (colorVariants, colorName) => {
     const foreground = isLightBackground(colorName) ? colors.black : colorVariants[50]
 
     return {
-      foreground,
-      border: foreground,
-      shadow: foreground,
-      background: colorVariants[500],
-      default: {
-        foreground: colors.grey[600],
-        border: colors.grey[600],
-        shadow: colors.grey[600],
-        background: colors.grey[100],
-      },
+      foregroundDefault: foreground,
+      borderDefault: foreground,
+      shadowDefault: foreground,
+      backgroundDefault: colorVariants[500],
+
+      foregroundActive: foreground,
+      borderActive: foreground,
+      shadowActive: foreground,
+      backgroundActive: colorVariants[500],
+
+      foregroundHover: foreground,
+      backgroundHover: colorVariants[500],
+      borderHover: foreground,
+      shadowHover: foreground,
+
+      foregroundFocus: foreground,
+      backgroundFocus: colorVariants[500],
+      borderFocus: foreground,
+      shadowFocus: foreground,
+
+      foregroundFocusWithin: foreground,
+      backgroundFocusWithin: colorVariants[500],
+      borderFocusWithin: foreground,
+      shadowFocusWithin: foreground,
+
+      foregroundDisabled: foreground,
+      backgroundDisabled: colorVariants[500],
+      borderDisabled: foreground,
+      shadowDisabled: foreground,
     }
-  },
-)
+  }),
+}

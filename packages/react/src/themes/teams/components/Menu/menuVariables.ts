@@ -1,6 +1,8 @@
 import { pxToRem } from '../../../../lib'
+import { ColorSchemeMapping } from '../../../types'
 
 export interface MenuVariables {
+  colorScheme: ColorSchemeMapping
   color: string
   verticalBorderColor: string
 
@@ -40,6 +42,7 @@ export interface MenuVariables {
 
 export default (siteVars: any): MenuVariables => {
   return {
+    colorScheme: siteVars.colorScheme,
     color: siteVars.colors.grey.light02,
     colorActive: siteVars.colors.black,
     colorFocus: siteVars.colors.white,

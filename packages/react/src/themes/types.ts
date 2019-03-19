@@ -100,10 +100,35 @@ export type ColorPalette<T = {}> = ExtendablePalette<
  */
 export type ColorScheme = {
   [key: string]: any
-  foreground: string
-  background: string
-  border: string
-  shadow: string
+  foregroundDefault: string
+  backgroundDefault: string
+  borderDefault: string
+  shadowDefault: string
+
+  foregroundHover: string
+  backgroundHover: string
+  borderHover: string
+  shadowHover: string
+
+  foregroundActive: string
+  backgroundActive: string
+  borderActive: string
+  shadowActive: string
+
+  foregroundFocus: string
+  backgroundFocus: string
+  borderFocus: string
+  shadowFocus: string
+
+  foregroundFocusWithin: string
+  backgroundFocusWithin: string
+  borderFocusWithin: string
+  shadowFocusWithin: string
+
+  foregroundDisabled: string
+  backgroundDisabled: string
+  borderDisabled: string
+  shadowDisabled: string
 }
 
 export type ColorSchemeMapping = ColorValues<ColorScheme> & { default?: ColorScheme }
@@ -196,7 +221,6 @@ export interface ComponentStyleFunctionParam<
   props: State & TProps
   variables: TVars
   theme: ThemePrepared
-  colors: Partial<ColorScheme>
 }
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((

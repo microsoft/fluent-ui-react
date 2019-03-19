@@ -158,7 +158,7 @@ const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariab
 }
 
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
-  wrapper: ({ props, variables: v, theme, colors }): ICSSInJSStyle => {
+  wrapper: ({ props, variables: v, theme }): ICSSInJSStyle => {
     const {
       active,
       disabled,
@@ -170,6 +170,9 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       underlined,
       vertical,
     } = props
+
+    // TODO check if this is the right thing...
+    // const colors = v.colorScheme[primary ? 'primary' : 'grey']
 
     return {
       color: 'inherit',
@@ -216,7 +219,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           marginBottom: verticalPointingBottomMargin,
         }),
 
-      ...itemSeparator({ props, variables: v, theme, colors }),
+      ...itemSeparator({ props, variables: v, theme }), // TODO we should use the colors here as well
 
       // active styles
       ...(active && {
@@ -227,7 +230,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             ? pointing === 'end'
               ? { borderRight: `${pxToRem(3)} solid ${v.borderColorActive}` }
               : { borderLeft: `${pxToRem(3)} solid ${v.borderColorActive}` }
-            : pointingBeak({ props, variables: v, theme, colors }))),
+            : pointingBeak({ props, variables: v, theme }))), // TODO we should use the colors here as well
       }),
 
       ...(iconOnly && {

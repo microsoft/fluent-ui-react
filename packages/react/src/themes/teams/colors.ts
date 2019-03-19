@@ -1,5 +1,5 @@
 import { ColorPalette, ContextualColors, EmphasisColors, NaturalColors } from '../types'
-import { ColorVariants } from 'src/themes/types'
+import { ColorVariants, ColorSchemeMapping } from 'src/themes/types'
 
 export const emphasisColors: EmphasisColors = {
   primary: {
@@ -182,8 +182,7 @@ export const colors: ColorPalette<ThemeColors> = {
   white: '#fff', // siteVariables.white
 }
 
-// TODO: update typings
-export const colorScheme: any = {
+export const colorScheme: ColorSchemeMapping = {
   default: {
     foregroundDefault: colors.grey.light14,
     backgroundDefault: colors.grey.light02,

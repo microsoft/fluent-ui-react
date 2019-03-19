@@ -1,16 +1,14 @@
-import { ColorValues } from '../../../types'
-import { mapColorsToScheme } from '../../../../lib'
+import { ColorSchemeMapping } from '../../../types'
 
 export interface HeaderVariables {
-  colors: ColorValues<string>
+  colorScheme?: ColorSchemeMapping
   color: string
   descriptionColor: string
 }
 
 export default (siteVars: any): HeaderVariables => {
-  const colorVariant = 500
   return {
-    colors: mapColorsToScheme(siteVars, colorVariant),
+    colorScheme: siteVars.colorScheme,
     color: siteVars.colors.grey[900],
     descriptionColor: undefined,
   }

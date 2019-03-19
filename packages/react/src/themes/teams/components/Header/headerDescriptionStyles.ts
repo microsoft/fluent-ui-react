@@ -6,12 +6,15 @@ import { HeaderDescriptionVariables } from './headerDescriptionVariables'
 import { pxToRem } from '../../../../lib'
 
 const headerStyles: ComponentSlotStylesInput<HeaderDescriptionProps, HeaderDescriptionVariables> = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    display: 'block',
-    color: _.get(v.colors, p.color, v.color),
-    fontSize: pxToRem(22),
-    fontWeight: 400,
-  }),
+  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+    const colors = v.colorScheme[p.color]
+    return {
+      display: 'block',
+      color: _.get(colors, 'foregroundDefault', v.color),
+      fontSize: pxToRem(22),
+      fontWeight: 400,
+    }
+  },
 }
 
 export default headerStyles

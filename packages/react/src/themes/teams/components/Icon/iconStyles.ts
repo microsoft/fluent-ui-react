@@ -88,8 +88,8 @@ const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier): number =>
   return modifiedSizes[size] && modifiedSizes[size][sizeModifier]
 }
 
-const getIconColor = (colorProp: string, variables: IconVariables) =>
-  _.get(variables.colors, colorProp, variables.color || 'currentColor')
+const getIconColor = (colorProp: string, variables, colors) =>
+  _.get(colors, colorProp, variables.color || 'currentColor')
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   root: ({
@@ -97,6 +97,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
     variables: v,
     theme,
   }): ICSSInJSStyle => {
+    const colors = v.colorScheme[color || 'default']
     const iconSpec = theme.icons[name]
     const rtl = theme.rtl
     const isFontBased = name && (!iconSpec || !iconSpec.isSvg)
@@ -112,7 +113,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       ...(isFontBased && getFontStyles(getIconSize(size, v.sizeModifier), name)),
 
       ...(isFontBased && {
-        color: getIconColor(color, v),
+        color: getIconColor(color, v, colors),
         fontWeight: 900, // required for the fontAwesome to render
 
         ...(disabled && {
@@ -125,7 +126,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       ...(circular && { ...getPaddedStyle(), borderRadius: '50%' }),
 
       ...((bordered || v.borderColor) &&
-        getBorderedStyles(v.borderColor || getIconColor(color, v))),
+        getBorderedStyles(v.borderColor || getIconColor(color, v, colors))),
 
       ...(!rtl && {
         transform: `rotate(${rotate}deg)`,
@@ -158,13 +159,14 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   },
 
   svg: ({ props: { size, color, disabled }, variables: v }): ICSSInJSStyle => {
+    const colors = v.colorScheme[color || 'default']
     const iconSizeInRems = pxToRem(getIconSize(size, v.sizeModifier))
 
     return {
       display: 'block',
       width: iconSizeInRems,
       height: iconSizeInRems,
-      fill: getIconColor(color, v),
+      fill: getIconColor(color, v, colors),
 
       ...(disabled && {
         fill: v.disabledColor,

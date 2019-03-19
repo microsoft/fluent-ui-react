@@ -1,8 +1,8 @@
 import { pxToRem } from '../../../../lib'
-import { SiteVariablesPrepared } from '../../../types'
+import { SiteVariablesPrepared, ColorSchemeMapping } from '../../../types'
 
 export interface LabelVariables {
-  colorScheme: any
+  colorScheme: ColorSchemeMapping
   circularRadius: string
   padding: string
   startPaddingLeft: string
@@ -17,53 +17,10 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
   const colorScheme = {
     ...siteVars.colorScheme,
     default: {
+      ...siteVars.colorScheme.default,
       foregroundDefault: color,
       backgroundDefault: 'rgb(232, 232, 232)',
     },
-    // grey: {
-    //   undefined: {
-    //     foreground: siteVars.colors.grey.light14,
-    //     background: siteVars.colors.grey.light02,
-    //     border: siteVars.colors.grey.light02,
-    //     shadow: siteVars.colors.grey.light02,
-    //   },
-    //   active: {
-    //     foreground: siteVars.colors.grey.light14,
-    //     background: siteVars.colors.grey.light02,
-    //     border: siteVars.colors.grey.light02,
-    //     shadow: siteVars.colors.grey.light02,
-    //   },
-    //   focus: {
-    //     foreground: siteVars.colors.grey.light14,
-    //     background: siteVars.colors.grey.light02,
-    //     border: siteVars.colors.grey.light02,
-    //     shadow: siteVars.colors.grey.light02,
-    //   },
-    //   focusWithin: {
-    //     foreground: siteVars.colors.grey.light14,
-    //     background: siteVars.colors.grey.light02,
-    //     border: siteVars.colors.grey.light02,
-    //     shadow: siteVars.colors.grey.light02,
-    //   },
-    //   hover: {
-    //     foreground: siteVars.colors.grey.light14,
-    //     background: siteVars.colors.grey.light02,
-    //     border: siteVars.colors.grey.light02,
-    //     shadow: siteVars.colors.grey.light02,
-    //   },
-    //   disabled: {
-    //     foreground: siteVars.colors.grey.light14,
-    //     background: siteVars.colors.grey.light02,
-    //     border: siteVars.colors.grey.light02,
-    //     shadow: siteVars.colors.grey.light02,
-    //   },
-    //   error: {
-    //     foreground: siteVars.colors.grey.light14,
-    //     background: siteVars.colors.grey.light02,
-    //     border: siteVars.colors.grey.light02,
-    //     shadow: siteVars.colors.grey.light02,
-    //   },
-    // }
   }
 
   return {

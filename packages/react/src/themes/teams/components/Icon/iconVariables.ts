@@ -1,12 +1,11 @@
-import { ColorValues } from '../../../types'
-import { mapColorsToScheme, pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../lib'
+import { ColorSchemeMapping } from '../../../types'
 
 export type IconSizeModifier = 'x' | 'xx'
 
 export interface IconVariables {
   [key: string]: object | string | number | boolean | undefined
-
-  colors: ColorValues<string>
+  colorScheme?: ColorSchemeMapping
   color?: string
   backgroundColor?: string
   borderColor?: string
@@ -19,10 +18,8 @@ export interface IconVariables {
   sizeModifier?: IconSizeModifier
 }
 
-const colorVariant = 500
-
 export default (siteVars): IconVariables => ({
-  colors: mapColorsToScheme(siteVars, colorVariant),
+  colorScheme: siteVars.colorScheme,
   color: undefined,
   backgroundColor: undefined,
   borderColor: undefined,
