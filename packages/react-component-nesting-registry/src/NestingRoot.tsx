@@ -1,11 +1,11 @@
 import * as React from 'react'
 
-import RegistrySet from './lib/RegistrySet'
+import RefStack from './lib/RefStack'
 import NestingContext from './NestingContext'
 import { NestingProps, NodeRef } from './types'
 
 class NestingRoot<T extends Node> extends React.Component<NestingProps> {
-  registry = new RegistrySet()
+  registry = new RefStack()
   parentRef = React.createRef<T>()
 
   componentDidMount() {

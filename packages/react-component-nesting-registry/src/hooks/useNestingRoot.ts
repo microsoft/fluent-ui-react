@@ -2,10 +2,10 @@ import * as React from 'react'
 
 import NestingContext from '../NestingContext'
 import { NestedContextProps } from '../types'
-import RegistrySet from '../lib/RegistrySet'
+import RefStack from '../lib/RefStack'
 import { UseNestingHookResult } from './types'
 
-const registrySet = new RegistrySet()
+const registrySet = new RefStack()
 
 const useNestingRoot = <T extends Node>(): UseNestingHookResult<T> => {
   const [registry] = React.useState(registrySet)
