@@ -260,10 +260,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
         defaultProps: {
           className: cx(MenuItem.slotClassNames.wrapper, classes.wrapper),
           ...accessibility.attributes.wrapper,
-          ...applyAccessibilityKeyHandlers(
-            accessibility.keyHandlers.wrapper,
-            typeof wrapper === 'object' ? wrapper : {},
-          ),
+          ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
         },
         overrideProps: () => ({
           children: (

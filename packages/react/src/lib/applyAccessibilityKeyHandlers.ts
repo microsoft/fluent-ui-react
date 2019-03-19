@@ -1,18 +1,24 @@
 import * as _ from 'lodash'
 
-import { Props } from '../types'
+import { Props, ShorthandValue } from '../types'
 import { KeyboardHandler, OnKeyDownHandler } from './accessibility/types'
 
-const applyAccessibilityKeyHandlers = (keyHandlers: OnKeyDownHandler, passedProps: Props) =>
-  _.mapValues(
+const applyAccessibilityKeyHandlers = (
+  keyHandlers: OnKeyDownHandler,
+  value: Props | ShorthandValue,
+) => {
+  const slotProps: Props = typeof value === 'object' ? value : {}
+
+  return _.mapValues(
     keyHandlers,
     (accessibilityHandler: KeyboardHandler, handleName: string) => (
       e: KeyboardEvent,
       ...args: any[]
     ) => {
       accessibilityHandler(e)
-      _.invoke(passedProps, handleName, e, ...args)
+      _.invoke(slotProps, handleName, e, ...args)
     },
   )
+}
 
 export default applyAccessibilityKeyHandlers
