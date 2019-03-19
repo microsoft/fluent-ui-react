@@ -19,7 +19,7 @@ export interface FlexItemProps {
    * */
   grow?: boolean | number
 
-  /** Defines gap between each two adjacent child items. */
+  /** Defines gap between this and the previous element in the flex container. */
   gap?: 'gap.smaller' | 'gap.small' | 'gap.medium' | 'gap.large'
 
   /**

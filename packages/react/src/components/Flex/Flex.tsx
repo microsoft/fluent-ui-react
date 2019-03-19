@@ -97,7 +97,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
       const maybeChildElement = isFlexItemElement
         ? React.cloneElement(child, {
             flexDirection: column ? 'column' : 'row',
-            gap: _.get(child, 'props.gap') || this.props.gap,
+            ...(!isFirstElement && { gap: _.get(child, 'props.gap') || this.props.gap }),
           })
         : child
         ? React.cloneElement(child, {
