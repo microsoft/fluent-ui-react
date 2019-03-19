@@ -344,6 +344,20 @@ export default (Component, options: Conformant = {}) => {
 
       expect(element.prop(IS_FOCUSABLE_ATTRIBUTE)).toBe(false)
     })
+
+    _.forEach(['onKeyDown', 'onKeyPress', 'onKeyUp'], listenerName => {
+      test.only(`${listenerName}`, () => {
+        // onKeyDown => keyDown
+        const eventName = _.camelCase(listenerName.replace('on', ''))
+        const handler = jest.fn()
+
+        const wrapperProps = { ...requiredProps, [listenerName]: handler }
+        const wrapper = mount(<Component {...wrapperProps} />)
+
+        getComponent(wrapper).simulate(eventName)
+        expect(handler).toBeCalledTimes(1)
+      })
+    })
   }
 
   // ----------------------------------------
