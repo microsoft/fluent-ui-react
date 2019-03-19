@@ -1,15 +1,12 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
-import cx from 'classnames'
 
 import { UIComponent, commonPropTypes } from '../../lib'
 import { ReactProps } from '../../types'
 import FlexItem from './FlexItem'
 
 export interface FlexProps {
-  [key: string]: any
-
   /** Defines if container should be inline element. */
   inline?: boolean
 
@@ -79,35 +76,24 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
     debug: PropTypes.bool,
   }
 
-  renderComponent({ ElementType, classes, styles, unhandledProps }): React.ReactNode {
+  renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
     return (
       <ElementType className={classes.root} {...unhandledProps}>
-        {this.renderChildren(styles.gap, classes.gap)}
+        {this.renderChildren(classes.gap)}
       </ElementType>
     )
   }
 
-  renderChildren = (gapStyles, gapClasses: string) => {
+  renderChildren = (gapClasses: string) => {
     const { column, children } = this.props
 
-    let isFirstElement = true
     return React.Children.map(children, (child: any) => {
       const isFlexItemElement: boolean = _.get(child, 'type.__isFlexItem')
-
       const maybeChildElement = isFlexItemElement
         ? React.cloneElement(child, {
             flexDirection: column ? 'column' : 'row',
-            ...(!isFirstElement && { gap: _.get(child, 'props.gap') || this.props.gap }),
           })
         : child
-        ? React.cloneElement(child, {
-            className: cx(child.className, !isFirstElement ? gapClasses : ''),
-          })
-        : child
-
-      if (maybeChildElement) {
-        isFirstElement = false
-      }
 
       return maybeChildElement
     })
