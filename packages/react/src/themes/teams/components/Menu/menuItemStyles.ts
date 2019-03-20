@@ -194,7 +194,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       primary,
     } = props
 
-    const colorScheme = v.colorScheme[color ? color : primary ? 'primary' : 'grey']
+    const colorScheme = v.colorScheme[color ? color : primary ? 'primary' : 'default']
 
     return {
       color: 'inherit',
