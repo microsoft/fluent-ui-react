@@ -1,27 +1,44 @@
-export interface RadioGroupItemVariables {
-  labelColorDefault: string
-  labelColorChecked: string
+import { pxToRem } from '../../../../lib'
 
-  iconColorBorderDefault: string
-  iconColorBorderChecked: string
+export type RadioGroupItemVariables = {
+  colorDisabled: string
 
-  iconcolorBackgroundDefault: string
-  iconColorBackgroundChecked: string
+  textFontSize: string
+
+  textColorDefault: string
+  textColorDefaultHoverFocus: string
+  textColorChecked: string
+
+  // iconBorderColorDefault: string
+  iconBorderColorDefaultHover: string
+  iconBorderColorChecked: string
+
+  iconBackgroundColorDefault: string
+  iconBackgroundColorChecked: string
+
   iconColorBoxShadowFocus: string
 
-  colorDisabled: string
+  padding: string
+  margin: string
 }
 
 export default (siteVars: any): RadioGroupItemVariables => ({
-  labelColorDefault: siteVars.gray02,
-  labelColorChecked: siteVars.colors.black,
+  colorDisabled: siteVars.gray06,
 
-  iconColorBorderDefault: siteVars.colors.primary[500],
-  iconColorBorderChecked: siteVars.colors.primary[500],
+  textFontSize: siteVars.fontSizes.medium,
 
-  iconcolorBackgroundDefault: siteVars.colors.white,
-  iconColorBackgroundChecked: siteVars.colors.primary[500],
+  textColorDefault: siteVars.gray02,
+  textColorDefaultHoverFocus: siteVars.colors.grey[900],
+  textColorChecked: siteVars.colors.grey[900],
+
+  iconBorderColorDefaultHover: siteVars.colors.grey[900],
+  iconBorderColorChecked: siteVars.colors.primary[500],
+
+  iconBackgroundColorDefault: siteVars.colors.white,
+  iconBackgroundColorChecked: siteVars.colors.primary[500],
+
   iconColorBoxShadowFocus: siteVars.brand07,
 
-  colorDisabled: siteVars.gray06,
+  padding: `0 ${pxToRem(4)}`,
+  margin: `${pxToRem(4)} 0`,
 })

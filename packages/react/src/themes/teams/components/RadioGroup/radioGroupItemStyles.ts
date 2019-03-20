@@ -6,77 +6,89 @@ import {
 import { RadioGroupItemVariables } from './radioGroupItemVariables'
 import { pxToRem } from '../../../../lib'
 
-const disabledIconStyles = v => ({
-  borderColor: v.colorDisabled,
+/// Disabled styles
+const iconBorderStyles = iconBorderColor => ({
+  borderColor: iconBorderColor,
+
+  // ':hover': {
+  //   borderColor: iconBorderColor,
+  // },
+
+  // ':focus': {
+  //   borderColor: iconBorderColor,
+  // },
 })
 
-const enabledHoverAndFocusIconStyles = v => ({
-  borderColor: v.iconColorBorderChecked,
-})
+const restHoverTextColor = textColor => ({
+  color: textColor,
 
-const disabledLabelStyles = v => ({
-  color: v.colorDisabled,
-})
-
-const enabledHoverAndFocusLabelStyles = v => ({
-  color: v.labelColorChecked,
+  ':hover': {
+    color: textColor,
+  },
 })
 
 const radioStyles: ComponentSlotStylesInput<
   RadioGroupItemProps & RadioGroupItemState,
   RadioGroupItemVariables
 > = {
-  root: ({ props }): ICSSInJSStyle => ({
-    outline: 0,
-    display: 'inline-flex',
+  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     alignItems: 'center',
-    cursor: props.disabled ? 'default' : 'pointer',
-    ...(!props.vertical && {
-      display: 'inline-block',
-    }),
-  }),
+    color: v.textColorDefault,
+    cursor: 'pointer',
+    display: p.vertical ? 'flex' : 'inline-flex',
+    fontSize: v.textFontSize,
+    padding: v.padding,
+    margin: v.margin,
+    outline: 0,
 
-  label: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    backgroundColor: 'transparent',
-    color: p.checked ? v.labelColorChecked : v.labelColorDefault,
     ':hover': {
-      ...enabledHoverAndFocusLabelStyles(v),
+      color: v.textColorDefaultHoverFocus,
     },
+
     ':focus': {
-      ...enabledHoverAndFocusLabelStyles(v),
+      color: v.textColorDefaultHoverFocus,
     },
+
+    ...(p.checked && {
+      ...restHoverTextColor(v.textColorChecked),
+    }),
+
     ...(p.disabled && {
-      ...disabledLabelStyles(v),
-      ':hover': {
-        ...disabledLabelStyles(v),
-      },
+      ...restHoverTextColor(v.colorDisabled),
     }),
   }),
 
   icon: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    boxSizing: 'border-box',
-    margin: `0 ${pxToRem(12)} 0 0`,
-    backgroundColor: p.checked ? v.iconColorBackgroundChecked : 'transparent',
-    height: `${pxToRem(12)}`,
-    width: `${pxToRem(12)}`,
+    // overrides from icon styles
+    backgroundColor: 'transparent',
     boxShadow: 'none',
+
+    // can remove this after global style for border-box goes in
+    boxSizing: 'border-box',
+
     borderStyle: 'solid',
     borderWidth: `${pxToRem(1)}`,
-    borderColor: p.checked ? v.iconColorBorderChecked : v.iconColorBorderDefault,
-    ':hover': {
-      ...enabledHoverAndFocusIconStyles(v),
-    },
-    ':focus': {
-      ...enabledHoverAndFocusIconStyles(v),
-    },
-    ...(p.disabled && {
-      ...disabledIconStyles(v),
-      ':hover': {
-        ...disabledIconStyles(v),
-      },
+    borderColor: 'currentColor',
+    margin: `0 ${pxToRem(12)} 0 0`,
+    height: `${pxToRem(12)}`,
+    width: `${pxToRem(12)}`,
+
+    ...(p.checked && {
+      backgroundColor: v.iconBackgroundColorChecked,
+      ...iconBorderStyles(v.iconBorderColorChecked),
     }),
+
+    ...(p.disabled && {
+      ...iconBorderStyles(v.colorDisabled),
+    }),
+
+    ...(p.checked &&
+      p.disabled && {
+        backgroundColor: v.colorDisabled,
+      }),
+
     ...(p.isFromKeyboard && {
-      borderColor: v.iconColorBorderChecked,
+      borderColor: v.iconBorderColorChecked,
       boxShadow: `0 0 0 ${pxToRem(2)} ${v.iconColorBoxShadowFocus}`,
     }),
   }),

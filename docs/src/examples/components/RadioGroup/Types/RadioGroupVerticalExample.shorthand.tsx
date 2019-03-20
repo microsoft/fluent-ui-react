@@ -12,7 +12,7 @@ class RadioGroupVerticalExample extends React.Component {
         <Divider />
         <RadioGroup
           vertical
-          defaultCheckedValue="capricciosa"
+          defaultCheckedValue="pepperoni"
           items={this.getItems()}
           checkedValueChanged={this.handleChange}
         />
@@ -22,12 +22,24 @@ class RadioGroupVerticalExample extends React.Component {
 
   getItems() {
     return [
-      { name: 'pizza', key: 'Capricciosa', label: 'Capricciosa', value: 'capricciosa' },
+      {
+        name: 'pizza',
+        key: 'Capricciosa',
+        label: 'Capricciosa',
+        value: 'capricciosa',
+      },
       {
         name: 'pizza',
         key: 'Prosciutto',
         label: 'Prosciutto',
         value: 'prosciutto',
+        disabled: true,
+      },
+      {
+        name: 'pizza',
+        key: 'Pepperoni',
+        label: 'Pepperoni',
+        value: 'pepperoni',
         disabled: true,
       },
       {
