@@ -291,11 +291,11 @@ export const colorScheme: ColorSchemeMapping = {
 
     foregroundActive: colors.white,
     backgroundActive: colors.primary.light08,
-    borderActive: colors.primary[50],
+    borderActive: colors.primary[500],
     shadowActive: colors.primary[50],
 
-    foregroundFocus: colors.primary[50],
-    backgroundFocus: colors.primary[500],
+    foregroundFocus: colors.white,
+    backgroundFocus: colors.primary[200],
     borderFocus: colors.primary[500],
     shadowFocus: colors.primary[500],
 
@@ -310,23 +310,23 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.primary[500],
   },
   grey: {
-    foregroundDefault: colors.black,
+    foregroundDefault: colors.grey.light02,
     backgroundDefault: colors.grey[500],
     borderDefault: colors.grey[500],
     shadowDefault: colors.grey[500],
 
     foregroundHover: colors.black,
-    backgroundHover: colors.grey[500],
+    backgroundHover: colors.grey.light14,
     borderHover: colors.grey[500],
     shadowHover: colors.grey[500],
 
     foregroundActive: colors.black,
-    backgroundActive: colors.grey[500],
+    backgroundActive: colors.grey.light10,
     borderActive: colors.grey[500],
     shadowActive: colors.grey[500],
 
     foregroundFocus: colors.black,
-    backgroundFocus: colors.grey[500],
+    backgroundFocus: colors.grey.light14,
     borderFocus: colors.grey[500],
     shadowFocus: colors.grey[500],
 

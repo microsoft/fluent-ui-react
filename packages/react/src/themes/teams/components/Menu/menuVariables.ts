@@ -45,7 +45,7 @@ export default (siteVars: any): MenuVariables => {
   return {
     colorScheme: siteVars.colorScheme,
     color: siteVars.colors.grey.light02,
-    colorActive: undefined,
+    colorActive: siteVars.colors.black,
     colorFocus: siteVars.colors.white,
     colorDisabled: siteVars.colors.grey.light06,
 
@@ -59,7 +59,7 @@ export default (siteVars: any): MenuVariables => {
     outlineFocus: siteVars.colors.black,
 
     backgroundColor: undefined,
-    backgroundColorFocus: siteVars.colors.grey.light09,
+    backgroundColorFocus: undefined,
     backgroundColorHover: undefined,
     backgroundColorActive: undefined,
 

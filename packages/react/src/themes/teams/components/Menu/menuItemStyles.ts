@@ -37,28 +37,17 @@ const getActionStyles = ({
 const getFocusedStyles = ({
   props,
   variables: v,
-  color,
+  colorScheme,
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  color: string
+  colorScheme: any
 }): ICSSInJSStyle => {
-  const { primary, underlined, isFromKeyboard, active, vertical, pointing } = props
+  const { primary, color, underlined, isFromKeyboard, active, vertical, pointing } = props
   if (active && !underlined && !vertical) return {}
   return {
-    ...(underlined && !isFromKeyboard
-      ? {
-          color,
-        }
-      : primary
-      ? {
-          color: 'inherit',
-          background: v.backgroundColorFocus,
-        }
-      : {
-          color,
-          background: v.backgroundColorHover,
-        }),
+    color: primary || color ? colorScheme.foregroundFocus : 'inherit',
+    background: v.backgroundColorFocus || colorScheme.backgroundFocus,
 
     ...(vertical && isFromKeyboard && !pointing && !primary
       ? {
@@ -69,7 +58,7 @@ const getFocusedStyles = ({
           outlineStyle: 'solid',
           outlineColor: v.outlineFocus,
           margin: pxToRem(1),
-          background: v.backgroundColorFocus,
+          background: v.backgroundColorFocus || colorScheme.backgroundFocus,
         }
       : {}),
   }
@@ -284,7 +273,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       ...(!iconOnly && {
         // focus styles
-        ...(isFromKeyboard && getFocusedStyles({ props, variables: v, color: 'inherit' })),
+        ...(isFromKeyboard && getFocusedStyles({ props, variables: v, colorScheme })),
 
         // hover styles
         ':hover': getHoverStyles({ props, variables: v, color: 'inherit', colorScheme }),
@@ -365,18 +354,18 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       // active styles
       ...(active &&
-        (primary
+        (primary || color
           ? {
               ...(iconOnly && { color: 'inherit' }),
 
               ...(underlined && {
-                color: 'inherit',
+                color: colorScheme.borderActive,
                 ...underlinedItem(v.borderColorActive || colorScheme.borderActive),
               }),
             }
           : underlined && {
               fontWeight: 700,
-              ...underlinedItem(v.colorActive || colorScheme.foregroundActive),
+              ...underlinedItem(v.colorActive),
             })),
 
       // focus styles
@@ -394,7 +383,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           },
         }),
 
-        ...(primary
+        ...(primary || color
           ? {
               ...(iconOnly && {
                 color: 'inherit',
@@ -403,16 +392,12 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
               ...(underlined && { color: 'inherit' }),
 
-              ...(underlined &&
-                active &&
-                underlinedItem(v.colorActive || colorScheme.foregroundActive)),
+              ...(underlined && active && underlinedItem(colorScheme.foregroundActive)),
             }
           : {
               ...(underlined && { fontWeight: 700 }),
 
-              ...(underlined &&
-                active &&
-                underlinedItem(v.colorActive || colorScheme.foregroundActive)),
+              ...(underlined && active && underlinedItem(v.colorActive)),
             }),
       }),
 
@@ -439,7 +424,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
               ...(iconOnly && { color: 'inherit' }),
               ...(!active &&
                 underlined &&
-                underlinedItem((v.borderColorHover as string) || colorScheme.borderHover)),
+                underlinedItem(v.backgroundColorActive || colorScheme.backgroundActive)),
             }
           : !active &&
             underlined &&
