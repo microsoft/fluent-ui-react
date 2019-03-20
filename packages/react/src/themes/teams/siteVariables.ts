@@ -21,7 +21,6 @@ export const gray10 = '#F3F2F1' // no mapping color
 export const gray14 = '#FAF9F8' // no mapping color
 
 export const brand04 = '#464775' // no mapping color
-export const brand07 = '#a6a7dc'
 export const brand08 = '#8B8CC7' // no mapping color
 
 export const magenta = '#B24782' // no mapping color

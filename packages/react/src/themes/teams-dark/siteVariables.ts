@@ -4,7 +4,7 @@ import { colors, naturalColors } from '../teams/siteVariables'
 // COLORS
 //
 export const black = '#201f1f' // no mapping color
-export const white = '#fff'
+
 export const gray02 = '#c8c6c4' // light theme gray06
 export const gray03 = '#b3b0ad' // no mapping color
 export const gray04 = '#8a8886' // no mapping color

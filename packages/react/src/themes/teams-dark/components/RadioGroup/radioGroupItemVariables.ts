@@ -2,14 +2,11 @@ import { RadioGroupItemVariables } from 'src/themes/teams/components/RadioGroup/
 
 export default (siteVars: any): Partial<RadioGroupItemVariables> => ({
   textColorDefault: siteVars.gray02,
-  textColorDefaultHoverFocus: siteVars.white,
-  textColorChecked: siteVars.white,
+  textColorDefaultHoverFocus: siteVars.colors.white,
+  textColorChecked: siteVars.colors.white,
 
-  iconBorderColorDefaultHover: siteVars.white,
+  iconBorderColorDefaultHover: siteVars.colors.white,
   iconBorderColorChecked: siteVars.brand06,
 
-  iconBackgroundColorDefault: siteVars.white,
   iconBackgroundColorChecked: siteVars.brand06,
-
-  iconColorBoxShadowFocus: siteVars.brand,
 })

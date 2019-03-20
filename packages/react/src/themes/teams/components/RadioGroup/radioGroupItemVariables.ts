@@ -16,10 +16,7 @@ export type RadioGroupItemVariables = {
   iconBorderColorDefaultHover: string
   iconBorderColorChecked: string
 
-  iconBackgroundColorDefault: string
   iconBackgroundColorChecked: string
-
-  iconColorBoxShadowFocus: string
 
   padding: string
 }
@@ -38,10 +35,7 @@ export default (siteVars: any): RadioGroupItemVariables => ({
   iconBorderColorDefaultHover: siteVars.colors.grey[900],
   iconBorderColorChecked: siteVars.colors.primary[500],
 
-  iconBackgroundColorDefault: siteVars.colors.white,
   iconBackgroundColorChecked: siteVars.colors.primary[500],
-
-  iconColorBoxShadowFocus: siteVars.brand07,
 
   padding: `0 ${pxToRem(4)}`,
 })
