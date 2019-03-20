@@ -20,8 +20,9 @@ const Types = () => (
         behaviors.
       </p>
       <p>
-        Remember that styles that applied directly to any component are not friendly for theme
-        switching.
+        Remember that <code>styles</code> that applied directly to any component are not friendly
+        for theme switching, prefer to use <code>variables</code> instead of <code>styles</code> for
+        overrides.
       </p>
     </Alert>
     <ComponentExample
