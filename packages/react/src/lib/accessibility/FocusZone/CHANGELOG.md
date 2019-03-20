@@ -65,3 +65,4 @@ This is a list of changes made to the Stardust copy of FocusTrapZone in comparis
     - Got rid of `componentWillMount` as it deprecated in higher versions of React.
     - Added `aria-hidden` to the body children outside of the Popup to prevent screen reader from reading background information.
     - Renamed `focus` method to `_findElementAndFocusAsync`, made it private and removed `IFocusTrapZone` interface as it's no longer needed.
+- Use `EventListener` component instead of `EventStack` [#949](https://github.com/stardust-ui/react/pull/949)
