@@ -279,8 +279,8 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.white,
   },
   primary: {
-    foregroundDefault: colors.primary[500],
-    backgroundDefault: colors.primary[50],
+    foregroundDefault: colors.primary[50],
+    backgroundDefault: colors.primary[500],
     borderDefault: colors.primary[500],
     shadowDefault: colors.primary[500],
 
