@@ -6,19 +6,6 @@ import {
 import { RadioGroupItemVariables } from './radioGroupItemVariables'
 import { pxToRem } from '../../../../lib'
 
-/// Disabled styles
-const iconBorderStyles = iconBorderColor => ({
-  borderColor: iconBorderColor,
-
-  // ':hover': {
-  //   borderColor: iconBorderColor,
-  // },
-
-  // ':focus': {
-  //   borderColor: iconBorderColor,
-  // },
-})
-
 const restHoverTextColor = textColor => ({
   color: textColor,
 
@@ -75,11 +62,11 @@ const radioStyles: ComponentSlotStylesInput<
 
     ...(p.checked && {
       backgroundColor: v.iconBackgroundColorChecked,
-      ...iconBorderStyles(v.iconBorderColorChecked),
+      borderColor: v.iconBorderColorChecked,
     }),
 
     ...(p.disabled && {
-      ...iconBorderStyles(v.colorDisabled),
+      borderColor: v.colorDisabled,
     }),
 
     ...(p.checked &&

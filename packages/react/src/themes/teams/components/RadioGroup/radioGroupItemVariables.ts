@@ -9,7 +9,6 @@ export type RadioGroupItemVariables = {
   textColorDefaultHoverFocus: string
   textColorChecked: string
 
-  // iconBorderColorDefault: string
   iconBorderColorDefaultHover: string
   iconBorderColorChecked: string
 
