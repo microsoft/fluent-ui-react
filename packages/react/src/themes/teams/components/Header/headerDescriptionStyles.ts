@@ -10,7 +10,7 @@ const headerStyles: ComponentSlotStylesInput<HeaderDescriptionProps, HeaderDescr
     const colors = v.colorScheme[p.color]
     return {
       display: 'block',
-      color: _.get(colors, 'foregroundDefault', v.color),
+      color: _.get(colors, 'borderDefault', v.color),
       fontSize: pxToRem(22),
       fontWeight: 400,
     }

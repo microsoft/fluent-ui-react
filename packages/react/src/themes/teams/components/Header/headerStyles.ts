@@ -10,7 +10,7 @@ const headerStyles: ComponentSlotStylesInput<HeaderProps, HeaderVariables> = {
     const colors = v.colorScheme[p.color]
     return {
       display: 'block',
-      color: _.get(colors, 'foregroundDefault', v.color),
+      color: _.get(colors, 'borderDefault', v.color),
       textAlign: p.textAlign as TextAlignProperty,
       ...(p.description && { marginBottom: 0 }),
     }
