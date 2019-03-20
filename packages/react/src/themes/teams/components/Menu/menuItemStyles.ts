@@ -112,7 +112,7 @@ const getHoverStyles = ({
   }
 }
 
-const itemSeparator = ({ props, variables: v, colorScheme }): ICSSInJSStyle => {
+const itemSeparator = ({ props, variables: v, theme, colorScheme }): ICSSInJSStyle => {
   const { iconOnly, pills, primary, underlined, vertical } = props
 
   return (
@@ -128,7 +128,7 @@ const itemSeparator = ({ props, variables: v, colorScheme }): ICSSInJSStyle => {
         width: pxToRem(1),
         height: '100%',
         ...(primary
-          ? { background: v.colorScheme.grey.backgroundActive /* TODO: check this again */ }
+          ? { background: theme.siteVariables.colors.grey.light10 /* TODO: check this again */ }
           : { background: v.borderColor || colorScheme.borderDefault }),
       },
     }
@@ -241,7 +241,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           marginBottom: verticalPointingBottomMargin,
         }),
 
-      ...itemSeparator({ props, variables: v, colorScheme }),
+      ...itemSeparator({ props, variables: v, theme, colorScheme }),
 
       // active styles
       ...(active && {

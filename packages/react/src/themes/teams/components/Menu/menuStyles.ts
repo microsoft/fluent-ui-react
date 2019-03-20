@@ -47,7 +47,7 @@ export default {
           // TODO check again, primary has hardcoded grey border color
           border: `${v.borderWidth} solid ${
             primary
-              ? v.colorScheme.grey.backgroundActive
+              ? theme.siteVariables.colors.grey.light10
               : v.borderColor || colorScheme.borderDefault
           }`,
           borderRadius: pxToRem(4),
