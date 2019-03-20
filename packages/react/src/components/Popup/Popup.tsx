@@ -6,6 +6,7 @@ import * as _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
 import {
+  applyAccessibilityKeyHandlers,
   childrenExist,
   AutoControlledComponent,
   EventStack,
@@ -418,9 +419,9 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
           }}
         >
           {React.cloneElement(triggerElement, {
-            ...triggerProps,
             ...accessibility.attributes.trigger,
-            ...accessibility.keyHandlers.trigger,
+            ...triggerProps,
+            ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.trigger, triggerProps),
           })}
         </Ref>
       )
