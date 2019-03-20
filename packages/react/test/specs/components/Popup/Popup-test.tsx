@@ -1,6 +1,5 @@
 import { Placement } from 'popper.js'
 import * as React from 'react'
-import * as simulant from 'simulant'
 
 import {
   getPopupPlacement,
@@ -268,31 +267,23 @@ describe('Popup', () => {
       behavior: Accessibility,
       shouldStopPropagation: boolean,
     ) => {
-      const attachTo = document.createElement('div')
-      document.body.appendChild(attachTo)
-
-      const wrapper = mountWithProvider(
+      const popup = mountWithProvider(
         <Popup
           trigger={<span id={triggerId}> text to trigger popup </span>}
           content={<span id={contentId} />}
           accessibility={behavior}
         />,
-        { attachTo },
       )
 
       // open popup
-      const popupTriggerElement = wrapper.find(`#${triggerId}`)
+      const popupTriggerElement = popup.find(`#${triggerId}`)
       popupTriggerElement.simulate('keydown', { keyCode: keyboardKey.Enter })
 
       // when popup open, check that stopPropagation is called when keyboard events are invoked
-      const event = simulant('keydown')
-      const stopPropagation = jest.spyOn(event, 'stopPropagation')
-
-      simulant.fire(document, event)
+      const stopPropagation = jest.fn()
+      const popupContentElement = getPopupContent(popup)
+      popupContentElement.simulate('keyDown', { stopPropagation })
       expect(stopPropagation).toHaveBeenCalledTimes(shouldStopPropagation ? 1 : 0)
-
-      wrapper.unmount()
-      document.body.removeChild(attachTo)
     }
     test('stops when focus trap behavior is used', () => {
       expectPopupToHandleStopPropagation(popupFocusTrapBehavior, true)
