@@ -3,6 +3,10 @@ import { pxToRem } from '../../../../lib'
 export type RadioGroupItemVariables = {
   colorDisabled: string
 
+  // can these be global colors so we don't have to define for every component?
+  focusInnerBorderColor: string
+  focusOuterBorderColor: string
+
   textFontSize: string
 
   textColorDefault: string
@@ -18,13 +22,15 @@ export type RadioGroupItemVariables = {
   iconColorBoxShadowFocus: string
 
   padding: string
-  margin: string
 }
 
 export default (siteVars: any): RadioGroupItemVariables => ({
   colorDisabled: siteVars.gray06,
+  focusInnerBorderColor: siteVars.colors.white,
+  focusOuterBorderColor: siteVars.colors.black,
 
-  textFontSize: siteVars.fontSizes.medium,
+  // revert back when pxToRem fix goes in
+  textFontSize: '14px', // siteVars.fontSizes.medium,
 
   textColorDefault: siteVars.gray02,
   textColorDefaultHoverFocus: siteVars.colors.grey[900],
@@ -39,5 +45,4 @@ export default (siteVars: any): RadioGroupItemVariables => ({
   iconColorBoxShadowFocus: siteVars.brand07,
 
   padding: `0 ${pxToRem(4)}`,
-  margin: `${pxToRem(4)} 0`,
 })

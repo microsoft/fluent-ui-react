@@ -4,12 +4,17 @@ import {
   RadioGroupItemState,
 } from '../../../../components/RadioGroup/RadioGroupItem'
 import { RadioGroupItemVariables } from './radioGroupItemVariables'
+import Icon from '../../../../components/Icon/Icon'
 import { pxToRem } from '../../../../lib'
 
-const restHoverTextColor = textColor => ({
+const restHoverFocusTextColor = textColor => ({
   color: textColor,
 
   ':hover': {
+    color: textColor,
+  },
+
+  ':focus': {
     color: textColor,
   },
 })
@@ -19,17 +24,27 @@ const radioStyles: ComponentSlotStylesInput<
   RadioGroupItemVariables
 > = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    // can remove this after global style for border-box goes in
+    boxSizing: 'border-box',
+
     alignItems: 'center',
+    borderStyle: 'solid',
+    borderWidth: `${pxToRem(1)}`,
+    borderColor: 'transparent',
+    borderRadius: `${pxToRem(2)}`,
     color: v.textColorDefault,
     cursor: 'pointer',
     display: p.vertical ? 'flex' : 'inline-flex',
     fontSize: v.textFontSize,
     padding: v.padding,
-    margin: v.margin,
     outline: 0,
 
     ':hover': {
       color: v.textColorDefaultHoverFocus,
+
+      [`& .${Icon.className}`]: {
+        color: v.iconBorderColorDefaultHover,
+      },
     },
 
     ':focus': {
@@ -37,11 +52,16 @@ const radioStyles: ComponentSlotStylesInput<
     },
 
     ...(p.checked && {
-      ...restHoverTextColor(v.textColorChecked),
+      ...restHoverFocusTextColor(v.textColorChecked),
     }),
 
     ...(p.disabled && {
-      ...restHoverTextColor(v.colorDisabled),
+      ...restHoverFocusTextColor(v.colorDisabled),
+    }),
+
+    ...(p.isFromKeyboard && {
+      borderColor: v.focusInnerBorderColor,
+      boxShadow: `0 0 0 ${pxToRem(1)} ${v.focusOuterBorderColor}`,
     }),
   }),
 
@@ -73,11 +93,6 @@ const radioStyles: ComponentSlotStylesInput<
       p.disabled && {
         backgroundColor: v.colorDisabled,
       }),
-
-    ...(p.isFromKeyboard && {
-      borderColor: v.iconBorderColorChecked,
-      boxShadow: `0 0 0 ${pxToRem(2)} ${v.iconColorBoxShadowFocus}`,
-    }),
   }),
 }
 

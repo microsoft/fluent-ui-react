@@ -7,12 +7,12 @@ class RadioGroupVerticalExample extends React.Component {
   render() {
     const { selectedValue } = this.state
     return (
-      <div>
+      <div style={{ maxWidth: '400px' }}>
         The selected value is: {selectedValue}
         <Divider />
         <RadioGroup
           vertical
-          defaultCheckedValue="pepperoni"
+          defaultCheckedValue="prosciutto"
           items={this.getItems()}
           checkedValueChanged={this.handleChange}
         />
@@ -40,7 +40,6 @@ class RadioGroupVerticalExample extends React.Component {
         key: 'Pepperoni',
         label: 'Pepperoni',
         value: 'pepperoni',
-        disabled: true,
       },
       {
         name: 'pizza',
@@ -48,7 +47,12 @@ class RadioGroupVerticalExample extends React.Component {
         label: (
           <Text>
             Choose your own{' '}
-            <Input input={{ tabIndex: this.state.inputTabIndex }} inline placeholder="flavour" />
+            <Input
+              input={{ tabIndex: this.state.inputTabIndex }}
+              inline
+              variables={{ inputPadding: '2px 8px', fontSize: '12px' }}
+              placeholder="flavour"
+            />
           </Text>
         ),
         value: 'custom',
