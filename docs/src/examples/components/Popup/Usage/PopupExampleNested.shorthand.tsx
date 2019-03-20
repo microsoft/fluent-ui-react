@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Button, Popup } from '@stardust-ui/react'
 
-const PopupExample = () => (
+const PopupExampleNested = () => (
   <Popup
     content={{
       content: (
@@ -29,4 +29,4 @@ const PopupExample = () => (
   />
 )
 
-export default PopupExample
+export default PopupExampleNested
