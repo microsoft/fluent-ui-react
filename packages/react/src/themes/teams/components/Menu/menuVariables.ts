@@ -32,7 +32,8 @@ export interface MenuVariables {
   verticalItemPadding: string
   verticalBoxShadow: string
   verticalDividerMargin: string
-  verticalItemBorder: string
+  verticalItemBorderWidth: string
+  verticalItemBorderColor: string
 
   underlinedBottomBorderWidth: string
 
@@ -44,23 +45,23 @@ export default (siteVars: any): MenuVariables => {
   return {
     colorScheme: siteVars.colorScheme,
     color: siteVars.colors.grey.light02,
-    colorActive: siteVars.colors.black,
+    colorActive: undefined,
     colorFocus: siteVars.colors.white,
     colorDisabled: siteVars.colors.grey.light06,
 
     verticalBorderColor: siteVars.colors.grey.light08,
 
     borderColor: siteVars.colors.grey.light10,
-    borderColorHover: siteVars.colors.grey.light08,
-    borderColorActive: siteVars.colors.primary[500],
+    borderColorHover: undefined,
+    borderColorActive: undefined,
     borderColorFocus: siteVars.colors.white,
 
     outlineFocus: siteVars.colors.black,
 
     backgroundColor: undefined,
     backgroundColorFocus: siteVars.colors.grey.light09,
-    backgroundColorHover: siteVars.colors.grey.light14,
-    backgroundColorActive: siteVars.colors.grey.light10,
+    backgroundColorHover: undefined,
+    backgroundColorActive: undefined,
 
     iconOnlyColorActive: siteVars.colors.primary[500],
 
@@ -74,7 +75,8 @@ export default (siteVars: any): MenuVariables => {
     verticalItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
     verticalBoxShadow: siteVars.shadowLevel3,
     verticalDividerMargin: `${pxToRem(8)} 0`,
-    verticalItemBorder: `solid ${pxToRem(2)} transparent`,
+    verticalItemBorderWidth: pxToRem(2),
+    verticalItemBorderColor: 'transparent',
 
     underlinedBottomBorderWidth: pxToRem(2),
 

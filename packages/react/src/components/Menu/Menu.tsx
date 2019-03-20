@@ -12,6 +12,7 @@ import {
   commonPropTypes,
   getKindProp,
   rtlTextContainer,
+  ColorComponentProps,
 } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
@@ -23,7 +24,7 @@ import MenuDivider from './MenuDivider'
 
 export type MenuShorthandKinds = 'divider' | 'item'
 
-export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
+export interface MenuProps extends UIComponentProps, ChildrenComponentProps, ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuBehavior
@@ -93,6 +94,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
+      color: true,
     }),
     activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -150,6 +152,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
       vertical,
       submenu,
       indicator,
+      color,
     } = this.props
     const { activeIndex } = this.state
 
@@ -167,6 +170,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
             variables,
             styles: styles.divider,
             inSubmenu: submenu,
+            color,
           },
         })
       }
@@ -185,6 +189,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
           active,
           inSubmenu: submenu,
           indicator,
+          color,
         },
         overrideProps: this.handleItemOverrides,
       })

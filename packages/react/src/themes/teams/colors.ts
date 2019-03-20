@@ -13,6 +13,8 @@ export const emphasisColors: EmphasisColors = {
     700: '#4A4C78',
     800: '#414265',
     900: '#33344A', // siteVariables.brand02
+    light04: '#464775', // no mapping color
+    light08: '#8B8CC7',
   },
 }
 
@@ -277,20 +279,20 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.white,
   },
   primary: {
-    foregroundDefault: colors.primary[50],
-    backgroundDefault: colors.primary[500],
+    foregroundDefault: colors.primary[500],
+    backgroundDefault: colors.primary[50],
     borderDefault: colors.primary[500],
     shadowDefault: colors.primary[500],
 
-    foregroundHover: colors.primary[50],
-    backgroundHover: colors.primary[500],
+    foregroundHover: colors.white,
+    backgroundHover: colors.primary[200],
     borderHover: colors.primary[500],
     shadowHover: colors.primary[500],
 
-    foregroundActive: colors.primary[50],
-    backgroundActive: colors.primary[500],
-    borderActive: colors.primary[500],
-    shadowActive: colors.primary[500],
+    foregroundActive: colors.white,
+    backgroundActive: colors.primary.light08,
+    borderActive: colors.primary[50],
+    shadowActive: colors.primary[50],
 
     foregroundFocus: colors.primary[50],
     backgroundFocus: colors.primary[500],
