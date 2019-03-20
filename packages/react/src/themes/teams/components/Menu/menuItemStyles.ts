@@ -17,7 +17,7 @@ const underlinedItem = (color: string): ICSSInJSStyle => ({
 })
 
 const getActionStyles = ({
-  props: { primary, underlined, iconOnly },
+  props: { primary, underlined, iconOnly, color },
   variables: v,
   colorScheme,
 }: {
@@ -27,10 +27,15 @@ const getActionStyles = ({
 }): ICSSInJSStyle =>
   underlined || iconOnly
     ? {
+        color: v.color,
+      }
+    : primary || color
+    ? {
         color: colorScheme.foregroundActive,
+        background: v.backgroundColorActive || colorScheme.backgroundActive,
       }
     : {
-        color: colorScheme.foregroundActive,
+        color: v.color,
         background: v.backgroundColorActive || colorScheme.backgroundActive,
       }
 
@@ -82,7 +87,7 @@ const getHoverStyles = ({
       ? {
           color,
         }
-      : primary
+      : primary || color
       ? {
           color: colorScheme.foregroundHover,
           background: v.backgroundColorHover || colorScheme.backgroundHover,
