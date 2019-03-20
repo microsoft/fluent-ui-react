@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 import { teamsIconClassNames } from '../Icon/svg'
@@ -112,10 +112,7 @@ const getHoverStyles = ({
   }
 }
 
-const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
-  props,
-  variables: v,
-}): ICSSInJSStyle => {
+const itemSeparator = ({ props, variables: v, colorScheme }): ICSSInJSStyle => {
   const { iconOnly, pills, primary, underlined, vertical } = props
 
   return (
@@ -130,7 +127,9 @@ const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVaria
         right: 0,
         width: pxToRem(1),
         height: '100%',
-        ...(primary ? { background: v.borderColor } : { background: v.borderColor }),
+        ...(primary
+          ? { background: v.colorScheme.grey.backgroundActive /* TODO: check this again */ }
+          : { background: v.borderColor || colorScheme.borderDefault }),
       },
     }
   )
@@ -242,7 +241,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           marginBottom: verticalPointingBottomMargin,
         }),
 
-      ...itemSeparator({ props, variables: v, theme }), // TODO we should use the colors here as well
+      ...itemSeparator({ props, variables: v, colorScheme }),
 
       // active styles
       ...(active && {

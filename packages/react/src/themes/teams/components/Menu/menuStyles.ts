@@ -44,7 +44,12 @@ export default {
         !iconOnly &&
         !(pointing && vertical) &&
         !underlined && {
-          border: `${v.borderWidth} solid ${v.borderColor || colorScheme.borderDefault}`,
+          // TODO check again, primary has hardcoded grey border color
+          border: `${v.borderWidth} solid ${
+            primary
+              ? v.colorScheme.grey.backgroundActive
+              : v.borderColor || colorScheme.borderDefault
+          }`,
           borderRadius: pxToRem(4),
         }),
       ...(underlined && {

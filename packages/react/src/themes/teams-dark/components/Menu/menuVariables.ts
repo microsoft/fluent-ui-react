@@ -1,8 +1,6 @@
 import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
 
 export default (siteVars: any): Partial<MenuVariables> => ({
-  verticalBorderColor: siteVars.black,
-
   borderColor: siteVars.colors.white,
   backgroundColorFocus: 'transparent',
 

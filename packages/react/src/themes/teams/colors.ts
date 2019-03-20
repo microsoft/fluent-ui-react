@@ -312,7 +312,7 @@ export const colorScheme: ColorSchemeMapping = {
   grey: {
     foregroundDefault: colors.grey.light02,
     backgroundDefault: colors.grey[500],
-    borderDefault: colors.grey[500],
+    borderDefault: colors.grey.light08,
     shadowDefault: colors.grey[500],
 
     foregroundHover: colors.black,

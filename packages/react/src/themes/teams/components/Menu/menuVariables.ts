@@ -4,7 +4,6 @@ import { ColorSchemeMapping } from '../../../types'
 export interface MenuVariables {
   colorScheme: ColorSchemeMapping
   color: string
-  verticalBorderColor: string
 
   backgroundColor: string
   backgroundColorFocus: string
@@ -49,9 +48,7 @@ export default (siteVars: any): MenuVariables => {
     colorFocus: siteVars.colors.white,
     colorDisabled: siteVars.colors.grey.light06,
 
-    verticalBorderColor: siteVars.colors.grey.light08,
-
-    borderColor: siteVars.colors.grey.light10,
+    borderColor: undefined,
     borderColorHover: undefined,
     borderColorActive: undefined,
     borderColorFocus: siteVars.colors.white,
