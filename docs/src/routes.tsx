@@ -13,6 +13,7 @@ import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
 import Theming from './views/Theming'
 import ThemingExamples from './views/ThemingExamples'
+import LayoutGuide from './views/Layout'
 import IntegrateCustomComponents from './views/IntegrateCustomComponents'
 
 const Router = () => (
@@ -89,6 +90,7 @@ const Router = () => (
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />
         <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
+        <DocsLayout exact path="/layout" component={LayoutGuide} />
         <DocsLayout exact path="/shorthand-props" component={ShorthandProps} />
         <DocsLayout
           exact

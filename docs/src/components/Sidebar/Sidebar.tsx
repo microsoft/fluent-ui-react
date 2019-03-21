@@ -317,6 +317,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'layout',
+        content: 'Layout',
+        as: NavLink,
+        to: '/layout',
+        styles: menuItemStyles,
+      },
+      {
         key: 'integrate-custom',
         content: 'Integrate Custom Components',
         as: NavLink,
