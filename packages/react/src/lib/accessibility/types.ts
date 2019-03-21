@@ -85,36 +85,36 @@ export type AriaRole =
 
 export interface AriaWidgetAttributes {
   role?: string
-  'aria-autocomplete'?: string
-  'aria-checked'?: string | boolean
-  'aria-current'?: string
-  'aria-disabled'?: string | boolean
-  'aria-expanded'?: string | boolean
-  'aria-haspopup'?: string
-  'aria-hidden'?: string | boolean
-  'aria-invalid'?: string
+  'aria-autocomplete'?: 'none' | 'inline' | 'list' | 'both'
+  'aria-checked'?: boolean | 'false' | 'mixed' | 'true'
+  'aria-current'?: boolean | 'false' | 'true' | 'page' | 'step' | 'location' | 'date' | 'time'
+  'aria-disabled'?: boolean | 'false' | 'true'
+  'aria-expanded'?: boolean | 'false' | 'true'
+  'aria-haspopup'?: boolean | 'false' | 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog'
+  'aria-hidden'?: boolean | 'false' | 'true'
+  'aria-invalid'?: boolean | 'false' | 'true' | 'grammar' | 'spelling'
   'aria-label'?: string
-  'aria-level'?: string
+  'aria-level'?: number
   'aria-modal'?: boolean
-  'aria-multiline'?: string
-  'aria-multiselectable'?: string
-  'aria-orientation'?: string
-  'aria-pressed'?: string | boolean
-  'aria-readonly'?: string
-  'aria-required'?: string
-  'aria-selected'?: string | boolean
-  'aria-sort'?: string
-  'aria-valuemax'?: string
-  'aria-valuemin'?: string
-  'aria-valuenow'?: string
+  'aria-multiline'?: boolean | 'false' | 'true'
+  'aria-multiselectable'?: boolean | 'false' | 'true'
+  'aria-orientation'?: 'horizontal' | 'vertical'
+  'aria-pressed'?: boolean | 'false' | 'mixed' | 'true'
+  'aria-readonly'?: boolean | 'false' | 'true'
+  'aria-required'?: boolean | 'false' | 'true'
+  'aria-selected'?: boolean | 'false' | 'true'
+  'aria-sort'?: 'none' | 'ascending' | 'descending' | 'other'
+  'aria-valuemax'?: number
+  'aria-valuemin'?: number
+  'aria-valuenow'?: number
   'aria-valuetext'?: string
 }
 
 export interface AriaRelationshipAttributes {
   'aria-activedescendant'?: string
-  'aria-colcount'?: string
-  'aria-colindex'?: string
-  'aria-colspan'?: string
+  'aria-colcount'?: number
+  'aria-colindex'?: number
+  'aria-colspan'?: number
   'aria-controls'?: string
   'aria-describedby'?: string
   'aria-details'?: string
@@ -122,15 +122,15 @@ export interface AriaRelationshipAttributes {
   'aria-flowto'?: string
   'aria-labelledby'?: string
   'aria-owns'?: string
-  'aria-posinset'?: string
-  'aria-rowcount'?: string
-  'aria-rowindex'?: string
-  'aria-rowspan'?: string
+  'aria-posinset'?: number
+  'aria-rowcount'?: number
+  'aria-rowindex'?: number
+  'aria-rowspan'?: number
 }
 
 export interface AccessibilityAttributes extends AriaWidgetAttributes, AriaRelationshipAttributes {
   role?: AriaRole
-  tabIndex?: string
+  tabIndex?: number
   [IS_FOCUSABLE_ATTRIBUTE]?: boolean
 }
 
