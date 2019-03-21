@@ -1,4 +1,4 @@
-import { customPropTypes } from 'src/lib'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 describe('suggest prop type', () => {
   test('should throw error when non-array argument given', () => {
