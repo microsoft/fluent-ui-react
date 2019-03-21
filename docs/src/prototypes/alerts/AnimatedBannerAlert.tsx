@@ -50,51 +50,22 @@ const BannerAlert: React.FunctionComponent<BannerAlertProps> = props => {
 }
 
 interface AnimatedBannerAlertProps extends BannerAlertProps {
-  closable?: boolean
-}
-
-interface AnimatedBannerAlertState {
-  open: boolean
+  open?: boolean
 }
 
 /**
  * Needs to have 'slideDown' animation defined in parent Provider
  */
-class AnimatedBannerAlert extends React.Component<
-  AnimatedBannerAlertProps,
-  AnimatedBannerAlertState
-> {
-  private readonly initialState: AnimatedBannerAlertState = { open: true }
-
-  state = this.initialState
-
-  componentDidUpdate(prevProps: AnimatedBannerAlertProps) {
-    const p = prevProps
-    const { info, danger, oof, critical, urgent } = this.props
-
-    if (
-      p.info !== info ||
-      p.danger !== danger ||
-      p.oof !== oof ||
-      p.critical !== critical ||
-      p.urgent !== urgent
-    ) {
-      this.setState(this.initialState)
-    }
-  }
-
-  handleClick = () => this.setState({ open: false })
-
+class AnimatedBannerAlert extends React.Component<AnimatedBannerAlertProps, { open: boolean }> {
   render() {
-    const { open } = this.state
-    const { closable, ...rest } = this.props
+    const { open, ...rest } = this.props
 
-    return closable ? (
+    if (open === undefined) return <BannerAlert {...rest} />
+
+    return (
       <Animation name={open ? '' : 'slideDown'}>
-        <BannerAlert {...rest} action={{ icon: 'close', onClick: this.handleClick }} />
+        <BannerAlert {...rest} />
       </Animation>
-    ) : (
-      <BannerAlert {...rest} />
     )
   }
 }

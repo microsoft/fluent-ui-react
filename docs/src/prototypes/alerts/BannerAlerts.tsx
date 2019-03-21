@@ -15,29 +15,47 @@ import ComposeMessage from '../chatPane/composeMessage'
 
 type BannerName = 'info' | 'oof' | 'danger' | 'urgent' | 'critical'
 
+const isAlertClosable = (bannerName: BannerName) =>
+  bannerName !== 'critical' && bannerName !== 'urgent'
+
+const getBannerContent = (bannerName: BannerName) => `${_.startCase(bannerName)} banner`
+
 const bannerNames: BannerName[] = ['info', 'oof', 'danger', 'urgent', 'critical']
 
 const bannerRadioItems: RadioGroupItemProps[] = bannerNames.map(bannerName => ({
   key: bannerName,
   value: bannerName,
-  label: `${_.startCase(bannerName)} banner`,
+  label: getBannerContent(bannerName),
 }))
 
-const isAlertClosable = (bannerName: BannerName) =>
-  bannerName !== 'critical' && bannerName !== 'urgent'
+const slideDown: ThemeAnimation = {
+  keyframe: {
+    from: { transform: 'translateY(0)' },
+    to: { transform: 'translateY(100%)', display: 'none' },
+  },
+  duration: '.3s',
+  iterationCount: '1',
+  timingFunction: 'linear',
+  fillMode: 'forwards',
+}
 
 interface BannerAlertsState {
-  selectedBanner: RadioGroupItemProps
+  selectedBannerName: string
+  open: boolean
 }
 
 class BannerAlerts extends React.Component<{}, BannerAlertsState> {
-  private readonly initialState: BannerAlertsState = { selectedBanner: bannerRadioItems[0] }
+  state = {
+    selectedBannerName: bannerRadioItems[0].value as BannerName,
+    open: true,
+  }
 
-  state = this.initialState
+  openSelectedBanner = () => this.setState({ open: true })
+
+  closeSelectedBanner = () => this.setState({ open: false })
 
   render() {
-    const { selectedBanner } = this.state
-    const bannerName = selectedBanner.value as BannerName
+    const { selectedBannerName, open } = this.state
 
     return (
       <Provider theme={{ animations: { slideDown } }}>
@@ -52,19 +70,25 @@ class BannerAlerts extends React.Component<{}, BannerAlertsState> {
         >
           <Flex space="between" vAlign="center">
             <Header as="h3">Select a banner:</Header>
-            <Button content="Reset Banner" onClick={() => this.setState(this.initialState)} />
+            <Button content="Reset Banner" onClick={this.openSelectedBanner} />
           </Flex>
           <RadioGroup
-            checkedValue={selectedBanner.value}
+            checkedValue={selectedBannerName}
             items={bannerRadioItems}
-            checkedValueChanged={(e, props) => this.setState({ selectedBanner: props })}
+            checkedValueChanged={(e, { value }) =>
+              this.setState({ selectedBannerName: value as BannerName, open: true })
+            }
           />
           <AnimatedBannerAlert
             {...{
-              [bannerName]: true,
+              key: selectedBannerName,
               attached: true,
-              closable: isAlertClosable(bannerName),
-              content: selectedBanner.label,
+              [selectedBannerName]: true,
+              content: getBannerContent(selectedBannerName as BannerName),
+              ...(isAlertClosable(selectedBannerName as BannerName) && {
+                open,
+                action: { icon: 'close', onClick: this.closeSelectedBanner },
+              }),
             }}
           />
           <ComposeMessage attached="bottom" />
@@ -75,14 +99,3 @@ class BannerAlerts extends React.Component<{}, BannerAlertsState> {
 }
 
 export default BannerAlerts
-
-const slideDown: ThemeAnimation = {
-  keyframe: {
-    from: { transform: 'translateY(0)' },
-    to: { transform: 'translateY(100%)', display: 'none' },
-  },
-  duration: '.3s',
-  iterationCount: '1',
-  timingFunction: 'linear',
-  fillMode: 'forwards',
-}
