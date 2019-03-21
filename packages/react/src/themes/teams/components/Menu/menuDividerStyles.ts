@@ -4,8 +4,10 @@ import { MenuVariables } from './menuVariables'
 
 const menuDividerStyles: ComponentSlotStylesInput<MenuDividerProps, MenuVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    // const borderColor = p.primary ? v.primaryBorderColor : v.borderColor
-    const borderColor = v.borderColor
+    const colorScheme = v.colorScheme[p.color ? p.color : p.primary ? 'primary' : 'default']
+    const borderColor = p.primary
+      ? v.primaryBorderColor
+      : v.borderColor || colorScheme.borderDefault
     const borderType = p.vertical ? 'borderTop' : 'borderLeft'
 
     return p.content

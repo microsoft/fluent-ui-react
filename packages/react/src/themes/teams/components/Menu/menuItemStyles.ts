@@ -128,7 +128,7 @@ const itemSeparator = ({ props, variables: v, theme, colorScheme }): ICSSInJSSty
         width: pxToRem(1),
         height: '100%',
         ...(primary
-          ? { background: theme.siteVariables.colors.grey.light10 /* TODO: check this again */ }
+          ? { background: v.primaryBorderColor /* TODO: check this again */ }
           : { background: v.borderColor || colorScheme.borderDefault }),
       },
     }
@@ -251,11 +251,11 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           (vertical
             ? pointing === 'end'
               ? {
-                  borderRight: `${pxToRem(3)} solid ${v.borderColorActive ||
+                  borderRight: `${pxToRem(3)} solid ${v.verticalPointingBorderColor ||
                     colorScheme.borderActive}`,
                 }
               : {
-                  borderLeft: `${pxToRem(3)} solid ${v.borderColorActive ||
+                  borderLeft: `${pxToRem(3)} solid ${v.verticalPointingBorderColor ||
                     colorScheme.borderActive}`,
                 }
             : pointingBeak({ props, variables: v, colorScheme }))),

@@ -33,8 +33,10 @@ export interface MenuVariables {
   verticalDividerMargin: string
   verticalItemBorderWidth: string
   verticalItemBorderColor: string
+  verticalPointingBorderColor: string
 
   underlinedBottomBorderWidth: string
+  primaryBorderColor: string
 
   dividerHeight: string
   borderWidth: string
@@ -74,8 +76,10 @@ export default (siteVars: any): MenuVariables => {
     verticalDividerMargin: `${pxToRem(8)} 0`,
     verticalItemBorderWidth: pxToRem(2),
     verticalItemBorderColor: 'transparent',
+    verticalPointingBorderColor: siteVars.colorScheme.primary.borderActive, // TODO: why is the default having primary color?!
 
     underlinedBottomBorderWidth: pxToRem(2),
+    primaryBorderColor: siteVars.colors.grey.light10,
 
     dividerHeight: pxToRem(1),
     borderWidth: pxToRem(1),
