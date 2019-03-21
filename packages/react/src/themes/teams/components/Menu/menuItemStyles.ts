@@ -266,12 +266,12 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
         // focus styles
         ...(isFromKeyboard && {
-          color: 'inherit',
+          color: v.iconOnlyColorActive,
         }),
 
         // hover styles
         ':hover': {
-          color: 'inherit',
+          color: v.iconOnlyColorActive,
         },
       }),
 
@@ -301,7 +301,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       },
 
       ...(disabled && {
-        color: 'inherit',
+        color: v.colorDisabled,
         ':hover': {
           // empty - overwrite all existing hover styles
         },
