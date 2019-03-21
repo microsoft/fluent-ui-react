@@ -115,12 +115,15 @@ export class TestHelper {
     return importedBehavior
   }
 
-  public convertToBooleanIfApplicable(stringToConvert: any) {
+  public convertToMatchingTypeIfApplicable(stringToConvert: any): boolean | number | string {
     if (stringToConvert === 'true') {
       return true
     }
     if (stringToConvert === 'false') {
       return false
+    }
+    if (typeof stringToConvert === 'string' && !Number.isNaN(Number(stringToConvert))) {
+      return Number(stringToConvert)
     }
     return stringToConvert
   }

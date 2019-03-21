@@ -2,7 +2,7 @@ import { SvgIconSpec, ComponentSlotStyleFunction } from '../../../../types'
 import { ObjectOf } from '../../../../../types'
 import { IconProps } from '../../../../../components/Icon/Icon'
 
-type SvgIconSpecWithStyles = {
+export type SvgIconSpecWithStyles = {
   icon: SvgIconSpec
   styles: ObjectOf<ComponentSlotStyleFunction<IconProps, any>>
 }

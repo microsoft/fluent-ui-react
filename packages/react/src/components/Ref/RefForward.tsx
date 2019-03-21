@@ -3,14 +3,13 @@ import * as React from 'react'
 
 import { ChildrenComponentProps, customPropTypes, handleRef } from '../../lib'
 
-export interface RefForwardProps
-  extends ChildrenComponentProps<React.ReactElement<any> & { ref: React.Ref<any> }> {
+export interface RefForwardProps extends ChildrenComponentProps<React.ReactElement<any>> {
   /**
    * Called when a child component will be mounted or updated.
    *
    * @param {HTMLElement} node - Referred node.
    */
-  innerRef?: React.Ref<any>
+  innerRef: React.Ref<any>
 }
 
 export default class RefForward extends React.Component<RefForwardProps> {
@@ -24,7 +23,7 @@ export default class RefForward extends React.Component<RefForwardProps> {
   private handleRefOverride = (node: HTMLElement) => {
     const { children, innerRef } = this.props
 
-    handleRef(children.ref, node)
+    handleRef((children as React.ReactElement<any> & { ref: React.Ref<any> }).ref, node)
     handleRef(innerRef, node)
   }
 
