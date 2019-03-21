@@ -40,7 +40,7 @@ const slideDown: ThemeAnimation = {
 }
 
 interface BannerAlertsState {
-  selectedBannerName: string
+  selectedBannerName: BannerName
   open: boolean
 }
 
@@ -84,8 +84,8 @@ class BannerAlerts extends React.Component<{}, BannerAlertsState> {
               key: selectedBannerName,
               attached: true,
               [selectedBannerName]: true,
-              content: getBannerContent(selectedBannerName as BannerName),
-              ...(isAlertClosable(selectedBannerName as BannerName) && {
+              content: getBannerContent(selectedBannerName),
+              ...(isAlertClosable(selectedBannerName) && {
                 open,
                 action: { icon: 'close', onClick: this.closeSelectedBanner },
               }),
