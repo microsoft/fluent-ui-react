@@ -5,7 +5,7 @@
   "author": "Levi Thomason <me@levithomason.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
-    "@stardust-ui/react-proptypes": "^0.23.0",
+    "@stardust-ui/react-proptypes": "^0.23.1",
     "classnames": "^2.2.5",
     "downshift": "^3.2.0",
     "fela": "^10.2.0",
