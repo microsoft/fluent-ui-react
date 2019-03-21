@@ -137,13 +137,13 @@ export interface PopupState {
  * This should be replaced with the actual description after the PR is merged
  */
 export default class Popup extends AutoControlledComponent<ReactProps<PopupProps>, PopupState> {
-  public static displayName = 'Popup'
+  static displayName = 'Popup'
 
-  public static className = 'ui-popup'
+  static className = 'ui-popup'
 
-  public static Content = PopupContent
+  static Content = PopupContent
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       animated: false,
       as: false,
@@ -168,7 +168,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     contentRef: customPropTypes.ref,
   }
 
-  public static defaultProps: PopupProps = {
+  static defaultProps: PopupProps = {
     accessibility: popupBehavior,
     align: 'start',
     position: 'above',
@@ -176,16 +176,16 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     mouseLeaveDelay: 500,
   }
 
-  public static autoControlledProps = ['open', 'target']
+  static autoControlledProps = ['open', 'target']
 
-  private static isBrowserContext = isBrowser()
+  static isBrowserContext = isBrowser()
 
-  private triggerDomElement = null
+  triggerDomElement = null
   // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
-  private triggerFocusableDomElement = null
-  private popupDomElement = null
+  triggerFocusableDomElement = null
+  popupDomElement = null
 
-  private closeTimeoutId
+  closeTimeoutId
 
   protected actionHandlers: AccessibilityActionHandlers = {
     closeAndFocusTrigger: e => {
@@ -203,7 +203,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     },
   }
 
-  public renderComponent({
+  renderComponent({
     classes,
     rtl,
     accessibility,
@@ -238,7 +238,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     }
   }
 
-  private isOutsidePopupElementAndOutsideTriggerElement(refs: NodeRef[], e) {
+  isOutsidePopupElementAndOutsideTriggerElement(refs: NodeRef[], e) {
     const isInsideNested = _.some(refs, (childRef: NodeRef) => {
       return doesNodeContainClick(childRef.current, e)
     })
@@ -250,7 +250,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     return isOutsidePopupElement && isOutsideTriggerElement
   }
 
-  private getTriggerProps(triggerElement) {
+  getTriggerProps(triggerElement) {
     const triggerProps: any = {}
 
     const { on } = this.props
@@ -315,7 +315,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     return triggerProps
   }
 
-  private getContentProps = (predefinedProps?) => {
+  getContentProps = (predefinedProps?) => {
     const contentProps: any = {}
 
     const { on } = this.props
@@ -358,7 +358,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     return contentProps
   }
 
-  private shouldBlurClose = e => {
+  shouldBlurClose = e => {
     return (
       !e.currentTarget ||
       !this.popupDomElement ||
@@ -367,7 +367,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     )
   }
 
-  private renderTrigger(accessibility) {
+  renderTrigger(accessibility) {
     const { children, trigger } = this.props
     const triggerElement = childrenExist(children) ? children : (trigger as any)
     const triggerProps = this.getTriggerProps(triggerElement)
@@ -389,7 +389,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     )
   }
 
-  private renderPopupContent(
+  renderPopupContent(
     popupPositionClasses: string,
     rtl: boolean,
     accessibility: AccessibilityBehavior,
@@ -419,7 +419,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     )
   }
 
-  private renderPopperChildren = (
+  renderPopperChildren = (
     popupPositionClasses: string,
     rtl: boolean,
     accessibility: AccessibilityBehavior,
@@ -504,7 +504,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     )
   }
 
-  private trySetOpen(newValue: boolean, eventArgs: any) {
+  trySetOpen(newValue: boolean, eventArgs: any) {
     // when new state 'open' === 'true', save the last focused element
     if (newValue) {
       this.updateTriggerFocusableDomElement()
@@ -513,12 +513,12 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
   }
 
-  private setPopupOpen(newOpen, e) {
+  setPopupOpen(newOpen, e) {
     clearTimeout(this.closeTimeoutId)
     newOpen ? this.trySetOpen(true, e) : this.schedulePopupClose(e)
   }
 
-  private schedulePopupClose = e => {
+  schedulePopupClose = e => {
     const { mouseLeaveDelay } = this.props
 
     this.closeTimeoutId = setTimeout(() => {
@@ -526,7 +526,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     }, mouseLeaveDelay)
   }
 
-  private close = (e, onClose?: Function) => {
+  close = (e, onClose?: Function) => {
     if (this.state.open) {
       this.trySetOpen(false, e)
       onClose && onClose()
@@ -537,7 +537,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
    * Save DOM element which had focus before Popup opens.
    * Can be either trigger DOM element itself or the element inside it.
    */
-  private updateTriggerFocusableDomElement() {
+  updateTriggerFocusableDomElement() {
     this.triggerFocusableDomElement = this.triggerDomElement.contains(document.activeElement)
       ? document.activeElement
       : this.triggerDomElement
