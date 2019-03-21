@@ -8,6 +8,7 @@ import {
   createShorthandFactory,
   commonPropTypes,
   isFromKeyboard,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
@@ -100,8 +101,8 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentStat
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {icon && (
           <div className={classes.icon}>
