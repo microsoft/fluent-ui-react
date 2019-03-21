@@ -91,7 +91,7 @@ class BannerAlerts extends React.Component<{}, BannerAlertsState> {
               }),
             }}
           />
-          <ComposeMessage attached="bottom" />
+          <ComposeMessage attached />
         </Flex>
       </Provider>
     )

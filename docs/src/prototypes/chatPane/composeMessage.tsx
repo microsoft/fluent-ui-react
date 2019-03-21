@@ -52,19 +52,25 @@ const ComposeMessage: React.FunctionComponent<ComposeMessageProps> = props => (
 )
 
 const getInputWrapperStyles = ({ attached }: ComposeMessageProps): React.CSSProperties => {
-  const borderTop = '3px'
-  const borderBottom = '2px'
+  const borderTopRadius = '3px'
+  const borderBottomRadius = '2px'
+  const borderWidth = '1px'
 
   return {
     boxSizing: 'border-box',
-    border: '1px solid',
-    borderRadius: `${borderTop} ${borderTop} ${borderBottom} ${borderBottom}`,
+    borderStyle: 'solid',
+    borderWidth,
+    borderRadius: `${borderTopRadius} ${borderTopRadius} ${borderBottomRadius} ${borderBottomRadius}`,
 
     ...((attached === 'top' || attached === true) && {
-      borderRadius: `${borderTop} ${borderTop} 0 0`,
+      borderRadius: `0 0 ${borderBottomRadius} ${borderBottomRadius}`,
+      marginTop: `-${borderWidth}`,
     }),
 
-    ...(attached === 'bottom' && { borderRadius: `0 0 ${borderBottom} ${borderBottom}` }),
+    ...(attached === 'bottom' && {
+      borderRadius: `${borderTopRadius} ${borderTopRadius} 0 0`,
+      marginBottom: `-${borderWidth}`,
+    }),
   }
 }
 
