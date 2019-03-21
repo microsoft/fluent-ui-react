@@ -7,8 +7,6 @@ import { ReactProps } from '../../types'
 import FlexItem from './FlexItem'
 
 export interface FlexProps extends UIComponentProps, ChildrenComponentProps {
-  [key: string]: any
-
   /** Defines if container should be inline element. */
   inline?: boolean
 
