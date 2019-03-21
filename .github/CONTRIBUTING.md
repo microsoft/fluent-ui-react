@@ -17,6 +17,7 @@ CONTRIBUTING
     - [Run `lerna create`](#run-lerna-create)
     - [Update `package.json`](#update-packagejson)
     - [Create `tsconfig.json`](#create-tsconfigjson)
+    - [Create `jest.config.js`](#create-jestconfigjs)
     - [Run `syncpack format`](#run-syncpack-format)
   - [Add a new dependency](#add-a-new-dependency)
 
@@ -175,8 +176,7 @@ Don't forget to provide a correct directory name, you can also use `gulp bundle:
 
 #### Create `tsconfig.json`
 
-If your package uses TypeScript, please also create a new `tsconfig.json` and place it in `packages/__DIRECTORY_NAME__`.
-An example config:
+If your package uses TypeScript, please also create a new `tsconfig.json` and place it in `packages/__DIRECTORY_NAME__`. An example config:
 
 ```json
 {
@@ -189,6 +189,17 @@ An example config:
 ```
 
 This config will extend a common TS config that is used in all packages. You can add specific options for the package here.
+
+#### Create `jest.config.js`
+
+If your package uses Jest for unit tests, please also create a new `jest.config.js` and place and place it in `packages/__DIRECTORY_NAME__`. An example config:
+
+```js
+module.exports = {
+  ...require('../../build/jest/jest.config.common'),
+  name: '__DIRECTORY_NAME__',
+}
+```
 
 #### Run `syncpack format`
 
