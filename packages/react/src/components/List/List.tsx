@@ -11,6 +11,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import ListItem, { ListItemProps } from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
@@ -166,9 +167,9 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
     return (
       <ElementType
         {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         className={classes.root}
       >
         {childrenExist(children) ? children : this.renderItems()}
