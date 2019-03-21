@@ -1,4 +1,4 @@
 module.exports = {
-  ...require('../../build/jest/jest.config.common'),
+  ...require('@stardust-ui/internal-tooling/jest'),
   name: 'react-component-nesting-registry',
 }

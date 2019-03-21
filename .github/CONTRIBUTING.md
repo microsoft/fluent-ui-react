@@ -196,7 +196,7 @@ If your package uses Jest for unit tests, please also create a new `jest.config.
 
 ```js
 module.exports = {
-  ...require('../../build/jest/jest.config.common'),
+  ...require('@stardust-ui/internal-tooling/jest'),
   name: '__DIRECTORY_NAME__',
 }
 ```
