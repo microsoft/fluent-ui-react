@@ -56,18 +56,16 @@ interface AnimatedBannerAlertProps extends BannerAlertProps {
 /**
  * Needs to have 'slideDown' animation defined in parent Provider
  */
-class AnimatedBannerAlert extends React.Component<AnimatedBannerAlertProps, { open: boolean }> {
-  render() {
-    const { open, ...rest } = this.props
+const AnimatedBannerAlert: React.FunctionComponent<AnimatedBannerAlertProps> = props => {
+  const { open, ...rest } = props
 
-    if (open === undefined) return <BannerAlert {...rest} />
+  if (open === undefined) return <BannerAlert {...rest} />
 
-    return (
-      <Animation name={open ? '' : 'slideDown'}>
-        <BannerAlert {...rest} />
-      </Animation>
-    )
-  }
+  return (
+    <Animation name={open ? '' : 'slideDown'}>
+      <BannerAlert {...rest} />
+    </Animation>
+  )
 }
 
 export default AnimatedBannerAlert
