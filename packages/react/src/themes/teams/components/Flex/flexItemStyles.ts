@@ -11,7 +11,7 @@ const flexItemStyles: ComponentSlotStylesInput<FlexItemProps, FlexItemVariables>
 
       ...(p.size && toFlexItemSizeValues(v[p.size])),
 
-      ...(p.shrink && { flexShrink: p.shrink }),
+      ...(typeof p.shrink === 'number' && { flexShrink: p.shrink }),
       ...(p.shrink === false && { flexShrink: 0 }),
 
       ...(p.grow && { flexGrow: p.grow }),
