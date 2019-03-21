@@ -13,7 +13,7 @@ try {
   felaDevMode = !!window.localStorage.felaDevMode
 } catch {}
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
   if (felaDevMode) {
     console.warn(
       [
