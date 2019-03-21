@@ -5,6 +5,7 @@ import 'mdn-polyfills/String.prototype.includes'
 import * as customPropTypes from './customPropTypes'
 import * as commonPropTypes from './commonPropTypes'
 
+export { default as applyAccessibilityKeyHandlers } from './applyAccessibilityKeyHandlers'
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
 export * from './colorUtils'
