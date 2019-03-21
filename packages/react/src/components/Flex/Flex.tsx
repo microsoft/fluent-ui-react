@@ -2,11 +2,11 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, commonPropTypes } from '../../lib'
+import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
 import { ReactProps } from '../../types'
 import FlexItem from './FlexItem'
 
-export interface FlexProps {
+export interface FlexProps extends UIComponentProps, ChildrenComponentProps {
   [key: string]: any
 
   /** Defines if container should be inline element. */

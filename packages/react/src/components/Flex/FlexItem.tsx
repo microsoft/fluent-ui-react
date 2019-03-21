@@ -2,11 +2,11 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import * as _ from 'lodash'
-import { UIComponent, commonPropTypes } from '../../lib'
+import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
 import { mergeStyles } from '../../lib/mergeThemes'
-import { Extendable } from '../../types'
+import { ReactProps } from '../../types'
 
-export interface FlexItemProps {
+export interface FlexItemProps extends UIComponentProps, ChildrenComponentProps {
   /** Controls item's alignment. */
   align?: 'auto' | 'start' | 'end' | 'center' | 'baseline' | 'stretch'
 
@@ -36,7 +36,7 @@ export interface FlexItemProps {
   flexDirection?: 'row' | 'column'
 }
 
-class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
+class FlexItem extends UIComponent<ReactProps<FlexItemProps>> {
   static className = 'ui-flex__item'
 
   static displayName = 'FlexItem'
