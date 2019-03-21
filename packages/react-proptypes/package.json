@@ -8,6 +8,9 @@
     "lodash": "^4.17.11",
     "prop-types": "^15.6.1"
   },
+  "devDependencies": {
+    "@stardust-ui/internal-tooling": "^0.23.1"
+  },
   "files": [
     "dist"
   ],

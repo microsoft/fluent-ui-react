@@ -7,6 +7,9 @@
   "dependencies": {
     "prop-types": "^15.6.1"
   },
+  "devDependencies": {
+    "@stardust-ui/internal-tooling": "^0.23.1"
+  },
   "files": [
     "dist"
   ],
@@ -18,9 +21,6 @@
   "peerDependencies": {
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
-  },
-  "devDependencies": {
-    "@stardust-ui/internal-tooling": "^0.23.1"
   },
   "publishConfig": {
     "access": "public"
