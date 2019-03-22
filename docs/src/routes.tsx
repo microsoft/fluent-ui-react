@@ -85,6 +85,12 @@ const Router = () => (
             path="/menu-button"
             component={require('./prototypes/MenuButton/index').default}
           />,
+          <DocsLayout
+            exact
+            key="/prototype-alerts"
+            path="/prototype-alerts"
+            component={require('./prototypes/alerts/index').default}
+          />,
         ]}
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />

@@ -75,16 +75,12 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
 
   public render(): JSX.Element {
     const { className, ariaLabelledBy } = this.props
+
     const unhandledProps = getUnhandledProps(
       { handledProps: [..._.keys(FocusTrapZone.propTypes)] },
       this.props,
     )
-    // TODO: Remove `as` there after the issue will be resolved:
-    // https://github.com/Microsoft/TypeScript/issues/28768
-    const ElementType = getElementType(
-      { defaultProps: FocusTrapZone.defaultProps },
-      this.props,
-    ) as React.ComponentClass<FocusTrapZoneProps>
+    const ElementType = getElementType({ defaultProps: FocusTrapZone.defaultProps }, this.props)
 
     return (
       <ElementType

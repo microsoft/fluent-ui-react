@@ -14,7 +14,7 @@ const popupBehavior: Accessibility = (props: any) => {
   return {
     attributes: {
       trigger: {
-        tabIndex: getAriaAttributeFromProps('tabIndex', props, '0'),
+        tabIndex: getAriaAttributeFromProps('tabIndex', props, 0),
         'aria-disabled': !_.isNil(props['aria-disabled'])
           ? props['aria-disabled']
           : !!props['disabled']
@@ -63,7 +63,11 @@ const isFocusable = propsData => {
   }
 }
 
-const getAriaAttributeFromProps = (attributeName: string, props: any, defaultValue: string) => {
+const getAriaAttributeFromProps = (
+  attributeName: string,
+  props: any,
+  defaultValue: number | string,
+) => {
   if (!props.trigger) return undefined
   if (props.trigger.props[attributeName]) {
     return props.trigger.props[attributeName]
