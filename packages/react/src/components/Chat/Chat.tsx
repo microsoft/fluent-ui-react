@@ -17,6 +17,10 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 
+export interface ChatSlotClassNames {
+  item: string
+}
+
 export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -32,9 +36,13 @@ export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
  * A Chat displays messages between users.
  */
 class Chat extends UIComponent<ReactProps<ChatProps>, any> {
+  static displayName = 'Chat'
+
   static className = 'ui-chat'
 
-  static displayName = 'Chat'
+  static slotClassNames: ChatSlotClassNames = {
+    item: ChatItem.className,
+  }
 
   static propTypes = {
     ...commonPropTypes.createCommon({

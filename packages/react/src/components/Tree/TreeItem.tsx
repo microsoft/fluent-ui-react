@@ -23,6 +23,11 @@ import {
   ShorthandValue,
 } from '../../types'
 
+export interface TreeItemSlotClassNames {
+  title: string
+  tree: string
+}
+
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -65,9 +70,14 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
 class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
   static create: Function
 
+  static displayName = 'TreeItem'
+
   static className = 'ui-tree__item'
 
-  static displayName = 'TreeItem'
+  static slotClassNames: TreeItemSlotClassNames = {
+    title: TreeTitle.className,
+    tree: `${TreeItem.className}__tree`,
+  }
 
   static autoControlledProps = ['open']
 
@@ -116,6 +126,7 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
         {open &&
           Tree.create(items, {
             defaultProps: {
+              className: TreeItem.slotClassNames.tree,
               exclusive,
               renderItemTitle,
             },

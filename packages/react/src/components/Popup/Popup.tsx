@@ -51,6 +51,10 @@ export type RestrictedClickEvents = 'click' | 'focus'
 export type RestrictedHoverEvents = 'hover' | 'focus'
 export type PopupEventsArray = RestrictedClickEvents[] | RestrictedHoverEvents[]
 
+export interface PopupSlotClassNames {
+  content: string
+}
+
 export interface PopupProps
   extends StyledComponentProps<PopupProps>,
     ChildrenComponentProps,
@@ -141,6 +145,10 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   static displayName = 'Popup'
 
   static className = 'ui-popup'
+
+  static slotClassNames: PopupSlotClassNames = {
+    content: PopupContent.className,
+  }
 
   static Content = PopupContent
 

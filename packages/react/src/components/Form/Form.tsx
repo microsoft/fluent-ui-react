@@ -16,6 +16,10 @@ import { defaultBehavior } from '../../lib/accessibility'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 import FormField from './FormField'
 
+export interface FormSlotClassNames {
+  field: string
+}
+
 export interface FormProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -48,6 +52,10 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
   public static displayName = 'Form'
 
   public static className = 'ui-form'
+
+  static slotClassNames: FormSlotClassNames = {
+    field: FormField.className,
+  }
 
   public static propTypes = {
     ...commonPropTypes.createCommon({

@@ -46,7 +46,10 @@ export interface DropdownSlotClassNames {
   clearIndicator: string
   container: string
   toggleIndicator: string
+  item: string
   itemsList: string
+  searchInput: string
+  selectedItem: string
   selectedItems: string
   triggerButton: string
 }
@@ -1099,7 +1102,10 @@ Dropdown.slotClassNames = {
   clearIndicator: `${Dropdown.className}__clear-indicator`,
   container: `${Dropdown.className}__container`,
   toggleIndicator: `${Dropdown.className}__toggle-indicator`,
+  item: DropdownItem.className,
   itemsList: `${Dropdown.className}__items-list`,
+  searchInput: DropdownSearchInput.className,
+  selectedItem: DropdownSelectedItem.className,
   selectedItems: `${Dropdown.className}__selected-items`,
   triggerButton: `${Dropdown.className}__trigger-button`,
 }

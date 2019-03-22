@@ -23,6 +23,11 @@ import {
   ShorthandRenderFunction,
 } from '../../types'
 
+export interface AccordionSlotClassNames {
+  content: string
+  title: string
+}
+
 export interface AccordionProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active panel. */
   activeIndex?: number[] | number
@@ -80,6 +85,11 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'
+
+  static slotClassNames: AccordionSlotClassNames = {
+    content: AccordionContent.className,
+    title: AccordionTitle.className,
+  }
 
   static propTypes = {
     ...commonPropTypes.createCommon({
