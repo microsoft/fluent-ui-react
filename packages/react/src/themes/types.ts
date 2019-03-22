@@ -153,11 +153,6 @@ export type State = ObjectOf<any>
 // ========================================================
 
 export interface SiteVariablesInput extends ObjectOf<any> {
-  colors?: ColorPalette
-  colorScheme?: ColorSchemeMapping
-  contextualColors?: ContextualColors
-  emphasisColors?: EmphasisColors
-  naturalColors?: NaturalColorsStrict
   htmlFontSize?: string
 }
 

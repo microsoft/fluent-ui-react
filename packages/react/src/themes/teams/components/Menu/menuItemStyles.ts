@@ -55,14 +55,10 @@ const getFocusedStyles = ({
     background: v.backgroundColorFocus || colorScheme.backgroundFocus,
     ...(vertical && isFromKeyboard && !pointing && !primary
       ? {
-          borderWidth: 1,
-          borderStyle: 'solid',
-          borderColor: v.borderColorFocus,
-          outlineWidth: 1,
-          outlineStyle: 'solid',
-          outlineColor: v.outlineFocus,
+          border: `solid 1px ${v.borderColorFocus}`,
+          outline: `solid 1px ${v.outlineColorFocus}`,
           margin: pxToRem(1),
-          background: v.backgroundColorFocus || colorScheme.backgroundFocus,
+          background: v.verticalBackgroundColorFocus || colorScheme.backgroundFocus,
         }
       : {}),
   }

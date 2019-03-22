@@ -15,7 +15,7 @@ export interface MenuVariables {
   borderColorActive: string
   borderColorFocus: string
 
-  outlineFocus: string
+  outlineColorFocus: string
   colorActive: string
   iconOnlyColorActive: string
 
@@ -33,6 +33,7 @@ export interface MenuVariables {
   verticalItemBorderWidth: string
   verticalItemBorderColor: string
   verticalPointingBorderColor: string
+  verticalBackgroundColorFocus: string
 
   underlinedBottomBorderWidth: string
   primaryBorderColor: string
@@ -54,7 +55,7 @@ export default (siteVars: any): MenuVariables => {
     borderColorActive: undefined,
     borderColorFocus: siteVars.colors.white,
 
-    outlineFocus: siteVars.colors.black,
+    outlineColorFocus: siteVars.colors.black,
 
     backgroundColor: undefined,
     backgroundColorFocus: undefined,
@@ -75,6 +76,7 @@ export default (siteVars: any): MenuVariables => {
     verticalItemBorderWidth: pxToRem(2),
     verticalItemBorderColor: 'transparent',
     verticalPointingBorderColor: siteVars.colorScheme.primary.borderActive, // TODO: why is the default having primary color?!
+    verticalBackgroundColorFocus: siteVars.colorScheme.grey.light09,
 
     underlinedBottomBorderWidth: pxToRem(2),
     primaryBorderColor: siteVars.colors.grey.light10,
