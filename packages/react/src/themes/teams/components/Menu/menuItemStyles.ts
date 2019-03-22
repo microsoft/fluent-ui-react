@@ -77,10 +77,10 @@ const getHoverStyles = ({
   variables: MenuVariables
   colorScheme: any
 }): ICSSInJSStyle => {
-  const { primary, underlined, isFromKeyboard, active, vertical, pointing, color } = props
+  const { primary, underlined, active, vertical, color } = props
   if (active && !underlined && !vertical) return {}
   return {
-    ...(underlined && !isFromKeyboard
+    ...(underlined
       ? {
           color: v.colorActive,
         }
@@ -90,22 +90,9 @@ const getHoverStyles = ({
           background: v.backgroundColorHover || colorScheme.backgroundHover,
         }
       : {
-          color: v.color,
+          color: v.colorActive,
           background: v.backgroundColorHover || colorScheme.backgroundHover,
         }),
-
-    ...(vertical && isFromKeyboard && !pointing && !primary
-      ? {
-          borderWidth: 1,
-          borderStyle: 'solid',
-          borderColor: v.borderColorFocus,
-          outlineWidth: 1,
-          outlineStyle: 'solid',
-          outlineColor: v.outlineFocus,
-          margin: pxToRem(1),
-          background: v.backgroundColorFocus,
-        }
-      : {}),
   }
 }
 
