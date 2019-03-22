@@ -35,9 +35,7 @@ import createAnimationStyles from './createAnimationStyles'
 import { generateColorScheme } from '.'
 
 export interface RenderResultConfig<P> {
-  // TODO: Switch back to React.ReactType after issue will be resolved
-  // https://github.com/Microsoft/TypeScript/issues/28768
-  ElementType: React.ComponentType<P> | string
+  ElementType: React.ElementType<P>
   classes: ComponentSlotClasses
   unhandledProps: Props
   variables: ComponentVariablesObject

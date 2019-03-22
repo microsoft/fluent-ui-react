@@ -1,12 +1,10 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
-import cx from 'classnames'
 
 import { UIComponent, commonPropTypes } from '../../lib'
 import { ReactProps } from '../../types'
 import FlexItem from './FlexItem'
-import FlexGap from './FlexGap'
 
 export interface FlexProps {
   [key: string]: any
@@ -48,8 +46,6 @@ export interface FlexProps {
 class Flex extends UIComponent<ReactProps<FlexProps>> {
   static Item = FlexItem
 
-  static Gap = FlexGap
-
   static displayName = 'Flex'
   static className = 'ui-flex'
 
@@ -85,36 +81,22 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
   renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
     return (
       <ElementType className={classes.root} {...unhandledProps}>
-        {this.renderChildren(classes.gap)}
+        {this.renderChildren()}
       </ElementType>
     )
   }
 
-  renderChildren = (gapClasses: string) => {
-    const { column, gap, children } = this.props
+  renderChildren = () => {
+    const { column, children } = this.props
 
-    let isFirstElement = true
     return React.Children.map(children, (child: any) => {
       const isFlexItemElement: boolean = _.get(child, 'type.__isFlexItem')
-      const maybeChildElement = isFlexItemElement
+
+      return isFlexItemElement
         ? React.cloneElement(child, {
             flexDirection: column ? 'column' : 'row',
           })
         : child
-
-      const renderGap = !isFirstElement
-      if (maybeChildElement) {
-        isFirstElement = false
-      }
-
-      return (
-        maybeChildElement && (
-          <>
-            {renderGap && gap && <Flex.Gap className={cx(`${Flex.className}__gap`, gapClasses)} />}
-            {maybeChildElement}
-          </>
-        )
-      )
     })
   }
 }

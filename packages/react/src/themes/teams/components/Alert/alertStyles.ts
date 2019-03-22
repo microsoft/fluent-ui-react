@@ -62,7 +62,8 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     position: 'relative',
     width: '100%',
     boxSizing: 'border-box',
-    border: v.border,
+    borderStyle: v.borderStyle,
+    borderWidth: v.borderWidth,
     borderRadius: v.borderRadius,
     minHeight: v.minHeight,
     padding: v.padding,
@@ -74,7 +75,9 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
       borderRadius: `${v.borderRadius} ${v.borderRadius} 0 0`,
     }),
 
-    ...(p.attached === 'bottom' && { borderRadius: `0 0 ${v.borderRadius} ${v.borderRadius}` }),
+    ...(p.attached === 'bottom' && {
+      borderRadius: `0 0 ${v.borderRadius} ${v.borderRadius}`,
+    }),
   }),
 
   content: (): ICSSInJSStyle => ({
@@ -84,8 +87,10 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
   action: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     height: v.actionSize,
     minWidth: v.actionSize,
+    margin: `-${v.borderWidth} 0`,
     color: v.actionColor || 'currentColor',
     ...(p.info && { color: siteVariables.gray02 }),
+    ':focus': { outline: 0 },
   }),
 }
 
