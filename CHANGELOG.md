@@ -32,6 +32,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `Alert` component @Bugaa92 ([#1063](https://github.com/stardust-ui/react/pull/1063))
+- Add `placeholderColor` variable for `Input` component in Teams theme @layershifter ([#1092](https://github.com/stardust-ui/react/pull/1092))
 
 <!--------------------------------[ v0.23.1 ]------------------------------- -->
 ## [v0.23.1](https://github.com/stardust-ui/react/tree/v0.23.1) (2019-03-13)
