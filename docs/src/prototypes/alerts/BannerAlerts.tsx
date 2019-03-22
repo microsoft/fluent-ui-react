@@ -33,7 +33,7 @@ const slideDown: ThemeAnimation = {
     from: { transform: 'translateY(0)' },
     to: { transform: 'translateY(100%)', display: 'none' },
   },
-  duration: '.3s',
+  duration: '.2s',
   iterationCount: '1',
   timingFunction: 'linear',
   fillMode: 'forwards',
