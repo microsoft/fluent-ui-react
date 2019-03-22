@@ -51,8 +51,19 @@ const getFocusedStyles = ({
   const { primary, color, underlined, isFromKeyboard, active, vertical, pointing } = props
   if (active && !underlined && !vertical) return {}
   return {
-    color: primary || color ? colorScheme.foregroundFocus : 'inherit',
-    background: v.backgroundColorFocus || colorScheme.backgroundFocus,
+    ...(underlined
+      ? {
+          color,
+        }
+      : primary || color
+      ? {
+          color: colorScheme.foregroundFocus,
+          background: v.backgroundColorHover || colorScheme.backgroundHover,
+        }
+      : {
+          color: v.color,
+          background: v.backgroundColorHover || colorScheme.backgroundHover,
+        }),
 
     ...(vertical && isFromKeyboard && !pointing && !primary
       ? {
