@@ -17,6 +17,7 @@ import {
   EventStack,
   rtlTextContainer,
   ColorComponentProps,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Menu from './Menu'
@@ -58,6 +59,12 @@ export interface MenuItemProps
 
   /** MenuItem index inside Menu. */
   index?: number
+
+  /** MenuItem position inside Menu (skipping separators). */
+  itemPosition?: number
+
+  /** MenuItem count inside Menu. */
+  itemsCount?: number
 
   /**
    * Called on click. When passed, the component will render as an `a`
@@ -142,6 +149,8 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     icon: customPropTypes.itemShorthand,
     iconOnly: PropTypes.bool,
     index: PropTypes.number,
+    itemPosition: PropTypes.number,
+    itemsCount: PropTypes.number,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     pills: PropTypes.bool,
@@ -213,9 +222,9 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
           {...accessibility.attributes.root}
-          {...accessibility.keyHandlers.root}
           {...unhandledProps}
           {...!wrapper && { onClick: this.handleClick }}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           {icon &&
             Icon.create(this.props.icon, {
@@ -255,7 +264,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
         defaultProps: {
           className: cx(MenuItem.slotClassNames.wrapper, classes.wrapper),
           ...accessibility.attributes.wrapper,
-          ...accessibility.keyHandlers.wrapper,
+          ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
         },
         overrideProps: () => ({
           children: (

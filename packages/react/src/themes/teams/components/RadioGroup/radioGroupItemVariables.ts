@@ -1,3 +1,5 @@
+import { pxToRem } from '../../../../lib'
+
 export type RadioGroupItemVariables = {
   color: string
   colorChecked: string
@@ -8,6 +10,8 @@ export type RadioGroupItemVariables = {
 
   colorBackground: string
   colorBackgroundChecked: string
+
+  padding: string
 }
 
 export default (siteVars: any): RadioGroupItemVariables => ({
@@ -20,4 +24,6 @@ export default (siteVars: any): RadioGroupItemVariables => ({
 
   colorBackground: siteVars.colors.white,
   colorBackgroundChecked: siteVars.colors.primary[500],
+
+  padding: `0 ${pxToRem(4)}`,
 })

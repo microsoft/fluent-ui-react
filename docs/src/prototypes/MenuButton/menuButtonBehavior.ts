@@ -12,14 +12,14 @@ const menuButtonBehavior: Accessibility = (props: MenuButtonProps & MenuButtonSt
       'aria-haspopup': 'true',
       id: props.buttonId,
       role: _.get(props, 'button.as') === 'button' ? undefined : 'button',
-      tabIndex: props.menuOpen ? '-1' : undefined,
+      tabIndex: props.menuOpen ? -1 : undefined,
     },
     menu: {
       'aria-labelledby': props.buttonId,
       id: props.menuId,
     },
     menuItem: {
-      tabIndex: '-1',
+      tabIndex: -1,
       wrapper: {
         role: 'none',
       },

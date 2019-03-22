@@ -318,6 +318,7 @@ export interface ThemeComponentStylesInput {
   [key: string]: ComponentSlotStylesInput | undefined
 
   Accordion?: ComponentSlotStylesInput
+  Alert?: ComponentSlotStylesInput
   Animation?: ComponentSlotStylesInput
   Attachment?: ComponentSlotStylesInput
   Avatar?: ComponentSlotStylesInput
@@ -361,6 +362,7 @@ export interface ThemeComponentStylesPrepared {
   [key: string]: ComponentSlotStylesPrepared | undefined
 
   Accordion?: ComponentSlotStylesPrepared
+  Alert?: ComponentSlotStylesPrepared
   Animation?: ComponentSlotStylesPrepared
   Attachment?: ComponentSlotStylesPrepared
   Avatar?: ComponentSlotStylesPrepared
@@ -404,6 +406,7 @@ export interface ThemeComponentVariablesInput {
   [key: string]: any
 
   Accordion?: ComponentVariablesInput
+  Alert?: ComponentVariablesInput
   Animation?: ComponentVariablesInput
   Attachment?: ComponentVariablesInput
   Avatar?: ComponentVariablesInput
@@ -445,6 +448,7 @@ export interface ThemeComponentVariablesPrepared {
   [key: string]: any
 
   Accordion?: ComponentVariablesPrepared
+  Alert?: ComponentVariablesPrepared
   Animation?: ComponentVariablesPrepared
   Attachment?: ComponentVariablesPrepared
   Avatar?: ComponentVariablesPrepared

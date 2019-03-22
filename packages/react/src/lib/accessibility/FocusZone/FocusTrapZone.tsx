@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as keyboardKey from 'keyboard-key'
@@ -17,7 +18,6 @@ import {
 import { FocusTrapZoneProps } from './FocusTrapZone.types'
 import getUnhandledProps from '../../getUnhandledProps'
 import getElementType from '../../getElementType'
-import * as customPropTypes from '../../customPropTypes'
 
 /** FocusTrapZone is used to trap the focus in any html element placed in body
  *  and hide other elements outside of Focus Trap Zone from accessibility tree.
@@ -75,16 +75,12 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
 
   public render(): JSX.Element {
     const { className, ariaLabelledBy } = this.props
+
     const unhandledProps = getUnhandledProps(
       { handledProps: [..._.keys(FocusTrapZone.propTypes)] },
       this.props,
     )
-    // TODO: Remove `as` there after the issue will be resolved:
-    // https://github.com/Microsoft/TypeScript/issues/28768
-    const ElementType = getElementType(
-      { defaultProps: FocusTrapZone.defaultProps },
-      this.props,
-    ) as React.ComponentClass<FocusTrapZoneProps>
+    const ElementType = getElementType({ defaultProps: FocusTrapZone.defaultProps }, this.props)
 
     return (
       <ElementType
