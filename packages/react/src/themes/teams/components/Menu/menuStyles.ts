@@ -28,7 +28,6 @@ export default {
       ...(iconOnly && { alignItems: 'center' }),
       ...(vertical && {
         flexDirection: 'column',
-        color: v.verticalColor || colorScheme.backgroundDefault,
         backgroundColor: v.verticalBackgroundColor || theme.siteVariables.colors.white,
         padding: `${pxToRem(8)} 0`,
         ...(submenu && {

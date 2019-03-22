@@ -428,7 +428,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
               ...(iconOnly && { color: 'inherit' }),
               ...(!active &&
                 underlined &&
-                underlinedItem(v.backgroundColorActive || colorScheme.backgroundActive)),
+                underlinedItem(v.underlinedBorderColor || colorScheme.backgroundActive)),
             }
           : !active &&
             underlined &&

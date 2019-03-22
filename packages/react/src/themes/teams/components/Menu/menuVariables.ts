@@ -26,7 +26,6 @@ export interface MenuVariables {
   lineHeightBase: string
   horizontalPadding: string
 
-  verticalColor: string
   verticalBackgroundColor: string
   verticalItemPadding: string
   verticalBoxShadow: string
@@ -69,7 +68,6 @@ export default (siteVars: any): MenuVariables => {
     lineHeightBase: siteVars.lineHeightMedium,
     horizontalPadding: `${pxToRem(14)} ${pxToRem(18)} ${pxToRem(14)} ${pxToRem(18)}`,
 
-    verticalColor: undefined,
     verticalBackgroundColor: undefined,
     verticalItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
     verticalBoxShadow: siteVars.shadowLevel3,
