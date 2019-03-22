@@ -5,8 +5,9 @@
   "author": "Levi Thomason <me@levithomason.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
+    "@stardust-ui/react-proptypes": "^0.23.1",
     "classnames": "^2.2.5",
-    "downshift": "^3.2.0",
+    "downshift": "^3.2.6",
     "fela": "^10.2.0",
     "fela-plugin-fallback-value": "^10.2.0",
     "fela-plugin-placeholder-prefixer": "^10.2.0",
