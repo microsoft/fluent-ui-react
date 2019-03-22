@@ -22,6 +22,7 @@ import chat from './chat'
 import chevronDown from './chevronDown'
 import close from './close'
 import codeSnippet from './codeSnippet'
+import document from './document'
 import download from './download'
 import edit from './edit'
 import email from './email'
@@ -109,6 +110,7 @@ export default {
   'chevron-down': chevronDown,
   close,
   'code-snippet': codeSnippet,
+  document,
   download,
   edit,
   email,
