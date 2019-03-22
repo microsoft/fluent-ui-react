@@ -17,7 +17,7 @@ const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, DividerV
     const { children, color, fitted, size, important, content } = props
     const colors = variables.colorScheme[color]
     return {
-      color: _.get(colors, 'borderDefault', variables.textColor),
+      color: _.get(colors, 'foregroundDefault', variables.textColor),
       display: 'flex',
       alignItems: 'center',
       ...(!fitted && {

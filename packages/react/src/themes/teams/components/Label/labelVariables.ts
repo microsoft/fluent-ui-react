@@ -18,8 +18,8 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
     ...siteVars.colorScheme,
     default: {
       ...siteVars.colorScheme.default,
-      foregroundDefault: color,
-      backgroundDefault: 'rgb(232, 232, 232)',
+      backgroundDefault: color,
+      foregroundDefault: 'rgb(232, 232, 232)',
     },
   }
 

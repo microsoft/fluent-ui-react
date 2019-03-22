@@ -1,4 +1,10 @@
-import { ColorPalette, ContextualColors, EmphasisColors, NaturalColors } from '../types'
+import {
+  ColorPalette,
+  ContextualColors,
+  EmphasisColors,
+  NaturalColors,
+  PrimitiveColors,
+} from '../types'
 import { ColorVariants, ColorSchemeMapping } from 'src/themes/types'
 
 export const emphasisColors: EmphasisColors = {
@@ -168,6 +174,11 @@ const emphasisAndNaturalColors: EmphasisColors & NaturalColors = {
   ...naturalColors,
 }
 
+export const primitiveColors: PrimitiveColors = {
+  black: '#000',
+  white: '#fff',
+}
+
 export type ThemeColors = Partial<{
   darkOrange: ColorVariants
   postOrange: ColorVariants
@@ -178,10 +189,7 @@ export type ThemeColors = Partial<{
 export const colors: ColorPalette<ThemeColors> = {
   ...emphasisAndNaturalColors,
   ...contextualColors,
-
-  // Primitive colors
-  black: '#000',
-  white: '#fff', // siteVariables.white
+  ...primitiveColors,
 }
 
 export const colorScheme: ColorSchemeMapping = {
@@ -217,8 +225,8 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.grey[500],
   },
   black: {
-    foregroundDefault: colors.white,
-    backgroundDefault: colors.black,
+    foregroundDefault: colors.black,
+    backgroundDefault: colors.white,
     borderDefault: colors.black,
     shadowDefault: colors.black,
 
@@ -248,8 +256,8 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.black,
   },
   white: {
-    foregroundDefault: colors.black,
-    backgroundDefault: colors.white,
+    foregroundDefault: colors.white,
+    backgroundDefault: colors.black,
     borderDefault: colors.white,
     shadowDefault: colors.white,
 
@@ -279,8 +287,8 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.white,
   },
   primary: {
-    foregroundDefault: colors.primary[50],
-    backgroundDefault: colors.primary[500],
+    foregroundDefault: colors.primary[500],
+    backgroundDefault: colors.primary[50],
     borderDefault: colors.primary[500],
     shadowDefault: colors.primary[500],
 
@@ -310,8 +318,8 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.primary[500],
   },
   grey: {
-    foregroundDefault: colors.grey[50],
-    backgroundDefault: colors.grey[500],
+    foregroundDefault: colors.grey[500],
+    backgroundDefault: colors.grey[50],
     borderDefault: colors.grey[500],
     shadowDefault: colors.grey[500],
 
@@ -341,8 +349,8 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.grey[500],
   },
   green: {
-    foregroundDefault: colors.green[50],
-    backgroundDefault: colors.green[500],
+    foregroundDefault: colors.green[500],
+    backgroundDefault: colors.green[50],
     borderDefault: colors.green[500],
     shadowDefault: colors.green[500],
 
@@ -372,8 +380,8 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.green[500],
   },
   orange: {
-    foregroundDefault: colors.black,
-    backgroundDefault: colors.orange[500],
+    foregroundDefault: colors.orange[500],
+    backgroundDefault: colors.black,
     borderDefault: colors.orange[500],
     shadowDefault: colors.orange[500],
 
@@ -403,8 +411,8 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.orange[500],
   },
   pink: {
-    foregroundDefault: colors.pink[50],
-    backgroundDefault: colors.pink[500],
+    foregroundDefault: colors.pink[500],
+    backgroundDefault: colors.pink[50],
     borderDefault: colors.pink[500],
     shadowDefault: colors.pink[500],
 
@@ -448,8 +456,8 @@ export const colorScheme: ColorSchemeMapping = {
     // darkerDefault: colors.red[500],
     // darkestDefault: colors.red[500],
 
-    foregroundDefault: colors.red[50],
-    backgroundDefault: colors.red[500],
+    foregroundDefault: colors.red[500],
+    backgroundDefault: colors.red[50],
     borderDefault: colors.red[500],
     shadowDefault: colors.red[500],
 
@@ -479,8 +487,8 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.red[500],
   },
   yellow: {
-    foregroundDefault: colors.black,
-    backgroundDefault: colors.yellow[500],
+    foregroundDefault: colors.yellow[500],
+    backgroundDefault: colors.black,
     borderDefault: colors.yellow[500],
     shadowDefault: colors.yellow[500],
 
@@ -510,8 +518,8 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.yellow[500],
   },
   darkOrange: {
-    foregroundDefault: colors.darkOrange[50],
-    backgroundDefault: colors.darkOrange[500],
+    foregroundDefault: colors.darkOrange[500],
+    backgroundDefault: colors.darkOrange[50],
     borderDefault: colors.darkOrange[500],
     shadowDefault: colors.darkOrange[500],
 
@@ -541,8 +549,8 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.darkOrange[500],
   },
   lightGreen: {
-    foregroundDefault: colors.black,
-    backgroundDefault: colors.lightGreen[500],
+    foregroundDefault: colors.lightGreen[500],
+    backgroundDefault: colors.black,
     borderDefault: colors.lightGreen[500],
     shadowDefault: colors.lightGreen[500],
 
@@ -572,8 +580,8 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.lightGreen[500],
   },
   magenta: {
-    foregroundDefault: colors.magenta[50],
-    backgroundDefault: colors.magenta[500],
+    foregroundDefault: colors.magenta[500],
+    backgroundDefault: colors.magenta[50],
     borderDefault: colors.magenta[500],
     shadowDefault: colors.magenta[500],
 
@@ -603,8 +611,8 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.magenta[500],
   },
   postOrange: {
-    foregroundDefault: colors.black,
-    backgroundDefault: colors.postOrange[500],
+    foregroundDefault: colors.postOrange[500],
+    backgroundDefault: colors.black,
     borderDefault: colors.postOrange[500],
     shadowDefault: colors.postOrange[500],
 

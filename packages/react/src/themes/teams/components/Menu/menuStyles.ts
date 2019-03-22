@@ -22,13 +22,13 @@ export default {
       minHeight: pxToRem(24),
       margin: 0,
       padding: 0,
-      color: v.color || colorScheme.foregroundDefault,
+      color: v.color || colorScheme.backgroundDefault,
       backgroundColor: v.backgroundColor || 'inherit',
       listStyleType: 'none',
       ...(iconOnly && { alignItems: 'center' }),
       ...(vertical && {
         flexDirection: 'column',
-        color: v.verticalColor || colorScheme.foregroundDefault,
+        color: v.verticalColor || colorScheme.backgroundDefault,
         backgroundColor: v.verticalBackgroundColor || theme.siteVariables.colors.white,
         padding: `${pxToRem(8)} 0`,
         ...(submenu && {
