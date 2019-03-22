@@ -51,20 +51,8 @@ const getFocusedStyles = ({
   const { primary, color, underlined, isFromKeyboard, active, vertical, pointing } = props
   if (active && !underlined && !vertical) return {}
   return {
-    ...(underlined
-      ? {
-          color,
-        }
-      : primary || color
-      ? {
-          color: colorScheme.foregroundFocus,
-          background: v.backgroundColorHover || colorScheme.backgroundHover,
-        }
-      : {
-          color: v.color,
-          background: v.backgroundColorHover || colorScheme.backgroundHover,
-        }),
-
+    color: primary || color ? colorScheme.foregroundFocus : v.colorActive,
+    background: v.backgroundColorFocus || colorScheme.backgroundFocus,
     ...(vertical && isFromKeyboard && !pointing && !primary
       ? {
           borderWidth: 1,
@@ -83,20 +71,18 @@ const getFocusedStyles = ({
 const getHoverStyles = ({
   props,
   variables: v,
-  color,
   colorScheme,
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  color: string
   colorScheme: any
 }): ICSSInJSStyle => {
-  const { primary, underlined, isFromKeyboard, active, vertical, pointing } = props
+  const { primary, underlined, isFromKeyboard, active, vertical, pointing, color } = props
   if (active && !underlined && !vertical) return {}
   return {
     ...(underlined && !isFromKeyboard
       ? {
-          color,
+          color: v.colorActive,
         }
       : primary || color
       ? {
@@ -291,7 +277,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         ...(isFromKeyboard && getFocusedStyles({ props, variables: v, colorScheme })),
 
         // hover styles
-        ':hover': getHoverStyles({ props, variables: v, color: 'inherit', colorScheme }),
+        ':hover': getHoverStyles({ props, variables: v, colorScheme }),
       }),
 
       ':first-child': {

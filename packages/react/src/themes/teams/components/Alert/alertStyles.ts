@@ -27,8 +27,8 @@ const getIntentColorsFromProps = (
   if (p.info) {
     return {
       color: colors.grey[900],
-      backgroundColor: siteVars.gray09,
-      borderColor: siteVars.gray08,
+      backgroundColor: siteVars.colors.grey.light09,
+      borderColor: siteVars.colors.grey.light08,
     }
   }
 
