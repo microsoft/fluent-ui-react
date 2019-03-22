@@ -5,8 +5,8 @@ import BannerAlerts from './BannerAlerts'
 export default () => (
   <PrototypeSection title="Alerts">
     <ComponentPrototype
-      title="Types of alerts"
-      description="The Alert component can be customized to show other intents than the ones defined (using variables)."
+      title="Banner Alerts"
+      description="The Alert component can be customized (using variables) to show other intents in addition to the predefined ones."
     >
       <BannerAlerts />
     </ComponentPrototype>
