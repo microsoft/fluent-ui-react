@@ -11,5 +11,5 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'filesIndesign',
+  exportedAs: 'files-indesign',
 } as TeamsProcessedSvgIconSpec
