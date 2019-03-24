@@ -72,7 +72,7 @@ export default () => (
         )
 
         return (
-          <OpaqueBackground color="red">
+          <OpaqueBackground color="lightyellow">
             This is a bad approach to opaque background :(
           </OpaqueBackground>
         )
