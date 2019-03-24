@@ -9,4 +9,5 @@ export default {
     </svg>
   ),
   styles: {},
+  exportedAs: 'files-txt',
 } as TeamsProcessedSvgIconSpec
