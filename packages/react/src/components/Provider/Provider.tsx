@@ -13,6 +13,8 @@ import {
   UIComponent,
   commonPropTypes,
   updateCachedRemSize,
+  UIComponentProps,
+  ChildrenComponentProps,
 } from '../../lib'
 
 import {
@@ -29,9 +31,8 @@ import { mergeSiteVariables } from '../../lib/mergeThemes'
 import ProviderBox from './ProviderBox'
 import { ReactProps } from '../../types'
 
-export interface ProviderProps {
+export interface ProviderProps extends UIComponentProps, ChildrenComponentProps {
   theme: ThemeInput
-  children: React.ReactNode
 }
 
 /**
