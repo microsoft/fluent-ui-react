@@ -10,8 +10,6 @@ import {
   felaRtlRenderer,
   isBrowser,
   mergeThemes,
-  UIComponent,
-  commonPropTypes,
   updateCachedRemSize,
   UIComponentProps,
   ChildrenComponentProps,
@@ -38,18 +36,12 @@ export interface ProviderProps extends UIComponentProps, ChildrenComponentProps 
 /**
  * The Provider passes the CSS in JS renderer and theme to your components.
  */
-class Provider extends UIComponent<ReactProps<ProviderProps>> {
+class Provider extends React.Component<ReactProps<ProviderProps>> {
   static className = 'ui-provider'
 
   static displayName = 'Provider'
 
   static propTypes = {
-    ...commonPropTypes.createCommon({
-      animated: false,
-      color: false,
-      content: false,
-      styled: false,
-    }),
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
       componentVariables: PropTypes.object,
@@ -75,10 +67,6 @@ class Provider extends UIComponent<ReactProps<ProviderProps>> {
       animations: PropTypes.object,
     }),
     children: PropTypes.element.isRequired,
-  }
-
-  static defaultProps = {
-    as: ProviderBox,
   }
 
   static Consumer = ProviderConsumer
@@ -156,8 +144,8 @@ class Provider extends UIComponent<ReactProps<ProviderProps>> {
     this.renderFontFaces()
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
-    const { theme, children } = this.props
+  render() {
+    const { theme, children, ...unhandledProps } = this.props
 
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
@@ -184,9 +172,9 @@ class Provider extends UIComponent<ReactProps<ProviderProps>> {
           return (
             <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
               <ThemeProvider theme={outgoingTheme}>
-                <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
+                <ProviderBox {...unhandledProps} {...rtlProps}>
                   {children}
-                </ElementType>
+                </ProviderBox>
               </ThemeProvider>
             </RendererProvider>
           )

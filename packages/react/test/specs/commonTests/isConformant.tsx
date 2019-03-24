@@ -4,11 +4,10 @@ import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 
-import { ThemeProvider, FelaTheme, RendererProvider } from 'react-fela'
+import { ThemeProvider, FelaTheme } from 'react-fela'
 
 import Ref from 'src/components/Ref/Ref'
 import RefFindNode from 'src/components/Ref/RefFindNode'
-import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
 
 import isExportedAtTopLevel from './isExportedAtTopLevel'
 import {
@@ -33,7 +32,6 @@ export interface Conformant {
   exportedAtTopLevel?: boolean
   rendersPortal?: boolean
   wrapperComponent?: React.ReactType
-  isStyled?: boolean
 }
 
 /**
@@ -54,14 +52,13 @@ export default (Component, options: Conformant = {}) => {
     requiredProps = {},
     rendersPortal = false,
     wrapperComponent = null,
-    isStyled = true,
   } = options
   const { throwError } = helpers('isConformant', Component)
 
   const componentType = typeof Component
 
   const helperComponentNames = [
-    ...[ThemeProvider, RendererProvider, ProviderConsumer, FelaTheme, Ref, RefFindNode],
+    ...[ThemeProvider, FelaTheme, Ref, RefFindNode],
     ...(wrapperComponent ? [wrapperComponent] : []),
   ].map(getDisplayName)
 
@@ -303,15 +300,13 @@ export default (Component, options: Conformant = {}) => {
       expect(Array.isArray(Component.handledProps)).toEqual(true)
     })
 
-    if (isStyled) {
-      test(`has 'styles' as handled prop`, () => {
-        expect(Component.handledProps).toContain('styles')
-      })
+    test(`has 'styles' as handled prop`, () => {
+      expect(Component.handledProps).toContain('styles')
+    })
 
-      test(`has 'variables' as handled prop`, () => {
-        expect(Component.handledProps).toContain('variables')
-      })
-    }
+    test(`has 'variables' as handled prop`, () => {
+      expect(Component.handledProps).toContain('variables')
+    })
 
     test('Component.handledProps includes all handled props', () => {
       const computedProps = _.union(
