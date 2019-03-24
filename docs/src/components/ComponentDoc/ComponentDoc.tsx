@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router'
-import { Flex, Header, Icon, Dropdown, Text, themes } from '@stardust-ui/react'
+import { Flex, Header, Icon, Dropdown, Text, Grid } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
@@ -90,18 +90,18 @@ class ComponentDoc extends React.Component<any, any> {
     const { activePath } = this.state
 
     return (
-      <div style={{ paddingLeft: '20px' }}>
+      <div style={{ padding: '20px' }}>
         <Flex column>
           <Flex.Item padding="padding.medium">
             <ThemeContext.Consumer>
-              {({ changeTheme }) => (
+              {({ changeTheme, themeOptions }) => (
                 <Dropdown
                   getA11yStatusMessage={getA11yStatusMessage}
                   getA11ySelectionMessage={getA11ySelectionMessage}
                   noResultsMessage="We couldn't find any matches."
                   placeholder="Theme"
                   onSelectedChange={changeTheme}
-                  items={this.getThemeOptions().map(o => o.text)}
+                  items={themeOptions.map(({ text, value }) => ({ header: text, value }))}
                 />
               )}
             </ThemeContext.Consumer>
@@ -137,25 +137,21 @@ class ComponentDoc extends React.Component<any, any> {
             </>
           </Flex.Item>
         </Flex>
-        <Flex styles={{ width: '75%' }} column>
-          <Flex.Item>
-            <div ref={this.handleExamplesRef}>
-              <ExampleContext.Provider
-                value={{
-                  activeAnchorName: activePath,
-                  onExamplePassed: this.handleExamplePassed,
-                }}
-              >
-                <ComponentExamples displayName={info.displayName} />
-              </ExampleContext.Provider>
-            </div>
-          </Flex.Item>
+        <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
+          <div ref={this.handleExamplesRef}>
+            <ExampleContext.Provider
+              value={{
+                activeAnchorName: activePath,
+                onExamplePassed: this.handleExamplePassed,
+              }}
+            >
+              <ComponentExamples displayName={info.displayName} />
+            </ExampleContext.Provider>
 
-          <Flex.Item>
             <div style={exampleEndStyle}>
               This is the bottom <Icon name="pointing down" />
             </div>
-          </Flex.Item>
+          </div>
 
           {/* TODO: bring back the right floating menu
             <Box styles={{ width: '25%', paddingLeft: '14px' }}>
@@ -167,16 +163,9 @@ class ComponentDoc extends React.Component<any, any> {
               />
             </Box>
           */}
-        </Flex>
+        </Grid>
       </div>
     )
-  }
-
-  private getThemeOptions = () => {
-    return Object.keys(themes).map(key => ({
-      text: _.startCase(key),
-      value: key,
-    }))
   }
 }
 

@@ -8,6 +8,7 @@ import {
   UIComponent,
   commonPropTypes,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
@@ -61,9 +62,9 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
       <ElementType
         className={classes.root}
         {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {childrenExist(children) ? children : _.map(items, item => ChatItem.create(item))}
       </ElementType>

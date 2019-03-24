@@ -13,7 +13,7 @@ export interface CreateComponentConfig<P> {
   shorthandPropName?: string
   defaultProps?: Partial<P>
   handledProps?: string[]
-  propTypes?: React.ValidationMap<P>
+  propTypes?: React.WeakValidationMap<P>
   actionHandlers?: AccessibilityActionHandlers
   focusZoneRef?: (focusZone: FocusZone) => void
   render: (config: RenderResultConfig<P>, props: P) => React.ReactNode
@@ -53,7 +53,10 @@ const createComponent = <P extends ObjectOf<any> = any>({
     })
   }
 
-  StardustComponent.create = createShorthandFactory(mergedDefaultProps.as, shorthandPropName)
+  StardustComponent.create = createShorthandFactory({
+    Component: mergedDefaultProps.as,
+    mappedProp: shorthandPropName,
+  })
 
   StardustComponent.displayName = displayName
 

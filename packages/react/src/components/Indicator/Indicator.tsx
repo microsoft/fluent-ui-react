@@ -9,14 +9,14 @@ import {
   customPropTypes,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+import { iconBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
 import Icon from '../Icon/Icon'
 
 export interface IndicatorProps extends UIComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
+   * @default iconBehavior
    */
   accessibility?: Accessibility
 
@@ -51,7 +51,7 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
+    accessibility: iconBehavior,
     as: 'span',
     direction: 'bottom',
   }
@@ -83,6 +83,6 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
   }
 }
 
-Indicator.create = createShorthandFactory(Indicator)
+Indicator.create = createShorthandFactory({ Component: Indicator, mappedProp: 'icon' })
 
 export default Indicator

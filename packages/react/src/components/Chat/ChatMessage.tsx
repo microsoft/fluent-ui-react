@@ -15,6 +15,7 @@ import {
   commonPropTypes,
   isFromKeyboard,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import { chatMessageBehavior, toolbarBehavior } from '../../lib/accessibility'
@@ -190,13 +191,13 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
 
     return (
       <ElementType
-        {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
-        {...rtlTextContainer.getAttributes({ forElements: [children] })}
-        {...unhandledProps}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
         className={className}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
       >
         {childrenPropExists ? (
           children
@@ -248,7 +249,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   }
 }
 
-ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
+ChatMessage.create = createShorthandFactory({ Component: ChatMessage, mappedProp: 'content' })
 ChatMessage.slotClassNames = {
   actionMenu: `${ChatMessage.className}__actions`,
   author: `${ChatMessage.className}__author`,

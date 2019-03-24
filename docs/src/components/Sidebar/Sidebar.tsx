@@ -125,21 +125,43 @@ class Sidebar extends React.Component<any, any> {
   render() {
     // Should be applied by provider
     const sidebarStyles: ICSSInJSStyle = {
+      background: '#201f1f',
       width: '250px',
       position: 'fixed',
       overflowY: 'scroll',
-      top: '0px',
-      bottom: '0px',
-      paddingLeft: '0em',
-      paddingRight: '0em',
-      paddingTop: '0em',
-      paddingBottom: '0em',
+      top: 0,
+      left: 0,
+      padding: 0,
+      maxHeight: '100vh',
+
+      '::-webkit-scrollbar': {
+        '-webkit-appearance': 'none',
+        height: '10px',
+        width: '10px',
+      },
+      '::-webkit-scrollbar-track': {
+        background: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: 0,
+      },
+      '::-webkit-scrollbar-thumb': {
+        cursor: 'pointer',
+        borderRadius: '5px',
+        background: 'rgba(255, 255, 255, 0.25)',
+        transition: 'color 0.2s ease',
+      },
+      '::-webkit-scrollbar-thumb:window-inactive': {
+        background: 'rgba(255, 255, 255, 0.15)',
+      },
+      '::-webkit-scrollbar-thumb:hover': {
+        background: 'rgba(255, 255, 255, 0.35)',
+      },
     }
 
     const menuSectionStyles: ICSSInJSStyle = {
       fontWeight: fontWeightBold,
       margin: '0 0 .5rem',
       padding: '0 1.2857rem',
+      background: '#201f1f',
       color: 'white',
       ':hover': {
         background: 'none',
@@ -157,6 +179,7 @@ class Sidebar extends React.Component<any, any> {
       fontSize: '0.85714286em',
       fontWeight: 400,
       color: '#ffffff80',
+      background: '#201f1f',
       ':hover': {
         color: 'white',
         backgroundColor: 'none',
@@ -170,11 +193,13 @@ class Sidebar extends React.Component<any, any> {
     const dividerStyles: ICSSInJSStyle = {
       marginTop: '.5em',
       paddingBottom: '.5em',
+      background: '#201f1f',
     }
 
     const navBarStyles: ICSSInJSStyle = {
       color: '#ffffff80',
       padding: '0px',
+      backgroundColor: '#201f1f',
     }
 
     const logoStyles: ICSSInJSStyle = {
@@ -336,10 +361,10 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
-        key: 'chatmessagepopover',
-        content: 'Chat message with popover',
+        key: 'chatMssages',
+        content: 'Chat Messages',
         as: NavLink,
-        to: '/prototype-chat-message-with-popover',
+        to: '/prototype-chat-messages',
         styles: menuItemStyles,
       },
       {
@@ -347,6 +372,13 @@ class Sidebar extends React.Component<any, any> {
         content: 'Dropdowns',
         as: NavLink,
         to: '/prototype-dropdowns',
+        styles: menuItemStyles,
+      },
+      {
+        key: 'alerts',
+        content: 'Alerts',
+        as: NavLink,
+        to: '/prototype-alerts',
         styles: menuItemStyles,
       },
       {
@@ -399,13 +431,6 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
-        key: 'importantmentionmessages',
-        content: 'Important and mention messages',
-        as: NavLink,
-        to: '/important-and-mention-messages',
-        styles: menuItemStyles,
-      },
-      {
         key: 'colorpalette',
         content: 'Color Palette',
         as: NavLink,
@@ -449,25 +474,20 @@ class Sidebar extends React.Component<any, any> {
 
     // TODO: bring back the active elements indicators
     return (
-      <Segment
-        styles={sidebarStyles}
-        content={
-          <>
-            <Segment styles={menuSectionStyles}>
-              <Logo width="32px" styles={logoStyles} />
-              <Text
-                role="heading"
-                aria-level="1"
-                color="white"
-                content="Stardust UI React &nbsp;"
-                styles={logoStyles}
-              />
-              <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
-            </Segment>
-            <Menu vertical fluid pills styles={navBarStyles} items={allItems} />
-          </>
-        }
-      />
+      <Segment styles={sidebarStyles}>
+        <Segment styles={menuSectionStyles}>
+          <Logo width="32px" styles={logoStyles} />
+          <Text
+            role="heading"
+            aria-level="1"
+            color="white"
+            content="Stardust UI React &nbsp;"
+            styles={logoStyles}
+          />
+          <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
+        </Segment>
+        <Menu vertical fluid pills styles={navBarStyles} items={allItems} />
+      </Segment>
     )
   }
 }

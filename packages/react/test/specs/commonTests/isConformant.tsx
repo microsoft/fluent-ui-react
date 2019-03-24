@@ -93,6 +93,27 @@ export default (Component, options: Conformant = {}) => {
     return wrapperComponent ? toNextNonTrivialChild(topLevelChildElement) : topLevelChildElement
   }
 
+  const getEventTargetComponent = (wrapper: ReactWrapper, listenerName: string) => {
+    const eventTarget = eventTargets[listenerName]
+      ? wrapper
+          .find(eventTargets[listenerName])
+          .hostNodes()
+          .first()
+      : wrapper
+          .find('[data-simulate-event-here]')
+          .hostNodes()
+          .first()
+
+    // if (eventTarget.length === 0) {
+    //   throw new Error(
+    //     'The event prop was not delegated to the children. You probably ' +
+    //     'forgot to use `getUnhandledProps` util to spread the `unhandledProps` props.',
+    //   )
+    // }
+
+    return eventTarget
+  }
+
   // make sure components are properly exported
   if (componentType !== 'function') {
     throwError(`Components should export a class or function, got: ${componentType}.`)
@@ -349,6 +370,24 @@ export default (Component, options: Conformant = {}) => {
 
       expect(element.prop(IS_FOCUSABLE_ATTRIBUTE)).toBe(false)
     })
+
+    _.forEach(['onKeyDown', 'onKeyPress', 'onKeyUp'], listenerName => {
+      test(`handles ${listenerName} transparently`, () => {
+        // onKeyDown => keyDown
+        const eventName = _.camelCase(listenerName.replace('on', ''))
+        const handler = jest.fn()
+
+        const wrapperProps = {
+          ...requiredProps,
+          'data-simulate-event-here': true,
+          [listenerName]: handler,
+        }
+        const wrapper = mount(<Component {...wrapperProps} />)
+
+        getEventTargetComponent(wrapper, listenerName).simulate(eventName)
+        expect(handler).toBeCalledTimes(1)
+      })
+    })
   }
 
   // ----------------------------------------
@@ -377,23 +416,7 @@ export default (Component, options: Conformant = {}) => {
         }
 
         const component = mount(<Component {...props} />).childAt(0)
-
-        const eventTarget = eventTargets[listenerName]
-          ? component
-              .find(eventTargets[listenerName])
-              .hostNodes()
-              .first()
-          : component
-              .find('[data-simulate-event-here]')
-              .hostNodes()
-              .first()
-
-        if (eventTarget.length === 0) {
-          throw new Error(
-            'The event prop was not delegated to the children. You probably ' +
-              'forgot to use `getUnhandledProps` util to spread the `unhandledProps` props.',
-          )
-        }
+        const eventTarget = getEventTargetComponent(component, listenerName)
         const customHandler: Function = eventTarget.prop(listenerName)
 
         if (customHandler) {

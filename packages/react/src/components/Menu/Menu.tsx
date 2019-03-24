@@ -152,6 +152,8 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
       indicator,
     } = this.props
     const { activeIndex } = this.state
+    const itemsCount = _.filter(items, item => getKindProp(item, 'item') !== 'divider').length
+    let itemPosition = 0
 
     return _.map(items, (item, index) => {
       const active =
@@ -166,9 +168,12 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
             vertical,
             variables,
             styles: styles.divider,
+            inSubmenu: submenu,
           },
         })
       }
+
+      itemPosition++
 
       return MenuItem.create(item, {
         defaultProps: {
@@ -181,6 +186,8 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
           variables,
           vertical,
           index,
+          itemPosition,
+          itemsCount,
           active,
           inSubmenu: submenu,
           indicator,
@@ -205,6 +212,6 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   }
 }
 
-Menu.create = createShorthandFactory(Menu, 'items')
+Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items' })
 
 export default Menu

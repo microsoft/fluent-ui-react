@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
@@ -11,11 +10,12 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
-  rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
-import Label from '../Label/Label'
+import Box from '../Box/Box'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 import Icon from '../Icon/Icon'
+import Ref from '../Ref/Ref'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
 
@@ -37,7 +37,7 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
   checkedChanged?: ComponentEventHandler<RadioGroupItemProps>
 
   /** The label of the radio item. */
-  label?: React.ReactNode
+  label?: ShorthandValue
 
   /** Initial checked value. */
   defaultChecked?: boolean
@@ -96,7 +96,7 @@ class RadioGroupItem extends AutoControlledComponent<
   ReactProps<RadioGroupItemProps>,
   RadioGroupItemState
 > {
-  private elementRef: HTMLElement
+  private elementRef = React.createRef<HTMLElement>()
 
   static create: Function
 
@@ -112,7 +112,7 @@ class RadioGroupItem extends AutoControlledComponent<
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
-    label: customPropTypes.nodeContent,
+    label: customPropTypes.itemShorthand,
     name: PropTypes.string,
     onBlur: PropTypes.func,
     onClick: PropTypes.func,
@@ -133,29 +133,39 @@ class RadioGroupItem extends AutoControlledComponent<
   componentDidUpdate(prevProps, prevState) {
     const checked = this.state.checked
     if (checked !== prevState.checked) {
-      checked && this.props.shouldFocus && this.elementRef.focus()
+      checked && this.props.shouldFocus && this.elementRef.current.focus()
       _.invoke(this.props, 'checkedChanged', undefined, { ...this.props, checked })
     }
   }
 
-  componentDidMount() {
-    this.elementRef = ReactDOM.findDOMNode(this) as HTMLElement
+  handleFocus = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: isFromKeyboard() })
+    _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
+  handleBlur = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: false })
+    _.invoke(this.props, 'onBlur', e, this.props)
+  }
+
+  handleClick = e => {
+    _.invoke(this.props, 'onClick', e, this.props)
   }
 
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
     const { label, icon } = this.props
 
     return (
-      <ElementType
-        {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
-        {...unhandledProps}
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
-        onClick={this.handleClick}
-        className={classes.root}
-      >
-        <Label styles={styles.label}>
+      <Ref innerRef={this.elementRef}>
+        <ElementType
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          onClick={this.handleClick}
+          className={classes.root}
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        >
           {Icon.create(icon || '', {
             defaultProps: {
               circular: true,
@@ -164,27 +174,17 @@ class RadioGroupItem extends AutoControlledComponent<
               styles: styles.icon,
             },
           })}
-          {rtlTextContainer.createFor({ element: label })}
-        </Label>
-      </ElementType>
+          {Box.create(label, {
+            defaultProps: {
+              as: 'span',
+            },
+          })}
+        </ElementType>
+      </Ref>
     )
-  }
-
-  private handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-    _.invoke(this.props, 'onFocus', e, this.props)
-  }
-
-  private handleBlur = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: false })
-    _.invoke(this.props, 'onBlur', e, this.props)
-  }
-
-  private handleClick = e => {
-    _.invoke(this.props, 'onClick', e, this.props)
   }
 }
 
-RadioGroupItem.create = createShorthandFactory(RadioGroupItem)
+RadioGroupItem.create = createShorthandFactory({ Component: RadioGroupItem, mappedProp: 'label' })
 
 export default RadioGroupItem

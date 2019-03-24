@@ -25,12 +25,19 @@ export const brand08 = '#8B8CC7' // no mapping color
 
 export const magenta = '#B24782' // no mapping color
 export const orchid = '#943670' // no mapping color
-export const red08 = '#F3D6DB' // no mapping color
+
+export const red = colors.red[900] // no mapping color $app-red
+export const red08 = '#F3D6DB' // no mapping color $app-red-08
+export const red10 = '#FCF4F6' // no mapping color $app-red-10
 
 //
 // SHADOW LEVELS
 //
-export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, 0.1)'
+export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, .1)'
+export const shadowLevel2 = '0 .4rem 0.7rem -0.1rem rgba(0, 0, 0, .1)'
+export const shadowLevel3 = '0 .8rem 1rem -0.2rem rgba(0, 0, 0, .1)'
+export const shadowLevel4 = '0 .6rem 1.8rem -0.4rem rgba(0, 0, 0, .1)'
+
 export const shadowLevel1Darker = '0 .2rem .4rem -.075rem rgba(0, 0, 0, 0.5)'
 
 //
