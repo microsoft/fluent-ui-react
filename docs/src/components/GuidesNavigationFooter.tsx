@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Button, Flex, Divider } from '@stardust-ui/react'
 
 type PageDescriptor = {
@@ -20,7 +20,7 @@ const GuidesNavigationFooter: React.FC<GuidesNavigationFooterProps> = ({ previou
     <Flex gap="gap.small">
       {previous && (
         <Button
-          as={NavLink}
+          as={Link}
           content={previous.name}
           icon="arrow left"
           iconPosition="before"
@@ -30,7 +30,7 @@ const GuidesNavigationFooter: React.FC<GuidesNavigationFooterProps> = ({ previou
       )}
       {next && (
         <Button
-          as={NavLink}
+          as={Link}
           content={next.name}
           icon="arrow right"
           iconPosition="after"

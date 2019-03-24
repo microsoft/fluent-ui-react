@@ -22,7 +22,7 @@ const links = {
 }
 
 export default () => (
-  <DocPage title="Layout">
+  <DocPage title="Layout Components">
     <Header as="h2">Overview</Header>
     <p>The following components are introduced by Stardust to handle layout aspects:</p>
     <ul>
