@@ -1,13 +1,13 @@
 {
   "name": "@stardust-ui/react",
   "description": "A themable React component library.",
-  "version": "0.23.1",
+  "version": "0.24.0",
   "author": "Levi Thomason <me@levithomason.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
-    "@stardust-ui/react-component-event-listener": "^0.23.1",
-    "@stardust-ui/react-component-nesting-registry": "^0.23.1",
-    "@stardust-ui/react-proptypes": "^0.23.1",
+    "@stardust-ui/react-component-event-listener": "^0.24.0",
+    "@stardust-ui/react-component-nesting-registry": "^0.24.0",
+    "@stardust-ui/react-proptypes": "^0.24.0",
     "classnames": "^2.2.5",
     "downshift": "^3.2.6",
     "fela": "^10.2.0",
