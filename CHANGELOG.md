@@ -29,6 +29,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Disable `devMode` for Fela by default @layershifter ([#1090](https://github.com/stardust-ui/react/pull/1090))
 - Fix accessibility types for aria attributes @layershifter ([#1087](https://github.com/stardust-ui/react/pull/1087))
 - Fix `action` prop size issue for `Alert` @Bugaa92 ([#1083](https://github.com/stardust-ui/react/pull/1083))
+- Fix issues with clicks inside nested `Popup`s @layershifter ([#949](https://github.com/stardust-ui/react/pull/949))
 
 ### Features
 - Add `Alert` component @Bugaa92 ([#1063](https://github.com/stardust-ui/react/pull/1063))

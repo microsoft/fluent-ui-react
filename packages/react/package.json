@@ -5,6 +5,8 @@
   "author": "Levi Thomason <me@levithomason.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
+    "@stardust-ui/react-component-event-listener": "^0.23.1",
+    "@stardust-ui/react-component-nesting-registry": "^0.23.1",
     "@stardust-ui/react-proptypes": "^0.23.1",
     "classnames": "^2.2.5",
     "downshift": "^3.2.6",
