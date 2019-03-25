@@ -28,7 +28,7 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
     },
     root: {
       role: 'button',
-      tabIndex: '0',
+      tabIndex: 0,
       'aria-haspopup': props.menu ? 'true' : undefined,
       'aria-disabled': !_.isNil(props['aria-disabled'])
         ? props['aria-disabled']

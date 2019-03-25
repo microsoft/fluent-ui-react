@@ -382,6 +382,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'alerts',
+        content: 'Alerts',
+        as: NavLink,
+        to: '/prototype-alerts',
+        styles: menuItemStyles,
+      },
+      {
         key: 'asyncshorthand',
         content: 'Async Shorthand',
         as: NavLink,
