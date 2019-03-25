@@ -35,6 +35,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `Alert` component @Bugaa92 ([#1063](https://github.com/stardust-ui/react/pull/1063))
 - Add `placeholderColor` variable for `Input` component in Teams theme @layershifter ([#1092](https://github.com/stardust-ui/react/pull/1092))
 - Add and export files icons in Teams theme @codepretty ([#1094](https://github.com/stardust-ui/react/pull/1094))
+- Add support for SVG animations to `Loader`, update in Teams theme @layershifter ([#1097](https://github.com/stardust-ui/react/pull/1097))
 
 <!--------------------------------[ v0.23.1 ]------------------------------- -->
 ## [v0.23.1](https://github.com/stardust-ui/react/tree/v0.23.1) (2019-03-13)
