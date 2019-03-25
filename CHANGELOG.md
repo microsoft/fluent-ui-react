@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix `RadioButtonGroup` Teams theme styles to be correct @notandrew ([#830](https://github.com/stardust-ui/react/pull/830))
+
 <!--------------------------------[ v0.24.0 ]------------------------------- -->
 ## [v0.24.0](https://github.com/stardust-ui/react/tree/v0.24.0) (2019-03-25)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.23.1...v0.24.0)
