@@ -16,10 +16,11 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         }),
       },
 
-      ...(active && {
-        background: v.backgroundColorActive,
-        color: v.colorActive,
-      }),
+      ...(active &&
+        !underlined && {
+          background: v.backgroundColorActive,
+          color: v.colorActive,
+        }),
 
       ...((iconOnly || vertical) && {
         ...(isFromKeyboard && {

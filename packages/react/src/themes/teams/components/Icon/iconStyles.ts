@@ -89,8 +89,6 @@ const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier): number =>
 }
 
 const getIconColor = (variables, colors) => {
-  console.log(variables.color)
-  colors && console.log(colors.foregroundDefault)
   return _.get(colors, 'foregroundDefault', variables.color || 'currentColor')
 }
 
