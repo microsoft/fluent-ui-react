@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { NavLink } from 'react-router-dom'
 import DocPage from '../components/DocPage/DocPage'
 import CodeSnippet from '../components/CodeSnippet'
+import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
-import { Header, Divider, Segment, Button } from '@stardust-ui/react'
+import { Header, Segment } from '@stardust-ui/react'
 
 const code = (content: string): React.ReactNode => <code>{content}</code>
 
@@ -522,23 +522,9 @@ export default () => (
       'https://github.com/stardust-ui/accessibility/blob/master/CONTRIBUTING.md',
     )}
 
-    <Divider />
-    <br />
-    <Button
-      as={NavLink}
-      content="Quick Start"
-      icon="arrow left"
-      iconPosition="before"
-      primary
-      to="quick-start"
-    />
-    <Button
-      as={NavLink}
-      content="Theming"
-      icon="arrow right"
-      iconPosition="after"
-      primary
-      to="theming"
+    <GuidesNavigationFooter
+      previous={{ name: 'Quick Start', url: 'quick-start' }}
+      next={{ name: 'Theming', url: 'theming' }}
     />
   </DocPage>
 )
