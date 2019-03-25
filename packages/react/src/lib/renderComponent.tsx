@@ -148,10 +148,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
     <FelaTheme>
       {(theme: ThemePrepared) => {
         if (_.isEmpty(theme)) {
-          if (className !== 'ui-provider') {
-            // Provider does not need to be wrapped a Provider
-            logProviderMissingWarning()
-          }
+          logProviderMissingWarning()
         }
 
         const {

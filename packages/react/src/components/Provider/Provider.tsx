@@ -65,7 +65,7 @@ class Provider extends React.Component<Extendable<ProviderProps>> {
       ),
       animations: PropTypes.object,
     }),
-    children: PropTypes.element.isRequired,
+    children: PropTypes.node.isRequired,
   }
 
   static Consumer = ProviderConsumer

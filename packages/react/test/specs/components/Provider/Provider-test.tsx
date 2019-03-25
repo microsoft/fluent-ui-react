@@ -62,7 +62,7 @@ describe('Provider', () => {
         </Provider>,
       )
       const providerDiv = component.find('div#top-level-provider')
-      expect(providerDiv.length).toEqual(1)
+      expect(providerDiv.exists()).toBe(true)
       expect(providerDiv.prop('dir')).toEqual('rtl')
     })
 
@@ -73,7 +73,7 @@ describe('Provider', () => {
         </Provider>,
       )
       const providerDiv = component.find('div#top-level-provider')
-      expect(providerDiv.length).toEqual(1)
+      expect(providerDiv.exists()).toBe(true)
       expect(providerDiv.prop('dir')).toEqual('ltr')
     })
 
@@ -120,7 +120,7 @@ describe('Provider', () => {
           </Provider>,
         )
         const nestedProviderDiv = component.find('div#nested-provider')
-        expect(nestedProviderDiv.length).toEqual(1)
+        expect(nestedProviderDiv.exists()).toBe(true)
         expect(nestedProviderDiv.prop('dir')).toEqual(expectedChildDir)
       })
     })
