@@ -40,16 +40,16 @@ export const colorScheme: ColorSchemeMapping = {
   default: createColorScheme('grey', {
     foregroundDefault: colors.grey.light02,
     backgroundDefault: colors.grey[500],
-    borderDefault: colors.grey.light08,
+    borderDefault: colors.grey.dark08,
 
     foregroundHover: colors.black,
-    backgroundHover: colors.grey.light14,
+    backgroundHover: colors.grey.dark08,
 
     foregroundActive: colors.black,
-    backgroundActive: colors.grey.light10,
+    backgroundActive: colors.grey.dark08,
 
     foregroundFocus: colors.black,
-    backgroundFocus: colors.grey.light14,
+    backgroundFocus: colors.grey.dark08,
 
     foregroundFocusWithin: colors.black,
 
