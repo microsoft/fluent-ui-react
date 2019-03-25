@@ -3,11 +3,8 @@ import { ChatItemVariables } from './chatItemVariables'
 import { ChatItemProps } from '../../../../components/Chat/ChatItem'
 import { pxToRem } from '../../../../lib'
 import { default as ChatMessage } from '../../../../components/Chat/ChatMessage'
-import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 
 const chatMessageClassNameSelector = `& .${ChatMessage.className}`
-const chatMessageAuthorClassNameSelector = `& .${ChatMessage.slotClassNames.author}`
-const chatMessageTimestampClassNameSelector = `& .${ChatMessage.slotClassNames.timestamp}`
 
 const getPositionStyles = (props: ChatItemProps) => ({
   float: props.contentPosition === 'end' ? 'right' : 'left',
@@ -46,9 +43,6 @@ const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables>
     ...((!p.attached || p.attached === 'top') && { paddingTop: pxToRem(16) }),
     ...((p.attached === 'bottom' || p.attached === true) && {
       paddingTop: pxToRem(2),
-      [chatMessageAuthorClassNameSelector]: screenReaderContainerStyles,
-      // we need to override these styles
-      [chatMessageTimestampClassNameSelector]: screenReaderContainerStyles,
     }),
     paddingBottom: 0,
   }),

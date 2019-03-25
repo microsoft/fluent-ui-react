@@ -8,8 +8,6 @@ import { ChatMessageVariables } from './chatMessageVariables'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../lib'
 
-const chatMessageTimestampClassNameSelector = `& .${ChatMessage.slotClassNames.timestamp}`
-
 const chatMessageStyles: ComponentSlotStylesInput<
   ChatMessageProps & ChatMessageState,
   ChatMessageVariables
@@ -63,18 +61,6 @@ const chatMessageStyles: ComponentSlotStylesInput<
         width: 'auto',
       },
     },
-
-    [chatMessageTimestampClassNameSelector]: {
-      ...(p.reactionGroup && {
-        clip: 'unset',
-        height: 'unset',
-        margin: '0',
-        marginBottom: `${v.headerMarginBottom}`,
-        overflow: 'unset',
-        position: 'relative',
-        width: 'unset',
-      }),
-    },
   }),
 
   actionMenu: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -92,7 +78,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
   }),
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    ...(p.mine && screenReaderContainerStyles),
+    ...((p.mine || p.attached === 'bottom' || p.attached === true) && screenReaderContainerStyles),
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
     fontWeight: v.authorFontWeight,
@@ -103,6 +89,9 @@ const chatMessageStyles: ComponentSlotStylesInput<
     ...(p.mine && {
       color: v.timestampColorMine,
     }),
+    ...((p.attached === 'bottom' || p.attached === true) &&
+      !p.reactionGroup &&
+      screenReaderContainerStyles),
   }),
 
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({

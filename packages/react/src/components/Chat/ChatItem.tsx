@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
+import * as _ from 'lodash'
 
 import { ReactProps, ShorthandValue } from '../../types'
 import {
@@ -96,6 +97,8 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
         defaultProps: { className: ChatItem.slotClassNames.gutter, styles: styles.gutter },
       })
 
+    // const isChatMessageElement: boolean = _.get(message, 'type.__isChatMessage')
+    // ...(isChatMessageElement && { attached })
     return (
       <>
         {contentPosition === 'start' && gutterElement}
