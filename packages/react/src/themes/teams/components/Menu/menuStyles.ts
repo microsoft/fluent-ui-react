@@ -14,8 +14,6 @@ export default {
   root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
     const { iconOnly, fluid, pointing, pills, primary, color, underlined, vertical, submenu } = p
     const colorScheme = v.colorScheme[color ? color : primary ? 'primary' : 'default']
-    // const verticalScheme = v[p.vertical].colorScheme
-    // console.log(colorScheme)
 
     return {
       display: 'flex',
@@ -43,7 +41,7 @@ export default {
         !iconOnly &&
         !(pointing && vertical) &&
         !underlined && {
-          // TODO check again, primary has hardcoded grey border color
+          // primary has hardcoded grey border color
           border: `${v.borderWidth} solid ${
             primary ? v.primaryBorderColor : v.borderColor || colorScheme.borderDefault
           }`,
