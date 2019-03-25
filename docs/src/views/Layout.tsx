@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Flex, Header, Icon, Segment, Divider } from '@stardust-ui/react'
+import { Button, Box, Flex, Header, Icon, Segment, Divider } from '@stardust-ui/react'
 
 import CodeSnippet from '../components/CodeSnippet'
 import ExampleSnippet from '../components/ExampleSnippet'
@@ -19,6 +19,7 @@ const links = {
   flexItem: link('Flex.Item', '/components/flex'),
   grid: link('Grid', '/components/grid'),
   segment: link('Segment', '/components/segment'),
+  box: link('Box', '/components/segment'),
 }
 
 export default () => (
@@ -48,21 +49,19 @@ export default () => (
         {code('Grid')}.
       </li>
     </ul>
-    <Header as="h3">Note on Segment component</Header>
+    <Header as="h3">Note on Segment and Box components</Header>
     <p>
-      {links.segment} component may be abused for layout purposes, like in the following example:
+      {links.segment} and {links.box} components may be abused for layout purposes, like in the
+      following examples:
     </p>
+    <Header as="h4">Segment's misuse: handle opaque background cases</Header>
     <CodeSnippet
-      label="AbsolutePositioned.jsx"
+      label="OpaqueBackground.jsx"
       value={`
         import { Segment } from '@stardust-ui/react'
 
         const OpaqueBackground = ({ children, color }) =>
-            <Segment styles={{ backgroundColor: color }} content={{ children }} />
-
-        const RelativePositioned = ({ children, top, right, bottom, left }) => (
-            <Segment styles={{ position: 'relative', top, right, bottom, left }} content={children} />
-        )
+          <Segment styles={{ backgroundColor: color }} content={{ children }} />
       `}
     />
     <ExampleSnippet
@@ -78,10 +77,20 @@ export default () => (
         )
       }}
     />
+    <Header as="h4">Box's misuse: handle relative positioning cases</Header>
+    <CodeSnippet
+      label="RelativePositioned.jsx"
+      value={`
+        import { Box } from '@stardust-ui/react'
+
+        const RelativePositioned = ({ children, top, right, bottom, left }) =>
+          <Box styles={{ position: 'relative', top, right, bottom, left }} content={children} />
+      `}
+    />
     <ExampleSnippet
       render={() => {
         const RelativePositioned = ({ children, left }) => (
-          <Segment styles={{ position: 'relative', left }} content={children} />
+          <Box styles={{ position: 'relative', left }} content={children} />
         )
 
         return (
@@ -108,6 +117,7 @@ export default () => (
       and, as a consequence, it might break accessibility and theming, as those both adhere to
       component's semantics at the first place.
     </p>
+    <p>Same conclusions applies to the {links.box} component.</p>
     <Divider />
     <Header as="h2">Flex recipies</Header>
     There are several advices that might help when using {code('Flex')} component.
