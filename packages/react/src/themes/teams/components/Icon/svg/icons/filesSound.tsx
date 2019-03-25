@@ -8,5 +8,4 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'files-sound',
 } as TeamsProcessedSvgIconSpec
