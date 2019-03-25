@@ -63,7 +63,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   static className = 'ui-label'
 
   static propTypes = {
-    ...commonPropTypes.createCommon({ color: 'complex' }),
+    ...commonPropTypes.createCommon({ color: true }),
     circular: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     iconPosition: PropTypes.oneOf(['start', 'end']),

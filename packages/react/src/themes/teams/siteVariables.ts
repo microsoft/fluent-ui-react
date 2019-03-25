@@ -18,15 +18,6 @@ export {
   colorScheme,
 } from './colors'
 
-// export const grey02 = '#484644' // no mapping color
-// export const grey03 = '#605E5C' // no mapping color
-// export const grey04 = '#979593' // no mapping color
-// export const grey06 = '#C8C6C4' // no mapping color
-// export const grey08 = '#E1DFDD' // no mapping color
-// export const grey09 = '#EDEBE9' // no mapping color
-// export const grey10 = '#F3F2F1' // no mapping color
-// export const grey14 = '#FAF9F8' // no mapping color
-
 export const brand04 = '#464775' // no mapping color
 export const brand08 = '#8B8CC7' // no mapping color
 

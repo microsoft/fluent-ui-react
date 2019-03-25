@@ -29,23 +29,7 @@ export interface UIComponentProps<P = any, V = any>
 
 export type SizeValue = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
 
-export type ColorValue =
-  | 'primary'
-  | 'secondary'
-  | 'blue'
-  | 'green'
-  | 'grey'
-  | 'orange'
-  | 'pink'
-  | 'purple'
-  | 'teal'
-  | 'red'
-  | 'yellow'
-  | string
-
-export type ColorValuesWithPrimitiveColors = ColorValue | 'black' | 'white'
-
-export interface ColorComponentProps<TColor = ColorValue> {
+export interface ColorComponentProps<TColor = string> {
   /** A component can have a color. */
   color?: TColor
 }

@@ -7,37 +7,10 @@ export interface CreateCommonConfig {
   children?: boolean | 'node' | 'element'
   as?: boolean
   className?: boolean
-  color?: boolean | 'simple' | 'complex'
+  color?: boolean
   content?: boolean | 'node' | 'shorthand'
   styled?: boolean
 }
-
-const colorPropType = PropTypes.oneOfType([
-  PropTypes.oneOf([
-    'primary',
-    'secondary',
-    'blue',
-    'green',
-    'grey',
-    'orange',
-    'pink',
-    'purple',
-    'teal',
-    'red',
-    'yellow',
-  ]),
-  PropTypes.string,
-])
-
-export const complexColorPropType = PropTypes.oneOfType([
-  PropTypes.shape({
-    foreground: colorPropType,
-    background: colorPropType,
-    border: colorPropType,
-    shadow: colorPropType,
-  }),
-  colorPropType,
-])
 
 export const createCommon = (config: CreateCommonConfig = {}) => {
   const {
@@ -67,7 +40,7 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
       className: PropTypes.string,
     }),
     ...(color && {
-      color: color === true || color === 'simple' ? colorPropType : complexColorPropType,
+      color: PropTypes.string,
     }),
     ...(content && {
       content:
