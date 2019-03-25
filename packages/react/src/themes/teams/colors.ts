@@ -227,6 +227,15 @@ const createColorScheme = (color: string, customValues = {}) => {
   }
 }
 
+const lightColorOverrides = {
+  backgroundDefault: colors.black,
+  foregroundHover: colors.black,
+  foregroundActive: colors.black,
+  foregroundFocus: colors.black,
+  foregroundFocusWithin: colors.black,
+  foregroundDisabled: colors.black,
+}
+
 export const colorScheme: ColorSchemeMapping = {
   default: createColorScheme('grey', {
     foregroundDefault: colors.grey.light02,
@@ -321,40 +330,12 @@ export const colorScheme: ColorSchemeMapping = {
   }),
   grey: createColorScheme('grey'),
   green: createColorScheme('green'),
-  orange: createColorScheme('orange', {
-    backgroundDefault: colors.black,
-    foregroundHover: colors.black,
-    foregroundActive: colors.black,
-    foregroundFocus: colors.black,
-    foregroundFocusWithin: colors.black,
-    foregroundDisabled: colors.black,
-  }),
+  orange: createColorScheme('orange', lightColorOverrides),
   pink: createColorScheme('pink'),
   red: createColorScheme('red'),
-  yellow: createColorScheme('yellow', {
-    backgroundDefault: colors.black,
-    foregroundHover: colors.black,
-    foregroundActive: colors.black,
-    foregroundFocus: colors.black,
-    foregroundFocusWithin: colors.black,
-    foregroundDisabled: colors.black,
-  }),
+  yellow: createColorScheme('yellow', lightColorOverrides),
   darkOrange: createColorScheme('darkOrange'),
-  lightGreen: createColorScheme('lightGreen', {
-    backgroundDefault: colors.black,
-    foregroundHover: colors.black,
-    foregroundActive: colors.black,
-    foregroundFocus: colors.black,
-    foregroundFocusWithin: colors.black,
-    foregroundDisabled: colors.black,
-  }),
+  lightGreen: createColorScheme('lightGreen', lightColorOverrides),
   magenta: createColorScheme('magenta'),
-  postOrange: createColorScheme('postOrange', {
-    backgroundDefault: colors.black,
-    foregroundHover: colors.black,
-    foregroundActive: colors.black,
-    foregroundFocus: colors.black,
-    foregroundFocusWithin: colors.black,
-    foregroundDisabled: colors.black,
-  }),
+  postOrange: createColorScheme('postOrange', lightColorOverrides),
 }
