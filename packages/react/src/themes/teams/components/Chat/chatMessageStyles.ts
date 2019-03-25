@@ -8,6 +8,8 @@ import { ChatMessageVariables } from './chatMessageVariables'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../lib'
 
+const chatMessageTimestampClassNameSelector = `& .${ChatMessage.slotClassNames.timestamp}`
+
 const chatMessageStyles: ComponentSlotStylesInput<
   ChatMessageProps & ChatMessageState,
   ChatMessageVariables
@@ -60,6 +62,18 @@ const chatMessageStyles: ComponentSlotStylesInput<
         opacity: 1,
         width: 'auto',
       },
+    },
+
+    [chatMessageTimestampClassNameSelector]: {
+      ...(p.reactionGroup && {
+        clip: 'unset',
+        height: 'unset',
+        margin: '0',
+        marginBottom: `${v.headerMarginBottom}`,
+        overflow: 'unset',
+        position: 'relative',
+        width: 'unset',
+      }),
     },
   }),
 

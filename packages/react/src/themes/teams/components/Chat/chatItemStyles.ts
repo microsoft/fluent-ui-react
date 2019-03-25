@@ -8,7 +8,6 @@ import { screenReaderContainerStyles } from '../../../../lib/accessibility/Style
 const chatMessageClassNameSelector = `& .${ChatMessage.className}`
 const chatMessageAuthorClassNameSelector = `& .${ChatMessage.slotClassNames.author}`
 const chatMessageTimestampClassNameSelector = `& .${ChatMessage.slotClassNames.timestamp}`
-const chatMessageContentClassNameSelector = `& .${ChatMessage.slotClassNames.content}`
 
 const getPositionStyles = (props: ChatItemProps) => ({
   float: props.contentPosition === 'end' ? 'right' : 'left',
@@ -23,9 +22,6 @@ const getChatMessageEvaluatedStyles = (p: ChatItemProps) => ({
       paddingTop: pxToRem(5),
       paddingBottom: pxToRem(7),
       ...getPositionStyles(p),
-      [chatMessageContentClassNameSelector]: {
-        display: 'inline-block',
-      },
     },
   }),
   ...(p.attached === 'top' && {
@@ -40,9 +36,6 @@ const getChatMessageEvaluatedStyles = (p: ChatItemProps) => ({
       paddingTop: pxToRem(5),
       paddingBottom: pxToRem(7),
       ...getPositionStyles(p),
-      [chatMessageContentClassNameSelector]: {
-        display: 'inline-block',
-      },
     },
   }),
 })
