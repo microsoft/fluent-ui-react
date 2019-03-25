@@ -1,5 +1,5 @@
 import { colors, naturalColors } from '../teams/siteVariables'
-
+export { colorScheme } from './colors'
 //
 // COLORS
 //
