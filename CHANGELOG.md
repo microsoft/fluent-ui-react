@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.24.0 ]------------------------------- -->
+## [v0.24.0](https://github.com/stardust-ui/react/tree/v0.24.0) (2019-03-25)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.23.1...v0.24.0)
+
 ### BREAKING CHANGES
 - Use regular components instead of `Label` in `RadioGroupItem` @layershifter ([#1070](https://github.com/stardust-ui/react/pull/1070))
 - Remove `Flex.Gap` component, and convert the `gap` styles to `margins` on the child elements of the `Flex` component @mnajdova ([#1074](https://github.com/stardust-ui/react/pull/1074))
