@@ -157,6 +157,9 @@ export { default as Indicator, IndicatorProps } from './components/Indicator/Ind
 export { default as Reaction, ReactionProps, ReactionState } from './components/Reaction/Reaction'
 export { default as ReactionGroup, ReactionGroupProps } from './components/Reaction/ReactionGroup'
 
+export { default as Video, VideoProps } from './components/Video/Video'
+export { default as VideoGif, VideoGifProps } from './components/Video/VideoGif'
+
 //
 // Accessibility
 //
