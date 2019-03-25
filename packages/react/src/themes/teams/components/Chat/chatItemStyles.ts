@@ -2,40 +2,6 @@ import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
 import { ChatItemVariables } from './chatItemVariables'
 import { ChatItemProps } from '../../../../components/Chat/ChatItem'
 import { pxToRem } from '../../../../lib'
-import { default as ChatMessage } from '../../../../components/Chat/ChatMessage'
-
-const chatMessageClassNameSelector = `& .${ChatMessage.className}`
-
-const getPositionStyles = (props: ChatItemProps) => ({
-  float: props.contentPosition === 'end' ? 'right' : 'left',
-})
-
-const getChatMessageEvaluatedStyles = (p: ChatItemProps) => ({
-  ...(!p.attached && { [chatMessageClassNameSelector]: getPositionStyles(p) }),
-  ...(p.attached === true && {
-    [chatMessageClassNameSelector]: {
-      [p.contentPosition === 'end' ? 'borderTopRightRadius' : 'borderTopLeftRadius']: 0,
-      [p.contentPosition === 'end' ? 'borderBottomRightRadius' : 'borderBottomLeftRadius']: 0,
-      paddingTop: pxToRem(5),
-      paddingBottom: pxToRem(7),
-      ...getPositionStyles(p),
-    },
-  }),
-  ...(p.attached === 'top' && {
-    [chatMessageClassNameSelector]: {
-      [p.contentPosition === 'end' ? 'borderBottomRightRadius' : 'borderBottomLeftRadius']: 0,
-      ...getPositionStyles(p),
-    },
-  }),
-  ...(p.attached === 'bottom' && {
-    [chatMessageClassNameSelector]: {
-      [p.contentPosition === 'end' ? 'borderTopRightRadius' : 'borderTopLeftRadius']: 0,
-      paddingTop: pxToRem(5),
-      paddingBottom: pxToRem(7),
-      ...getPositionStyles(p),
-    },
-  }),
-})
 
 const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -58,9 +24,9 @@ const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables>
 
   message: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'relative',
+    float: p.contentPosition === 'end' ? 'right' : 'left',
     marginLeft: v.messageMargin,
     marginRight: v.messageMargin,
-    ...getChatMessageEvaluatedStyles(p),
   }),
 }
 
