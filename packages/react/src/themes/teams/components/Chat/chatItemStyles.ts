@@ -47,6 +47,7 @@ const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables>
     ...((p.attached === 'bottom' || p.attached === true) && {
       paddingTop: pxToRem(2),
       [chatMessageAuthorClassNameSelector]: screenReaderContainerStyles,
+      // we need to override these styles
       [chatMessageTimestampClassNameSelector]: screenReaderContainerStyles,
     }),
     paddingBottom: 0,
