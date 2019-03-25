@@ -10,6 +10,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Box from '../Box/Box'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
@@ -157,13 +158,13 @@ class RadioGroupItem extends AutoControlledComponent<
     return (
       <Ref innerRef={this.elementRef}>
         <ElementType
-          {...accessibility.attributes.root}
-          {...accessibility.keyHandlers.root}
-          {...unhandledProps}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           onClick={this.handleClick}
           className={classes.root}
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           {Icon.create(icon || '', {
             defaultProps: {

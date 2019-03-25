@@ -16,6 +16,7 @@ import {
   commonPropTypes,
   isFromKeyboard,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Menu from './Menu'
@@ -204,9 +205,9 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
           {...accessibility.attributes.root}
-          {...accessibility.keyHandlers.root}
           {...unhandledProps}
           {...!wrapper && { onClick: this.handleClick }}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           {icon &&
             Icon.create(this.props.icon, {
@@ -248,7 +249,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
         defaultProps: {
           className: cx(MenuItem.slotClassNames.wrapper, classes.wrapper),
           ...accessibility.attributes.wrapper,
-          ...accessibility.keyHandlers.wrapper,
+          ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
         },
         overrideProps: () => ({
           children: (

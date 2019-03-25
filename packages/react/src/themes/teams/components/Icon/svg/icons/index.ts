@@ -22,6 +22,20 @@ import chat from './chat'
 import chevronDown from './chevronDown'
 import close from './close'
 import codeSnippet from './codeSnippet'
+import filesAftereffects from './filesAftereffects'
+import filesCode from './filesCode'
+import filesEmpty from './filesEmpty'
+import filesFlash from './filesFlash'
+import filesGif from './filesGif'
+import filesIllustrator from './filesIllustrator'
+import filesImage from './filesImage'
+import filesIndesign from './filesIndesign'
+import filesPdf from './filesPdf'
+import filesPhotoshop from './filesPhotoshop'
+import filesSketch from './filesSketch'
+import filesSound from './filesSound'
+import filesTxt from './filesTxt'
+import filesZip from './filesZip'
 import download from './download'
 import edit from './edit'
 import email from './email'
@@ -109,6 +123,20 @@ export default {
   'chevron-down': chevronDown,
   close,
   'code-snippet': codeSnippet,
+  'files-aftereffects': filesAftereffects,
+  'files-code': filesCode,
+  'files-empty': filesEmpty,
+  'files-flash': filesFlash,
+  'files-gif': filesGif,
+  'files-illustrator': filesIllustrator,
+  'files-image': filesImage,
+  'files-indesign': filesIndesign,
+  'files-pdf': filesPdf,
+  'files-photoshop': filesPhotoshop,
+  'files-sketch': filesSketch,
+  'files-sound': filesSound,
+  'files-txt': filesTxt,
+  'files-zip': filesZip,
   download,
   edit,
   email,
