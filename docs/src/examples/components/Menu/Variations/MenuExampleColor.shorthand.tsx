@@ -15,30 +15,16 @@ const items = [
   },
 ]
 
-const MenuExamplePrimary = () => (
+const MenuExampleColor = () => (
   <Provider.Consumer
     render={theme => (
       <Flex column gap="gap.medium">
         {Object.keys(theme.siteVariables.colorScheme).map(color => (
-          <Menu // variables={{
-            //   // flat
-            //   backgroundColor: 'red',
-            //   backgroundColorHover: 'blue',
-            //   verticalBackgroundColor: 'green',
-            //   verticalBackgroundColorHover: 'orange',
-            //   verticalItemBackgroundColor: 'red',
-            //   verticalItemBackgroundColorHover: 'black',
-            // }}
-            vertical
-            key={color}
-            defaultActiveIndex={0}
-            items={items}
-            color={color}
-          />
+          <Menu vertical key={color} defaultActiveIndex={0} items={items} color={color} />
         ))}
       </Flex>
     )}
   />
 )
 
-export default MenuExamplePrimary
+export default MenuExampleColor
