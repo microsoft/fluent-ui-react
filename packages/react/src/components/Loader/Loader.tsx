@@ -105,6 +105,9 @@ class Loader extends UIComponent<ReactProps<LoaderProps>, LoaderState> {
     const { indicator, label } = this.props
     const { visible } = this.state
 
+    const svgElement =
+      styles.svg && Box.create({}, { defaultProps: { className: 'container', styles: styles.svg } })
+
     return (
       visible && (
         <ElementType
@@ -112,7 +115,12 @@ class Loader extends UIComponent<ReactProps<LoaderProps>, LoaderState> {
           {...accessibility.attributes.root}
           {...unhandledProps}
         >
-          {Box.create(indicator, { defaultProps: { styles: styles.indicator } })}
+          {Box.create(indicator, {
+            defaultProps: {
+              children: svgElement,
+              styles: styles.indicator,
+            },
+          })}
           {Box.create(label, { defaultProps: { styles: styles.label } })}
         </ElementType>
       )
