@@ -76,7 +76,7 @@ export default (siteVars: any): MenuVariables => {
     verticalItemBorderWidth: pxToRem(2),
     verticalItemBorderColor: 'transparent',
     verticalPointingBorderColor: siteVars.colorScheme.primary.borderActive, // TODO: why is the default having primary color?!
-    verticalBackgroundColorFocus: siteVars.colorScheme.grey.light09,
+    verticalBackgroundColorFocus: siteVars.colors.grey.light09,
 
     underlinedBottomBorderWidth: pxToRem(2),
     primaryBorderColor: siteVars.colors.grey.light10,
