@@ -50,7 +50,12 @@ class RadioGroupVerticalExample extends React.Component {
             <Input
               input={{ tabIndex: this.state.inputTabIndex }}
               inline
-              variables={{ inputPadding: '2px 8px', fontSize: '12px' }}
+              styles={{
+                fontSize: '12px',
+                '& .ui-input__input': {
+                  padding: '2px 8px',
+                },
+              }}
               placeholder="flavour"
             />
           </Text>
