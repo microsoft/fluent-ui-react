@@ -10,7 +10,7 @@ const GridExamples = () => (
   <>
     <Alert styles={{ display: 'block' }}>
       <p>
-        You can get more information on Stardust's approach to layout from{' '}
+        Get more information on Stardust's approach to layout from{' '}
         <Link to="/layout">Layout guide</Link>.
       </p>
     </Alert>
