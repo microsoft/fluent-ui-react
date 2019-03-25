@@ -3,8 +3,7 @@ import * as React from 'react'
 import Rtl from './Rtl'
 import Types from './Types'
 import Variations from './Variations'
-
-import { Input } from '@stardust-ui/react'
+import Variants from './Variants'
 
 /**
  * We would like to render Input with no blue line underneath
@@ -15,34 +14,9 @@ import { Input } from '@stardust-ui/react'
 
 // Should 'variant' be a prop? Most probably, no - as this is not something that should be changed over component's life.
 
-const variantOf = (a, b) => {
-  return null
-}
-
-const theme = {
-  componentStyles: {
-    Input: {
-      root: ({ props }) => ({}),
-    },
-  },
-  componentVariants: {
-    Input: {
-      Minimalistic: {
-        variables: (originalVariables, { siteVariables }) => ({
-          ...originalVariables,
-          inputFocusBorderBottomColor: 'transparent',
-        }),
-      },
-    },
-  },
-}
-
-const MinimalisticInput = variantOf(Input, 'Minimalistic')
-
 const InputExamples = () => (
   <div>
-    <MinimalisticInput />
-
+    <Variants />
     <Types />
     <Variations />
     <Rtl />

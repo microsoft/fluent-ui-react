@@ -17,6 +17,7 @@ import {
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
+  ComponentVariablesPrepared,
 } from '../themes/types'
 import { Props } from '../types'
 import {
@@ -51,6 +52,7 @@ export interface RenderConfig<P> {
   className?: string
   defaultProps?: { [key: string]: any }
   displayName: string
+  variantName?: string
   handledProps: string[]
   props: PropsWithVarsAndStyles
   state: State
@@ -136,6 +138,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
     className,
     defaultProps,
     displayName,
+    variantName,
     handledProps,
     props,
     state,
@@ -162,16 +165,23 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           },
           componentVariables = {},
           componentStyles = {},
+          componentVariants = {},
           rtl = false,
           renderer = felaRenderer,
         } = theme
         const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
+        const componentVariant =
+          componentVariants[displayName] && componentVariants[displayName][variantName]
 
         const stateAndProps = { ...state, ...props }
+
+        const variantVariables: ComponentVariablesPrepared =
+          componentVariant && componentVariant.variables ? componentVariant.variables : {}
 
         // Resolve variables for this component, allow props.variables to override
         const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
           componentVariables[displayName],
+          variantVariables,
           props.variables,
         )(siteVariables)
 

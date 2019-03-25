@@ -161,6 +161,10 @@ export const mergeThemeStyles = (
   }, initial)
 }
 
+export const mergeComponentVariants = (target: any = {}, ...sources: any[]) => {
+  return sources.reduce((acc, next) => ({ ...acc, ...next }), target)
+}
+
 export const mergeRTL = (target, ...sources) => {
   return !!sources.reduce((acc, next) => {
     return typeof next === 'boolean' ? next : acc
@@ -211,6 +215,8 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
     acc.siteVariables = mergeSiteVariables(acc.siteVariables, next.siteVariables)
 
     acc.componentVariables = mergeThemeVariables(acc.componentVariables, next.componentVariables)
+
+    acc.componentVariants = mergeComponentVariants(acc.componentVariants, next.componentVariants)
 
     acc.componentStyles = mergeThemeStyles(acc.componentStyles, next.componentStyles)
 

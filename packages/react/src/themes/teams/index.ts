@@ -45,4 +45,13 @@ export default mergeThemes(base, {
   staticStyles,
   icons,
   animations,
+  componentVariants: {
+    Input: {
+      Minimalistic: {
+        variables: {
+          inputFocusBorderBottomColor: 'transparent',
+        },
+      },
+    },
+  },
 })

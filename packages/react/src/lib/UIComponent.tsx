@@ -10,6 +10,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
   static defaultProps: { [key: string]: any }
   static displayName: string
   static className: string
+  static variantName?: string
 
   static propTypes: any
 
@@ -51,6 +52,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
       className: this.childClass.className,
       defaultProps: this.childClass.defaultProps,
       displayName: this.childClass.displayName,
+      variantName: (this.childClass as any).variantName,
       handledProps: this.childClass.handledProps,
       props: this.props,
       state: this.state,

@@ -229,3 +229,13 @@ export const FocusZoneUtilities = {
   focusAsync,
 }
 export { FocusZoneDirection, FocusZoneProps } from './lib/accessibility/FocusZone/FocusZone.types'
+
+export const variantOf = <TProps>(
+  ComponentType: { new (...args: any[]): React.Component<TProps> },
+  name: string,
+): React.ComponentType<TProps> => {
+  class VariantType extends ComponentType {}
+  ;(VariantType as any).variantName = name
+
+  return VariantType
+}
