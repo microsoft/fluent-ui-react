@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { ReactProps, ShorthandValue } from '../../types'
+import { ReactProps, ShorthandValue, Props } from '../../types'
 import {
   childrenExist,
   createShorthandFactory,
@@ -90,20 +90,53 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
   }
 
   private renderChatItem(styles: ComponentSlotStylesPrepared) {
-    const { message, gutter, contentPosition } = this.props
+    const { message, gutter, contentPosition, attached } = this.props
     const gutterElement =
       gutter &&
       Box.create(gutter, {
         defaultProps: { className: ChatItem.slotClassNames.gutter, styles: styles.gutter },
       })
 
-    // const isChatMessageElement: boolean = _.get(message, 'type.__isChatMessage')
-    // ...(isChatMessageElement && { attached })
+    const messageIsPropsObject = _.isPlainObject(message)
+    const messageIsReactElement = React.isValidElement(message)
+
+    const messageProps =
+      (messageIsReactElement && (message as React.ReactElement<Props>).props) ||
+      (messageIsPropsObject && (message as Props)) ||
+      {}
+
+    const isMessageContentChatMessageElement: boolean = _.get(
+      messageProps,
+      'content.type.__isChatMessage',
+    )
+    const isMessageChildrenChatMessageElement: boolean = _.get(
+      messageProps,
+      'children.type.__isChatMessage',
+    )
+
+    const messageContent = isMessageContentChatMessageElement
+      ? React.cloneElement(messageProps.content, {
+          attached,
+        })
+      : messageProps.content
+    const messageChildren = isMessageChildrenChatMessageElement
+      ? React.cloneElement(messageProps.children, {
+          attached,
+        })
+      : messageProps.children
+
     return (
       <>
         {contentPosition === 'start' && gutterElement}
         {Box.create(message, {
-          defaultProps: { className: ChatItem.slotClassNames.message, styles: styles.message },
+          defaultProps: {
+            className: ChatItem.slotClassNames.message,
+            styles: styles.message,
+          },
+          overrideProps: predefinedProps => ({
+            content: messageContent,
+            children: messageChildren,
+          }),
         })}
         {contentPosition === 'end' && gutterElement}
       </>
