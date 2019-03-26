@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix narration for `Menu` @miroslavstastny ([#1105](https://github.com/stardust-ui/react/pull/1105))
+
 <!--------------------------------[ v0.25.0 ]------------------------------- -->
 ## [v0.25.0](https://github.com/stardust-ui/react/tree/v0.25.0) (2019-03-26)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.24.0...v0.25.0)
