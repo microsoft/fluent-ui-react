@@ -6,7 +6,14 @@ import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps 
 import { mergeStyles } from '../../lib/mergeThemes'
 import { ReactProps } from '../../types'
 
-export interface FlexItemProps extends UIComponentProps, ChildrenComponentProps {
+export interface FlexItemProps
+  extends UIComponentProps,
+    ChildrenComponentProps<
+      | React.ReactElement<any>
+      | ((
+          { styles: ComponentSlotStylesPrepared, classes: ComponentSlotClasses },
+        ) => React.ReactElement<any>)
+    > {
   /** Controls item's alignment. */
   align?: 'auto' | 'start' | 'end' | 'center' | 'baseline' | 'stretch'
 
