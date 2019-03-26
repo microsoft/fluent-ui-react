@@ -2,6 +2,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import * as Stardust from '@stardust-ui/react'
 import * as ReactDOM from 'react-dom'
+import * as ReactFela from 'react-fela'
 
 export const babelConfig = {
   plugins: [
@@ -18,6 +19,7 @@ export const imports = {
   lodash: _,
   react: React,
   'react-dom': ReactDOM,
+  'react-fela': ReactFela,
 }
 
 export const importResolver = importName => imports[importName]

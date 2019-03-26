@@ -1,5 +1,6 @@
 import { Provider, themes } from '@stardust-ui/react'
 import * as _ from 'lodash'
+import * as minimatch from 'minimatch'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
@@ -61,9 +62,15 @@ const renderCycle = async (
   return profilerMeasure
 }
 
-const satisfiesFilter = (componentName: string, filter: string) => {
-  return componentName.toLowerCase().startsWith(filter.toLowerCase())
-}
+const satisfiesFilter = (componentName: string, filter: string) =>
+  minimatch(componentName, filter || '*', {
+    matchBase: true,
+  })
+
+const sortObjectKeys = o =>
+  Object.keys(o)
+    .sort()
+    .reduce((r, k) => ((r[k] = o[k]), r), {})
 
 window.runMeasures = async (filter: string = '') => {
   const performanceMeasures: ProfilerMeasureCycle = {}
@@ -85,3 +92,36 @@ window.runMeasures = async (filter: string = '') => {
 
   return performanceMeasures
 }
+
+//
+// Control tools
+//
+const Control: React.FunctionComponent = () => {
+  const [filter, setFilter] = React.useState('')
+
+  return (
+    /* Heads up! This provider also does first run work! */
+    <Provider theme={themes.teams}>
+      <label htmlFor="filter">
+        Filter (use <code>minimatch</code>):
+      </label>
+      <input onChange={e => setFilter(e.target.value)} type="text" value={filter} />
+
+      <pre>
+        {_.filter(performanceExamplesContext.keys(), exampleName =>
+          satisfiesFilter(exampleName, filter),
+        ).join('\n')}
+      </pre>
+
+      <button
+        onClick={async () => {
+          console.table(sortObjectKeys(await window.runMeasures(filter)))
+        }}
+      >
+        Run!
+      </button>
+    </Provider>
+  )
+}
+
+ReactDOM.render(<Control />, document.querySelector('#control'))

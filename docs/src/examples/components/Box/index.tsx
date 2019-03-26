@@ -2,9 +2,10 @@ import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { Alert } from '@stardust-ui/react'
 
+import Performance from './Performance'
 import Types from './Types'
 
-const HeaderExamples = () => (
+const BoxExamples = () => (
   <>
     <Alert styles={{ display: 'block' }} warning>
       <p>
@@ -34,7 +35,8 @@ const HeaderExamples = () => (
     </Alert>
 
     <Types />
+    <Performance />
   </>
 )
 
-export default HeaderExamples
+export default BoxExamples
