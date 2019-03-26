@@ -71,7 +71,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
   } = props
 
   return (
-    <Provider theme={controlsTheme}>
+    <Provider theme={controlsTheme} as={React.Fragment}>
       <Menu
         {...rest}
         fluid

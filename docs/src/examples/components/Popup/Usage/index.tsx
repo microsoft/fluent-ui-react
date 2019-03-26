@@ -25,6 +25,11 @@ const Usage = () => (
       description="The triggering actions can be combined."
       examplePath="components/Popup/Usage/PopupExampleOnMultiple"
     />
+    <ComponentExample
+      title="Nested"
+      description="Popups can be nested."
+      examplePath="components/Popup/Usage/PopupExampleNested"
+    />
   </ExampleSection>
 )
 
