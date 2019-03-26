@@ -69,6 +69,7 @@ export default () => (
         const OpaqueBackground = ({ children, color }) => (
           <Segment styles={{ backgroundColor: color }} content={{ children }} />
         )
+        OpaqueBackground.dislayName = 'OpaqueBackground'
 
         return (
           <OpaqueBackground color="lightyellow">
