@@ -8,6 +8,7 @@ import {
   commonPropTypes,
   ContentComponentProps,
   isFromKeyboard,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
@@ -184,8 +185,8 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {mediaElement}
         <Flex.Item grow>

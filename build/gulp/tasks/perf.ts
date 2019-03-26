@@ -82,7 +82,7 @@ task('perf:build', cb => {
 
 task('perf:run', async () => {
   const measures: ProfilerMeasureCycle[] = []
-  const times = argv.times || DEFAULT_RUN_TIMES
+  const times = (argv.times as string) || DEFAULT_RUN_TIMES
   const filter = argv.filter
 
   let browser

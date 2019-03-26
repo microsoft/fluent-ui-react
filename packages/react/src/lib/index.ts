@@ -2,14 +2,14 @@
 import 'mdn-polyfills/Object.assign'
 import 'mdn-polyfills/String.prototype.includes'
 
-import * as customPropTypes from './customPropTypes'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as commonPropTypes from './commonPropTypes'
 
+export { default as applyAccessibilityKeyHandlers } from './applyAccessibilityKeyHandlers'
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
 export * from './colorUtils'
 export { default as UIComponent } from './UIComponent'
-export { EventStack } from './eventStack'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
 export { default as toCompactArray } from './toCompactArray'
 export { default as rtlTextContainer } from './rtlTextContainer'

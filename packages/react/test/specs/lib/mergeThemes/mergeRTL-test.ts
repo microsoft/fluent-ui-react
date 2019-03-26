@@ -22,11 +22,12 @@ describe('mergeRTL', () => {
     expect(mergeRTL(true, undefined)).toEqual(true)
   })
 
-  test('default to false if no boolean was provided', () => {
-    expect(mergeRTL(null, null)).toEqual(false)
-    expect(mergeRTL(null, undefined)).toEqual(false)
+  test('first value wins if no boolean was provided', () => {
+    // if a theme is created using mergeThemes() its rtl should remain `undefined` to be able to inherit it from parent Provider
+    expect(mergeRTL(null, null)).toEqual(null)
+    expect(mergeRTL(undefined, null)).toEqual(undefined)
 
-    expect(mergeRTL(undefined, null)).toEqual(false)
-    expect(mergeRTL(undefined, undefined)).toEqual(false)
+    expect(mergeRTL(null, undefined)).toEqual(null)
+    expect(mergeRTL(undefined, undefined)).toEqual(undefined)
   })
 })

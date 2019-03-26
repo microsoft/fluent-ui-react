@@ -25,7 +25,7 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
     ...(p.fluid && { width: '100%' }),
     ...(p.inline && { float: 'left' }),
     '::placeholder': {
-      color: v.fontColor,
+      color: v.placeholderColor,
     },
     ':focus': {
       borderBottomColor: v.inputFocusBorderBottomColor,

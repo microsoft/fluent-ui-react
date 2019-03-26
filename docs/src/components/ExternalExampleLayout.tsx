@@ -61,32 +61,24 @@ class ExternalExampleLayout extends React.Component<
       <Provider key={this.state.renderId} theme={theme}>
         <Provider.Consumer
           render={({ siteVariables }) => (
-            <div
-              dir={theme.rtl ? 'rtl' : undefined}
-              style={{
-                color: siteVariables.bodyColor,
-                backgroundColor: siteVariables.bodyBackground,
-              }}
+            <SourceRender
+              babelConfig={babelConfig}
+              source={exampleSource.js}
+              renderHtml={false}
+              resolver={importResolver}
             >
-              <SourceRender
-                babelConfig={babelConfig}
-                source={exampleSource.js}
-                renderHtml={false}
-                resolver={importResolver}
-              >
-                <SourceRender.Consumer>
-                  {({ element, error }) => (
-                    <>
-                      {element}
-                      {/* This block allows to see issues with examples as visual regressions. */}
-                      {error && (
-                        <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>
-                      )}
-                    </>
-                  )}
-                </SourceRender.Consumer>
-              </SourceRender>
-            </div>
+              <SourceRender.Consumer>
+                {({ element, error }) => (
+                  <>
+                    {element}
+                    {/* This block allows to see issues with examples as visual regressions. */}
+                    {error && (
+                      <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>
+                    )}
+                  </>
+                )}
+              </SourceRender.Consumer>
+            </SourceRender>
           )}
         />
       </Provider>
