@@ -193,7 +193,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   hasKnobs = () => _.includes(knobsContext.keys(), this.getKnobsFilename())
 
   renderElement = (element: React.ReactElement<any>) => {
-    const { showRtl, componentVariables, themeName } = this.state
+    const { showRtl, showTransparent, componentVariables, themeName } = this.state
 
     const theme = themes[themeName]
     const newTheme: ThemeInput = {
@@ -204,7 +204,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       rtl: showRtl,
     }
 
-    return <Provider theme={newTheme}>{element}</Provider>
+    const providerVariables = showTransparent ? { background: 'initial' } : undefined
+
+    return (
+      <Provider theme={newTheme} variables={providerVariables}>
+        {element}
+      </Provider>
+    )
   }
 
   handleKnobChange = knobs => {
@@ -595,7 +601,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                 render={({ siteVariables }) => {
                   return (
                     <Segment
-                      dir={showRtl ? 'rtl' : undefined}
                       className={`rendered-example ${this.getKebabExamplePath()}`}
                       styles={{
                         padding: '2rem',
