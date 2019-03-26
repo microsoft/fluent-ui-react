@@ -117,24 +117,24 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
       },
     })
 
-    // the box element is ChatMessage
-    if (this.checkIfElementIsChatMessage(messageElement)) {
+    // the element is ChatMessage
+    if (this.isChatMessageElement(messageElement)) {
       return this.cloneElementWithCustomProps(messageElement, { attached })
     }
 
     // the children element is ChatMessage
-    if (this.checkIfElementIsChatMessage(messageElement, 'children')) {
+    if (this.isChatMessageElement(messageElement, 'children')) {
       return this.cloneElementWithCustomProps(messageElement, { attached }, 'children')
     }
 
     // the content element is ChatMessage
-    if (this.checkIfElementIsChatMessage(messageElement, 'content')) {
+    if (this.isChatMessageElement(messageElement, 'content')) {
       return this.cloneElementWithCustomProps(messageElement, { attached }, 'content')
     }
     return messageElement
   }
 
-  checkIfElementIsChatMessage = (element, prop?) => {
+  isChatMessageElement = (element, prop?) => {
     return _.get(element, `${prop ? `props.${prop}.` : ''}type.__isChatMessage`)
   }
 
