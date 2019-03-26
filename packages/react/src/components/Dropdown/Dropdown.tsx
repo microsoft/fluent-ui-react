@@ -1105,10 +1105,10 @@ Dropdown.slotClassNames = {
   clearIndicator: `${Dropdown.className}__clear-indicator`,
   container: `${Dropdown.className}__container`,
   toggleIndicator: `${Dropdown.className}__toggle-indicator`,
-  item: DropdownItem.className,
+  item: `${Dropdown.className}__item`,
   itemsList: `${Dropdown.className}__items-list`,
-  searchInput: DropdownSearchInput.className,
-  selectedItem: DropdownSelectedItem.className,
+  searchInput: `${Dropdown.className}__searchinput`,
+  selectedItem: `${Dropdown.className}__selecteditem`,
   selectedItems: `${Dropdown.className}__selected-items`,
   triggerButton: `${Dropdown.className}__trigger-button`,
 }
