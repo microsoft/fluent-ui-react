@@ -13,11 +13,13 @@ import {
   commonPropTypes,
   customPropTypes,
   rtlTextContainer,
+  getElementProp,
 } from '../../lib'
 import Box from '../Box/Box'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
+import ChatMessage from './ChatMessage'
 
 export interface ChatItemSlotClassNames {
   message: string
@@ -118,24 +120,20 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
     })
 
     // the element is ChatMessage
-    if (this.isChatMessageElement(messageElement)) {
+    if (ChatMessage.isTypeOfElement(messageElement)) {
       return this.cloneElementWithCustomProps(messageElement, { attached })
     }
 
-    // the children element is ChatMessage
-    if (this.isChatMessageElement(messageElement, 'children')) {
+    // the children is ChatMessage
+    if (ChatMessage.isTypeOfElement(getElementProp(messageElement, 'children'))) {
       return this.cloneElementWithCustomProps(messageElement, { attached }, 'children')
     }
 
-    // the content element is ChatMessage
-    if (this.isChatMessageElement(messageElement, 'content')) {
+    // the content is ChatMessage
+    if (ChatMessage.isTypeOfElement(getElementProp(messageElement, 'content'))) {
       return this.cloneElementWithCustomProps(messageElement, { attached }, 'content')
     }
     return messageElement
-  }
-
-  isChatMessageElement = (element, prop?) => {
-    return _.get(element, `${prop ? `props.${prop}.` : ''}type.__isChatMessage`)
   }
 
   cloneElementWithCustomProps = (element, props, prop?) => {
@@ -143,7 +141,7 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
       return React.cloneElement(element, props)
     }
     return React.cloneElement(element, {
-      [prop]: React.cloneElement(element.props[prop], props),
+      [prop]: React.cloneElement(getElementProp(element, prop), props),
     })
   }
 }

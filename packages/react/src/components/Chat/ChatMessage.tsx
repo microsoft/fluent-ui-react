@@ -108,6 +108,8 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
 
   static __isChatMessage = true
 
+  static isTypeOfElement = element => _.get(element, `type.__isChatMessage`)
+
   static propTypes = {
     ...commonPropTypes.createCommon({ content: 'shorthand' }),
     actionMenu: customPropTypes.itemShorthand,
