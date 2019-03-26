@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- `Provider` now renders `div` element with `dir`, `color` and `background` @miroslavstastny ([#852](https://github.com/stardust-ui/react/pull/852))
+
 ### Fixes
 - Fix `RadioButtonGroup` Teams theme styles to be correct @notandrew ([#830](https://github.com/stardust-ui/react/pull/830))
 
