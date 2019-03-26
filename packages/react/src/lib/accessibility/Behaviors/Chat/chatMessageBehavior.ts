@@ -1,5 +1,5 @@
 import { Accessibility, FocusZoneMode } from '../../types'
-import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/types'
 import * as keyboardKey from 'keyboard-key'
 import { FocusZoneTabbableElements, FocusZoneDirection } from '../../FocusZone'
 

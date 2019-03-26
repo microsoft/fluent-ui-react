@@ -18,9 +18,10 @@ import {
   isElementFocusSubZone,
   isElementTabbable,
   getWindow,
-  IS_FOCUSABLE_ATTRIBUTE,
-  FOCUSZONE_ID_ATTRIBUTE,
 } from './focusUtilities'
+
+import { IS_FOCUSABLE_ATTRIBUTE, FOCUSZONE_ID_ATTRIBUTE } from './types'
+
 import getUnhandledProps from '../../getUnhandledProps'
 import getElementType from '../../getElementType'
 

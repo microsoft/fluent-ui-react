@@ -1,6 +1,6 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
-import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/types'
 import * as _ from 'lodash'
 
 /**

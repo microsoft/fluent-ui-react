@@ -3,7 +3,7 @@ import {
   FocusZoneProps,
   AutoFocusZoneProps,
   IS_FOCUSABLE_ATTRIBUTE,
-} from './FocusZone'
+} from './FocusZone/types'
 
 export type AriaWidgetRole =
   | 'button'

@@ -26,13 +26,13 @@ import {
   FocusZoneMode,
   FocusZoneDefinition,
 } from './accessibility/types'
-import { defaultBehavior } from './accessibility'
+import { default as defaultBehavior } from './accessibility/Behaviors/defaultBehavior'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
-import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
+import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/types'
 import createAnimationStyles from './createAnimationStyles'
-import { generateColorScheme } from '.'
+import { generateColorScheme } from './colorUtils'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>

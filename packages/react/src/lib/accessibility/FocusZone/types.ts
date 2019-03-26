@@ -1,0 +1,10 @@
+export * from './FocusZone.types'
+export * from './FocusTrapZone.types'
+export * from './AutoFocusZone.types'
+
+export const IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable'
+export const IS_VISIBLE_ATTRIBUTE = 'data-is-visible'
+export const FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id'
+export const FOCUSZONE_SUB_ATTRIBUTE = 'data-is-sub-focuszone'
+export const HIDDEN_FROM_ACC_TREE = 'data-is-hidden-from-acc-tree'
+export const FOCUSZONE_WRAP_ATTRIBUTE = 'data-focuszone-wrap'

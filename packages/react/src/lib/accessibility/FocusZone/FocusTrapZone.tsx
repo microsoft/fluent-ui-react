@@ -12,8 +12,9 @@ import {
   getLastTabbable,
   getWindow,
   focusAsync,
-  HIDDEN_FROM_ACC_TREE,
 } from './focusUtilities'
+
+import { HIDDEN_FROM_ACC_TREE } from './types'
 
 import { FocusTrapZoneProps } from './FocusTrapZone.types'
 import getUnhandledProps from '../../getUnhandledProps'
