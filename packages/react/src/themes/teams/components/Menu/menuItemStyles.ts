@@ -76,30 +76,6 @@ const getFocusedStyles = ({
   }
 }
 
-const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
-  props,
-  variables: v,
-}): ICSSInJSStyle => {
-  const { iconOnly, pills, primary, underlined, vertical } = props
-
-  return (
-    !vertical &&
-    !pills &&
-    !underlined &&
-    !iconOnly && {
-      '::before': {
-        position: 'absolute',
-        content: '""',
-        top: 0,
-        right: 0,
-        width: pxToRem(1),
-        height: '100%',
-        ...(primary ? { background: v.primaryBorderColor } : { background: v.borderColor }),
-      },
-    }
-  )
-}
-
 const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
   props,
   variables: v,
@@ -162,6 +138,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       isFromKeyboard,
       pills,
       pointing,
+      primary,
       secondary,
       underlined,
       vertical,
@@ -212,7 +189,13 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           marginBottom: verticalPointingBottomMargin,
         }),
 
-      ...itemSeparator({ props, variables: v, theme, colors }),
+      // item separator
+      ...(!vertical &&
+        !pills &&
+        !underlined &&
+        !iconOnly && {
+          boxShadow: `-1px 0 0 0 ${primary ? v.primaryBorderColor : v.borderColor} inset`,
+        }),
 
       // active styles
       ...(active && {
