@@ -76,6 +76,7 @@ export default () => (
           </OpaqueBackground>
         )
       }}
+      value={`<OpaqueBackground color="lightyellow">This is a bad approach to opaque background :(</OpaqueBackground>`}
     />
     <Header as="h4">Box's misuse: handle relative positioning cases</Header>
     <CodeSnippet
@@ -92,13 +93,15 @@ export default () => (
         const RelativePositioned = ({ children, left }) => (
           <Box styles={{ position: 'relative', left }} content={children} />
         )
+        RelativePositioned.displayName = 'RelativePositioned'
 
         return (
-          <RelativePositioned left={'30px'}>
+          <RelativePositioned left="30px">
             This is a bad way to support relative-positioning :(
           </RelativePositioned>
         )
       }}
+      value={`<RelativePositioned left='30px'>This is a bad way to support relative-positioning :(</RelativePositioned>`}
     />
     <p>
       While it might seem that the intent is addressed with the approach taken, however, this is
