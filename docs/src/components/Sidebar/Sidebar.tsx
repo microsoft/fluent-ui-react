@@ -317,6 +317,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'layout',
+        content: 'Layout',
+        as: NavLink,
+        to: '/layout',
+        styles: menuItemStyles,
+      },
+      {
         key: 'integrate-custom',
         content: 'Integrate Custom Components',
         as: NavLink,
@@ -372,6 +379,13 @@ class Sidebar extends React.Component<any, any> {
         content: 'Dropdowns',
         as: NavLink,
         to: '/prototype-dropdowns',
+        styles: menuItemStyles,
+      },
+      {
+        key: 'alerts',
+        content: 'Alerts',
+        as: NavLink,
+        to: '/prototype-alerts',
         styles: menuItemStyles,
       },
       {

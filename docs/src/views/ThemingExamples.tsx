@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Button, Divider, Icon, Label, Provider, Header } from '@stardust-ui/react'
+import { Button, Icon, Label, Provider, Header } from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
-import { pxToRem } from 'src/lib'
+
+import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
 export default () => (
   <DocPage title="Theming Examples">
@@ -368,24 +369,9 @@ export default () => (
       )}
     />
 
-    <Divider size={1} />
-    <br />
-    <Button
-      as={NavLink}
-      content="Theming"
-      icon="arrow left"
-      iconPosition="before"
-      primary
-      to="theming"
-    />
-    <Button
-      as={NavLink}
-      content="Integrate Custom Components"
-      icon="arrow right"
-      iconPosition="after"
-      primary
-      to="integrate-custom-components"
-      variables={{ maxWidth: pxToRem(300) }}
+    <GuidesNavigationFooter
+      previous={{ name: 'Theming', url: 'theming' }}
+      next={{ name: 'Layout', url: 'layout' }}
     />
   </DocPage>
 )

@@ -1,10 +1,10 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { EventListener } from '@stardust-ui/react-component-event-listener'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as keyboardKey from 'keyboard-key'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
-import { EventStack } from '../..'
 
 import {
   getNextElement,
@@ -27,12 +27,13 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   private _root: { current: HTMLElement | null } = { current: null }
   private _previouslyFocusedElementOutsideTrapZone: HTMLElement
   private _previouslyFocusedElementInTrapZone?: HTMLElement
-  private windowElement: Window | null
+  private windowRef = React.createRef<Window>()
 
-  private _focusSubscription = EventStack.noSubscription
-  private _clickSubscription = EventStack.noSubscription
-
-  private createRef = elem => (this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement)
+  private createRef = elem => {
+    this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement
+    // @ts-ignore
+    this.windowRef.current = getWindow(this._root.current)
+  }
   private shouldHandleOutsideClick = () =>
     !this.props.isClickableOutsideFocusTrap || !this.props.focusTriggerOnOutsideClick
 
@@ -59,7 +60,6 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
     FocusTrapZone._focusStack.push(this)
     const { disableFirstFocus = false } = this.props
 
-    this.windowElement = getWindow(this._root.current)
     this._previouslyFocusedElementOutsideTrapZone = this._getPreviouslyFocusedElementOutsideTrapZone()
 
     if (
@@ -70,33 +70,46 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
     }
 
     this._hideContentFromAccessibilityTree()
-    this._subscribeToEvents()
   }
 
   public render(): JSX.Element {
-    const { className, ariaLabelledBy } = this.props
+    const { className, forceFocusInsideTrap, ariaLabelledBy } = this.props
     const unhandledProps = getUnhandledProps(
       { handledProps: [..._.keys(FocusTrapZone.propTypes)] },
       this.props,
     )
-    // TODO: Remove `as` there after the issue will be resolved:
-    // https://github.com/Microsoft/TypeScript/issues/28768
-    const ElementType = getElementType(
-      { defaultProps: FocusTrapZone.defaultProps },
-      this.props,
-    ) as React.ComponentClass<FocusTrapZoneProps>
+    const ElementType = getElementType({ defaultProps: FocusTrapZone.defaultProps }, this.props)
 
     return (
-      <ElementType
-        {...unhandledProps}
-        className={className}
-        ref={this.createRef}
-        aria-labelledby={ariaLabelledBy}
-        onKeyDown={this._onKeyboardHandler}
-        onFocusCapture={this._onFocusCapture}
-      >
-        {this.props.children}
-      </ElementType>
+      <>
+        <ElementType
+          {...unhandledProps}
+          className={className}
+          ref={this.createRef}
+          aria-labelledby={ariaLabelledBy}
+          onKeyDown={this._onKeyboardHandler}
+          onFocusCapture={this._onFocusCapture}
+        >
+          {this.props.children}
+        </ElementType>
+
+        {forceFocusInsideTrap && (
+          <EventListener
+            capture
+            listener={this._handleOutsideFocus}
+            targetRef={this.windowRef}
+            type="focus"
+          />
+        )}
+        {this.shouldHandleOutsideClick() && (
+          <EventListener
+            capture
+            listener={this._handleOutsideClick}
+            targetRef={this.windowRef}
+            type="click"
+          />
+        )}
+      </>
     )
   }
 
@@ -116,7 +129,6 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
       focusAsync(this._previouslyFocusedElementOutsideTrapZone)
     }
 
-    this._unsubscribeFromEvents()
     const lastActiveFocusTrap =
       FocusTrapZone._focusStack.length &&
       FocusTrapZone._focusStack[FocusTrapZone._focusStack.length - 1]
@@ -242,34 +254,6 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
         // set it to NULL, so the trigger will not be focused on componentWillUnmount
         this._previouslyFocusedElementOutsideTrapZone = null
       }
-    }
-  }
-
-  private _subscribeToEvents = () => {
-    if (this.props.forceFocusInsideTrap) {
-      this._focusSubscription.unsubscribe()
-      this._focusSubscription = EventStack.subscribe('focus', this._handleOutsideFocus, {
-        target: this.windowElement,
-        useCapture: true,
-      })
-    }
-
-    if (this.shouldHandleOutsideClick()) {
-      this._clickSubscription.unsubscribe()
-      this._clickSubscription = EventStack.subscribe('click', this._handleOutsideClick, {
-        target: this.windowElement,
-        useCapture: true,
-      })
-    }
-  }
-
-  private _unsubscribeFromEvents = () => {
-    if (this.props.forceFocusInsideTrap) {
-      this._focusSubscription.unsubscribe()
-    }
-
-    if (this.shouldHandleOutsideClick()) {
-      this._clickSubscription.unsubscribe()
     }
   }
 
