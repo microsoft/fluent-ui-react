@@ -39,6 +39,7 @@ const getFontStyles = (
     justifyContent: 'center',
     alignItems: 'center',
 
+    boxSizing: 'content-box',
     width: sizeInRems,
     height: sizeInRems,
 
@@ -106,8 +107,6 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       display: 'inline-block',
       speak: 'none',
       verticalAlign: 'middle',
-
-      ...(isFontBased && { boxSizing: 'content-box' }),
 
       ...(isFontBased && getFontStyles(getIconSize(size, v.sizeModifier), name)),
 
