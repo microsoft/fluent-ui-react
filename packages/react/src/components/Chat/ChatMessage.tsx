@@ -50,7 +50,7 @@ export interface ChatMessageProps
   /** Menu with actions of the message. */
   actionMenu?: ShorthandValue
 
-  /** Controls messages's relation to other chat messages. It is automatically set from the ChatItem */
+  /** Controls messages's relation to other chat messages. Is automatically set by the ChatItem. */
   attached?: boolean | 'top' | 'bottom'
 
   /** Author of the message. */
