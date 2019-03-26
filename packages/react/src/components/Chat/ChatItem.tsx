@@ -99,7 +99,7 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
         defaultProps: { className: ChatItem.slotClassNames.gutter, styles: styles.gutter },
       })
 
-    const messageElement = this.getMessageAugmentedWithChatMessageProps(styles)
+    const messageElement = this.setAttachedPropValueForChatMessage(styles)
 
     return (
       <>
@@ -110,7 +110,7 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
     )
   }
 
-  getMessageAugmentedWithChatMessageProps = styles => {
+  setAttachedPropValueForChatMessage = styles => {
     const { message, attached } = this.props
     const messageElement = Box.create(message, {
       defaultProps: {
