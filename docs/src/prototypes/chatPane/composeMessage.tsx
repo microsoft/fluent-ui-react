@@ -57,7 +57,6 @@ const getInputWrapperStyles = ({ attached }: ComposeMessageProps): React.CSSProp
   const borderWidth = '1px'
 
   return {
-    boxSizing: 'border-box',
     borderStyle: 'solid',
     borderWidth,
     borderRadius: `${borderTopRadius} ${borderTopRadius} ${borderBottomRadius} ${borderBottomRadius}`,

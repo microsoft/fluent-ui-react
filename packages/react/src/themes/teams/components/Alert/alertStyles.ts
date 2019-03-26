@@ -61,7 +61,6 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     alignItems: 'center',
     position: 'relative',
     width: '100%',
-    boxSizing: 'border-box',
     borderStyle: v.borderStyle,
     borderWidth: v.borderWidth,
     borderRadius: v.borderRadius,

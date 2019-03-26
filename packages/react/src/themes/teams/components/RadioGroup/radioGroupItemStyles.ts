@@ -24,9 +24,6 @@ const radioStyles: ComponentSlotStylesInput<
   RadioGroupItemVariables
 > = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    // can remove this after global style for border-box goes in
-    boxSizing: 'border-box',
-
     alignItems: 'center',
     borderStyle: 'solid',
     borderWidth: `${pxToRem(1)}`,
@@ -69,10 +66,6 @@ const radioStyles: ComponentSlotStylesInput<
     // overrides from icon styles
     backgroundColor: 'transparent',
     boxShadow: 'none',
-
-    // can remove this after global style for border-box goes in
-    boxSizing: 'border-box',
-
     borderStyle: 'solid',
     borderWidth: `${pxToRem(1)}`,
     borderColor: 'currentColor',
