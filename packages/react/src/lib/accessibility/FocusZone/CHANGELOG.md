@@ -59,7 +59,7 @@ This is a list of changes made to the Stardust copy of FocusTrapZone in comparis
 ### features
 - Add focus trap zone [#239](https://github.com/stardust-ui/react/pull/239)
     - Used Stardust utils instead of Fabric utilities:
-    - Used `eventStack`.
+    - Used `EventListener` [#949](https://github.com/stardust-ui/react/pull/949)
     - Extended `React.Component` instead of Fabric `BaseComponent`.
     - Used `ReactDOM.findDOMNode` reference instead of `createRef` for `_root`.
     - Got rid of `componentWillMount` as it deprecated in higher versions of React.
