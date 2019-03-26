@@ -173,6 +173,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
       if (kind === 'divider') {
         return MenuDivider.create(item, {
           defaultProps: {
+            className: Menu.slotClassNames.divider,
             primary,
             secondary,
             vertical,
@@ -187,6 +188,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
 
       return MenuItem.create(item, {
         defaultProps: {
+          className: Menu.slotClassNames.item,
           iconOnly,
           pills,
           pointing,

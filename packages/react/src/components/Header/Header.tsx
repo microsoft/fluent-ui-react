@@ -95,6 +95,7 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
         {!hasChildren &&
           HeaderDescription.create(description, {
             defaultProps: {
+              className: Header.slotClassNames.description,
               variables: {
                 ...(v.descriptionColor && { color: v.descriptionColor }),
               },

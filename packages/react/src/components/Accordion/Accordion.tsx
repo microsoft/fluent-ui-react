@@ -170,14 +170,14 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
 
       children.push(
         AccordionTitle.create(title, {
-          defaultProps: { active, index },
+          defaultProps: { className: Accordion.slotClassNames.title, active, index },
           overrideProps: this.handleTitleOverrides,
           render: renderPanelTitle,
         }),
       )
       children.push(
         AccordionContent.create(content, {
-          defaultProps: { active },
+          defaultProps: { className: Accordion.slotClassNames.content, active },
           render: renderPanelContent,
         }),
       )

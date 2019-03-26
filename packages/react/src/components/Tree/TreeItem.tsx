@@ -117,6 +117,7 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
       <>
         {TreeTitle.create(title, {
           defaultProps: {
+            className: TreeItem.slotClassNames.title,
             open,
             hasSubtree,
           },

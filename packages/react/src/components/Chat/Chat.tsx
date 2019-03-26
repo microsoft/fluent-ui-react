@@ -74,7 +74,11 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        {childrenExist(children) ? children : _.map(items, item => ChatItem.create(item))}
+        {childrenExist(children)
+          ? children
+          : _.map(items, item =>
+              ChatItem.create(item, { defaultProps: { className: Chat.slotClassNames.item } }),
+            )}
       </ElementType>
     )
   }

@@ -206,6 +206,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
       }
 
       const itemProps = {
+        className: List.slotClassNames.item,
         ..._.pick(this.props, List.itemProps),
         ...maybeSelectableItemProps,
         index,

@@ -472,7 +472,10 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       accessibility.focusTrap || accessibility.autoFocus ? {} : popupWrapperAttributes
 
     const popupContent = Popup.Content.create(content, {
-      defaultProps: popupContentAttributes,
+      defaultProps: {
+        className: Popup.slotClassNames.content,
+        ...popupContentAttributes,
+      },
       overrideProps: this.getContentProps,
     })
 

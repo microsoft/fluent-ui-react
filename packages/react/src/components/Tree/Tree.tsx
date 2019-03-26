@@ -130,6 +130,7 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
     return _.map(items, (item: ShorthandValue, index: number) =>
       TreeItem.create(item, {
         defaultProps: {
+          className: Tree.slotClassNames.item,
           index,
           exclusive,
           renderItemTitle,

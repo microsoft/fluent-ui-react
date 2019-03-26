@@ -176,7 +176,7 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
 
     return _.map(items, item =>
       RadioGroupItem.create(item, {
-        defaultProps: { vertical },
+        defaultProps: { className: RadioGroup.slotClassNames.item, vertical },
         overrideProps: this.handleItemOverrides,
       }),
     )
