@@ -24,6 +24,13 @@ const ExampleSnippet = ({ render = () => null, value }: ExampleSnippetProps) => 
   const string =
     value ||
     reactElementToJSXString(element, {
+      displayName: (element: React.ReactElement<any>): string =>
+        // @ts-ignore
+        element.type.displayName ||
+        // @ts-ignore // function name
+        element.type.name ||
+        // function without a name, you should provide one
+        (typeof element.type === 'function' ? 'NoDisplayName' : element.type),
       showDefaultProps: false,
       showFunctions: true,
       functionValue: fn => (renderHasFunction = true),
