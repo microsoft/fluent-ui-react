@@ -17,10 +17,33 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix narration for `Menu` @miroslavstastny ([#1105](https://github.com/stardust-ui/react/pull/1105))
+- Fix `timestamp` to be shown if the `reactionGroup` prop is applied on the `ChatMessage` component in Teams theme @mnajdova ([#1100](https://github.com/stardust-ui/react/pull/1100))
+- Fix typings for `FlexProps` and `FlexItemProps` @miroslavstastny ([#1089](https://github.com/stardust-ui/react/pull/1089))
+
+### Features
+- Add `attached` prop on the `ChatMessage` component, which is automatically set by the `ChatItem` component @mnajdova ([#1100](https://github.com/stardust-ui/react/pull/1100))
+- Add support for SVG animations to `Loader`, update in Teams theme @layershifter ([#1097](https://github.com/stardust-ui/react/pull/1097))
+
+<!--------------------------------[ v0.25.0 ]------------------------------- -->
+## [v0.25.0](https://github.com/stardust-ui/react/tree/v0.25.0) (2019-03-26)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.24.0...v0.25.0)
+
+### BREAKING CHANGES
+- `Provider` now renders `div` element with `dir`, `color` and `background` @miroslavstastny ([#852](https://github.com/stardust-ui/react/pull/852))
+
+### Fixes
+- Fix `RadioButtonGroup` Teams theme styles to be correct @notandrew ([#830](https://github.com/stardust-ui/react/pull/830))
+
+<!--------------------------------[ v0.24.0 ]------------------------------- -->
+## [v0.24.0](https://github.com/stardust-ui/react/tree/v0.24.0) (2019-03-25)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.23.1...v0.24.0)
+
 ### BREAKING CHANGES
 - Use regular components instead of `Label` in `RadioGroupItem` @layershifter ([#1070](https://github.com/stardust-ui/react/pull/1070))
 - Remove `Flex.Gap` component, and convert the `gap` styles to `margins` on the child elements of the `Flex` component @mnajdova ([#1074](https://github.com/stardust-ui/react/pull/1074))
-- Dropdown: control highlightedIndex from Dropdown @silviuavram ([#966](https://github.com/stardust-ui/react/pull/966))
+- `Dropdown`: control highlightedIndex from `Dropdown` @silviuavram ([#966](https://github.com/stardust-ui/react/pull/966))
 
 ### Fixes
 - Add aria posinset and setsize, hide menu indicator from narration @jurokapsiar ([#1066](https://github.com/stardust-ui/react/pull/1066))
@@ -36,6 +59,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `placeholderColor` variable for `Input` component in Teams theme @layershifter ([#1092](https://github.com/stardust-ui/react/pull/1092))
 - Add and export files icons in Teams theme @codepretty ([#1094](https://github.com/stardust-ui/react/pull/1094))
 - Add support for SVG animations to `Loader`, update in Teams theme @layershifter ([#1097](https://github.com/stardust-ui/react/pull/1097))
+
+### Documentation
+- Add layout guide @kuzhelov ([#1091](https://github.com/stardust-ui/react/pull/1091))
 
 <!--------------------------------[ v0.23.1 ]------------------------------- -->
 ## [v0.23.1](https://github.com/stardust-ui/react/tree/v0.23.1) (2019-03-13)
