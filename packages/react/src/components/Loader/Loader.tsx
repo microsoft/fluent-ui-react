@@ -81,6 +81,7 @@ class Loader extends UIComponent<ReactProps<LoaderProps>, LoaderState> {
     label: customPropTypes.itemShorthand,
     labelPosition: PropTypes.oneOf(['above', 'below', 'start', 'end']),
     size: customPropTypes.size,
+    svg: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
