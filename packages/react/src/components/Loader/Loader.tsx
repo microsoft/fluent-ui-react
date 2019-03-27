@@ -122,7 +122,7 @@ class Loader extends UIComponent<ReactProps<LoaderProps>, LoaderState> {
     const { visible } = this.state
 
     const svgElement = Box.create(svg, {
-      defaultProps: { className: Loader.slotClassNames.indicator, styles: styles.svg },
+      defaultProps: { className: Loader.slotClassNames.svg, styles: styles.svg },
     })
 
     return (
