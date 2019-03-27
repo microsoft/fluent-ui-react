@@ -50,6 +50,9 @@ export interface ChatMessageProps
   /** Menu with actions of the message. */
   actionMenu?: ShorthandValue
 
+  /** Controls messages's relation to other chat messages. Is automatically set by the ChatItem. */
+  attached?: boolean | 'top' | 'bottom'
+
   /** Author of the message. */
   author?: ShorthandValue
 
@@ -103,9 +106,14 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
 
   static displayName = 'ChatMessage'
 
+  static __isChatMessage = true
+
+  static isTypeOfElement = element => _.get(element, `type.__isChatMessage`)
+
   static propTypes = {
     ...commonPropTypes.createCommon({ content: 'shorthand' }),
     actionMenu: customPropTypes.itemShorthand,
+    attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
     author: customPropTypes.itemShorthand,
     badge: customPropTypes.itemShorthand,
     badgePosition: PropTypes.oneOf(['start', 'end']),
