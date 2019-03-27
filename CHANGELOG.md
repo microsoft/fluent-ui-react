@@ -24,6 +24,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `attached` prop on the `ChatMessage` component, which is automatically set by the `ChatItem` component @mnajdova ([#1100](https://github.com/stardust-ui/react/pull/1100))
+- Add support for SVG animations to `Loader`, update in Teams theme @layershifter ([#1097](https://github.com/stardust-ui/react/pull/1097))
 
 <!--------------------------------[ v0.25.0 ]------------------------------- -->
 ## [v0.25.0](https://github.com/stardust-ui/react/tree/v0.25.0) (2019-03-26)
@@ -57,7 +58,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `Alert` component @Bugaa92 ([#1063](https://github.com/stardust-ui/react/pull/1063))
 - Add `placeholderColor` variable for `Input` component in Teams theme @layershifter ([#1092](https://github.com/stardust-ui/react/pull/1092))
 - Add and export files icons in Teams theme @codepretty ([#1094](https://github.com/stardust-ui/react/pull/1094))
-- Add support for SVG animations to `Loader`, update in Teams theme @layershifter ([#1097](https://github.com/stardust-ui/react/pull/1097))
 
 ### Documentation
 - Add layout guide @kuzhelov ([#1091](https://github.com/stardust-ui/react/pull/1091))
