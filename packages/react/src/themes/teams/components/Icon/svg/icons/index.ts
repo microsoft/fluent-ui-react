@@ -96,6 +96,7 @@ import translation from './translation'
 import trashCan from './trashCan'
 import triangleDown from './triangleDown'
 import triangleRight from './triangleRight'
+import triangleUp from './triangleUp'
 import underline from './underline'
 import undo from './undo'
 import urgent from './urgent'
@@ -189,6 +190,7 @@ export default {
   'trash-can': trashCan,
   'triangle-down': triangleDown,
   'triangle-right': triangleRight,
+  'triangle-up': triangleUp,
   'team-create': teamCreate,
   underline,
   undo,

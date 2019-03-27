@@ -30,7 +30,6 @@ import {
   handleRef,
   UIComponentProps,
 } from '../../lib'
-import Indicator, { IndicatorProps } from '../Indicator/Indicator'
 import List from '../List/List'
 import Ref from '../Ref/Ref'
 import DropdownItem from './DropdownItem'
@@ -394,14 +393,14 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                           },
                         }),
                       })
-                    : Indicator.create(toggleIndicator, {
+                    : Icon.create(toggleIndicator, {
                         defaultProps: {
                           className: Dropdown.slotClassNames.toggleIndicator,
-                          direction: open ? 'top' : 'bottom',
+                          name: open ? 'arrow-up' : 'arrow-down',
                           styles: styles.toggleIndicator,
                         },
-                        overrideProps: (predefinedProps: IndicatorProps) => ({
-                          onClick: (e, indicatorProps: IndicatorProps) => {
+                        overrideProps: (predefinedProps: IconProps) => ({
+                          onClick: (e, indicatorProps: IconProps) => {
                             _.invoke(predefinedProps, 'onClick', e, indicatorProps)
                             getToggleButtonProps().onClick(e)
                           },

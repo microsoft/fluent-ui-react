@@ -21,21 +21,34 @@ const declareSvg = (svgIcon: SvgIconSpec): ThemeIconSpec => ({
 
 const declareFontBased = (fontIcon: FontIconSpec): ThemeIconSpec => ({ icon: fontIcon })
 
-const icons: ThemeIcons = Object.keys(svgIconsAndStyles as {
-  [iconName: string]: TeamsSvgIconSpec
-}).reduce<ThemeIcons>((accIcons, iconName) => {
-  const iconAndMaybeStyles = svgIconsAndStyles[iconName]
-
-  const icon: SvgIconSpec = (iconAndMaybeStyles as any).styles
+const getIcon = iconAndMaybeStyles => {
+  return (iconAndMaybeStyles as any).styles
     ? (iconAndMaybeStyles as SvgIconSpecWithStyles).icon
     : (iconAndMaybeStyles as SvgIconSpec)
+}
+
+const themeIcons: { [key: string]: ThemeIconSpec } = Object.keys(svgIconsAndStyles as {
+  [iconName: string]: TeamsSvgIconSpec
+}).reduce<{ [key: string]: ThemeIconSpec }>((accIcons, iconName) => {
+  const iconAndMaybeStyles = svgIconsAndStyles[iconName]
+
+  const icon: SvgIconSpec = getIcon(iconAndMaybeStyles)
 
   return { ...accIcons, ...{ [iconName]: declareSvg(icon) } }
 }, {})
 
 Object.keys(fontIcons).forEach(iconName => {
-  icons[iconName] = declareFontBased(fontIcons[iconName])
+  themeIcons[iconName] = declareFontBased(fontIcons[iconName])
 })
+
+const icons: ThemeIcons = {
+  ...themeIcons,
+  close: themeIcons['close'],
+  'arrow-up': themeIcons['triangle-up'],
+  'arrow-down': themeIcons['triangle-down'],
+  'arrow-start': themeIcons['triangle-left'],
+  'arrow-end': themeIcons['triangle-right'],
+}
 
 export default mergeThemes(base, {
   siteVariables,

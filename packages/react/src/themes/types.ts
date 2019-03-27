@@ -505,4 +505,11 @@ export type ThemeIconSpec = {
   icon: FontIconSpec | SvgIconSpec
 }
 
-export type ThemeIcons = { [iconName: string]: ThemeIconSpec }
+export type ThemeIcons = {
+  close: ThemeIconSpec
+  'arrow-end': ThemeIconSpec
+  'arrow-start': ThemeIconSpec
+  'arrow-up': ThemeIconSpec
+  'arrow-down': ThemeIconSpec
+  [iconName: string]: ThemeIconSpec
+}
