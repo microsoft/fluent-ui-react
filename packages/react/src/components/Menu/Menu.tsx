@@ -23,6 +23,11 @@ import MenuDivider from './MenuDivider'
 
 export type MenuShorthandKinds = 'divider' | 'item'
 
+export interface MenuSlotClassNames {
+  divider: string
+  item: string
+}
+
 export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -87,6 +92,11 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
+
+  static slotClassNames: MenuSlotClassNames = {
+    divider: MenuDivider.className,
+    item: MenuItem.className,
+  }
 
   static create: Function
 
@@ -163,6 +173,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
       if (kind === 'divider') {
         return MenuDivider.create(item, {
           defaultProps: {
+            className: Menu.slotClassNames.divider,
             primary,
             secondary,
             vertical,
@@ -177,6 +188,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
 
       return MenuItem.create(item, {
         defaultProps: {
+          className: Menu.slotClassNames.item,
           iconOnly,
           pills,
           pointing,
