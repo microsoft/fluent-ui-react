@@ -188,6 +188,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   /** Sets search query value (controlled mode). */
   searchQuery?: string
 
+  /** When selecting an element with Tab, focus stays on the dropdown by default. If true, the focus will jump to next/previous element in DOM. */
+  tabInMultipleSelection?: boolean
+
   /** Controls appearance of toggle indicator that shows/hides items list. */
   toggleIndicator?: ShorthandValue
 
@@ -265,6 +268,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
+    tabInMultipleSelection: PropTypes.bool,
     toggleIndicator: customPropTypes.itemShorthand,
     triggerButton: customPropTypes.itemShorthand,
     value: PropTypes.oneOfType([
@@ -459,7 +463,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
               onFocus: () => {
                 this.setState({ focused: true })
               },
-              onBlur: () => {
+              onBlur: e => {
+                e.nativeEvent['preventDownshiftDefault'] = true
                 this.setState({ focused: false })
               },
               onKeyDown: e => {
@@ -745,6 +750,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       searchInputProps: DropdownSearchInputProps,
     ) => {
       this.setState({ focused: false })
+      e.nativeEvent['preventDownshiftDefault'] = true
       _.invoke(predefinedProps, 'onInputBlur', e, searchInputProps)
     }
 
@@ -756,6 +762,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         case keyboardKey.Tab:
           if (!_.isNil(highlightedIndex)) {
             selectItemAtIndex(highlightedIndex)
+          }
+          if (this.props.multiple && !this.props.tabInMultipleSelection) {
+            e.preventDefault()
           }
           break
         case keyboardKey.ArrowLeft:
@@ -893,6 +902,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           toggleMenu()
         } else {
           selectItemAtIndex(highlightedIndex)
+        }
+        if (this.props.multiple && !this.props.tabInMultipleSelection) {
+          e.preventDefault()
         }
         return
       case keyboardKey.Escape:
