@@ -77,11 +77,14 @@ export type AriaLandmarkRole =
   | 'navigation'
   | 'search'
 
+export type AriaLiveRegionsRole = 'alert' | 'log' | 'marquee' | 'status' | 'timer'
+
 export type AriaRole =
   | AriaWidgetRole
   | AriaCompositeRole
   | AriaDocumentStructureRole
   | AriaLandmarkRole
+  | AriaLiveRegionsRole
 
 export interface AriaWidgetAttributes {
   role?: string

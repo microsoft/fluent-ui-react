@@ -11,7 +11,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { RenderResultConfig } from 'src/lib/renderComponent'
-import { defaultBehavior } from '../../lib/accessibility'
+import { alertBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../types'
 import Box from '../Box/Box'
@@ -25,7 +25,7 @@ export interface AlertSlotClassNames {
 export interface AlertProps extends UIComponentProps, ContentComponentProps<ShorthandValue> {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
+   * @default alertBehavior
    */
   accessibility?: Accessibility
 
@@ -73,7 +73,7 @@ class Alert extends UIComponent<ReactProps<AlertProps>> {
     warning: PropTypes.bool,
   }
 
-  static defaultProps = { accessibility: defaultBehavior }
+  static defaultProps = { accessibility: alertBehavior }
 
   renderContent = ({ styles }: RenderResultConfig<AlertProps>) => {
     const { action, content } = this.props
