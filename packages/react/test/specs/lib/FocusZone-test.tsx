@@ -1304,6 +1304,9 @@ describe('FocusZone', () => {
     const buttonA = focusZone.querySelector('#a') as HTMLElement
     const buttonB = focusZone.querySelector('#b') as HTMLElement
 
+    expect(buttonA.tabIndex).toBe(0)
+    expect(buttonB.tabIndex).toBe(-1)
+
     // ButtonA should be focussed.
     ReactTestUtils.Simulate.focus(buttonA)
     expect(lastFocusedElement).toBe(buttonA)
