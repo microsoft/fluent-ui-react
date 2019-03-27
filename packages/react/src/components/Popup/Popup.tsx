@@ -1,5 +1,3 @@
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
-import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
@@ -42,6 +40,18 @@ import {
   AccessibilityActionHandlers,
   AccessibilityBehavior,
 } from '../../lib/accessibility/types'
+
+import { createSubscriptionType } from './subscriptionUtils'
+
+const {
+  Subscription: OutsideClickSubscription,
+  HandlingStrategy: OutsideClickHandling,
+} = createSubscriptionType()
+
+const {
+  Subscription: OutsideKeyDownSubscription,
+  HandlingStrategy: OutsideKeyDownHandling,
+} = createSubscriptionType()
 
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
@@ -224,27 +234,27 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     )
   }
 
-  handleDocumentClick = (getRefs: Function) => e => {
-    if (this.isOutsidePopupElementAndOutsideTriggerElement(getRefs(), e)) {
+  handleDocumentClick = e => {
+    if (this.isOutsidePopupElementAndOutsideTriggerElement(e)) {
       this.trySetOpen(false, e)
+      return false
     }
+
+    return true
   }
 
-  handleDocumentKeyDown = (getRefs: Function) => (e: KeyboardEvent) => {
+  handleDocumentKeyDown = () => (e: KeyboardEvent) => {
     const keyCode = keyboardKey.getCode(e)
     const isMatchingKey = keyCode === keyboardKey.Enter || keyCode === keyboardKey.Spacebar
 
-    if (isMatchingKey && this.isOutsidePopupElementAndOutsideTriggerElement(getRefs(), e)) {
+    if (isMatchingKey && this.isOutsidePopupElementAndOutsideTriggerElement(e)) {
       this.trySetOpen(false, e)
     }
   }
 
-  isOutsidePopupElementAndOutsideTriggerElement(refs: NodeRef[], e) {
-    const isInsideNested = _.some(refs, (childRef: NodeRef) => {
-      return doesNodeContainClick(childRef.current, e)
-    })
-
-    const isOutsidePopupElement = this.popupDomElement && !isInsideNested
+  private isOutsidePopupElementAndOutsideTriggerElement(e) {
+    const isOutsidePopupElement =
+      this.popupDomElement && !doesNodeContainClick(this.popupDomElement, e)
     const isOutsideTriggerElement =
       this.triggerDomElement && !doesNodeContainClick(this.triggerDomElement, e)
 
@@ -469,39 +479,37 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     })
 
     return (
-      <Unstable_NestingAuto>
-        {(getRefs, nestingRef) => (
-          <>
-            <Ref
-              innerRef={domElement => {
-                ref(domElement)
-                this.popupDomElement = domElement
-                handleRef(contentRef, domElement)
-                handleRef(nestingRef, domElement)
-              }}
-            >
-              {accessibility.focusTrap ? (
-                <FocusTrapZone {...focusTrapProps}>{popupContent}</FocusTrapZone>
-              ) : accessibility.autoFocus ? (
-                <AutoFocusZone {...autoFocusProps}>{popupContent}</AutoFocusZone>
-              ) : (
-                popupContent
-              )}
-            </Ref>
+      <OutsideKeyDownHandling.ChainedFromInnerSubscription>
+        <OutsideClickHandling.ChainedFromInnerSubscription>
+          <Ref
+            innerRef={domElement => {
+              ref(domElement)
+              this.popupDomElement = domElement
+              handleRef(contentRef, domElement)
+            }}
+          >
+            {accessibility.focusTrap ? (
+              <FocusTrapZone {...focusTrapProps}>{popupContent}</FocusTrapZone>
+            ) : accessibility.autoFocus ? (
+              <AutoFocusZone {...autoFocusProps}>{popupContent}</AutoFocusZone>
+            ) : (
+              popupContent
+            )}
+          </Ref>
 
-            <EventListener
-              listener={this.handleDocumentClick(getRefs)}
-              targetRef={documentRef}
-              type="click"
-            />
-            <EventListener
-              listener={this.handleDocumentKeyDown(getRefs)}
-              targetRef={documentRef}
-              type="keydown"
-            />
-          </>
-        )}
-      </Unstable_NestingAuto>
+          <OutsideClickSubscription
+            target={document}
+            type="click"
+            handler={e => this.handleDocumentClick(e)}
+          />
+
+          <OutsideKeyDownSubscription
+            target={document}
+            type="keydown"
+            handler={e => this.handleDocumentClick(e)}
+          />
+        </OutsideClickHandling.ChainedFromInnerSubscription>
+      </OutsideKeyDownHandling.ChainedFromInnerSubscription>
     )
   }
 
