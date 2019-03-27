@@ -25,7 +25,7 @@ import {
 
 export interface TreeItemSlotClassNames {
   title: string
-  tree: string
+  subtree: string
 }
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
@@ -76,7 +76,7 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
 
   static slotClassNames: TreeItemSlotClassNames = {
     title: TreeTitle.className,
-    tree: `${TreeItem.className}__tree`,
+    subtree: `${TreeItem.className}__subtree`,
   }
 
   static autoControlledProps = ['open']
@@ -127,7 +127,7 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
         {open &&
           Tree.create(items, {
             defaultProps: {
-              className: TreeItem.slotClassNames.tree,
+              className: TreeItem.slotClassNames.subtree,
               exclusive,
               renderItemTitle,
             },

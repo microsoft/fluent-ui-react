@@ -30,7 +30,7 @@ import Indicator from '../Indicator/Indicator'
 
 export interface MenuItemSlotClassNames {
   wrapper: string
-  menu: string
+  submenu: string
 }
 
 export interface MenuItemProps
@@ -232,7 +232,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
             {Menu.create(menu, {
               defaultProps: {
                 accessibility: submenuBehavior,
-                className: MenuItem.slotClassNames.menu,
+                className: MenuItem.slotClassNames.submenu,
                 vertical: true,
                 primary,
                 secondary,
@@ -373,7 +373,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
 
 MenuItem.create = createShorthandFactory({ Component: MenuItem, mappedProp: 'content' })
 MenuItem.slotClassNames = {
-  menu: `${MenuItem.className}__menu`,
+  submenu: `${MenuItem.className}__submenu`,
   wrapper: `${MenuItem.className}__wrapper`,
 }
 
