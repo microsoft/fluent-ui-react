@@ -183,9 +183,10 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         boxShadow: 'none',
       }),
 
-      ...(pointing && {
-        marginBottom: verticalPointingBottomMargin,
-      }),
+      ...(pointing &&
+        vertical && {
+          marginBottom: verticalPointingBottomMargin,
+        }),
 
       // item separator
       ...(!vertical &&
