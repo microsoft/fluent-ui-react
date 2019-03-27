@@ -506,10 +506,10 @@ export type ThemeIconSpec = {
 }
 
 export type ThemeIcons = {
-  close: ThemeIconSpec
-  'arrow-end': ThemeIconSpec
-  'arrow-start': ThemeIconSpec
-  'arrow-up': ThemeIconSpec
-  'arrow-down': ThemeIconSpec
+  close?: ThemeIconSpec
+  'arrow-end'?: ThemeIconSpec
+  'arrow-start'?: ThemeIconSpec
+  'arrow-up'?: ThemeIconSpec
+  'arrow-down'?: ThemeIconSpec
   [iconName: string]: ThemeIconSpec
 }
