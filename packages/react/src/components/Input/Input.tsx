@@ -19,6 +19,7 @@ import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import Box from '../Box/Box'
+import Indicator from '../Indicator/Indicator'
 
 export interface InputSlotClassNames {
   input: string
@@ -32,7 +33,7 @@ export interface InputProps extends UIComponentProps, ChildrenComponentProps {
   accessibility?: Accessibility
 
   /** A property that will change the icon on the input and clear the input on click on Cancel. */
-  clearable?: boolean
+  clearable?: ShorthandValue
 
   /** The default value of the input. */
   defaultValue?: React.ReactText
@@ -98,7 +99,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    clearable: PropTypes.bool,
+    clearable: customPropTypes.itemShorthand,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fluid: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
@@ -156,13 +157,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
                 },
               })}
             </Ref>
-            {Icon.create(this.computeIcon(), {
-              defaultProps: {
-                styles: styles.icon,
-                variables: variables.icon,
-              },
-              overrideProps: this.handleIconOverrides,
-            })}
+            {this.renderIcon(styles)}
           </>
         ),
         styles: styles.root,
@@ -198,15 +193,35 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
     }
   }
 
-  private computeIcon = (): ShorthandValue => {
+  private renderIcon = styles => {
     const { clearable, icon } = this.props
     const { value } = this.state
 
     if (clearable && (value as string).length !== 0) {
-      return 'close'
+      return typeof clearable === 'boolean'
+        ? Indicator.create(
+            {
+              code: 'close',
+              styles: styles.icon,
+            },
+            {
+              overrideProps: this.handleIconOverrides,
+            },
+          )
+        : Icon.create(clearable, {
+            defaultProps: {
+              styles: styles.icon,
+            },
+            overrideProps: this.handleIconOverrides,
+          })
     }
 
-    return icon || null
+    return Icon.create(icon || null, {
+      defaultProps: {
+        styles: styles.icon,
+      },
+      overrideProps: this.handleIconOverrides,
+    })
   }
 }
 

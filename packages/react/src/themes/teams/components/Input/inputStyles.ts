@@ -40,6 +40,7 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
 
   icon: ({ props: { iconPosition }, variables: v }): ICSSInJSStyle => ({
     position: v.iconPosition as PositionProperty,
+    cursor: 'pointer',
     color: v.iconColor,
     ...(iconPosition === 'start' && {
       left: v.iconLeft,

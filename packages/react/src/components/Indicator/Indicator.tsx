@@ -23,6 +23,9 @@ export interface IndicatorProps extends UIComponentProps {
   /** The indicator can point towards different directions. */
   direction?: 'start' | 'end' | 'top' | 'bottom'
 
+  /** The indicator can point towards different directions. */
+  code?: 'arrow' | 'close'
+
   /** The indicator can show specific icon if provided. */
   icon?: ShorthandValue
 }
@@ -38,10 +41,18 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
   static className = 'ui-indicator'
 
   static directionMap = {
-    end: { unicode: '\u25B8', rotation: -90 },
-    start: { unicode: '\u25C2', rotation: 90 },
-    top: { unicode: '\u25B4', rotation: 180 },
-    bottom: { unicode: '\u25BE', rotation: 0 },
+    arrow: {
+      end: { unicode: '\u25B8', rotation: -90 },
+      start: { unicode: '\u25C2', rotation: 90 },
+      top: { unicode: '\u25B4', rotation: 180 },
+      bottom: { unicode: '\u25BE', rotation: 0 },
+    },
+    close: {
+      end: { unicode: '\u2715', rotation: 0 },
+      start: { unicode: '\u2715', rotation: 0 },
+      top: { unicode: '\u2715', rotation: 0 },
+      bottom: { unicode: '\u2715', rotation: 0 },
+    },
   }
 
   static propTypes = {
@@ -54,12 +65,13 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
     accessibility: iconBehavior,
     as: 'span',
     direction: 'bottom',
+    code: 'arrow',
   }
 
   renderComponent({ accessibility, ElementType, classes, unhandledProps, rtl }) {
-    const { direction, icon, color } = this.props
+    const { direction, icon, color, code } = this.props
     const hexUnicode =
-      direction && Indicator.directionMap[this.getDirectionBasedOnRtl(rtl, direction)].unicode
+      direction && Indicator.directionMap[code][this.getDirectionBasedOnRtl(rtl, direction)].unicode
 
     return (
       <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
@@ -67,7 +79,7 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
           ? Icon.create(icon, {
               defaultProps: { color },
               overrideProps: ({ rotate }) => ({
-                rotate: (Indicator.directionMap[direction].rotation || 0) + (rotate || 0),
+                rotate: (Indicator.directionMap[code][direction].rotation || 0) + (rotate || 0),
               }),
             })
           : hexUnicode}

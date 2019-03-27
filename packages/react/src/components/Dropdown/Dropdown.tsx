@@ -56,10 +56,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   activeSelectedIndex?: number
 
   /** A dropdown can be clearable and let users remove their selection. */
-  clearable?: boolean
-
-  /** A slot for a clearing indicator. */
-  clearIndicator?: ShorthandValue
+  clearable?: ShorthandValue
 
   /** The initial value for the index of the currently active selected item, in a multiple selection. */
   defaultActiveSelectedIndex?: number
@@ -230,8 +227,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       content: false,
     }),
     activeSelectedIndex: PropTypes.number,
-    clearable: PropTypes.bool,
-    clearIndicator: customPropTypes.itemShorthand,
+    clearable: customPropTypes.itemShorthand,
     defaultActiveSelectedIndex: PropTypes.number,
     defaultOpen: PropTypes.bool,
     defaultHighlightedIndex: PropTypes.number,
@@ -272,7 +268,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   static defaultProps: DropdownProps = {
     as: 'div',
-    clearIndicator: 'close',
     itemToString: item => {
       if (!item || React.isValidElement(item)) {
         return ''
@@ -319,7 +314,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }: RenderResultConfig<DropdownProps>) {
     const {
       clearable,
-      clearIndicator,
       search,
       multiple,
       getA11yStatusMessage,
@@ -381,19 +375,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                       : this.renderTriggerButton(styles, rtl, getToggleButtonProps)}
                   </div>
                   {showClearIndicator
-                    ? Icon.create(clearIndicator, {
-                        defaultProps: {
-                          className: Dropdown.slotClassNames.clearIndicator,
-                          styles: styles.clearIndicator,
-                          xSpacing: 'none',
-                        },
-                        overrideProps: (predefinedProps: IconProps) => ({
-                          onClick: (e: React.SyntheticEvent<HTMLElement>, iconProps: IconProps) => {
-                            _.invoke(predefinedProps, 'onClick', e, iconProps)
-                            this.handleClear(e)
-                          },
-                        }),
-                      })
+                    ? this.renderClearIndicator(styles)
                     : Indicator.create(toggleIndicator, {
                         defaultProps: {
                           className: Dropdown.slotClassNames.toggleIndicator,
@@ -434,6 +416,39 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         </Portal>
       </ElementType>
     )
+  }
+
+  private renderClearIndicator = styles => {
+    const { clearable } = this.props
+    return typeof clearable === 'boolean'
+      ? Indicator.create(
+          {
+            code: 'close',
+            className: Dropdown.slotClassNames.clearIndicator,
+            styles: styles.clearIndicator,
+          },
+          {
+            overrideProps: (predefinedProps: IconProps) => ({
+              onClick: (e: React.SyntheticEvent<HTMLElement>, iconProps: IconProps) => {
+                _.invoke(predefinedProps, 'onClick', e, iconProps)
+                this.handleClear(e)
+              },
+            }),
+          },
+        )
+      : Icon.create(clearable, {
+          defaultProps: {
+            className: Dropdown.slotClassNames.clearIndicator,
+            styles: styles.clearIndicator,
+            xSpacing: 'none',
+          },
+          overrideProps: (predefinedProps: IconProps) => ({
+            onClick: (e: React.SyntheticEvent<HTMLElement>, iconProps: IconProps) => {
+              _.invoke(predefinedProps, 'onClick', e, iconProps)
+              this.handleClear(e)
+            },
+          }),
+        })
   }
 
   private renderTriggerButton(

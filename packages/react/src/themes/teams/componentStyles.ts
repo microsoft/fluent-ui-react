@@ -71,3 +71,5 @@ export { default as TreeItem } from './components/Tree/treeItemStyles'
 export { default as TreeTitle } from './components/Tree/treeTitleStyles'
 
 export { default as Animation } from './components/Animation/animationStyles'
+
+export { default as Indicator } from './components/Indicator/indicatorStyles'
