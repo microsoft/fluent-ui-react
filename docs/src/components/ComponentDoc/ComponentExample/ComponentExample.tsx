@@ -559,7 +559,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         <Flex.Item>
           <>
             {/* Ensure anchor links don't occlude card shadow effect */}
-            {/* <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} /> */}
+            <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
             <Segment styles={{ borderBottom: '1px solid #ddd' }}>
               <Flex>
