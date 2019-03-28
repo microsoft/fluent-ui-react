@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `timestamp` to be shown if the `reactionGroup` prop is applied on the `ChatMessage` component in Teams theme @mnajdova ([#1100](https://github.com/stardust-ui/react/pull/1100))
 - Fix typings for `FlexProps` and `FlexItemProps` @miroslavstastny ([#1089](https://github.com/stardust-ui/react/pull/1089))
 - Fix `selectableFocusHoverColor` value in `List` for Teams theme @layershifter ([#1113](https://github.com/stardust-ui/react/pull/1113))
+- Fix in `Dropdown`, close it after `searchQuery` will become empty @layershifter ([#1124](https://github.com/stardust-ui/react/pull/1124))
 
 ### Features
 - Add `attached` prop on the `ChatMessage` component, which is automatically set by the `ChatItem` component @mnajdova ([#1100](https://github.com/stardust-ui/react/pull/1100))

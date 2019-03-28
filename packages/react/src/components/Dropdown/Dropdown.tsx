@@ -628,7 +628,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private handleSearchQueryChange = (searchQuery: string) => {
-    this.trySetStateAndInvokeHandler('onSearchQueryChange', null, { searchQuery })
+    this.trySetStateAndInvokeHandler('onSearchQueryChange', null, {
+      searchQuery,
+      open: searchQuery === '' ? false : this.state.open,
+    })
   }
 
   private handleDownshiftStateChanges = (
@@ -835,6 +838,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     const {
       activeSelectedIndex,
       highlightedIndex,
+      open,
       searchQuery,
       value,
     } = this.getInitialAutoControlledState(this.props)
@@ -843,11 +847,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       ...this.props,
       activeSelectedIndex,
       highlightedIndex,
+      open,
       searchQuery,
       value,
     })
 
-    this.trySetState({ activeSelectedIndex, highlightedIndex, searchQuery, value })
+    this.trySetState({ activeSelectedIndex, highlightedIndex, open, searchQuery, value })
 
     this.tryFocusSearchInput()
     this.tryFocusTriggerButton()
