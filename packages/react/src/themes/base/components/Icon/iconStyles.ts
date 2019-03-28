@@ -89,7 +89,7 @@ const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier): number =>
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   root: ({
-    props: { disabled, name, size, bordered, circular, color, xSpacing, rotate },
+    props: { name, size, bordered, circular, xSpacing, rotate },
     variables: v,
     theme,
   }): ICSSInJSStyle => {
