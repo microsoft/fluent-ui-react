@@ -9,6 +9,7 @@ const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupConte
 
     return {
       display: 'block',
+      textAlign: 'left',
       backgroundColor,
       padding,
       border: `1px solid ${borderColor}`,
