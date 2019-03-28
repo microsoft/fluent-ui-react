@@ -7,6 +7,7 @@ import arrowUp from './arrowUp'
 import arrowDown from './arrowDown'
 import bold from './bold'
 import bookmark from './bookmark'
+import block from './block'
 import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
@@ -57,6 +58,7 @@ import giphy from './giphy'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
 import indent from './indent'
+import inputInvalid from './inputInvalid'
 import italic from './italic'
 import leave from './leave'
 import like from './like'
@@ -108,6 +110,7 @@ export default {
   'arrow-down': arrowDown,
   bold,
   bookmark,
+  block,
   bullets,
   calendar,
   call,
@@ -150,6 +153,7 @@ export default {
   highlight,
   'horizontal-rule': horizontalRule,
   indent,
+  'input-invalid': inputInvalid,
   italic,
   leave,
   like,
