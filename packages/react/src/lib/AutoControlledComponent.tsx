@@ -187,8 +187,9 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
    * Second argument is a state object that is always passed to setState.
    * @param {object} maybeState State that corresponds to controlled props.
    * @param {object} [state] Actual state, useful when you also need to setState.
+   * @param {object} onStateChanged Callback which is called after setState applied.
    */
-  trySetState = (maybeState, state?) => {
+  trySetState = (maybeState, state?, onStateChanged?: () => void) => {
     const { autoControlledProps } = this.constructor as any
     if (process.env.NODE_ENV !== 'production') {
       const { name } = this.constructor
@@ -218,6 +219,6 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
 
     if (state) newState = { ...newState, ...state }
 
-    if (Object.keys(newState).length > 0) this.setState(newState)
+    if (Object.keys(newState).length > 0) this.setState(newState, onStateChanged)
   }
 }
