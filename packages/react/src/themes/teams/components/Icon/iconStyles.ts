@@ -130,6 +130,10 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       ...(!rtl && {
         transform: `rotate(${rotate}deg)`,
       }),
+      // override base theme default rtl behavior
+      ...(rtl && {
+        transform: 'unset',
+      }),
     }
   },
 
