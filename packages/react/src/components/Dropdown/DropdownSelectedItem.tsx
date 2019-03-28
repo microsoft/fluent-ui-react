@@ -15,6 +15,7 @@ import {
 import { Image, Icon, Label } from '../..'
 import { IconProps } from '../Icon/Icon'
 import Ref from '../Ref/Ref'
+import Box from '../Box/Box'
 
 export interface DropdownSelectedItemSlotClassNames {
   removeIcon: string
@@ -135,6 +136,9 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
         avatar: true,
       },
     })
+    const contentElement = Box.create(header, {
+      defaultProps: { as: 'span' },
+    })
 
     return (
       <Ref innerRef={this.itemRef}>
@@ -144,7 +148,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
           circular
           onClick={this.handleClick}
           onKeyDown={this.handleKeyDown}
-          content={header}
+          content={contentElement}
           icon={iconElement}
           image={imageElement}
           {...unhandledProps}
