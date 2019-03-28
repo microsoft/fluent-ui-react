@@ -271,7 +271,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   static defaultProps: DropdownProps = {
     as: 'div',
-    clearIndicator: 'close',
+    clearIndicator: 'stardust-close',
     itemToString: item => {
       if (!item || React.isValidElement(item)) {
         return ''
@@ -396,7 +396,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                     : Icon.create(toggleIndicator, {
                         defaultProps: {
                           className: Dropdown.slotClassNames.toggleIndicator,
-                          name: open ? 'arrow-up' : 'arrow-down',
+                          name: open ? 'stardust-arrow-up' : 'stardust-arrow-down',
                           styles: styles.toggleIndicator,
                         },
                         overrideProps: (predefinedProps: IconProps) => ({

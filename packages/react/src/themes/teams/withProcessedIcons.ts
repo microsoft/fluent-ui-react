@@ -34,11 +34,10 @@ const processedIcons: { [key: string]: ThemeIconSpec } = Object.keys(svgIconsAnd
 const theme: ThemeInput = {
   icons: {
     ...processedIcons,
-    close: getIcon(svgIconsAndStyles['close']) as ThemeIconSpec,
-    'arrow-up': getIcon(svgIconsAndStyles['triangle-up'] || {}) as ThemeIconSpec,
-    'arrow-down': getIcon(svgIconsAndStyles['triangle-down'] || {}) as ThemeIconSpec,
-    'arrow-start': getIcon(svgIconsAndStyles['triangle-left'] || {}) as ThemeIconSpec,
-    'arrow-end': getIcon(svgIconsAndStyles['triangle-right'] || {}) as ThemeIconSpec,
+    'stardust-close': processedIcons['close'],
+    'stardust-arrow-up': processedIcons['triangle-up'],
+    'stardust-arrow-down': processedIcons['triangle-down'],
+    'stardust-arrow-end': processedIcons['triangle-right'],
   },
 }
 

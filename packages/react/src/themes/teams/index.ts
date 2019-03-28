@@ -43,11 +43,10 @@ Object.keys(fontIcons).forEach(iconName => {
 
 const icons: ThemeIcons = {
   ...themeIcons,
-  close: themeIcons['close'],
-  'arrow-up': themeIcons['triangle-up'],
-  'arrow-down': themeIcons['triangle-down'],
-  'arrow-start': themeIcons['triangle-left'],
-  'arrow-end': themeIcons['triangle-right'],
+  'stardust-close': themeIcons['close'],
+  'stardust-arrow-up': themeIcons['triangle-up'],
+  'stardust-arrow-down': themeIcons['triangle-down'],
+  'stardust-arrow-end': themeIcons['triangle-right'],
 }
 
 export default mergeThemes(base, {

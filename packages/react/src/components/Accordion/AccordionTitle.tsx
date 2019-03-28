@@ -69,7 +69,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
       <Layout
         start={Icon.create(indicatorWithDefaults, {
           defaultProps: {
-            name: active ? 'arrow-down' : 'arrow-end',
+            name: active ? 'stardust-arrow-down' : 'stardust-arrow-end',
             styles: styles.indicator,
           },
         })}
