@@ -7,6 +7,8 @@ export default (siteVars: any): Partial<MenuVariables> => ({
   focusedBorder: `solid ${pxToRem(1)} ${siteVars.colors.white}`,
   focusedBackgroundColor: 'transparent',
 
+  primaryActiveBorderColor: siteVars.brand06,
+
   hoverBackgroundColor: siteVars.gray08,
 
   activeColor: siteVars.colors.white,
