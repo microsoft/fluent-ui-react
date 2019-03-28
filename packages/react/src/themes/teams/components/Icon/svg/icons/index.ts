@@ -7,7 +7,7 @@ import arrowUp from './arrowUp'
 import arrowDown from './arrowDown'
 import bold from './bold'
 import bookmark from './bookmark'
-import block from './block'
+import ban from './ban'
 import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
@@ -108,9 +108,9 @@ export default {
   add,
   'arrow-up': arrowUp,
   'arrow-down': arrowDown,
+  ban,
   bold,
   bookmark,
-  block,
   bullets,
   calendar,
   call,
