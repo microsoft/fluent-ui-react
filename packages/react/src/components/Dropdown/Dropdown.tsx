@@ -128,6 +128,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   /** A message to be displayed in the list when dropdown is loading. */
   loadingMessage?: ShorthandValue
 
+  /** When selecting an element with Tab, focus stays on the dropdown by default. If true, the focus will jump to next/previous element in DOM. */
+  moveFocusOnTab?: boolean
+
   /** A dropdown can perform a multiple selection. */
   multiple?: boolean
 
@@ -187,9 +190,6 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 
   /** Sets search query value (controlled mode). */
   searchQuery?: string
-
-  /** When selecting an element with Tab, focus stays on the dropdown by default. If true, the focus will jump to next/previous element in DOM. */
-  tabInMultipleSelection?: boolean
 
   /** Controls appearance of toggle indicator that shows/hides items list. */
   toggleIndicator?: ShorthandValue
@@ -256,6 +256,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     itemToString: PropTypes.func,
     loading: PropTypes.bool,
     loadingMessage: customPropTypes.itemShorthand,
+    moveFocusOnTab: PropTypes.bool,
     multiple: PropTypes.bool,
     noResultsMessage: customPropTypes.itemShorthand,
     onOpenChange: PropTypes.func,
@@ -268,7 +269,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
-    tabInMultipleSelection: PropTypes.bool,
     toggleIndicator: customPropTypes.itemShorthand,
     triggerButton: customPropTypes.itemShorthand,
     value: PropTypes.oneOfType([
@@ -763,7 +763,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           if (!_.isNil(highlightedIndex)) {
             selectItemAtIndex(highlightedIndex)
             // Keep focus here if condition applies.
-            if (this.props.multiple && !this.props.tabInMultipleSelection) {
+            if (this.props.multiple && !this.props.moveFocusOnTab) {
               e.preventDefault()
             }
           }
@@ -903,7 +903,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           toggleMenu()
         } else {
           // Keep focus here in this case.
-          if (this.props.multiple && !this.props.tabInMultipleSelection) {
+          if (this.props.multiple && !this.props.moveFocusOnTab) {
             e.preventDefault()
           }
           selectItemAtIndex(highlightedIndex)
