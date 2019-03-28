@@ -19,6 +19,10 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
 
+export interface ListSlotClassNames {
+  item: string
+}
+
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -67,6 +71,10 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   static displayName = 'List'
 
   static className = 'ui-list'
+
+  static slotClassNames: ListSlotClassNames = {
+    item: ListItem.className,
+  }
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -198,6 +206,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
       }
 
       const itemProps = {
+        className: List.slotClassNames.item,
         ..._.pick(this.props, List.itemProps),
         ...maybeSelectableItemProps,
         index,

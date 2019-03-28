@@ -23,6 +23,11 @@ import {
   ShorthandRenderFunction,
 } from '../../types'
 
+export interface AccordionSlotClassNames {
+  content: string
+  title: string
+}
+
 export interface AccordionProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active panel. */
   activeIndex?: number[] | number
@@ -80,6 +85,11 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'
+
+  static slotClassNames: AccordionSlotClassNames = {
+    content: AccordionContent.className,
+    title: AccordionTitle.className,
+  }
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -160,14 +170,14 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
 
       children.push(
         AccordionTitle.create(title, {
-          defaultProps: { active, index },
+          defaultProps: { className: Accordion.slotClassNames.title, active, index },
           overrideProps: this.handleTitleOverrides,
           render: renderPanelTitle,
         }),
       )
       children.push(
         AccordionContent.create(content, {
-          defaultProps: { active },
+          defaultProps: { className: Accordion.slotClassNames.content, active },
           render: renderPanelContent,
         }),
       )
