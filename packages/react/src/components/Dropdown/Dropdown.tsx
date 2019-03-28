@@ -762,9 +762,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         case keyboardKey.Tab:
           if (!_.isNil(highlightedIndex)) {
             selectItemAtIndex(highlightedIndex)
-          }
-          if (this.props.multiple && !this.props.tabInMultipleSelection) {
-            e.preventDefault()
+            // Keep focus here if condition applies.
+            if (this.props.multiple && !this.props.tabInMultipleSelection) {
+              e.preventDefault()
+            }
           }
           break
         case keyboardKey.ArrowLeft:
@@ -901,10 +902,11 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         if (_.isNil(highlightedIndex)) {
           toggleMenu()
         } else {
+          // Keep focus here in this case.
+          if (this.props.multiple && !this.props.tabInMultipleSelection) {
+            e.preventDefault()
+          }
           selectItemAtIndex(highlightedIndex)
-        }
-        if (this.props.multiple && !this.props.tabInMultipleSelection) {
-          e.preventDefault()
         }
         return
       case keyboardKey.Escape:
