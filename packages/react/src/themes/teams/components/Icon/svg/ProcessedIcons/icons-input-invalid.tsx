@@ -9,5 +9,5 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'input-invalid',
+  exportedAs: 'exclamation-circle',
 } as TeamsProcessedSvgIconSpec

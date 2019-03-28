@@ -42,6 +42,7 @@ import edit from './edit'
 import email from './email'
 import emoji from './emoji'
 import error from './error'
+import exclamationCircle from './exclamationCircle'
 import filesExcel from './filesExcel'
 import filesExcelBrand from './filesExcelBrand'
 import filesOneNote from './filesOneNote'
@@ -58,7 +59,6 @@ import giphy from './giphy'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
 import indent from './indent'
-import inputInvalid from './inputInvalid'
 import italic from './italic'
 import leave from './leave'
 import like from './like'
@@ -145,6 +145,7 @@ export default {
   email,
   emoji,
   error,
+  'exclamation-circle': exclamationCircle,
   format,
   'font-color': fontColor,
   'font-size': fontSize,
@@ -153,7 +154,6 @@ export default {
   highlight,
   'horizontal-rule': horizontalRule,
   indent,
-  'input-invalid': inputInvalid,
   italic,
   leave,
   like,
