@@ -49,7 +49,7 @@ const getFocusedStyles = ({
   variables: MenuVariables
   color: string
 }): ICSSInJSStyle => {
-  const { primary, underlined, isFromKeyboard, active, vertical, pointing } = props
+  const { primary, underlined, isFromKeyboard, active, vertical } = props
   if (active && !underlined && !vertical) return {}
   return {
     ...(underlined && !isFromKeyboard
