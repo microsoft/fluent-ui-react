@@ -21,13 +21,13 @@ const declareSvg = (svgIcon: SvgIconSpec): ThemeIconSpec => ({
 
 const declareFontBased = (fontIcon: FontIconSpec): ThemeIconSpec => ({ icon: fontIcon })
 
-const getIcon = iconAndMaybeStyles => {
+export const getIcon = (iconAndMaybeStyles): SvgIconSpec => {
   return (iconAndMaybeStyles as any).styles
     ? (iconAndMaybeStyles as SvgIconSpecWithStyles).icon
     : (iconAndMaybeStyles as SvgIconSpec)
 }
 
-const themeIcons: { [key: string]: ThemeIconSpec } = Object.keys(svgIconsAndStyles as {
+const themeIcons: ThemeIcons = Object.keys(svgIconsAndStyles as {
   [iconName: string]: TeamsSvgIconSpec
 }).reduce<{ [key: string]: ThemeIconSpec }>((accIcons, iconName) => {
   const iconAndMaybeStyles = svgIconsAndStyles[iconName]

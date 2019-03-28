@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 
-import fontAwesomeIcons from './fontAwesomeIconStyles'
+import icons from './index'
 import { callable, pxToRem, SizeValue } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../types'
@@ -18,7 +18,7 @@ const sizes: Record<SizeValue, number> = {
 }
 
 const getDefaultFontIcon = (iconName: string) => {
-  return callable(fontAwesomeIcons(iconName).icon)()
+  return callable(icons(iconName).icon)()
 }
 
 const getFontStyles = (
@@ -101,33 +101,22 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
     const isFontBased = name && (!iconSpec || !iconSpec.isSvg)
 
     return {
-      backgroundColor: v.backgroundColor,
       display: 'inline-block',
       speak: 'none',
       verticalAlign: 'middle',
 
-      ...(!isFontBased && { boxSizing: 'border-box' }),
+      boxSizing: 'content-box',
 
       ...(isFontBased && getFontStyles(getIconSize(size, v.sizeModifier), name)),
-
-      ...(isFontBased && {
-        color: getIconColor(color, v),
-        fontWeight: 900, // required for the fontAwesome to render
-
-        ...(disabled && {
-          color: v.disabledColor,
-        }),
-      }),
 
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
       ...(circular && { ...getPaddedStyle(), borderRadius: '50%' }),
 
-      ...((bordered || v.borderColor) &&
-        getBorderedStyles(v.borderColor || getIconColor(color, v))),
+      ...(bordered && getBorderedStyles(v.borderColor || getIconColor(color, v))),
 
       ...(rtl && {
-        transform: `scaleX(-1) rotate(${-1 * rotate}deg)`,
+        transform: rtl ? `scaleX(-1) rotate(${-1 * rotate}deg)` : `rotate(${rotate}deg)`,
       }),
     }
   },
