@@ -52,9 +52,9 @@ export default (siteVariables: any): ListItemVariables => {
     contentMediaLineHeight: siteVariables.lineHeightSmall,
 
     // Selectable
-    selectableFocusHoverColor: siteVariables.white,
+    selectableFocusHoverColor: siteVariables.colors.white,
     selectableFocusHoverBackgroundColor: siteVariables.brand08,
-    selectedColor: siteVariables.colors.grey[900],
+    selectedColor: siteVariables.bodyColor,
     selectedBackgroundColor: siteVariables.gray10,
     selectedFocusOutlineColor: siteVariables.colors.primary[500],
   }

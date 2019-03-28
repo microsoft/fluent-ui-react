@@ -1286,4 +1286,37 @@ describe('FocusZone', () => {
     ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowUp })
     expect(lastFocusedElement).toBe(buttonA)
   })
+
+  it('updates tabindexes when element is focused programaticaly', () => {
+    const tabDownListener = jest.fn()
+
+    const component = ReactTestUtils.renderIntoDocument<{}, React.Component>(
+      <div {...{ onFocusCapture: onFocus, onKeyDown: tabDownListener }}>
+        <FocusZone>
+          <button id="a">a</button>
+          <button id="b">b</button>
+        </FocusZone>
+      </div>,
+    )
+
+    const focusZone = ReactDOM.findDOMNode(component)!.firstChild as Element
+
+    const buttonA = focusZone.querySelector('#a') as HTMLElement
+    const buttonB = focusZone.querySelector('#b') as HTMLElement
+
+    expect(buttonA.tabIndex).toBe(0)
+    expect(buttonB.tabIndex).toBe(-1)
+
+    // ButtonA should be focussed.
+    ReactTestUtils.Simulate.focus(buttonA)
+    expect(lastFocusedElement).toBe(buttonA)
+    expect(buttonA.tabIndex).toBe(0)
+    expect(buttonB.tabIndex).toBe(-1)
+
+    // ButtonB should be focussed and tabindex=0
+    ReactTestUtils.Simulate.focus(buttonB)
+    expect(lastFocusedElement).toBe(buttonB)
+    expect(buttonB.tabIndex).toBe(0)
+    expect(buttonA.tabIndex).toBe(-1)
+  })
 })
