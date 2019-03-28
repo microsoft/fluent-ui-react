@@ -29,7 +29,7 @@ export const getIcon = (iconAndMaybeStyles): SvgIconSpec => {
 
 const themeIcons: ThemeIcons = Object.keys(svgIconsAndStyles as {
   [iconName: string]: TeamsSvgIconSpec
-}).reduce<{ [key: string]: ThemeIconSpec }>((accIcons, iconName) => {
+}).reduce<ThemeIcons>((accIcons, iconName) => {
   const iconAndMaybeStyles = svgIconsAndStyles[iconName]
 
   const icon: SvgIconSpec = getIcon(iconAndMaybeStyles)
