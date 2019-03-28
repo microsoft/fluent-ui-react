@@ -79,6 +79,7 @@ class BannerAlerts extends React.Component<{}, BannerAlertsState> {
               this.setState({ selectedBannerName: value as BannerName, open: true })
             }
           />
+          <br />
           <AnimatedBannerAlert
             {...{
               key: selectedBannerName,
