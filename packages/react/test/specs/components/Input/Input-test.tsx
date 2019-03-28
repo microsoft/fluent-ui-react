@@ -118,7 +118,7 @@ describe('Input', () => {
       iconComp.simulate('click') // user clicks on 'x' icon
 
       expect(domNode.value).toEqual('') // input value gets cleared
-      expect(inputComp.find('Icon[name="close"]').length).toEqual(0) // the 'x' icon disappears
+      expect(inputComp.find('Icon[name="stardust-close"]').length).toEqual(0) // the 'x' icon disappears
     })
   })
 })
