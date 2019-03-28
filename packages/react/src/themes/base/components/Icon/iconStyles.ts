@@ -87,9 +87,6 @@ const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier): number =>
   return modifiedSizes[size] && modifiedSizes[size][sizeModifier]
 }
 
-const getIconColor = (colorProp: string, variables: IconVariables) =>
-  _.get(variables.colors, colorProp, variables.color || 'currentColor')
-
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   root: ({
     props: { disabled, name, size, bordered, circular, color, xSpacing, rotate },
@@ -113,7 +110,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
       ...(circular && { ...getPaddedStyle(), borderRadius: '50%' }),
 
-      ...(bordered && getBorderedStyles(v.borderColor || getIconColor(color, v))),
+      ...(bordered && getBorderedStyles(v.borderColor)),
 
       ...(rtl && {
         transform: rtl ? `scaleX(-1) rotate(${-1 * rotate}deg)` : `rotate(${rotate}deg)`,
