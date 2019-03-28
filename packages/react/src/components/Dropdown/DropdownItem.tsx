@@ -14,6 +14,12 @@ import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
 
+export interface DropdownItemSlotClassNames {
+  content: string
+  header: string
+  image: string
+}
+
 export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   /** A dropdown item can be active. */
   active?: boolean
@@ -46,6 +52,8 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
   static create: Function
 
   static className = 'ui-dropdown__item'
+
+  static slotClassNames: DropdownItemSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -83,6 +91,12 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
       />
     )
   }
+}
+
+DropdownItem.slotClassNames = {
+  content: `${DropdownItem.className}__content`,
+  header: `${DropdownItem.className}__header`,
+  image: `${DropdownItem.className}__image`,
 }
 
 DropdownItem.create = createShorthandFactory({ Component: DropdownItem, mappedProp: 'header' })
