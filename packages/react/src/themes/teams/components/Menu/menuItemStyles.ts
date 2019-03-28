@@ -72,9 +72,6 @@ const getFocusedStyles = ({
           outline: v.focusedOutline,
           margin: pxToRem(1),
           background: v.focusedBackgroundColor,
-          ...(pointing && {
-            marginBottom: verticalPointingBottomMarginFocus,
-          }),
         }
       : {}),
   }
@@ -182,11 +179,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         },
         boxShadow: 'none',
       }),
-
-      ...(pointing &&
-        vertical && {
-          marginBottom: verticalPointingBottomMargin,
-        }),
 
       // item separator
       ...(!vertical &&
