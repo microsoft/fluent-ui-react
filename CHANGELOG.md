@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix typings for `FlexProps` and `FlexItemProps` @miroslavstastny ([#1089](https://github.com/stardust-ui/react/pull/1089))
 - Fix `selectableFocusHoverColor` value in `List` for Teams theme @layershifter ([#1113](https://github.com/stardust-ui/react/pull/1113))
 - Align `slotClassNames` property for all components @Bugaa92 ([#1093](https://github.com/stardust-ui/react/pull/1093))
+- Fix `selectedBackgroundColor`/`selectableFocusHoverColor` value in `List` for Teams Dark and Teams HC themes @layershifter ([#1117](https://github.com/stardust-ui/react/pull/1117))
 
 ### Features
 - Add `attached` prop on the `ChatMessage` component, which is automatically set by the `ChatItem` component @mnajdova ([#1100](https://github.com/stardust-ui/react/pull/1100))
