@@ -128,7 +128,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   /** A message to be displayed in the list when dropdown is loading. */
   loadingMessage?: ShorthandValue
 
-  /** When selecting an element with Tab, focus stays on the dropdown by default. If true, the focus will jump to next/previous element in DOM. */
+  /** When selecting an element with Tab, focus stays on the dropdown by default. If true, the focus will jump to next/previous element in DOM. Only available to multiple selection dropdowns. */
   moveFocusOnTab?: boolean
 
   /** A dropdown can perform a multiple selection. */
@@ -358,6 +358,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             toggleMenu,
             highlightedIndex,
             selectItemAtIndex,
+            reset,
           }) => {
             const { innerRef, ...accessibilityRootPropsRest } = getRootProps(
               { refKey: 'innerRef' },
@@ -383,6 +384,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                           highlightedIndex,
                           getInputProps,
                           selectItemAtIndex,
+                          reset,
                           variables,
                         )
                       : this.renderTriggerButton(styles, rtl, getToggleButtonProps)}
@@ -463,8 +465,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
               onFocus: () => {
                 this.setState({ focused: true })
               },
-              onBlur: e => {
-                e.nativeEvent['preventDownshiftDefault'] = true
+              onBlur: () => {
                 this.setState({ focused: false })
               },
               onKeyDown: e => {
@@ -488,6 +489,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       otherStateToSet?: Partial<StateChangeOptions<any>>,
       cb?: () => void,
     ) => void,
+    reset: () => void,
     variables,
   ): JSX.Element {
     const { inline, searchInput, multiple, placeholder } = this.props
@@ -510,6 +512,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           highlightedIndex,
           rtl,
           selectItemAtIndex,
+          reset,
           accessibilityComboboxProps,
           getInputProps,
         ),
@@ -742,6 +745,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       otherStateToSet?: Partial<StateChangeOptions<any>>,
       cb?: () => void,
     ) => void,
+    reset: () => void,
     accessibilityComboboxProps: Object,
     getInputProps: (options?: GetInputPropsOptions) => any,
   ) => {
@@ -766,6 +770,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             if (this.props.multiple && !this.props.moveFocusOnTab) {
               e.preventDefault()
             }
+          } else {
+            reset()
           }
           break
         case keyboardKey.ArrowLeft:
