@@ -1,5 +1,5 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { ImageProps } from '../../../../components/Image/Image'
+import { VideoProps } from '../../../../components/Video/Video'
 
 export default {
   root: ({ props, variables }): ICSSInJSStyle => ({
@@ -9,4 +9,4 @@ export default {
     width: variables.width,
     height: variables.height || 'auto',
   }),
-} as ComponentSlotStylesInput<ImageProps, any>
+} as ComponentSlotStylesInput<VideoProps, any>
