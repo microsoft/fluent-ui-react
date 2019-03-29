@@ -106,7 +106,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       ...((bordered || v.borderColor) &&
         getBorderedStyles(v.borderColor || getIconColor(color, v))),
 
-      // overriding the base theme default rtl behavior
+      // overriding the base theme default rtl behavior as in teams theme the flipInRtl slot is used for this
       ...(rtl && {
         transform: 'unset',
       }),

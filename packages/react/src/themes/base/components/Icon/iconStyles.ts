@@ -81,9 +81,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
       ...(p.bordered && getBorderedStyles(v.borderColor)),
 
-      ...(rtl && {
-        transform: rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
-      }),
+      transform: rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
     }
   },
 }
