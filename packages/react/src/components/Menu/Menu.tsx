@@ -1,3 +1,5 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
+
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -6,7 +8,6 @@ import {
   AutoControlledComponent,
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,

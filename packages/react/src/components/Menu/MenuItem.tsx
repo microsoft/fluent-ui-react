@@ -1,3 +1,5 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
+
 import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
 import * as _ from 'lodash'
 import cx from 'classnames'
@@ -8,7 +10,6 @@ import {
   AutoControlledComponent,
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   doesNodeContainClick,
   UIComponentProps,
   ChildrenComponentProps,
@@ -187,6 +188,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   private itemRef = React.createRef<HTMLElement>()
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
+    console.log('[MenuItem] renderComponent')
     const {
       children,
       content,
@@ -277,6 +279,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   }
 
   private handleWrapperBlur = e => {
+    console.log('[MenuItem] handleWrapperBlur')
     if (!this.props.inSubmenu && !e.currentTarget.contains(e.relatedTarget)) {
       this.trySetMenuOpen(false, e)
     }
@@ -291,6 +294,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   }
 
   private outsideClickHandler = e => {
+    console.log('[MenuItem] outsideClickHandler')
     if (!this.state.menuOpen) return
     if (
       !doesNodeContainClick(this.itemRef.current, e) &&
@@ -380,10 +384,11 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   }
 
   private trySetMenuOpen(newValue: boolean, eventArgs: any, onStateChanged?: any) {
-    this.trySetState({ menuOpen: newValue }, null, onStateChanged)
+    this.trySetState({ menuOpen: newValue })
+    onStateChanged && onStateChanged()
     _.invoke(this.props, 'onMenuOpenChange', eventArgs, {
       ...this.props,
-      ...{ menuOpen: newValue },
+      menuOpen: newValue,
     })
   }
 }
