@@ -1,12 +1,6 @@
 import { debugRoot, debugArea, debugGap } from '../../../../styles/debugStyles'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 
-const getLayoutAreaStyles = (debug?: boolean): React.CSSProperties => ({
-  ...(debug && debugArea()),
-  alignItems: 'center',
-  overflow: 'hidden',
-})
-
 const layoutStyles: ComponentSlotStylesInput = {
   root: ({ props }): ICSSInJSStyle => {
     const {
@@ -52,19 +46,22 @@ const layoutStyles: ComponentSlotStylesInput = {
   }),
 
   start: ({ props: p }): ICSSInJSStyle => ({
-    ...getLayoutAreaStyles(p.debug),
+    ...(p.debug && debugArea()),
+    alignItems: 'center',
     display: 'inline-flex',
     ...p.startCSS,
   }),
 
   main: ({ props: p }): ICSSInJSStyle => ({
-    ...getLayoutAreaStyles(p.debug),
+    ...(p.debug && debugArea()),
+    alignItems: 'center',
     display: 'grid',
     ...p.mainCSS,
   }),
 
   end: ({ props: p }): ICSSInJSStyle => ({
-    ...getLayoutAreaStyles(p.debug),
+    ...(p.debug && debugArea()),
+    alignItems: 'center',
     display: 'inline-flex',
     ...p.endCSS,
   }),
