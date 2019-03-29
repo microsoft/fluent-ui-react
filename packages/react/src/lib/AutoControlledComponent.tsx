@@ -187,14 +187,14 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
    * Second argument is a state object that is always passed to setState.
    * @param {object} maybeState State that corresponds to controlled props.
    * @param {object} [state] Actual state, useful when you also need to setState.
-   * @param {object} onStateChanged Callback which is called after setState applied.
+   * @param {object} callback Callback which is called after setState applied.
    */
-  trySetState = (maybeState, state?, onStateChanged?: () => void) => {
+  trySetState = (state: Partial<S>, callback?: () => void) => {
     const { autoControlledProps } = this.constructor as any
     if (process.env.NODE_ENV !== 'production') {
       const { name } = this.constructor
       // warn about failed attempts to setState for keys not listed in autoControlledProps
-      const illegalKeys = _.difference(_.keys(maybeState), autoControlledProps)
+      const illegalKeys = _.difference(_.keys(state), autoControlledProps)
       if (!_.isEmpty(illegalKeys)) {
         console.error(
           [
@@ -206,19 +206,17 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
       }
     }
 
-    let newState = Object.keys(maybeState).reduce((acc, prop) => {
+    const newState = Object.keys(state).reduce((acc, prop) => {
       // ignore props defined by the parent
       if (this.props[prop] !== undefined) return acc
 
       // ignore props not listed in auto controlled props
       if (autoControlledProps.indexOf(prop) === -1) return acc
 
-      acc[prop] = maybeState[prop]
+      acc[prop] = state[prop]
       return acc
     }, {})
 
-    if (state) newState = { ...newState, ...state }
-
-    if (Object.keys(newState).length > 0) this.setState(newState, onStateChanged)
+    if (Object.keys(newState).length > 0) this.setState(newState, callback)
   }
 }
