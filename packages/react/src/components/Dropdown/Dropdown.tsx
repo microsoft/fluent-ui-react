@@ -30,7 +30,6 @@ import {
   handleRef,
   UIComponentProps,
 } from '../../lib'
-import Indicator, { IndicatorProps } from '../Indicator/Indicator'
 import List from '../List/List'
 import Ref from '../Ref/Ref'
 import DropdownItem from './DropdownItem'
@@ -279,7 +278,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   static defaultProps: DropdownProps = {
     as: 'div',
-    clearIndicator: 'close',
+    clearIndicator: 'stardust-close',
     itemToString: item => {
       if (!item || React.isValidElement(item)) {
         return ''
@@ -403,14 +402,14 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                           },
                         }),
                       })
-                    : Indicator.create(toggleIndicator, {
+                    : Icon.create(toggleIndicator, {
                         defaultProps: {
                           className: Dropdown.slotClassNames.toggleIndicator,
-                          direction: open ? 'top' : 'bottom',
+                          name: open ? 'stardust-arrow-up' : 'stardust-arrow-down',
                           styles: styles.toggleIndicator,
                         },
-                        overrideProps: (predefinedProps: IndicatorProps) => ({
-                          onClick: (e, indicatorProps: IndicatorProps) => {
+                        overrideProps: (predefinedProps: IconProps) => ({
+                          onClick: (e, indicatorProps: IconProps) => {
                             _.invoke(predefinedProps, 'onClick', e, indicatorProps)
                             getToggleButtonProps().onClick(e)
                           },
