@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -25,7 +26,6 @@ import Downshift, {
 import {
   AutoControlledComponent,
   RenderResultConfig,
-  customPropTypes,
   commonPropTypes,
   handleRef,
   UIComponentProps,
