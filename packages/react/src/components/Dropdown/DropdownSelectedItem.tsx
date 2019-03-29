@@ -12,8 +12,9 @@ import {
   RenderResultConfig,
   commonPropTypes,
 } from '../../lib'
-import { Image, Icon, Label } from '../..'
-import { IconProps } from '../Icon/Icon'
+import Icon, { IconProps } from '../Icon/Icon'
+import Image from '../Image/Image'
+import Label from '../Label/Label'
 import Ref from '../Ref/Ref'
 
 export interface DropdownSelectedItemSlotClassNames {
