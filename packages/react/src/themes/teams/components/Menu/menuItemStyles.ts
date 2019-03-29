@@ -48,7 +48,7 @@ const getFocusedStyles = ({
   variables: MenuVariables
   color: string
 }): ICSSInJSStyle => {
-  const { primary, underlined, isFromKeyboard, active, vertical, pointing } = props
+  const { primary, underlined, isFromKeyboard, active, vertical } = props
   if (active && !underlined && !vertical) return {}
   return {
     ...(underlined && !isFromKeyboard
@@ -65,7 +65,7 @@ const getFocusedStyles = ({
           background: v.hoverBackgroundColor,
         }),
 
-    ...(vertical && isFromKeyboard && !pointing && !primary
+    ...(vertical && isFromKeyboard && !primary
       ? {
           border: v.focusedBorder,
           outline: v.focusedOutline,
@@ -179,16 +179,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         boxShadow: 'none',
       }),
 
-      ...(pointing &&
-        vertical && {
-          borderTopLeftRadius: `${pxToRem(3)}`,
-          borderTopRightRadius: `${pxToRem(3)}`,
-          ...(pointing === 'end'
-            ? { borderRight: `${pxToRem(3)} solid transparent` }
-            : { borderLeft: `${pxToRem(3)} solid transparent` }),
-          marginBottom: verticalPointingBottomMargin,
-        }),
-
       // item separator
       ...(!vertical &&
         !pills &&
@@ -202,11 +192,23 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         ...getActionStyles({ props, variables: v, color: v.color }),
 
         ...(pointing &&
-          (vertical
-            ? pointing === 'end'
-              ? { borderRight: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
-              : { borderLeft: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
-            : pointingBeak({ props, variables: v, theme, colors }))),
+          vertical &&
+          !isFromKeyboard && {
+            '::before': {
+              content: `''`,
+              position: 'absolute',
+              width: pxToRem(3),
+              height: `calc(100% + ${pxToRem(4)})`,
+              top: pxToRem(-2),
+              backgroundColor: v.pointingIndicatorBackgroundColor,
+              ...(pointing === 'end' ? { right: pxToRem(-2) } : { left: pxToRem(-2) }),
+            },
+          }),
+
+        ...(pointing &&
+          !vertical && {
+            ...pointingBeak({ props, variables: v, theme, colors }),
+          }),
       }),
 
       ...(iconOnly && {
