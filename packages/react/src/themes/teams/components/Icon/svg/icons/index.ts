@@ -5,6 +5,7 @@ import add from './add'
 import addParticipant from './addParticipant'
 import arrowUp from './arrowUp'
 import arrowDown from './arrowDown'
+import ban from './ban'
 import bold from './bold'
 import bookmark from './bookmark'
 import bullets from './bullets'
@@ -41,6 +42,7 @@ import edit from './edit'
 import email from './email'
 import emoji from './emoji'
 import error from './error'
+import exclamationCircle from './exclamationCircle'
 import filesExcel from './filesExcel'
 import filesExcelBrand from './filesExcelBrand'
 import filesOneNote from './filesOneNote'
@@ -106,6 +108,7 @@ export default {
   add,
   'arrow-up': arrowUp,
   'arrow-down': arrowDown,
+  ban,
   bold,
   bookmark,
   bullets,
@@ -142,6 +145,7 @@ export default {
   email,
   emoji,
   error,
+  'exclamation-circle': exclamationCircle,
   format,
   'font-color': fontColor,
   'font-size': fontSize,
