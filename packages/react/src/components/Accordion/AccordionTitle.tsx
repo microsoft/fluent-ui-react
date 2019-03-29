@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -10,7 +11,6 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
-  customPropTypes,
   rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../types'
