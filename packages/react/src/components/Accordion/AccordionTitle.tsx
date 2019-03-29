@@ -14,7 +14,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../types'
-import Indicator from '../Indicator/Indicator'
+import Icon from '../Icon/Icon'
 import Layout from '../Layout/Layout'
 
 export interface AccordionTitleProps
@@ -67,9 +67,9 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
 
     const contentElement = (
       <Layout
-        start={Indicator.create(indicatorWithDefaults, {
+        start={Icon.create(indicatorWithDefaults, {
           defaultProps: {
-            direction: active ? 'bottom' : 'end',
+            name: active ? 'stardust-arrow-down' : 'stardust-arrow-end',
             styles: styles.indicator,
           },
         })}
