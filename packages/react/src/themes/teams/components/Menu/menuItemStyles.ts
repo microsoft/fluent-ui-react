@@ -9,7 +9,6 @@ type MenuItemPropsAndState = MenuItemProps & MenuItemState
 export const verticalPillsBottomMargin = pxToRem(5)
 export const horizontalPillsRightMargin = pxToRem(8)
 export const verticalPointingBottomMargin = pxToRem(12)
-export const verticalPointingBottomMarginFocus = pxToRem(13)
 
 const underlinedItem = (color: string): ICSSInJSStyle => ({
   paddingBottom: 0,
