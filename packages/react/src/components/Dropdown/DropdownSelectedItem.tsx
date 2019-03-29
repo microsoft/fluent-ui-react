@@ -130,6 +130,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
       defaultProps: {
         'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
         className: DropdownSelectedItem.slotClassNames.icon,
+        styles: styles.icon,
       },
       overrideProps: this.handleIconOverrides,
     })
@@ -137,12 +138,14 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
       defaultProps: {
         avatar: true,
         className: DropdownSelectedItem.slotClassNames.image,
+        styles: styles.image,
       },
     })
     const contentElement = Box.create(header, {
       defaultProps: {
         as: 'span',
         className: DropdownSelectedItem.slotClassNames.header,
+        styles: styles.header,
       },
     })
 

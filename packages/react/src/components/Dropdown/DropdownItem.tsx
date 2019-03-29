@@ -74,7 +74,11 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  public renderComponent({ classes, unhandledProps }: RenderResultConfig<DropdownItemProps>) {
+  public renderComponent({
+    classes,
+    styles,
+    unhandledProps,
+  }: RenderResultConfig<DropdownItemProps>) {
     const { content, header, image, accessibilityItemProps } = this.props
     return (
       <ListItem
@@ -82,6 +86,7 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
         header={Box.create(header, {
           defaultProps: {
             className: DropdownItem.slotClassNames.header,
+            styles: styles.header,
           },
         })}
         onClick={this.handleClick}
@@ -89,11 +94,13 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
           defaultProps: {
             avatar: true,
             className: DropdownItem.slotClassNames.image,
+            styles: styles.image,
           },
         })}
         content={Box.create(content, {
           defaultProps: {
             className: DropdownItem.slotClassNames.content,
+            styles: styles.content,
           },
         })}
         {...accessibilityItemProps}
