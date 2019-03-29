@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -25,12 +26,10 @@ import Downshift, {
 import {
   AutoControlledComponent,
   RenderResultConfig,
-  customPropTypes,
   commonPropTypes,
   handleRef,
   UIComponentProps,
 } from '../../lib'
-import Indicator, { IndicatorProps } from '../Indicator/Indicator'
 import List from '../List/List'
 import Ref from '../Ref/Ref'
 import DropdownItem from './DropdownItem'
@@ -127,6 +126,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 
   /** A message to be displayed in the list when dropdown is loading. */
   loadingMessage?: ShorthandValue
+
+  /** When selecting an element with Tab, focus stays on the dropdown by default. If true, the focus will jump to next/previous element in DOM. Only available to multiple selection dropdowns. */
+  moveFocusOnTab?: boolean
 
   /** A dropdown can perform a multiple selection. */
   multiple?: boolean
@@ -253,6 +255,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     itemToString: PropTypes.func,
     loading: PropTypes.bool,
     loadingMessage: customPropTypes.itemShorthand,
+    moveFocusOnTab: PropTypes.bool,
     multiple: PropTypes.bool,
     noResultsMessage: customPropTypes.itemShorthand,
     onOpenChange: PropTypes.func,
@@ -275,7 +278,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   static defaultProps: DropdownProps = {
     as: 'div',
-    clearIndicator: 'close',
+    clearIndicator: 'stardust-close',
     itemToString: item => {
       if (!item || React.isValidElement(item)) {
         return ''
@@ -354,6 +357,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             toggleMenu,
             highlightedIndex,
             selectItemAtIndex,
+            reset,
           }) => {
             const { innerRef, ...accessibilityRootPropsRest } = getRootProps(
               { refKey: 'innerRef' },
@@ -379,6 +383,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                           highlightedIndex,
                           getInputProps,
                           selectItemAtIndex,
+                          reset,
                           variables,
                         )
                       : this.renderTriggerButton(styles, rtl, getToggleButtonProps)}
@@ -397,14 +402,14 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                           },
                         }),
                       })
-                    : Indicator.create(toggleIndicator, {
+                    : Icon.create(toggleIndicator, {
                         defaultProps: {
                           className: Dropdown.slotClassNames.toggleIndicator,
-                          direction: open ? 'top' : 'bottom',
+                          name: open ? 'stardust-arrow-up' : 'stardust-arrow-down',
                           styles: styles.toggleIndicator,
                         },
-                        overrideProps: (predefinedProps: IndicatorProps) => ({
-                          onClick: (e, indicatorProps: IndicatorProps) => {
+                        overrideProps: (predefinedProps: IconProps) => ({
+                          onClick: (e, indicatorProps: IconProps) => {
                             _.invoke(predefinedProps, 'onClick', e, indicatorProps)
                             getToggleButtonProps().onClick(e)
                           },
@@ -483,6 +488,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       otherStateToSet?: Partial<StateChangeOptions<any>>,
       cb?: () => void,
     ) => void,
+    reset: () => void,
     variables,
   ): JSX.Element {
     const { inline, searchInput, multiple, placeholder } = this.props
@@ -505,6 +511,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           highlightedIndex,
           rtl,
           selectItemAtIndex,
+          reset,
           accessibilityComboboxProps,
           getInputProps,
         ),
@@ -634,7 +641,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private handleSearchQueryChange = (searchQuery: string) => {
-    this.trySetStateAndInvokeHandler('onSearchQueryChange', null, { searchQuery })
+    this.trySetStateAndInvokeHandler('onSearchQueryChange', null, {
+      searchQuery,
+      open: searchQuery === '' ? false : this.state.open,
+    })
   }
 
   private handleDownshiftStateChanges = (
@@ -737,6 +747,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       otherStateToSet?: Partial<StateChangeOptions<any>>,
       cb?: () => void,
     ) => void,
+    reset: () => void,
     accessibilityComboboxProps: Object,
     getInputProps: (options?: GetInputPropsOptions) => any,
   ) => {
@@ -745,6 +756,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       searchInputProps: DropdownSearchInputProps,
     ) => {
       this.setState({ focused: false })
+      e.nativeEvent['preventDownshiftDefault'] = true
       _.invoke(predefinedProps, 'onInputBlur', e, searchInputProps)
     }
 
@@ -756,6 +768,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         case keyboardKey.Tab:
           if (!_.isNil(highlightedIndex)) {
             selectItemAtIndex(highlightedIndex)
+            // Keep focus here if condition applies.
+            if (this.props.multiple && !this.props.moveFocusOnTab) {
+              e.preventDefault()
+            }
+          } else {
+            reset()
           }
           break
         case keyboardKey.ArrowLeft:
@@ -841,6 +859,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     const {
       activeSelectedIndex,
       highlightedIndex,
+      open,
       searchQuery,
       value,
     } = this.getInitialAutoControlledState(this.props)
@@ -849,11 +868,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       ...this.props,
       activeSelectedIndex,
       highlightedIndex,
+      open,
       searchQuery,
       value,
     })
 
-    this.trySetState({ activeSelectedIndex, highlightedIndex, searchQuery, value })
+    this.trySetState({ activeSelectedIndex, highlightedIndex, open, searchQuery, value })
 
     this.tryFocusSearchInput()
     this.tryFocusTriggerButton()
@@ -892,6 +912,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         if (_.isNil(highlightedIndex)) {
           toggleMenu()
         } else {
+          // Keep focus here in this case.
+          if (this.props.multiple && !this.props.moveFocusOnTab) {
+            e.preventDefault()
+          }
           selectItemAtIndex(highlightedIndex)
         }
         return

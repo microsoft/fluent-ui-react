@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -5,13 +6,7 @@ import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
 import { ComponentEventHandler, ShorthandValue, ReactProps } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import {
-  customPropTypes,
-  createShorthandFactory,
-  UIComponent,
-  RenderResultConfig,
-  commonPropTypes,
-} from '../../lib'
+import { createShorthandFactory, UIComponent, RenderResultConfig, commonPropTypes } from '../../lib'
 import { Image, Icon, Label } from '../..'
 import { IconProps } from '../Icon/Icon'
 import Ref from '../Ref/Ref'

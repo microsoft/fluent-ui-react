@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -7,7 +8,6 @@ import {
   UIComponentProps,
   commonPropTypes,
   ColorComponentProps,
-  customPropTypes,
   SizeValue,
 } from '../../lib'
 import { loaderBehavior } from '../../lib/accessibility'

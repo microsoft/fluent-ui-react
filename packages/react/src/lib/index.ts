@@ -2,7 +2,6 @@
 import 'mdn-polyfills/Object.assign'
 import 'mdn-polyfills/String.prototype.includes'
 
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as commonPropTypes from './commonPropTypes'
 
 export { default as applyAccessibilityKeyHandlers } from './applyAccessibilityKeyHandlers'
@@ -37,7 +36,6 @@ export { default as isBrowser } from './isBrowser'
 export { default as doesNodeContainClick } from './doesNodeContainClick'
 
 export { pxToRem, updateCachedRemSize } from './fontSizeUtility'
-export { customPropTypes }
 export { default as createAnimationStyles } from './createAnimationStyles'
 export { default as createComponent } from './createStardustComponent'
 export { getKindProp } from './getKindProp'
