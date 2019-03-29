@@ -1,8 +1,9 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import { ChildrenComponentProps, customPropTypes, handleRef } from '../../lib'
+import { ChildrenComponentProps, handleRef } from '../../lib'
 
 export interface RefFindNodeProps extends ChildrenComponentProps<React.ReactElement<any>> {
   /**
