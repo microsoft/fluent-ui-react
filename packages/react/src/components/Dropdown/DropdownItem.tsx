@@ -13,6 +13,7 @@ import { ShorthandValue, ComponentEventHandler, ReactProps } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
+import Box from '../Box/Box'
 
 export interface DropdownItemSlotClassNames {
   content: string
@@ -78,14 +79,23 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
     return (
       <ListItem
         className={classes.root}
-        header={header}
+        header={Box.create(header, {
+          defaultProps: {
+            className: DropdownItem.slotClassNames.header,
+          },
+        })}
         onClick={this.handleClick}
         media={Image.create(image, {
           defaultProps: {
             avatar: true,
+            className: DropdownItem.slotClassNames.image,
           },
         })}
-        content={content}
+        content={Box.create(content, {
+          defaultProps: {
+            className: DropdownItem.slotClassNames.content,
+          },
+        })}
         {...accessibilityItemProps}
         {...unhandledProps}
       />

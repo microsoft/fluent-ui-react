@@ -18,7 +18,9 @@ import Ref from '../Ref/Ref'
 import Box from '../Box/Box'
 
 export interface DropdownSelectedItemSlotClassNames {
-  removeIcon: string
+  header: string
+  icon: string
+  image: string
 }
 
 export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSelectedItemProps> {
@@ -127,17 +129,21 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
     const iconElement = Icon.create(icon, {
       defaultProps: {
         'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
-        className: DropdownSelectedItem.slotClassNames.removeIcon,
+        className: DropdownSelectedItem.slotClassNames.icon,
       },
       overrideProps: this.handleIconOverrides,
     })
     const imageElement = Image.create(image, {
       defaultProps: {
         avatar: true,
+        className: DropdownSelectedItem.slotClassNames.image,
       },
     })
     const contentElement = Box.create(header, {
-      defaultProps: { as: 'span' },
+      defaultProps: {
+        as: 'span',
+        className: DropdownSelectedItem.slotClassNames.header,
+      },
     })
 
     return (
@@ -159,7 +165,9 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
 }
 
 DropdownSelectedItem.slotClassNames = {
-  removeIcon: `${DropdownSelectedItem.className}__remove-icon`,
+  header: `${DropdownSelectedItem.className}__header`,
+  icon: `${DropdownSelectedItem.className}__icon`,
+  image: `${DropdownSelectedItem.className}__image`,
 }
 
 DropdownSelectedItem.create = createShorthandFactory({
