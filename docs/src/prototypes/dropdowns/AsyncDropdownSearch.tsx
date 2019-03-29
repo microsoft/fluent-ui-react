@@ -57,7 +57,7 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
     if (this.state.items.length > 10) return
 
     this.setState({ loading: true })
-    this.searchTimer = setTimeout(() => {
+    this.searchTimer = window.setTimeout(() => {
       this.setState(prevState => ({
         loading: false,
         items: [...prevState.items, ..._.times<Entry>(2, createEntry)],
@@ -76,7 +76,7 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
             items={items}
             loading={loading}
             loadingMessage={{
-              content: <Loader label="Loading..." labelPosition="end" size="larger" />,
+              content: <Loader label="Loading..." labelPosition="end" />,
             }}
             multiple
             onSearchQueryChange={this.handleSearchQueryChange}
