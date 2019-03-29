@@ -1,21 +1,9 @@
-import * as _ from 'lodash'
-
 import icons from './index'
-import { callable, pxToRem, SizeValue } from '../../../../lib'
+import { callable, pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../types'
 import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
-import { IconVariables, IconSizeModifier } from './iconVariables'
-
-const sizes: Record<SizeValue, number> = {
-  smallest: 7,
-  smaller: 10,
-  small: 12,
-  medium: 16,
-  large: 20,
-  larger: 32,
-  largest: 40,
-}
+import { IconVariables } from './iconVariables'
 
 const getDefaultFontIcon = (iconName: string) => {
   return callable(icons(iconName).icon)()
@@ -72,30 +60,11 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),
 })
 
-const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier): number => {
-  if (!sizeModifier) {
-    return sizes[size]
-  }
-
-  const modifiedSizes = {
-    large: {
-      x: 24,
-      xx: 28,
-    },
-  }
-
-  return modifiedSizes[size] && modifiedSizes[size][sizeModifier]
-}
-
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
-  root: ({
-    props: { name, size, bordered, circular, xSpacing, rotate },
-    variables: v,
-    theme,
-  }): ICSSInJSStyle => {
-    const iconSpec = theme.icons[name]
+  root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
+    const iconSpec = theme.icons[p.name]
     const rtl = theme.rtl
-    const isFontBased = name && (!iconSpec || !iconSpec.isSvg)
+    const isFontBased = p.name && (!iconSpec || !iconSpec.isSvg)
 
     return {
       display: 'inline-block',
@@ -104,16 +73,16 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
       boxSizing: 'content-box',
 
-      ...(isFontBased && getFontStyles(getIconSize(size, v.sizeModifier), name)),
+      ...(isFontBased && getFontStyles(16, p.name)),
 
-      ...getXSpacingStyles(xSpacing, v.horizontalSpace),
+      ...getXSpacingStyles(p.xSpacing, v.horizontalSpace),
 
-      ...(circular && { ...getPaddedStyle(), borderRadius: '50%' }),
+      ...(p.circular && { ...getPaddedStyle(), borderRadius: '50%' }),
 
-      ...(bordered && getBorderedStyles(v.borderColor)),
+      ...(p.bordered && getBorderedStyles(v.borderColor)),
 
       ...(rtl && {
-        transform: rtl ? `scaleX(-1) rotate(${-1 * rotate}deg)` : `rotate(${rotate}deg)`,
+        transform: rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
       }),
     }
   },

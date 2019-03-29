@@ -8,7 +8,6 @@ export interface IconVariables {
   borderColor?: string
 
   horizontalSpace: string
-  sizeModifier?: IconSizeModifier
 }
 
 export default (): IconVariables => ({
