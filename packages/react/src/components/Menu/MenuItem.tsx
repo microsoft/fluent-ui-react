@@ -1,6 +1,7 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import cx from 'classnames'
 import * as PropTypes from 'prop-types'
@@ -27,7 +28,6 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
 import Ref from '../Ref/Ref'
-import Indicator from '../Indicator/Indicator'
 
 export interface MenuItemSlotClassNames {
   wrapper: string
@@ -226,9 +226,9 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
             })}
           {rtlTextContainer.createFor({ element: content })}
           {menu &&
-            Indicator.create(indicatorWithDefaults, {
+            Icon.create(indicatorWithDefaults, {
               defaultProps: {
-                direction: vertical ? 'end' : 'bottom',
+                name: vertical ? 'stardust-arrow-end' : 'stardust-arrow-down',
                 styles: styles.indicator,
               },
             })}
