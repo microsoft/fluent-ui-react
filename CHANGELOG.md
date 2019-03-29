@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Update vertical && pointing `Menu` styles @jaanus03 ([#1116](https://github.com/stardust-ui/react/pull/1116))
+- Fix in `Dropdown`, close it after `searchQuery` will become empty @layershifter ([#1124](https://github.com/stardust-ui/react/pull/1124))
 
 <!--------------------------------[ v0.25.1 ]------------------------------- -->
 ## [v0.25.1](https://github.com/stardust-ui/react/tree/v0.25.1) (2019-03-29)
@@ -33,7 +34,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `selectedBackgroundColor`/`selectableFocusHoverColor` value in `List` for Teams Dark and Teams HC themes @layershifter ([#1117](https://github.com/stardust-ui/react/pull/1117))
 - Fix `Dropdown` multiple selection tab behavior and single search selection blur reset @silviuavram ([#1118](https://github.com/stardust-ui/react/pull/1118))
 - Add missing types to `role` in accessibility @layershifter ([#1125](https://github.com/stardust-ui/react/pull/1126))
-- Fix in `Dropdown`, close it after `searchQuery` will become empty @layershifter ([#1124](https://github.com/stardust-ui/react/pull/1124))
 
 ### Features
 - Add `attached` prop on the `ChatMessage` component, which is automatically set by the `ChatItem` component @mnajdova ([#1100](https://github.com/stardust-ui/react/pull/1100))
