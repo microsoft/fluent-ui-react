@@ -223,8 +223,8 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
 
 Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items' })
 Menu.slotClassNames = {
-  divider: MenuDivider.className,
-  item: MenuItem.className,
+  divider: `${Menu.className}__divider`,
+  item: `${Menu.className}__item`,
 }
 
 export default Menu
