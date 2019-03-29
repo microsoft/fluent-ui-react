@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -9,7 +10,6 @@ import { Accessibility } from '../../lib/accessibility/types'
 import {
   UIComponent,
   childrenExist,
-  customPropTypes,
   createShorthandFactory,
   commonPropTypes,
   UIComponentProps,

@@ -1,4 +1,5 @@
 import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import cx from 'classnames'
 import * as PropTypes from 'prop-types'
@@ -8,7 +9,6 @@ import {
   AutoControlledComponent,
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   doesNodeContainClick,
   UIComponentProps,
   ChildrenComponentProps,
