@@ -192,6 +192,10 @@ export {
 export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
 export { default as statusBehavior } from './lib/accessibility/Behaviors/Status/statusBehavior'
 export { default as alertBehavior } from './lib/accessibility/Behaviors/Alert/alertBehavior'
+export { default as alertInfoBehavior } from './lib/accessibility/Behaviors/Alert/alertInfoBehavior'
+export {
+  default as alertWarningBehavior,
+} from './lib/accessibility/Behaviors/Alert/alertWarningBehavior'
 
 //
 // Utilities

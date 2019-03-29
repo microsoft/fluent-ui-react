@@ -26,6 +26,7 @@ export interface AlertProps extends UIComponentProps, ContentComponentProps<Shor
   /**
    * Accessibility behavior if overridden by the user.
    * @default alertBehavior
+   * @available alertWarningBehavior, alertInfoBehavior
    */
   accessibility?: Accessibility
 
@@ -75,7 +76,7 @@ class Alert extends UIComponent<ReactProps<AlertProps>> {
 
   static defaultProps = { accessibility: alertBehavior }
 
-  renderContent = ({ styles }: RenderResultConfig<AlertProps>) => {
+  renderContent = ({ styles, accessibility }: RenderResultConfig<AlertProps>) => {
     const { action, content } = this.props
 
     return (
@@ -84,6 +85,7 @@ class Alert extends UIComponent<ReactProps<AlertProps>> {
           defaultProps: {
             className: Alert.slotClassNames.content,
             styles: styles.content,
+            ...accessibility.attributes.content,
           },
         })}
         {Button.create(action, {

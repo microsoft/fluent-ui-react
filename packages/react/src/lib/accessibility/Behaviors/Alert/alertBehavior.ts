@@ -1,18 +1,14 @@
 import { Accessibility } from '../../types'
+import alertWarningBehavior from './alertWarningBehavior'
+import alertInfoBehavior from './alertInfoBehavior'
 
 /**
- * @specification
- * Adds role 'alert' to 'root' component's part.
- * Adds Adds attribute 'aria-live=polite' to 'root' component's part.
+ * @description
+ * Uses 'alertWarningBehavior` for 'danger' and 'warning' variants.
+ * Uses 'alertInfoBehavior` for 'success' and 'info' variants.
  */
 
-const alertBehavior: Accessibility = (props: any) => ({
-  attributes: {
-    root: {
-      role: 'alert',
-      ['aria-live']: 'polite',
-    },
-  },
-})
+const alertBehavior: Accessibility = (props: any) =>
+  props.warning || props.danger ? alertWarningBehavior(props) : alertInfoBehavior(props)
 
 export default alertBehavior
