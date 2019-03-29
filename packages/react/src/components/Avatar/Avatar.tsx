@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import Image from '../Image/Image'
@@ -8,7 +9,6 @@ import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
 import {
   createShorthandFactory,
-  customPropTypes,
   UIComponent,
   UIComponentProps,
   commonPropTypes,
