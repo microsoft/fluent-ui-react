@@ -3,6 +3,7 @@ import * as fs from 'fs'
 import { parallel, series, task } from 'gulp'
 import { rollup as lernaAliases } from 'lerna-alias'
 import * as path from 'path'
+import * as portfinder from 'portfinder'
 import * as puppeteer from 'puppeteer'
 import sh from '../sh'
 import * as rimraf from 'rimraf'
@@ -84,20 +85,20 @@ const createReactApp = async (atTempDirectory: string, appName: string): Promise
   return appProjectPath
 }
 
-const startServer = (publicDirectory: string) =>
+const startServer = (publicDirectory: string, listenPort: number) =>
   new Promise<http.Server>((resolve, reject) => {
     const app = express()
     app.use(express.static(publicDirectory))
 
-    const server = app.listen(config.projects_port, config.server_host, e => {
+    const server = app.listen(listenPort, config.server_host, e => {
       if (e) return reject(e)
 
       resolve(server)
     })
   })
 
-const performBrowserTest = async (publicDirectory: string) => {
-  const server = await startServer(publicDirectory)
+const performBrowserTest = async (publicDirectory: string, listenPort: number) => {
+  const server = await startServer(publicDirectory, listenPort)
 
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
@@ -112,7 +113,7 @@ const performBrowserTest = async (publicDirectory: string) => {
     error = pageError
   })
 
-  await page.goto(`http://${config.server_host}:${config.projects_port}`)
+  await page.goto(`http://${config.server_host}:${listenPort}`)
 
   await browser.close()
   await new Promise(resolve => server.close(resolve))
@@ -155,7 +156,7 @@ task('test:projects:cra-ts', async () => {
   logger('STEP 4. Build test project..')
   await runInTestApp(`yarn build`)
 
-  await performBrowserTest(testAppPath('build'))
+  await performBrowserTest(testAppPath('build'), await portfinder.getPortPromise())
   logger(`✔️Browser test was passed`)
 })
 
@@ -191,7 +192,7 @@ task('test:projects:rollup', async () => {
   await runIn(tmpDirectory)(`yarn rollup -c`)
   logger(`✔️Example project was successfully built: ${tmpDirectory}`)
 
-  await performBrowserTest(tmpDirectory)
+  await performBrowserTest(tmpDirectory, await portfinder.getPortPromise())
   logger(`✔️Browser test was passed`)
 })
 
