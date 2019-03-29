@@ -46,7 +46,10 @@ export interface DropdownSlotClassNames {
   clearIndicator: string
   container: string
   toggleIndicator: string
+  item: string
   itemsList: string
+  searchInput: string
+  selectedItem: string
   selectedItems: string
   triggerButton: string
 }
@@ -490,6 +493,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
     return DropdownSearchInput.create(searchInput || {}, {
       defaultProps: {
+        className: Dropdown.slotClassNames.searchInput,
         placeholder: noPlaceholder ? '' : placeholder,
         inline,
         variables,
@@ -572,6 +576,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     const items = _.map(filteredItems, (item, index) =>
       DropdownItem.create(item, {
         defaultProps: {
+          className: Dropdown.slotClassNames.item,
           active: highlightedIndex === index,
           variables,
           ...(typeof item === 'object' &&
@@ -613,6 +618,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     return value.map((item, index) =>
       DropdownSelectedItem.create(item, {
         defaultProps: {
+          className: Dropdown.slotClassNames.selectedItem,
           active: this.isSelectedItemActive(index),
           variables,
           ...(typeof item === 'object' &&
@@ -1099,7 +1105,10 @@ Dropdown.slotClassNames = {
   clearIndicator: `${Dropdown.className}__clear-indicator`,
   container: `${Dropdown.className}__container`,
   toggleIndicator: `${Dropdown.className}__toggle-indicator`,
+  item: `${Dropdown.className}__item`,
   itemsList: `${Dropdown.className}__items-list`,
+  searchInput: `${Dropdown.className}__searchinput`,
+  selectedItem: `${Dropdown.className}__selecteditem`,
   selectedItems: `${Dropdown.className}__selected-items`,
   triggerButton: `${Dropdown.className}__trigger-button`,
 }

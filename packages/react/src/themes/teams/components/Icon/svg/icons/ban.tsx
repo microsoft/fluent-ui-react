@@ -17,5 +17,4 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'ban',
 } as TeamsProcessedSvgIconSpec
