@@ -25,6 +25,7 @@ describe('Dropdown', () => {
         expect.objectContaining({
           activeSelectedIndex: undefined,
           highlightedIndex: null,
+          open: false,
           searchQuery: undefined,
           value: null,
         }),
@@ -192,6 +193,20 @@ describe('Dropdown', () => {
           `[role="status"][aria-live="polite"][aria-relevant="additions text"]`,
         ),
       ).toBeTruthy()
+    })
+  })
+
+  describe('searchQuery', () => {
+    it('will close after reset', () => {
+      const dropdown = mountWithProvider(<Dropdown items={items} search />).find(Dropdown)
+
+      dropdown.find('input').simulate('change', { target: { value: 'foo' } })
+      expect(dropdown.state('open')).toBe(true)
+      expect(dropdown.state('searchQuery')).toBe('foo')
+
+      dropdown.find('input').simulate('change', { target: { value: '' } })
+      expect(dropdown.state('open')).toBe(false)
+      expect(dropdown.state('searchQuery')).toBe('')
     })
   })
 })
