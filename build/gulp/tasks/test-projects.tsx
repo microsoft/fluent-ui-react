@@ -197,5 +197,5 @@ task('test:projects:rollup', async () => {
 
 task(
   'test:projects',
-  series('bundle:all-packages', parallel('test:projects:cra-ts', 'test:projects:rollup')),
+  series('dll', 'bundle:all-packages', parallel('test:projects:cra-ts', 'test:projects:rollup')),
 )
