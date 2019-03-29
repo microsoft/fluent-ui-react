@@ -201,7 +201,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
                   width: pxToRem(3),
                   height: `calc(100% + ${pxToRem(4)})`,
                   top: pxToRem(-2),
-                  backgroundColor: v.primaryActiveBorderColor,
+                  backgroundColor: v.pointingIndicatorBackgroundColor,
                   ...(pointing === 'end' ? { right: pxToRem(-2) } : { left: pxToRem(-2) }),
                 },
               }
