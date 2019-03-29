@@ -55,11 +55,11 @@ const menuItemBehavior: Accessibility = (props: any) => ({
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
-      closeAllMenus: {
-        keyCombinations: [{ keyCode: keyboardKey.Escape }],
-      },
       closeAllMenusAndFocusNextParentItem: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+      },
+      closeMenuAndFocusTrigger: {
+        keyCombinations: [{ keyCode: keyboardKey.Escape }],
       },
       closeMenu: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
