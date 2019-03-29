@@ -1,47 +1,35 @@
 import * as React from 'react'
-import { Menu } from '@stardust-ui/react'
+import { Menu, Header } from '@stardust-ui/react'
 
 class MenuWithSubmenuControlledExample extends React.Component {
-  state = { editorialsMenuOpen: false }
+  state = { menuOpen: false }
 
   handleMenuOpenChange = (e, { menuOpen }) => {
-    this.setState({ editorialsMenuOpen: menuOpen })
-  }
-
-  renderItems = () => {
-    return [
-      {
-        key: 'editorials',
-        content: 'Editorials',
-        menuOpen: this.state.editorialsMenuOpen,
-        onMenuOpenChange: this.handleMenuOpenChange,
-        menu: {
-          items: [
-            { key: '1', content: 'item1' },
-            {
-              key: '2',
-              content: 'item2',
-              menu: [{ key: '1', content: 'item2.1' }, { key: '2', content: 'item2.2' }],
-            },
-            {
-              key: '3',
-              content: 'item3',
-              menu: [{ key: '1', content: 'item3.1' }, { key: '2', content: 'item3.2' }],
-            },
-          ],
-        },
-      },
-      { key: 'events', content: 'Upcoming Events' },
-    ]
+    this.setState({ menuOpen })
   }
 
   render() {
     return (
       <>
-        <span>{`Editorials menu item requested to change its submenu open state to "${
-          this.state.editorialsMenuOpen
-        }".`}</span>
-        <Menu defaultActiveIndex={0} items={this.renderItems()} />
+        <Header as="h5" content="Current state:" />
+        <pre>{JSON.stringify(this.state, null, 2)}</pre>
+        <Menu
+          defaultActiveIndex={0}
+          items={[
+            {
+              key: 'editorials',
+              content: 'Editorials',
+              menuOpen: this.state.menuOpen,
+              onMenuOpenChange: this.handleMenuOpenChange,
+              menu: [
+                { key: '1', content: 'item1' },
+                { key: '2', content: 'item2' },
+                { key: '3', content: 'item3' },
+              ],
+            },
+            { key: 'events', content: 'Upcoming Events' },
+          ]}
+        />
       </>
     )
   }

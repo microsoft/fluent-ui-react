@@ -189,31 +189,12 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
    * @param {object} [state] Actual state, useful when you also need to setState.
    * @param {object} callback Callback which is called after setState applied.
    */
-  trySetState = (state: Partial<S>, callback?: () => void) => {
-    const { autoControlledProps } = this.constructor as any
-    if (process.env.NODE_ENV !== 'production') {
-      const { name } = this.constructor
-      // warn about failed attempts to setState for keys not listed in autoControlledProps
-      const illegalKeys = _.difference(_.keys(state), autoControlledProps)
-      if (!_.isEmpty(illegalKeys)) {
-        console.error(
-          [
-            `${name} called trySetState() with controlled props: "${illegalKeys}".`,
-            'State will not be set.',
-            'Only props in static autoControlledProps will be set on state.',
-          ].join(' '),
-        )
-      }
-    }
-
-    const newState = Object.keys(state).reduce((acc, prop) => {
+  trySetState = (maybeState: Partial<S>, callback?: () => void) => {
+    const newState = Object.keys(maybeState).reduce((acc, prop) => {
       // ignore props defined by the parent
       if (this.props[prop] !== undefined) return acc
 
-      // ignore props not listed in auto controlled props
-      if (autoControlledProps.indexOf(prop) === -1) return acc
-
-      acc[prop] = state[prop]
+      acc[prop] = maybeState[prop]
       return acc
     }, {})
 
