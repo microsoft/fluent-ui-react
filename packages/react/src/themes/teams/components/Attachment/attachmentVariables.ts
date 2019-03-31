@@ -4,15 +4,13 @@ export type AttachmentVariables = {
   padding: string
   iconSpace: string
 
-  border: string
+  borderColor: string
   borderRadius: string
   backgroundColor: string
   backgroundColorHover: string
   textColor: string
   textColorHover: string
   boxShadow: string
-
-  actionColorContrastOverride: string
 
   progressColor: string
   progressHeight: number
@@ -25,34 +23,32 @@ export type AttachmentVariables = {
   descriptionFontWeight: number
   descriptionLineHeight: number
 
-  focusOutlineColor: string
+  focusInnerBorderColor: string
+  focusOuterBorderColor: string
 }
 
-export default (siteVariables: any): AttachmentVariables => {
-  return {
-    padding: `${pxToRem(7)} ${pxToRem(3)} ${pxToRem(7)} ${pxToRem(11)}`, // padding set to 1px less to account for 1px border
-    iconSpace: pxToRem(12),
-    border: `1px solid ${siteVariables.gray08}`,
-    borderRadius: '3px',
-    backgroundColor: siteVariables.gray10,
-    backgroundColorHover: siteVariables.gray08,
-    textColor: siteVariables.colors.grey[900],
-    textColorHover: siteVariables.colors.grey[900],
-    boxShadow: siteVariables.shadowLevel1,
+export default (siteVariables: any): AttachmentVariables => ({
+  padding: `${pxToRem(7)} ${pxToRem(3)} ${pxToRem(7)} ${pxToRem(11)}`, // padding set to 1px less to account for 1px border
+  iconSpace: pxToRem(12),
+  borderColor: siteVariables.gray08,
+  borderRadius: pxToRem(3),
+  backgroundColor: siteVariables.gray10,
+  backgroundColorHover: siteVariables.gray08,
+  textColor: siteVariables.colors.grey[900],
+  textColorHover: siteVariables.colors.grey[900],
+  boxShadow: siteVariables.shadowLevel1,
 
-    actionColorContrastOverride: '',
+  progressColor: siteVariables.naturalColors.lightGreen[900],
+  progressHeight: 4,
 
-    progressColor: siteVariables.naturalColors.lightGreen[900],
-    progressHeight: 4,
+  headerFontSize: siteVariables.fontSizes.medium,
+  headerFontWeight: siteVariables.fontWeightSemibold,
+  headerLineHeight: siteVariables.lineHeightMedium,
 
-    headerFontSize: siteVariables.fontSizes.medium,
-    headerFontWeight: siteVariables.fontWeightSemibold,
-    headerLineHeight: siteVariables.lineHeightMedium,
+  descriptionFontSize: siteVariables.fontSizes.small,
+  descriptionFontWeight: siteVariables.fontWeightRegular,
+  descriptionLineHeight: siteVariables.lineHeightSmall,
 
-    descriptionFontSize: siteVariables.fontSizes.small,
-    descriptionFontWeight: siteVariables.fontWeightRegular,
-    descriptionLineHeight: siteVariables.lineHeightSmall,
-
-    focusOutlineColor: siteVariables.colors.primary[500],
-  }
-}
+  focusInnerBorderColor: siteVariables.colors.white,
+  focusOuterBorderColor: siteVariables.colors.black,
+})

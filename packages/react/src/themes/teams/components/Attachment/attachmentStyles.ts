@@ -2,16 +2,15 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../lib'
-import Button from '../../../../components/Button/Button'
 import Icon from '../../../../components/Icon/Icon'
 
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    boxSizing: 'border-box',
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
-    width: pxToRem(300),
+    width: '100%',
+    maxWidth: pxToRem(440),
     minHeight: pxToRem(48),
     padding: v.padding,
     marginBottom: pxToRem(2),
@@ -19,18 +18,21 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     background: v.backgroundColor,
     color: v.textColor,
     boxShadow: v.boxShadow,
-    border: v.border,
+    border: `${pxToRem(1)} solid ${v.borderColor}`,
     borderRadius: v.borderRadius,
 
     outline: 0,
 
+    // todo: remove when #1057 to make box-sizing global is checked in
+    boxSizing: 'border-box',
     '& *': {
       boxSizing: `border-box`,
     },
 
     ...(p.isFromKeyboard && {
       ':focus': {
-        outline: `.2rem solid ${v.focusOutlineColor}`,
+        borderColor: v.focusInnerBorderColor,
+        boxShadow: `0 0 0 ${pxToRem(1)} ${v.focusOuterBorderColor}`,
       },
     }),
 
@@ -40,17 +42,12 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
       ':hover': {
         background: v.backgroundColorHover,
         color: v.textColorHover,
-
-        [`& .${Button.className}`]: {
-          color: v.actionColorContrastOverride,
-        },
       },
     }),
   }),
 
   content: (): ICSSInJSStyle => ({
     flex: 1,
-    margin: '-2px 0',
   }),
 
   header: ({ variables: v }): ICSSInJSStyle => ({
@@ -74,15 +71,9 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
 
   action: ({ variables: v }): ICSSInJSStyle => ({
     flex: '0 0 auto',
-    border: '1px solid transparent',
-    margin: '-1px', // negative margin should match border width.
 
     [`& .${Icon.className}`]: {
       color: v.textColor, // this breaks the color change on hover
-    },
-
-    ':hover': {
-      borderColor: v.actionColorContrastOverride,
     },
   }),
 
