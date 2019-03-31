@@ -12,11 +12,16 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+
+export interface RadioGroupSlotClassNames {
+  item: string
+}
 
 export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -55,6 +60,10 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
 
   static className = 'ui-radiogroup'
 
+  static slotClassNames: RadioGroupSlotClassNames = {
+    item: RadioGroupItem.className,
+  }
+
   static create: Function
 
   static propTypes = {
@@ -82,9 +91,9 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
     return (
       <ElementType
         {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         className={classes.root}
       >
         {childrenExist(children) ? children : this.renderItems(vertical)}
@@ -167,7 +176,7 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
 
     return _.map(items, item =>
       RadioGroupItem.create(item, {
-        defaultProps: { vertical },
+        defaultProps: { className: RadioGroup.slotClassNames.item, vertical },
         overrideProps: this.handleItemOverrides,
       }),
     )

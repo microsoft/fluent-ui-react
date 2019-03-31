@@ -2,6 +2,8 @@ export { default as Accordion } from './components/Accordion/accordionStyles'
 export { default as AccordionContent } from './components/Accordion/accordionContentStyles'
 export { default as AccordionTitle } from './components/Accordion/accordionTitleStyles'
 
+export { default as Alert } from './components/Alert/alertStyles'
+
 export { default as Attachment } from './components/Attachment/attachmentStyles'
 
 export { default as Avatar } from './components/Avatar/avatarStyles'
@@ -40,6 +42,8 @@ export { default as Input } from './components/Input/inputStyles'
 export { default as Label } from './components/Label/labelStyles'
 
 export { default as Layout } from './components/Layout/layoutStyles'
+
+export { default as Loader } from './components/Loader/loaderStyles'
 
 export { default as ItemLayout } from './components/ItemLayout/itemLayoutStyles'
 

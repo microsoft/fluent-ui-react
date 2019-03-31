@@ -25,7 +25,10 @@ export const brand08 = '#8B8CC7' // no mapping color
 
 export const magenta = '#B24782' // no mapping color
 export const orchid = '#943670' // no mapping color
-export const red08 = '#F3D6DB' // no mapping color
+
+export const red = colors.red[900] // no mapping color $app-red
+export const red08 = '#F3D6DB' // no mapping color $app-red-08
+export const red10 = '#FCF4F6' // no mapping color $app-red-10
 
 //
 // SHADOW LEVELS

@@ -12,6 +12,8 @@ export * from './themes/types'
 
 export { default as Accordion, AccordionProps } from './components/Accordion/Accordion'
 
+export { default as Alert, AlertProps } from './components/Alert/Alert'
+
 export { default as Attachment, AttachmentProps } from './components/Attachment/Attachment'
 
 export { default as Avatar, AvatarProps } from './components/Avatar/Avatar'

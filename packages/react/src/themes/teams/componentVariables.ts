@@ -2,6 +2,8 @@ export { default as AccordionContent } from './components/Accordion/accordionCon
 
 export { default as Attachment } from './components/Attachment/attachmentVariables'
 
+export { default as Alert } from './components/Alert/alertVariables'
+
 export { default as Avatar } from './components/Avatar/avatarVariables'
 
 export { default as Button } from './components/Button/buttonVariables'
@@ -37,6 +39,8 @@ export { default as Input } from './components/Input/inputVariables'
 export { default as Label } from './components/Label/labelVariables'
 
 export { default as Layout } from './components/Layout/layoutVariables'
+
+export { default as Loader } from './components/Loader/loaderVariables'
 
 export { default as ItemLayout } from './components/ItemLayout/itemLayoutVariables'
 

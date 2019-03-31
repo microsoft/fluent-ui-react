@@ -38,7 +38,7 @@ const addResolutionPathsForStardustPackages = async (
 
 const packStardustPackages = async (logger: Function): Promise<PackedPackages> => {
   // packages/react/src -> packages/react,
-  // as lernaAliases append 'src'  by default
+  // as lernaAliases append 'src' by default
   const stardustPackages = lernaAliases({ sourceDirectory: false })
 
   await Promise.all(

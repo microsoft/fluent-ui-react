@@ -11,7 +11,7 @@ const { paths } = config
 const g = require('gulp-load-plugins')()
 const { log, PluginError } = g.util
 
-const packageName: string = argv.package || 'react'
+const packageName = (argv.package as string) || 'react'
 
 // ----------------------------------------
 // Clean

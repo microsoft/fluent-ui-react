@@ -10,8 +10,8 @@ const selectors = {
 }
 
 const getScreenerSteps = ({ vertical }: StepsOptions = {}): ScreenerSteps => [
-  (steps, keys) =>
-    steps
+  (builder, keys) =>
+    builder
       .hover(selectors.item(2))
       .snapshot('Hovers 2nd item (hover state styles)')
       .click(selectors.item(2))

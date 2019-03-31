@@ -2,11 +2,17 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import * as _ from 'lodash'
-import { UIComponent, commonPropTypes } from '../../lib'
+import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
 import { mergeStyles } from '../../lib/mergeThemes'
-import { Extendable } from '../../types'
+import { ReactProps } from '../../types'
 
-export interface FlexItemProps {
+export type FlexItemChildren =
+  | React.ReactElement<any>
+  | ((
+      { styles: ComponentSlotStylesPrepared, classes: ComponentSlotClasses },
+    ) => React.ReactElement<any>)
+
+export interface FlexItemProps extends UIComponentProps, ChildrenComponentProps<FlexItemChildren> {
   /** Controls item's alignment. */
   align?: 'auto' | 'start' | 'end' | 'center' | 'baseline' | 'stretch'
 
@@ -36,7 +42,7 @@ export interface FlexItemProps {
   flexDirection?: 'row' | 'column'
 }
 
-class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
+class FlexItem extends UIComponent<ReactProps<FlexItemProps>> {
   static className = 'ui-flex__item'
 
   static displayName = 'FlexItem'
@@ -80,9 +86,8 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
       })
     }
 
-    return _.isNil(children)
-      ? children
-      : applyStyles(React.Children.only(children), styles, classes)
+    if (_.isNil(children)) return children
+    return applyStyles(React.Children.only(children) as React.ReactElement<any>, styles, classes)
   }
 }
 

@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -7,7 +8,6 @@ import { getNextElement, focusAsync } from './focusUtilities'
 import { AutoFocusZoneProps } from './AutoFocusZone.types'
 import getUnhandledProps from '../../getUnhandledProps'
 import getElementType from '../../getElementType'
-import * as customPropTypes from '../../customPropTypes'
 import callable from '../../callable'
 import Ref from '../../../components/Ref/Ref'
 

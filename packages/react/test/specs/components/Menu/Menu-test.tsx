@@ -85,6 +85,35 @@ describe('Menu', () => {
       })
     })
 
+    describe('itemsCount and itemPosition', () => {
+      it('should be set by default', () => {
+        const menuItems = mountWithProvider(<Menu items={getItems()} />).find('MenuItem')
+
+        expect(menuItems.at(0).prop('itemPosition')).toBe(1)
+        expect(menuItems.at(0).prop('itemsCount')).toBe(2)
+
+        expect(menuItems.at(1).prop('itemPosition')).toBe(2)
+        expect(menuItems.at(1).prop('itemsCount')).toBe(2)
+      })
+
+      it('should not be set on the divider', () => {
+        const wrapper = mountWithProvider(
+          <Menu items={[...getItems(), { kind: 'divider', key: 'divider' }]} />,
+        )
+        const menuItems = wrapper.find('MenuItem')
+        const menuDividers = wrapper.find('MenuDivider')
+
+        expect(menuItems.at(0).prop('itemPosition')).toBe(1)
+        expect(menuItems.at(0).prop('itemsCount')).toBe(2)
+
+        expect(menuItems.at(1).prop('itemsCount')).toBe(2)
+        expect(menuItems.at(1).prop('itemPosition')).toBe(2)
+
+        expect(menuDividers.at(0).prop('itemsCount')).toBeUndefined()
+        expect(menuDividers.at(0).prop('itemPosition')).toBeUndefined()
+      })
+    })
+
     describe('accessibility', () => {
       handlesAccessibility(Menu, {
         defaultRootRole: 'menu',

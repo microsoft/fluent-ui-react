@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router'
-import { Flex, Header, Icon, Dropdown, Text, themes, Grid } from '@stardust-ui/react'
+import { Flex, Header, Icon, Dropdown, Text, Grid } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
@@ -94,14 +94,14 @@ class ComponentDoc extends React.Component<any, any> {
         <Flex column>
           <Flex.Item padding="padding.medium">
             <ThemeContext.Consumer>
-              {({ changeTheme }) => (
+              {({ changeTheme, themeOptions }) => (
                 <Dropdown
                   getA11yStatusMessage={getA11yStatusMessage}
                   getA11ySelectionMessage={getA11ySelectionMessage}
                   noResultsMessage="We couldn't find any matches."
                   placeholder="Theme"
                   onSelectedChange={changeTheme}
-                  items={this.getThemeOptions().map(o => o.text)}
+                  items={themeOptions.map(({ text, value }) => ({ header: text, value }))}
                 />
               )}
             </ThemeContext.Consumer>
@@ -166,13 +166,6 @@ class ComponentDoc extends React.Component<any, any> {
         </Grid>
       </div>
     )
-  }
-
-  private getThemeOptions = () => {
-    return Object.keys(themes).map(key => ({
-      text: _.startCase(key),
-      value: key,
-    }))
   }
 }
 

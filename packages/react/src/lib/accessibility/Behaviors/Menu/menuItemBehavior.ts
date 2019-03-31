@@ -33,7 +33,7 @@ const menuItemBehavior: Accessibility = (props: any) => ({
     },
     root: {
       role: 'menuitem',
-      tabIndex: '0',
+      tabIndex: 0,
       'aria-expanded': props.menu ? props.menuOpen || false : undefined,
       'aria-haspopup': props.menu ? 'true' : undefined,
       'aria-label': props['aria-label'],
@@ -45,6 +45,8 @@ const menuItemBehavior: Accessibility = (props: any) => ({
         ? true
         : undefined,
       [IS_FOCUSABLE_ATTRIBUTE]: !props['disabled'],
+      'aria-posinset': props.itemPosition,
+      'aria-setsize': props.itemsCount,
     },
   },
 

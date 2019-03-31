@@ -1,7 +1,7 @@
 import { Button } from '@stardust-ui/react'
 
-const steps: ScreenerSteps = [
-  steps => steps.click(`.${Button.className}`).snapshot('RTL: Shows popup'),
-]
+const config: ScreenerTestsConfig = {
+  steps: [builder => builder.click(`.${Button.className}`).snapshot('RTL: Shows popup')],
+}
 
-export default steps
+export default config

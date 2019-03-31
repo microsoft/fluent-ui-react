@@ -5,13 +5,15 @@ const selectors = {
   item: (itemIndex: number) => `.${Dropdown.slotClassNames.itemsList} li:nth-child(${itemIndex})`,
 }
 
-const steps: ScreenerSteps = [
-  steps =>
-    steps
-      .click(selectors.triggerButton)
-      .snapshot('RTL: Shows list')
-      .click(selectors.item(3))
-      .snapshot('RTL: Selects an item'),
-]
+export const config: ScreenerTestsConfig = {
+  steps: [
+    builder =>
+      builder
+        .click(selectors.triggerButton)
+        .snapshot('RTL: Shows list')
+        .click(selectors.item(3))
+        .snapshot('RTL: Selects an item'),
+  ],
+}
 
-export default steps
+export default config

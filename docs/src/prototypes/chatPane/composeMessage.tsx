@@ -1,94 +1,103 @@
 import * as React from 'react'
 import {
-  Layout,
+  Flex,
   Input,
+  Menu,
+  Provider,
   toolbarButtonBehavior,
   toolbarBehavior,
-  Menu,
   MenuItemProps,
 } from '@stardust-ui/react'
-import style from './chatProtoStyle'
 
-type ToolbarProps = MenuItemProps & { key: string; 'aria-label'?: string }
+import { Props } from 'src/types'
+import chatProtoStyle from './chatProtoStyle'
 
-class ComposeMessage extends React.Component {
-  public render() {
-    return (
-      <Layout
-        role="region"
-        aria-labelledby="chat-compose-reader-text"
-        vertical
-        start={
-          <div>
-            <div
-              role="heading"
-              aria-level={2}
-              id="chat-compose-reader-text"
-              style={style.screenReaderContainerStyles}
-            >
-              Compose
-            </div>
-            {this.renderInput()}
+type ComposeMessageProps = Props<{
+  attached?: 'top' | 'bottom' | boolean
+  style?: React.CSSProperties
+}>
+
+const ComposeMessage: React.FunctionComponent<ComposeMessageProps> = props => (
+  <Provider.Consumer
+    render={({ siteVariables: siteVars }) => (
+      <Flex column role="region" aria-labelledby="chat-compose-reader-text" style={props.style}>
+        <div>
+          <div
+            role="heading"
+            aria-level={2}
+            id="chat-compose-reader-text"
+            style={chatProtoStyle.screenReaderContainerStyles}
+          >
+            Compose
           </div>
-        }
-        main={this.renderToolbar()}
-        styles={{ padding: '16px 32px' }}
-      />
-    )
+          <Input
+            fluid
+            placeholder="Type a message"
+            input={{ styles: { height: '3.1429rem' /* 44px */ } }}
+            styles={{ ...getInputWrapperStyles(props), borderColor: siteVars.colors.grey[200] }}
+            variables={{ backgroundColor: siteVars.colors.white }}
+          />
+        </div>
+        <Menu
+          defaultActiveIndex={0}
+          items={getMenuItems()}
+          iconOnly
+          accessibility={toolbarBehavior}
+          aria-label="Compose Editor"
+          styles={{ marginTop: '10px' }}
+        />
+      </Flex>
+    )}
+  />
+)
+
+const getInputWrapperStyles = ({ attached }: ComposeMessageProps): React.CSSProperties => {
+  const borderTopRadius = '3px'
+  const borderBottomRadius = '2px'
+  const borderWidth = '1px'
+
+  return {
+    boxSizing: 'border-box',
+    borderStyle: 'solid',
+    borderWidth,
+    borderRadius: `${borderTopRadius} ${borderTopRadius} ${borderBottomRadius} ${borderBottomRadius}`,
+
+    ...((attached === 'top' || attached === true) && {
+      borderRadius: `0 0 ${borderBottomRadius} ${borderBottomRadius}`,
+      marginTop: `-${borderWidth}`,
+    }),
+
+    ...(attached === 'bottom' && {
+      borderRadius: `${borderTopRadius} ${borderTopRadius} 0 0`,
+      marginBottom: `-${borderWidth}`,
+    }),
   }
+}
 
-  private renderInput(): React.ReactNode {
-    return (
-      <Input
-        fluid
-        placeholder="Type a message"
-        input={{ styles: { height: '3.1429rem' /* 44px */ } }}
-        variables={siteVars => ({ backgroundColor: siteVars.colors.white })}
-      />
-    )
-  }
+const getMenuItems = (): MenuItemProps[] => {
+  const items: MenuItemProps[] = [
+    'compose',
+    'attach',
+    'smile',
+    'picture',
+    'smile outline',
+    'calendar alternate',
+    'ellipsis horizontal',
+    'send',
+  ].map((name, index) => ({
+    key: `${index}-${name}`,
+    icon: {
+      name,
+      xSpacing: 'both',
+      variables: siteVars => ({ color: siteVars.gray02 }),
+    },
+    accessibility: toolbarButtonBehavior,
+    'aria-label': `${name} tool`,
+  }))
 
-  private renderToolbar(): React.ReactNode {
-    const items: (ToolbarProps | JSX.Element)[] = [
-      'compose',
-      'attach',
-      'smile',
-      'picture',
-      'smile outline',
-      'calendar alternate',
-      'ellipsis horizontal',
-      'send',
-    ].map((icon, index) => this.getMenuItem(icon, index))
+  items.splice(-1, 0, { key: 'separator', styles: { flex: 1 } })
 
-    items.splice(-1, 0, { key: 'separator', styles: { flex: 1 } })
-
-    return (
-      <Menu
-        defaultActiveIndex={0}
-        items={items}
-        iconOnly
-        accessibility={toolbarBehavior}
-        aria-label="Compose Editor"
-        styles={{ marginTop: '10px' }}
-      />
-    )
-  }
-
-  private getMenuItem(
-    name: string,
-    index: number,
-  ): MenuItemProps & { key: string; 'aria-label': string } {
-    return {
-      key: `${index}-${name}`,
-      icon: {
-        name,
-        xSpacing: 'both',
-        variables: siteVars => ({ color: siteVars.gray02 }),
-      },
-      accessibility: toolbarButtonBehavior,
-      'aria-label': `${name} tool`,
-    }
-  }
+  return items
 }
 
 export default ComposeMessage

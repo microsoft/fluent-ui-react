@@ -10,6 +10,7 @@ import {
   ContentComponentProps,
   AutoControlledComponent,
   doesNodeContainClick,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
@@ -191,8 +192,8 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
         <ElementType
           className={classes.root}
           {...accessibility.attributes.popup}
-          {...accessibility.keyHandlers.popup}
           {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
         >
           {Header.create(header, {
             defaultProps: {

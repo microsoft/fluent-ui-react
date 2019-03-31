@@ -18,6 +18,10 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
 
+export interface HeaderSlotClassNames {
+  description: string
+}
+
 export interface HeaderProps
   extends UIComponentProps,
     ChildrenComponentProps,
@@ -47,11 +51,15 @@ export interface HeaderProps
  *    In addition to that, both will be displayed in the list of headings.
  */
 class Header extends UIComponent<ReactProps<HeaderProps>, any> {
-  static create: Function
+  static displayName = 'Header'
 
   static className = 'ui-header'
 
-  static displayName = 'Header'
+  static slotClassNames: HeaderSlotClassNames = {
+    description: HeaderDescription.className,
+  }
+
+  static create: Function
 
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),
@@ -87,6 +95,7 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
         {!hasChildren &&
           HeaderDescription.create(description, {
             defaultProps: {
+              className: Header.slotClassNames.description,
               variables: {
                 ...(v.descriptionColor && { color: v.descriptionColor }),
               },

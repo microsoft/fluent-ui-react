@@ -6,6 +6,7 @@ import * as ReactDOM from 'react-dom'
 export const babelConfig = {
   plugins: [
     'proposal-class-properties',
+    'proposal-object-rest-spread',
     ['transform-typescript', { isTSX: true }],
     'transform-classes',
   ],

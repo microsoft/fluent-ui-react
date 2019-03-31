@@ -128,24 +128,29 @@ For some components, it is necessary to write screenshot tests in order to check
 This default test only checks the rendering for the component in its initial state. In order to test the rendering of more complex components, such as a `Dropdown`, screener provides an [api](https://www.npmjs.com/package/screener-runner) to execute actions on the DOM, in a way similar to end-to-end tests. These tests are executed by Screener as long as both the tests and their files respect the conventions:
 - the test file should be placed at the same location as the component example under test.
 - the test file should be named exactly as the component example file. If `DropdownExample.shorthand.tsx` is to be tested, the screener test file should be named `DropdownExample.shorthand.steps.ts`.
-- the tests should be written as an array of callbacks that accept a `steps` parameter, as all of them will be chained in `screener.config`. The `steps` parameter is actually the `Steps` object from screener, instantiated in `screener.config`.
+- the tests should be written as a config file that can contain the following props:
+  - `steps`: an array of callbacks that accept a `builder` (step builder) parameter, as all of them will be chained in `screener.config.js`. The `builder` parameter is actually the `Steps` object from screener, instantiated in `screener.config.js`.
+  - `themes`: an array of strings representing the theme applied to the component when taking the screenshot; by default, all screenshots are taken for `Teams` theme.
 
 #### Example for a test file:
 
 ```tsx
 import { Dropdown } from '@stardust-ui/react'
 
-const steps: ScreenerSteps = [
-  steps => steps.click(`.${Dropdown.slotClassNames.triggerButton}`)
-    .snapshot('Opens dropdown list'),
-  steps => 
-    steps
-      .click(`.${Dropdown.slotClassNames.triggerButton}`)
-      .hover(`.${Dropdown.slotClassNames.itemsList} li:nth-child(2)`)
-      .snapshot('Highlights an item'),
-]
+const config: ScreenerTestsConfig = {
+  themes: ['teams', 'teamsDark', 'teamsHighContrast'],
+  steps: [
+    builder => builder.click(`.${Dropdown.slotClassNames.triggerButton}`)
+      .snapshot('Opens dropdown list'),
+    builder =>
+      builder
+        .click(`.${Dropdown.slotClassNames.triggerButton}`)
+        .hover(`.${Dropdown.slotClassNames.itemsList} li:nth-child(2)`)
+        .snapshot('Highlights an item'),
+  ],
+}
 
-export default steps
+export default config
 ```
 
 #### Important mentions:
@@ -154,7 +159,7 @@ export default steps
 - an actual assertion is performed by taking a `.snapshot(<Your test name here>)`, as the assertion is performed by comparing the screenshot with the one taken on the previous run and considered correct.
 - a test can have as many snapshots as needed.
 - before the snapshot is taken, steps are added to reach the state of assertion, with methods from `screener-runner` API (`.click(<selector>)`, `.hover(<selector>)`etc.)
-- tests do not perform any cleanup by default. This means a test is dependent on the state of the component in which the previous test leaves it. In the example above, the second test will receive the `Dropdown` component with the list open.
+- tests perform cleanup by default. This means each test is independent of the state of the component from previous tests.
 
 ### Run Screener tests
 In order to run the tests locally, make sure to have a Screener API key saved in the environment variables on your machine. For instance, on MacOS/Linux you can use `export SCREENER_API_KEY=<Your screener key here>`.
@@ -184,7 +189,7 @@ Each line under the `@specification` tag is taken and matched against the regex 
 
 ### Running test(s)
 
-Run test and watch:  
+Run test and watch:
 ```
 yarn jest --watch behavior-test
 ```
@@ -211,14 +216,14 @@ Run the tests again and you should see in console:
     √ Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
   buttonGroupBehavior.ts
     √ Adds role 'presentation' to 'root' component's part (2ms)
-    √ Wraps component in FocusZone allowing arrow key navigation through the children of the component.  
+    √ Wraps component in FocusZone allowing arrow key navigation through the children of the component.
   dialogBehavior.ts
     √ Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'.
     √ Adds attribute 'aria-modal=true' to 'popup' component's part.
     √ Adds attribute 'role=dialog' to 'popup' component's part.
     √ Traps focus inside component
   gridBehavior.ts
-    √ Wraps component in FocusZone allowing circular arrow key navigation through the children of the component.  
+    √ Wraps component in FocusZone allowing circular arrow key navigation through the children of the component.
 ```
 
 #### I want to add any description which should not be consider as unit test

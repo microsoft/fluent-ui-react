@@ -11,12 +11,17 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import ListItem, { ListItemProps } from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+
+export interface ListSlotClassNames {
+  item: string
+}
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -66,6 +71,10 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   static displayName = 'List'
 
   static className = 'ui-list'
+
+  static slotClassNames: ListSlotClassNames = {
+    item: ListItem.className,
+  }
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -166,9 +175,9 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
     return (
       <ElementType
         {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         className={classes.root}
       >
         {childrenExist(children) ? children : this.renderItems()}
@@ -197,6 +206,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
       }
 
       const itemProps = {
+        className: List.slotClassNames.item,
         ..._.pick(this.props, List.itemProps),
         ...maybeSelectableItemProps,
         index,
