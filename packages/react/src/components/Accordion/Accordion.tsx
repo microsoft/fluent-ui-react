@@ -87,8 +87,8 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
   static className = 'ui-accordion'
 
   static slotClassNames: AccordionSlotClassNames = {
-    content: AccordionContent.className,
-    title: AccordionTitle.className,
+    content: `${Accordion.className}__content`,
+    title: `${Accordion.className}__title`,
   }
 
   static propTypes = {
@@ -146,7 +146,7 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
       const { index } = titleProps
       const activeIndex = this.computeNewIndex(index)
 
-      this.trySetState({ activeIndex }, index)
+      this.trySetState({ activeIndex })
 
       _.invoke(predefinedProps, 'onClick', e, titleProps)
       _.invoke(this.props, 'onTitleClick', e, titleProps)
