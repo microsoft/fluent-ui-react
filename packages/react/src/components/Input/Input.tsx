@@ -203,7 +203,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
     const { value } = this.state
 
     if (clearable && (value as string).length !== 0) {
-      return 'close'
+      return 'stardust-close'
     }
 
     return icon || null

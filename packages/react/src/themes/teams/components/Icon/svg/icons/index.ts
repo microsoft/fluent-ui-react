@@ -37,6 +37,7 @@ import filesSketch from './filesSketch'
 import filesSound from './filesSound'
 import filesTxt from './filesTxt'
 import filesZip from './filesZip'
+import flag from './flag'
 import download from './download'
 import edit from './edit'
 import email from './email'
@@ -98,6 +99,7 @@ import translation from './translation'
 import trashCan from './trashCan'
 import triangleDown from './triangleDown'
 import triangleRight from './triangleRight'
+import triangleUp from './triangleUp'
 import underline from './underline'
 import undo from './undo'
 import urgent from './urgent'
@@ -140,6 +142,7 @@ export default {
   'files-sound': filesSound,
   'files-txt': filesTxt,
   'files-zip': filesZip,
+  flag,
   download,
   edit,
   email,
@@ -193,6 +196,7 @@ export default {
   'trash-can': trashCan,
   'triangle-down': triangleDown,
   'triangle-right': triangleRight,
+  'triangle-up': triangleUp,
   'team-create': teamCreate,
   underline,
   undo,

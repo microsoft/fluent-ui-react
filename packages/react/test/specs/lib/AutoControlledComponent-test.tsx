@@ -65,17 +65,6 @@ describe('extending AutoControlledComponent', () => {
       expect(wrapper.state()).toHaveProperty(randomProp, randomValue)
     })
 
-    test('does not set state for non autoControlledProps', () => {
-      consoleUtil.disableOnce()
-
-      TestClass = createTestClass({ autoControlledProps: [], state: {} })
-      const wrapper = shallow(<TestClass />)
-
-      getAutoControlledInstance(wrapper).trySetState({ ['system']: 'compress' })
-
-      expect(wrapper.state()).toEqual({})
-    })
-
     test('does not set state for props defined by the parent', () => {
       consoleUtil.disableOnce()
 

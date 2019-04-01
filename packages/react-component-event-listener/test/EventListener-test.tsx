@@ -26,22 +26,6 @@ describe('EventListener', () => {
       expect(onKeyDown).toHaveBeenCalledWith(expect.objectContaining({ type: 'keydown' }))
     })
 
-    it('will not rerender on change', () => {
-      const firstClick = jest.fn()
-      const secondClick = jest.fn()
-
-      const wrapper = mount(
-        <EventListener listener={firstClick} targetRef={documentRef} type="click" />,
-      )
-
-      simulant.fire(document, 'click')
-      wrapper.setProps({ listener: secondClick })
-      simulant.fire(document, 'click')
-
-      expect(firstClick).toHaveBeenCalledTimes(1)
-      expect(secondClick).toHaveBeenCalledTimes(1)
-    })
-
     it('unsubscribes correctly', () => {
       const onClick = jest.fn()
 
