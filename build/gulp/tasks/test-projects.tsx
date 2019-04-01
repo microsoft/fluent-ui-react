@@ -115,6 +115,7 @@ const performBrowserTest = async (publicDirectory: string, listenPort: number) =
 
   await page.goto(`http://${config.server_host}:${listenPort}`)
 
+  await page.close()
   await browser.close()
   await new Promise(resolve => server.close(resolve))
 
