@@ -10,4 +10,5 @@ export default {
     </svg>
   ),
   styles: {},
+  exportedAs: 'files-aftereffects',
 } as TeamsProcessedSvgIconSpec

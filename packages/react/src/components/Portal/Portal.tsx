@@ -1,3 +1,5 @@
+import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -6,13 +8,11 @@ import {
   childrenExist,
   AutoControlledComponent,
   doesNodeContainClick,
-  EventStack,
   ChildrenComponentProps,
   commonPropTypes,
   ContentComponentProps,
   handleRef,
   rtlTextContainer,
-  customPropTypes,
 } from '../../lib'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
@@ -85,8 +85,6 @@ class Portal extends AutoControlledComponent<ReactProps<PortalProps>, PortalStat
   private portalNode: HTMLElement
   private triggerNode: HTMLElement
 
-  private clickSubscription = EventStack.noSubscription
-
   public static autoControlledProps = ['open']
 
   public static propTypes = {
@@ -141,6 +139,11 @@ class Portal extends AutoControlledComponent<ReactProps<PortalProps>, PortalStat
             ) : (
               contentToRender
             )}
+            <EventListener
+              listener={this.handleDocumentClick}
+              targetRef={documentRef}
+              type="click"
+            />
           </PortalInner>
         </Ref>
       )
@@ -163,13 +166,10 @@ class Portal extends AutoControlledComponent<ReactProps<PortalProps>, PortalStat
     )
   }
   private handleMount = () => {
-    this.clickSubscription = EventStack.subscribe('click', this.handleDocumentClick)
-
     _.invoke(this.props, 'onMount', this.props)
   }
 
   private handleUnmount = () => {
-    this.clickSubscription.unsubscribe()
     _.invoke(this.props, 'onUnmount', this.props)
   }
 
@@ -190,7 +190,7 @@ class Portal extends AutoControlledComponent<ReactProps<PortalProps>, PortalStat
     this.trySetState({ open: !this.state.open })
   }
 
-  private handleDocumentClick = (e: ReactMouseEvent) => {
+  private handleDocumentClick = (e: MouseEvent) => {
     if (
       !this.portalNode || // no portal
       doesNodeContainClick(this.triggerNode, e) || // event happened in trigger (delegate to trigger handlers)

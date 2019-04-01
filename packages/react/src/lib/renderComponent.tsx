@@ -164,7 +164,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           componentStyles = {},
           rtl = false,
           renderer = felaRenderer,
-        } = theme
+        } = theme || {}
         const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
 
         const stateAndProps = { ...state, ...props }
