@@ -1,7 +1,7 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["**/*.ts"],
+  "include": ["**/*"],
   "compilerOptions": {
-    "types": ["cypress", "node", "jest"]
+    "types": ["node", "jest", "cypress"]
   }
 }
