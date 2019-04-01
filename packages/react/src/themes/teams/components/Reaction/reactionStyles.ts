@@ -26,12 +26,14 @@ const reactionStyles: ComponentSlotStylesInput<ReactionProps & ReactionState, Re
         fontWeight: v.fontWeightHover as FontWeightProperty,
       },
     },
-    ...(p.isFromKeyboard && {
-      ':focus': {
-        outline: `${v.outlineColorFocus} solid ${v.outlineWidthFocus}`,
-        outlineOffset: v.outlineOffsetFocus,
-      },
-    }),
+
+    '[data-focus-visible-added]': {
+      outline: `${v.outlineColorFocus} solid ${v.outlineWidthFocus}`,
+      outlineOffset: v.outlineOffsetFocus,
+    },
+    ':focus:not([data-focus-visible-added])': {
+      outline: 'none',
+    },
   }),
   icon: ({ props: p }) => ({
     marginRight: p.content ? pxToRem(4) : pxToRem(0),

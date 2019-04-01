@@ -36,12 +36,13 @@ const selectableHoverStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
 
 const selectableFocusStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
   ...selectableHoverStyle(p, v),
-  outline: 0,
 
-  ...(p.isFromKeyboard && {
+  ':not([data-focus-visible-added])': { outline: 0 },
+
+  '[data-focus-visible-added]': {
     outline: `.2rem solid ${v.selectedFocusOutlineColor}`,
     zIndex: 1,
-  }),
+  },
 })
 
 const selectedStyle = variables => ({

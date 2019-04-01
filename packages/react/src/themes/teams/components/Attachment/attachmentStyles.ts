@@ -18,11 +18,9 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
 
     outline: 0,
 
-    ...(p.isFromKeyboard && {
-      ':focus': {
-        outline: `.2rem solid ${v.focusOutlineColor}`,
-      },
-    }),
+    '[data-focus-visible-added]': {
+      outline: `.2rem solid ${v.focusOutlineColor}`,
+    },
 
     ...((p.actionable || p.onClick) && {
       cursor: 'pointer',

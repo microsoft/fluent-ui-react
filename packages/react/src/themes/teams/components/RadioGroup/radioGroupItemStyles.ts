@@ -59,10 +59,10 @@ const radioStyles: ComponentSlotStylesInput<
       ...restHoverFocusTextColor(v.colorDisabled),
     }),
 
-    ...(p.isFromKeyboard && {
+    '[data-focus-visible-added]': {
       borderColor: v.focusInnerBorderColor,
       boxShadow: `0 0 0 ${pxToRem(1)} ${v.focusOuterBorderColor}`,
-    }),
+    },
   }),
 
   icon: ({ props: p, variables: v }): ICSSInJSStyle => ({

@@ -49,11 +49,8 @@ const chatMessageStyles: ComponentSlotStylesInput<
         borderTopLeftRadius: 'inherit',
       },
     }),
-
-    ':focus': {
-      ...(p.isFromKeyboard && {
-        outline: `.2rem solid ${v.contentFocusOutlineColor}`,
-      }),
+    '[data-focus-visible-added]': {
+      outline: `.2rem solid ${v.contentFocusOutlineColor}`,
     },
     ':hover': {
       [`& .${ChatMessage.slotClassNames.actionMenu}`]: {

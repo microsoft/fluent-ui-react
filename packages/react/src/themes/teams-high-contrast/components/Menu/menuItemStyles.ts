@@ -6,7 +6,7 @@ type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
   wrapper: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const { iconOnly, isFromKeyboard, vertical, active, underlined, primary, pointing } = p
+    const { iconOnly, vertical, active, underlined, primary, pointing } = p
 
     return {
       ':hover': {
@@ -22,10 +22,10 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       }),
 
       ...((iconOnly || vertical) && {
-        ...(isFromKeyboard && {
+        '[data-focus-visible-added]': {
           color: v.activeColor,
           background: v.focusedBackgroundColor,
-        }),
+        },
 
         ...(active && {
           color: v.activeColor,
@@ -56,14 +56,15 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
   },
 
   root: ({ props }): ICSSInJSStyle => {
-    const { iconOnly, isFromKeyboard } = props
+    const { iconOnly } = props
 
     return {
       // focus styles
-      ...(isFromKeyboard &&
-        iconOnly && {
+      ...(iconOnly && {
+        '[data-focus-visible-added]': {
           borderColor: 'transparent',
-        }),
+        },
+      }),
     }
   },
 }

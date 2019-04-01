@@ -4,7 +4,7 @@ import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
 
 const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, primary, text, iconOnly, isFromKeyboard } = props
+    const { circular, disabled, fluid, primary, text, iconOnly } = props
 
     const {
       height,
@@ -137,35 +137,31 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
             backgroundColor: circularBackgroundColorHover,
             borderColor: circularBorderColorHover,
           },
-          ...(isFromKeyboard && {
-            ':focus': {
+          '[data-focus-visible-added]': {
+            color: circularColorActive,
+            backgroundColor: circularBackgroundColorFocus,
+            borderColor: circularBorderColorFocus,
+            ':after': {
+              content: '""',
+              position: 'absolute',
+              top: '0',
+              right: '0',
+              bottom: '0',
+              left: '0',
+              borderWidth: `${pxToRem(borderWidth)}`,
+              borderStyle: 'solid',
+              borderColor: `${circularBorderColorFocusIndicator}`,
+              borderRadius: circularRadius,
+            },
+          },
+          ':focus:not([data-focus-visible-added])': {
+            ':active': {
               color: circularColorActive,
-              backgroundColor: circularBackgroundColorFocus,
-              borderColor: circularBorderColorFocus,
-              ':after': {
-                content: '""',
-                position: 'absolute',
-                top: '0',
-                right: '0',
-                bottom: '0',
-                left: '0',
-                borderWidth: `${pxToRem(borderWidth)}`,
-                borderStyle: 'solid',
-                borderColor: `${circularBorderColorFocusIndicator}`,
-                borderRadius: circularRadius,
-              },
+              backgroundColor: circularBackgroundColorActive,
+              borderColor: circularBorderColorActive,
+              boxShadow: 'none',
             },
-          }),
-          ...(!isFromKeyboard && {
-            ':focus': {
-              ':active': {
-                color: circularColorActive,
-                backgroundColor: circularBackgroundColorActive,
-                borderColor: circularBorderColorActive,
-                boxShadow: 'none',
-              },
-            },
-          }),
+          },
         }),
 
       // text button defaults
@@ -197,56 +193,50 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
             backgroundColor: primaryBackgroundColorHover,
             borderColor: primaryBorderColorHover,
           },
-          ...(isFromKeyboard &&
-            !circular && {
-              ':focus': {
-                color: primaryColorFocus,
-                backgroundColor: primaryBackgroundColorFocus,
-                borderColor: primaryBorderColorFocus,
-                ':after': {
-                  content: '""',
-                  position: 'absolute',
-                  top: `-${pxToRem(primaryBorderWidth * 2)}`,
-                  right: `-${pxToRem(primaryBorderWidth * 2)}`,
-                  bottom: `-${pxToRem(primaryBorderWidth * 2)}`,
-                  left: `-${pxToRem(primaryBorderWidth * 2)}`,
-                  borderWidth: pxToRem(primaryBorderWidth),
-                  borderStyle: 'solid',
-                  borderColor: primaryBorderColorFocusIndicator,
-                  borderRadius: borderRadiusFocused,
-                },
+          '[data-focus-visible-added]': {
+            ...(!circular && {
+              color: primaryColorFocus,
+              backgroundColor: primaryBackgroundColorFocus,
+              borderColor: primaryBorderColorFocus,
+              ':after': {
+                content: '""',
+                position: 'absolute',
+                top: `-${pxToRem(primaryBorderWidth * 2)}`,
+                right: `-${pxToRem(primaryBorderWidth * 2)}`,
+                bottom: `-${pxToRem(primaryBorderWidth * 2)}`,
+                left: `-${pxToRem(primaryBorderWidth * 2)}`,
+                borderWidth: pxToRem(primaryBorderWidth),
+                borderStyle: 'solid',
+                borderColor: primaryBorderColorFocusIndicator,
+                borderRadius: borderRadiusFocused,
               },
             }),
-          ...(isFromKeyboard &&
-            circular && {
-              ':focus': {
-                color: primaryColorFocus,
-                backgroundColor: primaryBackgroundColorFocus,
-                borderColor: primaryBackgroundColorFocus,
-                ':after': {
-                  content: '""',
-                  position: 'absolute',
-                  top: '0',
-                  right: '0',
-                  bottom: '0',
-                  left: '0',
-                  borderWidth: pxToRem(primaryBorderWidth),
-                  borderStyle: 'solid',
-                  borderColor: primaryCircularBorderColorFocusIndicator,
-                  borderRadius: circularRadius,
-                },
+            ...(circular && {
+              color: primaryColorFocus,
+              backgroundColor: primaryBackgroundColorFocus,
+              borderColor: primaryBackgroundColorFocus,
+              ':after': {
+                content: '""',
+                position: 'absolute',
+                top: '0',
+                right: '0',
+                bottom: '0',
+                left: '0',
+                borderWidth: pxToRem(primaryBorderWidth),
+                borderStyle: 'solid',
+                borderColor: primaryCircularBorderColorFocusIndicator,
+                borderRadius: circularRadius,
               },
             }),
-          ...(!isFromKeyboard && {
-            ':focus': {
-              ':active': {
-                color: primaryColorActive,
-                backgroundColor: primaryBackgroundColorActive,
-                borderColor: primaryBorderColorActive,
-                boxShadow: 'none',
-              },
+          },
+          ':focus:not([data-focus-visible-added])': {
+            ':active': {
+              color: primaryColorActive,
+              backgroundColor: primaryBackgroundColorActive,
+              borderColor: primaryBorderColorActive,
+              boxShadow: 'none',
             },
-          }),
+          },
         }),
 
       // Overrides for "disabled" buttons

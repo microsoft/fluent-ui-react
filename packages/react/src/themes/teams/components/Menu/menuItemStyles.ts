@@ -48,10 +48,42 @@ const getFocusedStyles = ({
   variables: MenuVariables
   color: string
 }): ICSSInJSStyle => {
-  const { primary, underlined, isFromKeyboard, active, vertical } = props
+  const { primary, underlined, active, vertical } = props
   if (active && !underlined && !vertical) return {}
   return {
-    ...(underlined && !isFromKeyboard
+    ...(primary
+      ? {
+          color: v.primaryFocusedColor,
+          background: v.primaryFocusedBackgroundColor,
+        }
+      : {
+          color,
+          background: v.hoverBackgroundColor,
+        }),
+
+    ...(vertical &&
+      !primary && {
+        border: v.focusedBorder,
+        outline: v.focusedOutline,
+        margin: pxToRem(1),
+        background: v.focusedBackgroundColor,
+      }),
+  }
+}
+
+const getHoveredStyles = ({
+  props,
+  variables: v,
+  color,
+}: {
+  props: MenuItemPropsAndState
+  variables: MenuVariables
+  color: string
+}): ICSSInJSStyle => {
+  const { primary, underlined, active, vertical } = props
+  if (active && !underlined && !vertical) return {}
+  return {
+    ...(underlined
       ? {
           color,
         }
@@ -64,15 +96,6 @@ const getFocusedStyles = ({
           color,
           background: v.hoverBackgroundColor,
         }),
-
-    ...(vertical && isFromKeyboard && !primary
-      ? {
-          border: v.focusedBorder,
-          outline: v.focusedOutline,
-          margin: pxToRem(1),
-          background: v.focusedBackgroundColor,
-        }
-      : {}),
   }
 }
 
@@ -135,7 +158,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       active,
       disabled,
       iconOnly,
-      isFromKeyboard,
       pills,
       pointing,
       primary,
@@ -192,16 +214,17 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         ...getActionStyles({ props, variables: v, color: v.color }),
 
         ...(pointing &&
-          vertical &&
-          !isFromKeyboard && {
-            '::before': {
-              content: `''`,
-              position: 'absolute',
-              width: pxToRem(3),
-              height: `calc(100% + ${pxToRem(4)})`,
-              top: pxToRem(-2),
-              backgroundColor: v.pointingIndicatorBackgroundColor,
-              ...(pointing === 'end' ? { right: pxToRem(-2) } : { left: pxToRem(-2) }),
+          vertical && {
+            ':focus:not([data-focus-visible-added])': {
+              '::before': {
+                content: `''`,
+                position: 'absolute',
+                width: pxToRem(3),
+                height: `calc(100% + ${pxToRem(4)})`,
+                top: pxToRem(-2),
+                backgroundColor: v.pointingIndicatorBackgroundColor,
+                ...(pointing === 'end' ? { right: pxToRem(-2) } : { left: pxToRem(-2) }),
+              },
             },
           }),
 
@@ -215,9 +238,9 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         display: 'flex',
 
         // focus styles
-        ...(isFromKeyboard && {
+        '[data-focus-visible-added]': {
           color: v.iconOnlyActiveColor,
-        }),
+        },
 
         // hover styles
         ':hover': {
@@ -227,10 +250,14 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       ...(!iconOnly && {
         // focus styles
-        ...(isFromKeyboard && getFocusedStyles({ props, variables: v, color: v.activeColor })),
+        '[data-focus-visible-added]': getFocusedStyles({
+          props,
+          variables: v,
+          color: v.activeColor,
+        }),
 
         // hover styles
-        ':hover': getFocusedStyles({ props, variables: v, color: v.activeColor }),
+        ':hover': getHoveredStyles({ props, variables: v, color: v.activeColor }),
       }),
 
       ':first-child': {
@@ -260,16 +287,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
   },
 
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const {
-      active,
-      iconOnly,
-      isFromKeyboard,
-      pointing,
-      primary,
-      underlined,
-      vertical,
-      disabled,
-    } = p
+    const { active, iconOnly, pointing, primary, underlined, vertical, disabled } = p
 
     return {
       color: 'inherit',
@@ -320,7 +338,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             })),
 
       // focus styles
-      ...(isFromKeyboard && {
+      '[data-focus-visible-added]': {
         ...(iconOnly && {
           borderRadius: '50%',
           borderColor: v.iconOnlyActiveColor,
@@ -350,7 +368,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
               ...(underlined && active && underlinedItem(v.activeColor)),
             }),
-      }),
+      },
 
       ':focus': {
         outline: 0,
