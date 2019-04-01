@@ -41,7 +41,7 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
   static className = 'ui-chat'
 
   static slotClassNames: ChatSlotClassNames = {
-    item: ChatItem.className,
+    item: `${Chat.className}__item`,
   }
 
   static propTypes = {

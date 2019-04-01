@@ -87,8 +87,8 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
   static className = 'ui-accordion'
 
   static slotClassNames: AccordionSlotClassNames = {
-    content: AccordionContent.className,
-    title: AccordionTitle.className,
+    content: `${Accordion.className}__content`,
+    title: `${Accordion.className}__title`,
   }
 
   static propTypes = {

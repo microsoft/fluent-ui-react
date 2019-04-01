@@ -75,7 +75,7 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
   static className = 'ui-tree__item'
 
   static slotClassNames: TreeItemSlotClassNames = {
-    title: TreeTitle.className,
+    title: `${TreeItem.className}__title`,
     subtree: `${TreeItem.className}__subtree`,
   }
 
