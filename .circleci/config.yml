@@ -70,6 +70,9 @@ jobs:
             - .vuln-scans
 
       - run:
+          name: E2E Tests with Cypress
+          command: yarn test:e2e
+      - run:
           name: Project Tests
           command: yarn test:projects
       - run:
