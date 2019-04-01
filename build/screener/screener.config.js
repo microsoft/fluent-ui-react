@@ -31,6 +31,16 @@ module.exports = {
     compareSVGDOM: false, // Pass if SVG DOM is the same. Defaults to false.
   },
 
+  browsers: [
+    {
+      browserName: 'chrome',
+    },
+    {
+      browserName: 'internet explorer',
+      version: '11',
+    },
+  ],
+
   // screenshot every example in maximized mode
   states: require('./screener.states').default,
 
