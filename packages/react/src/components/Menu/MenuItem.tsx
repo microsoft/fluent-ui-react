@@ -284,7 +284,6 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleClick(event),
     openMenu: event => this.openMenu(event),
-    closeAllMenus: event => this.closeAllMenus(event, false),
     closeAllMenusAndFocusNextParentItem: event => this.closeAllMenus(event, true),
     closeMenu: event => this.closeMenu(event),
     closeMenuAndFocusTrigger: event => this.closeMenu(event, true),
