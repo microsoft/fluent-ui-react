@@ -378,14 +378,14 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     }
   }
 
-  private trySetMenuOpen(newValue: boolean, eventArgs: any, onStateChanged?: any) {
+  private trySetMenuOpen(newValue: boolean, e: React.SyntheticEvent, onStateChanged?: any) {
     this.trySetState({ menuOpen: newValue })
     // The reason why post-effect is not passed as callback to trySetState method
     // is that in 'controlled' mode the post-effect is applied before final re-rendering
     // which cause a broken behavior: for e.g. when it is needed to focus submenu trigger on ESC.
     // TODO: all DOM post-effects should be applied at componentDidMount & componentDidUpdated stages.
     onStateChanged && onStateChanged()
-    _.invoke(this.props, 'onMenuOpenChange', eventArgs, {
+    _.invoke(this.props, 'onMenuOpenChange', e, {
       ...this.props,
       menuOpen: newValue,
     })
