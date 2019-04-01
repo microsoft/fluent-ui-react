@@ -1,5 +1,6 @@
 import { EventListenerProps } from '../types'
 
+// TODO: remove shallowEqual() and shouldUpdateListener() with update to hooks
 const shallowEqual = (first: Record<string, any>, second: Record<string, any>) => {
   // or whatever strategy we would have for handling falsy values - here is the most strict one
   if (first === undefined) {
