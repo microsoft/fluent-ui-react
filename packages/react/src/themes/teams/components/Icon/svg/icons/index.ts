@@ -37,6 +37,7 @@ import filesSketch from './filesSketch'
 import filesSound from './filesSound'
 import filesTxt from './filesTxt'
 import filesZip from './filesZip'
+import flag from './flag'
 import download from './download'
 import edit from './edit'
 import email from './email'
@@ -141,6 +142,7 @@ export default {
   'files-sound': filesSound,
   'files-txt': filesTxt,
   'files-zip': filesZip,
+  flag,
   download,
   edit,
   email,
