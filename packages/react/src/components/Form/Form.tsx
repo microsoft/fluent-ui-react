@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -5,7 +6,6 @@ import * as _ from 'lodash'
 import {
   UIComponent,
   childrenExist,
-  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
@@ -54,7 +54,7 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
   public static className = 'ui-form'
 
   static slotClassNames: FormSlotClassNames = {
-    field: FormField.className,
+    field: `${Form.className}__field`,
   }
 
   public static propTypes = {

@@ -1,10 +1,10 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
   childrenExist,
-  customPropTypes,
   UIComponent,
   commonPropTypes,
   rtlTextContainer,
@@ -41,7 +41,7 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
   static className = 'ui-chat'
 
   static slotClassNames: ChatSlotClassNames = {
-    item: ChatItem.className,
+    item: `${Chat.className}__item`,
   }
 
   static propTypes = {

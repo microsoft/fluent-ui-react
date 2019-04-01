@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -6,12 +7,11 @@ import {
   UIComponentProps,
   ContentComponentProps,
   commonPropTypes,
-  customPropTypes,
   childrenExist,
   rtlTextContainer,
 } from '../../lib'
 import { RenderResultConfig } from 'src/lib/renderComponent'
-import { defaultBehavior } from '../../lib/accessibility'
+import { alertBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../types'
 import Box from '../Box/Box'
@@ -25,7 +25,8 @@ export interface AlertSlotClassNames {
 export interface AlertProps extends UIComponentProps, ContentComponentProps<ShorthandValue> {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
+   * @default alertBehavior
+   * @available alertWarningBehavior
    */
   accessibility?: Accessibility
 
@@ -52,6 +53,7 @@ export interface AlertProps extends UIComponentProps, ContentComponentProps<Shor
  * A Alert displays information that explains nearby content.
  * @accessibility
  * Other considerations:
+ *  - by default, content from warning and danger variants is announced by the screen reader. To announce the content of other variants, a mechanism similar to react-aria-live can be used
  *  - if Alert contains action slot, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
  */
 class Alert extends UIComponent<ReactProps<AlertProps>> {
@@ -73,9 +75,9 @@ class Alert extends UIComponent<ReactProps<AlertProps>> {
     warning: PropTypes.bool,
   }
 
-  static defaultProps = { accessibility: defaultBehavior }
+  static defaultProps = { accessibility: alertBehavior }
 
-  renderContent = ({ styles }: RenderResultConfig<AlertProps>) => {
+  renderContent = ({ styles, accessibility }: RenderResultConfig<AlertProps>) => {
     const { action, content } = this.props
 
     return (
@@ -84,6 +86,7 @@ class Alert extends UIComponent<ReactProps<AlertProps>> {
           defaultProps: {
             className: Alert.slotClassNames.content,
             styles: styles.content,
+            ...accessibility.attributes.content,
           },
         })}
         {Button.create(action, {

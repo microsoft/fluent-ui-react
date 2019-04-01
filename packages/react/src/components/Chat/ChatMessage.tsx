@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -6,7 +7,6 @@ import * as _ from 'lodash'
 import {
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   RenderResultConfig,
   UIComponent,
   UIComponentProps,

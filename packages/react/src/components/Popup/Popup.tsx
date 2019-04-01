@@ -1,5 +1,6 @@
 import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
 import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
@@ -18,7 +19,6 @@ import {
   StyledComponentProps,
   commonPropTypes,
   isFromKeyboard,
-  customPropTypes,
   handleRef,
   doesNodeContainClick,
 } from '../../lib'
@@ -147,7 +147,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   static className = 'ui-popup'
 
   static slotClassNames: PopupSlotClassNames = {
-    content: PopupContent.className,
+    content: `${Popup.className}__content`,
   }
 
   static Content = PopupContent

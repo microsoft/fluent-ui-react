@@ -1,14 +1,19 @@
 import * as React from 'react'
 
 import addEventListener from './lib/addEventListener'
-import { EventListenerProps, listenerPropTypes } from './types'
 import removeEventListener from './lib/removeEventListener'
+import shouldUpdateListener from './lib/shouldUpdateListener'
+import { EventListenerProps, listenerPropTypes } from './types'
 
-class EventListener extends React.PureComponent<EventListenerProps> {
+class EventListener extends React.Component<EventListenerProps> {
   static displayName = 'EventListener'
   static propTypes = listenerPropTypes
   static defaultProps = {
     capture: false,
+  }
+
+  shouldComponentUpdate(nextProps: EventListenerProps) {
+    return shouldUpdateListener(this.props, nextProps)
   }
 
   componentDidMount() {

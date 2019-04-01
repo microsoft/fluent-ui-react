@@ -1,10 +1,10 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
@@ -56,7 +56,7 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
   static className = 'ui-header'
 
   static slotClassNames: HeaderSlotClassNames = {
-    description: HeaderDescription.className,
+    description: `${Header.className}__description`,
   }
 
   static create: Function

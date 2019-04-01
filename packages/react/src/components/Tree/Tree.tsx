@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -8,7 +9,6 @@ import {
   childrenExist,
   commonPropTypes,
   createShorthandFactory,
-  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   rtlTextContainer,
@@ -65,7 +65,7 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
   static className = 'ui-tree'
 
   static slotClassNames: TreeSlotClassNames = {
-    item: TreeItem.className,
+    item: `${Tree.className}__item`,
   }
 
   static propTypes = {

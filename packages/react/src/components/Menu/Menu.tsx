@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -6,7 +7,6 @@ import {
   AutoControlledComponent,
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
@@ -94,8 +94,8 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static className = 'ui-menu'
 
   static slotClassNames: MenuSlotClassNames = {
-    divider: MenuDivider.className,
-    item: MenuItem.className,
+    divider: `${Menu.className}__divider`,
+    item: `${Menu.className}__item`,
   }
 
   static create: Function

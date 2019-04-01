@@ -22,6 +22,7 @@ const skipSpecChecksForFiles = [
   'chatMessageBehavior.ts', // issue https://github.com/stardust-ui/react/issues/476
   'listBehavior.ts', // tests are written in listBehavior-test.tsx
   'listItemBehavior.ts', // tests are written in listItemBehavior-test.tsx
+  'alertBehavior.ts', // tests are written in alertBehavior-test.tsx
 ]
 
 export class TestHelper {

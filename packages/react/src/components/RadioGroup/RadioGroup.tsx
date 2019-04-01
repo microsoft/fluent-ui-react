@@ -1,5 +1,6 @@
 // TODO:
 // vertical - padding variable?
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -7,7 +8,6 @@ import * as React from 'react'
 import {
   AutoControlledComponent,
   childrenExist,
-  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
@@ -61,7 +61,7 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
   static className = 'ui-radiogroup'
 
   static slotClassNames: RadioGroupSlotClassNames = {
-    item: RadioGroupItem.className,
+    item: `${RadioGroup.className}__item`,
   }
 
   static create: Function
