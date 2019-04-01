@@ -100,7 +100,9 @@ const startServer = (publicDirectory: string, listenPort: number) =>
 const performBrowserTest = async (publicDirectory: string, listenPort: number) => {
   const server = await startServer(publicDirectory, listenPort)
 
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({
+    args: ['--single-process'], // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568
+  })
   const page = await browser.newPage()
   let error: Error
 
