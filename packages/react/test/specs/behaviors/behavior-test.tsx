@@ -33,7 +33,6 @@ import {
   treeTitleBehavior,
   gridBehavior,
   statusBehavior,
-  alertInfoBehavior,
   alertWarningBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
@@ -72,7 +71,6 @@ testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
 testHelper.addBehavior('gridBehavior', gridBehavior)
 testHelper.addBehavior('dialogBehavior', dialogBehavior)
 testHelper.addBehavior('statusBehavior', statusBehavior)
-testHelper.addBehavior('alertInfoBehavior', alertInfoBehavior)
 testHelper.addBehavior('alertWarningBehavior', alertWarningBehavior)
 
 testHelper.run(behaviorMenuItems)

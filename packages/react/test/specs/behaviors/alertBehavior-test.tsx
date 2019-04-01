@@ -17,19 +17,19 @@ describe('AlertBehavior.ts', () => {
     expect(expectedResult.attributes.content.role).toEqual('alert')
   })
 
-  test('use alertInfoBehavior if success prop is defined', () => {
+  test('use defaultBehavior if success prop is defined', () => {
     const property = {
       success: true,
     }
     const expectedResult = alertBehavior(property)
-    expect(expectedResult.attributes.content.role).toEqual('status')
+    expect(expectedResult.attributes.content).toBeUndefined()
   })
 
-  test('use alertInfoBehavior if info prop is defined', () => {
+  test('use defaultBehavior if info prop is defined', () => {
     const property = {
       info: true,
     }
     const expectedResult = alertBehavior(property)
-    expect(expectedResult.attributes.content.role).toEqual('status')
+    expect(expectedResult.attributes.content).toBeUndefined()
   })
 })

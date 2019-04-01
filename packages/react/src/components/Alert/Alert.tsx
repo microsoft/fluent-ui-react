@@ -26,7 +26,7 @@ export interface AlertProps extends UIComponentProps, ContentComponentProps<Shor
   /**
    * Accessibility behavior if overridden by the user.
    * @default alertBehavior
-   * @available alertWarningBehavior, alertInfoBehavior
+   * @available alertWarningBehavior
    */
   accessibility?: Accessibility
 
@@ -53,6 +53,7 @@ export interface AlertProps extends UIComponentProps, ContentComponentProps<Shor
  * A Alert displays information that explains nearby content.
  * @accessibility
  * Other considerations:
+ *  - by default, content from warning and danger variants is announced by the screen reader. To announce the content of other variants, a mechanism similar to react-aria-live can be used
  *  - if Alert contains action slot, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
  */
 class Alert extends UIComponent<ReactProps<AlertProps>> {

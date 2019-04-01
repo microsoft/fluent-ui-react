@@ -17,9 +17,14 @@ describe('Alert', () => {
   isConformant(Alert)
   handlesAccessibility(Alert, { defaultRootRole: undefined, requiredProps: { content: 'test' } })
   handlesAccessibility(Alert, {
-    defaultRootRole: 'status',
+    defaultRootRole: undefined,
     partSelector: `.${Alert.slotClassNames.content}`,
     requiredProps: { content: 'test' },
+  })
+  handlesAccessibility(Alert, {
+    defaultRootRole: 'alert',
+    partSelector: `.${Alert.slotClassNames.content}`,
+    requiredProps: { content: 'test', warning: true },
   })
 
   alertImplementsShorthandProp('action', Button, { mapsValueToProp: 'content' })
