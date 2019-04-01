@@ -65,7 +65,7 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
   static className = 'ui-tree'
 
   static slotClassNames: TreeSlotClassNames = {
-    item: TreeItem.className,
+    item: `${Tree.className}__item`,
   }
 
   static propTypes = {

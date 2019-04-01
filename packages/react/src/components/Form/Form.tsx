@@ -54,7 +54,7 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
   public static className = 'ui-form'
 
   static slotClassNames: FormSlotClassNames = {
-    field: FormField.className,
+    field: `${Form.className}__field`,
   }
 
   public static propTypes = {

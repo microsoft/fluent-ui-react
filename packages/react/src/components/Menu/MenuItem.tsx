@@ -143,7 +143,10 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
 
   static className = 'ui-menu__item'
 
-  static slotClassNames: MenuItemSlotClassNames
+  static slotClassNames: MenuItemSlotClassNames = {
+    submenu: `${MenuItem.className}__submenu`,
+    wrapper: `${MenuItem.className}__wrapper`,
+  }
 
   static create: Function
 
@@ -393,9 +396,5 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
 }
 
 MenuItem.create = createShorthandFactory({ Component: MenuItem, mappedProp: 'content' })
-MenuItem.slotClassNames = {
-  submenu: `${MenuItem.className}__submenu`,
-  wrapper: `${MenuItem.className}__wrapper`,
-}
 
 export default MenuItem
