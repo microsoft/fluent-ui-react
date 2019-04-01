@@ -7,7 +7,6 @@ import defaultBehavior from '../defaultBehavior'
  * Uses 'alertWarningBehavior` for 'danger' and 'warning' variants.
  * Uses 'defaultBehavior` for 'success' and 'info' variants.
  */
-
 const alertBehavior: Accessibility = (props: any) =>
   props.warning || props.danger ? alertWarningBehavior(props) : defaultBehavior(props)
 

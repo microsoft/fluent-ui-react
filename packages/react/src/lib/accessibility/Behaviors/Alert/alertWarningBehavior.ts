@@ -10,7 +10,7 @@ const alertWarningBehavior: Accessibility = (props: any) => ({
   attributes: {
     content: {
       role: 'alert',
-      ['aria-live']: 'polite',
+      'aria-live': 'polite',
     },
   },
 })
