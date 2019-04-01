@@ -61,7 +61,7 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
   static className = 'ui-radiogroup'
 
   static slotClassNames: RadioGroupSlotClassNames = {
-    item: RadioGroupItem.className,
+    item: `${RadioGroup.className}__item`,
   }
 
   static create: Function
