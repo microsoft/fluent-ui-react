@@ -1,6 +1,7 @@
 // TODO: remove after switch to Babel
 import 'mdn-polyfills/Object.assign'
 import 'mdn-polyfills/String.prototype.includes'
+import 'focus-visible/dist/focus-visible.min.js'
 
 import * as commonPropTypes from './commonPropTypes'
 

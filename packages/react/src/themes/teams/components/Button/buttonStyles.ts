@@ -96,35 +96,31 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
           backgroundColor: backgroundColorHover,
           borderColor: borderColorHover,
         },
-        ...(isFromKeyboard && {
-          ':focus': {
-            color: colorFocus,
-            backgroundColor: backgroundColorFocus,
-            borderColor: borderColorFocus,
-            ':after': {
-              content: '""',
-              position: 'absolute',
-              top: `-${pxToRem(borderWidth * 2)}`,
-              right: `-${pxToRem(borderWidth * 2)}`,
-              bottom: `-${pxToRem(borderWidth * 2)}`,
-              left: `-${pxToRem(borderWidth * 2)}`,
-              borderWidth: pxToRem(borderWidth),
-              borderStyle: 'solid',
-              borderColor: borderColorFocusIndicator,
-              borderRadius: borderRadiusFocused,
-            },
+        '[data-focus-visible-added]': {
+          color: colorFocus,
+          backgroundColor: backgroundColorFocus,
+          borderColor: borderColorFocus,
+          ':after': {
+            content: '""',
+            position: 'absolute',
+            top: `-${pxToRem(borderWidth * 2)}`,
+            right: `-${pxToRem(borderWidth * 2)}`,
+            bottom: `-${pxToRem(borderWidth * 2)}`,
+            left: `-${pxToRem(borderWidth * 2)}`,
+            borderWidth: pxToRem(borderWidth),
+            borderStyle: 'solid',
+            borderColor: borderColorFocusIndicator,
+            borderRadius: borderRadiusFocused,
           },
-        }),
-        ...(!isFromKeyboard && {
-          ':focus': {
-            ':active': {
-              color: colorActive,
-              backgroundColor: backgroundColorActive,
-              borderColor: borderColorActive,
-              boxShadow: 'none',
-            },
+        },
+        ':focus:not([data-focus-visible-added])': {
+          ':active': {
+            color: colorActive,
+            backgroundColor: backgroundColorActive,
+            borderColor: borderColorActive,
+            boxShadow: 'none',
           },
-        }),
+        },
       }),
 
       // circular button defaults
