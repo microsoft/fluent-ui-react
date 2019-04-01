@@ -101,6 +101,7 @@
     "merge2": "^1.2.2",
     "normalize.css": "^8.0.0",
     "prettier": "^1.15.3",
+    "progress": "^2.0.3",
     "puppeteer": "^1.11.0",
     "react": "^16.8.5",
     "react-ace": "^5.1.2",

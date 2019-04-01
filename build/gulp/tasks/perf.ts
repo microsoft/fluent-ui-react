@@ -133,7 +133,9 @@ task('perf:run', async () => {
   const times = (argv.times as string) || DEFAULT_RUN_TIMES
   const filter = argv.filter
 
-  const bar = new ProgressBar(':bar :current/:total', { total: times })
+  const bar = process.env.CI
+    ? { tick: _.noop }
+    : new ProgressBar(':bar :current/:total', { total: times })
 
   let browser
 
