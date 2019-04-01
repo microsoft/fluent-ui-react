@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -5,7 +6,6 @@ import * as _ from 'lodash'
 
 import {
   AutoControlledComponent,
-  customPropTypes,
   RenderResultConfig,
   partitionHTMLProps,
   UIComponentProps,
@@ -203,7 +203,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
     const { value } = this.state
 
     if (clearable && (value as string).length !== 0) {
-      return 'close'
+      return 'stardust-close'
     }
 
     return icon || null

@@ -1,5 +1,6 @@
 import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
 import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
@@ -18,7 +19,6 @@ import {
   StyledComponentProps,
   commonPropTypes,
   isFromKeyboard,
-  customPropTypes,
   handleRef,
   doesNodeContainClick,
 } from '../../lib'
@@ -50,6 +50,10 @@ export type PopupEvents = 'click' | 'hover' | 'focus'
 export type RestrictedClickEvents = 'click' | 'focus'
 export type RestrictedHoverEvents = 'hover' | 'focus'
 export type PopupEventsArray = RestrictedClickEvents[] | RestrictedHoverEvents[]
+
+export interface PopupSlotClassNames {
+  content: string
+}
 
 export interface PopupProps
   extends StyledComponentProps<PopupProps>,
@@ -141,6 +145,10 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   static displayName = 'Popup'
 
   static className = 'ui-popup'
+
+  static slotClassNames: PopupSlotClassNames = {
+    content: PopupContent.className,
+  }
 
   static Content = PopupContent
 
@@ -464,7 +472,10 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       accessibility.focusTrap || accessibility.autoFocus ? {} : popupWrapperAttributes
 
     const popupContent = Popup.Content.create(content, {
-      defaultProps: popupContentAttributes,
+      defaultProps: {
+        className: Popup.slotClassNames.content,
+        ...popupContentAttributes,
+      },
       overrideProps: this.getContentProps,
     })
 

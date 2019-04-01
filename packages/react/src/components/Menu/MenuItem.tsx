@@ -1,4 +1,5 @@
 import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import cx from 'classnames'
 import * as PropTypes from 'prop-types'
@@ -8,7 +9,6 @@ import {
   AutoControlledComponent,
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   doesNodeContainClick,
   UIComponentProps,
   ChildrenComponentProps,
@@ -26,10 +26,10 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
 import Ref from '../Ref/Ref'
-import Indicator from '../Indicator/Indicator'
 
 export interface MenuItemSlotClassNames {
   wrapper: string
+  submenu: string
 }
 
 export interface MenuItemProps
@@ -136,9 +136,9 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
 
   static className = 'ui-menu__item'
 
-  static create: Function
-
   static slotClassNames: MenuItemSlotClassNames
+
+  static create: Function
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
@@ -215,9 +215,9 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
             })}
           {rtlTextContainer.createFor({ element: content })}
           {menu &&
-            Indicator.create(indicatorWithDefaults, {
+            Icon.create(indicatorWithDefaults, {
               defaultProps: {
-                direction: vertical ? 'end' : 'bottom',
+                name: vertical ? 'stardust-arrow-end' : 'stardust-arrow-down',
                 styles: styles.indicator,
               },
             })}
@@ -231,6 +231,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
             {Menu.create(menu, {
               defaultProps: {
                 accessibility: submenuBehavior,
+                className: MenuItem.slotClassNames.submenu,
                 vertical: true,
                 primary,
                 secondary,
@@ -371,6 +372,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
 
 MenuItem.create = createShorthandFactory({ Component: MenuItem, mappedProp: 'content' })
 MenuItem.slotClassNames = {
+  submenu: `${MenuItem.className}__submenu`,
   wrapper: `${MenuItem.className}__wrapper`,
 }
 
