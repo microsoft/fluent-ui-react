@@ -57,6 +57,9 @@ jobs:
       - run:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)
+      - run:
+          name: E2E Tests with Cypress
+          command: yarn test:e2e
 
       - restore_cache:
           key: v1-vuln-scans-{{ checksum "yarn.lock" }}
@@ -69,9 +72,6 @@ jobs:
           paths:
             - .vuln-scans
 
-      - run:
-          name: E2E Tests with Cypress
-          command: yarn test:e2e
       - run:
           name: Project Tests
           command: yarn test:projects
