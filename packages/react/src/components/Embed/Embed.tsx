@@ -7,19 +7,21 @@ import {
   UIComponentProps,
   commonPropTypes,
   applyAccessibilityKeyHandlers,
+  customPropTypes,
 } from '../../lib'
-import { videoGifBehavior } from '../../lib/accessibility'
+import { embedBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import Image from '../Image/Image'
 import Video from '../Video/Video'
+import Box from '../Box/Box'
 import * as _ from 'lodash'
 
-import { ReactProps } from '../../types'
+import { ReactProps, ShorthandValue } from '../../types'
 
-export interface VideoGifProps extends UIComponentProps {
+export interface EmbedProps extends UIComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default videoGifBehavior
+   * @default embedBehavior
    * */
   accessibility?: Accessibility
 
@@ -27,13 +29,17 @@ export interface VideoGifProps extends UIComponentProps {
   src?: string
 
   /** Image source URL for when video isn't playing */
-  poster?: string
+  placeholder?: string
 
   /** whether the gif should be playing */
   playing?: boolean
+
+  iframe?: ShorthandValue
+
+  video?: ShorthandValue
 }
 
-export interface VideoGifState {
+export interface EmbedState {
   isPlaying: boolean
 }
 
@@ -45,33 +51,35 @@ export interface VideoGifState {
  * Other considerations:
  *  - when alt and title property are empty, then Narrator in scan mode navigates to the gif and narrates it as empty paragraph
  */
-class VideoGif extends UIComponent<ReactProps<VideoGifProps>, VideoGifState> {
+class Embed extends UIComponent<ReactProps<EmbedProps>, EmbedState> {
   static create: Function
 
-  static className = 'ui-video-gif'
+  static className = 'ui-embed'
 
-  static displayName = 'VideoGif'
+  static displayName = 'Embed'
 
   static propTypes = {
     ...commonPropTypes.createCommon({
       children: false,
       content: false,
     }),
+    iframe: customPropTypes.itemShorthand,
     playing: PropTypes.bool,
     poster: PropTypes.string,
     src: PropTypes.string,
+    video: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
     as: 'span',
-    accessibility: videoGifBehavior as Accessibility,
+    accessibility: embedBehavior as Accessibility,
   }
 
   public state = {
     isPlaying: this.props.playing,
   }
 
-  shouldComponentUpdate(nextProps: VideoGifProps, nextState: VideoGifState): boolean {
+  shouldComponentUpdate(nextProps: EmbedProps, nextState: EmbedState): boolean {
     if (nextProps.playing !== this.props.playing) {
       this.setState({ isPlaying: nextProps.playing })
       return false
@@ -81,7 +89,7 @@ class VideoGif extends UIComponent<ReactProps<VideoGifProps>, VideoGifState> {
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
-    const { poster, src } = this.props
+    const { placeholder, src, video, iframe } = this.props
 
     return (
       <ElementType
@@ -92,10 +100,10 @@ class VideoGif extends UIComponent<ReactProps<VideoGifProps>, VideoGifState> {
         onClick={this.handleClick}
       >
         {this.state.isPlaying
-          ? Video.create(ElementType, {
+          ? Video.create(video || ElementType, {
               defaultProps: {
                 src,
-                poster,
+                placeholder,
                 autoPlay: true,
                 muted: true,
                 controls: false,
@@ -107,7 +115,7 @@ class VideoGif extends UIComponent<ReactProps<VideoGifProps>, VideoGifState> {
                 },
               },
             })
-          : Image.create(poster, {
+          : Image.create(placeholder, {
               defaultProps: {
                 styles: styles.image,
                 variables: {
@@ -116,6 +124,7 @@ class VideoGif extends UIComponent<ReactProps<VideoGifProps>, VideoGifState> {
                 },
               },
             })}
+        {Box.create(iframe, { defaultProps: { as: 'iframe' } })}
       </ElementType>
     )
   }
@@ -131,6 +140,6 @@ class VideoGif extends UIComponent<ReactProps<VideoGifProps>, VideoGifState> {
   }
 }
 
-VideoGif.create = createShorthandFactory({ Component: VideoGif })
+Embed.create = createShorthandFactory({ Component: Embed })
 
-export default VideoGif
+export default Embed

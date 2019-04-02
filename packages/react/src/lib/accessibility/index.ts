@@ -32,4 +32,4 @@ export { default as treeTitleBehavior } from './Behaviors/Tree/treeTitleBehavior
 export { default as dialogBehavior } from './Behaviors/Dialog/dialogBehavior'
 export { default as statusBehavior } from './Behaviors/Status/statusBehavior'
 export { default as videoBehavior } from './Behaviors/Video/videoBehavior'
-export { default as videoGifBehavior } from './Behaviors/Video/videoGifBehavior'
+export { default as embedBehavior } from './Behaviors/Embed/embedBehavior'

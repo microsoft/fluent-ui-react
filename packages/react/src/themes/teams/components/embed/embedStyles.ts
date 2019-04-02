@@ -1,6 +1,6 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { pxToRem } from 'src/lib'
-import { VideoGifProps, VideoGifState } from '../../../../components/Video/VideoGif'
+import { EmbedProps, EmbedState } from '../../../../components/Embed/Embed'
 
 export default {
   root: ({ props, variables }): ICSSInJSStyle => {
@@ -54,4 +54,4 @@ export default {
       },
     }
   },
-} as ComponentSlotStylesInput<VideoGifProps & VideoGifState, any>
+} as ComponentSlotStylesInput<EmbedProps & EmbedState, any>

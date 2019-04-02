@@ -10,7 +10,7 @@ import * as keyboardKey from 'keyboard-key'
  * @specification
  * Sets 'aria-hidden' unless alt or title attribute provided
  */
-const videoGifBehavior: Accessibility = (props: any) => ({
+const embedBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       tabIndex: '0',
@@ -27,4 +27,4 @@ const videoGifBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default videoGifBehavior
+export default embedBehavior

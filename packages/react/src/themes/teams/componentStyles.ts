@@ -22,6 +22,8 @@ export { default as DropdownSearchInput } from './components/Dropdown/dropdownSe
 export { default as DropdownSelectedItem } from './components/Dropdown/dropdownSelectedItemStyles'
 export { default as DropdownItem } from './components/Dropdown/dropdownItemStyles'
 
+export { default as Embed } from './components/Embed/embedStyles'
+
 export { default as Flex } from './components/Flex/flexStyles'
 export { default as FlexItem } from './components/Flex/flexItemStyles'
 
@@ -73,4 +75,3 @@ export { default as TreeTitle } from './components/Tree/treeTitleStyles'
 export { default as Animation } from './components/Animation/animationStyles'
 
 export { default as Video } from './components/Video/videoStyles'
-export { default as VideoGif } from './components/Video/videoGifStyles'

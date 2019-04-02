@@ -7,8 +7,6 @@ import { Accessibility } from '../../lib/accessibility/types'
 
 import { ReactProps } from '../../types'
 
-import VideoGif from './VideoGif'
-
 export interface VideoProps extends UIComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -51,8 +49,6 @@ class Video extends UIComponent<ReactProps<VideoProps>, any> {
   static className = 'ui-video'
 
   static displayName = 'Video'
-
-  static Gif = VideoGif
 
   static propTypes = {
     ...commonPropTypes.createCommon({

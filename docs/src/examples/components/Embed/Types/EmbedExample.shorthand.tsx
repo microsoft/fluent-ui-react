@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { Video, Text, Flex } from '@stardust-ui/react'
+import { Embed, Flex, Text } from '@stardust-ui/react'
 
-const VideoGifExample = () => (
+const EmbedExample = () => (
   <Flex column>
-    <Video.Gif
-      poster="https://raw.githubusercontent.com/bower-media-samples/big-buck-bunny-480p-5s/master/poster.jpg"
+    <Embed
+      placeholder="https://raw.githubusercontent.com/bower-media-samples/big-buck-bunny-480p-5s/master/poster.jpg"
       src="https://raw.githubusercontent.com/bower-media-samples/big-buck-bunny-1080p-5s/master/video.mp4"
       playing
       variables={{ height: '400px', width: '711.11px' }}
@@ -13,4 +13,4 @@ const VideoGifExample = () => (
   </Flex>
 )
 
-export default VideoGifExample
+export default EmbedExample

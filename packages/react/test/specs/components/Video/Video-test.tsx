@@ -1,7 +1,7 @@
 import { isConformant } from 'test/specs/commonTests'
 
-import VideoGif from 'src/components/Video/VideoGif'
+import Video from 'src/components/Video/Video'
 
-describe('VideoGif', () => {
-  isConformant(VideoGif)
+describe('Video', () => {
+  isConformant(Video)
 })
