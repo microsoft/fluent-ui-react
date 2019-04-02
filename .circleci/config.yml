@@ -72,6 +72,9 @@ jobs:
       - run:
           name: Project Tests
           command: yarn test:projects
+       - run:
+          name: Circular Dependencies Tests
+          command: yarn test:circulars
       - run:
           name: Bundle Statistics
           command: yarn stats:build
