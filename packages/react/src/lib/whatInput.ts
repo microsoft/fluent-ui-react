@@ -233,8 +233,8 @@ if (isBrowser() && 'addEventListener' in window && Array.prototype.indexOf) {
   setUp()
 }
 
-export const resetWhatInputState = () => {
-  currentInput = 'initial'
+export const setWhatInputState = (newInput: 'mouse' | 'keyboard' | 'initial') => {
+  currentInput = newInput
 }
 
 // returns string: the current input type
