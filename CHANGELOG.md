@@ -30,6 +30,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - `chatBehavior` - remove role 'presentation' @sophieH29 ([#1137](https://github.com/stardust-ui/react/pull/1137))
 - Temporarily remove static type references in `slotClassNames` to prevent circular dependency crashes @kuzhelov ([#1145](https://github.com/stardust-ui/react/pull/1145))
 - Fix `EventListener` to not rerender on `listener` prop change @layershifter ([#1132](https://github.com/stardust-ui/react/pull/1132))
+- Fix circular dependencies from inferior modules to `index` files @kuzhelov ([#1148](https://github.com/stardust-ui/react/pull/1148))
 
 ### Features
 - Add predefined icon set for the usages in the `Input`, `Dropdown` and `AccordionTitle` components @mnajdova ([#1120](https://github.com/stardust-ui/react/pull/1120))
