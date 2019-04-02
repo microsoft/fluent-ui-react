@@ -6,6 +6,7 @@ import animations from './animations'
 import * as siteVariables from './siteVariables'
 import * as componentVariables from './componentVariables'
 import * as componentStyles from './componentStyles'
+import * as componentVariants from './componentVariants'
 import fontFaces from './fontFaces'
 import staticStyles from './staticStyles'
 
@@ -45,13 +46,5 @@ export default mergeThemes(base, {
   staticStyles,
   icons,
   animations,
-  componentVariants: {
-    Input: {
-      Minimalistic: {
-        variables: {
-          inputFocusBorderBottomColor: 'transparent',
-        },
-      },
-    },
-  },
+  componentVariants,
 })
