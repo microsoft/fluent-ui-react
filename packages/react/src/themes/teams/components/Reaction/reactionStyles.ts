@@ -19,9 +19,9 @@ const reactionStyles: ComponentSlotStylesInput<ReactionProps & ReactionState, Re
     display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',
-    color: v.color,
+    color: v.meReacting ? v.meReactingColor : v.otherReactingColor,
     ':hover': {
-      color: v.colorHover,
+      color: v.meReacting ? v.meReactingColorHover : v.otherReactingColorHover,
       [contentClassNameSelector]: {
         fontWeight: v.fontWeightHover as FontWeightProperty,
       },
