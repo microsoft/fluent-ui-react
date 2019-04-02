@@ -2,7 +2,6 @@ import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { Alert } from '@stardust-ui/react'
 
-import Performance from './Performance'
 import Types from './Types'
 
 const BoxExamples = () => (
@@ -35,7 +34,6 @@ const BoxExamples = () => (
     </Alert>
 
     <Types />
-    <Performance />
   </>
 )
 
