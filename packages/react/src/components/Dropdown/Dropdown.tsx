@@ -766,10 +766,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     ) => {
       switch (keyboardKey.getCode(e)) {
         case keyboardKey.Tab:
-          if (this.props.open && !_.isNil(highlightedIndex)) {
+          if (!_.isNil(highlightedIndex)) {
             selectItemAtIndex(highlightedIndex)
             // Keep focus here if condition applies.
-            if (this.props.multiple && !this.props.moveFocusOnTab) {
+            if (this.props.multiple && this.state.open && !this.props.moveFocusOnTab) {
               e.preventDefault()
             }
           } else {
