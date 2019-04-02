@@ -5,8 +5,8 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Types = () => (
   <ExampleSection title="Variants">
     <ComponentExample
-      title="Default"
-      description="A default Input."
+      title="Minimalistic"
+      description="An Input with minimal design."
       examplePath="components/Input/Variants/Minimalistic"
     />
   </ExampleSection>
