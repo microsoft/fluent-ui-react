@@ -233,7 +233,7 @@ if (isBrowser() && 'addEventListener' in window && Array.prototype.indexOf) {
   setUp()
 }
 
-export const setWhatInputState = (newInput: 'mouse' | 'keyboard' | 'initial') => {
+export const setWhatInputSource = (newInput: 'mouse' | 'keyboard' | 'initial') => {
   currentInput = newInput
 }
 

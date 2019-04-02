@@ -21,7 +21,7 @@ import {
   isFromKeyboard,
   handleRef,
   doesNodeContainClick,
-  setWhatInputState,
+  setWhatInputSource,
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 
@@ -304,7 +304,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     if (_.includes(normalizedOn, 'hover')) {
       triggerProps.onMouseEnter = (e, ...args) => {
         this.setPopupOpen(true, e)
-        setWhatInputState('mouse')
+        setWhatInputSource('mouse')
         _.invoke(triggerElement, 'props.onMouseEnter', e, ...args)
       }
       triggerProps.onMouseLeave = (e, ...args) => {
