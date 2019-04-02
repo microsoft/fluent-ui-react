@@ -11,6 +11,8 @@ export interface ReactionVariables {
   outlineWidthFocus: string
   outlineOffsetFocus: string
   meReacting: boolean
+  borderColorFocus: string
+  boxShadowColor: string
 }
 
 export default (siteVars): ReactionVariables => ({
@@ -24,4 +26,6 @@ export default (siteVars): ReactionVariables => ({
   outlineWidthFocus: pxToRem(2),
   outlineOffsetFocus: pxToRem(-2),
   meReacting: false,
+  boxShadowColor: siteVars.colors.white,
+  borderColorFocus: siteVars.colors.grey[900],
 })
