@@ -147,7 +147,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   static className = 'ui-popup'
 
   static slotClassNames: PopupSlotClassNames = {
-    content: PopupContent.className,
+    content: `${Popup.className}__content`,
   }
 
   static Content = PopupContent
