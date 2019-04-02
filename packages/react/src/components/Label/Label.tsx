@@ -1,6 +1,7 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as _ from 'lodash'
 
 import {
   childrenExist,
@@ -13,13 +14,15 @@ import {
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
+  isFromKeyboard,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 
 import Icon from '../Icon/Icon'
 import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { labelBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue } from '../../types'
 import {
   ComplexColorPropType,
@@ -33,7 +36,7 @@ export interface LabelProps
     ColorComponentProps<ComplexColorPropType<ColorValuesWithPrimitiveColors>> {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
+   * @default labelBehavior
    */
   accessibility?: Accessibility
 
@@ -54,6 +57,11 @@ export interface LabelProps
 
   /** A Label can position its image at the start or end of the layout. */
   imagePosition?: 'start' | 'end'
+}
+
+export interface AttachmentState {
+  isFromKeyboard: boolean
+  isVisible: boolean
 }
 
 /**
@@ -77,7 +85,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
+    accessibility: labelBehavior as Accessibility,
     as: 'span',
     imagePosition: 'start',
     iconPosition: 'end',
@@ -91,6 +99,11 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     }
   }
 
+  public state = {
+    isFromKeyboard: false,
+    isVisible: true,
+  }
+
   renderComponent({ accessibility, ElementType, classes, unhandledProps, variables, styles }) {
     const { children, content, icon, iconPosition, image, imagePosition } = this.props
 
@@ -100,6 +113,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
           {...rtlTextContainer.getAttributes({ forElements: [children] })}
           {...accessibility.attributes.root}
           {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
           className={classes.root}
         >
           {children}
@@ -130,29 +144,70 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     const hasEndElement = endIcon || endImage
 
     return (
-      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
-        <Layout
-          start={
-            hasStartElement && (
-              <>
-                {startImage}
-                {startIcon}
-              </>
-            )
-          }
-          main={content}
-          end={
-            hasEndElement && (
-              <>
-                {endIcon}
-                {endImage}
-              </>
-            )
-          }
-          gap={pxToRem(3)}
-        />
-      </ElementType>
+      this.state.isVisible && (
+        <ElementType
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+          className={classes.root}
+          onFocus={this.handleFocus}
+          onClick={this.handleClick}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        >
+          <Layout
+            start={
+              hasStartElement && (
+                <>
+                  {startImage}
+                  {startIcon}
+                </>
+              )
+            }
+            main={content}
+            end={
+              hasEndElement && (
+                <>
+                  {endIcon}
+                  {endImage}
+                </>
+              )
+            }
+            gap={pxToRem(8)}
+          />
+        </ElementType>
+      )
     )
+  }
+
+  protected actionHandlers: AccessibilityActionHandlers = {
+    performRemove: event => this.performRemove(event),
+    performClick: event => this.performClick(event),
+  }
+
+  private performRemove = e => {
+    e.stopPropagation()
+    this.handleRemove()
+  }
+
+  private handleRemove = () => {
+    console.warn('delete')
+    this.setState({ isVisible: false })
+  }
+
+  private performClick = e => {
+    e.stopPropagation()
+    this.handleClick(e)
+  }
+
+  private handleClick = (e: React.SyntheticEvent) => {
+    console.warn('click')
+    _.invoke(this.props, 'onClick', e, this.props)
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    console.warn('focus')
+    this.setState({ isFromKeyboard: isFromKeyboard() })
+
+    _.invoke(this.props, 'onFocus', e, this.props)
   }
 }
 

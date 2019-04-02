@@ -25,6 +25,16 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
       ...(p.circular && {
         borderRadius: v.circularRadius,
       }),
+
+      ':focus': {
+        outline: `none`,
+      },
+
+      ...(p.isFromKeyboard && {
+        ':focus': {
+          outline: `1px solid red`,
+        },
+      }),
     }
   },
 
@@ -33,11 +43,12 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
     width: v.height,
   }),
 
-  icon: ({ props: p }): ICSSInJSStyle =>
+  icon: ({ props: p, variables: v }): ICSSInJSStyle =>
     p.icon &&
     typeof p.icon === 'object' &&
     (p.icon as any).onClick && {
       cursor: 'pointer',
+      color: v.iconColor,
     },
 }
 

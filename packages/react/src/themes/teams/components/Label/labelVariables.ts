@@ -14,7 +14,7 @@ export interface LabelVariables {
 }
 
 export default (siteVars: SiteVariablesPrepared): LabelVariables => {
-  const color = 'rgba(0, 0, 0, 0.6)'
+  const color = siteVars.colors.black
 
   return {
     colorScheme: getColorSchemeWithCustomDefaults(siteVars.colorScheme, {
@@ -22,12 +22,12 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
       background: 'rgb(232, 232, 232)',
     }),
     circularRadius: pxToRem(9999),
-    padding: `0 ${pxToRem(4)} 0 ${pxToRem(4)}`,
+    padding: `0 ${pxToRem(6)} 0 ${pxToRem(6)}`,
     startPaddingLeft: '0px',
     endPaddingRight: '0px',
-    height: pxToRem(20),
+    height: pxToRem(24),
 
     // variables for 'icon' part
-    iconColor: color,
+    iconColor: siteVars.gray02,
   }
 }
