@@ -62,12 +62,10 @@ export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps
   contentMediaCSS?: ICSSInJSStyle
   /** Styled applied to the end media element of the rendered component. */
   endMediaCSS?: ICSSInJSStyle
-  truncateContent?: boolean
-  truncateHeader?: boolean
 }
 
 /**
- * The Item Layout handles layout styles for menu items, list items and other similar item templates.
+ * (DEPRECATED) The Item Layout handles layout styles for menu items, list items and other similar item templates.
  */
 class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
   static create: Function
@@ -101,8 +99,6 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
     contentCSS: PropTypes.object,
     contentMediaCSS: PropTypes.object,
     endMediaCSS: PropTypes.object,
-    truncateContent: PropTypes.bool,
-    truncateHeader: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -128,7 +124,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
     },
 
     renderHeaderArea: (props, state, classes) => {
-      const { debug, header, headerMedia, truncateHeader, headerCSS, headerMediaCSS } = props
+      const { debug, header, headerMedia, headerCSS, headerMediaCSS } = props
 
       const mergedClasses = cx(ItemLayout.slotClassNames.header, classes.header)
       const mediaClasses = cx(ItemLayout.slotClassNames.headerMedia, classes.headerMedia)
@@ -139,7 +135,6 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
           alignItems="end"
           gap={pxToRem(8)}
           debug={debug}
-          truncateMain={truncateHeader}
           main={rtlTextContainer.createFor({ element: header })}
           rootCSS={headerCSS}
           end={
@@ -154,7 +149,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
     },
 
     renderContentArea: (props, state, classes) => {
-      const { debug, content, contentMedia, truncateContent, contentCSS, contentMediaCSS } = props
+      const { debug, content, contentMedia, contentCSS, contentMediaCSS } = props
 
       const mergedClasses = cx(ItemLayout.slotClassNames.content, classes.content)
       const mediaClasses = cx(ItemLayout.slotClassNames.contentMedia, classes.contentMedia)
@@ -165,7 +160,6 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
           alignItems="start"
           gap={pxToRem(8)}
           debug={debug}
-          truncateMain={truncateContent}
           rootCSS={contentCSS}
           main={rtlTextContainer.createFor({ element: content })}
           end={
