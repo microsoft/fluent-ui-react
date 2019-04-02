@@ -28,7 +28,7 @@
     "satisfied": "satisfied --skip-invalid",
     "pretest": "yarn satisfied && yarn syncpack list-mismatches",
     "test": "gulp test",
-    "test:e2e": "yarn run cypress run",
+    "test:e2e": "gulp cypress",
     "test:watch": "gulp test:watch",
     "test:vulns": "gulp test:vulns",
     "test:visual": "gulp screener",

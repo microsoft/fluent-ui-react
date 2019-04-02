@@ -7,6 +7,8 @@
 .yarn-cache/
 
 coverage/
+cypress/videos
+cypress/screenshots
 dist/
 docs/src/componentInfo
 docs/src/componentMenu.json
