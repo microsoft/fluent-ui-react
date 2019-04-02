@@ -2,5 +2,5 @@ import { ReactionVariables } from '../../../teams/components/Reaction/reactionVa
 
 export default (siteVars: any): Partial<ReactionVariables> => ({
   meReactingColor: siteVars.brand06,
-  otherReactingColorHover: siteVars.black,
+  otherReactingColorHover: siteVars.colors.white,
 })
