@@ -19,6 +19,11 @@ const Usages = () => (
       description="A menu can have submenus."
       examplePath="components/Menu/Usages/MenuExampleWithSubmenu"
     />
+    <ComponentExample
+      title="Menu with submenus controlled"
+      description="When Submenu in MenuItem is controlled, then its 'menuOpen' prop value could be changed either by parent component, or by user actions (e.g. key press) - thus it is necessary to handle 'onMenuOpenChange' event."
+      examplePath="components/Menu/Usages/MenuExampleWithSubmenuControlled"
+    />
   </ExampleSection>
 )
 
