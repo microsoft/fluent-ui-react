@@ -20,7 +20,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING CHANGES
 - Remove `Indicator` component, the usages should be replaced with the `Icon` component @mnajdova ([#1120](https://github.com/stardust-ui/react/pull/1120))
 - Add shorthand support for `header` and `content` in `Dropdown`,` DropdownSelectedItem.slotClassNames.removeIcon` usages should be replaced with `DropdownSelectedItem.slotClassNames.icon` @silviuavram ([#1054](https://github.com/stardust-ui/react/pull/1054))
-- Remove `Indicator` component, the usages should be replaced with the `Icon` component @mnajdova ([#1120](https://github.com/stardust-ui/react/pull/1120))
 - `react@16.8` and `react-dom@16.8` are now required @layershifter ([#1147](https://github.com/stardust-ui/react/pull/1147))
 - Remove `truncateStart`, `truncateMain` and `truncateEnd` props from `Layout` component and `truncateContent` and `truncateHeader` props from `ItemLayout` component @Bugaa92 ([#1127](https://github.com/stardust-ui/react/pull/1127))
 
