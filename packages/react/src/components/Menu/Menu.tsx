@@ -94,8 +94,8 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static className = 'ui-menu'
 
   static slotClassNames: MenuSlotClassNames = {
-    divider: MenuDivider.className,
-    item: MenuItem.className,
+    divider: `${Menu.className}__divider`,
+    item: `${Menu.className}__item`,
   }
 
   static create: Function
