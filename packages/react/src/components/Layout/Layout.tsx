@@ -47,7 +47,7 @@ export interface LayoutProps extends UIComponentProps {
 }
 
 /**
- * A layout is a utility for arranging the content of a component.
+ * (DEPRECATED) A layout is a utility for arranging the content of a component.
  */
 class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
   static className = 'ui-layout'

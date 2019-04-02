@@ -65,7 +65,7 @@ export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps
 }
 
 /**
- * The Item Layout handles layout styles for menu items, list items and other similar item templates.
+ * (DEPRECATED) The Item Layout handles layout styles for menu items, list items and other similar item templates.
  */
 class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
   static create: Function
