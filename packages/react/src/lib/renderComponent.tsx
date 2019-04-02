@@ -189,9 +189,13 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           ? createAnimationStyles(props.animation, theme)
           : {}
 
+        const variantStyles: ComponentSlotStylesPrepared =
+          componentVariant && componentVariant.styles ? componentVariant.styles : {}
+
         // Resolve styles using resolved variables, merge results, allow props.styles to override
         const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
           componentStyles[displayName],
+          variantStyles,
           {
             root: props.styles,
           },

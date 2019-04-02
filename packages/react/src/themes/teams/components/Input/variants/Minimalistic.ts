@@ -2,5 +2,12 @@ export default {
   variables: {
     inputFocusBorderBottomColor: 'transparent',
   },
-  styles: {},
+  styles: {
+    root: () => ({
+      border: '1px solid black',
+    }),
+    input: () => ({
+      color: 'red',
+    }),
+  },
 }
