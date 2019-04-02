@@ -1,7 +1,14 @@
 import { parallel, series, task } from 'gulp'
-import { argv } from 'yargs'
+import * as yargs from 'yargs'
 
 import sh from '../sh'
+
+const argv = yargs
+  .option('runInBand', {})
+  .option('maxWorkers', {})
+  .option('detectLeaks', {})
+  .option('testNamePattern', { alias: 't' })
+  .option('testFilePattern', { alias: 'F' }).argv
 
 // ----------------------------------------
 // Jest
