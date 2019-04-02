@@ -5,7 +5,7 @@ const selectors = {
   item: (itemIndex: number) => `.${Dropdown.slotClassNames.itemsList} li:nth-child(${itemIndex})`,
   removeItemIcon: (itemIndex: number) =>
     `.${Dropdown.slotClassNames.selectedItems} span:nth-child(${itemIndex}) .${
-      DropdownSelectedItem.slotClassNames.removeIcon
+      DropdownSelectedItem.slotClassNames.icon
     }`,
 }
 
