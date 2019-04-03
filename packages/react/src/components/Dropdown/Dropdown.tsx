@@ -357,7 +357,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             toggleMenu,
             highlightedIndex,
             selectItemAtIndex,
-            reset,
           }) => {
             const { innerRef, ...accessibilityRootPropsRest } = getRootProps(
               { refKey: 'innerRef' },
@@ -383,7 +382,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                           highlightedIndex,
                           getInputProps,
                           selectItemAtIndex,
-                          reset,
+                          toggleMenu,
                           variables,
                         )
                       : this.renderTriggerButton(styles, rtl, getToggleButtonProps)}
@@ -488,7 +487,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       otherStateToSet?: Partial<StateChangeOptions<any>>,
       cb?: () => void,
     ) => void,
-    reset: () => void,
+    toggleMenu: () => void,
     variables,
   ): JSX.Element {
     const { inline, searchInput, multiple, placeholder } = this.props
@@ -511,7 +510,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           highlightedIndex,
           rtl,
           selectItemAtIndex,
-          reset,
+          toggleMenu,
           accessibilityComboboxProps,
           getInputProps,
         ),
@@ -747,7 +746,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       otherStateToSet?: Partial<StateChangeOptions<any>>,
       cb?: () => void,
     ) => void,
-    reset: () => void,
+    toggleMenu: () => void,
     accessibilityComboboxProps: Object,
     getInputProps: (options?: GetInputPropsOptions) => any,
   ) => {
@@ -766,14 +765,15 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     ) => {
       switch (keyboardKey.getCode(e)) {
         case keyboardKey.Tab:
-          if (!_.isNil(highlightedIndex)) {
-            selectItemAtIndex(highlightedIndex)
-            // Keep focus here if condition applies.
-            if (this.props.multiple && this.state.open && !this.props.moveFocusOnTab) {
-              e.preventDefault()
+          if (this.state.open) {
+            if (!_.isNil(highlightedIndex) && this.getItemsFilteredBySearchQuery().length) {
+              selectItemAtIndex(highlightedIndex)
+              if (!this.props.moveFocusOnTab && this.props.multiple) {
+                e.preventDefault()
+              }
+            } else {
+              toggleMenu()
             }
-          } else {
-            reset()
           }
           break
         case keyboardKey.ArrowLeft:
@@ -909,14 +909,15 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   ) => {
     switch (keyboardKey.getCode(e)) {
       case keyboardKey.Tab:
-        if (_.isNil(highlightedIndex)) {
-          toggleMenu()
-        } else {
-          // Keep focus here in this case.
-          if (this.props.multiple && !this.props.moveFocusOnTab) {
-            e.preventDefault()
+        if (this.state.open) {
+          if (!_.isNil(highlightedIndex) && this.getItemsFilteredBySearchQuery().length) {
+            selectItemAtIndex(highlightedIndex)
+            if (!this.props.moveFocusOnTab && this.props.multiple) {
+              e.preventDefault()
+            }
+          } else {
+            toggleMenu()
           }
-          selectItemAtIndex(highlightedIndex)
         }
         return
       case keyboardKey.Escape:
