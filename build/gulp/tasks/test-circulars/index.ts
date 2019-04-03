@@ -2,11 +2,14 @@ import * as path from 'path'
 import * as fs from 'fs'
 import { task, series } from 'gulp'
 import webpackPlugin from '../../plugins/gulp-webpack'
+import { argv } from 'yargs'
 
 import config from '../../../../config'
 
 import { cyclesToSkip } from './config'
 import { buildWebpackConfig, configureCircularDependencyCheckPlugin, isCycleToSkip } from './utils'
+
+const prebuild = !argv.noBuild
 
 const entryFilePath = config.paths.packageDist('react', 'es', 'index.js')
 const outputFilePath = path.resolve(__dirname, 'result.js')
@@ -37,13 +40,7 @@ task('test:circulars:run', done => {
   })
 })
 
-const runDependenciesTest = series('test:circulars:run')
-const buildPackagesAndTest = series('dll', 'bundle:all-packages', runDependenciesTest)
-
-task('test:circulars', done => {
-  if (!fs.existsSync(entryFilePath)) {
-    buildPackagesAndTest(done)
-  } else {
-    runDependenciesTest(done)
-  }
-})
+task(
+  'test:circulars',
+  series(...[...(prebuild ? ['dll', 'bundle:all-packages'] : []), 'test:circulars:run']),
+)
