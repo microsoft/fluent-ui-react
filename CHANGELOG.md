@@ -31,7 +31,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Temporarily remove static type references in `slotClassNames` to prevent circular dependency crashes @kuzhelov ([#1145](https://github.com/stardust-ui/react/pull/1145))
 - Fix `EventListener` to not rerender on `listener` prop change @layershifter ([#1132](https://github.com/stardust-ui/react/pull/1132))
 - Fix circular dependencies from inferior modules to `index` files @kuzhelov ([#1148](https://github.com/stardust-ui/react/pull/1148))
-- Fix Invalid DOM property `stop-color` in Teams theme icons @codepretty ([1157](https://github.com/stardust-ui/react/pull/1157))
+- Fix Invalid DOM property `stop-color` in Teams theme icons @codepretty ([#1157](https://github.com/stardust-ui/react/pull/1157))
+- Fix invalid import in `Alert` @mnajdova ([#1159](https://github.com/stardust-ui/react/pull/1159))
 
 ### Features
 - Add predefined icon set for the usages in the `Input`, `Dropdown` and `AccordionTitle` components @mnajdova ([#1120](https://github.com/stardust-ui/react/pull/1120))
