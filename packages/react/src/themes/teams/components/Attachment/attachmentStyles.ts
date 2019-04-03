@@ -3,6 +3,7 @@ import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../lib'
 import Icon from '../../../../components/Icon/Icon'
+import { teamsIconClassNames } from '../Icon/svg'
 
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -74,6 +75,16 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
 
     [`& .${Icon.className}`]: {
       color: v.textColor, // this breaks the color change on hover
+    },
+
+    ':hover': {
+      [`& .${teamsIconClassNames.filled}`]: {
+        display: 'block',
+      },
+
+      [`& .${teamsIconClassNames.outline}`]: {
+        display: 'none',
+      },
     },
   }),
 
