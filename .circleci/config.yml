@@ -118,7 +118,7 @@ jobs:
           name: Update yarn
           command: |
             # remove default yarn
-            sudo rm -rf $(dirname $(which yarn))/yarn*
+            rm -rf $(dirname $(which yarn))/yarn*
             # download latest
             rm -rf ~/.yarn
             curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -156,7 +156,7 @@ jobs:
           name: Update yarn
           command: |
             # remove default yarn
-            sudo rm -rf $(dirname $(which yarn))/yarn*
+            rm -rf $(dirname $(which yarn))/yarn*
             # download latest
             rm -rf ~/.yarn
             curl -o- -L https://yarnpkg.com/install.sh | bash
