@@ -32,7 +32,7 @@ import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
-import { generateColorScheme } from '.'
+import { generateColorScheme } from './colorUtils'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
