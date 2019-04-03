@@ -100,7 +100,9 @@ const Control: React.FunctionComponent = () => {
   const [filter, setFilter] = React.useState('')
 
   return (
-    /* Heads up! This provider also does first run work! */
+    // Heads up! On first run, this Provider increases measured time due to style DOM elements being
+    // rendered to the browser. Subsequent rerenders, in contrast, are not rendering these style DOM
+    // elements again.
     <Provider theme={themes.teams}>
       <label htmlFor="filter">
         Filter (use <code>minimatch</code>):
