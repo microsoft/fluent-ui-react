@@ -153,6 +153,7 @@ task('test:projects:cra-ts', async () => {
 
   //////// REFERENCE STARDUST COMPONENTS IN TEST APP's MAIN FILE ///////
   logger("STEP 3. Reference Stardust components in test project's App.tsx")
+  fs.copyFileSync(scaffoldPath('tsconfig.json'), testAppPath('tsconfig.json'))
   fs.copyFileSync(scaffoldPath('App.tsx'), testAppPath('src', 'App.tsx'))
 
   //////// BUILD TEST PROJECT ///////
