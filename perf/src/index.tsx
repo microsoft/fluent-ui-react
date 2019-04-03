@@ -67,11 +67,6 @@ const satisfiesFilter = (componentName: string, filter: string) =>
     matchBase: true,
   })
 
-const sortObjectKeys = o =>
-  Object.keys(o)
-    .sort()
-    .reduce((r, k) => ((r[k] = o[k]), r), {})
-
 window.runMeasures = async (filter: string = '') => {
   const performanceMeasures: ProfilerMeasureCycle = {}
 
@@ -117,7 +112,7 @@ const Control: React.FunctionComponent = () => {
 
       <button
         onClick={async () => {
-          console.table(sortObjectKeys(await window.runMeasures(filter)))
+          console.table(await window.runMeasures(filter))
         }}
       >
         Run!
