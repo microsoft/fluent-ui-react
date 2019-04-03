@@ -14,9 +14,9 @@ export default {
           gradientTransform="matrix(1 0 0 -1 0 32)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#fff" stop-opacity="0" />
-          <stop offset=".86" stop-color="#5e5e5e" stop-opacity=".06" />
-          <stop offset="1" stop-opacity=".1" />
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset=".86" stopColor="#5e5e5e" stopOpacity=".06" />
+          <stop offset="1" stopOpacity=".1" />
         </linearGradient>
         <linearGradient
           id="onenote-2"
@@ -27,12 +27,12 @@ export default {
           gradientTransform="matrix(1 0 0 -1 0 32)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#fff" stop-opacity="0" />
-          <stop offset=".53" stop-color="#fff" stop-opacity=".01" />
-          <stop offset=".72" stop-color="#fff" stop-opacity=".03" />
-          <stop offset=".85" stop-color="#fff" stop-opacity=".08" />
-          <stop offset=".96" stop-color="#fff" stop-opacity=".15" />
-          <stop offset="1" stop-color="#fff" stop-opacity=".18" />
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset=".53" stopColor="#fff" stopOpacity=".01" />
+          <stop offset=".72" stopColor="#fff" stopOpacity=".03" />
+          <stop offset=".85" stopColor="#fff" stopOpacity=".08" />
+          <stop offset=".96" stopColor="#fff" stopOpacity=".15" />
+          <stop offset="1" stopColor="#fff" stopOpacity=".18" />
         </linearGradient>
         <linearGradient
           id="onenote-3"
@@ -43,9 +43,9 @@ export default {
           gradientTransform="matrix(1 0 0 -1 0 32)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#828282" stop-opacity="0" />
-          <stop offset=".86" stop-color="#303030" stop-opacity=".13" />
-          <stop offset="1" stop-opacity=".2" />
+          <stop offset="0" stopColor="#828282" stopOpacity="0" />
+          <stop offset=".86" stopColor="#303030" stopOpacity=".13" />
+          <stop offset="1" stopOpacity=".2" />
         </linearGradient>
         <linearGradient
           id="onenote-4"
@@ -56,13 +56,13 @@ export default {
           gradientTransform="matrix(1 0 0 -1 0 32)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#fff" stop-opacity="0" />
-          <stop offset=".45" stop-color="#fff" stop-opacity=".01" />
-          <stop offset=".64" stop-color="#fff" stop-opacity=".04" />
-          <stop offset=".78" stop-color="#fff" stop-opacity=".08" />
-          <stop offset=".89" stop-color="#fff" stop-opacity=".15" />
-          <stop offset=".99" stop-color="#fff" stop-opacity=".24" />
-          <stop offset="1" stop-color="#fff" stop-opacity=".25" />
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset=".45" stopColor="#fff" stopOpacity=".01" />
+          <stop offset=".64" stopColor="#fff" stopOpacity=".04" />
+          <stop offset=".78" stopColor="#fff" stopOpacity=".08" />
+          <stop offset=".89" stopColor="#fff" stopOpacity=".15" />
+          <stop offset=".99" stopColor="#fff" stopOpacity=".24" />
+          <stop offset="1" stopColor="#fff" stopOpacity=".25" />
         </linearGradient>
       </defs>
       <g>
