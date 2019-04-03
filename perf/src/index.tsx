@@ -62,8 +62,8 @@ const renderCycle = async (
   return profilerMeasure
 }
 
-const satisfiesFilter = (componentName: string, filter: string) =>
-  minimatch(componentName, filter || '*', {
+const satisfiesFilter = (componentFilePath: string, filter: string) =>
+  minimatch(componentFilePath, filter || '*', {
     matchBase: true,
   })
 
