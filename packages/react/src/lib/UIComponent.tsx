@@ -52,7 +52,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
       className: this.childClass.className,
       defaultProps: this.childClass.defaultProps,
       displayName: this.childClass.displayName,
-      variantName: (this.childClass as any).variantName,
+      variantName: (this.childClass as any).variantName || (this.props as any).variant,
       handledProps: this.childClass.handledProps,
       props: this.props,
       state: this.state,

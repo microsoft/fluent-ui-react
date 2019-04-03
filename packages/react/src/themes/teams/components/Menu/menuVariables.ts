@@ -26,6 +26,8 @@ export interface MenuVariables {
   primaryHoverBorderColor: string
   primaryUnderlinedBorderColor: string
 
+  pointingBeakSize: string
+
   disabledColor: string
   lineHeightBase: string
   horizontalPadding: string
@@ -83,5 +85,7 @@ export default (siteVars: any): MenuVariables => {
 
     dividerHeight: pxToRem(1),
     borderWidth: pxToRem(1),
+
+    pointingBeakSize: pxToRem(10),
   }
 }
