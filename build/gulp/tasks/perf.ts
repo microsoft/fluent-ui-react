@@ -7,7 +7,12 @@ import * as puppeteer from 'puppeteer'
 import * as rimraf from 'rimraf'
 import { argv } from 'yargs'
 
-import { ProfilerMeasure, ProfilerMeasureCycle } from '../../../perf/types'
+import {
+  NormalizedMeasures,
+  ProfilerMeasure,
+  ProfilerMeasureCycle,
+  ReducedMeasures,
+} from '../../../perf/types'
 import config from '../../../config'
 import webpackPlugin from '../plugins/gulp-webpack'
 
@@ -28,7 +33,7 @@ const computeMeasureMedian = (measures: ProfilerMeasure[], key: string) => {
   return (values[lowMiddle][key] + values[highMiddle][key]) / 2
 }
 
-const reduceMeasures = (measures: ProfilerMeasure[], key: string) => {
+const reduceMeasures = (measures: ProfilerMeasure[], key: string): ReducedMeasures => {
   if (measures.length === 0) throw new Error('`measures` are empty')
 
   let min = measures[0][key]
@@ -54,7 +59,7 @@ const reduceMeasures = (measures: ProfilerMeasure[], key: string) => {
   }
 }
 
-const normalizeMeasures = (measures: ProfilerMeasureCycle[]) => {
+const normalizeMeasures = (measures: ProfilerMeasureCycle[]): NormalizedMeasures => {
   const perExampleMeasures = _.reduce(
     measures,
     (result, cycle: ProfilerMeasureCycle) => {
@@ -77,11 +82,14 @@ const getPercentDiff = (minValue: number, actualValue: number): number =>
   _.round((actualValue / minValue) * 100 - 100, 2)
 
 const createMarkdownTable = (
-  data,
+  normalizedMeasures: NormalizedMeasures,
   metricName: string = 'actualTime',
   fields: string[] = ['avg', 'median'],
 ) => {
-  const exampleMeasures = _.mapValues(data, exampleMeasure => exampleMeasure[metricName])
+  const exampleMeasures = _.mapValues(
+    normalizedMeasures,
+    exampleMeasure => exampleMeasure[metricName],
+  )
 
   const fieldLabels: string[] = _.flatMap(fields, field => [
     _.capitalize(field),
