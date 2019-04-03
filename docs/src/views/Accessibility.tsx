@@ -2,19 +2,8 @@ import * as React from 'react'
 import DocPage from '../components/DocPage/DocPage'
 import CodeSnippet from '../components/CodeSnippet'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
-
+import { code, link } from '../utils/helpers'
 import { Header } from '@stardust-ui/react'
-
-const code = (content: string): React.ReactNode => <code>{content}</code>
-
-const link = (content: string, url: string): React.ReactNode => (
-  <React.Fragment>
-    {' '}
-    <a href={url} target={url.startsWith('http') ? '_blank' : '_self'}>
-      {content}
-    </a>
-  </React.Fragment>
-)
 
 export default () => (
   <DocPage title="Accessibility in Stardust">
@@ -202,12 +191,27 @@ export default () => (
       the user.
     </p>
 
-    <Header as="h3" content="Focus Zones" />
+    <Header as="h3" content="Focus Zone" />
     <p>
       Focus zones allow the Tab navigation to be broken down into smaller parts, so that user can
       use the {code('tab')} key to navigate between higher level components (for example tool bars,
       menus, lists) and use arrow key navigation within these higher level components (buttons in a
-      toolbar, items in a list). <b>Read more about Focus Zone {link('here', '/focus-zone')}.</b>
+      toolbar, items in a list). {link('Read more about Focus Zone.', '/focus-zone')}
+    </p>
+
+    <Header as="h3" content="Focus Trap Zone" />
+    <p>
+      FocusTrapZone is used to trap the focus in any html element. Pressing TAB key will circle
+      focus within the inner focusable elements of the FocusTrapZone. For example, when Popup opens,
+      we want the focus go inside Popup and trap there.{' '}
+      {link('Read more about Focus Trap Zone.', '/focus-trap-zone')}
+    </p>
+
+    <Header as="h3" content="Auto Focus Zone" />
+    <p>
+      AutoFocusZone is used to focus inner element on mount. For example, when we want to focus
+      inner element in Popup when it mounts, but still without focus trap.{' '}
+      {link('Read more about Auto Focus Zone.', '/auto-focus-zone')}
     </p>
 
     <Header as="h3" content="Advanced keyboard navigation scenarios" />
@@ -265,8 +269,8 @@ export default () => (
       In Stardust, accessibility behaviors encapsulate keyboard navigation and screen reader
       navigation. They essentially add ARIA roles, ARIA attributes and event handlers. The idea is
       to compose visual components and apply a behavior on top of them to achieve desired keyboard
-      or screen reader navigation.
-      <b>Read more about Focus Zone {link('here', '/focus-zone')}.</b>
+      or screen reader navigation.{' '}
+      {link('Read more about Accessibility Behaviors.', '/accessibility-behaviors')}
     </p>
 
     <Header as="h2" content="Screen Readers" />

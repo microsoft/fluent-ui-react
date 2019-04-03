@@ -1,17 +1,9 @@
 import * as React from 'react'
-import { Header, Icon } from '@stardust-ui/react'
+import { Header } from '@stardust-ui/react'
 
 import CodeSnippet from '../components/CodeSnippet'
 import DocPage from '../components/DocPage'
-import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
-
-const code = value => <code>{value}</code>
-
-const link = (content, href, isExternal = false) => (
-  <a href={href} {...isExternal && { target: 'blank' }}>
-    {content} {isExternal ? <Icon name="external" size="small" link fitted /> : ''}
-  </a>
-)
+import { code, link } from '../utils/helpers'
 
 export default () => (
   <DocPage title="Focus Zone">
@@ -25,7 +17,7 @@ export default () => (
           <li>{link('Props', '/focus-zone#props')}</li>
         </ul>
       </li>
-      <li>{link('Override Focus Zone settings', '/focus-zone#override-focus-zone-settings')}</li>
+      <li>{link('Override FocusZone settings', '/focus-zone#override-focuszone-settings')}</li>
     </ul>
     <Header as="h2">Overview</Header>
     <p>
@@ -127,6 +119,10 @@ export default () => (
     <p>To FocusZone next props can be applied:</p>
     <ul>
       <li>
+        <b>as</b> - Element type the root element will use. Default is "div".
+        <p>Type: {code('React.ReactType')}</p>
+      </li>
+      <li>
         <b>className</b> - Additional class name to provide on the root element, in addition to the
         ms-FocusZone class.
         <p>Type: {code('string')}</p>
@@ -200,6 +196,7 @@ export default () => (
       <li>
         <b>shouldFocusOnMount</b> - If a default tabbable element should be force focused on
         FocusZone mount.
+        <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
@@ -207,32 +204,33 @@ export default () => (
         (container) receives focus, the focus will be forced to defaultTabbableElement (if set) or
         first tabbable element of this FocusZone. Usually a case for nested focus zones, when nested
         focus zone's container is a focusable element.
+        <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
         <b>shouldResetActiveElementWhenTabFromZone</b> - If true and TAB key is not handled by
         FocusZone, resets current active element to null value. For example, when roving index is
         not desirable and focus should always reset to the default tabbable element.
+        <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
         <b>disabled</b> - If set, the FocusZone will not be tabbable and keyboard navigation will be
         disabled. This does not affect disabled attribute of any child.
+        <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
-      </li>
-      <li>
-        <b>as</b> - Element type the root element will use. Default is "div".
-        <p>Type: {code('React.ReactType')}</p>
       </li>
       <li>
         <b>isRtl</b> - If true, FocusZone behavior will change to match RTL environments (left/right
         arrows switched).
+        <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
         <b>isCircularNavigation</b> - If true, will cycle to the beginning of the targets once the
         user navigates to the next target while at the end, and to the end when navigate to the
         previous at the beginning.
+        <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
         <p>For example, {link('horizontal menu', '/components/menu#types-menu')}.</p>
       </li>
@@ -243,6 +241,7 @@ export default () => (
         messages are inner focus zones. Navigation between messages possible with up/down arrow
         keys, but when pressing Enter, focus should go to focusable elements inside message, for
         example, a link.
+        <p>Default: {code('false')}</p>
         <p>Type: {code('(ev: React.KeyboardEvent<HTMLElement>) => boolean')}</p>
         <CodeSnippet
           label="jsx"
@@ -304,6 +303,7 @@ export default () => (
       </li>
       <li>
         <b>stopFocusPropagation</b> - if true, focus event propagation will be stopped.
+        <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
@@ -313,12 +313,13 @@ export default () => (
       <li>
         <b>preventDefaultWhenHandled</b> - if true, FocusZone prevents default when handled a key
         event.
+        <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
     </ul>
     <Header as="h2">Override Focus Zone settings</Header>
     <p>
-      To be able to override Focus Zone settings already set for a component, it is needed to
+      To be able to add/override Focus Zone settings already set for a component, it is needed to
       override or create a new accessibility behavior.
     </p>
     <p>
@@ -326,7 +327,6 @@ export default () => (
       first.
     </p>
     <CodeSnippet
-      label="chatBehavior.ts"
       value={`
       const overridenMenuBehavior: Accessibility = (props: any) => {
         const behavior = menuBehavior(props)
@@ -347,12 +347,19 @@ export default () => (
           <Menu accessibility={overridenMenuBehavior} />
         )`}
     />
+    <p>Read more about:</p>
+    <ul>
+      <li>{link('Accessibility Behaviors', '/accessibility-behaviors')}</li>
+      <li>{link('Focus Trap Zone', '/focus-trap-zone')}</li>
+      <li>{link('Auto Focus Zone', '/auto-focus-zone')}</li>
+    </ul>
     <p>
-      Read more about <b>accessibility behaviors {link('here', '/accessibility-behaviors')}</b>.
+      FocusZone code on{' '}
+      {link(
+        'GitHub.',
+        'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/FocusZone.tsx',
+        true,
+      )}
     </p>
-    <GuidesNavigationFooter
-      previous={{ name: 'Accessibility behaviors', url: 'accessibility-behaviors' }}
-      next={{ name: 'Focus Trap Zone', url: 'focus-trap-zone' }}
-    />
   </DocPage>
 )
