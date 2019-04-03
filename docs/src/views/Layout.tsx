@@ -69,6 +69,7 @@ export default () => (
         const OpaqueBackground = ({ children, color }) => (
           <Segment styles={{ backgroundColor: color }} content={{ children }} />
         )
+        OpaqueBackground.displayName = 'OpaqueBackground'
 
         return (
           <OpaqueBackground color="lightyellow">
@@ -92,9 +93,10 @@ export default () => (
         const RelativePositioned = ({ children, left }) => (
           <Box styles={{ position: 'relative', left }} content={children} />
         )
+        RelativePositioned.displayName = 'RelativePositioned'
 
         return (
-          <RelativePositioned left={'30px'}>
+          <RelativePositioned left="30px">
             This is a bad way to support relative-positioning :(
           </RelativePositioned>
         )

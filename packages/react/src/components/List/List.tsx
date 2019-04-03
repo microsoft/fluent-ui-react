@@ -1,10 +1,10 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 
 import {
-  customPropTypes,
   childrenExist,
   AutoControlledComponent,
   UIComponentProps,
@@ -18,6 +18,10 @@ import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+
+export interface ListSlotClassNames {
+  item: string
+}
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -67,6 +71,10 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   static displayName = 'List'
 
   static className = 'ui-list'
+
+  static slotClassNames: ListSlotClassNames = {
+    item: `${List.className}__item`,
+  }
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -198,6 +206,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
       }
 
       const itemProps = {
+        className: List.slotClassNames.item,
         ..._.pick(this.props, List.itemProps),
         ...maybeSelectableItemProps,
         index,

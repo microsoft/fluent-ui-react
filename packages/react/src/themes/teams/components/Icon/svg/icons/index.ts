@@ -5,6 +5,7 @@ import add from './add'
 import addParticipant from './addParticipant'
 import arrowUp from './arrowUp'
 import arrowDown from './arrowDown'
+import ban from './ban'
 import bold from './bold'
 import bookmark from './bookmark'
 import bullets from './bullets'
@@ -36,11 +37,13 @@ import filesSketch from './filesSketch'
 import filesSound from './filesSound'
 import filesTxt from './filesTxt'
 import filesZip from './filesZip'
+import flag from './flag'
 import download from './download'
 import edit from './edit'
 import email from './email'
 import emoji from './emoji'
 import error from './error'
+import exclamationCircle from './exclamationCircle'
 import filesExcel from './filesExcel'
 import filesExcelBrand from './filesExcelBrand'
 import filesOneNote from './filesOneNote'
@@ -96,6 +99,7 @@ import translation from './translation'
 import trashCan from './trashCan'
 import triangleDown from './triangleDown'
 import triangleRight from './triangleRight'
+import triangleUp from './triangleUp'
 import underline from './underline'
 import undo from './undo'
 import urgent from './urgent'
@@ -106,6 +110,7 @@ export default {
   add,
   'arrow-up': arrowUp,
   'arrow-down': arrowDown,
+  ban,
   bold,
   bookmark,
   bullets,
@@ -137,11 +142,13 @@ export default {
   'files-sound': filesSound,
   'files-txt': filesTxt,
   'files-zip': filesZip,
+  flag,
   download,
   edit,
   email,
   emoji,
   error,
+  'exclamation-circle': exclamationCircle,
   format,
   'font-color': fontColor,
   'font-size': fontSize,
@@ -189,6 +196,7 @@ export default {
   'trash-can': trashCan,
   'triangle-down': triangleDown,
   'triangle-right': triangleRight,
+  'triangle-up': triangleUp,
   'team-create': teamCreate,
   underline,
   undo,

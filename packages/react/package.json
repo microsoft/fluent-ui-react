@@ -1,13 +1,13 @@
 {
   "name": "@stardust-ui/react",
   "description": "A themable React component library.",
-  "version": "0.24.0",
+  "version": "0.26.0",
   "author": "Levi Thomason <me@levithomason.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
-    "@stardust-ui/react-component-event-listener": "^0.24.0",
-    "@stardust-ui/react-component-nesting-registry": "^0.24.0",
-    "@stardust-ui/react-proptypes": "^0.24.0",
+    "@stardust-ui/react-component-event-listener": "^0.26.0",
+    "@stardust-ui/react-component-nesting-registry": "^0.26.0",
+    "@stardust-ui/react-proptypes": "^0.26.0",
     "classnames": "^2.2.5",
     "downshift": "^3.2.6",
     "fela": "^10.2.0",
@@ -32,8 +32,8 @@
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
   "peerDependencies": {
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "publishConfig": {
     "access": "public"

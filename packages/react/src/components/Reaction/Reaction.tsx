@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -9,7 +10,6 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
-  customPropTypes,
   createShorthandFactory,
   ContentComponentProps,
   isFromKeyboard,
