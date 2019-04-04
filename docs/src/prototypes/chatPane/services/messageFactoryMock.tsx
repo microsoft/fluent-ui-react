@@ -150,6 +150,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
       <div style={{ marginTop: '20px', display: 'flex' }}>
         {_.map(['MeetingNotes.pptx', 'Document.docx'], (fileName, index) => (
           <Attachment
+            key={`attachment-${index}`}
             icon="file word outline"
             aria-label={`File attachment ${fileName}. Press tab for more options Press Enter to open the file`}
             header={fileName}

@@ -36,6 +36,8 @@ export interface MenuVariables {
   verticalDividerMargin: string
   verticalItemBorder: string
 
+  pointingIndicatorBackgroundColor: string
+
   underlinedBottomBorderWidth: string
 
   dividerHeight: string
@@ -78,6 +80,8 @@ export default (siteVars: any): MenuVariables => {
     verticalBoxShadow: siteVars.shadowLevel3,
     verticalDividerMargin: `${pxToRem(8)} 0`,
     verticalItemBorder: `solid ${pxToRem(2)} transparent`,
+
+    pointingIndicatorBackgroundColor: siteVars.colors.primary[500],
 
     underlinedBottomBorderWidth: pxToRem(2),
 

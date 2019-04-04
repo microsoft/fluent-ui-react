@@ -12,6 +12,14 @@ CONTRIBUTING
   - [Role and aria props](#role-and-aria-props)
   - [Focus](#focus)
   - [Keyboard handling](#keyboard-handling)
+- [Packages](#packages)
+  - [Add a new package](#add-a-new-package)
+    - [Run `lerna create`](#run-lerna-create)
+    - [Update `package.json`](#update-packagejson)
+    - [Create `tsconfig.json`](#create-tsconfigjson)
+    - [Create `jest.config.js`](#create-jestconfigjs)
+    - [Run `syncpack format`](#run-syncpack-format)
+  - [Add a new dependency](#add-a-new-dependency)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -98,6 +106,119 @@ Focused component needs to be clearly visible. This is handled in Stardust by fo
 
 In addition to basic focus handling, specific keyboard handlers can be added to the behaviors. These keyboard handlers call actions defined in the components, when corresponding keys are pressed by the user. For reference, see `keyActions` in [MenuItemBehavior][12] and `actionHandlers` in [MenuItem component][13].
 
+## Packages
+
+We are using [Lerna][14] to manage our packages and [Yarn Workspaces][15] to link them.
+
+### Add a new package
+
+#### Run `lerna create`
+ 
+You should to run `lerna create` command to create a new package
+
+- we are using `@stardust-ui` namespace on NPM to publish our packages
+- the directory name should not contain any namespace prefix and can be prefixed with the library name if the
+  implementation is not framework agnostic
+- please provide a meaningful description to a package in the matched field
+- use `https://github.com/stardust-ui/react/tree/master/packages/__DIRECTORY_NAME__` as `homepage`
+- our packages are currently published with MIT license, please follow it until you will have specific legal requirements
+
+```sh
+lerna create @stardust-ui/react-proptypes react-proptypes
+```
+
+##### Example input
+```
+lerna notice cli v3.11.1
+package name: (@stardust-ui/react-proptypes)
+version: (0.21.1)
+description: Set of custom reusable PropTypes for React components.
+keywords:
+homepage: https://github.com/stardust-ui/react/tree/master/packages/react-proptypes
+license: (ISC) MIT
+entry point: (lib/react-proptypes.js)
+git repository: (https://github.com/stardust-ui/react.git)
+```
+
+#### Update `package.json`
+
+After a package will be created we need to add necessary changes to a newly created `package.json`.
+These changes are required to setup internal tooling and package publishing.
+
+```diff
+-  "directories": {
+-    "lib": "lib",
+-    "test": "__tests__"
+-  },
+-  "files": [
+-    "lib"
+-  ],
++  "jsnext:main": "dist/es/index.js",
++  "main": "dist/commonjs/index.js",
++  "module": "dist/es/index.js",
++  "types": "dist/es/index.d.ts",
++  "sideEffects": false,
++  "files": [
++    "dist"
++  ],
+```
+
+```diff
+-  "scripts": {
+-    "test": "echo \"Error: run tests from root\" && exit 1"
+-  },
++  "scripts": {
++    "build": "gulp bundle:package:no-umd --package react-proptypes"
++  },
+```
+
+Don't forget to provide a correct directory name, you can also use `gulp bundle:package` to bundle your package with UMD.
+
+#### Create `tsconfig.json`
+
+If your package uses TypeScript, please also create a new `tsconfig.json` and place it in `packages/__DIRECTORY_NAME__`. An example config:
+
+```json
+{
+  "extends": "../../build/tsconfig.common",
+  "include": [
+    "src",
+    "test"
+  ]
+}
+```
+
+This config will extend a common TS config that is used in all packages. You can add specific options for the package here.
+
+#### Create `jest.config.js`
+
+If your package uses Jest for unit tests, please also create a new `jest.config.js` and place and place it in `packages/__DIRECTORY_NAME__`. An example config:
+
+```js
+module.exports = {
+  ...require('../../build/jest/jest.config.common'),
+  name: '__DIRECTORY_NAME__',
+}
+```
+
+#### Run `syncpack format`
+
+Organise a new `package.json` according to a conventional format, where fields appear in a predictable order and
+nested fields are ordered alphabetically.
+
+```
+yarn syncpack format
+```
+
+### Add a new dependency
+
+Please always use [`lerna add`][16] to manage all dependencies including internal packages. The command bellow will add
+`@stardust-ui/react-proptypes` as production dependency to the `@stardust-ui/react` package.
+
+```yarn
+lerna add @stardust-ui/react-proptypes packages/react
+```
+
 [1]: https://nodejs.org/
 [2]: https://github.com/stardust-ui/accessibility/blob/master/CONTRIBUTING.md
 [3]: https://www.w3.org/TR/wai-aria-1.1/#usage_intro
@@ -111,3 +232,6 @@ In addition to basic focus handling, specific keyboard handlers can be added to 
 [11]: https://github.com/stardust-ui/react/blob/master/src/themes/teams/components/Button/buttonStyles.ts
 [12]: https://github.com/stardust-ui/react/blob/master/src/lib/accessibility/Behaviors/Menu/MenuItemBehavior.ts
 [13]: https://github.com/stardust-ui/react/blob/master/src/components/Menu/MenuItem.tsx
+[14]: https://lernajs.io/
+[15]: https://yarnpkg.com/en/docs/workspaces
+[16]: https://github.com/lerna/lerna/tree/master/commands/add

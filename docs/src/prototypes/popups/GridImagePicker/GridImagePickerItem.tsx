@@ -20,9 +20,15 @@ class GridImagePickerItem extends React.Component<GridPickerItemProps> {
     const { title, imageSrc, onClick } = this.props
 
     return (
-      <li>
-        <Button styles={imageButtonStyles} onClick={onClick} title={title} role="listitem">
-          {imageSrc && <Image src={imageSrc} fluid />}
+      <li role="presentation">
+        <Button
+          styles={imageButtonStyles}
+          onClick={onClick}
+          title={title}
+          aria-label={title}
+          role="listitem"
+        >
+          {imageSrc && <Image alt={title} src={imageSrc} fluid />}
         </Button>
       </li>
     )

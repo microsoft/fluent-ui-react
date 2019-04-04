@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
@@ -21,7 +22,6 @@ import {
   FOCUSZONE_ID_ATTRIBUTE,
 } from './focusUtilities'
 import getUnhandledProps from '../../getUnhandledProps'
-import * as customPropTypes from '../../customPropTypes'
 import getElementType from '../../getElementType'
 
 const TABINDEX = 'tabindex'
@@ -140,12 +140,8 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
   render() {
     const { className } = this.props
-    // TODO: Remove `as` there after the issue will be resolved:
-    // https://github.com/Microsoft/TypeScript/issues/28768
-    const ElementType = getElementType(
-      { defaultProps: FocusZone.defaultProps },
-      this.props,
-    ) as React.ComponentClass<FocusZoneProps>
+
+    const ElementType = getElementType({ defaultProps: FocusZone.defaultProps }, this.props)
     const unhandledProps = getUnhandledProps(
       { handledProps: [..._.keys(FocusZone.propTypes)] },
       this.props,
@@ -264,23 +260,20 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
       defaultTabbableElement,
     } = this.props
 
+    let newActiveElement: HTMLElement | undefined
+
     if (this.isImmediateDescendantOfZone(ev.target as HTMLElement)) {
-      this._activeElement = ev.target as HTMLElement
-      this.setFocusAlignment(this._activeElement)
+      newActiveElement = ev.target as HTMLElement
     } else {
       let parentElement = ev.target as HTMLElement
 
       while (parentElement && parentElement !== this._root.current) {
         if (isElementTabbable(parentElement) && this.isImmediateDescendantOfZone(parentElement)) {
-          this._activeElement = parentElement
+          newActiveElement = parentElement
           break
         }
         parentElement = getParent(parentElement) as HTMLElement
       }
-    }
-
-    if (onActiveElementChanged) {
-      onActiveElementChanged(this._activeElement as HTMLElement, ev)
     }
 
     // If an inner focusable element should be focused when FocusZone container receives focus
@@ -290,11 +283,26 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
       // try to focus defaultTabbable element
       if (maybeElementToFocus && isElementTabbable(maybeElementToFocus)) {
+        newActiveElement = maybeElementToFocus
         maybeElementToFocus.focus()
       } else {
         // force focus on first focusable element
         this.focus(true)
+        if (this._activeElement) {
+          // set to null as new active element was handled in method above
+          newActiveElement = null
+        }
       }
+    }
+
+    if (newActiveElement && newActiveElement !== this._activeElement) {
+      this._activeElement = newActiveElement
+      this.setFocusAlignment(newActiveElement, true)
+      this.updateTabIndexes()
+    }
+
+    if (onActiveElementChanged) {
+      onActiveElementChanged(this._activeElement as HTMLElement, ev)
     }
 
     if (stopFocusPropagation) {

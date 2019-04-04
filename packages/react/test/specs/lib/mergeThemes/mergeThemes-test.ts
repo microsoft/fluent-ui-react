@@ -329,12 +329,12 @@ describe('mergeThemes', () => {
       expect(mergeThemes({ rtl: true }, { rtl: undefined })).toHaveProperty('rtl', true)
     })
 
-    test('default to false if no boolean was provided', () => {
-      expect(mergeThemes({ rtl: null }, { rtl: null })).toHaveProperty('rtl', false)
-      expect(mergeThemes({ rtl: null }, { rtl: undefined })).toHaveProperty('rtl', false)
+    test('is NOT set if no boolean was provided', () => {
+      expect(mergeThemes({ rtl: null }, { rtl: null })).not.toHaveProperty('rtl')
+      expect(mergeThemes({ rtl: null }, { rtl: undefined })).not.toHaveProperty('rtl')
 
-      expect(mergeThemes({ rtl: undefined }, { rtl: null })).toHaveProperty('rtl', false)
-      expect(mergeThemes({ rtl: undefined }, { rtl: undefined })).toHaveProperty('rtl', false)
+      expect(mergeThemes({ rtl: undefined }, { rtl: null })).not.toHaveProperty('rtl')
+      expect(mergeThemes({ rtl: undefined }, { rtl: undefined })).not.toHaveProperty('rtl')
     })
   })
 
