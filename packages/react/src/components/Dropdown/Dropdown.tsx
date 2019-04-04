@@ -643,6 +643,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   private handleSearchQueryChange = (searchQuery: string) => {
     this.trySetStateAndInvokeHandler('onSearchQueryChange', null, {
       searchQuery,
+      highlightedIndex: this.props.highlightFirstItemOnOpen ? 0 : null,
       open: searchQuery === '' ? false : this.state.open,
     })
   }
