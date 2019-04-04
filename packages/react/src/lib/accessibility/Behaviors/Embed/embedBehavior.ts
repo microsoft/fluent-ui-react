@@ -13,7 +13,7 @@ import * as keyboardKey from 'keyboard-key'
 const embedBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      tabIndex: '0',
+      tabIndex: 0,
       'aria-hidden': props['alt'] || props['title'] ? undefined : true,
       role: 'presentation',
     },

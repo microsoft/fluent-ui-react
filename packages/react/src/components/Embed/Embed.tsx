@@ -1,20 +1,20 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as _ from 'lodash'
 
 import {
   createShorthandFactory,
-  UIComponent,
   UIComponentProps,
-  commonPropTypes,
   applyAccessibilityKeyHandlers,
-  customPropTypes,
+  commonPropTypes,
+  AutoControlledComponent,
 } from '../../lib'
 import { embedBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import Image from '../Image/Image'
 import Video from '../Video/Video'
 import Box from '../Box/Box'
-import * as _ from 'lodash'
 
 import { ReactProps, ShorthandValue } from '../../types'
 
@@ -32,7 +32,9 @@ export interface EmbedProps extends UIComponentProps {
   placeholder?: string
 
   /** whether the gif should be playing */
-  playing?: boolean
+  active?: boolean
+
+  defaultActive?: boolean
 
   iframe?: ShorthandValue
 
@@ -40,7 +42,7 @@ export interface EmbedProps extends UIComponentProps {
 }
 
 export interface EmbedState {
-  isPlaying: boolean
+  active: boolean
 }
 
 /**
@@ -51,7 +53,7 @@ export interface EmbedState {
  * Other considerations:
  *  - when alt and title property are empty, then Narrator in scan mode navigates to the gif and narrates it as empty paragraph
  */
-class Embed extends UIComponent<ReactProps<EmbedProps>, EmbedState> {
+class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> {
   static create: Function
 
   static className = 'ui-embed'
@@ -64,7 +66,8 @@ class Embed extends UIComponent<ReactProps<EmbedProps>, EmbedState> {
       content: false,
     }),
     iframe: customPropTypes.itemShorthand,
-    playing: PropTypes.bool,
+    defaultActive: PropTypes.bool,
+    active: PropTypes.bool,
     poster: PropTypes.string,
     src: PropTypes.string,
     video: customPropTypes.itemShorthand,
@@ -75,17 +78,10 @@ class Embed extends UIComponent<ReactProps<EmbedProps>, EmbedState> {
     accessibility: embedBehavior as Accessibility,
   }
 
-  public state = {
-    isPlaying: this.props.playing,
-  }
+  static autoControlledProps = ['active']
 
-  shouldComponentUpdate(nextProps: EmbedProps, nextState: EmbedState): boolean {
-    if (nextProps.playing !== this.props.playing) {
-      this.setState({ isPlaying: nextProps.playing })
-      return false
-    }
-
-    return !_.isEqual(this.props, nextProps) || !_.isEqual(nextState, this.state)
+  getInitialAutoControlledState(): EmbedState {
+    return { active: false }
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
@@ -99,7 +95,7 @@ class Embed extends UIComponent<ReactProps<EmbedProps>, EmbedState> {
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         onClick={this.handleClick}
       >
-        {this.state.isPlaying
+        {this.state.active
           ? Video.create(video || ElementType, {
               defaultProps: {
                 src,
@@ -136,7 +132,7 @@ class Embed extends UIComponent<ReactProps<EmbedProps>, EmbedState> {
   private handleClick = e => {
     e.stopPropagation()
     e.preventDefault()
-    this.setState({ isPlaying: !this.state.isPlaying })
+    this.setState({ active: !this.state.active })
   }
 }
 
