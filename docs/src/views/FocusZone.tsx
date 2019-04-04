@@ -317,7 +317,7 @@ export default () => (
         <p>Type: {code('boolean')}</p>
       </li>
     </ul>
-    <Header as="h2">Override Focus Zone settings</Header>
+    <Header as="h2">Override FocusZone settings</Header>
     <p>
       To be able to add/override Focus Zone settings already set for a component, it is needed to
       override or create a new accessibility behavior.

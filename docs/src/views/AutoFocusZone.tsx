@@ -8,8 +8,8 @@ export default () => (
   <DocPage title="Auto Focus Zone">
     <Header as="h2">Content</Header>
     <ul>
-      <li>{link('Overview', '/focus-zone#overview')}</li>
-      <li>{link('Usage', '/focus-zone#usage')}</li>
+      <li>{link('Overview', '/auto-focus-zone#overview')}</li>
+      <li>{link('Usage', '/auto-focus-zone#usage')}</li>
       <li>
         {link(
           'Override AutoFocusZone settings',
