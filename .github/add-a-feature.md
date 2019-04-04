@@ -12,7 +12,7 @@ Add a feature
   - [How to create a component](#how-to-create-a-component)
   - [Good practice](#good-practice)
   - [Display Name and Class Name](#display-name-and-class-name)
-  - [Using propTypes](#using-proptypes)
+  - [Using prop interfaces and propTypes](#using-prop-interfaces-and-proptypes)
   - [State](#state)
   - [Conformance Test](#conformance-test)
   - [Add doc site example](#add-doc-site-example)
