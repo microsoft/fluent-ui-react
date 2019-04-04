@@ -43,14 +43,11 @@ export interface LayoutProps extends UIComponentProps {
   reducing?: boolean
   /** A layout can render its content directly if only one piece of content exists. */
   disappearing?: boolean
-  truncateStart?: boolean
-  truncateMain?: boolean
-  truncateEnd?: boolean
   vertical?: boolean
 }
 
 /**
- * A layout is a utility for arranging the content of a component.
+ * (DEPRECATED) A layout is a utility for arranging the content of a component.
  */
 class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
   static className = 'ui-layout'
@@ -93,10 +90,6 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
     gap: PropTypes.string,
     reducing: PropTypes.bool,
     disappearing: PropTypes.bool,
-
-    truncateStart: PropTypes.bool,
-    truncateMain: PropTypes.bool,
-    truncateEnd: PropTypes.bool,
 
     vertical: PropTypes.bool,
   }

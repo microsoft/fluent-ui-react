@@ -4,35 +4,39 @@ import * as React from 'react'
 import * as simulant from 'simulant'
 
 describe('EventListener', () => {
-  it('handles events on `target`', () => {
-    const onClick = jest.fn()
-    const onKeyDown = jest.fn()
+  describe('listener', () => {
+    it('handles events on `target`', () => {
+      const onClick = jest.fn()
+      const onKeyDown = jest.fn()
 
-    mount(
-      <>
-        <EventListener listener={onClick} targetRef={documentRef} type="click" />
-        <EventListener listener={onKeyDown} targetRef={documentRef} type="keydown" />
-      </>,
-    )
+      mount(
+        <>
+          <EventListener listener={onClick} targetRef={documentRef} type="click" />
+          <EventListener listener={onKeyDown} targetRef={documentRef} type="keydown" />
+        </>,
+      )
 
-    simulant.fire(document, 'click')
-    simulant.fire(document, 'keydown')
+      simulant.fire(document, 'click')
+      simulant.fire(document, 'keydown')
 
-    expect(onClick).toHaveBeenCalledTimes(1)
-    expect(onClick).toHaveBeenCalledWith(expect.objectContaining({ type: 'click' }))
+      expect(onClick).toHaveBeenCalledTimes(1)
+      expect(onClick).toHaveBeenCalledWith(expect.objectContaining({ type: 'click' }))
 
-    expect(onKeyDown).toHaveBeenCalledTimes(1)
-    expect(onKeyDown).toHaveBeenCalledWith(expect.objectContaining({ type: 'keydown' }))
-  })
+      expect(onKeyDown).toHaveBeenCalledTimes(1)
+      expect(onKeyDown).toHaveBeenCalledWith(expect.objectContaining({ type: 'keydown' }))
+    })
 
-  it('unsubscribes correctly', () => {
-    const onClick = jest.fn()
+    it('unsubscribes correctly', () => {
+      const onClick = jest.fn()
 
-    const wrapper = mount(<EventListener listener={onClick} targetRef={documentRef} type="click" />)
-    wrapper.unmount()
+      const wrapper = mount(
+        <EventListener listener={onClick} targetRef={documentRef} type="click" />,
+      )
+      wrapper.unmount()
 
-    simulant.fire(document, 'click')
-    expect(onClick).not.toHaveBeenCalled()
+      simulant.fire(document, 'click')
+      expect(onClick).not.toHaveBeenCalled()
+    })
   })
 
   describe('capture', () => {
@@ -60,6 +64,22 @@ describe('EventListener', () => {
 
       expect(addEventListener).toHaveBeenCalledWith('click', expect.any(Function), true)
       expect(removeEventListener).toHaveBeenCalledWith('click', expect.any(Function), true)
+    })
+  })
+
+  describe('type', () => {
+    it('handlers changes', () => {
+      const listener = jest.fn()
+      const wrapper = mount(
+        <EventListener listener={listener} targetRef={documentRef} type="click" />,
+      )
+
+      simulant.fire(document, 'click')
+      expect(listener).toHaveBeenCalledTimes(1)
+
+      wrapper.setProps({ type: 'scroll' })
+      simulant.fire(document, 'scroll')
+      expect(listener).toHaveBeenCalledTimes(2)
     })
   })
 })
