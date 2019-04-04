@@ -5,7 +5,7 @@ import * as keyboardKey from 'keyboard-key'
  * @specification
  * Adds attribute 'tabIndex=0' to 'root' component's part.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
- * Triggers 'performRemove' action with 'Delete' on 'root'.
+ * Triggers 'performRemove' action with 'Delete' or 'Backspace' on 'root'.
  */
 const labelBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -15,11 +15,8 @@ const labelBehavior: Accessibility = (props: any) => ({
   },
   keyActions: {
     root: {
-      performClick: {
-        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
-      },
       performRemove: {
-        keyCombinations: [{ keyCode: keyboardKey.Delete }],
+        keyCombinations: [{ keyCode: keyboardKey.Delete }, { keyCode: keyboardKey.Backspace }],
       },
     },
   },

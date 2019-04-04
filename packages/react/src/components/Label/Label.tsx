@@ -14,7 +14,6 @@ import {
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
-  isFromKeyboard,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 
@@ -57,6 +56,8 @@ export interface LabelProps
 
   /** A Label can position its image at the start or end of the layout. */
   imagePosition?: 'start' | 'end'
+
+  onRemove?: () => void
 }
 
 export interface AttachmentState {
@@ -82,6 +83,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     image: customPropTypes.itemShorthand,
     imagePosition: PropTypes.oneOf(['start', 'end']),
     fluid: PropTypes.bool,
+    onRemove: PropTypes.func,
   }
 
   static defaultProps = {
@@ -89,6 +91,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     as: 'span',
     imagePosition: 'start',
     iconPosition: 'end',
+    onRemove: () => {},
   }
 
   handleIconOverrides = iconProps => {
@@ -149,8 +152,6 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
           {...accessibility.attributes.root}
           {...unhandledProps}
           className={classes.root}
-          onFocus={this.handleFocus}
-          onClick={this.handleClick}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           <Layout
@@ -180,7 +181,6 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
 
   protected actionHandlers: AccessibilityActionHandlers = {
     performRemove: event => this.performRemove(event),
-    performClick: event => this.performClick(event),
   }
 
   private performRemove = e => {
@@ -189,25 +189,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   }
 
   private handleRemove = () => {
-    console.warn('delete')
-    this.setState({ isVisible: false })
-  }
-
-  private performClick = e => {
-    e.stopPropagation()
-    this.handleClick(e)
-  }
-
-  private handleClick = (e: React.SyntheticEvent) => {
-    console.warn('click')
-    _.invoke(this.props, 'onClick', e, this.props)
-  }
-
-  private handleFocus = (e: React.SyntheticEvent) => {
-    console.warn('focus')
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-
-    _.invoke(this.props, 'onFocus', e, this.props)
+    this.props.onRemove()
   }
 }
 

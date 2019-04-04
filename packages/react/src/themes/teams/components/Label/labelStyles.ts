@@ -32,7 +32,7 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
 
       ...(p.isFromKeyboard && {
         ':focus': {
-          outline: `1px solid red`,
+          outline: 'none',
         },
       }),
     }
