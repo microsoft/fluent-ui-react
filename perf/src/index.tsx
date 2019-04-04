@@ -121,4 +121,4 @@ const Control: React.FunctionComponent = () => {
   )
 }
 
-ReactDOM.render(<Control />, document.querySelector('#control'))
+ReactDOM.render(<Control />, document.querySelector('#tools-panel'))
