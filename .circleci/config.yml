@@ -37,13 +37,13 @@ jobs:
           command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
       - restore_cache:
           keys:
-            - test-v1-dependencies-{{ checksum "yarn.lock" }}
-            - test-v1-dependencies
+            - v1.1-dependencies-{{ checksum "yarn.lock" }}
+            - v1.1-dependencies
       - run:
           name: Install Dependencies
           command: yarn
       - save_cache:
-          key: test-v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v1.1-dependencies-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
             - .yarn-cache
@@ -62,13 +62,13 @@ jobs:
           command: bash <(curl -s https://codecov.io/bash)
 
       - restore_cache:
-          key: v1-vuln-scans-{{ checksum "yarn.lock" }}
+          key: v1.1-vuln-scans-{{ checksum "yarn.lock" }}
       - run:
           name: Vulnerability Tests
           command: yarn test:vulns
       # https://discuss.circleci.com/t/add-mechanism-to-update-existing-cache-key/9014/12
       - save_cache:
-          key: v1-vuln-scans-{{ checksum "yarn.lock" }}-{{ epoch }}
+          key: v1.1-vuln-scans-{{ checksum "yarn.lock" }}-{{ epoch }}
           paths:
             - .vuln-scans
 
@@ -128,13 +128,13 @@ jobs:
           command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies
+            - v1.1-dependencies-{{ checksum "yarn.lock" }}
+            - v1.1-dependencies
       - run:
           name: Install Dependencies
           command: yarn
       - save_cache:
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v1.1-dependencies-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
             - .yarn-cache
