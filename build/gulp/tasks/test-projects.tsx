@@ -199,6 +199,47 @@ task('test:projects:rollup', async () => {
   logger(`✔️Browser test was passed`)
 })
 
+task('test:projects:webpack', async () => {
+  const logger = log('test:projects:webpack')
+
+  const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/webpack')
+  const tmpDirectory = tmp.dirSync({ prefix: 'stardust-' }).name
+
+  logger(`✔️Temporary directory was created: ${tmpDirectory}`)
+
+  const dependencies = [
+    '@types/react',
+    '@types/react-dom',
+    'fork-ts-checker-webpack-plugin',
+    'react',
+    'react-dom',
+    'ts-loader',
+    'typescript',
+    'webpack',
+    'webpack-cli',
+  ].join(' ')
+  await runIn(tmpDirectory)(`yarn add ${dependencies}`)
+  logger(`✔️Dependencies were installed`)
+
+  const packedPackages = await packStardustPackages(logger)
+  await addResolutionPathsForStardustPackages(tmpDirectory, packedPackages)
+  await runIn(tmpDirectory)(`yarn add ${packedPackages['@stardust-ui/react']}`)
+  logger(`✔️Stardust UI packages were added to dependencies`)
+
+  fs.mkdirSync(path.resolve(tmpDirectory, 'src'))
+  fs.copyFileSync(scaffoldPath('index.tsx'), path.resolve(tmpDirectory, 'src/index.tsx'))
+
+  fs.copyFileSync(scaffoldPath('tsconfig.json'), path.resolve(tmpDirectory, 'tsconfig.json'))
+  fs.copyFileSync(
+    scaffoldPath('webpack.config.js'),
+    path.resolve(tmpDirectory, 'webpack.config.js'),
+  )
+  logger(`✔️Source and configs were copied`)
+
+  await runIn(tmpDirectory)(`yarn webpack`)
+  logger(`✔️Example project was successfully built: ${tmpDirectory}`)
+})
+
 task(
   'test:projects',
   series('dll', 'bundle:all-packages', parallel('test:projects:cra-ts', 'test:projects:rollup')),
