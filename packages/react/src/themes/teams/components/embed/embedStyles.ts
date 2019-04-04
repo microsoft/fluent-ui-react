@@ -24,7 +24,7 @@ export default {
       }),
       '::after': {
         background: `0 no-repeat rgba(0,0,0,.25)`,
-        backgroundPositionX: p.active ? pxToRem(3) : pxToRem(3),
+        backgroundPositionX: pxToRem(3),
         borderWidth: pxToRem(2),
         borderStyle: 'solid',
         borderColor: 'transparent',
