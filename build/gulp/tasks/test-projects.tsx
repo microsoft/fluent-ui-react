@@ -242,5 +242,9 @@ task('test:projects:webpack', async () => {
 
 task(
   'test:projects',
-  series('dll', 'bundle:all-packages', parallel('test:projects:cra-ts', 'test:projects:rollup')),
+  series(
+    'dll',
+    'bundle:all-packages',
+    parallel('test:projects:cra-ts', 'test:projects:rollup', 'test:projects:webpack'),
+  ),
 )
