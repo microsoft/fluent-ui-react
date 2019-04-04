@@ -26,7 +26,7 @@ const getIntentColorsFromProps = (
 
   if (p.info) {
     return {
-      color: colors.grey[900],
+      color: siteVars.gray02,
       backgroundColor: siteVars.gray09,
       borderColor: siteVars.gray08,
     }
@@ -62,7 +62,8 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     position: 'relative',
     width: '100%',
     boxSizing: 'border-box',
-    border: v.border,
+    borderStyle: v.borderStyle,
+    borderWidth: v.borderWidth,
     borderRadius: v.borderRadius,
     minHeight: v.minHeight,
     padding: v.padding,
@@ -74,18 +75,21 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
       borderRadius: `${v.borderRadius} ${v.borderRadius} 0 0`,
     }),
 
-    ...(p.attached === 'bottom' && { borderRadius: `0 0 ${v.borderRadius} ${v.borderRadius}` }),
+    ...(p.attached === 'bottom' && {
+      borderRadius: `0 0 ${v.borderRadius} ${v.borderRadius}`,
+    }),
   }),
 
   content: (): ICSSInJSStyle => ({
     flexGrow: 1,
   }),
 
-  action: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
+  action: ({ variables: v }): ICSSInJSStyle => ({
     height: v.actionSize,
     minWidth: v.actionSize,
+    margin: `-${v.borderWidth} 0`,
     color: v.actionColor || 'currentColor',
-    ...(p.info && { color: siteVariables.gray02 }),
+    ':focus': { outline: 0 },
   }),
 }
 

@@ -14,8 +14,8 @@ definitions.push({
     property[propertyDependingOn] = attributeExpectedValue
 
     const expectedResult = parameters.behavior(property).attributes!.root[attributeToBeAdded]
-    expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toEqual(
-      testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toEqual(
+      testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
     )
   },
 })
@@ -65,8 +65,8 @@ definitions.push({
     const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
       attributeToBeAdded
     ]
-    expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toEqual(
-      testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toEqual(
+      testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
     )
   },
 })
@@ -88,7 +88,9 @@ definitions.push({
     const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
       attributeToBeAdded
     ]
-    expect(expectedResult).toEqual(testHelper.convertToBooleanIfApplicable(attributeExpectedValue))
+    expect(expectedResult).toEqual(
+      testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
+    )
 
     // when property depending on is undefined, then there should not be 'aria' attribute added
     const propertyDependingOnValue = undefined
@@ -120,7 +122,7 @@ definitions.push({
       attributeToBeAdded
     ]
     expect(expectedResult).toEqual(
-      testHelper.convertToBooleanIfApplicable(propertyDependingOnValue),
+      testHelper.convertToMatchingTypeIfApplicable(propertyDependingOnValue),
     )
   },
 })
@@ -138,8 +140,8 @@ definitions.push({
     const expectedResultAttributeDefined = parameters.behavior(propertyWithOverride).attributes[
       component
     ][attributeToBeAdded]
-    expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeDefined)).toEqual(
-      testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAdded),
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAttributeDefined)).toEqual(
+      testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAdded),
     )
   },
 })
@@ -155,8 +157,8 @@ definitions.push({
     propertyWithOverride[overridingProperty] = valueOfAttributeToBeAdded
     const expectedResultAttributeDefined = parameters.behavior(propertyWithOverride).attributes
       .root[attributeToBeAdded]
-    expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeDefined)).toEqual(
-      testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAdded),
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAttributeDefined)).toEqual(
+      testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAdded),
     )
   },
 })
@@ -173,16 +175,16 @@ function testMethodConditionallyAddAttribute(
   const propertyWithAriaSelected = {}
   const expectedResultAttributeNotDefined = parameters.behavior(propertyWithAriaSelected)
     .attributes[component][attributeToBeAdded]
-  expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeNotDefined)).toEqual(
-    testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAddedOtherwise),
+  expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAttributeNotDefined)).toEqual(
+    testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAddedOtherwise),
   )
 
   propertyWithAriaSelected[propertyDependsOn] = valueOfProperty
   const expectedResultAttributeDefined = parameters.behavior(propertyWithAriaSelected).attributes[
     component
   ][attributeToBeAdded]
-  expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeDefined)).toEqual(
-    testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAddedIfTrue),
+  expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAttributeDefined)).toEqual(
+    testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAddedIfTrue),
   )
 }
 
@@ -261,16 +263,16 @@ definitions.push({
     const [attributeToBeAdded, attributeExpectedValue] = [...parameters.props]
     const property = {}
     const expectedResult = parameters.behavior(property).attributes.root[attributeToBeAdded]
-    expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toBe(
-      testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toBe(
+      testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
     )
 
     const propertyWithAlt = { alt: 'mockText' }
     const expectedResultWithAlt = parameters.behavior(propertyWithAlt).attributes.root[
       attributeToBeAdded
     ]
-    expect(testHelper.convertToBooleanIfApplicable(expectedResultWithAlt)).toBe(
-      testHelper.convertToBooleanIfApplicable(undefined),
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultWithAlt)).toBe(
+      testHelper.convertToMatchingTypeIfApplicable(undefined),
     )
   },
 })
@@ -291,19 +293,19 @@ definitions.push({
     property[propertyDependingOnFirst] = attributeExpectedValue
     property[propertyDependingOnSecond] = true
     const actualResult = parameters.behavior(property).attributes.root[attributeToBeAdded]
-    expect(testHelper.convertToBooleanIfApplicable(actualResult)).toEqual(
-      testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
+    expect(testHelper.convertToMatchingTypeIfApplicable(actualResult)).toEqual(
+      testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
     )
 
     const propertyFirstPropNegate = {}
-    propertyFirstPropNegate[propertyDependingOnFirst] = !testHelper.convertToBooleanIfApplicable(
-      attributeExpectedValue,
-    )
+    propertyFirstPropNegate[
+      propertyDependingOnFirst
+    ] = !testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue)
     propertyFirstPropNegate[propertyDependingOnSecond] = true
     const actualResultFirstPropertyNegate = parameters.behavior(propertyFirstPropNegate).attributes
       .root[attributeToBeAdded]
-    expect(testHelper.convertToBooleanIfApplicable(actualResultFirstPropertyNegate)).toEqual(
-      !testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
+    expect(testHelper.convertToMatchingTypeIfApplicable(actualResultFirstPropertyNegate)).toEqual(
+      !testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
     )
 
     const propertyFirstPropUndefined = {}
@@ -312,7 +314,7 @@ definitions.push({
     const actualResultFirstPropertyNegateUndefined = parameters.behavior(propertyFirstPropUndefined)
       .attributes.root[attributeToBeAdded]
     expect(
-      testHelper.convertToBooleanIfApplicable(actualResultFirstPropertyNegateUndefined),
+      testHelper.convertToMatchingTypeIfApplicable(actualResultFirstPropertyNegateUndefined),
     ).toEqual(undefined)
   },
 })
@@ -324,14 +326,14 @@ definitions.push({
     const [roleToBeAdded] = [...parameters.props]
     const property = {}
     const expectedResult = parameters.behavior(property).attributes.root.role
-    expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toBe(
-      testHelper.convertToBooleanIfApplicable(roleToBeAdded),
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toBe(
+      testHelper.convertToMatchingTypeIfApplicable(roleToBeAdded),
     )
 
     const propertyAsButton = { as: 'button' }
     const expectedResultAsButton = parameters.behavior(propertyAsButton).attributes.root.role
-    expect(testHelper.convertToBooleanIfApplicable(expectedResultAsButton)).toBe(
-      testHelper.convertToBooleanIfApplicable(undefined),
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAsButton)).toBe(
+      testHelper.convertToMatchingTypeIfApplicable(undefined),
     )
   },
 })
@@ -517,8 +519,8 @@ definitions.push({
   testMethod: (parameters: TestMethod) => {
     const propertyChecked = { checked: true }
     const propertyNotChecked = { checked: false }
-    expect(parameters.behavior(propertyChecked).attributes.root.tabIndex).toBe('0')
-    expect(parameters.behavior(propertyNotChecked).attributes.root.tabIndex).toBe('-1')
+    expect(parameters.behavior(propertyChecked).attributes.root.tabIndex).toBe(0)
+    expect(parameters.behavior(propertyNotChecked).attributes.root.tabIndex).toBe(-1)
   },
 })
 

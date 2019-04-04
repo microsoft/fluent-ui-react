@@ -1,5 +1,6 @@
 // TODO:
 // vertical - padding variable?
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -7,7 +8,6 @@ import * as React from 'react'
 import {
   AutoControlledComponent,
   childrenExist,
-  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
@@ -18,6 +18,10 @@ import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+
+export interface RadioGroupSlotClassNames {
+  item: string
+}
 
 export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -55,6 +59,10 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
   static displayName = 'RadioGroup'
 
   static className = 'ui-radiogroup'
+
+  static slotClassNames: RadioGroupSlotClassNames = {
+    item: `${RadioGroup.className}__item`,
+  }
 
   static create: Function
 
@@ -168,7 +176,7 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
 
     return _.map(items, item =>
       RadioGroupItem.create(item, {
-        defaultProps: { vertical },
+        defaultProps: { className: RadioGroup.slotClassNames.item, vertical },
         overrideProps: this.handleItemOverrides,
       }),
     )

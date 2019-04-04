@@ -28,7 +28,6 @@ const items = [
       content: (
         <Chat.Message
           reactionGroup={[{ icon: 'thumbs up', content: '8' }]}
-          reactionGroupPosition={'end'}
           content="I'm back!"
           author="John Doe"
           timestamp="Yesterday, 10:15 PM"

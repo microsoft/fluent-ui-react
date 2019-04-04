@@ -10,6 +10,7 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 - Respect `defaultTabbable` element when FocusZone container receives focus @sophieH29 ([#637](https://github.com/stardust-ui/react/pull/637))
 - Fix `FocusZone` - add `shouldResetActiveElementWhenTabFromZone` prop @sophieH29 ([#614](https://github.com/stardust-ui/react/pull/614))
 - Make `FocusZoneTabbableElements` a usual enum @layershifter ([#867](https://github.com/stardust-ui/react/pull/867))
+- Update tabindexes and focus alignment when item is focused programatically @sophieH29 ([#1098](https://github.com/stardust-ui/react/pull/1098))
 
 ### Features
 - Add embed mode for FocusZone and new Chat behavior ([#233](https://github.com/stardust-ui/react/pull/233))
@@ -59,7 +60,7 @@ This is a list of changes made to the Stardust copy of FocusTrapZone in comparis
 ### features
 - Add focus trap zone [#239](https://github.com/stardust-ui/react/pull/239)
     - Used Stardust utils instead of Fabric utilities:
-    - Used `eventStack`.
+    - Used `EventListener` [#949](https://github.com/stardust-ui/react/pull/949)
     - Extended `React.Component` instead of Fabric `BaseComponent`.
     - Used `ReactDOM.findDOMNode` reference instead of `createRef` for `_root`.
     - Got rid of `componentWillMount` as it deprecated in higher versions of React.

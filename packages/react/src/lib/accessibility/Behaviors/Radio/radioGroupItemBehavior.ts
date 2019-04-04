@@ -12,7 +12,7 @@ const radioGroupItemBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'radio',
-      tabIndex: props.checked ? '0' : '-1',
+      tabIndex: props.checked ? 0 : -1,
       'aria-checked': props.checked,
       'aria-disabled': !_.isNil(props['aria-disabled'])
         ? props['aria-disabled']

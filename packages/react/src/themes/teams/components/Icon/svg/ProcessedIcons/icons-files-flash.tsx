@@ -11,4 +11,5 @@ export default {
     </svg>
   ),
   styles: {},
+  exportedAs: 'files-flash',
 } as TeamsProcessedSvgIconSpec

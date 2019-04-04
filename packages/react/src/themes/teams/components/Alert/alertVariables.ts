@@ -1,10 +1,11 @@
 import { FontWeightProperty } from 'csstype'
 
 import { pxToRem } from '../../../../lib'
-import { SiteVariablesPrepared } from 'src/themes/types'
+import { SiteVariablesPrepared } from '../../../types'
 
 export interface AlertVariables {
-  border: string
+  borderStyle: string
+  borderWidth: string
   borderRadius: string
   backgroundColor: string
   borderColor: string
@@ -18,20 +19,20 @@ export interface AlertVariables {
 }
 
 export default (siteVars: SiteVariablesPrepared): AlertVariables => {
-  const alertHeight = 28
-  const borderSize = 1
+  const minHeight = pxToRem(28)
 
   return {
-    border: `${pxToRem(borderSize)} solid`,
+    borderStyle: 'solid',
+    borderWidth: '1px',
     borderRadius: pxToRem(3),
     backgroundColor: siteVars.colors.grey[50], // $app-white
     borderColor: siteVars.gray06,
     color: siteVars.gray02,
-    fontWeight: siteVars.fontWeightSemibold,
-    minHeight: pxToRem(alertHeight),
+    fontWeight: siteVars.fontWeightRegular,
+    minHeight,
     padding: `0 0 0 ${pxToRem(16)}`,
 
-    actionSize: pxToRem(alertHeight - 2 * borderSize),
+    actionSize: minHeight,
     actionColor: undefined,
   }
 }
