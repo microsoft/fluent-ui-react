@@ -37,13 +37,13 @@ jobs:
           command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies
+            - test-v1-dependencies-{{ checksum "yarn.lock" }}
+            - test-v1-dependencies
       - run:
           name: Install Dependencies
           command: yarn
       - save_cache:
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: test-v1-dependencies-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
             - .yarn-cache
