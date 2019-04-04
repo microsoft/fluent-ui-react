@@ -25,13 +25,13 @@ export interface EmbedProps extends UIComponentProps {
    * */
   accessibility?: Accessibility
 
-  /** Image source URL for when video isn't playing */
+  /** Image source URL for when video isn't playing. */
   placeholder?: string
 
   /** Whether the embedded object should be active. */
   active?: boolean
 
-  /** Whether the embedded object should start active */
+  /** Whether the embedded object should start active. */
   defaultActive?: boolean
 
   /** Shorthand for an embedded iframe. */
