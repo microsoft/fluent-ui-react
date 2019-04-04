@@ -72,7 +72,7 @@ jobs:
       - run:
           name: Project Tests
           command: yarn test:projects
-       - run:
+      - run:
           name: Circular Dependencies Tests
           command: yarn test:circulars
       - run:
