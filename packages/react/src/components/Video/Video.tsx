@@ -54,7 +54,7 @@ class Video extends UIComponent<ReactProps<VideoProps>> {
   }
 
   renderComponent({ ElementType, classes, unhandledProps }) {
-    const { controls, autoPlay, muted, loop } = this.props
+    const { controls, autoPlay, muted, loop, poster } = this.props
 
     return (
       <ElementType
@@ -64,11 +64,12 @@ class Video extends UIComponent<ReactProps<VideoProps>> {
         autoPlay={autoPlay}
         loop={loop}
         muted={muted}
+        poster={poster}
       />
     )
   }
 }
 
-Video.create = createShorthandFactory({ Component: Video })
+Video.create = createShorthandFactory({ Component: Video, mappedProp: 'src' })
 
 export default Video

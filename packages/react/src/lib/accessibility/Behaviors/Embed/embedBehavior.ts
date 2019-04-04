@@ -14,7 +14,7 @@ const embedBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       tabIndex: 0,
-      'aria-hidden': props['alt'] || props['title'] ? undefined : true,
+      'aria-hidden': props.alt || props.title ? undefined : true,
       role: 'presentation',
     },
   },

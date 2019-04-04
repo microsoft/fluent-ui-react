@@ -25,19 +25,19 @@ export interface EmbedProps extends UIComponentProps {
    * */
   accessibility?: Accessibility
 
-  /** Video source URL. */
-  src?: string
-
   /** Image source URL for when video isn't playing */
   placeholder?: string
 
-  /** whether the gif should be playing */
+  /** Whether the embedded object should be active. */
   active?: boolean
 
+  /** Whether the embedded object should start active */
   defaultActive?: boolean
 
+  /** Shorthand for an embedded iframe. */
   iframe?: ShorthandValue
 
+  /** Shorthand for an embedded video. */
   video?: ShorthandValue
 }
 
@@ -80,12 +80,22 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
 
   static autoControlledProps = ['active']
 
+  actionHandlers: AccessibilityActionHandlers = {
+    performClick: event => this.handleClick(event),
+  }
+
+  handleClick = e => {
+    e.stopPropagation()
+    e.preventDefault()
+    this.setState({ active: !this.state.active })
+  }
+
   getInitialAutoControlledState(): EmbedState {
     return { active: false }
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
-    const { placeholder, src, video, iframe } = this.props
+    const { placeholder, video, iframe } = this.props
 
     return (
       <ElementType
@@ -95,10 +105,10 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         onClick={this.handleClick}
       >
-        {this.state.active
-          ? Video.create(video || ElementType, {
+        {this.state.active ? (
+          <>
+            {Video.create(video, {
               defaultProps: {
-                src,
                 placeholder,
                 autoPlay: true,
                 muted: true,
@@ -110,29 +120,22 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
                   height: variables.height,
                 },
               },
-            })
-          : Image.create(placeholder, {
-              defaultProps: {
-                styles: styles.image,
-                variables: {
-                  width: variables.width,
-                  height: variables.height,
-                },
-              },
             })}
-        {Box.create(iframe, { defaultProps: { as: 'iframe' } })}
+            {Box.create(iframe, { defaultProps: { as: 'iframe' } })}
+          </>
+        ) : (
+          Image.create(placeholder, {
+            defaultProps: {
+              styles: styles.image,
+              variables: {
+                width: variables.width,
+                height: variables.height,
+              },
+            },
+          })
+        )}
       </ElementType>
     )
-  }
-
-  protected actionHandlers: AccessibilityActionHandlers = {
-    performClick: event => this.handleClick(event),
-  }
-
-  private handleClick = e => {
-    e.stopPropagation()
-    e.preventDefault()
-    this.setState({ active: !this.state.active })
   }
 }
 
