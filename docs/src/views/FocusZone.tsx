@@ -119,7 +119,8 @@ export default () => (
     <p>To FocusZone next props can be applied:</p>
     <ul>
       <li>
-        <b>as</b> - Element type the root element will use. Default is "div".
+        <b>as</b> - Element type the root element will use. Default is "div". Only applies to
+        FocusZone's container in {code('Wrap')} mode.
         <p>Type: {code('React.ReactType')}</p>
       </li>
       <li>

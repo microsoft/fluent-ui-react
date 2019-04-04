@@ -19,8 +19,13 @@ export default () => (
     </ul>
     <Header as="h2">Overview</Header>
     <p>
-      AutoFocusZone is used to focus inner element on mount. For example, when we want to focus
-      inner element in Popup when it mounts, but still without focus trap.
+      AutoFocusZone can wrap a component and is used to grab focus and put it to an inner element
+      when the component mounts. For example, it is needed to focus an inner element in the Popup
+      when it mounts.
+    </p>
+    <p>
+      If you need both - grabbing the focus and trap the focus in the component - use{' '}
+      {link('FocusTrapZone.', '/focus-trap-zone')}
     </p>
     <Header as="h2">Usage</Header>
     <p>

@@ -50,19 +50,22 @@ export default () => (
         </li>
         <li>
           <b>focusZone</b> - Focus Zone provides arrow key navigation within component's items, for
-          example, in menu, list, toolbar, grid etc. and at the same time allows tabbing between
-          these navigable components. {link('Read more about FocusZone.', '/focus-zone')}
+          example, in menu, list, toolbar, grid etc. and at the same time it is possible to TAB
+          between these navigable components (navigate between Menu and List components by pressing
+          TAB and use arrow keys to navigate between their items).{' '}
+          {link('Read more about FocusZone.', '/focus-zone')}
           <p>Type: {code('{ mode: FocusZoneMode, props?: FocusZoneProps }')}.</p>
         </li>
         <li>
-          <b>focusTrap</b> - FocusTrapZone traps focus within HTML content. If true, is it enabled
-          with default properties or can be modified by setting object.{' '}
+          <b>focusTrap</b> - FocusTrapZone grabs and traps focus within HTML content. If true, is it
+          enabled with default properties or can be modified by setting object.{' '}
           {link('Read more about FocusTrapZone.', '/focus-trap-zone')}
           <p>Type: {code('FocusTrapZoneProps | boolean')}.</p>
         </li>
         <li>
-          <b>autoFocus</b> - AutoFocusZone is used to focus inner element on mount.{' '}
-          {link('Read more about AutoFocusZone.', '/auto-focus-zone')}
+          <b>autoFocus</b> - AutoFocusZone is used to grab focus and put it to inner element when
+          component mounts. If true, is it enabled with default properties or can be modified by
+          setting object. {link('Read more about AutoFocusZone.', '/auto-focus-zone')}
           <p>Type: {code('AutoFocusZoneProps | boolean')}.</p>
         </li>
       </ul>
@@ -236,7 +239,7 @@ export default () => (
       The default and other available behaviors for all the components can be found in the{' '}
       {link('documentation', 'https://stardust-ui.github.io/react/')}, together with notes on other
       accessibility considerations for using the component. The examples show the recommended way of
-      using the components in the different variations - it is possible to edit example's code, see
+      using the components in the different variations. It is possible to edit example's code, see
       the rendered HTML, change themes and validate the rendering in RTL scenario, or with different
       behaviors.
     </p>
