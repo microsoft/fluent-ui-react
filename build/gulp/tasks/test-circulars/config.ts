@@ -13,9 +13,4 @@ export const cyclesToSkip = [
     reactPackageDist('components/Reaction/Reaction.js'),
     reactPackageDist('components/Reaction/ReactionGroup.js'),
   ],
-  [
-    reactPackageDist('themes/teams/components/Icon/svg/icons/callPstn.js'),
-    reactPackageDist('themes/teams/components/Icon/svg/index.js'),
-    reactPackageDist('themes/teams/components/Icon/svg/icons/index.js'),
-  ],
 ]
