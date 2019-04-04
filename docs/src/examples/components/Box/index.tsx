@@ -5,7 +5,7 @@ import { Alert } from '@stardust-ui/react'
 import Types from './Types'
 import { LayoutSuggestions } from 'docs/src/components/ComponentDoc/Suggestions'
 
-const HeaderExamples = () => (
+const BoxExamples = () => (
   <>
     <Alert styles={{ display: 'block' }} warning>
       <p>
@@ -36,4 +36,4 @@ const HeaderExamples = () => (
   </>
 )
 
-export default HeaderExamples
+export default BoxExamples
