@@ -58,7 +58,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('has the provided prop value + 1 when opened by ArrowDown', () => {
+    it('has the (provided prop value + 1) when opened by ArrowDown', () => {
       const highlightedIndex = 1
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
@@ -78,7 +78,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('has the provided prop value - 1 when opened by ArrowUp', () => {
+    it('has the provided (prop value - 1) when opened by ArrowUp', () => {
       const highlightedIndex = 1
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
@@ -138,7 +138,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('is defaultHighlightedIndex value at first opening', () => {
+    it('is defaultHighlightedIndex prop value at first opening', () => {
       const defaultHighlightedIndex = 1
       const wrapper = mountWithProvider(
         <Dropdown
@@ -198,7 +198,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('is set to 0 at searchQuery change and when highlightFirstItemOnOpen prop is provided', () => {
+    it('is set to 0 on searchQuery change and when highlightFirstItemOnOpen prop is provided', () => {
       const onSearchQueryChange = jest.fn()
       const wrapper = mountWithProvider(
         <Dropdown
