@@ -6,6 +6,7 @@ export { colorScheme } from './colors'
 //
 export const black = '#201f1f' // no mapping color
 
+// TODO: remove these colors
 export const brand = '#6264A7' // light theme brand - primary[500]
 export const brand02 = '#e2e2f6' // light theme brand14 - primary[100]
 export const brand04 = '#bdbde6' // light theme brand12 primary[200]

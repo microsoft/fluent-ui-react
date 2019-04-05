@@ -10,17 +10,20 @@ import { ColorVariants, ColorSchemeMapping } from 'src/themes/types'
 export const emphasisColors: EmphasisColors = {
   primary: {
     50: '#F4F4FC', // siteVariables.brand16
-    100: '#E2E2F6', // siteVariables.brand14
-    200: '#BDBDE6', // siteVariables.brand12
+    100: '#E2E2F6', // siteVariables.brand14, dark theme brand02
+    200: '#BDBDE6', // siteVariables.brand12, dark theme brand04
     300: '#8F90C1',
     400: '#6E70AE',
-    500: '#6264A7', // siteVariables.brand, siteVariables.brand06 (same color?)
+    500: '#6264A7', // siteVariables.brand, siteVariables.brand06 (same color?), dark theme brand, brand12
     600: '#55578D',
     700: '#4A4C78',
     800: '#414265',
-    900: '#33344A', // siteVariables.brand02
+    900: '#33344A', // siteVariables.brand02, dark theme brand16
     light04: '#464775', // no mapping color
     light08: '#8B8CC7',
+    dark06: '#a6a7dc',
+    dark08: '#8B8CC7', // same as light08
+    dark14: '#464775', // same as light04
   },
 }
 
