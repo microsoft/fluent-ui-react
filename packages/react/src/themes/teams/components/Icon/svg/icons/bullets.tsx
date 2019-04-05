@@ -9,7 +9,7 @@ export default {
       role="presentation"
       focusable="false"
       viewBox="8 8 16 16"
-      className={rtl ? classes.flipInRtl : classes.svg}
+      className={classes.svgFlippingInRtl}
     >
       <g>
         <g className={cx(teamsIconClassNames.outline, classes.outlinePart)}>
@@ -19,7 +19,7 @@ export default {
           <circle cx="10.5" cy="15.5" r="1" />
         </g>
         <g className={cx(teamsIconClassNames.filled, classes.filledPart)}>
-          <path d="M13.5 11.25h9a.75.75 0 0 0 0-1.5h-9a.75.75 0 0 0 0 1.5zM22.5 14.75h-9a.75.75 0 0 0 0 1.5h9a.75.75 0 0 0 0-1.5zM22.5 19.75h-9a.75.75 0 0 0 0 1.5h9a.75.75 0 0 0 0-1.5z" />
+          <path d="M13.5 11.25h9a.75.75 0 0 0 0-1.5h-9a.75.75 0 0 0 0 1.5zM22.5 14iconStyles.ts.75h-9a.75.75 0 0 0 0 1.5h9a.75.75 0 0 0 0-1.5zM22.5 19.75h-9a.75.75 0 0 0 0 1.5h9a.75.75 0 0 0 0-1.5z" />
           <circle cx="10.5" cy="10.5" r="1" />
           <circle cx="10.5" cy="15.5" r="1" />
           <circle cx="10.5" cy="20.5" r="1" />

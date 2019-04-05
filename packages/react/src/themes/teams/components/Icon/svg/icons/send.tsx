@@ -4,12 +4,12 @@ import { TeamsSvgIconSpec } from '../types'
 import { teamsIconClassNames } from '../teamsIconClassNames'
 
 export default {
-  icon: ({ classes, rtl }) => (
+  icon: ({ classes }) => (
     <svg
       role="presentation"
       focusable="false"
       viewBox="8 8 16 16"
-      className={rtl ? classes.flipInRtl : classes.svg}
+      className={classes.svgFlippingInRtl}
     >
       <g>
         <path

@@ -92,7 +92,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       backgroundColor: v.backgroundColor,
       boxSizing: isFontBased ? 'content-box' : 'border-box',
 
-      // overriding the base theme default rtl behavior as in teams theme the flipInRtl slot is used for this
+      // overriding the base theme default rtl behavior as in teams theme the svg/svgFlippingInRtl slots are used for this
       ...((rtl || !isFontBased) && {
         transform: 'unset',
       }),
@@ -150,7 +150,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
     }
   },
 
-  flipInRtl: config => {
+  svgFlippingInRtl: config => {
     const { props, theme } = config
     return {
       ...callable(iconStyles.svg)(config),
