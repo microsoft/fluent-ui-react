@@ -157,9 +157,15 @@ describe('Dropdown', () => {
           open: true,
         }),
       )
+    })
 
+    it('is null on second and subsequent open even though defaultHighlightedIndex prop is passed', () => {
+      const wrapper = mountWithProvider(
+        <Dropdown defaultHighlightedIndex={1} onOpenChange={onOpenChange} items={items} />,
+      )
       wrapper
         .find({ className: Dropdown.slotClassNames.triggerButton })
+        .simulate('click')
         .simulate('click')
         .simulate('click')
       expect(onOpenChange).toBeCalledTimes(3)
