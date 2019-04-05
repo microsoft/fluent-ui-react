@@ -190,5 +190,4 @@ jobs:
           path: cypress/results
       - store_artifacts:
           path: cypress/videos
-      - store_artifacts:
           path: cypress/screenshots
