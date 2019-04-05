@@ -16,6 +16,12 @@ describe('Dropdown', () => {
       cy.get(triggerButton).should('have.text', 'Bruce Wayne')
     })
 
+    it('should fail haha', () => {
+      cy.get(triggerButton).click()
+      cy.get(`${item}:nth-child(2)`).click()
+      cy.get(triggerButton).should('have.text', 'Bruce Wayne')
+    })
+
     it('selects item on click by opening with toggle indicator click', () => {
       cy.get(toggleIndicatior).click()
       cy.get(`${item}:nth-child(1)`).click()
