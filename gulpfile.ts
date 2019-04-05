@@ -26,6 +26,7 @@ require('./build/gulp/tasks/test-projects')
 require('./build/gulp/tasks/perf')
 require('./build/gulp/tasks/test-vulns')
 require('./build/gulp/tasks/cypress')
+require('./build/gulp/tasks/test-circulars')
 
 // global tasks
 task('build', series('dll', parallel('bundle:all-packages', 'build:docs')))
