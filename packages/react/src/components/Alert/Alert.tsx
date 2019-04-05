@@ -10,7 +10,7 @@ import {
   childrenExist,
   rtlTextContainer,
 } from '../../lib'
-import { RenderResultConfig } from 'src/lib/renderComponent'
+import { RenderResultConfig } from '../../lib/renderComponent'
 import { alertBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../types'
