@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Button, Divider, Icon, Provider, Text, Animation, Header } from '@stardust-ui/react'
+import { Button, Icon, Provider, Text, Animation, Header } from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
+import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
 export default () => (
   <DocPage title="Theming">
@@ -26,7 +27,7 @@ export default () => (
 
     <p>Variables are defined at two levels, the site level and the component level.</p>
 
-    <Header a="h3" content="Site variables" />
+    <Header as="h3" content="Site variables" />
     <p>
       Site variables define your site, app, or business. These are global values, like brand colors
       and typography, that are shared across many components.
@@ -75,7 +76,7 @@ export default () => (
       )}
     />
 
-    <Header a="h3" content="Component variables" />
+    <Header as="h3" content="Component variables" />
     <p>
       Component variables define theme values for a specific component. This includes information
       such as colors, borders, or box model values.
@@ -299,24 +300,9 @@ export default () => (
       structure of the <code>animation</code> property in any of the Stardust components.
     </p>
 
-    <br />
-    <Divider size={1} />
-    <br />
-    <Button
-      as={NavLink}
-      content="Accessibility"
-      icon="arrow left"
-      iconPosition="before"
-      primary
-      to="/accessibility"
-    />
-    <Button
-      as={NavLink}
-      content="Theming Examples"
-      icon="arrow right"
-      iconPosition="after"
-      primary
-      to="theming-examples"
+    <GuidesNavigationFooter
+      previous={{ name: 'Accessibility', url: 'accessibility' }}
+      next={{ name: 'Theming Examples', url: 'theming-examples' }}
     />
   </DocPage>
 )

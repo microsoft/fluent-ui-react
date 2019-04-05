@@ -1,7 +1,7 @@
 import { FontWeightProperty } from 'csstype'
 
 import { pxToRem } from '../../../../lib'
-import { SiteVariablesPrepared } from 'src/themes/types'
+import { SiteVariablesPrepared } from '../../../types'
 
 export interface AlertVariables {
   borderStyle: string
@@ -28,7 +28,7 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     backgroundColor: siteVars.colors.grey[50], // $app-white
     borderColor: siteVars.colors.grey.light06,
     color: siteVars.colors.grey.light02,
-    fontWeight: siteVars.fontWeightSemibold,
+    fontWeight: siteVars.fontWeightRegular,
     minHeight,
     padding: `0 0 0 ${pxToRem(16)}`,
 

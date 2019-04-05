@@ -1,10 +1,10 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
   childrenExist,
-  customPropTypes,
   UIComponent,
   commonPropTypes,
   rtlTextContainer,
@@ -16,6 +16,10 @@ import { ReactProps, ShorthandValue } from '../../types'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+
+export interface ChatSlotClassNames {
+  item: string
+}
 
 export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -32,9 +36,13 @@ export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
  * A Chat displays messages between users.
  */
 class Chat extends UIComponent<ReactProps<ChatProps>, any> {
+  static displayName = 'Chat'
+
   static className = 'ui-chat'
 
-  static displayName = 'Chat'
+  static slotClassNames: ChatSlotClassNames = {
+    item: `${Chat.className}__item`,
+  }
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -66,7 +74,11 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        {childrenExist(children) ? children : _.map(items, item => ChatItem.create(item))}
+        {childrenExist(children)
+          ? children
+          : _.map(items, item =>
+              ChatItem.create(item, { defaultProps: { className: Chat.slotClassNames.item } }),
+            )}
       </ElementType>
     )
   }

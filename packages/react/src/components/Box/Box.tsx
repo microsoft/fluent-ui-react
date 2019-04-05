@@ -17,7 +17,7 @@ export interface BoxProps
     ChildrenComponentProps {}
 
 /**
- * A Box is an abstract layout component, is frequently used for slots in other Stardust components.
+ * A Box is an abstract component, is frequently used for slots in other Stardust components.
  * By default it renders a `div` without any styles.
  */
 const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<BoxProps>({

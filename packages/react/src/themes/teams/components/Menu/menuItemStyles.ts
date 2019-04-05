@@ -48,12 +48,12 @@ const getFocusedStyles = ({
   variables: MenuVariables
   colorScheme: any
 }): ICSSInJSStyle => {
-  const { primary, color, underlined, isFromKeyboard, active, vertical, pointing } = props
+  const { primary, color, underlined, isFromKeyboard, active, vertical } = props
   if (active && !underlined && !vertical) return {}
   return {
     color: primary || color ? colorScheme.foregroundFocus : v.colorActive,
     background: v.backgroundColorFocus || colorScheme.backgroundFocus,
-    ...(vertical && isFromKeyboard && !pointing && !primary
+    ...(vertical && isFromKeyboard && !primary
       ? {
           border: `solid 1px ${v.borderColorFocus}`,
           outline: `solid 1px ${v.outlineColorFocus}`,
@@ -92,31 +92,11 @@ const getHoverStyles = ({
   }
 }
 
-const itemSeparator = ({ props, variables: v, theme, colorScheme }): ICSSInJSStyle => {
-  const { iconOnly, pills, primary, underlined, vertical } = props
-
-  return (
-    !vertical &&
-    !pills &&
-    !underlined &&
-    !iconOnly && {
-      '::before': {
-        position: 'absolute',
-        content: '""',
-        top: 0,
-        right: 0,
-        width: pxToRem(1),
-        height: '100%',
-        ...(primary
-          ? { background: v.primaryBorderColor /* TODO: check this again */ }
-          : { background: v.borderColor || colorScheme.borderDefault }),
-      },
-    }
-  )
-}
-
-const pointingBeak = ({ props, variables: v, colorScheme }): ICSSInJSStyle => {
-  const { pointing } = props
+const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
+  props,
+  variables: v,
+}): ICSSInJSStyle => {
+  const { pointing, primary } = props
 
   let top: string
   let borders: ICSSInJSStyle
@@ -211,34 +191,36 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         boxShadow: 'none',
       }),
 
-      ...(pointing &&
-        vertical && {
-          borderTopLeftRadius: `${pxToRem(3)}`,
-          borderTopRightRadius: `${pxToRem(3)}`,
-          ...(pointing === 'end'
-            ? { borderRight: `${pxToRem(3)} solid transparent` }
-            : { borderLeft: `${pxToRem(3)} solid transparent` }),
-          marginBottom: verticalPointingBottomMargin,
+      // item separator
+      ...(!vertical &&
+        !pills &&
+        !underlined &&
+        !iconOnly && {
+          boxShadow: `-1px 0 0 0 ${primary ? v.primaryBorderColor : v.borderColor} inset`,
         }),
-
-      ...itemSeparator({ props, variables: v, theme, colorScheme }),
 
       // active styles
       ...(active && {
         ...getActionStyles({ props, variables: v, colorScheme }),
 
         ...(pointing &&
-          (vertical
-            ? pointing === 'end'
-              ? {
-                  borderRight: `${pxToRem(3)} solid ${v.verticalPointingBorderColor ||
-                    colorScheme.borderActive}`,
-                }
-              : {
-                  borderLeft: `${pxToRem(3)} solid ${v.verticalPointingBorderColor ||
-                    colorScheme.borderActive}`,
-                }
-            : pointingBeak({ props, variables: v, colorScheme }))),
+          vertical &&
+          !isFromKeyboard && {
+            '::before': {
+              content: `''`,
+              position: 'absolute',
+              width: pxToRem(3),
+              height: `calc(100% + ${pxToRem(4)})`,
+              top: pxToRem(-2),
+              backgroundColor: v.pointingIndicatorBackgroundColor,
+              ...(pointing === 'end' ? { right: pxToRem(-2) } : { left: pxToRem(-2) }),
+            },
+          }),
+
+        ...(pointing &&
+          !vertical && {
+            ...pointingBeak({ props, variables: v, theme, colors }),
+          }),
       }),
 
       ...(iconOnly && {

@@ -5,7 +5,7 @@ import { ColorSchemeMapping } from '../../themes/types'
 //
 
 export const accessibleYellow = '#ffff01'
-export const accessibleGreen = '#3ff23f'
+export const accessibleGreen = '#3ff23f' // always disabled color in high contrast
 export const accessibleCyan = '#1aebff'
 
 export const red = '#f00'

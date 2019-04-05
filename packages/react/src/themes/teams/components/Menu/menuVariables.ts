@@ -35,6 +35,8 @@ export interface MenuVariables {
   verticalPointingBorderColor: string
   verticalBackgroundColorFocus: string
 
+  pointingIndicatorBackgroundColor: string
+
   underlinedBottomBorderWidth: string
   primaryBorderColor: string
 
@@ -77,6 +79,8 @@ export default (siteVars: any): MenuVariables => {
     verticalItemBorderColor: 'transparent',
     verticalPointingBorderColor: siteVars.colorScheme.primary.borderActive, // TODO: why is the default having primary color?!
     verticalBackgroundColorFocus: siteVars.colors.grey.light09,
+
+    pointingIndicatorBackgroundColor: siteVars.colors.primary[500],
 
     underlinedBottomBorderWidth: pxToRem(2),
     primaryBorderColor: siteVars.colors.grey.light10,

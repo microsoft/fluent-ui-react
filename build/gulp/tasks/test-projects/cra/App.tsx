@@ -8,7 +8,6 @@ import {
   Header,
   Icon,
   Image,
-  Indicator,
   Input,
   Popup,
   Provider,
@@ -31,7 +30,6 @@ class App extends React.Component {
           <Divider />
           <Header content="This is " />
           <Image src="//placehold.it" />
-          <Indicator />
           <Input placeholder="Type here" />
           <Popup trigger={<Button content="Popup" />} content="Popup content" />
         </div>

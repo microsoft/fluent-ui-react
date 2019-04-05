@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -8,7 +9,6 @@ import {
   childrenExist,
   commonPropTypes,
   createShorthandFactory,
-  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   rtlTextContainer,
@@ -16,6 +16,10 @@ import {
 import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
+
+export interface TreeSlotClassNames {
+  item: string
+}
 
 export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active subtree. */
@@ -56,9 +60,13 @@ export interface TreeState {
 class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
   static create: Function
 
+  static displayName = 'Tree'
+
   static className = 'ui-tree'
 
-  static displayName = 'Tree'
+  static slotClassNames: TreeSlotClassNames = {
+    item: `${Tree.className}__item`,
+  }
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -122,6 +130,7 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
     return _.map(items, (item: ShorthandValue, index: number) =>
       TreeItem.create(item, {
         defaultProps: {
+          className: Tree.slotClassNames.item,
           index,
           exclusive,
           renderItemTitle,

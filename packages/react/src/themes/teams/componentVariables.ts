@@ -40,6 +40,8 @@ export { default as Label } from './components/Label/labelVariables'
 
 export { default as Layout } from './components/Layout/layoutVariables'
 
+export { default as Loader } from './components/Loader/loaderVariables'
+
 export { default as ItemLayout } from './components/ItemLayout/itemLayoutVariables'
 
 export { default as ListItem } from './components/List/listItemVariables'
