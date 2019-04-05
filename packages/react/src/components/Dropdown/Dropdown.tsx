@@ -765,16 +765,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     ) => {
       switch (keyboardKey.getCode(e)) {
         case keyboardKey.Tab:
-          if (this.state.open) {
-            if (!_.isNil(highlightedIndex) && this.getItemsFilteredBySearchQuery().length) {
-              selectItemAtIndex(highlightedIndex)
-              if (!this.props.moveFocusOnTab && this.props.multiple) {
-                e.preventDefault()
-              }
-            } else {
-              toggleMenu()
-            }
-          }
+          this.handleTabSelection(e, highlightedIndex, selectItemAtIndex, toggleMenu)
           break
         case keyboardKey.ArrowLeft:
           if (!rtl) {
@@ -826,6 +817,28 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       onInputKeyDown: (e: React.SyntheticEvent, searchInputProps: DropdownSearchInputProps) => {
         handleInputKeyDown(e, searchInputProps)
       },
+    }
+  }
+
+  /**
+   * Custom Tab selection logic, at least until Downshift will implement selection on blur.
+   * Also keeps focus on multiple selection dropdown when selecting by Tab.
+   */
+  private handleTabSelection = (
+    e: React.SyntheticEvent,
+    highlightedIndex: number,
+    selectItemAtIndex: (highlightedIndex: number) => void,
+    toggleMenu: () => void,
+  ): void => {
+    if (this.state.open) {
+      if (!_.isNil(highlightedIndex) && this.getItemsFilteredBySearchQuery().length) {
+        selectItemAtIndex(highlightedIndex)
+        if (!this.props.moveFocusOnTab && this.props.multiple) {
+          e.preventDefault()
+        }
+      } else {
+        toggleMenu()
+      }
     }
   }
 
@@ -909,16 +922,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   ) => {
     switch (keyboardKey.getCode(e)) {
       case keyboardKey.Tab:
-        if (this.state.open) {
-          if (!_.isNil(highlightedIndex) && this.getItemsFilteredBySearchQuery().length) {
-            selectItemAtIndex(highlightedIndex)
-            if (!this.props.moveFocusOnTab && this.props.multiple) {
-              e.preventDefault()
-            }
-          } else {
-            toggleMenu()
-          }
-        }
+        this.handleTabSelection(e, highlightedIndex, selectItemAtIndex, toggleMenu)
         return
       case keyboardKey.Escape:
         accessibilityInputPropsKeyDown(e)
