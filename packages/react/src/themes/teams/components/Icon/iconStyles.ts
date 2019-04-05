@@ -92,11 +92,16 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       backgroundColor: v.backgroundColor,
       boxSizing: isFontBased ? 'content-box' : 'border-box',
 
+      // overriding the base theme default rtl behavior as in teams theme the flipInRtl slot is used for this
+      ...((rtl || !isFontBased) && {
+        transform: 'unset',
+      }),
+
       ...(isFontBased && {
         ...getFontStyles(getIconSize(size, v.sizeModifier), name),
         fontWeight: 900, // required for the fontAwesome to render
         color: getIconColor(color, v),
-
+        transform: `rotate(${rotate}deg)`,
         ...(disabled && {
           color: v.disabledColor,
         }),
@@ -105,11 +110,6 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       // overriding base theme border handling
       ...((bordered || v.borderColor) &&
         getBorderedStyles(v.borderColor || getIconColor(color, v))),
-
-      // overriding the base theme default rtl behavior as in teams theme the flipInRtl slot is used for this
-      ...(rtl && {
-        transform: 'unset',
-      }),
     }
   },
 
@@ -137,7 +137,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
     }
   },
 
-  svg: ({ props: { size, color, disabled }, variables: v }): ICSSInJSStyle => {
+  svg: ({ props: { size, color, disabled, rotate }, variables: v }): ICSSInJSStyle => {
     const iconSizeInRems = pxToRem(getIconSize(size, v.sizeModifier))
 
     return {
@@ -149,6 +149,8 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       ...(disabled && {
         fill: v.disabledColor,
       }),
+
+      transform: `rotate(${rotate}deg)`,
 
       ...getSvgStyle('svg'),
     }
