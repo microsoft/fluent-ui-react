@@ -4,7 +4,7 @@ import { TeamsSvgIconSpec } from '../types'
 import { teamsIconClassNames } from '../teamsIconClassNames'
 
 export default {
-  icon: ({ classes, rtl }) => (
+  icon: ({ classes }) => (
     <svg
       role="presentation"
       focusable="false"
