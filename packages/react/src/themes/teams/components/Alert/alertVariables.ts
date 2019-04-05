@@ -1,7 +1,7 @@
 import { FontWeightProperty } from 'csstype'
 
 import { pxToRem } from '../../../../lib'
-import { SiteVariablesPrepared } from 'src/themes/types'
+import { SiteVariablesPrepared } from '../../../types'
 
 export interface AlertVariables {
   borderStyle: string
