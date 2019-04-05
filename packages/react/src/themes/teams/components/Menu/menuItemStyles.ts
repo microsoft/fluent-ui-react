@@ -92,11 +92,8 @@ const getHoverStyles = ({
   }
 }
 
-const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
-  props,
-  variables: v,
-}): ICSSInJSStyle => {
-  const { pointing, primary } = props
+const pointingBeak = ({ props, variables: v, colorScheme }): ICSSInJSStyle => {
+  const { pointing } = props
 
   let top: string
   let borders: ICSSInJSStyle
@@ -219,7 +216,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
         ...(pointing &&
           !vertical && {
-            ...pointingBeak({ props, variables: v, theme, colors }),
+            ...pointingBeak({ props, variables: v, colorScheme }),
           }),
       }),
 
