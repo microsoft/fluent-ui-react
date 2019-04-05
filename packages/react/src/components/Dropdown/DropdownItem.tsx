@@ -98,6 +98,8 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
             styles: styles.content,
           },
         })}
+        truncateContent
+        truncateHeader
         {...accessibilityItemProps}
         {...unhandledProps}
       />

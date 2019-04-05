@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Truncate `content` and `header` of `ListItem` when used from `DropdownSelectedItem` @silviuavram ([#1161](https://github.com/stardust-ui/react/pull/1161))
+
 <!--------------------------------[ v0.26.0 ]------------------------------- -->
 ## [v0.26.0](https://github.com/stardust-ui/react/tree/v0.26.0) (2019-04-03)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.25.1...v0.26.0)
