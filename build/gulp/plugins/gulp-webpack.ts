@@ -3,9 +3,10 @@ import config from '../../../config'
 
 const { log, PluginError } = require('gulp-load-plugins')().util
 
-const webpackPlugin = (webpackConfig, cb) => {
+const webpackPlugin = (webpackConfig, cb, onComplete = (err: any, stats: any) => {}) => {
   webpack(webpackConfig).run((err, stats) => {
     const { errors, warnings } = stats.toJson()
+    onComplete(err, stats)
 
     log(stats.toString(config.compiler_stats))
 
