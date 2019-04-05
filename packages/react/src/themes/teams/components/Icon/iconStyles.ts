@@ -113,12 +113,6 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
     }
   },
 
-  flipInRtl: ({ props: p, theme: { rtl } }) => ({
-    ...(rtl && {
-      transform: `scaleX(-1) rotate(${-1 * p.rotate}deg)`,
-    }),
-  }),
-
   outlinePart: ({ props: p }): ICSSInJSStyle => {
     return {
       display: 'none',
@@ -153,6 +147,16 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       transform: `rotate(${rotate}deg)`,
 
       ...getSvgStyle('svg'),
+    }
+  },
+
+  flipInRtl: config => {
+    const { props, theme } = config
+    return {
+      ...callable(iconStyles.svg)(config),
+      ...(theme.rtl && {
+        transform: `scaleX(-1) rotate(${-1 * props.rotate}deg)`,
+      }),
     }
   },
 
