@@ -73,7 +73,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   static className = 'ui-list'
 
   static slotClassNames: ListSlotClassNames = {
-    item: ListItem.className,
+    item: `${List.className}__item`,
   }
 
   static propTypes = {

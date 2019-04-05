@@ -1,12 +1,16 @@
+import * as express from 'express'
 import * as fs from 'fs'
 import { parallel, series, task } from 'gulp'
 import { rollup as lernaAliases } from 'lerna-alias'
 import * as path from 'path'
+import * as portfinder from 'portfinder'
+import * as puppeteer from 'puppeteer'
 import sh from '../sh'
 import * as rimraf from 'rimraf'
 
 import config from '../../../config'
 import * as tmp from 'tmp'
+import * as http from 'http'
 
 type PackedPackages = Record<string, string>
 
@@ -81,6 +85,45 @@ const createReactApp = async (atTempDirectory: string, appName: string): Promise
   return appProjectPath
 }
 
+const startServer = (publicDirectory: string, listenPort: number) =>
+  new Promise<http.Server>((resolve, reject) => {
+    const app = express()
+    app.use(express.static(publicDirectory))
+
+    const server = app.listen(listenPort, config.server_host, e => {
+      if (e) return reject(e)
+
+      resolve(server)
+    })
+  })
+
+const performBrowserTest = async (publicDirectory: string, listenPort: number) => {
+  const server = await startServer(publicDirectory, listenPort)
+
+  const browser = await puppeteer.launch({
+    args: ['--single-process'], // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568
+  })
+  const page = await browser.newPage()
+  let error: Error
+
+  page.on('console', message => {
+    if (message.type() === 'error') {
+      error = new Error(`[Browser]: console.error(${message.text()})`)
+    }
+  })
+  page.on('pageerror', pageError => {
+    error = pageError
+  })
+
+  await page.goto(`http://${config.server_host}:${listenPort}`)
+
+  await page.close()
+  await browser.close()
+  await new Promise(resolve => server.close(resolve))
+
+  if (error) throw error
+}
+
 // Tests the following scenario
 //  - Create a new react test app
 //  - Add Stardust as a app's dependency
@@ -116,7 +159,8 @@ task('test:projects:cra-ts', async () => {
   logger('STEP 4. Build test project..')
   await runInTestApp(`yarn build`)
 
-  logger('Test project is built successfully!')
+  await performBrowserTest(testAppPath('build'), await portfinder.getPortPromise())
+  logger(`✔️Browser test was passed`)
 })
 
 task('test:projects:rollup', async () => {
@@ -145,10 +189,14 @@ task('test:projects:rollup', async () => {
 
   fs.copyFileSync(scaffoldPath('app.js'), path.resolve(tmpDirectory, 'app.js'))
   fs.copyFileSync(scaffoldPath('rollup.config.js'), path.resolve(tmpDirectory, 'rollup.config.js'))
+  fs.copyFileSync(scaffoldPath('index.html'), path.resolve(tmpDirectory, 'index.html'))
   logger(`✔️Source and bundler's config were created`)
 
   await runIn(tmpDirectory)(`yarn rollup -c`)
   logger(`✔️Example project was successfully built: ${tmpDirectory}`)
+
+  await performBrowserTest(tmpDirectory, await portfinder.getPortPromise())
+  logger(`✔️Browser test was passed`)
 })
 
 task(
