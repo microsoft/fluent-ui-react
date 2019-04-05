@@ -99,7 +99,7 @@ const pointingBeak = ({ props, variables: v, colorScheme }): ICSSInJSStyle => {
   let borders: ICSSInJSStyle
 
   const backgroundColor = v.backgroundColorActive || colorScheme.backgroundActive
-  const borderColor = v.borderColor
+  const borderColor = v.borderColor || colorScheme.borderDefault
 
   if (pointing === 'start') {
     borders = {
@@ -193,7 +193,9 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         !pills &&
         !underlined &&
         !iconOnly && {
-          boxShadow: `-1px 0 0 0 ${primary ? v.primaryBorderColor : v.borderColor} inset`,
+          boxShadow: `-1px 0 0 0 ${
+            primary ? v.primaryBorderColor : v.borderColor || colorScheme.borderDefault
+          } inset`,
         }),
 
       // active styles
