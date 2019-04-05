@@ -7,7 +7,9 @@ import sh from '../sh'
 // ----------------------------------------
 
 task('cypress:runner', cb => {
-  sh(`cypress run --reporter junit --reporter-options "mochaFile=results/my-test-output.xml"`)
+  sh(
+    `cypress run --reporter junit --reporter-options "mochaFile=cypress/results/my-test-output.xml"`,
+  )
     .then(() => {
       cb()
       process.exit(0)

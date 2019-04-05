@@ -186,6 +186,8 @@ jobs:
       - run:
           name: End to End Tests
           command: yarn test:e2e
+      - store_test_results:
+          path: cypress/results
       - store_artifacts:
           path: cypress/videos
       - store_artifacts:
