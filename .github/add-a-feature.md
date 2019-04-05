@@ -136,7 +136,9 @@ export interface DividerProps
 Strive to use stateless functional components when possible:
 
 ```tsx
-const MyComponent: React.FunctionalComponent = (props) => {
+export interface MyComponentProps {}
+
+const MyComponent: React.FunctionalComponent<MyComponentProps> = (props) => {
   return <div {...props} />
 }
 ```
@@ -144,7 +146,9 @@ const MyComponent: React.FunctionalComponent = (props) => {
 If you're component requires event handlers, it is a stateful class component. Want to know [why][8]?
 
 ```tsx
-class MyComponent extends AutoControlledComponent {
+export interface MyComponentProps {}
+
+class MyComponent extends AutoControlledComponent<MyComponentProps> {
   handleClick = (e) => {
     console.log('Clicked my component!')
   }
