@@ -3,6 +3,8 @@ import { AttachmentVariables } from '../../../teams/components/Attachment/attach
 export default (siteVariables: any): Partial<AttachmentVariables> => ({
   textColor: siteVariables.colors.grey[50],
   textColorHover: siteVariables.colors.grey[50],
-  borderColor: 'rgba(0, 0, 0, .05)',
+
+  backgroundColor: siteVariables.gray600,
+  borderColor: siteVariables.gray850,
   boxShadow: siteVariables.shadowLevel1,
 })
