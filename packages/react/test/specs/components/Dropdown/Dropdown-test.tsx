@@ -178,7 +178,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('is always 0 when highlightFirstItemOnOpen prop is provided', () => {
+    it('is 0 on first open when highlightFirstItemOnOpen prop is provided', () => {
       const wrapper = mountWithProvider(
         <Dropdown highlightFirstItemOnOpen onOpenChange={onOpenChange} items={items} />,
       )
@@ -193,7 +193,18 @@ describe('Dropdown', () => {
           open: true,
         }),
       )
-      triggerButton.simulate('click').simulate('click')
+    })
+
+    it('is 0 on second and subsequent open when highlightFirstItemOnOpen prop is provided', () => {
+      const wrapper = mountWithProvider(
+        <Dropdown highlightFirstItemOnOpen onOpenChange={onOpenChange} items={items} />,
+      )
+      const triggerButton = wrapper.find({ className: Dropdown.slotClassNames.triggerButton })
+
+      triggerButton
+        .simulate('click')
+        .simulate('click')
+        .simulate('click')
       expect(onOpenChange).toBeCalledTimes(3)
       expect(onOpenChange).toHaveBeenCalledWith(
         null,
@@ -204,7 +215,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('is set to 0 on searchQuery change and when highlightFirstItemOnOpen prop is provided', () => {
+    it('is 0 on searchQuery first change and when highlightFirstItemOnOpen prop is provided', () => {
       const onSearchQueryChange = jest.fn()
       const wrapper = mountWithProvider(
         <Dropdown
@@ -234,11 +245,26 @@ describe('Dropdown', () => {
           highlightedIndex: 0,
         }),
       )
+    })
+
+    it('is reset to 0 on searchQuery change and when highlightFirstItemOnOpen prop is provided', () => {
+      const onSearchQueryChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown
+          search
+          highlightFirstItemOnOpen
+          onSearchQueryChange={onSearchQueryChange}
+          onOpenChange={onOpenChange}
+          items={items}
+        />,
+      )
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
 
       searchInput
-        // now it's on index 1.
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
-        .simulate('change', { target: { value: 'in' } })
+        .simulate('click')
+        .simulate('change', { target: { value: 'i' } })
+        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' }) // now it's on index 1.
+        .simulate('change', { target: { value: 'in' } }) // now it should reset to 0.
       expect(onSearchQueryChange).toBeCalledTimes(2)
       expect(onSearchQueryChange).toHaveBeenCalledWith(
         null,
@@ -249,7 +275,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('is set to null at searchQuery change and when highlightFirstItemOnOpen prop is not provided', () => {
+    it('is null on searchQuery first change and when highlightFirstItemOnOpen prop is not provided', () => {
       const onSearchQueryChange = jest.fn()
       const wrapper = mountWithProvider(
         <Dropdown
@@ -278,10 +304,24 @@ describe('Dropdown', () => {
           highlightedIndex: null,
         }),
       )
+    })
+
+    it('is reset to null on searchQuery change and when highlightFirstItemOnOpen prop is not provided', () => {
+      const onSearchQueryChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown
+          search
+          onSearchQueryChange={onSearchQueryChange}
+          onOpenChange={onOpenChange}
+          items={items}
+        />,
+      )
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
 
       searchInput
-        // now it's on index 0.
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+        .simulate('click')
+        .simulate('change', { target: { value: 'i' } }) // no item highlighted.
+        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' }) // highlight on index 0.
         .simulate('change', { target: { value: 'in' } })
       expect(onSearchQueryChange).toBeCalledTimes(2)
       expect(onSearchQueryChange).toHaveBeenCalledWith(
