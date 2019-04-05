@@ -21,8 +21,10 @@ export default () => (
     </ul>
     <Header as="h2">Overview</Header>
     <p>
-      Focus Zone provides arrow key navigation within component's items, for example, in menu, list,
-      toolbar, grid etc. and at the same time allows tabbing between these navigable components.
+      Focus Zone provides arrow key navigation between component's child items, in such components
+      as
+      {code('Menu')}, {code('List')}, {code('Toolbar')} and {code('Grid')}. At the same time it is
+      possible to navigate between these components by using TAB key.
     </p>
     <p>
       Tabbable elements (buttons, anchors, etc., elements with {code('tabindex="0"')} or
@@ -119,17 +121,17 @@ export default () => (
     <p>To FocusZone next props can be applied:</p>
     <ul>
       <li>
-        <b>as</b> - Element type the root element will use. Default is "div". Only applies to
+        <b>as</b> - element type the root element will use. Default is "div". Only applies to
         FocusZone's container in {code('Wrap')} mode.
         <p>Type: {code('React.ReactType')}</p>
       </li>
       <li>
-        <b>className</b> - Additional class name to provide on the root element, in addition to the
+        <b>className</b> - additional class name to provide to the root element, in addition to the
         ms-FocusZone class.
         <p>Type: {code('string')}</p>
       </li>
       <li>
-        <b>direction</b> - Defines which arrows to react to.
+        <b>direction</b> - defines which arrows to react to.
         <p>Type: {code('FocusZoneDirection')}, enum with next options:</p>
         <ul>
           <li>
@@ -144,8 +146,8 @@ export default () => (
             </p>
           </li>
           <p>
-            Vertical and horizontal menu share same accessibility behavior and direction is defined
-            by prop "vertical":
+            Vertical and horizontal menu share the same accessibility behavior and direction is
+            defined by the prop "vertical":
           </p>
           <CodeSnippet
             label="menuBehavior.ts"
@@ -172,10 +174,9 @@ export default () => (
         </ul>
       </li>
       <li>
-        <b>defaultTabbableElement</b> - Function which uses root element as parameter to return the
-        initial active element. For example, when there is a chat with a bottom-up approach, it is
-        needed the last chat message to be tabbable (active), not the first one, which is by
-        default.
+        <b>defaultTabbableElement</b> - function which uses root element as parameter to return the
+        initial active element. For example, when there is a chat with a bottom-up approach, the
+        last chat message needs to be tabbable (active), not the first default one.
         <p>Type: {code('(root: HTMLElement) => HTMLElement')}</p>
         <CodeSnippet
           label="chatBehavior.ts"
@@ -195,40 +196,40 @@ export default () => (
         />
       </li>
       <li>
-        <b>shouldFocusOnMount</b> - If a default tabbable element should be force focused on
+        <b>shouldFocusOnMount</b> - if a default tabbable element should be force focused on
         FocusZone mount.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
         <b>shouldFocusInnerElementWhenReceivedFocus</b> - if true and FocusZone's root element
-        (container) receives focus, the focus will be forced to defaultTabbableElement (if set) or
-        first tabbable element of this FocusZone. Usually a case for nested focus zones, when nested
-        focus zone's container is a focusable element.
+        (container) receives focus, the focus will land either on the defaultTabbableElement (if
+        set) or on the first tabbable element of this FocusZone. Usually a case for nested focus
+        zones, when nested focus zone's container is a focusable element.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>shouldResetActiveElementWhenTabFromZone</b> - If true and TAB key is not handled by
+        <b>shouldResetActiveElementWhenTabFromZone</b> - if true and TAB key is not handled by
         FocusZone, resets current active element to null value. For example, when roving index is
         not desirable and focus should always reset to the default tabbable element.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>disabled</b> - If set, the FocusZone will not be tabbable and keyboard navigation will be
+        <b>disabled</b> - if set, the FocusZone will not be tabbable and keyboard navigation will be
         disabled. This does not affect disabled attribute of any child.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>isRtl</b> - If true, FocusZone behavior will change to match RTL environments (left/right
+        <b>isRtl</b> - if true, FocusZone behavior will change to match RTL environments (left/right
         arrows switched).
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>isCircularNavigation</b> - If true, will cycle to the beginning of the targets once the
+        <b>isCircularNavigation</b> - if true, will cycle to the beginning of the targets once the
         user navigates to the next target while at the end, and to the end when navigate to the
         previous at the beginning.
         <p>Default: {code('false')}</p>
@@ -236,12 +237,12 @@ export default () => (
         <p>For example, {link('horizontal menu', '/components/menu#types-menu')}.</p>
       </li>
       <li>
-        <b>shouldEnterInnerZone</b> - callback function, will be executed on keypresses to determine
-        if the user intends to navigate into the inner (nested) zone. Returning true will ask the
-        first inner zone to set focus. For example, when chat container is focus zone and chat
-        messages are inner focus zones. Navigation between messages possible with up/down arrow
-        keys, but when pressing Enter, focus should go to focusable elements inside message, for
-        example, a link.
+        <b>shouldEnterInnerZone</b> - callback function that will be executed, will be executed on
+        keypresses to determine if the user intends to navigate into the inner (nested) zone.
+        Returning true will ask the first inner zone to set focus. For example, when chat container
+        is focus zone and chat messages are inner focus zones. Navigation between messages possible
+        with up/down arrow keys, but when pressing Enter, focus should go to focusable elements
+        inside message, for example, a link.
         <p>Default: {code('false')}</p>
         <p>Type: {code('(ev: React.KeyboardEvent<HTMLElement>) => boolean')}</p>
         <CodeSnippet
@@ -270,19 +271,19 @@ export default () => (
         />
       </li>
       <li>
-        <b>onActiveElementChanged</b> - Callback for when one of immediate children elements gets
+        <b>onActiveElementChanged</b> - callback for when one of immediate children elements gets
         active by getting focused or by having one of its respective children elements focused.
         <p>Type: {code('(element?: HTMLElement, ev?: React.FocusEvent<HTMLElement>) => void')}</p>
       </li>
       <li>
-        <b>shouldReceiveFocus</b> - Callback method for determining if focus should indeed be set on
+        <b>shouldReceiveFocus</b> - callback method for determining if focus should indeed be set on
         the given element.
         <p>Type: {code('(childElement?: HTMLElement) => boolean')}</p>
       </li>
       <li>
-        <b>handleTabKey</b> - Allows tab key to be handled to tab through a list of items in the
-        focus zone. An unfortunate side effect is that users will not be able to tab out of the
-        focus zone and have to hit escape or some other key to exit focus zone.
+        <b>handleTabKey</b> - allows TAB key to be handled, thus alows tabbing through a focusable
+        list of items in the focus zone. An unfortunate side effect is that users will not be able
+        to tab out of the focus zone and have to hit escape or some other key to exit focus zone.
         <p>Type: {code('FocusZoneTabbableElements')}, enum with next options:</p>
         <ul>
           <li>
@@ -297,7 +298,7 @@ export default () => (
         </ul>
       </li>
       <li>
-        <b>shouldInputLoseFocusOnArrowKey</b> - A callback method to determine if the input element
+        <b>shouldInputLoseFocusOnArrowKey</b> - a callback method to determine if the input element
         should lose focus on arrow keys. For example, use arrow keys to navigate when an input
         element is empty or when cursor is at the beginning/end of a string.
         <p>Type: {code('(inputElement: HTMLInputElement) => boolean')}</p>

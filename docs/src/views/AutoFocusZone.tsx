@@ -29,7 +29,7 @@ export default () => (
     </p>
     <Header as="h2">Usage</Header>
     <p>
-      In Stardust AutoFocusZone is applied through accessibility behavior, as for FocusZone and
+      In Stardust, AutoFocusZone is applied through accessibility behavior, as for FocusZone and
       FocusTrapZone. To enable auto focus for component, it is needed, in behavior, to set prop{' '}
       {code('autoFocus')} to {code('true')} with default settings or set an object with desired
       values for auto focus zone props.{' '}
@@ -38,11 +38,11 @@ export default () => (
     <p>AutoFocusZone's props which can be applied in accessibility behavior:</p>
     <ul>
       <li>
-        <b>as</b> - Element type the root element will use. Default is "div".
+        <b>as</b> - element type the root element will use. Default is "div".
         <p>Type: {code('React.ReactType')}</p>
       </li>
       <li>
-        <b>firstFocusableSelector</b> - Indicates the selector for first focusable item. By default,
+        <b>firstFocusableSelector</b> - indicates the selector for first focusable item. By default,
         the first tabbable element will get focus.
         <p>Type: {code('string | (() => string)')}</p>
       </li>

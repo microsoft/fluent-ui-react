@@ -20,8 +20,10 @@ export default () => (
     </ul>
     <Header as="h2">Overview</Header>
     <p>
-      FocusTrapZone is used to trap the focus in any html element. Pressing TAB key will circle
-      focus within the inner focusable elements of the FocusTrapZone.
+      FocusTrapZone grabs the focus and traps it within an HTML element, usually a dialog or popup.
+      Pressing TAB key will circle focus within the inner focusable elements of the FocusTrapZone.
+      The main purpose is to block user interaction outside FocusTrapZone in any way. Therefore,
+      keyboard events are not propagated outside FocusTrapZone.
     </p>
     <p>
       Stardust leverages Focus Trap Zone component which is based on the{' '}
@@ -42,22 +44,22 @@ export default () => (
     <p>FocusTrapZone's props which can be applied in accessibility behavior:</p>
     <ul>
       <li>
-        <b>as</b> - Element type the root element will use. Default is "div".
+        <b>as</b> - element type the root element will use. Default is "div".
         <p>Type: {code('React.ReactType')}</p>
       </li>
       <li>
-        <b>className</b> - Additional class name to provide on the root element, in addition to the
+        <b>className</b> - additional class name to provide to the root element, in addition to the
         ms-FocusZone class.
         <p>Type: {code('string')}</p>
       </li>
       <li>
-        <b>elementToFocusOnDismiss</b> - Sets the HTMLElement to focus on when exiting the
+        <b>elementToFocusOnDismiss</b> - sets the HTMLElement to focus on when exiting the
         FocusTrapZone.
         <p>Default: The {code('target')} which triggered the FocusTrapZone.</p>
         <p>Type: {code('React.ReactType')}</p>
       </li>
       <li>
-        <b>ariaLabelledBy</b> - Sets the "aria-labelledby" attribute.
+        <b>ariaLabelledBy</b> - sets the "aria-labelledby" attribute.
         <p>Type: {code('string')}</p>
       </li>
       <li>
@@ -66,7 +68,7 @@ export default () => (
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>focusTriggerOnOutsideClick</b> - Indicates if the previously focused element outside
+        <b>focusTriggerOnOutsideClick</b> - indicates if the previously focused element outside
         FocusTrapZone should be focused on outside click. Note: trigger will be focused when exiting
         FTZ using keyboard. If {code('isClickableOutsideFocusTrap')} === {code('false')},
         {code('focusTriggerOnOutsideClick')} will not be taken into account.
@@ -74,24 +76,24 @@ export default () => (
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>ignoreExternalFocusing</b> - Indicates if this Trap Zone will ignore keeping track of
+        <b>ignoreExternalFocusing</b> - indicates if this Trap Zone will ignore keeping track of
         HTMLElement that activated the Zone.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>forceFocusInsideTrap</b> - Indicates whether focus trap zone should force focus inside
+        <b>forceFocusInsideTrap</b> - indicates whether focus trap zone should force focus inside
         the zone when outside 'focus' event occurs.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>disableFirstFocus</b> - Do not put focus onto first element when render focus trap zone.
+        <b>disableFirstFocus</b> - do not put focus onto first element when render focus trap zone.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>focusPreviouslyFocusedInnerElement</b> - Specifies the algorithm used to determine which
+        <b>focusPreviouslyFocusedInnerElement</b> - specifies the algorithm used to determine which
         descendant element to focus when focus() is called.
         <br /> If false, the first focusable descendant, filtered by the firstFocusableSelector
         property if present, is chosen.
@@ -103,7 +105,7 @@ export default () => (
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>firstFocusableSelector</b> - Indicates the selector for first focusable item. By default,
+        <b>firstFocusableSelector</b> - indicates the selector for first focusable item. By default,
         the first tabbable element will get focus. Only applies if
         {code('focusPreviouslyFocusedInnerElement')} === {code('false')}.
         <p>Type: {code('string | (() => string)')}</p>
