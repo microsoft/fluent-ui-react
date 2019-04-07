@@ -357,7 +357,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             toggleMenu,
             highlightedIndex,
             selectItemAtIndex,
-            reset,
           }) => {
             const { innerRef, ...accessibilityRootPropsRest } = getRootProps(
               { refKey: 'innerRef' },
@@ -383,7 +382,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                           highlightedIndex,
                           getInputProps,
                           selectItemAtIndex,
-                          reset,
+                          toggleMenu,
                           variables,
                         )
                       : this.renderTriggerButton(styles, rtl, getToggleButtonProps)}
@@ -488,7 +487,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       otherStateToSet?: Partial<StateChangeOptions<any>>,
       cb?: () => void,
     ) => void,
-    reset: () => void,
+    toggleMenu: () => void,
     variables,
   ): JSX.Element {
     const { inline, searchInput, multiple, placeholder } = this.props
@@ -511,7 +510,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           highlightedIndex,
           rtl,
           selectItemAtIndex,
-          reset,
+          toggleMenu,
           accessibilityComboboxProps,
           getInputProps,
         ),
@@ -747,7 +746,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       otherStateToSet?: Partial<StateChangeOptions<any>>,
       cb?: () => void,
     ) => void,
-    reset: () => void,
+    toggleMenu: () => void,
     accessibilityComboboxProps: Object,
     getInputProps: (options?: GetInputPropsOptions) => any,
   ) => {
@@ -766,15 +765,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     ) => {
       switch (keyboardKey.getCode(e)) {
         case keyboardKey.Tab:
-          if (!_.isNil(highlightedIndex)) {
-            selectItemAtIndex(highlightedIndex)
-            // Keep focus here if condition applies.
-            if (this.props.multiple && !this.props.moveFocusOnTab) {
-              e.preventDefault()
-            }
-          } else {
-            reset()
-          }
+          this.handleTabSelection(e, highlightedIndex, selectItemAtIndex, toggleMenu)
           break
         case keyboardKey.ArrowLeft:
           if (!rtl) {
@@ -826,6 +817,28 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       onInputKeyDown: (e: React.SyntheticEvent, searchInputProps: DropdownSearchInputProps) => {
         handleInputKeyDown(e, searchInputProps)
       },
+    }
+  }
+
+  /**
+   * Custom Tab selection logic, at least until Downshift will implement selection on blur.
+   * Also keeps focus on multiple selection dropdown when selecting by Tab.
+   */
+  private handleTabSelection = (
+    e: React.SyntheticEvent,
+    highlightedIndex: number,
+    selectItemAtIndex: (highlightedIndex: number) => void,
+    toggleMenu: () => void,
+  ): void => {
+    if (this.state.open) {
+      if (!_.isNil(highlightedIndex) && this.getItemsFilteredBySearchQuery().length) {
+        selectItemAtIndex(highlightedIndex)
+        if (!this.props.moveFocusOnTab && this.props.multiple) {
+          e.preventDefault()
+        }
+      } else {
+        toggleMenu()
+      }
     }
   }
 
@@ -909,15 +922,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   ) => {
     switch (keyboardKey.getCode(e)) {
       case keyboardKey.Tab:
-        if (_.isNil(highlightedIndex)) {
-          toggleMenu()
-        } else {
-          // Keep focus here in this case.
-          if (this.props.multiple && !this.props.moveFocusOnTab) {
-            e.preventDefault()
-          }
-          selectItemAtIndex(highlightedIndex)
-        }
+        this.handleTabSelection(e, highlightedIndex, selectItemAtIndex, toggleMenu)
         return
       case keyboardKey.Escape:
         accessibilityInputPropsKeyDown(e)
