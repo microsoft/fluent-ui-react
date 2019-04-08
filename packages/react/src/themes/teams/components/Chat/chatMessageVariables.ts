@@ -38,7 +38,7 @@ export default (siteVars): ChatMessageVariables => ({
   authorMarginRight: pxToRem(12),
   authorFontWeight: siteVars.fontWeightBold,
   headerMarginBottom: pxToRem(2),
-  contentFocusOutlineColor: siteVars.colors.primary[500],
+  contentFocusOutlineColor: siteVars.colors.primary[600],
   border: 'none',
   badgeShadow: siteVars.shadowLevel1Darker,
   isImportant: false,

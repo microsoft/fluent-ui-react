@@ -33,9 +33,9 @@ export default (siteVars: any): RadioGroupItemVariables => ({
   textColorChecked: siteVars.colors.grey[750],
 
   iconBorderColorDefaultHover: siteVars.colors.grey[750],
-  iconBorderColorChecked: siteVars.colors.primary[500],
+  iconBorderColorChecked: siteVars.colors.primary[600],
 
-  iconBackgroundColorChecked: siteVars.colors.primary[500],
+  iconBackgroundColorChecked: siteVars.colors.primary[600],
 
   padding: `0 ${pxToRem(4)}`,
 })

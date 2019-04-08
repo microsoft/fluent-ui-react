@@ -4,17 +4,17 @@ export { colorScheme } from './colors'
 //
 // COLORS
 //
-export const black = '#201f1f' // no mapping color
+export const black = colors.grey[800] // no mapping color
 
 // TODO: remove these colors
-export const brand = '#6264A7' // light theme brand - primary[500]
-export const brand02 = '#e2e2f6' // light theme brand14 - primary[100]
-export const brand04 = '#bdbde6' // light theme brand12 primary[200]
-export const brand06 = '#a6a7dc' // no mapping color
-export const brand08 = '#8b8cc7' // light theme brand08
-export const brand12 = colors.primary[500] // same as brand
-export const brand14 = '#464775' // light theme brand04
-export const brand16 = '#33344a' // light theme brand02 primary[900]
+export const brand = colors.primary[600]
+export const brand02 = colors.primary[200]
+export const brand04 = colors.primary[300]
+export const brand06 = colors.primary[400]
+export const brand08 = colors.primary[500]
+export const brand12 = colors.primary[600]
+export const brand14 = colors.primary[800]
+export const brand16 = colors.primary[900]
 
 export const orange04 = '#e97548' // orange[900]
 export const magenta = '#cf6098' // no mapping color

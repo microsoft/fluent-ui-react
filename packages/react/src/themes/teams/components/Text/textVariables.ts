@@ -9,7 +9,7 @@ export interface TeamsTextVariables extends TextVariables {
 export default (siteVariables): Partial<TeamsTextVariables> => {
   return {
     colorScheme: siteVariables.colorScheme,
-    atMentionOtherColor: siteVariables.colors.primary[500],
+    atMentionOtherColor: siteVariables.colors.primary[600],
     atMentionMeColor: siteVariables.naturalColors.darkOrange[400],
     atMentionMeFontWeight: siteVariables.fontWeightBold,
     disabledColor: siteVariables.colors.grey[250],

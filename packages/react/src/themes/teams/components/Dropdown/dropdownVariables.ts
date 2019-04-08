@@ -25,7 +25,7 @@ const [_2px_asRem, _3px_asRem, _12px_asRem] = [2, 3, 12].map(v => pxToRem(v))
 
 export default (siteVars): DropdownVariables => ({
   backgroundColor: siteVars.colors.grey[100],
-  borderColorFocus: siteVars.colors.primary[500],
+  borderColorFocus: siteVars.colors.primary[600],
   borderRadius: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
   borderWidth: `0 0 ${pxToRem(2)} 0`,
   color: siteVars.bodyColor,
@@ -37,9 +37,9 @@ export default (siteVars): DropdownVariables => ({
   listBoxShadow: `0 .2rem .6rem 0 ${siteVars.colors.grey[250]}`,
   listMaxHeight: '20rem',
   listItemBackgroundColor: siteVars.colors.white,
-  listItemBackgroundColorActive: siteVars.colors.primary[500],
+  listItemBackgroundColorActive: siteVars.colors.primary[600],
   listItemColorActive: siteVars.colors.white,
-  selectedItemBackgroundColorFocus: siteVars.colors.primary[100],
+  selectedItemBackgroundColorFocus: siteVars.colors.primary[200],
   selectedItemsMaxHeight: pxToRem(82),
   toggleIndicatorSize: pxToRem(32),
   width: pxToRem(356),

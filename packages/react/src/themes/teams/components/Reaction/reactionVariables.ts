@@ -15,7 +15,7 @@ export default (siteVars): ReactionVariables => ({
   colorHover: siteVars.colors.grey[750],
   contentFontSize: siteVars.fontSizes.small,
   fontWeightHover: siteVars.fontWeightBold,
-  outlineColorFocus: siteVars.colors.primary[500],
+  outlineColorFocus: siteVars.colors.primary[600],
   outlineWidthFocus: pxToRem(2),
   outlineOffsetFocus: pxToRem(-2),
 })

@@ -119,14 +119,14 @@ export const colorScheme: ColorSchemeMapping = {
   },
   primary: createColorScheme('primary', {
     foregroundHover: colors.white,
-    backgroundHover: colors.primary[200],
+    backgroundHover: colors.primary[300],
 
     foregroundActive: colors.white,
-    backgroundActive: colors.primary.light08,
+    backgroundActive: colors.primary[500],
     shadowActive: colors.primary[50],
 
     foregroundFocus: colors.white,
-    backgroundFocus: colors.primary[200],
+    backgroundFocus: colors.primary[300],
   }),
   grey: createColorScheme('grey'),
   green: createColorScheme('green'),

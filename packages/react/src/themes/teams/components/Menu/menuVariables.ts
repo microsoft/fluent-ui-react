@@ -64,7 +64,7 @@ export default (siteVars: any): MenuVariables => {
     backgroundColorHover: undefined,
     backgroundColorActive: undefined,
 
-    iconOnlyColorActive: siteVars.colors.primary[500],
+    iconOnlyColorActive: siteVars.colors.primary[600],
 
     underlinedBorderColor: siteVars.colors.grey[200],
 
@@ -80,7 +80,7 @@ export default (siteVars: any): MenuVariables => {
     verticalPointingBorderColor: siteVars.colorScheme.primary.borderActive, // TODO: why is the default having primary color?!
     verticalBackgroundColorFocus: siteVars.colors.grey[150],
 
-    pointingIndicatorBackgroundColor: siteVars.colors.primary[500],
+    pointingIndicatorBackgroundColor: siteVars.colors.primary[600],
 
     underlinedBottomBorderWidth: pxToRem(2),
     primaryBorderColor: siteVars.colors.grey[100],

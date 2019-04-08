@@ -41,5 +41,5 @@ export default siteVariables => ({
   descriptionFontWeight: siteVariables.fontWeightRegular,
   descriptionLineHeight: siteVariables.lineHeightSmall,
 
-  focusOutlineColor: siteVariables.colors.primary[500],
+  focusOutlineColor: siteVariables.colors.primary[600],
 })

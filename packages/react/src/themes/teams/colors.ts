@@ -9,21 +9,18 @@ import { ColorVariants, ColorSchemeMapping } from 'src/themes/types'
 
 export const emphasisColors: EmphasisColors = {
   primary: {
-    50: '#F4F4FC', // siteVariables.brand16
-    100: '#E2E2F6', // siteVariables.brand14, dark theme brand02
-    200: '#BDBDE6', // siteVariables.brand12, dark theme brand04
-    300: '#8F90C1',
-    400: '#6E70AE',
-    500: '#6264A7', // siteVariables.brand, siteVariables.brand06 (same color?), dark theme brand, brand12
-    600: '#55578D',
-    700: '#4A4C78',
-    800: '#414265',
-    900: '#33344A', // siteVariables.brand02, dark theme brand16
-    light04: '#464775', // no mapping color
-    light08: '#8B8CC7',
-    dark06: '#a6a7dc',
-    dark08: '#8B8CC7', // same as light08
-    dark14: '#464775', // same as light04
+    // UPDATED
+    50: '#F4F4FC', // siteVariables.brand16, same as prev
+    100: '#E5E5F1', // brand15
+    200: '#E2E2F6', // 100, light brand14, dark theme brand02
+    300: '#BDBDE6', // 200, light brand12, dark theme brand04
+    400: '#A6A7DC', // dark theme brand06 (dark06)
+    500: '#8B8CC7', // light08, dark08
+    600: '#6264A7', // 500, siteVariables.brand, siteVariables.brand06 (same color?), dark theme brand, brand12
+    700: '#585A96', // light05
+    800: '#464775', // light04, dark14
+    900: '#33344A', // siteVariables.brand02, dark theme brand16, same as 900 prev
+    1000: '#373644',
   },
 }
 
@@ -60,7 +57,7 @@ export const naturalColors: NaturalColors = {
     600: '#323131', // in call audio only grid slot 4
     650: '#2D2C2C', // dark10?!?!?! - different color [#323130], in call audio only grid slot 3
     700: '#292828', // dark14, in call audio only grid slot 2, old $app-density-message-background-initial-hover-focus-darktheme
-    750: '#252423', // 900, old $app-black, in call audio only grid slot 1, old $app-density-message-background-replay-hover-focus-darktheme
+    750: '#252423', // 900 - different [#252424] , old $app-black, in call audio only grid slot 1, old $app-density-message-background-replay-hover-focus-darktheme
     800: '#201F1F', // app black darktheme, in call title bar, in call audio only pip
     850: '#1B1A1A', // in call background behind presented doc, old $app-density-message-border-darktheme
     900: '#11100F', // dark theme borders
@@ -318,14 +315,14 @@ export const colorScheme: ColorSchemeMapping = {
   },
   primary: createColorScheme('primary', {
     foregroundHover: colors.white,
-    backgroundHover: colors.primary[200],
+    backgroundHover: colors.primary[300],
 
     foregroundActive: colors.white,
-    backgroundActive: colors.primary.light08,
+    backgroundActive: colors.primary[500],
     shadowActive: colors.primary[50],
 
     foregroundFocus: colors.white,
-    backgroundFocus: colors.primary[200],
+    backgroundFocus: colors.primary[300],
   }),
   grey: createColorScheme('grey'),
   green: createColorScheme('green'),
