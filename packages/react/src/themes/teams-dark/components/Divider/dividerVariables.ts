@@ -4,8 +4,8 @@ export default (siteVars: any): Partial<DividerVariables> => ({
   colorScheme: {
     ...siteVars.colorScheme,
     primary: {
-      foregroundDefault: siteVars.brand06,
-      borderDefault: siteVars.brand06,
+      foregroundDefault: siteVars.colors.primary[400],
+      borderDefault: siteVars.colors.primary[400],
     },
   },
   textColor: siteVars.colors.grey[250],

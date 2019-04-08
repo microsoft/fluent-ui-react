@@ -148,7 +148,6 @@ export const colorScheme: ColorSchemeMapping = {
     foregroundFocusWithin: colors.black,
     foregroundDisabled: colors.black,
   }),
-  darkOrange: createColorScheme('darkOrange'),
   lightGreen: createColorScheme('lightGreen', {
     backgroundDefault: colors.black,
     foregroundHover: colors.black,

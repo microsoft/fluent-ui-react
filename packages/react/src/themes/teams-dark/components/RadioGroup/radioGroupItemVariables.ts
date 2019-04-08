@@ -6,7 +6,7 @@ export default (siteVars: any): Partial<RadioGroupItemVariables> => ({
   textColorChecked: siteVars.colors.white,
 
   iconBorderColorDefaultHover: siteVars.colors.white,
-  iconBorderColorChecked: siteVars.brand06,
+  iconBorderColorChecked: siteVars.colors.primary[400],
 
-  iconBackgroundColorChecked: siteVars.brand06,
+  iconBackgroundColorChecked: siteVars.colors.primary[400],
 })

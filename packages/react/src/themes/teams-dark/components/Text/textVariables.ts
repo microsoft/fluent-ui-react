@@ -1,8 +1,8 @@
 import { TeamsTextVariables } from '../../../teams/components/Text/textVariables'
 
 export default (siteVariables): Partial<TeamsTextVariables> => ({
-  atMentionMeColor: siteVariables.orange04,
-  atMentionOtherColor: siteVariables.brand06,
+  atMentionMeColor: siteVariables.colors.orange[300],
+  atMentionOtherColor: siteVariables.colors.primary[400],
   disabledColor: siteVariables.colors.grey[450],
   errorColor: siteVariables.red,
   importantColor: siteVariables.red,

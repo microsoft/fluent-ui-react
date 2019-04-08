@@ -18,9 +18,6 @@ export {
   colorScheme,
 } from './colors'
 
-export const brand04 = '#464775' // no mapping color
-export const brand08 = '#8B8CC7' // no mapping color
-
 export const magenta = '#B24782' // no mapping color
 export const orchid = '#943670' // no mapping color
 

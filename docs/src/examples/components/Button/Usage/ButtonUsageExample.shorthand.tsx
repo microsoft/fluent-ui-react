@@ -8,8 +8,8 @@ const ButtonUsageExampleShorthand = () => (
         componentVariables: {
           Button: siteVariables => ({
             color: siteVariables.colors.primary[600],
-            colorActive: siteVariables.brand04,
-            colorHover: siteVariables.brand04,
+            colorActive: siteVariables.colors.primary[300],
+            colorHover: siteVariables.colors.primary[300],
             colorFocus: siteVariables.colors.primary[900],
             backgroundColor: '#252424', // no mapping color - tried - siteVariables.colors.grey[750]
             backgroundColorActive: siteVariables.colors.primary[200],

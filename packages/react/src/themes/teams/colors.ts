@@ -64,16 +64,16 @@ export const naturalColors: NaturalColors = {
     1000: '#000000', // black
   },
   orange: {
-    50: '#FEF9F7',
-    100: '#FDF0EB',
-    200: '#FAE3DA',
-    300: '#F8D3C5',
-    400: '#F5C6B3',
-    500: '#F4B8A1',
-    600: '#F2AD92',
-    700: '#F0A081',
-    800: '#ED8E6A',
-    900: '#E97548',
+    50: '#F9ECEA', // darkOrange[50]
+    100: '#EFDBD3', // app orange14
+    200: '#EDC2A7', // wrong in invision?! old message highlight border
+    300: '#E97548', // orange[900]
+    400: '#CC4A31', // app orange04 darkOrange[400]
+    500: '#BD432C', // app orange03
+    600: '#A33D2A', // app orange02
+    700: '#833122', // app orange01 darkOrange[900]
+    800: '#664134', // app orange14 dark
+    900: '#51332C', // app orange16 dark
   },
   pink: {
     50: '#E8BDD5',
@@ -110,18 +110,6 @@ export const naturalColors: NaturalColors = {
     700: '#F9DC58',
     800: '#F9D844',
     900: '#F8D22A', // siteVariables.yellow
-  },
-  darkOrange: {
-    50: '#F9ECEA',
-    100: '#ECBCB3',
-    200: '#E29C8F',
-    300: '#D97B69',
-    400: '#CC4A31', // siteVariables.orange04
-    500: '#C5472F',
-    600: '#B7432D',
-    700: '#A73D29',
-    800: '#983927',
-    900: '#833122',
   },
   lightGreen: {
     50: '#E7F2D9',
@@ -176,7 +164,6 @@ export const primitiveColors: PrimitiveColors = {
 }
 
 export type ThemeColors = Partial<{
-  darkOrange: ColorVariants
   postOrange: ColorVariants
   lightGreen: ColorVariants
   magenta: ColorVariants
@@ -330,7 +317,6 @@ export const colorScheme: ColorSchemeMapping = {
   pink: createColorScheme('pink', { foregroundDefault: colors.pink[500] }),
   red: createColorScheme('red', { foregroundDefault: colors.red[500] }),
   yellow: createColorScheme('yellow', lightColorOverrides),
-  darkOrange: createColorScheme('darkOrange', { foregroundDefault: colors.darkOrange[500] }),
   lightGreen: createColorScheme('lightGreen', lightColorOverrides),
   magenta: createColorScheme('magenta', { foregroundDefault: colors.magenta[500] }),
   postOrange: createColorScheme('postOrange', lightColorOverrides),
