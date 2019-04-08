@@ -1,4 +1,3 @@
-import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ImageProps } from '../../../../components/Image/Image'
 
