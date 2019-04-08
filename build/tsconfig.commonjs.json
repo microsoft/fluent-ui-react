@@ -1,7 +1,6 @@
 {
   "extends": "./tsconfig.common.json",
   "compilerOptions": {
-    "importHelpers": true,
     "module": "commonjs"
   },
   "include": ["../packages/react/src", "../types"]
