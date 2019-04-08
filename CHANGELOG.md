@@ -27,6 +27,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `rotate` prop on `Icon` not working in `rtl` @mnajdova ([#1179](https://github.com/stardust-ui/react/pull/1179))
 - `FocusTrapZone` - Do not propagate any keyboard events @sophieH29 ([#1180](https://github.com/stardust-ui/react/pull/1180))
 
+### Features
+- Export `flag` icon in Teams theme @layershifter ([#1189](https://github.com/stardust-ui/react/pull/1189))
+
 <!--------------------------------[ v0.26.0 ]------------------------------- -->
 ## [v0.26.0](https://github.com/stardust-ui/react/tree/v0.26.0) (2019-04-03)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.25.1...v0.26.0)
