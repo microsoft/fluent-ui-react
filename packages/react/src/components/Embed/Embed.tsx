@@ -11,8 +11,9 @@ import {
 } from '../../lib'
 import { embedBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import Image from '../Image/Image'
-import Video from '../Video/Video'
+import Icon, { IconProps } from '../Icon/Icon'
+import Image, { ImageProps } from '../Image/Image'
+import Video, { VideoProps } from '../Video/Video'
 import Box from '../Box/Box'
 
 import { ReactProps, ShorthandValue } from '../../types'
@@ -35,16 +36,16 @@ export interface EmbedProps extends UIComponentProps {
   defaultActive?: boolean
 
   /** Shorthand for an control. */
-  control?: ShorthandValue
+  control?: ShorthandValue<IconProps>
 
   /** Shorthand for an embedded iframe. */
   iframe?: ShorthandValue
 
   /** Image source URL for when video isn't playing. */
-  placeholder?: ShorthandValue
+  placeholder?: ShorthandValue<ImageProps>
 
   /** Shorthand for an embedded video. */
-  video?: ShorthandValue
+  video?: ShorthandValue<VideoProps>
 }
 
 export interface EmbedState {
@@ -147,8 +148,14 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
           })
         )}
 
-        {Box.create(control, {
-          defaultProps: { className: Embed.slotClassNames.control, styles: styles.control },
+        {Icon.create(control, {
+          defaultProps: {
+            className: Embed.slotClassNames.control,
+            circular: true,
+            name: active ? 'stardust-pause' : 'stardust-play',
+            size: 'largest',
+            styles: styles.control,
+          },
         })}
       </ElementType>
     )
