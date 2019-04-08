@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 
 import Dropdown from 'src/components/Dropdown/Dropdown'
+import DropdownSearchInput from 'src/components/Dropdown/DropdownSearchInput'
 import { isConformant } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
 
@@ -40,7 +41,7 @@ describe('Dropdown', () => {
       onOpenChange.mockReset()
     })
 
-    it('calls onOpen with highlightedIndex on click', () => {
+    it('has the provided prop value when opened by click', () => {
       const highlightedIndex = 1
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
@@ -57,7 +58,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('calls onOpen with highlightedIndex + 1 on arrow down', () => {
+    it('has the (provided prop value + 1) when opened by ArrowDown', () => {
       const highlightedIndex = 1
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
@@ -77,7 +78,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('calls onOpen with highlightedIndex - 1 on arrow down', () => {
+    it('has the provided (prop value - 1) when opened by ArrowUp', () => {
       const highlightedIndex = 1
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
@@ -97,7 +98,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('calls onOpen with highlightedIndex wrapped to 0 on arrow down', () => {
+    it('is 0 when the provided prop value is last item index and opened by ArrowDown', () => {
       const highlightedIndex = items.length - 1
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
@@ -117,7 +118,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('calls onOpen with highlightedIndex wrapped to items.length - 1 on arrow up', () => {
+    it('is last item index when the provided prop value is 0 and opened by ArrowUp', () => {
       const highlightedIndex = 0
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
@@ -137,7 +138,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('calls onOpen with highlightedIndex set to defaultHighlightedIndex', () => {
+    it('is defaultHighlightedIndex prop value at first opening', () => {
       const defaultHighlightedIndex = 1
       const wrapper = mountWithProvider(
         <Dropdown
@@ -158,9 +159,28 @@ describe('Dropdown', () => {
       )
     })
 
-    it('calls onOpen with highlightedIndex always set to 0', () => {
+    it('is null on second and subsequent open even though defaultHighlightedIndex prop is passed', () => {
       const wrapper = mountWithProvider(
-        <Dropdown highlightFirstItemOnOpen={true} onOpenChange={onOpenChange} items={items} />,
+        <Dropdown defaultHighlightedIndex={1} onOpenChange={onOpenChange} items={items} />,
+      )
+      wrapper
+        .find({ className: Dropdown.slotClassNames.triggerButton })
+        .simulate('click')
+        .simulate('click')
+        .simulate('click')
+      expect(onOpenChange).toBeCalledTimes(3)
+      expect(onOpenChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          highlightedIndex: null,
+          open: true,
+        }),
+      )
+    })
+
+    it('is 0 on first open when highlightFirstItemOnOpen prop is provided', () => {
+      const wrapper = mountWithProvider(
+        <Dropdown highlightFirstItemOnOpen onOpenChange={onOpenChange} items={items} />,
       )
       const triggerButton = wrapper.find({ className: Dropdown.slotClassNames.triggerButton })
 
@@ -173,13 +193,142 @@ describe('Dropdown', () => {
           open: true,
         }),
       )
-      triggerButton.simulate('click').simulate('click')
+    })
+
+    it('is 0 on second and subsequent open when highlightFirstItemOnOpen prop is provided', () => {
+      const wrapper = mountWithProvider(
+        <Dropdown highlightFirstItemOnOpen onOpenChange={onOpenChange} items={items} />,
+      )
+      const triggerButton = wrapper.find({ className: Dropdown.slotClassNames.triggerButton })
+
+      triggerButton
+        .simulate('click')
+        .simulate('click')
+        .simulate('click')
       expect(onOpenChange).toBeCalledTimes(3)
       expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex: 0,
           open: true,
+        }),
+      )
+    })
+
+    it('is 0 on searchQuery first change and when highlightFirstItemOnOpen prop is provided', () => {
+      const onSearchQueryChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown
+          search
+          highlightFirstItemOnOpen
+          onSearchQueryChange={onSearchQueryChange}
+          onOpenChange={onOpenChange}
+          items={items}
+        />,
+      )
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+
+      searchInput.simulate('click').simulate('change', { target: { value: 'i' } })
+      expect(onOpenChange).toBeCalledTimes(1)
+      expect(onOpenChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          highlightedIndex: 0,
+          open: true,
+        }),
+      )
+      expect(onSearchQueryChange).toBeCalledTimes(1)
+      expect(onSearchQueryChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          searchQuery: 'i',
+          highlightedIndex: 0,
+        }),
+      )
+    })
+
+    it('is reset to 0 on searchQuery change and when highlightFirstItemOnOpen prop is provided', () => {
+      const onSearchQueryChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown
+          search
+          highlightFirstItemOnOpen
+          onSearchQueryChange={onSearchQueryChange}
+          onOpenChange={onOpenChange}
+          items={items}
+        />,
+      )
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+
+      searchInput
+        .simulate('click')
+        .simulate('change', { target: { value: 'i' } })
+        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' }) // now it's on index 1.
+        .simulate('change', { target: { value: 'in' } }) // now it should reset to 0.
+      expect(onSearchQueryChange).toBeCalledTimes(2)
+      expect(onSearchQueryChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          searchQuery: 'in',
+          highlightedIndex: 0,
+        }),
+      )
+    })
+
+    it('is null on searchQuery first change and when highlightFirstItemOnOpen prop is not provided', () => {
+      const onSearchQueryChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown
+          search
+          onSearchQueryChange={onSearchQueryChange}
+          onOpenChange={onOpenChange}
+          items={items}
+        />,
+      )
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+
+      searchInput.simulate('click').simulate('change', { target: { value: 'i' } })
+      expect(onOpenChange).toBeCalledTimes(1)
+      expect(onOpenChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          highlightedIndex: null,
+          open: true,
+        }),
+      )
+      expect(onSearchQueryChange).toBeCalledTimes(1)
+      expect(onSearchQueryChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          searchQuery: 'i',
+          highlightedIndex: null,
+        }),
+      )
+    })
+
+    it('is reset to null on searchQuery change and when highlightFirstItemOnOpen prop is not provided', () => {
+      const onSearchQueryChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown
+          search
+          onSearchQueryChange={onSearchQueryChange}
+          onOpenChange={onOpenChange}
+          items={items}
+        />,
+      )
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+
+      searchInput
+        .simulate('click')
+        .simulate('change', { target: { value: 'i' } }) // no item highlighted.
+        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' }) // highlight on index 0.
+        .simulate('change', { target: { value: 'in' } })
+      expect(onSearchQueryChange).toBeCalledTimes(2)
+      expect(onSearchQueryChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          searchQuery: 'in',
+          highlightedIndex: null,
         }),
       )
     })
