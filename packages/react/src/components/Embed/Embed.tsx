@@ -1,7 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
-import * as _ from 'lodash'
 
 import {
   createShorthandFactory,
