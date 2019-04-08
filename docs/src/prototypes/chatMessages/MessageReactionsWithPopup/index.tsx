@@ -4,7 +4,7 @@ import { Avatar, Chat } from '@stardust-ui/react'
 import ReactionPopup from './ReactionPopup'
 
 const reactions = [
-  { icon: 'thumbs up', content: '1K', key: 'likes' },
+  { icon: 'thumbs up', content: '1K', key: 'likes', variables: { meReacting: true } },
   { icon: 'thumbs down', content: 2, key: 'dislikes' },
 ]
 
