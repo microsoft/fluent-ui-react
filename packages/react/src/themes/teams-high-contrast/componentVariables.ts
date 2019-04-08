@@ -12,3 +12,4 @@ export { default as RadioGroupItem } from './components/RadioGroup/radioGroupIte
 export { default as Text } from './components/Text/textVariables'
 export { default as TreeTitle } from './components/Tree/treeTitleVariables'
 export { default as Popup } from './components/Popup/popupVariables'
+export { default as Reaction } from './components/Reaction/reactionVariables'
