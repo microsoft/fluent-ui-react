@@ -21,12 +21,12 @@ export type RadioGroupItemVariables = {
   padding: string
 }
 
-export default (siteVars: any): RadioGroupItemVariables => ({
+export default (siteVars: any, fontSizes): RadioGroupItemVariables => ({
   colorDisabled: siteVars.gray06,
   focusInnerBorderColor: siteVars.colors.white,
   focusOuterBorderColor: siteVars.colors.black,
 
-  textFontSize: siteVars.fontSizes.medium,
+  textFontSize: fontSizes.medium,
 
   textColorDefault: siteVars.gray02,
   textColorDefaultHoverFocus: siteVars.colors.grey[900],

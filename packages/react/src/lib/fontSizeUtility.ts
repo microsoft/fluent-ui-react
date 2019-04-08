@@ -1,11 +1,12 @@
 import * as _ from 'lodash'
 import isBrowser from './isBrowser'
+import { PxToRem } from '../types'
 
 const DEFAULT_REM_SIZE_IN_PX = 16
 
 let _documentRemSize: number | null = null
 
-const getDocumentRemSize = (): number => {
+export const getDocumentRemSize = (): number => {
   return isBrowser()
     ? getFontSizeValue(getComputedStyle(document.documentElement).fontSize) ||
         DEFAULT_REM_SIZE_IN_PX
@@ -18,6 +19,12 @@ const getFontSizeValue = (size?: string | null): number | null => {
 
 export const updateCachedRemSize = () => {
   _documentRemSize = null
+}
+
+export const createPxToRem = (remSize: number): PxToRem => (valueInPx: number): string => {
+  const convertedValueInRems = valueInPx / remSize
+
+  return `${_.round(convertedValueInRems, 4)}rem`
 }
 
 /**

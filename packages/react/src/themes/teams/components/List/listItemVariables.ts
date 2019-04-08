@@ -28,7 +28,7 @@ export interface ListItemVariables {
   selectedFocusOutlineColor: string
 }
 
-export default (siteVariables: any): ListItemVariables => {
+export default (siteVariables: any, fontSizes): ListItemVariables => {
   return {
     minHeight: pxToRem(48),
     rootPadding: `0 ${pxToRem(18)} 0 ${pxToRem(20)}`,
@@ -36,19 +36,19 @@ export default (siteVariables: any): ListItemVariables => {
     // Header
     // TODO: prod app uses 17.5px here, it should be 16px per the design guide!
     headerLineHeight: siteVariables.lineHeightSmall,
-    headerFontSize: siteVariables.fontSizes.medium,
+    headerFontSize: fontSizes.medium,
 
     // Header Media
-    headerMediaFontSize: siteVariables.fontSizes.small,
+    headerMediaFontSize: fontSizes.small,
     // TODO: prod app uses 17.5px here, it should be 16px per the design guide!
     headerMediaLineHeight: siteVariables.lineHeightSmall,
 
     // Content
-    contentFontSize: siteVariables.fontSizes.small,
+    contentFontSize: fontSizes.small,
     contentLineHeight: siteVariables.lineHeightSmall,
 
     // Content Media
-    contentMediaFontSize: siteVariables.fontSizes.small,
+    contentMediaFontSize: fontSizes.small,
     contentMediaLineHeight: siteVariables.lineHeightSmall,
 
     // Selectable

@@ -73,3 +73,9 @@ type ReactNode =
 
 export type ShorthandValue<P = {}> = ReactNode | Props<P>
 export type ShorthandCollection<K = []> = ShorthandValue<{ kind?: K }>[]
+
+// ========================================================
+// PxToRem
+// ========================================================
+
+export type PxToRem = (valueInPx: number) => string

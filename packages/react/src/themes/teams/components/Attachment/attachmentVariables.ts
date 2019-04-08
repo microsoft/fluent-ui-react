@@ -22,7 +22,7 @@ export type AttachmentVariables = {
   focusOutlineColor: string
 }
 
-export default siteVariables => ({
+export default (siteVariables, fontSizes) => ({
   padding: pxToRem(8),
   iconSpace: pxToRem(12),
 
@@ -33,11 +33,11 @@ export default siteVariables => ({
   progressColor: siteVariables.naturalColors.lightGreen[900],
   progressHeight: 4,
 
-  headerFontSize: siteVariables.fontSizes.medium,
+  headerFontSize: fontSizes.medium,
   headerFontWeight: siteVariables.fontWeightSemibold,
   headerLineHeight: siteVariables.lineHeightSmall,
 
-  descriptionFontSize: siteVariables.fontSizes.small,
+  descriptionFontSize: fontSizes.small,
   descriptionFontWeight: siteVariables.fontWeightRegular,
   descriptionLineHeight: siteVariables.lineHeightSmall,
 

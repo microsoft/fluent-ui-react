@@ -10,10 +10,10 @@ export interface ReactionVariables {
   outlineOffsetFocus: string
 }
 
-export default (siteVars): ReactionVariables => ({
+export default (siteVars, fontSizes): ReactionVariables => ({
   color: siteVars.gray03,
   colorHover: siteVars.colors.grey[900],
-  contentFontSize: siteVars.fontSizes.small,
+  contentFontSize: fontSizes.small,
   fontWeightHover: siteVars.fontWeightBold,
   outlineColorFocus: siteVars.colors.primary[500],
   outlineWidthFocus: pxToRem(2),

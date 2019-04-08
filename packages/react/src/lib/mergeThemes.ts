@@ -17,6 +17,8 @@ import {
   ThemeIcons,
   ComponentSlotStyle,
   ThemeAnimation,
+  FontSizesInput,
+  FontSizesPrepared,
 } from '../themes/types'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
@@ -194,12 +196,26 @@ export const mergeStyles = (...sources: ComponentSlotStyle[]) => {
   }
 }
 
+export const mergePxToRem = (target, ...sources) => {
+  return sources.reduce((acc, next) => {
+    return typeof next === 'function' ? next : acc
+  }, target)
+}
+
+export const mergeFontSizes = (...sources: FontSizesInput[]): FontSizesPrepared => {
+  // TODO: test me
+  return sources.reduce((acc, next) => {
+    return !!next ? callable(next) : acc
+  }, callable({}))
+}
+
 const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
   const emptyTheme = {
     siteVariables: {},
     componentVariables: {},
     componentStyles: {},
     fontFaces: [],
+    fontSizes: {},
     staticStyles: [],
     icons: {},
     animations: {},
@@ -223,10 +239,17 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
       acc.rtl = mergedRTL
     }
 
+    const mergedPxToRem = mergePxToRem(acc.pxToRem, next.pxToRem)
+    if (typeof mergedPxToRem === 'function') {
+      acc.pxToRem = mergedPxToRem
+    }
+
     // Use the correct renderer for RTL
     acc.renderer = acc.rtl ? felaRtlRenderer : felaRenderer
 
     acc.fontFaces = mergeFontFaces(...acc.fontFaces, ...next.fontFaces)
+
+    acc.fontSizes = mergeFontSizes(acc.fontSizes, next.fontSizes) // FIXME: this does not work if you use mergeThemes(no sizes, no sizes) to create a theme
 
     acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...next.staticStyles)
 

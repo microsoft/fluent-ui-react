@@ -7,6 +7,7 @@ import * as siteVariables from './siteVariables'
 import * as componentVariables from './componentVariables'
 import * as componentStyles from './componentStyles'
 import fontFaces from './fontFaces'
+import fontSizes from './fontSizes'
 import staticStyles from './staticStyles'
 
 import { default as svgIconsAndStyles } from './components/Icon/svg'
@@ -54,6 +55,7 @@ export default mergeThemes(base, {
   componentVariables,
   componentStyles,
   fontFaces,
+  fontSizes,
   staticStyles,
   icons,
   animations,

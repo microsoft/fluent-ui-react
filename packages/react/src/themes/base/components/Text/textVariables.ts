@@ -36,7 +36,7 @@ export interface TextVariables {
   fontWeightBold: number
 }
 
-export default (siteVariables): TextVariables => {
+export default (siteVariables, fontSizes): TextVariables => {
   const colorVariant = 500
 
   return {
@@ -51,25 +51,25 @@ export default (siteVariables): TextVariables => {
     errorColor: siteVariables.colors.red[500],
     successColor: siteVariables.colors.green[500],
 
-    fontSizeSmallest: siteVariables.fontSizes.smallest,
+    fontSizeSmallest: fontSizes.smallest,
     fontLineHeightSmallest: siteVariables.lineHeightSmallest,
 
-    fontSizeSmaller: siteVariables.fontSizes.smaller,
+    fontSizeSmaller: fontSizes.smaller,
     fontLineHeightSmaller: siteVariables.lineHeightSmaller,
 
-    fontSizeSmall: siteVariables.fontSizes.small,
+    fontSizeSmall: fontSizes.small,
     fontLineHeightSmall: siteVariables.lineHeightSmall,
 
-    fontSizeMedium: siteVariables.fontSizes.medium,
+    fontSizeMedium: fontSizes.medium,
     fontLineHeightMedium: siteVariables.lineHeightMedium,
 
-    fontSizeLarge: siteVariables.fontSizes.large,
+    fontSizeLarge: fontSizes.large,
     fontLineHeightLarge: siteVariables.lineHeightLarge,
 
-    fontSizeLarger: siteVariables.fontSizes.larger,
+    fontSizeLarger: fontSizes.larger,
     fontLineHeightLarger: siteVariables.lineHeightLarger,
 
-    fontSizeLargest: siteVariables.fontSizes.largest,
+    fontSizeLargest: fontSizes.largest,
     fontLineHeightLargest: siteVariables.lineHeightLargest,
 
     fontWeightLight: siteVariables.fontWeightLight,

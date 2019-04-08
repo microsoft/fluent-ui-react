@@ -27,9 +27,11 @@ import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
 import ProviderBox from './ProviderBox'
 import { Extendable } from '../../types'
+import { createPxToRem, getDocumentRemSize } from '../../lib/fontSizeUtility'
 
 export interface ProviderProps extends ChildrenComponentProps {
   theme: ThemeInput
+  baseRemSize?: number
 }
 
 /**
@@ -63,6 +65,7 @@ class Provider extends React.Component<Extendable<ProviderProps>> {
       ),
       animations: PropTypes.object,
     }),
+    baseRemSize: PropTypes.number,
     children: PropTypes.node.isRequired,
   }
 
@@ -142,7 +145,7 @@ class Provider extends React.Component<Extendable<ProviderProps>> {
   }
 
   render() {
-    const { theme, children, ...unhandledProps } = this.props
+    const { theme, baseRemSize, children, ...unhandledProps } = this.props
 
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
@@ -150,6 +153,14 @@ class Provider extends React.Component<Extendable<ProviderProps>> {
       <ProviderConsumer
         render={(incomingTheme: ThemePrepared) => {
           const outgoingTheme: ThemePrepared = mergeThemes(incomingTheme, theme)
+
+          if (baseRemSize) {
+            outgoingTheme.pxToRem = createPxToRem(baseRemSize)
+          }
+          if (!outgoingTheme.pxToRem) {
+            // TODO: should be done by mergeThemes()?
+            outgoingTheme.pxToRem = createPxToRem(getDocumentRemSize())
+          }
 
           // Heads up!
           // We should call render() to ensure that a subscription for DOM updates was created

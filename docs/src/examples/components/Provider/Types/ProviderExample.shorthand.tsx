@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Provider } from '@stardust-ui/react'
+import { Provider, Text } from '@stardust-ui/react'
 
 const theme = { siteVariables: { brand: 'cornflowerblue' } }
 
@@ -11,7 +11,13 @@ const ProviderExampleShorthand = () => (
       </p>
 
       <Provider.Consumer
-        render={theme => <code>theme.siteVariables.brand = {theme.siteVariables.brand}</code>}
+        render={theme => (
+          <>
+            <code>theme.siteVariables.brand = {theme.siteVariables.brand}</code>
+            <pre>{JSON.stringify(theme.fontSizes(theme.pxToRem), null, 2)}</pre>
+            <Text size="medium">Medium text</Text>
+          </>
+        )}
       />
     </div>
   </Provider>

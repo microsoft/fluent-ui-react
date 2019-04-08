@@ -4,8 +4,9 @@ import { Provider, Text } from '@stardust-ui/react'
 
 const TextSizesExample = () => (
   <Provider.Consumer
-    render={({ siteVariables }) => {
-      return _.map(siteVariables.fontSizes, (value, key) => (
+    render={({ siteVariables, fontSizes, pxToRem }) => {
+      const computedFontSizes = fontSizes(pxToRem)
+      return _.map(computedFontSizes, (value, key) => (
         <div key={key}>
           <Text size={key as any}>This is size="{key}" size font.</Text>
         </div>

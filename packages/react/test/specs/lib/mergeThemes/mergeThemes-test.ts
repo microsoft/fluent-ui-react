@@ -338,6 +338,72 @@ describe('mergeThemes', () => {
     })
   })
 
+  describe('pxToRem', () => {
+    const pxToRem10 = pixels => `${pixels} / 10`
+    const pxToRem16 = pixels => `${pixels} / 16`
+
+    test('latest function value wins', () => {
+      expect(mergeThemes({ pxToRem: pxToRem16 }, { pxToRem: pxToRem10 })).toHaveProperty(
+        'pxToRem',
+        pxToRem10,
+      )
+      expect(mergeThemes({ pxToRem: pxToRem10 }, { pxToRem: pxToRem16 })).toHaveProperty(
+        'pxToRem',
+        pxToRem16,
+      )
+
+      expect(mergeThemes({ pxToRem: null }, { pxToRem: pxToRem10 })).toHaveProperty(
+        'pxToRem',
+        pxToRem10,
+      )
+      expect(mergeThemes({ pxToRem: null }, { pxToRem: pxToRem16 })).toHaveProperty(
+        'pxToRem',
+        pxToRem16,
+      )
+
+      expect(mergeThemes({ pxToRem: undefined }, { pxToRem: pxToRem10 })).toHaveProperty(
+        'pxToRem',
+        pxToRem10,
+      )
+      expect(mergeThemes({ pxToRem: undefined }, { pxToRem: pxToRem16 })).toHaveProperty(
+        'pxToRem',
+        pxToRem16,
+      )
+    })
+
+    test('null values do not override functions', () => {
+      expect(mergeThemes({ pxToRem: pxToRem16 }, { pxToRem: null })).toHaveProperty(
+        'pxToRem',
+        pxToRem16,
+      )
+      expect(mergeThemes({ pxToRem: pxToRem10 }, { pxToRem: null })).toHaveProperty(
+        'pxToRem',
+        pxToRem10,
+      )
+    })
+
+    test('undefined values do not override functions', () => {
+      expect(mergeThemes({ pxToRem: pxToRem16 }, { pxToRem: undefined })).toHaveProperty(
+        'pxToRem',
+        pxToRem16,
+      )
+      expect(mergeThemes({ pxToRem: pxToRem10 }, { pxToRem: undefined })).toHaveProperty(
+        'pxToRem',
+        pxToRem10,
+      )
+    })
+
+    test('is NOT set if no function was provided', () => {
+      expect(mergeThemes({ pxToRem: null }, { pxToRem: null })).not.toHaveProperty('pxToRem')
+      expect(mergeThemes({ pxToRem: null }, { pxToRem: undefined })).not.toHaveProperty('pxToRem')
+
+      expect(mergeThemes({ pxToRem: undefined }, { pxToRem: null })).not.toHaveProperty('pxToRem')
+      expect(mergeThemes({ pxToRem: undefined }, { pxToRem: undefined })).not.toHaveProperty(
+        'pxToRem',
+      )
+    })
+  })
+
   describe('renderer', () => {
     test('felaRtlRenderer is chosen if rtl is true', () => {
       expect(mergeThemes({ rtl: true })).toHaveProperty('renderer', felaRtlRenderer)

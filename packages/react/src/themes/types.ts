@@ -1,7 +1,7 @@
 import * as CSSType from 'csstype'
 import { IRenderer as FelaRenderer } from 'fela'
 import * as React from 'react'
-import { Extendable, ObjectOf, ObjectOrFunc } from '../types'
+import { Extendable, ObjectOf, ObjectOrFunc, PxToRem } from '../types'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -144,6 +144,7 @@ export type ComponentVariablesObject = any
 
 export type ComponentVariablesPrepared = (
   siteVariables?: SiteVariablesPrepared,
+  fontSizes?: FontSizesObject,
   props?: any,
 ) => ComponentVariablesObject
 
@@ -256,6 +257,17 @@ export interface ThemeAnimation<KP = {}> {
 }
 
 // ========================================================
+// Font sizes
+// ========================================================
+
+export interface FontSizesObject {
+  [key: string]: string
+}
+
+export type FontSizesPrepared = (pxToRem: PxToRem) => FontSizesObject
+export type FontSizesInput = FontSizesObject | FontSizesPrepared
+
+// ========================================================
 // Theme
 // ========================================================
 export interface ThemeInput {
@@ -265,9 +277,11 @@ export interface ThemeInput {
   rtl?: boolean
   renderer?: Renderer
   fontFaces?: FontFaces
+  fontSizes?: FontSizesInput
   staticStyles?: StaticStyles
   icons?: ThemeIcons
   animations?: { [key: string]: ThemeAnimation }
+  pxToRem?: PxToRem
 }
 
 // Component variables and styles must be resolved by the component after
@@ -286,8 +300,10 @@ export interface ThemePrepared {
   rtl: boolean
   renderer: Renderer
   fontFaces: FontFaces
+  fontSizes: FontSizesPrepared
   staticStyles: StaticStyles
   animations: { [key: string]: ThemeAnimation }
+  pxToRem: PxToRem
 }
 
 export interface ThemeComponentStylesInput {

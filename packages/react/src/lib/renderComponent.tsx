@@ -33,6 +33,7 @@ import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './acces
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
 import { generateColorScheme } from './colorUtils'
+import { createPxToRem } from './fontSizeUtility'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -164,6 +165,8 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           componentStyles = {},
           rtl = false,
           renderer = felaRenderer,
+          fontSizes = callable({}),
+          pxToRem = createPxToRem(16), // FIXME
         } = theme || {}
         const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
 
@@ -173,7 +176,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
         const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
           componentVariables[displayName],
           props.variables,
-        )(siteVariables)
+        )(siteVariables, fontSizes(pxToRem))
 
         const animationCSSProp = props.animation
           ? createAnimationStyles(props.animation, theme)
