@@ -11,7 +11,7 @@ const ButtonUsageExampleShorthand = () => (
             colorActive: siteVariables.brand04,
             colorHover: siteVariables.brand04,
             colorFocus: siteVariables.colors.primary[900],
-            backgroundColor: siteVariables.colors.grey[900],
+            backgroundColor: '#252424', // no mapping color - tried - siteVariables.colors.grey[750]
             backgroundColorActive: siteVariables.colors.primary[100],
             backgroundColorHover: siteVariables.colors.primary[50],
             backgroundColorFocus: siteVariables.colors.primary[100],
