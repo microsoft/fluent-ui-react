@@ -1,6 +1,6 @@
 import * as express from 'express'
 import * as fs from 'fs'
-import { parallel, series, task } from 'gulp'
+import { series, task } from 'gulp'
 import { rollup as lernaAliases } from 'lerna-alias'
 import * as path from 'path'
 import * as portfinder from 'portfinder'
@@ -239,6 +239,8 @@ task(
   series(
     'dll',
     'bundle:all-packages',
-    parallel('test:projects:cra-ts', 'test:projects:rollup', 'test:projects:typings'),
+    'test:projects:cra-ts',
+    'test:projects:rollup',
+    'test:projects:typings',
   ),
 )
