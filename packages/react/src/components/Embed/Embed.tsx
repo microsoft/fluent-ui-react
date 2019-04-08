@@ -17,6 +17,10 @@ import Box from '../Box/Box'
 
 import { ReactProps, ShorthandValue } from '../../types'
 
+export interface EmbedSlotClassNames {
+  control: string
+}
+
 export interface EmbedProps extends UIComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -29,6 +33,9 @@ export interface EmbedProps extends UIComponentProps {
 
   /** Whether the embedded object should start active. */
   defaultActive?: boolean
+
+  /** Shorthand for an control. */
+  control?: ShorthandValue
 
   /** Shorthand for an embedded iframe. */
   iframe?: ShorthandValue
@@ -66,6 +73,7 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
     }),
     active: PropTypes.bool,
     defaultActive: PropTypes.bool,
+    control: customPropTypes.itemShorthand,
     iframe: customPropTypes.itemShorthand,
     placeholder: PropTypes.string,
     video: customPropTypes.itemShorthand,
@@ -74,9 +82,14 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
   static defaultProps = {
     as: 'span',
     accessibility: embedBehavior as Accessibility,
+    control: {},
   }
 
   static autoControlledProps = ['active']
+
+  static slotClassNames: EmbedSlotClassNames = {
+    control: `${Embed.className}__control`,
+  }
 
   actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleClick(event),
@@ -94,7 +107,7 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
-    const { iframe, placeholder, video } = this.props
+    const { control, iframe, placeholder, video } = this.props
     const { active } = this.state
 
     return (
@@ -133,6 +146,10 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
             },
           })
         )}
+
+        {Box.create(control, {
+          defaultProps: { className: Embed.slotClassNames.control, styles: styles.control },
+        })}
       </ElementType>
     )
   }
