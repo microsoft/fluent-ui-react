@@ -8,7 +8,7 @@
     "clean:cache": "gulp clean:cache",
     "predeploy:docs": "cross-env NODE_ENV=production yarn build:docs",
     "deploy:docs": "gulp deploy:docs",
-    "lint": "tslint -t stylish -p .",
+    "lint": "cross-env NODE_OPTIONS='-r ts-node/register' tslint -t stylish -p . --rules-dir ./build/tslint",
     "lint:fix": "yarn lint --fix",
     "perf": "cross-env PERF=true gulp perf --times=50",
     "perf:debug": "cross-env PERF=true gulp perf:debug --debug",
