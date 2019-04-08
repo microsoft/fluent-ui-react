@@ -24,9 +24,6 @@ export interface EmbedProps extends UIComponentProps {
    * */
   accessibility?: Accessibility
 
-  /** Image source URL for when video isn't playing. */
-  placeholder?: string
-
   /** Whether the embedded object should be active. */
   active?: boolean
 
@@ -35,6 +32,9 @@ export interface EmbedProps extends UIComponentProps {
 
   /** Shorthand for an embedded iframe. */
   iframe?: ShorthandValue
+
+  /** Image source URL for when video isn't playing. */
+  placeholder?: ShorthandValue
 
   /** Shorthand for an embedded video. */
   video?: ShorthandValue
@@ -64,11 +64,10 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
       children: false,
       content: false,
     }),
-    iframe: customPropTypes.itemShorthand,
-    defaultActive: PropTypes.bool,
     active: PropTypes.bool,
-    poster: PropTypes.string,
-    src: PropTypes.string,
+    defaultActive: PropTypes.bool,
+    iframe: customPropTypes.itemShorthand,
+    placeholder: PropTypes.string,
     video: customPropTypes.itemShorthand,
   }
 
@@ -83,18 +82,18 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
     performClick: event => this.handleClick(event),
   }
 
+  getInitialAutoControlledState(): EmbedState {
+    return { active: false }
+  }
+
   handleClick = e => {
     e.stopPropagation()
     e.preventDefault()
     this.setState({ active: !this.state.active })
   }
 
-  getInitialAutoControlledState(): EmbedState {
-    return { active: false }
-  }
-
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
-    const { placeholder, video, iframe } = this.props
+    const { iframe, placeholder, video } = this.props
 
     return (
       <ElementType
@@ -108,11 +107,10 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
           <>
             {Video.create(video, {
               defaultProps: {
-                placeholder,
                 autoPlay: true,
-                muted: true,
                 controls: false,
                 loop: true,
+                muted: true,
                 styles: styles.video,
                 variables: {
                   width: variables.width,
