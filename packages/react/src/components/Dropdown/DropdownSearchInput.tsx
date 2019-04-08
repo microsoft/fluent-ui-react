@@ -1,14 +1,9 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import {
-  UIComponent,
-  RenderResultConfig,
-  createShorthandFactory,
-  commonPropTypes,
-  customPropTypes,
-} from '../../lib'
+import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropTypes } from '../../lib'
 import { ComponentEventHandler, ReactProps } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'

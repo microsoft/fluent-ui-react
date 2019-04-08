@@ -1,10 +1,10 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import {
   UIComponent,
-  customPropTypes,
   createShorthandFactory,
   commonPropTypes,
   isFromKeyboard,

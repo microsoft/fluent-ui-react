@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -6,7 +7,6 @@ import {
   AutoControlledComponent,
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
@@ -22,6 +22,11 @@ import { ReactProps, ShorthandCollection, ShorthandValue } from '../../types'
 import MenuDivider from './MenuDivider'
 
 export type MenuShorthandKinds = 'divider' | 'item'
+
+export interface MenuSlotClassNames {
+  divider: string
+  item: string
+}
 
 export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -87,6 +92,11 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
+
+  static slotClassNames: MenuSlotClassNames = {
+    divider: `${Menu.className}__divider`,
+    item: `${Menu.className}__item`,
+  }
 
   static create: Function
 
@@ -163,6 +173,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
       if (kind === 'divider') {
         return MenuDivider.create(item, {
           defaultProps: {
+            className: Menu.slotClassNames.divider,
             primary,
             secondary,
             vertical,
@@ -177,6 +188,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
 
       return MenuItem.create(item, {
         defaultProps: {
+          className: Menu.slotClassNames.item,
           iconOnly,
           pills,
           pointing,

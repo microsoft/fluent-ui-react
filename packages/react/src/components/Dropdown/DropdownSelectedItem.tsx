@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -5,19 +6,17 @@ import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
 import { ComponentEventHandler, ShorthandValue, ReactProps } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import {
-  customPropTypes,
-  createShorthandFactory,
-  UIComponent,
-  RenderResultConfig,
-  commonPropTypes,
-} from '../../lib'
-import { Image, Icon, Label } from '../..'
-import { IconProps } from '../Icon/Icon'
+import { createShorthandFactory, UIComponent, RenderResultConfig, commonPropTypes } from '../../lib'
+import Icon, { IconProps } from '../Icon/Icon'
+import Image from '../Image/Image'
+import Label from '../Label/Label'
 import Ref from '../Ref/Ref'
+import Box from '../Box/Box'
 
 export interface DropdownSelectedItemSlotClassNames {
-  removeIcon: string
+  header: string
+  icon: string
+  image: string
 }
 
 export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSelectedItemProps> {
@@ -25,7 +24,7 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
   active?: boolean
 
   /** Header of the selected item. */
-  header?: string
+  header?: ShorthandValue
 
   /** Icon of the selected item. */
   icon?: ShorthandValue
@@ -76,7 +75,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
       children: false,
     }),
     active: PropTypes.bool,
-    header: PropTypes.string,
+    header: customPropTypes.itemShorthand,
     icon: customPropTypes.itemShorthand,
     image: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
@@ -126,13 +125,23 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
     const iconElement = Icon.create(icon, {
       defaultProps: {
         'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
-        className: DropdownSelectedItem.slotClassNames.removeIcon,
+        className: DropdownSelectedItem.slotClassNames.icon,
+        styles: styles.icon,
       },
       overrideProps: this.handleIconOverrides,
     })
     const imageElement = Image.create(image, {
       defaultProps: {
         avatar: true,
+        className: DropdownSelectedItem.slotClassNames.image,
+        styles: styles.image,
+      },
+    })
+    const contentElement = Box.create(header, {
+      defaultProps: {
+        as: 'span',
+        className: DropdownSelectedItem.slotClassNames.header,
+        styles: styles.header,
       },
     })
 
@@ -144,7 +153,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
           circular
           onClick={this.handleClick}
           onKeyDown={this.handleKeyDown}
-          content={header}
+          content={contentElement}
           icon={iconElement}
           image={imageElement}
           {...unhandledProps}
@@ -155,7 +164,9 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
 }
 
 DropdownSelectedItem.slotClassNames = {
-  removeIcon: `${DropdownSelectedItem.className}__remove-icon`,
+  header: `${DropdownSelectedItem.className}__header`,
+  icon: `${DropdownSelectedItem.className}__icon`,
+  image: `${DropdownSelectedItem.className}__image`,
 }
 
 DropdownSelectedItem.create = createShorthandFactory({

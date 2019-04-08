@@ -32,12 +32,10 @@ import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
-import { generateColorScheme } from '.'
+import { generateColorScheme } from './colorUtils'
 
 export interface RenderResultConfig<P> {
-  // TODO: Switch back to React.ReactType after issue will be resolved
-  // https://github.com/Microsoft/TypeScript/issues/28768
-  ElementType: React.ComponentType<P> | string
+  ElementType: React.ElementType<P>
   classes: ComponentSlotClasses
   unhandledProps: Props
   variables: ComponentVariablesObject
@@ -166,7 +164,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           componentStyles = {},
           rtl = false,
           renderer = felaRenderer,
-        } = theme
+        } = theme || {}
         const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
 
         const stateAndProps = { ...state, ...props }

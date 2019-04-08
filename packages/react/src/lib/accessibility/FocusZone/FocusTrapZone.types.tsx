@@ -44,7 +44,7 @@ export interface FocusTrapZoneProps extends React.HTMLAttributes<HTMLDivElement>
 
   /**
    * Indicates whether focus trap zone should force focus inside the focus trap zone
-   * @default true
+   * @default false
    */
   forceFocusInsideTrap?: boolean
 

@@ -202,8 +202,6 @@ describe('Popup', () => {
       })
     })
     test(`close previous popup with Enter key`, () => {
-      jest.useFakeTimers()
-
       const attachTo = document.createElement('div')
       document.body.appendChild(attachTo)
 
@@ -230,7 +228,6 @@ describe('Popup', () => {
 
       domEvent.keyDown(`#${triggerId}`, { keyCode: keyboardKey.Enter })
       wrapper.update() // as event comes outside enzyme, we should trigger update
-      jest.runAllTimers() // we use setTimeout in `updateOutsideHandleSubscription()`
 
       expect(wrapper.find(`#${contentId}`).exists()).toBe(true)
       expect(wrapper.find(`#${contentId2}`).exists()).toBe(false)
@@ -241,6 +238,7 @@ describe('Popup', () => {
       expect(wrapper.find(`#${contentId}`).exists()).toBe(false)
       expect(wrapper.find(`#${contentId2}`).exists()).toBe(true)
 
+      wrapper.unmount()
       document.body.removeChild(attachTo)
     })
   })
