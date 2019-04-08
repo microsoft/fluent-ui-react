@@ -190,6 +190,9 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   private _onKeyboardHandler = (ev: React.KeyboardEvent<HTMLDivElement>): void => {
     this.props.onKeyDown && this.props.onKeyDown(ev)
 
+    // do not propogate keyboard events outside focus trap zone
+    ev.stopPropagation()
+
     if (
       ev.isDefaultPrevented() ||
       keyboardKey.getCode(ev) !== keyboardKey.Tab ||
@@ -212,11 +215,9 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
     if (ev.shiftKey && _firstTabbableChild === ev.target) {
       focusAsync(_lastTabbableChild)
       ev.preventDefault()
-      ev.stopPropagation()
     } else if (!ev.shiftKey && _lastTabbableChild === ev.target) {
       focusAsync(_firstTabbableChild)
       ev.preventDefault()
-      ev.stopPropagation()
     }
   }
 
