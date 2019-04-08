@@ -35,6 +35,22 @@ const KnobBoolean: React.FunctionComponent<KnobComponentProps> = props => (
   />
 )
 
+const KnobSelect: React.FunctionComponent<KnobComponentProps> = props => (
+  <select
+    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+      props.setValue(e.target.value)
+    }}
+    value={props.value}
+  >
+    {props.values &&
+      props.values.map(option => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+  </select>
+)
+
 const KnobString: React.FunctionComponent<KnobComponentProps> = props => (
   <input
     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +66,7 @@ const defaultComponents: KnobComponents = {
   KnobLabel,
 
   KnobBoolean,
+  KnobSelect,
   KnobString,
 }
 

@@ -5,6 +5,7 @@
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
+    "object.values": "^1.1.0",
     "prop-types": "^15.6.1"
   },
   "files": [

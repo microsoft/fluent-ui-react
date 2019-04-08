@@ -1,29 +1,60 @@
 import { KnobInspector, KnobProvider } from '@stardust-ui/docs-components'
-import { Flex, Segment } from '@stardust-ui/react'
+import { Flex, Header, Segment } from '@stardust-ui/react'
+import * as _ from 'lodash'
 import * as React from 'react'
 
-const ComponentPlayground: React.FunctionComponent = props => (
-  <KnobProvider>
-    <Flex gap="gap.medium">
-      <Flex.Item grow>
-        <Segment
-          styles={{
-            alignItems: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          {props.children}
-        </Segment>
-      </Flex.Item>
+import { examplePlaygroundContext } from 'docs/src/utils'
+import CodeSnippet from 'docs/src/components/CodeSnippet'
+import renderElementToJSX from 'docs/src/components/ExampleSnippet/renderElementToJSX'
 
-      <Flex.Item align="start" push>
-        <Segment color="primary">
-          <KnobInspector />
-        </Segment>
-      </Flex.Item>
-    </Flex>
-  </KnobProvider>
-)
+const playgroundPaths = examplePlaygroundContext.keys()
+
+type ComponentPlaygroundProps = {
+  componentName: string
+}
+
+const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = props => {
+  const playgroundPath = _.find(playgroundPaths, playgroundPath =>
+    _.includes(playgroundPath, `/${props.componentName}/`),
+  )
+
+  if (playgroundPath) {
+    const PlaygroundComponent: React.FunctionComponent = examplePlaygroundContext(playgroundPath)
+      .default
+    const jsxMarkup = renderElementToJSX(PlaygroundComponent(null))
+
+    return (
+      <KnobProvider>
+        <Flex gap="gap.medium">
+          <Flex.Item grow>
+            <Flex column>
+              <Segment
+                styles={{
+                  alignItems: 'center',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <PlaygroundComponent />
+              </Segment>
+              <CodeSnippet mode="jsx" value={jsxMarkup} />
+            </Flex>
+          </Flex.Item>
+
+          <Flex.Item align="start" push>
+            <Segment color="primary">
+              <Header as="h4" styles={{ marginTop: 0 }}>
+                Props
+              </Header>
+              <KnobInspector />
+            </Segment>
+          </Flex.Item>
+        </Flex>
+      </KnobProvider>
+    )
+  }
+
+  return null
+}
 
 export default ComponentPlayground

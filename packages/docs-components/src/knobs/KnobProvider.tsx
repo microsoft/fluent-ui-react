@@ -8,8 +8,10 @@ const KnobProvider: React.FunctionComponent = props => {
   const [knobs, setKnobs] = React.useState<KnobSet>({})
 
   const registerKnob = (knob: KnobDefinition) => {
-    if (knobs[knob.name]) {
-      console.log('AAAAAAAAAA') // TODO: Crash
+    if (process.env.NODE_ENV !== 'production') {
+      if (knobs[knob.name]) {
+        throw new Error(`Knob with name "${knob.name}" has been already registered`)
+      }
     }
 
     setKnobs(prevKnob => ({ ...prevKnob, [knob.name]: knob }))

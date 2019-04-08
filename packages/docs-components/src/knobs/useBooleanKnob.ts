@@ -1,30 +1,13 @@
-import * as React from 'react'
+import { UseKnobOptions } from './types'
+import useKnob from './useKnob'
 
-import KnobContext from './KnobContext'
+type UseBooleanKnobOptions = UseKnobOptions<boolean>
 
-const useBooleanKnob = (name: string, initialValue = false, displayName?: React.ReactNode) => {
-  const knobContext = React.useContext(KnobContext)
-
-  const value = knobContext.knobs[name] === undefined ? initialValue : knobContext.knobs[name].value
-  const setValue = (newValue: boolean) => {
-    knobContext.setKnobValue(name, newValue)
-  }
-
-  React.useEffect(
-    () => {
-      knobContext.registerKnob({
-        displayName,
-        name,
-        type: 'boolean',
-        value: initialValue,
-      })
-
-      return () => knobContext.unregisterKnob(name)
-    },
-    [name],
-  )
-
-  return [value, setValue]
-}
+const useBooleanKnob = (options: UseBooleanKnobOptions) =>
+  useKnob<boolean>({
+    initialValue: false,
+    type: 'boolean',
+    ...options,
+  })
 
 export default useBooleanKnob
