@@ -53,9 +53,9 @@ export default () => (
       override or create a new accessibility behavior.
     </p>
     <p>
-      For example, we want to specify first focusable selector for Popup with auto focus, so on
-      Popup mount, focus will go to the element matched to that selector. For that purpose, we can
-      to override {code('popupAutoFocusBehavior')} and specify
+      For example, we want to specify the focusable selector for Popup with auto focus, so on Popup
+      mount, focus will go to the element matched to that selector. For that purpose, we can to
+      override {code('popupAutoFocusBehavior')} and specify
       {code('firstFocusableSelector')} there.
     </p>
     <CodeSnippet
