@@ -23,8 +23,8 @@ export default () => (
       {code('FocusTrapZone')} grabs the focus and traps it within an HTML element, usually a dialog
       or popup. Pressing {code('TAB')} key will circle focus within the inner focusable elements of
       the {code('FocusTrapZone')}. The main purpose is to block user interaction outside{' '}
-      {code('FocusTrapZone')} in any way. Therefore, keyboard events are not propagated outside{' '}
-      {code('FocusTrapZone')}.
+      {code('FocusTrapZone')}
+      in any way. Therefore, keyboard events are not propagated outside {code('FocusTrapZone')}.
     </p>
     <p>
       Stardust leverages Focus Trap Zone component which is based on the{' '}
