@@ -16,12 +16,8 @@ const getFontSizeValue = (size?: string | null): number | null => {
   return (size && parseFloat(size)) || null
 }
 
-export const updateCachedRemSize = () => {
-  _documentRemSize = null
-}
-
 /**
- * Converts the provided px size to rem based on the default font size of 10px unless
+ * Converts the provided px size to rem based on the default font size of 16px unless
  * the HTML font size has been previously defined with setHTMLFontSize().
  * @param {number} valueInPx - The px value to convert to rem.
  * @param {number} baseRemSize - Rem size to use for convertions. Optional - document's font size will be taken otherwise.
@@ -35,6 +31,9 @@ export const updateCachedRemSize = () => {
  */
 export const pxToRem = (valueInPx: number, baseRemSize?: number): string => {
   if (!baseRemSize && !_documentRemSize) {
+    // there is no way how to reset the cached value, once it's cached, it's cached
+    // invalidating the cache is not possible as the current value has already been used to calc rems somewhere on the page
+    // and rem base size is global
     _documentRemSize = getDocumentRemSize()
   }
 

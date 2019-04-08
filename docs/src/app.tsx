@@ -27,12 +27,6 @@ class App extends React.Component<any, ThemeContextData> {
                 a: {
                   textDecoration: 'none',
                 },
-                html: {
-                  fontSize: '14px',
-                },
-                body: {
-                  fontSize: '1rem',
-                },
               },
             ],
           })}
