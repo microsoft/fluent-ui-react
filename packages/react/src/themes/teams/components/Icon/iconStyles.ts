@@ -87,15 +87,14 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   }): ICSSInJSStyle => {
     const colors = v.colorScheme[color]
     const iconSpec = theme.icons[name]
-    const rtl = theme.rtl
     const isFontBased = name && (!iconSpec || !iconSpec.isSvg)
 
     return {
       backgroundColor: v.backgroundColor,
       boxSizing: isFontBased ? 'content-box' : 'border-box',
 
-      // overriding the base theme default rtl behavior as in teams theme the flipInRtl slot is used for this
-      ...((rtl || !isFontBased) && {
+      // overriding the base theme default transformation as in teams theme the svg/svgFlippingInRtl slots are used for this
+      ...(!isFontBased && {
         transform: 'unset',
       }),
 
@@ -114,12 +113,6 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
         getBorderedStyles(v.borderColor || getIconColor(v, colors))),
     }
   },
-
-  flipInRtl: ({ props: p, theme: { rtl } }) => ({
-    ...(rtl && {
-      transform: `scaleX(-1) rotate(${-1 * p.rotate}deg)`,
-    }),
-  }),
 
   outlinePart: ({ props: p }): ICSSInJSStyle => {
     return {
@@ -156,6 +149,16 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       transform: `rotate(${rotate}deg)`,
 
       ...getSvgStyle('svg'),
+    }
+  },
+
+  svgFlippingInRtl: config => {
+    const { props, theme } = config
+    return {
+      ...callable(iconStyles.svg)(config),
+      ...(theme.rtl && {
+        transform: `scaleX(-1) rotate(${-1 * props.rotate}deg)`,
+      }),
     }
   },
 
