@@ -9,7 +9,7 @@ export interface HeaderVariables {
 export default (siteVars: any): HeaderVariables => {
   return {
     colorScheme: siteVars.colorScheme,
-    color: siteVars.colors.grey[900],
+    color: siteVars.colors.grey[750],
     descriptionColor: undefined,
   }
 }

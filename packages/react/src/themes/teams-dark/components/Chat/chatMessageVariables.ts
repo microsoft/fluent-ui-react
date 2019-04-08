@@ -2,7 +2,7 @@ import { ChatMessageVariables } from '../../../teams/components/Chat/chatMessage
 
 export default (siteVars: any): Partial<ChatMessageVariables> => {
   return {
-    backgroundColor: siteVars.colors.grey.dark10,
+    backgroundColor: siteVars.colors.grey[650],
     backgroundColorMine: '#3B3C54',
     color: siteVars.colors.white,
     contentFocusOutlineColor: siteVars.brand,

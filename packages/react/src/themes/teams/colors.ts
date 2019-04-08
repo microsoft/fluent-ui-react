@@ -41,34 +41,30 @@ export const naturalColors: NaturalColors = {
     900: '#237B4B', // siteVariables.green04
   },
   grey: {
-    light02: '#484644',
-    light03: '#605E5C',
-    light04: '#979593',
-    light06: '#C8C6C4',
-    light08: '#E1DFDD',
-    light09: '#EDEBE9',
-    light10: '#F3F2F1',
-    light14: '#FAF9F8',
+    // dark09: '#3b3a39', different colors
+    // dark10: '#323130', different colors
 
-    dark02: '#c8c6c4',
-    dark03: '#b3b0ad',
-    dark04: '#8a8886',
-    dark06: '#605e5c',
-    dark08: '#484644',
-    dark09: '#3b3a39',
-    dark10: '#323130',
-    dark14: '#292828',
-
-    50: '#FFFFFF', // siteVariables.white
-    100: '#E6E6E6',
-    200: '#CDCCCC',
-    300: '#B8B8B8',
-    400: '#A2A2A2',
-    500: '#8C8C8C',
-    600: '#747373',
-    700: '#5F5E5E',
-    800: '#404040',
-    900: '#252424', // siteVariables.black
+    0: '#FFFFFF', // white
+    25: '#FCFCFB', // old $app-density-message-initial-hover-focus
+    50: '#FAF9F8', // light14
+    100: '#F3F2F1', // light10, old $app-density-message-background-replay-hover-focus
+    150: '#EDEBE9', // light09, old $app-density-border-gray
+    200: '#E1DFDD', // light08
+    250: '#C8C6C4', // light06, dark02???
+    300: '#B3B0AD', // dark03
+    350: '#979593', // light04
+    400: '#8A8886', // dark04
+    450: '#605E5C', // light03, dark06, $app-gray-20-theme-agnostic, old $message-highlight-color-darktheme
+    500: '#484644', // light02, dark08
+    550: '#3B3A3A', // dark09 ?!?!?! different color [#3b3a39]
+    600: '#323131', // in call audio only grid slot 4
+    650: '#2D2C2C', // dark10?!?!?! - different color [#323130], in call audio only grid slot 3
+    700: '#292828', // dark14, in call audio only grid slot 2, old $app-density-message-background-initial-hover-focus-darktheme
+    750: '#252423', // 900, old $app-black, in call audio only grid slot 1, old $app-density-message-background-replay-hover-focus-darktheme
+    800: '#201F1F', // app black darktheme, in call title bar, in call audio only pip
+    850: '#1B1A1A', // in call background behind presented doc, old $app-density-message-border-darktheme
+    900: '#11100F', // dark theme borders
+    1000: '#000000', // black
   },
   orange: {
     50: '#FEF9F7',
@@ -241,18 +237,18 @@ const lightColorOverrides = {
 
 export const colorScheme: ColorSchemeMapping = {
   default: createColorScheme('grey', {
-    foregroundDefault: colors.grey.light02,
-    backgroundDefault: colors.grey[500],
-    borderDefault: colors.grey.light08,
+    foregroundDefault: colors.grey[500],
+    backgroundDefault: colors.grey[400],
+    borderDefault: colors.grey[200],
 
     foregroundHover: colors.black,
-    backgroundHover: colors.grey.light14,
+    backgroundHover: colors.grey[50],
 
     foregroundActive: colors.black,
-    backgroundActive: colors.grey.light10,
+    backgroundActive: colors.grey[100],
 
     foregroundFocus: colors.black,
-    backgroundFocus: colors.grey.light14,
+    backgroundFocus: colors.grey[50],
 
     foregroundFocusWithin: colors.black,
 

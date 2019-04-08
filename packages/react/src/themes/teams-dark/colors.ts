@@ -38,18 +38,18 @@ const createColorScheme = (color: string, customValues = {}) => {
 
 export const colorScheme: ColorSchemeMapping = {
   default: createColorScheme('grey', {
-    foregroundDefault: colors.grey.light02,
-    backgroundDefault: colors.grey[500],
-    borderDefault: colors.grey.dark08,
+    foregroundDefault: colors.grey[500],
+    backgroundDefault: colors.grey[400],
+    borderDefault: colors.grey[500],
 
     foregroundHover: colors.black,
-    backgroundHover: colors.grey.dark08,
+    backgroundHover: colors.grey[500],
 
     foregroundActive: colors.black,
-    backgroundActive: colors.grey.dark08,
+    backgroundActive: colors.grey[500],
 
     foregroundFocus: colors.black,
-    backgroundFocus: colors.grey.dark08,
+    backgroundFocus: colors.grey[500],
 
     foregroundFocusWithin: colors.black,
 

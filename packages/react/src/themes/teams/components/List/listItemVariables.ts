@@ -55,7 +55,7 @@ export default (siteVariables: any): ListItemVariables => {
     selectableFocusHoverColor: siteVariables.colors.white,
     selectableFocusHoverBackgroundColor: siteVariables.brand08,
     selectedColor: siteVariables.bodyColor,
-    selectedBackgroundColor: siteVariables.colors.grey.light10,
+    selectedBackgroundColor: siteVariables.colors.grey[100],
     selectedFocusOutlineColor: siteVariables.colors.primary[500],
   }
 }

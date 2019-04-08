@@ -60,7 +60,7 @@ export const warningStatusBackgroundColor = colors.yellow[900]
 export const warningStatusTextColor = colors.white
 export const errorStatusBackgroundColor = colors.red[900]
 export const errorStatusTextColor = colors.white
-export const unknownStatusBackgroundColor = colors.grey.light04
+export const unknownStatusBackgroundColor = colors.grey[350]
 export const unknownStatusTextColor = colors.white
 
 //
@@ -90,5 +90,5 @@ export const bodyFontFamily =
   '"Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif'
 export const bodyFontSize = '1.4rem'
 export const bodyBackground = colors.white
-export const bodyColor = colors.grey[900]
+export const bodyColor = colors.grey[750]
 export const bodyLineHeight = lineHeightMedium

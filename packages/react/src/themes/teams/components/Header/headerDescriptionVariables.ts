@@ -7,5 +7,5 @@ export interface HeaderDescriptionVariables {
 
 export default (siteVariables: any): HeaderDescriptionVariables => ({
   colorScheme: siteVariables.colorScheme,
-  color: siteVariables.colors.grey.light04,
+  color: siteVariables.colors.grey[350],
 })

@@ -8,6 +8,6 @@ export default (siteVars: any): Partial<DividerVariables> => ({
       borderDefault: siteVars.brand06,
     },
   },
-  textColor: siteVars.colors.grey.dark02,
-  dividerColor: siteVars.colors.grey.dark09,
+  textColor: siteVars.colors.grey[250],
+  dividerColor: siteVars.colors.grey[550],
 })

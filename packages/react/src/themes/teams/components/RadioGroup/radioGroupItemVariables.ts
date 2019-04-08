@@ -22,17 +22,17 @@ export type RadioGroupItemVariables = {
 }
 
 export default (siteVars: any): RadioGroupItemVariables => ({
-  colorDisabled: siteVars.colors.grey.light06,
+  colorDisabled: siteVars.colors.grey[250],
   focusInnerBorderColor: siteVars.colors.white,
   focusOuterBorderColor: siteVars.colors.black,
 
   textFontSize: siteVars.fontSizes.medium,
 
   textColorDefault: siteVars.gray02,
-  textColorDefaultHoverFocus: siteVars.colors.grey[900],
-  textColorChecked: siteVars.colors.grey[900],
+  textColorDefaultHoverFocus: siteVars.colors.grey[750],
+  textColorChecked: siteVars.colors.grey[750],
 
-  iconBorderColorDefaultHover: siteVars.colors.grey[900],
+  iconBorderColorDefaultHover: siteVars.colors.grey[750],
   iconBorderColorChecked: siteVars.colors.primary[500],
 
   iconBackgroundColorChecked: siteVars.colors.primary[500],

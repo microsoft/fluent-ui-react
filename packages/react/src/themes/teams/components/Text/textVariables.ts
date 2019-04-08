@@ -12,12 +12,12 @@ export default (siteVariables): Partial<TeamsTextVariables> => {
     atMentionOtherColor: siteVariables.colors.primary[500],
     atMentionMeColor: siteVariables.naturalColors.darkOrange[400],
     atMentionMeFontWeight: siteVariables.fontWeightBold,
-    disabledColor: siteVariables.colors.grey.light06,
+    disabledColor: siteVariables.colors.grey[250],
     errorColor: siteVariables.colors.red[900],
     importantWeight: siteVariables.fontWeightBold,
     importantColor: siteVariables.colors.red[900],
     successColor: siteVariables.colors.green[900],
-    timestampColor: siteVariables.colors.grey.light04,
-    timestampHoverColor: siteVariables.colors.grey.light02,
+    timestampColor: siteVariables.colors.grey[350],
+    timestampHoverColor: siteVariables.colors.grey[500],
   }
 }

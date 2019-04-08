@@ -15,8 +15,8 @@ export interface DividerVariables {
 
 export default (siteVars: any): DividerVariables => ({
   colorScheme: siteVars.colorScheme,
-  dividerColor: siteVars.colors.grey.light09,
-  textColor: siteVars.colors.grey.light03,
+  dividerColor: siteVars.colors.grey[150],
+  textColor: siteVars.colors.grey[450],
   textFontSize: siteVars.fontSizeSmall,
   textLineHeight: siteVars.lineHeightSmall,
   importantFontWeight: siteVars.fontWeightBold,
