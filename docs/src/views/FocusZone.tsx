@@ -174,8 +174,8 @@ export default () => (
       </li>
       <li>
         <b>defaultTabbableElement</b> - function which uses root element as parameter to return the
-        initial active element. For example, when there is a chat with a bottom-up approach, the
-        last chat message needs to be tabbable (active), not the first default one.
+        initial active element. For example, when there is a chat with a bottom-up approach, it is
+        expected that the last chat message is tabbable (active), not the first default one.
         <p>Type: {code('(root: HTMLElement) => HTMLElement')}</p>
         <CodeSnippet
           label="chatBehavior.ts"
@@ -229,8 +229,8 @@ export default () => (
       </li>
       <li>
         <b>isCircularNavigation</b> - if true, will cycle to the beginning of the targets once the
-        user navigates to the next target while at the end, and to the end when navigate to the
-        previous at the beginning.
+        user attempts to navigate past the last target while at the end, and to the end when the
+        user attempts to naviagate before the first target.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
         <p>For example, {link('horizontal menu', '/components/menu#types-menu')}.</p>
@@ -271,7 +271,7 @@ export default () => (
       </li>
       <li>
         <b>onActiveElementChanged</b> - callback for when one of immediate children elements gets
-        active by getting focused or by having one of its respective children elements focused.
+        activated by getting focused or by having one of its respective children elements focused.
         <p>Type: {code('(element?: HTMLElement, ev?: React.FocusEvent<HTMLElement>) => void')}</p>
       </li>
       <li>
@@ -281,8 +281,8 @@ export default () => (
       </li>
       <li>
         <b>handleTabKey</b> - allows TAB key to be handled, thus alows tabbing through a focusable
-        list of items in the focus zone. An unfortunate side effect is that users will not be able
-        to tab out of the focus zone and have to hit escape or some other key to exit focus zone.
+        list of items in the focus zone. A side effect is that users will not be able to tab out of
+        the focus zone and have to hit escape or some other key to exit focus zone.
         <p>Type: {code('FocusZoneTabbableElements')}, enum with next options:</p>
         <ul>
           <li>
