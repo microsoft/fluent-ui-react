@@ -199,10 +199,10 @@ task('test:projects:rollup', async () => {
   logger(`✔️Browser test was passed`)
 })
 
-task('test:projects:webpack', async () => {
-  const logger = log('test:projects:webpack')
+task('test:projects:typings', async () => {
+  const logger = log('test:projects:typings')
 
-  const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/webpack')
+  const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/typings')
   const tmpDirectory = tmp.dirSync({ prefix: 'stardust-' }).name
 
   logger(`✔️Temporary directory was created: ${tmpDirectory}`)
@@ -210,13 +210,9 @@ task('test:projects:webpack', async () => {
   const dependencies = [
     '@types/react',
     '@types/react-dom',
-    'fork-ts-checker-webpack-plugin',
     'react',
     'react-dom',
-    'ts-loader',
     'typescript',
-    'webpack',
-    'webpack-cli',
   ].join(' ')
   await runIn(tmpDirectory)(`yarn add ${dependencies}`)
   logger(`✔️Dependencies were installed`)
@@ -228,15 +224,10 @@ task('test:projects:webpack', async () => {
 
   fs.mkdirSync(path.resolve(tmpDirectory, 'src'))
   fs.copyFileSync(scaffoldPath('index.tsx'), path.resolve(tmpDirectory, 'src/index.tsx'))
-
   fs.copyFileSync(scaffoldPath('tsconfig.json'), path.resolve(tmpDirectory, 'tsconfig.json'))
-  fs.copyFileSync(
-    scaffoldPath('webpack.config.js'),
-    path.resolve(tmpDirectory, 'webpack.config.js'),
-  )
   logger(`✔️Source and configs were copied`)
 
-  await runIn(tmpDirectory)(`yarn webpack`)
+  await runIn(tmpDirectory)(`yarn tsc --noEmit`)
   logger(`✔️Example project was successfully built: ${tmpDirectory}`)
 })
 
@@ -245,6 +236,6 @@ task(
   series(
     'dll',
     'bundle:all-packages',
-    parallel('test:projects:cra-ts', 'test:projects:rollup', 'test:projects:webpack'),
+    parallel('test:projects:cra-ts', 'test:projects:rollup', 'test:projects:typings'),
   ),
 )
