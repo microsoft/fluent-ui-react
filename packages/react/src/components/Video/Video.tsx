@@ -6,23 +6,23 @@ import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes 
 import { ReactProps } from '../../types'
 
 export interface VideoProps extends UIComponentProps {
-  /** Video source URL. */
-  src?: string
-
-  /** Image source URL for when video isn't playing */
-  poster?: string
-
-  /** Whether the video should be allowed to play audio */
-  muted?: boolean
-
-  /** Whether the video should start playing when rendered. Autoplay videos must be muted or they will not play immediately in certain browers like Chrome */
+  /** Whether the video should start playing when rendered. Autoplay videos must be muted or they will not play immediately in certain browers like Chrome. */
   autoPlay?: boolean
 
-  /** Whether to display the native video controls */
+  /** Whether to display the native video controls. */
   controls?: boolean
 
-  /** Whether the video should automatically restart after it ends */
+  /** Whether the video should automatically restart after it ends. */
   loop?: boolean
+
+  /** Whether the video should be allowed to play audio. */
+  muted?: boolean
+
+  /** Image source URL for when video isn't playing. */
+  poster?: string
+
+  /** Video source URL. */
+  src?: string
 }
 
 /**
@@ -40,10 +40,12 @@ class Video extends UIComponent<ReactProps<VideoProps>> {
       children: false,
       content: false,
     }),
-    controls: PropTypes.bool,
     autoPlay: PropTypes.bool,
-    muted: PropTypes.bool,
+    controls: PropTypes.bool,
     loop: PropTypes.bool,
+    muted: PropTypes.bool,
+    poster: PropTypes.string,
+    src: PropTypes.string,
   }
 
   static defaultProps = {
@@ -54,17 +56,18 @@ class Video extends UIComponent<ReactProps<VideoProps>> {
   }
 
   renderComponent({ ElementType, classes, unhandledProps }) {
-    const { controls, autoPlay, muted, loop, poster } = this.props
+    const { controls, autoPlay, muted, loop, poster, src } = this.props
 
     return (
       <ElementType
         {...unhandledProps}
+        autoPlay={autoPlay}
         className={classes.root}
         controls={controls}
-        autoPlay={autoPlay}
         loop={loop}
         muted={muted}
         poster={poster}
+        src={src}
       />
     )
   }
