@@ -93,13 +93,13 @@ const getHoverStyles = ({
 }
 
 const pointingBeak = ({ props, variables: v, colorScheme }): ICSSInJSStyle => {
-  const { pointing } = props
+  const { pointing, primary } = props
 
   let top: string
   let borders: ICSSInJSStyle
 
   const backgroundColor = v.backgroundColorActive || colorScheme.backgroundActive
-  const borderColor = v.borderColor || colorScheme.borderDefault
+  const borderColor = v.borderColor || primary ? v.primaryBorderColor : colorScheme.borderDefault
 
   if (pointing === 'start') {
     borders = {
