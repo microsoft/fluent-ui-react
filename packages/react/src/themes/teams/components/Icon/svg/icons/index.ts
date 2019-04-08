@@ -76,6 +76,8 @@ import numberList from './numberList'
 import outdent from './outdent'
 import paperclip from './paperclip'
 import participantRemove from './participantRemove'
+import play from './play'
+import pause from './pause'
 import phoneClock from './phoneClock'
 import quote from './quote'
 import redbang from './redbang'
@@ -172,6 +174,8 @@ export default {
   'number-list': numberList,
   outdent,
   paperclip,
+  pause,
+  play,
   'participant-add': addParticipant,
   'participant-remove': participantRemove,
   'phone-clock': phoneClock,
