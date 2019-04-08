@@ -89,11 +89,13 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
   handleClick = e => {
     e.stopPropagation()
     e.preventDefault()
-    this.setState({ active: !this.state.active })
+
+    this.trySetState({ active: !this.state.active })
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { iframe, placeholder, video } = this.props
+    const { active } = this.state
 
     return (
       <ElementType
@@ -103,7 +105,7 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         onClick={this.handleClick}
       >
-        {this.state.active ? (
+        {active ? (
           <>
             {Video.create(video, {
               defaultProps: {
