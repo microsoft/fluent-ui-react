@@ -1,35 +1,10 @@
-import {
-  Accordion,
-  Animation,
-  Attachment,
-  Avatar,
-  Button,
-  Divider,
-  Header,
-  Icon,
-  Image,
-  Input,
-  Popup,
-  Provider,
-  themes,
-} from '@stardust-ui/react'
+import * as Stardust from '@stardust-ui/react'
 import * as React from 'react'
 
 const App = () => (
-  <Provider theme={themes.teams}>
-    <Accordion panels={[{ title: 'Title', content: 'Content' }]} />
-    <Animation name="spinner">
-      <Icon name="umbrella" circular bordered />
-    </Animation>
-    <Attachment header="Document.docx" />
-    <Avatar src="//placehold.it" />
-    <Button content="Click me" />
-    <Divider />
-    <Header content="This is " />
-    <Image src="//placehold.it" />
-    <Input placeholder="Type here" />
-    <Popup trigger={<Button content="Popup" />} content="Popup content" />
-  </Provider>
+  <Stardust.Provider theme={Stardust.themes.teams}>
+    <Stardust.Button content="Click me" />
+  </Stardust.Provider>
 )
 
 export default App
