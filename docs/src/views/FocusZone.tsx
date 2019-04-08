@@ -37,18 +37,17 @@ export default () => (
     <ul>
       <li>Focus the next or previous element after pressing a navigation key</li>
       <li>
-        Remember the last focused element within the zone by using{' '}
+        The last focused element within the zone is identified by using{' '}
         {link('Roving tabindex', 'https://www.w3.org/TR/wai-aria-practices/#kbd_roving_tabindex')}
       </li>
     </ul>
     <p>
       Stardust leverages Focus Zone component which is based on the{' '}
       {link(
-        'Focus Zone from Office UI Fabric',
+        'Focus Zone from Office UI Fabric.',
         'https://developer.microsoft.com/en-us/fabric#/components/focuszone',
-      )}
-      . This component allows to wrap any component/element and adds arrow key navigation
-      functionality.
+      )}{' '}
+      The Focus Zone can wrap any component / element and adds arrow key navigation functionality.
     </p>
     <Header as="h2">Usage</Header>
     <div>
@@ -78,8 +77,8 @@ export default () => (
       Read more about <b>accessibility behaviors {link('here', '/accessibility-behaviors')}</b>.
     </div>
     <p>
-      For setting Focus Zone properly in accessibility behavior, it is needed to specify FocusZone's{' '}
-      <b>mode</b> and <b>props</b>.
+      The accessibility behavior can control the focus zone operation by specifying Focus zone's
+      properties - <b>mode</b> and <b>props</b>.
     </p>
     <Header as="h3">Mode</Header>
     <p>Type: {code('FocusZoneMode')}, with 2 main options:</p>
@@ -118,7 +117,7 @@ export default () => (
       </li>
     </ul>
     <Header as="h3">Props</Header>
-    <p>To FocusZone next props can be applied:</p>
+    <p>The following props can be applied:</p>
     <ul>
       <li>
         <b>as</b> - element type the root element will use. Default is "div". Only applies to
@@ -147,7 +146,7 @@ export default () => (
           </li>
           <p>
             Vertical and horizontal menu share the same accessibility behavior and direction is
-            defined by the prop "vertical":
+            defined by the Menu's prop "vertical":
           </p>
           <CodeSnippet
             label="menuBehavior.ts"
@@ -299,8 +298,8 @@ export default () => (
       </li>
       <li>
         <b>shouldInputLoseFocusOnArrowKey</b> - a callback method to determine if the input element
-        should lose focus on arrow keys. For example, use arrow keys to navigate when an input
-        element is empty or when cursor is at the beginning/end of a string.
+        should lose focus on arrow keys. For example, when arrow keys are pressed to navigate when
+        an input element is empty or when cursor is at the beginning/end of a string.
         <p>Type: {code('(inputElement: HTMLInputElement) => boolean')}</p>
       </li>
       <li>
@@ -313,8 +312,8 @@ export default () => (
         <p>Type: {code('(event: React.FocusEvent<HTMLElement | FocusZone>) => void')}</p>
       </li>
       <li>
-        <b>preventDefaultWhenHandled</b> - if true, FocusZone prevents default when handled a key
-        event.
+        <b>preventDefaultWhenHandled</b> - if true, FocusZone prevents default behavior when handled
+        a key event.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>

@@ -20,8 +20,8 @@ export default () => (
     <Header as="h2">Overview</Header>
     <p>
       AutoFocusZone can wrap a component and is used to grab focus and put it to an inner element
-      when the component mounts. For example, it is needed to focus an inner element in the Popup
-      when it mounts.
+      when the component mounts. For example, when it is needed to focus an inner element in the
+      Popup when it mounts.
     </p>
     <p>
       If you need both - grabbing the focus and trap the focus in the component - use{' '}
@@ -30,9 +30,9 @@ export default () => (
     <Header as="h2">Usage</Header>
     <p>
       In Stardust, AutoFocusZone is applied through accessibility behavior, as for FocusZone and
-      FocusTrapZone. To enable auto focus for component, it is needed, in behavior, to set prop{' '}
-      {code('autoFocus')} to {code('true')} with default settings or set an object with desired
-      values for auto focus zone props.{' '}
+      FocusTrapZone. To enable auto focus for a component, in the behavior set prop{' '}
+      {code('autoFocus')} to {code('true')}
+      with default settings or set an object with desired values for auto focus zone props.{' '}
       {link('Read more about Accessibility Behaviors.', '/accessibility-behaviors')}
     </p>
     <p>AutoFocusZone's props which can be applied in accessibility behavior:</p>
