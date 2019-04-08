@@ -51,23 +51,24 @@ export default () => (
         <li>
           <b>focusZone</b> - In components such as {code('Menu')}, {code('List')}, {code('Toolbar')}{' '}
           and
-          {code('Grid')}, Focus Zone provides arrow key navigation between their child items, such
-          as list items and menu items. At the same time it is possible to TAB between these
-          navigable components (navigate between Menu and List components by pressing TAB and use
-          arrow keys to navigate between their items).{' '}
+          {code('Grid')}, {code('FocusZone')} provides arrow key navigation between their child
+          items, such as list items and menu items. At the same time it is possible to TAB between
+          these navigable components (navigate between Menu and List components by pressing TAB and
+          use arrow keys to navigate between their items).{' '}
           {link('Read more about FocusZone.', '/focus-zone')}
           <p>Type: {code('{ mode: FocusZoneMode, props?: FocusZoneProps }')}.</p>
         </li>
         <li>
-          <b>focusTrap</b> - FocusTrapZone grabs the focus and traps it within an HTML element,
-          usually a dialog or popup. {link('Read more about FocusTrapZone.', '/focus-trap-zone')}
+          <b>focusTrap</b> - {code('FocusTrapZone')} grabs the focus and traps it within an HTML
+          element, usually a dialog or popup.{' '}
+          {link('Read more about FocusTrapZone.', '/focus-trap-zone')}
           <p>Type: {code('FocusTrapZoneProps | boolean')}.</p>
         </li>
         <li>
-          <b>autoFocus</b> - AutoFocusZone is used to grab focus and put it to inner element when
-          component mounts. For example, when it is needed to focus an inner element in the Popup
-          when it mounts. If true, it is enabled with default properties or can be modified by
-          setting object. {link('Read more about AutoFocusZone.', '/auto-focus-zone')}
+          <b>autoFocus</b> - {code('AutoFocusZone')} is used to grab focus and put it to inner
+          element when component mounts. For example, when it is needed to focus an inner element in
+          the Popup when it mounts. If true, it is enabled with default properties or can be
+          modified by setting object. {link('Read more about AutoFocusZone.', '/auto-focus-zone')}
           <p>Type: {code('AutoFocusZoneProps | boolean')}.</p>
         </li>
       </ul>
@@ -249,9 +250,9 @@ export default () => (
     <p>
       Read more about:
       <ul>
-        <li>{link('Focus Zone', '/focus-zone')}</li>
-        <li>{link('Focus Trap Zone', '/focus-trap-zone')}</li>
-        <li>{link('Auto Focus Zone', '/auto-focus-zone')}</li>
+        <li>{link('FocusZone', '/focus-zone')}</li>
+        <li>{link('FocusTrapZone', '/focus-trap-zone')}</li>
+        <li>{link('AutoFocusZone', '/auto-focus-zone')}</li>
       </ul>
     </p>
   </DocPage>

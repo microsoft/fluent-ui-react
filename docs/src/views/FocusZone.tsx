@@ -21,19 +21,20 @@ export default () => (
     </ul>
     <Header as="h2">Overview</Header>
     <p>
-      Focus Zone provides arrow key navigation between component's child items, in such components
-      as
+      {code('FocusZone')} provides arrow key navigation between component's child items, in such
+      components as
       {code('Menu')}, {code('List')}, {code('Toolbar')} and {code('Grid')}. At the same time it is
-      possible to navigate between these components by using TAB key.
+      possible to navigate between these components by using {code('TAB')} key.
     </p>
     <p>
       Tabbable elements (buttons, anchors, etc., elements with {code('tabindex="0"')} or
       {code('data-is-focusable="true"')} attributes) are considered when pressing directional arrow
       keys and focus is moved appropriately. Tabbing to a zone sets focus only to the current
-      "active" element, making it simple to use the tab key to transition from one zone to the next
-      (from e.g., tab from Menu to List), rather than through every focusable element.
+      "active" element, making it simple to use the {code('TAB')} key to transition from one zone to
+      the next (from e.g., {code('TAB')} from Menu to List), rather than through every focusable
+      element.
     </p>
-    <p>Focus Zone operates based on DOM structure to:</p>
+    <p>{code('FocusZone')} operates based on DOM structure to:</p>
     <ul>
       <li>Focus the next or previous element after pressing a navigation key</li>
       <li>
@@ -42,7 +43,7 @@ export default () => (
       </li>
     </ul>
     <p>
-      Stardust leverages Focus Zone component which is based on the{' '}
+      Stardust leverages {code('FocusZone')} component which is based on the{' '}
       {link(
         'Focus Zone from Office UI Fabric.',
         'https://developer.microsoft.com/en-us/fabric#/components/focuszone',
@@ -84,8 +85,8 @@ export default () => (
     <p>Type: {code('FocusZoneMode')}, with 2 main options:</p>
     <ul>
       <li>
-        <b>Embed</b> - Focus Zone is embeded into component's container, thus all FocusZone's
-        attributes/events listeners are applied to component's container.
+        <b>Embed</b> - Focus Zone is embeded into component's container, thus all{' '}
+        {code('FocusZone')}'s attributes/events listeners are applied to component's container.
         <CodeSnippet
           label="html"
           value={`
@@ -117,11 +118,19 @@ export default () => (
       </li>
     </ul>
     <Header as="h3">Props</Header>
-    <p>The following props can be applied:</p>
+    <p>
+      The following props can be applied (
+      {link(
+        'lookup for API on GitHub',
+        'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/FocusZone.types.ts',
+        true,
+      )}
+      ):
+    </p>
     <ul>
       <li>
         <b>as</b> - element type the root element will use. Default is "div". Only applies to
-        FocusZone's container in {code('Wrap')} mode.
+        {code('FocusZone')}'s container in {code('Wrap')} mode.
         <p>Type: {code('React.ReactType')}</p>
       </li>
       <li>
@@ -201,29 +210,30 @@ export default () => (
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>shouldFocusInnerElementWhenReceivedFocus</b> - if true and FocusZone's root element
-        (container) receives focus, the focus will land either on the defaultTabbableElement (if
-        set) or on the first tabbable element of this FocusZone. Usually a case for nested focus
-        zones, when nested focus zone's container is a focusable element.
+        <b>shouldFocusInnerElementWhenReceivedFocus</b> - if true and {code('FocusZone')}'s root
+        element (container) receives focus, the focus will land either on the defaultTabbableElement
+        (if set) or on the first tabbable element of this {code('FocusZone')}. Usually a case for
+        nested focus zones, when nested focus zone's container is a focusable element.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>shouldResetActiveElementWhenTabFromZone</b> - if true and TAB key is not handled by
-        FocusZone, resets current active element to null value. For example, when roving index is
-        not desirable and focus should always reset to the default tabbable element.
+        <b>shouldResetActiveElementWhenTabFromZone</b> - if true and {code('TAB')} key is not
+        handled by
+        {code('FocusZone')}, resets current active element to null value. For example, when roving
+        index is not desirable and focus should always reset to the default tabbable element.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>disabled</b> - if set, the FocusZone will not be tabbable and keyboard navigation will be
-        disabled. This does not affect disabled attribute of any child.
+        <b>disabled</b> - if set, the {code('FocusZone')} will not be tabbable and keyboard
+        navigation will be disabled. This does not affect disabled attribute of any child.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>isRtl</b> - if true, FocusZone behavior will change to match RTL environments (left/right
-        arrows switched).
+        <b>isRtl</b> - if true, {code('FocusZone')} behavior will change to match RTL environments
+        (left/right arrows switched).
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
@@ -280,9 +290,10 @@ export default () => (
         <p>Type: {code('(childElement?: HTMLElement) => boolean')}</p>
       </li>
       <li>
-        <b>handleTabKey</b> - allows TAB key to be handled, thus alows tabbing through a focusable
-        list of items in the focus zone. A side effect is that users will not be able to tab out of
-        the focus zone and have to hit escape or some other key to exit focus zone.
+        <b>handleTabKey</b> - allows {code('TAB')} key to be handled, thus alows tabbing through a
+        focusable list of items in the focus zone. A side effect is that users will not be able to{' '}
+        {code('TAB')} out of the focus zone and have to hit escape or some other key to exit focus
+        zone.
         <p>Type: {code('FocusZoneTabbableElements')}, enum with next options:</p>
         <ul>
           <li>
@@ -308,17 +319,17 @@ export default () => (
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
-        <b>onFocus</b> - callback called when "focus" event triggered in FocusZone.
+        <b>onFocus</b> - callback called when "focus" event triggered in {code('FocusZone')}.
         <p>Type: {code('(event: React.FocusEvent<HTMLElement | FocusZone>) => void')}</p>
       </li>
       <li>
-        <b>preventDefaultWhenHandled</b> - if true, FocusZone prevents default behavior when handled
-        a key event.
+        <b>preventDefaultWhenHandled</b> - if true, {code('FocusZone')} prevents default behavior
+        when handled a key event.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
     </ul>
-    <Header as="h2">Override FocusZone settings</Header>
+    <Header as="h2">Override {code('FocusZone')} settings</Header>
     <p>
       To be able to add/override Focus Zone settings already set for a component, it is needed to
       override or create a new accessibility behavior.
@@ -351,11 +362,11 @@ export default () => (
     <p>Read more about:</p>
     <ul>
       <li>{link('Accessibility Behaviors', '/accessibility-behaviors')}</li>
-      <li>{link('Focus Trap Zone', '/focus-trap-zone')}</li>
-      <li>{link('Auto Focus Zone', '/auto-focus-zone')}</li>
+      <li>{link('FocusTrapZone', '/focus-trap-zone')}</li>
+      <li>{link('AutoFocusZone', '/auto-focus-zone')}</li>
     </ul>
     <p>
-      FocusZone code on{' '}
+      {code('FocusZone')} code on{' '}
       {link(
         'GitHub.',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/FocusZone.tsx',

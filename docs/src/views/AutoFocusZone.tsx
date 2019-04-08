@@ -19,9 +19,9 @@ export default () => (
     </ul>
     <Header as="h2">Overview</Header>
     <p>
-      AutoFocusZone can wrap a component and is used to grab focus and put it to an inner element
-      when the component mounts. For example, when it is needed to focus an inner element in the
-      Popup when it mounts.
+      {code('AutoFocusZone')} can wrap a component and is used to grab focus and put it to an inner
+      element when the component mounts. For example, when it is needed to focus an inner element in
+      the Popup when it mounts.
     </p>
     <p>
       If you need both - grabbing the focus and trap the focus in the component - use{' '}
@@ -29,13 +29,22 @@ export default () => (
     </p>
     <Header as="h2">Usage</Header>
     <p>
-      In Stardust, AutoFocusZone is applied through accessibility behavior, as for FocusZone and
-      FocusTrapZone. To enable auto focus for a component, in the behavior set prop{' '}
+      In Stardust, {code('AutoFocusZone')} is applied through accessibility behavior, as for{' '}
+      {code('FocusZone')} and
+      {code('FocusTrapZone')}. To enable auto focus for a component, in the behavior set prop{' '}
       {code('autoFocus')} to {code('true')}
       with default settings or set an object with desired values for auto focus zone props.{' '}
       {link('Read more about Accessibility Behaviors.', '/accessibility-behaviors')}
     </p>
-    <p>AutoFocusZone's props which can be applied in accessibility behavior:</p>
+    <p>
+      {code('AutoFocusZone')}'s props which can be applied in accessibility behavior (
+      {link(
+        'lookup for API on GitHub',
+        'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/AutoFocusZone/AutoFocusZone.types.tsx',
+        true,
+      )}
+      ):
+    </p>
     <ul>
       <li>
         <b>as</b> - element type the root element will use. Default is "div".
@@ -47,10 +56,10 @@ export default () => (
         <p>Type: {code('string | (() => string)')}</p>
       </li>
     </ul>
-    <Header as="h2">Override AutoFocusZone settings</Header>
+    <Header as="h2">Override {code('AutoFocusZone')} settings</Header>
     <p>
-      To be able to add/override AutoFocusZone props already set for a component, it is needed to
-      override or create a new accessibility behavior.
+      To be able to add/override {code('AutoFocusZone')} props already set for a component, it is
+      needed to override or create a new accessibility behavior.
     </p>
     <p>
       For example, we want to specify the focusable selector for Popup with auto focus, so on Popup
@@ -80,11 +89,11 @@ export default () => (
     <p>Read more about:</p>
     <ul>
       <li>{link('Accessibility Behaviors', '/accessibility-behaviors')}</li>
-      <li>{link('Focus Zone', '/focus-zone')}</li>
-      <li>{link('Focus Trap Zone', '/focus-trap-zone')}</li>
+      <li>{link('FocusZone', '/focus-zone')}</li>
+      <li>{link('FocusTrapZone', '/focus-trap-zone')}</li>
     </ul>
     <p>
-      AutoFocusZone code on{' '}
+      {code('AutoFocusZone')} code on{' '}
       {link(
         'GitHub.',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/AutoFocusZone.tsx',

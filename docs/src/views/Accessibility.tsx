@@ -289,7 +289,7 @@ export default () => (
       Focus zones allow the Tab navigation to be broken down into smaller parts, so that user can
       use the {code('tab')} key to navigate between higher level components (for example tool bars,
       menus, lists) and use arrow key navigation within these higher level components (buttons in a
-      toolbar, items in a list). {link('Read more about Focus Zone.', '/focus-zone')}
+      toolbar, items in a list). {link('Read more about FocusZone.', '/focus-zone')}
     </p>
 
     <Header as="h3" content="Focus Trap Zone" />
@@ -297,14 +297,14 @@ export default () => (
       FocusTrapZone is used to trap the focus in any html element. Pressing TAB key will circle
       focus within the inner focusable elements of the FocusTrapZone. For example, when Popup opens,
       we want the focus go inside Popup and trap there.{' '}
-      {link('Read more about Focus Trap Zone.', '/focus-trap-zone')}
+      {link('Read more about FocusTrapZone.', '/focus-trap-zone')}
     </p>
 
     <Header as="h3" content="Auto Focus Zone" />
     <p>
       AutoFocusZone is used to focus inner element on mount. For example, when we want to focus
       inner element in Popup when it mounts, but still without focus trap.{' '}
-      {link('Read more about Auto Focus Zone.', '/auto-focus-zone')}
+      {link('Read more about AutoFocusZone.', '/auto-focus-zone')}
     </p>
 
     <Header as="h3" content="Focus indicator" />
@@ -412,9 +412,9 @@ export default () => (
     <p>Read more about:</p>
     <ul>
       <li>{link('Accessibility Behaviors', '/accessibility-behaviors')}</li>
-      <li>{link('Focus Zone', '/focus-zone')}</li>
-      <li>{link('Focus Trap Zone', '/focus-trap-zone')}</li>
-      <li>{link('Auto Focus Zone', '/auto-focus-zone')}</li>
+      <li>{link('FocusZone', '/focus-zone')}</li>
+      <li>{link('FocusTrapZone', '/focus-trap-zone')}</li>
+      <li>{link('AutoFocusZone', '/auto-focus-zone')}</li>
     </ul>
 
     <GuidesNavigationFooter

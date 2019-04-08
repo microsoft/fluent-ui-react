@@ -20,10 +20,11 @@ export default () => (
     </ul>
     <Header as="h2">Overview</Header>
     <p>
-      FocusTrapZone grabs the focus and traps it within an HTML element, usually a dialog or popup.
-      Pressing TAB key will circle focus within the inner focusable elements of the FocusTrapZone.
-      The main purpose is to block user interaction outside FocusTrapZone in any way. Therefore,
-      keyboard events are not propagated outside FocusTrapZone.
+      {code('FocusTrapZone')} grabs the focus and traps it within an HTML element, usually a dialog
+      or popup. Pressing {code('TAB')} key will circle focus within the inner focusable elements of
+      the {code('FocusTrapZone')}. The main purpose is to block user interaction outside{' '}
+      {code('FocusTrapZone')} in any way. Therefore, keyboard events are not propagated outside{' '}
+      {code('FocusTrapZone')}.
     </p>
     <p>
       Stardust leverages Focus Trap Zone component which is based on the{' '}
@@ -34,14 +35,23 @@ export default () => (
     </p>
     <Header as="h2">Usage</Header>
     <p>
-      In Stardust focus trap is applied through accessibility behavior, as for focus zone. To enable
-      focus trap for component, it is needed, in behavior, to set prop {code('trapFocus')} to{' '}
-      {code('true')} with default settings or set an object with desired values for focus trap zone
-      props. {link('Read more about Accessibility Behaviors.', '/accessibility-behaviors')}
+      Stardust applies focus trap via accessibility behavior, the same way as it's done for{' '}
+      {link('FocusZone', '/focus-zone')}. To enable focus trap for component, it is needed, in
+      behavior, to set prop {code('trapFocus')} to {code('true')} with default settings or set an
+      object with desired values for focus trap zone props.{' '}
+      {link('Read more about Accessibility Behaviors.', '/accessibility-behaviors')}
       Currently, it is used for Popup via {code('popupFocusTrapBehavior')} and Dialog via{' '}
       {code('dialogBehavior')}.
     </p>
-    <p>FocusTrapZone's props which can be applied in accessibility behavior:</p>
+    <p>
+      {code('FocusTrapZone')}'s props which can be applied in accessibility behavior (
+      {link(
+        'lookup for API on GitHub',
+        'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusTrapZone/FocusTrapZone.types.tsx',
+        true,
+      )}
+      ):
+    </p>
     <ul>
       <li>
         <b>as</b> - element type the root element will use. Default is "div".
@@ -54,8 +64,10 @@ export default () => (
       </li>
       <li>
         <b>elementToFocusOnDismiss</b> - sets the HTMLElement to focus on when exiting the
-        FocusTrapZone.
-        <p>Default: The {code('target')} which triggered the FocusTrapZone.</p>
+        {code('FocusTrapZone')}.
+        <p>
+          Default: The {code('target')} which triggered the {code('FocusTrapZone')}.
+        </p>
         <p>Type: {code('React.ReactType')}</p>
       </li>
       <li>
@@ -63,15 +75,15 @@ export default () => (
         <p>Type: {code('string')}</p>
       </li>
       <li>
-        <b>isClickableOutsideFocusTrap</b> - if true, allows clicks outside the FocusTrapZone.
-        <p>Default: {code('true')}</p>
+        <b>isClickableOutsideFocusTrap</b> - if true, allows clicks outside the{' '}
+        {code('FocusTrapZone')}.<p>Default: {code('true')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
       <li>
         <b>focusTriggerOnOutsideClick</b> - indicates if the previously focused element outside
-        FocusTrapZone should be focused on outside click. Note: trigger will be focused when exiting
-        FTZ using keyboard. If {code('isClickableOutsideFocusTrap')} === {code('false')},
-        {code('focusTriggerOnOutsideClick')} will not be taken into account.
+        {code('FocusTrapZone')} should be focused on outside click. Note: trigger will be focused
+        when exiting FTZ using keyboard. If {code('isClickableOutsideFocusTrap')} ==={' '}
+        {code('false')},{code('focusTriggerOnOutsideClick')} will not be taken into account.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
       </li>
@@ -111,10 +123,10 @@ export default () => (
         <p>Type: {code('string | (() => string)')}</p>
       </li>
     </ul>
-    <Header as="h2">Override FocusTrapZone settings</Header>
+    <Header as="h2">Override {code('FocusTrapZone')} settings</Header>
     <p>
-      To be able to add/override FocusTrapZone props already set for a component, it is needed to
-      override or create a new accessibility behavior.
+      To be able to add/override {code('FocusTrapZone')} props already set for a component, it is
+      needed to override or create a new accessibility behavior.
     </p>
     <p>
       For example, we want to disable first focus on Popup mount, so we can control the initial
@@ -142,11 +154,11 @@ export default () => (
     <p>Read more about:</p>
     <ul>
       <li>{link('Accessibility Behaviors', '/accessibility-behaviors')}</li>
-      <li>{link('Focus Zone', '/focus-zone')}</li>
-      <li>{link('Auto Focus Zone', '/auto-focus-zone')}</li>
+      <li>{link('FocusZone', '/focus-zone')}</li>
+      <li>{link('AutoFocusZone', '/auto-focus-zone')}</li>
     </ul>
     <p>
-      FocusTrapZone code on{' '}
+      {code('FocusTrapZone')} code on{' '}
       {link(
         'GitHub.',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/FocusTrapZone.tsx',
