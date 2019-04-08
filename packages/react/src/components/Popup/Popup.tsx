@@ -21,6 +21,7 @@ import {
   isFromKeyboard,
   handleRef,
   doesNodeContainClick,
+  setWhatInputSource,
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 
@@ -303,6 +304,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     if (_.includes(normalizedOn, 'hover')) {
       triggerProps.onMouseEnter = (e, ...args) => {
         this.setPopupOpen(true, e)
+        setWhatInputSource('mouse')
         _.invoke(triggerElement, 'props.onMouseEnter', e, ...args)
       }
       triggerProps.onMouseLeave = (e, ...args) => {
@@ -450,13 +452,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const focusTrapProps = {
       ...(typeof accessibility.focusTrap === 'boolean' ? {} : accessibility.focusTrap),
       ...popupWrapperAttributes,
-      onKeyDown: (e: React.KeyboardEvent) => {
-        // No need to propagate keydown events outside Popup
-        // when focus trap behavior is used
-        // allow only keyboard actions to execute
-        _.invoke(accessibility.keyHandlers.popup, 'onKeyDown', e)
-        e.stopPropagation()
-      },
     } as FocusTrapZoneProps
 
     const autoFocusProps = {

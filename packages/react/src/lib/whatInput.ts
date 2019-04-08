@@ -233,6 +233,10 @@ if (isBrowser() && 'addEventListener' in window && Array.prototype.indexOf) {
   setUp()
 }
 
+export const setWhatInputSource = (newInput: 'mouse' | 'keyboard' | 'initial') => {
+  currentInput = newInput
+}
+
 // returns string: the current input type
 // returns the same value as the `data-whatinput` attribute
 export const ask = (): string => currentInput
