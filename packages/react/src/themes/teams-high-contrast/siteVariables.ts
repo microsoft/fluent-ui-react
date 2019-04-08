@@ -78,7 +78,6 @@ export const colorScheme: ColorSchemeMapping = {
   yellow: createColorScheme(),
   lightGreen: createColorScheme(),
   magenta: createColorScheme(),
-  postOrange: createColorScheme(),
 }
 
 //

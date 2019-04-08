@@ -44,7 +44,7 @@ export default (siteVars): ChatMessageVariables => ({
   isImportant: false,
   hasMention: false,
   hasMentionColor: siteVars.colors.orange[400],
-  isImportantColor: siteVars.colors.red[900],
+  isImportantColor: siteVars.colors.red[400],
   badgeTextColor: siteVars.colors.white,
   reactionGroupMarginLeft: pxToRem(12),
   timestampColorMine: siteVars.colors.grey[500],

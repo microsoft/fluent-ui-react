@@ -88,16 +88,16 @@ export const naturalColors: NaturalColors = {
     900: '#B34A84',
   },
   red: {
-    50: '#F2D1D7',
-    100: '#ECBDC5',
-    200: '#E8AFB9',
-    300: '#E39EAA',
-    400: '#DE8D9B',
-    500: '#D97B8C',
-    600: '#D56B7E',
-    700: '#D05B70',
-    800: '#CC4B61',
-    900: '#C4314B', // siteVariables.red
+    50: '#FCF4F6', // app red 10
+    100: '#F3D6D8', // postOrange[900] app red 08
+    200: '#F9526B', // new, error banner string
+    300: '#E73550', // merge old @app-red-dark-theme
+    400: '#C4314B', // red[900], app red 06, siteVariables.red
+    500: '#A72037', // app red 04
+    600: '#8E192E', // app red 02
+    700: '#4F222B', // old app red 10 dark
+    800: '#3E1F25', // new error banner bg
+    900: '#1E040A', // app red08 dark
   },
   yellow: {
     50: '#FEF5D0',
@@ -135,18 +135,6 @@ export const naturalColors: NaturalColors = {
     800: '#A14F82',
     900: '#953872',
   },
-  postOrange: {
-    50: '#FDF6F7',
-    100: '#FBF2F3',
-    200: '#FAEEEF',
-    300: '#F9ECED',
-    400: '#F8E9EA',
-    500: '#F7E5E6',
-    600: '#F7E2E4',
-    700: '#F5DEE0',
-    800: '#F5DBDD',
-    900: '#F3D6D8',
-  },
 }
 
 export const contextualColors: ContextualColors = {
@@ -164,7 +152,6 @@ export const primitiveColors: PrimitiveColors = {
 }
 
 export type ThemeColors = Partial<{
-  postOrange: ColorVariants
   lightGreen: ColorVariants
   magenta: ColorVariants
 }>
@@ -319,5 +306,4 @@ export const colorScheme: ColorSchemeMapping = {
   yellow: createColorScheme('yellow', lightColorOverrides),
   lightGreen: createColorScheme('lightGreen', lightColorOverrides),
   magenta: createColorScheme('magenta', { foregroundDefault: colors.magenta[500] }),
-  postOrange: createColorScheme('postOrange', lightColorOverrides),
 }

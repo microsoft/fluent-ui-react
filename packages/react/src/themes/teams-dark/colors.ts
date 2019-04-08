@@ -157,12 +157,4 @@ export const colorScheme: ColorSchemeMapping = {
     foregroundDisabled: colors.black,
   }),
   magenta: createColorScheme('magenta'),
-  postOrange: createColorScheme('postOrange', {
-    backgroundDefault: colors.black,
-    foregroundHover: colors.black,
-    foregroundActive: colors.black,
-    foregroundFocus: colors.black,
-    foregroundFocusWithin: colors.black,
-    foregroundDisabled: colors.black,
-  }),
 }
