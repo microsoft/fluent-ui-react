@@ -10,7 +10,7 @@ export default (siteVariables): Partial<TeamsTextVariables> => {
   return {
     colorScheme: siteVariables.colorScheme,
     atMentionOtherColor: siteVariables.colors.primary[600],
-    atMentionMeColor: siteVariables.orange[400],
+    atMentionMeColor: siteVariables.colors.orange[400],
     atMentionMeFontWeight: siteVariables.fontWeightBold,
     disabledColor: siteVariables.colors.grey[250],
     errorColor: siteVariables.colors.red[900],
