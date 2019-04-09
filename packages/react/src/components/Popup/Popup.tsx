@@ -199,10 +199,13 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
   protected actionHandlers: AccessibilityActionHandlers = {
     closeAndFocusTrigger: e => {
-      e.stopPropagation()
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
+      e.stopPropagation()
     },
-    close: e => this.close(e),
+    close: e => {
+      this.close(e)
+      e.stopPropagation()
+    },
     toggle: e => {
       e.preventDefault()
       this.trySetOpen(!this.state.open, e)

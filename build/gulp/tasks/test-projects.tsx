@@ -1,6 +1,6 @@
 import * as express from 'express'
 import * as fs from 'fs'
-import { parallel, series, task } from 'gulp'
+import { series, task } from 'gulp'
 import { rollup as lernaAliases } from 'lerna-alias'
 import * as path from 'path'
 import * as portfinder from 'portfinder'
@@ -101,7 +101,10 @@ const performBrowserTest = async (publicDirectory: string, listenPort: number) =
   const server = await startServer(publicDirectory, listenPort)
 
   const browser = await puppeteer.launch({
-    args: ['--single-process'], // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568
+    args: [
+      // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568
+      process.env.CI && '--single-process',
+    ].filter(Boolean),
   })
   const page = await browser.newPage()
   let error: Error
@@ -199,7 +202,45 @@ task('test:projects:rollup', async () => {
   logger(`✔️Browser test was passed`)
 })
 
+task('test:projects:typings', async () => {
+  const logger = log('test:projects:typings')
+
+  const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/typings')
+  const tmpDirectory = tmp.dirSync({ prefix: 'stardust-' }).name
+
+  logger(`✔️Temporary directory was created: ${tmpDirectory}`)
+
+  const dependencies = [
+    '@types/react',
+    '@types/react-dom',
+    'react',
+    'react-dom',
+    'typescript',
+  ].join(' ')
+  await runIn(tmpDirectory)(`yarn add ${dependencies}`)
+  logger(`✔️Dependencies were installed`)
+
+  const packedPackages = await packStardustPackages(logger)
+  await addResolutionPathsForStardustPackages(tmpDirectory, packedPackages)
+  await runIn(tmpDirectory)(`yarn add ${packedPackages['@stardust-ui/react']}`)
+  logger(`✔️Stardust UI packages were added to dependencies`)
+
+  fs.mkdirSync(path.resolve(tmpDirectory, 'src'))
+  fs.copyFileSync(scaffoldPath('index.tsx'), path.resolve(tmpDirectory, 'src/index.tsx'))
+  fs.copyFileSync(scaffoldPath('tsconfig.json'), path.resolve(tmpDirectory, 'tsconfig.json'))
+  logger(`✔️Source and configs were copied`)
+
+  await runIn(tmpDirectory)(`yarn tsc --noEmit`)
+  logger(`✔️Example project was successfully built: ${tmpDirectory}`)
+})
+
 task(
   'test:projects',
-  series('dll', 'bundle:all-packages', parallel('test:projects:cra-ts', 'test:projects:rollup')),
+  series(
+    'dll',
+    'bundle:all-packages',
+    'test:projects:cra-ts',
+    'test:projects:rollup',
+    'test:projects:typings',
+  ),
 )

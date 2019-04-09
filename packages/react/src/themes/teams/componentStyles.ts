@@ -33,11 +33,7 @@ export { default as FormField } from './components/Form/formFieldStyles'
 export { default as Header } from './components/Header/headerStyles'
 export { default as HeaderDescription } from './components/Header/headerDescriptionStyles'
 
-export { default as Grid } from './components/Grid/gridStyles'
-
 export { default as Icon } from './components/Icon/iconStyles'
-
-export { default as Image } from './components/Image/imageStyles'
 
 export { default as Input } from './components/Input/inputStyles'
 

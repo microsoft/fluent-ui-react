@@ -928,6 +928,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       case keyboardKey.Escape:
         accessibilityInputPropsKeyDown(e)
         this.tryFocusTriggerButton()
+        e.stopPropagation()
         return
       default:
         accessibilityInputPropsKeyDown(e)
