@@ -4,7 +4,13 @@ import { Attachment } from '@stardust-ui/react'
 const AttachmentProgressExampleShorthand = () => (
   <Attachment
     header="Photo.jpg"
-    action={{ icon: 'x', onClick: () => alert("'X' is clicked!") }}
+    action={{
+      icon: {
+        name: 'close',
+        outline: true,
+      },
+      onClick: () => alert("'X' is clicked!"),
+    }}
     progress={33}
   />
 )

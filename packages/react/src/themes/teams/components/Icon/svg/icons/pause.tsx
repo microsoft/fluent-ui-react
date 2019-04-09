@@ -9,6 +9,5 @@ export default {
       </g>
     </svg>
   ),
-  exportedAs: 'pause',
   styles: {},
 } as TeamsProcessedSvgIconSpec
