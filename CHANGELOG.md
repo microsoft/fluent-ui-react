@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Performance
 - Drop usages of `FelaTheme` component and use `React.Context` to get `theme` directly @layershifter ([#1163](https://github.com/stardust-ui/react/pull/1163))
+- Use `tslib` to replace helpers with their imports, reduces bundle size @layershifter ([#1184](https://github.com/stardust-ui/react/pull/1184))
 
 ### Features
 - Add `Reaction` variables to Teams dark and HOC themes @mnajdova ([#1152](https://github.com/stardust-ui/react/pull/1152))
