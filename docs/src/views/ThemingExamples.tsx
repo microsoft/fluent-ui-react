@@ -48,13 +48,11 @@ export default () => (
 
         export default () =>
          <Provider theme={themes.teams}>
-          <>
             <Button content="Button" />
             <Button icon="plus" iconOnly primary />
             <Button icon="at" content="Send email" secondary />
             <Icon name="chess rook" size="larger" />
             <Label content="Label with icon" icon="close" />
-          </>
          </Provider>
       `}
       render={() => (
