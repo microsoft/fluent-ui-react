@@ -30,6 +30,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix click triggering logic of `Space` and `Enter` keys for `MenuItem` @kuzhelov ([#1175](https://github.com/stardust-ui/react/pull/1175))
 - Truncate `content` and `header` of `ListItem` when used from `DropdownSelectedItem` @silviuavram ([#1161](https://github.com/stardust-ui/react/pull/1161))
 - Fix `rotate` prop on `Icon` not working in `rtl` @mnajdova ([#1179](https://github.com/stardust-ui/react/pull/1179))
+- Updated themeing for `Attachment` for Teams, Teams Dark and Teams Contrast @bcalvery ([#1033]https://github.com/stardust-ui/react/pull/1033)
 - `FocusTrapZone` - Do not propagate any keyboard events @sophieH29 ([#1180](https://github.com/stardust-ui/react/pull/1180))
 - Capture effect of `Esc` key down event within component for `Popup` and `Dropdown` @kuzhelov ([#1183](https://github.com/stardust-ui/react/pull/1183))
 
