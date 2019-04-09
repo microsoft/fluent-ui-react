@@ -122,11 +122,11 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
 
     return (
       <ElementType
-        {...unhandledProps}
         className={classes.root}
+        onClick={this.handleClick}
         {...accessibility.attributes.root}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-        onClick={this.handleClick}
+        {...unhandledProps}
       >
         {active ? (
           <>

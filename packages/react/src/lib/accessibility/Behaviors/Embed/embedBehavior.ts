@@ -1,5 +1,5 @@
-import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
+import { Accessibility } from '../../types'
 
 /**
  * @description
@@ -8,14 +8,15 @@ import * as keyboardKey from 'keyboard-key'
  * Enter/space keys play and pause the gif respectively
  *
  * @specification
- * Sets 'aria-hidden' unless alt or title attribute provided
+ * Adds role 'presentation' to 'root' component's part.
+ * Adds attribute 'aria-hidden=true', if there is no 'alt' property provided.
  */
 const embedBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      tabIndex: 0,
       'aria-hidden': props.alt || props.title ? undefined : true,
       role: 'presentation',
+      tabIndex: 0,
     },
   },
   keyActions: {

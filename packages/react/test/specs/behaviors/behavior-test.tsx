@@ -9,6 +9,7 @@ import {
   basicListBehavior,
   basicListItemBehavior,
   buttonBehavior,
+  embedBehavior,
   iconBehavior,
   imageBehavior,
   inputBehavior,
@@ -47,6 +48,7 @@ testHelper.addBehavior('attachmentBehavior', attachmentBehavior)
 testHelper.addBehavior('basicListBehavior', basicListBehavior)
 testHelper.addBehavior('basicListItemBehavior', basicListItemBehavior)
 testHelper.addBehavior('buttonBehavior', buttonBehavior)
+testHelper.addBehavior('embedBehavior', embedBehavior)
 testHelper.addBehavior('iconBehavior', iconBehavior)
 testHelper.addBehavior('inputBehavior', inputBehavior)
 testHelper.addBehavior('imageBehavior', imageBehavior)
