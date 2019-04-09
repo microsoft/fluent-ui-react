@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 export type KnobDefinition = {
-  displayName?: React.ReactNode
+  content?: React.ReactNode
   name: KnobName
   type: 'boolean' | 'string' | 'select'
   value: any
@@ -29,7 +29,7 @@ export type KnobComponentProps = KnobDefinition & {
 }
 
 export type UseKnobOptions<T> = {
-  displayName?: React.ReactNode
+  content?: React.ReactNode
   name: string
   initialValue?: T
   values?: T[]

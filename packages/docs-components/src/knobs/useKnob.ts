@@ -6,7 +6,7 @@ import { KnobDefinition, UseKnobOptions } from './types'
 const useKnob = <T>(
   options: UseKnobOptions<T> & { type: KnobDefinition['type'] },
 ): [T, (newValue: T) => void] => {
-  const { displayName, initialValue, name, type, values } = options
+  const { content, initialValue, name, type, values } = options
   const knobContext = React.useContext(KnobContext)
 
   const value: T =
@@ -18,7 +18,7 @@ const useKnob = <T>(
   React.useEffect(
     () => {
       knobContext.registerKnob({
-        displayName,
+        content,
         name,
         type,
         value: initialValue,

@@ -4,26 +4,23 @@ import * as React from 'react'
 
 const ButtonPlayground: React.FunctionComponent = () => {
   const [content] = useStringKnob({
-    displayName: <code>content</code>,
     name: 'content',
     initialValue: 'A sample Button',
   })
 
   const [icon] = useSelectKnob({
-    displayName: <code>content</code>,
     name: 'camera',
     initialValue: 'camera',
     values: ['book', 'camera'],
   })
   const [iconPosition] = useSelectKnob({
-    displayName: <code>iconPosition</code>,
     name: 'iconPosition',
     initialValue: 'before',
     values: ['before', 'after'],
   })
 
-  const [primary] = useBooleanKnob({ displayName: <code>primary</code>, name: 'primary' })
-  const [text] = useBooleanKnob({ displayName: <code>text</code>, name: 'text' })
+  const [primary] = useBooleanKnob({ name: 'primary' })
+  const [text] = useBooleanKnob({ name: 'text' })
 
   return (
     <Button

@@ -20,9 +20,7 @@ const KnobControl: React.FunctionComponent<KnobComponentProps> = props => (
 )
 
 const KnobLabel: React.FunctionComponent<KnobComponentProps> = props => (
-  <span style={{ display: 'flex', flexGrow: 1, marginRight: 5 }}>
-    {props.displayName || props.name}
-  </span>
+  <span style={{ marginRight: 5 }}>{props.content || <code>{props.name}</code>}</span>
 )
 
 const KnobBoolean: React.FunctionComponent<KnobComponentProps> = props => (

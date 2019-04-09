@@ -3,9 +3,8 @@ import { Flex, Header, Segment } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 
+import ComponentPlaygroundSnippet from 'docs/src/components/ComponentPlaygroundSnippet'
 import { examplePlaygroundContext } from 'docs/src/utils'
-import CodeSnippet from 'docs/src/components/CodeSnippet'
-import renderElementToJSX from 'docs/src/components/ExampleSnippet/renderElementToJSX'
 
 const playgroundPaths = examplePlaygroundContext.keys()
 
@@ -21,29 +20,30 @@ const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = p
   if (playgroundPath) {
     const PlaygroundComponent: React.FunctionComponent = examplePlaygroundContext(playgroundPath)
       .default
-    const jsxMarkup = renderElementToJSX(PlaygroundComponent(null))
 
     return (
       <KnobProvider>
         <Flex gap="gap.medium">
           <Flex.Item grow>
             <Flex column>
-              <Segment
-                styles={{
-                  alignItems: 'center',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-              >
-                <PlaygroundComponent />
-              </Segment>
-              <CodeSnippet mode="jsx" value={jsxMarkup} />
+              <Flex.Item grow>
+                <Segment
+                  styles={{
+                    alignItems: 'center',
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <PlaygroundComponent />
+                </Segment>
+              </Flex.Item>
+              <ComponentPlaygroundSnippet component={PlaygroundComponent} />
             </Flex>
           </Flex.Item>
 
           <Flex.Item align="start" push>
             <Segment color="primary">
-              <Header as="h4" styles={{ marginTop: 0 }}>
+              <Header as="h4" className="no-anchor" styles={{ marginTop: 0 }}>
                 Props
               </Header>
               <KnobInspector />
