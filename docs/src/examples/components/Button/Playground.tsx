@@ -9,7 +9,7 @@ const ButtonPlayground: React.FunctionComponent = () => {
   })
 
   const [icon] = useSelectKnob({
-    name: 'camera',
+    name: 'icon',
     initialValue: 'camera',
     values: ['book', 'camera'],
   })
