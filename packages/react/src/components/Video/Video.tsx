@@ -4,6 +4,8 @@ import * as React from 'react'
 import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 
 import { ReactProps } from '../../types'
+import { defaultBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/types'
 
 export interface VideoProps extends UIComponentProps {
   /** Whether the video should start playing when rendered. Autoplay videos must be muted or they will not play immediately in certain browers like Chrome. */
@@ -50,17 +52,17 @@ class Video extends UIComponent<ReactProps<VideoProps>> {
 
   static defaultProps = {
     as: 'video',
+    accessibility: defaultBehavior as Accessibility,
     controls: true,
     autoPlay: false,
     muted: false,
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  renderComponent({ accessibility, ElementType, classes, unhandledProps }) {
     const { controls, autoPlay, muted, loop, poster, src } = this.props
 
     return (
       <ElementType
-        {...unhandledProps}
         autoPlay={autoPlay}
         className={classes.root}
         controls={controls}
@@ -68,6 +70,8 @@ class Video extends UIComponent<ReactProps<VideoProps>> {
         muted={muted}
         poster={poster}
         src={src}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
       />
     )
   }

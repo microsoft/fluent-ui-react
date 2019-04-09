@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
@@ -15,8 +16,7 @@ import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
 import Box from '../Box/Box'
-
-import { ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 
 export interface EmbedSlotClassNames {
   control: string
@@ -40,6 +40,14 @@ export interface EmbedProps extends UIComponentProps {
 
   /** Shorthand for an embedded iframe. */
   iframe?: ShorthandValue
+
+  /**
+   * Called when is clicked.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All item props.
+   */
+  onClick?: ComponentEventHandler<EmbedProps>
 
   /** Image source URL for when video isn't playing. */
   placeholder?: ShorthandValue<ImageProps>
@@ -105,6 +113,7 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
     e.preventDefault()
 
     this.trySetState({ active: !this.state.active })
+    _.invoke(this.props, 'onClick', e, { ...this.props, active: !this.state.active })
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
