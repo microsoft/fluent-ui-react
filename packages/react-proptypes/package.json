@@ -6,7 +6,8 @@
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
     "lodash": "^4.17.11",
-    "prop-types": "^15.6.1"
+    "prop-types": "^15.6.1",
+    "tslib": "^1.9.3"
   },
   "files": [
     "dist"
