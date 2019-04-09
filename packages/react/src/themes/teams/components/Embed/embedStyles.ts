@@ -1,5 +1,5 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { pxToRem } from 'src/lib'
+import { pxToRem } from '../../../../lib'
 import Embed, { EmbedProps, EmbedState } from '../../../../components/Embed/Embed'
 import { EmbedVariables } from './embedVariables'
 
