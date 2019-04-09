@@ -1,5 +1,3 @@
-import * as _ from 'lodash'
-
 import { SegmentProps } from '../../../../components/Segment/Segment'
 import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
 import { SegmentVariables } from './segmentVariables'
