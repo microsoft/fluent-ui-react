@@ -72,10 +72,12 @@ class Video extends UIComponent<ReactProps<VideoProps>> {
   setVideoAttributes = () => {
     // React doesn't guaranty that props will be set:
     // https://github.com/facebook/react/issues/10389
-    if (this.props.muted) {
-      this.videoRef.current.setAttribute('muted', 'true')
-    } else {
-      this.videoRef.current.removeAttribute('muted')
+    if (this.videoRef.current) {
+      if (this.props.muted) {
+        this.videoRef.current.setAttribute('muted', 'true')
+      } else {
+        this.videoRef.current.removeAttribute('muted')
+      }
     }
   }
 
