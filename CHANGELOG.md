@@ -37,6 +37,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Updated themeing for `Attachment` for Teams, Teams Dark and Teams Contrast @bcalvery ([#1033]https://github.com/stardust-ui/react/pull/1033)
 - `FocusTrapZone` - Do not propagate any keyboard events @sophieH29 ([#1180](https://github.com/stardust-ui/react/pull/1180))
 - Capture effect of `Esc` key down event within component for `Popup` and `Dropdown` @kuzhelov ([#1183](https://github.com/stardust-ui/react/pull/1183))
+- Fix example's code of `Theming Examples` guide @kuzhelov ([#1192](https://github.com/stardust-ui/react/pull/1192))
 
 <!--------------------------------[ v0.26.0 ]------------------------------- -->
 ## [v0.26.0](https://github.com/stardust-ui/react/tree/v0.26.0) (2019-04-03)
