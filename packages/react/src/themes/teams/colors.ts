@@ -38,9 +38,6 @@ export const naturalColors: NaturalColors = {
     900: '#237B4B', // siteVariables.green04
   },
   grey: {
-    // dark09: '#3b3a39', different colors
-    // dark10: '#323130', different colors
-
     0: '#FFFFFF', // white
     25: '#FCFCFB', // old $app-density-message-initial-hover-focus
     50: '#FAF9F8', // light14
@@ -53,9 +50,9 @@ export const naturalColors: NaturalColors = {
     400: '#8A8886', // dark04
     450: '#605E5C', // light03, dark06, $app-gray-20-theme-agnostic, old $message-highlight-color-darktheme
     500: '#484644', // light02, dark08
-    550: '#3B3A3A', // dark09 ?!?!?! different color [#3b3a39]
-    600: '#323131', // in call audio only grid slot 4
-    650: '#2D2C2C', // dark10?!?!?! - different color [#323130], in call audio only grid slot 3
+    550: '#3B3A39', // dark09 ?!?!?! different color [#3b3a39]
+    600: '#323131', // dark10, in call audio only grid slot 4
+    650: '#2D2C2C', // in call audio only grid slot 3
     700: '#292828', // dark14, in call audio only grid slot 2, old $app-density-message-background-initial-hover-focus-darktheme
     750: '#252423', // 900 - different [#252424] , old $app-black, in call audio only grid slot 1, old $app-density-message-background-replay-hover-focus-darktheme
     800: '#201F1F', // app black darktheme, in call title bar, in call audio only pip
@@ -89,7 +86,7 @@ export const naturalColors: NaturalColors = {
   },
   red: {
     50: '#FCF4F6', // app red 10
-    100: '#F3D6D8', // postOrange[900] app red 08
+    100: '#F3D6DB', // postOrange[900] app red 08
     200: '#F9526B', // new, error banner string
     300: '#E73550', // merge old @app-red-dark-theme
     400: '#C4314B', // red[900], app red 06, siteVariables.red

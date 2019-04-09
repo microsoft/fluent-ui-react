@@ -7,9 +7,9 @@ export default (siteVars: any): Partial<MenuVariables> => ({
   colorActive: siteVars.colors.white,
   colorDisabled: siteVars.colors.grey[450],
 
-  primaryBorderColor: siteVars.colors.grey[650],
+  primaryBorderColor: siteVars.colors.grey[600],
   pointingIndicatorBackgroundColor: siteVars.colors.primary[400],
 
-  verticalBackgroundColor: siteVars.colors.grey[650],
+  verticalBackgroundColor: siteVars.colors.grey[600],
   verticalBackgroundColorFocus: siteVars.colors.grey[550],
 })
