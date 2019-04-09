@@ -1,15 +1,27 @@
 import { pxToRem } from '../../../../lib'
 
 export interface PopupContentVariables {
-  [key: string]: string | number
-
   borderColor: string
+  borderSize: number
   padding: string
+
+  contentColor: string
+  contentBackgroundColor: string
+
+  pointerHeight: number
+  pointerWidth: number
 }
 
 export default (siteVars: any): PopupContentVariables => {
   return {
     borderColor: siteVars.gray06,
+    borderSize: 1,
     padding: `${pxToRem(10)} ${pxToRem(14)}`,
+
+    contentColor: siteVars.bodyColor,
+    contentBackgroundColor: siteVars.bodyBackground,
+
+    pointerHeight: 10,
+    pointerWidth: 10,
   }
 }

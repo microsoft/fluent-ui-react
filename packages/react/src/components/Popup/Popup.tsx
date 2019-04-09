@@ -104,6 +104,9 @@ export interface PopupProps
    */
   onOpenChange?: ComponentEventHandler<PopupProps>
 
+  /** A popup can show a pointer to trigger. */
+  pointing?: boolean
+
   /**
    * Position for the popup. Position has higher priority than align. If position is vertical ('above' | 'below')
    * and align is also vertical ('top' | 'bottom') or if both position and align are horizontal ('before' | 'after'
@@ -171,6 +174,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     ]),
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
+    pointing: PropTypes.bool,
     position: PropTypes.oneOf(POSITIONS),
     renderContent: PropTypes.func,
     target: PropTypes.any,
@@ -438,9 +442,15 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     rtl: boolean,
     accessibility: AccessibilityBehavior,
     // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
-    { ref, scheduleUpdate, style: popupPlacementStyles }: PopperChildrenProps,
+    {
+      arrowProps,
+      ref,
+      scheduleUpdate,
+      placement,
+      style: popupPlacementStyles,
+    }: PopperChildrenProps,
   ) => {
-    const { content: propsContent, renderContent, contentRef } = this.props
+    const { content: propsContent, renderContent, contentRef, pointing } = this.props
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
 
     const popupWrapperAttributes = {
@@ -448,6 +458,9 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       ...accessibility.attributes.popup,
       ...accessibility.keyHandlers.popup,
       className: popupPositionClasses,
+      placement,
+      pointing,
+      pointerProps: arrowProps,
       style: popupPlacementStyles,
       ...this.getContentProps(),
     }
@@ -470,10 +483,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       accessibility.focusTrap || accessibility.autoFocus ? {} : popupWrapperAttributes
 
     const popupContent = Popup.Content.create(content, {
-      defaultProps: {
-        className: Popup.slotClassNames.content,
-        ...popupContentAttributes,
-      },
+      defaultProps: popupContentAttributes,
       overrideProps: this.getContentProps,
     })
 
