@@ -1,4 +1,4 @@
-import { colors, naturalColors } from '../teams/siteVariables'
+import { colors } from '../teams/siteVariables'
 export { colorScheme } from './colors'
 
 //
