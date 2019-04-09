@@ -210,7 +210,7 @@ const renderComponent = <P extends {}>(
   const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
   classes.root = cx(className, classes.root, props.className)
 
-  const resultConfig: RenderResultConfig<P> = {
+  const resolvedConfig: RenderResultConfig<P> = {
     ElementType,
     unhandledProps,
     classes,
@@ -222,10 +222,10 @@ const renderComponent = <P extends {}>(
   }
 
   if (accessibility.focusZone) {
-    return renderWithFocusZone(render, accessibility.focusZone, resultConfig, focusZoneRef)
+    return renderWithFocusZone(render, accessibility.focusZone, resolvedConfig, focusZoneRef)
   }
 
-  return render(resultConfig)
+  return render(resolvedConfig)
 }
 
 export default renderComponent
