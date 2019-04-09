@@ -24,6 +24,7 @@ const gridStyles: ComponentSlotStylesInput<GridProps, GridVariables> = {
       gridGap,
       display: 'grid',
       justifyContent: 'space-evenly',
+      '& > *': { outlineOffset: '-3px' },
 
       ...(rows && !columns && { gridAutoFlow: 'column' }),
       ...(rows && { gridTemplateRows: getCSSTemplateValue(rows) }),
