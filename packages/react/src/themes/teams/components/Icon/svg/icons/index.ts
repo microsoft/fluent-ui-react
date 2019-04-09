@@ -74,9 +74,11 @@ import micOff from './micOff'
 import more from './more'
 import numberList from './numberList'
 import outdent from './outdent'
+import pause from './pause'
 import paperclip from './paperclip'
 import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
+import play from './play'
 import quote from './quote'
 import redbang from './redbang'
 import redo from './redo'
@@ -174,7 +176,9 @@ export default {
   paperclip,
   'participant-add': addParticipant,
   'participant-remove': participantRemove,
+  pause,
   'phone-clock': phoneClock,
+  play,
   quote,
   redbang,
   redo,
