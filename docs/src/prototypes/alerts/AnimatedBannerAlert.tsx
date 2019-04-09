@@ -20,17 +20,17 @@ const BannerAlert: React.FunctionComponent<BannerAlertProps> = props => {
 
         if (oof) {
           return {
-            color: siteVars.orchid,
-            backgroundColor: '#F9F5F8',
-            borderColor: '#DCADC7',
+            color: siteVars.colors.pink[600],
+            backgroundColor: '#F9F5F8', // where is this color coming from?
+            borderColor: '#DCADC7', // where is this this color coming from?
           }
         }
 
         if (urgent) {
           return {
             color: appWhite,
-            backgroundColor: siteVars.red,
-            borderColor: siteVars.red,
+            backgroundColor: siteVars.colors.red[400],
+            borderColor: siteVars.colors.red[400],
           }
         }
 

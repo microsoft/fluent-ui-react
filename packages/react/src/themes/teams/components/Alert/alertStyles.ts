@@ -10,11 +10,12 @@ const getIntentColorsFromProps = (
 ): React.CSSProperties => {
   const { colors } = siteVars
 
+  // TODO move all these colors in the variables, so that they can be overriden in other teams
   if (p.danger) {
     return {
-      color: siteVars.red,
-      backgroundColor: siteVars.red10,
-      borderColor: siteVars.red08,
+      color: siteVars.colors.red[400],
+      backgroundColor: siteVars.colors.red[50],
+      borderColor: siteVars.colors.red[100],
     }
   }
 
@@ -36,7 +37,7 @@ const getIntentColorsFromProps = (
 
   if (p.warning) {
     return {
-      color: siteVars.gray03,
+      color: siteVars.colors.grey[450],
       backgroundColor: colors.grey[50], // $app-white
       borderColor: colors.yellow[400], // $app-yellow
     }

@@ -6,7 +6,7 @@ export default (siteVariables): Partial<TeamsTextVariables> => ({
   disabledColor: siteVariables.colors.grey[450],
   errorColor: siteVariables.red,
   importantColor: siteVariables.red,
-  successColor: siteVariables.green04,
+  successColor: siteVariables.colors.green[200],
   timestampColor: siteVariables.colors.grey[400],
   timestampHoverColor: siteVariables.colors.grey[250],
 })
