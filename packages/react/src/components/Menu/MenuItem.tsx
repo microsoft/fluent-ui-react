@@ -105,7 +105,7 @@ export interface MenuItemProps
   wrapper?: ShorthandValue
 
   /** Shorthand for the submenu. */
-  menu?: ShorthandValue
+  menu?: ShorthandValue | ShorthandValue[]
 
   /** Indicates if the menu inside the item is open. */
   menuOpen?: boolean
@@ -168,7 +168,10 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
     wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
-    menu: customPropTypes.itemShorthand,
+    menu: PropTypes.oneOfType([
+      customPropTypes.itemShorthand,
+      PropTypes.arrayOf(customPropTypes.itemShorthand),
+    ]),
     menuOpen: PropTypes.bool,
     defaultMenuOpen: PropTypes.bool,
     onActiveChanged: PropTypes.func,
