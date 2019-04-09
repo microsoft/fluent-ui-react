@@ -4,13 +4,11 @@ import * as React from 'react'
 
 const HeaderPlayground: React.FunctionComponent = () => {
   const [as] = useSelectKnob({
-    displayName: <code>as</code>,
     name: 'as',
     initialValue: 'h1',
     values: ['h1', 'h2', 'h3', 'h4', 'h5'],
   })
   const [content] = useStringKnob({
-    displayName: <code>content</code>,
     name: 'content',
     initialValue: 'A sample header',
   })
