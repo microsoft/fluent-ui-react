@@ -30,7 +30,7 @@ export default siteVariables => ({
   backgroundColorHover: siteVariables.colors.grey[200],
   textColor: siteVariables.colors.grey[750],
 
-  progressColor: siteVariables.naturalColors.lightGreen[900],
+  progressColor: siteVariables.colors.green[200],
   progressHeight: 4,
 
   headerFontSize: siteVariables.fontSizes.medium,

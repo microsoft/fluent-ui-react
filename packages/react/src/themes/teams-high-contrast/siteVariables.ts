@@ -1,4 +1,4 @@
-import { colors, naturalColors } from '../teams/siteVariables'
+import { colors } from '../teams/siteVariables'
 import { ColorSchemeMapping } from '../../themes/types'
 //
 // COLORS
@@ -9,7 +9,7 @@ export const accessibleGreen = '#3ff23f' // always disabled color in high contra
 export const accessibleCyan = '#1aebff'
 
 export const red = '#f00'
-export const green04 = naturalColors.lightGreen[900]
+export const green04 = colors.green[200]
 
 export const white = colors.white
 export const black = colors.black

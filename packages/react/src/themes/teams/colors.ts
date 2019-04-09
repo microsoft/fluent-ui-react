@@ -5,7 +5,7 @@ import {
   NaturalColors,
   PrimitiveColors,
 } from '../types'
-import { ColorVariants, ColorSchemeMapping } from 'src/themes/types'
+import { ColorSchemeMapping } from 'src/themes/types'
 
 export const emphasisColors: EmphasisColors = {
   primary: {
@@ -25,18 +25,6 @@ export const emphasisColors: EmphasisColors = {
 }
 
 export const naturalColors: NaturalColors = {
-  green: {
-    50: '#D3E4DB',
-    100: '#C4DCCF',
-    200: '#B3D1C1',
-    300: '#9DC4AF',
-    400: '#8CBAA1',
-    500: '#7BB093',
-    600: '#68A584',
-    700: '#579A75',
-    800: '#458F67',
-    900: '#237B4B', // siteVariables.green04
-  },
   grey: {
     0: '#FFFFFF', // white
     25: '#FCFCFB', // old $app-density-message-initial-hover-focus
@@ -73,16 +61,16 @@ export const naturalColors: NaturalColors = {
     900: '#51332C', // app orange16 dark
   },
   pink: {
-    50: '#E8BDD5',
-    100: '#E1ABC8',
-    200: '#DA9EBF',
-    300: '#D693B8',
-    400: '#D28BB2',
-    500: '#CA7BA6',
-    600: '#C775A3',
-    700: '#C06597',
-    800: '#BA598F',
-    900: '#B34A84',
+    50: '#FCF2FA', // app orchid opacity, oof message, oof banner bg
+    100: '#F1DFEE', // new oof banner border default theme
+    200: '#EC6FAE', // new oof text for better contrast in dark theme
+    300: '#DE569A', // magenta dark theme
+    400: '#E959D9', // oof presence icon dark theme
+    500: '#B4009E', // merge oof presence icon, odl $app-magenta
+    600: '#943670', // old $app-orchid, use for oof banner text
+    700: undefined, //
+    800: '#3E2D3B', // old @app orchid opacity, oof message bg, oof banner bg
+    900: '#1F191D', // new oof banner border dark theme
   },
   red: {
     50: '#FCF4F6', // app red 10
@@ -96,41 +84,29 @@ export const naturalColors: NaturalColors = {
     800: '#3E1F25', // new error banner bg
     900: '#1E040A', // app red08 dark
   },
+  green: {
+    50: undefined,
+    100: undefined,
+    200: '#92C353', // lightGreen[900] old $app-green, available presence dark theme, siteVars.green
+    300: '#6BB700', // new Available presence
+    400: '#13A40E', // dual presence Available
+    500: undefined,
+    600: '#237B4B', // old $app-green-04, siteVariables.green04, green[900]
+    700: undefined,
+    800: undefined,
+    900: undefined,
+  },
   yellow: {
-    50: '#FEF5D0',
-    100: '#FDF1BE',
-    200: '#FDEEAE',
-    300: '#FBEA9D',
-    400: '#FCE78E',
-    500: '#FAE37C',
-    600: '#FAE06C',
-    700: '#F9DC58',
-    800: '#F9D844',
-    900: '#F8D22A', // siteVariables.yellow
-  },
-  lightGreen: {
-    50: '#E7F2D9',
-    100: '#DFEECD',
-    200: '#D8EAC1',
-    300: '#CDE3B0',
-    400: '#C6DFA4',
-    500: '#BDDB96',
-    600: '#B4D689',
-    700: '#ACD17B',
-    800: '#A1CC6B',
-    900: '#92C353', // siteVariables.green
-  },
-  magenta: {
-    50: '#E8D4E0',
-    100: '#DEC0D2',
-    200: '#D4ADC5',
-    300: '#CDA0BC',
-    400: '#C491B0',
-    500: '#BB7FA4',
-    600: '#B26E98',
-    700: '#AA5F8D',
-    800: '#A14F82',
-    900: '#953872',
+    50: undefined,
+    100: '#FBF6D9', // old message highlight color
+    200: undefined,
+    300: '#F9EC02', // old acc critical ufd icon color
+    400: '#F8D22A', // old siteVariables.yellow, $app-yellow, yellow[900]
+    500: '#FFB900', // old $bcast pre live color
+    600: '#FFAA44', // new away presence
+    700: undefined,
+    800: undefined,
+    900: undefined,
   },
 }
 
@@ -148,12 +124,7 @@ export const primitiveColors: PrimitiveColors = {
   white: '#fff',
 }
 
-export type ThemeColors = Partial<{
-  lightGreen: ColorVariants
-  magenta: ColorVariants
-}>
-
-export const colors: ColorPalette<ThemeColors> = {
+export const colors: ColorPalette = {
   ...emphasisAndNaturalColors,
   ...contextualColors,
   ...primitiveColors,
@@ -296,11 +267,9 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundFocus: colors.primary[300],
   }),
   grey: createColorScheme('grey'),
-  green: createColorScheme('green', { foregroundDefault: colors.green[500] }),
+  green: createColorScheme('green'),
   orange: createColorScheme('orange', lightColorOverrides),
-  pink: createColorScheme('pink', { foregroundDefault: colors.pink[500] }),
-  red: createColorScheme('red', { foregroundDefault: colors.red[500] }),
+  pink: createColorScheme('pink'),
+  red: createColorScheme('red'),
   yellow: createColorScheme('yellow', lightColorOverrides),
-  lightGreen: createColorScheme('lightGreen', lightColorOverrides),
-  magenta: createColorScheme('magenta', { foregroundDefault: colors.magenta[500] }),
 }

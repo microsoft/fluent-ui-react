@@ -1,10 +1,5 @@
 import * as React from 'react'
-import {
-  ComponentSlotStylesInput,
-  ICSSInJSStyle,
-  SiteVariablesPrepared,
-  NaturalColors,
-} from '../../../types'
+import { ComponentSlotStylesInput, ICSSInJSStyle, SiteVariablesPrepared } from '../../../types'
 import { AlertProps } from '../../../../components/Alert/Alert'
 import { AlertVariables } from './alertVariables'
 
@@ -14,7 +9,6 @@ const getIntentColorsFromProps = (
   siteVars: SiteVariablesPrepared,
 ): React.CSSProperties => {
   const { colors } = siteVars
-  const naturalColors: NaturalColors = siteVars.naturalColors
 
   if (p.danger) {
     return {
@@ -34,9 +28,9 @@ const getIntentColorsFromProps = (
 
   if (p.success) {
     return {
-      color: colors.green[900], // $app-green-04
+      color: colors.green[600], // $app-green-04
       backgroundColor: colors.grey[50], // $app-white
-      borderColor: naturalColors.lightGreen[900], // $app-green
+      borderColor: colors.green[200], // $app-green
     }
   }
 
@@ -44,7 +38,7 @@ const getIntentColorsFromProps = (
     return {
       color: siteVars.gray03,
       backgroundColor: colors.grey[50], // $app-white
-      borderColor: colors.yellow[900], // $app-yellow
+      borderColor: colors.yellow[400], // $app-yellow
     }
   }
 

@@ -86,7 +86,7 @@ const items = [
           badge={{ icon: 'redbang' }}
           variables={siteVars => ({
             isImportant: true,
-            isImportantColor: siteVars.colors.yellow[900],
+            isImportantColor: siteVars.colors.yellow[400],
           })}
         />
       ),
