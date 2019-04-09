@@ -6,6 +6,7 @@ import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes 
 import { ReactProps } from '../../types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
+import Ref from '../Ref/Ref'
 
 export interface VideoProps extends UIComponentProps {
   /** Whether the video should start playing when rendered. Autoplay videos must be muted or they will not play immediately in certain browers like Chrome. */
@@ -58,21 +59,42 @@ class Video extends UIComponent<ReactProps<VideoProps>> {
     muted: false,
   }
 
+  videoRef = React.createRef<HTMLVideoElement>()
+
+  componentDidMount() {
+    this.setVideoAttributes()
+  }
+
+  componentDidUpdate() {
+    this.setVideoAttributes()
+  }
+
+  setVideoAttributes = () => {
+    // React doesn't guaranty that props will be set:
+    // https://github.com/facebook/react/issues/10389
+    if (this.props.muted) {
+      this.videoRef.current.setAttribute('muted', 'true')
+    } else {
+      this.videoRef.current.removeAttribute('muted')
+    }
+  }
+
   renderComponent({ accessibility, ElementType, classes, unhandledProps }) {
-    const { controls, autoPlay, muted, loop, poster, src } = this.props
+    const { controls, autoPlay, loop, poster, src } = this.props
 
     return (
-      <ElementType
-        autoPlay={autoPlay}
-        className={classes.root}
-        controls={controls}
-        loop={loop}
-        muted={muted}
-        poster={poster}
-        src={src}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-      />
+      <Ref innerRef={this.videoRef}>
+        <ElementType
+          autoPlay={autoPlay}
+          className={classes.root}
+          controls={controls}
+          loop={loop}
+          poster={poster}
+          src={src}
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+        />
+      </Ref>
     )
   }
 }
