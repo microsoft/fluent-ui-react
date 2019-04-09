@@ -3,35 +3,35 @@ import { ColorSchemeMapping } from 'src/themes/types'
 
 const createColorScheme = (color: string, customValues = {}) => {
   return {
-    foregroundDefault: colors[color][500],
+    foregroundDefault: colors[color][600],
     backgroundDefault: colors[color][50],
-    borderDefault: colors[color][500],
-    shadowDefault: colors[color][500],
+    borderDefault: colors[color][600],
+    shadowDefault: colors[color][600],
 
     foregroundHover: colors[color][50],
-    backgroundHover: colors[color][500],
-    borderHover: colors[color][500],
-    shadowHover: colors[color][500],
+    backgroundHover: colors[color][600],
+    borderHover: colors[color][600],
+    shadowHover: colors[color][600],
 
     foregroundActive: colors[color][50],
-    backgroundActive: colors[color][500],
-    borderActive: colors[color][500],
-    shadowActive: colors[color][500],
+    backgroundActive: colors[color][600],
+    borderActive: colors[color][600],
+    shadowActive: colors[color][600],
 
     foregroundFocus: colors[color][50],
-    backgroundFocus: colors[color][500],
-    borderFocus: colors[color][500],
-    shadowFocus: colors[color][500],
+    backgroundFocus: colors[color][600],
+    borderFocus: colors[color][600],
+    shadowFocus: colors[color][600],
 
     foregroundFocusWithin: colors[color][50],
-    backgroundFocusWithin: colors[color][500],
-    borderFocusWithin: colors[color][500],
-    shadowFocusWithin: colors[color][500],
+    backgroundFocusWithin: colors[color][600],
+    borderFocusWithin: colors[color][600],
+    shadowFocusWithin: colors[color][600],
 
     foregroundDisabled: colors[color][50],
-    backgroundDisabled: colors[color][500],
-    borderDisabled: colors[color][500],
-    shadowDisabled: colors[color][500],
+    backgroundDisabled: colors[color][600],
+    borderDisabled: colors[color][600],
+    shadowDisabled: colors[color][600],
     ...customValues,
   }
 }
@@ -148,13 +148,4 @@ export const colorScheme: ColorSchemeMapping = {
     foregroundFocusWithin: colors.black,
     foregroundDisabled: colors.black,
   }),
-  lightGreen: createColorScheme('lightGreen', {
-    backgroundDefault: colors.black,
-    foregroundHover: colors.black,
-    foregroundActive: colors.black,
-    foregroundFocus: colors.black,
-    foregroundFocusWithin: colors.black,
-    foregroundDisabled: colors.black,
-  }),
-  magenta: createColorScheme('magenta'),
 }
