@@ -44,6 +44,8 @@ import email from './email'
 import emoji from './emoji'
 import error from './error'
 import exclamationCircle from './exclamationCircle'
+import eye from './eye'
+import eyeSlash from './eyeSlash'
 import filesExcel from './filesExcel'
 import filesExcelBrand from './filesExcelBrand'
 import filesOneNote from './filesOneNote'
@@ -151,6 +153,8 @@ export default {
   emoji,
   error,
   'exclamation-circle': exclamationCircle,
+  eye,
+  'eye-slash': eyeSlash,
   format,
   'font-color': fontColor,
   'font-size': fontSize,
