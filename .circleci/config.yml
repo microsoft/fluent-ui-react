@@ -12,9 +12,6 @@ jobs:
     steps:
       # https://circleci.com/docs/2.0/api-job-trigger/
       - run:
-          name: My branch
-          command: if [ $CIRCLE_BRANCH == 'chore/disable-bundle-stat-for-dev-branches' ]; then echo 'yes'; else echo 'no'; fi
-      - run:
           name: Start Visual Tests job
           command: |
             curl --user ${CIRCLE_API_USER_TOKEN} \
@@ -80,7 +77,7 @@ jobs:
           command: yarn test:circulars
       - run:
           name: Bundle Statistics
-          command: yarn stats:build
+          command: command: if [ $CIRCLE_BRANCH == 'master' ]; then yarn stats:build; fi
       - run:
           name: Performance Tests
           command: yarn perf
