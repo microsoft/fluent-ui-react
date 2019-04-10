@@ -55,7 +55,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('is null when opened by Enter', () => {
+    it.skip('is null when opened by Enter', () => {
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
 
       wrapper
