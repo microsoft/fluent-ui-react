@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Add `box-sizing: border-box` to all elements, as well as before and after pseudo elements in Teams theme @mnajdova ([#1057](https://github.com/stardust-ui/react/pull/1057))
+
 ### Fixes
 - Fix overflowing focus outline for `Grid` items for Teams theme @Bugaa92 ([#1195](https://github.com/stardust-ui/react/pull/1195))
 
@@ -104,9 +107,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentation
 - Fix example permalinks @miroslavstastny ([#1122](https://github.com/stardust-ui/react/pull/1122))
-
-### BREAKING CHANGES
-- Add `box-sizing: border-box` to all elements, as well as before and after pseudo elements in Teams theme @mnajdova ([#1057](https://github.com/stardust-ui/react/pull/1057))
 
 <!--------------------------------[ v0.25.0 ]------------------------------- -->
 ## [v0.25.0](https://github.com/stardust-ui/react/tree/v0.25.0) (2019-03-26)
