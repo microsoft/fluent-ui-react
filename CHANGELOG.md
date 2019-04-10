@@ -17,12 +17,24 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.27.0 ]------------------------------- -->
+## [v0.27.0](https://github.com/stardust-ui/react/tree/v0.27.0) (2019-04-10)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.26.0...v0.27.0)
+
 ### BREAKING CHANGES
 - Rename `flipInRtl` Icon's `slot` to `svgFlippingInRtl` in Teams theme @mnajdova ([#1179](https://github.com/stardust-ui/react/pull/1179))
+- Do not set html `font-size` in theme static styles @miroslavstastny ([#1190](https://github.com/stardust-ui/react/pull/1190))
 
-### Performance
-- Drop usages of `FelaTheme` component and use `React.Context` to get `theme` directly @layershifter ([#1163](https://github.com/stardust-ui/react/pull/1163))
-- Use `tslib` to replace helpers with their imports, reduces bundle size @layershifter ([#1184](https://github.com/stardust-ui/react/pull/1184))
+### Fixes
+- Fix the reset of the `highlightedIndex` when search query changes @silviuavram ([#1168](https://github.com/stardust-ui/react/pull/1168))
+- Fix click triggering logic of `Space` and `Enter` keys for `MenuItem` @kuzhelov ([#1175](https://github.com/stardust-ui/react/pull/1175))
+- Truncate `content` and `header` of `ListItem` when used from `DropdownSelectedItem` @silviuavram ([#1161](https://github.com/stardust-ui/react/pull/1161))
+- Fix `rotate` prop on `Icon` not working in `rtl` @mnajdova ([#1179](https://github.com/stardust-ui/react/pull/1179))
+- Updated theming for `Attachment` for Teams, Teams Dark and Teams Contrast @bcalvery ([#1033](https://github.com/stardust-ui/react/pull/1033))
+- `FocusTrapZone` - Do not propagate any keyboard events @sophieH29 ([#1180](https://github.com/stardust-ui/react/pull/1180))
+- Capture effect of `Esc` key down event within component for `Popup` and `Dropdown` @kuzhelov ([#1183](https://github.com/stardust-ui/react/pull/1183))
+- Fix prop types of `MenuItem` @kuzhelov ([#1197](https://github.com/stardust-ui/react/pull/1197))
+- Fix example's code of `Theming Examples` guide @kuzhelov ([#1192](https://github.com/stardust-ui/react/pull/1192))
 
 ### Features
 - Add `Reaction` variables to Teams dark and HOC themes @mnajdova ([#1152](https://github.com/stardust-ui/react/pull/1152))
@@ -30,15 +42,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Export `play` and `pause` icons in Teams theme @layershifter ([#1189](https://github.com/stardust-ui/react/pull/1189))
 - Export `eye` and `eye-slash` icons in Teams theme @alinais ([#1194](https://github.com/stardust-ui/react/pull/1194))
 
-### Fixes
-- Fix the reset of the `highlightedIndex` when search query changes @silviuavram ([#1168](https://github.com/stardust-ui/react/pull/1168))
-- Fix click triggering logic of `Space` and `Enter` keys for `MenuItem` @kuzhelov ([#1175](https://github.com/stardust-ui/react/pull/1175))
-- Truncate `content` and `header` of `ListItem` when used from `DropdownSelectedItem` @silviuavram ([#1161](https://github.com/stardust-ui/react/pull/1161))
-- Fix `rotate` prop on `Icon` not working in `rtl` @mnajdova ([#1179](https://github.com/stardust-ui/react/pull/1179))
-- Updated themeing for `Attachment` for Teams, Teams Dark and Teams Contrast @bcalvery ([#1033]https://github.com/stardust-ui/react/pull/1033)
-- `FocusTrapZone` - Do not propagate any keyboard events @sophieH29 ([#1180](https://github.com/stardust-ui/react/pull/1180))
-- Capture effect of `Esc` key down event within component for `Popup` and `Dropdown` @kuzhelov ([#1183](https://github.com/stardust-ui/react/pull/1183))
-- Fix example's code of `Theming Examples` guide @kuzhelov ([#1192](https://github.com/stardust-ui/react/pull/1192))
+### Performance
+- Drop usages of `FelaTheme` component and use `React.Context` to get `theme` directly @layershifter ([#1163](https://github.com/stardust-ui/react/pull/1163))
+- Use `tslib` to replace helpers with their imports, reduces bundle size @layershifter ([#1184](https://github.com/stardust-ui/react/pull/1184))
 
 <!--------------------------------[ v0.26.0 ]------------------------------- -->
 ## [v0.26.0](https://github.com/stardust-ui/react/tree/v0.26.0) (2019-04-03)
