@@ -81,7 +81,7 @@ jobs:
             if [ $CIRCLE_BRANCH == 'master' ]; then
               yarn stats:build
             else
-              echo 'skipping bundle statistics collection'
+              echo 'skip bundle statistics collection'
             fi
       - run:
           name: Performance Tests
@@ -92,7 +92,7 @@ jobs:
             if [ -n "${STATS_URI}" ] && [ $CIRCLE_BRANCH == 'master' ]; then
               yarn stats:save --tag=`git tag --points-at HEAD`
             else
-              echo "skip saving statistics"
+              echo 'skip saving statistics'
             fi
       - run:
           name: Danger JS
