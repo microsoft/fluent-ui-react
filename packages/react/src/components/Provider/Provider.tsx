@@ -10,7 +10,6 @@ import {
   felaRtlRenderer,
   isBrowser,
   mergeThemes,
-  updateCachedRemSize,
   ChildrenComponentProps,
 } from '../../lib'
 
@@ -185,8 +184,6 @@ class Provider extends React.Component<Extendable<ProviderProps>> {
     if (!this.staticStylesRendered && staticStyles) {
       this.renderStaticStyles(mergedTheme)
       this.staticStylesRendered = true
-
-      updateCachedRemSize()
     }
   }
 }

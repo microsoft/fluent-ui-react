@@ -9,11 +9,23 @@ class AttachmentActionExampleShorthand extends React.Component {
       <div>
         <Attachment
           header="Picture.jpg"
-          action={{ icon: 'x', onClick: this.handleClick('Remove') }}
+          action={{
+            icon: {
+              name: 'close',
+              outline: true,
+            },
+            onClick: this.handleClick('Remove'),
+          }}
         />
         <Attachment
           header="Document.docx"
-          action={{ icon: 'ellipsis horizontal', onClick: this.handleClick('Show more') }}
+          action={{
+            icon: {
+              name: 'more',
+              outline: true,
+            },
+            onClick: this.handleClick('Show more'),
+          }}
         />
       </div>
     )

@@ -2,14 +2,19 @@ import * as React from 'react'
 
 import addEventListener from './lib/addEventListener'
 import removeEventListener from './lib/removeEventListener'
-import { EventListenerProps, listenerPropTypes } from './types'
 import * as listenerRegistries from './lib/listenerRegistries'
+import shouldUpdateListener from './lib/shouldUpdateListener'
+import { EventListenerProps, listenerPropTypes } from './types'
 
-class StackableEventListener extends React.PureComponent<EventListenerProps> {
+class StackableEventListener extends React.Component<EventListenerProps> {
   static displayName = 'StackableEventListener'
   static propTypes = listenerPropTypes
   static defaultProps = {
     capture: false,
+  }
+
+  shouldComponentUpdate(nextProps: EventListenerProps) {
+    return shouldUpdateListener(this.props, nextProps)
   }
 
   componentDidMount() {

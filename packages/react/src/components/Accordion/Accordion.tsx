@@ -1,10 +1,10 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
   AutoControlledComponent,
-  customPropTypes,
   childrenExist,
   UIComponentProps,
   ChildrenComponentProps,
@@ -22,6 +22,11 @@ import {
   ShorthandValue,
   ShorthandRenderFunction,
 } from '../../types'
+
+export interface AccordionSlotClassNames {
+  content: string
+  title: string
+}
 
 export interface AccordionProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active panel. */
@@ -81,6 +86,11 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
 
   static className = 'ui-accordion'
 
+  static slotClassNames: AccordionSlotClassNames = {
+    content: `${Accordion.className}__content`,
+    title: `${Accordion.className}__title`,
+  }
+
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
@@ -136,7 +146,7 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
       const { index } = titleProps
       const activeIndex = this.computeNewIndex(index)
 
-      this.trySetState({ activeIndex }, index)
+      this.trySetState({ activeIndex })
 
       _.invoke(predefinedProps, 'onClick', e, titleProps)
       _.invoke(this.props, 'onTitleClick', e, titleProps)
@@ -160,14 +170,14 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
 
       children.push(
         AccordionTitle.create(title, {
-          defaultProps: { active, index },
+          defaultProps: { className: Accordion.slotClassNames.title, active, index },
           overrideProps: this.handleTitleOverrides,
           render: renderPanelTitle,
         }),
       )
       children.push(
         AccordionContent.create(content, {
-          defaultProps: { active },
+          defaultProps: { className: Accordion.slotClassNames.content, active },
           render: renderPanelContent,
         }),
       )

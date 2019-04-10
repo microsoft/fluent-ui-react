@@ -133,7 +133,6 @@ export interface SiteVariablesInput extends ObjectOf<any> {
   contextualColors?: ContextualColors
   emphasisColors?: EmphasisColors
   naturalColors?: NaturalColorsStrict
-  htmlFontSize?: string
 }
 
 export interface SiteVariablesPrepared extends SiteVariablesInput {
@@ -505,4 +504,12 @@ export type ThemeIconSpec = {
   icon: FontIconSpec | SvgIconSpec
 }
 
-export type ThemeIcons = { [iconName: string]: ThemeIconSpec }
+export type RequiredIconNames =
+  | 'stardust-close'
+  | 'stardust-arrow-end'
+  | 'stardust-arrow-up'
+  | 'stardust-arrow-down'
+
+export type ThemeIcons = Partial<Record<RequiredIconNames, ThemeIconSpec>> & {
+  [iconName: string]: ThemeIconSpec
+}

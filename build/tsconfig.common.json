@@ -13,6 +13,7 @@
     "types": ["node", "jest"],
     "typeRoots": ["../types", "../node_modules/@types"],
     "jsx": "react",
+    "importHelpers": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "allowJs": false,

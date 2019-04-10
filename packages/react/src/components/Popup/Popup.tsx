@@ -1,5 +1,6 @@
 import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
 import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
@@ -18,9 +19,9 @@ import {
   StyledComponentProps,
   commonPropTypes,
   isFromKeyboard,
-  customPropTypes,
   handleRef,
   doesNodeContainClick,
+  setWhatInputSource,
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 
@@ -50,6 +51,10 @@ export type PopupEvents = 'click' | 'hover' | 'focus'
 export type RestrictedClickEvents = 'click' | 'focus'
 export type RestrictedHoverEvents = 'hover' | 'focus'
 export type PopupEventsArray = RestrictedClickEvents[] | RestrictedHoverEvents[]
+
+export interface PopupSlotClassNames {
+  content: string
+}
 
 export interface PopupProps
   extends StyledComponentProps<PopupProps>,
@@ -142,6 +147,10 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
   static className = 'ui-popup'
 
+  static slotClassNames: PopupSlotClassNames = {
+    content: `${Popup.className}__content`,
+  }
+
   static Content = PopupContent
 
   static propTypes = {
@@ -190,10 +199,13 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
   protected actionHandlers: AccessibilityActionHandlers = {
     closeAndFocusTrigger: e => {
-      e.stopPropagation()
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
+      e.stopPropagation()
     },
-    close: e => this.close(e),
+    close: e => {
+      this.close(e)
+      e.stopPropagation()
+    },
     toggle: e => {
       e.preventDefault()
       this.trySetOpen(!this.state.open, e)
@@ -295,6 +307,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     if (_.includes(normalizedOn, 'hover')) {
       triggerProps.onMouseEnter = (e, ...args) => {
         this.setPopupOpen(true, e)
+        setWhatInputSource('mouse')
         _.invoke(triggerElement, 'props.onMouseEnter', e, ...args)
       }
       triggerProps.onMouseLeave = (e, ...args) => {
@@ -442,13 +455,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const focusTrapProps = {
       ...(typeof accessibility.focusTrap === 'boolean' ? {} : accessibility.focusTrap),
       ...popupWrapperAttributes,
-      onKeyDown: (e: React.KeyboardEvent) => {
-        // No need to propagate keydown events outside Popup
-        // when focus trap behavior is used
-        // allow only keyboard actions to execute
-        _.invoke(accessibility.keyHandlers.popup, 'onKeyDown', e)
-        e.stopPropagation()
-      },
     } as FocusTrapZoneProps
 
     const autoFocusProps = {
@@ -464,7 +470,10 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       accessibility.focusTrap || accessibility.autoFocus ? {} : popupWrapperAttributes
 
     const popupContent = Popup.Content.create(content, {
-      defaultProps: popupContentAttributes,
+      defaultProps: {
+        className: Popup.slotClassNames.content,
+        ...popupContentAttributes,
+      },
       overrideProps: this.getContentProps,
     })
 

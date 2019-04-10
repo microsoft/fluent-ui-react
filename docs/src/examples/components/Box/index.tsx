@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import { Alert } from '@stardust-ui/react'
 
 import Types from './Types'
+import { LayoutSuggestions } from 'docs/src/components/ComponentDoc/Suggestions'
 
-const HeaderExamples = () => (
+const BoxExamples = () => (
   <>
     <Alert styles={{ display: 'block' }} warning>
       <p>
@@ -12,9 +13,7 @@ const HeaderExamples = () => (
       </p>
       <ul>
         <li>
-          For layouts and positioning refer to <Link to="/components/flex">Flex</Link> and{' '}
-          <Link to="/components/grid">Grid</Link> components (and general{' '}
-          <Link to="/layout">Layout guide</Link>).
+          <LayoutSuggestions />
         </li>
         <li>
           Consider to use <Link to="/components/text">Text</Link> component to wrap text.
@@ -37,4 +36,4 @@ const HeaderExamples = () => (
   </>
 )
 
-export default HeaderExamples
+export default BoxExamples

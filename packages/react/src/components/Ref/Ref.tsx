@@ -1,8 +1,9 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { isForwardRef } from 'react-is'
 
-import { ChildrenComponentProps, customPropTypes } from '../../lib'
+import { ChildrenComponentProps } from '../../lib'
 import { ReactProps } from '../../types'
 import RefFindNode from './RefFindNode'
 import RefForward from './RefForward'

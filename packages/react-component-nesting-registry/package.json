@@ -1,11 +1,12 @@
 {
   "name": "@stardust-ui/react-component-nesting-registry",
   "description": "Registers a DOM nodes within a context.",
-  "version": "0.25.0",
+  "version": "0.27.0",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
-    "prop-types": "^15.6.1"
+    "prop-types": "^15.6.1",
+    "tslib": "^1.9.3"
   },
   "files": [
     "dist"
@@ -16,8 +17,8 @@
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
   "peerDependencies": {
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "publishConfig": {
     "access": "public"
