@@ -5,7 +5,6 @@ import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes 
 
 import { ReactProps } from '../../types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 import Ref from '../Ref/Ref'
 
 export interface VideoProps extends UIComponentProps {
@@ -53,7 +52,7 @@ class Video extends UIComponent<ReactProps<VideoProps>> {
 
   static defaultProps = {
     as: 'video',
-    accessibility: defaultBehavior as Accessibility,
+    accessibility: defaultBehavior,
     controls: true,
     autoPlay: false,
     muted: false,

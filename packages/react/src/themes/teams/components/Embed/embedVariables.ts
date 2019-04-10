@@ -1,7 +1,7 @@
 export interface EmbedVariables {
   controlColor: string
-  width: number
-  height: number
+  width: string
+  height: string
   focusBorderColor: string
 }
 

@@ -1,6 +1,6 @@
 export interface VideoVariables {
-  width: number
-  height: number
+  width: string
+  height: string
 }
 
 export default (): VideoVariables => ({

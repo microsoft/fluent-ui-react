@@ -42,6 +42,13 @@ export interface EmbedProps extends UIComponentProps {
   iframe?: ShorthandValue
 
   /**
+   * Event for request to change 'active' value.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
+  onActiveChanged?: ComponentEventHandler<EmbedProps>
+
+  /**
    * Called when is clicked.
    *
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
@@ -84,6 +91,8 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
     defaultActive: PropTypes.bool,
     control: customPropTypes.itemShorthand,
     iframe: customPropTypes.itemShorthand,
+    onActiveChanged: PropTypes.func,
+    onClick: PropTypes.func,
     placeholder: PropTypes.string,
     video: customPropTypes.itemShorthand,
   }
@@ -113,6 +122,8 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
     e.preventDefault()
 
     this.trySetState({ active: !this.state.active })
+
+    _.invoke(this.props, 'onActiveChanged', e, { ...this.props, active: !this.state.active })
     _.invoke(this.props, 'onClick', e, { ...this.props, active: !this.state.active })
   }
 
