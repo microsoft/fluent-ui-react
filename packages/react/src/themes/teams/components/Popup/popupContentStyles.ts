@@ -4,7 +4,7 @@ import { pxToRem } from '../../../../lib'
 import { PopupContentProps } from '../../../../components/Popup/PopupContent'
 import { PopupContentVariables } from './popupContentVariables'
 
-const getStyles = (
+const getPointerStyles = (
   v: PopupContentVariables,
   popperPlacement?: PopperChildrenProps['placement'],
 ) => {
@@ -52,7 +52,7 @@ const getStyles = (
 const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupContentVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
-    ...getStyles(v, p.placement).root,
+    ...(p.pointing && getPointerStyles(v, p.placement).root),
   }),
   pointer: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
@@ -66,7 +66,7 @@ const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupConte
     height: pxToRem(v.pointerHeight),
     width: pxToRem(v.pointerWidth),
 
-    ...getStyles(v, p.placement).pointer,
+    ...getPointerStyles(v, p.placement).pointer,
   }),
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
