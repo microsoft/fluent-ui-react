@@ -9,14 +9,13 @@ import { ColorSchemeMapping } from 'src/themes/types'
 
 export const emphasisColors: EmphasisColors = {
   primary: {
-    // UPDATED
     50: '#F4F4FC', // siteVariables.brand16, same as prev
     100: '#E5E5F1', // brand15
     200: '#E2E2F6', // 100, light brand14, dark theme brand02
     300: '#BDBDE6', // 200, light brand12, dark theme brand04
     400: '#A6A7DC', // dark theme brand06 (dark06)
     500: '#8B8CC7', // light08, dark08
-    600: '#6264A7', // 500, siteVariables.brand, siteVariables.brand06 (same color?), dark theme brand, brand12
+    600: '#6264A7', // 500, siteVariables.brand, siteVariables.brand06, dark theme brand, brand12
     700: '#585A96', // light05
     800: '#464775', // light04, dark14
     900: '#33344A', // siteVariables.brand02, dark theme brand16, same as 900 prev
@@ -32,13 +31,13 @@ export const naturalColors: NaturalColors = {
     100: '#F3F2F1', // light10, old $app-density-message-background-replay-hover-focus
     150: '#EDEBE9', // light09, old $app-density-border-gray
     200: '#E1DFDD', // light08
-    250: '#C8C6C4', // light06, dark02???
+    250: '#C8C6C4', // light06, dark02
     300: '#B3B0AD', // dark03
     350: '#979593', // light04
     400: '#8A8886', // dark04
     450: '#605E5C', // light03, dark06, $app-gray-20-theme-agnostic, old $message-highlight-color-darktheme
     500: '#484644', // light02, dark08
-    550: '#3B3A39', // dark09 ?!?!?! different color [#3b3a39]
+    550: '#3B3A39', // dark09
     600: '#323131', // dark10, in call audio only grid slot 4
     650: '#2D2C2C', // in call audio only grid slot 3
     700: '#292828', // dark14, in call audio only grid slot 2, old $app-density-message-background-initial-hover-focus-darktheme
@@ -51,7 +50,7 @@ export const naturalColors: NaturalColors = {
   orange: {
     50: '#F9ECEA', // darkOrange[50]
     100: '#EFDBD3', // app orange14
-    200: '#EDC2A7', // wrong in invision?! old message highlight border
+    200: '#EDC2A7', // old message highlight border
     300: '#E97548', // orange[900]
     400: '#CC4A31', // app orange04 darkOrange[400]
     500: '#BD432C', // app orange03
