@@ -351,7 +351,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     const { menu } = this.props
     const { menuOpen } = this.state
 
-    return menu && menuOpen
+    return !!(menu && menuOpen)
   }
 
   private closeAllMenus = (e: Event) => {
