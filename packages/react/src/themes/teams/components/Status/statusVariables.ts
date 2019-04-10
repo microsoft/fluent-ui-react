@@ -18,7 +18,7 @@ export default siteVariables => ({
   borderWidth: 2,
   successBackgroundColor: siteVariables.colors.green[200],
   successTextColor: siteVariables.colors.white,
-  infoBackgroundColor: 'blue', // TODO define color for this
+  infoBackgroundColor: siteVariables.colors.primary[500],
   infoTextColor: siteVariables.colors.white,
   warningBackgroundColor: siteVariables.colors.yellow[400],
   warningTextColor: siteVariables.colors.white,
