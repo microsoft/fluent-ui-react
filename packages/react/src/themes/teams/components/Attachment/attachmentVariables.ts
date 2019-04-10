@@ -30,12 +30,12 @@ export type AttachmentVariables = {
 export default (siteVariables: any): AttachmentVariables => ({
   padding: `${pxToRem(7)} ${pxToRem(3)} ${pxToRem(7)} ${pxToRem(11)}`, // padding set to 1px less to account for 1px border
   iconSpace: pxToRem(12),
-  borderColor: siteVariables.gray08,
+  borderColor: siteVariables.colors.grey[200],
   borderRadius: pxToRem(3),
-  backgroundColor: siteVariables.gray10,
-  backgroundColorHover: siteVariables.gray08,
-  textColor: siteVariables.colors.grey[900],
-  textColorHover: siteVariables.colors.grey[900],
+  backgroundColor: siteVariables.colors.grey[100],
+  backgroundColorHover: siteVariables.colors.grey[200],
+  textColor: siteVariables.colors.grey[750],
+  textColorHover: siteVariables.colors.grey[750],
   boxShadow: siteVariables.shadowLevel1,
 
   progressColor: siteVariables.colors.green[200],
