@@ -12,6 +12,9 @@ jobs:
     steps:
       # https://circleci.com/docs/2.0/api-job-trigger/
       - run:
+          name: My branch
+          command: echo "${CIRCLE_BRANCH}"
+      - run:
           name: Start Visual Tests job
           command: |
             curl --user ${CIRCLE_API_USER_TOKEN} \
