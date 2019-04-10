@@ -31,9 +31,9 @@ const getFontSizeValue = (size?: string | null): number | null => {
  */
 export const pxToRem = (valueInPx: number, baseRemSize?: number): string => {
   if (!baseRemSize && !_documentRemSize) {
-    // there is no way how to reset the cached value, once it's cached, it's cached
-    // invalidating the cache is not possible as the current value has already been used to calc rems somewhere on the page
-    // and rem base size is global
+    // there is no way how to reset the cached value
+    // invalidating the cache is not possible as resetting cached value won't trigger recalculation of site variables,
+    // for which originally computed values will stay unchanged
     _documentRemSize = getDocumentRemSize()
   }
 
