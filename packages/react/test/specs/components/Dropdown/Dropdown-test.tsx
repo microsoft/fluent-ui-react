@@ -9,7 +9,7 @@ import { mountWithProvider } from 'test/utils'
 jest.dontMock('keyboard-key')
 
 describe('Dropdown', () => {
-  const items = ['item1', 'item2', 'item3']
+  const items = ['item1', 'item2', 'item3', 'item4', 'item5']
   isConformant(Dropdown, { hasAccessibilityProp: false })
 
   describe('clearable', () => {
@@ -41,71 +41,73 @@ describe('Dropdown', () => {
       onOpenChange.mockReset()
     })
 
-    it('has the provided prop value when opened by click', () => {
-      const highlightedIndex = 1
-      const wrapper = mountWithProvider(
-        <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
-      )
+    it('is null when opened by click', () => {
+      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
 
-      wrapper.find({ className: Dropdown.slotClassNames.triggerButton }).simulate('click')
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
       expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
-          highlightedIndex,
+          highlightedIndex: null,
           open: true,
         }),
       )
     })
 
-    it('has the (provided prop value + 1) when opened by ArrowDown', () => {
-      const highlightedIndex = 1
-      const wrapper = mountWithProvider(
-        <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
-      )
+    it('is null when opened by Enter', () => {
+      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
 
       wrapper
-        .find({ className: Dropdown.slotClassNames.triggerButton })
+        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
         .simulate('focus')
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
       expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
-          highlightedIndex: highlightedIndex + 1,
+          highlightedIndex: null,
           open: true,
         }),
       )
     })
 
-    it('has the provided (prop value - 1) when opened by ArrowUp', () => {
-      const highlightedIndex = 1
-      const wrapper = mountWithProvider(
-        <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
-      )
+    it('is null when opened by Space', () => {
+      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
 
       wrapper
-        .find({ className: Dropdown.slotClassNames.triggerButton })
+        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
         .simulate('focus')
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+        .simulate('keydown', { keyCode: keyboardKey.Space, key: 'Space' })
       expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
-          highlightedIndex: highlightedIndex - 1,
+          highlightedIndex: null,
           open: true,
         }),
       )
     })
 
-    it('is 0 when the provided prop value is last item index and opened by ArrowDown', () => {
-      const highlightedIndex = items.length - 1
-      const wrapper = mountWithProvider(
-        <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
+    it('is null when opened by toggle indicator click', () => {
+      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+
+      wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`).simulate('click')
+      expect(onOpenChange).toBeCalledTimes(1)
+      expect(onOpenChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          highlightedIndex: null,
+          open: true,
+        }),
       )
+    })
+
+    it('is first item index when opened by arrow down key', () => {
+      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
 
       wrapper
-        .find({ className: Dropdown.slotClassNames.triggerButton })
+        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
         .simulate('focus')
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
       expect(onOpenChange).toBeCalledTimes(1)
@@ -118,14 +120,108 @@ describe('Dropdown', () => {
       )
     })
 
-    it('is last item index when the provided prop value is 0 and opened by ArrowUp', () => {
+    it('is last item index when opened by arrow up key', () => {
+      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+
+      wrapper
+        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+        .simulate('focus')
+        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+      expect(onOpenChange).toBeCalledTimes(1)
+      expect(onOpenChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          highlightedIndex: items.length - 1,
+          open: true,
+        }),
+      )
+    })
+
+    it('has the provided prop value when opened by click', () => {
+      const highlightedIndex = 1
+      const wrapper = mountWithProvider(
+        <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
+      )
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      expect(onOpenChange).toBeCalledTimes(1)
+      expect(onOpenChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          highlightedIndex,
+          open: true,
+        }),
+      )
+    })
+
+    it('has the (provided prop value + 1) when opened by arrow down key', () => {
+      const highlightedIndex = 1
+      const wrapper = mountWithProvider(
+        <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
+      )
+
+      wrapper
+        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+        .simulate('focus')
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+      expect(onOpenChange).toBeCalledTimes(1)
+      expect(onOpenChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          highlightedIndex: highlightedIndex + 1,
+          open: true,
+        }),
+      )
+    })
+
+    it('has the provided (prop value - 1) when opened by arrow up key', () => {
+      const highlightedIndex = 1
+      const wrapper = mountWithProvider(
+        <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
+      )
+
+      wrapper
+        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+        .simulate('focus')
+        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+      expect(onOpenChange).toBeCalledTimes(1)
+      expect(onOpenChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          highlightedIndex: highlightedIndex - 1,
+          open: true,
+        }),
+      )
+    })
+
+    it('is 0 when the provided prop value is last item index and opened by arrow down key', () => {
+      const highlightedIndex = items.length - 1
+      const wrapper = mountWithProvider(
+        <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
+      )
+
+      wrapper
+        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+        .simulate('focus')
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+      expect(onOpenChange).toBeCalledTimes(1)
+      expect(onOpenChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          highlightedIndex: 0,
+          open: true,
+        }),
+      )
+    })
+
+    it('is last item index when the provided prop value is 0 and opened by arrow up key', () => {
       const highlightedIndex = 0
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
       )
 
       wrapper
-        .find({ className: Dropdown.slotClassNames.triggerButton })
+        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
         .simulate('focus')
         .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
       expect(onOpenChange).toBeCalledTimes(1)
@@ -148,7 +244,7 @@ describe('Dropdown', () => {
         />,
       )
 
-      wrapper.find({ className: Dropdown.slotClassNames.triggerButton }).simulate('click')
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
       expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenCalledWith(
         null,
@@ -163,8 +259,9 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown defaultHighlightedIndex={1} onOpenChange={onOpenChange} items={items} />,
       )
+
       wrapper
-        .find({ className: Dropdown.slotClassNames.triggerButton })
+        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
         .simulate('click')
         .simulate('click')
         .simulate('click')
@@ -182,9 +279,8 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown highlightFirstItemOnOpen onOpenChange={onOpenChange} items={items} />,
       )
-      const triggerButton = wrapper.find({ className: Dropdown.slotClassNames.triggerButton })
 
-      triggerButton.simulate('click')
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
       expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenCalledWith(
         null,
@@ -199,9 +295,9 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown highlightFirstItemOnOpen onOpenChange={onOpenChange} items={items} />,
       )
-      const triggerButton = wrapper.find({ className: Dropdown.slotClassNames.triggerButton })
 
-      triggerButton
+      wrapper
+        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
         .simulate('click')
         .simulate('click')
         .simulate('click')
@@ -329,6 +425,119 @@ describe('Dropdown', () => {
         expect.objectContaining({
           searchQuery: 'in',
           highlightedIndex: null,
+        }),
+      )
+    })
+
+    it('should be the index of the value previously selected when opened', () => {
+      const onOpenChange = jest.fn()
+      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      wrapper
+        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+
+      expect(onOpenChange).toBeCalledTimes(3)
+      expect(onOpenChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          highlightedIndex: 1,
+          open: true,
+        }),
+      )
+    })
+
+    it('should be the index of the (value previously selected + 1) when opened by arrow down', () => {
+      const onOpenChange = jest.fn()
+      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      wrapper
+        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
+      wrapper
+        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+
+      expect(onOpenChange).toBeCalledTimes(3)
+      expect(onOpenChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          highlightedIndex: 2,
+          open: true,
+        }),
+      )
+    })
+
+    it('should be the index of the (value previously selected - 1) when opened by arrow up', () => {
+      const onOpenChange = jest.fn()
+      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      wrapper
+        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
+      wrapper
+        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+
+      expect(onOpenChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          highlightedIndex: 0,
+          open: true,
+        }),
+      )
+    })
+  })
+
+  describe('value', () => {
+    it('should be the index of the correct item value when navigating with arrow down key', () => {
+      const onSelectedChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
+      )
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click') // open
+      wrapper
+        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' }) // should be index 0
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' }) // should be index 1
+        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
+
+      expect(onSelectedChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          value: items[1],
+        }),
+      )
+    })
+
+    it('should be the index of the correct item value when navigating with arrow up key', () => {
+      const onSelectedChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
+      )
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      wrapper
+        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
+
+      expect(onSelectedChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          value: items[items.length - 2],
         }),
       )
     })
