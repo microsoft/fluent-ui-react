@@ -34,7 +34,7 @@ export {
 export { default as isBrowser } from './isBrowser'
 export { default as doesNodeContainClick } from './doesNodeContainClick'
 
-export { pxToRem, updateCachedRemSize } from './fontSizeUtility'
+export { pxToRem } from './fontSizeUtility'
 export { default as createAnimationStyles } from './createAnimationStyles'
 export { default as createComponent } from './createStardustComponent'
 export { getKindProp } from './getKindProp'

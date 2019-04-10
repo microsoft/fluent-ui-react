@@ -199,10 +199,13 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
   protected actionHandlers: AccessibilityActionHandlers = {
     closeAndFocusTrigger: e => {
-      e.stopPropagation()
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
+      e.stopPropagation()
     },
-    close: e => this.close(e),
+    close: e => {
+      this.close(e)
+      e.stopPropagation()
+    },
     toggle: e => {
       e.preventDefault()
       this.trySetOpen(!this.state.open, e)
@@ -452,13 +455,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const focusTrapProps = {
       ...(typeof accessibility.focusTrap === 'boolean' ? {} : accessibility.focusTrap),
       ...popupWrapperAttributes,
-      onKeyDown: (e: React.KeyboardEvent) => {
-        // No need to propagate keydown events outside Popup
-        // when focus trap behavior is used
-        // allow only keyboard actions to execute
-        _.invoke(accessibility.keyHandlers.popup, 'onKeyDown', e)
-        e.stopPropagation()
-      },
     } as FocusTrapZoneProps
 
     const autoFocusProps = {

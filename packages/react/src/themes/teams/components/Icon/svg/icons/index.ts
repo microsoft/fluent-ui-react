@@ -44,6 +44,8 @@ import email from './email'
 import emoji from './emoji'
 import error from './error'
 import exclamationCircle from './exclamationCircle'
+import eye from './eye'
+import eyeSlash from './eyeSlash'
 import filesExcel from './filesExcel'
 import filesExcelBrand from './filesExcelBrand'
 import filesOneNote from './filesOneNote'
@@ -74,9 +76,11 @@ import micOff from './micOff'
 import more from './more'
 import numberList from './numberList'
 import outdent from './outdent'
+import pause from './pause'
 import paperclip from './paperclip'
 import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
+import play from './play'
 import quote from './quote'
 import redbang from './redbang'
 import redo from './redo'
@@ -149,6 +153,8 @@ export default {
   emoji,
   error,
   'exclamation-circle': exclamationCircle,
+  eye,
+  'eye-slash': eyeSlash,
   format,
   'font-color': fontColor,
   'font-size': fontSize,
@@ -174,7 +180,9 @@ export default {
   paperclip,
   'participant-add': addParticipant,
   'participant-remove': participantRemove,
+  pause,
   'phone-clock': phoneClock,
+  play,
   quote,
   redbang,
   redo,

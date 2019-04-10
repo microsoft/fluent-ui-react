@@ -152,9 +152,7 @@ export type State = ObjectOf<any>
 // Variables
 // ========================================================
 
-export interface SiteVariablesInput extends ObjectOf<any> {
-  htmlFontSize?: string
-}
+export interface SiteVariablesInput extends ObjectOf<any> {}
 
 export interface SiteVariablesPrepared extends SiteVariablesInput {
   fontSizes: ObjectOf<string>
