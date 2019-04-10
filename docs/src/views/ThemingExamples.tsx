@@ -44,17 +44,15 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button, Icon, Label, Provider } from '@stardust-ui/react'
+        import { Button, Icon, Label, Provider, themes } from '@stardust-ui/react'
 
         export default () =>
-         <Provider>
-          <>
+         <Provider theme={themes.teams}>
             <Button content="Button" />
             <Button icon="plus" iconOnly primary />
             <Button icon="at" content="Send email" secondary />
             <Icon name="chess rook" size="larger" />
             <Label content="Label with icon" icon="close" />
-          </>
          </Provider>
       `}
       render={() => (
