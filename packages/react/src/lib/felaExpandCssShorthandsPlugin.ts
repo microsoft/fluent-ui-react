@@ -27,12 +27,12 @@ export default () => {
     return _.keys(styles).reduce((acc, cssPropertyName) => {
       const cssPropertyValue = styles[cssPropertyName]
 
-      if (_.includes(handledCssProps, cssPropertyName)) {
-        if (typeof cssPropertyValue === 'object') {
-          return { ...acc, [cssPropertyName]: expandCssShorthands(cssPropertyValue) }
-        }
+      if (typeof cssPropertyValue === 'object') {
+        return { ...acc, [cssPropertyName]: expandCssShorthands(cssPropertyValue) }
+      }
 
-        const expandedProps = expand(_.kebabCase(cssPropertyName), String(cssPropertyValue))
+      if (_.includes(handledCssProps, cssPropertyName)) {
+        const expandedProps = expand(_.kebabCase(cssPropertyName), `${cssPropertyValue}`)
         if (expandedProps) {
           return { ...acc, ...convertKeysToCamelCase(expandedProps) }
         }
@@ -45,8 +45,4 @@ export default () => {
   return expandCssShorthands
 }
 
-const convertKeysToCamelCase = obj => {
-  return _.mapKeys(obj, (value, key) => {
-    return _.camelCase(key)
-  })
-}
+const convertKeysToCamelCase = obj => _.mapKeys(obj, (value, key) => _.camelCase(key))
