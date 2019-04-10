@@ -323,7 +323,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     }
   }
 
-  private handleClick = e => {
+  private handleClick = (e: Event | React.SyntheticEvent) => {
     const { disabled } = this.props
 
     if (disabled) {
@@ -354,7 +354,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     return menu && menuOpen
   }
 
-  private closeAllMenus = (e, focusNextParent: boolean) => {
+  private closeAllMenus = (e: Event, focusNextParent: boolean) => {
     if (!this.isSubmenuOpen()) {
       return
     }
@@ -366,7 +366,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     })
   }
 
-  private closeMenu = (e, forceTriggerFocus?: boolean) => {
+  private closeMenu = (e: Event, forceTriggerFocus?: boolean) => {
     if (!this.isSubmenuOpen()) {
       return
     }
@@ -384,7 +384,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     }
   }
 
-  private openMenu = e => {
+  private openMenu = (e: Event) => {
     const { menu } = this.props
     const { menuOpen } = this.state
     if (menu && !menuOpen) {
@@ -395,7 +395,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     }
   }
 
-  private trySetMenuOpen(newValue: boolean, e: React.SyntheticEvent, onStateChanged?: any) {
+  private trySetMenuOpen(newValue: boolean, e: Event | React.SyntheticEvent, onStateChanged?: any) {
     this.trySetState({ menuOpen: newValue })
     // The reason why post-effect is not passed as callback to trySetState method
     // is that in 'controlled' mode the post-effect is applied before final re-rendering
