@@ -287,7 +287,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => !event.defaultPrevented && this.handleClick(event),
     openMenu: event => this.openMenu(event),
-    closeAllMenusAndFocusNextParentItem: event => this.closeAllMenus(event, true),
+    closeAllMenusAndFocusNextParentItem: event => this.closeAllMenus(event),
     closeMenu: event => this.closeMenu(event),
     closeMenuAndFocusTrigger: event => this.closeMenu(event, true),
     doNotNavigateNextParentItem: event => {
@@ -354,13 +354,13 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     return menu && menuOpen
   }
 
-  private closeAllMenus = (e: Event, focusNextParent: boolean) => {
+  private closeAllMenus = (e: Event) => {
     if (!this.isSubmenuOpen()) {
       return
     }
     const { inSubmenu } = this.props
     this.trySetMenuOpen(false, e, () => {
-      if (!inSubmenu && (!focusNextParent || this.props.vertical)) {
+      if (!inSubmenu && this.props.vertical) {
         focusAsync(this.itemRef.current)
       }
     })
