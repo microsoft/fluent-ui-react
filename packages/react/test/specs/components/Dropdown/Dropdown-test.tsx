@@ -72,7 +72,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('is null when opened by Space', () => {
+    it.skip('is null when opened by Space', () => {
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
 
       wrapper
