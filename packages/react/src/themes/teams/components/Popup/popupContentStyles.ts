@@ -24,45 +24,28 @@ const getStyles = (
       paddingRight: pxToRem(v.pointerHeight),
     },
   }
-
   const pointerStyles = {
     top: {
-      bottom: `${pxToRem(v.pointerHeight / 2 + v.borderSize)}`,
+      bottom: `${pxToRem(v.pointerHeight / 2)}`,
       transform: 'rotate(45deg)',
     },
     right: {
-      left: `${pxToRem(v.pointerHeight / 2 + v.borderSize)}`,
+      left: `${pxToRem(v.pointerHeight / 2)}`,
       transform: 'rotate(135deg)',
     },
     bottom: {
-      top: `${pxToRem(v.pointerHeight / 2 + v.borderSize)}`,
+      top: `${pxToRem(v.pointerHeight / 2)}`,
       transform: 'rotate(-135deg)',
     },
     left: {
-      right: `${pxToRem(v.pointerHeight / 2 + v.borderSize)}`,
+      right: `${pxToRem(v.pointerHeight / 2)}`,
       transform: 'rotate(-45deg)',
-    },
-  }
-
-  const pointerBeforeStyles = {
-    top: {
-      top: 0,
-    },
-    right: {
-      right: 0,
-    },
-    bottom: {
-      bottom: 0,
-    },
-    left: {
-      left: 0,
     },
   }
 
   return {
     root: rootStyles[placement],
     pointer: pointerStyles[placement],
-    pointerBefore: pointerBeforeStyles[placement],
   }
 }
 
@@ -76,29 +59,21 @@ const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupConte
     position: 'absolute',
 
     background: v.contentBackgroundColor,
-    boxShadow: `1px 1px 0 0 ${v.borderColor}`,
+    borderBottom: `${pxToRem(v.borderSize)} solid ${v.borderColor}`,
+    borderRight: `${pxToRem(v.borderSize)} solid ${v.borderColor}`,
     color: v.contentColor,
 
     height: pxToRem(v.pointerHeight),
     width: pxToRem(v.pointerWidth),
 
     ...getStyles(v, p.placement).pointer,
-
-    ':before': {
-      borderColor: 'transparent',
-      borderStyle: 'solid',
-      content: '""',
-      position: 'absolute',
-
-      ...getStyles(v, p.placement).pointerBefore,
-    },
   }),
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
     padding: v.padding,
 
     background: v.contentBackgroundColor,
-    border: `${v.borderSize} solid ${v.borderColor}`,
+    border: `${pxToRem(v.borderSize)} solid ${v.borderColor}`,
     borderRadius: pxToRem(3),
     boxShadow: `0 2px 4px 0 ${v.borderColor}, 0 2px 10px 0 ${v.borderColor}`,
     color: v.contentColor,

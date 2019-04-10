@@ -444,9 +444,9 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
     {
       arrowProps,
+      placement,
       ref,
       scheduleUpdate,
-      placement,
       style: popupPlacementStyles,
     }: PopperChildrenProps,
   ) => {
