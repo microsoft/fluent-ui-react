@@ -10,6 +10,7 @@ import {
   ShorthandRenderer,
 } from '../types'
 import { mergeStyles } from './mergeThemes'
+import * as perf from 'src/lib/perf'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
@@ -45,8 +46,10 @@ const mappedProps: { [key in HTMLTag]: ShorthandProp } = {
 // Factories
 // ============================================================
 
+export const createShorthand = perf.time('createShorthand', createShorthandOrigin)
+
 /** A more robust React.createElement. It can create elements from primitive values. */
-export function createShorthand({
+function createShorthandOrigin({
   Component,
   mappedProp,
   mappedArrayProp,
@@ -89,6 +92,7 @@ export type CreateShorthandFactoryConfig = CreateShorthandFactoryConfigInner
 // ============================================================
 // Factory Creators
 // ============================================================
+
 /**
  * @param {React.ReactType} Component A ReactClass or string
  * @param {string} mappedProp A function that maps a primitive value to the Component props
@@ -110,7 +114,12 @@ export function createShorthandFactory<TInstance extends React.Component>(config
   mappedProp?: keyof PropsOf<TInstance>
   mappedArrayProp?: keyof PropsOf<TInstance>
 })
-export function createShorthandFactory({
+export const createShorthandFactory = perf.time(
+  'createShorthandFactory',
+  createShorthandFactoryOriginal,
+)
+
+function createShorthandFactoryOriginal({
   Component,
   mappedProp,
   mappedArrayProp,
@@ -127,7 +136,12 @@ export function createShorthandFactory({
 // Private Utils
 // ============================================================
 
-function createShorthandFromValue({
+const createShorthandFromValue = perf.time(
+  'createShorthandFromValue',
+  createShorthandFromValueOriginal,
+)
+
+function createShorthandFromValueOriginal({
   Component,
   mappedProp,
   mappedArrayProp,
@@ -256,7 +270,12 @@ function createShorthandFromValue({
   return null
 }
 
-function createShorthandFromRenderCallback({
+const createShorthandFromRenderCallback = perf.time(
+  'createShorthandFromRenderCallback',
+  createShorthandFromRenderCallbackOriginal,
+)
+
+function createShorthandFromRenderCallbackOriginal({
   Component,
   renderCallback,
   mappedProp,

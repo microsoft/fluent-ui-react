@@ -16,7 +16,6 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
   static displayName: string
   static className: string
 
-  static contextType = ThemeContext
   static propTypes: any
 
   /** Array of props to exclude from list of handled ones. */
@@ -70,7 +69,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
         actionHandlers: this.actionHandlers,
         focusZoneRef: this.setFocusZoneRef,
         render: this.renderComponent,
-      }
+      },
       perf.flags.SKIP_CONTEXT ? {} : this.context,
     )
   }
@@ -78,6 +77,10 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
   private setFocusZoneRef = (focusZone: FocusZone): void => {
     this.focusZone = focusZone
   }
+}
+
+if (!perf.flags.SKIP_CONTEXT) {
+  UIComponent.contextType = ThemeContext
 }
 
 export default UIComponent

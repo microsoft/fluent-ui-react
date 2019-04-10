@@ -143,5 +143,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "string-hash": "^1.1.3"
+  }
 }
