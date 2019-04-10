@@ -36,6 +36,7 @@ import filesPhotoshop from './filesPhotoshop'
 import filesSketch from './filesSketch'
 import filesSound from './filesSound'
 import filesTxt from './filesTxt'
+import filesVideo from './filesVideo'
 import filesZip from './filesZip'
 import flag from './flag'
 import download from './download'
@@ -145,6 +146,7 @@ export default {
   'files-sketch': filesSketch,
   'files-sound': filesSound,
   'files-txt': filesTxt,
+  'files-video': filesVideo,
   'files-zip': filesZip,
   flag,
   download,
