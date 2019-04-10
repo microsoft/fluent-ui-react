@@ -77,17 +77,22 @@ jobs:
           command: yarn test:circulars
       - run:
           name: Bundle Statistics
-          command: if [ $CIRCLE_BRANCH == 'master' ]; then yarn stats:build; fi
+          command: |
+            if [ $CIRCLE_BRANCH == 'master' ]; then
+              yarn stats:build
+            else
+              echo 'skipping bundle statistics collection'
+            fi
       - run:
           name: Performance Tests
           command: yarn perf
       - run:
           name: Save Statistics to DB
           command: |
-            if [ -n "${STATS_URI}" ]; then
+            if [ -n "${STATS_URI}" ] && [ $CIRCLE_BRANCH == 'master' ]; then
               yarn stats:save --tag=`git tag --points-at HEAD`
             else
-              echo "STATS_URI not set, skipping"
+              echo "skip saving statistics"
             fi
       - run:
           name: Danger JS
