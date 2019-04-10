@@ -47,11 +47,14 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
-      closeAllMenus: {
+      closeMenuAndFocusTrigger: {
         keyCombinations: [{ keyCode: keyboardKey.Escape }],
       },
       openMenu: !props.vertical && {
         keyCombinations: [{ keyCode: keyboardKey.ArrowDown }],
+      },
+      doNotNavigateNextParentItem: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }, { keyCode: keyboardKey.ArrowRight }],
       },
     },
   },

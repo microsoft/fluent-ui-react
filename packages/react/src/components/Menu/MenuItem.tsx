@@ -290,10 +290,15 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     closeAllMenusAndFocusNextParentItem: event => this.closeAllMenus(event, true),
     closeMenu: event => this.closeMenu(event),
     closeMenuAndFocusTrigger: event => this.closeMenu(event, true),
+    doNotNavigateNextParentItem: event => {
+      if (this.isSubmenuOpen()) {
+        event.stopPropagation()
+      }
+    },
   }
 
   private outsideClickHandler = e => {
-    if (!this.state.menuOpen) return
+    if (!this.isSubmenuOpen()) return
     if (
       !doesNodeContainClick(this.itemRef.current, e) &&
       !doesNodeContainClick(this.menuRef.current, e)
@@ -342,31 +347,40 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
-  private closeAllMenus = (e, focusNextParent: boolean) => {
-    const { menu, inSubmenu } = this.props
+  private isSubmenuOpen = (): boolean => {
+    const { menu } = this.props
     const { menuOpen } = this.state
-    if (menu && menuOpen) {
-      this.trySetMenuOpen(false, e, () => {
-        if (!inSubmenu && (!focusNextParent || this.props.vertical)) {
-          focusAsync(this.itemRef.current)
-        }
-      })
+
+    return menu && menuOpen
+  }
+
+  private closeAllMenus = (e, focusNextParent: boolean) => {
+    if (!this.isSubmenuOpen()) {
+      return
     }
+    const { inSubmenu } = this.props
+    this.trySetMenuOpen(false, e, () => {
+      if (!inSubmenu && (!focusNextParent || this.props.vertical)) {
+        focusAsync(this.itemRef.current)
+      }
+    })
   }
 
   private closeMenu = (e, forceTriggerFocus?: boolean) => {
-    const { menu, inSubmenu } = this.props
-    const { menuOpen } = this.state
+    if (!this.isSubmenuOpen()) {
+      return
+    }
+
+    const { inSubmenu } = this.props
     const shouldStopPropagation = inSubmenu || this.props.vertical
-    if (menu && menuOpen) {
-      this.trySetMenuOpen(false, e, () => {
-        if (forceTriggerFocus || shouldStopPropagation) {
-          focusAsync(this.itemRef.current)
-        }
-      })
-      if (shouldStopPropagation) {
-        e.stopPropagation()
+    this.trySetMenuOpen(false, e, () => {
+      if (forceTriggerFocus || shouldStopPropagation) {
+        focusAsync(this.itemRef.current)
       }
+    })
+
+    if (shouldStopPropagation) {
+      e.stopPropagation()
     }
   }
 
