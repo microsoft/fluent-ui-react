@@ -51,7 +51,6 @@ const getFontStyles = (
     justifyContent: 'center',
     alignItems: 'center',
 
-    boxSizing: 'content-box',
     width: sizeInRems,
     height: sizeInRems,
 
@@ -90,6 +89,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
     return {
       backgroundColor: v.backgroundColor,
+      boxSizing: isFontBased ? 'content-box' : 'border-box',
 
       // overriding the base theme default transformation as in teams theme the svg/svgFlippingInRtl slots are used for this
       ...(!isFontBased && {
