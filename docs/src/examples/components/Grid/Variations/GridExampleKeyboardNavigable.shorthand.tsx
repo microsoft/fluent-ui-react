@@ -43,7 +43,7 @@ const renderImages = () => {
 
 const renderImageButtons = () => {
   return _.map(imageNames, imageName => (
-    <Button key={imageName} text styles={imageButtonStyles}>
+    <Button key={imageName} styles={imageButtonStyles}>
       <Image fluid src={`public/images/avatar/large/${imageName}.jpg`} />
     </Button>
   ))
