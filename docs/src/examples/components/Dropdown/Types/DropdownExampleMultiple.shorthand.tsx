@@ -18,8 +18,14 @@ const DropdownExampleMultiple = () => (
     multiple
     items={inputItems}
     placeholder="Select your heroes"
+    getA11ySelectionMessage={getA11ySelectionMessage}
     noResultsMessage="We couldn't find any matches."
   />
 )
+
+const getA11ySelectionMessage = {
+  onAdd: item => `${item} has been selected.`,
+  onRemove: item => `${item} has been removed.`,
+}
 
 export default DropdownExampleMultiple

@@ -12,6 +12,8 @@ export * from './themes/types'
 
 export { default as Accordion, AccordionProps } from './components/Accordion/Accordion'
 
+export { default as Alert, AlertProps } from './components/Alert/Alert'
+
 export { default as Attachment, AttachmentProps } from './components/Attachment/Attachment'
 
 export { default as Avatar, AvatarProps } from './components/Avatar/Avatar'
@@ -150,7 +152,8 @@ export { default as Animation, AnimationProps } from './components/Animation/Ani
 
 export { default as Tree } from './components/Tree'
 
-export { default as Indicator, IndicatorProps } from './components/Indicator/Indicator'
+export { default as Reaction, ReactionProps, ReactionState } from './components/Reaction/Reaction'
+export { default as ReactionGroup, ReactionGroupProps } from './components/Reaction/ReactionGroup'
 
 //
 // Accessibility
@@ -181,8 +184,15 @@ export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/grid
 export {
   default as popupFocusTrapBehavior,
 } from './lib/accessibility/Behaviors/Popup/popupFocusTrapBehavior'
+export {
+  default as popupAutoFocusBehavior,
+} from './lib/accessibility/Behaviors/Popup/popupAutoFocusBehavior'
 export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
 export { default as statusBehavior } from './lib/accessibility/Behaviors/Status/statusBehavior'
+export { default as alertBehavior } from './lib/accessibility/Behaviors/Alert/alertBehavior'
+export {
+  default as alertWarningBehavior,
+} from './lib/accessibility/Behaviors/Alert/alertWarningBehavior'
 
 //
 // Utilities
@@ -201,11 +211,23 @@ export {
   ContentComponentProps,
   SizeValue,
 } from './lib'
-export { ShorthandRenderer } from './types'
+export { ShorthandValue, ShorthandRenderer } from './types'
 
 //
 // FocusZone
 //
-import { getFirstTabbable, getLastTabbable } from './lib/accessibility/FocusZone/focusUtilities'
-export const FocusZoneUtilities = { getFirstTabbable, getLastTabbable }
+import {
+  getFirstTabbable,
+  getLastTabbable,
+  getNextElement,
+  getPreviousElement,
+  focusAsync,
+} from './lib/accessibility/FocusZone/focusUtilities'
+export const FocusZoneUtilities = {
+  getFirstTabbable,
+  getLastTabbable,
+  getNextElement,
+  getPreviousElement,
+  focusAsync,
+}
 export { FocusZoneDirection, FocusZoneProps } from './lib/accessibility/FocusZone/FocusZone.types'

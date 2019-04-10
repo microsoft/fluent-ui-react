@@ -3,8 +3,9 @@ import { Menu, MenuShorthandKinds } from '@stardust-ui/react'
 
 const items = [
   { key: 'editorials', content: 'Editorials' },
+  { key: 'divider-1', kind: 'divider' as MenuShorthandKinds },
   { key: 'review', content: 'Reviews' },
-  { key: 'divider', kind: 'divider' as MenuShorthandKinds },
+  { key: 'divider-2', kind: 'divider' as MenuShorthandKinds, content: '...' },
   { key: 'events', content: 'Upcoming Events' },
 ]
 

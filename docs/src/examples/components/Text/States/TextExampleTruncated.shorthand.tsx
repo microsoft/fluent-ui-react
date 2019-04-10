@@ -11,7 +11,7 @@ const [notTruncatedText, truncatedText] = [
 )
 
 const TextExampleTruncatedShorthand = () => (
-  <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+  <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', width: 500 }}>
     <Text content={notTruncatedText} />
     <br />
     <br />

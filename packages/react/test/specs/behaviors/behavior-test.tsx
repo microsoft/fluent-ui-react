@@ -19,6 +19,7 @@ import {
   submenuBehavior,
   popupBehavior,
   popupFocusTrapBehavior,
+  popupAutoFocusBehavior,
   dialogBehavior,
   radioGroupBehavior,
   radioGroupItemBehavior,
@@ -32,6 +33,7 @@ import {
   treeTitleBehavior,
   gridBehavior,
   statusBehavior,
+  alertWarningBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -55,6 +57,7 @@ testHelper.addBehavior('menuDividerBehavior', menuDividerBehavior)
 testHelper.addBehavior('submenuBehavior', submenuBehavior)
 testHelper.addBehavior('popupBehavior', popupBehavior)
 testHelper.addBehavior('popupFocusTrapBehavior', popupFocusTrapBehavior)
+testHelper.addBehavior('popupAutoFocusBehavior', popupAutoFocusBehavior)
 testHelper.addBehavior('radioGroupBehavior', radioGroupBehavior)
 testHelper.addBehavior('radioGroupItemBehavior', radioGroupItemBehavior)
 testHelper.addBehavior('selectableListBehavior', selectableListBehavior)
@@ -68,5 +71,6 @@ testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
 testHelper.addBehavior('gridBehavior', gridBehavior)
 testHelper.addBehavior('dialogBehavior', dialogBehavior)
 testHelper.addBehavior('statusBehavior', statusBehavior)
+testHelper.addBehavior('alertWarningBehavior', alertWarningBehavior)
 
 testHelper.run(behaviorMenuItems)

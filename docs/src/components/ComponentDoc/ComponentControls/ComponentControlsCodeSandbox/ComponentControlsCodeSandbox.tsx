@@ -1,12 +1,11 @@
-import * as _ from 'lodash'
 import * as React from 'react'
 import CodeSandboxer from 'react-codesandboxer'
 
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
-import { imports } from 'docs/src/components/Playground/renderConfig'
 import { updateForKeys } from 'docs/src/hoc'
-import { appTemplateJs } from './indexTemplates'
+import { appTemplateJs, appTemplateTs } from './indexTemplates'
 import LabelledButton from '../ComponentButton'
+import createPackageJson from './createPackageJson'
 
 type ComponentControlsCodeSandboxProps = {
   exampleCode: string
@@ -17,6 +16,7 @@ type ComponentControlsCodeSandboxProps = {
 
 type ComponentControlsCodeSandboxState = {
   exampleCode: string
+  examplePath: string
   sandboxUrl: string
 }
 
@@ -26,6 +26,7 @@ class ComponentControlsShowCode extends React.Component<
 > {
   state = {
     exampleCode: '',
+    examplePath: '',
     sandboxUrl: '',
   }
 
@@ -35,12 +36,14 @@ class ComponentControlsShowCode extends React.Component<
   ): Partial<ComponentControlsCodeSandboxState> {
     return {
       exampleCode: props.exampleCode,
+      examplePath: props.exampleLanguage === 'ts' ? '/example.tsx' : '/example.js',
       sandboxUrl: props.exampleCode === state.exampleCode ? state.sandboxUrl : '',
     }
   }
 
   handleDeploy = (embedUrl: string, sandboxId: string) => {
-    const sandboxUrl = `https://codesandbox.io/s/${sandboxId}?module=/example.js`
+    const { examplePath } = this.state
+    const sandboxUrl = `https://codesandbox.io/s/${sandboxId}?module=${examplePath}`
 
     this.setState({ sandboxUrl })
   }
@@ -53,11 +56,11 @@ class ComponentControlsShowCode extends React.Component<
 
   render() {
     const { active, exampleLanguage, exampleCode, exampleName } = this.props
-    const { sandboxUrl } = this.state
+    const { examplePath, sandboxUrl } = this.state
 
-    if (exampleLanguage === 'ts') {
-      return <LabelledButton label="CodeSandbox" iconName="connectdevelop" active={active} />
-    }
+    const main = exampleLanguage === 'ts' ? 'index.tsx' : 'index.js'
+    const appTemplate = exampleLanguage === 'ts' ? appTemplateTs : appTemplateJs
+    const template = exampleLanguage === 'ts' ? 'create-react-app-typescript' : 'create-react-app'
 
     if (sandboxUrl) {
       return (
@@ -73,17 +76,15 @@ class ComponentControlsShowCode extends React.Component<
     return (
       <CodeSandboxer
         afterDeploy={this.handleDeploy}
-        examplePath="/"
+        examplePath={examplePath}
         example={exampleCode}
-        dependencies={_.mapValues(imports, () => 'latest')}
-        /* Magic trick to reload sources on passed code update */
-        key={exampleCode}
         name={exampleName}
         providedFiles={{
-          'index.js': { content: appTemplateJs },
+          [main]: { content: appTemplate },
+          'package.json': createPackageJson(main, exampleLanguage),
         }}
         skipRedirect
-        template="create-react-app"
+        template={template}
       >
         {({ isLoading, isDeploying, active }) => {
           const loading = isLoading || isDeploying

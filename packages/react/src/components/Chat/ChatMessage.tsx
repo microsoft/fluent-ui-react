@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -6,7 +7,6 @@ import * as _ from 'lodash'
 import {
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   RenderResultConfig,
   UIComponent,
   UIComponentProps,
@@ -15,6 +15,7 @@ import {
   commonPropTypes,
   isFromKeyboard,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import { chatMessageBehavior, toolbarBehavior } from '../../lib/accessibility'
@@ -25,6 +26,7 @@ import Box from '../Box/Box'
 import Label from '../Label/Label'
 import Menu from '../Menu/Menu'
 import Text from '../Text/Text'
+import Reaction from '../Reaction/Reaction'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string
@@ -32,6 +34,7 @@ export interface ChatMessageSlotClassNames {
   timestamp: string
   badge: string
   content: string
+  reactionGroup: string
 }
 
 export interface ChatMessageProps
@@ -46,6 +49,9 @@ export interface ChatMessageProps
 
   /** Menu with actions of the message. */
   actionMenu?: ShorthandValue
+
+  /** Controls messages's relation to other chat messages. Is automatically set by the ChatItem. */
+  attached?: boolean | 'top' | 'bottom'
 
   /** Author of the message. */
   author?: ShorthandValue
@@ -75,6 +81,12 @@ export interface ChatMessageProps
    * @param {object} data - All props.
    */
   onFocus?: ComponentEventHandler<ChatMessageProps>
+
+  /** Reaction group applied to the message. */
+  reactionGroup?: ShorthandValue
+
+  /** A message can format the reactions group to appear at the start or the end of the message. */
+  reactionGroupPosition?: 'start' | 'end'
 }
 
 export interface ChatMessageState {
@@ -94,9 +106,14 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
 
   static displayName = 'ChatMessage'
 
+  static __isChatMessage = true
+
+  static isTypeOfElement = element => _.get(element, `type.__isChatMessage`)
+
   static propTypes = {
     ...commonPropTypes.createCommon({ content: 'shorthand' }),
     actionMenu: customPropTypes.itemShorthand,
+    attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
     author: customPropTypes.itemShorthand,
     badge: customPropTypes.itemShorthand,
     badgePosition: PropTypes.oneOf(['start', 'end']),
@@ -104,12 +121,15 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     timestamp: customPropTypes.itemShorthand,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
+    reactionGroup: customPropTypes.itemShorthand,
+    reactionGroupPosition: PropTypes.oneOf(['start', 'end']),
   }
 
   static defaultProps = {
     accessibility: chatMessageBehavior,
     as: 'div',
     badgePosition: 'end',
+    reactionGroupPosition: 'start',
   }
 
   public state = {
@@ -150,7 +170,17 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     unhandledProps,
     styles,
   }: RenderResultConfig<ChatMessageProps>) {
-    const { actionMenu, author, badge, badgePosition, children, content, timestamp } = this.props
+    const {
+      actionMenu,
+      author,
+      badge,
+      badgePosition,
+      children,
+      content,
+      timestamp,
+      reactionGroup,
+      reactionGroupPosition,
+    } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
     const badgeElement = Label.create(badge, {
@@ -160,15 +190,22 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
       },
     })
 
+    const reactionGroupElement = Reaction.Group.create(reactionGroup, {
+      defaultProps: {
+        className: ChatMessage.slotClassNames.reactionGroup,
+        styles: styles.reactionGroup,
+      },
+    })
+
     return (
       <ElementType
-        {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
-        {...rtlTextContainer.getAttributes({ forElements: [children] })}
-        {...unhandledProps}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
         className={className}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
       >
         {childrenPropExists ? (
           children
@@ -184,6 +221,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
             })}
 
             {badgePosition === 'start' && badgeElement}
+
             {Text.create(author, {
               defaultProps: {
                 size: 'small',
@@ -200,12 +238,17 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
               },
             })}
 
+            {reactionGroupPosition === 'start' && reactionGroupElement}
+
             {Box.create(content, {
               defaultProps: {
                 className: ChatMessage.slotClassNames.content,
                 styles: styles.content,
               },
             })}
+
+            {reactionGroupPosition === 'end' && reactionGroupElement}
+
             {badgePosition === 'end' && badgeElement}
           </>
         )}
@@ -214,13 +257,14 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   }
 }
 
-ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
+ChatMessage.create = createShorthandFactory({ Component: ChatMessage, mappedProp: 'content' })
 ChatMessage.slotClassNames = {
   actionMenu: `${ChatMessage.className}__actions`,
   author: `${ChatMessage.className}__author`,
   timestamp: `${ChatMessage.className}__timestamp`,
   badge: `${ChatMessage.className}__badge`,
   content: `${ChatMessage.className}__content`,
+  reactionGroup: `${ChatMessage.className}__reactions`,
 }
 
 export default ChatMessage

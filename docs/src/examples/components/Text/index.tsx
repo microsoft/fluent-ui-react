@@ -1,14 +1,17 @@
 import * as React from 'react'
+
+import Rtl from './Rtl'
 import States from './States'
 import Types from './Types'
 import Variations from './Variations'
 
 const TextExamples = () => (
-  <div>
+  <>
     <Types />
     <States />
     <Variations />
-  </div>
+    <Rtl />
+  </>
 )
 
 export default TextExamples

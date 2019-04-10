@@ -133,7 +133,6 @@ export interface SiteVariablesInput extends ObjectOf<any> {
   contextualColors?: ContextualColors
   emphasisColors?: EmphasisColors
   naturalColors?: NaturalColorsStrict
-  htmlFontSize?: string
 }
 
 export interface SiteVariablesPrepared extends SiteVariablesInput {
@@ -244,7 +243,7 @@ export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
 export type StaticStyles = StaticStyle[]
 
 export interface ThemeAnimation<KP = {}> {
-  keyframe: ((KP) => object) | object | string
+  keyframe: ((kp: KP) => object) | object | string
   delay?: string
   direction?: string
   duration?: string
@@ -294,6 +293,7 @@ export interface ThemeComponentStylesInput {
   [key: string]: ComponentSlotStylesInput | undefined
 
   Accordion?: ComponentSlotStylesInput
+  Alert?: ComponentSlotStylesInput
   Animation?: ComponentSlotStylesInput
   Attachment?: ComponentSlotStylesInput
   Avatar?: ComponentSlotStylesInput
@@ -326,6 +326,8 @@ export interface ThemeComponentStylesInput {
   PopupContent?: ComponentSlotStylesInput
   RadioGroup?: ComponentSlotStylesInput
   RadioGroupItem?: ComponentSlotStylesInput
+  Reaction?: ComponentSlotStylesInput
+  ReactionGroup?: ComponentSlotStylesInput
   Segment?: ComponentSlotStylesInput
   Status?: ComponentSlotStylesInput
   Text?: ComponentSlotStylesInput
@@ -335,6 +337,7 @@ export interface ThemeComponentStylesPrepared {
   [key: string]: ComponentSlotStylesPrepared | undefined
 
   Accordion?: ComponentSlotStylesPrepared
+  Alert?: ComponentSlotStylesPrepared
   Animation?: ComponentSlotStylesPrepared
   Attachment?: ComponentSlotStylesPrepared
   Avatar?: ComponentSlotStylesPrepared
@@ -367,6 +370,8 @@ export interface ThemeComponentStylesPrepared {
   PopupContent?: ComponentSlotStylesPrepared
   RadioGroup?: ComponentSlotStylesPrepared
   RadioGroupItem?: ComponentSlotStylesPrepared
+  Reaction?: ComponentSlotStylesPrepared
+  ReactionGroup?: ComponentSlotStylesPrepared
   Segment?: ComponentSlotStylesPrepared
   Status?: ComponentSlotStylesPrepared
   Text?: ComponentSlotStylesPrepared
@@ -376,6 +381,7 @@ export interface ThemeComponentVariablesInput {
   [key: string]: any
 
   Accordion?: ComponentVariablesInput
+  Alert?: ComponentVariablesInput
   Animation?: ComponentVariablesInput
   Attachment?: ComponentVariablesInput
   Avatar?: ComponentVariablesInput
@@ -406,6 +412,8 @@ export interface ThemeComponentVariablesInput {
   PopupContent?: ComponentVariablesInput
   RadioGroup?: ComponentVariablesInput
   RadioGroupItem?: ComponentVariablesInput
+  Reaction?: ComponentVariablesInput
+  ReactionGroup?: ComponentVariablesInput
   Segment?: ComponentVariablesInput
   Status?: ComponentVariablesInput
   Text?: ComponentVariablesInput
@@ -415,6 +423,7 @@ export interface ThemeComponentVariablesPrepared {
   [key: string]: any
 
   Accordion?: ComponentVariablesPrepared
+  Alert?: ComponentVariablesPrepared
   Animation?: ComponentVariablesPrepared
   Attachment?: ComponentVariablesPrepared
   Avatar?: ComponentVariablesPrepared
@@ -445,6 +454,8 @@ export interface ThemeComponentVariablesPrepared {
   PopupContent?: ComponentVariablesPrepared
   RadioGroup?: ComponentVariablesPrepared
   RadioGroupItem?: ComponentVariablesPrepared
+  Reaction?: ComponentVariablesPrepared
+  ReactionGroup?: ComponentVariablesPrepared
   Segment?: ComponentVariablesPrepared
   Status?: ComponentVariablesPrepared
   Text?: ComponentVariablesPrepared
@@ -493,4 +504,12 @@ export type ThemeIconSpec = {
   icon: FontIconSpec | SvgIconSpec
 }
 
-export type ThemeIcons = { [iconName: string]: ThemeIconSpec }
+export type RequiredIconNames =
+  | 'stardust-close'
+  | 'stardust-arrow-end'
+  | 'stardust-arrow-up'
+  | 'stardust-arrow-down'
+
+export type ThemeIcons = Partial<Record<RequiredIconNames, ThemeIconSpec>> & {
+  [iconName: string]: ThemeIconSpec
+}

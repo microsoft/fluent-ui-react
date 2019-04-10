@@ -10,7 +10,8 @@ describe('Ref', () => {
   describe('children', () => {
     it('renders single child', () => {
       const child = <div data-child="whatever" />
-      const component = shallow(<Ref>{child}</Ref>)
+      const innerRef = React.createRef()
+      const component = shallow(<Ref innerRef={innerRef}>{child}</Ref>)
 
       expect(component.contains(child)).toBeTruthy()
     })

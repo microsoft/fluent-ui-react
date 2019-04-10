@@ -1,9 +1,9 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
   UIComponent,
-  customPropTypes,
   childrenExist,
   createShorthandFactory,
   UIComponentProps,
@@ -129,6 +129,6 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
   }
 }
 
-FormField.create = createShorthandFactory(FormField, 'label')
+FormField.create = createShorthandFactory({ Component: FormField, mappedProp: 'label' })
 
 export default FormField

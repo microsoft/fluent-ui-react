@@ -72,7 +72,7 @@ task(
 // Build
 // ----------------------------------------
 
-const componentsSrc = [`${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`, '!**/Box.tsx']
+const componentsSrc = [`${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`]
 const behaviorSrc = [`${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
 const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/!(*index|.knobs).tsx`
@@ -234,7 +234,9 @@ task('watch:docs', cb => {
       const sourceFilename = getRelativePathToSourceFile(filePath)
       const sourcePath = config.paths.docsSrc('exampleSources', sourceFilename)
 
-      fs.unlinkSync(sourcePath)
+      try {
+        fs.unlinkSync(sourcePath)
+      } catch (e) {}
     })
 
   watch(behaviorSrc, series('build:docs:component-menu-behaviors'))

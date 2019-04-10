@@ -1,17 +1,19 @@
 import * as React from 'react'
 
+import Rtl from './Rtl'
 import Types from './Types'
 import Variations from './Variations'
 import State from './State'
 import Usage from './Usage'
 
 const DropdownExamples = () => (
-  <div>
+  <>
     <Types />
     <Variations />
     <State />
     <Usage />
-  </div>
+    <Rtl />
+  </>
 )
 
 export default DropdownExamples

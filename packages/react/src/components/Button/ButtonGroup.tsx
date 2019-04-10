@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -6,17 +7,16 @@ import { ReactProps, ShorthandValue } from '../../types'
 import {
   UIComponent,
   childrenExist,
-  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  createShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import Button from './Button'
-import Flex from '../Flex/Flex'
 
 export interface ButtonGroupProps
   extends UIComponentProps,
@@ -39,6 +39,8 @@ export interface ButtonGroupProps
  * A button group presents multiple related actions.
  */
 class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
+  public static create: Function
+
   public static displayName = 'ButtonGroup'
 
   public static className = 'ui-buttons'
@@ -76,7 +78,7 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
     }
 
     return (
-      <Flex as={ElementType} gap="gap.smaller" {...unhandledProps} className={classes.root}>
+      <ElementType {...unhandledProps} className={classes.root}>
         {_.map(buttons, (button, idx) =>
           Button.create(button, {
             defaultProps: {
@@ -85,7 +87,7 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
             },
           }),
         )}
-      </Flex>
+      </ElementType>
     )
   }
 
@@ -103,5 +105,11 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
     return resultStyles
   }
 }
+
+ButtonGroup.create = createShorthandFactory({
+  Component: ButtonGroup,
+  mappedProp: 'content',
+  mappedArrayProp: 'buttons',
+})
 
 export default ButtonGroup

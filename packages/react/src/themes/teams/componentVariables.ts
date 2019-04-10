@@ -2,6 +2,8 @@ export { default as AccordionContent } from './components/Accordion/accordionCon
 
 export { default as Attachment } from './components/Attachment/attachmentVariables'
 
+export { default as Alert } from './components/Alert/alertVariables'
+
 export { default as Avatar } from './components/Avatar/avatarVariables'
 
 export { default as Button } from './components/Button/buttonVariables'
@@ -23,20 +25,18 @@ export {
 export { default as Flex } from './components/Flex/flexVariables'
 export { default as FlexItem } from './components/Flex/flexItemVariables'
 
-export { default as Grid } from './components/Grid/gridVariables'
-
 export { default as Header } from './components/Header/headerVariables'
 export { default as HeaderDescription } from './components/Header/headerDescriptionVariables'
 
 export { default as Icon } from './components/Icon/iconVariables'
-
-export { default as Image } from './components/Image/imageVariables'
 
 export { default as Input } from './components/Input/inputVariables'
 
 export { default as Label } from './components/Label/labelVariables'
 
 export { default as Layout } from './components/Layout/layoutVariables'
+
+export { default as Loader } from './components/Loader/loaderVariables'
 
 export { default as ItemLayout } from './components/ItemLayout/itemLayoutVariables'
 
@@ -50,6 +50,9 @@ export { default as Popup } from './components/Popup/popupVariables'
 export { default as PopupContent } from './components/Popup/popupContentVariables'
 
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemVariables'
+
+export { default as Reaction } from './components/Reaction/reactionVariables'
+export { default as ReactionGroup } from './components/Reaction/reactionGroupVariables'
 
 export { default as Segment } from './components/Segment/segmentVariables'
 

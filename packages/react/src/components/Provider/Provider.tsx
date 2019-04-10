@@ -7,10 +7,12 @@ import { RendererProvider, ThemeProvider } from 'react-fela'
 
 import {
   felaRenderer as felaLtrRenderer,
+  felaRtlRenderer,
   isBrowser,
   mergeThemes,
-  updateCachedRemSize,
+  ChildrenComponentProps,
 } from '../../lib'
+
 import {
   ThemePrepared,
   ThemeInput,
@@ -19,20 +21,20 @@ import {
   StaticStyleFunction,
   FontFace,
 } from '../../themes/types'
+
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
+import ProviderBox from './ProviderBox'
+import { Extendable } from '../../types'
 
-export interface ProviderProps {
+export interface ProviderProps extends ChildrenComponentProps {
   theme: ThemeInput
-  children: React.ReactNode
 }
 
 /**
  * The Provider passes the CSS in JS renderer and theme to your components.
  */
-class Provider extends React.Component<ProviderProps> {
-  staticStylesRendered: boolean = false
-
+class Provider extends React.Component<Extendable<ProviderProps>> {
   static displayName = 'Provider'
 
   static propTypes = {
@@ -60,14 +62,27 @@ class Provider extends React.Component<ProviderProps> {
       ),
       animations: PropTypes.object,
     }),
-    children: PropTypes.element.isRequired,
+    children: PropTypes.node.isRequired,
   }
 
   static Consumer = ProviderConsumer
+  static Box = ProviderBox
+
+  staticStylesRendered: boolean = false
+
+  static _topLevelFelaRenderer = undefined
+
+  private get topLevelFelaRenderer() {
+    if (!Provider._topLevelFelaRenderer) {
+      Provider._topLevelFelaRenderer = this.props.theme.rtl ? felaRtlRenderer : felaLtrRenderer
+    }
+    return Provider._topLevelFelaRenderer
+  }
 
   renderStaticStyles = (mergedTheme: ThemePrepared) => {
     // RTL WARNING
-    // This function sets static styles which are global and renderer agnostic
+    // This function sets static styles which are global and renderer agnostic.
+    // Top level fela renderer (the first one rendered) is used to render static styles.
     // With current implementation, static styles cannot differ between LTR and RTL
     // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
 
@@ -78,13 +93,13 @@ class Provider extends React.Component<ProviderProps> {
 
     const renderObject = (object: StaticStyleObject) => {
       _.forEach(object, (style, selector) => {
-        felaLtrRenderer.renderStatic(style as IStyle, selector)
+        this.topLevelFelaRenderer.renderStatic(style as IStyle, selector)
       })
     }
 
     staticStyles.forEach((staticStyle: StaticStyle) => {
       if (typeof staticStyle === 'string') {
-        felaLtrRenderer.renderStatic(staticStyle)
+        this.topLevelFelaRenderer.renderStatic(staticStyle)
       } else if (_.isPlainObject(staticStyle)) {
         renderObject(staticStyle as StaticStyleObject)
       } else if (_.isFunction(staticStyle)) {
@@ -100,7 +115,8 @@ class Provider extends React.Component<ProviderProps> {
 
   renderFontFaces = () => {
     // RTL WARNING
-    // This function sets static styles which are global and renderer agnostic
+    // This function sets static styles which are global and renderer agnostic.
+    // Top level fela renderer (the first one rendered) is used to render static styles.
     // With current implementation, static styles cannot differ between LTR and RTL
     // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
 
@@ -112,7 +128,7 @@ class Provider extends React.Component<ProviderProps> {
       if (!_.isPlainObject(font)) {
         throw new Error(`fontFaces must be objects, got: ${typeof font}`)
       }
-      felaLtrRenderer.renderFont(font.name, font.paths, font.style)
+      this.topLevelFelaRenderer.renderFont(font.name, font.paths, font.style)
     }
 
     fontFaces.forEach((font: FontFace) => {
@@ -125,7 +141,7 @@ class Provider extends React.Component<ProviderProps> {
   }
 
   render() {
-    const { theme, children } = this.props
+    const { theme, children, ...unhandledProps } = this.props
 
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
@@ -140,9 +156,22 @@ class Provider extends React.Component<ProviderProps> {
           if (isBrowser()) render(outgoingTheme.renderer)
           this.renderStaticStylesOnce(outgoingTheme)
 
+          const rtlProps: { dir?: 'rtl' | 'ltr' } = {}
+          // only add dir attribute for top level provider or when direction changes from parent to child
+          if (
+            !incomingTheme ||
+            (incomingTheme.rtl !== outgoingTheme.rtl && _.isBoolean(outgoingTheme.rtl))
+          ) {
+            rtlProps.dir = outgoingTheme.rtl ? 'rtl' : 'ltr'
+          }
+
           return (
             <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
-              <ThemeProvider theme={outgoingTheme}>{children}</ThemeProvider>
+              <ThemeProvider theme={outgoingTheme}>
+                <ProviderBox {...unhandledProps} {...rtlProps}>
+                  {children}
+                </ProviderBox>
+              </ThemeProvider>
             </RendererProvider>
           )
         }}
@@ -155,8 +184,6 @@ class Provider extends React.Component<ProviderProps> {
     if (!this.staticStylesRendered && staticStyles) {
       this.renderStaticStyles(mergedTheme)
       this.staticStylesRendered = true
-
-      updateCachedRemSize()
     }
   }
 }

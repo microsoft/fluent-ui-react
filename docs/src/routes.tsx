@@ -13,7 +13,12 @@ import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
 import Theming from './views/Theming'
 import ThemingExamples from './views/ThemingExamples'
+import LayoutGuide from './views/Layout'
 import IntegrateCustomComponents from './views/IntegrateCustomComponents'
+import AccessibilityBehaviors from './views/AccessibilityBehaviors'
+import FocusZone from './views/FocusZone'
+import FocusTrapZone from './views/FocusTrapZone'
+import AutoFocusZone from './views/AutoFocusZone'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -32,10 +37,11 @@ const Router = () => (
           />,
           <DocsLayout
             exact
-            key="/prototype-chat-message-with-popover"
-            path="/prototype-chat-message-with-popover"
-            component={require('./prototypes/chatMessageWithPopover/index').default}
+            key="/prototype-chat-messages"
+            path="/prototype-chat-messages"
+            component={require('./prototypes/chatMessages/index').default}
           />,
+          ,
           <DocsLayout
             exact
             key="/prototype-async-shorthand"
@@ -80,14 +86,25 @@ const Router = () => (
           />,
           <DocsLayout
             exact
-            key="/important-and-mention-messages"
-            path="/important-and-mention-messages"
-            component={require('./prototypes/ImportantAndMentionMessages/index').default}
+            key="/menu-button"
+            path="/menu-button"
+            component={require('./prototypes/MenuButton/index').default}
+          />,
+          <DocsLayout
+            exact
+            key="/prototype-alerts"
+            path="/prototype-alerts"
+            component={require('./prototypes/alerts/index').default}
           />,
         ]}
         <DocsLayout exact path="/accessibility" component={Accessibility} />
+        <DocsLayout exact path="/accessibility-behaviors" component={AccessibilityBehaviors} />
+        <DocsLayout exact path="/focus-zone" component={FocusZone} />
+        <DocsLayout exact path="/focus-trap-zone" component={FocusTrapZone} />
+        <DocsLayout exact path="/auto-focus-zone" component={AutoFocusZone} />
         <DocsLayout exact path="/theming" component={Theming} />
         <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
+        <DocsLayout exact path="/layout" component={LayoutGuide} />
         <DocsLayout exact path="/shorthand-props" component={ShorthandProps} />
         <DocsLayout
           exact

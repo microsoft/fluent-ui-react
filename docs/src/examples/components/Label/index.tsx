@@ -1,12 +1,15 @@
 import * as React from 'react'
+
 import Content from './Content'
+import Rtl from './Rtl'
 import Variations from './Variations'
 
 const LabelExamples = () => (
-  <div>
+  <>
     <Content />
     <Variations />
-  </div>
+    <Rtl />
+  </>
 )
 
 export default LabelExamples

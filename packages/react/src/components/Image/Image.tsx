@@ -70,6 +70,6 @@ class Image extends UIComponent<ReactProps<ImageProps>, any> {
   }
 }
 
-Image.create = createShorthandFactory(Image, 'src')
+Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src' })
 
 export default Image

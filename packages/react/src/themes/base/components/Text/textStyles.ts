@@ -6,6 +6,8 @@ import { TextProps } from '../../../../components/Text/Text'
 export default {
   root: ({
     props: {
+      as,
+      animation,
       atMention,
       color,
       disabled,
@@ -21,7 +23,11 @@ export default {
     variables: v,
   }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
     return {
-      display: 'inline-block',
+      // animations are not working with span, unless display is set to 'inline-block'
+      ...(animation &&
+        as === 'span' && {
+          display: 'inline-block',
+        }),
       ...(atMention === true && {
         color: v.atMentionOtherColor,
       }),

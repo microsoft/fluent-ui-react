@@ -1,12 +1,15 @@
 import * as React from 'react'
+
+import Rtl from './Rtl'
 import Types from './Types'
 import Item from './Item'
 
 const RadioGroupExamples = () => (
-  <div>
+  <>
     <Types />
     <Item />
-  </div>
+    <Rtl />
+  </>
 )
 
 export default RadioGroupExamples

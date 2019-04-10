@@ -14,7 +14,7 @@ import {
 } from '../../lib'
 import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ReactProps } from '../../types'
+import { ComponentEventHandler, ReactProps } from '../../types'
 
 export interface TreeTitleProps
   extends UIComponentProps,
@@ -25,6 +25,14 @@ export interface TreeTitleProps
    * @default treeTitleBehavior
    */
   accessibility?: Accessibility
+
+  /**
+   * Called on click.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick?: ComponentEventHandler<TreeTitleProps>
 
   /** Whether or not the subtree of the item is in the open state. */
   open?: boolean
@@ -42,6 +50,7 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
+    onClick: PropTypes.func,
     open: PropTypes.bool,
     hasSubtree: PropTypes.bool,
   }
@@ -73,6 +82,6 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
   }
 }
 
-TreeTitle.create = createShorthandFactory(TreeTitle, 'content')
+TreeTitle.create = createShorthandFactory({ Component: TreeTitle, mappedProp: 'content' })
 
 export default TreeTitle

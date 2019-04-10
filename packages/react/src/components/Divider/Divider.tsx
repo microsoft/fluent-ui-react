@@ -75,7 +75,7 @@ class Divider extends UIComponent<ReactProps<DividerProps>, any> {
   }
 }
 
-Divider.create = createShorthandFactory(Divider, 'content')
+Divider.create = createShorthandFactory({ Component: Divider, mappedProp: 'content' })
 
 export default Divider
 

@@ -3,9 +3,9 @@ import { Attachment } from '@stardust-ui/react'
 
 const AttachmentIconExampleShorthand = () => (
   <div>
-    <Attachment icon="file word outline" header="MeetingNotes.pptx" />
-    <Attachment icon="file excel outline" header="Budget.pptx" />
-    <Attachment icon="file powerpoint outline" header="Presentation.pptx" />
+    <Attachment icon="word-color" header="MeetingNotes.docx" />
+    <Attachment icon="excel-color" header="Budget.xlsx" />
+    <Attachment icon="powerpoint-color" header="Presentation.pptx" />
   </div>
 )
 

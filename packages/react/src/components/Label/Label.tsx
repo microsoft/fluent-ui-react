@@ -1,10 +1,10 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   pxToRem,
   UIComponent,
   UIComponentProps,
@@ -156,6 +156,6 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   }
 }
 
-Label.create = createShorthandFactory(Label, 'content')
+Label.create = createShorthandFactory({ Component: Label, mappedProp: 'content' })
 
 export default Label

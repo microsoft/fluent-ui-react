@@ -1,3 +1,5 @@
+import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import cx from 'classnames'
 import * as PropTypes from 'prop-types'
@@ -7,28 +9,27 @@ import {
   AutoControlledComponent,
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   doesNodeContainClick,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
   isFromKeyboard,
-  EventStack,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Menu from './Menu'
 import Box from '../Box/Box'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, ReactProps, ShorthandValue, ShorthandCollection } from '../../types'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
 import Ref from '../Ref/Ref'
-import Indicator from '../Indicator/Indicator'
 
 export interface MenuItemSlotClassNames {
   wrapper: string
+  submenu: string
 }
 
 export interface MenuItemProps
@@ -56,6 +57,12 @@ export interface MenuItemProps
 
   /** MenuItem index inside Menu. */
   index?: number
+
+  /** MenuItem position inside Menu (skipping separators). */
+  itemPosition?: number
+
+  /** MenuItem count inside Menu. */
+  itemsCount?: number
 
   /**
    * Called on click. When passed, the component will render as an `a`
@@ -98,7 +105,7 @@ export interface MenuItemProps
   wrapper?: ShorthandValue
 
   /** Shorthand for the submenu. */
-  menu?: ShorthandValue
+  menu?: ShorthandValue | ShorthandCollection
 
   /** Indicates if the menu inside the item is open. */
   menuOpen?: boolean
@@ -114,6 +121,13 @@ export interface MenuItemProps
 
   /** Shorthand for the submenu indicator. */
   indicator?: ShorthandValue
+
+  /**
+   * Event for request to change 'open' value.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
+  onMenuOpenChange?: ComponentEventHandler<MenuItemProps>
 }
 
 export interface MenuItemState {
@@ -129,9 +143,12 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
 
   static className = 'ui-menu__item'
 
-  static create: Function
+  static slotClassNames: MenuItemSlotClassNames = {
+    submenu: `${MenuItem.className}__submenu`,
+    wrapper: `${MenuItem.className}__wrapper`,
+  }
 
-  static slotClassNames: MenuItemSlotClassNames
+  static create: Function
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
@@ -140,6 +157,8 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     icon: customPropTypes.itemShorthand,
     iconOnly: PropTypes.bool,
     index: PropTypes.number,
+    itemPosition: PropTypes.number,
+    itemsCount: PropTypes.number,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     pills: PropTypes.bool,
@@ -149,12 +168,13 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
     wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
-    menu: customPropTypes.itemShorthand,
+    menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.collectionShorthand]),
     menuOpen: PropTypes.bool,
     defaultMenuOpen: PropTypes.bool,
     onActiveChanged: PropTypes.func,
     inSubmenu: PropTypes.bool,
     indicator: customPropTypes.itemShorthand,
+    onMenuOpenChange: PropTypes.func,
   }
 
   static defaultProps = {
@@ -165,22 +185,8 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
 
   static autoControlledProps = ['menuOpen']
 
-  private outsideClickSubscription = EventStack.noSubscription
-
   private menuRef = React.createRef<HTMLElement>()
   private itemRef = React.createRef<HTMLElement>()
-
-  public componentDidMount() {
-    this.updateOutsideClickSubscription()
-  }
-
-  public componentDidUpdate() {
-    this.updateOutsideClickSubscription()
-  }
-
-  public componentWillUnmount() {
-    this.outsideClickSubscription.unsubscribe()
-  }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
     const {
@@ -210,9 +216,9 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
           {...accessibility.attributes.root}
-          {...accessibility.keyHandlers.root}
           {...unhandledProps}
           {...!wrapper && { onClick: this.handleClick }}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           {icon &&
             Icon.create(this.props.icon, {
@@ -220,9 +226,9 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
             })}
           {rtlTextContainer.createFor({ element: content })}
           {menu &&
-            Indicator.create(indicatorWithDefaults, {
+            Icon.create(indicatorWithDefaults, {
               defaultProps: {
-                direction: vertical ? 'end' : 'bottom',
+                name: vertical ? 'stardust-arrow-end' : 'stardust-arrow-down',
                 styles: styles.indicator,
               },
             })}
@@ -231,19 +237,23 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     )
     const maybeSubmenu =
       menu && active && menuOpen ? (
-        <Ref innerRef={this.menuRef}>
-          {Menu.create(menu, {
-            defaultProps: {
-              accessibility: submenuBehavior,
-              vertical: true,
-              primary,
-              secondary,
-              styles: styles.menu,
-              submenu: true,
-              indicator,
-            },
-          })}
-        </Ref>
+        <>
+          <Ref innerRef={this.menuRef}>
+            {Menu.create(menu, {
+              defaultProps: {
+                accessibility: submenuBehavior,
+                className: MenuItem.slotClassNames.submenu,
+                vertical: true,
+                primary,
+                secondary,
+                styles: styles.menu,
+                submenu: true,
+                indicator,
+              },
+            })}
+          </Ref>
+          <EventListener listener={this.outsideClickHandler} targetRef={documentRef} type="click" />
+        </>
       ) : null
 
     if (wrapper) {
@@ -251,7 +261,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
         defaultProps: {
           className: cx(MenuItem.slotClassNames.wrapper, classes.wrapper),
           ...accessibility.attributes.wrapper,
-          ...accessibility.keyHandlers.wrapper,
+          ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
         },
         overrideProps: () => ({
           children: (
@@ -270,26 +280,16 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
 
   private handleWrapperBlur = e => {
     if (!this.props.inSubmenu && !e.currentTarget.contains(e.relatedTarget)) {
-      this.setState({ menuOpen: false })
+      this.trySetMenuOpen(false, e)
     }
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
-    performClick: event => this.handleClick(event),
+    performClick: event => !event.defaultPrevented && this.handleClick(event),
     openMenu: event => this.openMenu(event),
-    closeAllMenus: event => this.closeAllMenus(event, false),
     closeAllMenusAndFocusNextParentItem: event => this.closeAllMenus(event, true),
     closeMenu: event => this.closeMenu(event),
-  }
-
-  private updateOutsideClickSubscription() {
-    if (this.props.menu && this.state.menuOpen && this.outsideClickSubscription.isEmpty) {
-      setTimeout(() => {
-        this.outsideClickSubscription = EventStack.subscribe('click', this.outsideClickHandler)
-      })
-    } else {
-      this.outsideClickSubscription.unsubscribe()
-    }
+    closeMenuAndFocusTrigger: event => this.closeMenu(event, true),
   }
 
   private outsideClickHandler = e => {
@@ -298,19 +298,20 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
       !doesNodeContainClick(this.itemRef.current, e) &&
       !doesNodeContainClick(this.menuRef.current, e)
     ) {
-      this.trySetState({ menuOpen: false })
+      this.trySetMenuOpen(false, e)
     }
   }
 
   private performClick = e => {
     const { active, menu } = this.props
+
     if (menu) {
       if (doesNodeContainClick(this.menuRef.current, e)) {
         // submenu was clicked => close it and propagate
-        this.setState({ menuOpen: false }, () => focusAsync(this.itemRef.current))
+        this.trySetMenuOpen(false, e, () => focusAsync(this.itemRef.current))
       } else {
         // the menuItem element was clicked => toggle the open/close and stop propagation
-        this.trySetState({ menuOpen: active ? !this.state.menuOpen : true })
+        this.trySetMenuOpen(active ? !this.state.menuOpen : true, e)
         e.stopPropagation()
         e.preventDefault()
       }
@@ -345,7 +346,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     const { menu, inSubmenu } = this.props
     const { menuOpen } = this.state
     if (menu && menuOpen) {
-      this.setState({ menuOpen: false }, () => {
+      this.trySetMenuOpen(false, e, () => {
         if (!inSubmenu && (!focusNextParent || this.props.vertical)) {
           focusAsync(this.itemRef.current)
         }
@@ -353,13 +354,13 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     }
   }
 
-  private closeMenu = e => {
+  private closeMenu = (e, forceTriggerFocus?: boolean) => {
     const { menu, inSubmenu } = this.props
     const { menuOpen } = this.state
     const shouldStopPropagation = inSubmenu || this.props.vertical
     if (menu && menuOpen) {
-      this.setState({ menuOpen: false }, () => {
-        if (shouldStopPropagation) {
+      this.trySetMenuOpen(false, e, () => {
+        if (forceTriggerFocus || shouldStopPropagation) {
           focusAsync(this.itemRef.current)
         }
       })
@@ -373,17 +374,27 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     const { menu } = this.props
     const { menuOpen } = this.state
     if (menu && !menuOpen) {
-      this.setState({ menuOpen: true })
+      this.trySetMenuOpen(true, e)
       _.invoke(this.props, 'onActiveChanged', e, { ...this.props, active: true })
       e.stopPropagation()
       e.preventDefault()
     }
   }
+
+  private trySetMenuOpen(newValue: boolean, e: React.SyntheticEvent, onStateChanged?: any) {
+    this.trySetState({ menuOpen: newValue })
+    // The reason why post-effect is not passed as callback to trySetState method
+    // is that in 'controlled' mode the post-effect is applied before final re-rendering
+    // which cause a broken behavior: for e.g. when it is needed to focus submenu trigger on ESC.
+    // TODO: all DOM post-effects should be applied at componentDidMount & componentDidUpdated stages.
+    onStateChanged && onStateChanged()
+    _.invoke(this.props, 'onMenuOpenChange', e, {
+      ...this.props,
+      menuOpen: newValue,
+    })
+  }
 }
 
-MenuItem.create = createShorthandFactory(MenuItem, 'content')
-MenuItem.slotClassNames = {
-  wrapper: `${MenuItem.className}__wrapper`,
-}
+MenuItem.create = createShorthandFactory({ Component: MenuItem, mappedProp: 'content' })
 
 export default MenuItem

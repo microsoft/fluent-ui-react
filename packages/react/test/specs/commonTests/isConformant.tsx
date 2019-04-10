@@ -4,10 +4,16 @@ import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 
+import { ThemeProvider, FelaTheme } from 'react-fela'
+
+import Ref from 'src/components/Ref/Ref'
+import RefFindNode from 'src/components/Ref/RefFindNode'
+
 import isExportedAtTopLevel from './isExportedAtTopLevel'
 import {
   assertBodyContains,
   consoleUtil,
+  getDisplayName,
   mountWithProvider as mount,
   syntheticEvent,
 } from 'test/utils'
@@ -22,11 +28,10 @@ import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusU
 export interface Conformant {
   eventTargets?: object
   hasAccessibilityProp?: boolean
-  nestingLevel?: number
   requiredProps?: object
   exportedAtTopLevel?: boolean
   rendersPortal?: boolean
-  usesWrapperSlot?: boolean
+  wrapperComponent?: React.ReactType
 }
 
 /**
@@ -44,49 +49,66 @@ export default (Component, options: Conformant = {}) => {
     eventTargets = {},
     exportedAtTopLevel = true,
     hasAccessibilityProp = true,
-    nestingLevel = 0,
     requiredProps = {},
     rendersPortal = false,
-    usesWrapperSlot = false,
+    wrapperComponent = null,
   } = options
   const { throwError } = helpers('isConformant', Component)
 
   const componentType = typeof Component
 
-  // This is added because the component is mounted
+  const helperComponentNames = [
+    ...[ThemeProvider, FelaTheme, Ref, RefFindNode],
+    ...(wrapperComponent ? [wrapperComponent] : []),
+  ].map(getDisplayName)
+
+  const toNextNonTrivialChild = (from: ReactWrapper) => {
+    const current = from.childAt(0)
+
+    if (!current) return current
+
+    return helperComponentNames.indexOf(current.name()) === -1
+      ? current
+      : toNextNonTrivialChild(current)
+  }
+
   const getComponent = (wrapper: ReactWrapper) => {
-    // FelaTheme wrapper and the component itself:
-    let component = wrapper
+    const componentElement = toNextNonTrivialChild(wrapper)
+    let topLevelChildElement = toNextNonTrivialChild(componentElement)
 
-    /**
-     * The wrapper is mounted with Provider, so in total there are three HOC components
-     * that we want to get rid of: ThemeProvider, the actual Component and FelaTheme,
-     * in order to be able to get to the actual rendered result of the component we are testing
-     */
-    _.times(nestingLevel + 3, () => {
-      component = component.childAt(0)
-    })
-
-    if (component.type() === FocusZone) {
+    // passing through Focus Zone wrappers
+    if (topLevelChildElement.type() === FocusZone) {
       // another HOC component is added: FocuZone
-      component = component.childAt(0) // skip through <FocusZone>
-      if (component.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
-        component = component.childAt(0) // skip the additional wrap <div> of the FocusZone
+      topLevelChildElement = topLevelChildElement.childAt(0) // skip through <FocusZone>
+      if (topLevelChildElement.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
+        topLevelChildElement = topLevelChildElement.childAt(0) // skip the additional wrap <div> of the FocusZone
       }
     }
 
-    if (usesWrapperSlot) {
-      /**
-       * If there is a wrapper slot, then again, we need to get rid of all three HOC components:
-       * ThemeProvider, Wrapper (Slot), and FelaTheme in order to be able to get to the actual
-       * rendered result of the component we are testing
-       */
-      _.times(3, () => {
-        component = component.childAt(0)
-      })
-    }
+    // in that case 'topLevelChildElement' we've found so far is a wrapper's topmost child
+    // thus, we should continue search
+    return wrapperComponent ? toNextNonTrivialChild(topLevelChildElement) : topLevelChildElement
+  }
 
-    return component
+  const getEventTargetComponent = (wrapper: ReactWrapper, listenerName: string) => {
+    const eventTarget = eventTargets[listenerName]
+      ? wrapper
+          .find(eventTargets[listenerName])
+          .hostNodes()
+          .first()
+      : wrapper
+          .find('[data-simulate-event-here]')
+          .hostNodes()
+          .first()
+
+    // if (eventTarget.length === 0) {
+    //   throw new Error(
+    //     'The event prop was not delegated to the children. You probably ' +
+    //     'forgot to use `getUnhandledProps` util to spread the `unhandledProps` props.',
+    //   )
+    // }
+
+    return eventTarget
   }
 
   // make sure components are properly exported
@@ -343,6 +365,24 @@ export default (Component, options: Conformant = {}) => {
 
       expect(element.prop(IS_FOCUSABLE_ATTRIBUTE)).toBe(false)
     })
+
+    _.forEach(['onKeyDown', 'onKeyPress', 'onKeyUp'], listenerName => {
+      test(`handles ${listenerName} transparently`, () => {
+        // onKeyDown => keyDown
+        const eventName = _.camelCase(listenerName.replace('on', ''))
+        const handler = jest.fn()
+
+        const wrapperProps = {
+          ...requiredProps,
+          'data-simulate-event-here': true,
+          [listenerName]: handler,
+        }
+        const wrapper = mount(<Component {...wrapperProps} />)
+
+        getEventTargetComponent(wrapper, listenerName).simulate(eventName)
+        expect(handler).toBeCalledTimes(1)
+      })
+    })
   }
 
   // ----------------------------------------
@@ -371,23 +411,7 @@ export default (Component, options: Conformant = {}) => {
         }
 
         const component = mount(<Component {...props} />).childAt(0)
-
-        const eventTarget = eventTargets[listenerName]
-          ? component
-              .find(eventTargets[listenerName])
-              .hostNodes()
-              .first()
-          : component
-              .find('[data-simulate-event-here]')
-              .hostNodes()
-              .first()
-
-        if (eventTarget.length === 0) {
-          throw new Error(
-            'The event prop was not delegated to the children. You probably ' +
-              'forgot to use `getUnhandledProps` util to spread the `unhandledProps` props.',
-          )
-        }
+        const eventTarget = getEventTargetComponent(component, listenerName)
         const customHandler: Function = eventTarget.prop(listenerName)
 
         if (customHandler) {
@@ -463,7 +487,7 @@ export default (Component, options: Conformant = {}) => {
         .find('[className]')
         .hostNodes()
         .filterWhere(c => !c.prop(FOCUSZONE_WRAP_ATTRIBUTE)) // filter out FocusZone wrap <div>
-        .at(usesWrapperSlot ? 1 : 0)
+        .at(wrapperComponent ? 1 : 0)
         .prop('className')
       return classes
     }

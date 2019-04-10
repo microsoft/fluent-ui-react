@@ -2,6 +2,8 @@ export { default as Accordion } from './components/Accordion/accordionStyles'
 export { default as AccordionContent } from './components/Accordion/accordionContentStyles'
 export { default as AccordionTitle } from './components/Accordion/accordionTitleStyles'
 
+export { default as Alert } from './components/Alert/alertStyles'
+
 export { default as Attachment } from './components/Attachment/attachmentStyles'
 
 export { default as Avatar } from './components/Avatar/avatarStyles'
@@ -29,17 +31,15 @@ export { default as FormField } from './components/Form/formFieldStyles'
 export { default as Header } from './components/Header/headerStyles'
 export { default as HeaderDescription } from './components/Header/headerDescriptionStyles'
 
-export { default as Grid } from './components/Grid/gridStyles'
-
 export { default as Icon } from './components/Icon/iconStyles'
-
-export { default as Image } from './components/Image/imageStyles'
 
 export { default as Input } from './components/Input/inputStyles'
 
 export { default as Label } from './components/Label/labelStyles'
 
 export { default as Layout } from './components/Layout/layoutStyles'
+
+export { default as Loader } from './components/Loader/loaderStyles'
 
 export { default as ItemLayout } from './components/ItemLayout/itemLayoutStyles'
 
@@ -56,6 +56,9 @@ export { default as PopupContent } from './components/Popup/popupContentStyles'
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemStyles'
 
 export { default as Segment } from './components/Segment/segmentStyles'
+
+export { default as Reaction } from './components/Reaction/reactionStyles'
+export { default as ReactionGroup } from './components/Reaction/reactionGroupStyles'
 
 export { default as Status } from './components/Status/statusStyles'
 

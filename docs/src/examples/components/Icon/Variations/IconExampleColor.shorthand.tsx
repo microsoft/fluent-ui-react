@@ -12,9 +12,9 @@ const IconExampleColor = () => (
     </Flex>
     <Text content="INHERITED COLOR FOR OUTLINED ICONS:" weight="bold" />
     <Flex gap="gap.smaller" style={{ color: 'yellowgreen' }}>
-      <Icon name="calendar" bordered variables={{ outline: true }} />
-      <Icon name="call" bordered variables={{ outline: true }} />
-      <Icon name="call-video" bordered variables={{ outline: true }} />
+      <Icon name="calendar" bordered outline />
+      <Icon name="call" bordered outline />
+      <Icon name="call-video" bordered outline />
     </Flex>
     <Text weight="bold">
       USING THE <code>color</code> VARIABLE:

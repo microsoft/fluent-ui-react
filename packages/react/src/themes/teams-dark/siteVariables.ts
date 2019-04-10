@@ -13,6 +13,8 @@ export const gray08 = '#484644' // light theme gray02
 export const gray09 = '#3b3a39' // no mapping color
 export const gray10 = '#323130' // no mapping color
 export const gray14 = '#292828' // no mapping color
+export const gray850 = '#1b1a1a'
+export const gray600 = '#323131'
 
 export const brand = '#6264A7' // light theme brand - primary[500]
 export const brand02 = '#e2e2f6' // light theme brand14 - primary[100]
@@ -33,7 +35,7 @@ export const green04 = naturalColors.lightGreen[900]
 //
 // SHADOW LEVELS
 //
-export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(255, 255, 255, 0.1)'
+export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, .25)'
 
 //
 // SEMANTIC ASSIGNMENTS

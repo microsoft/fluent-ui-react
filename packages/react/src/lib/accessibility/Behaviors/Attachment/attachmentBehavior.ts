@@ -9,7 +9,7 @@ import * as keyboardKey from 'keyboard-key'
 const attachmentBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      tabIndex: '0',
+      tabIndex: 0,
     },
   },
   keyActions: {

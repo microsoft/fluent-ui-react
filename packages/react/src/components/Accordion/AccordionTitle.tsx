@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -10,11 +11,10 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
-  customPropTypes,
   rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../types'
-import Indicator from '../Indicator/Indicator'
+import Icon from '../Icon/Icon'
 import Layout from '../Layout/Layout'
 
 export interface AccordionTitleProps
@@ -67,9 +67,9 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
 
     const contentElement = (
       <Layout
-        start={Indicator.create(indicatorWithDefaults, {
+        start={Icon.create(indicatorWithDefaults, {
           defaultProps: {
-            direction: active ? 'bottom' : 'end',
+            name: active ? 'stardust-arrow-down' : 'stardust-arrow-end',
             styles: styles.indicator,
           },
         })}
@@ -90,6 +90,6 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
   }
 }
 
-AccordionTitle.create = createShorthandFactory(AccordionTitle, 'content')
+AccordionTitle.create = createShorthandFactory({ Component: AccordionTitle, mappedProp: 'content' })
 
 export default AccordionTitle

@@ -1,10 +1,10 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   UIComponent,
   UIComponentProps,
   ContentComponentProps,
@@ -112,6 +112,6 @@ class Text extends UIComponent<ReactProps<TextProps>, any> {
   }
 }
 
-Text.create = createShorthandFactory(Text, 'content')
+Text.create = createShorthandFactory({ Component: Text, mappedProp: 'content' })
 
 export default Text

@@ -1,3 +1,5 @@
+import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -6,19 +8,17 @@ import {
   childrenExist,
   AutoControlledComponent,
   doesNodeContainClick,
-  EventStack,
   ChildrenComponentProps,
   commonPropTypes,
   ContentComponentProps,
   handleRef,
   rtlTextContainer,
-  customPropTypes,
 } from '../../lib'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
-import { ReactPropsStrict } from '../../types'
+import { ReactProps } from '../../types'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 export type TriggerAccessibility = {
@@ -81,11 +81,9 @@ export interface PortalState {
 /**
  * A component that allows you to render children outside their parent.
  */
-class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, PortalState> {
+class Portal extends AutoControlledComponent<ReactProps<PortalProps>, PortalState> {
   private portalNode: HTMLElement
   private triggerNode: HTMLElement
-
-  private clickSubscription = EventStack.noSubscription
 
   public static autoControlledProps = ['open']
 
@@ -141,6 +139,11 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
             ) : (
               contentToRender
             )}
+            <EventListener
+              listener={this.handleDocumentClick}
+              targetRef={documentRef}
+              type="click"
+            />
           </PortalInner>
         </Ref>
       )
@@ -163,13 +166,10 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     )
   }
   private handleMount = () => {
-    this.clickSubscription = EventStack.subscribe('click', this.handleDocumentClick)
-
     _.invoke(this.props, 'onMount', this.props)
   }
 
   private handleUnmount = () => {
-    this.clickSubscription.unsubscribe()
     _.invoke(this.props, 'onUnmount', this.props)
   }
 
@@ -190,7 +190,7 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     this.trySetState({ open: !this.state.open })
   }
 
-  private handleDocumentClick = (e: ReactMouseEvent) => {
+  private handleDocumentClick = (e: MouseEvent) => {
     if (
       !this.portalNode || // no portal
       doesNodeContainClick(this.triggerNode, e) || // event happened in trigger (delegate to trigger handlers)

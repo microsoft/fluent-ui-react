@@ -1,22 +1,22 @@
 import { mount } from 'enzyme'
 import * as React from 'react'
 
-import Ref from 'src/components/Ref/Ref'
+import RefFindNode from 'src/components/Ref/RefFindNode'
 import { CompositeClass, CompositeFunction, DOMClass, DOMFunction } from './fixtures'
 
 const testInnerRef = Component => {
   const innerRef = jest.fn()
   const node = mount(
-    <Ref innerRef={innerRef}>
+    <RefFindNode innerRef={innerRef}>
       <Component />
-    </Ref>,
+    </RefFindNode>,
   ).getDOMNode()
 
   expect(innerRef).toHaveBeenCalledTimes(1)
   expect(innerRef).toHaveBeenCalledWith(node)
 }
 
-describe('Ref', () => {
+describe('RefFindNode', () => {
   describe('innerRef', () => {
     it('returns node from a functional component with DOM node', () => {
       testInnerRef(DOMFunction)
@@ -37,9 +37,9 @@ describe('Ref', () => {
     it('returns "null" after unmount', () => {
       const innerRef = jest.fn()
       const wrapper = mount(
-        <Ref innerRef={innerRef}>
+        <RefFindNode innerRef={innerRef}>
           <CompositeClass />
-        </Ref>,
+        </RefFindNode>,
       )
 
       innerRef.mockClear()
@@ -47,6 +47,36 @@ describe('Ref', () => {
 
       expect(innerRef).toHaveBeenCalledTimes(1)
       expect(innerRef).toHaveBeenCalledWith(null)
+    })
+
+    it('passes an updated node', () => {
+      const innerRef = jest.fn()
+      const wrapper = mount(
+        <RefFindNode innerRef={innerRef}>
+          <div />
+        </RefFindNode>,
+      )
+
+      expect(innerRef).toHaveBeenCalledWith(expect.objectContaining({ tagName: 'DIV' }))
+      wrapper.setProps({ children: <button /> })
+
+      expect(innerRef).toHaveBeenCalledTimes(2)
+      expect(innerRef).toHaveBeenCalledWith(expect.objectContaining({ tagName: 'BUTTON' }))
+    })
+
+    it('skips an update if node did not change', () => {
+      const innerRef = jest.fn()
+      const wrapper = mount(
+        <RefFindNode innerRef={innerRef}>
+          <div />
+        </RefFindNode>,
+      )
+
+      expect(innerRef).toHaveBeenCalledWith(expect.objectContaining({ tagName: 'DIV' }))
+      wrapper.setProps({ children: <div /> })
+
+      expect(innerRef).toHaveBeenCalledTimes(1)
+      expect(innerRef).toHaveBeenCalledWith(expect.objectContaining({ tagName: 'DIV' }))
     })
   })
 })

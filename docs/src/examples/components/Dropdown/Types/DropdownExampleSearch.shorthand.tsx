@@ -14,14 +14,13 @@ const inputItems = [
 ]
 
 const DropdownExampleSearch = () => (
-  <>
-    <Dropdown
-      search
-      items={inputItems}
-      placeholder="Start typing a name"
-      noResultsMessage="We couldn't find any matches."
-    />
-  </>
+  <Dropdown
+    search
+    items={inputItems}
+    placeholder="Start typing a name"
+    noResultsMessage="We couldn't find any matches."
+    getA11ySelectionMessage={{ onAdd: item => `${item} has been selected.` }}
+  />
 )
 
 export default DropdownExampleSearch

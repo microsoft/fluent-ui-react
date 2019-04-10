@@ -1,9 +1,10 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { isForwardRef } from 'react-is'
 
-import { ChildrenComponentProps, customPropTypes } from '../../lib'
-import { ReactPropsStrict } from '../../types'
+import { ChildrenComponentProps } from '../../lib'
+import { ReactProps } from '../../types'
 import RefFindNode from './RefFindNode'
 import RefForward from './RefForward'
 
@@ -13,10 +14,10 @@ export interface RefProps extends ChildrenComponentProps<React.ReactElement<any>
    *
    * @param {HTMLElement} node - Referred node.
    */
-  innerRef?: React.Ref<any>
+  innerRef: React.Ref<any>
 }
 
-const Ref: React.SFC<ReactPropsStrict<RefProps>> = props => {
+const Ref: React.FunctionComponent<ReactProps<RefProps>> = props => {
   const { children, innerRef } = props
 
   const child = React.Children.only(children)
@@ -28,7 +29,7 @@ const Ref: React.SFC<ReactPropsStrict<RefProps>> = props => {
 Ref.displayName = 'Ref'
 Ref.propTypes = {
   children: PropTypes.element.isRequired,
-  innerRef: customPropTypes.ref as PropTypes.Requireable<any>,
+  innerRef: customPropTypes.ref.isRequired as PropTypes.Validator<React.Ref<any>>,
 }
 
 export default Ref

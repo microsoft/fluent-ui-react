@@ -7,7 +7,7 @@ const Slots = () => (
     <ComponentExample
       title="Content"
       description="A menu can have content."
-      examplePath="components/Menu/Slots/MenuExample"
+      examplePath="components/Menu/Slots/MenuExampleSlot"
     />
     <ComponentExample
       title="Icon Only"
@@ -24,6 +24,7 @@ const Slots = () => (
       description="A menu can have divider between some items."
       examplePath="components/Menu/Slots/MenuExampleDivider"
     />
+    <ComponentExample examplePath="components/Menu/Slots/MenuExampleDividerHorizontal" />
   </ExampleSection>
 )
 
