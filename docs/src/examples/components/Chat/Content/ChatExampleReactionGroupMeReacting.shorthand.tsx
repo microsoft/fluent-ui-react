@@ -7,14 +7,6 @@ const reactions = [
   { icon: 'thumbs down', content: 2, key: 'dislikes', as: 'button' },
 ]
 
-const actionMenu = {
-  iconOnly: true,
-  items: [
-    { key: 'like', icon: 'like', title: 'Like' },
-    { key: 'more', icon: 'more', title: 'More actions' },
-  ],
-}
-
 const items = [
   {
     attached: 'top',
@@ -25,7 +17,6 @@ const items = [
           reactionGroup={{
             items: reactions,
           }}
-          actionMenu={actionMenu}
           content="Hello"
           author="John Doe"
           timestamp="Yesterday, 10:15 PM"
@@ -43,7 +34,6 @@ const items = [
       content: (
         <Chat.Message
           reactionGroup={{ items: reactions }}
-          actionMenu={actionMenu}
           reactionGroupPosition={'end'}
           content="I'm back!"
           author="John Doe"
@@ -63,7 +53,6 @@ const items = [
           reactionGroup={{
             items: reactions,
           }}
-          actionMenu={actionMenu}
           content="Hi"
           author="Jane Doe"
           timestamp="Yesterday, 10:15 PM"
