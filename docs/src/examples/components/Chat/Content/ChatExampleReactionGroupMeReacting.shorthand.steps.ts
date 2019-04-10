@@ -1,6 +1,7 @@
-import { Reaction } from '@stardust-ui/react'
+import { Reaction, ChatMessage } from '@stardust-ui/react'
 
 const selectors = {
+  chatMessageContent: `.${ChatMessage.slotClassNames.content}`,
   reaction: `.${Reaction.className}`,
 }
 
@@ -10,6 +11,7 @@ const config: ScreenerTestsConfig = {
     builder => builder.click(selectors.reaction).snapshot('Clicks the first reaction'),
     (builder, keys) =>
       builder.keys(selectors.reaction, keys.tab).snapshot('Focuses on the second reaction'),
+    builder => builder.click(selectors.chatMessageContent),
   ],
 }
 
