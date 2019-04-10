@@ -60,6 +60,8 @@ export {
   DropdownSearchInputProps,
 } from './components/Dropdown/DropdownSearchInput'
 
+export { default as Embed, EmbedProps, EmbedState } from './components/Embed/Embed'
+
 export { default as Flex, FlexProps } from './components/Flex/Flex'
 export { default as FlexItem, FlexItemProps } from './components/Flex/FlexItem'
 
@@ -154,6 +156,8 @@ export { default as Tree } from './components/Tree'
 
 export { default as Reaction, ReactionProps, ReactionState } from './components/Reaction/Reaction'
 export { default as ReactionGroup, ReactionGroupProps } from './components/Reaction/ReactionGroup'
+
+export { default as Video, VideoProps } from './components/Video/Video'
 
 //
 // Accessibility
