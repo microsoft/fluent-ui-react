@@ -68,6 +68,12 @@ const Router = () => (
           />,
           <DocsLayout
             exact
+            key="/prototype-mentions"
+            path="/prototype-mentions"
+            component={require('./prototypes/mentions/index').default}
+          />,
+          <DocsLayout
+            exact
             key="/prototype-dropdowns"
             path="/prototype-dropdowns"
             component={require('./prototypes/dropdowns/index').default}

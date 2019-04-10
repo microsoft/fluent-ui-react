@@ -410,6 +410,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'mentions',
+        content: 'Mentions',
+        as: NavLink,
+        to: '/prototype-mentions',
+        styles: menuItemStyles,
+      },
+      {
         key: 'searchpage',
         content: 'Search Page',
         as: NavLink,
