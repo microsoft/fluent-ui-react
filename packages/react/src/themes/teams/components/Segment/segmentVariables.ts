@@ -1,5 +1,7 @@
+import { ColorSchemeMapping } from '../../../../themes/types'
+
 export interface SegmentVariables {
-  colorScheme: any
+  colorScheme: ColorSchemeMapping
   color: string
   backgroundColor: string
   padding: string

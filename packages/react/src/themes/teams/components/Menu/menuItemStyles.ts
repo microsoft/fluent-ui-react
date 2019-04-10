@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesInput, ICSSInJSStyle, ColorScheme } from '../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 import { teamsIconClassNames } from '../Icon/svg'
@@ -23,7 +23,7 @@ const getActionStyles = ({
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  colorScheme: any
+  colorScheme: ColorScheme
 }): ICSSInJSStyle =>
   underlined || iconOnly
     ? {
@@ -46,7 +46,7 @@ const getFocusedStyles = ({
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  colorScheme: any
+  colorScheme: ColorScheme
 }): ICSSInJSStyle => {
   const { primary, color, underlined, isFromKeyboard, active, vertical } = props
   if (active && !underlined && !vertical) return {}
@@ -71,7 +71,7 @@ const getHoverStyles = ({
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  colorScheme: any
+  colorScheme: ColorScheme
 }): ICSSInJSStyle => {
   const { primary, underlined, active, vertical, color } = props
   if (active && !underlined && !vertical) return {}
