@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add `Reaction` variables to Teams dark and HOC themes @mnajdova ([#1152](https://github.com/stardust-ui/react/pull/1152))
 - Move `Grid`'s and `Image`'s styles and variables from Teams to base theme @mnajdova ([#1182](https://github.com/stardust-ui/react/pull/1182))
+- Add file video icon on `Icon` component @luzhon  ([#1205](https://github.com/stardust-ui/react/pull/1250))
 
 ### Fixes
 - Fix the reset of the `highlightedIndex` when search query changes @silviuavram ([#1168](https://github.com/stardust-ui/react/pull/1168))
@@ -31,7 +32,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `rotate` prop on `Icon` not working in `rtl` @mnajdova ([#1179](https://github.com/stardust-ui/react/pull/1179))
 - `FocusTrapZone` - Do not propagate any keyboard events @sophieH29 ([#1180](https://github.com/stardust-ui/react/pull/1180))
 - Capture effect of `Esc` key down event within component for `Popup` and `Dropdown` @kuzhelov ([#1183](https://github.com/stardust-ui/react/pull/1183))
-- Add file video icon on `Icon` component @luzhon  ([#1205](https://github.com/stardust-ui/react/pull/1250))
 
 <!--------------------------------[ v0.26.0 ]------------------------------- -->
 ## [v0.26.0](https://github.com/stardust-ui/react/tree/v0.26.0) (2019-04-03)
