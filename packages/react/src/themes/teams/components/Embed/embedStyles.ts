@@ -32,7 +32,7 @@ export default {
     }
   },
   control: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    background: `0 no-repeat rgba(0,0,0,.25)`,
+    background: `0 no-repeat ${v.controlBackgroundColor}`,
     backgroundPositionX: pxToRem(3),
     color: v.controlColor,
 
