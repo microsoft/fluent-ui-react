@@ -40,21 +40,6 @@ export const fontSizes = {
 }
 
 //
-// STATUS COLORS
-//
-// TODO these should be moved to status variables
-export const successStatusBackgroundColor = colors.green[200]
-export const successStatusTextColor = colors.white
-export const infoStatusBackgroundColor = 'blue'
-export const infoStatusTextColor = colors.white
-export const warningStatusBackgroundColor = colors.yellow[400]
-export const warningStatusTextColor = colors.white
-export const errorStatusBackgroundColor = colors.red[400]
-export const errorStatusTextColor = colors.white
-export const unknownStatusBackgroundColor = colors.grey[350]
-export const unknownStatusTextColor = colors.white
-
-//
 // FONT WEIGHTS
 //
 export const fontWeightLight = 200

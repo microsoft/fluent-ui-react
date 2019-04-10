@@ -1,5 +1,5 @@
 import { colors } from '../teams/siteVariables'
-import { ColorSchemeMapping } from 'src/themes/types'
+import { ColorSchemeMapping } from '../../themes/types'
 
 const createColorScheme = (color: string, customValues = {}) => {
   return {
