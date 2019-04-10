@@ -2,10 +2,10 @@ import { ChatMessageVariables } from '../../../teams/components/Chat/chatMessage
 
 export default (siteVars: any): Partial<ChatMessageVariables> => {
   return {
-    backgroundColor: siteVars.black,
-    backgroundColorMine: siteVars.black,
-    color: siteVars.white,
+    backgroundColor: siteVars.colors.black,
+    backgroundColorMine: siteVars.colors.black,
+    color: siteVars.colors.white,
     contentFocusOutlineColor: siteVars.colors.yellow[400], // Red flag (should this be accessibleYellow?)
-    border: `1px solid ${siteVars.white}`,
+    border: `1px solid ${siteVars.colors.white}`,
   }
 }
