@@ -13,7 +13,7 @@ jobs:
       # https://circleci.com/docs/2.0/api-job-trigger/
       - run:
           name: My branch
-          command: echo "${CIRCLE_BRANCH}"
+          command: if  $CIRCLE_BRANCH == 'master' ]; then echo 'yes'; else echo 'no'; fi
       - run:
           name: Start Visual Tests job
           command: |
