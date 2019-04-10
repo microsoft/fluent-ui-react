@@ -28,7 +28,7 @@ export default (siteVars: any): RadioGroupItemVariables => ({
 
   textFontSize: siteVars.fontSizes.medium,
 
-  textColorDefault: siteVars.gray02,
+  textColorDefault: siteVars.colors.grey[500],
   textColorDefaultHoverFocus: siteVars.colors.grey[750],
   textColorChecked: siteVars.colors.grey[750],
 

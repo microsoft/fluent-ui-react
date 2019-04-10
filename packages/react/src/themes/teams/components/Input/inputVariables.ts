@@ -37,5 +37,5 @@ export default (siteVars): InputVariables => ({
   inputFocusBorderBottomColor: siteVars.colors.primary[600],
   inputFocusBorderRadius: `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`,
 
-  placeholderColor: siteVars.gray02,
+  placeholderColor: siteVars.colors.grey[500],
 })
