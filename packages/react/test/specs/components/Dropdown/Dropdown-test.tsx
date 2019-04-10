@@ -429,7 +429,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('should be the index of the value previously selected when opened', () => {
+    it('is the index of the value previously selected when opened', () => {
       const onOpenChange = jest.fn()
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
 
@@ -451,7 +451,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('should be the index of the (value previously selected + 1) when opened by arrow down', () => {
+    it('is the index of the (value previously selected + 1) when opened by arrow down', () => {
       const onOpenChange = jest.fn()
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
 
@@ -475,7 +475,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('should be the index of the (value previously selected - 1) when opened by arrow up', () => {
+    it('is the index of the (value previously selected - 1) when opened by arrow up', () => {
       const onOpenChange = jest.fn()
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
 
@@ -500,7 +500,88 @@ describe('Dropdown', () => {
   })
 
   describe('value', () => {
-    it('should be the index of the correct item value when navigating with arrow down key', () => {
+    it('is set by clicking on item', () => {
+      const itemSelectedIndex = 2
+      const onSelectedChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
+      )
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      wrapper
+        .find(`li.${Dropdown.slotClassNames.item}`)
+        .at(itemSelectedIndex)
+        .simulate('click')
+
+      expect(onSelectedChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          value: items[itemSelectedIndex],
+        }),
+      )
+    })
+
+    it('is set by using Enter on highlighted item', () => {
+      const onSelectedChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
+      )
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      wrapper
+        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
+
+      expect(onSelectedChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          value: items[0],
+        }),
+      )
+    })
+
+    it('is set by using Tab on highlighted item', () => {
+      const onSelectedChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
+      )
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      wrapper
+        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab' })
+
+      expect(onSelectedChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          value: items[0],
+        }),
+      )
+    })
+
+    it('is set by using Shift+Tab on highlighted item', () => {
+      const onSelectedChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
+      )
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      wrapper
+        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab', shiftKey: true })
+
+      expect(onSelectedChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          value: items[0],
+        }),
+      )
+    })
+
+    it('is the coorect item when navigating with arrow down key', () => {
       const onSelectedChange = jest.fn()
       const wrapper = mountWithProvider(
         <Dropdown onSelectedChange={onSelectedChange} items={items} />,
@@ -521,7 +602,29 @@ describe('Dropdown', () => {
       )
     })
 
-    it('should be the index of the correct item value when navigating with arrow up key', () => {
+    it('is the correct item when navigating with arrow up key', () => {
+      const onSelectedChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
+      )
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click') // open
+      wrapper
+        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' }) // should be index 0
+        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' }) // should be index 1
+        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
+
+      expect(onSelectedChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          value: items[items.length - 2],
+        }),
+      )
+    })
+
+    it('is replaced when another item is selected', () => {
+      const itemSelectedIndex = 3
       const onSelectedChange = jest.fn()
       const wrapper = mountWithProvider(
         <Dropdown onSelectedChange={onSelectedChange} items={items} />,
@@ -529,15 +632,91 @@ describe('Dropdown', () => {
 
       wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
       wrapper
-        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
-        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
+        .find(`li.${Dropdown.slotClassNames.item}`)
+        .at(1)
+        .simulate('click')
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      wrapper
+        .find(`li.${Dropdown.slotClassNames.item}`)
+        .at(itemSelectedIndex)
+        .simulate('click')
 
       expect(onSelectedChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
-          value: items[items.length - 2],
+          value: items[itemSelectedIndex],
+        }),
+      )
+    })
+
+    it('has multiple items at multiple selections if the multiple prop is supplied', () => {
+      const onSelectedChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown onSelectedChange={onSelectedChange} multiple items={items} />,
+      )
+      const indexesOfItemsSelected = [1, 3]
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      wrapper
+        .find(`li.${Dropdown.slotClassNames.item}`)
+        .at(indexesOfItemsSelected[0])
+        .simulate('click')
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      wrapper
+        .find(`li.${Dropdown.slotClassNames.item}`)
+        .at(indexesOfItemsSelected[1])
+        .simulate('click')
+
+      expect(onSelectedChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          value: [items[indexesOfItemsSelected[0]], items[indexesOfItemsSelected[1] + 1]],
+        }),
+      )
+    })
+  })
+
+  describe('searchQuery', () => {
+    it('is the string equivalent of selected item in single search', () => {
+      const itemSelectedIndex = 2
+      const onSelectedChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown onSelectedChange={onSelectedChange} search items={items} />,
+      )
+
+      wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`).simulate('click')
+      wrapper
+        .find(`li.${Dropdown.slotClassNames.item}`)
+        .at(itemSelectedIndex)
+        .simulate('click')
+
+      expect(onSelectedChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          value: items[itemSelectedIndex],
+          searchQuery: items[itemSelectedIndex],
+        }),
+      )
+    })
+
+    it('is set to empty when item is selected in multiple search', () => {
+      const itemSelectedIndex = 2
+      const onSelectedChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown onSelectedChange={onSelectedChange} search multiple items={items} />,
+      )
+
+      wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`).simulate('click')
+      wrapper
+        .find(`li.${Dropdown.slotClassNames.item}`)
+        .at(itemSelectedIndex)
+        .simulate('click')
+
+      expect(onSelectedChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          value: [items[itemSelectedIndex]],
+          searchQuery: '',
         }),
       )
     })
