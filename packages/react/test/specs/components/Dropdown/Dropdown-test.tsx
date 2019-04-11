@@ -671,6 +671,64 @@ describe('Dropdown', () => {
         }),
       )
     })
+
+    it('has items removed on empty search query backspace', () => {
+      const onSelectedChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown onSelectedChange={onSelectedChange} multiple items={items} search />,
+      )
+      const input = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+
+      toggleIndicator.simulate('click')
+      wrapper
+        .find(`li.${Dropdown.slotClassNames.item}`)
+        .at(0)
+        .simulate('click')
+      toggleIndicator.simulate('click')
+      wrapper
+        .find(`li.${Dropdown.slotClassNames.item}`)
+        .at(0)
+        .simulate('click')
+      input
+        .simulate('click')
+        .simulate('keydown', { keyCode: keyboardKey.Backspace, key: 'Backspace' })
+      expect(onSelectedChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          value: [items[0]],
+        }),
+      )
+    })
+
+    it('has last item removed on empty search query backspace', () => {
+      const onSelectedChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown onSelectedChange={onSelectedChange} multiple items={items} search />,
+      )
+      const input = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+
+      toggleIndicator.simulate('click')
+      wrapper
+        .find(`li.${Dropdown.slotClassNames.item}`)
+        .at(0)
+        .simulate('click')
+      toggleIndicator.simulate('click')
+      wrapper
+        .find(`li.${Dropdown.slotClassNames.item}`)
+        .at(0)
+        .simulate('click')
+      input
+        .simulate('click')
+        .simulate('keydown', { keyCode: keyboardKey.Backspace, key: 'Backspace' })
+      expect(onSelectedChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          value: [items[0]],
+        }),
+      )
+    })
   })
 
   describe('getA11ySelectionMessage', () => {
