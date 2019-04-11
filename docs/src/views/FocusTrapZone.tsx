@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 import { Header } from '@stardust-ui/react'
 import DocPage from '../components/DocPage'
 import { link, code } from '../utils/helpers'
@@ -9,13 +10,10 @@ export default () => (
   <DocPage title="Focus Trap Zone">
     <Header as="h2">Content</Header>
     <ul>
-      <li>{link('Overview', '/focus-trap-zone#overview')}</li>
-      <li>{link('Usage', '/focus-trap-zone#usage')}</li>
+      <li>{link('Overview', 'focus-trap-zone#overview')}</li>
+      <li>{link('Usage', 'focus-trap-zone#usage')}</li>
       <li>
-        {link(
-          'Override FocusTrapZone settings',
-          '/focus-trap-zone#override-focustrapzone-settings',
-        )}
+        {link('Override FocusTrapZone settings', 'focus-trap-zone#override-focustrapzone-settings')}
       </li>
     </ul>
     <Header as="h2">Overview</Header>
@@ -36,10 +34,10 @@ export default () => (
     <Header as="h2">Usage</Header>
     <p>
       Stardust applies focus trap via accessibility behavior, the same way as it's done for{' '}
-      {link('FocusZone', '/focus-zone')}. To enable focus trap for component, it is needed, in
-      behavior, to set prop {code('trapFocus')} to {code('true')} with default settings or set an
-      object with desired values for focus trap zone props.{' '}
-      {link('Read more about Accessibility Behaviors.', '/accessibility-behaviors')}
+      <Link to="focus-zone">FocusZone</Link>. To enable focus trap for component, it is needed, in
+      behavior, to set prop {code('trapFocus')} to
+      {code('true')} with default settings or set an object with desired values for focus trap zone
+      props. <Link to="accessibility-behaviors">Read more about Accessibility Behaviors.</Link>{' '}
       Currently, it is used for Popup via {code('popupFocusTrapBehavior')} and Dialog via{' '}
       {code('dialogBehavior')}.
     </p>
@@ -153,9 +151,15 @@ export default () => (
     />
     <p>Read more about:</p>
     <ul>
-      <li>{link('Accessibility Behaviors', '/accessibility-behaviors')}</li>
-      <li>{link('FocusZone', '/focus-zone')}</li>
-      <li>{link('AutoFocusZone', '/auto-focus-zone')}</li>
+      <li>
+        <Link to="accessibility-behaviors">Accessibility Behaviors</Link>
+      </li>
+      <li>
+        <Link to="focus-zone">FocusZone</Link>
+      </li>
+      <li>
+        <Link to="auto-focus-zone">AutoFocusZone</Link>
+      </li>
     </ul>
     <p>
       {code('FocusTrapZone')} code on{' '}
