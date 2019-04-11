@@ -255,7 +255,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('is null on second and subsequent open even though defaultHighlightedIndex prop is passed', () => {
+    it('is null on second and subsequent open when defaultHighlightedIndex prop is passed', () => {
       const wrapper = mountWithProvider(
         <Dropdown defaultHighlightedIndex={1} onOpenChange={onOpenChange} items={items} />,
       )
@@ -497,6 +497,45 @@ describe('Dropdown', () => {
         }),
       )
     })
+
+    it('is changed correctly on arrow down navigation', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const dropdown = wrapper.find(Dropdown)
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      for (let index = 0; index < 2; index++) {
+        itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        expect(dropdown.state('highlightedIndex')).toBe(index)
+      }
+    })
+
+    it('is changed correctly on arrow up navigation', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const dropdown = wrapper.find(Dropdown)
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      for (let index = 0; index < 2; index++) {
+        itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+        expect(dropdown.state('highlightedIndex')).toBe(items.length - 1 - index)
+      }
+    })
+
+    it('wraps to start and end on navigation', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} defaultHighlightedIndex={1} />)
+      const dropdown = wrapper.find(Dropdown)
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+
+      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      itemsList
+        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+      expect(dropdown.state('highlightedIndex')).toBe(items.length - 1)
+
+      itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+      expect(dropdown.state('highlightedIndex')).toBe(0)
+    })
   })
 
   describe('value', () => {
@@ -581,48 +620,6 @@ describe('Dropdown', () => {
       )
     })
 
-    it('is the coorect item when navigating with arrow down key', () => {
-      const onSelectedChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
-      )
-
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click') // open
-      wrapper
-        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' }) // should be index 0
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' }) // should be index 1
-        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
-
-      expect(onSelectedChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          value: items[1],
-        }),
-      )
-    })
-
-    it('is the correct item when navigating with arrow up key', () => {
-      const onSelectedChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
-      )
-
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click') // open
-      wrapper
-        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' }) // should be index 0
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' }) // should be index 1
-        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
-
-      expect(onSelectedChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          value: items[items.length - 2],
-        }),
-      )
-    })
-
     it('is replaced when another item is selected', () => {
       const itemSelectedIndex = 3
       const onSelectedChange = jest.fn()
@@ -676,7 +673,30 @@ describe('Dropdown', () => {
     })
   })
 
+  describe('getA11ySelectionMessage', () => {
+    it('creates message container element', () => {
+      mountWithProvider(<Dropdown options={[]} getA11ySelectionMessage={{}} />)
+      expect(
+        document.querySelector(
+          `[role="status"][aria-live="polite"][aria-relevant="additions text"]`,
+        ),
+      ).toBeTruthy()
+    })
+  })
+
   describe('searchQuery', () => {
+    it('will close after reset', () => {
+      const dropdown = mountWithProvider(<Dropdown items={items} search />).find(Dropdown)
+
+      dropdown.find('input').simulate('change', { target: { value: 'foo' } })
+      expect(dropdown.state('open')).toBe(true)
+      expect(dropdown.state('searchQuery')).toBe('foo')
+
+      dropdown.find('input').simulate('change', { target: { value: '' } })
+      expect(dropdown.state('open')).toBe(false)
+      expect(dropdown.state('searchQuery')).toBe('')
+    })
+
     it('is the string equivalent of selected item in single search', () => {
       const itemSelectedIndex = 2
       const onSelectedChange = jest.fn()
@@ -719,31 +739,6 @@ describe('Dropdown', () => {
           searchQuery: '',
         }),
       )
-    })
-  })
-
-  describe('getA11ySelectionMessage', () => {
-    it('creates message container element', () => {
-      mountWithProvider(<Dropdown options={[]} getA11ySelectionMessage={{}} />)
-      expect(
-        document.querySelector(
-          `[role="status"][aria-live="polite"][aria-relevant="additions text"]`,
-        ),
-      ).toBeTruthy()
-    })
-  })
-
-  describe('searchQuery', () => {
-    it('will close after reset', () => {
-      const dropdown = mountWithProvider(<Dropdown items={items} search />).find(Dropdown)
-
-      dropdown.find('input').simulate('change', { target: { value: 'foo' } })
-      expect(dropdown.state('open')).toBe(true)
-      expect(dropdown.state('searchQuery')).toBe('foo')
-
-      dropdown.find('input').simulate('change', { target: { value: '' } })
-      expect(dropdown.state('open')).toBe(false)
-      expect(dropdown.state('searchQuery')).toBe('')
     })
   })
 })
