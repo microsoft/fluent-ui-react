@@ -1,5 +1,7 @@
+import { ColorSchemeMapping } from '../../../types'
+
 export interface TextVariables {
-  colorScheme: any
+  colorScheme: ColorSchemeMapping
 
   atMentionMeColor: string
   atMentionOtherColor: string

@@ -148,9 +148,6 @@ const emphasisAndNaturalColors: EmphasisColors & NaturalColors = {
   ...naturalColors,
 }
 
-const lightBackgroundColors = ['teal', 'yellow']
-const isLightBackground = (colorName: string) => _.includes(lightBackgroundColors, colorName)
-
 export const colors: ColorPalette = {
   ...emphasisAndNaturalColors,
   ...contextualColors,
@@ -161,38 +158,36 @@ export const colors: ColorPalette = {
 
 export const colorScheme: ColorSchemeMapping = {
   ..._.mapValues(emphasisAndNaturalColors, (colorVariants, colorName) => {
-    const foreground = isLightBackground(colorName) ? colors.black : colorVariants[50]
-
     return {
-      foregroundDefault: foreground,
-      borderDefault: foreground,
-      shadowDefault: foreground,
-      backgroundDefault: colorVariants[500],
+      foregroundDefault: colorVariants[500],
+      borderDefault: colorVariants[500],
+      shadowDefault: colorVariants[500],
+      backgroundDefault: colorVariants[50],
 
-      foregroundActive: foreground,
-      borderActive: foreground,
-      shadowActive: foreground,
-      backgroundActive: colorVariants[500],
+      foregroundActive: colorVariants[500],
+      borderActive: colorVariants[500],
+      shadowActive: colorVariants[500],
+      backgroundActive: colorVariants[50],
 
-      foregroundHover: foreground,
-      backgroundHover: colorVariants[500],
-      borderHover: foreground,
-      shadowHover: foreground,
+      foregroundHover: colorVariants[500],
+      borderHover: colorVariants[500],
+      shadowHover: colorVariants[500],
+      backgroundHover: colorVariants[50],
 
-      foregroundFocus: foreground,
-      backgroundFocus: colorVariants[500],
-      borderFocus: foreground,
-      shadowFocus: foreground,
+      foregroundFocus: colorVariants[500],
+      borderFocus: colorVariants[500],
+      shadowFocus: colorVariants[500],
+      backgroundFocus: colorVariants[50],
 
-      foregroundFocusWithin: foreground,
-      backgroundFocusWithin: colorVariants[500],
-      borderFocusWithin: foreground,
-      shadowFocusWithin: foreground,
+      foregroundFocusWithin: colorVariants[500],
+      borderFocusWithin: colorVariants[500],
+      shadowFocusWithin: colorVariants[500],
+      backgroundFocusWithin: colorVariants[50],
 
-      foregroundDisabled: foreground,
-      backgroundDisabled: colorVariants[500],
-      borderDisabled: foreground,
-      shadowDisabled: foreground,
+      foregroundDisabled: colorVariants[500],
+      borderDisabled: colorVariants[500],
+      shadowDisabled: colorVariants[500],
+      backgroundDisabled: colorVariants[50],
     }
   }),
 }

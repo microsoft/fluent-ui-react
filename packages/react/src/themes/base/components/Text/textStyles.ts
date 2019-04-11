@@ -1,4 +1,3 @@
-import * as _ from 'lodash'
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { TextVariables } from './textVariables'
 import { TextProps } from '../../../../components/Text/Text'
@@ -22,7 +21,11 @@ export default {
     },
     variables: v,
   }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
+    const colors = v.colorScheme[color || 'default']
     return {
+      ...(color && {
+        color: colors.foregroundDefault,
+      }),
       // animations are not working with span, unless display is set to 'inline-block'
       ...(animation &&
         as === 'span' && {
