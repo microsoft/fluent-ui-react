@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 import { Header } from '@stardust-ui/react'
 
 import CodeSnippet from '../components/CodeSnippet'
@@ -9,15 +10,15 @@ export default () => (
   <DocPage title="Focus Zone">
     <Header as="h2">Content</Header>
     <ul>
-      <li>{link('Overview', '/focus-zone#overview')}</li>
+      <li>{link('Overview', 'focus-zone#overview')}</li>
       <li>
-        {link('Usage', '/focus-zone#usage')}
+        {link('Usage', 'focus-zone#usage')}
         <ul>
-          <li>{link('Mode', '/focus-zone#mode')}</li>
-          <li>{link('Props', '/focus-zone#props')}</li>
+          <li>{link('Mode', 'focus-zone#mode')}</li>
+          <li>{link('Props', 'focus-zone#props')}</li>
         </ul>
       </li>
-      <li>{link('Override FocusZone settings', '/focus-zone#override-focuszone-settings')}</li>
+      <li>{link('Override FocusZone settings', 'focus-zone#override-focuszone-settings')}</li>
     </ul>
     <Header as="h2">Overview</Header>
     <p>
@@ -75,7 +76,7 @@ export default () => (
           <Menu accessibility={menuBehavior} />
         )`}
       />
-      Read more about <b>accessibility behaviors {link('here', '/accessibility-behaviors')}</b>.
+      Read more about <Link to="accessibility-behaviors">Accessibility Behaviors</Link>.
     </div>
     <p>
       The accessibility behavior can control the focus zone operation by specifying Focus zone's
@@ -144,13 +145,13 @@ export default () => (
         <ul>
           <li>
             <i>horizontal</i> - navigation between items can be made using left/right arrow keys.
-            <p>See an example of {link('horizontal menu', '/components/menu#types-menu')}.</p>
+            <p>See an example of {link('horizontal menu', 'components/menu#types-menu')}.</p>
           </li>
           <li>
             <i>vertical</i> - navigation between items can be made using up/down arrow keys.
             <p>
               See an example of{' '}
-              {link('vertical menu', '/components/menu#variations-vertical-pointing')}.
+              {link('vertical menu', 'components/menu#variations-vertical-pointing')}.
             </p>
           </li>
           <p>
@@ -177,7 +178,7 @@ export default () => (
           <li>
             <i>bidirectional</i> - navigation between items can be made using all arrow keys.{' '}
             <b>It is set by default.</b>
-            <p>See an example of {link('tab list', '/components/menu#usages-tab-list')}.</p>
+            <p>See an example of {link('tab list', 'components/menu#usages-tab-list')}.</p>
           </li>
         </ul>
       </li>
@@ -243,7 +244,7 @@ export default () => (
         user attempts to naviagate before the first target.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
-        <p>For example, {link('horizontal menu', '/components/menu#types-menu')}.</p>
+        <p>For example, {link('horizontal menu', 'components/menu#types-menu')}.</p>
       </li>
       <li>
         <b>shouldEnterInnerZone</b> - callback function that will be executed, will be executed on
@@ -361,9 +362,15 @@ export default () => (
     />
     <p>Read more about:</p>
     <ul>
-      <li>{link('Accessibility Behaviors', '/accessibility-behaviors')}</li>
-      <li>{link('FocusTrapZone', '/focus-trap-zone')}</li>
-      <li>{link('AutoFocusZone', '/auto-focus-zone')}</li>
+      <li>
+        <Link to="accessibility-behaviors">Accessibility Behaviors</Link>
+      </li>
+      <li>
+        <Link to="focus-trap-zone">FocusTrapZone</Link>
+      </li>
+      <li>
+        <Link to="auto-focus-zone">AutoFocusZone</Link>
+      </li>
     </ul>
     <p>
       {code('FocusZone')} code on{' '}

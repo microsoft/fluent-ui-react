@@ -3,14 +3,15 @@ import { Header } from '@stardust-ui/react'
 import DocPage from '../components/DocPage'
 import CodeSnippet from '../components/CodeSnippet'
 import { code, link } from '../utils/helpers'
+import { Link } from 'react-router-dom'
 
 export default () => (
   <DocPage title="Accessibility Behaviors">
     <Header as="h2">Content</Header>
     <ul>
-      <li>{link('Overview', '/accessibility-behaviors#overview')}</li>
-      <li>{link('ARIA attributes', '/accessibility-behaviors#aria-attributes')}</li>
-      <li>{link('Overriding behaviors', '/accessibility-behaviors#overriding-behaviors')}</li>
+      <li>{link('Overview', 'accessibility-behaviors#overview')}</li>
+      <li>{link('ARIA attributes', 'accessibility-behaviors#aria-attributes')}</li>
+      <li>{link('Overriding behaviors', 'accessibility-behaviors#overriding-behaviors')}</li>
     </ul>
     <Header as="h2">Overview</Header>
     <p>
@@ -55,20 +56,21 @@ export default () => (
           items, such as list items and menu items. At the same time it is possible to TAB between
           these navigable components (navigate between Menu and List components by pressing TAB and
           use arrow keys to navigate between their items).{' '}
-          {link('Read more about FocusZone.', '/focus-zone')}
+          <Link to="focus-zone">Read more about FocusZone.</Link>
           <p>Type: {code('{ mode: FocusZoneMode, props?: FocusZoneProps }')}.</p>
         </li>
         <li>
           <b>focusTrap</b> - {code('FocusTrapZone')} grabs the focus and traps it within an HTML
           element, usually a dialog or popup.{' '}
-          {link('Read more about FocusTrapZone.', '/focus-trap-zone')}
+          <Link to="focus-trap-zone">Read more about FocusTrapZone.</Link>
           <p>Type: {code('FocusTrapZoneProps | boolean')}.</p>
         </li>
         <li>
           <b>autoFocus</b> - {code('AutoFocusZone')} is used to grab focus and put it to inner
           element when component mounts. For example, when it is needed to focus an inner element in
           the Popup when it mounts. If true, it is enabled with default properties or can be
-          modified by setting object. {link('Read more about AutoFocusZone.', '/auto-focus-zone')}
+          modified by setting object.{' '}
+          <Link to="auto-focus-zone">Read more about AutoFocusZone.</Link>
           <p>Type: {code('AutoFocusZoneProps | boolean')}.</p>
         </li>
       </ul>
@@ -233,7 +235,7 @@ export default () => (
       All Stardust behaviors implementations can be found on the{' '}
       {link(
         'GitHub',
-        'https://github.com/stardust-ui/react/tree/master/packages/react/src/lib/accessibility/Behaviors',
+        'https://github.com/stardust-ui/react/tree/master/packages/react/src/libaccessibility/Behaviors',
       )}
       .
     </p>
@@ -250,9 +252,15 @@ export default () => (
     <p>
       Read more about:
       <ul>
-        <li>{link('FocusZone', '/focus-zone')}</li>
-        <li>{link('FocusTrapZone', '/focus-trap-zone')}</li>
-        <li>{link('AutoFocusZone', '/auto-focus-zone')}</li>
+        <li>
+          <Link to="focus-zone">FocusZone</Link>
+        </li>
+        <li>
+          <Link to="focus-trap-zone">FocusTrapZone</Link>
+        </li>
+        <li>
+          <Link to="auto-focus-zone">AutoFocusZone</Link>
+        </li>
       </ul>
     </p>
   </DocPage>
