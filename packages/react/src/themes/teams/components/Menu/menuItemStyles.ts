@@ -135,6 +135,11 @@ const pointingBeak = ({ props, variables: v, colorScheme }): ICSSInJSStyle => {
   }
 }
 
+const getColorSchemeKey = (props: MenuItemProps): string => {
+  const { color, primary } = props
+  return color || (primary ? 'primary' : 'default')
+}
+
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
   wrapper: ({ props, variables: v, theme }): ICSSInJSStyle => {
     const {
@@ -147,11 +152,10 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       secondary,
       underlined,
       vertical,
-      color,
       primary,
     } = props
 
-    const colorScheme = v.colorScheme[color ? color : primary ? 'primary' : 'default']
+    const colorScheme = v.colorScheme[getColorSchemeKey(props)]
 
     return {
       color: 'inherit',
@@ -283,7 +287,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       color,
     } = p
 
-    const colorScheme = v.colorScheme[color ? color : primary ? 'primary' : 'grey']
+    const colorScheme = v.colorScheme[getColorSchemeKey(p)]
 
     return {
       color: 'inherit',
