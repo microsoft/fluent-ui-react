@@ -424,7 +424,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         keepTogether: { enabled: false },
       }),
     }
-    console.log('PROPOSED', placement)
+
     return (
       target && (
         <Popper
@@ -458,13 +458,10 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       ...accessibility.attributes.popup,
       ...accessibility.keyHandlers.popup,
       className: popupPositionClasses,
-      placement,
-      pointing,
-      pointerProps: arrowProps,
       style: popupPlacementStyles,
       ...this.getContentProps(),
     }
-    console.log('REAL', placement)
+
     const focusTrapProps = {
       ...(typeof accessibility.focusTrap === 'boolean' ? {} : accessibility.focusTrap),
       ...popupWrapperAttributes,
@@ -483,7 +480,13 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       accessibility.focusTrap || accessibility.autoFocus ? {} : popupWrapperAttributes
 
     const popupContent = Popup.Content.create(content, {
-      defaultProps: popupContentAttributes,
+      defaultProps: {
+        ...popupContentAttributes,
+        placement,
+        pointing,
+        pointerRef: arrowProps.ref,
+        pointerStyle: arrowProps.style,
+      },
       overrideProps: this.getContentProps,
     })
 

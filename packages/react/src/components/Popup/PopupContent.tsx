@@ -1,4 +1,3 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import { PopperChildrenProps } from 'react-popper'
 import * as PropTypes from 'prop-types'
@@ -51,8 +50,11 @@ export interface PopupContentProps
   /** A popup can show a pointer to trigger. */
   pointing?: boolean
 
-  /** A set of Popper props for a pointer. */
-  pointerProps?: PopperChildrenProps['arrowProps']
+  /** A ref to a pointer element. */
+  pointerRef?: PopperChildrenProps['arrowProps']['ref']
+
+  /** An object with positioning styles fof a pointer. */
+  pointerStyle?: PopperChildrenProps['arrowProps']['style']
 }
 
 /**
@@ -70,9 +72,10 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
     ...commonPropTypes.createCommon(),
     placement: PropTypes.string,
     pointing: PropTypes.bool,
-    pointerProps: customPropTypes.itemShorthand,
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
+    pointerRef: PropTypes.func,
+    pointerStyle: PropTypes.object,
   }
 
   static defaultProps = {
@@ -94,7 +97,7 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
     unhandledProps,
     styles,
   }: RenderResultConfig<PopupContentProps>): React.ReactNode {
-    const { children, content, pointerProps, pointing } = this.props
+    const { children, content, pointing, pointerRef, pointerStyle } = this.props
 
     return (
       <ElementType
@@ -106,12 +109,12 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
         onMouseLeave={this.handleMouseLeave}
       >
         {pointing && (
-          <Ref innerRef={pointerProps.ref}>
+          <Ref innerRef={pointerRef}>
             {Box.create(
               {},
               {
                 defaultProps: {
-                  style: pointerProps.style,
+                  style: pointerStyle,
                   styles: styles.pointer,
                 },
               },
