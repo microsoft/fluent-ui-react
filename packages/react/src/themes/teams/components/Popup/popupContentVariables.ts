@@ -6,6 +6,9 @@ export interface PopupContentVariables {
   borderSize: string
   padding: string
 
+  contentColor: string
+  contentBackgroundColor: string
+
   pointerPadding: string
   pointerOffset: string
   pointerHeight: string
@@ -18,6 +21,9 @@ export default (siteVars: any): PopupContentVariables => {
     borderRadius: pxToRem(3),
     borderSize: '1px',
     padding: `${pxToRem(10)} ${pxToRem(14)}`,
+
+    contentColor: siteVars.bodyColor,
+    contentBackgroundColor: siteVars.bodyBackground,
 
     pointerOffset: pxToRem(5),
     pointerPadding: pxToRem(10),

@@ -9,8 +9,6 @@ const popupStyles: ComponentSlotStylesInput<PopupProps, PopupVariables> = {
     zIndex: variables.zIndex,
     position: 'absolute',
     textAlign: 'left',
-    color: variables.contentColor,
-    background: variables.contentBackgroundColor,
   }),
 }
 
