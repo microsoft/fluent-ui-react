@@ -7,9 +7,10 @@ export interface PopupContentVariables {
 
   contentColor: string
   contentBackgroundColor: string
+  contentPointerPadding: string
 
-  pointerHeight: number
-  pointerWidth: number
+  pointerHeight: string
+  pointerWidth: string
 }
 
 export default (siteVars: any): PopupContentVariables => {
@@ -20,8 +21,9 @@ export default (siteVars: any): PopupContentVariables => {
 
     contentColor: siteVars.bodyColor,
     contentBackgroundColor: siteVars.bodyBackground,
+    contentPointerPadding: pxToRem(10),
 
-    pointerHeight: 10,
-    pointerWidth: 10,
+    pointerHeight: pxToRem(10),
+    pointerWidth: pxToRem(10),
   }
 }

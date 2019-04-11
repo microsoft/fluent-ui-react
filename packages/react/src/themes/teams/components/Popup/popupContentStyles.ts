@@ -8,37 +8,39 @@ const getPointerStyles = (
   v: PopupContentVariables,
   popperPlacement?: PopperChildrenProps['placement'],
 ) => {
+  const offset = pxToRem(v.pointerHeight / 2)
+  const padding = pxToRem(v.pointerHeight)
   const placement = (popperPlacement || '').split('-', 1).pop()
 
   const rootStyles = {
     top: {
-      paddingBottom: pxToRem(v.pointerHeight),
+      paddingBottom: v.contentPointerPadding,
     },
     right: {
-      paddingLeft: pxToRem(v.pointerHeight),
+      paddingLeft: v.contentPointerPadding,
     },
     bottom: {
-      paddingTop: pxToRem(v.pointerHeight),
+      paddingTop: v.contentPointerPadding,
     },
     left: {
-      paddingRight: pxToRem(v.pointerHeight),
+      paddingRight: v.contentPointerPadding,
     },
   }
   const pointerStyles = {
     top: {
-      bottom: `${pxToRem(v.pointerHeight / 2)}`,
+      bottom: offset,
       transform: 'rotate(45deg)',
     },
     right: {
-      left: `${pxToRem(v.pointerHeight / 2)}`,
+      left: offset,
       transform: 'rotate(135deg)',
     },
     bottom: {
-      top: `${pxToRem(v.pointerHeight / 2)}`,
+      top: offset,
       transform: 'rotate(-135deg)',
     },
     left: {
-      right: `${pxToRem(v.pointerHeight / 2)}`,
+      right: offset,
       transform: 'rotate(-45deg)',
     },
   }
