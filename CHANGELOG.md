@@ -21,6 +21,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix overflowing focus outline for `Grid` items for Teams theme @Bugaa92 ([#1195](https://github.com/stardust-ui/react/pull/1195))
 - `Menu` as `Toolbar` - left/right arrow keys should not activate prev/next parent when focus in in the toolbar submenu @sophieH29 ([#1199](https://github.com/stardust-ui/react/pull/1199))
 
+### Features
+- Add `Embed` and `Video` components @stuartlong ([#1108](https://github.com/stardust-ui/react/pull/1108))
+- Add file video icon on `Icon` component @luzhon  ([#1205](https://github.com/stardust-ui/react/pull/1250))
+
 <!--------------------------------[ v0.27.0 ]------------------------------- -->
 ## [v0.27.0](https://github.com/stardust-ui/react/tree/v0.27.0) (2019-04-10)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.26.0...v0.27.0)
