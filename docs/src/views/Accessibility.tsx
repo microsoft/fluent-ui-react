@@ -2,6 +2,8 @@ import * as React from 'react'
 import DocPage from '../components/DocPage/DocPage'
 import CodeSnippet from '../components/CodeSnippet'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
+import { Link } from 'react-router-dom'
+
 import { code, link } from '../utils/helpers'
 import { Header } from '@stardust-ui/react'
 
@@ -10,56 +12,56 @@ export default () => (
     <Header as="h2" content="Content" />
     <ul>
       <li>
-        {link('Goals of accessibility', '/accessibility#goals-of-accessibility')}
+        {link('Goals of accessibility', 'accessibility#goals-of-accessibility')}
         <ul>
-          <li>{link('Out of scope', '/accessibility#out-of-scope')}</li>
+          <li>{link('Out of scope', 'accessibility#out-of-scope')}</li>
         </ul>
       </li>
       <li>
-        {link('Making an app / page accessible', '/accessibility#making-an-app-page-accessible')}
+        {link('Making an app / page accessible', 'accessibility#making-an-app-page-accessible')}
         <ul>
-          <li>{link('Semantic HTML', '/accessibility#semantic-html')}</li>
-          <li>{link('Design Considerations', '/accessibility#design-considerations')}</li>
+          <li>{link('Semantic HTML', 'accessibility#semantic-html')}</li>
+          <li>{link('Design Considerations', 'accessibility#design-considerations')}</li>
         </ul>
       </li>
       <li>
-        {link('Keyboard Navigation', '/accessibility#keyboard-navigation')}
+        {link('Keyboard Navigation', 'accessibility#keyboard-navigation')}
         <ul>
           <li>
             {link(
               'Tabbing and arrow key navigation',
-              '/accessibility#tabbing-and-arrow-key-navigation',
+              'accessibility#tabbing-and-arrow-key-navigation',
             )}
           </li>
           <li>
             {link(
               'Virtual Screen Reader Navigation',
-              '/accessibility#virtual-screen-reader-navigation',
+              'accessibility#virtual-screen-reader-navigation',
             )}
           </li>
-          <li>{link('Accessibility Behaviors', '/accessibility#accessibility-behaviors')}</li>
-          <li>{link('Focus Zone', '/accessibility#focus-zone')}</li>
-          <li>{link('Focus Trap Zone', '/accessibility#focus-trap-zone')}</li>
-          <li>{link('Auto Focus Zone', '/accessibility#auto-focus-zone')}</li>
-          <li>{link('Focus Indicator', '/accessibility#focus-indicator')}</li>
-          <li>{link('Right Click Support', '/accessibility#right-click-support')}</li>
+          <li>{link('Accessibility Behaviors', 'accessibility#accessibility-behaviors')}</li>
+          <li>{link('Focus Zone', 'accessibility#focus-zone')}</li>
+          <li>{link('Focus Trap Zone', 'accessibility#focus-trap-zone')}</li>
+          <li>{link('Auto Focus Zone', 'accessibility#auto-focus-zone')}</li>
+          <li>{link('Focus Indicator', 'accessibility#focus-indicator')}</li>
+          <li>{link('Right Click Support', 'accessibility#right-click-support')}</li>
           <li>
             {link(
               'Elements that appear on hover',
-              '/accessibility#elements-that-appear-on-hover-over-another-element',
+              'accessibility#elements-that-appear-on-hover-over-another-element',
             )}
           </li>
         </ul>
       </li>
       <li>
-        {link('Screen Readers', '/accessibility#screen-readers')}
+        {link('Screen Readers', 'accessibility#screen-readers')}
         <ul>
-          <li>{link('Textual Representation', '/accessibility#textual-representation')}</li>
-          <li>{link('Live Regions', '/accessibility#live-regions')}</li>
+          <li>{link('Textual Representation', 'accessibility#textual-representation')}</li>
+          <li>{link('Live Regions', 'accessibility#live-regions')}</li>
         </ul>
       </li>
-      <li>{link('High Contrast', '/accessibility#high-contrast')}</li>
-      <li>{link('Zoom', '/accessibility#zoom')}</li>
+      <li>{link('High Contrast', 'accessibility#high-contrast')}</li>
+      <li>{link('Zoom', 'accessibility#zoom')}</li>
     </ul>
 
     <Header as="h2" content="Goals of Accessibility" />
@@ -281,7 +283,7 @@ export default () => (
       to compose visual components and apply a behavior on top of them to achieve desired keyboard
       or screen reader navigation. Users can override these and provide their own roles and
       attributes by changing the behavior applied.{' '}
-      {link('Read more about Accessibility Behaviors.', '/accessibility-behaviors')}
+      {link('Read more about Accessibility Behaviors.', 'accessibility-behaviors')}
     </p>
 
     <Header as="h3" content="Focus Zone" />
@@ -411,10 +413,18 @@ export default () => (
 
     <p>Read more about:</p>
     <ul>
-      <li>{link('Accessibility Behaviors', '/accessibility-behaviors')}</li>
-      <li>{link('FocusZone', '/focus-zone')}</li>
-      <li>{link('FocusTrapZone', '/focus-trap-zone')}</li>
-      <li>{link('AutoFocusZone', '/auto-focus-zone')}</li>
+      <li>
+        <Link to="accessibility-behaviors">Accessibility Behaviors</Link>
+      </li>
+      <li>
+        <Link to="focus-zone">FocusZone</Link>
+      </li>
+      <li>
+        <Link to="focus-trap-zone">FocusTrapZone</Link>
+      </li>
+      <li>
+        <Link to="auto-focus-zone">AutoFocusZone</Link>
+      </li>
     </ul>
 
     <GuidesNavigationFooter
