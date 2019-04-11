@@ -4,7 +4,7 @@ module.exports = {
   ...commonConfig,
   name: 'react',
   moduleNameMapper: {
-    ...commonConfig.moduleNameMapper,
+    ...require('lerna-alias').jest(),
     'docs/(.*)$': `<rootDir>/../../docs/$1`,
 
     // Legacy aliases, they should not be used in new tests
