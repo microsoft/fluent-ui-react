@@ -99,40 +99,38 @@ export type ColorPalette<T = {}> = ExtendablePalette<
 >
 
 /**
+ * A type for all area names that can define color
+ */
+export type ComponentAreaName =
+  | 'foregroundDefault'
+  | 'backgroundDefault'
+  | 'borderDefault'
+  | 'shadowDefault'
+  | 'foregroundHover'
+  | 'backgroundHover'
+  | 'borderHover'
+  | 'shadowHover'
+  | 'foregroundActive'
+  | 'backgroundActive'
+  | 'borderActive'
+  | 'shadowActive'
+  | 'foregroundFocus'
+  | 'backgroundFocus'
+  | 'borderFocus'
+  | 'shadowFocus'
+  | 'foregroundFocusWithin'
+  | 'backgroundFocusWithin'
+  | 'borderFocusWithin'
+  | 'shadowFocusWithin'
+  | 'foregroundDisabled'
+  | 'backgroundDisabled'
+  | 'borderDisabled'
+  | 'shadowDisabled'
+
+/**
  * A type for the generic color scheme of a component based on CSS property names
  */
-export type ColorScheme = {
-  [key: string]: string
-  foregroundDefault: string
-  backgroundDefault: string
-  borderDefault: string
-  shadowDefault: string
-
-  foregroundHover: string
-  backgroundHover: string
-  borderHover: string
-  shadowHover: string
-
-  foregroundActive: string
-  backgroundActive: string
-  borderActive: string
-  shadowActive: string
-
-  foregroundFocus: string
-  backgroundFocus: string
-  borderFocus: string
-  shadowFocus: string
-
-  foregroundFocusWithin: string
-  backgroundFocusWithin: string
-  borderFocusWithin: string
-  shadowFocusWithin: string
-
-  foregroundDisabled: string
-  backgroundDisabled: string
-  borderDisabled: string
-  shadowDisabled: string
-}
+export type ColorScheme = Extendable<Record<ComponentAreaName, string>, string>
 
 export type ColorSchemeMapping = ColorValues<ColorScheme> & { default?: ColorScheme }
 
@@ -234,6 +232,7 @@ export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
   extends ObjectOf<ComponentSlotStyleFunction<TProps, TVars>> {}
 
 export interface ComponentSlotClasses extends ObjectOf<string> {}
+
 export interface ComponentSlotClasses extends ObjectOf<string> {}
 
 export type AnimationProp =
