@@ -28,8 +28,8 @@ const imageButtonStyles = {
   height: '72px',
   padding: '0',
   margin: '0',
-  background: '#fff',
 }
+
 const renderImages = () => {
   return _.map(imageNames, imageName => (
     <Image
@@ -49,25 +49,15 @@ const renderImageButtons = () => {
   ))
 }
 
-const gridStyles = {
-  gridColumnGap: '10px',
-  gridRowGap: '10px',
-}
-
 const GridExample = () => (
   <div>
     Grid with images, which are not natively focusable elements. Set 'data-is-focusable=true' to
     each item to make grid items focusable and navigable.
-    <Grid accessibility={gridBehavior} styles={gridStyles} columns="7" content={renderImages()} />
+    <Grid accessibility={gridBehavior} columns="7" content={renderImages()} />
     <br />
     Grid with images, wrapped with buttons, which are natively focusable elements. No need to add
     'data-is-focusable'='true'.
-    <Grid
-      accessibility={gridBehavior}
-      styles={gridStyles}
-      columns="7"
-      content={renderImageButtons()}
-    />
+    <Grid accessibility={gridBehavior} columns="7" content={renderImageButtons()} />
   </div>
 )
 
