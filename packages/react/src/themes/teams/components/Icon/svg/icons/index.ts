@@ -19,7 +19,7 @@ import callRecording from './callRecording'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
-import callMissedLineFilled from './callMissedLineFilled'
+import callMissedLine from './callMissedLine'
 import chat from './chat'
 import chevronDown from './chevronDown'
 import close from './close'
@@ -124,7 +124,7 @@ export default {
   'call-video-off': callVideoOff,
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
-  'call-missed-line-filled': callMissedLineFilled,
+  'call-missed-line': callMissedLine,
   'call-pstn': callPstn,
   'call-recording': callRecording,
   'canvas-add-page': canvasAddPage,
