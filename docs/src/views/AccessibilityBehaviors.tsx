@@ -235,7 +235,7 @@ export default () => (
       All Stardust behaviors implementations can be found on the{' '}
       {link(
         'GitHub',
-        'https://github.com/stardust-ui/react/tree/master/packages/react/src/libaccessibility/Behaviors',
+        'https://github.com/stardust-ui/react/tree/master/packages/react/src/lib/accessibility/Behaviors',
       )}
       .
     </p>

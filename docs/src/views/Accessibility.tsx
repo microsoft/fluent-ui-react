@@ -408,7 +408,7 @@ export default () => (
     <Header as="h1" content="Contributing" />
     {link(
       'Accessibility contributing guide',
-      'https://github.com/stardust-uiaccessibility/blob/master/CONTRIBUTING.md',
+      'https://github.com/stardust-ui/accessibility/blob/master/CONTRIBUTING.md',
     )}
 
     <p>Read more about:</p>
