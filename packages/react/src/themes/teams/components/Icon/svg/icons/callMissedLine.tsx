@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { TeamsProcessedSvgIconSpec } from '../types'
-import { teamsIconClassNames } from '..'
+import { teamsIconClassNames } from '../teamsIconClassNames'
 import cx from 'classnames'
 
 export default {
