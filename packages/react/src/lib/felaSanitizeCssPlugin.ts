@@ -37,10 +37,10 @@ const isValidCssValue = (value: any) => {
   return openingBracketsStack.length === 0
 }
 
-export default perf.time('[fela-plugin]: sanitize', (config?: { skip?: string[] }) => {
+export default (config?: { skip?: string[] }) => {
   const cssPropertiesToSkip = [...((config && config.skip) || [])]
 
-  const sanitizeCssStyleObject = styles => {
+  const sanitizeCssStyleObject = perf.time('[fela-plugin]: sanitize-css', styles => {
     const processedStyles = Array.isArray(styles) ? [] : {}
 
     Object.keys(styles).forEach(cssPropertyNameOrIndex => {
@@ -60,7 +60,7 @@ export default perf.time('[fela-plugin]: sanitize', (config?: { skip?: string[] 
     })
 
     return processedStyles
-  }
+  })
 
   return sanitizeCssStyleObject
-})
+}
