@@ -1,14 +1,16 @@
 import * as _ from 'lodash'
 import * as _expand from 'css-shorthand-expand'
-import * as memoize from 'fast-memoize'
+import * as _memoize from 'fast-memoize'
+
+// `fast-memoize` is a CJS library, there are known issues with them:
+// https://github.com/rollup/rollup/issues/1267#issuecomment-446681320
+const memoize = (_memoize as any).default || _memoize
 
 // `css-shorthand-expand` is a CJS library, there are known issues with them:
 // https://github.com/rollup/rollup/issues/1267#issuecomment-446681320
-const expand = (_expand as any).default || _expand
-// @ts-ignore
-const expandMemoized = memoize(expand)
-// @ts-ignore
-const camelCaseMemoized = memoize(_.camelCase)
+const expand = memoize((_expand as any).default || _expand)
+
+const camelCase = memoize(_.camelCase)
 
 const handledCssPropsMap = {
   font: 'font',
@@ -37,10 +39,7 @@ export default () => {
       }
 
       if (handledCssPropsMap[cssPropertyName]) {
-        const expandedProps = expandMemoized(
-          handledCssPropsMap[cssPropertyName],
-          `${cssPropertyValue}`,
-        )
+        const expandedProps = expand(handledCssPropsMap[cssPropertyName], `${cssPropertyValue}`)
         if (expandedProps) {
           return { ...acc, ...convertKeysToCamelCase(expandedProps) }
         }
@@ -53,4 +52,4 @@ export default () => {
   return expandCssShorthands
 }
 
-const convertKeysToCamelCase = obj => _.mapKeys(obj, (value, key) => camelCaseMemoized(key))
+const convertKeysToCamelCase = obj => _.mapKeys(obj, (value, key) => camelCase(key))
