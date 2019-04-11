@@ -6,9 +6,11 @@ const popupStyles: ComponentSlotStylesInput<PopupProps, PopupVariables> = {
   root: (): ICSSInJSStyle => ({}),
 
   popup: ({ variables }): ICSSInJSStyle => ({
+    zIndex: variables.zIndex,
     position: 'absolute',
     textAlign: 'left',
-    zIndex: variables.zIndex,
+    color: variables.contentColor,
+    background: variables.contentBackgroundColor,
   }),
 }
 

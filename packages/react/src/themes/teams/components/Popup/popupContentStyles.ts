@@ -18,16 +18,16 @@ const getPointerStyles = (
 
   const rootStyles = {
     top: {
-      paddingBottom: v.contentPointerPadding,
+      paddingBottom: v.pointerPadding,
     },
     right: {
-      paddingLeft: v.contentPointerPadding,
+      paddingLeft: v.pointerPadding,
     },
     bottom: {
-      paddingTop: v.contentPointerPadding,
+      paddingTop: v.pointerPadding,
     },
     left: {
-      paddingRight: v.contentPointerPadding,
+      paddingRight: v.pointerPadding,
     },
   }
   const pointerStyles = {
@@ -64,10 +64,9 @@ const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupConte
     display: 'block',
     position: 'absolute',
 
-    background: v.contentBackgroundColor,
+    background: 'inherit',
     borderBottom: `${v.borderSize} solid ${v.borderColor}`,
     borderRight: `${v.borderSize} solid ${v.borderColor}`,
-    color: v.contentColor,
 
     height: v.pointerHeight,
     width: v.pointerWidth,
@@ -78,11 +77,9 @@ const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupConte
     display: 'block',
     padding: v.padding,
 
-    background: v.contentBackgroundColor,
     border: `${v.borderSize} solid ${v.borderColor}`,
     borderRadius: v.borderRadius,
     boxShadow: `0 2px 4px 0 ${v.borderColor}, 0 2px 10px 0 ${v.borderColor}`,
-    color: v.contentColor,
   }),
 }
 
