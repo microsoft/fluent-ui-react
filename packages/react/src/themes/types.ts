@@ -133,7 +133,6 @@ export interface SiteVariablesInput extends ObjectOf<any> {
   contextualColors?: ContextualColors
   emphasisColors?: EmphasisColors
   naturalColors?: NaturalColorsStrict
-  htmlFontSize?: string
 }
 
 export interface SiteVariablesPrepared extends SiteVariablesInput {
@@ -307,6 +306,7 @@ export interface ThemeComponentStylesInput {
   Dropdown?: ComponentSlotStylesInput
   DropdownItem?: ComponentSlotStylesInput
   DropdownSearchInput?: ComponentSlotStylesInput
+  Embed?: ComponentSlotStylesInput
   Form?: ComponentSlotStylesInput
   FormField?: ComponentSlotStylesInput
   Grid?: ComponentSlotStylesInput
@@ -332,6 +332,10 @@ export interface ThemeComponentStylesInput {
   Segment?: ComponentSlotStylesInput
   Status?: ComponentSlotStylesInput
   Text?: ComponentSlotStylesInput
+  Tree?: ComponentSlotStylesInput
+  TreeItem?: ComponentSlotStylesInput
+  TreeTitle?: ComponentSlotStylesInput
+  Video?: ComponentSlotStylesInput
 }
 
 export interface ThemeComponentStylesPrepared {
@@ -351,6 +355,7 @@ export interface ThemeComponentStylesPrepared {
   Dropdown?: ComponentSlotStylesPrepared
   DropdownItem?: ComponentSlotStylesPrepared
   DropdownSearchInput?: ComponentSlotStylesPrepared
+  Embed?: ComponentSlotStylesPrepared
   Form?: ComponentSlotStylesPrepared
   FormField?: ComponentSlotStylesPrepared
   Grid?: ComponentSlotStylesPrepared
@@ -376,6 +381,10 @@ export interface ThemeComponentStylesPrepared {
   Segment?: ComponentSlotStylesPrepared
   Status?: ComponentSlotStylesPrepared
   Text?: ComponentSlotStylesPrepared
+  Tree?: ComponentSlotStylesPrepared
+  TreeItem?: ComponentSlotStylesPrepared
+  TreeTitle?: ComponentSlotStylesPrepared
+  Video?: ComponentSlotStylesPrepared
 }
 
 export interface ThemeComponentVariablesInput {
@@ -393,6 +402,7 @@ export interface ThemeComponentVariablesInput {
   ChatMessage?: ComponentVariablesInput
   Divider?: ComponentVariablesInput
   Dropdown?: ComponentVariablesInput
+  Embed?: ComponentVariablesInput
   Form?: ComponentVariablesInput
   FormField?: ComponentVariablesInput
   Grid?: ComponentVariablesInput
@@ -418,6 +428,10 @@ export interface ThemeComponentVariablesInput {
   Segment?: ComponentVariablesInput
   Status?: ComponentVariablesInput
   Text?: ComponentVariablesInput
+  Tree?: ComponentVariablesInput
+  TreeItem?: ComponentVariablesInput
+  TreeTitle?: ComponentVariablesInput
+  Video?: ComponentVariablesInput
 }
 
 export interface ThemeComponentVariablesPrepared {
@@ -435,6 +449,7 @@ export interface ThemeComponentVariablesPrepared {
   ChatMessage?: ComponentVariablesPrepared
   Divider?: ComponentVariablesPrepared
   Dropdown?: ComponentVariablesPrepared
+  Embed?: ComponentVariablesPrepared
   Form?: ComponentVariablesPrepared
   FormField?: ComponentVariablesPrepared
   Grid?: ComponentVariablesPrepared
@@ -460,6 +475,10 @@ export interface ThemeComponentVariablesPrepared {
   Segment?: ComponentVariablesPrepared
   Status?: ComponentVariablesPrepared
   Text?: ComponentVariablesPrepared
+  Tree?: ComponentVariablesPrepared
+  TreeItem?: ComponentVariablesPrepared
+  TreeTitle?: ComponentVariablesPrepared
+  Video?: ComponentVariablesPrepared
 }
 
 export interface Renderer extends FelaRenderer {}
@@ -505,4 +524,14 @@ export type ThemeIconSpec = {
   icon: FontIconSpec | SvgIconSpec
 }
 
-export type ThemeIcons = { [iconName: string]: ThemeIconSpec }
+export type RequiredIconNames =
+  | 'stardust-close'
+  | 'stardust-arrow-end'
+  | 'stardust-arrow-up'
+  | 'stardust-arrow-down'
+  | 'stardust-pause'
+  | 'stardust-play'
+
+export type ThemeIcons = Partial<Record<RequiredIconNames, ThemeIconSpec>> & {
+  [iconName: string]: ThemeIconSpec
+}

@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -6,7 +7,6 @@ import {
   UIComponentProps,
   commonPropTypes,
   ColorComponentProps,
-  customPropTypes,
   ContentComponentProps,
   AutoControlledComponent,
   doesNodeContainClick,
@@ -23,7 +23,10 @@ import Portal from '../Portal/Portal'
 import Ref from '../Ref/Ref'
 import Flex from '../Flex/Flex'
 
-export interface DialogProps extends UIComponentProps, ContentComponentProps, ColorComponentProps {
+export interface DialogProps
+  extends UIComponentProps,
+    ContentComponentProps<ShorthandValue>,
+    ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default dialogBehavior
@@ -93,7 +96,7 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
   static propTypes = {
     ...commonPropTypes.createCommon({
       children: false,
-      content: true,
+      content: 'shorthand',
     }),
     actions: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,

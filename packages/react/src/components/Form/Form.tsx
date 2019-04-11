@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -5,7 +6,6 @@ import * as _ from 'lodash'
 import {
   UIComponent,
   childrenExist,
-  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
@@ -15,6 +15,10 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 import FormField from './FormField'
+
+export interface FormSlotClassNames {
+  field: string
+}
 
 export interface FormProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -48,6 +52,10 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
   public static displayName = 'Form'
 
   public static className = 'ui-form'
+
+  static slotClassNames: FormSlotClassNames = {
+    field: `${Form.className}__field`,
+  }
 
   public static propTypes = {
     ...commonPropTypes.createCommon({
@@ -92,7 +100,9 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
 
   private renderFields = () => {
     const { fields } = this.props
-    return _.map(fields, field => FormField.create(field))
+    return _.map(fields, field =>
+      FormField.create(field, { defaultProps: { className: Form.slotClassNames.field } }),
+    )
   }
 }
 

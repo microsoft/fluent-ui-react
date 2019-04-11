@@ -22,6 +22,7 @@ const skipSpecChecksForFiles = [
   'chatMessageBehavior.ts', // issue https://github.com/stardust-ui/react/issues/476
   'listBehavior.ts', // tests are written in listBehavior-test.tsx
   'listItemBehavior.ts', // tests are written in listItemBehavior-test.tsx
+  'alertBehavior.ts', // tests are written in alertBehavior-test.tsx
 ]
 
 export class TestHelper {
@@ -117,12 +118,15 @@ export class TestHelper {
     return importedBehavior
   }
 
-  public convertToBooleanIfApplicable(stringToConvert: any) {
+  public convertToMatchingTypeIfApplicable(stringToConvert: any): boolean | number | string {
     if (stringToConvert === 'true') {
       return true
     }
     if (stringToConvert === 'false') {
       return false
+    }
+    if (typeof stringToConvert === 'string' && !Number.isNaN(Number(stringToConvert))) {
+      return Number(stringToConvert)
     }
     return stringToConvert
   }

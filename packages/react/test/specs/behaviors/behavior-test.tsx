@@ -9,6 +9,7 @@ import {
   basicListBehavior,
   basicListItemBehavior,
   buttonBehavior,
+  embedBehavior,
   iconBehavior,
   imageBehavior,
   inputBehavior,
@@ -33,6 +34,7 @@ import {
   treeTitleBehavior,
   gridBehavior,
   statusBehavior,
+  alertWarningBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -46,6 +48,7 @@ testHelper.addBehavior('attachmentBehavior', attachmentBehavior)
 testHelper.addBehavior('basicListBehavior', basicListBehavior)
 testHelper.addBehavior('basicListItemBehavior', basicListItemBehavior)
 testHelper.addBehavior('buttonBehavior', buttonBehavior)
+testHelper.addBehavior('embedBehavior', embedBehavior)
 testHelper.addBehavior('iconBehavior', iconBehavior)
 testHelper.addBehavior('inputBehavior', inputBehavior)
 testHelper.addBehavior('imageBehavior', imageBehavior)
@@ -70,5 +73,6 @@ testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
 testHelper.addBehavior('gridBehavior', gridBehavior)
 testHelper.addBehavior('dialogBehavior', dialogBehavior)
 testHelper.addBehavior('statusBehavior', statusBehavior)
+testHelper.addBehavior('alertWarningBehavior', alertWarningBehavior)
 
 testHelper.run(behaviorMenuItems)

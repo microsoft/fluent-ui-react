@@ -60,6 +60,8 @@ export {
   DropdownSearchInputProps,
 } from './components/Dropdown/DropdownSearchInput'
 
+export { default as Embed, EmbedProps, EmbedState } from './components/Embed/Embed'
+
 export { default as Flex, FlexProps } from './components/Flex/Flex'
 export { default as FlexItem, FlexItemProps } from './components/Flex/FlexItem'
 
@@ -152,10 +154,10 @@ export { default as Animation, AnimationProps } from './components/Animation/Ani
 
 export { default as Tree } from './components/Tree'
 
-export { default as Indicator, IndicatorProps } from './components/Indicator/Indicator'
-
 export { default as Reaction, ReactionProps, ReactionState } from './components/Reaction/Reaction'
 export { default as ReactionGroup, ReactionGroupProps } from './components/Reaction/ReactionGroup'
+
+export { default as Video, VideoProps } from './components/Video/Video'
 
 //
 // Accessibility
@@ -191,6 +193,10 @@ export {
 } from './lib/accessibility/Behaviors/Popup/popupAutoFocusBehavior'
 export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
 export { default as statusBehavior } from './lib/accessibility/Behaviors/Status/statusBehavior'
+export { default as alertBehavior } from './lib/accessibility/Behaviors/Alert/alertBehavior'
+export {
+  default as alertWarningBehavior,
+} from './lib/accessibility/Behaviors/Alert/alertWarningBehavior'
 
 //
 // Utilities

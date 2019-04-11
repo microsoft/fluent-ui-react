@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Button, Divider, Icon, Label, Provider, Header } from '@stardust-ui/react'
+import { Button, Icon, Label, Provider, Header } from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
-import { pxToRem } from 'src/lib'
+
+import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
 export default () => (
   <DocPage title="Theming Examples">
@@ -43,17 +44,15 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button, Icon, Label, Provider } from '@stardust-ui/react'
+        import { Button, Icon, Label, Provider, themes } from '@stardust-ui/react'
 
         export default () =>
-         <Provider>
-          <>
+         <Provider theme={themes.teams}>
             <Button content="Button" />
             <Button icon="plus" iconOnly primary />
             <Button icon="at" content="Send email" secondary />
             <Icon name="chess rook" size="larger" />
             <Label content="Label with icon" icon="close" />
-          </>
          </Provider>
       `}
       render={() => (
@@ -368,24 +367,9 @@ export default () => (
       )}
     />
 
-    <Divider size={1} />
-    <br />
-    <Button
-      as={NavLink}
-      content="Theming"
-      icon="arrow left"
-      iconPosition="before"
-      primary
-      to="theming"
-    />
-    <Button
-      as={NavLink}
-      content="Integrate Custom Components"
-      icon="arrow right"
-      iconPosition="after"
-      primary
-      to="integrate-custom-components"
-      variables={{ maxWidth: pxToRem(300) }}
+    <GuidesNavigationFooter
+      previous={{ name: 'Theming', url: 'theming' }}
+      next={{ name: 'Layout', url: 'layout' }}
     />
   </DocPage>
 )

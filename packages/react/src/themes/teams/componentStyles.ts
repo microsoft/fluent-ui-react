@@ -22,26 +22,28 @@ export { default as DropdownSearchInput } from './components/Dropdown/dropdownSe
 export { default as DropdownSelectedItem } from './components/Dropdown/dropdownSelectedItemStyles'
 export { default as DropdownItem } from './components/Dropdown/dropdownItemStyles'
 
+export { default as Embed } from './components/Embed/embedStyles'
+
 export { default as Flex } from './components/Flex/flexStyles'
 export { default as FlexItem } from './components/Flex/flexItemStyles'
 
 export { default as Form } from './components/Form/formStyles'
 export { default as FormField } from './components/Form/formFieldStyles'
 
+export { default as Grid } from './components/Grid/gridStyles'
+
 export { default as Header } from './components/Header/headerStyles'
 export { default as HeaderDescription } from './components/Header/headerDescriptionStyles'
 
-export { default as Grid } from './components/Grid/gridStyles'
-
 export { default as Icon } from './components/Icon/iconStyles'
-
-export { default as Image } from './components/Image/imageStyles'
 
 export { default as Input } from './components/Input/inputStyles'
 
 export { default as Label } from './components/Label/labelStyles'
 
 export { default as Layout } from './components/Layout/layoutStyles'
+
+export { default as Loader } from './components/Loader/loaderStyles'
 
 export { default as ItemLayout } from './components/ItemLayout/itemLayoutStyles'
 
@@ -71,3 +73,5 @@ export { default as TreeItem } from './components/Tree/treeItemStyles'
 export { default as TreeTitle } from './components/Tree/treeTitleStyles'
 
 export { default as Animation } from './components/Animation/animationStyles'
+
+export { default as Video } from './components/Video/videoStyles'

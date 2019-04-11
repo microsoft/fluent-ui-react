@@ -162,7 +162,7 @@ export const mergeThemeStyles = (
 }
 
 export const mergeRTL = (target, ...sources) => {
-  return !!sources.reduce((acc, next) => {
+  return sources.reduce((acc, next) => {
     return typeof next === 'boolean' ? next : acc
   }, target)
 }
@@ -218,7 +218,10 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
     acc.icons = mergeIcons(acc.icons, next.icons)
 
     // Latest RTL value wins
-    acc.rtl = mergeRTL(acc.rtl, next.rtl)
+    const mergedRTL = mergeRTL(acc.rtl, next.rtl)
+    if (typeof mergedRTL === 'boolean') {
+      acc.rtl = mergedRTL
+    }
 
     // Use the correct renderer for RTL
     acc.renderer = acc.rtl ? felaRtlRenderer : felaRenderer

@@ -34,8 +34,6 @@ You can contribute to Stardust by being an official [contributor](setup-local-de
 >This list contains the most useful commands. You should run `yarn run` to see all scripts.
 
 ```sh
-yarn generate:component    // generates a new component. Will ask for the name of the component
-
 yarn start                 // run doc site
 
 yarn test                  // test once
