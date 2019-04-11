@@ -11,8 +11,7 @@ export interface PopupContentVariables {
 
   pointerPadding: string
   pointerOffset: string
-  pointerHeight: string
-  pointerWidth: string
+  pointerSize: string
 }
 
 export default (siteVars: any): PopupContentVariables => {
@@ -27,7 +26,6 @@ export default (siteVars: any): PopupContentVariables => {
 
     pointerOffset: pxToRem(5),
     pointerPadding: pxToRem(10),
-    pointerHeight: pxToRem(10),
-    pointerWidth: pxToRem(10),
+    pointerSize: pxToRem(10),
   }
 }
