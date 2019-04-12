@@ -20,7 +20,7 @@ const ChatExample = () => {
           ChatMessage: {
             root: ({ props: p, theme: { siteVariables } }) => ({
               '& a': {
-                color: siteVariables.colors.primary[500],
+                color: siteVariables.colors.primary[600],
               },
             }),
           },
