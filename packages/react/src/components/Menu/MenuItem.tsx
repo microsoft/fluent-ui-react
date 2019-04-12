@@ -24,7 +24,7 @@ import Menu from './Menu'
 import Box from '../Box/Box'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, ReactProps, ShorthandValue, ShorthandCollection } from '../../types'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
 import Ref from '../Ref/Ref'
 
@@ -107,7 +107,7 @@ export interface MenuItemProps
   wrapper?: ShorthandValue
 
   /** Shorthand for the submenu. */
-  menu?: ShorthandValue
+  menu?: ShorthandValue | ShorthandCollection
 
   /** Indicates if the menu inside the item is open. */
   menuOpen?: boolean
@@ -170,7 +170,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
     wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
-    menu: customPropTypes.itemShorthand,
+    menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.collectionShorthand]),
     menuOpen: PropTypes.bool,
     defaultMenuOpen: PropTypes.bool,
     onActiveChanged: PropTypes.func,
