@@ -20,7 +20,7 @@ export default {
       minHeight: pxToRem(24),
       margin: 0,
       padding: 0,
-      color: v.color || colorScheme.backgroundDefault,
+      color: v.color,
       backgroundColor: v.backgroundColor || 'inherit',
       listStyleType: 'none',
       ...(iconOnly && { alignItems: 'center' }),
