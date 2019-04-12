@@ -137,42 +137,6 @@ describe('Dropdown', () => {
       )
     })
 
-    it.skip('is null when opened by Enter', () => {
-      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
-
-      wrapper
-        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
-        .simulate('focus')
-        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
-
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: null,
-          open: true,
-        }),
-      )
-    })
-
-    it.skip('is null when opened by Space', () => {
-      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
-      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
-
-      triggerButton
-        .simulate('focus')
-        .simulate('keydown', { keyCode: keyboardKey.Space, key: 'Space' })
-
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: null,
-          open: true,
-        }),
-      )
-    })
-
     it('is null when opened by toggle indicator click', () => {
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
       const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
@@ -965,59 +929,6 @@ describe('Dropdown', () => {
       expect(document.activeElement).toEqual(
         wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`).getDOMNode(),
       )
-    })
-  })
-
-  describe('moveFocusOnTab', () => {
-    it('keeps focus on trigger button when not passed', () => {
-      const wrapper = mountWithProvider(
-        <>
-          <Dropdown multiple items={items} />,<div tabIndex={0} id="give-me-focus" />
-        </>,
-      )
-      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
-      triggerButton.simulate('click')
-      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
-      itemsList
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-        .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab' })
-
-      expect(document.activeElement).toEqual(triggerButton.getDOMNode())
-    })
-
-    it('keeps focus on input when not passed', () => {
-      const wrapper = mountWithProvider(
-        <>
-          <Dropdown multiple search items={items} />,<div tabIndex={0} id="give-me-focus" />
-        </>,
-      )
-      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
-
-      toggleIndicator.simulate('click')
-      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
-      itemsList
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-        .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab' })
-
-      expect(document.activeElement).toEqual(
-        wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`).getDOMNode(),
-      )
-    })
-
-    it.skip('allows focus to move to next item when passed', () => {
-      const wrapper = mountWithProvider(
-        <>
-          <Dropdown multiple items={items} moveFocusOnTab />,<div tabIndex={0} id="give-me-focus" />
-        </>,
-      )
-      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
-      triggerButton.simulate('click')
-      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
-      itemsList
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-        .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab' })
-
-      expect(document.activeElement).toEqual(wrapper.find('#give-me-focus').getDOMNode())
     })
   })
 })
