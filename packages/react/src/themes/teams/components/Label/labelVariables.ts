@@ -1,5 +1,6 @@
 import { pxToRem } from '../../../../lib'
 import { SiteVariablesPrepared, ColorSchemeMapping } from '../../../types'
+import { extendColorScheme } from 'src/themes/teams/colorUtils'
 
 export interface LabelVariables {
   colorScheme: ColorSchemeMapping
@@ -14,17 +15,13 @@ export interface LabelVariables {
 export default (siteVars: SiteVariablesPrepared): LabelVariables => {
   const color = 'rgba(0, 0, 0, 0.6)'
 
-  const colorScheme = {
-    ...siteVars.colorScheme,
-    default: {
-      ...siteVars.colorScheme.default,
-      backgroundDefault: color,
-      foregroundDefault: 'rgb(232, 232, 232)',
-    },
-  }
-
   return {
-    colorScheme,
+    colorScheme: extendColorScheme(siteVars.colorScheme, {
+      default: {
+        backgroundDefault: color,
+        foregroundDefault: 'rgb(232, 232, 232)',
+      },
+    }),
     circularRadius: pxToRem(9999),
     padding: `0 ${pxToRem(4)} 0 ${pxToRem(4)}`,
     startPaddingLeft: '0px',

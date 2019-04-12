@@ -133,6 +133,9 @@ export type ComponentAreaName =
 export type ColorScheme = Extendable<Record<ComponentAreaName, string>, string>
 
 export type ColorSchemeMapping = ColorValues<ColorScheme> & { default?: ColorScheme }
+export type ColorSchemeMappingOverrides = ColorValues<Partial<ColorScheme>> & {
+  default?: Partial<ColorScheme>
+}
 
 // ========================================================
 // Props
