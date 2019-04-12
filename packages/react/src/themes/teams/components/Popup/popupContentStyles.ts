@@ -64,6 +64,7 @@ const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupConte
     display: 'block',
     position: 'absolute',
 
+    backgroundColor: 'inherit',
     borderBottom: `${v.borderSize} solid ${v.borderColor}`,
     borderRight: `${v.borderSize} solid ${v.borderColor}`,
 
@@ -76,18 +77,15 @@ const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupConte
       content: '" "',
       display: 'block',
       borderTop: `${v.pointerSize} solid transparent`,
-      borderRight: `${v.pointerSize} solid ${v.contentBackgroundColor}`,
+      borderRight: `${v.pointerSize} solid ${v.pointerBackgroundColor}`,
     },
   }),
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
     padding: v.padding,
 
-    backgroundColor: v.contentBackgroundColor,
-    color: v.contentColor,
-
     border: `${v.borderSize} solid ${v.borderColor}`,
-    borderRadius: v.borderRadius,
+    borderRadius: 'inherit',
     boxShadow: `0 2px 4px 0 ${v.borderColor}, 0 2px 10px 0 ${v.borderColor}`,
   }),
 }
