@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
+import * as _ from 'lodash'
 
 import Dropdown from 'src/components/Dropdown/Dropdown'
 import DropdownSearchInput from 'src/components/Dropdown/DropdownSearchInput'
@@ -43,11 +44,9 @@ describe('Dropdown', () => {
 
     it('is false when closed by trigger button click', () => {
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper
-        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
-        .simulate('click')
-        .simulate('click')
+      triggerButton.simulate('click').simulate('click')
 
       expect(onOpenChange).toBeCalledTimes(2)
       expect(onOpenChange).toHaveBeenLastCalledWith(
@@ -62,9 +61,9 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown onOpenChange={onOpenChange} search items={items} />,
       )
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
 
-      wrapper
-        .find(`input.${DropdownSearchInput.slotClassNames.input}`)
+      searchInput
         .simulate('click')
         .simulate('change', { target: { value: 'test' } })
         .simulate('keydown', { keyCode: keyboardKey.Escape, key: 'Escape' })
@@ -82,9 +81,9 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown onOpenChange={onOpenChange} multiple items={items} />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper
-        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      triggerButton
         .simulate('click')
         .simulate('keydown', { keyCode: keyboardKey.Escape, key: 'Escape' })
 
@@ -99,12 +98,11 @@ describe('Dropdown', () => {
 
     it('is false when an item has been selected', () => {
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      wrapper
-        .find(`li.${Dropdown.slotClassNames.item}`)
-        .at(0)
-        .simulate('click')
+      triggerButton.simulate('click')
+      const firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
+      firstItem.simulate('click')
 
       expect(onOpenChange).toBeCalledTimes(2)
       expect(onOpenChange).toHaveBeenLastCalledWith(
@@ -125,8 +123,9 @@ describe('Dropdown', () => {
 
     it('is null when opened by click', () => {
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      triggerButton.simulate('click')
 
       expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenLastCalledWith(
@@ -158,9 +157,9 @@ describe('Dropdown', () => {
 
     it.skip('is null when opened by Space', () => {
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper
-        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      triggerButton
         .simulate('focus')
         .simulate('keydown', { keyCode: keyboardKey.Space, key: 'Space' })
 
@@ -176,8 +175,9 @@ describe('Dropdown', () => {
 
     it('is null when opened by toggle indicator click', () => {
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
 
-      wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`).simulate('click')
+      toggleIndicator.simulate('click')
 
       expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenLastCalledWith(
@@ -191,9 +191,9 @@ describe('Dropdown', () => {
 
     it('is first item index when opened by arrow down key', () => {
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper
-        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      triggerButton
         .simulate('focus')
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
 
@@ -209,9 +209,9 @@ describe('Dropdown', () => {
 
     it('is last item index when opened by arrow up key', () => {
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper
-        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      triggerButton
         .simulate('focus')
         .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
 
@@ -230,8 +230,9 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      triggerButton.simulate('click')
 
       expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenLastCalledWith(
@@ -248,9 +249,9 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper
-        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      triggerButton
         .simulate('focus')
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
 
@@ -269,9 +270,9 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper
-        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      triggerButton
         .simulate('focus')
         .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
 
@@ -290,9 +291,9 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper
-        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      triggerButton
         .simulate('focus')
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
 
@@ -311,9 +312,9 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper
-        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      triggerButton
         .simulate('focus')
         .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
 
@@ -336,8 +337,9 @@ describe('Dropdown', () => {
           items={items}
         />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      triggerButton.simulate('click')
 
       expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenLastCalledWith(
@@ -353,9 +355,9 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown defaultHighlightedIndex={1} onOpenChange={onOpenChange} items={items} />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper
-        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      triggerButton
         .simulate('click')
         .simulate('click')
         .simulate('click')
@@ -374,8 +376,9 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown highlightFirstItemOnOpen onOpenChange={onOpenChange} items={items} />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      triggerButton.simulate('click')
 
       expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenLastCalledWith(
@@ -391,9 +394,9 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown highlightFirstItemOnOpen onOpenChange={onOpenChange} items={items} />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper
-        .find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      triggerButton
         .simulate('click')
         .simulate('click')
         .simulate('click')
@@ -419,11 +422,9 @@ describe('Dropdown', () => {
           items={items}
         />,
       )
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
 
-      wrapper
-        .find(`input.${DropdownSearchInput.slotClassNames.input}`)
-        .simulate('click')
-        .simulate('change', { target: { value: 'i' } })
+      searchInput.simulate('click').simulate('change', { target: { value: 'i' } })
 
       expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenLastCalledWith(
@@ -482,11 +483,9 @@ describe('Dropdown', () => {
           items={items}
         />,
       )
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
 
-      wrapper
-        .find(`input.${DropdownSearchInput.slotClassNames.input}`)
-        .simulate('click')
-        .simulate('change', { target: { value: 'i' } })
+      searchInput.simulate('click').simulate('change', { target: { value: 'i' } })
 
       expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenLastCalledWith(
@@ -516,9 +515,9 @@ describe('Dropdown', () => {
           items={items}
         />,
       )
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
 
-      wrapper
-        .find(`input.${DropdownSearchInput.slotClassNames.input}`)
+      searchInput
         .simulate('click')
         .simulate('change', { target: { value: 'i' } }) // no item highlighted.
         .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' }) // highlight on index 0.
@@ -537,10 +536,11 @@ describe('Dropdown', () => {
     it('is the index of the value previously selected when opened', () => {
       const onOpenChange = jest.fn()
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      wrapper
-        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      triggerButton.simulate('click')
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      itemsList
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
@@ -559,10 +559,11 @@ describe('Dropdown', () => {
     it('is the index of the (value previously selected + 1) when opened by arrow down', () => {
       const onOpenChange = jest.fn()
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      wrapper
-        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      triggerButton.simulate('click')
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      itemsList
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
@@ -583,10 +584,11 @@ describe('Dropdown', () => {
     it('is the index of the (value previously selected - 1) when opened by arrow up', () => {
       const onOpenChange = jest.fn()
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      wrapper
-        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      triggerButton.simulate('click')
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      itemsList
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
@@ -607,34 +609,37 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(<Dropdown items={items} />)
       const dropdown = wrapper.find(Dropdown)
       const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      for (let index = 0; index < 2; index++) {
+      triggerButton.simulate('click')
+      _.times(2, index => {
         itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
 
         expect(dropdown.state('highlightedIndex')).toBe(index)
-      }
+      })
     })
 
     it('is changed correctly on arrow up navigation', () => {
       const wrapper = mountWithProvider(<Dropdown items={items} />)
       const dropdown = wrapper.find(Dropdown)
       const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      for (let index = 0; index < 2; index++) {
+      triggerButton.simulate('click')
+      _.times(2, index => {
         itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
 
         expect(dropdown.state('highlightedIndex')).toBe(items.length - 1 - index)
-      }
+      })
     })
 
     it('wraps to start and end on navigation', () => {
       const wrapper = mountWithProvider(<Dropdown items={items} defaultHighlightedIndex={1} />)
       const dropdown = wrapper.find(Dropdown)
       const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
+      triggerButton.simulate('click')
       itemsList
         .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
         .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
@@ -654,12 +659,11 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown onSelectedChange={onSelectedChange} items={items} />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      wrapper
-        .find(`li.${Dropdown.slotClassNames.item}`)
-        .at(itemSelectedIndex)
-        .simulate('click')
+      triggerButton.simulate('click')
+      const item = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(itemSelectedIndex)
+      item.simulate('click')
 
       expect(onSelectedChange).toHaveBeenLastCalledWith(
         null,
@@ -674,10 +678,10 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown onSelectedChange={onSelectedChange} items={items} />,
       )
-
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      wrapper
-        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      triggerButton.simulate('click')
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      itemsList
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
 
@@ -694,10 +698,11 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown onSelectedChange={onSelectedChange} items={items} />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      wrapper
-        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      triggerButton.simulate('click')
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      itemsList
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab' })
 
@@ -714,10 +719,11 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown onSelectedChange={onSelectedChange} items={items} />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      wrapper
-        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      triggerButton.simulate('click')
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      itemsList
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab', shiftKey: true })
 
@@ -735,17 +741,14 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown onSelectedChange={onSelectedChange} items={items} />,
       )
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      wrapper
-        .find(`li.${Dropdown.slotClassNames.item}`)
-        .at(1)
-        .simulate('click')
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      wrapper
-        .find(`li.${Dropdown.slotClassNames.item}`)
-        .at(itemSelectedIndex)
-        .simulate('click')
+      triggerButton.simulate('click')
+      const firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      firstItem.simulate('click')
+      triggerButton.simulate('click')
+      const itemAtIndex = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(itemSelectedIndex)
+      itemAtIndex.simulate('click')
 
       expect(onSelectedChange).toHaveBeenLastCalledWith(
         null,
@@ -761,17 +764,18 @@ describe('Dropdown', () => {
         <Dropdown onSelectedChange={onSelectedChange} multiple items={items} />,
       )
       const indexesOfItemsSelected = [1, 3]
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      wrapper
+      triggerButton.simulate('click')
+      const itemAtIndex1 = wrapper
         .find(`li.${Dropdown.slotClassNames.item}`)
         .at(indexesOfItemsSelected[0])
-        .simulate('click')
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      wrapper
+      itemAtIndex1.simulate('click')
+      triggerButton.simulate('click')
+      const itemAtIndex2 = wrapper
         .find(`li.${Dropdown.slotClassNames.item}`)
         .at(indexesOfItemsSelected[1])
-        .simulate('click')
+      itemAtIndex2.simulate('click')
 
       expect(onSelectedChange).toHaveBeenLastCalledWith(
         null,
@@ -786,20 +790,16 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown onSelectedChange={onSelectedChange} multiple items={items} search />,
       )
-      const input = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
       const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
 
       toggleIndicator.simulate('click')
-      wrapper
-        .find(`li.${Dropdown.slotClassNames.item}`)
-        .at(0)
-        .simulate('click')
+      let firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
+      firstItem.simulate('click')
       toggleIndicator.simulate('click')
-      wrapper
-        .find(`li.${Dropdown.slotClassNames.item}`)
-        .at(0)
-        .simulate('click')
-      input
+      firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
+      firstItem.simulate('click')
+      searchInput
         .simulate('click')
         .simulate('keydown', { keyCode: keyboardKey.Backspace, key: 'Backspace' })
 
@@ -816,20 +816,16 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown onSelectedChange={onSelectedChange} multiple items={items} search />,
       )
-      const input = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
       const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
 
       toggleIndicator.simulate('click')
-      wrapper
-        .find(`li.${Dropdown.slotClassNames.item}`)
-        .at(0)
-        .simulate('click')
+      let firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
+      firstItem.simulate('click')
       toggleIndicator.simulate('click')
-      wrapper
-        .find(`li.${Dropdown.slotClassNames.item}`)
-        .at(0)
-        .simulate('click')
-      input
+      firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
+      firstItem.simulate('click')
+      searchInput
         .simulate('click')
         .simulate('keydown', { keyCode: keyboardKey.Backspace, key: 'Backspace' })
 
@@ -872,12 +868,11 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown onSelectedChange={onSelectedChange} search items={items} />,
       )
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
 
-      wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`).simulate('click')
-      wrapper
-        .find(`li.${Dropdown.slotClassNames.item}`)
-        .at(itemSelectedIndex)
-        .simulate('click')
+      toggleIndicator.simulate('click')
+      const itemAtIndex = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(itemSelectedIndex)
+      itemAtIndex.simulate('click')
 
       expect(onSelectedChange).toHaveBeenLastCalledWith(
         null,
@@ -893,9 +888,9 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown onSearchQueryChange={onSearchQueryChange} search items={items} />,
       )
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
 
-      wrapper
-        .find(`input.${DropdownSearchInput.slotClassNames.input}`)
+      searchInput
         .simulate('click')
         .simulate('change', { target: { value: 'test' } })
         .simulate('keydown', { keyCode: keyboardKey.Escape, key: 'Escape' })
@@ -915,12 +910,11 @@ describe('Dropdown', () => {
       const wrapper = mountWithProvider(
         <Dropdown onSelectedChange={onSelectedChange} search multiple items={items} />,
       )
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
 
-      wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`).simulate('click')
-      wrapper
-        .find(`li.${Dropdown.slotClassNames.item}`)
-        .at(itemSelectedIndex)
-        .simulate('click')
+      toggleIndicator.simulate('click')
+      const itemAtIndex = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(itemSelectedIndex)
+      itemAtIndex.simulate('click')
 
       expect(onSelectedChange).toHaveBeenLastCalledWith(
         null,
@@ -936,9 +930,11 @@ describe('Dropdown', () => {
     it('closes the open menu on click', () => {
       const onOpenChange = jest.fn()
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
 
-      wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`).simulate('click')
-      wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`).simulate('click')
+      triggerButton.simulate('click')
+      toggleIndicator.simulate('click')
 
       expect(onOpenChange).toBeCalledTimes(2)
       expect(onOpenChange).toHaveBeenLastCalledWith(
@@ -951,8 +947,9 @@ describe('Dropdown', () => {
 
     it('opens the menu and moves focus to list in selection mode', () => {
       const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
 
-      wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`).simulate('click')
+      toggleIndicator.simulate('click')
 
       expect(document.activeElement).toEqual(
         wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`).getDOMNode(),
@@ -961,8 +958,9 @@ describe('Dropdown', () => {
 
     it('opens the menu and moves focus to input in search mode', () => {
       const wrapper = mountWithProvider(<Dropdown items={items} search />)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
 
-      wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`).simulate('click')
+      toggleIndicator.simulate('click')
 
       expect(document.activeElement).toEqual(
         wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`).getDOMNode(),
@@ -979,8 +977,8 @@ describe('Dropdown', () => {
       )
       const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
       triggerButton.simulate('click')
-      wrapper
-        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      itemsList
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab' })
 
@@ -994,9 +992,10 @@ describe('Dropdown', () => {
         </>,
       )
       const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+
       toggleIndicator.simulate('click')
-      wrapper
-        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      itemsList
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab' })
 
@@ -1013,8 +1012,8 @@ describe('Dropdown', () => {
       )
       const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
       triggerButton.simulate('click')
-      wrapper
-        .find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      itemsList
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab' })
 
