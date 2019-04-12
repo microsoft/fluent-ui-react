@@ -18,33 +18,33 @@ const getPointerStyles = (
 
   const rootStyles = {
     top: {
-      paddingBottom: v.pointerPadding,
+      marginBottom: v.pointerMargin,
     },
     right: {
-      paddingLeft: v.pointerPadding,
+      marginLeft: v.pointerMargin,
     },
     bottom: {
-      paddingTop: v.pointerPadding,
+      marginTop: v.pointerMargin,
     },
     left: {
-      paddingRight: v.pointerPadding,
+      marginRight: v.pointerMargin,
     },
   }
   const pointerStyles = {
     top: {
-      bottom: v.pointerOffset,
+      bottom: `-${v.pointerOffset}`,
       transform: 'rotate(45deg)',
     },
     right: {
-      left: v.pointerOffset,
+      left: `-${v.pointerOffset}`,
       transform: 'rotate(135deg)',
     },
     bottom: {
-      top: v.pointerOffset,
+      top: `-${v.pointerOffset}`,
       transform: 'rotate(-135deg)',
     },
     left: {
-      right: v.pointerOffset,
+      right: `-${v.pointerOffset}`,
       transform: 'rotate(-45deg)',
     },
   }
