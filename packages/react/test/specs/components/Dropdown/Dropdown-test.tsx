@@ -931,4 +931,51 @@ describe('Dropdown', () => {
       )
     })
   })
+
+  describe('moveFocusOnTab', () => {
+    const preventDefault = jest.fn()
+
+    afterEach(() => {
+      preventDefault.mockReset()
+    })
+
+    it('keeps focus on trigger button when not passed', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      itemsList
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab', preventDefault })
+
+      expect(preventDefault).toBeCalled()
+    })
+
+    it('keeps focus on input when not passed', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple search items={items} />)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+
+      toggleIndicator.simulate('click')
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+      searchInput
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab', preventDefault })
+
+      expect(preventDefault).toBeCalled()
+    })
+
+    it('allows focus to move to next item when passed', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} moveFocusOnTab />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      itemsList
+        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+        .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab', preventDefault })
+
+      expect(preventDefault).not.toBeCalled()
+    })
+  })
 })
