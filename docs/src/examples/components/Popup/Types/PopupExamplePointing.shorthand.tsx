@@ -4,7 +4,16 @@ import { Button, Grid, Popup } from '@stardust-ui/react'
 const PopupWithButton = props => (
   <Popup
     align={props.align}
-    content="A popup with a pointer."
+    content={{
+      content: (
+        <>
+          <p>A popup with a pointer.</p>
+          <p>
+            Is aligned to <code>{props.align}</code>.
+          </p>
+        </>
+      ),
+    }}
     pointing
     position={props.position}
     trigger={
