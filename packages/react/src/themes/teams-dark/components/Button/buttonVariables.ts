@@ -34,6 +34,7 @@ export default (siteVars: any): Partial<ButtonVariables> => {
 
     textColorHover: siteVars.colors.primary[300],
     textPrimaryColorHover: siteVars.colors.primary[300],
+    textSecondaryColor: siteVars.colors.grey[300],
     textSecondaryColorHover: siteVars.colors.primary[300],
   }
 }
