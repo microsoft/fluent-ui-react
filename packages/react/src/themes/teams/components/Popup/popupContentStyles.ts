@@ -74,13 +74,6 @@ const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupConte
     width: v.pointerSize,
 
     ...getPointerStyles(v, t.rtl, p.placement).pointer,
-
-    ':before': {
-      content: '" "',
-      display: 'block',
-      borderTop: `${v.pointerSize} solid transparent`,
-      borderRight: `${v.pointerSize} solid ${v.pointerBackgroundColor}`,
-    },
   }),
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
