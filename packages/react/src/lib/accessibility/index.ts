@@ -30,6 +30,7 @@ export { default as popupAutoFocusBehavior } from './Behaviors/Popup/popupAutoFo
 export { default as chatBehavior } from './Behaviors/Chat/chatBehavior'
 export { default as chatMessageBehavior } from './Behaviors/Chat/chatMessageBehavior'
 export { default as gridBehavior } from './Behaviors/Grid/gridBehavior'
+export { default as treeBehavior } from './Behaviors/Tree/treeBehavior'
 export { default as treeTitleBehavior } from './Behaviors/Tree/treeTitleBehavior'
 export { default as dialogBehavior } from './Behaviors/Dialog/dialogBehavior'
 export { default as statusBehavior } from './Behaviors/Status/statusBehavior'
