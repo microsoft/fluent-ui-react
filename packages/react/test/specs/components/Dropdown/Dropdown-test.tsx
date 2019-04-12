@@ -22,7 +22,7 @@ describe('Dropdown', () => {
 
       wrapper.find({ className: Dropdown.slotClassNames.clearIndicator }).simulate('click')
       expect(onSelectedChange).toBeCalledTimes(1)
-      expect(onSelectedChange).toHaveBeenLastCalledWith(
+      expect(onSelectedChange).toHaveBeenCalledWith(
         expect.objectContaining({ type: 'click' }),
         expect.objectContaining({
           activeSelectedIndex: undefined,
@@ -128,7 +128,7 @@ describe('Dropdown', () => {
       triggerButton.simulate('click')
 
       expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
+      expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex: null,
@@ -144,7 +144,7 @@ describe('Dropdown', () => {
       toggleIndicator.simulate('click')
 
       expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
+      expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex: null,
@@ -162,7 +162,7 @@ describe('Dropdown', () => {
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
 
       expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
+      expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex: 0,
@@ -180,7 +180,7 @@ describe('Dropdown', () => {
         .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
 
       expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
+      expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex: items.length - 1,
@@ -199,7 +199,7 @@ describe('Dropdown', () => {
       triggerButton.simulate('click')
 
       expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
+      expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex,
@@ -220,7 +220,7 @@ describe('Dropdown', () => {
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
 
       expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
+      expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex: highlightedIndex + 1,
@@ -241,7 +241,7 @@ describe('Dropdown', () => {
         .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
 
       expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
+      expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex: highlightedIndex - 1,
@@ -262,7 +262,7 @@ describe('Dropdown', () => {
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
 
       expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
+      expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex: 0,
@@ -283,7 +283,7 @@ describe('Dropdown', () => {
         .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
 
       expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
+      expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex: items.length - 1,
@@ -306,7 +306,7 @@ describe('Dropdown', () => {
       triggerButton.simulate('click')
 
       expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
+      expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex: defaultHighlightedIndex,
@@ -345,7 +345,7 @@ describe('Dropdown', () => {
       triggerButton.simulate('click')
 
       expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
+      expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex: 0,
@@ -391,7 +391,7 @@ describe('Dropdown', () => {
       searchInput.simulate('click').simulate('change', { target: { value: 'i' } })
 
       expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
+      expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex: 0,
@@ -399,7 +399,7 @@ describe('Dropdown', () => {
         }),
       )
       expect(onSearchQueryChange).toBeCalledTimes(1)
-      expect(onSearchQueryChange).toHaveBeenLastCalledWith(
+      expect(onSearchQueryChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           searchQuery: 'i',
@@ -452,7 +452,7 @@ describe('Dropdown', () => {
       searchInput.simulate('click').simulate('change', { target: { value: 'i' } })
 
       expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
+      expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           highlightedIndex: null,
@@ -460,7 +460,7 @@ describe('Dropdown', () => {
         }),
       )
       expect(onSearchQueryChange).toBeCalledTimes(1)
-      expect(onSearchQueryChange).toHaveBeenLastCalledWith(
+      expect(onSearchQueryChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           searchQuery: 'i',
@@ -560,6 +560,7 @@ describe('Dropdown', () => {
         .find(`button.${Dropdown.slotClassNames.triggerButton}`)
         .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
 
+      expect(onOpenChange).toBeCalledTimes(3)
       expect(onOpenChange).toHaveBeenLastCalledWith(
         null,
         expect.objectContaining({
@@ -629,7 +630,8 @@ describe('Dropdown', () => {
       const item = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(itemSelectedIndex)
       item.simulate('click')
 
-      expect(onSelectedChange).toHaveBeenLastCalledWith(
+      expect(onSelectedChange).toHaveBeenCalledTimes(1)
+      expect(onSelectedChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: items[itemSelectedIndex],
@@ -649,7 +651,8 @@ describe('Dropdown', () => {
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
 
-      expect(onSelectedChange).toHaveBeenLastCalledWith(
+      expect(onSelectedChange).toHaveBeenCalledTimes(1)
+      expect(onSelectedChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: items[0],
@@ -670,7 +673,8 @@ describe('Dropdown', () => {
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab' })
 
-      expect(onSelectedChange).toHaveBeenLastCalledWith(
+      expect(onSelectedChange).toHaveBeenCalledTimes(1)
+      expect(onSelectedChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: items[0],
@@ -691,7 +695,8 @@ describe('Dropdown', () => {
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab', shiftKey: true })
 
-      expect(onSelectedChange).toHaveBeenLastCalledWith(
+      expect(onSelectedChange).toHaveBeenCalledTimes(1)
+      expect(onSelectedChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: items[0],
@@ -714,6 +719,7 @@ describe('Dropdown', () => {
       const itemAtIndex = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(itemSelectedIndex)
       itemAtIndex.simulate('click')
 
+      expect(onSelectedChange).toHaveBeenCalledTimes(2)
       expect(onSelectedChange).toHaveBeenLastCalledWith(
         null,
         expect.objectContaining({
@@ -741,6 +747,7 @@ describe('Dropdown', () => {
         .at(indexesOfItemsSelected[1])
       itemAtIndex2.simulate('click')
 
+      expect(onSelectedChange).toHaveBeenCalledTimes(2)
       expect(onSelectedChange).toHaveBeenLastCalledWith(
         null,
         expect.objectContaining({
@@ -767,32 +774,7 @@ describe('Dropdown', () => {
         .simulate('click')
         .simulate('keydown', { keyCode: keyboardKey.Backspace, key: 'Backspace' })
 
-      expect(onSelectedChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          value: [items[0]],
-        }),
-      )
-    })
-
-    it('has last item removed on empty search query backspace', () => {
-      const onSelectedChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown onSelectedChange={onSelectedChange} multiple items={items} search />,
-      )
-      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
-      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
-
-      toggleIndicator.simulate('click')
-      let firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
-      firstItem.simulate('click')
-      toggleIndicator.simulate('click')
-      firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
-      firstItem.simulate('click')
-      searchInput
-        .simulate('click')
-        .simulate('keydown', { keyCode: keyboardKey.Backspace, key: 'Backspace' })
-
+      expect(onSelectedChange).toHaveBeenCalledTimes(3)
       expect(onSelectedChange).toHaveBeenLastCalledWith(
         null,
         expect.objectContaining({
@@ -838,7 +820,8 @@ describe('Dropdown', () => {
       const itemAtIndex = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(itemSelectedIndex)
       itemAtIndex.simulate('click')
 
-      expect(onSelectedChange).toHaveBeenLastCalledWith(
+      expect(onSelectedChange).toHaveBeenCalledTimes(1)
+      expect(onSelectedChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: items[itemSelectedIndex],
@@ -880,7 +863,8 @@ describe('Dropdown', () => {
       const itemAtIndex = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(itemSelectedIndex)
       itemAtIndex.simulate('click')
 
-      expect(onSelectedChange).toHaveBeenLastCalledWith(
+      expect(onSelectedChange).toHaveBeenCalledTimes(1)
+      expect(onSelectedChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: [items[itemSelectedIndex]],
