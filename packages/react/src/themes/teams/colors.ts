@@ -73,7 +73,7 @@ export const naturalColors: NaturalColors = {
   },
   red: {
     50: '#FCF4F6', // app red 10
-    100: '#F3D6DB', // postOrange[900] app red 08
+    100: '#F3D6D8', // postOrange[900] app red 08
     200: '#F9526B', // new, error banner string
     300: '#E73550', // merge old @app-red-dark-theme
     400: '#C4314B', // red[900], app red 06, siteVariables.red
