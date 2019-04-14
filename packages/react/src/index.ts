@@ -1,4 +1,5 @@
 import * as themes from './themes'
+import * as hoistNonReactStatic from 'hoist-non-react-statics'
 
 //
 // Theme
@@ -237,6 +238,7 @@ export const variantOf = <TProps>(
   name: string,
 ): React.ComponentType<TProps> => {
   class VariantType extends ComponentType {}
+  hoistNonReactStatic(VariantType, ComponentType)
   ;(VariantType as any).variantName = name
 
   return VariantType
