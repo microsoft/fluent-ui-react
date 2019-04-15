@@ -21,6 +21,7 @@ const handleRef = <N>(ref: React.Ref<N>, node: N) => {
   }
 
   if (ref !== null && typeof ref === 'object') {
+    // The `current` property is defined as readonly, however it's a valid way because `ref` is a mutable object
     ;(ref as React.MutableRefObject<N>).current = node
   }
 }
