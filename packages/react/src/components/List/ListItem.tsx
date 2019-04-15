@@ -212,7 +212,12 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
         {mediaElement}
 
         <Flex.Item grow>
-          <Flex column={hasBothParts} className={ListItem.slotClassNames.main} styles={styles.main}>
+          <Flex
+            className={ListItem.slotClassNames.main}
+            column={hasBothParts}
+            gap={hasBothParts ? undefined : 'gap.small'}
+            styles={styles.main}
+          >
             {this.wrapWithFlex(headerPart, hasBothParts)}
             {this.wrapWithFlex(contentPart, hasBothParts)}
           </Flex>

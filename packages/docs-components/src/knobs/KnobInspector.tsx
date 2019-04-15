@@ -57,7 +57,7 @@ const KnobInspector: React.FunctionComponent<KnobInspectorProps> = props => {
   const { Control, Field, Label } = getKnobControls(knobsContext)
   const knobComponents = getKnobComponents(knobsContext)
   const knobValues = useKnobValues()
-  console.log(Label)
+
   const children =
     knobValues.length > 0 ? (
       <>
