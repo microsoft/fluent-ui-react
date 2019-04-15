@@ -44,7 +44,7 @@ describe('Popup', () => {
     testPopupPosition({ align, position, expectedPlacement, rtl: true })
 
   const getPopupContent = (popup: ReactWrapper) => {
-    return popup.find(`#${contentId}`)
+    return popup.find(`div#${contentId}`)
   }
 
   type ExpectPopupToOpenAndCloseParams = {
@@ -61,7 +61,7 @@ describe('Popup', () => {
     const popup = mountWithProvider(
       <Popup
         trigger={<span id={triggerId}> text to trigger popup </span>}
-        content={<span id={contentId} />}
+        content={{ id: contentId }}
         on={onProp}
       />,
     )
@@ -211,12 +211,12 @@ describe('Popup', () => {
         <React.Fragment>
           <Popup
             trigger={<span id={triggerId}>text to trigger popup</span>}
-            content={<span id={contentId} />}
+            content={{ id: contentId }}
             on="click"
           />
           <Popup
             trigger={<span id={triggerId2}>text to trigger popup</span>}
-            content={<span id={contentId2} />}
+            content={{ id: contentId2 }}
             on="click"
           />
         </React.Fragment>,
@@ -270,7 +270,7 @@ describe('Popup', () => {
       const popup = mountWithProvider(
         <Popup
           trigger={<span id={triggerId}> text to trigger popup </span>}
-          content={<span id={contentId} />}
+          content={{ id: contentId }}
           accessibility={behavior}
         />,
       )
