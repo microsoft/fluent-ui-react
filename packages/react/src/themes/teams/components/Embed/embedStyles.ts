@@ -6,7 +6,6 @@ import { EmbedVariables } from './embedVariables'
 export default {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
     return {
-      boxSizing: 'border-box',
       display: 'inline-block',
       verticalAlign: 'middle',
       position: 'relative',
