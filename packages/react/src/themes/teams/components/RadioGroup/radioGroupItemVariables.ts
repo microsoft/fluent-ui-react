@@ -26,7 +26,7 @@ export default (siteVars: any): RadioGroupItemVariables => ({
   focusInnerBorderColor: siteVars.colors.white,
   focusOuterBorderColor: siteVars.colors.black,
 
-  textFontSize: siteVars.fontSizes.medium,
+  textFontSize: siteVars.fontSizes.small,
 
   textColorDefault: siteVars.gray02,
   textColorDefaultHoverFocus: siteVars.colors.grey[900],
