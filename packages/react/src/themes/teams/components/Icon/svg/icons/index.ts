@@ -19,6 +19,7 @@ import callRecording from './callRecording'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
+import callMissedLine from './callMissedLine'
 import chat from './chat'
 import chevronDown from './chevronDown'
 import close from './close'
@@ -36,6 +37,7 @@ import filesPhotoshop from './filesPhotoshop'
 import filesSketch from './filesSketch'
 import filesSound from './filesSound'
 import filesTxt from './filesTxt'
+import filesVideo from './filesVideo'
 import filesZip from './filesZip'
 import flag from './flag'
 import download from './download'
@@ -125,6 +127,7 @@ export default {
   'call-video-off': callVideoOff,
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
+  'call-missed-line': callMissedLine,
   'call-pstn': callPstn,
   'call-recording': callRecording,
   'canvas-add-page': canvasAddPage,
@@ -145,6 +148,7 @@ export default {
   'files-sketch': filesSketch,
   'files-sound': filesSound,
   'files-txt': filesTxt,
+  'files-video': filesVideo,
   'files-zip': filesZip,
   flag,
   download,
