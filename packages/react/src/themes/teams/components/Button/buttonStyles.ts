@@ -87,34 +87,57 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       // rectangular button defaults
       ...(!text && {
         outline: 0,
-        borderWidth: pxToRem(borderWidth),
-        borderStyle: 'solid',
-        borderColor,
+        border: 0,
         boxShadow,
+
         ':hover': {
           color: colorHover,
           backgroundColor: backgroundColorHover,
-          borderColor: borderColorHover,
         },
+
+        ':before': {
+          content: '""',
+          position: 'absolute',
+          top: pxToRem(borderWidth),
+          right: pxToRem(borderWidth),
+          bottom: pxToRem(borderWidth),
+          left: pxToRem(borderWidth),
+          borderWidth: pxToRem(borderWidth),
+          borderStyle: 'solid',
+          borderColor: 'transparent',
+          borderRadius: borderRadiusFocused,
+        },
+
+        ':after': {
+          content: '""',
+          position: 'absolute',
+          top: '0',
+          right: '0',
+          bottom: '0',
+          left: '0',
+          borderWidth: pxToRem(borderWidth),
+          borderStyle: 'solid',
+          borderColor,
+          borderRadius: borderRadiusFocused,
+        },
+
         ...(isFromKeyboard && {
           ':focus': {
             color: colorFocus,
             backgroundColor: backgroundColorFocus,
-            borderColor: borderColorFocus,
+            borderColor: 'transparent',
+            boxShadow: 'none',
+
+            ':before': {
+              borderColor: borderColorFocus,
+            },
+
             ':after': {
-              content: '""',
-              position: 'absolute',
-              top: `-${pxToRem(borderWidth * 2)}`,
-              right: `-${pxToRem(borderWidth * 2)}`,
-              bottom: `-${pxToRem(borderWidth * 2)}`,
-              left: `-${pxToRem(borderWidth * 2)}`,
-              borderWidth: pxToRem(borderWidth),
-              borderStyle: 'solid',
               borderColor: borderColorFocusIndicator,
-              borderRadius: borderRadiusFocused,
             },
           },
         }),
+
         ...(!isFromKeyboard && {
           ':focus': {
             ':active': {
@@ -134,8 +157,15 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
           padding: 0,
           color: circularColor,
           backgroundColor: circularBackgroundColor,
+          borderWidth: pxToRem(borderWidth),
+          borderStyle: 'solid',
           borderColor: circularBorderColor,
           borderRadius: circularRadius,
+
+          ':after': {
+            borderColor: 'transparent',
+          },
+
           ':hover': {
             color: circularColorActive,
             backgroundColor: circularBackgroundColorHover,
@@ -160,6 +190,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
               },
             },
           }),
+
           ...(!isFromKeyboard && {
             ':focus': {
               ':active': {
@@ -193,54 +224,39 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
         !text && {
           color: primaryColor,
           backgroundColor: primaryBackgroundColor,
-          borderWidth: `${pxToRem(primaryBorderWidth)}`,
-          borderStyle: 'solid',
-          borderColor: `${primaryBorderColor}`,
+
+          ':after': {
+            borderColor: primaryBorderColor,
+          },
+
           ':hover': {
             color: primaryColorHover,
             backgroundColor: primaryBackgroundColorHover,
-            borderColor: primaryBorderColorHover,
           },
-          ...(isFromKeyboard &&
-            !circular && {
-              ':focus': {
-                color: primaryColorFocus,
-                backgroundColor: primaryBackgroundColorFocus,
-                borderColor: primaryBorderColorFocus,
-                ':after': {
-                  content: '""',
-                  position: 'absolute',
-                  top: `-${pxToRem(primaryBorderWidth * 2)}`,
-                  right: `-${pxToRem(primaryBorderWidth * 2)}`,
-                  bottom: `-${pxToRem(primaryBorderWidth * 2)}`,
-                  left: `-${pxToRem(primaryBorderWidth * 2)}`,
-                  borderWidth: pxToRem(primaryBorderWidth),
-                  borderStyle: 'solid',
-                  borderColor: primaryBorderColorFocusIndicator,
-                  borderRadius: borderRadiusFocused,
-                },
+
+          ...(isFromKeyboard && {
+            ':focus': {
+              color: primaryColorFocus,
+              backgroundColor: primaryBackgroundColorFocus,
+
+              ':before': {
+                borderColor: borderColorFocus,
               },
-            }),
-          ...(isFromKeyboard &&
-            circular && {
+
+              ':after': {
+                borderColor: borderColorFocusIndicator,
+              },
+            },
+
+            ...(circular && {
               ':focus': {
                 color: primaryColorFocus,
                 backgroundColor: primaryBackgroundColorFocus,
                 borderColor: primaryBackgroundColorFocus,
-                ':after': {
-                  content: '""',
-                  position: 'absolute',
-                  top: '0',
-                  right: '0',
-                  bottom: '0',
-                  left: '0',
-                  borderWidth: pxToRem(primaryBorderWidth),
-                  borderStyle: 'solid',
-                  borderColor: primaryCircularBorderColorFocusIndicator,
-                  borderRadius: circularRadius,
-                },
               },
             }),
+          }),
+
           ...(!isFromKeyboard && {
             ':focus': {
               ':active': {
