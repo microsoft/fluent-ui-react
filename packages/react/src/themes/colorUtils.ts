@@ -1,4 +1,4 @@
-import { ColorSchemeMapping, ColorSchemeMappingOverrides } from '../types'
+import { ColorSchemeMapping, ColorSchemeMappingOverrides } from './types'
 
 export const extendColorScheme = (
   colorScheme: ColorSchemeMapping,

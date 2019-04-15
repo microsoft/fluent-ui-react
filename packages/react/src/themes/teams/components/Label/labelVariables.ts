@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
 import { SiteVariablesPrepared, ColorSchemeMapping } from '../../../types'
-import { extendColorScheme } from '../../colorUtils'
+import { extendColorScheme } from '../../../colorUtils'
 
 export interface LabelVariables {
   colorScheme: ColorSchemeMapping
