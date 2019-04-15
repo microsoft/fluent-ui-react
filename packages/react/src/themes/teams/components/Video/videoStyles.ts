@@ -4,7 +4,6 @@ import { VideoVariables } from './videoVariables'
 
 export default {
   root: ({ variables: v }): ICSSInJSStyle => ({
-    boxSizing: 'border-box',
     display: 'inline-block',
     verticalAlign: 'middle',
     width: v.width,
