@@ -42,7 +42,7 @@ describe('Dropdown', () => {
       onOpenChange.mockReset()
     })
 
-    it('is false when closed by trigger button click', () => {
+    it('is "false" when closed by trigger button click', () => {
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
       const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
@@ -57,7 +57,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('is false when closed by hitting Escape in search input', () => {
+    it('is "false" when closed by hitting Escape in search input', () => {
       const wrapper = mountWithProvider(
         <Dropdown onOpenChange={onOpenChange} search items={items} />,
       )
@@ -77,7 +77,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('is false when closed by hitting Escape in items list', () => {
+    it('is "false" when closed by hitting Escape in items list', () => {
       const wrapper = mountWithProvider(
         <Dropdown onOpenChange={onOpenChange} multiple items={items} />,
       )
@@ -96,7 +96,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('is false when an item has been selected', () => {
+    it('is "false" when an item has been selected', () => {
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
       const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
@@ -728,30 +728,25 @@ describe('Dropdown', () => {
       )
     })
 
-    it('has multiple items at multiple selections if the multiple prop is supplied', () => {
+    it('has an array of items if more items are selected and the multiple prop is supplied', () => {
       const onSelectedChange = jest.fn()
       const wrapper = mountWithProvider(
         <Dropdown onSelectedChange={onSelectedChange} multiple items={items} />,
       )
-      const indexesOfItemsSelected = [1, 3]
       const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
       triggerButton.simulate('click')
-      const itemAtIndex1 = wrapper
-        .find(`li.${Dropdown.slotClassNames.item}`)
-        .at(indexesOfItemsSelected[0])
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
       itemAtIndex1.simulate('click')
       triggerButton.simulate('click')
-      const itemAtIndex2 = wrapper
-        .find(`li.${Dropdown.slotClassNames.item}`)
-        .at(indexesOfItemsSelected[1])
+      const itemAtIndex2 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(3)
       itemAtIndex2.simulate('click')
 
       expect(onSelectedChange).toHaveBeenCalledTimes(2)
       expect(onSelectedChange).toHaveBeenLastCalledWith(
         null,
         expect.objectContaining({
-          value: [items[indexesOfItemsSelected[0]], items[indexesOfItemsSelected[1] + 1]],
+          value: ['item2', 'item5'],
         }),
       )
     })
