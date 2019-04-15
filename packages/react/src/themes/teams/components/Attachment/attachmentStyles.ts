@@ -24,12 +24,6 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
 
     outline: 0,
 
-    // todo: remove when #1057 to make box-sizing global is checked in
-    boxSizing: 'border-box',
-    '& *': {
-      boxSizing: `border-box`,
-    },
-
     ...(p.isFromKeyboard && {
       ':focus': {
         borderColor: v.focusInnerBorderColor,
