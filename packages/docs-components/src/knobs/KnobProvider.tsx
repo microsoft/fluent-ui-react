@@ -10,7 +10,7 @@ type KnobProviderProps = {
 
 const KnobProvider: React.FunctionComponent<KnobProviderProps> = props => {
   const [knobs, setKnobs] = React.useState<KnobSet>({})
-  console.log(props.components)
+
   const registerKnob = (knob: KnobDefinition) => {
     if (process.env.NODE_ENV !== 'production') {
       if (knobs[knob.name]) {
@@ -35,13 +35,16 @@ const KnobProvider: React.FunctionComponent<KnobProviderProps> = props => {
     })
   }
 
-  const value: KnobContextValue = {
-    components: { ...defaultComponents, ...props.components },
-    knobs,
-    registerKnob,
-    setKnobValue,
-    unregisterKnob,
-  }
+  const value: KnobContextValue = React.useMemo(
+    () => ({
+      components: { ...defaultComponents, ...props.components },
+      knobs,
+      registerKnob,
+      setKnobValue,
+      unregisterKnob,
+    }),
+    [knobs, props.components],
+  )
 
   return <KnobsContext.Provider value={value}>{props.children}</KnobsContext.Provider>
 }
