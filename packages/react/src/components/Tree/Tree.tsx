@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+import { treeBehavior } from '../../lib/accessibility'
 
 export interface TreeSlotClassNames {
   item: string
@@ -88,7 +88,7 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
 
   public static defaultProps = {
     as: 'ul',
-    accessibility: defaultBehavior,
+    accessibility: treeBehavior,
   }
 
   static autoControlledProps = ['activeIndex']
