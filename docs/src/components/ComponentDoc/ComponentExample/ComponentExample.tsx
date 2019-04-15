@@ -1,3 +1,4 @@
+import { KnobInspector, KnobProvider } from '@stardust-ui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
@@ -15,9 +16,10 @@ import {
   themes,
   Grid,
   ICSSInJSStyle,
+  Box,
 } from '@stardust-ui/react'
 
-import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
+import { examplePathToHash, getFormattedHash, scrollToAnchor } from 'docs/src/utils'
 import { callable, constants } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
@@ -44,7 +46,6 @@ export interface ComponentExampleProps
 }
 
 interface ComponentExampleState {
-  knobs: Object
   themeName: string
   componentVariables: Object
   showCode: boolean
@@ -65,7 +66,6 @@ const childrenStyle: React.CSSProperties = {
 class ComponentExample extends React.Component<ComponentExampleProps, ComponentExampleState> {
   anchorName: string
   kebabExamplePath: string
-  KnobsComponent: any
 
   constructor(props) {
     super(props)
@@ -75,7 +75,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.anchorName = examplePathToHash(examplePath)
     this.state = {
       themeName,
-      knobs: this.getDefaultKnobsValue(),
       showCode: this.isActiveHash(),
       componentVariables: {},
       showRtl: examplePath && examplePath.endsWith('rtl'),
@@ -182,15 +181,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }
   }
 
-  getKnobsFilename = () => `./${this.props.examplePath}.knobs.tsx`
-
   getKebabExamplePath = () => {
     if (!this.kebabExamplePath) this.kebabExamplePath = _.kebabCase(this.props.examplePath)
 
     return this.kebabExamplePath
   }
-
-  hasKnobs = () => _.includes(knobsContext.keys(), this.getKnobsFilename())
 
   renderElement = (element: React.ReactElement<any>) => {
     const { showRtl, showTransparent, componentVariables, themeName } = this.state
@@ -211,42 +206,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         {element}
       </Provider>
     )
-  }
-
-  handleKnobChange = knobs => {
-    this.setState(prevState => ({
-      knobs: {
-        ...prevState.knobs,
-        ...knobs,
-      },
-    }))
-  }
-
-  getKnobsComponent = () => {
-    if (typeof this.KnobsComponent !== 'undefined') {
-      return this.KnobsComponent
-    }
-
-    this.KnobsComponent = this.hasKnobs() ? knobsContext(this.getKnobsFilename()).default : null
-
-    return this.KnobsComponent
-  }
-
-  getDefaultKnobsValue = (overrides = {}) => {
-    const Knobs = this.getKnobsComponent()
-
-    return Knobs ? { ...Knobs.defaultProps, overrides } : null
-  }
-
-  renderKnobs = () => {
-    const Knobs = this.getKnobsComponent()
-
-    return Knobs ? (
-      <Knobs
-        {...this.getDefaultKnobsValue(this.state.knobs)}
-        onKnobChange={this.handleKnobChange}
-      />
-    ) : null
   }
 
   getDisplayName = () => this.props.examplePath.split('/')[1]
@@ -552,12 +511,21 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       description,
       title,
     } = this.props
-    const { knobs, showCode, showRtl, showTransparent, showVariables } = this.state
+    const { showCode, showRtl, showTransparent, showVariables } = this.state
 
     return (
       <Flex column>
         <Flex.Item>
-          <>
+          <KnobProvider
+            components={{
+              KnobLabel: props => (
+                <span style={{ marginRight: 5 }}>
+                  {props.content || <code>{props.name}</code>}:{' '}
+                  <code>{JSON.stringify(props.value, null, 2)}</code>
+                </span>
+              ),
+            }}
+          >
             {/* Ensure anchor links don't occlude card shadow effect */}
             <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
@@ -584,14 +552,42 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                 </Flex.Item>
               </Flex>
 
-              {this.renderKnobs()}
+              <KnobInspector>
+                {knobs =>
+                  knobs && (
+                    <Box
+                      styles={{
+                        background: 'whitesmoke',
+                        color: '#777',
+                        display: 'inline-block',
+                        fontFamily: 'monospace',
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                        lineHeight: '1.5',
+                        minWidth: '20rem',
+                        padding: `5px 10px`,
+                        position: 'relative',
+                        width: '50%',
+
+                        '::before': {
+                          content: "'knobs = {'",
+                        },
+                        '::after': {
+                          content: "'}'",
+                        },
+                      }}
+                    >
+                      {knobs}
+                    </Box>
+                  )
+                }
+              </KnobInspector>
             </Segment>
 
             {children && <Segment styles={childrenStyle}>{children}</Segment>}
 
             <SourceRender
               babelConfig={babelConfig}
-              knobs={knobs}
               source={currentCode}
               render={this.renderElement}
               renderHtml={showCode}
@@ -626,7 +622,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               </Segment>
               <div style={{ paddingBottom: '10px' }} />
             </SourceRender>
-          </>
+          </KnobProvider>
         </Flex.Item>
       </Flex>
     )
