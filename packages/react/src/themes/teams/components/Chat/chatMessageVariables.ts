@@ -11,7 +11,6 @@ export interface ChatMessageVariables {
   offset: string
   padding: string
   authorMarginRight: string
-  authorFontWeight: number
   headerMarginBottom: string
   contentFocusOutlineColor: string
   border: string
@@ -30,13 +29,12 @@ export default (siteVars): ChatMessageVariables => ({
   actionMenuPositionRight: pxToRem(5),
   actionMenuPositionTop: pxToRem(-30),
   backgroundColor: siteVars.colors.white,
-  backgroundColorMine: '#E5E5F1',
+  backgroundColorMine: siteVars.colors.primary[100],
   borderRadius: pxToRem(3),
-  color: 'rgb(64, 64, 64)',
+  color: siteVars.colors.gray[750], // verify this is in palette
   offset: pxToRem(100),
   padding: pxToRem(16),
   authorMarginRight: pxToRem(12),
-  authorFontWeight: siteVars.fontWeightBold,
   headerMarginBottom: pxToRem(2),
   contentFocusOutlineColor: siteVars.colors.primary[500],
   border: 'none',

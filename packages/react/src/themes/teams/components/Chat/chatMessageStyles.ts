@@ -95,7 +95,6 @@ const chatMessageStyles: ComponentSlotStylesInput<
     ...((p.mine || p.attached === 'bottom' || p.attached === true) && screenReaderContainerStyles),
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
-    fontWeight: v.authorFontWeight,
   }),
 
   timestamp: ({ props: p, variables: v }) => ({
