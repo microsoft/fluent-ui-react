@@ -3,7 +3,7 @@ import { Alert } from '@stardust-ui/react'
 
 const AlertExampleInfo = () => (
   <Alert
-    oof
+    variables={{ oof: true }}
     action={{
       icon: {
         name: 'close',

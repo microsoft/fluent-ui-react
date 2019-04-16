@@ -34,7 +34,7 @@ const getIntentColorsFromProps = (
     }
   }
 
-  if (p.oof) {
+  if (v.oof) {
     return {
       color: v.oofColor,
       backgroundColor: v.oofBackgroundColor,
@@ -42,7 +42,7 @@ const getIntentColorsFromProps = (
     }
   }
 
-  if (p.urgent) {
+  if (v.urgent) {
     return {
       color: v.urgentColor,
       backgroundColor: v.urgentBackgroundColor,

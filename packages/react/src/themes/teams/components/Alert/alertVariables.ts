@@ -24,6 +24,7 @@ export interface AlertVariables {
   dangerBackgroundColor: string
   dangerBorderColor: string
 
+  oof: boolean
   oofColor: string
   oofBackgroundColor: string
   oofBorderColor: string
@@ -32,6 +33,7 @@ export interface AlertVariables {
   infoBackgroundColor: string
   infoBorderColor: string
 
+  urgent: boolean
   urgentColor: string
   urgentBackgroundColor: string
   urgentBorderColor: string
@@ -61,6 +63,7 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     dangerBackgroundColor: siteVars.red10,
     dangerBorderColor: siteVars.red08,
 
+    oof: false,
     oofColor: siteVars.orchid, // pink[600] when new color palette PR goes in
     oofBackgroundColor: '#fcf2fa', // pink[50] when new color palette PR goes in
     oofBorderColor: '#f1dfee', // pink[100] when new color palette PR goes in
@@ -69,6 +72,7 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     infoBackgroundColor: siteVars.gray09,
     infoBorderColor: siteVars.gray08,
 
+    urgent: false,
     urgentColor: siteVars.colors.white,
     urgentBackgroundColor: siteVars.red,
     urgentBorderColor: siteVars.red,
