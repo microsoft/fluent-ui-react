@@ -16,7 +16,6 @@ import {
   themes,
   Grid,
   ICSSInJSStyle,
-  Box,
 } from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, scrollToAnchor } from 'docs/src/utils'
@@ -34,6 +33,7 @@ import { mergeThemeVariables } from '../../../../../packages/react/src/lib/merge
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import CodeSnippet from '../../CodeSnippet'
 import CopyToClipboard from 'docs/src/components/CopyToClipboard'
+import ComponentExampleKnobs from './ComponentExampleKnobs'
 
 export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
@@ -516,16 +516,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     return (
       <Flex column>
         <Flex.Item>
-          <KnobProvider
-            components={{
-              KnobLabel: props => (
-                <span style={{ marginRight: 5 }}>
-                  {props.content || <code>{props.name}</code>}:{' '}
-                  <code>{JSON.stringify(props.value, null, 2)}</code>
-                </span>
-              ),
-            }}
-          >
+          <KnobProvider>
             {/* Ensure anchor links don't occlude card shadow effect */}
             <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
@@ -553,34 +544,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               </Flex>
 
               <KnobInspector>
-                {knobs =>
-                  knobs && (
-                    <Box
-                      styles={{
-                        background: 'whitesmoke',
-                        color: '#777',
-                        display: 'inline-block',
-                        fontFamily: 'monospace',
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        lineHeight: '1.5',
-                        minWidth: '20rem',
-                        padding: `5px 10px`,
-                        position: 'relative',
-                        width: '50%',
-
-                        '::before': {
-                          content: "'knobs = {'",
-                        },
-                        '::after': {
-                          content: "'}'",
-                        },
-                      }}
-                    >
-                      {knobs}
-                    </Box>
-                  )
-                }
+                {knobs => knobs && <ComponentExampleKnobs>{knobs}</ComponentExampleKnobs>}
               </KnobInspector>
             </Segment>
 

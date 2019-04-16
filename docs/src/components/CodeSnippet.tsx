@@ -7,6 +7,7 @@ import Editor, { EDITOR_BACKGROUND_COLOR } from './Editor'
 export type CodeSnippetValue = string | string[] | Object
 
 export interface CodeSnippetProps {
+  className?: string
   fitted?: boolean
   label?: string
   mode?: 'json' | 'jsx' | 'html' | 'sh'
@@ -26,7 +27,7 @@ const formatters = {
   jsx: (val: string = ''): string => formatCode(val, 'babylon'),
 }
 
-const CodeSnippet = ({ fitted, label, mode, value, ...restProps }: CodeSnippetProps) => {
+const CodeSnippet = ({ className, fitted, label, mode, value, ...restProps }: CodeSnippetProps) => {
   const format = formatters[mode]
   const formattedValue = format(normalizeToString(value))
     // remove eof line break, they are not helpful for snippets
@@ -34,6 +35,7 @@ const CodeSnippet = ({ fitted, label, mode, value, ...restProps }: CodeSnippetPr
 
   return (
     <div
+      className={className}
       style={{
         position: 'relative',
         padding: '1rem',
