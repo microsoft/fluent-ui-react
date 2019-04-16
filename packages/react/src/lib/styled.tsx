@@ -1,10 +1,12 @@
 import * as React from 'react'
 import { FelaTheme } from 'react-fela'
 import { ThemePrepared, ComponentSlotStylesPrepared } from '../themes/types'
+import getClasses from './getClasses'
 
 type ApplyThemeRenderConfig = {
   siteVariables: any
   styles: any
+  getClasses: (styles: any) => string
 }
 
 const normalizeComponentStyles = function<TProps = any, TVars = any>(
@@ -63,6 +65,9 @@ const styled = (render: (config: ApplyThemeRenderConfig) => React.ReactNode) => 
         render({
           siteVariables: theme ? theme.siteVariables : {},
           styles: theme ? normalizeStyles(theme) : {},
+          getClasses: theme
+            ? styles => getClasses(theme.renderer, { root: styles }, {} as any).root
+            : () => '',
         })
       }
     </FelaTheme>
