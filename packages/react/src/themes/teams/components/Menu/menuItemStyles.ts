@@ -130,7 +130,7 @@ const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariab
 }
 
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
-  wrapper: ({ props, variables: v, theme, colors }): ICSSInJSStyle => {
+  wrapper: ({ props, variables: v, theme, colors, styles }): ICSSInJSStyle => {
     const {
       active,
       disabled,
@@ -207,7 +207,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
         ...(pointing &&
           !vertical && {
-            ...pointingBeak({ props, variables: v, theme, colors }),
+            ...pointingBeak({ props, variables: v, theme, colors, styles }),
           }),
       }),
 

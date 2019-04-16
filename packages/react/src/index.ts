@@ -198,6 +198,8 @@ export {
 //
 // Utilities
 //
+export { default as styled } from './lib/styled'
+
 export { default as mergeThemes } from './lib/mergeThemes'
 export { createComponent } from './lib'
 export {

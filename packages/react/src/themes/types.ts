@@ -191,12 +191,14 @@ export interface ICSSInJSStyle extends React.CSSProperties {
 
 export interface ComponentStyleFunctionParam<
   TProps extends PropsWithVarsAndStyles = PropsWithVarsAndStyles,
-  TVars extends ComponentVariablesObject = ComponentVariablesObject
+  TVars extends ComponentVariablesObject = ComponentVariablesObject,
+  TStyles = any
 > {
   props: State & TProps
   variables: TVars
   theme: ThemePrepared
   colors: Partial<ColorScheme>
+  styles: TStyles
 }
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((

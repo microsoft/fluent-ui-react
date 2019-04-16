@@ -35,6 +35,8 @@ import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtiliti
 import createAnimationStyles from './createAnimationStyles'
 import { generateColorScheme } from './colorUtils'
 
+import { normalizeStyles } from './styled'
+
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
   classes: ComponentSlotClasses
@@ -219,6 +221,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           variables: resolvedVariables,
           theme,
           colors,
+          styles: normalizeStyles(theme),
         }
 
         mergedStyles.root = {
