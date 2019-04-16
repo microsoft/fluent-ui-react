@@ -20,7 +20,7 @@ import * as _ from 'lodash'
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
  * Triggers 'closeMenuAndFocusTrigger' action with 'Escape' on 'wrapper'.
  * Triggers 'openMenu' action with 'ArrowDown' on 'wrapper', when orientation is horizontal.
- * Triggers 'doNotNavigateNextParentItem' action with 'ArrowLeft' or 'ArrowRight' on 'wrapper'.
+ * Triggers 'doNotNavigateNextParentItem' action with 'ArrowLeft' or 'ArrowRight' on 'wrapper', when toolbar button has submenu and it is opened.
  */
 const toolbarButtonBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -55,11 +55,10 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
         keyCombinations: [{ keyCode: keyboardKey.ArrowDown }],
       },
       doNotNavigateNextParentItem: {
-        keyCombinations: props.menu &&
-          props.menuOpen && [
-            { keyCode: keyboardKey.ArrowLeft },
-            { keyCode: keyboardKey.ArrowRight },
-          ],
+        keyCombinations:
+          props.menu && props.menuOpen
+            ? [{ keyCode: keyboardKey.ArrowLeft }, { keyCode: keyboardKey.ArrowRight }]
+            : null,
       },
     },
   },
