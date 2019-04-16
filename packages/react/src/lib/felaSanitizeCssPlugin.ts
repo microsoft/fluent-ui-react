@@ -40,7 +40,7 @@ const isValidCssValue = (value: any) => {
 export default (config?: { skip?: string[] }) => {
   const cssPropertiesToSkip = [...((config && config.skip) || [])]
 
-  const sanitizeCssStyleObject = perf.time('[fela-plugin]: sanitize-css', styles => {
+  const plugin = styles => {
     const processedStyles = Array.isArray(styles) ? [] : {}
 
     Object.keys(styles).forEach(cssPropertyNameOrIndex => {
@@ -60,7 +60,10 @@ export default (config?: { skip?: string[] }) => {
     })
 
     return processedStyles
-  })
+  }
+  const sanitizeCssStyleObject = perf.flags.SKIP_FELA_PERF_MARKS
+    ? plugin
+    : perf.time('[fela-plugin]: sanitize-css', plugin)
 
   return sanitizeCssStyleObject
 }

@@ -1,4 +1,4 @@
-import { Avatar, Chat, Divider } from '@stardust-ui/react'
+import { Avatar, Chat, Divider, Flex } from '@stardust-ui/react'
 import * as React from 'react'
 
 const janeAvatar = {

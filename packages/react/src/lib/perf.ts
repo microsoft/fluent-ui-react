@@ -44,6 +44,11 @@ type PERF_FLAGS = {
   SKIP_FELA: boolean
 
   /**
+   * Stops calls of Fela perf marks.
+   */
+  SKIP_FELA_PERF_MARKS: boolean
+
+  /**
    * Skips context providers/consumers.
    */
   SKIP_CONTEXT: boolean
@@ -87,6 +92,7 @@ const DEFAULT_FLAGS_PROD: PERF_FLAGS = {
   FELA_RENDERER_DEV_MODE: false,
   SKIP_CONTEXT: false,
   SKIP_FELA: false,
+  SKIP_FELA_PERF_MARKS: false,
   SKIP_FOCUS_ZONE: false,
   SKIP_FELA_PLUGINS: false,
   STYLE_NODE_UPDATE_STRATEGY: STYLE_NODE_UPDATE_STRATEGY.INSERT_RULE,
@@ -98,6 +104,7 @@ const DEFAULT_FLAGS_DEV: PERF_FLAGS = {
   FELA_RENDERER_DEV_MODE: true,
   SKIP_CONTEXT: false,
   SKIP_FELA: false,
+  SKIP_FELA_PERF_MARKS: false,
   SKIP_FOCUS_ZONE: false,
   SKIP_FELA_PLUGINS: false,
   STYLE_NODE_UPDATE_STRATEGY: STYLE_NODE_UPDATE_STRATEGY.INSERT_RULE,
@@ -163,7 +170,7 @@ export const timeStart = function timeStart(id) {
 
 export const time = function time(id, fn) {
   let call = 0
-  return function (...args) {
+  return function(...args) {
     call++
     const timeEnd = timeStart(id + call)
     const res = fn(...args)

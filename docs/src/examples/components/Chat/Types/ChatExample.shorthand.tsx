@@ -1,4 +1,13 @@
-import { Accessibility, Avatar, Chat, Menu, Provider, toolbarBehavior, toolbarButtonBehavior } from '@stardust-ui/react'
+import {
+  Accessibility,
+  Avatar,
+  Chat,
+  Flex,
+  Menu,
+  Provider,
+  toolbarBehavior,
+  toolbarButtonBehavior,
+} from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import cx from 'classnames'
@@ -150,7 +159,7 @@ function ChatWithPopover() {
           message: {
             content: (
               <Chat.Message
-                actionMenu={<Popover/>}
+                actionMenu={<Popover />}
                 author="Jane Doe"
                 content={{
                   content: (
