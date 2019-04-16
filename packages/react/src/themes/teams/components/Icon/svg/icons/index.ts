@@ -84,6 +84,7 @@ import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
 import play from './play'
 import quote from './quote'
+import readAloud from './read-aloud'
 import redbang from './redbang'
 import redo from './redo'
 import removeFormat from './removeFormat'
@@ -188,6 +189,7 @@ export default {
   'phone-clock': phoneClock,
   play,
   quote,
+  'read-aloud': readAloud,
   redbang,
   redo,
   'remove-format': removeFormat,

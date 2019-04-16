@@ -13,6 +13,7 @@ import ComponentProps from './ComponentProps'
 import ComponentAccessibility from './ComponentDocAccessibility'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ExampleContext from 'docs/src/context/ExampleContext'
+import ComponentPlayground from 'docs/src/components/ComponentPlayground'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -137,6 +138,9 @@ class ComponentDoc extends React.Component<any, any> {
             </>
           </Flex.Item>
         </Flex>
+
+        <ComponentPlayground componentName={info.displayName} key={info.displayName} />
+
         <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
           <div ref={this.handleExamplesRef}>
             <ExampleContext.Provider
