@@ -291,9 +291,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     closeMenu: event => this.closeMenu(event),
     closeMenuAndFocusTrigger: event => this.closeMenu(event, true),
     doNotNavigateNextParentItem: event => {
-      if (this.isSubmenuOpen()) {
-        event.stopPropagation()
-      }
+      event.stopPropagation()
     },
   }
 

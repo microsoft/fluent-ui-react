@@ -55,7 +55,11 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
         keyCombinations: [{ keyCode: keyboardKey.ArrowDown }],
       },
       doNotNavigateNextParentItem: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }, { keyCode: keyboardKey.ArrowRight }],
+        keyCombinations: props.menu &&
+          props.menuOpen && [
+            { keyCode: keyboardKey.ArrowLeft },
+            { keyCode: keyboardKey.ArrowRight },
+          ],
       },
     },
   },
