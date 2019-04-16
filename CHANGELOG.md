@@ -36,6 +36,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Export `call-missed-line` icon in Teams theme @96andrei ([#1203](https://github.com/stardust-ui/react/pull/1203))
 - Add `pointing` prop to `Popup` ([#1198](https://github.com/stardust-ui/react/pull/1198))
 - [Teams Theme] Export missing read-aloud icon in Teams Theme @joheredi ([#1225](https://github.com/stardust-ui/react/pull/1225))
+- Add styles for scrollbar to `ProviderBox` in Teams Theme ([#1223](https://github.com/stardust-ui/react/pull/1223))
 
 <!--------------------------------[ v0.27.0 ]------------------------------- -->
 ## [v0.27.0](https://github.com/stardust-ui/react/tree/v0.27.0) (2019-04-10)
