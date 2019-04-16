@@ -39,7 +39,7 @@ const normalizeComponentStyles = function<TProps = any, TVars = any>(
 const callable = arg => (typeof arg === 'function' ? arg : () => arg)
 
 export const normalizeStyles = (theme: ThemePrepared) => {
-  const allComponentStyles = theme.componentStyles
+  const allComponentStyles = theme.componentStyles || {}
 
   const result = Object.keys(allComponentStyles).reduce((acc, componentName) => {
     const componentStyles = allComponentStyles[componentName]
