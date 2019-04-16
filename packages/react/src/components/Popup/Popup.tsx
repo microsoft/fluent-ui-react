@@ -104,6 +104,9 @@ export interface PopupProps
    */
   onOpenChange?: ComponentEventHandler<PopupProps>
 
+  /** A popup can show a pointer to trigger. */
+  pointing?: boolean
+
   /**
    * Position for the popup. Position has higher priority than align. If position is vertical ('above' | 'below')
    * and align is also vertical ('top' | 'bottom') or if both position and align are horizontal ('before' | 'after'
@@ -171,6 +174,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     ]),
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
+    pointing: PropTypes.bool,
     position: PropTypes.oneOf(POSITIONS),
     renderContent: PropTypes.func,
     target: PropTypes.any,
@@ -199,10 +203,13 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
   protected actionHandlers: AccessibilityActionHandlers = {
     closeAndFocusTrigger: e => {
-      e.stopPropagation()
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
+      e.stopPropagation()
     },
-    close: e => this.close(e),
+    close: e => {
+      this.close(e)
+      e.stopPropagation()
+    },
     toggle: e => {
       e.preventDefault()
       this.trySetOpen(!this.state.open, e)
@@ -435,9 +442,15 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     rtl: boolean,
     accessibility: AccessibilityBehavior,
     // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
-    { ref, scheduleUpdate, style: popupPlacementStyles }: PopperChildrenProps,
+    {
+      arrowProps,
+      placement,
+      ref,
+      scheduleUpdate,
+      style: popupPlacementStyles,
+    }: PopperChildrenProps,
   ) => {
-    const { content: propsContent, renderContent, contentRef } = this.props
+    const { content: propsContent, renderContent, contentRef, pointing } = this.props
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
 
     const popupWrapperAttributes = {
@@ -452,13 +465,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const focusTrapProps = {
       ...(typeof accessibility.focusTrap === 'boolean' ? {} : accessibility.focusTrap),
       ...popupWrapperAttributes,
-      onKeyDown: (e: React.KeyboardEvent) => {
-        // No need to propagate keydown events outside Popup
-        // when focus trap behavior is used
-        // allow only keyboard actions to execute
-        _.invoke(accessibility.keyHandlers.popup, 'onKeyDown', e)
-        e.stopPropagation()
-      },
     } as FocusTrapZoneProps
 
     const autoFocusProps = {
@@ -475,8 +481,11 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
     const popupContent = Popup.Content.create(content, {
       defaultProps: {
-        className: Popup.slotClassNames.content,
         ...popupContentAttributes,
+        placement,
+        pointing,
+        pointerRef: arrowProps.ref,
+        pointerStyle: arrowProps.style,
       },
       overrideProps: this.getContentProps,
     })

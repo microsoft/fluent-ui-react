@@ -1,18 +1,11 @@
 import * as React from 'react'
-import { Button, Box, Flex, Header, Icon, Segment, Divider } from '@stardust-ui/react'
+import { Button, Box, Flex, Header, Segment, Divider } from '@stardust-ui/react'
 
 import CodeSnippet from '../components/CodeSnippet'
 import ExampleSnippet from '../components/ExampleSnippet'
 import DocPage from '../components/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
-
-const code = value => <code>{value}</code>
-
-const link = (content, href, isExternal = false) => (
-  <a href={href} {...isExternal && { target: 'blank' }}>
-    {content} {isExternal ? <Icon name="external" size="small" link fitted /> : ''}
-  </a>
-)
+import { code, link } from '../utils/helpers'
 
 const links = {
   flex: link('Flex', '/components/flex'),

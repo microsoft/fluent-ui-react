@@ -34,13 +34,13 @@ jobs:
           command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies
+            - v1.1-dependencies-{{ checksum "yarn.lock" }}
+            - v1.1-dependencies
       - run:
           name: Install Dependencies
           command: yarn
       - save_cache:
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v1.1-dependencies-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
             - .yarn-cache
@@ -59,13 +59,13 @@ jobs:
           command: bash <(curl -s https://codecov.io/bash)
 
       - restore_cache:
-          key: v1-vuln-scans-{{ checksum "yarn.lock" }}
+          key: v1.1-vuln-scans-{{ checksum "yarn.lock" }}
       - run:
           name: Vulnerability Tests
           command: yarn test:vulns
       # https://discuss.circleci.com/t/add-mechanism-to-update-existing-cache-key/9014/12
       - save_cache:
-          key: v1-vuln-scans-{{ checksum "yarn.lock" }}-{{ epoch }}
+          key: v1.1-vuln-scans-{{ checksum "yarn.lock" }}-{{ epoch }}
           paths:
             - .vuln-scans
 
@@ -73,18 +73,27 @@ jobs:
           name: Project Tests
           command: yarn test:projects
       - run:
-          name: Bundle Statistics
-          command: yarn stats:build
+          name: Circular Dependencies Tests
+          command: yarn test:circulars
       - run:
-          name: Performance Tests
-          command: yarn perf
-      - run:
-          name: Save Statistics to DB
+          name: Bundle Statistics (master only)
           command: |
-            if [ -n "${STATS_URI}" ]; then
+            if [ $CIRCLE_BRANCH == 'master' ]; then
+              yarn stats:build
+            else
+              echo 'skip bundle statistics collection'
+            fi
+      - run:
+          name: Performance Tests (master only)
+          command: |
+            if [ $CIRCLE_BRANCH == 'master' ]; then yarn perf; fi
+      - run:
+          name: Save Statistics to DB (master only)
+          command: |
+            if [ $CIRCLE_BRANCH == 'master' ] && [ -n "${STATS_URI}" ]; then
               yarn stats:save --tag=`git tag --points-at HEAD`
             else
-              echo "STATS_URI not set, skipping"
+              echo 'skip saving statistics'
             fi
       - run:
           name: Danger JS
@@ -93,7 +102,7 @@ jobs:
               yarn danger ci
             fi
       - run:
-          name: Publish npm package
+          name: Publish npm package (master only)
           command: |
             if [ -n "${npm_TOKEN}" ] && [ "${CIRCLE_BRANCH}" == "master" ]; then
               echo "//registry.npmjs.org/:_authToken=${npm_TOKEN}" > ~/project/.npmrc
@@ -122,13 +131,13 @@ jobs:
           command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies
+            - v1.1-dependencies-{{ checksum "yarn.lock" }}
+            - v1.1-dependencies
       - run:
           name: Install Dependencies
           command: yarn
       - save_cache:
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v1.1-dependencies-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
             - .yarn-cache

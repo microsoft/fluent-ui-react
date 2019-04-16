@@ -22,17 +22,12 @@ export {
   default as DropdownSelectedItem,
 } from './components/Dropdown/dropdownSelectedItemVariables'
 
-export { default as Flex } from './components/Flex/flexVariables'
-export { default as FlexItem } from './components/Flex/flexItemVariables'
-
-export { default as Grid } from './components/Grid/gridVariables'
+export { default as Embed } from './components/Embed/embedVariables'
 
 export { default as Header } from './components/Header/headerVariables'
 export { default as HeaderDescription } from './components/Header/headerDescriptionVariables'
 
 export { default as Icon } from './components/Icon/iconVariables'
-
-export { default as Image } from './components/Image/imageVariables'
 
 export { default as Input } from './components/Input/inputVariables'
 
@@ -53,6 +48,8 @@ export { default as MenuDivider } from './components/Menu/menuDividerVariables'
 export { default as Popup } from './components/Popup/popupVariables'
 export { default as PopupContent } from './components/Popup/popupContentVariables'
 
+export { default as ProviderBox } from './components/Provider/providerBoxVariables'
+
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemVariables'
 
 export { default as Reaction } from './components/Reaction/reactionVariables'
@@ -67,3 +64,5 @@ export { default as Text } from './components/Text/textVariables'
 export { default as TreeTitle } from './components/Tree/treeTitleVariables'
 
 export { default as Animation } from './components/Animation/animationVariables'
+
+export { default as Video } from './components/Video/videoVariables'

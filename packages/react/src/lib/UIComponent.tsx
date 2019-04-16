@@ -1,5 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
+// @ts-ignore We have this export in package, but it is not present in typings
+import { ThemeContext } from 'react-fela'
+
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
@@ -12,6 +15,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
   static className: string
   static variantName?: string
 
+  static contextType = ThemeContext
   static propTypes: any
 
   /** Array of props to exclude from list of handled ones. */
@@ -48,18 +52,21 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
   }
 
   render() {
-    return renderComponent({
-      className: this.childClass.className,
-      defaultProps: this.childClass.defaultProps,
-      displayName: this.childClass.displayName,
-      variantName: (this.childClass as any).variantName || (this.props as any).variant,
-      handledProps: this.childClass.handledProps,
-      props: this.props,
-      state: this.state,
-      actionHandlers: this.actionHandlers,
-      focusZoneRef: this.setFocusZoneRef,
-      render: this.renderComponent,
-    })
+    return renderComponent(
+      {
+        className: this.childClass.className,
+        defaultProps: this.childClass.defaultProps,
+        displayName: this.childClass.displayName,
+        variantName: (this.childClass as any).variantName || (this.props as any).variant,
+        handledProps: this.childClass.handledProps,
+        props: this.props,
+        state: this.state,
+        actionHandlers: this.actionHandlers,
+        focusZoneRef: this.setFocusZoneRef,
+        render: this.renderComponent,
+      },
+      this.context,
+    )
   }
 
   private setFocusZoneRef = (focusZone: FocusZone): void => {

@@ -48,6 +48,8 @@ const icons: ThemeIcons = {
   'stardust-arrow-up': themeIcons['triangle-up'],
   'stardust-arrow-down': themeIcons['triangle-down'],
   'stardust-arrow-end': themeIcons['triangle-right'],
+  'stardust-pause': themeIcons['pause'],
+  'stardust-play': themeIcons['play'],
 }
 
 export default mergeThemes(base, {
