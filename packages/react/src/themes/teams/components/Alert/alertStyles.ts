@@ -7,6 +7,8 @@ import {
 } from '../../../types'
 import { AlertProps } from '../../../../components/Alert/Alert'
 import { AlertVariables } from './alertVariables'
+import { teamsIconClassNames } from '../Icon/svg'
+import { pxToRem } from '../../../../lib'
 
 const getIntentColorsFromProps = (
   p: AlertProps,
@@ -18,17 +20,33 @@ const getIntentColorsFromProps = (
 
   if (p.danger) {
     return {
-      color: siteVars.red,
-      backgroundColor: siteVars.red10,
-      borderColor: siteVars.red08,
+      color: v.dangerColor,
+      backgroundColor: v.dangerBackgroundColor,
+      borderColor: v.dangerBorderColor,
     }
   }
 
   if (p.info) {
     return {
-      color: siteVars.gray02,
-      backgroundColor: siteVars.gray09,
-      borderColor: siteVars.gray08,
+      color: v.infoColor,
+      backgroundColor: v.infoBackgroundColor,
+      borderColor: v.infoBorderColor,
+    }
+  }
+
+  if (p.oof) {
+    return {
+      color: v.oofColor,
+      backgroundColor: v.oofBackgroundColor,
+      borderColor: v.oofBorderColor,
+    }
+  }
+
+  if (p.urgent) {
+    return {
+      color: v.urgentColor,
+      backgroundColor: v.urgentBackgroundColor,
+      borderColor: v.urgentBorderColor,
     }
   }
 
@@ -83,12 +101,42 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     flexGrow: 1,
   }),
 
-  action: ({ variables: v }): ICSSInJSStyle => ({
+  action: ({ variables: v, props }): ICSSInJSStyle => ({
     height: v.actionSize,
     minWidth: v.actionSize,
     margin: `-${v.borderWidth} 0`,
     color: v.actionColor || 'currentColor',
+    border: `${pxToRem(1)} solid transparent`,
+    borderRadius: v.borderRadius,
+
     ':focus': { outline: 0 },
+
+    ':hover': {
+      color: 'currentColor',
+
+      [`& .${teamsIconClassNames.filled}`]: {
+        display: 'block',
+      },
+
+      [`& .${teamsIconClassNames.outline}`]: {
+        display: 'none',
+      },
+    },
+
+    ...(props.isFromKeyboard && {
+      ':focus': {
+        borderColor: v.focusInnerBorderColor,
+        boxShadow: `0 0 0 ${pxToRem(1)} ${v.focusOuterBorderColor}`,
+
+        [`& .${teamsIconClassNames.filled}`]: {
+          display: 'block',
+        },
+
+        [`& .${teamsIconClassNames.outline}`]: {
+          display: 'none',
+        },
+      },
+    }),
   }),
 }
 

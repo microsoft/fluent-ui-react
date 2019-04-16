@@ -9,7 +9,13 @@ class AlertExampleClosable extends React.Component<{}, { open: boolean }> {
       this.state.open && (
         <Alert
           content="This is a closable alert"
-          action={{ icon: 'close', onClick: () => this.setState({ open: false }) }}
+          action={{
+            icon: {
+              name: 'close',
+              outline: true,
+            },
+            onClick: () => this.setState({ open: false }),
+          }}
         />
       )
     )

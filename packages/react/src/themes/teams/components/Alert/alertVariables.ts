@@ -16,6 +16,25 @@ export interface AlertVariables {
 
   actionSize: string
   actionColor: string
+
+  focusInnerBorderColor: string
+  focusOuterBorderColor: string
+
+  dangerColor: string
+  dangerBackgroundColor: string
+  dangerBorderColor: string
+
+  oofColor: string
+  oofBackgroundColor: string
+  oofBorderColor: string
+
+  infoColor: string
+  infoBackgroundColor: string
+  infoBorderColor: string
+
+  urgentColor: string
+  urgentBackgroundColor: string
+  urgentBorderColor: string
 }
 
 export default (siteVars: SiteVariablesPrepared): AlertVariables => {
@@ -25,7 +44,7 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     borderStyle: 'solid',
     borderWidth: '1px',
     borderRadius: pxToRem(3),
-    backgroundColor: siteVars.colors.grey[50], // $app-white
+    backgroundColor: siteVars.colors.grey[50],
     borderColor: siteVars.gray06,
     color: siteVars.gray02,
     fontWeight: siteVars.fontWeightRegular,
@@ -34,5 +53,24 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
 
     actionSize: minHeight,
     actionColor: undefined,
+
+    focusInnerBorderColor: siteVars.colors.white,
+    focusOuterBorderColor: siteVars.colors.black,
+
+    dangerColor: siteVars.red,
+    dangerBackgroundColor: siteVars.red10,
+    dangerBorderColor: siteVars.red08,
+
+    oofColor: siteVars.orchid, // pink[600] when new color palette PR goes in
+    oofBackgroundColor: '#fcf2fa', // pink[50] when new color palette PR goes in
+    oofBorderColor: '#f1dfee', // pink[100] when new color palette PR goes in
+
+    infoColor: siteVars.gray02,
+    infoBackgroundColor: siteVars.gray09,
+    infoBorderColor: siteVars.gray08,
+
+    urgentColor: siteVars.colors.white,
+    urgentBackgroundColor: siteVars.red,
+    urgentBorderColor: siteVars.red,
   }
 }
