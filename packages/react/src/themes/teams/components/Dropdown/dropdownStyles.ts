@@ -64,7 +64,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     display: 'flex',
     flexWrap: 'wrap',
     position: 'relative',
-    boxSizing: 'border-box',
     borderStyle: 'solid',
     borderColor: 'transparent',
     outline: 0,

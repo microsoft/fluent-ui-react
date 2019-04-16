@@ -127,6 +127,7 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
         {open &&
           Tree.create(items, {
             defaultProps: {
+              accessibility: defaultBehavior,
               className: TreeItem.slotClassNames.subtree,
               exclusive,
               renderItemTitle,

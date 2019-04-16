@@ -22,8 +22,7 @@ export {
   default as DropdownSelectedItem,
 } from './components/Dropdown/dropdownSelectedItemVariables'
 
-export { default as Flex } from './components/Flex/flexVariables'
-export { default as FlexItem } from './components/Flex/flexItemVariables'
+export { default as Embed } from './components/Embed/embedVariables'
 
 export { default as Header } from './components/Header/headerVariables'
 export { default as HeaderDescription } from './components/Header/headerDescriptionVariables'
@@ -63,3 +62,5 @@ export { default as Text } from './components/Text/textVariables'
 export { default as TreeTitle } from './components/Tree/treeTitleVariables'
 
 export { default as Animation } from './components/Animation/animationVariables'
+
+export { default as Video } from './components/Video/videoVariables'

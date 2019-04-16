@@ -254,7 +254,6 @@ import processedIcons_callparticipantending from './icons-call-participant-endin
 import processedIcons_callparticipantconnectingline from './icons-call-participant-connecting-line'
 import processedIcons_callparticipantconnecting from './icons-call-participant-connecting'
 import processedIcons_callparticipantconnected from './icons-call-participant-connected'
-import processedIcons_callmissedlinefilled from './icons-call-missed-line-filled'
 import processedIcons_callmissedline from './icons-call-missed-line'
 import processedIcons_callmissed from './icons-call-missed'
 import processedIcons_callmicrophoneunmuting from './icons-call-microphone-unmuting'
@@ -557,7 +556,6 @@ export default {
   processedIcons_callparticipantconnectingline,
   processedIcons_callparticipantconnecting,
   processedIcons_callparticipantconnected,
-  processedIcons_callmissedlinefilled,
   processedIcons_callmissedline,
   processedIcons_callmissed,
   processedIcons_callmicrophoneunmuting,

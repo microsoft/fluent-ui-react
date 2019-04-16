@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Header } from '@stardust-ui/react'
+import { Link } from 'react-router-dom'
 import DocPage from '../components/DocPage'
 import { code, link } from '../utils/helpers'
 import CodeSnippet from '../components/CodeSnippet'
@@ -8,13 +9,10 @@ export default () => (
   <DocPage title="Auto Focus Zone">
     <Header as="h2">Content</Header>
     <ul>
-      <li>{link('Overview', '/auto-focus-zone#overview')}</li>
-      <li>{link('Usage', '/auto-focus-zone#usage')}</li>
+      <li>{link('Overview', 'auto-focus-zone#overview')}</li>
+      <li>{link('Usage', 'auto-focus-zone#usage')}</li>
       <li>
-        {link(
-          'Override AutoFocusZone settings',
-          '/auto-focus-zone#override-autofocuszone-settings',
-        )}
+        {link('Override AutoFocusZone settings', 'auto-focus-zone#override-autofocuszone-settings')}
       </li>
     </ul>
     <Header as="h2">Overview</Header>
@@ -25,7 +23,7 @@ export default () => (
     </p>
     <p>
       If you need both - grabbing the focus and trap the focus in the component - use{' '}
-      {link('FocusTrapZone.', '/focus-trap-zone')}
+      <Link to="focus-trap-zone">FocusTrapZone</Link>.
     </p>
     <Header as="h2">Usage</Header>
     <p>
@@ -34,7 +32,7 @@ export default () => (
       {code('FocusTrapZone')}. To enable auto focus for a component, in the behavior set prop{' '}
       {code('autoFocus')} to {code('true')}
       with default settings or set an object with desired values for auto focus zone props.{' '}
-      {link('Read more about Accessibility Behaviors.', '/accessibility-behaviors')}
+      <Link to="accessibility-behaviors">Read more about Accessibility Behaviors.</Link>
     </p>
     <p>
       {code('AutoFocusZone')}'s props which can be applied in accessibility behavior (
@@ -64,8 +62,7 @@ export default () => (
     <p>
       For example, we want to specify the focusable selector for Popup with auto focus, so on Popup
       mount, focus will go to the element matched to that selector. For that purpose, we can to
-      override {code('popupAutoFocusBehavior')} and specify
-      {code('firstFocusableSelector')} there.
+      override {code('popupAutoFocusBehavior')} and specify {code('firstFocusableSelector')} there.
     </p>
     <CodeSnippet
       value={`
@@ -88,9 +85,15 @@ export default () => (
     />
     <p>Read more about:</p>
     <ul>
-      <li>{link('Accessibility Behaviors', '/accessibility-behaviors')}</li>
-      <li>{link('FocusZone', '/focus-zone')}</li>
-      <li>{link('FocusTrapZone', '/focus-trap-zone')}</li>
+      <li>
+        <Link to="accessibility-behaviors">Accessibility Behaviors</Link>
+      </li>
+      <li>
+        <Link to="focus-zone">FocusZone</Link>
+      </li>
+      <li>
+        <Link to="focus-trap-zone">FocusTrapZone</Link>
+      </li>
     </ul>
     <p>
       {code('AutoFocusZone')} code on{' '}
