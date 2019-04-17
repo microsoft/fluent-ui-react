@@ -54,6 +54,8 @@ export { default as MenuDivider } from './components/Menu/menuDividerStyles'
 export { default as Popup } from './components/Popup/popupStyles'
 export { default as PopupContent } from './components/Popup/popupContentStyles'
 
+export { default as ProviderBox } from './components/Provider/providerBoxStyles'
+
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemStyles'
 
 export { default as Segment } from './components/Segment/segmentStyles'
