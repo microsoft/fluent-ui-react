@@ -18,8 +18,9 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-disabled=true' to 'root' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
  * Adds attribute 'aria-haspopup=true' to 'root' component's part if 'menu' property is set.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
- * Triggers 'closeAllMenus' action with 'Escape' on 'wrapper'.
+ * Triggers 'closeMenuAndFocusTrigger' action with 'Escape' on 'wrapper'.
  * Triggers 'openMenu' action with 'ArrowDown' on 'wrapper', when orientation is horizontal.
+ * Triggers 'doNotNavigateNextParentItem' action with 'ArrowLeft' or 'ArrowRight' on 'wrapper', when toolbar button has submenu and it is opened.
  */
 const toolbarButtonBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -47,11 +48,17 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
-      closeAllMenus: {
+      closeMenuAndFocusTrigger: {
         keyCombinations: [{ keyCode: keyboardKey.Escape }],
       },
       openMenu: !props.vertical && {
         keyCombinations: [{ keyCode: keyboardKey.ArrowDown }],
+      },
+      doNotNavigateNextParentItem: {
+        keyCombinations:
+          props.menu && props.menuOpen
+            ? [{ keyCode: keyboardKey.ArrowLeft }, { keyCode: keyboardKey.ArrowRight }]
+            : null,
       },
     },
   },
