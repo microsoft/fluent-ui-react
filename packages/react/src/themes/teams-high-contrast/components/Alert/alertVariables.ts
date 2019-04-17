@@ -1,28 +1,6 @@
-import { SiteVariablesPrepared } from '../../../types'
+import { AlertVariables } from '../../../teams/components/Alert/alertVariables'
 
-export interface AlertVariables {
-  backgroundColor: string
-  borderColor: string
-  color: string
-
-  dangerColor: string
-  dangerBackgroundColor: string
-  dangerBorderColor: string
-
-  oofColor: string
-  oofBackgroundColor: string
-  oofBorderColor: string
-
-  infoColor: string
-  infoBackgroundColor: string
-  infoBorderColor: string
-
-  urgentColor: string
-  urgentBackgroundColor: string
-  urgentBorderColor: string
-}
-
-export default (siteVars: SiteVariablesPrepared): AlertVariables => {
+export default (siteVars: any): Partial<AlertVariables> => {
   return {
     backgroundColor: siteVars.colors.white,
     borderColor: siteVars.colors.white,
