@@ -16,7 +16,6 @@ import {
 import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ReactProps } from '../../types'
-import keyboardKey from 'keyboard-key'
 
 export interface TreeTitleProps
   extends UIComponentProps,
