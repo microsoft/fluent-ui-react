@@ -13,7 +13,7 @@ const normalizeComponentStyles = function<TProps = any, TVars = any>(
   styles: ComponentSlotStylesPrepared<TProps, TVars>,
   variables: TVars,
   theme: ThemePrepared,
-  assembledStyles: any,
+  getAssembledStyles: () => any,
 ) {
   const root = (props: TProps) =>
     styles['root']({
@@ -21,7 +21,7 @@ const normalizeComponentStyles = function<TProps = any, TVars = any>(
       variables,
       theme,
       colors: null,
-      styles: assembledStyles,
+      styles: getAssembledStyles(),
     })
 
   Object.keys(styles).forEach(slotName => {
@@ -31,7 +31,7 @@ const normalizeComponentStyles = function<TProps = any, TVars = any>(
         variables,
         theme,
         colors: null,
-        styles: assembledStyles,
+        styles: getAssembledStyles(),
       })
   })
 
@@ -51,7 +51,7 @@ export const normalizeStyles = (theme: ThemePrepared) => {
         componentStyles,
         callable(theme.componentVariables[componentName])(theme.siteVariables),
         theme,
-        result,
+        () => result,
       ),
     }
   }, {})
