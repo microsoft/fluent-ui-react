@@ -25,6 +25,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix routing for accessibility documentation @sophieH29 ([#1208](https://github.com/stardust-ui/react/pull/1208))
 - Fix `content` prop type in `Dialog` @layershifter ([#1212](https://github.com/stardust-ui/react/pull/1212))
 - Add `keyboard` up & down key controls for the `Tree` component @priyankar205 ([#1219](https://github.com/stardust-ui/react/pull/1219))
+- Add `keyboard` enter & spacebar key controls for the `Tree` component @priyankar205 ([#1233](https://github.com/stardust-ui/react/pull/1233))
 - Simplify DOM structure in `List` component when not all slot are defined @layershifter ([#1218](https://github.com/stardust-ui/react/pull/1218))
 - `Menu` as `Toolbar` - left/right arrow keys should not activate prev/next parent when focus in in the toolbar submenu @sophieH29 ([#1199](https://github.com/stardust-ui/react/pull/1199))
 
