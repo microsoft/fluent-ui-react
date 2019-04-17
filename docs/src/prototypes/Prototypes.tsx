@@ -3,27 +3,34 @@ import { Box, Header, Segment } from '@stardust-ui/react'
 
 interface PrototypeSectionProps {
   title?: React.ReactNode
+  style?: React.CSSProperties
 }
 
 interface ComponentPrototypeProps extends PrototypeSectionProps {
   description?: React.ReactNode
 }
 
-export const PrototypeSection: React.FC<ComponentPrototypeProps> = props => (
-  <Box style={{ margin: 20 }}>
-    {props.title && <Header as="h1">{props.title}</Header>}
-    {props.children}
-  </Box>
-)
+export const PrototypeSection: React.FC<ComponentPrototypeProps> = props => {
+  const { title: title, children, style, ...rest } = props
+  return (
+    <Box style={{ margin: 20, ...style }} {...rest}>
+      {title && <Header as="h1">{title}</Header>}
+      {children}
+    </Box>
+  )
+}
 
-export const ComponentPrototype: React.FC<ComponentPrototypeProps> = props => (
-  <Box style={{ marginTop: 20 }}>
-    {(props.title || props.description) && (
-      <Segment>
-        {props.title && <Header as="h3">{props.title}</Header>}
-        {props.description && <p>{props.description}</p>}
-      </Segment>
-    )}
-    <Segment>{props.children}</Segment>
-  </Box>
-)
+export const ComponentPrototype: React.FC<ComponentPrototypeProps> = props => {
+  const { description, title: header, children, style, ...rest } = props
+  return (
+    <Box style={{ marginTop: 20, ...style }} {...rest}>
+      {(header || description) && (
+        <Segment>
+          {header && <Header as="h3">{header}</Header>}
+          {description && <p>{description}</p>}
+        </Segment>
+      )}
+      <Segment>{children}</Segment>
+    </Box>
+  )
+}
