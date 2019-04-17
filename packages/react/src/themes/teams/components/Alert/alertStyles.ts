@@ -101,7 +101,7 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     flexGrow: 1,
   }),
 
-  action: ({ variables: v, props }): ICSSInJSStyle => ({
+  action: ({ variables: v, props: p }): ICSSInJSStyle => ({
     height: v.actionSize,
     minWidth: v.actionSize,
     margin: `-${v.borderWidth} 0`,
@@ -131,20 +131,11 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
       },
     },
 
-    ...(props.isFromKeyboard && {
-      ':focus': {
-        borderColor: v.focusInnerBorderColor,
-        boxShadow: `0 0 0 ${pxToRem(1)} ${v.focusOuterBorderColor}`,
-
-        [`& .${teamsIconClassNames.filled}`]: {
-          display: 'block',
-        },
-
-        [`& .${teamsIconClassNames.outline}`]: {
-          display: 'none',
-        },
-      },
-    }),
+    ...(p.isFromKeyboard &&
+      {
+        // todo: ifFromKeyboard isn't currently being detected in this style file
+        //       update styles here after Issue #1230 is resolved
+      }),
   }),
 }
 
