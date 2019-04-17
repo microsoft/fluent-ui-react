@@ -48,7 +48,7 @@ export const colorBoxStyles: ComponentSlotStylesInput<ColorBoxProps, ColorBoxVar
     backgroundColor: p.value,
     border: '1px solid transparent',
     borderRadius: p.rounded && '.25rem',
-    color: Color(p.value).isDark() ? v.colorWhite : v.colorBlack,
+    color: p.value !== undefined && Color(p.value).isDark() ? v.colorWhite : v.colorBlack,
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',
     fontSize: v.padding[p.size],
@@ -78,7 +78,7 @@ const ColorBox = createComponent<ColorBoxProps>({
         render={(active, onClick) => (
           <div className={classes.value}>
             <span onClick={onClick}>
-              <Icon name={active ? 'checkmark' : 'copy outline'} size="small" />
+              {value && <Icon name={active ? 'checkmark' : 'copy outline'} size="small" />}
               {value}
             </span>
           </div>
