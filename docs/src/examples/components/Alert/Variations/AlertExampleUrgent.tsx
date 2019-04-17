@@ -1,14 +1,11 @@
 import * as React from 'react'
 import { Alert } from '@stardust-ui/react'
 
-const AlertExampleInfo = () => (
+const AlertExampleUrgent = () => (
   <Alert
     variables={{ urgent: true }}
     action={{
-      icon: {
-        name: 'close',
-        outline: true,
-      },
+      icon: 'close',
       onClick: () =>
         this.setState({
           open: false,
@@ -19,4 +16,4 @@ const AlertExampleInfo = () => (
   </Alert>
 )
 
-export default AlertExampleInfo
+export default AlertExampleUrgent

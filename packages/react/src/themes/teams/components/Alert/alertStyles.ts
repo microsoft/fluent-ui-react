@@ -109,6 +109,14 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     border: `${pxToRem(1)} solid transparent`,
     borderRadius: v.borderRadius,
 
+    [`& .${teamsIconClassNames.filled}`]: {
+      display: 'none',
+    },
+
+    [`& .${teamsIconClassNames.outline}`]: {
+      display: 'block',
+    },
+
     ':focus': { outline: 0 },
 
     ':hover': {

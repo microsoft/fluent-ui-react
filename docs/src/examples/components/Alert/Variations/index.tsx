@@ -12,7 +12,7 @@ const Variations = () => (
     <ComponentExample
       title="OOF"
       description="An alert may be formatted to display an oof message."
-      examplePath="components/Alert/Variations/AlertExampleOOF"
+      examplePath="components/Alert/Variations/AlertExampleOof"
     />
     <ComponentExample
       title="Urgent"
