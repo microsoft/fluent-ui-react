@@ -22,7 +22,6 @@ import {
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../types'
-import keyboardKey from 'keyboard-key'
 
 export interface TreeItemSlotClassNames {
   title: string
@@ -104,10 +103,6 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
 
   handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
     onClick: (e, titleProps) => {
-      // Only prevent default if the key is spacebar
-      if (keyboardKey.getCode(e) === keyboardKey.Spacebar) {
-        e.preventDefault()
-      }
       _.invoke(this.props, 'onTitleClick', e, this.props)
       _.invoke(predefinedProps, 'onClick', e, titleProps)
     },

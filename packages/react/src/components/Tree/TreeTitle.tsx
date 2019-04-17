@@ -16,6 +16,7 @@ import {
 import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ReactProps } from '../../types'
+import keyboardKey from 'keyboard-key'
 
 export interface TreeTitleProps
   extends UIComponentProps,
@@ -62,7 +63,13 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
-    performClick: event => !event.defaultPrevented && this.handleClick(event),
+    performClick: e => {
+      // Only prevent default if the key is spacebar
+      if (keyboardKey.getCode(e) === keyboardKey.Spacebar) {
+        e.preventDefault()
+      }
+      this.handleClick(e)
+    },
   }
 
   handleClick = e => {
