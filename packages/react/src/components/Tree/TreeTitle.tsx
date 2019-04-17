@@ -64,10 +64,7 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
 
   protected actionHandlers: AccessibilityActionHandlers = {
     performClick: e => {
-      // Only prevent default if the key is spacebar
-      if (keyboardKey.getCode(e) === keyboardKey.Spacebar) {
-        e.preventDefault()
-      }
+      e.preventDefault()
       this.handleClick(e)
     },
   }
