@@ -11,9 +11,10 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { treeTitleBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ReactProps } from '../../types'
 
 export interface TreeTitleProps
@@ -56,9 +57,12 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
   }
 
   public static defaultProps = {
-    as: 'a',
-    href: '#',
+    as: 'span',
     accessibility: treeTitleBehavior,
+  }
+
+  protected actionHandlers: AccessibilityActionHandlers = {
+    performClick: event => !event.defaultPrevented && this.handleClick(event),
   }
 
   handleClick = e => {
@@ -75,6 +79,7 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {childrenExist(children) ? children : content}
       </ElementType>
