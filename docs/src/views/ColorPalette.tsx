@@ -171,8 +171,8 @@ const ColorPalette = () => (
           </p>
           <Grid columns={3}>
             <Header as="h3" content="Design token" />
-            <Header as="h3" content="Value in light theme" />
-            <Header as="h3" content="Value in HOC theme" />
+            <Header as="h3" content="Light theme" />
+            <Header as="h3" content="HC theme" />
           </Grid>
           <Grid columns={1} variables={{ gridGap: '2rem' }}>
             <ColorSchemes themes={[themes.teams, themes.teamsHighContrast]} name={'primary'} />
