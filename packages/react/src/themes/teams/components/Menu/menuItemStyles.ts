@@ -3,6 +3,7 @@ import { ComponentSlotStylesInput, ICSSInJSStyle, ColorScheme } from '../../../t
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 import { teamsIconClassNames } from '../Icon/svg'
+import { getColorSchemeKey } from '../../colors'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
@@ -135,15 +136,11 @@ const pointingBeak = ({ props, variables: v, colorScheme }): ICSSInJSStyle => {
   }
 }
 
-const getColorSchemeKey = (props: MenuItemProps): string => {
-  const { color, primary } = props
-  return color || (primary ? 'primary' : 'default')
-}
-
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
   wrapper: ({ props, variables: v, theme }): ICSSInJSStyle => {
     const {
       active,
+      color,
       disabled,
       iconOnly,
       isFromKeyboard,
@@ -155,7 +152,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       primary,
     } = props
 
-    const colorScheme = v.colorScheme[getColorSchemeKey(props)]
+    const colorScheme = v.colorScheme[getColorSchemeKey(color, primary)]
 
     return {
       color: 'inherit',
@@ -287,7 +284,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       color,
     } = p
 
-    const colorScheme = v.colorScheme[getColorSchemeKey(p)]
+    const colorScheme = v.colorScheme[getColorSchemeKey(color, primary)]
 
     return {
       color: 'inherit',

@@ -272,3 +272,24 @@ export const colorScheme: ColorSchemeMapping = {
   red: createColorScheme('red'),
   yellow: createColorScheme('yellow', lightColorOverrides),
 }
+
+export const availableColors = [
+  'default',
+  'black',
+  'white',
+  'primary',
+  'grey',
+  'red',
+  'yellow',
+  'green',
+  'pink',
+  'orange',
+]
+
+export const isValidColor = (color: string): boolean => {
+  return color && availableColors.indexOf(color) >= 0
+}
+
+export const getColorSchemeKey = (color: string, primary?: boolean): string => {
+  return color && isValidColor(color) ? color : primary ? 'primary' : 'default'
+}

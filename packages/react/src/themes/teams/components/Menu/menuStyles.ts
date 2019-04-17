@@ -7,13 +7,14 @@ import {
   horizontalPillsRightMargin,
   verticalPointingBottomMargin,
 } from './menuItemStyles'
+import { getColorSchemeKey } from '../../colors'
 
 type MenuPropsAndState = MenuProps & MenuState
 
 export default {
   root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
     const { iconOnly, fluid, pointing, pills, primary, color, underlined, vertical, submenu } = p
-    const colorScheme = v.colorScheme[color ? color : primary ? 'primary' : 'default']
+    const colorScheme = v.colorScheme[getColorSchemeKey(color, primary)]
 
     return {
       display: 'flex',

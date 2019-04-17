@@ -21,7 +21,7 @@ export default {
     },
     variables: v,
   }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
-    const colors = v.colorScheme[color || 'default']
+    const colors = v.colorScheme[color] || v.colorScheme['default']
     return {
       ...(color && {
         color: colors.foregroundDefault,
