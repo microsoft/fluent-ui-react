@@ -17,7 +17,7 @@ const normalizeComponentStyles = function<TProps = any, TVars = any>(
 ) {
   const root = (props: TProps) =>
     styles['root']({
-      props,
+      props: (props || {}) as any,
       variables,
       theme,
       colors: null,
@@ -27,7 +27,7 @@ const normalizeComponentStyles = function<TProps = any, TVars = any>(
   Object.keys(styles).forEach(slotName => {
     root[slotName] = (props: TProps) =>
       styles[slotName]({
-        props,
+        props: (props || {}) as any,
         variables,
         theme,
         colors: null,
