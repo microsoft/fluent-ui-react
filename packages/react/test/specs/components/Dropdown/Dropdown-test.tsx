@@ -114,6 +114,42 @@ describe('Dropdown', () => {
         }),
       )
     })
+
+    it('is "false" when input is blurred', () => {
+      const wrapper = mountWithProvider(
+        <Dropdown onOpenChange={onOpenChange} search items={items} />,
+      )
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+
+      toggleIndicator.simulate('click')
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      itemsList.simulate('blur')
+
+      expect(onOpenChange).toBeCalledTimes(2)
+      expect(onOpenChange).toHaveBeenLastCalledWith(
+        null,
+        expect.objectContaining({
+          open: false,
+        }),
+      )
+    })
+
+    it('is "false" when list is blurred', () => {
+      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+
+      toggleIndicator.simulate('click')
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+      searchInput.simulate('blur')
+
+      expect(onOpenChange).toBeCalledTimes(2)
+      expect(onOpenChange).toHaveBeenLastCalledWith(
+        null,
+        expect.objectContaining({
+          open: false,
+        }),
+      )
+    })
   })
 
   describe('highlightedIndex', () => {
