@@ -4,14 +4,7 @@ import { colors } from './colors'
 //
 // COLORS
 //
-export {
-  colors,
-  contextualColors,
-  emphasisColors,
-  naturalColors,
-  primitiveColors,
-  colorScheme,
-} from './colors'
+export { colors, emphasisColors, naturalColors, primitiveColors, colorScheme } from './colors'
 
 //
 // SHADOW LEVELS

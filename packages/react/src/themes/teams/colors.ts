@@ -1,10 +1,4 @@
-import {
-  ColorPalette,
-  ContextualColors,
-  EmphasisColors,
-  NaturalColors,
-  PrimitiveColors,
-} from '../types'
+import { ColorPalette, EmphasisColors, NaturalColors, PrimitiveColors } from '../types'
 import { ColorSchemeMapping } from 'src/themes/types'
 
 export const emphasisColors: EmphasisColors = {
@@ -109,10 +103,6 @@ export const naturalColors: NaturalColors = {
   },
 }
 
-export const contextualColors: ContextualColors = {
-  text: naturalColors.grey,
-}
-
 const emphasisAndNaturalColors: EmphasisColors & NaturalColors = {
   ...emphasisColors,
   ...naturalColors,
@@ -125,7 +115,6 @@ export const primitiveColors: PrimitiveColors = {
 
 export const colors: ColorPalette = {
   ...emphasisAndNaturalColors,
-  ...contextualColors,
   ...primitiveColors,
 }
 

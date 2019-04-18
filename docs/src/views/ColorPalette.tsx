@@ -58,9 +58,7 @@ const ColorPalette = () => (
     }}
   >
     <ProviderConsumer
-      render={({
-        siteVariables: { colors, contextualColors, emphasisColors, naturalColors, colorScheme },
-      }) => (
+      render={({ siteVariables: { colors, emphasisColors, naturalColors } }) => (
         <DocPage title="Colors">
           <Header as="h2">Introduction</Header>
           <p>
@@ -68,8 +66,11 @@ const ColorPalette = () => (
             There is a need to be intentional and functional with color use. We analyzed existing
             frameworks and picked the best ideas from them. In Stardust, the colors mechanisms are
             completely based on the siteVariables, we don't have any additional API specific to the
-            colors. There are two things important in order for colors to work transparently when
-            the theme switching is in play:
+            colors.
+          </p>
+          <p>
+            There are two things important in order for colors to work transparently when the theme
+            switching is in play:
             <ul>
               <li>
                 <b>color palette</b> - central place for all colors available in the application
@@ -132,42 +133,24 @@ const ColorPalette = () => (
             ))}
           </Grid>
 
-          {/*<Header as="h2">Contextual colors</Header>*/}
-          {/*<p>*/}
-          {/*Contextual colors can be used to provide "meaning through colors", however they can be*/}
-          {/*just aliases for natural colors. You can think here of names like: danger, success, warning,*/}
-          {/*info, text colors etc.*/}
-          {/*</p>*/}
-
-          {/*<Grid columns={2}>*/}
-          {/*{_.map(contextualColors, (variants, color) => (*/}
-          {/*<div key={color}>*/}
-          {/*<ColorBox name={color} rounded size="big" value={colors[color][600]}/>*/}
-          {/*</div>*/}
-          {/*))}*/}
-          {/*</Grid>*/}
-
           <Header as="h3">All colors</Header>
           <p>This are all colors available in the color palette.</p>
           <Grid columns={2} variables={{ gridGap: '2rem' }}>
-            {_.map(
-              { ...emphasisColors, ...contextualColors, ...naturalColors },
-              (variants, color) => (
-                <div key={color}>
-                  <ColorVariants name={color} />
-                </div>
-              ),
-            )}
+            {_.map({ ...emphasisColors, ...naturalColors }, (variants, color) => (
+              <div key={color}>
+                <ColorVariants name={color} />
+              </div>
+            ))}
           </Grid>
 
           <Header as="h2">Color scheme</Header>
           <p>
             Now that we know how the color palette is defined, let's see how we can use these
             values, so that they will work correctly when different themes will be applied. As part
-            of the each theme, we are defining <b>color scheme</b>, which will define the design
-            tokens usages of the different colors from the palette, that make sense for the
-            developers. For example, let's take a look of one color scheme defined for primary in
-            light theme and high contrast theme.
+            of each theme, we are defining <b>color scheme</b>, which will define the design tokens
+            usages of the different colors from the palette, that make sense for the developers. For
+            example, let's take a look of one color scheme defined for primary in light theme and
+            high contrast theme.
           </p>
           <Grid columns={3}>
             <Header as="h3" content="Design token" />
@@ -236,9 +219,11 @@ const ColorPalette = () => (
 
           <p>
             The color scheme is just a recommendation of how the color design tokens can be
-            organized. If your design team has provided you with different names for the design
-            tokens, you can use those, but introducing values in the siteVariables, just be sure
-            that they will be mapped to the correct color from the palette in each theme.
+            organized. If neeeded, you can add multiple color schemes per theme, like inverted, or
+            specific to the parts of the application that looks different. If your design team has
+            provided you with different names for the design tokens, you can use those, by
+            introducing values in the siteVariables, just be sure that they will be mapped to the
+            correct color from the palette in each theme.
           </p>
           <GuidesNavigationFooter
             previous={{ name: 'Theming Examples', url: 'theming-examples' }}
