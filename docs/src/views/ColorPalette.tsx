@@ -151,8 +151,8 @@ const ColorPalette = () => (
             values, so that they will work correctly when different themes will be applied. As part
             of each theme, we are defining <b>color scheme</b>, which will define the design tokens
             usages of the different colors from the palette, that make sense for the developers. For
-            example, let's take a look of one color scheme defined for primary in light theme and
-            high contrast theme.
+            example, let's take a look of one color scheme defined for primary in Teams light and
+            high contrast themes.
           </p>
 
           <ColorSchemes
