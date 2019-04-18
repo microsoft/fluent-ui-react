@@ -1,4 +1,10 @@
-import { ComponentSlotStylesInput, createComponent, Icon, ICSSInJSStyle } from '@stardust-ui/react'
+import {
+  ComponentSlotStylesInput,
+  ComponentSlotStyle,
+  createComponent,
+  Icon,
+  ICSSInJSStyle,
+} from '@stardust-ui/react'
 import * as Color from 'color'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -11,6 +17,7 @@ type ColorBoxProps = {
   rounded?: boolean
   size?: 'small' | 'normal' | 'big'
   value: string
+  styles?: ComponentSlotStyle
 }
 
 type ColorBoxVariables = {

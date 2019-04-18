@@ -152,14 +152,25 @@ const ColorPalette = () => (
             example, let's take a look of one color scheme defined for primary in light theme and
             high contrast theme.
           </p>
-          <Grid columns={3}>
-            <Header as="h3" content="Design token" />
-            <Header as="h3" content="Light theme" />
-            <Header as="h3" content="HC theme" />
-          </Grid>
-          <Grid columns={1} variables={{ gridGap: '2rem' }}>
-            <ColorSchemes themes={[themes.teams, themes.teamsHighContrast]} name={'primary'} />
-          </Grid>
+
+          <ColorSchemes
+            themes={[themes.teams, themes.teamsHighContrast]}
+            headers={[
+              {
+                as: 'h3',
+                content: 'Design token',
+              },
+              {
+                as: 'h3',
+                content: 'Light theme',
+              },
+              {
+                as: 'h3',
+                content: 'HC theme',
+              },
+            ]}
+            name={'primary'}
+          />
 
           <p>
             With this example, we can see that the user can safely use any token from the color
@@ -192,7 +203,7 @@ const ColorPalette = () => (
               },
             }
 
-            const colorSchemeExample = () => (
+            const ColorSchemeExample = () => (
               <Provider theme={mergeThemes(themes.teams, theme)}>
                  <Text content={'Box in light theme'} />
                  <Box content={'LIGHT THEME - HOVER ME'}/>
@@ -203,7 +214,7 @@ const ColorPalette = () => (
               </Provider>
             )
 
-            export default btnExample
+            export default ColorSchemeExample
         `}
             render={() => (
               <Provider theme={mergeThemes(themes.teams, theme)}>
