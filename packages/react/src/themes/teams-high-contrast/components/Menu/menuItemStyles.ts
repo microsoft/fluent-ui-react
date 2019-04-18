@@ -12,6 +12,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       ':hover': {
         color: v.colorActive,
         ...(!active && {
+          ...(primary && !underlined && { color: v.colorActive }),
           background: v.backgroundColorFocus,
         }),
       },
@@ -39,11 +40,15 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         },
       }),
 
-      ...((underlined || primary) && {
-        ...(!active && {
-          ':hover': {
-            color: v.color,
-          },
+      ...(underlined && {
+        ...(active && {
+          color: v.color,
+        }),
+        ':hover': {
+          color: v.color,
+        },
+        ...(isFromKeyboard && {
+          color: v.colorActive,
         }),
       }),
 
