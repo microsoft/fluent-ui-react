@@ -177,7 +177,7 @@ const ColorPalette = () => (
           <p>
             With this example, we can see that the user can safely use any token from the color
             scheme in the styles consistently, as those will be mapped to the correct values in all
-            themes. The following example will ilustrate this:
+            themes. The following example will illustrate this:
           </p>
 
           <ExampleSnippet
@@ -193,11 +193,11 @@ const ColorPalette = () => (
                     return {
                       color: colorScheme.primary.foregroundDefault,
                       backgroundColor: colorScheme.primary.backgroundDefault,
-                      border: '1px solid ' + colorScheme.primary.borderDefault,
+                      border: \`1px solid \${colorScheme.primary.borderDefault}\`,
                       ':hover': {
                         color: colorScheme.primary.foregroundHover,
                         backgroundColor: colorScheme.primary.backgroundHover,
-                        border: '1px solid ' + colorScheme.primary.borderHover,
+                        border: \`1px solid \${colorScheme.primary.borderHover}\`,
                       },
                     }
                   },
