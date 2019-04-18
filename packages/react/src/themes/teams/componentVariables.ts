@@ -24,9 +24,6 @@ export {
 
 export { default as Embed } from './components/Embed/embedVariables'
 
-export { default as Flex } from './components/Flex/flexVariables'
-export { default as FlexItem } from './components/Flex/flexItemVariables'
-
 export { default as Header } from './components/Header/headerVariables'
 export { default as HeaderDescription } from './components/Header/headerDescriptionVariables'
 
@@ -50,6 +47,8 @@ export { default as MenuDivider } from './components/Menu/menuDividerVariables'
 
 export { default as Popup } from './components/Popup/popupVariables'
 export { default as PopupContent } from './components/Popup/popupContentVariables'
+
+export { default as ProviderBox } from './components/Provider/providerBoxVariables'
 
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemVariables'
 

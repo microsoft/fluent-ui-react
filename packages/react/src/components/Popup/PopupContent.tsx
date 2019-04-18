@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { PopperChildrenProps } from 'react-popper'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
@@ -16,6 +17,8 @@ import {
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ComponentEventHandler } from '../../types'
+import Box from '../Box/Box'
+import Ref from '../Ref/Ref'
 
 export interface PopupContentProps
   extends UIComponentProps,
@@ -40,6 +43,18 @@ export interface PopupContentProps
    * @param {object} data - All props.
    */
   onMouseLeave?: ComponentEventHandler<PopupContentProps>
+
+  /** An actual placement value from Popper. */
+  placement?: PopperChildrenProps['placement']
+
+  /** A popup can show a pointer to trigger. */
+  pointing?: boolean
+
+  /** A ref to a pointer element. */
+  pointerRef?: PopperChildrenProps['arrowProps']['ref']
+
+  /** An object with positioning styles fof a pointer. */
+  pointerStyle?: PopperChildrenProps['arrowProps']['style']
 }
 
 /**
@@ -55,8 +70,12 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
 
   public static propTypes = {
     ...commonPropTypes.createCommon(),
+    placement: PropTypes.string,
+    pointing: PropTypes.bool,
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
+    pointerRef: PropTypes.func,
+    pointerStyle: PropTypes.object,
   }
 
   static defaultProps = {
@@ -76,8 +95,9 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
     ElementType,
     classes,
     unhandledProps,
+    styles,
   }: RenderResultConfig<PopupContentProps>): React.ReactNode {
-    const { children, content } = this.props
+    const { children, content, pointing, pointerRef, pointerStyle } = this.props
 
     return (
       <ElementType
@@ -88,7 +108,29 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        {childrenExist(children) ? children : content}
+        {pointing && (
+          <Ref innerRef={pointerRef}>
+            {Box.create(
+              {},
+              {
+                defaultProps: {
+                  style: pointerStyle,
+                  styles: styles.pointer,
+                },
+              },
+            )}
+          </Ref>
+        )}
+
+        {Box.create(
+          {},
+          {
+            defaultProps: {
+              children: childrenExist(children) ? children : content,
+              styles: styles.content,
+            },
+          },
+        )}
       </ElementType>
     )
   }
