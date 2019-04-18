@@ -21,11 +21,12 @@ export default {
     },
     variables: v,
   }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
-    const colors = v.colorScheme[color] || v.colorScheme['default']
+    const colors = v.colorScheme[color]
     return {
-      ...(color && {
-        color: colors.foregroundDefault,
-      }),
+      ...(color &&
+        colors && {
+          color: colors.foregroundDefault,
+        }),
       // animations are not working with span, unless display is set to 'inline-block'
       ...(animation &&
         as === 'span' && {
