@@ -29,28 +29,21 @@ const ColorSchemes = createComponent<ColorVariantsProps>({
   displayName: 'ColorVariants',
   render: ({ name, themes, headers, stardust: { classes } }) => {
     if (themes.length === 0) return <></>
-    const schema = themes[0].siteVariables.colorScheme[name]
-    const elements = []
 
-    Object.keys(schema).forEach(key => {
-      let isFirstElement: boolean = true
-      for (let i = 0; i < themes.length; i++) {
-        if (isFirstElement) {
-          elements.push(
-            <ColorBox
-              name={key}
-              key={`${i}schema`}
-              size="small"
-              value={undefined}
-              styles={{ backgroundColor: '#f2f2f2' }}
-            />,
-          )
-          isFirstElement = false
-        }
-        const value = themes[i].siteVariables.colorScheme[name][key]
-        elements.push(<ColorBox key={`${i}${key}`} size="small" value={value} />)
-      }
-    })
+    const colorSchemes = _.map(themes, theme => theme.siteVariables.colorScheme[name])
+
+    const elements = _.flatMap(_.head(colorSchemes), (i, token) => [
+      <ColorBox
+        name={token}
+        key={`${token}schema`}
+        size="small"
+        value={undefined}
+        styles={{ backgroundColor: '#f2f2f2' }}
+      />,
+      ..._.map(colorSchemes, (colorScheme, i) => (
+        <ColorBox key={`${token}${i}`} size="small" value={colorScheme[token]} />
+      )),
+    ])
 
     const columns = `auto ${_.times(themes.length, () => '180px').join(' ')}`
     return (

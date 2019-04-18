@@ -65,21 +65,23 @@ const ColorPalette = () => (
             The organizing of the colors for an application has many requirements and constraints.
             There is a need to be intentional and functional with color use. We analyzed existing
             frameworks and picked the best ideas from them. In Stardust, the colors mechanisms are
-            completely based on the siteVariables, we don't have any additional API specific to the
-            colors.
+            completely based on the <code>siteVariables</code>, we don't have any additional API
+            specific to the colors.
           </p>
           <p>
             There are two things important in order for colors to work transparently when the theme
             switching is in play:
-            <ul>
-              <li>
-                <b>color palette</b> - central place for all colors available in the application
-              </li>
-              <li>
-                <b>color schema</b> - design tokens for all colors used in the application that
-                should be appropriately map in all themes
-              </li>
-            </ul>
+          </p>
+          <ul>
+            <li>
+              <b>color palette</b> - central place for all colors available in the application
+            </li>
+            <li>
+              <b>color schema</b> - design tokens for all colors used in the application that should
+              be appropriately map in all themes
+            </li>
+          </ul>
+          <p>
             Be aware that everything that follows is our recommendation, not requirement (everything
             will work even if you decide to structure the palette and schemas differently in your
             theme)
@@ -230,11 +232,11 @@ const ColorPalette = () => (
 
           <p>
             The color scheme is just a recommendation of how the color design tokens can be
-            organized. If neeeded, you can add multiple color schemes per theme, like inverted, or
+            organized. If needed, you can add multiple color schemes per theme, like inverted, or
             specific to the parts of the application that looks different. If your design team has
             provided you with different names for the design tokens, you can use those, by
-            introducing values in the siteVariables, just be sure that they will be mapped to the
-            correct color from the palette in each theme.
+            introducing values in the <code>siteVariables</code>, just be sure that they will be
+            mapped to the correct color from the palette in each theme.
           </p>
           <GuidesNavigationFooter
             previous={{ name: 'Theming Examples', url: 'theming-examples' }}
