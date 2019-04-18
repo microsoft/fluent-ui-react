@@ -317,6 +317,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
   }
 
+  a11yStatusTimeout: any
+
+  componentWillUnmount() {
+    clearTimeout(this.a11yStatusTimeout)
+  }
+
   public renderComponent({
     ElementType,
     classes,
@@ -952,9 +958,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onAdd) {
       this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onAdd(item) })
-      setTimeout(() => {
-        this.setState({ a11ySelectionStatus: '' })
-      }, Dropdown.a11yStatusCleanupTime)
+      this.setA11ySelectionMessage()
     }
 
     if (multiple) {
@@ -1040,9 +1044,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onRemove) {
       this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onRemove(poppedItem) })
-      setTimeout(() => {
-        this.setState({ a11ySelectionStatus: '' })
-      }, Dropdown.a11yStatusCleanupTime)
+      this.setA11ySelectionMessage()
     }
 
     this.trySetStateAndInvokeHandler('onSelectedChange', null, { value })
@@ -1137,6 +1139,17 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
     // otherwise, highlight no item.
     return null
+  }
+
+  /**
+   * Function that sets and cleans the selection message after it has been set,
+   * so it is not read anymore via virtual cursor.
+   */
+  private setA11ySelectionMessage = (): void => {
+    clearTimeout(this.a11yStatusTimeout)
+    this.a11yStatusTimeout = setTimeout(() => {
+      this.setState({ a11ySelectionStatus: '' })
+    }, Dropdown.a11yStatusCleanupTime)
   }
 }
 
