@@ -58,12 +58,14 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
 
   public static defaultProps = {
     as: 'a',
-    href: '#',
     accessibility: treeTitleBehavior,
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
-    performClick: e => this.handleClick(e),
+    performClick: e => {
+      e.preventDefault()
+      this.handleClick(e)
+    },
   }
 
   handleClick = e => {
