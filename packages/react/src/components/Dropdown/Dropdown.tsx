@@ -226,6 +226,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   static className = 'ui-dropdown'
 
+  static a11yStatusCleanupTime = 500
+
   static slotClassNames: DropdownSlotClassNames
 
   static propTypes = {
@@ -950,6 +952,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onAdd) {
       this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onAdd(item) })
+      setTimeout(() => {
+        this.setState({ a11ySelectionStatus: '' })
+      }, Dropdown.a11yStatusCleanupTime)
     }
 
     if (multiple) {
@@ -1035,6 +1040,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onRemove) {
       this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onRemove(poppedItem) })
+      setTimeout(() => {
+        this.setState({ a11ySelectionStatus: '' })
+      }, Dropdown.a11yStatusCleanupTime)
     }
 
     this.trySetStateAndInvokeHandler('onSelectedChange', null, { value })
