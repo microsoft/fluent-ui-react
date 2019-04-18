@@ -282,3 +282,11 @@ export const isValidColor = (color: string): boolean => {
 export const getColorSchemeKey = (color: string, primary?: boolean): string => {
   return color && isValidColor(color) ? color : primary ? 'primary' : 'default'
 }
+
+export const getColorScheme = (
+  colorScheme: ColorSchemeMapping,
+  color: string,
+  primary?: boolean,
+) => {
+  return colorScheme[getColorSchemeKey(color, primary)]
+}
