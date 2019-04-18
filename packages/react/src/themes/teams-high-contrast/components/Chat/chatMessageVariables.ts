@@ -11,5 +11,6 @@ export default (siteVars: any): Partial<ChatMessageVariables> => {
     hasMentionNubbinColor: siteVars.accessibleYellow,
     isImportantColor: siteVars.accessibleYellow,
     badgeTextColor: siteVars.colors.black,
+    timestampColorMine: siteVars.colors.white,
   }
 }
