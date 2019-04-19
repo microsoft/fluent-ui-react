@@ -191,7 +191,7 @@ export interface ICSSInJSStyle extends React.CSSProperties {
 export interface ComponentStyleFunctionParam<
   TProps extends PropsWithVarsAndStyles = PropsWithVarsAndStyles,
   TVars extends ComponentVariablesObject = ComponentVariablesObject,
-  TStyles = any
+  TStyles = {}
 > {
   props: State & TProps
   variables: TVars
@@ -200,8 +200,8 @@ export interface ComponentStyleFunctionParam<
   styles: TStyles
 }
 
-export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((
-  styleParam: ComponentStyleFunctionParam<TProps, TVars>,
+export type ComponentSlotStyleFunction<TProps = {}, TVars = {}, TStyles = {}> = ((
+  styleParam: ComponentStyleFunctionParam<TProps, TVars, TStyles>,
 ) => ICSSInJSStyle)
 
 export type ComponentSlotStyle<TProps = {}, TVars = {}> =
