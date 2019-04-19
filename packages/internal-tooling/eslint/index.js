@@ -94,6 +94,7 @@ module.exports = {
     'no-useless-constructor': 'off',
     'no-useless-escape': 'off',
     'no-use-before-define': 'off',
+    'operator-assignment': 'off',
     'prefer-destructuring': 'off',
     'spaced-comment': 'off',
   },
