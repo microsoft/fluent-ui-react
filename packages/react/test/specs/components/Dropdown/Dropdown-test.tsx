@@ -59,6 +59,23 @@ describe('Dropdown', () => {
       )
     })
 
+    it('is "false" when closed by toggle indicator click', () => {
+      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+
+      triggerButton.simulate('click')
+      toggleIndicator.simulate('click')
+
+      expect(onOpenChange).toBeCalledTimes(2)
+      expect(onOpenChange).toHaveBeenLastCalledWith(
+        null,
+        expect.objectContaining({
+          open: false,
+        }),
+      )
+    })
+
     it('is "false" when closed by hitting Escape in search input', () => {
       const wrapper = mountWithProvider(
         <Dropdown onOpenChange={onOpenChange} search items={items} />,
@@ -115,39 +132,14 @@ describe('Dropdown', () => {
       )
     })
 
-    it.skip('is "false" when input is blurred', () => {
-      const wrapper = mountWithProvider(
-        <Dropdown onOpenChange={onOpenChange} search items={items} />,
-      )
-      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+    it('when set to "true" by toggle button click will move focus to the items list', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
-      toggleIndicator.simulate('click')
-      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
-      itemsList.simulate('blur')
+      triggerButton.simulate('click')
 
-      expect(onOpenChange).toBeCalledTimes(2)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          open: false,
-        }),
-      )
-    })
-
-    it.skip('is "false" when list is blurred', () => {
-      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
-      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
-
-      toggleIndicator.simulate('click')
-      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
-      searchInput.simulate('blur')
-
-      expect(onOpenChange).toBeCalledTimes(2)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          open: false,
-        }),
+      expect(document.activeElement).toEqual(
+        wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`).getDOMNode(),
       )
     })
   })
@@ -985,6 +977,259 @@ describe('Dropdown', () => {
           searchQuery: '',
         }),
       )
+    })
+  })
+
+  describe('activeSelectedIndex', () => {
+    it('is unset by default', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      const dropdown = wrapper.find(Dropdown)
+
+      triggerButton.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+
+      expect(dropdown.state('activeSelectedIndex')).toBe(null)
+    })
+
+    it('is set on active item click', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      const dropdown = wrapper.find(Dropdown)
+
+      triggerButton.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+      const selectedItem = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
+      selectedItem.simulate('click')
+
+      expect(dropdown.state('activeSelectedIndex')).toBe(0)
+    })
+
+    it('is set as last index on left arrow from the search query', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple search items={items} />)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+      const dropdown = wrapper.find(Dropdown)
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+
+      toggleIndicator.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+      toggleIndicator.simulate('click')
+      const itemAtIndex2 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex2.simulate('click')
+      searchInput.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
+
+      expect(dropdown.state('activeSelectedIndex')).toBe(1)
+    })
+
+    it('is updated on arrow navigation', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple search items={items} />)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+      const dropdown = wrapper.find(Dropdown)
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+
+      toggleIndicator.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+      toggleIndicator.simulate('click')
+      const itemAtIndex2 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex2.simulate('click')
+      toggleIndicator.simulate('click')
+      const itemAtIndex3 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex3.simulate('click')
+      searchInput.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
+
+      expect(dropdown.state('activeSelectedIndex')).toBe(2)
+
+      const selectedItemAtIndex2 = wrapper
+        .find(`span.${Dropdown.slotClassNames.selectedItem}`)
+        .at(2)
+      selectedItemAtIndex2.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
+
+      expect(dropdown.state('activeSelectedIndex')).toBe(1)
+
+      const selectedItemAtIndex1 = wrapper
+        .find(`span.${Dropdown.slotClassNames.selectedItem}`)
+        .at(1)
+      selectedItemAtIndex1.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
+
+      expect(dropdown.state('activeSelectedIndex')).toBe(0)
+
+      const selectedItemAtIndex0 = wrapper
+        .find(`span.${Dropdown.slotClassNames.selectedItem}`)
+        .at(0)
+      selectedItemAtIndex0.simulate('keydown', {
+        keyCode: keyboardKey.ArrowRight,
+        key: 'ArrowRight',
+      })
+
+      expect(dropdown.state('activeSelectedIndex')).toBe(1)
+
+      selectedItemAtIndex1.simulate('keydown', {
+        keyCode: keyboardKey.ArrowRight,
+        key: 'ArrowRight',
+      })
+
+      expect(dropdown.state('activeSelectedIndex')).toBe(2)
+    })
+
+    it('is updated on arrow navigation after being set by click', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} />)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+      const dropdown = wrapper.find(Dropdown)
+
+      toggleIndicator.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+      toggleIndicator.simulate('click')
+      const itemAtIndex2 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex2.simulate('click')
+      toggleIndicator.simulate('click')
+      const itemAtIndex3 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex3.simulate('click')
+      const selectedItemAtIndex1 = wrapper
+        .find(`span.${Dropdown.slotClassNames.selectedItem}`)
+        .at(1)
+      selectedItemAtIndex1.simulate('click')
+      selectedItemAtIndex1.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
+
+      expect(dropdown.state('activeSelectedIndex')).toBe(0)
+
+      const selectedItemAtIndex0 = wrapper
+        .find(`span.${Dropdown.slotClassNames.selectedItem}`)
+        .at(0)
+      selectedItemAtIndex0.simulate('keydown', {
+        keyCode: keyboardKey.ArrowRight,
+        key: 'ArrowRight',
+      })
+
+      expect(dropdown.state('activeSelectedIndex')).toBe(1)
+    })
+
+    it('stays as "0" on left arrow from the first selected item', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} />)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+      const dropdown = wrapper.find(Dropdown)
+
+      toggleIndicator.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+      toggleIndicator.simulate('click')
+      const itemAtIndex2 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex2.simulate('click')
+      const selectedItemAtIndex1 = wrapper
+        .find(`span.${Dropdown.slotClassNames.selectedItem}`)
+        .at(1)
+      selectedItemAtIndex1.simulate('click')
+      selectedItemAtIndex1.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
+      selectedItemAtIndex1.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
+
+      expect(dropdown.state('activeSelectedIndex')).toBe(0)
+    })
+
+    it('gets unset on right arrow from the last selected item', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} />)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+      const dropdown = wrapper.find(Dropdown)
+
+      toggleIndicator.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+      const selectedItemAtIndex0 = wrapper.find(
+        `span.${DropdownSelectedItem.slotClassNames.header}`,
+      )
+      selectedItemAtIndex0.simulate('click')
+      selectedItemAtIndex0.simulate('keydown', {
+        keyCode: keyboardKey.ArrowRight,
+        key: 'ArrowRight',
+      })
+
+      expect(dropdown.state('activeSelectedIndex')).toBe(null)
+    })
+
+    it('moves focus to the label when is set by click', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+      const selectedItem = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
+      selectedItem.simulate('click')
+
+      expect(document.activeElement).toEqual(
+        wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`).getDOMNode(),
+      )
+    })
+
+    it('moves focus between labels on arrow navigation', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+      triggerButton.simulate('click')
+      const itemAtIndex2 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex2.simulate('click')
+      const selectedItemHeaderAtIndex1 = wrapper
+        .find(`span.${DropdownSelectedItem.slotClassNames.header}`)
+        .at(1)
+      selectedItemHeaderAtIndex1.simulate('click')
+      const selectedItemAtIndex1 = wrapper
+        .find(`span.${Dropdown.slotClassNames.selectedItem}`)
+        .at(1)
+      selectedItemAtIndex1.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
+      const selectedItemAtIndex0 = wrapper
+        .find(`span.${Dropdown.slotClassNames.selectedItem}`)
+        .at(0)
+
+      expect(document.activeElement).toEqual(selectedItemAtIndex0.getDOMNode())
+
+      selectedItemAtIndex0.simulate('keydown', {
+        keyCode: keyboardKey.ArrowRight,
+        key: 'ArrowRight',
+      })
+
+      expect(document.activeElement).toEqual(
+        wrapper
+          .find(`span.${Dropdown.slotClassNames.selectedItem}`)
+          .at(1)
+          .getDOMNode(),
+      )
+    })
+
+    it('moves focus back to the trigger button on arrow right from last selected item', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+      const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
+      selectedItemHeader.simulate('click')
+      const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`)
+      selectedItem.simulate('keydown', { keyCode: keyboardKey.ArrowRight, key: 'ArrowRight' })
+
+      expect(document.activeElement).toEqual(triggerButton.getDOMNode())
+    })
+
+    it('moves focus back to the search input on arrow right from last selected item', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple search items={items} />)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+
+      toggleIndicator.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+      const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
+      selectedItemHeader.simulate('click')
+      const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`)
+      selectedItem.simulate('keydown', { keyCode: keyboardKey.ArrowRight, key: 'ArrowRight' })
+
+      expect(document.activeElement).toEqual(searchInput.getDOMNode())
     })
   })
 
