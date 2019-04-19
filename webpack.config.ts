@@ -3,6 +3,7 @@ import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import { webpack as lernaAliases } from 'lerna-alias'
 import * as _ from 'lodash'
 import * as webpack from 'webpack'
+import * as TerserPlugin from 'terser-webpack-plugin'
 import { CheckerPlugin as AsyncTypeScriptChecker } from 'awesome-typescript-loader'
 
 import config from './config'
@@ -146,6 +147,18 @@ if (__PROD__) {
       minimize: true,
     }),
   )
+
+  webpackConfig.optimization = {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          output: {
+            comments: false,
+          },
+        },
+      }),
+    ],
+  }
 }
 
 export default webpackConfig

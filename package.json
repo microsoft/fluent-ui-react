@@ -130,9 +130,9 @@
     "tslint-config-airbnb": "^5.11.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3333",
-    "webpack": "^4.25.1",
-    "webpack-dev-middleware": "^3.4.0",
-    "webpack-hot-middleware": "^2.18.2"
+    "webpack": "^4.30.0",
+    "webpack-dev-middleware": "^3.6.2",
+    "webpack-hot-middleware": "^2.24.3"
   },
   "workspaces": [
     "packages/*"
