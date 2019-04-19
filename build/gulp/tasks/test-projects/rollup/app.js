@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-// eslint-disable-next-line import/no-unresolved
 import { Button, Provider, themes } from '@stardust-ui/react'
 
 ReactDOM.render(

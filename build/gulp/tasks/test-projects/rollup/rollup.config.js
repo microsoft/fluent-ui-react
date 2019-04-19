@@ -1,6 +1,6 @@
-import replace from 'rollup-plugin-replace' // eslint-disable-line import/no-unresolved
-import resolve from 'rollup-plugin-node-resolve' // eslint-disable-line import/no-unresolved
-import commonjs from 'rollup-plugin-commonjs' // eslint-disable-line import/no-unresolved
+import replace from 'rollup-plugin-replace'
+import resolve from 'rollup-plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs'
 
 const warningWhitelist = [
   'THIS_IS_UNDEFINED', // comes from TS transforms
