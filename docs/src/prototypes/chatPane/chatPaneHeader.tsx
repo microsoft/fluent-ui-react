@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Avatar, Button, Divider, Icon, Layout, Segment, Text } from '@stardust-ui/react'
-import style from './chatProtoStyle'
+import { Avatar, Button, Divider, Icon, Segment, Text, Flex } from '@stardust-ui/react'
+import chatProtoStyle from './chatProtoStyle'
 
 import { ChatData } from './services'
 
@@ -11,22 +11,22 @@ export interface ChatPaneHeaderProps {
 class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
   public render() {
     return (
-      <Layout
-        vertical
-        start={this.renderBanner()}
-        main={this.renderMainArea()}
-        end={<Divider size={2} styles={{ padding: '0 32px' }} />}
-      />
+      <Flex column>
+        <Flex.Item>{this.renderBanner()}</Flex.Item>
+        {this.renderMainArea()}
+        <Divider size={2} styles={{ padding: '0 32px' }} />
+      </Flex>
     )
   }
 
-  private renderBanner(): React.ReactNode {
+  private renderBanner(): React.ReactElement {
     return (
       <Segment
         content={
           <Icon
             name="team-create"
-            variables={siteVars => ({ color: siteVars.colors.white, margin: 'auto 8px' })}
+            styles={{ margin: 'auto 8px' }}
+            variables={siteVars => ({ color: siteVars.colors.white })}
           />
         }
         styles={({ variables: v }) => ({
@@ -41,40 +41,40 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
     )
   }
 
-  private renderMainArea(): React.ReactNode {
+  private renderMainArea(): React.ReactElement {
     const { chat } = this.props
 
     return (
-      <Layout
+      <Flex
         role="region"
         aria-labelledby="heading"
-        start={<Avatar name={chat.title} />}
-        main={
-          <div
-            id="heading"
-            role="heading"
-            aria-level={2}
-            aria-labelledby="chat-header-reader-text chat-header-title"
-          >
-            <div id="chat-header-reader-text" style={style.screenReaderContainerStyles}>
-              Chat header
-            </div>
-            <Text
-              id="chat-header-title"
-              size="large"
-              content={chat.title}
-              styles={{ marginLeft: '12px', fontWeight: 600 }}
-            />
+        hAlign="stretch"
+        vAlign="center"
+        styles={{ height: '64px', padding: '0 32px' }}
+      >
+        <Avatar name={chat.title} />
+        <div
+          id="heading"
+          role="heading"
+          aria-level={2}
+          aria-labelledby="chat-header-reader-text chat-header-title"
+        >
+          <div id="chat-header-reader-text" style={chatProtoStyle.screenReaderContainerStyles}>
+            Chat header
           </div>
-        }
-        end={this.renderHeaderButtons()}
-        alignItems="center"
-        styles={{ padding: '16px 32px' }}
-      />
+          <Text
+            id="chat-header-title"
+            size="large"
+            content={chat.title}
+            styles={{ marginLeft: '12px', fontWeight: 600 }}
+          />
+        </div>
+        <Flex.Item push>{this.renderHeaderButtons()}</Flex.Item>
+      </Flex>
     )
   }
 
-  private renderHeaderButtons(): React.ReactNode {
+  private renderHeaderButtons(): React.ReactElement {
     return (
       <div style={{ display: 'inline-flex' }}>
         <Button.Group

@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -6,7 +7,6 @@ import {
   AutoControlledComponent,
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
@@ -22,6 +22,11 @@ import { ReactProps, ShorthandCollection, ShorthandValue } from '../../types'
 import MenuDivider from './MenuDivider'
 
 export type MenuShorthandKinds = 'divider' | 'item'
+
+export interface MenuSlotClassNames {
+  divider: string
+  item: string
+}
 
 export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -88,6 +93,11 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
 
   static className = 'ui-menu'
 
+  static slotClassNames: MenuSlotClassNames = {
+    divider: `${Menu.className}__divider`,
+    item: `${Menu.className}__item`,
+  }
+
   static create: Function
 
   static propTypes = {
@@ -152,6 +162,8 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
       indicator,
     } = this.props
     const { activeIndex } = this.state
+    const itemsCount = _.filter(items, item => getKindProp(item, 'item') !== 'divider').length
+    let itemPosition = 0
 
     return _.map(items, (item, index) => {
       const active =
@@ -161,6 +173,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
       if (kind === 'divider') {
         return MenuDivider.create(item, {
           defaultProps: {
+            className: Menu.slotClassNames.divider,
             primary,
             secondary,
             vertical,
@@ -171,8 +184,11 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
         })
       }
 
+      itemPosition++
+
       return MenuItem.create(item, {
         defaultProps: {
+          className: Menu.slotClassNames.item,
           iconOnly,
           pills,
           pointing,
@@ -182,6 +198,8 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
           variables,
           vertical,
           index,
+          itemPosition,
+          itemsCount,
           active,
           inSubmenu: submenu,
           indicator,

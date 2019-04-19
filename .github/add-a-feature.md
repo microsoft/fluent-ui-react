@@ -12,7 +12,7 @@ Add a feature
   - [How to create a component](#how-to-create-a-component)
   - [Good practice](#good-practice)
   - [Display Name and Class Name](#display-name-and-class-name)
-  - [Using propTypes](#using-proptypes)
+  - [Using prop interfaces and propTypes](#using-prop-interfaces-and-proptypes)
   - [State](#state)
   - [Conformance Test](#conformance-test)
   - [Add doc site example](#add-doc-site-example)
@@ -40,12 +40,9 @@ Once the component spec is solidified, it's time to write some code. The followi
 
 ### How to create a component
 
-You can create a new component `MyComponent` by following the example of an existing component (e.g. Button) or by running the command
-```
-yarn generate:component MyComponent
-```
+You can create a new component `MyComponent` by following the example of an existing component (e.g. Button).
 
-The corresponding component directory trees are going to be created in correct places:
+The corresponding component directory trees should be created in correct places:
   - the component under `/src/components/MyComponent`,
   - the docs under `/docs/src/examples/components/MyComponent`,
   - the tests under `/test/specs/components/MyComponent`
@@ -57,10 +54,11 @@ E.g. for update on the `teams` theme: `/src/themes/`
 
 Generally if you're updating a component, push a small change so that your PR could be reviewed quickly.
 
-Stateless components should be written as a `function`:
+Stateless components should be written as an arrow `function`:
 
 ```tsx
-function Button(props) {
+
+const Button: React.FunctionalComponent = (props) => {
   // ...
 }
 ```
@@ -88,42 +86,48 @@ Here's an example:
   static className = 'ui-accordion'
 ```
 
-### Using propTypes
+### Using prop interfaces and propTypes
 
-Every component must have fully described `propTypes`.
+Every component must have fully described `MyComponentProps` interface and `propTypes`.
 
  ```tsx
-import * as React from 'react'
 import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
-...
+import {
+  ChildrenComponentProps,
+  ContentComponentProps,
+  UIComponentProps,
+  commonPropTypes,
+} from '../../lib'
+
+export interface DividerProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
+  /** A divider can be fitted, without any space above or below it.  */
+  fitted?: boolean
+
+  /** Size multiplier (default 0) * */
+  size?: number
+
+  /** A divider can appear more important and draw the user's attention. */
+  important?: boolean
+}
+
+// ...
 
   static propTypes = {
-    as: customPropTypes.as,
-
-    /** Child content * */
-    children: PropTypes.node,
-
-    /** Additional classes. */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** Size multiplier (default 0) * */
-    size: PropTypes.number,
-
-    /** A Divider can be formatted to show different levels of emphasis. */
-    type: PropTypes.oneOf(['primary', 'secondary']),
-
-    /** A divider can appear more important and draw the user's attention. */
-    important: PropTypes.bool,
-
-    /** Custom styles to be applied for component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied for component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+     ...commonPropTypes.createCommon({ color: true }),
+     fitted: PropTypes.bool,
+     important: PropTypes.bool,
+     size: PropTypes.number,
   }
  ```
 
@@ -132,7 +136,9 @@ import * as PropTypes from 'prop-types'
 Strive to use stateless functional components when possible:
 
 ```tsx
-function MyComponent(props) {
+export interface MyComponentProps {}
+
+const MyComponent: React.FunctionalComponent<MyComponentProps> = (props) => {
   return <div {...props} />
 }
 ```
@@ -140,7 +146,9 @@ function MyComponent(props) {
 If you're component requires event handlers, it is a stateful class component. Want to know [why][8]?
 
 ```tsx
-class MyComponent extends AutoControlledComponent {
+export interface MyComponentProps {}
+
+class MyComponent extends AutoControlledComponent<MyComponentProps> {
   handleClick = (e) => {
     console.log('Clicked my component!')
   }

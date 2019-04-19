@@ -1,7 +1,14 @@
 import { parallel, series, task } from 'gulp'
-import { argv } from 'yargs'
+import * as yargs from 'yargs'
 
 import sh from '../sh'
+
+const argv = yargs
+  .option('runInBand', {})
+  .option('maxWorkers', {})
+  .option('detectLeaks', {})
+  .option('testNamePattern', { alias: 't' })
+  .option('testFilePattern', { alias: 'F' }).argv
 
 // ----------------------------------------
 // Jest
@@ -9,19 +16,21 @@ import sh from '../sh'
 const jest = ({ watch = false } = {}) => cb => {
   process.env.NODE_ENV = 'test'
 
-  const jestConfigFileName = `jest.config.${argv.strict ? 'strict' : 'common'}.js`
-
   // in watch mode jest never exits
   // let the gulp task complete to prevent blocking subsequent tasks
   const command = [
-    `jest --config ./build/jest/${jestConfigFileName} --coverage`,
+    `jest --config ./jest.config.js --coverage`,
     watch && '--watchAll',
     argv.runInBand && '--runInBand',
     argv.maxWorkers && `--maxWorkers=${argv.maxWorkers}`,
     argv.detectLeaks && '--detectLeaks',
+    argv.testNamePattern && `--testNamePattern="${argv.testNamePattern}"`,
+    argv.testFilePattern && `${argv.testFilePattern}`, // !!! THIS ITEM MUST GO LAST IN THE ARRAY !!!
   ]
     .filter(Boolean)
     .join(' ')
+
+  console.log(command)
 
   return sh(command)
 }

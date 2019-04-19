@@ -24,7 +24,7 @@ const tabBehavior: Accessibility = (props: any) => ({
     },
     root: {
       role: 'tab',
-      tabIndex: '0',
+      tabIndex: 0,
       'aria-selected': !_.isNil(props['aria-selected'])
         ? props['aria-selected']
         : !!props['active'],

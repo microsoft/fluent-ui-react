@@ -1,6 +1,7 @@
 import * as React from 'react'
-import reactElementToJSXString from 'react-element-to-jsx-string'
+
 import CodeSnippet from '../CodeSnippet'
+import renderElementToJSX from './renderElementToJSX'
 
 export type ExampleSnippetProps = {
   value?: string
@@ -18,32 +19,8 @@ const renderedStyle = {
 }
 
 const ExampleSnippet = ({ render = () => null, value }: ExampleSnippetProps) => {
-  let renderHasFunction
-
   const element = render()
-  const string =
-    value ||
-    reactElementToJSXString(element, {
-      showDefaultProps: false,
-      showFunctions: true,
-      functionValue: fn => (renderHasFunction = true),
-    })
-
-  if (process.env.NODE_ENV !== 'production') {
-    if (renderHasFunction && !value) {
-      throw new Error(
-        [
-          "This ExampleSnippet's render prop output includes function.",
-          ' A helpful JSX string cannot be generated for functions.',
-          ' Please define a `value` string prop that displays readable code to the user.',
-          '\n\n',
-          'RENDERED:',
-          '\n\n',
-          string,
-        ].join(''),
-      )
-    }
-  }
+  const string = value || renderElementToJSX(element, !value)
 
   return (
     <div style={rootStyle}>

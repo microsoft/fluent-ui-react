@@ -10,8 +10,9 @@ import {
   felaRtlRenderer,
   isBrowser,
   mergeThemes,
-  updateCachedRemSize,
+  ChildrenComponentProps,
 } from '../../lib'
+
 import {
   ThemePrepared,
   ThemeInput,
@@ -20,20 +21,20 @@ import {
   StaticStyleFunction,
   FontFace,
 } from '../../themes/types'
+
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
+import ProviderBox from './ProviderBox'
+import { Extendable } from '../../types'
 
-export interface ProviderProps {
+export interface ProviderProps extends ChildrenComponentProps {
   theme: ThemeInput
-  children: React.ReactNode
 }
 
 /**
  * The Provider passes the CSS in JS renderer and theme to your components.
  */
-class Provider extends React.Component<ProviderProps> {
-  staticStylesRendered: boolean = false
-
+class Provider extends React.Component<Extendable<ProviderProps>> {
   static displayName = 'Provider'
 
   static propTypes = {
@@ -61,10 +62,13 @@ class Provider extends React.Component<ProviderProps> {
       ),
       animations: PropTypes.object,
     }),
-    children: PropTypes.element.isRequired,
+    children: PropTypes.node.isRequired,
   }
 
   static Consumer = ProviderConsumer
+  static Box = ProviderBox
+
+  staticStylesRendered: boolean = false
 
   static _topLevelFelaRenderer = undefined
 
@@ -137,7 +141,7 @@ class Provider extends React.Component<ProviderProps> {
   }
 
   render() {
-    const { theme, children } = this.props
+    const { theme, children, ...unhandledProps } = this.props
 
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
@@ -152,9 +156,22 @@ class Provider extends React.Component<ProviderProps> {
           if (isBrowser()) render(outgoingTheme.renderer)
           this.renderStaticStylesOnce(outgoingTheme)
 
+          const rtlProps: { dir?: 'rtl' | 'ltr' } = {}
+          // only add dir attribute for top level provider or when direction changes from parent to child
+          if (
+            !incomingTheme ||
+            (incomingTheme.rtl !== outgoingTheme.rtl && _.isBoolean(outgoingTheme.rtl))
+          ) {
+            rtlProps.dir = outgoingTheme.rtl ? 'rtl' : 'ltr'
+          }
+
           return (
             <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
-              <ThemeProvider theme={outgoingTheme}>{children}</ThemeProvider>
+              <ThemeProvider theme={outgoingTheme}>
+                <ProviderBox {...unhandledProps} {...rtlProps}>
+                  {children}
+                </ProviderBox>
+              </ThemeProvider>
             </RendererProvider>
           )
         }}
@@ -167,8 +184,6 @@ class Provider extends React.Component<ProviderProps> {
     if (!this.staticStylesRendered && staticStyles) {
       this.renderStaticStyles(mergedTheme)
       this.staticStylesRendered = true
-
-      updateCachedRemSize()
     }
   }
 }

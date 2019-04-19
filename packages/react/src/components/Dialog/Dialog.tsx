@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -6,10 +7,10 @@ import {
   UIComponentProps,
   commonPropTypes,
   ColorComponentProps,
-  customPropTypes,
   ContentComponentProps,
   AutoControlledComponent,
   doesNodeContainClick,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
@@ -22,7 +23,10 @@ import Portal from '../Portal/Portal'
 import Ref from '../Ref/Ref'
 import Flex from '../Flex/Flex'
 
-export interface DialogProps extends UIComponentProps, ContentComponentProps, ColorComponentProps {
+export interface DialogProps
+  extends UIComponentProps,
+    ContentComponentProps<ShorthandValue>,
+    ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default dialogBehavior
@@ -92,7 +96,7 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
   static propTypes = {
     ...commonPropTypes.createCommon({
       children: false,
-      content: true,
+      content: 'shorthand',
     }),
     actions: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
@@ -191,8 +195,8 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
         <ElementType
           className={classes.root}
           {...accessibility.attributes.popup}
-          {...accessibility.keyHandlers.popup}
           {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
         >
           {Header.create(header, {
             defaultProps: {

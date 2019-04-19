@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -5,7 +6,6 @@ import * as _ from 'lodash'
 import {
   UIComponent,
   childrenExist,
-  customPropTypes,
   createShorthandFactory,
   isFromKeyboard,
   UIComponentProps,
@@ -82,7 +82,7 @@ export interface ButtonState {
  * @accessibility
  * Other considerations:
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
- *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
+ *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
  */
 class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
   static create: Function

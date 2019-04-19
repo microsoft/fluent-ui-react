@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -9,7 +10,6 @@ import { Accessibility } from '../../lib/accessibility/types'
 import {
   UIComponent,
   childrenExist,
-  customPropTypes,
   createShorthandFactory,
   commonPropTypes,
   UIComponentProps,
@@ -22,6 +22,11 @@ import {
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../types'
+
+export interface TreeItemSlotClassNames {
+  title: string
+  subtree: string
+}
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -65,9 +70,14 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
 class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
   static create: Function
 
+  static displayName = 'TreeItem'
+
   static className = 'ui-tree__item'
 
-  static displayName = 'TreeItem'
+  static slotClassNames: TreeItemSlotClassNames = {
+    title: `${TreeItem.className}__title`,
+    subtree: `${TreeItem.className}__subtree`,
+  }
 
   static autoControlledProps = ['open']
 
@@ -93,7 +103,6 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
 
   handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
     onClick: (e, titleProps) => {
-      e.preventDefault()
       _.invoke(this.props, 'onTitleClick', e, this.props)
       _.invoke(predefinedProps, 'onClick', e, titleProps)
     },
@@ -107,6 +116,7 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
       <>
         {TreeTitle.create(title, {
           defaultProps: {
+            className: TreeItem.slotClassNames.title,
             open,
             hasSubtree,
           },
@@ -116,6 +126,8 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
         {open &&
           Tree.create(items, {
             defaultProps: {
+              accessibility: defaultBehavior,
+              className: TreeItem.slotClassNames.subtree,
               exclusive,
               renderItemTitle,
             },

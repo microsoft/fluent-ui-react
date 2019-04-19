@@ -2,11 +2,6 @@ import { pxToRem } from '../../lib'
 import { colors, naturalColors } from './colors'
 
 //
-// VARIABLES
-//
-export const htmlFontSize = '10px' // what 1rem represents
-
-//
 // COLORS
 //
 export { colors, contextualColors, emphasisColors, naturalColors, colorScheme } from './colors'
@@ -25,7 +20,10 @@ export const brand08 = '#8B8CC7' // no mapping color
 
 export const magenta = '#B24782' // no mapping color
 export const orchid = '#943670' // no mapping color
-export const red08 = '#F3D6DB' // no mapping color
+
+export const red = colors.red[900] // no mapping color $app-red
+export const red08 = '#F3D6DB' // no mapping color $app-red-08
+export const red10 = '#FCF4F6' // no mapping color $app-red-10
 
 //
 // SHADOW LEVELS
@@ -87,7 +85,7 @@ export const bodyPadding = 0
 export const bodyMargin = 0
 export const bodyFontFamily =
   '"Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif'
-export const bodyFontSize = '1.4rem'
+export const bodyFontSize = fontSizes.medium
 export const bodyBackground = colors.white
 export const bodyColor = colors.grey[900]
 export const bodyLineHeight = lineHeightMedium

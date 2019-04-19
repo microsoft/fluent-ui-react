@@ -1,9 +1,9 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import {
   UIComponent,
   childrenExist,
-  customPropTypes,
   RenderResultConfig,
   UIComponentProps,
   ChildrenComponentProps,
@@ -14,7 +14,6 @@ import {
 import { ReactProps } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import ReactNode = React.ReactNode
 
 export interface GridProps
   extends UIComponentProps,
@@ -69,7 +68,7 @@ class Grid extends UIComponent<ReactProps<GridProps>, any> {
     ElementType,
     classes,
     unhandledProps,
-  }: RenderResultConfig<any>): ReactNode {
+  }: RenderResultConfig<any>): React.ReactNode {
     const { children, content } = this.props
 
     return (

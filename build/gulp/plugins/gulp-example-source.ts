@@ -4,7 +4,7 @@ import * as prettier from 'prettier'
 import * as through from 'through2'
 import * as Vinyl from 'vinyl'
 
-import * as prettierConfig from '../../../.prettierrc.json'
+const prettierConfig = require('../../../.prettierrc.json')
 import { ExampleSource } from '../../../docs/src/types'
 import transformStarImportPlugin from '../../babel/transform-star-import-plugin'
 import { getRelativePathToSourceFile } from './util'

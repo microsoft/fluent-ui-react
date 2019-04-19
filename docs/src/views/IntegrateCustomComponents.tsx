@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 import {
-  Button,
-  Divider,
   Header,
   Provider,
   createComponent,
@@ -13,6 +11,7 @@ import {
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
 import { ReactChildren } from 'src/types'
+import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
 interface StyledButtonProps {
   className?: string
@@ -276,16 +275,6 @@ export default () => (
       <NavLink to="accessibility">Accessibility guide</NavLink> section.
     </p>
 
-    <br />
-    <Divider size={1} />
-    <br />
-    <Button
-      as={NavLink}
-      content="Theming Examples"
-      icon="arrow left"
-      iconPosition="before"
-      primary
-      to="/theming-examples"
-    />
+    <GuidesNavigationFooter previous={{ name: 'Layout', url: 'layout' }} />
   </DocPage>
 )

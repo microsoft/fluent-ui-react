@@ -14,7 +14,6 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
 
   input: ({ props: p, variables: v }): ICSSInJSStyle => ({
     outline: 0,
-    boxSizing: 'border-box',
     borderStyle: 'solid',
     borderColor: 'transparent',
     borderWidth: v.borderWidth,
@@ -26,7 +25,7 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
     ...(p.fluid && { width: '100%' }),
     ...(p.inline && { float: 'left' }),
     '::placeholder': {
-      color: v.fontColor,
+      color: v.placeholderColor,
     },
     ':focus': {
       borderBottomColor: v.inputFocusBorderBottomColor,

@@ -44,7 +44,7 @@ describe('Popup', () => {
     testPopupPosition({ align, position, expectedPlacement, rtl: true })
 
   const getPopupContent = (popup: ReactWrapper) => {
-    return popup.find(`#${contentId}`)
+    return popup.find(`div#${contentId}`)
   }
 
   type ExpectPopupToOpenAndCloseParams = {
@@ -61,7 +61,7 @@ describe('Popup', () => {
     const popup = mountWithProvider(
       <Popup
         trigger={<span id={triggerId}> text to trigger popup </span>}
-        content={<span id={contentId} />}
+        content={{ id: contentId }}
         on={onProp}
       />,
     )
@@ -202,8 +202,6 @@ describe('Popup', () => {
       })
     })
     test(`close previous popup with Enter key`, () => {
-      jest.useFakeTimers()
-
       const attachTo = document.createElement('div')
       document.body.appendChild(attachTo)
 
@@ -213,12 +211,12 @@ describe('Popup', () => {
         <React.Fragment>
           <Popup
             trigger={<span id={triggerId}>text to trigger popup</span>}
-            content={<span id={contentId} />}
+            content={{ id: contentId }}
             on="click"
           />
           <Popup
             trigger={<span id={triggerId2}>text to trigger popup</span>}
-            content={<span id={contentId2} />}
+            content={{ id: contentId2 }}
             on="click"
           />
         </React.Fragment>,
@@ -230,7 +228,6 @@ describe('Popup', () => {
 
       domEvent.keyDown(`#${triggerId}`, { keyCode: keyboardKey.Enter })
       wrapper.update() // as event comes outside enzyme, we should trigger update
-      jest.runAllTimers() // we use setTimeout in `updateOutsideHandleSubscription()`
 
       expect(wrapper.find(`#${contentId}`).exists()).toBe(true)
       expect(wrapper.find(`#${contentId2}`).exists()).toBe(false)
@@ -241,6 +238,7 @@ describe('Popup', () => {
       expect(wrapper.find(`#${contentId}`).exists()).toBe(false)
       expect(wrapper.find(`#${contentId2}`).exists()).toBe(true)
 
+      wrapper.unmount()
       document.body.removeChild(attachTo)
     })
   })
@@ -272,7 +270,7 @@ describe('Popup', () => {
       const popup = mountWithProvider(
         <Popup
           trigger={<span id={triggerId}> text to trigger popup </span>}
-          content={<span id={contentId} />}
+          content={{ id: contentId }}
           accessibility={behavior}
         />,
       )
