@@ -1092,7 +1092,10 @@ describe('Dropdown', () => {
       const selectedItemAtIndex1 = wrapper
         .find(`span.${Dropdown.slotClassNames.selectedItem}`)
         .at(1)
-      selectedItemAtIndex1.simulate('click')
+      const selectedItemHeaderAtIndex1 = wrapper
+        .find(`span.${DropdownSelectedItem.slotClassNames.header}`)
+        .at(1)
+      selectedItemHeaderAtIndex1.simulate('click')
       selectedItemAtIndex1.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
 
       expect(dropdown.state('activeSelectedIndex')).toBe(0)
@@ -1122,7 +1125,10 @@ describe('Dropdown', () => {
       const selectedItemAtIndex1 = wrapper
         .find(`span.${Dropdown.slotClassNames.selectedItem}`)
         .at(1)
-      selectedItemAtIndex1.simulate('click')
+      const selectedItemHeaderAtIndex1 = wrapper
+        .find(`span.${DropdownSelectedItem.slotClassNames.header}`)
+        .at(1)
+      selectedItemHeaderAtIndex1.simulate('click')
       selectedItemAtIndex1.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
       selectedItemAtIndex1.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
 
@@ -1137,15 +1143,43 @@ describe('Dropdown', () => {
       toggleIndicator.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
       itemAtIndex1.simulate('click')
-      const selectedItemAtIndex0 = wrapper.find(
-        `span.${DropdownSelectedItem.slotClassNames.header}`,
-      )
-      selectedItemAtIndex0.simulate('click')
-      selectedItemAtIndex0.simulate('keydown', {
+      const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
+      selectedItemHeader.simulate('click')
+      const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`)
+      selectedItem.simulate('keydown', {
         keyCode: keyboardKey.ArrowRight,
         key: 'ArrowRight',
       })
 
+      expect(dropdown.state('activeSelectedIndex')).toBe(null)
+    })
+
+    it('gets unset on removal by delete key on selected item', () => {
+      const onSelectedChange = jest.fn()
+      const wrapper = mountWithProvider(
+        <Dropdown multiple items={items} onSelectedChange={onSelectedChange} />,
+      )
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+      const dropdown = wrapper.find(Dropdown)
+
+      toggleIndicator.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+      const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
+      selectedItemHeader.simulate('click')
+      const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`)
+      selectedItem.simulate('keydown', {
+        keyCode: keyboardKey.Delete,
+        key: 'Delete',
+      })
+
+      expect(onSelectedChange).toHaveBeenCalledTimes(2)
+      expect(onSelectedChange).toHaveBeenLastCalledWith(
+        null,
+        expect.objectContaining({
+          value: [],
+        }),
+      )
       expect(dropdown.state('activeSelectedIndex')).toBe(null)
     })
 
@@ -1156,8 +1190,8 @@ describe('Dropdown', () => {
       triggerButton.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
       itemAtIndex1.simulate('click')
-      const selectedItem = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
-      selectedItem.simulate('click')
+      const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
+      selectedItemHeader.simulate('click')
 
       expect(document.activeElement).toEqual(
         wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`).getDOMNode(),
@@ -1193,12 +1227,7 @@ describe('Dropdown', () => {
         key: 'ArrowRight',
       })
 
-      expect(document.activeElement).toEqual(
-        wrapper
-          .find(`span.${Dropdown.slotClassNames.selectedItem}`)
-          .at(1)
-          .getDOMNode(),
-      )
+      expect(document.activeElement).toEqual(selectedItemAtIndex1.getDOMNode())
     })
 
     it('moves focus back to the trigger button on arrow right from last selected item', () => {
@@ -1228,6 +1257,37 @@ describe('Dropdown', () => {
       selectedItemHeader.simulate('click')
       const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`)
       selectedItem.simulate('keydown', { keyCode: keyboardKey.ArrowRight, key: 'ArrowRight' })
+
+      expect(document.activeElement).toEqual(searchInput.getDOMNode())
+    })
+
+    it('moves focus back to the trigger button on removal by delete key on selected item', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+      const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
+      selectedItemHeader.simulate('click')
+      const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`)
+      selectedItem.simulate('keydown', { keyCode: keyboardKey.Delete, key: 'Delete' })
+
+      expect(document.activeElement).toEqual(triggerButton.getDOMNode())
+    })
+
+    it('moves focus back to the search input on removal by delete key on selected item', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple search items={items} />)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+
+      toggleIndicator.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('click')
+      const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
+      selectedItemHeader.simulate('click')
+      const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`)
+      selectedItem.simulate('keydown', { keyCode: keyboardKey.Delete, key: 'Delete' })
 
       expect(document.activeElement).toEqual(searchInput.getDOMNode())
     })
