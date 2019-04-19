@@ -1,13 +1,9 @@
 {
-  "extends": ["../../.eslintrc.json"],
-  "rules": {
-    "no-useless-constructor": "off"
-  },
+  "extends": ["../internal-tooling/eslint/index.js"],
   "overrides": [
     {
       "files": "**/icons/*.tsx",
       "rules": {
-        "react/no-unknown-property": "off",
         "react/prop-types": "off"
       }
     }
