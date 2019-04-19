@@ -96,7 +96,7 @@ const config = {
     chunksSort: '', // (string) sort the chunks by that field
     assetsSort: '', // (string) sort the assets by that field
   },
-  compiler_vendor: ['classnames', 'copy-to-clipboard', 'react-ace'],
+  compiler_vendor: ['classnames', 'copy-to-clipboard'],
 }
 
 export default config

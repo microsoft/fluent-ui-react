@@ -29,6 +29,10 @@ const webpackConfig: any = {
     '@babel/standalone': 'Babel',
     'anchor-js': 'AnchorJS',
     'prettier/standalone': 'prettier',
+    // These Prettier plugins doesn't have any exports
+    'prettier/parser-babylon': 'window',
+    'prettier/parser-html': 'window',
+    'prettier/parser-typescript': 'window',
     'prop-types': 'PropTypes',
     react: 'React',
     'react-dom': 'ReactDOM',
@@ -93,8 +97,8 @@ const webpackConfig: any = {
       },
     }),
     new webpack.IgnorePlugin({
-      resourceRegExp: /^parser-.+$/,
-      contextRegExp: /prettier$/,
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
     }),
   ],
   resolve: {
@@ -104,6 +108,8 @@ const webpackConfig: any = {
       src: paths.packageSrc('react'),
       docs: paths.base('docs'),
     },
+    // Allows to avoid multiple inclusions of the same module
+    modules: [paths.base('node_modules')],
   },
   performance: {
     hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")

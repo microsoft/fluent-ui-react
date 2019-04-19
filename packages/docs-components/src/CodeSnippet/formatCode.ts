@@ -8,6 +8,7 @@ import 'prettier/parser-typescript'
 import { CodeSnippetMode, CodeSnippetValue } from './types'
 
 const prettierConfig = {
+  htmlWhitespaceSensitivity: 'ignore',
   printWidth: 100,
   tabWidth: 2,
   semi: false,
