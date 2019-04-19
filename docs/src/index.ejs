@@ -61,6 +61,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@<%= htmlWebpackPlugin.options.versions.babelStandalone %>/babel.min.js"></script>
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.16.0/themes/prism-tomorrow.css">
+
   <style>
     html, body {
       background: #f7f7f7;
@@ -110,7 +112,7 @@
       margin: 0;
     }
 
-    code:not(.hljs) {
+    code:not([class*="language-"]) {
       font-size: 87.5%;
       background-color: rgba(0, 0, 0, 0.04);
       border-radius: 3px;
@@ -118,12 +120,12 @@
       display: inline-block;
     }
 
-    code:not(.hljs)::before {
+    code:not([class*="language-"])::before {
       letter-spacing: -0.2em;
       content: "\00a0";
     }
 
-    code:not(.hljs)::after {
+    code:not([class*="language-"])::after {
       letter-spacing: -0.2em;
       content: "\00a0";
     }

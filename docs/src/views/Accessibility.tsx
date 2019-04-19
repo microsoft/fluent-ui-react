@@ -1,6 +1,6 @@
+import { CodeSnippet } from '@stardust-ui/docs-components'
 import * as React from 'react'
 import DocPage from '../components/DocPage/DocPage'
-import CodeSnippet from '../components/CodeSnippet'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 import { Link } from 'react-router-dom'
 

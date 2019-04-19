@@ -4,6 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
 
+import { CodeSnippet } from '@stardust-ui/docs-components'
 import {
   Divider,
   Flex,
@@ -30,7 +31,6 @@ import ComponentSourceManager, {
 import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
 import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
-import CodeSnippet from '../../CodeSnippet'
 import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 
 export interface ComponentExampleProps

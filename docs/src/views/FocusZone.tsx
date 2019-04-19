@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { Header } from '@stardust-ui/react'
+import { CodeSnippet } from '@stardust-ui/docs-components'
 
-import CodeSnippet from '../components/CodeSnippet'
 import DocPage from '../components/DocPage'
 import { code, link } from '../utils/helpers'
 

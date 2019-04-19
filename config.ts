@@ -96,16 +96,7 @@ const config = {
     chunksSort: '', // (string) sort the chunks by that field
     assetsSort: '', // (string) sort the assets by that field
   },
-  compiler_vendor: [
-    'brace',
-    'brace/ext/language_tools',
-    'brace/mode/jsx',
-    'brace/mode/html',
-    'brace/theme/tomorrow',
-    'classnames',
-    'copy-to-clipboard',
-    'react-ace',
-  ],
+  compiler_vendor: ['classnames', 'copy-to-clipboard', 'react-ace'],
 }
 
 export default config

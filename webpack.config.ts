@@ -92,6 +92,10 @@ const webpackConfig: any = {
         stardust: require('./package.json').version,
       },
     }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^parser-.+$/,
+      contextRegExp: /prettier$/,
+    }),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
