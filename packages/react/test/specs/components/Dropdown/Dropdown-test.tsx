@@ -675,6 +675,41 @@ describe('Dropdown', () => {
 
       expect(dropdown.state('highlightedIndex')).toBe(0)
     })
+
+    it('is updated correctly when hovering over items', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const dropdown = wrapper.find(Dropdown)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('mousemove')
+
+      expect(dropdown.state('highlightedIndex')).toBe(1)
+
+      const itemAtIndex3 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(3)
+      itemAtIndex3.simulate('mousemove')
+
+      expect(dropdown.state('highlightedIndex')).toBe(3)
+    })
+
+    it('is updated correctly when hovering over items and using arrow keys to navigate', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const dropdown = wrapper.find(Dropdown)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+
+      triggerButton.simulate('click')
+      const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
+      itemAtIndex1.simulate('mousemove')
+      itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+      expect(dropdown.state('highlightedIndex')).toBe(0)
+
+      const itemAtIndex2 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(2)
+      itemAtIndex2.simulate('mousemove')
+      itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+      expect(dropdown.state('highlightedIndex')).toBe(3)
+    })
   })
 
   describe('value', () => {
