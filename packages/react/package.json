@@ -24,6 +24,10 @@
     "react-popper": "^1.3.2",
     "tslib": "^1.9.3"
   },
+  "devDependencies": {
+    "@stardust-ui/internal-tooling": "^0.23.1",
+    "lerna-alias": "^3.0.3-0"
+  },
   "files": [
     "dist"
   ],
