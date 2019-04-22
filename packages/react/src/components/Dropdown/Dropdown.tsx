@@ -32,7 +32,7 @@ import {
 } from '../../lib'
 import List from '../List/List'
 import Ref from '../Ref/Ref'
-import DropdownItem from './DropdownItem'
+import DropdownItem, { DropdownItemProps } from './DropdownItem'
 import DropdownSelectedItem, { DropdownSelectedItemProps } from './DropdownSelectedItem'
 import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'
 import Button from '../Button/Button'
@@ -590,7 +590,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
               key: (item as any).header,
             }),
         },
-        overrideProps: () => this.handleItemOverrides(item, index, getItemProps),
+        overrideProps: (predefinedProps: DropdownItemProps) =>
+          this.handleItemOverrides(predefinedProps, item, index, getItemProps),
         render: renderItem,
       }),
     )
@@ -713,10 +714,25 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private handleItemOverrides = (
+    predefinedProps: DropdownItemProps,
     item: ShorthandValue,
     index: number,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
-  ) => ({ accessibilityItemProps: getItemProps({ item, index }) })
+  ) => ({
+    accessibilityItemProps: getItemProps({
+      item,
+      index,
+      onClick: e => {
+        _.invoke(predefinedProps, 'onClick', e, predefinedProps)
+      },
+      onMouseDown: e => {
+        _.invoke(predefinedProps, 'onMouseDown', e, predefinedProps)
+      },
+      onMouseMove: e => {
+        _.invoke(predefinedProps, 'onMouseMove', e, predefinedProps)
+      },
+    }),
+  })
 
   private handleSelectedItemOverrides = (
     predefinedProps: DropdownSelectedItemProps,
