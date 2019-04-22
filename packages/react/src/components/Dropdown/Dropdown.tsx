@@ -575,8 +575,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           onFocus={() => {
             this.setState({ focused: true })
           }}
-          onBlur={() => {
-            this.setState({ focused: false })
+          onBlur={e => {
+            if (this.buttonRef.current !== e.relatedTarget) {
+              this.setState({ focused: false })
+            }
           }}
           items={open ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []}
         />
