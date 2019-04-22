@@ -937,7 +937,7 @@ describe('Dropdown', () => {
   })
 
   describe('searchQuery', () => {
-    it('will close after reset', () => {
+    it('closes dropdown when changed to empty string', () => {
       const dropdown = mountWithProvider(<Dropdown items={items} search />).find(Dropdown)
 
       dropdown.find('input').simulate('change', { target: { value: 'foo' } })
@@ -1325,6 +1325,48 @@ describe('Dropdown', () => {
       selectedItem.simulate('keydown', { keyCode: keyboardKey.Delete, key: 'Delete' })
 
       expect(document.activeElement).toEqual(searchInput.getDOMNode())
+    })
+  })
+
+  describe('focused', () => {
+    it('is "true" when focus is on trigger button', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      const dropdown = wrapper.find(Dropdown)
+
+      triggerButton.simulate('focus')
+
+      expect(dropdown.state('focused')).toBe(true)
+    })
+
+    it('is "true" when focus is on search input', () => {
+      const wrapper = mountWithProvider(<Dropdown search items={items} />)
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+      const dropdown = wrapper.find(Dropdown)
+
+      searchInput.simulate('focus')
+
+      expect(dropdown.state('focused')).toBe(true)
+    })
+
+    it('is "true" when dropdown is open by trigger click', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const dropdown = wrapper.find(Dropdown)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+
+      expect(dropdown.state('focused')).toBe(true)
+    })
+
+    it('is "true" when dropdown is open by toggle indicator click', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const dropdown = wrapper.find(Dropdown)
+      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+
+      toggleIndicator.simulate('click')
+
+      expect(dropdown.state('focused')).toBe(true)
     })
   })
 
