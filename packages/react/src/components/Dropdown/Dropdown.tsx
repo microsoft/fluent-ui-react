@@ -725,12 +725,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       onClick: e => {
         _.invoke(predefinedProps, 'onClick', e, predefinedProps)
       },
-      onMouseDown: e => {
-        _.invoke(predefinedProps, 'onMouseDown', e, predefinedProps)
-      },
-      onMouseMove: e => {
-        _.invoke(predefinedProps, 'onMouseMove', e, predefinedProps)
-      },
     }),
   })
 
