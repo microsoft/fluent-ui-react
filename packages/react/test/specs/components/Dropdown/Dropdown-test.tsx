@@ -132,7 +132,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('when set to "true" by toggle button click will move focus to the items list', () => {
+    it('when set to "true" by trigger button click will move focus to the items list', () => {
       const wrapper = mountWithProvider(<Dropdown items={items} />)
       const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
@@ -1349,22 +1349,12 @@ describe('Dropdown', () => {
       expect(dropdown.state('focused')).toBe(true)
     })
 
-    it('is "true" when dropdown is open by trigger click', () => {
-      const wrapper = mountWithProvider(<Dropdown items={items} />)
+    it('is "true" when focus is on the list', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} open />)
       const dropdown = wrapper.find(Dropdown)
-      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
 
-      triggerButton.simulate('click')
-
-      expect(dropdown.state('focused')).toBe(true)
-    })
-
-    it('is "true" when dropdown is open by toggle indicator click', () => {
-      const wrapper = mountWithProvider(<Dropdown items={items} />)
-      const dropdown = wrapper.find(Dropdown)
-      const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
-
-      toggleIndicator.simulate('click')
+      itemsList.simulate('focus')
 
       expect(dropdown.state('focused')).toBe(true)
     })
@@ -1389,7 +1379,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('opens the menu and moves focus to list in selection mode', () => {
+    it('moves focus to list in selection mode', () => {
       const wrapper = mountWithProvider(<Dropdown items={items} />)
       const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
 
@@ -1400,7 +1390,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('opens the menu and moves focus to input in search mode', () => {
+    it('moves focus to input in search mode', () => {
       const wrapper = mountWithProvider(<Dropdown items={items} search />)
       const toggleIndicator = wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
 
