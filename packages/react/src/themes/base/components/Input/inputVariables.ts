@@ -22,7 +22,7 @@ export interface InputVariables {
 export default (siteVars): InputVariables => ({
   backgroundColor: siteVars.colors.grey[50],
   borderColor: siteVars.colors.grey[300],
-  borderRadius: `${pxToRem(3)} ${pxToRem(2)}`,
+  borderRadius: pxToRem(3),
   borderWidth: `1px`,
 
   fontColor: siteVars.colors.grey[600],
@@ -37,7 +37,7 @@ export default (siteVars): InputVariables => ({
 
   inputPadding: `${pxToRem(7)} ${pxToRem(12)}`,
   inputFocusBorderColor: siteVars.colors.primary[300],
-  inputFocusBorderRadius: `${pxToRem(3)} ${pxToRem(2)}`,
+  inputFocusBorderRadius: pxToRem(3),
 
   placeholderColor: siteVars.colors.grey[600],
 })
