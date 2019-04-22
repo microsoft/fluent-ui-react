@@ -34,8 +34,6 @@ export { default as HeaderDescription } from './components/Header/headerDescript
 
 export { default as Icon } from './components/Icon/iconStyles'
 
-export { default as Input } from './components/Input/inputStyles'
-
 export { default as Label } from './components/Label/labelStyles'
 
 export { default as Layout } from './components/Layout/layoutStyles'
