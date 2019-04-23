@@ -6,7 +6,9 @@ export type PerfSample = {
   performance: {
     [name: string]: {
       actualTime: {
+        min: number
         median: number
+        max: number
       }
     }
   }
