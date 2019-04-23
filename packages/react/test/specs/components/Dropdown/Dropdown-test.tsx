@@ -973,6 +973,12 @@ describe('Dropdown', () => {
       firstItem.simulate('click', mockedEvent)
 
       expect(onClick).toBeCalledTimes(1)
+      expect(onClick).toHaveBeenCalledWith(
+        expect.objectContaining(mockedEvent),
+        expect.objectContaining({
+          header: 'Venom',
+        }),
+      )
       expect(stopPropagation).toBeCalledTimes(1)
     })
 
@@ -989,6 +995,12 @@ describe('Dropdown', () => {
       selectedItemHeaderAtIndex0.simulate('click', mockedEvent)
 
       expect(onClick).toBeCalledTimes(1)
+      expect(onClick).toHaveBeenCalledWith(
+        expect.objectContaining(mockedEvent),
+        expect.objectContaining({
+          header: 'Venom',
+        }),
+      )
       expect(stopPropagation).toBeCalledTimes(1)
     })
   })
