@@ -16,6 +16,9 @@
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixes
+
+- Fix override onClick in shorthand for `DropdownItem` @silviuavram ([#1248](https://github.com/stardust-ui/react/pull/1248))
 
 ### BREAKING CHANGES
 - Add `box-sizing: border-box` to all elements, as well as before and after pseudo elements in Teams theme @mnajdova ([#1057](https://github.com/stardust-ui/react/pull/1057))
