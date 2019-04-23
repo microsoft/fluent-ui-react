@@ -17,5 +17,8 @@
   "files": [
     "babel",
     "jest"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
