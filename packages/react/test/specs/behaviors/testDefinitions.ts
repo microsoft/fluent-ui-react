@@ -513,6 +513,30 @@ definitions.push({
   },
 })
 
+// Triggers 'doNotNavigateNextParentItem' action with 'ArrowLeft' or 'ArrowRight' on 'wrapper', when toolbar button has submenu and it is opened.
+definitions.push({
+  regexp: /Triggers '(\w+)' action with '(\w+)' or '(\w+)' on '([\w-]+)', when toolbar button has submenu and it is opened\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, firstKey, secondKey, elementToPerformAction] = [...parameters.props]
+    const propertySubmenuOpened = { menu: { items: [] }, menuOpen: true }
+    const expectedFirstKeyNumber = parameters.behavior(propertySubmenuOpened).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    const expectedSecondKeyNumber = parameters.behavior(propertySubmenuOpened).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[1].keyCode
+    expect(expectedFirstKeyNumber).toBe(keyboardKey[firstKey])
+    expect(expectedSecondKeyNumber).toBe(keyboardKey[secondKey])
+
+    // when menuOpen == "false"
+    propertySubmenuOpened.menuOpen = false
+    const expectedKeyCombinations = parameters.behavior(propertySubmenuOpened).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations
+    expect(expectedKeyCombinations).toBe(null)
+  },
+})
+
 // Implements roving tabIndex
 definitions.push({
   regexp: /Implements roving tabIndex\./g,
