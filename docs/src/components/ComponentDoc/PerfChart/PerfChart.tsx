@@ -1,39 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { FlexibleXYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries, Crosshair } from 'react-vis'
-
-const ChartTooltip = ({ x, data, ...rest }: { x: number; data: any }) => {
-  return (
-    <Crosshair {...rest} values={[{ x, y: 20 }]}>
-      <div style={{ background: '#555', color: 'white', padding: '.5em' }}>
-        <div>Build:&nbsp;{x}</div>
-        <div>Date:&nbsp;{data.ts}</div>
-        <table className="tooltip">
-          <thead>
-            <tr>
-              <th>Example</th>
-              <th>Min</th>
-              <th>Median</th>
-              <th>Max</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.keys(data.performance)
-              .sort()
-              .map(chartName => (
-                <tr key={chartName}>
-                  <td>{chartName}</td>
-                  <td>{_.get(data, `performance.${chartName}.actualTime.min`, '-')}</td>
-                  <td>{_.get(data, `performance.${chartName}.actualTime.median`, '-')}</td>
-                  <td>{_.get(data, `performance.${chartName}.actualTime.max`, '-')}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
-    </Crosshair>
-  )
-}
+import { FlexibleXYPlot, HorizontalGridLines, LineSeries, XAxis, YAxis } from 'react-vis'
+import PerfChartTooltip from './PerfChartTooltip'
+import { PerfData } from './PerfDataContext'
 
 /**
  * Draws a performance chart for all items in perfData.performance.
@@ -41,7 +10,7 @@ const ChartTooltip = ({ x, data, ...rest }: { x: number; data: any }) => {
  * x-axis is a build number
  * y-axis is a render time
  */
-const PerfChart: React.FC<any> = ({ perfData }) => {
+const PerfChart: React.FC<{ perfData: PerfData }> = ({ perfData }) => {
   const availableCharts: string[] = perfData
     .reduce(
       (acc, next) => {
@@ -72,7 +41,7 @@ const PerfChart: React.FC<any> = ({ perfData }) => {
           }))}
           {...(index === 0
             ? {
-                onNearestX: (d: any) => {
+                onNearestX: (d: { x: number }) => {
                   setNearestX(d.x)
                 },
               }
@@ -81,7 +50,7 @@ const PerfChart: React.FC<any> = ({ perfData }) => {
       ))}
 
       {nearestX ? (
-        <ChartTooltip x={nearestX} data={perfData.find(entry => entry.build === nearestX)} />
+        <PerfChartTooltip x={nearestX} data={perfData.find(entry => entry.build === nearestX)} />
       ) : (
         undefined
       )}
