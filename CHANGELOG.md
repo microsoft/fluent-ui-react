@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.28.0 ]------------------------------- -->
+## [v0.28.0](https://github.com/stardust-ui/react/tree/v0.28.0) (2019-04-22)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.27.0...v0.28.0)
+
 ### BREAKING CHANGES
 - Add `box-sizing: border-box` to all elements, as well as before and after pseudo elements in Teams theme @mnajdova ([#1057](https://github.com/stardust-ui/react/pull/1057))
 - Rename `inputFocusBorderBottomColor` to `inputFocusBorderColor` in `InputVariables` @layershifter ([#1247](https://github.com/stardust-ui/react/pull/1247))
