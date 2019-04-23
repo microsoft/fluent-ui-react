@@ -719,6 +719,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       index,
       onClick: e => {
         e.stopPropagation()
+        e.nativeEvent.stopImmediatePropagation()
         _.invoke(predefinedProps, 'onClick', e, predefinedProps)
       },
     }),
