@@ -17,8 +17,15 @@ export interface MentionsContainerProps {
 }
 
 interface MentionsEditorState {
-  open?: boolean
-  searchQuery?: string
+  shouldUpdate: boolean
+  open: boolean
+  searchQuery: string
+  selectedItem: string
+}
+
+interface MentionsEditorAction {
+  type: 'OPEN' | 'UPDATE_AND_CLOSE' | 'RESET_UPDATE_FLAG' | 'SET_SEARCH_QUERY'
+  args?: string
 }
 
 const editorStyle: React.CSSProperties = {
@@ -30,101 +37,124 @@ const editorStyle: React.CSSProperties = {
   outline: 0,
 }
 
-const withMentionsEditor = <P extends MentionsContainerProps = MentionsContainerProps>(
-  MentionsContainerComponent: React.ComponentType<MentionsContainerProps>,
-) =>
-  class extends React.Component<P, MentionsEditorState> {
-    private readonly initialState: MentionsEditorState = {
-      open: false,
-      searchQuery: '',
-    }
-
-    private contendEditableRef = React.createRef<HTMLDivElement>()
-
-    state = this.initialState
-
-    render() {
-      const { open, searchQuery } = this.state
-
-      return (
-        <>
-          <div
-            contentEditable
-            ref={this.contendEditableRef}
-            onKeyUp={this.handleEditorKeyUp}
-            style={editorStyle}
-          />
-          <PortalAtCursorPosition open={open}>
-            <MentionsContainerComponent
-              items={atMentionItems}
-              open={open}
-              searchQuery={searchQuery}
-              onOpenChange={this.handleOpenChange}
-              onSearchQueryChange={this.handleSearchQueryChange}
-              onInputKeyDown={this.handleInputKeyDown}
-              onSelectedChange={this.handleSelectedChange}
-              {...this.props}
-            />
-          </PortalAtCursorPosition>
-        </>
-      )
-    }
-
-    private handleEditorKeyUp = (e: React.KeyboardEvent) => {
-      if (!this.state.open && e.shiftKey && keyboardKey.getCode(e) === keyboardKey.AtSign) {
-        this.setState({ open: true })
+const stateReducer = (state: MentionsEditorState, action: MentionsEditorAction) => {
+  switch (action.type) {
+    case 'OPEN':
+      return { ...state, open: true }
+    case 'RESET_UPDATE_FLAG':
+      return { ...state, shouldUpdate: false }
+    case 'UPDATE_AND_CLOSE':
+      return {
+        ...state,
+        shouldUpdate: true,
+        open: false,
+        searchQuery: '',
+        selectedItem: action.args,
       }
-    }
+    case 'SET_SEARCH_QUERY':
+      return { ...state, searchQuery: action.args }
+    default:
+      throw new Error(`Action ${action.type} is not supported`)
+  }
+}
 
-    private handleOpenChange = (e: React.SyntheticEvent, { open }: MentionsContainerProps) => {
-      if (!open) {
-        this.resetStateAndUpdateEditor()
+const MentionsEditor: React.FunctionComponent<
+  MentionsContainerProps & { render: (props: MentionsContainerProps) => React.ReactNode }
+> = props => {
+  const { render, ...rest } = props
+  const contendEditableRef = React.useRef(null)
+  const [state, dispatch] = React.useReducer(stateReducer, {
+    shouldUpdate: false,
+    open: false,
+    searchQuery: '',
+    selectedItem: '',
+  })
+
+  React.useEffect(
+    () => {
+      if (!state.shouldUpdate) {
+        return
       }
+
+      tryFocusEditor()
+
+      // after the wrapped component is closed the value of the search query is inserted in the editor at cursor position
+      insertTextAtCursorPosition(state.selectedItem)
+      dispatch({ type: 'RESET_UPDATE_FLAG' })
+    },
+    [state.shouldUpdate],
+  )
+
+  const handleEditorKeyUp = (e: React.KeyboardEvent) => {
+    if (!state.open && e.shiftKey && keyboardKey.getCode(e) === keyboardKey.AtSign) {
+      dispatch({ type: 'OPEN' })
     }
-
-    private handleSelectedChange = (
-      e: React.SyntheticEvent,
-      { searchQuery }: MentionsContainerProps,
-    ) => {
-      this.resetStateAndUpdateEditor(searchQuery)
-    }
-
-    private handleSearchQueryChange = (
-      e: React.SyntheticEvent,
-      { searchQuery }: MentionsContainerProps,
-    ) => {
-      this.setState({ searchQuery })
-    }
-
-    private handleInputKeyDown = (e: React.KeyboardEvent) => {
-      const keyCode = keyboardKey.getCode(e)
-      switch (keyCode) {
-        case keyboardKey.Backspace: // 8
-          if (this.state.searchQuery === '') {
-            this.resetStateAndUpdateEditor()
-          }
-          break
-        case keyboardKey.Escape: // 27
-          this.resetStateAndUpdateEditor()
-          break
-      }
-    }
-
-    private resetStateAndUpdateEditor = (searchQuery?: string) => {
-      const { open } = this.state
-      const newSearchQuery = searchQuery || this.state.searchQuery
-
-      if (open) {
-        this.setState(this.initialState, () => {
-          this.tryFocusEditor()
-
-          // after the wrapped component is closed the value of the search query is inserted in the editor at cursor position
-          insertTextAtCursorPosition(newSearchQuery)
-        })
-      }
-    }
-
-    private tryFocusEditor = () => _.invoke(this.contendEditableRef.current, 'focus')
   }
 
-export default withMentionsEditor
+  const handleOpenChange = (e: React.SyntheticEvent, { open }: MentionsContainerProps) => {
+    if (!open) {
+      resetStateAndUpdateEditor()
+    }
+  }
+
+  const handleSelectedChange = (
+    e: React.SyntheticEvent,
+    { searchQuery }: MentionsContainerProps,
+  ) => {
+    resetStateAndUpdateEditor(searchQuery)
+  }
+
+  const handleSearchQueryChange = (
+    e: React.SyntheticEvent,
+    { searchQuery }: MentionsContainerProps,
+  ) => {
+    dispatch({ type: 'SET_SEARCH_QUERY', args: searchQuery })
+  }
+
+  const handleInputKeyDown = (e: React.KeyboardEvent) => {
+    const keyCode = keyboardKey.getCode(e)
+    switch (keyCode) {
+      case keyboardKey.Backspace: // 8
+        if (state.searchQuery === '') {
+          resetStateAndUpdateEditor()
+        }
+        break
+      case keyboardKey.Escape: // 27
+        resetStateAndUpdateEditor()
+        break
+    }
+  }
+
+  const resetStateAndUpdateEditor = (searchQueryArg?: string) => {
+    if (state.open) {
+      dispatch({ type: 'UPDATE_AND_CLOSE', args: searchQueryArg || state.searchQuery })
+    }
+  }
+
+  const tryFocusEditor = () => _.invoke(contendEditableRef.current, 'focus')
+
+  return (
+    <>
+      <div
+        contentEditable
+        ref={contendEditableRef}
+        onKeyUp={handleEditorKeyUp}
+        style={editorStyle}
+      />
+      <PortalAtCursorPosition open={state.open}>
+        {render({
+          items: atMentionItems,
+          open: state.open,
+          searchQuery: state.searchQuery,
+          onOpenChange: handleOpenChange,
+          onSearchQueryChange: handleSearchQueryChange,
+          onInputKeyDown: handleInputKeyDown,
+          onSelectedChange: handleSelectedChange,
+          ...rest,
+        })}
+      </PortalAtCursorPosition>
+    </>
+  )
+}
+
+export default MentionsEditor

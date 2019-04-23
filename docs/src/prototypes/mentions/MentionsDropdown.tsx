@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
+import { FontWeightProperty } from 'csstype'
 import { Dropdown, DropdownItemProps, Provider } from '@stardust-ui/react'
 
 import { MentionsContainerProps } from './MentionsEditor'
@@ -8,37 +9,14 @@ const MentionsDropdown: React.FunctionComponent<MentionsContainerProps> = props 
   const { searchQuery, items, onOpenChange, onSearchQueryChange, onInputKeyDown } = props
 
   const renderItem = React.useCallback(
-    (Item: React.ReactType, props: DropdownItemProps, boldFont: number) => {
-      const { header = '', ...rest } = props
-      const headerStr = String(header)
-      const queryStartIndex = headerStr.indexOf(searchQuery)
-
-      if (queryStartIndex < 0) return <Item {...props} />
-      const queryEndIndex = queryStartIndex + searchQuery.length
-
-      return (
-        <Item
-          {...rest}
-          header={{
-            content: (
-              <span>
-                {headerStr.substring(0, queryStartIndex)}
-                <span style={{ fontWeight: boldFont }}>
-                  {headerStr.substring(queryStartIndex, queryEndIndex)}
-                </span>
-                {headerStr.substring(queryEndIndex)}
-              </span>
-            ),
-          }}
-        />
-      )
-    },
+    (args: { Item: React.ReactType; props: DropdownItemProps; fontWeight: FontWeightProperty }) =>
+      getCustomItem({ ...args, searchQuery }),
     [searchQuery],
   )
 
   return (
     <Provider.Consumer
-      render={({ siteVariables }) => (
+      render={({ siteVariables: siteVars }) => (
         <Dropdown
           defaultOpen={true}
           inline
@@ -46,7 +24,7 @@ const MentionsDropdown: React.FunctionComponent<MentionsContainerProps> = props 
           items={items}
           renderItem={
             searchQuery
-              ? (Item, props) => renderItem(Item, props, siteVariables.fontWeightBold)
+              ? (Item, props) => renderItem({ Item, props, fontWeight: siteVars.fontWeightBold })
               : undefined
           }
           toggleIndicator={null}
@@ -59,6 +37,39 @@ const MentionsDropdown: React.FunctionComponent<MentionsContainerProps> = props 
           noResultsMessage="We couldn't find any matches."
         />
       )}
+    />
+  )
+}
+
+const getCustomItem = (args: {
+  Item: React.ReactType
+  props: DropdownItemProps
+  searchQuery: string
+  fontWeight: FontWeightProperty
+}) => {
+  const { Item, props, searchQuery, fontWeight } = args
+  const { header, ...rest } = props
+
+  if (!header || typeof header !== 'string') return <Item {...props} />
+
+  const queryStartIndex = header.indexOf(searchQuery)
+
+  if (queryStartIndex < 0) return <Item {...props} />
+
+  const queryEndIndex = queryStartIndex + searchQuery.length
+
+  return (
+    <Item
+      header={{
+        content: (
+          <span>
+            {header.substring(0, queryStartIndex)}
+            <span style={{ fontWeight }}>{header.substring(queryStartIndex, queryEndIndex)}</span>
+            {header.substring(queryEndIndex)}
+          </span>
+        ),
+      }}
+      {...rest}
     />
   )
 }

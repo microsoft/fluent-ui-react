@@ -13,7 +13,7 @@ interface ComponentPrototypeProps extends PrototypeSectionProps {
 export const PrototypeSection: React.FC<ComponentPrototypeProps> = props => {
   const { title: title, children, style, ...rest } = props
   return (
-    <Box style={{ margin: 20, ...style }} {...rest}>
+    <Box styles={{ margin: '20px', ...style }} {...rest}>
       {title && <Header as="h1">{title}</Header>}
       {children}
     </Box>
@@ -23,7 +23,7 @@ export const PrototypeSection: React.FC<ComponentPrototypeProps> = props => {
 export const ComponentPrototype: React.FC<ComponentPrototypeProps> = props => {
   const { description, title: header, children, style, ...rest } = props
   return (
-    <Box style={{ marginTop: 20, ...style }} {...rest}>
+    <Box styles={{ marginTop: '20px', ...style }} {...rest}>
       {(header || description) && (
         <Segment>
           {header && <Header as="h3">{header}</Header>}
