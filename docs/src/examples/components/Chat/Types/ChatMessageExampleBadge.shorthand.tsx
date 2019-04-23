@@ -16,9 +16,10 @@ const items = [
           timestamp="Yesterday, 10:15 PM"
           mine
           badge={{
-            icon: 'exclamation',
+            icon: 'redbang',
           }}
           badgePosition="start"
+          variables={{ isImportant: true }}
         />
       ),
     },
@@ -34,8 +35,9 @@ const items = [
           author="Jane Doe"
           timestamp="Yesterday, 10:15 PM"
           badge={{
-            icon: 'at',
+            icon: 'mention',
           }}
+          variables={{ hasMention: true }}
         />
       ),
     },

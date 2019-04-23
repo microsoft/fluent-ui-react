@@ -14,7 +14,6 @@ import {
 import { ReactProps } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import ReactNode = React.ReactNode
 
 export interface GridProps
   extends UIComponentProps,
@@ -69,7 +68,7 @@ class Grid extends UIComponent<ReactProps<GridProps>, any> {
     ElementType,
     classes,
     unhandledProps,
-  }: RenderResultConfig<any>): ReactNode {
+  }: RenderResultConfig<any>): React.ReactNode {
     const { children, content } = this.props
 
     return (

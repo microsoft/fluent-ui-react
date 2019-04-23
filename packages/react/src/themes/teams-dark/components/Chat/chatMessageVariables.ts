@@ -7,5 +7,7 @@ export default (siteVars: any): Partial<ChatMessageVariables> => {
     color: siteVars.colors.white,
     contentFocusOutlineColor: siteVars.colors.primary[600],
     timestampColorMine: siteVars.colors.grey[250],
+    hasMentionNubbinColor: siteVars.colors.orange[300],
+    isImportantColor: siteVars.colors.red[300],
   }
 }
