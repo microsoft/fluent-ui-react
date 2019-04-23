@@ -504,16 +504,14 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         variables,
         inputRef: this.inputRef,
       },
-      overrideProps: (predefinedProps: DropdownSearchInputProps) =>
-        this.handleSearchInputOverrides(
-          predefinedProps,
-          highlightedIndex,
-          rtl,
-          selectItemAtIndex,
-          toggleMenu,
-          accessibilityComboboxProps,
-          getInputProps,
-        ),
+      overrideProps: this.handleSearchInputOverrides(
+        highlightedIndex,
+        rtl,
+        selectItemAtIndex,
+        toggleMenu,
+        accessibilityComboboxProps,
+        getInputProps,
+      ),
     })
   }
 
@@ -590,8 +588,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
               key: (item as any).header,
             }),
         },
-        overrideProps: (predefinedProps: DropdownItemProps) =>
-          this.handleItemOverrides(predefinedProps, item, index, getItemProps),
+        overrideProps: this.handleItemOverrides(item, index, getItemProps),
         render: renderItem,
       }),
     )
@@ -633,8 +630,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
               key: (item as any).header,
             }),
         },
-        overrideProps: (predefinedProps: DropdownSelectedItemProps) =>
-          this.handleSelectedItemOverrides(predefinedProps, item, rtl),
+        overrideProps: this.handleSelectedItemOverrides(item, rtl),
         render: renderSelectedItem,
       }),
     )
@@ -714,24 +710,22 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private handleItemOverrides = (
-    predefinedProps: DropdownItemProps,
     item: ShorthandValue,
     index: number,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
-  ) => ({
+  ) => (predefinedProps: DropdownItemProps) => ({
     accessibilityItemProps: getItemProps({
       item,
       index,
       onClick: e => {
+        e.stopPropagation()
         _.invoke(predefinedProps, 'onClick', e, predefinedProps)
       },
     }),
   })
 
-  private handleSelectedItemOverrides = (
+  private handleSelectedItemOverrides = (item: ShorthandValue, rtl: boolean) => (
     predefinedProps: DropdownSelectedItemProps,
-    item: ShorthandValue,
-    rtl: boolean,
   ) => ({
     onRemove: (e: React.SyntheticEvent, dropdownSelectedItemProps: DropdownSelectedItemProps) => {
       this.handleSelectedItemRemove(e, item, predefinedProps, dropdownSelectedItemProps)
@@ -749,7 +743,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   })
 
   private handleSearchInputOverrides = (
-    predefinedProps: DropdownSearchInputProps,
     highlightedIndex: number,
     rtl: boolean,
     selectItemAtIndex: (
@@ -760,7 +753,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     toggleMenu: () => void,
     accessibilityComboboxProps: Object,
     getInputProps: (options?: GetInputPropsOptions) => any,
-  ) => {
+  ) => (predefinedProps: DropdownSearchInputProps) => {
     const handleInputBlur = (
       e: React.SyntheticEvent,
       searchInputProps: DropdownSearchInputProps,
@@ -1028,7 +1021,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     this.removeItemFromValue(item)
     this.tryFocusSearchInput()
     this.tryFocusTriggerButton()
-    e.stopPropagation()
     _.invoke(predefinedProps, 'onRemove', e, DropdownSelectedItemProps)
   }
 
