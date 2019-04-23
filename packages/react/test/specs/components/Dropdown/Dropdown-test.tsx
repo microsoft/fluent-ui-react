@@ -6,6 +6,7 @@ import Dropdown from 'src/components/Dropdown/Dropdown'
 import DropdownSearchInput from 'src/components/Dropdown/DropdownSearchInput'
 import { isConformant } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
+import { DropdownSelectedItem } from '@stardust-ui/react/src'
 
 jest.dontMock('keyboard-key')
 
@@ -955,6 +956,40 @@ describe('Dropdown', () => {
         .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab', preventDefault })
 
       expect(preventDefault).not.toBeCalled()
+    })
+  })
+
+  describe('items', () => {
+    it('have onClick called when passed stop event from being propagated', () => {
+      const onClick = jest.fn()
+      const stopPropagation = jest.fn()
+      const mockedEvent = { stopPropagation }
+      const items = [{ header: 'Venom', onClick }]
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      const firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`)
+      firstItem.simulate('click', mockedEvent)
+
+      expect(onClick).toBeCalledTimes(1)
+      expect(stopPropagation).toBeCalledTimes(1)
+    })
+
+    it('when selected have onClick called when passed stop event from being propagated', () => {
+      const onClick = jest.fn()
+      const stopPropagation = jest.fn()
+      const mockedEvent = { stopPropagation }
+      const items = [{ header: 'Venom', onClick }]
+      const wrapper = mountWithProvider(<Dropdown items={items} value={items} multiple />)
+      const selectedItemHeaderAtIndex0 = wrapper
+        .find(`span.${DropdownSelectedItem.slotClassNames.header}`)
+        .at(0)
+
+      selectedItemHeaderAtIndex0.simulate('click', mockedEvent)
+
+      expect(onClick).toBeCalledTimes(1)
+      expect(stopPropagation).toBeCalledTimes(1)
     })
   })
 })
