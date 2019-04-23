@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix Teams theme styles for `Alert` [redlines] @codepretty ([#1226](https://github.com/stardust-ui/react/pull/1226))
+
 <!--------------------------------[ v0.28.1 ]------------------------------- -->
 ## [v0.28.1](https://github.com/stardust-ui/react/tree/v0.28.1) (2019-04-23)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.28.0...v0.28.1)
@@ -33,7 +36,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Fix overflowing focus outline for `Grid` items for Teams theme @Bugaa92 ([#1195](https://github.com/stardust-ui/react/pull/1195))
 - Fix routing for accessibility documentation @sophieH29 ([#1208](https://github.com/stardust-ui/react/pull/1208))
-- Fix Teams theme styles for `Alert` [redlines] @codepretty ([#1226](https://github.com/stardust-ui/react/pull/1226))
 - Fix `content` prop type in `Dialog` @layershifter ([#1212](https://github.com/stardust-ui/react/pull/1212))
 - Fix themeing for Teams theme at mention nubbin and left bar in `ChatMessage` [redlines] @codepretty ([#1232](https://github.com/stardust-ui/react/pull/1232))
 - Add `keyboard` up & down key controls for the `Tree` component @priyankar205 ([#1219](https://github.com/stardust-ui/react/pull/1219))
