@@ -6,7 +6,7 @@ import Dropdown from 'src/components/Dropdown/Dropdown'
 import DropdownSearchInput from 'src/components/Dropdown/DropdownSearchInput'
 import { isConformant } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
-import { DropdownSelectedItem } from '@stardust-ui/react/src'
+import DropdownSelectedItem from 'src/components/Dropdown/DropdownSelectedItem'
 
 jest.dontMock('keyboard-key')
 
