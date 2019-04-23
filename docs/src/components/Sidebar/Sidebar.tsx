@@ -274,7 +274,7 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
-        key: 'faw',
+        key: 'faq',
         content: 'FAQ',
         as: NavLink,
         to: '/faq',
