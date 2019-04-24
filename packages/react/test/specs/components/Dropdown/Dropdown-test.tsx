@@ -808,7 +808,7 @@ describe('Dropdown', () => {
 
       triggerButton.simulate('click')
       const firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
-      firstItem.simulate('click')
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
 
       expect(dropdown.state('a11ySelectionStatus')).toBe('bla bla added')
 
@@ -830,7 +830,7 @@ describe('Dropdown', () => {
 
       triggerButton.simulate('click')
       const firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
-      firstItem.simulate('click')
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       jest.runAllTimers()
       const removeIcon = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.icon}`)
       removeIcon.simulate('click')
