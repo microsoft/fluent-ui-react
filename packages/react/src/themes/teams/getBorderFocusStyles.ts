@@ -1,13 +1,14 @@
 import * as React from 'react'
 
-import { ICSSInJSStyle } from '../types'
+import { ICSSInJSStyle, SiteVariablesPrepared } from '../types'
 
 type CSSBorderStyles = Pick<React.CSSProperties, 'borderWidth' | 'borderRadius'>
 
-type FocusBorderStyles = CSSBorderStyles & {
-  borderColorInner?: string
-  borderColorOuter?: string
-  focusFromKeyboard?: boolean
+type BorderFocusStyles = CSSBorderStyles & {
+  siteVariables?: SiteVariablesPrepared
+  focusInnerBorderColor?: string
+  focusOuterBorderColor?: string
+  isFromKeyboard?: boolean
 }
 
 type BorderPseudoElementStyles = CSSBorderStyles & { borderEdgeValue: string }
@@ -29,13 +30,19 @@ const getPseudoElementStyles = (args: BorderPseudoElementStyles): ICSSInJSStyle 
   }
 }
 
-export const getBorderStyles = (args: FocusBorderStyles): ICSSInJSStyle => {
+/**
+ * Returns style object that can be used for styling components on focus state
+ * NOTE: the element where this is used needs to have relative positioning so that the
+ * pseudo elements created on focus can be properly positioned
+ */
+const getBorderFocusStyles = (args: BorderFocusStyles): ICSSInJSStyle => {
+  const sv = args.siteVariables || ({} as BorderFocusStyles)
   const {
-    borderWidth,
-    borderRadius,
-    borderColorOuter = defaultColor,
-    borderColorInner = defaultColor,
-    focusFromKeyboard,
+    borderWidth = sv.borderWidth,
+    borderRadius = sv.borderRadius,
+    focusInnerBorderColor = sv.focusInnerBorderColor || defaultColor,
+    focusOuterBorderColor = sv.focusOuterBorderColor || defaultColor,
+    isFromKeyboard,
   } = args
 
   const defaultBorderStyles: React.CSSProperties = { borderWidth, borderRadius }
@@ -43,22 +50,24 @@ export const getBorderStyles = (args: FocusBorderStyles): ICSSInJSStyle => {
   return {
     ...defaultBorderStyles,
 
-    ...(focusFromKeyboard && {
+    ...(isFromKeyboard && {
       ':focus': {
         borderColor: 'transparent',
 
         ':before': getPseudoElementStyles({
           borderEdgeValue: '0',
-          borderColor: borderColorInner,
+          borderColor: focusInnerBorderColor,
           ...defaultBorderStyles,
         }),
 
         ':after': getPseudoElementStyles({
           borderEdgeValue: `-${borderWidth}`,
-          borderColor: borderColorOuter,
+          borderColor: focusOuterBorderColor,
           ...defaultBorderStyles,
         }),
       },
     }),
   }
 }
+
+export default getBorderFocusStyles

@@ -122,13 +122,10 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentStat
             })}
           </div>
         )}
-        {action && (
-          <div className={classes.action}>
-            {Button.create(action, {
-              defaultProps: { iconOnly: true, text: true },
-            })}
-          </div>
-        )}
+        {action &&
+          Button.create(action, {
+            defaultProps: { iconOnly: true, text: true, styles: styles.action },
+          })}
         {!_.isNil(progress) &&
           Box.create('', {
             defaultProps: { className: classes.progress },

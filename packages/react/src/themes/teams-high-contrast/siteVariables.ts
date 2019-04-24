@@ -29,6 +29,12 @@ export const unknownStatusBackgroundColor = colors.white
 export const unknownStatusTextColor = black
 
 //
+// BORDER STYLES
+//
+export const focusInnerBorderColor = colors.black
+export const focusOuterBorderColor = colors.white
+
+//
 // SEMANTIC ASSIGNMENTS
 //
 export const bodyBackground = black

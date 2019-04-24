@@ -3,10 +3,6 @@ import { pxToRem } from '../../../../lib'
 export type RadioGroupItemVariables = {
   colorDisabled: string
 
-  // can these be global colors so we don't have to define for every component?
-  focusInnerBorderColor: string
-  focusOuterBorderColor: string
-
   textFontSize: string
 
   textColorDefault: string
@@ -23,8 +19,6 @@ export type RadioGroupItemVariables = {
 
 export default (siteVars: any): RadioGroupItemVariables => ({
   colorDisabled: siteVars.gray06,
-  focusInnerBorderColor: siteVars.colors.white,
-  focusOuterBorderColor: siteVars.colors.black,
 
   textFontSize: siteVars.fontSizes.medium,
 

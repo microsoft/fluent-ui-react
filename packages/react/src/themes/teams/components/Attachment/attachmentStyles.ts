@@ -2,11 +2,12 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../lib'
-import Icon from '../../../../components/Icon/Icon'
 import { teamsIconClassNames } from '../Icon/svg'
+import Icon from '../../../../components/Icon/Icon'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
@@ -19,16 +20,13 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     background: v.backgroundColor,
     color: v.textColor,
     boxShadow: v.boxShadow,
-    border: `${pxToRem(1)} solid ${v.borderColor}`,
-    borderRadius: v.borderRadius,
+    border: `${siteVariables.borderWidth} solid ${v.borderColor}`,
 
     outline: 0,
-
-    ...(p.isFromKeyboard && {
-      ':focus': {
-        borderColor: v.focusInnerBorderColor,
-        boxShadow: `0 0 0 ${pxToRem(1)} ${v.focusOuterBorderColor}`,
-      },
+    ...getBorderFocusStyles({
+      siteVariables,
+      isFromKeyboard: p.isFromKeyboard,
+      borderRadius: v.borderRadius,
     }),
 
     ...((p.actionable || p.onClick) && {
@@ -64,12 +62,19 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     marginRight: v.iconSpace,
   }),
 
-  action: ({ variables: v }): ICSSInJSStyle => ({
+  action: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     flex: '0 0 auto',
 
     [`& .${Icon.className}`]: {
       color: v.textColor, // this breaks the color change on hover
     },
+
+    outline: 0,
+    ...getBorderFocusStyles({
+      siteVariables,
+      isFromKeyboard: p.isFromKeyboard,
+      borderRadius: v.borderRadius,
+    }),
 
     ':hover': {
       [`& .${teamsIconClassNames.filled}`]: {
