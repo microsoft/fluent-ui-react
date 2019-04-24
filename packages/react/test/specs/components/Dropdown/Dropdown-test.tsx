@@ -103,7 +103,7 @@ describe('Dropdown', () => {
 
       triggerButton.simulate('click')
       const firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
-      firstItem.simulate('click')
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
 
       expect(onOpenChange).toBeCalledTimes(2)
       expect(onOpenChange).toHaveBeenLastCalledWith(
@@ -629,7 +629,7 @@ describe('Dropdown', () => {
 
       triggerButton.simulate('click')
       const item = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(itemSelectedIndex)
-      item.simulate('click')
+      item.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
 
       expect(onSelectedChange).toHaveBeenCalledTimes(1)
       expect(onSelectedChange).toHaveBeenCalledWith(
@@ -715,10 +715,10 @@ describe('Dropdown', () => {
 
       triggerButton.simulate('click')
       const firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      firstItem.simulate('click')
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       triggerButton.simulate('click')
       const itemAtIndex = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(itemSelectedIndex)
-      itemAtIndex.simulate('click')
+      itemAtIndex.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
 
       expect(onSelectedChange).toHaveBeenCalledTimes(2)
       expect(onSelectedChange).toHaveBeenLastCalledWith(
@@ -738,10 +738,10 @@ describe('Dropdown', () => {
 
       triggerButton.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       triggerButton.simulate('click')
       const itemAtIndex2 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(3)
-      itemAtIndex2.simulate('click')
+      itemAtIndex2.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
 
       expect(onSelectedChange).toHaveBeenCalledTimes(2)
       expect(onSelectedChange).toHaveBeenLastCalledWith(
@@ -762,10 +762,10 @@ describe('Dropdown', () => {
 
       toggleIndicator.simulate('click')
       let firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
-      firstItem.simulate('click')
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       toggleIndicator.simulate('click')
       firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
-      firstItem.simulate('click')
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       searchInput
         .simulate('click')
         .simulate('keydown', { keyCode: keyboardKey.Backspace, key: 'Backspace' })
@@ -814,7 +814,7 @@ describe('Dropdown', () => {
 
       toggleIndicator.simulate('click')
       const itemAtIndex = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(itemSelectedIndex)
-      itemAtIndex.simulate('click')
+      itemAtIndex.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
 
       expect(onSelectedChange).toHaveBeenCalledTimes(1)
       expect(onSelectedChange).toHaveBeenCalledWith(
@@ -857,7 +857,7 @@ describe('Dropdown', () => {
 
       toggleIndicator.simulate('click')
       const itemAtIndex = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(itemSelectedIndex)
-      itemAtIndex.simulate('click')
+      itemAtIndex.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
 
       expect(onSelectedChange).toHaveBeenCalledTimes(1)
       expect(onSelectedChange).toHaveBeenCalledWith(
@@ -963,7 +963,8 @@ describe('Dropdown', () => {
     it('have onClick called when passed stop event from being propagated', () => {
       const onClick = jest.fn()
       const stopPropagation = jest.fn()
-      const mockedEvent = { stopPropagation }
+      const stopImmediatePropagation = jest.fn()
+      const mockedEvent = { stopPropagation, nativeEvent: { stopImmediatePropagation } }
       const items = [{ header: 'Venom', onClick }]
       const wrapper = mountWithProvider(<Dropdown items={items} />)
       const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
@@ -980,12 +981,14 @@ describe('Dropdown', () => {
         }),
       )
       expect(stopPropagation).toBeCalledTimes(1)
+      expect(stopImmediatePropagation).toBeCalledTimes(1)
     })
 
     it('when selected have onClick called when passed stop event from being propagated', () => {
       const onClick = jest.fn()
       const stopPropagation = jest.fn()
-      const mockedEvent = { stopPropagation }
+      const stopImmediatePropagation = jest.fn()
+      const mockedEvent = { stopPropagation, nativeEvent: { stopImmediatePropagation } }
       const items = [{ header: 'Venom', onClick }]
       const wrapper = mountWithProvider(<Dropdown items={items} value={items} multiple />)
       const selectedItemHeaderAtIndex0 = wrapper
