@@ -471,10 +471,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
               onFocus: () => {
                 this.setState({ focused: true })
               },
-              onBlur: e => {
-                if (this.listRef.current !== e.relatedTarget) {
-                  this.setState({ focused: false })
-                }
+              onBlur: () => {
+                this.setState({ focused: false })
               },
               onKeyDown: e => {
                 this.handleTriggerButtonKeyDown(e, rtl)
@@ -572,14 +570,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           styles={styles.list}
           tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
           aria-hidden={!open}
-          onFocus={() => {
-            this.setState({ focused: true })
-          }}
-          onBlur={e => {
-            if (this.buttonRef.current !== e.relatedTarget) {
-              this.setState({ focused: false })
-            }
-          }}
           items={open ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []}
         />
       </Ref>
