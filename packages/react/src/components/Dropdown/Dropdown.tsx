@@ -468,14 +468,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             fluid: true,
             styles: styles.triggerButton,
             ...getToggleButtonProps({
-              onFocus: () => {
-                this.setState({ focused: true })
-              },
-              onBlur: e => {
-                if (this.listRef.current !== e.relatedTarget) {
-                  this.setState({ focused: false })
-                }
-              },
+              onFocus: this.handleTriggerButtonOrListFocus,
+              onBlur: this.handleTriggerButtonBlur,
               onKeyDown: e => {
                 this.handleTriggerButtonKeyDown(e, rtl)
               },
@@ -572,14 +566,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           styles={styles.list}
           tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
           aria-hidden={!open}
-          onFocus={() => {
-            this.setState({ focused: true })
-          }}
-          onBlur={e => {
-            if (this.buttonRef.current !== e.relatedTarget) {
-              this.setState({ focused: false })
-            }
-          }}
+          onFocus={this.handleTriggerButtonOrListFocus}
+          onBlur={this.handleListBlur}
           items={open ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []}
         />
       </Ref>
@@ -1029,6 +1017,22 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         break
     }
     _.invoke(predefinedProps, 'onKeyDown', e, DropdownSelectedItemProps)
+  }
+
+  private handleTriggerButtonOrListFocus = () => {
+    this.setState({ focused: true })
+  }
+
+  private handleTriggerButtonBlur = e => {
+    if (this.listRef.current !== e.relatedTarget) {
+      this.setState({ focused: false })
+    }
+  }
+
+  private handleListBlur = e => {
+    if (this.buttonRef.current !== e.relatedTarget) {
+      this.setState({ focused: false })
+    }
   }
 
   private handleSelectedItemRemove(
