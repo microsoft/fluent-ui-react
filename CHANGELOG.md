@@ -20,6 +20,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING CHANGES
 - Rename `inputFocusBorderBottomColor` to `inputFocusBorderColor` in `InputVariables` @layershifter ([#1247](https://github.com/stardust-ui/react/pull/1247))
 
+### Fixes
+- Fix a11y message cleanup for add and remove items in `Dropdown` @silviuavram ([#1237](https://github.com/stardust-ui/react/pull/1237))
+
 ### Features
 - Move `Input` styles to Base theme @layershifter ([#1247](https://github.com/stardust-ui/react/pull/1247))
 
