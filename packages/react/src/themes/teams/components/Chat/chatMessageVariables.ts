@@ -39,10 +39,10 @@ export default (siteVars): ChatMessageVariables => ({
   offset: pxToRem(100),
   padding: pxToRem(16),
   authorMarginRight: pxToRem(12),
-  authorColor: siteVars.gray02,
+  authorColor: siteVars.gray02, // will be gray[500] with new palette
   authorFontWeight: siteVars.fontWeightRegular,
   headerMarginBottom: pxToRem(2),
-  contentColor: siteVars.colors.grey[900],
+  contentColor: '#252423', // will be gray[750] with new palette
   contentFocusOutlineColor: siteVars.colors.primary[500],
   border: 'none',
   badgeShadow: siteVars.shadowLevel1Darker,

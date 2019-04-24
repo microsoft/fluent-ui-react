@@ -4,7 +4,7 @@ export default (siteVars: any): Partial<ChatMessageVariables> => {
   return {
     backgroundColor: siteVars.gray10,
     backgroundColorMine: '#3B3C54',
-    authorColor: siteVars.gray02,
+    authorColor: siteVars.gray02, // will be gray[250] with new palette
     contentColor: siteVars.colors.white,
     color: siteVars.colors.white,
     contentFocusOutlineColor: siteVars.brand,
