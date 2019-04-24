@@ -1,6 +1,4 @@
 export interface PopupVariables {
-  [key: string]: string | number
-
   zIndex: number
   contentColor: string
   contentBackgroundColor: string

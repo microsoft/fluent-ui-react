@@ -24,9 +24,6 @@ export { default as DropdownItem } from './components/Dropdown/dropdownItemStyle
 
 export { default as Embed } from './components/Embed/embedStyles'
 
-export { default as Flex } from './components/Flex/flexStyles'
-export { default as FlexItem } from './components/Flex/flexItemStyles'
-
 export { default as Form } from './components/Form/formStyles'
 export { default as FormField } from './components/Form/formFieldStyles'
 
@@ -36,8 +33,6 @@ export { default as Header } from './components/Header/headerStyles'
 export { default as HeaderDescription } from './components/Header/headerDescriptionStyles'
 
 export { default as Icon } from './components/Icon/iconStyles'
-
-export { default as Input } from './components/Input/inputStyles'
 
 export { default as Label } from './components/Label/labelStyles'
 
@@ -56,6 +51,8 @@ export { default as MenuDivider } from './components/Menu/menuDividerStyles'
 
 export { default as Popup } from './components/Popup/popupStyles'
 export { default as PopupContent } from './components/Popup/popupContentStyles'
+
+export { default as ProviderBox } from './components/Provider/providerBoxStyles'
 
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemStyles'
 

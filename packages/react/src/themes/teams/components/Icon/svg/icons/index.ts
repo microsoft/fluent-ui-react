@@ -19,6 +19,7 @@ import callRecording from './callRecording'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
+import callMissedLine from './callMissedLine'
 import chat from './chat'
 import chevronDown from './chevronDown'
 import close from './close'
@@ -83,6 +84,7 @@ import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
 import play from './play'
 import quote from './quote'
+import readAloud from './read-aloud'
 import redbang from './redbang'
 import redo from './redo'
 import removeFormat from './removeFormat'
@@ -126,6 +128,7 @@ export default {
   'call-video-off': callVideoOff,
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
+  'call-missed-line': callMissedLine,
   'call-pstn': callPstn,
   'call-recording': callRecording,
   'canvas-add-page': canvasAddPage,
@@ -186,6 +189,7 @@ export default {
   'phone-clock': phoneClock,
   play,
   quote,
+  'read-aloud': readAloud,
   redbang,
   redo,
   'remove-format': removeFormat,
