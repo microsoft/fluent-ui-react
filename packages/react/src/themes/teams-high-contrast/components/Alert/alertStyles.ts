@@ -8,6 +8,10 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertHighContrastVariabl
     ...(p.isFromKeyboard && {
       ':focus': {
         backgroundColor: v.focusBackgroundColor,
+
+        ':hover': {
+          backgroundColor: v.hoverBackgroundColor,
+        },
       },
     }),
 
