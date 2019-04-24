@@ -1,3 +1,5 @@
+import { FontWeightProperty } from 'csstype'
+
 import { pxToRem } from '../../../../lib'
 
 export interface ButtonVariables {
@@ -7,9 +9,8 @@ export interface ButtonVariables {
   minWidth: string
   maxWidth: string
   borderRadius: string
-  circularRadius: string
   paddingLeftRightValue: number
-  contentFontWeight: string
+  contentFontWeight: FontWeightProperty
 
   color: string
   colorActive: string
@@ -46,6 +47,7 @@ export interface ButtonVariables {
 
   primaryCircularBorderColorFocusIndicator: string
 
+  circularBorderRadius: string
   circularColor: string
   circularColorActive: string
   circularBackgroundColor: string
@@ -75,7 +77,6 @@ export default (siteVars: any): ButtonVariables => {
     minWidth: pxToRem(96),
     maxWidth: pxToRem(280),
     borderRadius: pxToRem(2),
-    circularRadius: pxToRem(999),
     contentFontWeight: siteVars.fontWeightSemibold,
     paddingLeftRightValue: 20,
 
@@ -114,6 +115,7 @@ export default (siteVars: any): ButtonVariables => {
 
     primaryCircularBorderColorFocusIndicator: siteVars.colors.white,
 
+    circularBorderRadius: pxToRem(999),
     circularColor: siteVars.gray02,
     circularColorActive: siteVars.colors.white,
     circularBackgroundColor: 'transparent',
