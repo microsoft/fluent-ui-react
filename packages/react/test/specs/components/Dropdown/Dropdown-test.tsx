@@ -1023,7 +1023,7 @@ describe('Dropdown', () => {
 
       triggerButton.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
 
       expect(dropdown.state('activeSelectedIndex')).toBe(null)
     })
@@ -1035,7 +1035,7 @@ describe('Dropdown', () => {
 
       triggerButton.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       const selectedItem = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
       selectedItem.simulate('click')
 
@@ -1050,10 +1050,10 @@ describe('Dropdown', () => {
 
       toggleIndicator.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       toggleIndicator.simulate('click')
       const itemAtIndex2 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex2.simulate('click')
+      itemAtIndex2.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       searchInput.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
 
       expect(dropdown.state('activeSelectedIndex')).toBe(1)
@@ -1067,13 +1067,13 @@ describe('Dropdown', () => {
 
       toggleIndicator.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       toggleIndicator.simulate('click')
       const itemAtIndex2 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex2.simulate('click')
+      itemAtIndex2.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       toggleIndicator.simulate('click')
       const itemAtIndex3 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex3.simulate('click')
+      itemAtIndex3.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       searchInput.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
 
       expect(dropdown.state('activeSelectedIndex')).toBe(2)
@@ -1117,13 +1117,13 @@ describe('Dropdown', () => {
 
       toggleIndicator.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       toggleIndicator.simulate('click')
       const itemAtIndex2 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex2.simulate('click')
+      itemAtIndex2.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       toggleIndicator.simulate('click')
       const itemAtIndex3 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex3.simulate('click')
+      itemAtIndex3.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       const selectedItemAtIndex1 = wrapper
         .find(`span.${Dropdown.slotClassNames.selectedItem}`)
         .at(1)
@@ -1153,10 +1153,10 @@ describe('Dropdown', () => {
 
       toggleIndicator.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       toggleIndicator.simulate('click')
       const itemAtIndex2 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex2.simulate('click')
+      itemAtIndex2.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       const selectedItemAtIndex1 = wrapper
         .find(`span.${Dropdown.slotClassNames.selectedItem}`)
         .at(1)
@@ -1177,7 +1177,7 @@ describe('Dropdown', () => {
 
       toggleIndicator.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
       selectedItemHeader.simulate('click')
       const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`)
@@ -1199,7 +1199,7 @@ describe('Dropdown', () => {
 
       toggleIndicator.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
       selectedItemHeader.simulate('click')
       const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`)
@@ -1224,7 +1224,7 @@ describe('Dropdown', () => {
 
       triggerButton.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
       selectedItemHeader.simulate('click')
 
@@ -1239,10 +1239,10 @@ describe('Dropdown', () => {
 
       triggerButton.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       triggerButton.simulate('click')
       const itemAtIndex2 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex2.simulate('click')
+      itemAtIndex2.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       const selectedItemHeaderAtIndex1 = wrapper
         .find(`span.${DropdownSelectedItem.slotClassNames.header}`)
         .at(1)
@@ -1271,7 +1271,7 @@ describe('Dropdown', () => {
 
       triggerButton.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
       selectedItemHeader.simulate('click')
       const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`)
@@ -1287,7 +1287,7 @@ describe('Dropdown', () => {
 
       toggleIndicator.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
       selectedItemHeader.simulate('click')
       const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`)
@@ -1302,7 +1302,7 @@ describe('Dropdown', () => {
 
       triggerButton.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
       selectedItemHeader.simulate('click')
       const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`)
@@ -1318,7 +1318,7 @@ describe('Dropdown', () => {
 
       toggleIndicator.simulate('click')
       const itemAtIndex1 = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(1)
-      itemAtIndex1.simulate('click')
+      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
       const selectedItemHeader = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`)
       selectedItemHeader.simulate('click')
       const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`)
