@@ -3,7 +3,7 @@ import { ChatMessageVariables } from '../../../teams/components/Chat/chatMessage
 export default (siteVars: any): Partial<ChatMessageVariables> => {
   return {
     backgroundColor: siteVars.gray10,
-    backgroundColorMine: '#3B3C54',
+    backgroundColorMine: '#33344a', // colors.primary[900] when new palette pr is checked in
     color: siteVars.colors.white,
     contentFocusOutlineColor: siteVars.brand,
     hasMentionNubbinColor: siteVars.naturalColors.orange[900], // orange[300] when the new palette pr is checked in
