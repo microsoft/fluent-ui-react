@@ -96,7 +96,6 @@ module.exports = {
     'no-use-before-define': 'off',
     'operator-assignment': 'off',
     'prefer-destructuring': 'off',
-    'spaced-comment': 'off',
   },
   overrides: [
     {
