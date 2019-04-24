@@ -5,30 +5,36 @@ import { PositionProperty } from 'csstype'
 
 const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
   root: ({ props: p }): ICSSInJSStyle => ({
+    alignItems: 'center',
     display: 'inline-flex',
     position: 'relative',
-    alignItems: 'center',
     outline: 0,
+
     ...(p.fluid && { width: '100%' }),
   }),
 
   input: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    outline: 0,
-    borderStyle: 'solid',
-    borderColor: 'transparent',
-    borderWidth: v.borderWidth,
-    borderRadius: v.borderRadius,
-    color: v.fontColor,
     backgroundColor: v.backgroundColor,
-    position: 'relative',
+    color: v.fontColor,
+
+    borderColor: v.borderColor,
+    borderRadius: v.borderRadius,
+    borderStyle: 'solid',
+    borderWidth: v.borderWidth,
+
+    outline: 0,
     padding: v.inputPadding,
+    position: 'relative',
+
     ...(p.fluid && { width: '100%' }),
     ...(p.inline && { float: 'left' }),
+
     '::placeholder': {
       color: v.placeholderColor,
     },
+
     ':focus': {
-      borderBottomColor: v.inputFocusBorderBottomColor,
+      borderColor: v.inputFocusBorderColor,
     },
     ...(p.clearable && { padding: v.inputPaddingWithIconAtEnd }),
     ...(p.icon && {
@@ -37,16 +43,17 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
     }),
   }),
 
-  icon: ({ props: { iconPosition }, variables: v }): ICSSInJSStyle => ({
-    position: v.iconPosition as PositionProperty,
+  icon: ({ props: p, variables: v }): ICSSInJSStyle => ({
     color: v.iconColor,
-    ...(iconPosition === 'start' && {
+    outline: 0,
+    position: v.iconPosition as PositionProperty,
+
+    ...(p.iconPosition === 'start' && {
       left: v.iconLeft,
     }),
-    ...(iconPosition === 'end' && {
+    ...(p.iconPosition === 'end' && {
       right: v.iconRight,
     }),
-    outline: 0,
   }),
 }
 
