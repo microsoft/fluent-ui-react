@@ -1117,15 +1117,13 @@ describe('Dropdown', () => {
     it('stays as "0" on left arrow from the first selected item', () => {
       const wrapper = mountWithProvider(<Dropdown multiple items={items} value={items} />)
       const dropdown = wrapper.find(Dropdown)
-      const selectedItemAtIndex1 = wrapper
-        .find(`span.${Dropdown.slotClassNames.selectedItem}`)
-        .at(1)
-      const selectedItemHeaderAtIndex1 = wrapper
+      const selectedItem = wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`).at(0)
+      const selectedItemHeader = wrapper
         .find(`span.${DropdownSelectedItem.slotClassNames.header}`)
-        .at(1)
-      selectedItemHeaderAtIndex1.simulate('click')
-      selectedItemAtIndex1.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
-      selectedItemAtIndex1.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
+        .at(0)
+      selectedItemHeader.simulate('click')
+      selectedItem.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
+      selectedItem.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
 
       expect(dropdown.state('activeSelectedIndex')).toBe(0)
     })
