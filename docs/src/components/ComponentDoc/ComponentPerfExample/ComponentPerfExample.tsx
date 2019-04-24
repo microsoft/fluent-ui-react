@@ -6,7 +6,13 @@ import { Accordion, Segment } from '@stardust-ui/react'
 import ComponentExample from '../ComponentExample'
 import { ComponentPerfChart } from './ComponentPerfChart'
 
-const ComponentPerfExample = props => {
+export interface ComponentPerfExampleProps {
+  title: React.ReactNode
+  description?: React.ReactNode
+  examplePath: string
+}
+
+const ComponentPerfExample: React.FC<ComponentPerfExampleProps> = props => {
   const { title, description, examplePath } = props
   // FIXME: find a better way
   // "components/Divider/Performance/Divider.perf" -> dividerPerfTsx

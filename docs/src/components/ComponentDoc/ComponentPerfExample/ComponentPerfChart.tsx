@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from 'src/index'
+import { Box, Flex, Text } from '@stardust-ui/react'
 import { PerfChart, usePerfData } from 'docs/src/components/ComponentDoc/PerfChart'
 import * as React from 'react'
 

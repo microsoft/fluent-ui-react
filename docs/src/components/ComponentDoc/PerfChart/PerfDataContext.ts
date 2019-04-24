@@ -3,15 +3,16 @@ import * as React from 'react'
 export type PerfSample = {
   build: number
   ts: string
-  performance: {
-    [name: string]: {
+  performance: Record<
+    string,
+    {
       actualTime: {
         min: number
         median: number
         max: number
       }
     }
-  }
+  >
 }
 
 export type PerfData = PerfSample[]
