@@ -9,14 +9,15 @@ module.exports = {
   rules: {
     // False positive on arg types:
     // https://github.com/typescript-eslint/typescript-eslint/issues/46
-    // '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
+    '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
+
     'import/no-unresolved': 'off',
     'prettier/prettier': 'error',
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.tsx'] }],
+    'no-unused-vars': 'off', // we use @typescript-eslint/no-unused-vars instead
     semi: ['error', 'never'],
 
     // Temporary disabled rules
-    '@typescript-eslint/no-unused-vars': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/no-static-element-interactions': 'off',
     'jsx-a11y/alt-text': 'off',
@@ -89,7 +90,6 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'no-unused-expressions': 'off',
     'no-useless-return': 'off',
-    'no-unused-vars': 'off',
     'no-empty-function': 'off',
     'no-useless-constructor': 'off',
     'no-useless-escape': 'off',
