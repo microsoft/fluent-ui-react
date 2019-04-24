@@ -10,6 +10,7 @@
     "deploy:docs": "gulp deploy:docs",
     "lint": "cross-env NODE_OPTIONS='-r ts-node/register' tslint -t stylish -p . --rules-dir ./build/tslint",
     "lint:fix": "yarn lint --fix",
+    "now-build": "cross-env NOW=true yarn predeploy:docs",
     "perf": "cross-env PERF=true gulp perf --times=50",
     "perf:debug": "cross-env PERF=true gulp perf:debug --debug",
     "prettier": "prettier --list-different \"**/*.{ts,tsx}\"",
