@@ -86,13 +86,13 @@ class ComponentControlsShowCode extends React.Component<
         skipRedirect
         template={template}
       >
-        {({ isLoading, isDeploying, active }) => {
+        {({ isLoading, isDeploying, active: isActive }) => {
           const loading = isLoading || isDeploying
           return (
             <LabelledButton
               iconName={loading ? 'spinner' : 'connectdevelop'}
               label={loading ? 'Exporting...' : 'CodeSandbox'}
-              active={active}
+              active={isActive}
             />
           )
         }}

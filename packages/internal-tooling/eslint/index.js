@@ -84,7 +84,6 @@ module.exports = {
     'no-restricted-syntax': 'off',
     'no-throw-literal': 'off',
     'no-sparse-arrays': 'off',
-    'no-shadow': 'off',
     'no-undef': 'off',
     'no-undef-init': 'off',
     'no-underscore-dangle': 'off',

@@ -89,16 +89,16 @@ function wrapInGenericFocusZone<
   PROPS extends COMPONENT_PROPS,
   COMPONENT extends FocusZone & React.Component<COMPONENT_PROPS>
 >(
-  FocusZone: { new (...args: any[]): COMPONENT },
+  Component: { new (...args: any[]): COMPONENT },
   props: PROPS | undefined,
   children: React.ReactNode,
   ref: (focusZone: FocusZone) => void,
 ) {
   props[FOCUSZONE_WRAP_ATTRIBUTE] = true
   return (
-    <FocusZone ref={ref} {...props}>
+    <Component ref={ref} {...props}>
       {children}
-    </FocusZone>
+    </Component>
   )
 }
 

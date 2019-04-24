@@ -46,7 +46,7 @@ describe('MenuItem', () => {
     handlesAccessibility(MenuItem, { defaultRootRole: 'presentation', usesWrapperSlot: true })
     handlesAccessibility(MenuItem, { defaultRootRole: 'menuitem', partSelector: 'a' })
 
-    const accessibility: { name: string; behavior: Accessibility; expectedAnchorRole: string }[] = [
+    const behaviors: { name: string; behavior: Accessibility; expectedAnchorRole: string }[] = [
       { name: 'default', behavior: undefined, expectedAnchorRole: 'menuitem' },
       {
         name: 'toolbarButtonBehavior',
@@ -55,7 +55,7 @@ describe('MenuItem', () => {
       },
       { name: 'tabBehavior', behavior: tabBehavior, expectedAnchorRole: 'tab' },
     ]
-    accessibility.forEach(accessibility => {
+    behaviors.forEach(accessibility => {
       test(`integration test for ${accessibility.name} behavior`, () => {
         // accessibility functionality is covered by a combination of behavior tests and `handlesAccessibility()`
         // this is just an integration smoke test

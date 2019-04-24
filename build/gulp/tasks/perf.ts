@@ -72,9 +72,9 @@ const normalizeMeasures = (measures: ProfilerMeasureCycle[]): NormalizedMeasures
     {},
   )
 
-  return _.mapValues(perExampleMeasures, (measures: ProfilerMeasure[]) => ({
-    actualTime: reduceMeasures(measures, 'actualTime'),
-    baseTime: reduceMeasures(measures, 'baseTime'),
+  return _.mapValues(perExampleMeasures, (profilerMeasures: ProfilerMeasure[]) => ({
+    actualTime: reduceMeasures(profilerMeasures, 'actualTime'),
+    baseTime: reduceMeasures(profilerMeasures, 'baseTime'),
   }))
 }
 
@@ -139,7 +139,7 @@ task('perf:build', cb => {
 task('perf:run', async () => {
   const measures: ProfilerMeasureCycle[] = []
   const times = (argv.times as string) || DEFAULT_RUN_TIMES
-  const filter = argv.filter
+  const pathFilter = argv.filter
 
   const bar = process.env.CI
     ? { tick: _.noop }
@@ -159,7 +159,7 @@ task('perf:run', async () => {
       const page = await browser.newPage()
       await page.goto(`http://${config.server_host}:${config.perf_port}`)
 
-      const measuresFromStep = await page.evaluate(filter => window.runMeasures(filter), filter)
+      const measuresFromStep = await page.evaluate(filter => window.runMeasures(filter), pathFilter)
       measures.push(measuresFromStep)
       bar.tick()
 

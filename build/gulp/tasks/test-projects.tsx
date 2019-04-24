@@ -23,7 +23,7 @@ const log = (context: string) => (message: string) => {
   console.log('='.repeat(80))
 }
 
-export const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
+export const runIn = targetPath => cmd => sh(`cd ${targetPath} && ${cmd}`)
 
 const addResolutionPathsForStardustPackages = async (
   testProjectDir: string,

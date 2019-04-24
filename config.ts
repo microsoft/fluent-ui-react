@@ -36,10 +36,10 @@ const paths = {
   dll: base.bind(null, envConfig.dir_dll),
   docsDist: base.bind(null, envConfig.dir_docs_dist),
   docsSrc: base.bind(null, envConfig.dir_docs_src),
-  packageDist: (packageName: string, ...paths: string[]) =>
-    base(envConfig.dir_packages, packageName, 'dist', ...paths),
-  packageSrc: (packageName: string, ...paths: string[]) =>
-    base(envConfig.dir_packages, packageName, 'src', ...paths),
+  packageDist: (packageName: string, ...passedPaths: string[]) =>
+    base(envConfig.dir_packages, packageName, 'dist', ...passedPaths),
+  packageSrc: (packageName: string, ...passedPaths: string[]) =>
+    base(envConfig.dir_packages, packageName, 'src', ...passedPaths),
   packages: base.bind(null, envConfig.dir_packages),
   perfDist: base.bind(null, envConfig.dir_perf_dist),
   perfSrc: base.bind(null, envConfig.dir_perf_src),
