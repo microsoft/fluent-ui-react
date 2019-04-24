@@ -11,6 +11,7 @@ import bookmark from './bookmark'
 import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
+import callPark from './callPark'
 import callControlPresentNew from './callControlPresentNew'
 import callControlStopPresentingNew from './callControlStopPresentingNew'
 import callEnd from './callEnd'
@@ -63,8 +64,10 @@ import gallery from './gallery'
 import giphy from './giphy'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
+import hold from './hold'
 import indent from './indent'
 import italic from './italic'
+import keypad from './keypad'
 import leave from './leave'
 import like from './like'
 import link from './link'
@@ -76,12 +79,14 @@ import menu from './menu'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
+import nudge from './nudge'
 import numberList from './numberList'
 import outdent from './outdent'
 import pause from './pause'
 import paperclip from './paperclip'
 import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
+import phoneArrow from './phoneArrow'
 import play from './play'
 import quote from './quote'
 import readAloud from './read-aloud'
@@ -94,6 +99,7 @@ import skypeLogo from './skypeLogo'
 import search from './search'
 import send from './send'
 import settings from './settings'
+import closeShareTray from './closeShareTray'
 import star from './star'
 import sticker from './sticker'
 import strike from './strike'
@@ -110,6 +116,7 @@ import triangleUp from './triangleUp'
 import underline from './underline'
 import undo from './undo'
 import urgent from './urgent'
+import userBlur from './userBlur'
 import videoCameraEmphasis from './videoCameraEmphasis'
 
 export default {
@@ -124,6 +131,7 @@ export default {
   calendar,
   call,
   'call-end': callEnd,
+  'call-park': callPark,
   'call-video': callVideo,
   'call-video-off': callVideoOff,
   'call-control-present-new': callControlPresentNew,
@@ -135,6 +143,7 @@ export default {
   chat,
   'chevron-down': chevronDown,
   close,
+  'close-share-tray': closeShareTray,
   'code-snippet': codeSnippet,
   'files-aftereffects': filesAftereffects,
   'files-code': filesCode,
@@ -167,8 +176,10 @@ export default {
   giphy,
   highlight,
   'horizontal-rule': horizontalRule,
+  hold,
   indent,
   italic,
+  keypad,
   leave,
   like,
   link,
@@ -180,6 +191,7 @@ export default {
   mic,
   'mic-off': micOff,
   more,
+  nudge,
   'number-list': numberList,
   outdent,
   paperclip,
@@ -187,6 +199,7 @@ export default {
   'participant-remove': participantRemove,
   pause,
   'phone-clock': phoneClock,
+  'phone-arrow': phoneArrow,
   play,
   quote,
   'read-aloud': readAloud,
@@ -215,6 +228,7 @@ export default {
   underline,
   undo,
   urgent,
+  'user-blur': userBlur,
   'video-camera-emphasis': videoCameraEmphasis,
 
   // Office icons
