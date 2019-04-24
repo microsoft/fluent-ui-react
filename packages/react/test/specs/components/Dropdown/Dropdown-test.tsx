@@ -7,7 +7,6 @@ import DropdownSearchInput from 'src/components/Dropdown/DropdownSearchInput'
 import DropdownSelectedItem from 'src/components/Dropdown/DropdownSelectedItem'
 import { isConformant } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
-import DropdownSelectedItem from 'src/components/Dropdown/DropdownSelectedItem'
 
 jest.dontMock('keyboard-key')
 jest.useFakeTimers()
