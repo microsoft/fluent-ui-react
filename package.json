@@ -8,8 +8,9 @@
     "clean:cache": "gulp clean:cache",
     "predeploy:docs": "cross-env NODE_ENV=production yarn build:docs",
     "deploy:docs": "gulp deploy:docs",
-    "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "lint:fix": "yarn eslint --fix",
+    "lint": "eslint \"**/*.{js,ts,tsx}\" && yarn lint:old",
+    "lint:fix": "yarn lint --fix && yarn lint:old --fix",
+    "lint:old": "cross-env NODE_OPTIONS='-r ts-node/register' tslint -t stylish -p . --rules-dir ./build/tslint",
     "perf": "cross-env PERF=true gulp perf --times=50",
     "perf:debug": "cross-env PERF=true gulp perf:debug --debug",
     "prettier": "prettier --list-different \"**/*.{ts,tsx}\"",
@@ -38,6 +39,7 @@
   "lint-staged": {
     "**/*.{ts,tsx}": [
       "prettier --write",
+      "tslint -t stylish --fix",
       "eslint --fix",
       "git add"
     ],
@@ -126,6 +128,9 @@
     "ts-loader": "^5.3.0",
     "ts-node": "^6.1.0",
     "tsconfig-paths": "^3.7.0",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3333",
     "webpack": "^4.25.1",
     "webpack-dev-middleware": "^3.4.0",
