@@ -4,11 +4,13 @@ import * as _ from 'lodash'
 
 import Dropdown from 'src/components/Dropdown/Dropdown'
 import DropdownSearchInput from 'src/components/Dropdown/DropdownSearchInput'
+import DropdownSelectedItem from 'src/components/Dropdown/DropdownSelectedItem'
 import { isConformant } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
 import DropdownSelectedItem from 'src/components/Dropdown/DropdownSelectedItem'
 
 jest.dontMock('keyboard-key')
+jest.useFakeTimers()
 
 describe('Dropdown', () => {
   const items = ['item1', 'item2', 'item3', 'item4', 'item5']
@@ -781,6 +783,10 @@ describe('Dropdown', () => {
   })
 
   describe('getA11ySelectionMessage', () => {
+    afterEach(() => {
+      jest.runAllTimers()
+    })
+
     it('creates message container element', () => {
       mountWithProvider(<Dropdown options={[]} getA11ySelectionMessage={{}} />)
       expect(
@@ -788,6 +794,53 @@ describe('Dropdown', () => {
           `[role="status"][aria-live="polite"][aria-relevant="additions text"]`,
         ),
       ).toBeTruthy()
+    })
+
+    it('has the onAdd message inserted and cleared after an item has been added to selection', () => {
+      const wrapper = mountWithProvider(
+        <Dropdown
+          multiple
+          items={items}
+          getA11ySelectionMessage={{ onAdd: item => 'bla bla added' }}
+        />,
+      )
+      const dropdown = wrapper.find(Dropdown)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      const firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
+      firstItem.simulate('click')
+
+      expect(dropdown.state('a11ySelectionStatus')).toBe('bla bla added')
+
+      jest.runAllTimers()
+
+      expect(dropdown.state('a11ySelectionStatus')).toBe('')
+    })
+
+    it('has the onRemove message inserted and cleared after an item has been removed from selection', () => {
+      const wrapper = mountWithProvider(
+        <Dropdown
+          multiple
+          items={items}
+          getA11ySelectionMessage={{ onRemove: item => 'bla bla removed' }}
+        />,
+      )
+      const dropdown = wrapper.find(Dropdown)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      const firstItem = wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(0)
+      firstItem.simulate('click')
+      jest.runAllTimers()
+      const removeIcon = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.icon}`)
+      removeIcon.simulate('click')
+
+      expect(dropdown.state('a11ySelectionStatus')).toBe('bla bla removed')
+
+      jest.runAllTimers()
+
+      expect(dropdown.state('a11ySelectionStatus')).toBe('')
     })
   })
 
