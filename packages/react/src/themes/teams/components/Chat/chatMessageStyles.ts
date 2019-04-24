@@ -122,7 +122,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
   badge: ({ props: p, variables: v }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
     return {
-      backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
+      backgroundColor: v.hasMention ? v.hasMentionNubbinColor : v.isImportantColor,
       color: v.badgeTextColor,
       boxShadow: v.badgeShadow,
       position: 'absolute',

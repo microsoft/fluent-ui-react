@@ -1,6 +1,10 @@
 export { default as componentInfoContext } from './componentInfoContext'
 export { default as componentInfoShape } from './componentInfoShape'
-export { exampleIndexContext, exampleSourcesContext } from './exampleContexts'
+export {
+  exampleIndexContext,
+  examplePlaygroundContext,
+  exampleSourcesContext,
+} from './exampleContexts'
 export { default as exampleKebabNameToSourceFilename } from './exampleKebabNameToSourceFilename'
 export { default as examplePathToHash } from './examplePathToHash'
 export { default as getComponentGroup } from './getComponentGroup'

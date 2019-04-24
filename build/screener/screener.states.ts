@@ -8,7 +8,7 @@ import getScreenerSteps from './screener.steps'
 import config from '../../config'
 
 const examplePaths = glob.sync('docs/src/examples/**/*.tsx', {
-  ignore: ['**/index.tsx', '**/*.knobs.tsx'],
+  ignore: ['**/index.tsx', '**/*.knobs.tsx', '**/Playground.tsx'],
 })
 const pathFilter = process.env.SCREENER_FILTER
 const filteredPaths: string[] = minimatch.match(examplePaths, pathFilter || '*', {

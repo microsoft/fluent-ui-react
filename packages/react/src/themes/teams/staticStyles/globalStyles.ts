@@ -8,6 +8,15 @@ const globalStyles: StaticStyleFunction = siteVars => ({
     fontSize: siteVars.bodyFontSize,
     lineHeight: siteVars.bodyLineHeight,
   },
+  '*': {
+    boxSizing: 'border-box',
+  },
+  '*:before': {
+    boxSizing: 'border-box',
+  },
+  '*:after': {
+    boxSizing: 'border-box',
+  },
 })
 
 export default globalStyles
