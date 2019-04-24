@@ -17,10 +17,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.29.0 ]------------------------------- -->
+## [v0.29.0](https://github.com/stardust-ui/react/tree/v0.29.0) (2019-04-24)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.28.1...v0.29.0)
+
 ### BREAKING CHANGES
 - Rename `inputFocusBorderBottomColor` to `inputFocusBorderColor` in `InputVariables` @layershifter ([#1247](https://github.com/stardust-ui/react/pull/1247))
 
 ### Fixes
+- Fix onClick in `DropdownItem` to accept user callback and have its event propagation stopped @silviuavram ([#1248](https://github.com/stardust-ui/react/pull/1248))
 - Fix a11y message cleanup for add and remove items in `Dropdown` @silviuavram ([#1237](https://github.com/stardust-ui/react/pull/1237))
 - Update `ChatMessage` styles in Teams themes @layershifter ([#1246](https://github.com/stardust-ui/react/pull/1246))
 
