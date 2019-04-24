@@ -144,7 +144,7 @@ class Provider extends React.Component<Extendable<ProviderProps>> {
 
   render() {
     const { theme, children, target, ...unhandledProps } = this.props
-    console.log(target)
+
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
     return (
@@ -156,7 +156,7 @@ class Provider extends React.Component<Extendable<ProviderProps>> {
           // We should call render() to ensure that a subscription for DOM updates was created
           // https://github.com/stardust-ui/react/issues/581
           if (isBrowser()) {
-            // @ts-ignore
+            // @ts-ignore TODO: Remove before merge
             render(outgoingTheme.renderer, target)
           }
           this.renderStaticStylesOnce(outgoingTheme)

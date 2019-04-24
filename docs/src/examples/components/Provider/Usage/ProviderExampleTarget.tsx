@@ -4,26 +4,36 @@ import { Attachment, Button, Provider, themes } from '@stardust-ui/react'
 
 type PortalWindowProps = {
   children: (externalDocument: Document) => React.ReactElement
+  onClose?: () => void
 }
 
-const PortalWindow: React.FunctionComponent<PortalWindowProps> = ({ children }) => {
+const PortalWindow: React.FunctionComponent<PortalWindowProps> = ({ children, onClose }) => {
+  const externalContainer = React.useRef<HTMLDivElement>(null)
   const externalWindow = React.useRef<Window>(null)
-  const [container, setContainer] = React.useState<HTMLDivElement>(null)
+  const [mounted, setMounted] = React.useState<boolean>(false)
 
   React.useEffect(() => {
     externalWindow.current = window.open('', '', 'width=600,height=400,left=200,top=200')
 
-    const newContainer = externalWindow.current.document.createElement('div')
-    externalWindow.current.document.body.appendChild(newContainer)
+    externalContainer.current = externalWindow.current.document.createElement('div')
 
-    setContainer(newContainer)
+    externalWindow.current.document.body.appendChild(externalContainer.current)
+    if (onClose) externalWindow.current.onbeforeunload = onClose
+
+    setMounted(true)
 
     return () => {
       externalWindow.current.close()
     }
   }, [])
 
-  return container && ReactDOM.createPortal(children(container.ownerDocument), container)
+  return (
+    mounted &&
+    ReactDOM.createPortal(
+      children(externalContainer.current.ownerDocument),
+      externalContainer.current,
+    )
+  )
 }
 
 const ProviderExampleTarget = () => {
@@ -33,7 +43,7 @@ const ProviderExampleTarget = () => {
     <>
       <Button onClick={() => setOpen(true)}>Open window!</Button>
       {open && (
-        <PortalWindow>
+        <PortalWindow onClose={() => setOpen(false)}>
           {externalDocument => (
             <Provider theme={themes.teams} target={externalDocument}>
               <Attachment header="Document.docx" />
