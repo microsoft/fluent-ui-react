@@ -113,6 +113,7 @@
     "react-router-dom": "^4.1.2",
     "react-source-render": "2.0.0-beta.6",
     "react-test-renderer": "^16.8.5",
+    "react-vis": "^1.11.6",
     "request-promise-native": "^1.0.5",
     "rimraf": "^2.6.1",
     "satisfied": "^1.1.1",
