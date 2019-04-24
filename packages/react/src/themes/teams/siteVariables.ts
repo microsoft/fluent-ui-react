@@ -26,6 +26,11 @@ export const red08 = '#F3D6DB' // no mapping color $app-red-08
 export const red10 = '#FCF4F6' // no mapping color $app-red-10
 
 //
+// BORDER SIZES
+//
+export const borderWidth = '1px'
+
+//
 // SHADOW LEVELS
 //
 export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, .1)'

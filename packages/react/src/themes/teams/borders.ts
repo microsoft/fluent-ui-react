@@ -2,77 +2,62 @@ import * as React from 'react'
 
 import { ICSSInJSStyle } from '../types'
 
-interface BorderParams {
-  borderWidth: string
-  borderRadius: string
-  borderColorOuter: string
-  borderColorFocusOuter: string
+type CSSBorderStyles = Pick<React.CSSProperties, 'borderWidth' | 'borderRadius'>
+
+type FocusBorderStyles = CSSBorderStyles & {
   borderColorInner?: string
-  borderColorFocusInner?: string
+  borderColorOuter?: string
   focusFromKeyboard?: boolean
 }
 
-const commonStyles: React.CSSProperties = {
-  content: '""',
-  position: 'absolute',
-  borderStyle: 'solid',
-}
+type BorderPseudoElementStyles = CSSBorderStyles & { borderEdgeValue: string }
 
-const getPseudoBorderStyles = (args: {
-  borderColor: string
-  borderEdgeValue: string
-}): ICSSInJSStyle => {
-  const { borderEdgeValue, borderColor } = args
+const defaultColor = 'transparent'
+
+const getPseudoElementStyles = (args: BorderPseudoElementStyles): ICSSInJSStyle => {
+  const { borderEdgeValue, ...styles } = args
 
   return {
-    ...commonStyles,
-    borderColor,
-    top: borderEdgeValue, // TODO former borderWidth
+    content: '""',
+    position: 'absolute',
+    borderStyle: 'solid',
+    top: borderEdgeValue,
     right: borderEdgeValue,
     bottom: borderEdgeValue,
     left: borderEdgeValue,
+    ...styles,
   }
 }
 
-export const getBorderStyles = (args: BorderParams): ICSSInJSStyle => {
-  const defaultColor = 'transparent'
-
+export const getBorderStyles = (args: FocusBorderStyles): ICSSInJSStyle => {
   const {
     borderWidth,
     borderRadius,
-    borderColorOuter,
-    borderColorFocusOuter,
+    borderColorOuter = defaultColor,
     borderColorInner = defaultColor,
-    borderColorFocusInner = defaultColor,
     focusFromKeyboard,
   } = args
 
+  const defaultBorderStyles: React.CSSProperties = { borderWidth, borderRadius }
+
   return {
-    // border: 0,
-    borderRadius,
-
-    ':before': {
-      borderWidth,
-      borderRadius, // TODO former borderRadiusFocused,
-      ...getPseudoBorderStyles({ borderColor: borderColorInner, borderEdgeValue: borderWidth }),
-    },
-
-    ':after': {
-      borderWidth,
-      borderRadius, // TODO former borderRadiusFocused,
-      ...getPseudoBorderStyles({ borderColor: borderColorOuter, borderEdgeValue: '0' }),
-    },
+    ...defaultBorderStyles,
 
     ...(focusFromKeyboard && {
       ':focus': {
-        // borderColor: 'transparent', // TODO: needed?
-        ':before': {
-          borderColor: borderColorFocusInner,
-        },
+        borderColor: 'transparent',
 
-        ':after': {
-          borderColor: borderColorFocusOuter,
-        },
+        ':before': getPseudoElementStyles({
+          borderEdgeValue: '0',
+          borderColor: borderColorInner,
+          ...defaultBorderStyles,
+        }),
+
+        ':after': getPseudoElementStyles({
+          borderEdgeValue: `-${borderWidth}`,
+          borderColor: borderColorOuter,
+          ...defaultBorderStyles,
+        }),
       },
     }),
   }
