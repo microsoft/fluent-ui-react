@@ -5,7 +5,11 @@ const alert = `.${Alert.className}`
 
 const getScreenerSteps = (): ScreenerSteps => [
   builder => builder.hover(alert).snapshot('Hovers the action icon'),
-  builder => builder.focus(alert).snapshot('Focuses the action icon'),
+  (builder, keys) =>
+    builder
+      .click(alert)
+      .keys(alert, keys.tab)
+      .snapshot('Focuses the action icon'),
 ]
 
 export default getScreenerSteps
