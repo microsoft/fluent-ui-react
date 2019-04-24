@@ -8,6 +8,7 @@ import * as _ from 'lodash'
  *
  * @specification
  * Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Does not set the attribute otherwise.
+ * Adds attribute 'role=complementary' to 'popup' component's part.
  */
 const popupBehavior: Accessibility = (props: any) => {
   const onAsArray = _.isArray(props.on) ? props.on : [props.on]
@@ -20,6 +21,9 @@ const popupBehavior: Accessibility = (props: any) => {
           : !!props['disabled']
           ? true
           : undefined,
+      },
+      popup: {
+        role: 'complementary',
       },
     },
     keyActions: {
