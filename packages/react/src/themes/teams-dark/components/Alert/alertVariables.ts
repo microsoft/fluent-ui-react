@@ -6,8 +6,8 @@ export default (siteVars: any): Partial<AlertVariables> => {
     borderColor: siteVars.gray09,
     color: siteVars.gray09,
 
-    dangerColor: '#E73550', // red[300] when new color palette PR goes in
-    dangerBackgroundColor: siteVars.red08,
+    dangerColor: '#f9526b', // red[200] when new color palette PR goes in
+    dangerBackgroundColor: '#3e1f25', // red[800] when new color palette PR goes in
     dangerBorderColor: '#1E040A', // red[900] when new color palette PR goes in
 
     oofColor: '#ec6fae', // pink[200] when new color palette PR goes in

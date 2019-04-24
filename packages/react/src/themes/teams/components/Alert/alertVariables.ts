@@ -59,9 +59,9 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     focusInnerBorderColor: siteVars.colors.white,
     focusOuterBorderColor: siteVars.colors.black,
 
-    dangerColor: siteVars.red,
-    dangerBackgroundColor: siteVars.red10,
-    dangerBorderColor: siteVars.red08,
+    dangerColor: siteVars.red, // red[400] when new color palette PR goes in
+    dangerBackgroundColor: siteVars.red10, // red[50] when new color palette PR goes in
+    dangerBorderColor: siteVars.red08, // red[100] when new color palette PR goes in
 
     oof: false,
     oofColor: siteVars.orchid, // pink[600] when new color palette PR goes in
