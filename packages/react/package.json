@@ -9,7 +9,7 @@
     "@stardust-ui/react-component-nesting-registry": "^0.29.0",
     "@stardust-ui/react-proptypes": "^0.29.0",
     "classnames": "^2.2.5",
-    "downshift": "^3.2.6",
+    "downshift": "^3.2.10",
     "fela": "^10.2.0",
     "fela-plugin-fallback-value": "^10.2.0",
     "fela-plugin-placeholder-prefixer": "^10.2.0",
