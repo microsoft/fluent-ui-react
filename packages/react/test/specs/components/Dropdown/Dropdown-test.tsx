@@ -732,6 +732,50 @@ describe('Dropdown', () => {
       itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
       expect(dropdown.state('highlightedIndex')).toBe(3)
     })
+
+    it('jumps to the item starting with the character key pressed', () => {
+      const items = ['Athos', 'Porthos', 'Aramis', `D'Artagnan`]
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const dropdown = wrapper.find(Dropdown)
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      itemsList.simulate('keydown', { keyCode: keyboardKey.P, key: 'P' })
+
+      expect(dropdown.state('highlightedIndex')).toBe(1)
+    })
+
+    it('jumps starting from the current highlightedIndex on character key press', () => {
+      const items = ['Athos', 'Porthos', 'Aramis', `D'Artagnan`]
+      const wrapper = mountWithProvider(<Dropdown items={items} defaultHighlightedIndex={1} />)
+      const dropdown = wrapper.find(Dropdown)
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
+
+      expect(dropdown.state('highlightedIndex')).toBe(2)
+    })
+
+    it('is updated in a circular way on same character key press', () => {
+      const items = ['Athos', 'Porthos', 'Aramis', `D'Artagnan`]
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const dropdown = wrapper.find(Dropdown)
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
+      expect(dropdown.state('highlightedIndex')).toBe(0)
+
+      itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
+      expect(dropdown.state('highlightedIndex')).toBe(2)
+
+      itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
+      expect(dropdown.state('highlightedIndex')).toBe(0)
+    })
   })
 
   describe('value', () => {

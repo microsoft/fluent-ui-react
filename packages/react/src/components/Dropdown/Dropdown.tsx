@@ -931,7 +931,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     toggleMenu: () => void,
     selectItemAtIndex: (index: number) => void,
   ) => {
-    switch (keyboardKey.getCode(e)) {
+    const keyCode = keyboardKey.getCode(e)
+    switch (keyCode) {
       case keyboardKey.Tab:
         this.handleTabSelection(e, highlightedIndex, selectItemAtIndex, toggleMenu)
         return
@@ -941,6 +942,16 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         e.stopPropagation()
         return
       default:
+        const keyString = String.fromCharCode(keyCode)
+        if (/[a-zA-Z]/.test(keyString)) {
+          const highlightedIndex = this.getHighlightedIndexOnCharKeyPress(keyString)
+          if (highlightedIndex >= 0) {
+            this.setState({
+              highlightedIndex,
+            })
+          }
+        }
+
         accessibilityInputPropsKeyDown(e)
         return
     }
@@ -1033,6 +1044,30 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     if (this.buttonRef.current !== e.relatedTarget) {
       this.setState({ focused: false })
     }
+  }
+
+  private getHighlightedIndexOnCharKeyPress = (keyPressed: string): number => {
+    const { highlightedIndex } = this.state
+    const filteredItemLowercasedStrings = this.getItemsFilteredBySearchQuery().map(item =>
+      this.props.itemToString(item).toLocaleLowerCase(),
+    )
+    let newHighlightedIndex = -1
+
+    if (_.isNumber(highlightedIndex)) {
+      newHighlightedIndex = _.findIndex(
+        filteredItemLowercasedStrings,
+        item => item.startsWith(keyPressed.toLowerCase()),
+        highlightedIndex + 1,
+      )
+    }
+
+    if (newHighlightedIndex < 0) {
+      return _.findIndex(filteredItemLowercasedStrings, item =>
+        item.startsWith(keyPressed.toLowerCase()),
+      )
+    }
+
+    return newHighlightedIndex
   }
 
   private handleSelectedItemRemove(
