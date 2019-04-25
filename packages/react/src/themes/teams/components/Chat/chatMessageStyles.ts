@@ -93,6 +93,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
     ...((p.mine || p.attached === 'bottom' || p.attached === true) && screenReaderContainerStyles),
+    color: v.authorColor,
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
     fontWeight: v.authorFontWeight,
@@ -109,6 +110,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
   }),
 
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    color: v.contentColor,
     display: 'block',
     '& a:focus': {
       outline: 'none',
@@ -123,7 +125,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
   badge: ({ props: p, variables: v }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
     return {
-      backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
+      backgroundColor: v.hasMention ? v.hasMentionNubbinColor : v.isImportantColor,
       color: v.badgeTextColor,
       boxShadow: v.badgeShadow,
       position: 'absolute',
