@@ -25,6 +25,7 @@ const KnobLabel: React.FunctionComponent<KnobComponentProps> = props => (
 
 const KnobBoolean: React.FunctionComponent<KnobComponentProps> = props => (
   <input
+    checked={props.value}
     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
       props.setValue(e.target.checked)
     }}
@@ -49,6 +50,35 @@ const KnobSelect: React.FunctionComponent<KnobComponentProps> = props => (
   </select>
 )
 
+const KnobRange: React.FunctionComponent<KnobComponentProps> = props => {
+  const parseValue = (parseValue: string): number => {
+    const hasDecimal = /\.\d/.test(parseValue)
+
+    return hasDecimal ? parseFloat(parseValue) : parseInt(parseValue, 10)
+  }
+  const { defaultValue, unit } = React.useMemo(
+    () => ({
+      defaultValue: parseValue(props.value),
+      unit: `${props.value}`.replace(`${parseValue(props.value)}`, ''),
+    }),
+    [],
+  )
+
+  return (
+    <input
+      type="range"
+      min="0"
+      max={defaultValue * 3}
+      step="1"
+      value={parseValue(props.value)}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+        props.setValue(`${e.target.value}${unit}`)
+      }}
+      style={{ width: '100%' }}
+    />
+  )
+}
+
 const KnobString: React.FunctionComponent<KnobComponentProps> = props => (
   <input
     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +94,7 @@ const defaultComponents: KnobComponents = {
   KnobLabel,
 
   KnobBoolean,
+  KnobRange,
   KnobSelect,
   KnobString,
 }
