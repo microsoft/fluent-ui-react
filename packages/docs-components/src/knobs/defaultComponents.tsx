@@ -56,12 +56,13 @@ const KnobRange: React.FunctionComponent<KnobComponentProps> = props => {
 
     return hasDecimal ? parseFloat(parseValue) : parseInt(parseValue, 10)
   }
-  const { defaultValue, unit } = React.useMemo(() => {
-    return {
+  const { defaultValue, unit } = React.useMemo(
+    () => ({
       defaultValue: parseValue(props.value),
       unit: `${props.value}`.replace(`${parseValue(props.value)}`, ''),
-    }
-  }, [])
+    }),
+    [],
+  )
 
   return (
     <input
