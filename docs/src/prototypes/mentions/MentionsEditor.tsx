@@ -93,7 +93,7 @@ const MentionsEditor: React.FunctionComponent<
 
   const handleOpenChange = (e: React.SyntheticEvent, { open }: MentionsContainerProps) => {
     if (!open) {
-      resetStateAndUpdateEditor()
+      dispatch({ type: 'UPDATE_AND_CLOSE', args: state.searchQuery })
     }
   }
 
