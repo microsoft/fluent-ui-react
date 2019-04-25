@@ -235,3 +235,4 @@ export const FocusZoneUtilities = {
   focusAsync,
 }
 export { FocusZoneDirection, FocusZoneProps } from './lib/accessibility/FocusZone/FocusZone.types'
+export { FocusZoneMode } from './lib/accessibility/types'
