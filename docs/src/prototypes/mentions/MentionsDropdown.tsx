@@ -5,12 +5,17 @@ import { Dropdown, DropdownItemProps, Provider } from '@stardust-ui/react'
 
 import { MentionsContainerProps } from './MentionsEditor'
 
+type RenderItem = {
+  Item: React.ReactType
+  props: DropdownItemProps
+  fontWeight: FontWeightProperty
+}
+
 const MentionsDropdown: React.FunctionComponent<MentionsContainerProps> = props => {
   const { searchQuery, items, onOpenChange, onSearchQueryChange, onInputKeyDown } = props
 
   const renderItem = React.useCallback(
-    (args: { Item: React.ReactType; props: DropdownItemProps; fontWeight: FontWeightProperty }) =>
-      getCustomItem({ ...args, searchQuery }),
+    (args: RenderItem) => getCustomItem({ ...args, searchQuery }),
     [searchQuery],
   )
 

@@ -9,9 +9,9 @@ export default () => (
     <ComponentPrototype
       title="Editable Area with Dropdown"
       description="Type text into editable area below. Use the '@' key to mention people."
-      style={{ marginTop: '200px' }}
+      styles={{ marginTop: '200px' }}
     >
-      <MentionsEditor render={props => <MentionsDropdown {...props} />} />
+      <MentionsEditor children={props => <MentionsDropdown {...props} />} />
     </ComponentPrototype>
   </PrototypeSection>
 )

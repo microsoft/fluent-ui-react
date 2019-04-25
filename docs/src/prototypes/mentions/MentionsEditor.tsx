@@ -59,9 +59,9 @@ const stateReducer = (state: MentionsEditorState, action: MentionsEditorAction) 
 }
 
 const MentionsEditor: React.FunctionComponent<
-  MentionsContainerProps & { render: (props: MentionsContainerProps) => React.ReactNode }
+  MentionsContainerProps & { children: (props: MentionsContainerProps) => React.ReactNode }
 > = props => {
-  const { render, ...rest } = props
+  const { children, ...rest } = props
   const contendEditableRef = React.useRef(null)
   const [state, dispatch] = React.useReducer(stateReducer, {
     shouldUpdate: false,
@@ -76,7 +76,7 @@ const MentionsEditor: React.FunctionComponent<
         return
       }
 
-      tryFocusEditor()
+      _.invoke(contendEditableRef.current, 'focus')
 
       // after the wrapped component is closed the value of the search query is inserted in the editor at cursor position
       insertTextAtCursorPosition(state.selectedItem)
@@ -131,8 +131,6 @@ const MentionsEditor: React.FunctionComponent<
     }
   }
 
-  const tryFocusEditor = () => _.invoke(contendEditableRef.current, 'focus')
-
   return (
     <>
       <div
@@ -142,7 +140,7 @@ const MentionsEditor: React.FunctionComponent<
         style={editorStyle}
       />
       <PortalAtCursorPosition open={state.open}>
-        {render({
+        {children({
           items: atMentionItems,
           open: state.open,
           searchQuery: state.searchQuery,

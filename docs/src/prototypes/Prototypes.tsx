@@ -3,27 +3,27 @@ import { Box, Header, Segment } from '@stardust-ui/react'
 
 interface PrototypeSectionProps {
   title?: React.ReactNode
-  style?: React.CSSProperties
+  styles?: React.CSSProperties
 }
 
 interface ComponentPrototypeProps extends PrototypeSectionProps {
   description?: React.ReactNode
 }
 
-export const PrototypeSection: React.FC<ComponentPrototypeProps> = props => {
-  const { title: title, children, style, ...rest } = props
+export const PrototypeSection: React.FunctionComponent<ComponentPrototypeProps> = props => {
+  const { title, children, styles, ...rest } = props
   return (
-    <Box styles={{ margin: '20px', ...style }} {...rest}>
+    <Box styles={{ margin: '20px', ...styles }} {...rest}>
       {title && <Header as="h1">{title}</Header>}
       {children}
     </Box>
   )
 }
 
-export const ComponentPrototype: React.FC<ComponentPrototypeProps> = props => {
-  const { description, title: header, children, style, ...rest } = props
+export const ComponentPrototype: React.FunctionComponent<ComponentPrototypeProps> = props => {
+  const { description, title: header, children, styles, ...rest } = props
   return (
-    <Box styles={{ marginTop: '20px', ...style }} {...rest}>
+    <Box styles={{ marginTop: '20px', ...styles }} {...rest}>
       {(header || description) && (
         <Segment>
           {header && <Header as="h3">{header}</Header>}
