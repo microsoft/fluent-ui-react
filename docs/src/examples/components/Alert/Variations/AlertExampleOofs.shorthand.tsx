@@ -6,10 +6,6 @@ const AlertExampleOof = () => (
     variables={{ oof: true }}
     action={{
       icon: 'close',
-      onClick: () =>
-        this.setState({
-          open: false,
-        }),
     }}
     content="This is an oof alert"
   />

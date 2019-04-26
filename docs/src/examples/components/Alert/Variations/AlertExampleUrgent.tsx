@@ -6,10 +6,6 @@ const AlertExampleUrgent = () => (
     variables={{ urgent: true }}
     action={{
       icon: 'close',
-      onClick: () =>
-        this.setState({
-          open: false,
-        }),
     }}
   >
     This is an urgent alert
