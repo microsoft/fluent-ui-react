@@ -1,5 +1,5 @@
 import { ButtonVariables } from '../../../teams/components/Button/buttonVariables'
-import { extendColorObject } from 'src/themes/colorUtils'
+import { extendColorObject } from '../../../colorUtils'
 
 export default (siteVars: any): Partial<ButtonVariables> => {
   return {
