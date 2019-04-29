@@ -121,7 +121,10 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     timestamp: customPropTypes.itemShorthand,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
-    reactionGroup: customPropTypes.itemShorthand,
+    reactionGroup: PropTypes.oneOfType([
+      customPropTypes.collectionShorthand,
+      customPropTypes.itemShorthand,
+    ]),
     reactionGroupPosition: PropTypes.oneOf(['start', 'end']),
   }
 

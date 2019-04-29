@@ -28,9 +28,10 @@ const getKnobControls = (
 const getKnobComponents = (
   knobsContext: KnobContextValue,
 ): Record<KnobDefinition['type'], KnobComponent> => {
-  const { KnobBoolean, KnobSelect, KnobString } = knobsContext.components
+  const { KnobBoolean, KnobRange, KnobSelect, KnobString } = knobsContext.components
   const components = {
     boolean: KnobBoolean,
+    range: KnobRange,
     select: KnobSelect,
     string: KnobString,
   }
@@ -46,30 +47,37 @@ const getKnobComponents = (
   return components
 }
 
-const KnobInspector: React.FunctionComponent = () => {
+type KnobInspectorProps = {
+  children?: (children: React.ReactElement) => React.ReactElement
+}
+
+const KnobInspector: React.FunctionComponent<KnobInspectorProps> = props => {
   const knobsContext = React.useContext(KnobsContext)
 
   const { Control, Field, Label } = getKnobControls(knobsContext)
   const knobComponents = getKnobComponents(knobsContext)
   const knobValues = useKnobValues()
 
-  return (
-    <>
-      {knobValues.map((knob: KnobDefinition) => {
-        const setValue = (value: any) => knobsContext.setKnobValue(knob.name, value)
-        const knobProps: KnobComponentProps = { ...knob, setValue }
+  const children =
+    knobValues.length > 0 ? (
+      <>
+        {knobValues.map((knob: KnobDefinition) => {
+          const setValue = (value: any) => knobsContext.setKnobValue(knob.name, value)
+          const knobProps: KnobComponentProps = { ...knob, setValue }
 
-        return (
-          <Field {...knobProps} key={knob.name}>
-            <Label {...knobProps} />
-            <Control {...knobProps}>
-              {React.createElement(knobComponents[knob.type], knobProps)}
-            </Control>
-          </Field>
-        )
-      })}
-    </>
-  )
+          return (
+            <Field {...knobProps} key={knob.name}>
+              <Label {...knobProps} />
+              <Control {...knobProps}>
+                {React.createElement(knobComponents[knob.type], knobProps)}
+              </Control>
+            </Field>
+          )
+        })}
+      </>
+    ) : null
+
+  return props.children ? props.children(children) : children
 }
 
 export default KnobInspector
