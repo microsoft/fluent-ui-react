@@ -149,3 +149,110 @@ export const colorScheme: ColorSchemeMapping = {
     foregroundDisabled: colors.black,
   }),
 }
+
+export const colorSchemeWIP = {
+  default: {
+    foregroundDefault1: colors.white,
+    foregroundDefault2: colors.grey[250],
+    foregroundDefault3: colors.grey[300],
+    foregroundDefault4: colors.white,
+
+    backgroundDefault1: colors.grey[650],
+    backgroundDefault2: colors.grey[700],
+    backgroundDefault3: colors.grey[800],
+    backgroundDefault4: colors.grey[550],
+
+    borderDefault1: colors.grey[850], // menu borders are too dark?
+    borderDefault2: colors.grey[900],
+    borderDefault3: colors.grey[450], // buttons
+
+    shadowDefault: colors.black, // opacity 25%
+    shadowHover: colors.black,
+
+    foregroundHover: colors.white,
+
+    backgroundHover1: colors.grey[550],
+    backgroundHover2: colors.grey[550],
+
+    borderHover3: colors.grey[400],
+
+    foregroundActive1: colors.white,
+    foregroundActive2: colors.primary[400],
+
+    backgroundActive2: colors.grey[500], // backgroundActive1 swapped with 2
+    backgroundActive1: colors.grey[800],
+
+    // active border no change (just copied)
+    borderActive1: colors.grey[850],
+    borderActive2: colors.grey[900],
+    borderActive3: colors.grey[450], // buttons
+
+    foregroundFocus1: colors.white,
+    foregroundFocus2: colors.grey[250],
+    foregroundFocus3: colors.grey[300],
+    foregroundFocus4: colors.white,
+
+    backgroundFocus1: colors.grey[650],
+    backgroundFocus2: colors.grey[700],
+    backgroundFocus3: colors.grey[800],
+    backgroundFocus4: colors.grey[550],
+
+    borderFocus: colors.black,
+    borderFocusWithin: colors.white,
+    borderFocus1: colors.primary[400],
+
+    foregroundDisabled1: colors.grey[450],
+    foregroundDisabled2: colors.grey[450],
+
+    backgroundDisabled1: colors.grey[550],
+    backgroundDisabled2: colors.grey[550],
+
+    borderDisabled: colors.grey[550],
+    shadowDisabled: undefined,
+  },
+  primary: {
+    foregroundDefault1: colors.primary[400],
+    foregroundDefault2: colors.primary[400],
+    foregroundDefault3: colors.primary[400],
+    foregroundDefault4: colors.primary[200],
+
+    backgroundDefault1: colors.primary[600],
+    backgroundDefault2: colors.primary[900],
+    backgroundDefault3: colors.primary[900],
+    backgroundDefault4: colors.primary[1000],
+    backgroundDefault5: colors.primary[600],
+
+    borderDefault1: colors.primary[800],
+    borderDefault2: colors.primary[800],
+    // borderDefault3: colors.grey[200], // buttons
+
+    foregroundHover: colors.primary[400],
+
+    borderHover3: colors.primary[400],
+
+    backgroundHover1: colors.primary[500], // in the button we have 50 :(
+    backgroundHover2: colors.primary[900],
+
+    foregroundPressed: colors.primary[200],
+    backgroundPressed: colors.primary[700], // it's 900 on the button - 800 is same as hover
+    borderPressed: colors.primary[800],
+
+    foregroundActive1: colors.primary[400],
+    foregroundActive2: colors.primary[400],
+    foregroundActive3: colors.primary[200],
+
+    backgroundActive1: colors.primary[400],
+    borderFocus: colors.primary[400], // input field only
+
+    // TODO added by me
+    backgroundActive2: colors.primary[400],
+    backgroundFocus2: colors.primary[300],
+    foregroundFocus4: colors.white,
+    // copied from the default
+    borderDisabled: colors.grey[550],
+    foregroundDisabled1: colors.grey[450],
+    foregroundDisabled2: colors.grey[450],
+    backgroundDisabled1: colors.grey[550],
+    backgroundDisabled2: colors.grey[550],
+  },
+}

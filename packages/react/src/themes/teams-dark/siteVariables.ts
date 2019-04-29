@@ -1,5 +1,5 @@
 import { colors } from '../teams/siteVariables'
-export { colorScheme } from './colors'
+export { colorScheme, colorSchemeWIP } from './colors'
 
 //
 // SHADOW LEVELS

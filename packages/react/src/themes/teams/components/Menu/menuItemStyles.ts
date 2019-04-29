@@ -33,11 +33,11 @@ const getActionStyles = ({
     : primary || color
     ? {
         color: colorScheme.foregroundActive,
-        background: v.backgroundColorActive || colorScheme.backgroundActive,
+        background: v.backgroundColorActive || colorScheme.backgroundActive2,
       }
     : {
         color: v.color,
-        background: v.backgroundColorActive || colorScheme.backgroundActive,
+        background: v.backgroundColorActive || colorScheme.backgroundActive2,
       }
 
 const getFocusedStyles = ({
@@ -52,14 +52,14 @@ const getFocusedStyles = ({
   const { primary, color, underlined, isFromKeyboard, active, vertical } = props
   if (active && !underlined && !vertical) return {}
   return {
-    color: primary || color ? colorScheme.foregroundFocus : v.colorActive,
-    background: v.backgroundColorFocus || colorScheme.backgroundFocus,
+    color: primary || color ? colorScheme.foregroundFocus4 : v.colorActive,
+    background: v.backgroundColorFocus || colorScheme.backgroundFocus2,
     ...(vertical && isFromKeyboard && !primary
       ? {
           border: `solid 1px ${v.borderColorFocus}`,
           outline: `solid 1px ${v.outlineColorFocus}`,
           margin: pxToRem(1),
-          background: v.verticalBackgroundColorFocus || colorScheme.backgroundFocus,
+          background: v.verticalBackgroundColorFocus || colorScheme.backgroundFocus2,
         }
       : {}),
   }
@@ -84,11 +84,11 @@ const getHoverStyles = ({
       : primary || color
       ? {
           color: colorScheme.foregroundHover,
-          background: v.backgroundColorHover || colorScheme.backgroundHover,
+          background: v.backgroundColorHover || colorScheme.backgroundHover2,
         }
       : {
           color: v.colorActive,
-          background: v.backgroundColorHover || colorScheme.backgroundHover,
+          background: v.backgroundColorHover || colorScheme.backgroundHover2,
         }),
   }
 }
@@ -99,8 +99,8 @@ const pointingBeak = ({ props, variables: v, colorScheme }): ICSSInJSStyle => {
   let top: string
   let borders: ICSSInJSStyle
 
-  const backgroundColor = v.backgroundColorActive || colorScheme.backgroundActive
-  const borderColor = v.borderColor || primary ? v.primaryBorderColor : colorScheme.borderDefault
+  const backgroundColor = v.backgroundColorActive || colorScheme.backgroundActive2
+  const borderColor = v.borderColor || primary ? v.primaryBorderColor : colorScheme.borderDefault2
 
   if (pointing === 'start') {
     borders = {
@@ -195,7 +195,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         !underlined &&
         !iconOnly && {
           boxShadow: `-1px 0 0 0 ${
-            primary ? v.primaryBorderColor : v.borderColor || colorScheme.borderDefault
+            primary ? v.primaryBorderColor : v.borderColor || colorScheme.borderDefault2
           } inset`,
         }),
 
@@ -325,8 +325,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
               ...(iconOnly && { color: 'inherit' }),
 
               ...(underlined && {
-                color: colorScheme.borderActive,
-                ...underlinedItem(v.borderColorActive || colorScheme.borderActive),
+                color: colorScheme.foregroundActive2,
+                ...underlinedItem(v.borderColorActive || colorScheme.foregroundActive2),
               }),
             }
           : underlined && {
@@ -390,11 +390,11 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
               ...(iconOnly && { color: 'inherit' }),
               ...(!active &&
                 underlined &&
-                underlinedItem(v.underlinedBorderColor || colorScheme.backgroundActive)),
+                underlinedItem(v.underlinedBorderColor || colorScheme.backgroundActive2)),
             }
           : !active &&
             underlined &&
-            underlinedItem(v.backgroundColorActive || colorScheme.backgroundActive)),
+            underlinedItem(v.backgroundColorActive || colorScheme.backgroundActive2)),
       },
 
       ...(disabled && {

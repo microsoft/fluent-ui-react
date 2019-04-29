@@ -264,15 +264,15 @@ export const colorScheme: ColorSchemeMapping = {
 
 export const availableColors = [
   'default',
-  'black',
-  'white',
+  // 'black',
+  // 'white',
   'primary',
-  'grey',
-  'red',
-  'yellow',
-  'green',
-  'pink',
-  'orange',
+  // 'grey',
+  // 'red',
+  // 'yellow',
+  // 'green',
+  // 'pink',
+  // 'orange',
 ]
 
 export const isValidColor = (color: string): boolean => {
@@ -289,4 +289,117 @@ export const getColorScheme = (
   primary?: boolean,
 ) => {
   return colorScheme[getColorSchemeKey(color, primary)]
+}
+
+export const colorSchemeWIP = {
+  default: {
+    foregroundDefault1: colors.grey[750],
+    foregroundDefault2: colors.grey[500],
+    foregroundDefault3: colors.grey[450],
+    foregroundDefault4: colors.white,
+
+    backgroundDefault1: colors.white,
+    backgroundDefault2: colors.grey[50],
+    backgroundDefault3: colors.grey[100],
+    backgroundDefault4: colors.grey[150],
+
+    borderDefault1: colors.grey[150],
+    borderDefault2: colors.grey[200],
+    borderDefault3: colors.grey[200], // buttons
+
+    shadowDefault: colors.black, // opacity 10%
+    shadowHover: colors.black,
+
+    foregroundHover: colors.grey[750],
+
+    backgroundHover1: colors.grey[100], // in the button we have 50 :(
+    backgroundHover2: colors.grey[150],
+
+    borderHover3: colors.grey[250],
+
+    // We don't have foregroundActive black :(
+    foregroundActive1: colors.grey[750],
+    foregroundActive2: colors.primary[600],
+
+    backgroundActive2: colors.grey[150],
+    backgroundActive1: colors.grey[100], // OK
+
+    // active border no change (just copied)
+    borderActive1: colors.grey[150],
+    borderActive2: colors.grey[200],
+    borderActive3: colors.grey[200], // buttons
+
+    foregroundFocus1: colors.grey[750],
+    foregroundFocus2: colors.grey[500],
+    foregroundFocus3: colors.grey[450],
+    foregroundFocus4: colors.white,
+
+    backgroundFocus1: colors.white,
+    backgroundFocus2: colors.grey[50],
+    backgroundFocus3: colors.grey[100],
+    backgroundFocus4: colors.grey[150], // button has 200 :(
+
+    borderFocus: colors.black,
+    borderFocusWithin: colors.white,
+    borderFocus1: colors.primary[600],
+
+    foregroundDisabled1: colors.grey[250],
+    foregroundDisabled2: colors.grey[250],
+
+    backgroundDisabled1: colors.grey[150],
+    backgroundDisabled2: colors.grey[150],
+
+    borderDisabled: colors.grey[150],
+    shadowDisabled: undefined,
+
+    // TODO: verify with Daisy
+    backgroundPressed: colors.grey[200],
+  },
+  primary: {
+    foregroundDefault1: colors.primary[600],
+    foregroundDefault2: colors.primary[700],
+    foregroundDefault3: colors.primary[600],
+    foregroundDefault4: colors.primary[200],
+
+    backgroundDefault1: colors.primary[600],
+    backgroundDefault2: colors.primary[100],
+    backgroundDefault3: colors.primary[900],
+    backgroundDefault4: colors.primary[1000],
+    backgroundDefault5: colors.primary[900],
+
+    borderDefault1: colors.primary[200],
+    borderDefault2: colors.primary[300],
+    // borderDefault3: colors.grey[200], // buttons
+
+    foregroundHover: colors.primary[600],
+
+    borderHover3: colors.primary[300],
+
+    backgroundHover1: colors.primary[700], // in the button we have 50 :(
+    backgroundHover2: colors.primary[50], // in menu is 300 (but is this used?)
+
+    foregroundPressed: colors.primary[800],
+    backgroundPressed: colors.primary[800], // it's 900 on the button - 800 is same as hover
+    borderPressed: colors.primary[300],
+
+    foregroundActive1: colors.primary[600],
+    foregroundActive2: colors.primary[600],
+    foregroundActive3: colors.primary[200],
+
+    backgroundActive1: colors.primary[600],
+    borderFocus: colors.primary[600], // input field only
+
+    // TODO added by me
+    backgroundFocus2: colors.primary[300],
+    backgroundActive2: colors.primary[500],
+    foregroundFocus4: colors.white,
+
+    foregroundDisabled1: colors.grey[250],
+    foregroundDisabled2: colors.grey[250],
+
+    borderDisabled: colors.grey[150],
+
+    backgroundDisabled1: colors.grey[150],
+    backgroundDisabled2: colors.grey[150],
+  },
 }

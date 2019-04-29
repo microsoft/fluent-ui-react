@@ -1,7 +1,10 @@
 import { pxToRem } from '../../../../lib'
+import { extendColorObject } from '../../../colorUtils'
 
 export interface ButtonVariables {
-  [key: string]: string | number
+  [key: string]: string | number | object
+
+  colorScheme: any
 
   height: string
   minWidth: string
@@ -71,6 +74,17 @@ export interface ButtonVariables {
 
 export default (siteVars: any): ButtonVariables => {
   return {
+    colorScheme: extendColorObject(siteVars.colorSchemeWIP, {
+      primary: {
+        foregroundDefault1: siteVars.colors.white,
+        foregroundHover: siteVars.colors.white,
+        foregroundFocus1: siteVars.colors.white,
+        foregroundActive1: siteVars.colors.white,
+        backgroundHover1: siteVars.colors.primary[800],
+        borderDefault3: 'transparent',
+        borderHover3: 'transparent',
+      },
+    }),
     height: pxToRem(32),
     minWidth: pxToRem(96),
     maxWidth: pxToRem(280),
@@ -80,20 +94,20 @@ export default (siteVars: any): ButtonVariables => {
     paddingLeftRightValue: 20,
 
     color: siteVars.colors.grey[750],
-    colorActive: siteVars.colors.grey[750],
-    colorHover: siteVars.colors.grey[750],
-    colorFocus: siteVars.colors.grey[750],
-    colorDisabled: siteVars.colors.grey[250],
-    backgroundColor: siteVars.colors.white,
-    backgroundColorActive: siteVars.colors.grey[200],
-    backgroundColorHover: siteVars.colors.grey[50],
-    backgroundColorFocus: siteVars.colors.grey[200],
-    backgroundColorDisabled: siteVars.colors.grey[150],
-    borderColor: siteVars.colors.grey[200],
-    borderColorActive: siteVars.colors.grey[250],
-    borderColorHover: siteVars.colors.grey[250],
-    borderColorFocus: siteVars.colors.white,
-    borderColorFocusIndicator: siteVars.colors.grey[750],
+    colorActive: siteVars.colors.grey[750], // OK
+    colorHover: siteVars.colors.grey[750], // OK
+    colorFocus: siteVars.colors.grey[750], // OK
+    colorDisabled: siteVars.colors.grey[250], // OK
+    backgroundColor: siteVars.colors.white, // OK
+    backgroundColorActive: siteVars.colors.grey[200], // we don't have this :( (150, 100) - pressed
+    backgroundColorHover: siteVars.colors.grey[50], // we don't have this :( (100, 150) - we want darker value, so it's ok
+    backgroundColorFocus: siteVars.colors.grey[200], // it's just the button, so here override should be enpoughwe don't have this, but maybe it is ok if we are changing the focus indicator
+    backgroundColorDisabled: siteVars.colors.grey[150], // OK
+    borderColor: siteVars.colors.grey[200], // OK
+    borderColorActive: siteVars.colors.grey[250], // pressed - we don't have this :( (150, 200, 200)
+    borderColorHover: siteVars.colors.grey[250], // OK
+    borderColorFocus: siteVars.colors.white, // OK
+    borderColorFocusIndicator: siteVars.colors.grey[750], // shouldn't this be black?-yes
     borderColorDisabled: 'transparent',
     borderWidth: 1,
 
@@ -114,6 +128,7 @@ export default (siteVars: any): ButtonVariables => {
 
     primaryCircularBorderColorFocusIndicator: siteVars.colors.white,
 
+    // replace these with the regular button's
     circularColor: siteVars.colors.grey[500],
     circularColorActive: siteVars.colors.white,
     circularBackgroundColor: 'transparent',
@@ -126,12 +141,12 @@ export default (siteVars: any): ButtonVariables => {
     circularBorderColorFocus: 'transparent',
     circularBorderColorFocusIndicator: siteVars.colors.white,
 
-    textColor: siteVars.colors.primary[600],
-    textColorHover: siteVars.colors.primary[800],
+    textColor: siteVars.colors.primary[600], // we don't have this :(
+    textColorHover: siteVars.colors.primary[800], // hmm
     textPrimaryColor: siteVars.colors.primary[600],
     textPrimaryColorHover: siteVars.colors.primary[800],
-    textSecondaryColor: siteVars.colors.grey[450],
-    textSecondaryColorHover: siteVars.colors.primary[800],
+    textSecondaryColor: siteVars.colors.grey[450], // OK
+    textSecondaryColorHover: siteVars.colors.primary[800], // hmm
 
     boxShadow: siteVars.shadowLevel1,
     borderRadiusFocused: pxToRem(3),

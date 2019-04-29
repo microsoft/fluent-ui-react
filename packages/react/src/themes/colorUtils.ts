@@ -16,3 +16,17 @@ export const extendColorScheme = (
   })
   return result
 }
+
+export const extendColorObject = (colorScheme: object, overrides: object): object => {
+  let result = colorScheme
+  Object.keys(overrides).map(color => {
+    result = {
+      ...result,
+      [color]: {
+        ...colorScheme[color],
+        ...overrides[color],
+      },
+    }
+  })
+  return result
+}

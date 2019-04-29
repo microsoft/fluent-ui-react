@@ -21,15 +21,18 @@ export interface ListItemVariables {
   contentMediaLineHeight: string
 
   // Selectable
-  selectableFocusHoverColor: string
+  // selectableFocusHoverColor: string
   selectableFocusHoverBackgroundColor: string
-  selectedColor: string
-  selectedBackgroundColor: string
-  selectedFocusOutlineColor: string
+  // selectedColor: string
+  // selectedBackgroundColor: string
+  // selectedFocusOutlineColor: string
+
+  colorScheme: any
 }
 
 export default (siteVariables: any): ListItemVariables => {
   return {
+    colorScheme: siteVariables.colorSchemeWIP,
     minHeight: pxToRem(48),
     rootPadding: `0 ${pxToRem(18)} 0 ${pxToRem(20)}`,
 
@@ -52,10 +55,10 @@ export default (siteVariables: any): ListItemVariables => {
     contentMediaLineHeight: siteVariables.lineHeightSmall,
 
     // Selectable
-    selectableFocusHoverColor: siteVariables.colors.white,
+    // selectableFocusHoverColor: siteVariables.colors.white,
     selectableFocusHoverBackgroundColor: siteVariables.colors.primary[500],
-    selectedColor: siteVariables.bodyColor,
-    selectedBackgroundColor: siteVariables.colors.grey[100],
-    selectedFocusOutlineColor: siteVariables.colors.primary[600],
+    // selectedColor: siteVariables.bodyColor,
+    // selectedBackgroundColor: siteVariables.colors.grey[100],
+    // selectedFocusOutlineColor: siteVariables.colors.primary[600],
   }
 }

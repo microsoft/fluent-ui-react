@@ -1,8 +1,9 @@
 import { pxToRem } from '../../../../lib'
-import { ColorSchemeMapping } from '../../../types'
+// import { ColorSchemeMapping } from '../../../types'
+import { extendColorObject } from '@stardust-ui/react'
 
 export interface MenuVariables {
-  colorScheme: ColorSchemeMapping
+  colorScheme: any
   color: string
 
   backgroundColor: string
@@ -46,7 +47,12 @@ export interface MenuVariables {
 
 export default (siteVars: any): MenuVariables => {
   return {
-    colorScheme: siteVars.colorScheme,
+    colorScheme: extendColorObject(siteVars.colorSchemeWIP, {
+      primary: {
+        foregroundActive: siteVars.colors.white,
+        // backgroundFocus: siteVars.colors.primary[300],
+      },
+    }),
     color: siteVars.colors.grey[500],
     colorActive: siteVars.colors.black,
     colorFocus: siteVars.colors.white,

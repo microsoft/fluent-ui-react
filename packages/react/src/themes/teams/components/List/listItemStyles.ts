@@ -17,7 +17,7 @@ const truncateStyle = {
 
 const selectableHoverStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
   background: v.selectableFocusHoverBackgroundColor,
-  color: v.selectableFocusHoverColor,
+  color: v.colorScheme.default.foregroundFocus4,
   cursor: 'pointer',
 
   [`& .${ListItem.slotClassNames.header}`]: { color: 'inherit' },
@@ -39,14 +39,14 @@ const selectableFocusStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
   outline: 0,
 
   ...(p.isFromKeyboard && {
-    outline: `.2rem solid ${v.selectedFocusOutlineColor}`,
+    outline: `.2rem solid ${v.colorScheme.default.borderFocus1}`,
     zIndex: 1,
   }),
 })
 
 const selectedStyle = variables => ({
-  background: variables.selectedBackgroundColor,
-  color: variables.selectedColor,
+  background: variables.colorScheme.default.backgroundActive1,
+  color: variables.colorScheme.default.foregroundHover,
 })
 
 const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {

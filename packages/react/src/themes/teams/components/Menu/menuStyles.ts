@@ -44,7 +44,7 @@ export default {
         !underlined && {
           // primary has hardcoded grey border color
           border: `${v.borderWidth} solid ${
-            primary ? v.primaryBorderColor : v.borderColor || colorScheme.borderDefault
+            primary ? v.primaryBorderColor : v.borderColor || colorScheme.borderDefault2
           }`,
           borderRadius: pxToRem(4),
         }),

@@ -47,9 +47,11 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         ':hover': {
           color: v.color,
         },
-        ...(isFromKeyboard && {
-          color: v.colorActive,
-        }),
+        ':focus': {
+          ...(isFromKeyboard && {
+            color: v.colorActive,
+          }),
+        },
       }),
 
       ...(pointing &&
@@ -61,8 +63,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  root: ({ props }): ICSSInJSStyle => {
-    const { iconOnly, isFromKeyboard } = props
+  root: ({ props, variables: v }): ICSSInJSStyle => {
+    const { iconOnly, isFromKeyboard, underlined, active } = props
 
     return {
       // focus styles
@@ -70,6 +72,19 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         iconOnly && {
           borderColor: 'transparent',
         }),
+      ...(underlined && {
+        ...(active && {
+          color: v.color,
+        }),
+        ':hover': {
+          color: v.color,
+        },
+        ':focus': {
+          ...(isFromKeyboard && {
+            color: v.colorActive,
+          }),
+        },
+      }),
     }
   },
 }
