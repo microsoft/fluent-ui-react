@@ -8,7 +8,7 @@ const menuDividerStyles: ComponentSlotStylesInput<MenuDividerProps, MenuVariable
     const colorScheme = getColorScheme(v.colorScheme, p.color, p.primary)
     const borderColor = p.primary
       ? v.primaryBorderColor
-      : v.borderColor || colorScheme.borderDefault
+      : v.borderColor || colorScheme.borderDefault2
     const borderType = p.vertical ? 'borderTop' : 'borderLeft'
 
     return p.content
