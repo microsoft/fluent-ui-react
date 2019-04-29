@@ -59,27 +59,22 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     focusInnerBorderColor: siteVars.colors.white,
     focusOuterBorderColor: siteVars.colors.black,
 
-    dangerColor: siteVars.colors.red[400], // red[400] when new color palette PR goes in
-    dangerBackgroundColor: siteVars.colors.red[50], // red[50] when new color palette PR goes in
-    dangerBorderColor: siteVars.colors.red[100], // red[100] when new color palette PR goes in
+    dangerColor: siteVars.colors.red[400],
+    dangerBackgroundColor: siteVars.colors.red[50],
+    dangerBorderColor: siteVars.colors.red[100],
 
     oof: false,
     oofColor: siteVars.colors.pink[600],
     oofBackgroundColor: siteVars.colors.pink[50],
     oofBorderColor: siteVars.colors.pink[100],
 
-    // gray02
-    infoColor: siteVars.gray02,
-    // gray09
-    infoBackgroundColor: siteVars.gray09,
-    // gray08
-    infoBorderColor: siteVars.gray08,
+    infoColor: siteVars.colors.grey[500],
+    infoBackgroundColor: siteVars.colors.grey[150],
+    infoBorderColor: siteVars.colors.grey[200],
 
     urgent: false,
     urgentColor: siteVars.colors.white,
-    // red
-    urgentBackgroundColor: siteVars.red,
-    // red
-    urgentBorderColor: siteVars.red,
+    urgentBackgroundColor: siteVars.colors.red[400],
+    urgentBorderColor: siteVars.colors.red[400],
   }
 }

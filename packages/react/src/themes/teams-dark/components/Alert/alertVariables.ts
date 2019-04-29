@@ -6,20 +6,20 @@ export default (siteVars: any): Partial<AlertVariables> => {
     borderColor: siteVars.gray09,
     color: siteVars.gray09,
 
-    dangerColor: '#f9526b', // red[200] when new color palette PR goes in
-    dangerBackgroundColor: '#3e1f25', // red[800] when new color palette PR goes in
-    dangerBorderColor: '#1E040A', // red[900] when new color palette PR goes in
+    dangerColor: siteVars.colors.red[200],
+    dangerBackgroundColor: siteVars.colors.red[800],
+    dangerBorderColor: siteVars.colors.red[900],
 
-    oofColor: '#ec6fae', // pink[200] when new color palette PR goes in
-    oofBackgroundColor: '#3e2d3b', // pink[800] when new color palette PR goes in
-    oofBorderColor: '#1f191d', // pink[900] when new color palette PR goes in
+    oofColor: siteVars.colors.pink[200], // pink[200] when new color palette PR goes in
+    oofBackgroundColor: siteVars.colors.pink[800], // pink[800] when new color palette PR goes in
+    oofBorderColor: siteVars.colors.pink[900], // pink[900] when new color palette PR goes in
 
-    infoColor: siteVars.gray02,
-    infoBackgroundColor: siteVars.gray09,
-    infoBorderColor: '#11100F', // gray[900] when new color palette PR goes in
+    infoColor: siteVars.colors.grey[250],
+    infoBackgroundColor: siteVars.colors.grey[550],
+    infoBorderColor: siteVars.colors.grey[900],
 
     urgentColor: siteVars.colors.white,
-    urgentBackgroundColor: siteVars.colors.red[900],
-    urgentBorderColor: siteVars.colors.red[900],
+    urgentBackgroundColor: siteVars.colors.red[400],
+    urgentBorderColor: siteVars.colors.red[400],
   }
 }
