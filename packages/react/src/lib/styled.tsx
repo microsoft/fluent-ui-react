@@ -3,6 +3,7 @@ import { FelaTheme } from 'react-fela'
 import { ThemePrepared, ComponentSlotStylesPrepared } from '../themes/types'
 import getClasses from './getClasses'
 import { getColors } from './renderComponent'
+import callable from './callable'
 
 type ApplyThemeRenderConfig = {
   siteVariables: any
@@ -70,8 +71,6 @@ const normalizeComponentStylesAndClasses = function<TProps = any, TVars = any>(
     classes: resultClasses,
   }
 }
-
-const callable = arg => (typeof arg === 'function' ? arg : () => arg)
 
 export const normalizeAllStylesAndClasses = (theme: ThemePrepared) => {
   const allComponentStyles = theme.componentStyles || {}

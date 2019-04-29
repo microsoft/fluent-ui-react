@@ -1,5 +1,4 @@
 import * as themes from './themes'
-import * as hoistNonReactStatic from 'hoist-non-react-statics'
 
 //
 // Theme
@@ -203,6 +202,7 @@ export {
 // Utilities
 //
 export { default as styled } from './lib/styled'
+export { default as variantOf } from './lib/variantOf'
 
 export { default as mergeThemes } from './lib/mergeThemes'
 export { createComponent } from './lib'
@@ -238,14 +238,3 @@ export const FocusZoneUtilities = {
   focusAsync,
 }
 export { FocusZoneDirection, FocusZoneProps } from './lib/accessibility/FocusZone/FocusZone.types'
-
-export const variantOf = <TProps>(
-  ComponentType: { new (...args: any[]): React.Component<TProps> },
-  name: string,
-): React.ComponentType<TProps> => {
-  class VariantType extends ComponentType {}
-  hoistNonReactStatic(VariantType, ComponentType)
-  ;(VariantType as any).variantName = name
-
-  return VariantType
-}
