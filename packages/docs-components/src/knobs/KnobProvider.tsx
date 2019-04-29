@@ -2,9 +2,13 @@ import * as React from 'react'
 
 import defaultComponents from './defaultComponents'
 import KnobsContext, { KnobContextValue } from './KnobContext'
-import { KnobDefinition, KnobName, KnobSet } from './types'
+import { KnobComponents, KnobDefinition, KnobName, KnobSet } from './types'
 
-const KnobProvider: React.FunctionComponent = props => {
+type KnobProviderProps = {
+  components?: Partial<KnobComponents>
+}
+
+const KnobProvider: React.FunctionComponent<KnobProviderProps> = props => {
   const [knobs, setKnobs] = React.useState<KnobSet>({})
 
   const registerKnob = (knob: KnobDefinition) => {
@@ -31,15 +35,22 @@ const KnobProvider: React.FunctionComponent = props => {
     })
   }
 
-  const value: KnobContextValue = {
-    components: defaultComponents,
-    knobs,
-    registerKnob,
-    setKnobValue,
-    unregisterKnob,
-  }
+  const value: KnobContextValue = React.useMemo(
+    () => ({
+      components: { ...defaultComponents, ...props.components },
+      knobs,
+      registerKnob,
+      setKnobValue,
+      unregisterKnob,
+    }),
+    [knobs, props.components],
+  )
 
   return <KnobsContext.Provider value={value}>{props.children}</KnobsContext.Provider>
+}
+
+KnobProvider.defaultProps = {
+  components: {},
 }
 
 export default KnobProvider
