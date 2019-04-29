@@ -5,7 +5,7 @@ export const extendColorScheme = (
   overrides: ColorSchemeMappingOverrides,
 ): ColorSchemeMapping => {
   let result = colorScheme
-  Object.keys(overrides).map(color => {
+  Object.keys(overrides).forEach(color => {
     result = {
       ...result,
       [color]: {
@@ -19,7 +19,7 @@ export const extendColorScheme = (
 
 export const extendColorObject = (colorScheme: object, overrides: object): object => {
   let result = colorScheme
-  Object.keys(overrides).map(color => {
+  Object.keys(overrides).forEach(color => {
     result = {
       ...result,
       [color]: {
