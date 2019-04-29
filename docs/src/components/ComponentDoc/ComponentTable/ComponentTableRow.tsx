@@ -5,6 +5,13 @@ import * as _ from 'lodash'
 import ComponentPropDefaultValue from '../ComponentProp/ComponentPropDefaultValue'
 import ComponentPropDescription from '../ComponentProp/ComponentPropDescription'
 import ComponentPropName from '../ComponentProp/ComponentPropName'
+import { Popup, Button } from '@stardust-ui/react'
+import {
+  getShorthandRenderFunctionDescription,
+  getComponentSlotStypeDescription,
+  getComponentEventHandlerDescription,
+  getShorthandValueDescription,
+} from './typeDescriptions'
 
 export default class ComponentTableRow extends React.Component<any, any> {
   static propTypes = {
@@ -20,6 +27,52 @@ export default class ComponentTableRow extends React.Component<any, any> {
   state: any = {}
 
   toggleEnums = () => this.setState({ showEnums: !this.state.showEnums })
+
+  expandType(paramType: string): JSX.Element {
+    console.log(paramType)
+    let expandedType = <span>{paramType}</span>
+    if (paramType === 'ShorthandRenderFunction') {
+      expandedType = (
+        <Popup
+          content={{
+            content: getShorthandRenderFunctionDescription(),
+          }}
+          trigger={<Button content={paramType} />}
+        />
+      )
+    }
+    if (paramType.indexOf('ComponentSlotStyle') > -1) {
+      expandedType = (
+        <Popup
+          content={{
+            content: getComponentSlotStypeDescription(),
+          }}
+          trigger={<Button content={paramType} />}
+        />
+      )
+    }
+    if (paramType.indexOf('ShorthandValue') > -1) {
+      expandedType = (
+        <Popup
+          content={{
+            content: getShorthandValueDescription(),
+          }}
+          trigger={<Button content={paramType} />}
+        />
+      )
+    }
+    if (paramType.indexOf('ComponentEventHandler') > -1) {
+      expandedType = (
+        <Popup
+          content={{
+            content: getComponentEventHandlerDescription(),
+          }}
+          trigger={<Button content={paramType} />}
+        />
+      )
+    }
+    return expandedType
+  }
 
   render() {
     const { defaultValue, description, name, required, tags, type } = this.props
@@ -39,7 +92,7 @@ export default class ComponentTableRow extends React.Component<any, any> {
         <td>
           <ComponentPropDefaultValue value={defaultValue} />
         </td>
-        <td>{`{${type}}`}</td>
+        <td>{this.expandType(type)}</td>
         <td>
           <ComponentPropDescription description={description} />
           {/* TODO change these according to the react-docgen-typescript generated json */}
