@@ -2,20 +2,21 @@ import * as React from 'react'
 import { FelaTheme } from 'react-fela'
 import { ThemePrepared, ComponentSlotStylesPrepared } from '../themes/types'
 import getClasses from './getClasses'
+import { getColors } from './renderComponent'
 
 type ApplyThemeRenderConfig = {
   siteVariables: any
   styles: any
-  getClasses: (styles: any) => string
+  classes: any
 }
 
-const normalizeComponentStyles = function<TProps = any, TVars = any>(
+const normalizeComponentStylesAndClasses = function<TProps = any, TVars = any>(
   styles: ComponentSlotStylesPrepared<TProps, TVars>,
   variables: TVars,
   theme: ThemePrepared,
   getAssembledStyles: () => any,
 ) {
-  const root = (props: TProps) =>
+  const resultStyles = (props: TProps) =>
     styles['root']({
       props: (props || {}) as any,
       variables,
@@ -25,51 +26,93 @@ const normalizeComponentStyles = function<TProps = any, TVars = any>(
     })
 
   Object.keys(styles).forEach(slotName => {
-    root[slotName] = (props: TProps) =>
-      styles[slotName]({
+    resultStyles[slotName] = (props: TProps) => {
+      const colors = getColors({
+        theme,
+        componentVariables: variables,
+        props: props || {},
+      })
+
+      return styles[slotName]({
         props: (props || {}) as any,
         variables,
         theme,
-        colors: null,
+        colors,
         styles: getAssembledStyles(),
       })
+    }
   })
 
-  return root
+  const resultClasses = Object.keys(styles).reduce(
+    (acc, slotName) => ({
+      ...acc,
+      [slotName]: (props: any) => {
+        const colors = getColors({
+          theme,
+          componentVariables: variables,
+          props: props || {},
+        })
+
+        return getClasses(theme.renderer, { root: styles[slotName] }, {
+          variables,
+          props,
+          styles: getAssembledStyles(),
+          theme,
+          colors,
+        } as any).root
+      },
+    }),
+    {},
+  )
+
+  return {
+    styles: resultStyles,
+    classes: resultClasses,
+  }
 }
 
 const callable = arg => (typeof arg === 'function' ? arg : () => arg)
 
-export const normalizeStyles = (theme: ThemePrepared) => {
+export const normalizeAllStylesAndClasses = (theme: ThemePrepared) => {
   const allComponentStyles = theme.componentStyles || {}
 
-  const result = Object.keys(allComponentStyles).reduce((acc, componentName) => {
-    const componentStyles = allComponentStyles[componentName]
-    return {
-      ...acc,
-      [componentName]: normalizeComponentStyles(
-        componentStyles,
-        callable(theme.componentVariables[componentName])(theme.siteVariables),
-        theme,
-        () => result,
-      ),
-    }
-  }, {})
-  return result
+  const styles = {}
+  const classes = {}
+
+  Object.keys(allComponentStyles).forEach(componentName => {
+    const componentStylesInput = allComponentStyles[componentName]
+
+    const {
+      styles: componentStyles,
+      classes: componentClasses,
+    } = normalizeComponentStylesAndClasses(
+      componentStylesInput,
+      callable(theme.componentVariables[componentName])(theme.siteVariables),
+      theme,
+      () => styles,
+    )
+
+    styles[componentName] = componentStyles
+    classes[componentName] = componentClasses
+  })
+
+  return { styles, classes }
 }
 
 const styled = (render: (config: ApplyThemeRenderConfig) => React.ReactNode) => {
   return (
     <FelaTheme>
-      {(theme: ThemePrepared) =>
-        render({
+      {(theme: ThemePrepared) => {
+        const { styles, classes } = theme
+          ? normalizeAllStylesAndClasses(theme)
+          : { styles: {}, classes: {} }
+
+        return render({
           siteVariables: theme ? theme.siteVariables : {},
-          styles: theme ? normalizeStyles(theme) : {},
-          getClasses: theme
-            ? styles => getClasses(theme.renderer, { root: styles }, {} as any).root
-            : () => '',
+          styles,
+          classes,
         })
-      }
+      }}
     </FelaTheme>
   )
 }
