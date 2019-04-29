@@ -10,7 +10,7 @@ type PerSlotFunc<TResult, TProps = {}> = Record<string, (props: TProps) => TResu
 
 type Api<TResult, TProps = {}> = PerComponent<PerSlotFunc<TResult, TProps>>
 
-type ApplyThemeRenderConfig = {
+type ApplyStyledConfig = {
   siteVariables: any
   styles: PerComponent<PerSlotFunc<ICSSInJSStyle>>
   classes: PerComponent<PerSlotFunc<string>>
@@ -94,7 +94,7 @@ export type ClassesApi<TProps = {}> = Api<string, TProps>
 export const applyStylesApi = (theme: ThemePrepared) => applyApi(theme, getSlotStylesFunc)
 export const applyClassesApi = (theme: ThemePrepared) => applyApi(theme, getSlotClassesFunc)
 
-const styled = (render: (config: ApplyThemeRenderConfig) => React.ReactNode) => {
+const styled = (render: (config: ApplyStyledConfig) => React.ReactNode) => {
   return (
     <FelaTheme>
       {(theme: ThemePrepared) =>
