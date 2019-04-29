@@ -33,8 +33,7 @@ import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './acces
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
 import { generateColorScheme } from './colorUtils'
-
-import { normalizeAllStylesAndClasses } from './styled'
+import { applyStylesApi } from './styled'
 
 export const getColors = ({ theme, componentVariables, props }) => {
   const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
@@ -221,7 +220,7 @@ const renderComponent = <P extends {}>(
     variables: resolvedVariables,
     theme,
     colors,
-    styles: normalizeAllStylesAndClasses(theme).styles,
+    styles: applyStylesApi(theme),
   }
 
   mergedStyles.root = {

@@ -1,12 +1,14 @@
 import * as React from 'react'
 import { FelaTheme } from 'react-fela'
-import { ThemePrepared, ComponentSlotStylesPrepared, ICSSInJSStyle } from '../themes/types'
+import { ThemePrepared, ICSSInJSStyle } from '../themes/types'
 import getClasses from './getClasses'
 import { getColors } from './renderComponent'
 import callable from './callable'
 
 type PerComponent<TValue> = Record<string, TValue>
-type PerSlotFunc<TResult, TArg = any> = Record<string, (props: TArg) => TResult>
+type PerSlotFunc<TResult, TProps = {}> = Record<string, (props: TProps) => TResult>
+
+type Api<TResult, TProps = {}> = PerComponent<PerSlotFunc<TResult, TProps>>
 
 type ApplyThemeRenderConfig = {
   siteVariables: any
@@ -14,119 +16,90 @@ type ApplyThemeRenderConfig = {
   classes: PerComponent<PerSlotFunc<string>>
 }
 
-const normalizeComponentStylesAndClasses = function<TProps = any, TVars = any>(
-  styles: ComponentSlotStylesPrepared<TProps, TVars>,
-  variables: TVars,
+type GetPropValue<TPropValue> = (propName: string) => TPropValue
+const createProxy = function<TPropValue>(getPropValue: GetPropValue<TPropValue>) {
+  return new Proxy({}, { get: (_target, name) => getPropValue(String(name)) })
+}
+
+type ResultFunc<TProps, TResult> = (props: TProps) => TResult
+
+type GetResultFunc<TResult, TProps = {}> = (
   theme: ThemePrepared,
-  getAssembledStyles: () => any,
-) {
-  const resultStyles = {}
+  componentName: string,
+  slotName: string,
+) => ResultFunc<TProps, TResult>
 
-  Object.keys(styles).forEach(slotName => {
-    resultStyles[slotName] = (props: TProps) => {
-      const colors = getColors({
-        theme,
-        componentVariables: variables,
-        props: props || {},
-      })
-
-      return styles[slotName]({
-        props: (props || {}) as any,
-        variables,
-        theme,
-        colors,
-        styles: getAssembledStyles(),
-      })
-    }
-  })
-
-  const resultClasses = Object.keys(styles).reduce(
-    (acc, slotName) => ({
-      ...acc,
-      [slotName]: (props: any) => {
-        const colors = getColors({
-          theme,
-          componentVariables: variables,
-          props: props || {},
-        })
-
-        return getClasses(theme.renderer, { root: styles[slotName] }, {
-          variables,
-          props,
-          styles: getAssembledStyles(),
-          theme,
-          colors,
-        } as any).root
-      },
-    }),
-    {},
+const applyApi = function<TResult, TProps = any>(
+  theme: ThemePrepared,
+  getFunc: GetResultFunc<TResult, TProps>,
+): Api<TResult, TProps> {
+  return createProxy(componentName =>
+    createProxy(slotName => getFunc(theme, componentName, slotName)),
   )
+}
 
-  return {
-    styles: resultStyles,
-    classes: resultClasses,
+const getSlotStylesFunc = function<TProps = {}>(
+  theme: ThemePrepared,
+  componentName: string,
+  slotName: string,
+): (props: TProps) => ICSSInJSStyle {
+  const variables = callable(theme.componentVariables[componentName])(theme.siteVariables)
+  const styles = (theme.componentStyles || {})[componentName]
+
+  return (props: TProps) => {
+    const colors = getColors({
+      theme,
+      componentVariables: variables,
+      props: props || {},
+    })
+
+    return styles[slotName]({
+      props: (props || {}) as any,
+      variables,
+      theme,
+      colors,
+      styles: applyApi(theme, getSlotClassesFunc),
+    })
   }
 }
 
-// export const normalizeAllStylesAndClasses = (theme: ThemePrepared) => {
-//   const allComponentStyles = theme.componentStyles || {}
+const getSlotClassesFunc = function<TProps = {}>(
+  theme: ThemePrepared,
+  componentName: string,
+  slotName: string,
+): (props: TProps) => string {
+  return (props: TProps) => {
+    const slotStyles = getSlotStylesFunc(theme, componentName, slotName)(props)
+    const variables = callable(theme.componentVariables[componentName])(theme.siteVariables)
 
-//   const styles = {}
-//   const classes = {}
-
-//   Object.keys(allComponentStyles).forEach(componentName => {
-//     const componentStylesInput = allComponentStyles[componentName]
-
-//     const {
-//       styles: componentStyles,
-//       classes: componentClasses,
-//     } = normalizeComponentStylesAndClasses(
-//       componentStylesInput,
-//       callable(theme.componentVariables[componentName])(theme.siteVariables),
-//       theme,
-//       () => styles,
-//     )
-
-//     styles[componentName] = componentStyles
-//     classes[componentName] = componentClasses
-//   })
-
-//   return { styles, classes }
-// }
-
-export const normalizeAllStylesAndClasses = (theme: ThemePrepared) => {
-  const allComponentStyles = theme.componentStyles || {}
-
-  const styles = {}
-  const classes = {}
-
-  Object.keys(allComponentStyles).forEach(componentName => {
-    const componentStylesInput = allComponentStyles[componentName]
-
-    const {
-      styles: componentStyles,
-      classes: componentClasses,
-    } = normalizeComponentStylesAndClasses(
-      componentStylesInput,
-      callable(theme.componentVariables[componentName])(theme.siteVariables),
+    const colors = getColors({
       theme,
-      () => styles,
-    )
+      componentVariables: variables,
+      props: props || {},
+    })
 
-    styles[componentName] = componentStyles
-    classes[componentName] = componentClasses
-  })
-
-  return { styles, classes }
+    return getClasses(theme.renderer, { root: slotStyles }, {
+      variables,
+      props,
+      styles: applyApi(theme, getSlotClassesFunc),
+      theme,
+      colors,
+    } as any).root
+  }
 }
+
+export type StylesApi<TProps = {}> = Api<ICSSInJSStyle, TProps>
+export type ClassesApi<TProps = {}> = Api<string, TProps>
+
+export const applyStylesApi = (theme: ThemePrepared) => applyApi(theme, getSlotStylesFunc)
+export const applyClassesApi = (theme: ThemePrepared) => applyApi(theme, getSlotClassesFunc)
 
 const styled = (render: (config: ApplyThemeRenderConfig) => React.ReactNode) => {
   return (
     <FelaTheme>
       {(theme: ThemePrepared) => {
-        const { styles, classes } = theme
-          ? normalizeAllStylesAndClasses(theme)
-          : { styles: {}, classes: {} }
+        const styles = theme ? applyStylesApi(theme) : {}
+        const classes = theme ? applyClassesApi(theme) : {}
 
         return render({
           siteVariables: theme ? theme.siteVariables : {},
