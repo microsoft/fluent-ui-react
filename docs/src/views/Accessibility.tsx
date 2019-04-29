@@ -428,7 +428,7 @@ export default () => (
     </ul>
 
     <GuidesNavigationFooter
-      previous={{ name: 'Quick Start', url: 'quick-start' }}
+      previous={{ name: 'FAQ', url: 'faq' }}
       next={{ name: 'Theming', url: 'theming' }}
     />
   </DocPage>

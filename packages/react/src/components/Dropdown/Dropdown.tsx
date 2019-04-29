@@ -32,7 +32,7 @@ import {
 } from '../../lib'
 import List from '../List/List'
 import Ref from '../Ref/Ref'
-import DropdownItem from './DropdownItem'
+import DropdownItem, { DropdownItemProps } from './DropdownItem'
 import DropdownSelectedItem, { DropdownSelectedItemProps } from './DropdownSelectedItem'
 import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'
 import Button from '../Button/Button'
@@ -226,6 +226,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   static className = 'ui-dropdown'
 
+  static a11yStatusCleanupTime = 500
+
   static slotClassNames: DropdownSlotClassNames
 
   static propTypes = {
@@ -313,6 +315,12 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
     }
+  }
+
+  a11yStatusTimeout: any
+
+  componentWillUnmount() {
+    clearTimeout(this.a11yStatusTimeout)
   }
 
   public renderComponent({
@@ -460,12 +468,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             fluid: true,
             styles: styles.triggerButton,
             ...getToggleButtonProps({
-              onFocus: () => {
-                this.setState({ focused: true })
-              },
-              onBlur: () => {
-                this.setState({ focused: false })
-              },
+              onFocus: this.handleTriggerButtonOrListFocus,
+              onBlur: this.handleTriggerButtonBlur,
               onKeyDown: e => {
                 this.handleTriggerButtonKeyDown(e, rtl)
               },
@@ -504,16 +508,14 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         variables,
         inputRef: this.inputRef,
       },
-      overrideProps: (predefinedProps: DropdownSearchInputProps) =>
-        this.handleSearchInputOverrides(
-          predefinedProps,
-          highlightedIndex,
-          rtl,
-          selectItemAtIndex,
-          toggleMenu,
-          accessibilityComboboxProps,
-          getInputProps,
-        ),
+      overrideProps: this.handleSearchInputOverrides(
+        highlightedIndex,
+        rtl,
+        selectItemAtIndex,
+        toggleMenu,
+        accessibilityComboboxProps,
+        getInputProps,
+      ),
     })
   }
 
@@ -564,6 +566,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           styles={styles.list}
           tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
           aria-hidden={!open}
+          onFocus={this.handleTriggerButtonOrListFocus}
+          onBlur={this.handleListBlur}
           items={open ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []}
         />
       </Ref>
@@ -590,7 +594,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
               key: (item as any).header,
             }),
         },
-        overrideProps: () => this.handleItemOverrides(item, index, getItemProps),
+        overrideProps: this.handleItemOverrides(item, index, getItemProps),
         render: renderItem,
       }),
     )
@@ -632,8 +636,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
               key: (item as any).header,
             }),
         },
-        overrideProps: (predefinedProps: DropdownSelectedItemProps) =>
-          this.handleSelectedItemOverrides(predefinedProps, item, rtl),
+        overrideProps: this.handleSelectedItemOverrides(item, rtl),
         render: renderSelectedItem,
       }),
     )
@@ -716,12 +719,20 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     item: ShorthandValue,
     index: number,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
-  ) => ({ accessibilityItemProps: getItemProps({ item, index }) })
+  ) => (predefinedProps: DropdownItemProps) => ({
+    accessibilityItemProps: getItemProps({
+      item,
+      index,
+      onClick: e => {
+        e.stopPropagation()
+        e.nativeEvent.stopImmediatePropagation()
+        _.invoke(predefinedProps, 'onClick', e, predefinedProps)
+      },
+    }),
+  })
 
-  private handleSelectedItemOverrides = (
+  private handleSelectedItemOverrides = (item: ShorthandValue, rtl: boolean) => (
     predefinedProps: DropdownSelectedItemProps,
-    item: ShorthandValue,
-    rtl: boolean,
   ) => ({
     onRemove: (e: React.SyntheticEvent, dropdownSelectedItemProps: DropdownSelectedItemProps) => {
       this.handleSelectedItemRemove(e, item, predefinedProps, dropdownSelectedItemProps)
@@ -739,7 +750,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   })
 
   private handleSearchInputOverrides = (
-    predefinedProps: DropdownSearchInputProps,
     highlightedIndex: number,
     rtl: boolean,
     selectItemAtIndex: (
@@ -750,7 +760,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     toggleMenu: () => void,
     accessibilityComboboxProps: Object,
     getInputProps: (options?: GetInputPropsOptions) => any,
-  ) => {
+  ) => (predefinedProps: DropdownSearchInputProps) => {
     const handleInputBlur = (
       e: React.SyntheticEvent,
       searchInputProps: DropdownSearchInputProps,
@@ -950,6 +960,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onAdd) {
       this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onAdd(item) })
+      this.setA11ySelectionMessage()
     }
 
     if (multiple) {
@@ -1008,6 +1019,22 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     _.invoke(predefinedProps, 'onKeyDown', e, DropdownSelectedItemProps)
   }
 
+  private handleTriggerButtonOrListFocus = () => {
+    this.setState({ focused: true })
+  }
+
+  private handleTriggerButtonBlur = e => {
+    if (this.listRef.current !== e.relatedTarget) {
+      this.setState({ focused: false })
+    }
+  }
+
+  private handleListBlur = e => {
+    if (this.buttonRef.current !== e.relatedTarget) {
+      this.setState({ focused: false })
+    }
+  }
+
   private handleSelectedItemRemove(
     e: React.SyntheticEvent,
     item: ShorthandValue,
@@ -1018,7 +1045,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     this.removeItemFromValue(item)
     this.tryFocusSearchInput()
     this.tryFocusTriggerButton()
-    e.stopPropagation()
     _.invoke(predefinedProps, 'onRemove', e, DropdownSelectedItemProps)
   }
 
@@ -1035,6 +1061,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onRemove) {
       this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onRemove(poppedItem) })
+      this.setA11ySelectionMessage()
     }
 
     this.trySetStateAndInvokeHandler('onSelectedChange', null, { value })
@@ -1129,6 +1156,17 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
     // otherwise, highlight no item.
     return null
+  }
+
+  /**
+   * Function that sets and cleans the selection message after it has been set,
+   * so it is not read anymore via virtual cursor.
+   */
+  private setA11ySelectionMessage = (): void => {
+    clearTimeout(this.a11yStatusTimeout)
+    this.a11yStatusTimeout = setTimeout(() => {
+      this.setState({ a11ySelectionStatus: '' })
+    }, Dropdown.a11yStatusCleanupTime)
   }
 }
 

@@ -178,7 +178,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
       },
     })
 
-    const hasHeaderPart = headerElement || headerMediaElement
+    const hasHeaderPart = !!(headerElement || headerMediaElement)
     const headerPart = hasHeaderPart && (
       <>
         <Flex.Item grow>{headerElement}</Flex.Item>
@@ -186,7 +186,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
       </>
     )
 
-    const hasContentPart = contentElement || contentMediaElement
+    const hasContentPart = !!(contentElement || contentMediaElement)
     const contentPart = hasContentPart && (
       <>
         <Flex.Item grow>{contentElement}</Flex.Item>

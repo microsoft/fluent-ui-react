@@ -3,7 +3,7 @@ import * as React from 'react'
 export type KnobDefinition = {
   content?: React.ReactNode
   name: KnobName
-  type: 'boolean' | 'string' | 'select'
+  type: 'boolean' | 'range' | 'string' | 'select'
   value: any
   values?: any[]
 }
@@ -20,6 +20,7 @@ export type KnobComponents = {
   KnobLabel: KnobComponent
 
   KnobBoolean: KnobComponent
+  KnobRange: KnobComponent
   KnobSelect: KnobComponent
   KnobString: KnobComponent
 }

@@ -1,7 +1,10 @@
 import * as React from 'react'
 import { Avatar, Chat, Provider } from '@stardust-ui/react'
 
-const reactions = [{ icon: 'thumbs up', content: '1K' }, { icon: 'thumbs down', content: 5 }]
+const reactions = [
+  { key: 'up', icon: 'thumbs up', content: '1K' },
+  { key: 'down', icon: 'thumbs down', content: 5 },
+]
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',

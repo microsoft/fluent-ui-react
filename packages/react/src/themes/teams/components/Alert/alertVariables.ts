@@ -16,6 +16,27 @@ export interface AlertVariables {
 
   actionSize: string
   actionColor: string
+
+  focusInnerBorderColor: string
+  focusOuterBorderColor: string
+
+  dangerColor: string
+  dangerBackgroundColor: string
+  dangerBorderColor: string
+
+  oof: boolean
+  oofColor: string
+  oofBackgroundColor: string
+  oofBorderColor: string
+
+  infoColor: string
+  infoBackgroundColor: string
+  infoBorderColor: string
+
+  urgent: boolean
+  urgentColor: string
+  urgentBackgroundColor: string
+  urgentBorderColor: string
 }
 
 export default (siteVars: SiteVariablesPrepared): AlertVariables => {
@@ -34,5 +55,26 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
 
     actionSize: minHeight,
     actionColor: undefined,
+
+    focusInnerBorderColor: siteVars.colors.white,
+    focusOuterBorderColor: siteVars.colors.black,
+
+    dangerColor: siteVars.colors.red[400],
+    dangerBackgroundColor: siteVars.colors.red[50],
+    dangerBorderColor: siteVars.colors.red[100],
+
+    oof: false,
+    oofColor: siteVars.colors.pink[600],
+    oofBackgroundColor: siteVars.colors.pink[50],
+    oofBorderColor: siteVars.colors.pink[100],
+
+    infoColor: siteVars.colors.grey[500],
+    infoBackgroundColor: siteVars.colors.grey[150],
+    infoBorderColor: siteVars.colors.grey[200],
+
+    urgent: false,
+    urgentColor: siteVars.colors.white,
+    urgentBackgroundColor: siteVars.colors.red[400],
+    urgentBorderColor: siteVars.colors.red[400],
   }
 }
