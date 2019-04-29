@@ -7,6 +7,8 @@ import DocsRoot from './components/DocsRoot'
 
 import Accessibility from './views/Accessibility'
 import ColorPalette from './views/ColorPalette'
+
+import FAQ from './views/FAQ'
 import ShorthandProps from './views/ShorthandProps'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
@@ -68,6 +70,12 @@ const Router = () => (
           />,
           <DocsLayout
             exact
+            key="/prototype-mentions"
+            path="/prototype-mentions"
+            component={require('./prototypes/mentions/index').default}
+          />,
+          <DocsLayout
+            exact
             key="/prototype-dropdowns"
             path="/prototype-dropdowns"
             component={require('./prototypes/dropdowns/index').default}
@@ -97,6 +105,7 @@ const Router = () => (
             component={require('./prototypes/alerts/index').default}
           />,
         ]}
+        <DocsLayout exact path="/faq" component={FAQ} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/accessibility-behaviors" component={AccessibilityBehaviors} />
         <DocsLayout exact path="/focus-zone" component={FocusZone} />

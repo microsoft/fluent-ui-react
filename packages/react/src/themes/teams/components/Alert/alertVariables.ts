@@ -16,6 +16,27 @@ export interface AlertVariables {
 
   actionSize: string
   actionColor: string
+
+  focusInnerBorderColor: string
+  focusOuterBorderColor: string
+
+  dangerColor: string
+  dangerBackgroundColor: string
+  dangerBorderColor: string
+
+  oof: boolean
+  oofColor: string
+  oofBackgroundColor: string
+  oofBorderColor: string
+
+  infoColor: string
+  infoBackgroundColor: string
+  infoBorderColor: string
+
+  urgent: boolean
+  urgentColor: string
+  urgentBackgroundColor: string
+  urgentBorderColor: string
 }
 
 export default (siteVars: SiteVariablesPrepared): AlertVariables => {
@@ -34,5 +55,31 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
 
     actionSize: minHeight,
     actionColor: undefined,
+
+    focusInnerBorderColor: siteVars.colors.white,
+    focusOuterBorderColor: siteVars.colors.black,
+
+    dangerColor: siteVars.colors.red[400], // red[400] when new color palette PR goes in
+    dangerBackgroundColor: siteVars.colors.red[50], // red[50] when new color palette PR goes in
+    dangerBorderColor: siteVars.colors.red[100], // red[100] when new color palette PR goes in
+
+    oof: false,
+    oofColor: siteVars.colors.pink[600],
+    oofBackgroundColor: siteVars.colors.pink[50],
+    oofBorderColor: siteVars.colors.pink[100],
+
+    // gray02
+    infoColor: siteVars.gray02,
+    // gray09
+    infoBackgroundColor: siteVars.gray09,
+    // gray08
+    infoBorderColor: siteVars.gray08,
+
+    urgent: false,
+    urgentColor: siteVars.colors.white,
+    // red
+    urgentBackgroundColor: siteVars.red,
+    // red
+    urgentBorderColor: siteVars.red,
   }
 }
