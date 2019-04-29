@@ -97,16 +97,13 @@ export const applyClassesApi = (theme: ThemePrepared) => applyApi(theme, getSlot
 const styled = (render: (config: ApplyThemeRenderConfig) => React.ReactNode) => {
   return (
     <FelaTheme>
-      {(theme: ThemePrepared) => {
-        const styles = theme ? applyStylesApi(theme) : {}
-        const classes = theme ? applyClassesApi(theme) : {}
-
-        return render({
+      {(theme: ThemePrepared) =>
+        render({
           siteVariables: theme ? theme.siteVariables : {},
-          styles,
-          classes,
+          styles: theme ? applyStylesApi(theme) : {},
+          classes: theme ? applyClassesApi(theme) : {},
         })
-      }}
+      }
     </FelaTheme>
   )
 }
