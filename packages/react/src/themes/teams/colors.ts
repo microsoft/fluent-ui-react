@@ -1,5 +1,11 @@
-import { ColorPalette, EmphasisColors, NaturalColors, PrimitiveColors } from '../types'
-import { ColorSchemeMapping } from 'src/themes/types'
+import {
+  ColorPalette,
+  EmphasisColors,
+  NaturalColors,
+  PrimitiveColors,
+  ColorSchemeMapping,
+  ColorVariants,
+} from '../types'
 
 export const emphasisColors: EmphasisColors = {
   primary: {
@@ -101,6 +107,19 @@ export const naturalColors: NaturalColors = {
     800: undefined,
     900: undefined,
   },
+}
+
+const emphasisAndNaturalColors: EmphasisColors & NaturalColors = {
+  ...emphasisColors,
+  ...naturalColors,
+}
+
+export const primitiveColors: PrimitiveColors = {
+  black: '#000',
+  white: '#fff',
+}
+
+export const transparentColors = {
   silver: {
     100: undefined,
     200: 'rgba(255,255,255,0.75)',
@@ -136,19 +155,16 @@ export const naturalColors: NaturalColors = {
   },
 }
 
-const emphasisAndNaturalColors: EmphasisColors & NaturalColors = {
-  ...emphasisColors,
-  ...naturalColors,
-}
+type TransparentColors = Partial<{
+  silver: ColorVariants
+  ruby: ColorVariants
+  onyx: ColorVariants
+}>
 
-export const primitiveColors: PrimitiveColors = {
-  black: '#000',
-  white: '#fff',
-}
-
-export const colors: ColorPalette = {
+export const colors: ColorPalette<TransparentColors> = {
   ...emphasisAndNaturalColors,
   ...primitiveColors,
+  ...transparentColors,
 }
 
 const createColorScheme = (color: string, customValues = {}) => {
