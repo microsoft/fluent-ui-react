@@ -53,6 +53,10 @@ const getSlotStylesFunc = function<TProps = {}>(
   const styles = (theme.componentStyles || {})[componentName]
 
   return (props: TProps) => {
+    if (!styles) {
+      return {}
+    }
+
     const colors = getColors({
       theme,
       componentVariables: variables,
@@ -64,7 +68,7 @@ const getSlotStylesFunc = function<TProps = {}>(
       variables,
       theme,
       colors,
-      styles: applyApi(theme, getSlotClassesFunc),
+      styles: applyApi(theme, getSlotStylesFunc),
     })
   }
 }
@@ -87,7 +91,7 @@ const getSlotClassesFunc = function<TProps = {}>(
     return getClasses(theme.renderer, { root: slotStyles }, {
       variables,
       props,
-      styles: applyApi(theme, getSlotClassesFunc),
+      styles: applyApi(theme, getSlotStylesFunc),
       theme,
       colors,
     } as any).root
