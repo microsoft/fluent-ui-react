@@ -3,10 +3,12 @@ import {
   SiteVariablesInput,
   ColorVariants,
   ColorValues,
+  ComponentVariablesObject,
   ColorSchemeMapping,
   ColorScheme,
 } from '../themes/types'
 import { ComplexColorPropType } from './commonPropInterfaces'
+import { mergeComponentVariables } from './mergeThemes'
 
 export const mapColorsToScheme = <T>(
   siteVars: SiteVariablesInput,
@@ -72,4 +74,14 @@ export const generateColorScheme = (
 
   // if neither the color prop, nor the color scheme are defined, we are returning empty object
   return {}
+}
+
+export const getColors = ({ theme, componentVariables, props }) => {
+  const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
+    componentVariables,
+    {}, // variantVariables
+    props.variables,
+  )(theme.siteVariables)
+
+  return generateColorScheme(props.color, resolvedVariables.colorScheme)
 }
