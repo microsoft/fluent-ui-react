@@ -79,7 +79,6 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundActive1: accessibleCyan,
     backgroundActive: colors.black,
 
-    // active border no change (just copied)
     borderActive1: accessibleCyan,
     borderActive2: accessibleCyan,
     borderActive: accessibleCyan, // buttons
@@ -131,11 +130,11 @@ export const colorScheme: ColorSchemeMapping = {
 
     borderHover: accessibleYellow,
 
-    backgroundHover: accessibleYellow, // in the button we have 50 :(
+    backgroundHover: accessibleYellow,
     backgroundHover1: accessibleYellow,
 
     foregroundPressed: colors.black,
-    backgroundPressed: accessibleYellow, // it's 900 on the button - 800 is same as hover
+    backgroundPressed: accessibleYellow,
     borderPressed: accessibleYellow,
     shadowPressed: undefined,
 
@@ -146,7 +145,6 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundActive1: accessibleCyan,
     backgroundActive: colors.black,
 
-    // active border no change (just copied)
     borderActive1: accessibleCyan,
     borderActive2: accessibleCyan,
     borderActive: accessibleCyan, // buttons

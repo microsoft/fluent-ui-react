@@ -48,7 +48,7 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundDefault2: colors.grey[800],
     backgroundDefault3: colors.grey[550],
 
-    borderDefault1: colors.grey[850], // menu borders are too dark?
+    borderDefault1: colors.grey[850],
     borderDefault2: colors.grey[900],
     borderDefault: colors.grey[450], // buttons
 
@@ -73,7 +73,6 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundActive: colors.grey[800], // OK
     backgroundActive1: colors.grey[500],
 
-    // active border no change (just copied)
     borderActive1: colors.grey[850],
     borderActive2: colors.grey[900],
     borderActive: colors.grey[450], // buttons
@@ -116,20 +115,20 @@ export const colorScheme: ColorSchemeMapping = {
 
     borderDefault1: colors.primary[800],
     borderDefault2: colors.primary[800],
-    borderDefault: colors.grey[450], // check this
+    borderDefault: colors.grey[450],
 
-    shadowDefault: colors.black, // check this
-    shadowHover: colors.black, // check this
+    shadowDefault: colors.black,
+    shadowHover: colors.black,
 
     foregroundHover: colors.primary[400],
 
     borderHover: colors.primary[600],
 
-    backgroundHover: colors.primary[500], // in the button we have 50 :(
+    backgroundHover: colors.primary[500],
     backgroundHover1: colors.primary[900],
 
     foregroundPressed: colors.primary[200],
-    backgroundPressed: colors.primary[700], // it's 900 on the button - 800 is same as hover
+    backgroundPressed: colors.primary[700],
     borderPressed: colors.primary[800],
     shadowPressed: undefined,
 
