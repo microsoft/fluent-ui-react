@@ -179,10 +179,10 @@ export const colorScheme: ColorSchemeMapping = {
       shadowFocus: colorVariants[500],
       backgroundFocus: colorVariants[50],
 
-      foregroundFocusWithin: colorVariants[500],
-      borderFocusWithin: colorVariants[500],
-      shadowFocusWithin: colorVariants[500],
-      backgroundFocusWithin: colorVariants[50],
+      foregroundPressed: colorVariants[500],
+      borderPressed: colorVariants[500],
+      shadowPressed: colorVariants[500],
+      backgroundPressed: colorVariants[50],
 
       foregroundDisabled: colorVariants[500],
       borderDisabled: colorVariants[500],
