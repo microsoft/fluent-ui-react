@@ -203,7 +203,10 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 export interface DropdownState {
   a11ySelectionStatus: string
   activeSelectedIndex: number
+  filteredItems: ShorthandCollection
+  filteredItemStrings: string[]
   focused: boolean
+  startingString: string
   open: boolean
   searchQuery: string
   highlightedIndex: number
@@ -227,6 +230,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   static className = 'ui-dropdown'
 
   static a11yStatusCleanupTime = 500
+  static letterKeyPressedCleanupTime = 500
 
   static slotClassNames: DropdownSlotClassNames
 
@@ -309,7 +313,10 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     return {
       a11ySelectionStatus: '',
       activeSelectedIndex: multiple ? null : undefined,
+      filteredItems: undefined,
+      filteredItemStrings: undefined,
       focused: false,
+      startingString: search ? undefined : '',
       open: false,
       highlightedIndex: this.props.highlightFirstItemOnOpen ? 0 : null,
       searchQuery: search ? '' : undefined,
@@ -318,9 +325,36 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   a11yStatusTimeout: any
+  letterKeysPressedTimeout: any
 
   componentWillUnmount() {
     clearTimeout(this.a11yStatusTimeout)
+    clearTimeout(this.letterKeysPressedTimeout)
+  }
+
+  componentDidMount() {
+    this.setFilteredItemsAndItemStrings()
+  }
+
+  componentDidUpdate(prevProps: DropdownProps, prevState: DropdownState) {
+    const items = this.props.items
+    const prevItems = prevProps.items
+    const value = this.state.value as ShorthandCollection
+    const prevValue = prevState.value as ShorthandCollection
+    const itemsHaveBeenUpdated =
+      items.length !== prevItems.length ||
+      _.difference(items, prevItems).length > 0 ||
+      _.difference(prevItems, items).length > 0
+    const valueHasBeenAddedOrRemoved =
+      (this.props.multiple && value.length !== prevValue.length) ||
+      _.difference(value, prevValue).length > 0 ||
+      _.difference(prevValue, value).length > 0
+    const searchQueryHasBeenUpdated =
+      this.props.search && this.state.searchQuery !== prevState.searchQuery
+
+    if (itemsHaveBeenUpdated || valueHasBeenAddedOrRemoved || searchQueryHasBeenUpdated) {
+      this.setFilteredItemsAndItemStrings()
+    }
   }
 
   public renderComponent({
@@ -581,8 +615,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     highlightedIndex: number,
   ) {
     const { loading, loadingMessage, noResultsMessage, renderItem } = this.props
-    const filteredItems = this.getItemsFilteredBySearchQuery()
-
+    const { filteredItems } = this.state
     const items = _.map(filteredItems, (item, index) =>
       DropdownItem.create(item, {
         defaultProps: {
@@ -688,27 +721,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     if (this.state.open && _.isNumber(changes.highlightedIndex)) {
       this.trySetState({ highlightedIndex: changes.highlightedIndex })
     }
-  }
-
-  private getItemsFilteredBySearchQuery = (): ShorthandCollection => {
-    const { items, itemToString, multiple, search } = this.props
-    const { searchQuery, value } = this.state
-    const filteredItems = multiple ? _.difference(items, value as ShorthandCollection) : items
-
-    if (search) {
-      if (_.isFunction(search)) {
-        return search(filteredItems, searchQuery)
-      }
-
-      return filteredItems.filter(
-        item =>
-          itemToString(item)
-            .toLowerCase()
-            .indexOf(searchQuery.toLowerCase()) !== -1,
-      )
-    }
-
-    return filteredItems
   }
 
   private isSelectedItemActive = (index: number): boolean => {
@@ -842,7 +854,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     toggleMenu: () => void,
   ): void => {
     if (this.state.open) {
-      if (!_.isNil(highlightedIndex) && this.getItemsFilteredBySearchQuery().length) {
+      if (!_.isNil(highlightedIndex) && this.state.filteredItems.length) {
         selectItemAtIndex(highlightedIndex)
         if (!this.props.moveFocusOnTab && this.props.multiple) {
           e.preventDefault()
@@ -943,8 +955,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         return
       default:
         const keyString = String.fromCharCode(keyCode)
-        if (/[a-zA-Z]/.test(keyString)) {
-          const highlightedIndex = this.getHighlightedIndexOnCharKeyPress(keyString)
+        if (/[a-zA-Z0-9]/.test(keyString)) {
+          const highlightedIndex = this.getHighlightedIndexOnLetterKey(keyString)
           if (highlightedIndex >= 0) {
             this.setState({
               highlightedIndex,
@@ -970,8 +982,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onAdd) {
-      this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onAdd(item) })
-      this.setA11ySelectionMessage()
+      this.setA11ySelectionMessage(getA11ySelectionMessage.onAdd(item))
     }
 
     if (multiple) {
@@ -1046,25 +1057,23 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
   }
 
-  private getHighlightedIndexOnCharKeyPress = (keyPressed: string): number => {
-    const { highlightedIndex } = this.state
-    const filteredItemLowercasedStrings = this.getItemsFilteredBySearchQuery().map(item =>
-      this.props.itemToString(item).toLocaleLowerCase(),
-    )
+  private getHighlightedIndexOnLetterKey = (keyPressed: string): number => {
+    const { highlightedIndex, filteredItemStrings, startingString } = this.state
+    const newStartingString = `${startingString}${keyPressed.toLowerCase()}`
     let newHighlightedIndex = -1
+
+    this.setStartingString(newStartingString)
 
     if (_.isNumber(highlightedIndex)) {
       newHighlightedIndex = _.findIndex(
-        filteredItemLowercasedStrings,
-        item => item.startsWith(keyPressed.toLowerCase()),
+        filteredItemStrings,
+        item => item.startsWith(newStartingString),
         highlightedIndex + 1,
       )
     }
 
     if (newHighlightedIndex < 0) {
-      return _.findIndex(filteredItemLowercasedStrings, item =>
-        item.startsWith(keyPressed.toLowerCase()),
-      )
+      return _.findIndex(filteredItemStrings, item => item.startsWith(newStartingString))
     }
 
     return newHighlightedIndex
@@ -1095,8 +1104,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onRemove) {
-      this.setState({ a11ySelectionStatus: getA11ySelectionMessage.onRemove(poppedItem) })
-      this.setA11ySelectionMessage()
+      this.setA11ySelectionMessage(getA11ySelectionMessage.onRemove(poppedItem))
     }
 
     this.trySetStateAndInvokeHandler('onSelectedChange', null, { value })
@@ -1154,7 +1162,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   private getHighlightedIndexOnArrowKeyOpen = (
     changes: StateChangeOptions<ShorthandValue>,
   ): number => {
-    const itemsLength = this.getItemsFilteredBySearchQuery().length
+    const itemsLength = this.state.filteredItems.length
     switch (changes.type) {
       // if open by ArrowUp, index should change by -1.
       case Downshift.stateChangeTypes.keyDownArrowUp:
@@ -1197,11 +1205,56 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
    * Function that sets and cleans the selection message after it has been set,
    * so it is not read anymore via virtual cursor.
    */
-  private setA11ySelectionMessage = (): void => {
+  private setA11ySelectionMessage = (a11ySelectionStatus: string): void => {
     clearTimeout(this.a11yStatusTimeout)
+    this.setState({ a11ySelectionStatus })
     this.a11yStatusTimeout = setTimeout(() => {
       this.setState({ a11ySelectionStatus: '' })
     }, Dropdown.a11yStatusCleanupTime)
+  }
+
+  private setStartingString = (startingString: string): void => {
+    clearTimeout(this.letterKeysPressedTimeout)
+    this.setState({ startingString })
+    this.letterKeysPressedTimeout = setTimeout(() => {
+      this.setState({ startingString: '' })
+    }, Dropdown.letterKeyPressedCleanupTime)
+  }
+
+  private setFilteredItemsAndItemStrings = (): void => {
+    const { items, itemToString, multiple, search } = this.props
+    const { value } = this.state
+    const filteredItemsByValue = multiple
+      ? _.difference(items, value as ShorthandCollection)
+      : items
+
+    if (search) {
+      this.setState({ filteredItems: this.getFilteredItemsBySearchQuery(filteredItemsByValue) })
+    } else {
+      this.setState({
+        filteredItems: filteredItemsByValue,
+        filteredItemStrings: filteredItemsByValue.map(filteredItem =>
+          itemToString(filteredItem).toLowerCase(),
+        ),
+      })
+    }
+  }
+
+  private getFilteredItemsBySearchQuery = (
+    filteredItems = this.state.filteredItems,
+  ): ShorthandCollection => {
+    const { itemToString, search } = this.props
+    const { searchQuery } = this.state
+
+    if (_.isFunction(search)) {
+      return search(filteredItems, searchQuery)
+    }
+    return filteredItems.filter(
+      item =>
+        itemToString(item)
+          .toLowerCase()
+          .indexOf(searchQuery.toLowerCase()) !== -1,
+    )
   }
 }
 
