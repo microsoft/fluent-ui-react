@@ -1,6 +1,7 @@
 import replace from 'rollup-plugin-replace'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
+import json from 'rollup-plugin-json'
 
 const warningWhitelist = [
   'THIS_IS_UNDEFINED', // comes from TS transforms
@@ -56,6 +57,11 @@ export default {
           'Tab',
         ],
       },
+    }),
+    json({
+      include: 'node_modules/**',
+      preferConst: true,
+      compact: true,
     }),
   ],
 }

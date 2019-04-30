@@ -10,6 +10,8 @@
     "@stardust-ui/react-proptypes": "^0.29.0",
     "classnames": "^2.2.5",
     "downshift": "^3.2.10",
+    "css-shorthand-expand": "^1.2.0",
+    "fast-memoize": "^2.5.1",
     "fela": "^10.2.0",
     "fela-plugin-fallback-value": "^10.2.0",
     "fela-plugin-placeholder-prefixer": "^10.2.0",
