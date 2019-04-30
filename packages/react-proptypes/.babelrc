@@ -1,0 +1,3 @@
+{
+  "extends": "@stardust-ui/internal-tooling/babel"
+}

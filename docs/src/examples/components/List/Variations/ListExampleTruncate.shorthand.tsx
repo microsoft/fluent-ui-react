@@ -1,5 +1,6 @@
-import * as React from 'react'
+import { useBooleanKnob, useRangeKnob } from '@stardust-ui/docs-components'
 import { List, Image } from '@stardust-ui/react'
+import * as React from 'react'
 
 const items = [
   {
@@ -28,15 +29,22 @@ const items = [
   },
 ]
 
-const ListExample = ({ knobs }) => (
-  <div style={{ width: knobs.width }}>
-    <List
-      debug={knobs.debug}
-      truncateHeader={knobs.truncateHeader}
-      truncateContent={knobs.truncateContent}
-      items={items}
-    />
-  </div>
-)
+const ListExample = () => {
+  const [debug] = useBooleanKnob({ name: 'debug' })
+  const [truncateContent] = useBooleanKnob({ name: 'truncateContent', initialValue: true })
+  const [truncateHeader] = useBooleanKnob({ name: 'truncateHeader', initialValue: true })
+  const [width] = useRangeKnob({ name: 'width', initialValue: '25rem' })
+
+  return (
+    <div style={{ width }}>
+      <List
+        debug={debug}
+        truncateHeader={truncateHeader}
+        truncateContent={truncateContent}
+        items={items}
+      />
+    </div>
+  )
+}
 
 export default ListExample

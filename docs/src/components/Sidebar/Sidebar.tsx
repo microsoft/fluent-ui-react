@@ -274,6 +274,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'faq',
+        content: 'FAQ',
+        as: NavLink,
+        to: '/faq',
+        styles: menuItemStyles,
+      },
+      {
         key: 'accessiblity',
         content: 'Accessibility',
         as: NavLink,
@@ -385,6 +392,13 @@ class Sidebar extends React.Component<any, any> {
         content: 'Meeting Options',
         as: NavLink,
         to: '/prototype-meeting-options',
+        styles: menuItemStyles,
+      },
+      {
+        key: 'mentions',
+        content: 'Mentions',
+        as: NavLink,
+        to: '/prototype-mentions',
         styles: menuItemStyles,
       },
       {

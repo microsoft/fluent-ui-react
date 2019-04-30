@@ -1,16 +1,16 @@
 import * as React from 'react'
 
-import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
+import ComponentPerfExample from 'docs/src/components/ComponentDoc/ComponentPerfExample'
 import NonPublicSection from 'docs/src/components/ComponentDoc/NonPublicSection'
 
 const Performance = () => (
   <NonPublicSection title="Performance">
-    <ComponentExample
+    <ComponentPerfExample
       title="Default"
       description="A default test."
       examplePath="components/Header/Performance/Header.perf"
     />
-    <ComponentExample
+    <ComponentPerfExample
       title="Default"
       description="A test with a description shorthand."
       examplePath="components/Header/Performance/HeaderDescription.perf"
