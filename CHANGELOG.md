@@ -17,15 +17,31 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Update `ChatMessage` styles in Teams themes @layershifter ([#1246](https://github.com/stardust-ui/react/pull/1246))
+- Fix Teams theme styles for `Alert` [redlines] @codepretty ([#1226](https://github.com/stardust-ui/react/pull/1226))
+- Update background color in Teams dark theme for `Chat` message background color @codepretty ([#1256](https://github.com/stardust-ui/react/pull/1256))
+- Fix selected status of `Dropdown` when focus is on the `List` @silviuavram ([#1258](https://github.com/stardust-ui/react/pull/1258))
+- Fix `propTypes` warning in `ListItem` @layershifter ([#1266](https://github.com/stardust-ui/react/pull/1266))
+- Expand css shorthands for correct merging of the styles @mnajdova ([#869](https://github.com/stardust-ui/react/pull/869))
+
+### Features
+- Export `call-dialpad` icon in Teams theme @assamad ([#1271](https://github.com/stardust-ui/react/pull/1271))
+
+<!--------------------------------[ v0.29.0 ]------------------------------- -->
+## [v0.29.0](https://github.com/stardust-ui/react/tree/v0.29.0) (2019-04-24)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.28.1...v0.29.0)
+
 ### BREAKING CHANGES
 - Rename `inputFocusBorderBottomColor` to `inputFocusBorderColor` in `InputVariables` @layershifter ([#1247](https://github.com/stardust-ui/react/pull/1247))
 
 ### Fixes
-- Update background color in Teams dark theme for `Chat` message background color ([#1256](https://github.com/stardust-ui/react/pull/1256))
+- Fix onClick in `DropdownItem` to accept user callback and have its event propagation stopped @silviuavram ([#1248](https://github.com/stardust-ui/react/pull/1248))
 - Fix a11y message cleanup for add and remove items in `Dropdown` @silviuavram ([#1237](https://github.com/stardust-ui/react/pull/1237))
 
 ### Features
 - Move `Input` styles to Base theme @layershifter ([#1247](https://github.com/stardust-ui/react/pull/1247))
+- Add `role` attribute to `Popup`'s content in accessibility behaviors @sophieH29 ([1253](https://github.com/stardust-ui/react/pull/1253))
 
 <!--------------------------------[ v0.28.1 ]------------------------------- -->
 ## [v0.28.1](https://github.com/stardust-ui/react/tree/v0.28.1) (2019-04-23)
