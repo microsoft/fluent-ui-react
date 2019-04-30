@@ -13,7 +13,7 @@ const beforeAndAfter = (
   content: '""',
   flex: 1,
   height: `${size + 1}px`,
-  background: _.get(colors, 'borderDefault', variables.dividerColor),
+  background: _.get(colors, 'foregroundDefault', variables.dividerColor),
 })
 
 const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, DividerVariables> = {
