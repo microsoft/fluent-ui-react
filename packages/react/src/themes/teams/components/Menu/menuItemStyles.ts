@@ -263,7 +263,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       },
 
       ...(disabled && {
-        color: v.colorDisabled,
+        color: v.colorDisabled || colorScheme.foregroundDisabled1,
         ':hover': {
           // empty - overwrite all existing hover styles
         },

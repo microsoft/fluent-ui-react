@@ -49,15 +49,11 @@ export default (siteVars: any): MenuVariables => {
   return {
     colorScheme: extendColorScheme(siteVars.colorScheme, {
       default: {
-        foregroundDefault: siteVars.colors.grey[500],
-        backgroundDefault: siteVars.colors.grey[400],
         foregroundHover: siteVars.colors.black,
         backgroundHover: siteVars.colors.grey[50],
         borderActive: siteVars.colors.grey[600],
         foregroundActive: siteVars.colors.black,
         foregroundFocus: siteVars.colors.black,
-        foregroundFocusWithin: siteVars.colors.black,
-        foregroundDisabled: siteVars.colors.black,
       },
       primary: {
         foregroundHover: siteVars.colors.white,
@@ -65,7 +61,6 @@ export default (siteVars: any): MenuVariables => {
         foregroundActive: siteVars.colors.white,
         borderActive: siteVars.colors.primary[600],
         backgroundActive: siteVars.colors.primary[500],
-        shadowActive: siteVars.colors.primary[50],
         foregroundFocus: siteVars.colors.white,
         backgroundFocus1: siteVars.colors.primary[300],
       },
@@ -73,7 +68,7 @@ export default (siteVars: any): MenuVariables => {
     color: siteVars.colors.grey[500],
     colorActive: siteVars.colors.black,
     colorFocus: siteVars.colors.white,
-    colorDisabled: siteVars.colors.grey[250],
+    colorDisabled: undefined,
 
     borderColor: undefined,
     borderColorHover: undefined,

@@ -7,7 +7,16 @@ type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
   wrapper: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const { iconOnly, isFromKeyboard, vertical, active, underlined, primary, pointing } = p
+    const {
+      iconOnly,
+      isFromKeyboard,
+      vertical,
+      active,
+      underlined,
+      primary,
+      pointing,
+      disabled,
+    } = p
 
     return {
       ':hover': {
@@ -59,6 +68,13 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             display: 'none',
           },
         }),
+
+      ...(disabled && {
+        cursor: 'default',
+        ':hover': {
+          // reset all existing hover styles
+        },
+      }),
     }
   },
 

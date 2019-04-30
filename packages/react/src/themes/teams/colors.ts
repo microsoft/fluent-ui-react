@@ -232,7 +232,7 @@ export const colorScheme: ColorSchemeMapping = {
 
     foregroundHover: colors.grey[750],
 
-    backgroundHover: colors.grey[100], // in the button we have 50 :(
+    backgroundHover: colors.grey[100],
     backgroundHover1: colors.grey[150],
 
     borderHover: colors.grey[250], // buttons
@@ -242,14 +242,12 @@ export const colorScheme: ColorSchemeMapping = {
     borderPressed: colors.grey[250],
     shadowPressed: undefined,
 
-    // We don't have foregroundActive black :(
     foregroundActive: colors.grey[750],
     foregroundActive1: colors.white,
 
-    backgroundActive: colors.grey[100], // OK
+    backgroundActive: colors.grey[100],
     backgroundActive1: colors.grey[150],
 
-    // active border no change (just copied)
     borderActive1: colors.grey[150],
     borderActive2: colors.grey[200],
     borderActive: colors.grey[200], // buttons
@@ -264,7 +262,7 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundFocus: colors.white,
     backgroundFocus1: colors.grey[50],
     backgroundFocus2: colors.grey[100],
-    backgroundFocus3: colors.grey[150], // button has 200 :(
+    backgroundFocus3: colors.grey[150],
 
     borderFocus: colors.black,
     borderFocusWithin: colors.white,
@@ -292,17 +290,17 @@ export const colorScheme: ColorSchemeMapping = {
 
     borderDefault1: colors.primary[200],
     borderDefault2: colors.primary[300],
-    borderDefault: colors.grey[200], // check this
+    borderDefault: colors.grey[200],
 
-    shadowDefault: colors.black, // check this
-    shadowHover: colors.black, // check this
+    shadowDefault: colors.black,
+    shadowHover: colors.black,
 
     foregroundHover: colors.primary[600],
 
     borderHover: colors.primary[300],
 
-    backgroundHover: colors.primary[700], // in the button we have 50 :(
-    backgroundHover2: colors.primary[50], // in menu is 300 (but is this used?)
+    backgroundHover: colors.primary[700],
+    backgroundHover2: colors.primary[50],
 
     foregroundPressed: colors.primary[800],
     backgroundPressed: colors.primary[800], // it's 900 on the button - 800 is same as hover
@@ -314,9 +312,8 @@ export const colorScheme: ColorSchemeMapping = {
     foregroundActive2: colors.primary[200],
 
     backgroundActive: colors.primary[600],
-    backgroundActive1: colors.primary[600], // check this
+    backgroundActive1: colors.primary[600],
 
-    // active border no change (just copied from default)
     borderActive1: colors.grey[150],
     borderActive2: colors.grey[200],
     borderActive: colors.grey[200],
