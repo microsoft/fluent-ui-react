@@ -23,10 +23,10 @@ const createColorScheme = (color: string, customValues = {}) => {
     borderFocus: colors[color][600],
     shadowFocus: colors[color][600],
 
-    foregroundFocusWithin: colors[color][50],
-    backgroundFocusWithin: colors[color][600],
-    borderFocusWithin: colors[color][600],
-    shadowFocusWithin: colors[color][600],
+    foregroundPressed: colors[color][50],
+    backgroundPressed: colors[color][600],
+    borderPressed: colors[color][600],
+    shadowPressed: colors[color][600],
 
     foregroundDisabled: colors[color][50],
     backgroundDisabled: colors[color][600],
@@ -192,10 +192,10 @@ export const colorScheme: ColorSchemeMapping = {
     borderFocus: colors.black,
     shadowFocus: colors.black,
 
-    foregroundFocusWithin: colors.white,
-    backgroundFocusWithin: colors.black,
-    borderFocusWithin: colors.black,
-    shadowFocusWithin: colors.black,
+    foregroundPressed: colors.white,
+    backgroundPressed: colors.black,
+    borderPressed: colors.black,
+    shadowPressed: colors.black,
 
     foregroundDisabled: colors.white,
     backgroundDisabled: colors.black,
@@ -223,10 +223,10 @@ export const colorScheme: ColorSchemeMapping = {
     borderFocus: colors.white,
     shadowFocus: colors.white,
 
-    foregroundFocusWithin: colors.black,
-    backgroundFocusWithin: colors.white,
-    borderFocusWithin: colors.white,
-    shadowFocusWithin: colors.white,
+    foregroundPressed: colors.black,
+    backgroundPressed: colors.white,
+    borderPressed: colors.white,
+    shadowPressed: colors.white,
 
     foregroundDisabled: colors.black,
     backgroundDisabled: colors.white,

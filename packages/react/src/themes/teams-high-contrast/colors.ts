@@ -29,10 +29,10 @@ const createColorScheme = (customValues = {}) => {
     borderFocus: colors.white,
     shadowFocus: colors.white,
 
-    foregroundFocusWithin: colors.black,
-    backgroundFocusWithin: accessibleYellow,
-    borderFocusWithin: colors.white,
-    shadowFocusWithin: colors.white,
+    foregroundPressed: colors.black,
+    backgroundPressed: accessibleYellow,
+    borderPressed: colors.white,
+    shadowPressed: colors.white,
 
     foregroundDisabled: colors.black,
     backgroundDisabled: accessibleGreen,
