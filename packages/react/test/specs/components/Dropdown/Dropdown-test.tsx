@@ -121,6 +121,7 @@ describe('Dropdown', () => {
 
     afterEach(() => {
       onOpenChange.mockReset()
+      jest.runAllTimers()
     })
 
     it('is null when opened by click', () => {
@@ -652,11 +653,33 @@ describe('Dropdown', () => {
       itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
       expect(dropdown.state('highlightedIndex')).toBe(0)
 
+      jest.runAllTimers()
       itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
       expect(dropdown.state('highlightedIndex')).toBe(2)
 
+      jest.runAllTimers()
       itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
       expect(dropdown.state('highlightedIndex')).toBe(0)
+    })
+
+    it('jumps to the item starting with the keys tapped in rapid succession', () => {
+      const items = ['Albert', 'Alfred', 'Alena', 'Ali']
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const dropdown = wrapper.find(Dropdown)
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+
+      triggerButton.simulate('click')
+      itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
+      expect(dropdown.state('highlightedIndex')).toBe(0)
+
+      jest.advanceTimersByTime(200)
+      itemsList.simulate('keydown', { keyCode: keyboardKey.L, key: 'L' })
+      expect(dropdown.state('highlightedIndex')).toBe(0)
+
+      jest.advanceTimersByTime(200)
+      itemsList.simulate('keydown', { keyCode: keyboardKey.E, key: 'E' })
+      expect(dropdown.state('highlightedIndex')).toBe(2)
     })
   })
 

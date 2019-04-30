@@ -333,7 +333,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   componentDidMount() {
-    this.setFilteredItemsAndItemStrings()
+    this.props.items && this.setFilteredItemsAndItemStrings()
   }
 
   componentDidUpdate(prevProps: DropdownProps, prevState: DropdownState) {
@@ -342,7 +342,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     const value = this.state.value as ShorthandCollection
     const prevValue = prevState.value as ShorthandCollection
     const itemsHaveBeenUpdated =
-      items.length !== prevItems.length ||
+      (items && items.length !== prevItems.length) ||
       _.difference(items, prevItems).length > 0 ||
       _.difference(prevItems, items).length > 0
     const valueHasBeenAddedOrRemoved =
@@ -1068,7 +1068,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       newHighlightedIndex = _.findIndex(
         filteredItemStrings,
         item => item.startsWith(newStartingString),
-        highlightedIndex + 1,
+        highlightedIndex + (startingString.length > 0 ? 0 : 1),
       )
     }
 
