@@ -394,12 +394,10 @@ export const colorSchemeWIP = {
     backgroundActive2: colors.primary[500],
     foregroundFocus4: colors.white,
 
-    foregroundDisabled1: colors.grey[250],
-    foregroundDisabled2: colors.grey[250],
-
-    borderDisabled: colors.grey[150],
-
-    backgroundDisabled1: colors.grey[150],
-    backgroundDisabled2: colors.grey[150],
+    // foregroundDisabled1: colors.grey[250], // always use default scheme for disabled state ( should always be true!)
+    // foregroundDisabled2: colors.grey[250], // always use default scheme for disabled state ( should always be true!)
+    // borderDisabled: colors.grey[150], // always use default scheme for disabled state ( should always be true!)
+    // backgroundDisabled1: colors.grey[150], // always use default scheme for disabled state ( should always be true!)
+    // backgroundDisabled2: colors.grey[150], // always use default scheme for disabled state ( should always be true!)
   },
 }

@@ -6,6 +6,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
     const { circular, disabled, fluid, primary, text, iconOnly, isFromKeyboard } = props
     const colorScheme = variables.colorScheme[primary ? 'primary' : 'default']
+    const commonColorScheme = variables.colorScheme['default']
     const {
       height,
       minWidth,
@@ -88,7 +89,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
           ':focus': {
             color: colorScheme.foregroundFocus1,
             backgroundColor: primary ? primaryBackgroundColorFocus : backgroundColorFocus, // we are moving away from this
-            borderColor: colorScheme.borderFocusWithin,
+            borderColor: variables.colorScheme.default.borderFocus,
             ':after': {
               content: '""',
               position: 'absolute',
@@ -98,7 +99,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
               left: `-${pxToRem(borderWidth * 2)}`,
               borderWidth: pxToRem(borderWidth),
               borderStyle: 'solid',
-              borderColor: colorScheme.borderFocus,
+              borderColor: variables.colorScheme.default.borderFocusWithin,
               borderRadius: borderRadiusFocused,
             },
           },
@@ -132,7 +133,8 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
                 left: '0',
                 borderWidth: `${pxToRem(borderWidth)}`,
                 borderStyle: 'solid',
-                borderColor: colorScheme.borderFocus,
+                borderColor:
+                  variables.colorScheme.default[primary ? 'borderFocusWithin' : 'borderFocus'],
                 borderRadius: circularRadius,
               },
             },
@@ -223,13 +225,13 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       // Overrides for "disabled" buttons
       ...(disabled && {
         cursor: 'default',
-        color: colorScheme.foregroundDisabled2,
-        backgroundColor: colorScheme.backgroundDisabled1,
-        borderColor: colorScheme.borderDisabled,
+        color: commonColorScheme.foregroundDisabled2,
+        backgroundColor: commonColorScheme.backgroundDisabled1,
+        borderColor: commonColorScheme.borderDisabled,
         boxShadow: 'none',
         ':hover': {
-          backgroundColor: colorScheme.backgroundDisabled1,
-          borderColor: colorScheme.borderDisabled,
+          backgroundColor: commonColorScheme.backgroundDisabled1,
+          borderColor: commonColorScheme.borderDisabled,
         },
       }),
 
