@@ -17,8 +17,12 @@ type ApplyStyledConfig = {
 }
 
 type GetPropValue<TPropValue> = (propName: string) => TPropValue
-const createProxy = function<TPropValue>(getPropValue: GetPropValue<TPropValue>) {
-  return new Proxy({}, { get: (_target, name) => getPropValue(String(name)) })
+const createProxy = function<TPropValue>(
+  // this 'prototype' is necessary for IE11 polyfill support: https://github.com/GoogleChrome/proxy-polyfill
+  prototype: any,
+  getPropValue: GetPropValue<TPropValue>,
+) {
+  return new Proxy(prototype, { get: (_target, name) => getPropValue(String(name)) })
 }
 
 type ResultFunc<TProps, TResult> = (props: TProps) => TResult
@@ -33,8 +37,10 @@ const applyApi = function<TResult, TProps = any>(
   theme: ThemePrepared,
   getFunc: GetResultFunc<TResult, TProps>,
 ): Api<TResult, TProps> {
-  return createProxy(componentName =>
-    createProxy(slotName => getFunc(theme, componentName, slotName)),
+  return createProxy(Object.assign({}, theme.componentStyles), componentName =>
+    createProxy(Object.assign({}, theme.componentStyles[componentName]), slotName =>
+      getFunc(theme, componentName, slotName),
+    ),
   )
 }
 
