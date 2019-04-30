@@ -1,4 +1,4 @@
-import * as hoistNonReactStatic from 'hoist-non-react-statics'
+import hoistNonReactStatic from 'hoist-non-react-statics'
 
 function createVariant<TProps>(
   ComponentType: { new (...args: any[]): React.Component<TProps> },

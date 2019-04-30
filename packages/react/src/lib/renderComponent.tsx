@@ -35,16 +35,6 @@ import createAnimationStyles from './createAnimationStyles'
 import { generateColorScheme } from './colorUtils'
 import { applyStylesApi } from './styled'
 
-export const getColors = ({ theme, componentVariables, props }) => {
-  const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
-    componentVariables,
-    {}, // variantVariables
-    props.variables,
-  )(theme.siteVariables)
-
-  return generateColorScheme(props.color, resolvedVariables.colorScheme)
-}
-
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
   classes: ComponentSlotClasses

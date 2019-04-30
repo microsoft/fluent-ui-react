@@ -2,7 +2,7 @@ import * as React from 'react'
 import { FelaTheme } from 'react-fela'
 import { ThemePrepared, ICSSInJSStyle } from '../themes/types'
 import getClasses from './getClasses'
-import { getColors } from './renderComponent'
+import { getColors } from './colorUtils'
 import callable from './callable'
 
 type PerComponent<TValue> = Record<string, TValue>
