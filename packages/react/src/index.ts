@@ -202,7 +202,7 @@ export {
 // Utilities
 //
 export { default as styled } from './lib/styled'
-export { default as variantOf } from './lib/variantOf'
+export { default as createVariant } from './lib/createVariant'
 
 export { default as mergeThemes } from './lib/mergeThemes'
 export { createComponent } from './lib'

@@ -30,6 +30,10 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
     return this._handledPropsCache
   }
 
+  static set handledProps(handledProps: string[]) {
+    this._handledPropsCache = handledProps
+  }
+
   protected actionHandlers: AccessibilityActionHandlers
   protected focusZone: FocusZone
 
