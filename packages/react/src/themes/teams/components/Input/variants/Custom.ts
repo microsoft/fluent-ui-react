@@ -1,6 +1,6 @@
 export default {
   variables: {
-    inputFocusBorderBottomColor: 'transparent',
+    inputFocusBorderColor: 'transparent transparent darkred transparent',
     placeholderColor: 'darkred',
   },
   styles: {

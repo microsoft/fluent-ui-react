@@ -1,5 +1,5 @@
 export default {
   variables: {
-    inputFocusBorderBottomColor: 'transparent',
+    inputFocusBorderColor: 'transparent',
   },
 }
