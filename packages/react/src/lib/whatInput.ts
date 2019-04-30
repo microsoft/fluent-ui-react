@@ -1,6 +1,7 @@
 import isBrowser from './isBrowser'
 
 // Taken from https://github.com/ten1seven/what-input/blob/master/src/scripts/what-input.js
+/* eslint-disable */
 
 /*
  * variables

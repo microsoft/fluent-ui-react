@@ -10,6 +10,21 @@ const Variations = () => (
       examplePath="components/Alert/Variations/AlertExampleInfo"
     />
     <ComponentExample
+      title="OOF"
+      description="An alert may be formatted to display an oof message."
+      examplePath="components/Alert/Variations/AlertExampleOofs"
+    />
+    <ComponentExample
+      title="Urgent"
+      description="An alert may be formatted to display an urgent message."
+      examplePath="components/Alert/Variations/AlertExampleUrgent"
+    />
+    <ComponentExample
+      title="Danger"
+      description="An alert may be formatted to display a danger or error message."
+      examplePath="components/Alert/Variations/AlertExampleDanger"
+    />
+    <ComponentExample
       title="Warning"
       description="An alert may be formatted to display a warning message."
       examplePath="components/Alert/Variations/AlertExampleWarning"
@@ -18,11 +33,6 @@ const Variations = () => (
       title="Success"
       description="An alert may be formatted to display a successful message."
       examplePath="components/Alert/Variations/AlertExampleSuccess"
-    />
-    <ComponentExample
-      title="Danger"
-      description="An alert may be formatted to display a danger message."
-      examplePath="components/Alert/Variations/AlertExampleDanger"
     />
     <ComponentExample
       title="Attached"

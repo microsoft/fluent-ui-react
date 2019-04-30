@@ -1243,6 +1243,38 @@ describe('Dropdown', () => {
     })
   })
 
+  describe('focused', () => {
+    it('is "true" when focus is on trigger button', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      const dropdown = wrapper.find(Dropdown)
+
+      triggerButton.simulate('focus')
+
+      expect(dropdown.state('focused')).toBe(true)
+    })
+
+    it('is "true" when focus is on search input', () => {
+      const wrapper = mountWithProvider(<Dropdown search items={items} />)
+      const searchInput = wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+      const dropdown = wrapper.find(Dropdown)
+
+      searchInput.simulate('focus')
+
+      expect(dropdown.state('focused')).toBe(true)
+    })
+
+    it('is "true" when focus is on the list', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} open />)
+      const dropdown = wrapper.find(Dropdown)
+      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+
+      itemsList.simulate('focus')
+
+      expect(dropdown.state('focused')).toBe(true)
+    })
+  })
+
   describe('toggleIndicator', () => {
     it('closes the open menu on click', () => {
       const onOpenChange = jest.fn()
