@@ -118,10 +118,10 @@ export type ComponentAreaName =
   | 'backgroundFocus'
   | 'borderFocus'
   | 'shadowFocus'
-  | 'foregroundFocusWithin'
-  | 'backgroundFocusWithin'
-  | 'borderFocusWithin'
-  | 'shadowFocusWithin'
+  | 'foregroundPressed'
+  | 'backgroundPressed'
+  | 'borderFocusPressed'
+  | 'shadowFocusPressed'
   | 'foregroundDisabled'
   | 'backgroundDisabled'
   | 'borderDisabled'
@@ -132,9 +132,11 @@ export type ComponentAreaName =
  */
 export type ColorScheme = Extendable<Record<ComponentAreaName, string>, string>
 
-export type ColorSchemeMapping = ColorValues<ColorScheme> & { default?: ColorScheme }
-export type ColorSchemeMappingOverrides = ColorValues<Partial<ColorScheme>> & {
-  default?: Partial<ColorScheme>
+export type ColorSchemeMapping = ColorValues<Extendable<ColorScheme, string>> & {
+  default?: Extendable<ColorScheme, string>
+}
+export type ColorSchemeMappingOverrides = ColorValues<Partial<Extendable<ColorScheme, string>>> & {
+  default?: Partial<Extendable<ColorScheme, string>>
 }
 
 // ========================================================

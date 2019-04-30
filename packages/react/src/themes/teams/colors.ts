@@ -101,6 +101,39 @@ export const naturalColors: NaturalColors = {
     800: undefined,
     900: undefined,
   },
+  silver: {
+    100: undefined,
+    200: 'rgba(255,255,255,0.75)',
+    300: 'rgba(255,255,255,0.65)',
+    400: 'rgba(255,255,255,0.5)',
+    500: undefined,
+    600: 'rgba(255,255,255,0.3)',
+    700: undefined,
+    800: 'rgba(255,255,255,0.15)',
+    900: 'rgba(255,255,255,0.05)',
+  },
+  ruby: {
+    100: undefined,
+    200: undefined,
+    300: undefined,
+    400: undefined,
+    500: 'rgba(196,49,75,0.9)',
+    600: 'rgba(167,32,55,0.9)',
+    700: 'rgba(142,25,46,0.9)',
+    800: undefined,
+    900: undefined,
+  },
+  onyx: {
+    100: 'rgba(59,58,57,0.9)',
+    200: undefined,
+    300: undefined,
+    400: undefined,
+    500: 'rgba(41,40,40,0.9)',
+    600: undefined,
+    700: undefined,
+    800: 'rgba(27,26,26,0.9)',
+    900: undefined,
+  },
 }
 
 const emphasisAndNaturalColors: EmphasisColors & NaturalColors = {
@@ -163,24 +196,141 @@ const lightColorOverrides = {
 }
 
 export const colorScheme: ColorSchemeMapping = {
-  default: createColorScheme('grey', {
-    foregroundDefault: colors.grey[500],
-    backgroundDefault: colors.grey[400],
-    borderDefault: colors.grey[200],
+  default: {
+    foregroundDefault: colors.grey[750],
+    foregroundDefault1: colors.grey[500],
+    foregroundDefault2: colors.grey[450],
+    foregroundDefault3: colors.white,
 
-    foregroundHover: colors.black,
-    backgroundHover: colors.grey[50],
+    backgroundDefault: colors.white,
+    backgroundDefault1: colors.grey[50],
+    backgroundDefault2: colors.grey[100],
+    backgroundDefault3: colors.grey[150],
 
-    foregroundActive: colors.black,
-    backgroundActive: colors.grey[100],
+    borderDefault1: colors.grey[150],
+    borderDefault2: colors.grey[200],
+    borderDefault: colors.grey[200], // buttons
 
-    foregroundFocus: colors.black,
-    backgroundFocus: colors.grey[50],
+    shadowDefault: colors.black, // opacity 10%
+    shadowHover: colors.black,
 
-    foregroundFocusWithin: colors.black,
+    foregroundHover: colors.grey[750],
 
-    foregroundDisabled: colors.black,
-  }),
+    backgroundHover: colors.grey[100], // in the button we have 50 :(
+    backgroundHover1: colors.grey[150],
+
+    borderHover: colors.grey[250], // buttons
+
+    foregroundPressed: colors.grey[750],
+    backgroundPressed: colors.grey[200],
+    borderPressed: colors.grey[250],
+    shadowPressed: undefined,
+
+    // We don't have foregroundActive black :(
+    foregroundActive: colors.grey[750],
+    foregroundActive1: colors.white,
+
+    backgroundActive: colors.grey[100], // OK
+    backgroundActive1: colors.grey[150],
+
+    // active border no change (just copied)
+    borderActive1: colors.grey[150],
+    borderActive2: colors.grey[200],
+    borderActive: colors.grey[200], // buttons
+
+    shadowActive: undefined,
+
+    foregroundFocus: colors.grey[750],
+    foregroundFocus1: colors.grey[500],
+    foregroundFocus2: colors.grey[450],
+    foregroundFocus3: colors.white,
+
+    backgroundFocus: colors.white,
+    backgroundFocus1: colors.grey[50],
+    backgroundFocus2: colors.grey[100],
+    backgroundFocus3: colors.grey[150], // button has 200 :(
+
+    borderFocus: colors.black,
+    borderFocusWithin: colors.white,
+    shadowFocus: undefined,
+
+    foregroundDisabled1: colors.grey[250],
+    foregroundDisabled: colors.grey[250],
+
+    backgroundDisabled1: colors.grey[150],
+    backgroundDisabled: colors.grey[150],
+
+    borderDisabled: colors.grey[150],
+    shadowDisabled: undefined,
+  },
+  primary: {
+    foregroundDefault: colors.primary[600],
+    foregroundDefault1: colors.primary[600],
+    foregroundDefault2: colors.primary[700],
+    foregroundDefault3: colors.primary[200],
+
+    backgroundDefault: colors.primary[600],
+    backgroundDefault1: colors.primary[100],
+    backgroundDefault2: colors.primary[900],
+    backgroundDefault3: colors.primary[1000],
+
+    borderDefault1: colors.primary[200],
+    borderDefault2: colors.primary[300],
+    borderDefault: colors.grey[200], // check this
+
+    shadowDefault: colors.black, // check this
+    shadowHover: colors.black, // check this
+
+    foregroundHover: colors.primary[600],
+
+    borderHover: colors.primary[300],
+
+    backgroundHover: colors.primary[700], // in the button we have 50 :(
+    backgroundHover2: colors.primary[50], // in menu is 300 (but is this used?)
+
+    foregroundPressed: colors.primary[800],
+    backgroundPressed: colors.primary[800], // it's 900 on the button - 800 is same as hover
+    borderPressed: colors.primary[300],
+    shadowPressed: undefined,
+
+    foregroundActive: colors.primary[600],
+    foregroundActive1: colors.primary[600],
+    foregroundActive2: colors.primary[200],
+
+    backgroundActive: colors.primary[600],
+    backgroundActive1: colors.primary[600], // check this
+
+    // active border no change (just copied from default)
+    borderActive1: colors.grey[150],
+    borderActive2: colors.grey[200],
+    borderActive: colors.grey[200],
+
+    shadowActive: undefined,
+
+    foregroundFocus: colors.primary[600],
+    foregroundFocus1: colors.primary[600],
+    foregroundFocus2: colors.primary[700],
+    foregroundFocus3: colors.primary[200],
+
+    backgroundFocus: colors.primary[600],
+    backgroundFocus1: colors.primary[100],
+    backgroundFocus2: colors.primary[900],
+    backgroundFocus3: colors.primary[1000],
+
+    borderFocus: colors.black,
+    borderFocus1: colors.primary[600], // only input
+    borderFocusWithin: colors.white,
+    shadowFocus: undefined,
+
+    foregroundDisabled1: colors.grey[250],
+    foregroundDisabled: colors.grey[250],
+
+    backgroundDisabled1: colors.grey[150],
+    backgroundDisabled: colors.grey[150],
+
+    borderDisabled: colors.grey[150],
+    shadowDisabled: undefined,
+  },
   black: {
     foregroundDefault: colors.black,
     backgroundDefault: colors.white,
@@ -243,17 +393,6 @@ export const colorScheme: ColorSchemeMapping = {
     borderDisabled: colors.white,
     shadowDisabled: colors.white,
   },
-  primary: createColorScheme('primary', {
-    foregroundHover: colors.white,
-    backgroundHover: colors.primary[300],
-
-    foregroundActive: colors.white,
-    backgroundActive: colors.primary[500],
-    shadowActive: colors.primary[50],
-
-    foregroundFocus: colors.white,
-    backgroundFocus: colors.primary[300],
-  }),
   grey: createColorScheme('grey'),
   green: createColorScheme('green'),
   orange: createColorScheme('orange', lightColorOverrides),

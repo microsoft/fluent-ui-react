@@ -11,7 +11,7 @@ export const verticalPillsBottomMargin = pxToRem(5)
 export const horizontalPillsRightMargin = pxToRem(8)
 export const verticalPointingBottomMargin = pxToRem(12)
 
-const underlinedItem = (color: string): ICSSInJSStyle => ({
+export const underlinedItem = (color: string): ICSSInJSStyle => ({
   paddingBottom: 0,
   borderBottom: `solid ${pxToRem(4)} ${color}`,
   transition: 'color .1s ease',
@@ -53,13 +53,13 @@ const getFocusedStyles = ({
   if (active && !underlined && !vertical) return {}
   return {
     color: primary || color ? colorScheme.foregroundFocus : v.colorActive,
-    background: v.backgroundColorFocus || colorScheme.backgroundFocus,
+    background: v.backgroundColorFocus || colorScheme.backgroundFocus1,
     ...(vertical && isFromKeyboard && !primary
       ? {
           border: `solid 1px ${v.borderColorFocus}`,
           outline: `solid 1px ${v.outlineColorFocus}`,
           margin: pxToRem(1),
-          background: v.verticalBackgroundColorFocus || colorScheme.backgroundFocus,
+          background: v.verticalBackgroundColorFocus || colorScheme.backgroundFocus1,
         }
       : {}),
   }

@@ -1,6 +1,7 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
+import { underlinedItem } from '../../../teams/components/Menu/menuItemStyles'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
@@ -61,10 +62,25 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  root: ({ props }): ICSSInJSStyle => {
-    const { iconOnly, isFromKeyboard } = props
+  root: ({ props, variables: v }): ICSSInJSStyle => {
+    const { iconOnly, isFromKeyboard, underlined, primary, color, active } = props
 
     return {
+      ...(underlined && {
+        ...(active && {
+          color: v.color,
+          ...(!primary &&
+            !color && {
+              ...underlinedItem(v.color),
+            }),
+        }),
+        ':hover': {
+          color: v.color,
+        },
+        ...(isFromKeyboard && {
+          color: v.colorActive,
+        }),
+      }),
       // focus styles
       ...(isFromKeyboard &&
         iconOnly && {

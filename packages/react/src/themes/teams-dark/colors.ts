@@ -37,24 +37,140 @@ const createColorScheme = (color: string, customValues = {}) => {
 }
 
 export const colorScheme: ColorSchemeMapping = {
-  default: createColorScheme('grey', {
-    foregroundDefault: colors.grey[500],
-    backgroundDefault: colors.grey[400],
-    borderDefault: colors.grey[500],
+  default: {
+    foregroundDefault: colors.white,
+    foregroundDefault1: colors.grey[250],
+    foregroundDefault3: colors.grey[300],
+    foregroundDefault4: colors.white,
 
-    foregroundHover: colors.black,
-    backgroundHover: colors.grey[500],
+    backgroundDefault: colors.grey[650],
+    backgroundDefault1: colors.grey[700],
+    backgroundDefault2: colors.grey[800],
+    backgroundDefault3: colors.grey[550],
 
-    foregroundActive: colors.black,
-    backgroundActive: colors.grey[500],
+    borderDefault1: colors.grey[850], // menu borders are too dark?
+    borderDefault2: colors.grey[900],
+    borderDefault: colors.grey[450], // buttons
 
-    foregroundFocus: colors.black,
-    backgroundFocus: colors.grey[500],
+    shadowDefault: colors.black, // opacity 25%
+    shadowHover: colors.black,
 
-    foregroundFocusWithin: colors.black,
+    foregroundHover: colors.white,
 
-    foregroundDisabled: colors.black,
-  }),
+    backgroundHover: colors.grey[550],
+    backgroundHover2: colors.grey[550],
+
+    borderHover: colors.grey[400],
+
+    foregroundPressed: colors.white,
+    backgroundPressed: colors.grey[500],
+    borderPressed: colors.grey[450],
+    shadowPressed: undefined,
+
+    foregroundActive: colors.white,
+    foregroundActive1: colors.white,
+
+    backgroundActive: colors.grey[800], // OK
+    backgroundActive1: colors.grey[500],
+
+    // active border no change (just copied)
+    borderActive1: colors.grey[850],
+    borderActive2: colors.grey[900],
+    borderActive: colors.grey[450], // buttons
+
+    shadowActive: undefined,
+
+    foregroundFocus: colors.white,
+    foregroundFocus1: colors.grey[250],
+    foregroundFocus2: colors.grey[300],
+    foregroundFocus3: colors.white,
+
+    backgroundFocus: colors.grey[650],
+    backgroundFocus1: colors.grey[700],
+    backgroundFocus2: colors.grey[800],
+    backgroundFocus3: colors.grey[550],
+
+    borderFocus: colors.black,
+    borderFocusWithin: colors.white,
+    shadowFocus: undefined,
+
+    foregroundDisabled1: colors.grey[450],
+    foregroundDisabled: colors.grey[450],
+
+    backgroundDisabled1: colors.grey[550],
+    backgroundDisabled: colors.grey[550],
+
+    borderDisabled: colors.grey[550],
+    shadowDisabled: undefined,
+  },
+  primary: {
+    foregroundDefault: colors.primary[400],
+    foregroundDefault1: colors.primary[400],
+    foregroundDefault2: colors.primary[400],
+    foregroundDefault3: colors.primary[200],
+
+    backgroundDefault: colors.primary[600],
+    backgroundDefault1: colors.primary[900],
+    backgroundDefault2: colors.primary[900],
+    backgroundDefault3: colors.primary[1000],
+
+    borderDefault1: colors.primary[800],
+    borderDefault2: colors.primary[800],
+    borderDefault: colors.grey[450], // check this
+
+    shadowDefault: colors.black, // check this
+    shadowHover: colors.black, // check this
+
+    foregroundHover: colors.primary[400],
+
+    borderHover: colors.primary[600],
+
+    backgroundHover: colors.primary[500], // in the button we have 50 :(
+    backgroundHover1: colors.primary[900],
+
+    foregroundPressed: colors.primary[200],
+    backgroundPressed: colors.primary[700], // it's 900 on the button - 800 is same as hover
+    borderPressed: colors.primary[800],
+    shadowPressed: undefined,
+
+    foregroundActive: colors.primary[400],
+    foregroundActive1: colors.primary[400],
+    foregroundActive2: colors.primary[200],
+
+    backgroundActive: colors.primary[400],
+    backgroundActive1: colors.primary[400],
+
+    // active border no change (just copied)
+    borderActive1: colors.grey[850],
+    borderActive2: colors.grey[900],
+    borderActive: colors.grey[450], // buttons
+
+    shadowActive: undefined,
+
+    foregroundFocus: colors.primary[400],
+    foregroundFocus1: colors.primary[400],
+    foregroundFocus2: colors.primary[400],
+    foregroundFocus3: colors.primary[200],
+
+    backgroundFocus: colors.primary[600],
+    backgroundFocus1: colors.primary[900],
+    backgroundFocus2: colors.primary[900],
+    backgroundFocus3: colors.primary[1000],
+
+    borderFocus: colors.black,
+    borderFocus1: colors.primary[400], // only input
+    borderFocusWithin: colors.white,
+    shadowFocus: undefined,
+
+    foregroundDisabled1: colors.grey[450],
+    foregroundDisabled: colors.grey[450],
+
+    backgroundDisabled1: colors.grey[550],
+    backgroundDisabled: colors.grey[550],
+
+    borderDisabled: colors.grey[550],
+    shadowDisabled: undefined,
+  },
   black: {
     foregroundDefault: colors.black,
     backgroundDefault: colors.white,
@@ -117,17 +233,6 @@ export const colorScheme: ColorSchemeMapping = {
     borderDisabled: colors.white,
     shadowDisabled: colors.white,
   },
-  primary: createColorScheme('primary', {
-    foregroundHover: colors.white,
-    backgroundHover: colors.primary[300],
-
-    foregroundActive: colors.white,
-    backgroundActive: colors.primary[500],
-    shadowActive: colors.primary[50],
-
-    foregroundFocus: colors.white,
-    backgroundFocus: colors.primary[300],
-  }),
   grey: createColorScheme('grey'),
   green: createColorScheme('green'),
   orange: createColorScheme('orange', {
