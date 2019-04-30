@@ -230,7 +230,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   static className = 'ui-dropdown'
 
   static a11yStatusCleanupTime = 500
-  static letterKeyPressedCleanupTime = 500
+  static charKeyPressedCleanupTime = 500
 
   static slotClassNames: DropdownSlotClassNames
 
@@ -325,11 +325,11 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   a11yStatusTimeout: any
-  letterKeysPressedTimeout: any
+  charKeysPressedTimeout: any
 
   componentWillUnmount() {
     clearTimeout(this.a11yStatusTimeout)
-    clearTimeout(this.letterKeysPressedTimeout)
+    clearTimeout(this.charKeysPressedTimeout)
   }
 
   componentDidMount() {
@@ -956,7 +956,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       default:
         const keyString = String.fromCharCode(keyCode)
         if (/[a-zA-Z0-9]/.test(keyString)) {
-          const highlightedIndex = this.getHighlightedIndexOnLetterKey(keyString)
+          const highlightedIndex = this.getHighlightedIndexOnCharKeyDown(keyString)
           if (highlightedIndex >= 0) {
             this.setState({
               highlightedIndex,
@@ -1057,9 +1057,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
   }
 
-  private getHighlightedIndexOnLetterKey = (keyPressed: string): number => {
+  private getHighlightedIndexOnCharKeyDown = (keyString: string): number => {
     const { highlightedIndex, filteredItemStrings, startingString } = this.state
-    const newStartingString = `${startingString}${keyPressed.toLowerCase()}`
+    const newStartingString = `${startingString}${keyString.toLowerCase()}`
     let newHighlightedIndex = -1
 
     this.setStartingString(newStartingString)
@@ -1214,11 +1214,11 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private setStartingString = (startingString: string): void => {
-    clearTimeout(this.letterKeysPressedTimeout)
+    clearTimeout(this.charKeysPressedTimeout)
     this.setState({ startingString })
-    this.letterKeysPressedTimeout = setTimeout(() => {
+    this.charKeysPressedTimeout = setTimeout(() => {
       this.setState({ startingString: '' })
-    }, Dropdown.letterKeyPressedCleanupTime)
+    }, Dropdown.charKeyPressedCleanupTime)
   }
 
   private setFilteredItemsAndItemStrings = (): void => {
