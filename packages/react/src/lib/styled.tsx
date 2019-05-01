@@ -1,29 +1,9 @@
 import * as React from 'react'
 import { FelaTheme } from 'react-fela'
-import { ThemePrepared, ICSSInJSStyle } from '../themes/types'
+import { ThemePrepared, ICSSInJSStyle, StyledGenericApi, ApplyStyledConfig } from '../themes/types'
 import getClasses from './getClasses'
 import { getColors } from './colorUtils'
 import callable from './callable'
-
-type PerComponent<TValue> = Record<string, TValue>
-type PerSlotFunc<TResult, TProps = {}> = Record<string, (props: TProps) => TResult>
-
-type Api<TResult, TProps = {}> = PerComponent<PerSlotFunc<TResult, TProps>>
-
-type ApplyStyledConfig = {
-  siteVariables: any
-  styles: PerComponent<PerSlotFunc<ICSSInJSStyle>>
-  classes: PerComponent<PerSlotFunc<string>>
-}
-
-type GetPropValue<TPropValue> = (propName: string) => TPropValue
-const createProxy = function<TPropValue>(
-  // this 'prototype' is necessary for IE11 polyfill support: https://github.com/GoogleChrome/proxy-polyfill
-  prototype: any,
-  getPropValue: GetPropValue<TPropValue>,
-) {
-  return new Proxy(prototype, { get: (_target, name) => getPropValue(String(name)) })
-}
 
 type ResultFunc<TProps, TResult> = (props: TProps) => TResult
 
@@ -33,10 +13,20 @@ type GetResultFunc<TResult, TProps = {}> = (
   slotName: string,
 ) => ResultFunc<TProps, TResult>
 
-const applyApi = function<TResult, TProps = any>(
+type GetPropValue<TPropValue> = (propName: string) => TPropValue
+
+const createProxy = function<TPropValue>(
+  // this 'prototype' is necessary for IE11 polyfill support: https://github.com/GoogleChrome/proxy-polyfill
+  prototype: any,
+  getPropValue: GetPropValue<TPropValue>,
+) {
+  return new Proxy(prototype, { get: (_target, name) => getPropValue(String(name)) })
+}
+
+const applyApi = function<TResult>(
   theme: ThemePrepared,
-  getFunc: GetResultFunc<TResult, TProps>,
-): Api<TResult, TProps> {
+  getFunc: GetResultFunc<TResult>,
+): StyledGenericApi<TResult> {
   return createProxy(Object.assign({}, theme.componentStyles), componentName =>
     createProxy(Object.assign({}, theme.componentStyles[componentName]), slotName =>
       getFunc(theme, componentName, slotName),
@@ -97,9 +87,6 @@ const getSlotClassesFunc = function<TProps = {}>(
     } as any).root
   }
 }
-
-export type StylesApi<TProps = {}> = Api<ICSSInJSStyle, TProps>
-export type ClassesApi<TProps = {}> = Api<string, TProps>
 
 export const applyStylesApi = (theme: ThemePrepared) => applyApi(theme, getSlotStylesFunc)
 export const applyClassesApi = (theme: ThemePrepared) => applyApi(theme, getSlotClassesFunc)

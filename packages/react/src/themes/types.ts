@@ -1,7 +1,7 @@
 import * as CSSType from 'csstype'
 import { IRenderer as FelaRenderer } from 'fela'
 import * as React from 'react'
-import { Extendable, ObjectOf, ObjectOrFunc } from '../types'
+import { Extendable, ObjectOf, ObjectOrFunc, KnownKeys } from '../types'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -149,9 +149,27 @@ export type ComponentVariablesPrepared = (
 export type ComponentVariablesInput = ComponentVariablesObject | ComponentVariablesPrepared
 
 // ========================================================
-// Styles
+// Reusable styles
 // ========================================================
 
+type PerSlotFunc<TResult, TProps = {}> = Record<string, (props?: TProps) => TResult>
+
+export type StyledGenericApi<TResult> = {
+  [K in KnownKeys<ThemeComponentStylesPrepared>]?: PerSlotFunc<TResult>
+}
+
+export type StylesApi = StyledGenericApi<ICSSInJSStyle>
+export type ClassesApi = StyledGenericApi<string>
+
+export type ApplyStyledConfig = {
+  siteVariables: any
+  styles: StylesApi
+  classes: ClassesApi
+}
+
+// ========================================================
+// Styles
+// ========================================================
 export interface ICSSPseudoElementStyle extends ICSSInJSStyle {
   content?: string
 }
@@ -191,7 +209,7 @@ export interface ICSSInJSStyle extends React.CSSProperties {
 export interface ComponentStyleFunctionParam<
   TProps extends PropsWithVarsAndStyles = PropsWithVarsAndStyles,
   TVars extends ComponentVariablesObject = ComponentVariablesObject,
-  TStyles = {}
+  TStyles = StylesApi
 > {
   props: State & TProps
   variables: TVars
@@ -200,16 +218,16 @@ export interface ComponentStyleFunctionParam<
   styles: TStyles
 }
 
-export type ComponentSlotStyleFunction<TProps = {}, TVars = {}, TStyles = {}> = ((
+export type ComponentSlotStyleFunction<TProps = {}, TVars = {}, TStyles = StylesApi> = ((
   styleParam: ComponentStyleFunctionParam<TProps, TVars, TStyles>,
 ) => ICSSInJSStyle)
 
-export type ComponentSlotStyle<TProps = {}, TVars = {}> =
-  | ComponentSlotStyleFunction<TProps, TVars>
+export type ComponentSlotStyle<TProps = {}, TVars = {}, TStyles = StylesApi> =
+  | ComponentSlotStyleFunction<TProps, TVars, TStyles>
   | ICSSInJSStyle
 
-export interface ComponentSlotStylesInput<TProps = {}, TVars = {}>
-  extends ObjectOf<ComponentSlotStyle<TProps, TVars>> {}
+export interface ComponentSlotStylesInput<TProps = {}, TVars = {}, TStyles = StylesApi>
+  extends ObjectOf<ComponentSlotStyle<TProps, TVars, TStyles>> {}
 
 export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
   extends ObjectOf<ComponentSlotStyleFunction<TProps, TVars>> {}
@@ -360,6 +378,8 @@ export interface ThemeComponentStylesPrepared {
   DropdownItem?: ComponentSlotStylesPrepared
   DropdownSearchInput?: ComponentSlotStylesPrepared
   Embed?: ComponentSlotStylesPrepared
+  Flex?: ComponentSlotStylesPrepared
+  FlexItem?: ComponentSlotStylesPrepared
   Form?: ComponentSlotStylesPrepared
   FormField?: ComponentSlotStylesPrepared
   Grid?: ComponentSlotStylesPrepared
@@ -407,6 +427,8 @@ export interface ThemeComponentVariablesInput {
   Divider?: ComponentVariablesInput
   Dropdown?: ComponentVariablesInput
   Embed?: ComponentVariablesInput
+  Flex?: ComponentVariablesInput
+  FlexItem?: ComponentVariablesInput
   Form?: ComponentVariablesInput
   FormField?: ComponentVariablesInput
   Grid?: ComponentVariablesInput
@@ -454,6 +476,8 @@ export interface ThemeComponentVariablesPrepared {
   Divider?: ComponentVariablesPrepared
   Dropdown?: ComponentVariablesPrepared
   Embed?: ComponentVariablesPrepared
+  Flex?: ComponentVariablesPrepared
+  FlexItem?: ComponentVariablesPrepared
   Form?: ComponentVariablesPrepared
   FormField?: ComponentVariablesPrepared
   Grid?: ComponentVariablesPrepared
