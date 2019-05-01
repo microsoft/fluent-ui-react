@@ -38,12 +38,28 @@ const getSlotStylesFunc = function<TProps = {}>(
   theme: ThemePrepared,
   componentName: string,
   slotName: string,
+  componentNamesContext = [],
 ): (props: TProps) => ICSSInJSStyle {
   const variables = callable(theme.componentVariables[componentName])(theme.siteVariables)
   const styles = (theme.componentStyles || {})[componentName]
 
   return (props: TProps) => {
+    // check if component styles are defined
     if (!styles) {
+      console.warn(
+        `STARDUST STYLES: requested styles for component '${componentName}' are not defined.`,
+      )
+
+      return {}
+    }
+
+    // check for circular dependencies
+    if (componentNamesContext.some(name => name === componentName)) {
+      console.error(
+        'STARDUST STYLES: circular dependency detected.',
+        [...componentNamesContext, componentName].join(' -> '),
+      )
+
       return {}
     }
 
@@ -58,7 +74,9 @@ const getSlotStylesFunc = function<TProps = {}>(
       variables,
       theme,
       colors,
-      styles: applyApi(theme, getSlotStylesFunc),
+      styles: applyApi(theme, (_1, _2, _3) =>
+        getSlotStylesFunc(_1, _2, _3, [...componentNamesContext, componentName]),
+      ),
     })
   }
 }
