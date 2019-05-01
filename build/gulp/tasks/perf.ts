@@ -74,7 +74,9 @@ const normalizeMeasures = (measures: ProfilerMeasureCycle[]): NormalizedMeasures
 
   return _.mapValues(perExampleMeasures, (measures: ProfilerMeasure[]) => ({
     actualTime: reduceMeasures(measures, 'actualTime'),
+    actualTimeN: reduceMeasures(measures, 'actualTimeN'),
     baseTime: reduceMeasures(measures, 'baseTime'),
+    baseTimeN: reduceMeasures(measures, 'baseTimeN'),
   }))
 }
 
@@ -172,12 +174,17 @@ task('perf:run', async () => {
   }
 
   const resultsFile = paths.perfDist('result.json')
+  console.log(`Done, ${measures.length} measure(s).`)
   const normalizedMeasures = normalizeMeasures(measures)
 
   fs.writeFileSync(resultsFile, JSON.stringify(normalizedMeasures, null, 2))
 
   log(colors.green('Results are written to "%s"'), resultsFile)
+  console.log('\n# Measures\n')
   console.log(createMarkdownTable(normalizedMeasures))
+
+  console.log('\n# Baseline-normalized measures\n')
+  console.log(createMarkdownTable(normalizedMeasures, 'actualTimeN'))
 })
 
 task('perf:serve', cb => {
