@@ -33,7 +33,7 @@ export default (siteVars): ChatMessageVariables => ({
   actionMenuPositionRight: pxToRem(5),
   actionMenuPositionTop: pxToRem(-30),
   backgroundColor: siteVars.colors.white,
-  backgroundColorMine: '#E5E5F1',
+  backgroundColorMine: '#E5E5F1', // colors.primary[100] when new color palette pr is checked in
   borderRadius: pxToRem(3),
   color: 'rgb(64, 64, 64)',
   offset: pxToRem(100),
