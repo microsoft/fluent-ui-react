@@ -68,11 +68,14 @@ task(
   ),
 )
 
-// ----------------------------------------s
+// ----------------------------------------
 // Build
 // ----------------------------------------
 
-const componentsSrc = [`${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`]
+const componentsSrc = [
+  `${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`,
+  `${paths.posix.packageSrc('react')}/lib/accessibility/FocusZone/[A-Z]!(*.types).tsx`,
+]
 const behaviorSrc = [`${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
 const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/!(*index|.knobs).tsx`
@@ -88,7 +91,7 @@ const markdownSrc = [
 task('build:docs:component-info', () =>
   src(componentsSrc, { since: lastRun('build:docs:component-info') })
     .pipe(
-      cache(gulpReactDocgen(), {
+      cache(gulpReactDocgen(['DOMAttributes', 'HTMLAttributes']), {
         name: 'componentInfo',
       }),
     )

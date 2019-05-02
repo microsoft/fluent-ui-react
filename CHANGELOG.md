@@ -17,8 +17,20 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.29.1 ]------------------------------- -->
+## [v0.29.1](https://github.com/stardust-ui/react/tree/v0.29.1) (2019-05-01)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.29.0...v0.29.1)
+
 ### Fixes
 - Update `ChatMessage` styles in Teams themes @layershifter ([#1246](https://github.com/stardust-ui/react/pull/1246))
+- Fix Teams theme styles for `Alert` [redlines] @codepretty ([#1226](https://github.com/stardust-ui/react/pull/1226))
+- Update background color in Teams dark theme for `Chat` message background color @codepretty ([#1256](https://github.com/stardust-ui/react/pull/1256))
+- Fix selected status of `Dropdown` when focus is on the `List` @silviuavram ([#1258](https://github.com/stardust-ui/react/pull/1258))
+- Fix `propTypes` warning in `ListItem` @layershifter ([#1266](https://github.com/stardust-ui/react/pull/1266))
+- Expand css shorthands for correct merging of the styles @mnajdova ([#869](https://github.com/stardust-ui/react/pull/869))
+
+### Features
+- Export `call-dialpad` icon in Teams theme @assamad ([#1271](https://github.com/stardust-ui/react/pull/1271))
 
 <!--------------------------------[ v0.29.0 ]------------------------------- -->
 ## [v0.29.0](https://github.com/stardust-ui/react/tree/v0.29.0) (2019-04-24)

@@ -175,6 +175,7 @@ task('test:projects:rollup', async () => {
     'rollup-plugin-replace',
     'rollup-plugin-commonjs',
     'rollup-plugin-node-resolve',
+    'rollup-plugin-json',
     'react',
     'react-dom',
   ].join(' ')
