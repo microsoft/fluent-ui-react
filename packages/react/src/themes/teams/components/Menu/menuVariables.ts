@@ -49,18 +49,14 @@ export default (siteVars: any): MenuVariables => {
   return {
     colorScheme: extendColorScheme(siteVars.colorScheme, {
       default: {
-        foregroundHover: siteVars.colors.black,
-        backgroundHover: siteVars.colors.grey[50],
         borderActive: siteVars.colors.grey[600],
-        foregroundActive: siteVars.colors.black,
-        foregroundFocus: siteVars.colors.black,
       },
       primary: {
         foregroundHover: siteVars.colors.white,
         backgroundHover: siteVars.colors.primary[300],
         foregroundActive: siteVars.colors.white,
         borderActive: siteVars.colors.primary[600],
-        backgroundActive: siteVars.colors.primary[500],
+        backgroundActive1: siteVars.colors.primary[500], // it's 600 in the color scheme
         foregroundFocus: siteVars.colors.white,
         backgroundFocus1: siteVars.colors.primary[300],
       },

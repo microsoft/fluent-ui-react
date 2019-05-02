@@ -33,11 +33,11 @@ const getActionStyles = ({
     : primary || color
     ? {
         color: colorScheme.foregroundActive,
-        background: v.backgroundColorActive || colorScheme.backgroundActive,
+        background: v.backgroundColorActive || colorScheme.backgroundActive1,
       }
     : {
         color: v.color,
-        background: v.backgroundColorActive || colorScheme.backgroundActive,
+        background: v.backgroundColorActive || colorScheme.backgroundActive1,
       }
 
 const getFocusedStyles = ({
@@ -74,20 +74,15 @@ const getHoverStyles = ({
   variables: MenuVariables
   colorScheme: ColorScheme
 }): ICSSInJSStyle => {
-  const { primary, underlined, active, vertical, color } = props
+  const { underlined, active, vertical } = props
   if (active && !underlined && !vertical) return {}
   return {
     ...(underlined
       ? {
           color: v.colorActive,
         }
-      : primary || color
-      ? {
-          color: colorScheme.foregroundHover,
-          background: v.backgroundColorHover || colorScheme.backgroundHover,
-        }
       : {
-          color: v.colorActive,
+          color: colorScheme.foregroundHover,
           background: v.backgroundColorHover || colorScheme.backgroundHover,
         }),
   }
@@ -99,7 +94,7 @@ const pointingBeak = ({ props, variables: v, colorScheme }): ICSSInJSStyle => {
   let top: string
   let borders: ICSSInJSStyle
 
-  const backgroundColor = v.backgroundColorActive || colorScheme.backgroundActive
+  const backgroundColor = v.backgroundColorActive || colorScheme.backgroundActive1
   const borderColor = v.borderColor || primary ? v.primaryBorderColor : colorScheme.borderDefault
 
   if (pointing === 'start') {
@@ -390,11 +385,11 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
               ...(iconOnly && { color: 'inherit' }),
               ...(!active &&
                 underlined &&
-                underlinedItem(v.underlinedBorderColor || colorScheme.backgroundActive)),
+                underlinedItem(v.underlinedBorderColor || colorScheme.backgroundActive1)),
             }
           : !active &&
             underlined &&
-            underlinedItem(v.backgroundColorActive || colorScheme.backgroundActive)),
+            underlinedItem(v.backgroundColorActive || colorScheme.backgroundActive1)),
       },
 
       ...(disabled && {
