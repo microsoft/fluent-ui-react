@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add new callings icons in Teams theme @codepretty ([#1264](https://github.com/stardust-ui/react/pull/1264))
+
 <!--------------------------------[ v0.29.1 ]------------------------------- -->
 ## [v0.29.1](https://github.com/stardust-ui/react/tree/v0.29.1) (2019-05-01)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.29.0...v0.29.1)
@@ -31,7 +34,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Export `call-dialpad` icon in Teams theme @assamad ([#1271](https://github.com/stardust-ui/react/pull/1271))
-- Add new callings icons in Teams theme @codepretty ([#1264](https://github.com/stardust-ui/react/pull/1264))
 
 <!--------------------------------[ v0.29.0 ]------------------------------- -->
 ## [v0.29.0](https://github.com/stardust-ui/react/tree/v0.29.0) (2019-04-24)
