@@ -10,15 +10,15 @@ export default () => (
   <DocPage title="Focus Zone">
     <Header as="h2">Content</Header>
     <ul>
-      <li>{link('Overview', 'focus-zone#overview')}</li>
+      <li>{link('Overview', '#overview')}</li>
       <li>
-        {link('Usage', 'focus-zone#usage')}
+        {link('Usage', '#usage')}
         <ul>
-          <li>{link('Mode', 'focus-zone#mode')}</li>
-          <li>{link('Props', 'focus-zone#props')}</li>
+          <li>{link('Mode', '#mode')}</li>
+          <li>{link('Props', '#props')}</li>
         </ul>
       </li>
-      <li>{link('Override FocusZone settings', 'focus-zone#override-focuszone-settings')}</li>
+      <li>{link('Override FocusZone settings', '#override-focuszone-settings')}</li>
     </ul>
     <Header as="h2">Overview</Header>
     <p>
@@ -124,7 +124,6 @@ export default () => (
       {link(
         'lookup for API on GitHub',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/FocusZone.types.ts',
-        true,
       )}
       ):
     </p>
@@ -145,13 +144,13 @@ export default () => (
         <ul>
           <li>
             <i>horizontal</i> - navigation between items can be made using left/right arrow keys.
-            <p>See an example of {link('horizontal menu', 'components/menu#types-menu')}.</p>
+            <p>See an example of {link('horizontal menu', '/components/menu#types-menu')}.</p>
           </li>
           <li>
             <i>vertical</i> - navigation between items can be made using up/down arrow keys.
             <p>
               See an example of{' '}
-              {link('vertical menu', 'components/menu#variations-vertical-pointing')}.
+              {link('vertical menu', '/components/menu#variations-vertical-pointing')}.
             </p>
           </li>
           <p>
@@ -178,7 +177,7 @@ export default () => (
           <li>
             <i>bidirectional</i> - navigation between items can be made using all arrow keys.{' '}
             <b>It is set by default.</b>
-            <p>See an example of {link('tab list', 'components/menu#usages-tab-list')}.</p>
+            <p>See an example of {link('tab list', '/components/menu#usages-tab-list')}.</p>
           </li>
         </ul>
       </li>
@@ -244,7 +243,7 @@ export default () => (
         user attempts to naviagate before the first target.
         <p>Default: {code('false')}</p>
         <p>Type: {code('boolean')}</p>
-        <p>For example, {link('horizontal menu', 'components/menu#types-menu')}.</p>
+        <p>For example, {link('horizontal menu', '/components/menu#types-menu')}.</p>
       </li>
       <li>
         <b>shouldEnterInnerZone</b> - callback function that will be executed, will be executed on
@@ -377,7 +376,6 @@ export default () => (
       {link(
         'GitHub.',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/FocusZone.tsx',
-        true,
       )}
     </p>
   </DocPage>

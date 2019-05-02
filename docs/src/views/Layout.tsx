@@ -156,7 +156,6 @@ export default () => (
       {link(
         'flexbox usage scenarios',
         'https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Typical_Use_Cases_of_Flexbox',
-        true,
       )}{' '}
       (e.g. {code('push')} prop) - the value of these props is that they introduce the least amount
       of DOM elements necessary to accomplish corresponding use-case.

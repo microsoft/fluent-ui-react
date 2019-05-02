@@ -9,11 +9,9 @@ export default () => (
   <DocPage title="Auto Focus Zone">
     <Header as="h2">Content</Header>
     <ul>
-      <li>{link('Overview', 'auto-focus-zone#overview')}</li>
-      <li>{link('Usage', 'auto-focus-zone#usage')}</li>
-      <li>
-        {link('Override AutoFocusZone settings', 'auto-focus-zone#override-autofocuszone-settings')}
-      </li>
+      <li>{link('Overview', '#overview')}</li>
+      <li>{link('Usage', '#usage')}</li>
+      <li>{link('Override AutoFocusZone settings', '#override-autofocuszone-settings')}</li>
     </ul>
     <Header as="h2">Overview</Header>
     <p>
@@ -39,7 +37,6 @@ export default () => (
       {link(
         'lookup for API on GitHub',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/AutoFocusZone/AutoFocusZone.types.tsx',
-        true,
       )}
       ):
     </p>
@@ -100,7 +97,6 @@ export default () => (
       {link(
         'GitHub.',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/AutoFocusZone.tsx',
-        true,
       )}
     </p>
   </DocPage>

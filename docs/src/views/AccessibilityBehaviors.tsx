@@ -9,9 +9,9 @@ export default () => (
   <DocPage title="Accessibility Behaviors">
     <Header as="h2">Content</Header>
     <ul>
-      <li>{link('Overview', 'accessibility-behaviors#overview')}</li>
-      <li>{link('ARIA attributes', 'accessibility-behaviors#aria-attributes')}</li>
-      <li>{link('Overriding behaviors', 'accessibility-behaviors#overriding-behaviors')}</li>
+      <li>{link('Overview', '#overview')}</li>
+      <li>{link('ARIA attributes', '#aria-attributes')}</li>
+      <li>{link('Overriding behaviors', '#overriding-behaviors')}</li>
     </ul>
     <Header as="h2">Overview</Header>
     <p>
@@ -83,8 +83,8 @@ export default () => (
     </p>
     <p>
       ARIA attributes are applied according to{' '}
-      {link('ARIA specification', 'https://www.w3.org/TR/wai-aria-1.1/', true)} and{' '}
-      {link('ARIA best practices', 'https://www.w3.org/TR/wai-aria-practices-1.1/', true)}.
+      {link('ARIA specification', 'https://www.w3.org/TR/wai-aria-1.1/')} and{' '}
+      {link('ARIA best practices', 'https://www.w3.org/TR/wai-aria-practices-1.1/')}.
     </p>
     <p>For example, Menu component:</p>
     <CodeSnippet

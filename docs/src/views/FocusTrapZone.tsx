@@ -10,11 +10,9 @@ export default () => (
   <DocPage title="Focus Trap Zone">
     <Header as="h2">Content</Header>
     <ul>
-      <li>{link('Overview', 'focus-trap-zone#overview')}</li>
-      <li>{link('Usage', 'focus-trap-zone#usage')}</li>
-      <li>
-        {link('Override FocusTrapZone settings', 'focus-trap-zone#override-focustrapzone-settings')}
-      </li>
+      <li>{link('Overview', '#overview')}</li>
+      <li>{link('Usage', '#usage')}</li>
+      <li>{link('Override FocusTrapZone settings', '#override-focustrapzone-settings')}</li>
     </ul>
     <Header as="h2">Overview</Header>
     <p>
@@ -46,7 +44,6 @@ export default () => (
       {link(
         'lookup for API on GitHub',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusTrapZone/FocusTrapZone.types.tsx',
-        true,
       )}
       ):
     </p>
@@ -166,7 +163,6 @@ export default () => (
       {link(
         'GitHub.',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/FocusTrapZone.tsx',
-        true,
       )}
     </p>
   </DocPage>
