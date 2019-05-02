@@ -1,4 +1,5 @@
 import { Accessibility, FocusZoneMode } from '../../types'
+import toolbarButtonBehavior from './toolbarButtonBehavior'
 
 /**
  * @description
@@ -22,6 +23,7 @@ const toolbarBehavior: Accessibility = (props: any) => ({
       shouldFocusInnerElementWhenReceivedFocus: true,
     },
   },
+  childrenBehavior: props => toolbarButtonBehavior(props),
 })
 
 export default toolbarBehavior

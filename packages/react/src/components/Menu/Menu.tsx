@@ -148,7 +148,11 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     },
   })
 
-  renderItems = (styles: ComponentSlotStylesPrepared, variables: ComponentVariablesObject) => {
+  renderItems = (
+    styles: ComponentSlotStylesPrepared,
+    variables: ComponentVariablesObject,
+    accessibility: Accessibility,
+  ) => {
     const {
       iconOnly,
       items,
@@ -203,6 +207,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
           active,
           inSubmenu: submenu,
           indicator,
+          accessibility: (accessibility as any).childrenBehavior,
         },
         overrideProps: this.handleItemOverrides,
       })
@@ -218,7 +223,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
         {...unhandledProps}
         className={classes.root}
       >
-        {childrenExist(children) ? children : this.renderItems(styles, variables)}
+        {childrenExist(children) ? children : this.renderItems(styles, variables, accessibility)}
       </ElementType>
     )
   }

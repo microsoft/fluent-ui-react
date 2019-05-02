@@ -160,6 +160,7 @@ export interface AccessibilityDefinition {
   focusZone?: FocusZoneDefinition
   focusTrap?: FocusTrapDefinition
   autoFocus?: AutoFocusZoneDefinition
+  childrenBehavior?: Accessibility
 }
 
 export interface AccessibilityBehavior extends AccessibilityDefinition {
