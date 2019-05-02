@@ -511,7 +511,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       description,
       title,
     } = this.props
-    const { showCode, showRtl, showTransparent, showVariables } = this.state
+    const { showCode, showRtl, showTransparent } = this.state
 
     return (
       <Flex column>
@@ -535,10 +535,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                     onShowRtl={this.handleShowRtlClick}
                     onShowVariables={this.handleShowVariablesClick}
                     onShowTransparent={this.handleShowTransparentClick}
-                    showCode={showCode}
                     showRtl={showRtl}
-                    showTransparent={showTransparent}
-                    showVariables={showVariables}
                   />
                 </Flex.Item>
               </Flex>

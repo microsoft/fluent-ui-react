@@ -6,7 +6,7 @@ import ComponentPropDefaultValue from '../ComponentProp/ComponentPropDefaultValu
 import ComponentPropDescription from '../ComponentProp/ComponentPropDescription'
 import ComponentPropName from '../ComponentProp/ComponentPropName'
 
-export default class ComponentTableRow extends React.Component<any, any> {
+export default class ComponentPropsRow extends React.Component<any, any> {
   static propTypes = {
     defaultValue: PropTypes.string,
     description: PropTypes.arrayOf(PropTypes.string),
