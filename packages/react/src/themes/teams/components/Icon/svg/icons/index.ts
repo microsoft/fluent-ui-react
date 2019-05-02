@@ -67,7 +67,6 @@ import gallery from './gallery'
 import giphy from './giphy'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
-import hold from './hold'
 import indent from './indent'
 import italic from './italic'
 import leave from './leave'
@@ -81,10 +80,11 @@ import menu from './menu'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
-import nudge from './nudge'
+import userPhone from './userPhone'
 import numberList from './numberList'
 import outdent from './outdent'
 import pause from './pause'
+import pauseThick from './pauseThick'
 import paperclip from './paperclip'
 import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
@@ -119,7 +119,7 @@ import underline from './underline'
 import undo from './undo'
 import urgent from './urgent'
 import userBlur from './userBlur'
-import users from './users'
+import userFriends from './userFriends'
 import videoCameraEmphasis from './videoCameraEmphasis'
 
 export default {
@@ -182,7 +182,6 @@ export default {
   giphy,
   highlight,
   'horizontal-rule': horizontalRule,
-  hold,
   indent,
   italic,
   leave,
@@ -196,13 +195,14 @@ export default {
   mic,
   'mic-off': micOff,
   more,
-  nudge,
+  'user-phone': userPhone,
   'number-list': numberList,
   outdent,
   paperclip,
   'participant-add': addParticipant,
   'participant-remove': participantRemove,
   pause,
+  'pause-thick': pauseThick,
   'phone-clock': phoneClock,
   'phone-arrow': phoneArrow,
   play,
@@ -234,7 +234,7 @@ export default {
   undo,
   urgent,
   'user-blur': userBlur,
-  users,
+  'user-friends': userFriends,
   'video-camera-emphasis': videoCameraEmphasis,
 
   // Office icons
