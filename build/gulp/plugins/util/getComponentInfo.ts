@@ -100,9 +100,9 @@ const getComponentInfo = (filepath: string, ignoredParentInterfaces: string[]) =
     const { name, value } = parseType(propName, propDef)
 
     const parentInterface = _.get(propDef, 'parent.name')
-    const ignoredInDefinitions = _.includes(ignoredParentInterfaces, parentInterface)
+    const visibleInDefinition = !_.includes(ignoredParentInterfaces, parentInterface)
 
-    if (!ignoredInDefinitions) {
+    if (visibleInDefinition) {
       info.props[propName] = {
         ...propDef,
         description,
