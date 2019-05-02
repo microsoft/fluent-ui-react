@@ -72,9 +72,9 @@ const normalizeMeasures = (measures: ProfilerMeasureCycle[]): NormalizedMeasures
     {},
   )
 
-  return _.mapValues(perExampleMeasures, (measures: ProfilerMeasure[]) => ({
-    actualTime: reduceMeasures(measures, 'actualTime'),
-    baseTime: reduceMeasures(measures, 'baseTime'),
+  return _.mapValues(perExampleMeasures, (profilerMeasures: ProfilerMeasure[]) => ({
+    actualTime: reduceMeasures(profilerMeasures, 'actualTime'),
+    baseTime: reduceMeasures(profilerMeasures, 'baseTime'),
   }))
 }
 

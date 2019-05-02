@@ -20,8 +20,8 @@ type BehaviorMenuItem = {
 }
 
 const getTextFromCommentToken = (commentTokens, tokenTitle): string => {
-  const token = commentTokens.find(token => token.title === tokenTitle)
-  return token ? token.description : ''
+  const resultToken = commentTokens.find(token => token.title === tokenTitle)
+  return resultToken ? resultToken.description : ''
 }
 
 export default () => {

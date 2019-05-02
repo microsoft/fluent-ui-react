@@ -7,7 +7,7 @@ import { getComponentInfo } from './util'
 
 const pluginName = 'gulp-react-docgen'
 
-export default () =>
+export default (ignoredInterfaces: string[] = []) =>
   through2.obj(function bufferContents(file, enc, cb) {
     if (file.isNull()) {
       cb(null, file)
@@ -21,7 +21,7 @@ export default () =>
 
     try {
       const infoFilename = file.basename.replace(/\.tsx$/, '.info.json')
-      const contents = getComponentInfo(file.path)
+      const contents = getComponentInfo(file.path, ignoredInterfaces)
 
       const infoFile = new Vinyl({
         path: `./${infoFilename}`,
