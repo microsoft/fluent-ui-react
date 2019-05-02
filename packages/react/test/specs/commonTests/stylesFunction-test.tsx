@@ -42,11 +42,11 @@ const testStylesForComponent = ({
     }
   }
 
-  const TestStylesComponent = (testProps: Extendable<Props>) => (
+  const TestStylesComponent = (props: Extendable<Props>) => (
     <TestComponent
-      {...testProps}
-      styles={({ props: p }: { props: PropsAndState }): ICSSInJSStyle => {
-        expect(_.mapValues(expected, (val, key) => p[key])).toEqual(expected)
+      {...props}
+      styles={({ props }: { props: PropsAndState }): ICSSInJSStyle => {
+        expect(_.mapValues(expected, (val, key) => props[key])).toEqual(expected)
         return {}
       }}
     />

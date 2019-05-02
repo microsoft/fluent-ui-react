@@ -1037,8 +1037,8 @@ describe('Dropdown', () => {
       const stopPropagation = jest.fn()
       const stopImmediatePropagation = jest.fn()
       const mockedEvent = { stopPropagation, nativeEvent: { stopImmediatePropagation } }
-      const value = [{ header: 'Venom', onClick }]
-      const wrapper = mountWithProvider(<Dropdown items={value} value={value} multiple />)
+      const items = [{ header: 'Venom', onClick }]
+      const wrapper = mountWithProvider(<Dropdown items={items} value={items} multiple />)
       const selectedItemHeaderAtIndex0 = wrapper
         .find(`span.${DropdownSelectedItem.slotClassNames.header}`)
         .at(0)

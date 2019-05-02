@@ -293,8 +293,8 @@ describe('factories', () => {
 
         getShorthand({
           valueOrRenderCallback: render =>
-            render(props, (Component, componentProps) => {
-              expect(callable(componentProps.styles)()).toMatchObject({
+            render(props, (Component, props) => {
+              expect(callable(props.styles)()).toMatchObject({
                 color: 'black',
                 ':hover': { color: 'blue' },
               })
@@ -328,8 +328,8 @@ describe('factories', () => {
 
         getShorthand({
           valueOrRenderCallback: render =>
-            render(props, (Component, componentProps) => {
-              expect(callable(componentProps.styles)()).toMatchObject({
+            render(props, (Component, props) => {
+              expect(callable(props.styles)()).toMatchObject({
                 position: 'keep',
                 color: 'black',
                 ':hover': {
@@ -358,8 +358,8 @@ describe('factories', () => {
 
         getShorthand({
           valueOrRenderCallback: render =>
-            render(props, (Component, componentProps) => {
-              expect(callable(componentProps.styles)()).toMatchObject({
+            render(props, (Component, props) => {
+              expect(callable(props.styles)()).toMatchObject({
                 color: 'black',
                 ':hover': { color: 'blue' },
               })
@@ -393,8 +393,8 @@ describe('factories', () => {
 
         getShorthand({
           valueOrRenderCallback: render =>
-            render(props, (Component, componentProps) => {
-              expect(callable(componentProps.styles)()).toMatchObject({
+            render(props, (Component, props) => {
+              expect(callable(props.styles)()).toMatchObject({
                 position: 'keep',
                 color: 'black',
                 ':hover': {

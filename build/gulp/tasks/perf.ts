@@ -139,7 +139,7 @@ task('perf:build', cb => {
 task('perf:run', async () => {
   const measures: ProfilerMeasureCycle[] = []
   const times = (argv.times as string) || DEFAULT_RUN_TIMES
-  const pathFilter = argv.filter
+  const filter = argv.filter
 
   const bar = process.env.CI
     ? { tick: _.noop }
@@ -159,7 +159,7 @@ task('perf:run', async () => {
       const page = await browser.newPage()
       await page.goto(`http://${config.server_host}:${config.perf_port}`)
 
-      const measuresFromStep = await page.evaluate(filter => window.runMeasures(filter), pathFilter)
+      const measuresFromStep = await page.evaluate(filter => window.runMeasures(filter), filter)
       measures.push(measuresFromStep)
       bar.tick()
 

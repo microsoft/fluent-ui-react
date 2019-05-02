@@ -7,7 +7,7 @@ import PortalInner from 'src/components/Portal/PortalInner'
 
 describe('Portal', () => {
   const mountPortal = (props: PortalProps = {}, options?) => {
-    const TestPortal = portalProps => withProvider(<Portal content={<p />} {...portalProps} />)
+    const TestPortal = props => withProvider(<Portal content={<p />} {...props} />)
 
     const wrapperWrapper = mount(<TestPortal {...props} />, options)
     const wrapper = wrapperWrapper.find(Portal)

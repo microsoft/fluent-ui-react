@@ -1,10 +1,10 @@
 import * as React from 'react'
 import reactElementToJSXString from 'react-element-to-jsx-string'
 
-const renderElementToJSX = (target: React.ReactNode, triggerErrorOnRenderFn: boolean = false) => {
+const renderElementToJSX = (element: React.ReactNode, triggerErrorOnRenderFn: boolean = false) => {
   let renderHasFunction
 
-  const jsxMarkup = reactElementToJSXString(target, {
+  const jsxMarkup = reactElementToJSXString(element, {
     displayName: (element: React.ReactElement<any>): string =>
       // @ts-ignore
       element.type.displayName ||

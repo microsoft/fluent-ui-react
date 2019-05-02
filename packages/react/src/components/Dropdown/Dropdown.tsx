@@ -340,7 +340,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       itemToString,
       toggleIndicator,
     } = this.props
-    const { highlightedIndex: stateIndex, open, searchQuery, value } = this.state
+    const { highlightedIndex, open, searchQuery, value } = this.state
 
     return (
       <ElementType className={classes.root} {...unhandledProps}>
@@ -353,7 +353,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           itemToString={itemToString}
           selectedItem={null}
           getA11yStatusMessage={getA11yStatusMessage}
-          highlightedIndex={stateIndex}
+          highlightedIndex={highlightedIndex}
           onStateChange={this.handleStateChange}
         >
           {({

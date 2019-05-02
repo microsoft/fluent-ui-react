@@ -47,7 +47,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
   buttonNode: HTMLButtonElement
   menuNode: HTMLUListElement
 
-  componentDidUpdate(prevProps, prevState: MenuButtonState) {
+  componentDidUpdate(_, prevState: MenuButtonState) {
     if (!prevState.menuOpen && this.state.menuOpen) {
       document.addEventListener('click', this.handleDocumentClick)
 
@@ -176,7 +176,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
             )}
           </PopperReference>
           <Popper placement={placement}>
-            {({ placement: actualPlacement, ref, style }) =>
+            {({ placement, ref, style }) =>
               menuOpen && (
                 <Ref
                   innerRef={(menuNode: HTMLUListElement) => {
@@ -187,7 +187,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
                   {Menu.create(menu, {
                     defaultProps: {
                       ...accessibilityBehavior.attributes.menu,
-                      'data-placement': actualPlacement,
+                      'data-placement': placement,
                       styles: { background: '#fff', zIndex: 1 },
                       vertical: true,
                     },
