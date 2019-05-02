@@ -1,5 +1,5 @@
 import * as React from 'react'
-import LabelledButton from './ComponentButton'
+import ComponentButton from './ComponentButton'
 import * as _ from 'lodash'
 
 export default class ComponentControlsCopyLink extends React.Component<any, any> {
@@ -24,10 +24,9 @@ export default class ComponentControlsCopyLink extends React.Component<any, any>
     const { active } = this.state
 
     return (
-      <LabelledButton
+      <ComponentButton
         iconName="linkify"
         label={active ? 'Copied!' : this.btnLabel}
-        active={active}
         onClick={this.handleClick}
       />
     )

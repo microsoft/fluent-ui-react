@@ -13,19 +13,19 @@ import {
 import AnimatedBannerAlert from './AnimatedBannerAlert'
 import ComposeMessage from '../chatPane/composeMessage'
 
-type BannerName = 'info' | 'oof' | 'danger' | 'urgent' | 'critical'
+type BannerName = 'info' | 'oof' | 'danger' | 'urgent'
 
-const isAlertClosable = (bannerName: BannerName) =>
-  bannerName !== 'critical' && bannerName !== 'urgent'
+const isAlertClosable = (bannerName: BannerName) => bannerName !== 'info'
 
-const getBannerContent = (bannerName: BannerName) => `${_.startCase(bannerName)} banner`
+const getBannerContent = (bannerName: BannerName) =>
+  bannerName === 'danger' ? `Danger banner - used for errors` : `${_.startCase(bannerName)} banner`
 
-const bannerNames: BannerName[] = ['info', 'oof', 'danger', 'urgent', 'critical']
+const bannerNames: BannerName[] = ['info', 'oof', 'danger', 'urgent']
 
 const bannerRadioItems: RadioGroupItemProps[] = bannerNames.map(bannerName => ({
   key: bannerName,
   value: bannerName,
-  label: getBannerContent(bannerName),
+  label: `${_.startCase(bannerName)}`,
 }))
 
 const slideDown: ThemeAnimation = {
@@ -85,6 +85,7 @@ class BannerAlerts extends React.Component<{}, BannerAlertsState> {
               key: selectedBannerName,
               attached: true,
               [selectedBannerName]: true,
+              variables: { [selectedBannerName]: true },
               content: getBannerContent(selectedBannerName),
               ...(isAlertClosable(selectedBannerName) && {
                 open,

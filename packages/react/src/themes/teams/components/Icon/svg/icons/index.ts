@@ -12,8 +12,10 @@ import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
 import callPark from './callPark'
+import callControlPresent from './callControlPresent'
 import callControlPresentNew from './callControlPresentNew'
 import callControlStopPresentingNew from './callControlStopPresentingNew'
+import callDialpad from './callDialpad'
 import callEnd from './callEnd'
 import callPstn from './callPstn'
 import callRecording from './callRecording'
@@ -21,6 +23,7 @@ import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
 import callMissedLine from './callMissedLine'
+import cast from './cast'
 import chat from './chat'
 import chevronDown from './chevronDown'
 import close from './close'
@@ -67,7 +70,6 @@ import horizontalRule from './horizontalRule'
 import hold from './hold'
 import indent from './indent'
 import italic from './italic'
-import keypad from './keypad'
 import leave from './leave'
 import like from './like'
 import link from './link'
@@ -117,6 +119,7 @@ import underline from './underline'
 import undo from './undo'
 import urgent from './urgent'
 import userBlur from './userBlur'
+import users from './users'
 import videoCameraEmphasis from './videoCameraEmphasis'
 
 export default {
@@ -130,15 +133,18 @@ export default {
   bullets,
   calendar,
   call,
+  'call-dialpad': callDialpad,
   'call-end': callEnd,
   'call-park': callPark,
   'call-video': callVideo,
   'call-video-off': callVideoOff,
+  'call-control-present': callControlPresent,
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
   'call-missed-line': callMissedLine,
   'call-pstn': callPstn,
   'call-recording': callRecording,
+  cast,
   'canvas-add-page': canvasAddPage,
   chat,
   'chevron-down': chevronDown,
@@ -179,7 +185,6 @@ export default {
   hold,
   indent,
   italic,
-  keypad,
   leave,
   like,
   link,
@@ -229,6 +234,7 @@ export default {
   undo,
   urgent,
   'user-blur': userBlur,
+  users,
   'video-camera-emphasis': videoCameraEmphasis,
 
   // Office icons

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import { Avatar, Chat } from '@stardust-ui/react'
 
 const reactions = [
@@ -33,8 +32,8 @@ const items = [
     message: {
       content: (
         <Chat.Message
-          reactionGroup={{ items: reactions }}
-          reactionGroupPosition={'end'}
+          reactionGroup={reactions}
+          reactionGroupPosition="end"
           content="I'm back!"
           author="John Doe"
           timestamp="Yesterday, 10:15 PM"
@@ -50,9 +49,7 @@ const items = [
     message: {
       content: (
         <Chat.Message
-          reactionGroup={{
-            items: reactions,
-          }}
+          reactionGroup={reactions}
           content="Hi"
           author="Jane Doe"
           timestamp="Yesterday, 10:15 PM"

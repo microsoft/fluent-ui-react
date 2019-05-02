@@ -2,16 +2,14 @@ import * as React from 'react'
 import CodeSandboxer from 'react-codesandboxer'
 
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
-import { updateForKeys } from 'docs/src/hoc'
 import { appTemplateJs, appTemplateTs } from './indexTemplates'
-import LabelledButton from '../ComponentButton'
+import ComponentButton from '../ComponentButton'
 import createPackageJson from './createPackageJson'
 
 type ComponentControlsCodeSandboxProps = {
   exampleCode: string
   exampleLanguage: ComponentSourceManagerLanguage
   exampleName: string
-  active: boolean
 }
 
 type ComponentControlsCodeSandboxState = {
@@ -20,7 +18,7 @@ type ComponentControlsCodeSandboxState = {
   sandboxUrl: string
 }
 
-class ComponentControlsShowCode extends React.Component<
+class ComponentControlsCodeSandbox extends React.PureComponent<
   ComponentControlsCodeSandboxProps,
   ComponentControlsCodeSandboxState
 > {
@@ -55,7 +53,7 @@ class ComponentControlsShowCode extends React.Component<
   }
 
   render() {
-    const { active, exampleLanguage, exampleCode, exampleName } = this.props
+    const { exampleLanguage, exampleCode, exampleName } = this.props
     const { examplePath, sandboxUrl } = this.state
 
     const main = exampleLanguage === 'ts' ? 'index.tsx' : 'index.js'
@@ -64,12 +62,7 @@ class ComponentControlsShowCode extends React.Component<
 
     if (sandboxUrl) {
       return (
-        <LabelledButton
-          label="Click to open"
-          onClick={this.handleClick}
-          iconName="checkmark"
-          active={active}
-        />
+        <ComponentButton label="Click to open" onClick={this.handleClick} iconName="checkmark" />
       )
     }
 
@@ -86,13 +79,12 @@ class ComponentControlsShowCode extends React.Component<
         skipRedirect
         template={template}
       >
-        {({ isLoading, isDeploying, active }) => {
+        {({ isLoading, isDeploying }) => {
           const loading = isLoading || isDeploying
           return (
-            <LabelledButton
+            <ComponentButton
               iconName={loading ? 'spinner' : 'connectdevelop'}
               label={loading ? 'Exporting...' : 'CodeSandbox'}
-              active={active}
             />
           )
         }}
@@ -101,4 +93,4 @@ class ComponentControlsShowCode extends React.Component<
   }
 }
 
-export default updateForKeys(['exampleCode', 'active'])(ComponentControlsShowCode)
+export default ComponentControlsCodeSandbox

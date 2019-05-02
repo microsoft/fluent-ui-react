@@ -1,7 +1,10 @@
 import { Avatar, Chat } from '@stardust-ui/react'
 import * as React from 'react'
 
-const reactions = [{ icon: 'thumbs up', content: '1K' }, { icon: 'thumbs down', content: 5 }]
+const reactions = [
+  { key: 'up', icon: 'thumbs up', content: '1K' },
+  { key: 'down', icon: 'thumbs down', content: 5 },
+]
 
 const items = [
   {
@@ -27,7 +30,7 @@ const items = [
     message: {
       content: (
         <Chat.Message
-          reactionGroup={[{ icon: 'thumbs up', content: '8' }]}
+          reactionGroup={[{ key: 'up', icon: 'thumbs up', content: '8' }]}
           content="I'm back!"
           author="John Doe"
           timestamp="Yesterday, 10:15 PM"

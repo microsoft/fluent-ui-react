@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import DocPage from '../components/DocPage'
 import { code, link } from '../utils/helpers'
 import CodeSnippet from '../components/CodeSnippet'
+import ComponentPropsTable from 'docs/src/components/ComponentDoc/ComponentPropsTable'
 
 export default () => (
   <DocPage title="Auto Focus Zone">
@@ -43,17 +44,7 @@ export default () => (
       )}
       ):
     </p>
-    <ul>
-      <li>
-        <b>as</b> - element type the root element will use. Default is "div".
-        <p>Type: {code('React.ReactType')}</p>
-      </li>
-      <li>
-        <b>firstFocusableSelector</b> - indicates the selector for first focusable item. By default,
-        the first tabbable element will get focus.
-        <p>Type: {code('string | (() => string)')}</p>
-      </li>
-    </ul>
+    <ComponentPropsTable componentName="AutoFocusZone" />
     <Header as="h2">Override {code('AutoFocusZone')} settings</Header>
     <p>
       To be able to add/override {code('AutoFocusZone')} props already set for a component, it is

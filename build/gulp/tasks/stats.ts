@@ -46,9 +46,9 @@ const semverCmp = (a, b) => {
   return 0
 }
 
-function webpackAsync(config): Promise<any> {
+function webpackAsync(webpackConfig): Promise<any> {
   return new Promise((resolve, reject) => {
-    const compiler = webpack(config)
+    const compiler = webpack(webpackConfig)
     compiler.run((err, stats) => {
       const statsJson = stats.toJson()
       const { errors, warnings } = statsJson
@@ -73,14 +73,14 @@ function webpackAsync(config): Promise<any> {
 
 async function compileOneByOne(allConfigs) {
   let assets = []
-  for (const config of allConfigs) {
-    log('Compiling', config.output.filename)
+  for (const webpackConfig of allConfigs) {
+    log('Compiling', webpackConfig.output.filename)
     try {
-      const result = await webpackAsync(config)
+      const result = await webpackAsync(webpackConfig)
       assets = [...assets, ...result.assets]
       log('Done', result.assets[0].name) // All builds should produce just single asset
     } catch (err) {
-      log('Error', config.output.filename)
+      log('Error', webpackConfig.output.filename)
       throw err
     }
   }

@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { getComponentGroup } from 'docs/src/utils'
-import ComponentTable from '../ComponentTable'
+import ComponentTableProps from '../ComponentPropsTable'
 import ComponentPropsComponents from './ComponentPropsComponents'
 import ComponentPropsDescription from './ComponentPropsDescription'
 import { ICSSInJSStyle, Input, Text, Flex } from '@stardust-ui/react'
@@ -48,7 +48,7 @@ export default class ComponentProps extends React.Component<any, any> {
     const { displayName } = this.props
     const { activeDisplayName, componentGroup } = this.state
     const displayNames = _.keys(componentGroup)
-    const { docblock, props } = (componentGroup[activeDisplayName] || {}) as any
+    const { docblock } = (componentGroup[activeDisplayName] || {}) as any
     const description = _.get(docblock, 'description', [])
 
     return (
@@ -81,7 +81,7 @@ export default class ComponentProps extends React.Component<any, any> {
           <Flex.Item style={propsContainerStyle}>
             <>
               <ComponentPropsDescription description={_.join(description, ' ')} />
-              <ComponentTable displayName={activeDisplayName} props={props} />
+              <ComponentTableProps componentName={activeDisplayName} />
             </>
           </Flex.Item>
         )}
