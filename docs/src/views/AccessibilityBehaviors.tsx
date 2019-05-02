@@ -243,10 +243,11 @@ export default () => (
     <Header as="h4" content="Available Behaviors" />
     <p>
       The default and other available behaviors for all the components can be found in the{' '}
-      {link('documentation', '/')}, together with notes on other accessibility considerations for
-      using the component. The examples show the recommended way of using the components in
-      different variations. It is possible to edit example's code, see the rendered HTML, change
-      themes and validate the rendering in RTL scenario, or with different behaviors.
+      {link('documentation', 'https://stardust-ui.github.io/react/')}, together with notes on other
+      accessibility considerations for using the component. The examples show the recommended way of
+      using the components in different variations. It is possible to edit example's code, see the
+      rendered HTML, change themes and validate the rendering in RTL scenario, or with different
+      behaviors.
     </p>
 
     <p>
