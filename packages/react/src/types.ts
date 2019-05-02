@@ -63,7 +63,7 @@ export type ShorthandRenderer = (
 export type ShorthandRenderCallback = (render: ShorthandRenderer) => React.ReactElement<any>
 
 // The ReactFragment here is replaced from the original typings with ReactNodeArray because of incorrect inheriting of the type when it is defined as {}
-type ReactNode =
+export type ReactNode =
   | React.ReactChild
   | React.ReactNodeArray
   | React.ReactPortal

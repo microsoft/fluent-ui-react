@@ -1,19 +1,88 @@
 import * as React from 'react'
-import { Grid, Image } from '@stardust-ui/react'
+import { Table, Icon, Button, gridBehavior } from '@stardust-ui/react'
 
-const images = [
-  <Image key="ade" fluid src="public/images/avatar/large/ade.jpg" />,
-  <Image key="chris" fluid src="public/images/avatar/large/chris.jpg" />,
-  <Image key="christian" fluid src="public/images/avatar/large/christian.jpg" />,
-  <Image key="daniel" fluid src="public/images/avatar/large/daniel.jpg" />,
-  <Image key="elliot" fluid src="public/images/avatar/large/elliot.jpg" />,
-  <Image key="elyse" fluid src="public/images/avatar/large/elyse.png" />,
-  <Image key="helen" fluid src="public/images/avatar/large/helen.jpg" />,
-  <Image key="jenny" fluid src="public/images/avatar/large/jenny.jpg" />,
-  <Image key="joe" fluid src="public/images/avatar/large/joe.jpg" />,
-  <Image key="justen" fluid src="public/images/avatar/large/justen.jpg" />,
+const headers = [
+  {
+    content: 'id',
+    'data-is-focusable': true,
+  },
+  {
+    content: 'Name',
+    'data-is-focusable': true,
+  },
+  {
+    content: 'Picture',
+    'data-is-focusable': true,
+  },
+  {
+    content: 'Action',
+    'data-is-focusable': true,
+  },
 ]
 
-const GridExample = () => <Grid content={images} />
+const rows = [
+  {
+    items: [
+      {
+        content: '1',
+        'data-is-focusable': true,
+      },
+      {
+        content: 'Roman',
+        'data-is-focusable': true,
+      },
+      {
+        content: <Icon name="call-video" />,
+        'data-is-focusable': true,
+      },
+      {
+        content: <Button>Click</Button>,
+      },
+    ],
+    headerIndex: 2,
+  },
+  {
+    items: [
+      {
+        content: '2',
+        'data-is-focusable': true,
+      },
+      {
+        content: 'Alex',
+        'data-is-focusable': true,
+      },
+      {
+        content: <Icon name="call-video" />,
+        'data-is-focusable': true,
+      },
+      {
+        content: <Button>Click</Button>,
+      },
+    ],
+    headerIndex: 2,
+  },
+  {
+    items: [
+      {
+        content: '3',
+        'data-is-focusable': true,
+      },
+      {
+        content: 'Ali',
+        'data-is-focusable': true,
+      },
+      {
+        content: <Icon name="call-video" />,
+        'data-is-focusable': true,
+      },
+      {
+        content: <Button>Click</Button>,
+      },
+    ],
+    headerIndex: 2,
+  },
+]
+
+const GridExample = () => <Table headers={headers} rows={rows} accessibility={gridBehavior} />
 
 export default GridExample

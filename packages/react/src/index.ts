@@ -69,6 +69,7 @@ export { default as Form, FormProps } from './components/Form/Form'
 export { default as FormField, FormFieldProps } from './components/Form/FormField'
 
 export { default as Grid, GridProps } from './components/Grid/Grid'
+export { default as Table, TableProps } from './components/Table/Table'
 
 export { default as Header, HeaderProps } from './components/Header/Header'
 export {
