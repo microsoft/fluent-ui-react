@@ -39,7 +39,7 @@ export default () => {
         const jsonInfo = fs.readFileSync(infoFilePath)
         componentInfo = JSON.parse(jsonInfo.toString())
       } else {
-        componentInfo = getComponentInfo(file.path)
+        componentInfo = getComponentInfo(file.path, [])
       }
 
       if (componentInfo.isParent) {
