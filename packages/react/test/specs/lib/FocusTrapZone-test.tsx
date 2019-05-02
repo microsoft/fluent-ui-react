@@ -388,7 +388,7 @@ describe('FocusTrapZone', () => {
       expect.assertions(4)
 
       const { focusTrapZone, buttonF, buttonB, buttonZ } = setupTest(
-        true /*focusPreviouslyFocusedInnerElement*/,
+        true /* focusPreviouslyFocusedInnerElement */,
       )
 
       // By calling `componentDidMount`, FTZ will behave as just initialized and focus needed element
@@ -417,7 +417,7 @@ describe('FocusTrapZone', () => {
       expect.assertions(4)
 
       const { focusTrapZone, buttonF, buttonB, buttonZ } = setupTest(
-        false /*focusPreviouslyFocusedInnerElement*/,
+        false /* focusPreviouslyFocusedInnerElement */,
       )
 
       // By calling `componentDidMount`, FTZ will behave as just initialized and focus needed element

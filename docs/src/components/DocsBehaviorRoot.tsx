@@ -61,8 +61,8 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                     <>
                       <strong>Description:</strong>
                       <br />
-                      {variation.description.split('\n').map((splittedText, keyValue) => (
-                        <span key={keyValue}>
+                      {variation.description.split('\n').map((splittedText, key) => (
+                        <span key={key}>
                           {splittedText}
                           <br />
                         </span>
@@ -74,8 +74,8 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                       {variation.description && <br />}
                       <strong>Specification:</strong>
                       <br />
-                      {variation.specification.split('\n').map((splittedText, keyValue) => (
-                        <span key={keyValue}>
+                      {variation.specification.split('\n').map((splittedText, key) => (
+                        <span key={key}>
                           {splittedText}
                           <br />
                         </span>

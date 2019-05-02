@@ -75,9 +75,9 @@ export const getPopupPlacement = ({
   return `${computedPosition}${stringifiedAlignment}` as Placement
 }
 
-/////////////////////////////////
+//
 // OFFSET VALUES ADJUSTMENT
-/////////////////////////////////
+//
 
 const flipPlusMinusSigns = (offset: string): string => {
   return offset

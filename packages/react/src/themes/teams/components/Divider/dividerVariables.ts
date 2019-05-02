@@ -1,4 +1,3 @@
-import * as _ from 'lodash'
 import { FontWeightProperty } from 'csstype'
 
 import { ColorValues } from '../../../types'

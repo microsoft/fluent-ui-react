@@ -16,9 +16,9 @@ import Box from 'src/components/Box/Box'
 const testValue = 'test value'
 const htmlInputAttrs = ['id', 'name', 'pattern', 'placeholder', 'type', 'value']
 
-const getInputAttrsObject = (testValue: string) =>
+const getInputAttrsObject = (value: string) =>
   htmlInputAttrs.reduce((acc, attr) => {
-    acc[attr] = testValue
+    acc[attr] = value
     return acc
   }, {})
 
