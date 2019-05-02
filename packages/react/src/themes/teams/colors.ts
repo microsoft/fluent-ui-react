@@ -314,8 +314,8 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundActive: colors.primary[600],
     backgroundActive1: colors.primary[600],
 
-    borderActive1: colors.grey[150],
-    borderActive2: colors.grey[200],
+    borderActive1: colors.primary[200],
+    borderActive2: colors.primary[300],
     borderActive: colors.grey[200],
 
     shadowActive: undefined,

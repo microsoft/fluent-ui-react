@@ -140,8 +140,8 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundActive1: colors.primary[400],
 
     // active border no change (just copied)
-    borderActive1: colors.grey[850],
-    borderActive2: colors.grey[900],
+    borderActive1: colors.primary[800],
+    borderActive2: colors.primary[800],
     borderActive: colors.grey[450], // buttons
 
     shadowActive: undefined,
