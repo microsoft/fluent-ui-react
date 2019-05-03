@@ -15,7 +15,7 @@ const segmentStyles: ComponentSlotStylesInput<SegmentProps, SegmentVariables> = 
       boxShadow: `0 1px 1px 1px ${v.boxShadowColor}`,
       color: v.color,
       backgroundColor: v.backgroundColor,
-      borderColor: segmentColor,
+      ...(p.color && { borderColor: segmentColor }),
       ...(p.inverted && {
         color: v.backgroundColor,
         backgroundColor: segmentColor || v.color,
