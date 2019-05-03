@@ -33,7 +33,8 @@ export interface IFocusZone {
  */
 export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | FocusZone> {
   /**
-   * Element type the root element will use. Default is "div".
+   * Element type the root element will use.
+   * @default div
    */
   as?: React.ReactType
   /**
@@ -51,13 +52,11 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
   /**
    * Function which uses root element as parameter to return the intial tabbable element.
    * For example, when there is a chat with a bottom-up approach, it is expected that the last chat message is tabbable (active), not the first default one.
-   * @default undefined
    */
   defaultTabbableElement?: (root: HTMLElement) => HTMLElement
 
   /**
    * If a default tabbable element should be force focused on FocusZone mount.
-   * @default false
    */
   shouldFocusOnMount?: boolean
 
@@ -65,34 +64,29 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
    * if true and FocusZone's root element (container) receives focus, the focus will land either on the defaultTabbableElement
    * (if set) or on the first tabbable element of this FocusZone.
    * Usually a case for nested focus zones, when nested focus zone's container is a focusable element.
-   * @default false
    */
   shouldFocusInnerElementWhenReceivedFocus?: boolean
 
   /**
    * If true and TAB key is not handled by FocusZone, resets current active element to null value.
    * For example, when roving index is not desirable and focus should always reset to the default tabbable element.
-   * @default false
    */
   shouldResetActiveElementWhenTabFromZone?: boolean
 
   /**
    * If set, the FocusZone will not be tabbable and keyboard navigation will be disabled.
    * This does not affect disabled attribute of any child.
-   * @default false
    */
   disabled?: boolean
 
   /**
    * If true, FocusZone behavior will change to match RTL environments (left/right arrows switched).
-   * @default false
    */
   isRtl?: boolean
 
   /**
    * If true, will cycle to the beginning of the targets once the user attempts to navigate past the last
    * target while at the end, and to the end when the user attempts to naviagate before the first target.
-   * @default false
    */
   isCircularNavigation?: boolean
 
@@ -102,14 +96,12 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
    * For example, when chat container is FocusZone and chat messages are inner focus zones.
    * Navigation between messages possible with up/down arrow keys, but when pressing Enter, focus should go to
    * focusable elements inside message, for example, a link.
-   * @default undefined
    */
   shouldEnterInnerZone?: (ev: React.KeyboardEvent<HTMLElement>) => boolean
 
   /**
    * Callback for when one of immediate children elements gets active by getting focused
    * or by having one of its respective children elements focused.
-   * @default undefined
    */
   onActiveElementChanged?: (element?: HTMLElement, ev?: React.FocusEvent<HTMLElement>) => void
 
@@ -117,13 +109,11 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
    * Callback method for determining if focus should indeed be set on the given element.
    * @param {HTMLElement} element The child element within the zone to focus.
    * @returns True if focus should be set to the given element, false to avoid setting focus.
-   * @default undefined
    */
   shouldReceiveFocus?: (childElement?: HTMLElement) => boolean
 
   /**
    * Allow focus to move to root container
-   * @default false
    */
   allowFocusRoot?: boolean
 
@@ -135,7 +125,6 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
    * none - tabbing is not allowed
    * all - all tabbing action is allowed
    * inputOnly - tabbing is allowed only on input elements
-   * @default undefined
    */
   handleTabKey?: FocusZoneTabbableElements
 
@@ -149,20 +138,17 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
 
   /**
    * If true, focus event propagation will be stopped.
-   * @default false
    */
   stopFocusPropagation?: boolean
 
   /**
    * Callback called when "focus" event triggered in FocusZone.
    * @param {FocusEvent} event - React's original FocusEvent.
-   * @default undefined
    */
   onFocus?: (event: React.FocusEvent<HTMLElement | FocusZone>) => void
 
   /**
    * If true, FocusZone prevents default behavior.
-   * @default false
    */
   preventDefaultWhenHandled?: boolean
 }

@@ -108,7 +108,7 @@ const getComponentInfo = (filepath: string, ignoredParentInterfaces: string[]) =
         description,
         tags,
         value,
-        defaultValue: parseDefaultValue(propDef),
+        defaultValue: parseDefaultValue(propDef, name),
         name: propName,
         type: name,
       }
