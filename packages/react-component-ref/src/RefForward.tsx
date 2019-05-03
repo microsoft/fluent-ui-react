@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -11,7 +12,7 @@ export interface RefForwardProps {
    *
    * @param {HTMLElement} node - Referred node.
    */
-  innerRef?: React.Ref<any>
+  innerRef: React.Ref<any>
 }
 
 export default class RefForward extends React.Component<RefForwardProps> {
@@ -19,7 +20,7 @@ export default class RefForward extends React.Component<RefForwardProps> {
 
   static propTypes = {
     children: PropTypes.element.isRequired,
-    innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]) as PropTypes.Requireable<any>,
+    innerRef: customPropTypes.ref.isRequired as PropTypes.Validator<React.Ref<any>>,
   }
 
   private handleRefOverride = (node: HTMLElement) => {

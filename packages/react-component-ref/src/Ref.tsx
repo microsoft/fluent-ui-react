@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as ReactIs from 'react-is'
@@ -13,7 +14,7 @@ export interface RefProps {
    *
    * @param {HTMLElement} node - Referred node.
    */
-  innerRef?: React.Ref<any>
+  innerRef: React.Ref<any>
 }
 
 const Ref: React.FunctionComponent<RefProps> = props => {
@@ -28,7 +29,7 @@ const Ref: React.FunctionComponent<RefProps> = props => {
 Ref.displayName = 'Ref'
 Ref.propTypes = {
   children: PropTypes.element.isRequired,
-  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]) as PropTypes.Requireable<any>,
+  innerRef: customPropTypes.ref.isRequired as PropTypes.Validator<React.Ref<any>>,
 }
 
 export default Ref

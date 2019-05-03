@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
@@ -12,7 +13,7 @@ export interface RefFindNodeProps {
    *
    * @param {HTMLElement} node - Referred node.
    */
-  innerRef?: React.Ref<any>
+  innerRef: React.Ref<any>
 }
 
 export default class RefFindNode extends React.Component<RefFindNodeProps> {
@@ -20,7 +21,7 @@ export default class RefFindNode extends React.Component<RefFindNodeProps> {
 
   static propTypes = {
     children: PropTypes.element.isRequired,
-    innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]) as PropTypes.Requireable<any>,
+    innerRef: customPropTypes.ref.isRequired as PropTypes.Validator<React.Ref<any>>,
   }
 
   prevNode: Node | null = null

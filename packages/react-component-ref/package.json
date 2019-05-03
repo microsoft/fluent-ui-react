@@ -5,6 +5,7 @@
   "author": "Oleksandr Fediashov <olfedias@microsoft.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
+    "@stardust-ui/react-proptypes": "^0.29.1",
     "prop-types": "^15.6.1",
     "react-is": "^16.6.3"
   },
