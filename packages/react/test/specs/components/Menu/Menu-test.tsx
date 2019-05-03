@@ -3,10 +3,9 @@ import * as React from 'react'
 import Menu from 'src/components/Menu/Menu'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
 import { mountWithProvider, mountWithProviderAndGetComponent } from 'test/utils'
-import { toolbarBehavior, tabListBehavior } from '../../../../src/lib/accessibility'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import MenuItem from 'src/components/Menu/MenuItem'
-import { menuBehavior } from 'src/lib/accessibility'
+import { menuBehavior, toolbarBehavior, tabListBehavior, tabBehavior } from 'src/lib/accessibility'
 import { AccessibilityDefinition } from 'src/lib/accessibility/types'
 
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
@@ -138,6 +137,16 @@ describe('Menu', () => {
         )
 
         expect(getRenderedAttribute(menuComponent, 'aria-labelledby', '')).toBe(ariaLabelledByID)
+      })
+
+      test('attributes should override the default ones from child behavior', () => {
+        const items = getItems()
+        items[0]['accessibility'] = tabBehavior
+        const menuItemComponent = mountWithProviderAndGetComponent(
+          Menu,
+          <Menu items={items} accessibility={menuBehavior} />, // enforce behavior that has child behavior.
+        ).find('MenuItem')
+        expect(getRenderedAttribute(menuItemComponent.at(0), 'role', 'a')).toBe('tab')
       })
 
       describe('as a Toolbar', () => {
