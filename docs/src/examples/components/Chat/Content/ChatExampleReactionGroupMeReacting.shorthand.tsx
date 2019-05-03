@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import { Avatar, Chat } from '@stardust-ui/react'
 
 const reactions = [

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import { FontWeightProperty } from 'csstype'
 import { Dropdown, DropdownItemProps, Provider } from '@stardust-ui/react'
 

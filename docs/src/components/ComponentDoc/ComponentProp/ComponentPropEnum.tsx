@@ -2,7 +2,6 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { updateForKeys } from 'docs/src/hoc'
 import ComponentPropExtra from './ComponentPropExtra'
 import ComponentPropToggle from './ComponentPropEnumToggle'
 import ComponentPropValue from './ComponentPropEnumValue'
@@ -39,4 +38,9 @@ ComponentPropEnum.propTypes = {
   values: PropTypes.array,
 }
 
-export default updateForKeys(['showAll', 'type', 'values'])(ComponentPropEnum)
+const arePropsEqual = (prevProps, nextProps) =>
+  prevProps.showAll === nextProps.showAll &&
+  prevProps.type === nextProps.type &&
+  prevProps.values === nextProps.values
+
+export default React.memo(ComponentPropEnum, arePropsEqual)
