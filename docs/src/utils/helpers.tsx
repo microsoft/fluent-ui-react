@@ -6,7 +6,7 @@ export const code = value => <code>{value}</code>
 
 export const link = (content: string, href: string) => {
   const isExternal = href.startsWith('http://') || href.startsWith('https://')
-  const isAnchor = !isExternal && href.includes('#')
+  const isAnchor = !isExternal && href.startsWith('#')
 
   if (isAnchor || isExternal) {
     return (

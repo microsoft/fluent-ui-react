@@ -27,18 +27,8 @@ export default () => (
       <li>
         {link('Keyboard Navigation', '#keyboard-navigation')}
         <ul>
-          <li>
-            {link(
-              'Tabbing and arrow key navigation',
-              'accessibility#tabbing-and-arrow-key-navigation',
-            )}
-          </li>
-          <li>
-            {link(
-              'Virtual Screen Reader Navigation',
-              'accessibility#virtual-screen-reader-navigation',
-            )}
-          </li>
+          <li>{link('Tabbing and arrow key navigation', '#tabbing-and-arrow-key-navigation')}</li>
+          <li>{link('Virtual Screen Reader Navigation', '#virtual-screen-reader-navigation')}</li>
           <li>{link('Accessibility Behaviors', '#accessibility-behaviors')}</li>
           <li>{link('Focus Zone', '#focus-zone')}</li>
           <li>{link('Focus Trap Zone', '#focus-trap-zone')}</li>
@@ -48,7 +38,7 @@ export default () => (
           <li>
             {link(
               'Elements that appear on hover',
-              'accessibility#elements-that-appear-on-hover-over-another-element',
+              '#elements-that-appear-on-hover-over-another-element',
             )}
           </li>
         </ul>
