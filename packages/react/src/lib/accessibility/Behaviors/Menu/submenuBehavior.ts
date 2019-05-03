@@ -26,7 +26,7 @@ const submenuBehavior: Accessibility = (props: any) => ({
       direction: FocusZoneDirection.vertical,
     },
   },
-  childBehavior: menuItemBehavior,
+  childBehaviors: { item: menuItemBehavior },
 })
 
 export default submenuBehavior
