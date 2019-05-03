@@ -122,43 +122,59 @@ describe('Menu', () => {
 
       test('aria-label should be added to the menu', () => {
         const ariaLabel = 'A Nice Toolbar'
-        const menuItemComponent = mountWithProviderAndGetComponent(
+        const menuComponent = mountWithProviderAndGetComponent(
           Menu,
           <Menu aria-label={ariaLabel} />,
         )
 
-        expect(getRenderedAttribute(menuItemComponent, 'aria-label', '')).toBe(ariaLabel)
+        expect(getRenderedAttribute(menuComponent, 'aria-label', '')).toBe(ariaLabel)
       })
 
       test('aria-labelledby should be added to the menu', () => {
         const ariaLabelledByID = 'element-that-labels'
-        const menuItemComponent = mountWithProviderAndGetComponent(
+        const menuComponent = mountWithProviderAndGetComponent(
           Menu,
           <Menu aria-labelledby={ariaLabelledByID} />,
         )
 
-        expect(getRenderedAttribute(menuItemComponent, 'aria-labelledby', '')).toBe(
-          ariaLabelledByID,
-        )
+        expect(getRenderedAttribute(menuComponent, 'aria-labelledby', '')).toBe(ariaLabelledByID)
       })
 
       describe('as a Toolbar', () => {
         test('root role should be toolbar', () => {
-          const menuItemComponent = mountWithProviderAndGetComponent(
+          const menuComponent = mountWithProviderAndGetComponent(
             Menu,
             <Menu accessibility={toolbarBehavior} />,
           )
-          expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('toolbar')
+          expect(getRenderedAttribute(menuComponent, 'role', '')).toBe('toolbar')
+        })
+
+        test('children role should be toolbarButton', () => {
+          const menuItemComponents = mountWithProviderAndGetComponent(
+            Menu,
+            <Menu accessibility={toolbarBehavior} items={getItems()} />,
+          ).find('MenuItem')
+          expect(getRenderedAttribute(menuItemComponents.at(0), 'role', 'a')).toBe('button')
+          expect(getRenderedAttribute(menuItemComponents.at(1), 'role', 'a')).toBe('button')
         })
       })
 
       describe('as a TabList', () => {
         test('root role should be tablist', () => {
-          const menuItemComponent = mountWithProviderAndGetComponent(
+          const menuComponent = mountWithProviderAndGetComponent(
             Menu,
             <Menu accessibility={tabListBehavior} />,
           )
-          expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('tablist')
+          expect(getRenderedAttribute(menuComponent, 'role', '')).toBe('tablist')
+        })
+
+        test('children role should be tab', () => {
+          const menuItemComponents = mountWithProviderAndGetComponent(
+            Menu,
+            <Menu accessibility={tabListBehavior} items={getItems()} />,
+          ).find('MenuItem')
+          expect(getRenderedAttribute(menuItemComponents.at(0), 'role', 'a')).toBe('tab')
+          expect(getRenderedAttribute(menuItemComponents.at(1), 'role', 'a')).toBe('tab')
         })
       })
     })
