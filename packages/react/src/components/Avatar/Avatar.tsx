@@ -80,7 +80,7 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
       const initials = reducedName
         .split(' ')
         .filter(item => item !== '')
-        .map(name => name.charAt(0))
+        .map(item => item.charAt(0))
         .reduce((accumulator, currentValue) => accumulator + currentValue)
 
       if (initials.length > 2) {

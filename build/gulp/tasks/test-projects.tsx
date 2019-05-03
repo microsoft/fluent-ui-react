@@ -23,7 +23,7 @@ const log = (context: string) => (message: string) => {
   console.log('='.repeat(80))
 }
 
-export const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
+export const runIn = targetPath => cmd => sh(`cd ${targetPath} && ${cmd}`)
 
 const addResolutionPathsForStardustPackages = async (
   testProjectDir: string,
@@ -136,7 +136,6 @@ task('test:projects:cra-ts', async () => {
   const logger = log('test:projects:cra-ts')
   const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/cra')
 
-  //////// CREATE TEST REACT APP ///////
   logger('STEP 1. Create test React project with TSX scripts..')
 
   const testAppPath = paths.withRootAt(
@@ -146,7 +145,6 @@ task('test:projects:cra-ts', async () => {
   const runInTestApp = runIn(testAppPath())
   logger(`Test React project is successfully created: ${testAppPath()}`)
 
-  //////// ADD STARDUST AS A DEPENDENCY ///////
   logger('STEP 2. Add Stardust dependency to test project..')
 
   const packedPackages = await packStardustPackages(logger)
@@ -154,11 +152,9 @@ task('test:projects:cra-ts', async () => {
   await runInTestApp(`yarn add ${packedPackages['@stardust-ui/react']}`)
   logger(`✔️Stardust UI packages were added to dependencies`)
 
-  //////// REFERENCE STARDUST COMPONENTS IN TEST APP's MAIN FILE ///////
   logger("STEP 3. Reference Stardust components in test project's App.tsx")
   fs.copyFileSync(scaffoldPath('App.tsx'), testAppPath('src', 'App.tsx'))
 
-  //////// BUILD TEST PROJECT ///////
   logger('STEP 4. Build test project..')
   await runInTestApp(`yarn build`)
 

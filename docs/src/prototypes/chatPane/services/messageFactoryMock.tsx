@@ -87,8 +87,8 @@ function createMessageContent(message: MessageData): ShorthandValue {
 }
 
 function createMessageContentWithAttachments(content: string, messageId: string): JSX.Element {
-  const menuClickHandler = content => e => {
-    alert(`${content} clicked`)
+  const menuClickHandler = message => e => {
+    alert(`${message} clicked`)
     e.stopPropagation()
   }
 

@@ -542,7 +542,6 @@ describe('Dropdown', () => {
     })
 
     it('is the index of the value previously selected when opened', () => {
-      const onOpenChange = jest.fn()
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
       const triggerButton = getTriggerButtonWrapper(wrapper)
 
@@ -565,7 +564,6 @@ describe('Dropdown', () => {
     })
 
     it('is the index of the (value previously selected + 1) when opened by arrow down', () => {
-      const onOpenChange = jest.fn()
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
       const triggerButton = getTriggerButtonWrapper(wrapper)
 
@@ -591,7 +589,6 @@ describe('Dropdown', () => {
     })
 
     it('is the index of the (value previously selected - 1) when opened by arrow up', () => {
-      const onOpenChange = jest.fn()
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
       const triggerButton = getTriggerButtonWrapper(wrapper)
 
