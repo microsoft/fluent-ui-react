@@ -207,7 +207,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
           active,
           inSubmenu: submenu,
           indicator,
-          accessibility: (accessibility as any).childrenBehavior,
+          accessibility: accessibility ? (accessibility as any).childBehavior : undefined,
         },
         overrideProps: this.handleItemOverrides,
       })
