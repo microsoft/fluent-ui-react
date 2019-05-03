@@ -6,32 +6,33 @@ declare global {
   }
 }
 
-export type ProfilerMeasure = {
-  actualTime: number
-  baseTime: number
+export type MeasuredValues = 'actualTime' | 'baseTime'
+
+export type ProfilerMeasure = { [key in MeasuredValues]: number } & {
   exampleIndex: number
   phase: string
   startTime: number
   commitTime: number
 }
 
-export type ProfilerMeasureCycle = { [perfExample: string]: ProfilerMeasure }
+export type ProfilerMeasureWithBaseline = ProfilerMeasure & {
+  baseline: Record<MeasuredValues, number>
+}
 
-export type NormalizedMeasures = Record<
-  string,
-  {
-    actualTime: ReducedMeasures
-    baseTime: ReducedMeasures
-  }
->
+export type ProfilerMeasureCycle = Record<string, ProfilerMeasureWithBaseline>
+
+export type PerExamplePerfMeasures = Record<string, Record<MeasuredValues, ReducedMeasures>>
 
 export type ReducedMeasures = {
   avg: number
+  avgNormalized: number
   median: number
+  medianNormalized: number
   min: number
   max: number
   values: {
     exampleIndex: number
-    value: ProfilerMeasure
+    value: number
+    baseline: number
   }[]
 }
