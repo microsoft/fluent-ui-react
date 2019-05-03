@@ -1,6 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { FelaTheme } from 'react-fela'
+// @ts-ignore
+import { FelaTheme } from 'layeshifter-react-fela'
 
 import { ThemePrepared } from '../../themes/types'
 

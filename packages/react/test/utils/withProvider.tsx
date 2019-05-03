@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
-import { ThemeProvider } from 'react-fela'
+// @ts-ignore
+import { ThemeProvider } from 'layeshifter-react-fela'
 import { felaRenderer } from 'src/lib'
 import { ThemeInput } from 'src/themes/types'
 

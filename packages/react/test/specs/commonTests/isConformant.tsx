@@ -4,7 +4,7 @@ import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 
-import { ThemeProvider, FelaTheme } from 'react-fela'
+import { ThemeProvider, FelaTheme } from 'layeshifter-react-fela'
 
 import Ref from 'src/components/Ref/Ref'
 import RefFindNode from 'src/components/Ref/RefFindNode'

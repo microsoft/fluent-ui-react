@@ -1,9 +1,10 @@
 import { IStyle } from 'fela'
-import { render } from 'fela-dom'
+import { render } from 'layeshifter-fela-dom'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { RendererProvider, ThemeProvider } from 'react-fela'
+// @ts-ignore
+import { RendererProvider, ThemeProvider } from 'layeshifter-react-fela'
 
 import {
   felaRenderer as felaLtrRenderer,

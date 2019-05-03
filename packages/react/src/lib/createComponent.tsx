@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 // @ts-ignore
-import { ThemeContext } from 'react-fela'
+import { ThemeContext } from 'layeshifter-react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/types'

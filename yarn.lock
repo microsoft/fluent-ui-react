@@ -5764,26 +5764,6 @@ fd-slicer@~1.0.1:
   dependencies:
     pend "~1.2.0"
 
-fela-bindings@^10.2.4:
-  version "10.2.4"
-  resolved "https://registry.yarnpkg.com/fela-bindings/-/fela-bindings-10.2.4.tgz#14773e56862b60ad949dfae5d276b72e01cc9fef"
-  integrity sha512-d84T6uF+FMpB2RjzV0AtWxfj6bAnD9l4OLDctdwFqp+WYLqBl4119J6v9NRFw4nGnMhKizX8cwh6GCSPaT2hyw==
-  dependencies:
-    fast-loops "^1.0.0"
-    fela-dom "^10.2.4"
-    fela-tools "^10.2.4"
-    react-addons-shallow-compare "^15.6.2"
-    shallow-equal "^1.0.0"
-
-fela-dom@^10.2.4:
-  version "10.2.4"
-  resolved "https://registry.yarnpkg.com/fela-dom/-/fela-dom-10.2.4.tgz#45fccb41235d7c3ca4a96eaf6d413a0117abe673"
-  integrity sha512-OCImD6SVdzbOsqv6wcgeQz5eN3bb9OEPY9qL3xfjt08gRzLTtmC0h7hFRRNRkEfsJBVRVPzS7QTxw3PT0o2jxQ==
-  dependencies:
-    css-in-js-utils "^3.0.0"
-    fast-loops "^1.0.1"
-    fela-utils "^10.2.4"
-
 fela-plugin-custom-property@^10.2.4:
   version "10.2.4"
   resolved "https://registry.yarnpkg.com/fela-plugin-custom-property/-/fela-plugin-custom-property-10.2.4.tgz#0ebe1357cc45cf623692e26f16d4868d5a36adf8"
@@ -8658,6 +8638,46 @@ latest-version@^3.0.0:
   integrity sha1-ogU4P+oyKzO1rjsYq+4NwvNW7hU=
   dependencies:
     package-json "^4.0.0"
+
+layeshifter-fela-bindings@^10.2.10:
+  version "10.2.10"
+  resolved "https://registry.yarnpkg.com/layeshifter-fela-bindings/-/layeshifter-fela-bindings-10.2.10.tgz#a9a1539f7d9b45a654541f4f26c20b87cfe2a4b6"
+  integrity sha512-/igANRWKqpqqg3Zb9AFMinoWb3pIXCjfz26zU8jQFJrPhKWscxzxjZ1rFWuY+cGbZzgh+sYed3hgiseRzqcD7g==
+  dependencies:
+    fast-loops "^1.0.0"
+    fela-tools "^10.2.4"
+    layeshifter-fela-dom "^10.2.10"
+    react-addons-shallow-compare "^15.6.2"
+    shallow-equal "^1.0.0"
+
+layeshifter-fela-dom@^10.2.10:
+  version "10.2.10"
+  resolved "https://registry.yarnpkg.com/layeshifter-fela-dom/-/layeshifter-fela-dom-10.2.10.tgz#5c3756828a6dde339844f8ebdb387b96571e6271"
+  integrity sha512-FxcPn1qUL0vTS1GjRJepUy3//fSvXxaBn5zGurGVjoO/3JSxKrJtpUrmSQVwHNkZLjKOE+kEYZJiuS49pJ2ctw==
+  dependencies:
+    css-in-js-utils "^3.0.0"
+    fast-loops "^1.0.1"
+    fela-utils "^10.2.4"
+
+layeshifter-fela@^10.2.10:
+  version "10.2.10"
+  resolved "https://registry.yarnpkg.com/layeshifter-fela/-/layeshifter-fela-10.2.10.tgz#83003cb147acd2fb4b26ab737d30cce10919cb6e"
+  integrity sha512-gJ1l4sa/3MLnucSQTeC2aezjWjS07DdM21cgiWNJA6jcp2cfxVr0hxkO80qycGLo4XmpQ4MPxY7mNkeKxr+kBg==
+  dependencies:
+    css-in-js-utils "^3.0.0"
+    csstype "^2.5.5"
+    fast-loops "^1.0.0"
+    fela-utils "^10.2.4"
+    isobject "^3.0.1"
+
+layeshifter-react-fela@^10.2.10:
+  version "10.2.10"
+  resolved "https://registry.yarnpkg.com/layeshifter-react-fela/-/layeshifter-react-fela-10.2.10.tgz#b6285585126e3df8b3eb45450c9f3937459e7a17"
+  integrity sha512-DRt+C8+7rTKc6ZExkVxcsNXI5frv149w3nbu/zKrAsSbp6HxKbqwAgd/5h0eg1JiZK4YK4sOlmLnk4xCBDnWUQ==
+  dependencies:
+    layeshifter-fela-bindings "^10.2.10"
+    layeshifter-fela-dom "^10.2.10"
+    prop-types "^15.5.8"
 
 lazy-cache@^0.2.3:
   version "0.2.7"
@@ -11608,15 +11628,6 @@ react-element-to-jsx-string@^14.0.2:
   dependencies:
     is-plain-object "2.0.4"
     stringify-object "3.2.2"
-
-react-fela@^10.2.4:
-  version "10.2.4"
-  resolved "https://registry.yarnpkg.com/react-fela/-/react-fela-10.2.4.tgz#46cdbeda414d3fc2cfd21d06b5f4ee59eaaf4b7a"
-  integrity sha512-4JJEn8jzEr7b5ZsBZnExW6KICUZkXZIMncE5occWugkF/rZfPLeFPqmw7Ue8tJEJCfDt9bIFKsQQhz9vBMk6tw==
-  dependencies:
-    fela-bindings "^10.2.4"
-    fela-dom "^10.2.4"
-    prop-types "^15.5.8"
 
 react-hot-loader@^4.8.2:
   version "4.8.2"

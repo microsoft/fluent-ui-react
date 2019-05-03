@@ -1,4 +1,5 @@
-import { createRenderer } from 'fela'
+// @ts-ignore
+import { createRenderer } from 'layeshifter-fela'
 import felaSanitizeCss from './felaSanitizeCssPlugin'
 import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
