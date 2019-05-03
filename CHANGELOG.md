@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Highlight options by character keys in `Dropdown` non-search versions @silviuavram ([#1270](https://github.com/stardust-ui/react/pull/1270))
+
 <!--------------------------------[ v0.29.1 ]------------------------------- -->
 ## [v0.29.1](https://github.com/stardust-ui/react/tree/v0.29.1) (2019-05-01)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.29.0...v0.29.1)
