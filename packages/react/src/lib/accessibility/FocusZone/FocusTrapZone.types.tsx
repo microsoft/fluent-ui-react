@@ -12,13 +12,14 @@ export interface FocusTrapZoneProps extends React.HTMLAttributes<HTMLDivElement>
   className?: string
 
   /**
-   * Sets the HTMLElement to focus on when exiting the FocusTrapZone.
-   * @default The target which triggered the FocusTrapZone.
+   * Sets the HTMLElement to focus on when exiting the FocusTrapZone. By default, the target which triggered the FocusTrapZone will get focus.
+   * @default undefined
    */
   elementToFocusOnDismiss?: HTMLElement
 
   /**
    * Sets the aria-labelledby attribute.
+   * @default undefined
    */
   ariaLabelledBy?: string
 
@@ -50,6 +51,7 @@ export interface FocusTrapZoneProps extends React.HTMLAttributes<HTMLDivElement>
 
   /**
    * Indicates the selector for first focusable item.  Only applies if focusPreviouslyFocusedInnerElement == false.
+   * @default undefined
    */
   firstFocusableSelector?: string | (() => string)
 
