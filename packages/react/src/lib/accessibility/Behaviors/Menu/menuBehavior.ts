@@ -1,6 +1,7 @@
 import { Accessibility, FocusZoneMode } from '../../types'
 import { FocusZoneDirection } from '../../FocusZone'
 import menuItemBehavior from './menuItemBehavior'
+import menuDividerBehavior from './menuDividerBehavior'
 
 /**
  * @description
@@ -27,7 +28,10 @@ const menuBehavior: Accessibility = (props: any) => ({
       direction: props.vertical ? FocusZoneDirection.vertical : FocusZoneDirection.horizontal,
     },
   },
-  childBehavior: menuItemBehavior,
+  childBehaviors: {
+    item: menuItemBehavior,
+    divider: menuDividerBehavior,
+  },
 })
 
 export default menuBehavior

@@ -23,7 +23,9 @@ const tabListBehavior: Accessibility = (props: any) => ({
       shouldFocusInnerElementWhenReceivedFocus: true,
     },
   },
-  childBehavior: tabBehavior,
+  childBehaviors: {
+    item: tabBehavior,
+  },
 })
 
 export default tabListBehavior

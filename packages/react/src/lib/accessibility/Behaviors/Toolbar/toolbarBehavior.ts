@@ -23,7 +23,9 @@ const toolbarBehavior: Accessibility = (props: any) => ({
       shouldFocusInnerElementWhenReceivedFocus: true,
     },
   },
-  childBehavior: toolbarButtonBehavior,
+  childBehaviors: {
+    item: toolbarButtonBehavior,
+  },
 })
 
 export default toolbarBehavior
