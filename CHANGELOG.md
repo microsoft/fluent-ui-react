@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- `Ref` component extracted to a `@stardust-ui/react-component-ref` @layershifter ([#1281](https://github.com/stardust-ui/react/pull/1281))
+- added `isRefObject()`, `toRefObject()` and `unstable_mergeRefs()` utils for React refs @layershifter ([#1281](https://github.com/stardust-ui/react/pull/1281))
+
 <!--------------------------------[ v0.29.1 ]------------------------------- -->
 ## [v0.29.1](https://github.com/stardust-ui/react/tree/v0.29.1) (2019-05-01)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.29.0...v0.29.1)
