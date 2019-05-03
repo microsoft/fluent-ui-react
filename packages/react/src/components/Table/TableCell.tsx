@@ -2,6 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as React from 'react'
+import { getFirstFocusable } from '../../lib/accessibility/FocusZone/focusUtilities'
 import {
   UIComponent,
   childrenExist,
@@ -27,6 +28,8 @@ export interface TableCellProps
   accessibility?: Accessibility
 
   scope?: string
+
+  focused?: boolean
 }
 
 /**
@@ -38,6 +41,10 @@ class TableCell extends UIComponent<ReactProps<TableCellProps>, any> {
   public static displayName = 'TableCell'
 
   public static className = 'ui-TableCell'
+
+  private cellRef: HTMLElement
+  private focusableElement: HTMLElement
+  private setRef = (ref: HTMLElement) => (this.cellRef = ref)
 
   public static propTypes = {
     ...commonPropTypes.createCommon({
@@ -51,11 +58,33 @@ class TableCell extends UIComponent<ReactProps<TableCellProps>, any> {
       ]),
     ]),
     isHeader: PropTypes.bool,
+    focused: PropTypes.bool,
   }
 
   public static defaultProps: TableCellProps = {
     as: 'td',
     accessibility: defaultBehavior,
+  }
+
+  private tryFocusCell() {
+    const { focused } = this.props
+    if (this.focusableElement) {
+      if (focused) {
+        this.focusableElement.focus()
+        this.focusableElement.setAttribute('tabindex', '0')
+      } else {
+        this.focusableElement.setAttribute('tabindex', '-1')
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.focusableElement = getFirstFocusable(this.cellRef, this.cellRef, true)
+    this.tryFocusCell()
+  }
+
+  componentDidUpdate() {
+    this.tryFocusCell()
   }
 
   public renderComponent({
@@ -72,6 +101,7 @@ class TableCell extends UIComponent<ReactProps<TableCellProps>, any> {
         {...accessibility.attributes.root}
         {...unhandledProps}
         scope={scope}
+        ref={this.setRef}
       >
         {childrenExist(children) ? children : content}
       </ElementType>

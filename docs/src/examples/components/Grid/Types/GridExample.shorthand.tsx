@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Table, Icon, Button, gridBehavior } from '@stardust-ui/react'
+import { Table, Icon, Button } from '@stardust-ui/react'
 
 const headers = [
   {
@@ -83,6 +83,6 @@ const rows = [
   },
 ]
 
-const GridExample = () => <Table headers={headers} rows={rows} accessibility={gridBehavior} />
+const GridExample = () => <Table headers={headers} rows={rows} />
 
 export default GridExample

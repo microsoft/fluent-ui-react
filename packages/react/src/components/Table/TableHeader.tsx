@@ -2,7 +2,8 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as React from 'react'
-import TableCell, { TableCellProps } from './TableCell'
+import { TableCellProps } from './TableCell'
+import TableRow from './TableRow'
 import { UIComponent, RenderResultConfig, UIComponentProps, commonPropTypes } from '../../lib'
 import { ReactProps, ShorthandValue } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -48,11 +49,15 @@ class TableHeader extends UIComponent<ReactProps<TableHeaderProps>, any> {
     accessibility: defaultBehavior,
   }
 
-  public renderHeaders() {
+  public getHeaders() {
     const { items } = this.props
 
     return _.map(items, (item: TableCellProps) => {
-      return <TableCell as="th" scope="col" {...item} />
+      return {
+        as: 'th',
+        scope: 'col',
+        ...item,
+      }
     })
   }
 
@@ -64,7 +69,7 @@ class TableHeader extends UIComponent<ReactProps<TableHeaderProps>, any> {
   }: RenderResultConfig<any>): React.ReactNode {
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        <tr>{this.renderHeaders()}</tr>
+        <TableRow items={this.getHeaders()} />
       </ElementType>
     )
   }

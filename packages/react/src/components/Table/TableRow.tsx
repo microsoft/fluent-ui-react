@@ -19,6 +19,8 @@ export interface TableRowProps extends UIComponentProps {
   items?: ShorthandValue[]
 
   headerIndex?: number
+
+  focusedIndex?: number
 }
 
 /**
@@ -44,6 +46,7 @@ class TableRow extends UIComponent<ReactProps<TableRowProps>, any> {
     ]),
     items: customPropTypes.collectionShorthand,
     headerIndex: PropTypes.number,
+    focusedIndex: PropTypes.number,
   }
 
   public static defaultProps: TableRowProps = {
@@ -52,13 +55,23 @@ class TableRow extends UIComponent<ReactProps<TableRowProps>, any> {
   }
 
   public renderCells() {
-    const { items, headerIndex } = this.props
+    const { items, headerIndex, focusedIndex } = this.props
 
     return _.map(items, (item: TableCellProps, index) => {
-      if (headerIndex && index === headerIndex) {
-        return <TableCell as="th" scope="row" {...item} />
+      const cellProps = {
+        ...item,
+        focused: index === focusedIndex,
       }
-      return <TableCell {...item} />
+      const headerProps = {
+        ...cellProps,
+        as: 'th',
+        scope: 'row',
+      } as TableCellProps
+
+      if (headerIndex && index === headerIndex) {
+        return <TableCell {...headerProps} />
+      }
+      return <TableCell {...cellProps} />
     })
   }
 

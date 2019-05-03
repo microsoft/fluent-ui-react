@@ -9,20 +9,17 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
-import TableHeader from './TableHeader'
 import TableRow, { TableRowProps } from './TableRow'
-import { ReactProps, ShorthandValue } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+import { TableCellProps } from './TableCell'
 
-// type CellType = ReactNode | string
-// type RowType = CellType[]
-// type RowsType = RowType[]
+import { ReactProps, ShorthandValue } from '../../types'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { tableBehavior } from '../../lib/accessibility'
 
 export interface TableProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
+   * @default tableBehavior
    * @available TableBehavior
    * */
   accessibility?: Accessibility
@@ -34,6 +31,11 @@ export interface TableProps extends UIComponentProps, ChildrenComponentProps {
   rows?: ShorthandValue[]
 }
 
+export interface TableState {
+  focusedRow: number
+  focusedCol: number
+}
+
 /**
  * A Table is used to harmonize negative space in a layout.
  * @accessibility This is example usage of the accessibility tag.
@@ -41,8 +43,51 @@ export interface TableProps extends UIComponentProps, ChildrenComponentProps {
  */
 class Table extends UIComponent<ReactProps<TableProps>, any> {
   public static displayName = 'Table'
-
   public static className = 'ui-Table'
+
+  private rowsCount: number
+  private columsCount: number
+
+  actionHandlers: AccessibilityActionHandlers = {
+    moveNextColumn: e => {
+      e.preventDefault()
+      const nextIndex =
+        this.state.focusedCol + 1 >= this.columsCount
+          ? this.state.focusedCol
+          : this.state.focusedCol + 1
+
+      this.setState({
+        focusedCol: nextIndex,
+      })
+    },
+    movePreviousColumn: e => {
+      e.preventDefault()
+      const nextIndex = this.state.focusedCol - 1 < 0 ? 0 : this.state.focusedCol - 1
+
+      this.setState({
+        focusedCol: nextIndex,
+      })
+    },
+    moveNextRow: e => {
+      e.preventDefault()
+      const nextIndex =
+        this.state.focusedRow + 1 >= this.rowsCount
+          ? this.state.focusedRow
+          : this.state.focusedRow + 1
+
+      this.setState({
+        focusedRow: nextIndex,
+      })
+    },
+    movePreviousRow: e => {
+      e.preventDefault()
+      const nextIndex = this.state.focusedRow - 1 < 0 ? 0 : this.state.focusedRow - 1
+
+      this.setState({
+        focusedRow: nextIndex,
+      })
+    },
+  }
 
   public static propTypes = {
     ...commonPropTypes.createCommon({
@@ -61,27 +106,49 @@ class Table extends UIComponent<ReactProps<TableProps>, any> {
 
   public static defaultProps: TableProps = {
     as: 'table',
-    accessibility: defaultBehavior,
+    accessibility: tableBehavior,
   }
 
-  public renderHeaders() {
-    const { headers } = this.props
+  constructor(p, c) {
+    super(p, c)
 
-    return (
-      <tr>
-        {_.map(headers, header => {
-          return <th data-is-focusable="true">{header}</th>
-        })}
-      </tr>
-    )
+    this.state = {
+      focusedRow: 0,
+      focusedCol: 1,
+    }
+    const { rows, headers } = this.props
+    this.rowsCount = rows.length + (headers.length ? 1 : 0)
+    this.columsCount = headers && headers.length
   }
 
   public renderRows() {
     const { rows } = this.props
+    const { focusedRow } = this.state
 
-    return _.map(rows, (row: TableRowProps) => {
-      return <TableRow {...row} />
+    return _.map(rows, (row: TableRowProps, index) => {
+      const props = {
+        ...row,
+        focusedIndex: focusedRow - 1 === index ? this.state.focusedCol : -1,
+      } as TableRowProps
+      return <TableRow {...props} />
     })
+  }
+
+  public getHeaderProps() {
+    const { headers } = this.props
+
+    const items = _.map(headers, (header: TableCellProps) => {
+      return {
+        as: 'th',
+        scope: 'col',
+        ...header,
+      }
+    })
+
+    return {
+      items,
+      focusedIndex: this.state.focusedRow === 0 ? this.state.focusedCol : -1,
+    } as TableRowProps
   }
 
   public renderComponent({
@@ -90,12 +157,17 @@ class Table extends UIComponent<ReactProps<TableProps>, any> {
     classes,
     unhandledProps,
   }: RenderResultConfig<any>): React.ReactNode {
-    const { headers } = this.props
-
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        <TableHeader items={headers} />
-        {this.renderRows()}
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...unhandledProps}
+      >
+        <thead>
+          <TableRow {...this.getHeaderProps()} />
+        </thead>
+        <tbody>{this.renderRows()}</tbody>
       </ElementType>
     )
   }
