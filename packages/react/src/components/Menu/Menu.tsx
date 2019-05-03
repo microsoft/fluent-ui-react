@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility, AccessibilityBehavior } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import { ReactProps, ShorthandCollection, ShorthandValue } from '../../types'
@@ -151,7 +151,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   renderItems = (
     styles: ComponentSlotStylesPrepared,
     variables: ComponentVariablesObject,
-    accessibility: Accessibility,
+    accessibility: AccessibilityBehavior,
   ) => {
     const {
       iconOnly,
@@ -207,7 +207,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
           active,
           inSubmenu: submenu,
           indicator,
-          accessibility: accessibility ? (accessibility as any).childBehavior : undefined,
+          accessibility: accessibility.childBehavior,
         },
         overrideProps: this.handleItemOverrides,
       })
