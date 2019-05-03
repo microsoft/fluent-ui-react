@@ -12,7 +12,7 @@ interface BehaviorInfo {
   category: string
 }
 
-const getComponentInfo = (filepath: string) => {
+const getComponentInfo = (filepath: string, ignoredParentInterfaces: string[]) => {
   const absPath = path.resolve(process.cwd(), filepath)
 
   const dir = path.dirname(absPath)
@@ -99,14 +99,21 @@ const getComponentInfo = (filepath: string) => {
     const { description, tags } = parseDocblock(propDef.description)
     const { name, value } = parseType(propName, propDef)
 
-    info.props[propName] = {
-      ...propDef,
-      description,
-      tags,
-      value,
-      defaultValue: parseDefaultValue(propDef),
-      name: propName,
-      type: name,
+    const parentInterface = _.get(propDef, 'parent.name')
+    const visibleInDefinition = !_.includes(ignoredParentInterfaces, parentInterface)
+
+    if (visibleInDefinition) {
+      info.props[propName] = {
+        ...propDef,
+        description,
+        tags,
+        value,
+        defaultValue: parseDefaultValue(propDef),
+        name: propName,
+        type: name,
+      }
+    } else {
+      delete info.props[propName]
     }
   })
 

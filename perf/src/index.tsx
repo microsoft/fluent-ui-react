@@ -16,10 +16,10 @@ const performanceExamplesContext = require.context('docs/src/examples/', true, /
 // We want to randomize examples to avoid any notable issues with always first example
 const performanceExampleNames: string[] = _.shuffle(performanceExamplesContext.keys())
 
-const asyncRender = (element: React.ReactElement<any>, mountNode: Element) =>
+const asyncRender = (element: React.ReactElement<any>, container: Element) =>
   new Promise(resolve => {
-    ReactDOM.render(element, mountNode, () => {
-      ReactDOM.unmountComponentAtNode(mountNode)
+    ReactDOM.render(element, container, () => {
+      ReactDOM.unmountComponentAtNode(container)
       resolve()
     })
   })

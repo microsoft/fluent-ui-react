@@ -500,7 +500,6 @@ describe('Dropdown', () => {
     })
 
     it('is the index of the value previously selected when opened', () => {
-      const onOpenChange = jest.fn()
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
       const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
@@ -523,7 +522,6 @@ describe('Dropdown', () => {
     })
 
     it('is the index of the (value previously selected + 1) when opened by arrow down', () => {
-      const onOpenChange = jest.fn()
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
       const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
@@ -548,7 +546,6 @@ describe('Dropdown', () => {
     })
 
     it('is the index of the (value previously selected - 1) when opened by arrow up', () => {
-      const onOpenChange = jest.fn()
       const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
       const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
@@ -1049,8 +1046,7 @@ describe('Dropdown', () => {
       const stopPropagation = jest.fn()
       const stopImmediatePropagation = jest.fn()
       const mockedEvent = { stopPropagation, nativeEvent: { stopImmediatePropagation } }
-      const items = [{ header: 'Venom', onClick }]
-      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const wrapper = mountWithProvider(<Dropdown items={[{ header: 'Venom', onClick }]} />)
       const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
 
       triggerButton.simulate('click')
