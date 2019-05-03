@@ -17,7 +17,7 @@ import {
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { StardustProps, ShorthandValue, ComponentEventHandler } from '../../types'
 
 export interface RadioGroupSlotClassNames {
   item: string
@@ -55,7 +55,10 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
  * @accessibility
  * Implements ARIA Radio Group design pattern.
  */
-class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, any> {
+class RadioGroup<TAs = 'div'> extends AutoControlledComponent<
+  StardustProps<RadioGroupProps, TAs>,
+  any
+> {
   static displayName = 'RadioGroup'
 
   static className = 'ui-radiogroup'

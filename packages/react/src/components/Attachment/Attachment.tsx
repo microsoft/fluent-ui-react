@@ -2,7 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { StardustProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import {
   UIComponent,
   createShorthandFactory,
@@ -33,6 +33,9 @@ export interface AttachmentProps extends UIComponentProps, ChildrenComponentProp
 
   /** A string describing the attachment. */
   description?: ShorthandValue
+
+  /** An attachment can be disabled. */
+  disabled?: boolean
 
   /** The name of the attachment. */
   header?: ShorthandValue
@@ -65,7 +68,10 @@ export interface AttachmentState {
 /**
  * An Attachment displays a file attachment.
  */
-class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentState> {
+class Attachment<TAs = 'div'> extends UIComponent<
+  StardustProps<AttachmentProps, TAs>,
+  AttachmentState
+> {
   static create: Function
 
   static className = 'ui-attachment'
@@ -85,7 +91,7 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentStat
   }
 
   static defaultProps = {
-    accessibility: attachmentBehavior as Accessibility,
+    accessibility: attachmentBehavior,
   }
 
   public state = {
@@ -164,6 +170,9 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentStat
   }
 }
 
-Attachment.create = createShorthandFactory({ Component: Attachment, mappedProp: 'header' })
+Attachment.create = createShorthandFactory<AttachmentProps>({
+  Component: Attachment,
+  mappedProp: 'header',
+})
 
 export default Attachment

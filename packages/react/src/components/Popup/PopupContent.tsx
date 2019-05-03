@@ -16,7 +16,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ComponentEventHandler } from '../../types'
+import { StardustProps, ComponentEventHandler } from '../../types'
 import Box from '../Box/Box'
 import Ref from '../Ref/Ref'
 
@@ -62,7 +62,7 @@ export interface PopupContentProps
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
+class PopupContent<TAs = 'div'> extends UIComponent<StardustProps<PopupContentProps, TAs>, any> {
   public static create: Function
 
   public static displayName = 'PopupContent'
@@ -136,6 +136,9 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
   }
 }
 
-PopupContent.create = createShorthandFactory({ Component: PopupContent, mappedProp: 'content' })
+PopupContent.create = createShorthandFactory<PopupContentProps>({
+  Component: PopupContent,
+  mappedProp: 'content',
+})
 
 export default PopupContent

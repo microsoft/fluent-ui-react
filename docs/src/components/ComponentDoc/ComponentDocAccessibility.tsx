@@ -21,7 +21,7 @@ const ComponentDocAccessibility = ({ info }) => {
     <Flex column>
       <Flex.Item>
         <>
-          <Header
+          <Header<'h2'>
             as="h2"
             className="no-anchor"
             content="Accessibility"

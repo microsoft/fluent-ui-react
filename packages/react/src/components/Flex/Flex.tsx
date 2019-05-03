@@ -3,7 +3,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
-import { ReactProps } from '../../types'
+import { StardustProps } from '../../types'
 import FlexItem from './FlexItem'
 
 export interface FlexProps extends UIComponentProps, ChildrenComponentProps {
@@ -41,7 +41,7 @@ export interface FlexProps extends UIComponentProps, ChildrenComponentProps {
 /**
  * Arrange group of items aligned towards common direction.
  */
-class Flex extends UIComponent<ReactProps<FlexProps>> {
+class Flex<TAs = 'div'> extends UIComponent<StardustProps<FlexProps, TAs>> {
   static Item = FlexItem
 
   static displayName = 'Flex'

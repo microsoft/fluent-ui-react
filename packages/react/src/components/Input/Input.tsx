@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { StardustProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import Box from '../Box/Box'
@@ -85,7 +85,10 @@ export interface InputState {
  * Other considerations:
  *  - if input is search, then use "role='search'"
  */
-class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> {
+class Input<TAs = 'div'> extends AutoControlledComponent<
+  StardustProps<InputProps, TAs>,
+  InputState
+> {
   private inputRef = React.createRef<HTMLElement>()
 
   static className = 'ui-input'

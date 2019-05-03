@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropTypes } from '../../lib'
-import { ShorthandValue, ComponentEventHandler, ReactProps } from '../../types'
+import { ShorthandValue, ComponentEventHandler, StardustProps } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
@@ -17,6 +17,9 @@ export interface DropdownItemSlotClassNames {
 }
 
 export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
+  /** Accessibility props of dropdown item. */
+  accessibilityItemProps?: any
+
   /** A dropdown item can be active. */
   active?: boolean
 
@@ -42,7 +45,7 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
  * A DropdownItem is a sub-component of the Dropdown,
  * used to display items of the dropdown list.
  */
-class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
+class DropdownItem<TAs = 'div'> extends UIComponent<StardustProps<DropdownItemProps, TAs>, any> {
   static displayName = 'DropdownItem'
 
   static create: Function
@@ -113,6 +116,9 @@ DropdownItem.slotClassNames = {
   image: `${DropdownItem.className}__image`,
 }
 
-DropdownItem.create = createShorthandFactory({ Component: DropdownItem, mappedProp: 'header' })
+DropdownItem.create = createShorthandFactory<DropdownItemProps>({
+  Component: DropdownItem,
+  mappedProp: 'header',
+})
 
 export default DropdownItem

@@ -11,7 +11,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
+import { StardustProps, ShorthandValue } from '../../types'
 import Box from '../Box/Box'
 
 export interface SegmentProps
@@ -31,7 +31,7 @@ export interface SegmentProps
 /**
  * A segment is used to create a grouping of related content.
  */
-class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
+class Segment<TAs = 'div'> extends UIComponent<StardustProps<SegmentProps, TAs>, any> {
   static className = 'ui-segment'
 
   static displayName = 'Segment'

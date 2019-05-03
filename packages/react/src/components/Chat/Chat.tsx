@@ -12,7 +12,7 @@ import {
 } from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
-import { ReactProps, ShorthandValue } from '../../types'
+import { StardustProps, ShorthandValue } from '../../types'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
@@ -35,7 +35,7 @@ export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
 /**
  * A Chat displays messages between users.
  */
-class Chat extends UIComponent<ReactProps<ChatProps>, any> {
+class Chat<TAs = 'ul'> extends UIComponent<StardustProps<ChatProps, TAs>, any> {
   static displayName = 'Chat'
 
   static className = 'ui-chat'

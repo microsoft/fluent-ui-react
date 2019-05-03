@@ -11,7 +11,7 @@ import {
   ContentComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps } from '../../types'
+import { StardustProps } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 
@@ -38,7 +38,7 @@ export interface GridProps
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Grid extends UIComponent<ReactProps<GridProps>, any> {
+class Grid<TAs = 'div'> extends UIComponent<StardustProps<GridProps, TAs>, any> {
   public static displayName = 'Grid'
 
   public static className = 'ui-grid'

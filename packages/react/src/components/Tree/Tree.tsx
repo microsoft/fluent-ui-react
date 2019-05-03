@@ -13,7 +13,7 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../types'
+import { ShorthandValue, ShorthandRenderFunction, StardustProps } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { treeBehavior } from '../../lib/accessibility'
 
@@ -38,7 +38,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   exclusive?: boolean
 
   /** Shorthand array of props for Tree. */
-  items: ShorthandValue[]
+  items?: ShorthandValue[]
 
   /**
    * A custom render function for the title slot.
@@ -57,7 +57,7 @@ export interface TreeState {
 /**
  * Allows users to display data organised in tree-hierarchy.
  */
-class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
+class Tree<TAs = 'ul'> extends AutoControlledComponent<StardustProps<TreeProps, TAs>, TreeState> {
   static create: Function
 
   static displayName = 'Tree'
@@ -157,6 +157,9 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
   }
 }
 
-Tree.create = createShorthandFactory({ Component: Tree, mappedArrayProp: 'items' })
+Tree.create = createShorthandFactory<TreeProps>({
+  Component: Tree,
+  mappedArrayProp: 'items',
+})
 
 export default Tree

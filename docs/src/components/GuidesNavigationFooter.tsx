@@ -19,7 +19,7 @@ const GuidesNavigationFooter: React.FC<GuidesNavigationFooterProps> = ({ previou
     <br />
     <Flex gap="gap.small">
       {previous && (
-        <Button
+        <Button<Link>
           as={Link}
           content={previous.name}
           icon="arrow left"
@@ -29,7 +29,7 @@ const GuidesNavigationFooter: React.FC<GuidesNavigationFooterProps> = ({ previou
         />
       )}
       {next && (
-        <Button
+        <Button<Link>
           as={Link}
           content={next.name}
           icon="arrow right"

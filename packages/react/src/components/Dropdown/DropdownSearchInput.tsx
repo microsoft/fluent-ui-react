@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropTypes } from '../../lib'
-import { ComponentEventHandler, ReactProps } from '../../types'
+import { ComponentEventHandler, StardustProps } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
 
@@ -14,6 +14,12 @@ export interface DropdownSearchInputSlotClassNames {
 }
 
 export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearchInputProps> {
+  /** Accessibility props of combobox. */
+  accessibilityComboboxProps?: any
+
+  /** Accessibility props of input. */
+  accessibilityInputProps?: any
+
   /** A dropdown search input can be formatted to appear inline in the context of a Dropdown. */
   inline?: boolean
 
@@ -59,7 +65,10 @@ export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearc
 /**
  * A DropdownSearchInput is a sub-component of a Dropdown that also has a search function, used to display the search input field.
  */
-class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProps>, any> {
+class DropdownSearchInput<TAs = 'div'> extends UIComponent<
+  StardustProps<DropdownSearchInputProps, TAs>,
+  any
+> {
   static displayName = 'DropdownSearchInput'
   static create: Function
   static slotClassNames: DropdownSearchInputSlotClassNames

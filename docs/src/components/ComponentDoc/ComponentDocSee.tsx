@@ -16,10 +16,10 @@ const ComponentDocSee: any = ({ displayName }) => {
     <List styles={listStyle}>
       {/* Heads up! Still render empty lists to reserve the whitespace */}
       <List.Item>
-        <Header color="grey" content={items.length > 0 ? 'See:' : ' '} size="tiny" />
+        <Header color="grey" content={items.length > 0 ? 'See:' : ' '} />
       </List.Item>
       {_.map(items, info => (
-        <List.Item
+        <List.Item<Link>
           as={Link}
           content={info.displayName}
           key={info.docblock.description}

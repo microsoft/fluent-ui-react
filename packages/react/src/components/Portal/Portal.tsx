@@ -18,7 +18,7 @@ import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
-import { ReactProps } from '../../types'
+import { StardustProps } from '../../types'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 export type TriggerAccessibility = {
@@ -81,7 +81,7 @@ export interface PortalState {
 /**
  * A component that allows you to render children outside their parent.
  */
-class Portal extends AutoControlledComponent<ReactProps<PortalProps>, PortalState> {
+class Portal extends AutoControlledComponent<StardustProps<PortalProps, false>, PortalState> {
   private portalNode: HTMLElement
   private triggerNode: HTMLElement
 
@@ -124,7 +124,7 @@ class Portal extends AutoControlledComponent<ReactProps<PortalProps>, PortalStat
     const { children, content, trapFocus } = this.props
     const { open } = this.state
     const contentToRender = childrenExist(children) ? children : content
-    const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
+    const focusTrapZoneProps = (_.keys(trapFocus).length && (trapFocus as FocusTrapZoneProps)) || {}
 
     return (
       open && (

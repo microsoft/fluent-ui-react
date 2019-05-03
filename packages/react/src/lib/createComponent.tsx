@@ -22,6 +22,12 @@ export interface CreateComponentConfig<P> {
   render: (config: RenderResultConfig<P>, props: P) => React.ReactNode
 }
 
+// export type StardustFunctionComponent<P={}> = <TAs='div'>(props: ReactProps<P, TAs>) => JSX.Element
+
+// export type CreateComponentReturnType<P> = StardustFunctionComponent<P> & {
+//   create: Function
+// }
+
 export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
   create: Function
 }
@@ -42,7 +48,8 @@ const createComponent = <P extends ObjectOf<any> = any>({
     ...(defaultProps as any),
   }
 
-  const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
+  // const StardustComponent = function<TAs='div'>(props: ReactProps<P, TAs>): JSX.Element {
+  const StardustComponent = (props: P): JSX.Element => {
     const theme: ThemePrepared = React.useContext(ThemeContext)
 
     return renderComponent(
@@ -55,7 +62,7 @@ const createComponent = <P extends ObjectOf<any> = any>({
         state: {},
         actionHandlers,
         focusZoneRef,
-        render: config => render(config, props),
+        render: config => render(config, props as P),
       },
       theme,
     )

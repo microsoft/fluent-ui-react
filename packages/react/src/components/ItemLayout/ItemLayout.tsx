@@ -13,7 +13,7 @@ import {
 } from '../../lib'
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
-import { ReactProps } from '../../types'
+import { StardustProps } from '../../types'
 
 export interface ItemLayoutSlotClassNames {
   header: string
@@ -67,7 +67,7 @@ export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps
 /**
  * (DEPRECATED) The Item Layout handles layout styles for menu items, list items and other similar item templates.
  */
-class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
+class ItemLayout<TAs = 'div'> extends UIComponent<StardustProps<ItemLayoutProps, TAs>, any> {
   static create: Function
 
   static displayName = 'ItemLayout'
@@ -176,7 +176,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
 
   renderComponent({ ElementType, classes, unhandledProps, styles }) {
     const { as, debug, endMedia, media, renderMainArea, rootCSS, mediaCSS, endMediaCSS } = this
-      .props as ItemLayoutPropsWithDefaults
+      .props as ItemLayoutProps
 
     const startArea = media
     const mainArea = renderMainArea(this.props, this.state, classes)
@@ -216,7 +216,11 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
   }
 }
 
-ItemLayout.create = createShorthandFactory({ Component: ItemLayout, mappedProp: 'content' })
+ItemLayout.create = createShorthandFactory<ItemLayoutProps>({
+  Component: ItemLayout,
+  mappedProp: 'content',
+})
+
 ItemLayout.slotClassNames = {
   header: `${ItemLayout.className}__header`,
   headerMedia: `${ItemLayout.className}__headerMedia`,
@@ -228,5 +232,3 @@ ItemLayout.slotClassNames = {
 }
 
 export default ItemLayout
-
-export type ItemLayoutPropsWithDefaults = ItemLayoutProps & typeof ItemLayout.defaultProps

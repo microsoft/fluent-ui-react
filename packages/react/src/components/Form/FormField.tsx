@@ -12,7 +12,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
+import { StardustProps, ShorthandValue } from '../../types'
 import Text from '../Text/Text'
 import Input from '../Input/Input'
 import Box from '../Box/Box'
@@ -52,7 +52,7 @@ export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps
 /**
  * A field is a form element containing a label and an input.
  */
-class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
+class FormField<TAs = 'div'> extends UIComponent<StardustProps<FormFieldProps, TAs>, any> {
   public static displayName = 'FormField'
 
   public static className = 'ui-form__field'
@@ -129,6 +129,9 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
   }
 }
 
-FormField.create = createShorthandFactory({ Component: FormField, mappedProp: 'label' })
+FormField.create = createShorthandFactory<FormFieldProps>({
+  Component: FormField,
+  mappedProp: 'label',
+})
 
 export default FormField

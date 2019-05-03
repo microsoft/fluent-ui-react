@@ -8,8 +8,8 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
-import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
-import { ReactProps } from '../../types'
+import createComponent from '../../lib/createComponent'
+import { StardustProps } from '../../types'
 
 export interface BoxProps
   extends UIComponentProps<BoxProps>,
@@ -20,7 +20,7 @@ export interface BoxProps
  * A Box is an abstract component, is frequently used for slots in other Stardust components.
  * By default it renders a `div` without any styles.
  */
-const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<BoxProps>({
+const Box = createComponent<StardustProps<BoxProps, any>>({
   displayName: 'Box',
 
   className: 'ui-box',

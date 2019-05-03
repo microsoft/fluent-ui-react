@@ -16,7 +16,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { StardustProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 import ReactionGroup from './ReactionGroup'
@@ -56,7 +56,7 @@ export interface ReactionState {
 /**
  * A reaction is used to indicate user's reaction.
  */
-class Reaction extends UIComponent<ReactProps<ReactionProps>, ReactionState> {
+class Reaction<TAs = 'span'> extends UIComponent<StardustProps<ReactionProps, TAs>, ReactionState> {
   static create: Function
 
   static className = 'ui-reaction'
@@ -123,7 +123,11 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>, ReactionState> {
   }
 }
 
-Reaction.create = createShorthandFactory({ Component: Reaction, mappedProp: 'content' })
+Reaction.create = createShorthandFactory<ReactionProps>({
+  Component: Reaction,
+  mappedProp: 'content',
+})
+
 Reaction.slotClassNames = {
   icon: `${Reaction.className}__icon`,
   content: `${Reaction.className}__content`,

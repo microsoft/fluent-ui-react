@@ -6,11 +6,11 @@ import cx from 'classnames'
 import * as keyboardKey from 'keyboard-key'
 
 import {
-  Extendable,
   ShorthandRenderFunction,
   ShorthandValue,
   ComponentEventHandler,
   ShorthandCollection,
+  StardustProps,
 } from '../../types'
 import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
 import Downshift, {
@@ -216,7 +216,11 @@ export interface DropdownState {
  * @accessibility
  * Implements ARIA collapsible Listbox design pattern, uses aria-live to announce state changes.
  */
-class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, DropdownState> {
+
+class Dropdown<TAs = 'div'> extends AutoControlledComponent<
+  StardustProps<DropdownProps, TAs>,
+  DropdownState
+> {
   private buttonRef = React.createRef<HTMLElement>()
   private inputRef = React.createRef<HTMLInputElement>()
   private listRef = React.createRef<HTMLElement>()

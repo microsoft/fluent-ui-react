@@ -109,7 +109,7 @@ export default () => (
       customize styles and variables of these components, the same way they would do with the
       Stardust components.
     </p>
-    <Header
+    <Header<'h3'>
       as="h3"
       content={
         <>
@@ -150,7 +150,7 @@ export default () => (
       For more advanced theming scenarios, please take a look in the <b>Styles</b> section on the{' '}
       <NavLink to="theming">Theming guide</NavLink>.
     </p>
-    <Header
+    <Header<'h3'>
       as="h3"
       content={
         <>
@@ -237,7 +237,7 @@ export default () => (
       <NavLink to="theming">Theming guide</NavLink>.
     </p>
 
-    <Header
+    <Header<'h3'>
       as="h3"
       content={
         <>

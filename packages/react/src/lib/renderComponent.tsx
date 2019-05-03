@@ -17,7 +17,7 @@ import {
   State,
   ThemePrepared,
 } from '../themes/types'
-import { Props } from '../types'
+import { Props, StardustProps } from '../types'
 import {
   AccessibilityBehavior,
   AccessibilityDefinition,
@@ -33,8 +33,8 @@ import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtiliti
 import createAnimationStyles from './createAnimationStyles'
 import { generateColorScheme } from './colorUtils'
 
-export interface RenderResultConfig<P> {
-  ElementType: React.ElementType<P>
+export interface RenderResultConfig<P, TAs = any> {
+  ElementType: React.ElementType<StardustProps<P, TAs>>
   classes: ComponentSlotClasses
   unhandledProps: Props
   variables: ComponentVariablesObject

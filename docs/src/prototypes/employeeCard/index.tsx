@@ -20,14 +20,14 @@ class EmployeeCardPrototype extends React.Component<any, { popupOpen: boolean }>
     }
     return (
       <div style={{ margin: '20px' }}>
-        <Header
+        <Header<'h3'>
           as="h3"
           content="Employee Card"
           description={{ content: 'Simple employee card component.', styles: { fontSize: '16px' } }}
         />
         <EmployeeCard {...employee} />
         <Divider variables={{ dividerColor: 'transparent' }} />
-        <Header
+        <Header<'h3'>
           as="h3"
           content="Avatar Employee Card"
           description={{

@@ -10,7 +10,7 @@ import {
 } from '../../lib'
 import { AnimationProp } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
-import { ReactProps } from '../../types'
+import { StardustProps } from '../../types'
 
 export interface AnimationProps
   extends StyledComponentProps,
@@ -82,7 +82,7 @@ export interface AnimationProps
 /**
  * An animation allows the user to animate their own components.
  */
-class Animation extends UIComponent<ReactProps<AnimationProps>, any> {
+class Animation<TAs = 'div'> extends UIComponent<StardustProps<AnimationProps, TAs>, any> {
   static create: Function
 
   static className = 'ui-animation'

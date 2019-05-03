@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 
-import { ReactProps } from '../../types'
+import { StardustProps } from '../../types'
 import { defaultBehavior } from '../../lib/accessibility'
 import Ref from '../Ref/Ref'
 
@@ -30,7 +30,7 @@ export interface VideoProps extends UIComponentProps {
 /**
  * An video is a graphicical and audio representation of something.
  */
-class Video extends UIComponent<ReactProps<VideoProps>> {
+class Video<TAs = 'video'> extends UIComponent<StardustProps<VideoProps, TAs>> {
   static create: Function
 
   static className = 'ui-video'
@@ -100,6 +100,9 @@ class Video extends UIComponent<ReactProps<VideoProps>> {
   }
 }
 
-Video.create = createShorthandFactory({ Component: Video, mappedProp: 'src' })
+Video.create = createShorthandFactory<VideoProps>({
+  Component: Video,
+  mappedProp: 'src',
+})
 
 export default Video

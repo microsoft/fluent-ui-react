@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { commonPropTypes } from '../../lib'
-import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
-import { ReactProps } from '../../types'
+import createComponent from '../../lib/createComponent'
+import { StardustProps } from '../../types'
 
-const ProviderBox: CreateComponentReturnType<ReactProps<{}>> = createComponent<any>({
+const ProviderBox = createComponent<StardustProps<React.PropsWithChildren<{}>, any>>({
   displayName: 'ProviderBox',
 
   className: 'ui-provider__box',

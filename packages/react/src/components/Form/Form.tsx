@@ -13,7 +13,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, StardustProps, ShorthandValue } from '../../types'
 import FormField from './FormField'
 
 export interface FormSlotClassNames {
@@ -46,7 +46,7 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
  * @accessibility
  * Label needs to be provided by using 'aria-label', or 'aria-labelledby' attributes on the <form> element.
  */
-class Form extends UIComponent<ReactProps<FormProps>, any> {
+class Form<TAs = 'form'> extends UIComponent<StardustProps<FormProps, TAs>, any> {
   static create: Function
 
   public static displayName = 'Form'

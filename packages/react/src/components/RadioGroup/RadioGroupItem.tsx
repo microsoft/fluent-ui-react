@@ -13,7 +13,7 @@ import {
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Box from '../Box/Box'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, StardustProps, ShorthandValue } from '../../types'
 import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -92,8 +92,8 @@ export interface RadioGroupItemState {
  * @accessibility
  * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
  */
-class RadioGroupItem extends AutoControlledComponent<
-  ReactProps<RadioGroupItemProps>,
+class RadioGroupItem<TAs = 'div'> extends AutoControlledComponent<
+  StardustProps<RadioGroupItemProps, TAs>,
   RadioGroupItemState
 > {
   private elementRef = React.createRef<HTMLElement>()
@@ -185,6 +185,9 @@ class RadioGroupItem extends AutoControlledComponent<
   }
 }
 
-RadioGroupItem.create = createShorthandFactory({ Component: RadioGroupItem, mappedProp: 'label' })
+RadioGroupItem.create = createShorthandFactory<RadioGroupItemProps>({
+  Component: RadioGroupItem,
+  mappedProp: 'label',
+})
 
 export default RadioGroupItem

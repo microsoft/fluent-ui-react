@@ -18,7 +18,7 @@ import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
-import { ReactProps, ShorthandCollection, ShorthandValue } from '../../types'
+import { StardustProps, ShorthandCollection, ShorthandValue } from '../../types'
 import MenuDivider from './MenuDivider'
 
 export type MenuShorthandKinds = 'divider' | 'item'
@@ -88,7 +88,7 @@ export interface MenuState {
  * @accessibility
  * Implements ARIA Menu, Toolbar or Tabs design pattern, depending on the behavior used.
  */
-class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
+class Menu<TAs = 'ul'> extends AutoControlledComponent<StardustProps<MenuProps, TAs>, MenuState> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -224,6 +224,9 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   }
 }
 
-Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items' })
+Menu.create = createShorthandFactory<MenuProps>({
+  Component: Menu,
+  mappedArrayProp: 'items',
+})
 
 export default Menu

@@ -68,9 +68,9 @@ export default () => (
       value={`
       const overridenAutoFocusBehavior: Accessibility = (props: any) => {
         const behavior = popupFocusTrapBehavior(props)
-      
+
         behavior.autoFocus.firstFocusableSelector = ".btn-submit";
-      
+
         return behavior
       }
       `}

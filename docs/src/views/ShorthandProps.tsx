@@ -242,7 +242,13 @@ const ShorthandProps = props => (
     </p>
 
     <br />
-    <Button as={NavLink} content="Quick Start" icon="arrow right" primary to="quick-start" />
+    <Button<NavLink>
+      as={NavLink}
+      content="Quick Start"
+      icon="arrow right"
+      primary
+      to="quick-start"
+    />
   </DocPage>
 )
 

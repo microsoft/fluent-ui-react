@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 
 import { UIComponent, UIComponentProps, commonPropTypes, rtlTextContainer } from '../../lib'
-import { ReactProps } from '../../types'
+import { StardustProps } from '../../types'
 import { ICSSInJSStyle } from '../../themes/types'
 
 export interface LayoutSlotClassNames {
@@ -49,7 +49,7 @@ export interface LayoutProps extends UIComponentProps {
 /**
  * (DEPRECATED) A layout is a utility for arranging the content of a component.
  */
-class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
+class Layout<TAs = 'div'> extends UIComponent<StardustProps<LayoutProps, TAs>, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'

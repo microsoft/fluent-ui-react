@@ -20,7 +20,7 @@ import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
+import { StardustProps, ShorthandValue } from '../../types'
 import {
   ComplexColorPropType,
   ColorValuesWithPrimitiveColors,
@@ -59,7 +59,7 @@ export interface LabelProps
 /**
  * A Label is used to classify content.
  */
-class Label extends UIComponent<ReactProps<LabelProps>, any> {
+class Label<TAs = 'span'> extends UIComponent<StardustProps<LabelProps, TAs>, any> {
   static displayName = 'Label'
 
   static create: Function
@@ -156,6 +156,9 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   }
 }
 
-Label.create = createShorthandFactory({ Component: Label, mappedProp: 'content' })
+Label.create = createShorthandFactory<LabelProps>({
+  Component: Label,
+  mappedProp: 'content',
+})
 
 export default Label

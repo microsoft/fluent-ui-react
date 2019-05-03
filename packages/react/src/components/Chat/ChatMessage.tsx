@@ -17,7 +17,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { StardustProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import { chatMessageBehavior, toolbarBehavior } from '../../lib/accessibility'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
@@ -97,7 +97,10 @@ export interface ChatMessageState {
 /**
  * A chat message represents a single statement communicated to a user.
  */
-class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageState> {
+class ChatMessage<TAs = 'div'> extends UIComponent<
+  StardustProps<ChatMessageProps, TAs>,
+  ChatMessageState
+> {
   static className = 'ui-chat__message'
 
   static create: Function
@@ -260,7 +263,11 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   }
 }
 
-ChatMessage.create = createShorthandFactory({ Component: ChatMessage, mappedProp: 'content' })
+ChatMessage.create = createShorthandFactory<ChatMessageProps>({
+  Component: ChatMessage,
+  mappedProp: 'content',
+})
+
 ChatMessage.slotClassNames = {
   actionMenu: `${ChatMessage.className}__actions`,
   author: `${ChatMessage.className}__author`,

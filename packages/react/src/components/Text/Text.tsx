@@ -16,7 +16,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps } from '../../types'
+import { StardustProps } from '../../types'
 
 export interface TextProps
   extends UIComponentProps,
@@ -70,7 +70,7 @@ export interface TextProps
  * - 'content' is provided as plain string (then dir="auto" attribute will be applied automatically)
  * - for other 'content' value types (i.e. that use elements inside) ensure that dir="auto" attribute is applied for all places in content where necessary
  */
-class Text extends UIComponent<ReactProps<TextProps>, any> {
+class Text<TAs = 'span'> extends UIComponent<StardustProps<TextProps, TAs>, any> {
   static create: Function
 
   static className = 'ui-text'
@@ -112,6 +112,9 @@ class Text extends UIComponent<ReactProps<TextProps>, any> {
   }
 }
 
-Text.create = createShorthandFactory({ Component: Text, mappedProp: 'content' })
+Text.create = createShorthandFactory<TextProps>({
+  Component: Text,
+  mappedProp: 'content',
+})
 
 export default Text

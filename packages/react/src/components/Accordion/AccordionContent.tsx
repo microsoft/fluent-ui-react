@@ -11,7 +11,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ComponentEventHandler } from '../../types'
+import { StardustProps, ComponentEventHandler } from '../../types'
 
 export interface AccordionContentProps
   extends UIComponentProps,
@@ -32,7 +32,10 @@ export interface AccordionContentProps
 /**
  * A standard AccordionContent.
  */
-class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, any> {
+class AccordionContent<TAs = 'div'> extends UIComponent<
+  StardustProps<AccordionContentProps, TAs>,
+  any
+> {
   static displayName = 'AccordionContent'
 
   static create: Function
@@ -60,7 +63,7 @@ class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, an
   }
 }
 
-AccordionContent.create = createShorthandFactory({
+AccordionContent.create = createShorthandFactory<AccordionContentProps>({
   Component: AccordionContent,
   mappedProp: 'content',
 })

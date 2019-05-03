@@ -84,7 +84,6 @@ export { default as Input, InputState, InputProps } from './components/Input/Inp
 
 export {
   default as ItemLayout,
-  ItemLayoutPropsWithDefaults,
   ItemLayoutProps,
   ItemLayoutSlotClassNames,
 } from './components/ItemLayout/ItemLayout'

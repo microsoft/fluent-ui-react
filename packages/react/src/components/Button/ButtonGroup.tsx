@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { ReactProps, ShorthandValue } from '../../types'
+import { StardustProps, ShorthandValue } from '../../types'
 import {
   UIComponent,
   childrenExist,
@@ -38,7 +38,7 @@ export interface ButtonGroupProps
 /**
  * A button group presents multiple related actions.
  */
-class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
+class ButtonGroup<TAs = 'div'> extends UIComponent<StardustProps<ButtonGroupProps, TAs>, any> {
   public static create: Function
 
   public static displayName = 'ButtonGroup'
@@ -106,7 +106,7 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
   }
 }
 
-ButtonGroup.create = createShorthandFactory({
+ButtonGroup.create = createShorthandFactory<ButtonGroupProps>({
   Component: ButtonGroup,
   mappedProp: 'content',
   mappedArrayProp: 'buttons',

@@ -4,7 +4,6 @@ import * as React from 'react'
 import {
   ShorthandValue,
   Props,
-  PropsOf,
   ShorthandRenderCallback,
   ShorthandRenderFunction,
   ShorthandRenderer,
@@ -54,8 +53,8 @@ export function createShorthand({
   options = CREATE_SHORTHAND_DEFAULT_OPTIONS,
 }: {
   Component: React.ReactType
-  mappedProp?: string
-  mappedArrayProp?: string
+  mappedProp?: string | number | symbol
+  mappedArrayProp?: string | number | symbol
   valueOrRenderCallback?: ShorthandValue | ShorthandRenderCallback
   options?: CreateShorthandOptions
 }): React.ReactElement<Props> | null | undefined {
@@ -80,12 +79,11 @@ export function createShorthand({
   })
 }
 
-type CreateShorthandFactoryConfigInner<TPropName = string> = {
-  Component: React.ReactType
-  mappedProp?: TPropName
-  mappedArrayProp?: TPropName
+export type CreateShorthandFactoryConfig<TProps> = {
+  Component: React.ComponentType<{ [K in keyof TProps]?: TProps[K] }>
+  mappedProp?: keyof TProps
+  mappedArrayProp?: keyof TProps
 }
-export type CreateShorthandFactoryConfig = CreateShorthandFactoryConfigInner
 // ============================================================
 // Factory Creators
 // ============================================================
@@ -95,26 +93,11 @@ export type CreateShorthandFactoryConfig = CreateShorthandFactoryConfigInner
  * * @param {string} mappedArrayProp A function that maps an array value to the Component props
  * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
  */
-export function createShorthandFactory<TStringElement extends keyof JSX.IntrinsicElements>(config: {
-  Component: TStringElement
-  mappedProp?: keyof PropsOf<TStringElement>
-  mappedArrayProp?: keyof PropsOf<TStringElement>
-})
-export function createShorthandFactory<TFunctionComponent extends React.FunctionComponent>(config: {
-  Component: TFunctionComponent
-  mappedProp?: keyof PropsOf<TFunctionComponent>
-  mappedArrayProp?: keyof PropsOf<TFunctionComponent>
-})
-export function createShorthandFactory<TInstance extends React.Component>(config: {
-  Component: { new (...args: any[]): TInstance }
-  mappedProp?: keyof PropsOf<TInstance>
-  mappedArrayProp?: keyof PropsOf<TInstance>
-})
-export function createShorthandFactory({
+export function createShorthandFactory<TProps>({
   Component,
   mappedProp,
   mappedArrayProp,
-}: CreateShorthandFactoryConfigInner<any>) {
+}: CreateShorthandFactoryConfig<any>) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthandFactory() Component must be a string or function.')
   }
@@ -135,8 +118,8 @@ function createShorthandFromValue({
   options,
 }: {
   Component: React.ReactType
-  mappedProp?: string
-  mappedArrayProp?: string
+  mappedProp?: string | number | symbol
+  mappedArrayProp?: string | number | symbol
   value?: ShorthandValue
   options?: CreateShorthandOptions
 }) {
@@ -265,8 +248,8 @@ function createShorthandFromRenderCallback({
 }: {
   Component: React.ReactType
   renderCallback: ShorthandRenderCallback
-  mappedProp?: string
-  mappedArrayProp?: string
+  mappedProp?: string | number | symbol
+  mappedArrayProp?: string | number | symbol
   options?: CreateShorthandOptions
 }) {
   const render: ShorthandRenderer = (shorthandValue, renderTree) => {

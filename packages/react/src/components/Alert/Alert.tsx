@@ -15,7 +15,7 @@ import {
 import { RenderResultConfig } from '../../lib/renderComponent'
 import { alertBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, StardustProps, ShorthandValue } from '../../types'
 import Box from '../Box/Box'
 import Button, { ButtonProps } from '../Button/Button'
 
@@ -69,7 +69,7 @@ export interface AlertState {
  *  - by default, content from warning and danger variants is announced by the screen reader. To announce the content of other variants, a mechanism similar to react-aria-live can be used
  *  - if Alert contains action slot, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
  */
-class Alert extends UIComponent<ReactProps<AlertProps>, AlertState> {
+class Alert<TAs = 'div'> extends UIComponent<StardustProps<AlertProps, TAs>, AlertState> {
   static displayName = 'Alert'
   static className = 'ui-alert'
 

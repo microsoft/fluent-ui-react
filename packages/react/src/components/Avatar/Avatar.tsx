@@ -6,7 +6,7 @@ import Label from '../Label/Label'
 import Status, { StatusProps } from '../Status/Status'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
+import { StardustProps, ShorthandValue } from '../../types'
 import {
   createShorthandFactory,
   UIComponent,
@@ -44,7 +44,7 @@ export interface AvatarProps extends UIComponentProps {
 /**
  * An avatar is a graphic representation of user.
  */
-class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
+class Avatar<TAs = 'div'> extends UIComponent<StardustProps<AvatarProps, TAs>, any> {
   static create: Function
 
   static className = 'ui-avatar'
@@ -127,6 +127,9 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
   }
 }
 
-Avatar.create = createShorthandFactory({ Component: Avatar, mappedProp: 'name' })
+Avatar.create = createShorthandFactory<AvatarProps>({
+  Component: Avatar,
+  mappedProp: 'name',
+})
 
 export default Avatar

@@ -16,7 +16,7 @@ import {
 import HeaderDescription from './HeaderDescription'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
+import { StardustProps, ShorthandValue } from '../../types'
 
 export interface HeaderSlotClassNames {
   description: string
@@ -50,7 +50,7 @@ export interface HeaderProps
  *  - when the description property is used in header, readers will narrate both header content and description within the element.
  *    In addition to that, both will be displayed in the list of headings.
  */
-class Header extends UIComponent<ReactProps<HeaderProps>, any> {
+class Header<TAs = 'h1'> extends UIComponent<StardustProps<HeaderProps, TAs>, any> {
   static displayName = 'Header'
 
   static className = 'ui-header'
@@ -106,6 +106,9 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
   }
 }
 
-Header.create = createShorthandFactory({ Component: Header, mappedProp: 'content' })
+Header.create = createShorthandFactory<HeaderProps>({
+  Component: Header,
+  mappedProp: 'content',
+})
 
 export default Header

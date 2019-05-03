@@ -18,7 +18,7 @@ import {
 } from '../../lib'
 import {
   ComponentEventHandler,
-  ReactProps,
+  StardustProps,
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../types'
@@ -67,7 +67,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   title?: ShorthandValue
 }
 
-class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
+class TreeItem<TAs = 'li'> extends UIComponent<StardustProps<TreeItemProps, TAs>> {
   static create: Function
 
   static displayName = 'TreeItem'
@@ -152,6 +152,9 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
   }
 }
 
-TreeItem.create = createShorthandFactory({ Component: TreeItem, mappedProp: 'title' })
+TreeItem.create = createShorthandFactory<TreeItemProps>({
+  Component: TreeItem,
+  mappedProp: 'title',
+})
 
 export default TreeItem

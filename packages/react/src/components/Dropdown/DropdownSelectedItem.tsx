@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import keyboardKey from 'keyboard-key'
-import { ComponentEventHandler, ShorthandValue, ReactProps } from '../../types'
+import { ComponentEventHandler, ShorthandValue, StardustProps } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import { createShorthandFactory, UIComponent, RenderResultConfig, commonPropTypes } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -61,7 +61,10 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
  * A DropdownSelectedItem is a sub-component of a multiple selection Dropdown.
  * It is used to display selected item.
  */
-class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemProps>, any> {
+class DropdownSelectedItem<TAs = 'div'> extends UIComponent<
+  StardustProps<DropdownSelectedItemProps, TAs>,
+  any
+> {
   private itemRef = React.createRef<HTMLElement>()
 
   static displayName = 'DropdownSelectedItem'
@@ -169,7 +172,7 @@ DropdownSelectedItem.slotClassNames = {
   image: `${DropdownSelectedItem.className}__image`,
 }
 
-DropdownSelectedItem.create = createShorthandFactory({
+DropdownSelectedItem.create = createShorthandFactory<DropdownSelectedItemProps>({
   Component: DropdownSelectedItem,
   mappedProp: 'header',
 })

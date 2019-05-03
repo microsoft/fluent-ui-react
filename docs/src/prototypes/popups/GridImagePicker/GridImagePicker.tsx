@@ -50,7 +50,7 @@ class GridImagePicker extends React.Component<GridPickerProps> {
           placeholder={inputPlaceholder}
           inputRef={this.setInputNode}
         />
-        <Grid
+        <Grid<'ul'>
           as="ul"
           accessibility={gridBehavior}
           columns={gridColumns}

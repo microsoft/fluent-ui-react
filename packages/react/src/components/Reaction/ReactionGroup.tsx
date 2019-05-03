@@ -2,7 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { ReactProps, ShorthandValue } from '../../types'
+import { StardustProps, ShorthandValue } from '../../types'
 import {
   UIComponent,
   childrenExist,
@@ -34,7 +34,7 @@ export interface ReactionGroupProps
 /**
  * A reaction group presents multiple reactions as a group.
  */
-class ReactionGroup extends UIComponent<ReactProps<ReactionGroupProps>> {
+class ReactionGroup<TAs = 'div'> extends UIComponent<StardustProps<ReactionGroupProps, TAs>> {
   static create: Function
 
   public static displayName = 'ReactionGroup'
@@ -85,7 +85,7 @@ class ReactionGroup extends UIComponent<ReactProps<ReactionGroupProps>> {
   }
 }
 
-ReactionGroup.create = createShorthandFactory({
+ReactionGroup.create = createShorthandFactory<ReactionGroupProps>({
   Component: ReactionGroup,
   mappedProp: 'content',
   mappedArrayProp: 'items',

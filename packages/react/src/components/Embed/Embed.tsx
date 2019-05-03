@@ -16,7 +16,7 @@ import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
 import Box from '../Box/Box'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, StardustProps, ShorthandValue } from '../../types'
 
 export interface EmbedSlotClassNames {
   control: string
@@ -75,7 +75,10 @@ export interface EmbedState {
  * Other considerations:
  *  - when alt and title property are empty, then Narrator in scan mode navigates to the gif and narrates it as empty paragraph
  */
-class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> {
+class Embed<TAs = 'span'> extends AutoControlledComponent<
+  StardustProps<EmbedProps, TAs>,
+  EmbedState
+> {
   static create: Function
 
   static className = 'ui-embed'

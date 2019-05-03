@@ -6,7 +6,7 @@ const HeaderExampleColor = () => (
   <ProviderConsumer
     render={({ siteVariables: { emphasisColors, naturalColors } }) =>
       _.keys({ ...emphasisColors, ...naturalColors }).map(color => (
-        <Header
+        <Header<'h4'>
           key={color}
           as="h4"
           color={color}

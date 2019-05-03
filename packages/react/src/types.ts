@@ -26,7 +26,25 @@ export type ObjectOrFunc<TResult, TArg = {}> = ((arg: TArg) => TResult) | TResul
 export type Props<T = {}> = T & ObjectOf<any>
 export type ReactChildren = React.ReactNodeArray | React.ReactNode
 
-export type ReactProps<T> = { [K in keyof T]: NullableIfUndefined<T[K]> }
+type ValueOf<TFirst, TSecond, TKey extends keyof (TFirst & TSecond)> = TKey extends keyof TFirst
+  ? TFirst[TKey]
+  : TKey extends keyof TSecond
+  ? TSecond[TKey]
+  : {}
+
+type Extended<TFirst, TSecond> = { [K in keyof (TFirst & TSecond)]: ValueOf<TFirst, TSecond, K> }
+
+type ExcludeProps<TFrom, TPropNames> = { [Key in Exclude<keyof TFrom, TPropNames>]?: TFrom[Key] }
+
+export type ReactProps<T> = ExcludeProps<{ [K in keyof T]: NullableIfUndefined<T[K]> }, 'as'>
+
+export type ReactPropsNoAs<T> = ReactProps<T>
+
+export type StardustProps<T, TAs = 'div'> = TAs extends null
+  ? ReactProps<T> & { as?: TAs }
+  : TAs extends false
+  ? ReactProps<T> & { as?: never }
+  : Extended<ReactProps<T>, PropsOf<TAs>> & (TAs extends 'div' ? { as?: 'div' } : { as: TAs })
 
 export type ComponentEventHandler<TProps> = (
   event: React.SyntheticEvent<HTMLElement>,
@@ -34,11 +52,7 @@ export type ComponentEventHandler<TProps> = (
 ) => void
 
 type ChildrenProps = { children: any }
-export type PropsOf<T> = T extends React.Component<ReactProps<infer TProps>>
-  ? (ChildrenProps & TProps)
-  : T extends React.Component<infer TProps>
-  ? (ChildrenProps & TProps)
-  : T extends React.FunctionComponent<ReactProps<infer TProps>>
+export type PropsOf<T> = T extends React.Component<infer TProps>
   ? (ChildrenProps & TProps)
   : T extends React.FunctionComponent<infer TProps>
   ? (ChildrenProps & TProps)

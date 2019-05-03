@@ -12,7 +12,7 @@ import {
 } from '../../lib'
 import { loaderBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ReactProps, ShorthandValue } from '../../types'
+import { StardustProps, ShorthandValue } from '../../types'
 import Box from '../Box/Box'
 
 export type LoaderPosition = 'above' | 'below' | 'start' | 'end'
@@ -59,7 +59,7 @@ export interface LoaderState {
 /**
  * A Loader indicates a possible user action.
  */
-class Loader extends UIComponent<ReactProps<LoaderProps>, LoaderState> {
+class Loader<TAs = 'div'> extends UIComponent<StardustProps<LoaderProps, TAs>, LoaderState> {
   static create: Function
   static displayName = 'Loader'
   static className = 'ui-loader'

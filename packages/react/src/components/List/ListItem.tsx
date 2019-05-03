@@ -13,7 +13,7 @@ import {
 import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ShorthandValue, ReactProps, ComponentEventHandler } from '../../types'
+import { ShorthandValue, StardustProps, ComponentEventHandler } from '../../types'
 import Box from '../Box/Box'
 
 export interface ListItemSlotClassNames {
@@ -74,7 +74,7 @@ export interface ListItemState {
 /**
  * A list item contains a single piece of content within a list.
  */
-class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
+class ListItem<TAs = 'li'> extends UIComponent<StardustProps<ListItemProps, TAs>, ListItemState> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -228,7 +228,11 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
   }
 }
 
-ListItem.create = createShorthandFactory({ Component: ListItem, mappedProp: 'content' })
+ListItem.create = createShorthandFactory<ListItemProps>({
+  Component: ListItem,
+  mappedProp: 'content',
+})
+
 ListItem.slotClassNames = {
   header: `${ListItem.className}__header`,
   headerMedia: `${ListItem.className}__headerMedia`,

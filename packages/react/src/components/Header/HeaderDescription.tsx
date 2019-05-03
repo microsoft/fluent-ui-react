@@ -13,7 +13,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps } from '../../types'
+import { StardustProps } from '../../types'
 
 export interface HeaderDescriptionProps
   extends UIComponentProps,
@@ -30,7 +30,10 @@ export interface HeaderDescriptionProps
 /**
  * A header's description provides more detailed information.
  */
-class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, any> {
+class HeaderDescription<TAs = 'p'> extends UIComponent<
+  StardustProps<HeaderDescriptionProps, TAs>,
+  any
+> {
   static create: Function
 
   static className = 'ui-header__description'
@@ -61,7 +64,7 @@ class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, 
   }
 }
 
-HeaderDescription.create = createShorthandFactory({
+HeaderDescription.create = createShorthandFactory<HeaderDescriptionProps>({
   Component: HeaderDescription,
   mappedProp: 'content',
 })

@@ -12,7 +12,7 @@ import {
   commonPropTypes,
   SizeValue,
 } from '../../lib'
-import { ReactProps, ShorthandValue } from '../../types'
+import { StardustProps, ShorthandValue } from '../../types'
 
 export interface StatusProps extends UIComponentProps {
   /**
@@ -39,7 +39,7 @@ export interface StatusProps extends UIComponentProps {
  * @accessibility
  * The 'img' role is used to identify an element as image. 'Title' attribute have to be provided on status component. Then reader narrate content of 'title' attribute.
  */
-class Status extends UIComponent<ReactProps<StatusProps>, any> {
+class Status<TAs = 'span'> extends UIComponent<StardustProps<StatusProps, TAs>, any> {
   static create: Function
 
   static className = 'ui-status'
@@ -81,6 +81,9 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
   }
 }
 
-Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' })
+Status.create = createShorthandFactory<StatusProps>({
+  Component: Status,
+  mappedProp: 'state',
+})
 
 export default Status

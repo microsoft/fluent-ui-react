@@ -5,7 +5,7 @@ export default props => {
   const { content, children } = props
   return (
     <Provider.Consumer
-      render={({ siteVariables }) => (
+      render={() => (
         <Text as="a" content={content} color="primary">
           {children}
         </Text>

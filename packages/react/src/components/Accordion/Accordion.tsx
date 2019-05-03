@@ -18,7 +18,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   ComponentEventHandler,
-  ReactProps,
+  StardustProps,
   ShorthandValue,
   ShorthandRenderFunction,
 } from '../../types'
@@ -81,7 +81,10 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
  * Implements ARIA Accordion design pattern (keyboard navigation not yet supported).
  * Consider using Tree if you intend to wrap Lists in an Accordion.
  */
-class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any> {
+class Accordion<TAs = 'div'> extends AutoControlledComponent<
+  StardustProps<AccordionProps, TAs>,
+  any
+> {
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'

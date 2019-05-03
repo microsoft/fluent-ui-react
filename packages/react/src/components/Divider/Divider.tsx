@@ -14,7 +14,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps } from '../../types'
+import { StardustProps } from '../../types'
 
 export interface DividerProps
   extends UIComponentProps,
@@ -40,7 +40,7 @@ export interface DividerProps
 /**
  * A divider visually segments content into groups.
  */
-class Divider extends UIComponent<ReactProps<DividerProps>, any> {
+class Divider<TAs = 'div'> extends UIComponent<StardustProps<DividerProps, TAs>, any> {
   static displayName = 'Divider'
 
   static create: Function
@@ -75,7 +75,10 @@ class Divider extends UIComponent<ReactProps<DividerProps>, any> {
   }
 }
 
-Divider.create = createShorthandFactory({ Component: Divider, mappedProp: 'content' })
+Divider.create = createShorthandFactory<DividerProps>({
+  Component: Divider,
+  mappedProp: 'content',
+})
 
 export default Divider
 

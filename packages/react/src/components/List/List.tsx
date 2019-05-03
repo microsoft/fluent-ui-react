@@ -17,7 +17,7 @@ import ListItem, { ListItemProps } from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { StardustProps, ShorthandValue, ComponentEventHandler } from '../../types'
 
 export interface ListSlotClassNames {
   item: string
@@ -67,7 +67,7 @@ export interface ListState {
 /**
  * A list displays a group of related content.
  */
-class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
+class List<TAs = 'ul'> extends AutoControlledComponent<StardustProps<ListProps, TAs>, ListState> {
   static displayName = 'List'
 
   static className = 'ui-list'

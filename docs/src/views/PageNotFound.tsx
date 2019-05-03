@@ -4,7 +4,7 @@ import { Grid, Segment, Header, Icon } from '@stardust-ui/react'
 const PageNotFound = () => (
   <Grid>
     <div>
-      <Header as="h1" icon textAlign="center">
+      <Header as="h1" styles={{ textAlign: 'center' }}>
         <Icon name="game" />
         404
         <Header.Description>How about some good old Atari?</Header.Description>
@@ -12,7 +12,7 @@ const PageNotFound = () => (
     </div>
 
     <div>
-      <Segment basic>
+      <Segment>
         <embed
           src="http://www.pizn.com/swf/classic-asteroids.swf"
           width="425"
@@ -28,7 +28,7 @@ const PageNotFound = () => (
       </Segment>
     </div>
     <div>
-      <Segment basic>
+      <Segment>
         <embed
           src="http://www.pizn.com/swf/1-space-invaders.swf"
           width="425"

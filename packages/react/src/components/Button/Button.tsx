@@ -18,7 +18,7 @@ import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, StardustProps, ShorthandValue } from '../../types'
 import ButtonGroup from './ButtonGroup'
 
 export interface ButtonProps
@@ -84,7 +84,7 @@ export interface ButtonState {
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
  */
-class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
+class Button<TAs = 'button'> extends UIComponent<StardustProps<ButtonProps, TAs>, ButtonState> {
   static create: Function
 
   public static displayName = 'Button'
@@ -180,6 +180,9 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
   }
 }
 
-Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
+Button.create = createShorthandFactory<ButtonProps>({
+  Component: Button,
+  mappedProp: 'content',
+})
 
 export default Button
