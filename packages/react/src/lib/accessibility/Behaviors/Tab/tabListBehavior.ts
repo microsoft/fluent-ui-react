@@ -1,4 +1,5 @@
 import { Accessibility, FocusZoneMode } from '../../types'
+import tabBehavior from './tabBehavior'
 
 /**
  * @description
@@ -22,6 +23,7 @@ const tabListBehavior: Accessibility = (props: any) => ({
       shouldFocusInnerElementWhenReceivedFocus: true,
     },
   },
+  childBehavior: tabBehavior,
 })
 
 export default tabListBehavior

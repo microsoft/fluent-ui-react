@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { Menu, tabBehavior, tabListBehavior } from '@stardust-ui/react'
+import { Menu, tabListBehavior } from '@stardust-ui/react'
 
 const items = [
-  { key: 'editorials', content: 'Editorials', accessibility: tabBehavior },
-  { key: 'review', content: 'Reviews', accessibility: tabBehavior },
-  { key: 'events', content: 'Upcoming Events', accessibility: tabBehavior },
+  { key: 'editorials', content: 'Editorials' },
+  { key: 'review', content: 'Reviews' },
+  { key: 'events', content: 'Upcoming Events' },
 ]
 
 class MenuExampleTabShorthand extends React.Component {
