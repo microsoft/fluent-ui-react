@@ -13,19 +13,36 @@ jest.dontMock('keyboard-key')
 jest.useFakeTimers()
 
 const getTriggerButtonWrapper = (wrapper: ReactWrapper) =>
-  wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+  wrapper
+    .find(`.${Dropdown.slotClassNames.triggerButton}`)
+    .filterWhere(n => typeof n.type() === 'string')
 const getToggleIndicatorWrapper = (wrapper: ReactWrapper) =>
-  wrapper.find(`span.${Dropdown.slotClassNames.toggleIndicator}`)
+  wrapper
+    .find(`.${Dropdown.slotClassNames.toggleIndicator}`)
+    .filterWhere(n => typeof n.type() === 'string')
 const getSearchInputWrapper = (wrapper: ReactWrapper) =>
-  wrapper.find(`input.${DropdownSearchInput.slotClassNames.input}`)
+  wrapper
+    .find(`.${DropdownSearchInput.slotClassNames.input}`)
+    .filterWhere(n => typeof n.type() === 'string')
 const getItemsListWrapper = (wrapper: ReactWrapper) =>
-  wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
+  wrapper
+    .find(`.${Dropdown.slotClassNames.itemsList}`)
+    .filterWhere(n => typeof n.type() === 'string')
 const getItemAtIndexWrapper = (wrapper: ReactWrapper, index: number = 0) =>
-  wrapper.find(`li.${Dropdown.slotClassNames.item}`).at(index)
+  wrapper
+    .find(`.${Dropdown.slotClassNames.item}`)
+    .filterWhere(n => typeof n.type() === 'string')
+    .at(index)
 const getSelectedItemAtIndexWrapper = (wrapper: ReactWrapper, index: number = 0) =>
-  wrapper.find(`span.${Dropdown.slotClassNames.selectedItem}`).at(index)
+  wrapper
+    .find(`.${Dropdown.slotClassNames.selectedItem}`)
+    .filterWhere(n => typeof n.type() === 'string')
+    .at(index)
 const getSelectedItemHeaderAtIndexWrapper = (wrapper: ReactWrapper, index: number = 0) =>
-  wrapper.find(`span.${DropdownSelectedItem.slotClassNames.header}`).at(index)
+  wrapper
+    .find(`.${DropdownSelectedItem.slotClassNames.header}`)
+    .filterWhere(n => typeof n.type() === 'string')
+    .at(index)
 
 describe('Dropdown', () => {
   const items = ['item1', 'item2', 'item3', 'item4', 'item5']
