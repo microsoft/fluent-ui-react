@@ -16,7 +16,7 @@ export interface RefProps {
   innerRef?: React.Ref<any>
 }
 
-const Ref: React.FC<RefProps> = props => {
+const Ref: React.FunctionComponent<RefProps> = props => {
   const { children, innerRef } = props
 
   const child = React.Children.only(children)
