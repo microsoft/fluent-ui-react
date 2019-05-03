@@ -6,7 +6,7 @@ import ComponentPropDefaultValue from '../ComponentProp/ComponentPropDefaultValu
 import ComponentPropDescription from '../ComponentProp/ComponentPropDescription'
 import ComponentPropName from '../ComponentProp/ComponentPropName'
 
-export default class ComponentTableRow extends React.Component<any, any> {
+export default class ComponentPropsRow extends React.Component<any, any> {
   static propTypes = {
     defaultValue: PropTypes.string,
     description: PropTypes.arrayOf(PropTypes.string),
@@ -43,13 +43,13 @@ export default class ComponentTableRow extends React.Component<any, any> {
         <td>
           <ComponentPropDescription description={description} />
           {/* TODO change these according to the react-docgen-typescript generated json */}
-          {/*<ComponentPropFunctionSignature name={name} tags={tags} />*/}
-          {/*<ComponentPropEnum*/}
-          {/*showAll={showEnums}*/}
-          {/*toggle={this.toggleEnums}*/}
-          {/*type={type}*/}
-          {/*values={value}*/}
-          {/*/>*/}
+          {/* <ComponentPropFunctionSignature name={name} tags={tags} /> */}
+          {/* <ComponentPropEnum */}
+          {/* showAll={showEnums} */}
+          {/* toggle={this.toggleEnums} */}
+          {/* type={type} */}
+          {/* values={value} */}
+          {/* /> */}
         </td>
       </tr>
     )

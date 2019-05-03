@@ -27,8 +27,8 @@ const PerfDataProvider: React.FC = ({ children }) => {
           setData(responseJson)
           setLoading(false)
         })
-        .catch(error => {
-          setError(error)
+        .catch(e => {
+          setError(e)
           setLoading(false)
         })
     }

@@ -4,16 +4,15 @@ import { Link } from 'react-router-dom'
 import DocPage from '../components/DocPage'
 import { code, link } from '../utils/helpers'
 import CodeSnippet from '../components/CodeSnippet'
+import ComponentPropsTable from 'docs/src/components/ComponentDoc/ComponentPropsTable'
 
 export default () => (
   <DocPage title="Auto Focus Zone">
     <Header as="h2">Content</Header>
     <ul>
-      <li>{link('Overview', 'auto-focus-zone#overview')}</li>
-      <li>{link('Usage', 'auto-focus-zone#usage')}</li>
-      <li>
-        {link('Override AutoFocusZone settings', 'auto-focus-zone#override-autofocuszone-settings')}
-      </li>
+      <li>{link('Overview', '#overview')}</li>
+      <li>{link('Usage', '#usage')}</li>
+      <li>{link('Override AutoFocusZone settings', '#override-autofocuszone-settings')}</li>
     </ul>
     <Header as="h2">Overview</Header>
     <p>
@@ -39,21 +38,10 @@ export default () => (
       {link(
         'lookup for API on GitHub',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/AutoFocusZone/AutoFocusZone.types.tsx',
-        true,
       )}
       ):
     </p>
-    <ul>
-      <li>
-        <b>as</b> - element type the root element will use. Default is "div".
-        <p>Type: {code('React.ReactType')}</p>
-      </li>
-      <li>
-        <b>firstFocusableSelector</b> - indicates the selector for first focusable item. By default,
-        the first tabbable element will get focus.
-        <p>Type: {code('string | (() => string)')}</p>
-      </li>
-    </ul>
+    <ComponentPropsTable componentName="AutoFocusZone" />
     <Header as="h2">Override {code('AutoFocusZone')} settings</Header>
     <p>
       To be able to add/override {code('AutoFocusZone')} props already set for a component, it is
@@ -100,7 +88,6 @@ export default () => (
       {link(
         'GitHub.',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/AutoFocusZone.tsx',
-        true,
       )}
     </p>
   </DocPage>

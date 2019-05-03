@@ -5,16 +5,15 @@ import DocPage from '../components/DocPage'
 import { link, code } from '../utils/helpers'
 
 import CodeSnippet from '../components/CodeSnippet'
+import ComponentPropsTable from 'docs/src/components/ComponentDoc/ComponentPropsTable'
 
 export default () => (
   <DocPage title="Focus Trap Zone">
     <Header as="h2">Content</Header>
     <ul>
-      <li>{link('Overview', 'focus-trap-zone#overview')}</li>
-      <li>{link('Usage', 'focus-trap-zone#usage')}</li>
-      <li>
-        {link('Override FocusTrapZone settings', 'focus-trap-zone#override-focustrapzone-settings')}
-      </li>
+      <li>{link('Overview', '#overview')}</li>
+      <li>{link('Usage', '#usage')}</li>
+      <li>{link('Override FocusTrapZone settings', '#override-focustrapzone-settings')}</li>
     </ul>
     <Header as="h2">Overview</Header>
     <p>
@@ -46,81 +45,10 @@ export default () => (
       {link(
         'lookup for API on GitHub',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusTrapZone/FocusTrapZone.types.tsx',
-        true,
       )}
       ):
     </p>
-    <ul>
-      <li>
-        <b>as</b> - element type the root element will use. Default is "div".
-        <p>Type: {code('React.ReactType')}</p>
-      </li>
-      <li>
-        <b>className</b> - additional class name to provide to the root element, in addition to the
-        ms-FocusZone class.
-        <p>Type: {code('string')}</p>
-      </li>
-      <li>
-        <b>elementToFocusOnDismiss</b> - sets the HTMLElement to focus on when exiting the
-        {code('FocusTrapZone')}.
-        <p>
-          Default: The {code('target')} which triggered the {code('FocusTrapZone')}.
-        </p>
-        <p>Type: {code('React.ReactType')}</p>
-      </li>
-      <li>
-        <b>ariaLabelledBy</b> - sets the "aria-labelledby" attribute.
-        <p>Type: {code('string')}</p>
-      </li>
-      <li>
-        <b>isClickableOutsideFocusTrap</b> - if true, allows clicks outside the{' '}
-        {code('FocusTrapZone')}.<p>Default: {code('true')}</p>
-        <p>Type: {code('boolean')}</p>
-      </li>
-      <li>
-        <b>focusTriggerOnOutsideClick</b> - indicates if the previously focused element outside
-        {code('FocusTrapZone')} should be focused on outside click. Note: trigger will be focused
-        when exiting FTZ using keyboard. If {code('isClickableOutsideFocusTrap')} ==={' '}
-        {code('false')},{code('focusTriggerOnOutsideClick')} will not be taken into account.
-        <p>Default: {code('false')}</p>
-        <p>Type: {code('boolean')}</p>
-      </li>
-      <li>
-        <b>ignoreExternalFocusing</b> - indicates if this Trap Zone will ignore keeping track of
-        HTMLElement that activated the Zone.
-        <p>Default: {code('false')}</p>
-        <p>Type: {code('boolean')}</p>
-      </li>
-      <li>
-        <b>forceFocusInsideTrap</b> - indicates whether focus trap zone should force focus inside
-        the zone when outside 'focus' event occurs.
-        <p>Default: {code('false')}</p>
-        <p>Type: {code('boolean')}</p>
-      </li>
-      <li>
-        <b>disableFirstFocus</b> - do not put focus onto first element when render focus trap zone.
-        <p>Default: {code('false')}</p>
-        <p>Type: {code('boolean')}</p>
-      </li>
-      <li>
-        <b>focusPreviouslyFocusedInnerElement</b> - specifies the algorithm used to determine which
-        descendant element to focus when focus() is called.
-        <br /> If false, the first focusable descendant, filtered by the firstFocusableSelector
-        property if present, is chosen.
-        <br /> If true, the element that was focused when the Trap Zone last had a focused
-        descendant is chosen.
-        <br /> If it has never had a focused descendant before, behavior falls back to the first
-        focused descendant.
-        <p>Default: {code('false')}</p>
-        <p>Type: {code('boolean')}</p>
-      </li>
-      <li>
-        <b>firstFocusableSelector</b> - indicates the selector for first focusable item. By default,
-        the first tabbable element will get focus. Only applies if
-        {code('focusPreviouslyFocusedInnerElement')} === {code('false')}.
-        <p>Type: {code('string | (() => string)')}</p>
-      </li>
-    </ul>
+    <ComponentPropsTable componentName="FocusTrapZone" />
     <Header as="h2">Override {code('FocusTrapZone')} settings</Header>
     <p>
       To be able to add/override {code('FocusTrapZone')} props already set for a component, it is
@@ -166,7 +94,6 @@ export default () => (
       {link(
         'GitHub.',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/FocusTrapZone.tsx',
-        true,
       )}
     </p>
   </DocPage>

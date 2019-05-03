@@ -95,9 +95,9 @@ const sumByExample = (measures: ProfilerMeasureCycle[]): PerExamplePerfMeasures 
     {},
   )
 
-  return _.mapValues(perExampleMeasures, (measures: ProfilerMeasureWithBaseline[]) => ({
-    actualTime: reduceMeasures(measures, 'actualTime'),
-    baseTime: reduceMeasures(measures, 'baseTime'),
+  return _.mapValues(perExampleMeasures, (profilerMeasures: ProfilerMeasureWithBaseline[]) => ({
+    actualTime: reduceMeasures(profilerMeasures, 'actualTime'),
+    baseTime: reduceMeasures(profilerMeasures, 'baseTime'),
   }))
 }
 
