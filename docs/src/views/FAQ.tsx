@@ -56,11 +56,7 @@ export default () => (
         <p>
           Generally Teams should be using SVG icons only. If you need FontAwesome or other icons,
           process for adding them is described in{' '}
-          {link(
-            'Issue 585',
-            'https://github.com/stardust-ui/react/pull/585',
-            true, // if 'true', opens in a new tab
-          )}
+          {link('Issue 585', 'https://github.com/stardust-ui/react/pull/585')}
         </p>
       }
     />
