@@ -1,0 +1,39 @@
+import { pxToRem } from '../../../../lib'
+
+export interface DialogVariables {
+  boxShadow: string
+  foregroundColor: string
+
+  rootBackground: string
+  rootBorderRadius: string
+  rootPadding: string
+  rootWidth: string
+
+  contentMargin: string
+
+  headerFontSize: string
+  headerFontWeight: number
+  headerMargin: string
+
+  overlayBackground: string
+  overlayZIndex: number
+}
+
+export default (siteVariables): DialogVariables => ({
+  boxShadow: siteVariables.shadowLevel4,
+  foregroundColor: siteVariables.colors.grey[900],
+
+  rootBackground: siteVariables.colors.white,
+  rootBorderRadius: pxToRem(3),
+  rootPadding: `${pxToRem(27)} ${pxToRem(32)} ${pxToRem(20)} ${pxToRem(32)}`,
+  rootWidth: '50vw',
+
+  contentMargin: `0 0 ${pxToRem(20)} 0`,
+
+  headerFontSize: siteVariables.fontSizes.large,
+  headerFontWeight: siteVariables.fontWeightBold,
+  headerMargin: `0 0 ${pxToRem(8)} 0`,
+
+  overlayBackground: 'rgba(37, 36, 36, .74)', // todo: ask daisy what this color should map to
+  overlayZIndex: 1000,
+})
