@@ -12,37 +12,29 @@ import { ReactWrapper } from 'enzyme'
 jest.dontMock('keyboard-key')
 jest.useFakeTimers()
 
+const findIntrinsicElement = (wrapper: ReactWrapper, selector: string) =>
+  wrapper.find(selector).filterWhere(n => typeof n.type() === 'string')
+
 const getTriggerButtonWrapper = (wrapper: ReactWrapper) =>
-  wrapper
-    .find(`.${Dropdown.slotClassNames.triggerButton}`)
-    .filterWhere(n => typeof n.type() === 'string')
+  findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.triggerButton}`)
+
 const getToggleIndicatorWrapper = (wrapper: ReactWrapper) =>
-  wrapper
-    .find(`.${Dropdown.slotClassNames.toggleIndicator}`)
-    .filterWhere(n => typeof n.type() === 'string')
+  findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.toggleIndicator}`)
+
 const getSearchInputWrapper = (wrapper: ReactWrapper) =>
-  wrapper
-    .find(`.${DropdownSearchInput.slotClassNames.input}`)
-    .filterWhere(n => typeof n.type() === 'string')
+  findIntrinsicElement(wrapper, `.${DropdownSearchInput.slotClassNames.input}`)
+
 const getItemsListWrapper = (wrapper: ReactWrapper) =>
-  wrapper
-    .find(`.${Dropdown.slotClassNames.itemsList}`)
-    .filterWhere(n => typeof n.type() === 'string')
+  findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.itemsList}`)
+
 const getItemAtIndexWrapper = (wrapper: ReactWrapper, index: number = 0) =>
-  wrapper
-    .find(`.${Dropdown.slotClassNames.item}`)
-    .filterWhere(n => typeof n.type() === 'string')
-    .at(index)
+  findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.item}`).at(index)
+
 const getSelectedItemAtIndexWrapper = (wrapper: ReactWrapper, index: number = 0) =>
-  wrapper
-    .find(`.${Dropdown.slotClassNames.selectedItem}`)
-    .filterWhere(n => typeof n.type() === 'string')
-    .at(index)
+  findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`).at(index)
+
 const getSelectedItemHeaderAtIndexWrapper = (wrapper: ReactWrapper, index: number = 0) =>
-  wrapper
-    .find(`.${DropdownSelectedItem.slotClassNames.header}`)
-    .filterWhere(n => typeof n.type() === 'string')
-    .at(index)
+  findIntrinsicElement(wrapper, `.${DropdownSelectedItem.slotClassNames.header}`).at(index)
 
 describe('Dropdown', () => {
   const items = ['item1', 'item2', 'item3', 'item4', 'item5']
