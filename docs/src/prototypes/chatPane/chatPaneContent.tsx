@@ -63,7 +63,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
                       {this.getMessagePreviewForScreenReader(props)}
                     </div>
                   )}
-                  <ElementType {...props} text={undefined} {...maybeAttributesForDivider} />
+                  <ElementType {...props} {...maybeAttributesForDivider} />
                 </>
               ),
             }}

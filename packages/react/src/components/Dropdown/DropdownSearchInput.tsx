@@ -14,6 +14,12 @@ export interface DropdownSearchInputSlotClassNames {
 }
 
 export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearchInputProps> {
+  /** Accessibility props for combobox slot. */
+  accessibilityComboboxProps?: any
+
+  /** Accessibility props for input slot. */
+  accessibilityInputProps?: any
+
   /** A dropdown search input can be formatted to appear inline in the context of a Dropdown. */
   inline?: boolean
 

@@ -94,7 +94,7 @@ const getMenuItems = (): MenuItemProps[] => {
     'aria-label': `${name} tool`,
   }))
 
-  items.splice(-1, 0, { key: 'separator', styles: { flex: 1 } })
+  items.splice(-1, 0, { key: 'separator', styles: { flex: 1 } } as any)
 
   return items
 }

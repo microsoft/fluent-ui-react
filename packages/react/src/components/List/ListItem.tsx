@@ -13,7 +13,7 @@ import {
 import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ShorthandValue, ReactProps, ComponentEventHandler } from '../../types'
+import { ShorthandValue, ReactProps, ComponentEventHandler, withAsType } from '../../types'
 import Box from '../Box/Box'
 
 export interface ListItemSlotClassNames {
@@ -239,4 +239,4 @@ ListItem.slotClassNames = {
   endMedia: `${ListItem.className}__endMedia`,
 }
 
-export default ListItem
+export default withAsType<ListItemProps, typeof ListItem>(ListItem)

@@ -73,7 +73,7 @@ export interface ChatMessageProps
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
-  onBlur?: (event: React.FocusEvent<HTMLElement>, data: ChatMessageProps) => void
+  onBlur?: ComponentEventHandler<ChatMessageProps>
 
   /**
    * Called after user's focus.
@@ -157,10 +157,10 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
-  handleBlur = (e: React.FocusEvent) => {
+  handleBlur = (e: React.SyntheticEvent) => {
     // `this.state.focused` controls is focused the whole `ChatMessage` or any of its children. When we're navigating
     // with keyboard the focused element will be changed and there is no way to use `:focus` selector
-    const shouldPreserveFocusState = _.invoke(e, 'currentTarget.contains', e.relatedTarget)
+    const shouldPreserveFocusState = _.invoke(e, 'currentTarget.contains', (e as any).relatedTarget)
 
     this.setState({ focused: shouldPreserveFocusState })
     _.invoke(this.props, 'onBlur', e, this.props)

@@ -58,7 +58,7 @@ class Grid extends UIComponent<ReactProps<GridProps>, any> {
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }
 
-  public static defaultProps: GridProps = {
+  public static defaultProps: ReactProps<GridProps> = {
     as: 'div',
     accessibility: defaultBehavior,
   }

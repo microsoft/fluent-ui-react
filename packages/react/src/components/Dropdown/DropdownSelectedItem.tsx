@@ -4,7 +4,12 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import keyboardKey from 'keyboard-key'
-import { ComponentEventHandler, ShorthandValue, ReactProps } from '../../types'
+import {
+  ComponentEventHandler,
+  ShorthandValue,
+  ReactProps,
+  ComponentKeyboardEventHandler,
+} from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import { createShorthandFactory, UIComponent, RenderResultConfig, commonPropTypes } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -46,7 +51,7 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onKeyDown?: ComponentEventHandler<DropdownSelectedItemProps>
+  onKeyDown?: ComponentKeyboardEventHandler<DropdownSelectedItemProps>
 
   /**
    * Called when item is removed from the selection list.

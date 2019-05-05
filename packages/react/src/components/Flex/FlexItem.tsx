@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import * as _ from 'lodash'
-import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
+import { UIComponent, commonPropTypes, UIComponentProps } from '../../lib'
 import { mergeStyles } from '../../lib/mergeThemes'
 import { ReactProps } from '../../types'
 
@@ -12,7 +12,7 @@ export type FlexItemChildren =
       { styles: ComponentSlotStylesPrepared, classes: ComponentSlotClasses },
     ) => React.ReactElement<any>)
 
-export interface FlexItemProps extends UIComponentProps, ChildrenComponentProps<FlexItemChildren> {
+export interface FlexItemProps extends UIComponentProps {
   /** Controls item's alignment. */
   align?: 'auto' | 'start' | 'end' | 'center' | 'baseline' | 'stretch'
 

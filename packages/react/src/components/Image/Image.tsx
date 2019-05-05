@@ -5,7 +5,7 @@ import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes 
 import { imageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import { ReactProps } from '../../types'
+import { ReactProps, withAsType } from '../../types'
 
 export interface ImageProps extends UIComponentProps {
   /**
@@ -72,4 +72,4 @@ class Image extends UIComponent<ReactProps<ImageProps>, any> {
 
 Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src' })
 
-export default Image
+export default withAsType<ImageProps, typeof Image, 'img'>(Image)

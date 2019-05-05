@@ -478,7 +478,7 @@ class Sidebar extends React.Component<any, any> {
           <Logo width="32px" styles={logoStyles} />
           <Text
             role="heading"
-            aria-level="1"
+            aria-level={1}
             color="white"
             content="Stardust UI React &nbsp;"
             styles={logoStyles}

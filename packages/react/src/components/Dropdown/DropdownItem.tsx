@@ -20,6 +20,9 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   /** A dropdown item can be active. */
   active?: boolean
 
+  /** Item's accessibility props. */
+  accessibilityItemProps?: any
+
   /** Item's content. */
   content?: ShorthandValue
 

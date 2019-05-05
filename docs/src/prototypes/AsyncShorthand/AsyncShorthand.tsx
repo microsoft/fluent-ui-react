@@ -95,8 +95,7 @@ class CustomChatMessage extends React.Component {
                 { key: 'a', icon: 'thumbs up' },
                 { key: 'b', icon: 'user' },
                 { key: 'c', icon: 'ellipsis horizontal' },
-              ]}
-              renderItem={this.renderMenuItem}
+              ].map(item => render => render(item, this.renderMenuItem))}
             />
           </div>
         }

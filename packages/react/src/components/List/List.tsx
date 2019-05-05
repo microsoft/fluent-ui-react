@@ -17,7 +17,7 @@ import ListItem, { ListItemProps } from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { ReactProps, ShorthandValue, ComponentEventHandler, withAsType } from '../../types'
 
 export interface ListSlotClassNames {
   item: string
@@ -220,4 +220,4 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   }
 }
 
-export default List
+export default withAsType<ListProps, typeof List>(List)

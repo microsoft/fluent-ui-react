@@ -17,7 +17,7 @@ export default () => (
       Stardust components are styled using CSS in JS. This technique requires a style renderer to
       render JavaScript objects to CSS.{' '}
       <a href="https://reactjs.org/docs/context.html" target="_blank" rel="noopener nofollow">
-        React Context <Icon name="external" size="small" link fitted />
+        React Context <Icon name="external" size="small" />
       </a>{' '}
       is used to provide the style renderer and theme to components.
     </p>

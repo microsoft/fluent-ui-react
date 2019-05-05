@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { ReactProps, ShorthandValue, ComponentEventHandler, withAsType } from '../../types'
 import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import Box from '../Box/Box'
@@ -214,4 +214,4 @@ Input.slotClassNames = {
   input: `${Input.className}__input`,
 }
 
-export default Input
+export default withAsType<InputProps, typeof Input, 'input'>(Input)

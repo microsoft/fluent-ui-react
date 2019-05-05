@@ -18,7 +18,7 @@ import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, ReactProps, ShorthandValue, withAsType } from '../../types'
 import ButtonGroup from './ButtonGroup'
 
 export interface ButtonProps
@@ -182,4 +182,4 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
 
 Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
 
-export default Button
+export default withAsType<ButtonProps, typeof Button, 'button'>(Button)

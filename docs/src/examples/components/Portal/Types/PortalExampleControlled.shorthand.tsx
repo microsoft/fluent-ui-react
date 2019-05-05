@@ -28,7 +28,7 @@ class PortalExampleControlled extends React.Component {
           <Divider />
 
           <Flex gap="gap.small" vAlign="center">
-            <Button size="small" onClick={this.clearLog} content="Clear" />
+            <Button onClick={this.clearLog} content="Clear" />
             <span>
               Event Log <Label circular>{logCount}</Label>
             </span>
