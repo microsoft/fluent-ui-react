@@ -332,28 +332,49 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     clearTimeout(this.charKeysPressedTimeout)
   }
 
-  componentDidMount() {
-    this.props.items && this.setFilteredItemsAndItemStrings()
-  }
+  /**
+   * Used to compute the filtered items (by value and search query) and, if needed,
+   * their string equivalents, in order to be used throughout the component.
+   * @param props
+   * @param state
+   */
+  static getDerivedStateFromProps(props: DropdownProps, state: DropdownState) {
+    const { items, itemToString, multiple, search } = props
+    const { value } = state
+    const filteredItemsByValue = multiple
+      ? _.difference(items, value as ShorthandCollection)
+      : items
+    let filteredResults
 
-  componentDidUpdate(prevProps: DropdownProps, prevState: DropdownState) {
-    const items = this.props.items
-    const prevItems = prevProps.items
-    const value = this.state.value as ShorthandCollection
-    const prevValue = prevState.value as ShorthandCollection
-    const itemsHaveBeenUpdated =
-      (items && items.length !== prevItems.length) ||
-      _.difference(items, prevItems).length > 0 ||
-      _.difference(prevItems, items).length > 0
-    const valueHasBeenAddedOrRemoved =
-      (this.props.multiple && value.length !== prevValue.length) ||
-      _.difference(value, prevValue).length > 0 ||
-      _.difference(prevValue, value).length > 0
-    const searchQueryHasBeenUpdated =
-      this.props.search && this.state.searchQuery !== prevState.searchQuery
+    if (search) {
+      const { itemToString } = props
+      const { searchQuery } = state
 
-    if (itemsHaveBeenUpdated || valueHasBeenAddedOrRemoved || searchQueryHasBeenUpdated) {
-      this.setFilteredItemsAndItemStrings()
+      if (_.isFunction(search)) {
+        filteredResults = {
+          filteredItems: search(filteredItemsByValue, searchQuery),
+        }
+      } else {
+        filteredResults = {
+          filteredItems: filteredItemsByValue.filter(
+            item =>
+              itemToString(item)
+                .toLowerCase()
+                .indexOf(searchQuery.toLowerCase()) !== -1,
+          ),
+        }
+      }
+    } else {
+      filteredResults = {
+        filteredItems: filteredItemsByValue,
+        filteredItemStrings: filteredItemsByValue.map(filteredItem =>
+          itemToString(filteredItem).toLowerCase(),
+        ),
+      }
+    }
+    return {
+      ...state,
+      ...filteredResults,
     }
   }
 
@@ -1219,42 +1240,6 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     this.charKeysPressedTimeout = setTimeout(() => {
       this.setState({ startingString: '' })
     }, Dropdown.charKeyPressedCleanupTime)
-  }
-
-  private setFilteredItemsAndItemStrings = (): void => {
-    const { items, itemToString, multiple, search } = this.props
-    const { value } = this.state
-    const filteredItemsByValue = multiple
-      ? _.difference(items, value as ShorthandCollection)
-      : items
-
-    if (search) {
-      this.setState({ filteredItems: this.getFilteredItemsBySearchQuery(filteredItemsByValue) })
-    } else {
-      this.setState({
-        filteredItems: filteredItemsByValue,
-        filteredItemStrings: filteredItemsByValue.map(filteredItem =>
-          itemToString(filteredItem).toLowerCase(),
-        ),
-      })
-    }
-  }
-
-  private getFilteredItemsBySearchQuery = (
-    filteredItems = this.state.filteredItems,
-  ): ShorthandCollection => {
-    const { itemToString, search } = this.props
-    const { searchQuery } = this.state
-
-    if (_.isFunction(search)) {
-      return search(filteredItems, searchQuery)
-    }
-    return filteredItems.filter(
-      item =>
-        itemToString(item)
-          .toLowerCase()
-          .indexOf(searchQuery.toLowerCase()) !== -1,
-    )
   }
 }
 
