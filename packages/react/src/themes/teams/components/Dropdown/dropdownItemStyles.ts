@@ -10,6 +10,10 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
       color: v.listItemColorActive,
       backgroundColor: v.listItemBackgroundColorActive,
     }),
+    ':hover': {
+      color: v.listItemColorHover,
+      backgroundColor: v.listItemBackgroundColorHover,
+    },
   }),
 }
 

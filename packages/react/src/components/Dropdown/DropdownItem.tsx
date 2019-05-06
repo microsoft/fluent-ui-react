@@ -42,7 +42,7 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
  * A DropdownItem is a sub-component of the Dropdown,
  * used to display items of the dropdown list.
  */
-class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
+class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>> {
   static displayName = 'DropdownItem'
 
   static create: Function
@@ -77,7 +77,7 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
     const { content, header, image, accessibilityItemProps } = this.props
     return (
       <ListItem
-        className={classes.root}
+        styles={styles.root}
         header={Box.create(header, {
           defaultProps: {
             className: DropdownItem.slotClassNames.header,

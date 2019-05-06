@@ -72,6 +72,9 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     borderRadius: v.borderRadius,
     color: v.color,
     backgroundColor: v.backgroundColor,
+    ':hover': {
+      backgroundColor: v.backgroundColorHover,
+    },
     ...(p.focused && { borderBottomColor: v.borderColorFocus }),
     ...(p.inline && {
       ...transparentColorStyleObj,

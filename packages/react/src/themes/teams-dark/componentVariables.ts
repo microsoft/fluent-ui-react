@@ -12,5 +12,6 @@ export { default as TreeTitle } from './components/Tree/treeTitleVariables'
 export { default as Menu } from './components/Menu/menuVariables'
 export { default as Reaction } from './components/Reaction/reactionVariables'
 export { default as Alert } from './components/Alert/alertVariables'
+export { default as Dropdown } from './components/Dropdown/dropdownVariables'
 
 export { default as PopupContent } from './components/Popup/popupContentVariables'
