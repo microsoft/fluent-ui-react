@@ -40,7 +40,9 @@ export interface ButtonProps
   /** A button can take the width of its container. */
   fluid?: boolean
 
-  /** Button can have an icon. */
+  /** Button can have an icon.
+   * @slot
+   */
   icon?: ShorthandValue
 
   /** A button may indicate that it has only icon. */
