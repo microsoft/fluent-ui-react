@@ -341,6 +341,11 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   static getDerivedStateFromProps(props: DropdownProps, state: DropdownState) {
     const { items, itemToString, multiple, search } = props
     const { value } = state
+
+    if (!items) {
+      return state
+    }
+
     const filteredItemsByValue = multiple
       ? _.difference(items, value as ShorthandCollection)
       : items
