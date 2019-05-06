@@ -13,6 +13,7 @@ import { formatCode } from './formatCode'
 import { CodeSnippetMode, CodeSnippetValue } from './types'
 
 type CodeSnippetProps = {
+  className?: string
   fitted?: boolean
   label?: React.ReactNode | false
   mode?: CodeSnippetMode
@@ -21,18 +22,19 @@ type CodeSnippetProps = {
 }
 
 const CodeSnippet: React.FunctionComponent<CodeSnippetProps> = props => {
-  const { fitted, label, mode, value } = props
+  const { className, fitted, label, mode, value } = props
 
-  const className = `language-${mode}`
+  const codeClassName = `language-${mode}`
   const code = formatCode(value, mode)
   const ref = React.useRef(null)
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     Prism.highlightElement(ref.current)
   })
 
   return (
     <div
+      className={className}
       style={{
         fontSize: '12px',
         position: 'relative',
@@ -57,7 +59,7 @@ const CodeSnippet: React.FunctionComponent<CodeSnippetProps> = props => {
         </div>
       )}
       <pre style={{ margin: fitted ? '0' : undefined }}>
-        <code className={className} ref={ref}>
+        <code className={codeClassName} ref={ref}>
           {code}
         </code>
       </pre>
