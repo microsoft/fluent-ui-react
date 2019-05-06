@@ -26,6 +26,7 @@ import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 
 import Ref from '../Ref/Ref'
 import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './positioningHelper'
+import createReferenceProxy from './createReferenceProxy'
 
 import PopupContent from './PopupContent'
 
@@ -54,43 +55,6 @@ export type PopupEventsArray = RestrictedClickEvents[] | RestrictedHoverEvents[]
 export interface PopupSlotClassNames {
   content: string
 }
-
-class CreateReferenceProxy {
-  ref: React.RefObject<HTMLElement>
-
-  constructor(refObject) {
-    this.ref = refObject
-  }
-
-  getBoundingClientRect() {
-    return _.invoke(this.ref.current, 'getBoundingClientRect', {})
-  }
-
-  get clientWidth() {
-    console.log('width', this.getBoundingClientRect().width)
-    return this.getBoundingClientRect().width
-  }
-
-  get clientHeight() {
-    return this.getBoundingClientRect().height
-  }
-}
-
-/**
- * Popper.js does not support ref objects from `createRef()` as referenceElement. If we will pass
- * directly `ref`, `ref.current` will be `null` at the render process. We use memoize to keep the
- * same reference between renders.
- *
- * @see https://popper.js.org/popper-documentation.html#referenceObject
- */
-const createReferenceProxy = _.memoize(
-  reference =>
-    new CreateReferenceProxy(
-      // TODO: use toRefObject from Stardust
-      // https://github.com/stardust-ui/react/issues/998
-      reference.hasOwnProperty('current') ? reference : { current: reference },
-    ),
-)
 
 export interface PopupProps
   extends StyledComponentProps<PopupProps>,
