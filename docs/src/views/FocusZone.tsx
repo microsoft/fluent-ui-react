@@ -11,15 +11,15 @@ export default () => (
   <DocPage title="Focus Zone">
     <Header as="h2">Content</Header>
     <ul>
-      <li>{link('Overview', 'focus-zone#overview')}</li>
+      <li>{link('Overview', '#overview')}</li>
       <li>
-        {link('Usage', 'focus-zone#usage')}
+        {link('Usage', '#usage')}
         <ul>
-          <li>{link('Mode', 'focus-zone#mode')}</li>
-          <li>{link('Props', 'focus-zone#props')}</li>
+          <li>{link('Mode', '#mode')}</li>
+          <li>{link('Props', '#props')}</li>
         </ul>
       </li>
-      <li>{link('Override FocusZone settings', 'focus-zone#override-focuszone-settings')}</li>
+      <li>{link('Override FocusZone settings', '#override-focuszone-settings')}</li>
     </ul>
     <Header as="h2">Overview</Header>
     <p>
@@ -41,11 +41,7 @@ export default () => (
       <li>Focus the next or previous element after pressing a navigation key</li>
       <li>
         The last focused element within the zone is identified by using{' '}
-        {link(
-          'Roving tabindex',
-          'https://www.w3.org/TR/wai-aria-practices/#kbd_roving_tabindex',
-          true,
-        )}
+        {link('Roving tabindex', 'https://www.w3.org/TR/wai-aria-practices/#kbd_roving_tabindex')}
       </li>
     </ul>
     <p>
@@ -129,7 +125,6 @@ export default () => (
       {link(
         'lookup for API on GitHub',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/FocusZone.types.ts',
-        true,
       )}
       ):
     </p>
@@ -181,7 +176,6 @@ export default () => (
       {link(
         'GitHub.',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/FocusZone.tsx',
-        true,
       )}
     </p>
   </DocPage>
