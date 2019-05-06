@@ -239,4 +239,4 @@ ListItem.slotClassNames = {
   endMedia: `${ListItem.className}__endMedia`,
 }
 
-export default withAsType<ListItemProps, typeof ListItem>(ListItem)
+export default withAsType<typeof ListItem>(ListItem)

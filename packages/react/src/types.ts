@@ -125,12 +125,14 @@ type Intersect<First extends string | number | symbol, Second extends string | n
 
 type PickProps<T, Props extends string> = { [K in Intersect<Props, keyof T>]: T[K] }
 
+type InstanceOf<T> = T extends { new (...args: any[]): infer TInstance } ? TInstance : never
+
 // Appropriate overloads:
-export const withAsType = function<
-  TProps,
-  TComponent,
-  TAs extends keyof JSX.IntrinsicElements = 'div'
->(componentType: TComponent) {
+export const withAsType = function<TComponentType, TAs extends keyof JSX.IntrinsicElements = 'div'>(
+  componentType: TComponentType,
+) {
+  type TProps = Partial<PropsOf<InstanceOf<TComponentType>>>
+
   function variadicComponent<Tag extends keyof JSX.IntrinsicElements>(
     x: AsHtmlElement<Tag, TProps>,
   ): JSX.Element
@@ -143,5 +145,5 @@ export const withAsType = function<
   }
 
   return (componentType as any) as typeof variadicComponent &
-    PickProps<TComponent, CommonStaticProps>
+    PickProps<TComponentType, CommonStaticProps>
 }

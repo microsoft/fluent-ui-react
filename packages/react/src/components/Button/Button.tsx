@@ -182,4 +182,4 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
 
 Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
 
-export default withAsType<ButtonProps, typeof Button, 'button'>(Button)
+export default withAsType<typeof Button, 'button'>(Button)

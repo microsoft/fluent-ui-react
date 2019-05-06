@@ -72,4 +72,4 @@ class Image extends UIComponent<ReactProps<ImageProps>, any> {
 
 Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src' })
 
-export default withAsType<ImageProps, typeof Image, 'img'>(Image)
+export default withAsType<typeof Image, 'img'>(Image)

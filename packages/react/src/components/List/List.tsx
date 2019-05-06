@@ -220,4 +220,4 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   }
 }
 
-export default withAsType<ListProps, typeof List>(List)
+export default withAsType<typeof List>(List)

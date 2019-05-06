@@ -214,4 +214,4 @@ Input.slotClassNames = {
   input: `${Input.className}__input`,
 }
 
-export default withAsType<InputProps, typeof Input, 'input'>(Input)
+export default withAsType<typeof Input, 'input'>(Input)
