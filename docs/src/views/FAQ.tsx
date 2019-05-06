@@ -12,6 +12,35 @@ const Answer = props => <p>{props.content}</p>
 
 export default () => (
   <DocPage title="FAQ">
+    <Header as="h2" content="Content" />
+    <ul>
+      <li>
+        {link('General', '#General')}
+        <ul>
+          <li>{link('Does Stardust support mobile?', '#does-stardust-support-mobile')}</li>
+          <li>
+            {link(
+              "How can @mixins be used in the Stardust's styles?",
+              '#how-can-mixins-be-used-in-the-stardusts-styles',
+            )}
+          </li>
+          <li>
+            {link('How to use Links and React-Router?', '#how-to-use-links-and-react-router')}
+          </li>
+          <li>
+            {link(
+              'How can I set default value of Form.Field?',
+              '#how-can-i-set-default-value-on-form-field',
+            )}
+          </li>
+        </ul>
+        {link('Teams Specific', '#teams-specific')}
+        <ul>
+          <li>{link('How to add Icons to Stardust?', '#how-to-add-icons-to-stardust')}</li>
+        </ul>
+      </li>
+    </ul>
+
     <Category content="General" />
     <Question content="Does Stardust support mobile?" />
     <Answer content="No. Scope is limited to Web / Desktop at present." />
@@ -24,7 +53,7 @@ export default () => (
       "
     />
 
-    <Question content="How to use Links and React-Router" />
+    <Question content="How to use Links and React-Router?" />
     <Answer
       content={
         <p>
