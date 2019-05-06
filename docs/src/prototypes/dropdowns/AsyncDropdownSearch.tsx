@@ -1,9 +1,8 @@
+import { CodeSnippet } from '@stardust-ui/docs-components'
 import { Dropdown, DropdownProps, Flex, Label, Loader } from '@stardust-ui/react'
 import * as faker from 'faker'
 import * as _ from 'lodash'
 import * as React from 'react'
-
-import CodeSnippet from '../../components/CodeSnippet'
 
 // ----------------------------------------
 // Types
