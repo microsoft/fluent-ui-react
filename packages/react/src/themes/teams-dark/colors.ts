@@ -3,10 +3,10 @@ import { ColorSchemeMapping } from '../../themes/types'
 
 const createColorScheme = (color: string, customValues = {}) => {
   return {
-    foregroundDefault: colors[color][600],
-    backgroundDefault: colors[color][50],
-    borderDefault: colors[color][600],
-    shadowDefault: colors[color][600],
+    foreground: colors[color][600],
+    background: colors[color][50],
+    border: colors[color][600],
+    shadow: colors[color][600],
 
     foregroundHover: colors[color][50],
     backgroundHover: colors[color][600],
@@ -38,21 +38,21 @@ const createColorScheme = (color: string, customValues = {}) => {
 
 export const colorScheme: ColorSchemeMapping = {
   default: {
-    foregroundDefault: colors.white,
-    foregroundDefault1: colors.grey[250],
-    foregroundDefault3: colors.grey[300],
-    foregroundDefault4: colors.white,
+    foreground: colors.white,
+    foreground1: colors.grey[250],
+    foreground3: colors.grey[300],
+    foreground4: colors.white,
 
-    backgroundDefault: colors.grey[650],
-    backgroundDefault1: colors.grey[700],
-    backgroundDefault2: colors.grey[800],
-    backgroundDefault3: colors.grey[550],
+    background: colors.grey[650],
+    background1: colors.grey[700],
+    background2: colors.grey[800],
+    background3: colors.grey[550],
 
-    borderDefault1: colors.grey[850],
-    borderDefault2: colors.grey[900],
-    borderDefault: colors.grey[450], // buttons
+    border1: colors.grey[850],
+    border2: colors.grey[900],
+    border: colors.grey[450], // buttons
 
-    shadowDefault: colors.black, // opacity 25%
+    shadow: colors.black, // opacity 25%
     shadowHover: colors.black,
 
     foregroundHover: colors.white,
@@ -102,62 +102,62 @@ export const colorScheme: ColorSchemeMapping = {
     borderDisabled: colors.grey[550],
     shadowDisabled: undefined,
   },
-  primary: {
-    foregroundDefault: colors.primary[400],
-    foregroundDefault1: colors.primary[400],
-    foregroundDefault2: colors.primary[400],
-    foregroundDefault3: colors.primary[200],
+  brand: {
+    foreground: colors.brand[400],
+    foreground1: colors.brand[400],
+    foreground2: colors.brand[400],
+    foreground3: colors.brand[200],
 
-    backgroundDefault: colors.primary[600],
-    backgroundDefault1: colors.primary[900],
-    backgroundDefault2: colors.primary[900],
-    backgroundDefault3: colors.primary[1000],
+    background: colors.brand[600],
+    background1: colors.brand[900],
+    background2: colors.brand[900],
+    background3: colors.brand[1000],
 
-    borderDefault1: colors.primary[800],
-    borderDefault2: colors.primary[800],
-    borderDefault: colors.grey[450],
+    border1: colors.brand[800],
+    border2: colors.brand[800],
+    border: colors.grey[450],
 
-    shadowDefault: colors.black,
+    shadow: colors.black,
     shadowHover: colors.black,
 
-    foregroundHover: colors.primary[400],
+    foregroundHover: colors.brand[400],
 
-    borderHover: colors.primary[600],
+    borderHover: colors.brand[600],
 
-    backgroundHover: colors.primary[500],
-    backgroundHover1: colors.primary[900],
+    backgroundHover: colors.brand[500],
+    backgroundHover1: colors.brand[900],
 
-    foregroundPressed: colors.primary[200],
-    backgroundPressed: colors.primary[700],
-    borderPressed: colors.primary[800],
+    foregroundPressed: colors.brand[200],
+    backgroundPressed: colors.brand[700],
+    borderPressed: colors.brand[800],
     shadowPressed: undefined,
 
-    foregroundActive: colors.primary[400],
-    foregroundActive1: colors.primary[400],
-    foregroundActive2: colors.primary[200],
+    foregroundActive: colors.brand[400],
+    foregroundActive1: colors.brand[400],
+    foregroundActive2: colors.brand[200],
 
-    backgroundActive: colors.primary[400],
-    backgroundActive1: colors.primary[400],
+    backgroundActive: colors.brand[400],
+    backgroundActive1: colors.brand[400],
 
     // active border no change (just copied)
-    borderActive1: colors.primary[800],
-    borderActive2: colors.primary[800],
+    borderActive1: colors.brand[800],
+    borderActive2: colors.brand[800],
     borderActive: colors.grey[450], // buttons
 
     shadowActive: undefined,
 
-    foregroundFocus: colors.primary[400],
-    foregroundFocus1: colors.primary[400],
-    foregroundFocus2: colors.primary[400],
-    foregroundFocus3: colors.primary[200],
+    foregroundFocus: colors.brand[400],
+    foregroundFocus1: colors.brand[400],
+    foregroundFocus2: colors.brand[400],
+    foregroundFocus3: colors.brand[200],
 
-    backgroundFocus: colors.primary[600],
-    backgroundFocus1: colors.primary[900],
-    backgroundFocus2: colors.primary[900],
-    backgroundFocus3: colors.primary[1000],
+    backgroundFocus: colors.brand[600],
+    backgroundFocus1: colors.brand[900],
+    backgroundFocus2: colors.brand[900],
+    backgroundFocus3: colors.brand[1000],
 
     borderFocus: colors.black,
-    borderFocus1: colors.primary[400], // only input
+    borderFocus1: colors.brand[400], // only input
     borderFocusWithin: colors.white,
     shadowFocus: undefined,
 
@@ -171,10 +171,10 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: undefined,
   },
   black: {
-    foregroundDefault: colors.black,
-    backgroundDefault: colors.white,
-    borderDefault: colors.black,
-    shadowDefault: colors.black,
+    foreground: colors.black,
+    background: colors.white,
+    border: colors.black,
+    shadow: colors.black,
 
     foregroundHover: colors.white,
     backgroundHover: colors.black,
@@ -202,10 +202,10 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.black,
   },
   white: {
-    foregroundDefault: colors.white,
-    backgroundDefault: colors.black,
-    borderDefault: colors.white,
-    shadowDefault: colors.white,
+    foreground: colors.white,
+    background: colors.black,
+    border: colors.white,
+    shadow: colors.white,
 
     foregroundHover: colors.black,
     backgroundHover: colors.white,
@@ -235,7 +235,7 @@ export const colorScheme: ColorSchemeMapping = {
   grey: createColorScheme('grey'),
   green: createColorScheme('green'),
   orange: createColorScheme('orange', {
-    backgroundDefault: colors.black,
+    background: colors.black,
     foregroundHover: colors.black,
     foregroundActive: colors.black,
     foregroundFocus: colors.black,
@@ -245,7 +245,7 @@ export const colorScheme: ColorSchemeMapping = {
   pink: createColorScheme('pink'),
   red: createColorScheme('red'),
   yellow: createColorScheme('yellow', {
-    backgroundDefault: colors.black,
+    background: colors.black,
     foregroundHover: colors.black,
     foregroundActive: colors.black,
     foregroundFocus: colors.black,

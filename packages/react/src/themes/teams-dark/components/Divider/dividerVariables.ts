@@ -3,9 +3,9 @@ import { extendColorScheme } from '../../../colorUtils'
 
 export default (siteVars: any): Partial<DividerVariables> => ({
   colorScheme: extendColorScheme(siteVars.colorScheme, {
-    primary: {
-      foregroundDefault: siteVars.colors.primary[400],
-      borderDefault: siteVars.colors.primary[400],
+    brand: {
+      foreground: siteVars.colors.brand[400],
+      border: siteVars.colors.brand[400],
     },
   }),
   textColor: siteVars.colors.grey[250],

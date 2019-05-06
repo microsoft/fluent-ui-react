@@ -51,14 +51,14 @@ export default (siteVars: any): MenuVariables => {
       default: {
         borderActive: siteVars.colors.grey[600],
       },
-      primary: {
+      brand: {
         foregroundHover: siteVars.colors.white,
-        backgroundHover: siteVars.colors.primary[300],
+        backgroundHover: siteVars.colors.brand[300],
         foregroundActive: siteVars.colors.white,
-        borderActive: siteVars.colors.primary[600],
-        backgroundActive1: siteVars.colors.primary[500], // it's 600 in the color scheme
+        borderActive: siteVars.colors.brand[600],
+        backgroundActive1: siteVars.colors.brand[500], // it's 600 in the color scheme
         foregroundFocus: siteVars.colors.white,
-        backgroundFocus1: siteVars.colors.primary[300],
+        backgroundFocus1: siteVars.colors.brand[300],
       },
     }),
     color: siteVars.colors.grey[500],
@@ -78,7 +78,7 @@ export default (siteVars: any): MenuVariables => {
     backgroundColorHover: undefined,
     backgroundColorActive: undefined,
 
-    iconOnlyColorActive: siteVars.colors.primary[600],
+    iconOnlyColorActive: siteVars.colors.brand[600],
 
     underlinedBorderColor: siteVars.colors.grey[200],
 
@@ -91,10 +91,10 @@ export default (siteVars: any): MenuVariables => {
     verticalDividerMargin: `${pxToRem(8)} 0`,
     verticalItemBorderWidth: pxToRem(2),
     verticalItemBorderColor: 'transparent',
-    verticalPointingBorderColor: siteVars.colorScheme.primary.borderActive, // TODO: why is the default having primary color?!
+    verticalPointingBorderColor: siteVars.colorScheme.brand.borderActive,
     verticalBackgroundColorFocus: siteVars.colors.grey[150],
 
-    pointingIndicatorBackgroundColor: siteVars.colors.primary[600],
+    pointingIndicatorBackgroundColor: siteVars.colors.brand[600],
 
     underlinedBottomBorderWidth: pxToRem(2),
     primaryBorderColor: siteVars.colors.grey[100],

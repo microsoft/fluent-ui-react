@@ -120,7 +120,11 @@ export const naturalColors: NaturalColors = {
 }
 
 export const emphasisColors: EmphasisColors = {
-  primary: {
+  secondary: naturalColors.grey,
+}
+
+export const contextualColors: ContextualColors = {
+  brand: {
     50: '#E5F2FF',
     100: '#CCE5FF',
     200: '#99CCFF',
@@ -132,10 +136,6 @@ export const emphasisColors: EmphasisColors = {
     800: '#003366',
     900: '#001933',
   },
-  secondary: naturalColors.grey,
-}
-
-export const contextualColors: ContextualColors = {
   text: naturalColors.grey,
   info: naturalColors.blue,
   danger: naturalColors.red,
@@ -159,10 +159,10 @@ export const colors: ColorPalette = {
 export const colorScheme: ColorSchemeMapping = {
   ..._.mapValues(emphasisAndNaturalColors, (colorVariants, colorName) => {
     return {
-      foregroundDefault: colorVariants[500],
-      borderDefault: colorVariants[500],
-      shadowDefault: colorVariants[500],
-      backgroundDefault: colorVariants[50],
+      foreground: colorVariants[500],
+      border: colorVariants[500],
+      shadow: colorVariants[500],
+      background: colorVariants[50],
 
       foregroundActive: colorVariants[500],
       borderActive: colorVariants[500],

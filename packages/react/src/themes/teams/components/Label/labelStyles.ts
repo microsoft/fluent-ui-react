@@ -1,5 +1,3 @@
-import * as _ from 'lodash'
-
 import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { LabelProps } from '../../../../components/Label/Label'
@@ -16,8 +14,8 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
       overflow: 'hidden',
       height: v.height,
       lineHeight: v.height,
-      color: colors.backgroundDefault,
-      backgroundColor: colors.foregroundDefault,
+      color: colors.background,
+      backgroundColor: colors.foreground,
       fontSize: pxToRem(14),
       borderRadius: pxToRem(3),
       padding: v.padding,

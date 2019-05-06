@@ -7,13 +7,13 @@ export default (siteVars: any): Partial<MenuVariables> => ({
       borderActive: siteVars.colors.grey[600],
       backgroundFocus1: siteVars.colors.grey[500],
     },
-    primary: {
+    brand: {
       foregroundHover: siteVars.colors.white,
-      backgroundHover: siteVars.colors.primary[300],
-      borderActive: siteVars.colors.primary[400],
+      backgroundHover: siteVars.colors.brand[300],
+      borderActive: siteVars.colors.brand[400],
       foregroundActive: siteVars.colors.white,
       foregroundFocus: siteVars.colors.white,
-      backgroundFocus1: siteVars.colors.primary[300],
+      backgroundFocus1: siteVars.colors.brand[300],
     },
   }),
 
@@ -21,9 +21,9 @@ export default (siteVars: any): Partial<MenuVariables> => ({
   colorActive: siteVars.colors.white,
 
   primaryBorderColor: siteVars.colors.grey[600],
-  pointingIndicatorBackgroundColor: siteVars.colors.primary[400],
+  pointingIndicatorBackgroundColor: siteVars.colors.brand[400],
 
   verticalBackgroundColor: siteVars.colors.grey[600],
   verticalBackgroundColorFocus: siteVars.colors.grey[550],
-  iconOnlyColorActive: siteVars.colors.primary[400],
+  iconOnlyColorActive: siteVars.colors.brand[400],
 })

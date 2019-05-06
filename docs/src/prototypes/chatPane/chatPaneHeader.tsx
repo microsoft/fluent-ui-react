@@ -36,7 +36,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
           height: '40px',
           padding: 0,
         })}
-        variables={siteVars => ({ backgroundColor: siteVars.colors.primary[600] })}
+        variables={siteVars => ({ backgroundColor: siteVars.colors.brand[600] })}
       />
     )
   }

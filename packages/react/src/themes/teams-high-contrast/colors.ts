@@ -9,10 +9,10 @@ export const red = '#f00'
 // COLOR SCHEME
 const createColorScheme = (customValues = {}) => {
   return {
-    foregroundDefault: colors.white,
-    backgroundDefault: colors.black,
-    borderDefault: colors.white,
-    shadowDefault: colors.white,
+    foreground: colors.white,
+    background: colors.black,
+    border: colors.white,
+    shadow: colors.white,
 
     foregroundHover: accessibleYellow,
     backgroundHover: colors.black,
@@ -44,21 +44,21 @@ const createColorScheme = (customValues = {}) => {
 
 export const colorScheme: ColorSchemeMapping = {
   default: {
-    foregroundDefault: colors.white,
-    foregroundDefault1: colors.white,
-    foregroundDefault2: colors.white,
-    foregroundDefault3: colors.white,
+    foreground: colors.white,
+    foreground1: colors.white,
+    foreground2: colors.white,
+    foreground3: colors.white,
 
-    backgroundDefault: colors.black,
-    backgroundDefault1: colors.black,
-    backgroundDefault2: colors.black,
-    backgroundDefault3: colors.black,
+    background: colors.black,
+    background1: colors.black,
+    background2: colors.black,
+    background3: colors.black,
 
-    borderDefault1: colors.white,
-    borderDefault2: colors.white,
-    borderDefault: colors.white, // buttons
+    border1: colors.white,
+    border2: colors.white,
+    border: colors.white, // buttons
 
-    shadowDefault: colors.black, // opacity 25%
+    shadow: colors.black, // opacity 25%
     shadowHover: colors.black,
 
     foregroundHover: colors.black,
@@ -108,22 +108,22 @@ export const colorScheme: ColorSchemeMapping = {
     borderDisabled: accessibleGreen,
     shadowDisabled: undefined,
   },
-  primary: {
-    foregroundDefault: colors.white,
-    foregroundDefault1: accessibleYellow,
-    foregroundDefault2: accessibleYellow,
-    foregroundDefault3: accessibleYellow,
+  brand: {
+    foreground: colors.white,
+    foreground1: accessibleYellow,
+    foreground2: accessibleYellow,
+    foreground3: accessibleYellow,
 
-    backgroundDefault: colors.white,
-    backgroundDefault1: colors.black,
-    backgroundDefault2: colors.black,
-    backgroundDefault3: colors.black,
+    background: colors.white,
+    background1: colors.black,
+    background2: colors.black,
+    background3: colors.black,
 
-    borderDefault1: colors.white,
-    borderDefault2: colors.white,
-    borderDefault: colors.white, // buttons
+    border1: colors.white,
+    border2: colors.white,
+    border: colors.white, // buttons
 
-    shadowDefault: colors.black, // opacity 25%
+    shadow: colors.black, // opacity 25%
     shadowHover: colors.black,
 
     foregroundHover: colors.black,

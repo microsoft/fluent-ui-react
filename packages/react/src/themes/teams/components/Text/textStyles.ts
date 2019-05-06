@@ -11,7 +11,7 @@ export default {
     const colors = getColorScheme(v.colorScheme, color)
     return {
       ...(color && {
-        color: colors.foregroundDefault,
+        color: colors.foreground,
       }),
       ...(atMention === 'me' && {
         fontWeight: v.atMentionMeFontWeight,

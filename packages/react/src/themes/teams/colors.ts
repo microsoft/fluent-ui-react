@@ -5,10 +5,11 @@ import {
   PrimitiveColors,
   ColorSchemeMapping,
   ColorVariants,
+  ContextualColors,
 } from '../types'
 
-export const emphasisColors: EmphasisColors = {
-  primary: {
+export const emphasisColors: ContextualColors = {
+  brand: {
     50: '#F4F4FC', // siteVariables.brand16, same as prev
     100: '#E5E5F1', // brand15
     200: '#E2E2F6', // 100, light brand14, dark theme brand02
@@ -169,10 +170,10 @@ export const colors: ColorPalette<TransparentColors> = {
 
 const createColorScheme = (color: string, customValues = {}) => {
   return {
-    foregroundDefault: colors[color][600],
-    backgroundDefault: colors[color][50],
-    borderDefault: colors[color][600],
-    shadowDefault: colors[color][600],
+    foreground: colors[color][600],
+    background: colors[color][50],
+    border: colors[color][600],
+    shadow: colors[color][600],
 
     foregroundHover: colors[color][50],
     backgroundHover: colors[color][600],
@@ -203,7 +204,7 @@ const createColorScheme = (color: string, customValues = {}) => {
 }
 
 const lightColorOverrides = {
-  backgroundDefault: colors.black,
+  background: colors.black,
   foregroundHover: colors.black,
   foregroundActive: colors.black,
   foregroundFocus: colors.black,
@@ -213,21 +214,21 @@ const lightColorOverrides = {
 
 export const colorScheme: ColorSchemeMapping = {
   default: {
-    foregroundDefault: colors.grey[750],
-    foregroundDefault1: colors.grey[500],
-    foregroundDefault2: colors.grey[450],
-    foregroundDefault3: colors.white,
+    foreground: colors.grey[750],
+    foreground1: colors.grey[500],
+    foreground2: colors.grey[450],
+    foreground3: colors.white,
 
-    backgroundDefault: colors.white,
-    backgroundDefault1: colors.grey[50],
-    backgroundDefault2: colors.grey[100],
-    backgroundDefault3: colors.grey[150],
+    background: colors.white,
+    background1: colors.grey[50],
+    background2: colors.grey[100],
+    background3: colors.grey[150],
 
-    borderDefault1: colors.grey[150],
-    borderDefault2: colors.grey[200],
-    borderDefault: colors.grey[200], // buttons
+    border1: colors.grey[150],
+    border2: colors.grey[200],
+    border: colors.grey[200], // buttons
 
-    shadowDefault: colors.black, // opacity 10%
+    shadow: colors.black, // opacity 10%
     shadowHover: colors.black,
 
     foregroundHover: colors.grey[750],
@@ -277,61 +278,61 @@ export const colorScheme: ColorSchemeMapping = {
     borderDisabled: colors.grey[150],
     shadowDisabled: undefined,
   },
-  primary: {
-    foregroundDefault: colors.primary[600],
-    foregroundDefault1: colors.primary[600],
-    foregroundDefault2: colors.primary[700],
-    foregroundDefault3: colors.primary[200],
+  brand: {
+    foreground: colors.brand[600],
+    foreground1: colors.brand[600],
+    foreground2: colors.brand[700],
+    foreground3: colors.brand[200],
 
-    backgroundDefault: colors.primary[600],
-    backgroundDefault1: colors.primary[100],
-    backgroundDefault2: colors.primary[900],
-    backgroundDefault3: colors.primary[1000],
+    background: colors.brand[600],
+    background1: colors.brand[100],
+    background2: colors.brand[900],
+    background3: colors.brand[1000],
 
-    borderDefault1: colors.primary[200],
-    borderDefault2: colors.primary[300],
-    borderDefault: colors.grey[200],
+    border1: colors.brand[200],
+    border2: colors.brand[300],
+    border: colors.grey[200],
 
-    shadowDefault: colors.black,
+    shadow: colors.black,
     shadowHover: colors.black,
 
-    foregroundHover: colors.primary[600],
+    foregroundHover: colors.brand[600],
 
-    borderHover: colors.primary[300],
+    borderHover: colors.brand[300],
 
-    backgroundHover: colors.primary[700],
-    backgroundHover2: colors.primary[50],
+    backgroundHover: colors.brand[700],
+    backgroundHover1: colors.brand[50],
 
-    foregroundPressed: colors.primary[800],
-    backgroundPressed: colors.primary[800], // it's 900 on the button - 800 is same as hover
-    borderPressed: colors.primary[300],
+    foregroundPressed: colors.brand[800],
+    backgroundPressed: colors.brand[800], // it's 900 on the button - 800 is same as hover
+    borderPressed: colors.brand[300],
     shadowPressed: undefined,
 
-    foregroundActive: colors.primary[600],
-    foregroundActive1: colors.primary[600],
-    foregroundActive2: colors.primary[200],
+    foregroundActive: colors.brand[600],
+    foregroundActive1: colors.brand[600],
+    foregroundActive2: colors.brand[200],
 
-    backgroundActive: colors.primary[600],
-    backgroundActive1: colors.primary[600],
+    backgroundActive: colors.brand[600],
+    backgroundActive1: colors.brand[600],
 
-    borderActive1: colors.primary[200],
-    borderActive2: colors.primary[300],
+    borderActive1: colors.brand[200],
+    borderActive2: colors.brand[300],
     borderActive: colors.grey[200],
 
     shadowActive: undefined,
 
-    foregroundFocus: colors.primary[600],
-    foregroundFocus1: colors.primary[600],
-    foregroundFocus2: colors.primary[700],
-    foregroundFocus3: colors.primary[200],
+    foregroundFocus: colors.brand[600],
+    foregroundFocus1: colors.brand[600],
+    foregroundFocus2: colors.brand[700],
+    foregroundFocus3: colors.brand[200],
 
-    backgroundFocus: colors.primary[600],
-    backgroundFocus1: colors.primary[100],
-    backgroundFocus2: colors.primary[900],
-    backgroundFocus3: colors.primary[1000],
+    backgroundFocus: colors.brand[600],
+    backgroundFocus1: colors.brand[100],
+    backgroundFocus2: colors.brand[900],
+    backgroundFocus3: colors.brand[1000],
 
     borderFocus: colors.black,
-    borderFocus1: colors.primary[600], // only input
+    borderFocus1: colors.brand[600], // only input
     borderFocusWithin: colors.white,
     shadowFocus: undefined,
 
@@ -345,10 +346,10 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: undefined,
   },
   black: {
-    foregroundDefault: colors.black,
-    backgroundDefault: colors.white,
-    borderDefault: colors.black,
-    shadowDefault: colors.black,
+    foreground: colors.black,
+    background: colors.white,
+    border: colors.black,
+    shadow: colors.black,
 
     foregroundHover: colors.white,
     backgroundHover: colors.black,
@@ -376,10 +377,10 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.black,
   },
   white: {
-    foregroundDefault: colors.white,
-    backgroundDefault: colors.black,
-    borderDefault: colors.white,
-    shadowDefault: colors.white,
+    foreground: colors.white,
+    background: colors.black,
+    border: colors.white,
+    shadow: colors.white,
 
     foregroundHover: colors.black,
     backgroundHover: colors.white,
@@ -418,7 +419,7 @@ export const availableColors = [
   'default',
   'black',
   'white',
-  'primary',
+  'brand',
   'grey',
   'red',
   'yellow',
@@ -432,7 +433,7 @@ export const isValidColor = (color: string): boolean => {
 }
 
 export const getColorSchemeKey = (color: string, primary?: boolean): string => {
-  return color && isValidColor(color) ? color : primary ? 'primary' : 'default'
+  return color && isValidColor(color) ? color : primary ? 'brand' : 'default'
 }
 
 export const getColorScheme = (

@@ -13,7 +13,7 @@ const beforeAndAfter = (
   content: '""',
   flex: 1,
   height: `${size + 1}px`,
-  background: _.get(colors, 'foregroundDefault', variables.dividerColor),
+  background: _.get(colors, 'foreground', variables.dividerColor),
 })
 
 const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, DividerVariables> = {
@@ -21,7 +21,7 @@ const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, DividerV
     const { children, color, fitted, size, important, content } = props
     const colors = variables.colorScheme[color]
     return {
-      color: _.get(colors, 'foregroundDefault', variables.textColor),
+      color: _.get(colors, 'foreground', variables.textColor),
       display: 'flex',
       alignItems: 'center',
       ...(!fitted && {

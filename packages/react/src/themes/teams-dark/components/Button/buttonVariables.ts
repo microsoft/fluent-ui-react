@@ -18,9 +18,9 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     borderColorHover: siteVars.colors.grey[450],
     borderColorFocusIndicator: siteVars.colors.white,
 
-    primaryBackgroundColorActive: siteVars.colors.primary[500],
-    primaryBackgroundColorHover: siteVars.colors.primary[500],
-    primaryBackgroundColorFocus: siteVars.colors.primary[800],
+    primaryBackgroundColorActive: siteVars.colors.brand[500],
+    primaryBackgroundColorHover: siteVars.colors.brand[500],
+    primaryBackgroundColorFocus: siteVars.colors.brand[800],
     primaryBorderColorFocus: siteVars.colors.grey[800],
     primaryBorderColorFocusIndicator: siteVars.colors.white,
 
@@ -32,9 +32,9 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     circularBorderColor: siteVars.colors.grey[250],
     circularBorderColorFocusIndicator: siteVars.colors.grey[800],
 
-    textColorHover: siteVars.colors.primary[300],
-    textPrimaryColorHover: siteVars.colors.primary[300],
+    textColorHover: siteVars.colors.brand[300],
+    textPrimaryColorHover: siteVars.colors.brand[300],
     textSecondaryColor: siteVars.colors.grey[300],
-    textSecondaryColorHover: siteVars.colors.primary[300],
+    textSecondaryColorHover: siteVars.colors.brand[300],
   }
 }

@@ -25,7 +25,7 @@ export default {
     return {
       ...(color &&
         colors && {
-          color: colors.foregroundDefault,
+          color: colors.foreground,
         }),
       // animations are not working with span, unless display is set to 'inline-block'
       ...(animation &&

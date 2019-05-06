@@ -76,7 +76,7 @@ const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier): number =>
 }
 
 const getIconColor = (variables, colors) => {
-  return _.get(colors, 'foregroundDefault', variables.color || 'currentColor')
+  return _.get(colors, 'foreground', variables.color || 'currentColor')
 }
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {

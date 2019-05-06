@@ -55,6 +55,7 @@ export type NaturalColors = Extendable<NaturalColorsStrict, ColorVariants>
 export type ContextualColorsStrict = Partial<{
   text: ColorVariants
 
+  brand: ColorVariants
   danger: ColorVariants
   info: ColorVariants
   success: ColorVariants
@@ -102,10 +103,10 @@ export type ColorPalette<T = {}> = ExtendablePalette<
  * A type for all area names that can define color
  */
 export type ComponentAreaName =
-  | 'foregroundDefault'
-  | 'backgroundDefault'
-  | 'borderDefault'
-  | 'shadowDefault'
+  | 'foreground'
+  | 'background'
+  | 'border'
+  | 'shadow'
   | 'foregroundHover'
   | 'backgroundHover'
   | 'borderHover'

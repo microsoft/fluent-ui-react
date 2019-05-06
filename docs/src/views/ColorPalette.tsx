@@ -26,13 +26,13 @@ const theme = {
         return {
           textAlign: 'center',
           padding: '5px',
-          color: colorScheme.primary.foregroundDefault,
-          backgroundColor: colorScheme.primary.backgroundDefault,
-          border: `1px solid ${colorScheme.primary.borderDefault}`,
+          color: colorScheme.brand.foreground3,
+          backgroundColor: colorScheme.brand.background3,
+          border: `1px solid ${colorScheme.brand.border}`,
           ':hover': {
-            color: colorScheme.primary.foregroundHover,
-            backgroundColor: colorScheme.primary.backgroundHover,
-            border: `1px solid ${colorScheme.primary.borderHover}`,
+            color: colorScheme.brand.foregroundHover,
+            backgroundColor: colorScheme.brand.backgroundHover1,
+            border: `1px solid ${colorScheme.brand.borderHover}`,
           },
         }
       },
@@ -151,8 +151,8 @@ const ColorPalette = () => (
             values, so that they will work correctly when different themes will be applied. As part
             of each theme, we are defining <b>color scheme</b>, which will define the design tokens
             usages of the different colors from the palette, that make sense for the developers. For
-            example, let's take a look of one color scheme defined for primary in Teams light and
-            high contrast themes.
+            example, let's take a look of one color scheme defined for brand in Teams light and high
+            contrast themes.
           </p>
 
           <ColorSchemes
@@ -171,7 +171,7 @@ const ColorPalette = () => (
                 content: 'HC theme',
               },
             ]}
-            name={'primary'}
+            name={'brand'}
           />
 
           <p>
@@ -191,13 +191,13 @@ const ColorPalette = () => (
                   root: ({ theme: { siteVariables } }) => {
                     const colorScheme = siteVariables.colorScheme
                     return {
-                      color: colorScheme.primary.foregroundDefault,
-                      backgroundColor: colorScheme.primary.backgroundDefault,
-                      border: \`1px solid \${colorScheme.primary.borderDefault}\`,
+                      color: colorScheme.brand.foreground3,
+                      backgroundColor: colorScheme.brand.background,
+                      border: \`1px solid \${colorScheme.brand.border}\`,
                       ':hover': {
-                        color: colorScheme.primary.foregroundHover,
-                        backgroundColor: colorScheme.primary.backgroundHover,
-                        border: \`1px solid \${colorScheme.primary.borderHover}\`,
+                        color: colorScheme.brand.foregroundHover,
+                        backgroundColor: colorScheme.brand.backgroundHover,
+                        border: \`1px solid \${colorScheme.brand.borderHover}\`,
                       },
                     }
                   },

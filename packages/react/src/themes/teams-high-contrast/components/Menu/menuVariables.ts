@@ -3,7 +3,7 @@ import { extendColorScheme } from '../../../colorUtils'
 
 export default (siteVars: any): Partial<MenuVariables> => ({
   colorScheme: extendColorScheme(siteVars.colorScheme, {
-    primary: {
+    brand: {
       foregroundActive: siteVars.colors.black,
     },
   }),

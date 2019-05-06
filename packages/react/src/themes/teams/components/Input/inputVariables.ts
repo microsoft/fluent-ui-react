@@ -11,7 +11,7 @@ export default (siteVars): Partial<InputVariables> => ({
   fontSize: siteVars.fontSizes.medium,
 
   iconColor: siteVars.bodyColor,
-  inputFocusBorderColor: `transparent transparent ${siteVars.colors.primary[600]} transparent`,
+  inputFocusBorderColor: `transparent transparent ${siteVars.colors.brand[600]} transparent`,
   inputFocusBorderRadius: `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`,
   placeholderColor: siteVars.colors.grey[500],
 })
