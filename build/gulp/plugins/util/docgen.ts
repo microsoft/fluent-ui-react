@@ -41,7 +41,6 @@ export interface PropItem {
   type: PropItemType
   description: string
   defaultValue: any
-  slot: boolean
   parent?: ParentType
 }
 
@@ -360,7 +359,6 @@ export class Parser {
       const jsDocComment = this.findDocComment(prop)
 
       let defaultValue = null
-      let slot = false
 
       if (defaultProps[propName] !== undefined) {
         defaultValue = { value: defaultProps[propName] }
@@ -368,14 +366,10 @@ export class Parser {
         defaultValue = { value: jsDocComment.tags.default }
       }
 
-      if (jsDocComment.tags.slot) {
-        slot = true
-      }
       const parent = getParentType(prop)
 
       result[propName] = {
         defaultValue,
-        slot,
         description: jsDocComment.fullComment,
         name: propName,
         parent,
