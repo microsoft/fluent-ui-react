@@ -184,7 +184,9 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
             variables,
             styles: styles.divider,
             inSubmenu: submenu,
-            accessibility: accessibility.childBehaviors.divider,
+            accessibility: accessibility.childBehaviors
+              ? accessibility.childBehaviors.divider
+              : undefined,
           },
         })
       }
@@ -208,7 +210,9 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
           active,
           inSubmenu: submenu,
           indicator,
-          accessibility: accessibility.childBehaviors.item,
+          accessibility: accessibility.childBehaviors
+            ? accessibility.childBehaviors.item
+            : undefined,
         },
         overrideProps: this.handleItemOverrides,
       })
