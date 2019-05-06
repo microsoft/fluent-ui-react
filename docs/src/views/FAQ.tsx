@@ -1,9 +1,9 @@
 import * as React from 'react'
 import DocPage from '../components/DocPage/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
-import CodeSnippet from '../components/CodeSnippet'
 import { link } from '../utils/helpers'
 
+import { CodeSnippet } from '@stardust-ui/docs-components'
 import { Header } from '@stardust-ui/react'
 
 const Category = props => <Header as="h2" {...props} />
