@@ -138,8 +138,6 @@ class Table extends UIComponent<ReactProps<TableProps>, any> {
     const header = this.props.header as TableRowProps
     const { items } = header
 
-    console.log('header', items)
-
     const headers = _.map(items, (item: TableCellProps) => {
       return {
         as: 'th',
@@ -147,8 +145,6 @@ class Table extends UIComponent<ReactProps<TableProps>, any> {
         ...item,
       }
     })
-
-    console.log('headers cells', headers)
 
     const headerRowProps = {
       ...header,
