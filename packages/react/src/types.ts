@@ -97,8 +97,8 @@ export type Extended<TFirst, TSecond> = {
   [K in keyof (TFirst & TSecond)]: ValueOf<TFirst, TSecond, K>
 }
 
-// type PropsOf<C> = C extends React.FC<infer Props> ? Props & JSX.IntrinsicAttributes :
-//     C extends React.ComponentClass<infer Props> ? Props & JSX.IntrinsicAttributes :
+// export type PropsOfEx<C> = C extends React.FC<infer Props> ? Props :
+//     C extends React.ComponentClass<infer Props> ? Props :
 //     never
 
 type AsHtmlElement<Tag extends keyof JSX.IntrinsicElements, TProps> = {
@@ -106,10 +106,10 @@ type AsHtmlElement<Tag extends keyof JSX.IntrinsicElements, TProps> = {
 } & JSX.IntrinsicElements[Tag] &
   TProps
 
-// temp solution - allow any props if 'as' is specified
-type AsComponent<C, TProps> = { as: C } & { [K: string]: any } & TProps
+// TODO temp solution - allow any props if 'as' is specified
+export type AsComponent<C, TProps> = { as: C } & TProps & { [K: string]: any }
 
-type CommonStaticProps =
+export type CommonStaticProps =
   | 'Group'
   | 'Item'
   | 'className'
@@ -117,20 +117,24 @@ type CommonStaticProps =
   | 'slotClassNames'
   | 'displayName'
   | 'propTypes'
-  | 'defaultProps'
 
 type Intersect<First extends string | number | symbol, Second extends string | number | symbol> = {
   [K in First]: K extends Second ? K : never
 }[First]
 
-type PickProps<T, Props extends string> = { [K in Intersect<Props, keyof T>]: T[K] }
+export type PickProps<T, Props extends string> = { [K in Intersect<Props, keyof T>]: T[K] }
+
+// type SelectKeys<TComponent> = { [K in CommonStaticProps]: K extends keyof TComponent ? K : never }[CommonStaticProps]
+// type Select<TComponent> = { [K in SelectKeys<TComponent>]: TComponent[K] }
 
 type InstanceOf<T> = T extends { new (...args: any[]): infer TInstance } ? TInstance : never
 
-// Appropriate overloads:
-export const withAsType = function<TComponentType, TAs extends keyof JSX.IntrinsicElements = 'div'>(
-  componentType: TComponentType,
-) {
+// type TypeOf<T, Name extends string> = Name extends keyof T ? T[Name] : never
+
+export const withAsType = function<
+  TComponentType extends React.ComponentType,
+  TAs extends keyof JSX.IntrinsicElements = 'div'
+>(componentType: TComponentType) {
   type TProps = Partial<PropsOf<InstanceOf<TComponentType>>>
 
   function variadicComponent<Tag extends keyof JSX.IntrinsicElements>(
