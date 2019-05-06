@@ -25,7 +25,7 @@ export interface TableProps extends UIComponentProps, ChildrenComponentProps {
   accessibility?: Accessibility
 
   /** The columns of the Table with a space-separated list of values. The values represent the track size, and the space between them represents the Table line. */
-  headers?: ShorthandValue[]
+  header?: ShorthandValue
 
   /** The rows of the Table with a space-separated list of values. The values represent the track size, and the space between them represents the Table line. */
   rows?: ShorthandValue[]
@@ -100,7 +100,7 @@ class Table extends UIComponent<ReactProps<TableProps>, any> {
         customPropTypes.nodeContent,
       ]),
     ]),
-    headers: customPropTypes.collectionShorthand,
+    header: customPropTypes.itemShorthand,
     rows: customPropTypes.collectionShorthand,
   }
 
@@ -113,12 +113,12 @@ class Table extends UIComponent<ReactProps<TableProps>, any> {
     super(p, c)
 
     this.state = {
-      focusedRow: 0,
-      focusedCol: 1,
+      focusedRow: -1,
+      focusedCol: -1,
     }
-    const { rows, headers } = this.props
-    this.rowsCount = rows.length + (headers.length ? 1 : 0)
-    this.columsCount = headers && headers.length
+    const { rows, header } = this.props
+    this.rowsCount = rows.length + (header ? 1 : 0)
+    this.columsCount = header && (header as TableRowProps).items.length
   }
 
   public renderRows() {
@@ -134,21 +134,29 @@ class Table extends UIComponent<ReactProps<TableProps>, any> {
     })
   }
 
-  public getHeaderProps() {
-    const { headers } = this.props
+  public renderHeader() {
+    const header = this.props.header as TableRowProps
+    const { items } = header
 
-    const items = _.map(headers, (header: TableCellProps) => {
+    console.log('header', items)
+
+    const headers = _.map(items, (item: TableCellProps) => {
       return {
         as: 'th',
         scope: 'col',
-        ...header,
+        ...item,
       }
     })
 
-    return {
-      items,
+    console.log('headers cells', headers)
+
+    const headerRowProps = {
+      ...header,
+      items: headers,
       focusedIndex: this.state.focusedRow === 0 ? this.state.focusedCol : -1,
     } as TableRowProps
+
+    return <TableRow {...headerRowProps} />
   }
 
   public renderComponent({
@@ -165,7 +173,8 @@ class Table extends UIComponent<ReactProps<TableProps>, any> {
         {...unhandledProps}
       >
         <thead>
-          <TableRow {...this.getHeaderProps()} />
+          {/* <TableRow {...this.getHeaderProps()} /> */}
+          {this.renderHeader()}
         </thead>
         <tbody>{this.renderRows()}</tbody>
       </ElementType>

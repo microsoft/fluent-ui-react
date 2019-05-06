@@ -199,6 +199,25 @@ export {
   default as alertWarningBehavior,
 } from './lib/accessibility/Behaviors/Alert/alertWarningBehavior'
 
+/** Table */
+export { default as tableBehavior } from './lib/accessibility/Behaviors/Table/tableBehavior'
+export { default as tableCellBehavior } from './lib/accessibility/Behaviors/Table/tableCellBehavior'
+export {
+  default as tableRowHeaderBehavior,
+} from './lib/accessibility/Behaviors/Table/tableRowHeaderBehavior'
+export {
+  default as tableColumnHeaderBehavior,
+} from './lib/accessibility/Behaviors/Table/tableColumnHeaderBehavior'
+
+export { default as gridTableBehavior } from './lib/accessibility/Behaviors/Table/gridTableBehavior'
+export { default as gridCellBehavior } from './lib/accessibility/Behaviors/Table/gridCellBehavior'
+export {
+  default as tableNestedNavigationBehavior,
+} from './lib/accessibility/Behaviors/Table/tableNestedNavigationBehavior'
+export {
+  default as tableRowNestedNavigationBehavior,
+} from './lib/accessibility/Behaviors/Table/tableRowNestedNavigationBehavior'
+
 //
 // Utilities
 //

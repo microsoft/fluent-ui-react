@@ -1,88 +1,59 @@
 import * as React from 'react'
-import { Table, Icon, Button } from '@stardust-ui/react'
+import {
+  Table,
+  Icon,
+  Button,
+  tableNestedNavigationBehavior,
+  tableRowNestedNavigationBehavior,
+} from '@stardust-ui/react'
 
-const headers = [
-  {
-    content: 'id',
-    'data-is-focusable': true,
-  },
-  {
-    content: 'Name',
-    'data-is-focusable': true,
-  },
-  {
-    content: 'Picture',
-    'data-is-focusable': true,
-  },
-  {
-    content: 'Action',
-    'data-is-focusable': true,
-  },
-]
+const header = {
+  items: [{ content: 'id' }, { content: 'Name' }, { content: 'Picture' }, { content: 'Action' }],
+  accessibility: tableRowNestedNavigationBehavior,
+}
 
 const rows = [
   {
     items: [
+      { content: '1' },
       {
-        content: '1',
-        'data-is-focusable': true,
+        content: (
+          <span>
+            Roman <br />
+            <button>Button</button>
+          </span>
+        ),
       },
-      {
-        content: 'Roman',
-        'data-is-focusable': true,
-      },
-      {
-        content: <Icon name="call-video" />,
-        'data-is-focusable': true,
-      },
-      {
-        content: <Button>Click</Button>,
-      },
+      { content: <Icon name="call-video" /> },
+      { content: <Button>Click</Button> },
     ],
     headerIndex: 2,
+    accessibility: tableRowNestedNavigationBehavior,
   },
   {
     items: [
-      {
-        content: '2',
-        'data-is-focusable': true,
-      },
-      {
-        content: 'Alex',
-        'data-is-focusable': true,
-      },
-      {
-        content: <Icon name="call-video" />,
-        'data-is-focusable': true,
-      },
-      {
-        content: <Button>Click</Button>,
-      },
+      { content: '2' },
+      { content: 'Alex' },
+      { content: <Icon name="call-video" /> },
+      { content: <Button>Click</Button> },
     ],
     headerIndex: 2,
+    accessibility: tableRowNestedNavigationBehavior,
   },
   {
     items: [
-      {
-        content: '3',
-        'data-is-focusable': true,
-      },
-      {
-        content: 'Ali',
-        'data-is-focusable': true,
-      },
-      {
-        content: <Icon name="call-video" />,
-        'data-is-focusable': true,
-      },
-      {
-        content: <Button>Click</Button>,
-      },
+      { content: '3' },
+      { content: 'Ali' },
+      { content: <Icon name="call-video" /> },
+      { content: <Button>Click</Button> },
     ],
     headerIndex: 2,
+    accessibility: tableRowNestedNavigationBehavior,
   },
 ]
 
-const GridExample = () => <Table headers={headers} rows={rows} />
+const GridExample = () => (
+  <Table header={header} rows={rows} accessibility={tableNestedNavigationBehavior} />
+)
 
 export default GridExample

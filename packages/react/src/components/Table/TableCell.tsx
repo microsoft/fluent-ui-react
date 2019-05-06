@@ -80,6 +80,11 @@ class TableCell extends UIComponent<ReactProps<TableCellProps>, any> {
 
   componentDidMount() {
     this.focusableElement = getFirstFocusable(this.cellRef, this.cellRef, true)
+    if (!this.focusableElement) {
+      this.focusableElement = this.cellRef
+    }
+    this.focusableElement.setAttribute('data-is-focusable', 'true')
+
     this.tryFocusCell()
   }
 

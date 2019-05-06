@@ -35,4 +35,18 @@ export { default as treeTitleBehavior } from './Behaviors/Tree/treeTitleBehavior
 export { default as dialogBehavior } from './Behaviors/Dialog/dialogBehavior'
 export { default as statusBehavior } from './Behaviors/Status/statusBehavior'
 export { default as embedBehavior } from './Behaviors/Embed/embedBehavior'
+
+/** Table */
 export { default as tableBehavior } from './Behaviors/Table/tableBehavior'
+export { default as tableCellBehavior } from './Behaviors/Table/tableCellBehavior'
+export { default as tableRowHeaderBehavior } from './Behaviors/Table/tableRowHeaderBehavior'
+export { default as tableColumnHeaderBehavior } from './Behaviors/Table/tableColumnHeaderBehavior'
+
+export { default as gridTableBehavior } from './Behaviors/Table/gridTableBehavior'
+export { default as gridCellBehavior } from './Behaviors/Table/gridCellBehavior'
+export {
+  default as tableNestedNavigationBehavior,
+} from './Behaviors/Table/tableNestedNavigationBehavior'
+export {
+  default as tableRowNestedNavigationBehavior,
+} from './Behaviors/Table/tableRowNestedNavigationBehavior'
