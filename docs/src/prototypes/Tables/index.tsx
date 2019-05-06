@@ -23,7 +23,7 @@ export default () => (
     <TableNestedNavigation />
     <br />
     <h3>Grid table:</h3>
-    <p>Use left/right/up/down arrow keys to navigate between cells</p>
+    <p>Use left/right/up/down arrow keys to navigate between cells.</p>
     <GridTable />
   </div>
 )

@@ -1,5 +1,31 @@
 import * as React from 'react'
-import { Table, Icon, Button, gridTableBehavior, gridCellBehavior } from '@stardust-ui/react'
+import {
+  Table,
+  Icon,
+  Button,
+  gridTableBehavior,
+  gridCellBehavior,
+  Popup,
+  popupFocusTrapBehavior,
+  Header,
+  Input,
+} from '@stardust-ui/react'
+// import { renderDropdown } from './dropdown'
+
+const renderPopup = () => (
+  <Popup
+    accessibility={popupFocusTrapBehavior}
+    trigger={<Button content="Press to open Popup" />}
+    content={{
+      content: (
+        <>
+          <Header as="h4">This content traps focus on appearance.</Header>
+          <Input icon="search" placeholder="Search..." />
+        </>
+      ),
+    }}
+  />
+)
 
 const header = {
   items: [
@@ -24,7 +50,7 @@ const rows = [
         accessibility: gridCellBehavior,
       },
       { content: <Icon name="call-video" />, accessibility: gridCellBehavior },
-      { content: <Button>Click</Button>, accessibility: gridCellBehavior },
+      { content: renderPopup(), accessibility: gridCellBehavior },
     ],
     headerIndex: 2,
   },

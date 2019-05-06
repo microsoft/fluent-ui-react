@@ -5,7 +5,26 @@ import {
   Button,
   tableNestedNavigationBehavior,
   tableRowNestedNavigationBehavior,
+  Popup,
+  popupFocusTrapBehavior,
+  Header,
+  Input,
 } from '@stardust-ui/react'
+
+const renderPopup = () => (
+  <Popup
+    accessibility={popupFocusTrapBehavior}
+    trigger={<Button content="Press to open Popup" />}
+    content={{
+      content: (
+        <>
+          <Header as="h4">This content traps focus on appearance.</Header>
+          <Input icon="search" placeholder="Search..." />
+        </>
+      ),
+    }}
+  />
+)
 
 const header = {
   items: [{ content: 'id' }, { content: 'Name' }, { content: 'Picture' }, { content: 'Action' }],
@@ -25,7 +44,7 @@ const rows = [
         ),
       },
       { content: <Icon name="call-video" /> },
-      { content: <Button>Click</Button> },
+      { content: renderPopup() },
     ],
     headerIndex: 2,
     accessibility: tableRowNestedNavigationBehavior,
