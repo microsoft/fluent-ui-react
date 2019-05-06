@@ -49,6 +49,20 @@ export default () => (
       }
     />
 
+    <Question content="How can I set default value of Form.Field?" />
+    <Answer
+      content={
+        <p>
+          You need to set the default value on the input slot.
+          <CodeSnippet
+            value={`
+      <Form.Field control={{as: Input, defaultValue:'some value'}} />
+      `}
+          />
+        </p>
+      }
+    />
+
     <Category content="Teams Specific" />
     <Question content="How to add Icons to Stardust" />
     <Answer
