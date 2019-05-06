@@ -1,7 +1,7 @@
-import * as React from 'react'
+import { CodeSnippet } from '@stardust-ui/docs-components'
 import { Header, Icon } from '@stardust-ui/react'
+import * as React from 'react'
 
-import CodeSnippet from '../components/CodeSnippet'
 import DocPage from '../components/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
@@ -11,7 +11,7 @@ export default () => (
     <p>
       Stardust UI should be installed as a <code>dependency</code> of your app.
     </p>
-    <CodeSnippet mode="sh" value="yarn add @stardust-ui/react" />
+    <CodeSnippet mode="bash" value="yarn add @stardust-ui/react" />
     <Header as="h2">Setup</Header>
     <p>
       Stardust components are styled using CSS in JS. This technique requires a style renderer to
@@ -53,6 +53,6 @@ export default () => (
       `}
     />
 
-    <GuidesNavigationFooter next={{ name: 'Accessibility', url: 'accessibility' }} />
+    <GuidesNavigationFooter next={{ name: 'FAQ', url: 'faq' }} />
   </DocPage>
 )

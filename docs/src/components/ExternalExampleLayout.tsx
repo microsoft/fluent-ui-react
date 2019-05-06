@@ -47,10 +47,10 @@ class ExternalExampleLayout extends React.Component<
     const { exampleName } = this.props.match.params
     const exampleFilename = exampleKebabNameToSourceFilename(exampleName)
 
-    const examplePath = _.find(examplePaths, path => {
-      const { exampleName } = parseExamplePath(path)
-      return exampleFilename === exampleName
-    })
+    const examplePath = _.find(
+      examplePaths,
+      path => exampleFilename === parseExamplePath(path).exampleName,
+    )
 
     if (!examplePath) return <PageNotFound />
 

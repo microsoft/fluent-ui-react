@@ -12,7 +12,7 @@ interface BehaviorInfo {
   category: string
 }
 
-const getComponentInfo = (filepath: string) => {
+const getComponentInfo = (filepath: string, ignoredParentInterfaces: string[]) => {
   const absPath = path.resolve(process.cwd(), filepath)
 
   const dir = path.dirname(absPath)
@@ -40,6 +40,9 @@ const getComponentInfo = (filepath: string) => {
   const info: any = components[0]
 
   // add exported Component info
+  //
+  // this 'require' instruction might break by producing partially initialized types - because of ts-node module's cache used during processing
+  // - in that case we might consider to disable ts-node cache when running this command: https://github.com/ReactiveX/rxjs/commit/2f86b9ddccbf020b2e695dd8fe0b79194efa3f56
   const Component = require(absPath).default
   info.constructorName = _.get(Component, 'prototype.constructor.name', null)
 
@@ -96,14 +99,21 @@ const getComponentInfo = (filepath: string) => {
     const { description, tags } = parseDocblock(propDef.description)
     const { name, value } = parseType(propName, propDef)
 
-    info.props[propName] = {
-      ...propDef,
-      description,
-      tags,
-      value,
-      defaultValue: parseDefaultValue(propDef),
-      name: propName,
-      type: name,
+    const parentInterface = _.get(propDef, 'parent.name')
+    const visibleInDefinition = !_.includes(ignoredParentInterfaces, parentInterface)
+
+    if (visibleInDefinition) {
+      info.props[propName] = {
+        ...propDef,
+        description,
+        tags,
+        value,
+        defaultValue: parseDefaultValue(propDef, name),
+        name: propName,
+        type: name,
+      }
+    } else {
+      delete info.props[propName]
     }
   })
 

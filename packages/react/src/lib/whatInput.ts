@@ -1,6 +1,7 @@
 import isBrowser from './isBrowser'
 
 // Taken from https://github.com/ten1seven/what-input/blob/master/src/scripts/what-input.js
+/* eslint-disable */
 
 /*
  * variables
@@ -231,6 +232,10 @@ const detectWheel = () => {
 // (also passes if polyfills are used)
 if (isBrowser() && 'addEventListener' in window && Array.prototype.indexOf) {
   setUp()
+}
+
+export const setWhatInputSource = (newInput: 'mouse' | 'keyboard' | 'initial') => {
+  currentInput = newInput
 }
 
 // returns string: the current input type

@@ -135,6 +135,9 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
+  wrapWithFlex = (part: React.ReactNode, shouldWrap: boolean) =>
+    shouldWrap ? <Flex gap="gap.smaller">{part}</Flex> : part
+
   renderComponent({ classes, accessibility, unhandledProps, styles }) {
     const { as, debug, endMedia, media, content, contentMedia, header, headerMedia } = this.props
 
@@ -175,6 +178,24 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
       },
     })
 
+    const hasHeaderPart = !!(headerElement || headerMediaElement)
+    const headerPart = hasHeaderPart && (
+      <>
+        <Flex.Item grow>{headerElement}</Flex.Item>
+        {headerMediaElement}
+      </>
+    )
+
+    const hasContentPart = !!(contentElement || contentMediaElement)
+    const contentPart = hasContentPart && (
+      <>
+        <Flex.Item grow>{contentElement}</Flex.Item>
+        {contentMediaElement}
+      </>
+    )
+
+    const hasBothParts = hasContentPart && hasHeaderPart
+
     return (
       <Flex
         vAlign="center"
@@ -189,16 +210,16 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {mediaElement}
+
         <Flex.Item grow>
-          <Flex column className={ListItem.slotClassNames.main} styles={styles.main}>
-            <Flex gap="gap.smaller">
-              <Flex.Item grow>{headerElement}</Flex.Item>
-              {headerMediaElement}
-            </Flex>
-            <Flex gap="gap.smaller">
-              <Flex.Item grow>{contentElement}</Flex.Item>
-              {contentMediaElement}
-            </Flex>
+          <Flex
+            className={ListItem.slotClassNames.main}
+            column={hasBothParts}
+            gap={hasBothParts ? undefined : 'gap.small'}
+            styles={styles.main}
+          >
+            {this.wrapWithFlex(headerPart, hasBothParts)}
+            {this.wrapWithFlex(contentPart, hasBothParts)}
           </Flex>
         </Flex.Item>
         {endMediaElement}

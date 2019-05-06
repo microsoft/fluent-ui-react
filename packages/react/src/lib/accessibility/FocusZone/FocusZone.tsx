@@ -793,7 +793,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
           return distance
         },
-        undefined /*ev*/,
+        undefined /* ev */,
         true,
       )
     ) {
@@ -832,7 +832,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
           return distance
         },
-        undefined /*ev*/,
+        undefined /* ev */,
         true,
       )
     ) {

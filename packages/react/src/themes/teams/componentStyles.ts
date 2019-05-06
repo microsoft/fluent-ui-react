@@ -22,22 +22,17 @@ export { default as DropdownSearchInput } from './components/Dropdown/dropdownSe
 export { default as DropdownSelectedItem } from './components/Dropdown/dropdownSelectedItemStyles'
 export { default as DropdownItem } from './components/Dropdown/dropdownItemStyles'
 
-export { default as Flex } from './components/Flex/flexStyles'
-export { default as FlexItem } from './components/Flex/flexItemStyles'
+export { default as Embed } from './components/Embed/embedStyles'
 
 export { default as Form } from './components/Form/formStyles'
 export { default as FormField } from './components/Form/formFieldStyles'
 
+export { default as Grid } from './components/Grid/gridStyles'
+
 export { default as Header } from './components/Header/headerStyles'
 export { default as HeaderDescription } from './components/Header/headerDescriptionStyles'
 
-export { default as Grid } from './components/Grid/gridStyles'
-
 export { default as Icon } from './components/Icon/iconStyles'
-
-export { default as Image } from './components/Image/imageStyles'
-
-export { default as Input } from './components/Input/inputStyles'
 
 export { default as Label } from './components/Label/labelStyles'
 
@@ -57,6 +52,8 @@ export { default as MenuDivider } from './components/Menu/menuDividerStyles'
 export { default as Popup } from './components/Popup/popupStyles'
 export { default as PopupContent } from './components/Popup/popupContentStyles'
 
+export { default as ProviderBox } from './components/Provider/providerBoxStyles'
+
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemStyles'
 
 export { default as Segment } from './components/Segment/segmentStyles'
@@ -73,3 +70,5 @@ export { default as TreeItem } from './components/Tree/treeItemStyles'
 export { default as TreeTitle } from './components/Tree/treeTitleStyles'
 
 export { default as Animation } from './components/Animation/animationStyles'
+
+export { default as Video } from './components/Video/videoStyles'

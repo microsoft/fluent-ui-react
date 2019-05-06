@@ -58,7 +58,6 @@ export const getSizeStyles = (sizeInPx: number, variables: StatusVariables) => {
 const statusStyles: ComponentSlotStylesInput<StatusProps, StatusVariables> = {
   root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => {
     return {
-      boxSizing: 'border-box',
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',

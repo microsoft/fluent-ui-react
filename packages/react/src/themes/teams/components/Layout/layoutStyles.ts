@@ -1,12 +1,6 @@
 import { debugRoot, debugArea, debugGap } from '../../../../styles/debugStyles'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 
-const truncateStyle = {
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-}
-
 const layoutStyles: ComponentSlotStylesInput = {
   root: ({ props }): ICSSInJSStyle => {
     const {
@@ -51,28 +45,25 @@ const layoutStyles: ComponentSlotStylesInput = {
     ...(props.debug && debugGap({ vertical: props.vertical })),
   }),
 
-  start: ({ props }): ICSSInJSStyle => ({
-    ...(props.debug && debugArea()),
-    display: 'inline-flex',
+  start: ({ props: p }): ICSSInJSStyle => ({
+    ...(p.debug && debugArea()),
     alignItems: 'center',
-    ...(props.truncateStart && truncateStyle),
-    ...props.startCSS,
+    display: 'inline-flex',
+    ...p.startCSS,
   }),
 
-  main: ({ props }): ICSSInJSStyle => ({
-    ...(props.debug && debugArea()),
+  main: ({ props: p }): ICSSInJSStyle => ({
+    ...(p.debug && debugArea()),
+    alignItems: 'center',
     display: 'grid',
-    alignItems: 'center',
-    ...(props.truncateMain && truncateStyle),
-    ...props.mainCSS,
+    ...p.mainCSS,
   }),
 
-  end: ({ props }): ICSSInJSStyle => ({
-    ...(props.debug && debugArea()),
-    display: 'inline-flex',
+  end: ({ props: p }): ICSSInJSStyle => ({
+    ...(p.debug && debugArea()),
     alignItems: 'center',
-    ...(props.truncateEnd && truncateStyle),
-    ...props.endCSS,
+    display: 'inline-flex',
+    ...p.endCSS,
   }),
 }
 

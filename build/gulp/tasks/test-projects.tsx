@@ -1,6 +1,6 @@
 import * as express from 'express'
 import * as fs from 'fs'
-import { parallel, series, task } from 'gulp'
+import { series, task } from 'gulp'
 import { rollup as lernaAliases } from 'lerna-alias'
 import * as path from 'path'
 import * as portfinder from 'portfinder'
@@ -23,7 +23,7 @@ const log = (context: string) => (message: string) => {
   console.log('='.repeat(80))
 }
 
-export const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
+export const runIn = targetPath => cmd => sh(`cd ${targetPath} && ${cmd}`)
 
 const addResolutionPathsForStardustPackages = async (
   testProjectDir: string,
@@ -101,7 +101,10 @@ const performBrowserTest = async (publicDirectory: string, listenPort: number) =
   const server = await startServer(publicDirectory, listenPort)
 
   const browser = await puppeteer.launch({
-    args: ['--single-process'], // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568
+    args: [
+      // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568
+      process.env.CI && '--single-process',
+    ].filter(Boolean),
   })
   const page = await browser.newPage()
   let error: Error
@@ -133,7 +136,6 @@ task('test:projects:cra-ts', async () => {
   const logger = log('test:projects:cra-ts')
   const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/cra')
 
-  //////// CREATE TEST REACT APP ///////
   logger('STEP 1. Create test React project with TSX scripts..')
 
   const testAppPath = paths.withRootAt(
@@ -143,7 +145,6 @@ task('test:projects:cra-ts', async () => {
   const runInTestApp = runIn(testAppPath())
   logger(`Test React project is successfully created: ${testAppPath()}`)
 
-  //////// ADD STARDUST AS A DEPENDENCY ///////
   logger('STEP 2. Add Stardust dependency to test project..')
 
   const packedPackages = await packStardustPackages(logger)
@@ -151,11 +152,9 @@ task('test:projects:cra-ts', async () => {
   await runInTestApp(`yarn add ${packedPackages['@stardust-ui/react']}`)
   logger(`✔️Stardust UI packages were added to dependencies`)
 
-  //////// REFERENCE STARDUST COMPONENTS IN TEST APP's MAIN FILE ///////
   logger("STEP 3. Reference Stardust components in test project's App.tsx")
   fs.copyFileSync(scaffoldPath('App.tsx'), testAppPath('src', 'App.tsx'))
 
-  //////// BUILD TEST PROJECT ///////
   logger('STEP 4. Build test project..')
   await runInTestApp(`yarn build`)
 
@@ -176,6 +175,7 @@ task('test:projects:rollup', async () => {
     'rollup-plugin-replace',
     'rollup-plugin-commonjs',
     'rollup-plugin-node-resolve',
+    'rollup-plugin-json',
     'react',
     'react-dom',
   ].join(' ')
@@ -199,7 +199,45 @@ task('test:projects:rollup', async () => {
   logger(`✔️Browser test was passed`)
 })
 
+task('test:projects:typings', async () => {
+  const logger = log('test:projects:typings')
+
+  const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/typings')
+  const tmpDirectory = tmp.dirSync({ prefix: 'stardust-' }).name
+
+  logger(`✔️Temporary directory was created: ${tmpDirectory}`)
+
+  const dependencies = [
+    '@types/react',
+    '@types/react-dom',
+    'react',
+    'react-dom',
+    'typescript',
+  ].join(' ')
+  await runIn(tmpDirectory)(`yarn add ${dependencies}`)
+  logger(`✔️Dependencies were installed`)
+
+  const packedPackages = await packStardustPackages(logger)
+  await addResolutionPathsForStardustPackages(tmpDirectory, packedPackages)
+  await runIn(tmpDirectory)(`yarn add ${packedPackages['@stardust-ui/react']}`)
+  logger(`✔️Stardust UI packages were added to dependencies`)
+
+  fs.mkdirSync(path.resolve(tmpDirectory, 'src'))
+  fs.copyFileSync(scaffoldPath('index.tsx'), path.resolve(tmpDirectory, 'src/index.tsx'))
+  fs.copyFileSync(scaffoldPath('tsconfig.json'), path.resolve(tmpDirectory, 'tsconfig.json'))
+  logger(`✔️Source and configs were copied`)
+
+  await runIn(tmpDirectory)(`yarn tsc --noEmit`)
+  logger(`✔️Example project was successfully built: ${tmpDirectory}`)
+})
+
 task(
   'test:projects',
-  series('dll', 'bundle:all-packages', parallel('test:projects:cra-ts', 'test:projects:rollup')),
+  series(
+    'dll',
+    'bundle:all-packages',
+    'test:projects:cra-ts',
+    'test:projects:rollup',
+    'test:projects:typings',
+  ),
 )

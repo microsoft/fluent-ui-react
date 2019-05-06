@@ -1,5 +1,6 @@
 const _ = require('lodash')
 
+// eslint-disable-next-line no-eval
 const evalValue = value => eval(value) // tslint:disable-line no-eval
 
 const isTransformable = value => typeof value === 'string' && value.includes('names')

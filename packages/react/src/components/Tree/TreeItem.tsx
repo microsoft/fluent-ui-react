@@ -103,7 +103,6 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
 
   handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
     onClick: (e, titleProps) => {
-      e.preventDefault()
       _.invoke(this.props, 'onTitleClick', e, this.props)
       _.invoke(predefinedProps, 'onClick', e, titleProps)
     },
@@ -127,6 +126,7 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
         {open &&
           Tree.create(items, {
             defaultProps: {
+              accessibility: defaultBehavior,
               className: TreeItem.slotClassNames.subtree,
               exclusive,
               renderItemTitle,
