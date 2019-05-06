@@ -409,6 +409,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'tables',
+        content: 'Tables',
+        as: NavLink,
+        to: '/prototype-tables',
+        styles: menuItemStyles,
+      },
+      {
         key: 'iconviewer',
         content: 'Processed Icons',
         as: NavLink,

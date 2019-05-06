@@ -98,6 +98,12 @@ const Router = () => (
             path="/prototype-alerts"
             component={require('./prototypes/alerts/index').default}
           />,
+          <DocsLayout
+            exact
+            key="/prototype-tables"
+            path="/prototype-tables"
+            component={require('./prototypes/tables/index').default}
+          />,
         ]}
         <DocsLayout exact path="/faq" component={FAQ} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />

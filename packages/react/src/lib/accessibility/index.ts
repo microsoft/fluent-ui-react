@@ -39,6 +39,7 @@ export { default as embedBehavior } from './Behaviors/Embed/embedBehavior'
 /** Table */
 export { default as tableBehavior } from './Behaviors/Table/tableBehavior'
 export { default as tableCellBehavior } from './Behaviors/Table/tableCellBehavior'
+export { default as tableRowBehavior } from './Behaviors/Table/tableRowBehavior'
 export { default as tableRowHeaderBehavior } from './Behaviors/Table/tableRowHeaderBehavior'
 export { default as tableColumnHeaderBehavior } from './Behaviors/Table/tableColumnHeaderBehavior'
 

@@ -3,18 +3,18 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as React from 'react'
 import {
-  UIComponent,
   RenderResultConfig,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  AutoControlledComponent,
 } from '../../lib'
 import TableRow, { TableRowProps } from './TableRow'
 import { TableCellProps } from './TableCell'
 
 import { ReactProps, ShorthandValue } from '../../types'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { tableBehavior } from '../../lib/accessibility'
+import { tableBehavior, tableColumnHeaderBehavior } from '../../lib/accessibility'
 
 export interface TableProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -29,6 +29,10 @@ export interface TableProps extends UIComponentProps, ChildrenComponentProps {
 
   /** The rows of the Table with a space-separated list of values. The values represent the track size, and the space between them represents the Table line. */
   rows?: ShorthandValue[]
+  focusedRow?: number
+  focusedCol?: number
+  defaultFocusedRow?: number
+  defaultFocusedCol?: number
 }
 
 export interface TableState {
@@ -41,7 +45,7 @@ export interface TableState {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Table extends UIComponent<ReactProps<TableProps>, any> {
+class Table extends AutoControlledComponent<ReactProps<TableProps>, TableState> {
   public static displayName = 'Table'
   public static className = 'ui-Table'
 
@@ -102,6 +106,16 @@ class Table extends UIComponent<ReactProps<TableProps>, any> {
     ]),
     header: customPropTypes.itemShorthand,
     rows: customPropTypes.collectionShorthand,
+    focusedRow: PropTypes.number,
+    focusedCol: PropTypes.number,
+    defaultFocusedRow: PropTypes.number,
+    defaultFocusedCol: PropTypes.number,
+  }
+
+  static autoControlledProps = ['focusedRow', 'focusedCol']
+
+  getInitialAutoControlledState() {
+    return { focusedRow: -1, focusedCol: -1 }
   }
 
   public static defaultProps: TableProps = {
@@ -112,10 +126,6 @@ class Table extends UIComponent<ReactProps<TableProps>, any> {
   constructor(p, c) {
     super(p, c)
 
-    this.state = {
-      focusedRow: -1,
-      focusedCol: -1,
-    }
     const { rows, header } = this.props
     this.rowsCount = rows.length + (header ? 1 : 0)
     this.columsCount = header && (header as TableRowProps).items.length
@@ -129,6 +139,7 @@ class Table extends UIComponent<ReactProps<TableProps>, any> {
       const props = {
         ...row,
         focusedIndex: focusedRow - 1 === index ? this.state.focusedCol : -1,
+        focusable: this.state.focusedRow !== -1 || this.state.focusedCol !== -1,
       } as TableRowProps
       return <TableRow {...props} />
     })
@@ -141,7 +152,7 @@ class Table extends UIComponent<ReactProps<TableProps>, any> {
     const headers = _.map(items, (item: TableCellProps) => {
       return {
         as: 'th',
-        scope: 'col',
+        accessibility: tableColumnHeaderBehavior,
         ...item,
       }
     })
@@ -150,6 +161,7 @@ class Table extends UIComponent<ReactProps<TableProps>, any> {
       ...header,
       items: headers,
       focusedIndex: this.state.focusedRow === 0 ? this.state.focusedCol : -1,
+      focusable: this.state.focusedRow !== -1 || this.state.focusedCol !== -1,
     } as TableRowProps
 
     return <TableRow {...headerRowProps} />

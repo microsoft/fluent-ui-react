@@ -4,7 +4,9 @@ import { FocusZoneDirection } from '../../FocusZone'
 
 const tableNestedNavigationBehavior: Accessibility = (props: any) => ({
   attributes: {
-    root: {},
+    root: {
+      role: 'grid',
+    },
   },
   focusZone: {
     mode: FocusZoneMode.Embed,

@@ -6,12 +6,12 @@ import TableCell, { TableCellProps } from './TableCell'
 import { UIComponent, RenderResultConfig, UIComponentProps, commonPropTypes } from '../../lib'
 import { ReactProps, ShorthandValue } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+import { tableRowBehavior, tableRowHeaderBehavior } from '../../lib/accessibility'
 
 export interface TableRowProps extends UIComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
+   * @default tableRowBehavior
    * @available TableRowBehavior
    * */
   accessibility?: Accessibility
@@ -21,6 +21,7 @@ export interface TableRowProps extends UIComponentProps {
   headerIndex?: number
 
   focusedIndex?: number
+  focusable?: boolean
 }
 
 /**
@@ -47,11 +48,12 @@ class TableRow extends UIComponent<ReactProps<TableRowProps>, any> {
     items: customPropTypes.collectionShorthand,
     headerIndex: PropTypes.number,
     focusedIndex: PropTypes.number,
+    focusable: PropTypes.bool,
   }
 
   public static defaultProps: TableRowProps = {
     as: 'tr',
-    accessibility: defaultBehavior,
+    accessibility: tableRowBehavior,
   }
 
   public renderCells() {
@@ -61,11 +63,12 @@ class TableRow extends UIComponent<ReactProps<TableRowProps>, any> {
       const cellProps = {
         ...item,
         focused: index === focusedIndex,
+        focusable: this.props.focusable,
       }
       const headerProps = {
         ...cellProps,
         as: 'th',
-        scope: 'row',
+        accessibility: tableRowHeaderBehavior,
       } as TableCellProps
 
       if (headerIndex && index === headerIndex) {

@@ -27,9 +27,8 @@ export interface TableCellProps
    * */
   accessibility?: Accessibility
 
-  scope?: string
-
   focused?: boolean
+  focusable?: boolean
 }
 
 /**
@@ -59,6 +58,7 @@ class TableCell extends UIComponent<ReactProps<TableCellProps>, any> {
     ]),
     isHeader: PropTypes.bool,
     focused: PropTypes.bool,
+    focusable: PropTypes.bool,
   }
 
   public static defaultProps: TableCellProps = {
@@ -79,6 +79,9 @@ class TableCell extends UIComponent<ReactProps<TableCellProps>, any> {
   }
 
   componentDidMount() {
+    if (!this.props.focusable) {
+      return
+    }
     this.focusableElement = getFirstFocusable(this.cellRef, this.cellRef, true)
     if (!this.focusableElement) {
       this.focusableElement = this.cellRef
@@ -89,6 +92,9 @@ class TableCell extends UIComponent<ReactProps<TableCellProps>, any> {
   }
 
   componentDidUpdate() {
+    if (!this.props.focusable) {
+      return
+    }
     this.tryFocusCell()
   }
 
@@ -98,14 +104,13 @@ class TableCell extends UIComponent<ReactProps<TableCellProps>, any> {
     classes,
     unhandledProps,
   }: RenderResultConfig<any>): React.ReactNode {
-    const { children, content, scope } = this.props
+    const { children, content } = this.props
 
     return (
       <ElementType
         className={classes.root}
         {...accessibility.attributes.root}
         {...unhandledProps}
-        scope={scope}
         ref={this.setRef}
       >
         {childrenExist(children) ? children : content}
