@@ -8,8 +8,9 @@
     "clean:cache": "gulp clean:cache",
     "predeploy:docs": "cross-env NODE_ENV=production yarn build:docs",
     "deploy:docs": "gulp deploy:docs",
-    "lint": "cross-env NODE_OPTIONS='-r ts-node/register' tslint -t stylish -p . --rules-dir ./build/tslint",
-    "lint:fix": "yarn lint --fix",
+    "lint": "eslint \"**/*.{js,ts,tsx}\" && yarn lint:old",
+    "lint:fix": "yarn lint --fix && yarn lint:old --fix",
+    "lint:old": "cross-env NODE_OPTIONS='-r ts-node/register' tslint -t stylish -p . --rules-dir ./build/tslint",
     "perf": "cross-env PERF=true gulp perf --times=50",
     "perf:debug": "cross-env PERF=true gulp perf:debug --debug",
     "prettier": "prettier --list-different \"**/*.{ts,tsx}\"",
@@ -39,6 +40,7 @@
     "**/*.{ts,tsx}": [
       "prettier --write",
       "tslint -t stylish --fix",
+      "eslint --fix",
       "git add"
     ],
     "**/*.{js,json}": [
@@ -113,6 +115,7 @@
     "react-router-dom": "^4.1.2",
     "react-source-render": "2.0.0-beta.6",
     "react-test-renderer": "^16.8.5",
+    "react-vis": "^1.11.6",
     "request-promise-native": "^1.0.5",
     "rimraf": "^2.6.1",
     "satisfied": "^1.1.1",

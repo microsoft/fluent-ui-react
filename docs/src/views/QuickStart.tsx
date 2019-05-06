@@ -53,6 +53,6 @@ export default () => (
       `}
     />
 
-    <GuidesNavigationFooter next={{ name: 'Accessibility', url: 'accessibility' }} />
+    <GuidesNavigationFooter next={{ name: 'FAQ', url: 'faq' }} />
   </DocPage>
 )

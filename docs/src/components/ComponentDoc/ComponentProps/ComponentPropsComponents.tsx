@@ -3,8 +3,6 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Menu, tabListBehavior } from '@stardust-ui/react'
 
-import { updateForKeys } from 'docs/src/hoc'
-
 const ComponentPropsComponents: any = ({
   activeDisplayName,
   displayNames,
@@ -42,4 +40,8 @@ ComponentPropsComponents.propTypes = {
   parentDisplayName: PropTypes.string.isRequired,
 }
 
-export default updateForKeys(['activeDisplayName', 'parentDisplayName'])(ComponentPropsComponents)
+const areEqualProps = (prevProps, nextProps) =>
+  prevProps.activeDisplayName === nextProps.activeDisplayName &&
+  prevProps.parentDisplayName === nextProps.parentDisplayName
+
+export default React.memo(ComponentPropsComponents, areEqualProps)

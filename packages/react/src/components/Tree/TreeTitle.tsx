@@ -57,7 +57,7 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
   }
 
   public static defaultProps = {
-    as: 'span',
+    as: 'a',
     accessibility: treeTitleBehavior,
   }
 

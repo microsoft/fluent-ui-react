@@ -95,6 +95,7 @@ const webpackConfig: any = {
         react: require('react/package.json').version,
         reactDOM: require('react-dom/package.json').version,
         stardust: require('./package.json').version,
+        reactVis: require('react-vis/package.json').version,
       },
     }),
     new webpack.IgnorePlugin({

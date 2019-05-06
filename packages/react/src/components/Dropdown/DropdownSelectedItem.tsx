@@ -118,6 +118,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
 
   public renderComponent({
     unhandledProps,
+    classes,
     styles,
   }: RenderResultConfig<DropdownSelectedItemProps>) {
     const { active, header, icon, image } = this.props
@@ -148,6 +149,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
     return (
       <Ref innerRef={this.itemRef}>
         <Label
+          className={classes.root}
           tabIndex={active ? 0 : -1}
           styles={styles.root}
           circular

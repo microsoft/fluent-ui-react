@@ -1,10 +1,10 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import { Provider, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from 'src/lib'
 import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
 import Router from './routes'
+import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
 
 class App extends React.Component<any, ThemeContextData> {
   // State also contains the updater function so it will
@@ -31,7 +31,9 @@ class App extends React.Component<any, ThemeContextData> {
             ],
           })}
         >
-          <Router />
+          <PerfDataProvider>
+            <Router />
+          </PerfDataProvider>
         </Provider>
       </ThemeContext.Provider>
     )

@@ -13,6 +13,7 @@ import calendar from './calendar'
 import call from './call'
 import callControlPresentNew from './callControlPresentNew'
 import callControlStopPresentingNew from './callControlStopPresentingNew'
+import callDialpad from './callDialpad'
 import callEnd from './callEnd'
 import callPstn from './callPstn'
 import callRecording from './callRecording'
@@ -123,6 +124,7 @@ export default {
   bullets,
   calendar,
   call,
+  'call-dialpad': callDialpad,
   'call-end': callEnd,
   'call-video': callVideo,
   'call-video-off': callVideoOff,

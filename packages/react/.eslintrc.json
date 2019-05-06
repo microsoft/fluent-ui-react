@@ -1,0 +1,12 @@
+{
+  "extends": ["../internal-tooling/eslint/index.js"],
+  "overrides": [
+    {
+      "files": "**/icons/*.tsx",
+      "rules": {
+        "react/prop-types": "off"
+      }
+    }
+  ],
+  "root": true
+}
