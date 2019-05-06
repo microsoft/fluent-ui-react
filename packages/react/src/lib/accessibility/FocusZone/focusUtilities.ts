@@ -18,9 +18,9 @@ export function getFirstFocusable(
   return getNextElement(
     rootElement,
     currentElement,
-    true /*checkNode*/,
-    false /*suppressParentTraversal*/,
-    false /*suppressChildTraversal*/,
+    true /* checkNode */,
+    false /* suppressParentTraversal */,
+    false /* suppressChildTraversal */,
     includeElementsInFocusZones,
   )
 }
@@ -38,9 +38,9 @@ export function getLastFocusable(
   return getPreviousElement(
     rootElement,
     currentElement,
-    true /*checkNode*/,
-    false /*suppressParentTraversal*/,
-    true /*traverseChildren*/,
+    true /* checkNode */,
+    false /* suppressParentTraversal */,
+    true /* traverseChildren */,
     includeElementsInFocusZones,
   )
 }
@@ -62,12 +62,12 @@ export function getFirstTabbable(
   return getNextElement(
     rootElement,
     currentElement,
-    true /*checkNode*/,
-    false /*suppressParentTraversal*/,
-    false /*suppressChildTraversal*/,
+    true /* checkNode */,
+    false /* suppressParentTraversal */,
+    false /* suppressChildTraversal */,
     includeElementsInFocusZones,
-    false /*allowFocusRoot*/,
-    true /*tabbable*/,
+    false /* allowFocusRoot */,
+    true /* tabbable */,
   )
 }
 
@@ -88,12 +88,12 @@ export function getLastTabbable(
   return getPreviousElement(
     rootElement,
     currentElement,
-    true /*checkNode*/,
-    false /*suppressParentTraversal*/,
-    true /*traverseChildren*/,
+    true /* checkNode */,
+    false /* suppressParentTraversal */,
+    true /* traverseChildren */,
     includeElementsInFocusZones,
-    false /*allowFocusRoot*/,
-    true /*tabbable*/,
+    false /* allowFocusRoot */,
+    true /* tabbable */,
   )
 }
 

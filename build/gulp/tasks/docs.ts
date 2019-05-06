@@ -25,10 +25,10 @@ const { paths } = config
 const g = require('gulp-load-plugins')()
 const { colors, log } = g.util
 
-const handleWatchChange = path => log(`File ${path} was changed, running tasks...`)
-const handleWatchUnlink = (group, path) => {
-  log(`File ${path} was deleted, running tasks...`)
-  remember.forget(group, path)
+const handleWatchChange = changedPath => log(`File ${changedPath} was changed, running tasks...`)
+const handleWatchUnlink = (group, changedPath) => {
+  log(`File ${changedPath} was deleted, running tasks...`)
+  remember.forget(group, changedPath)
 }
 
 // ----------------------------------------
@@ -68,11 +68,14 @@ task(
   ),
 )
 
-// ----------------------------------------s
+// ----------------------------------------
 // Build
 // ----------------------------------------
 
-const componentsSrc = [`${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`]
+const componentsSrc = [
+  `${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`,
+  `${paths.posix.packageSrc('react')}/lib/accessibility/FocusZone/[A-Z]!(*.types).tsx`,
+]
 const behaviorSrc = [`${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
 const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/!(*index|.knobs).tsx`
@@ -88,7 +91,7 @@ const markdownSrc = [
 task('build:docs:component-info', () =>
   src(componentsSrc, { since: lastRun('build:docs:component-info') })
     .pipe(
-      cache(gulpReactDocgen(), {
+      cache(gulpReactDocgen(['DOMAttributes', 'HTMLAttributes']), {
         name: 'componentInfo',
       }),
     )
@@ -224,7 +227,7 @@ task('watch:docs', cb => {
   // rebuild example menus
   watch(examplesIndexSrc, series('build:docs:example-menu'))
     .on('change', handleWatchChange)
-    .on('unlink', path => handleWatchUnlink('example-menu', path))
+    .on('unlink', changedPath => handleWatchUnlink('example-menu', changedPath))
 
   watch(examplesSrc, series('build:docs:example-sources'))
     .on('change', handleWatchChange)
@@ -241,7 +244,7 @@ task('watch:docs', cb => {
 
   watch(behaviorSrc, series('build:docs:component-menu-behaviors'))
     .on('change', handleWatchChange)
-    .on('unlink', path => handleWatchUnlink('component-menu-behaviors', path))
+    .on('unlink', changedPath => handleWatchUnlink('component-menu-behaviors', changedPath))
 
   // rebuild images
   watch(`${config.paths.docsSrc()}/**/*.{png,jpg,gif}`, series('build:docs:images')).on(

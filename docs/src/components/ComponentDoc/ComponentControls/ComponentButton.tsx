@@ -4,12 +4,11 @@ import * as React from 'react'
 interface LabelledButtonProps {
   iconName: string
   label: string
-  active: boolean
   onClick?: (event: React.SyntheticEvent) => void
 }
 
-const LabelledButton = createComponent<LabelledButtonProps>({
-  displayName: 'LabelledButton',
+const ComponentButton = createComponent<LabelledButtonProps>({
+  displayName: 'ComponentButton',
   render: ({ stardust, ...props }) => {
     const { iconName, label, onClick } = props
     return (
@@ -20,4 +19,4 @@ const LabelledButton = createComponent<LabelledButtonProps>({
     )
   },
 })
-export default LabelledButton
+export default ComponentButton

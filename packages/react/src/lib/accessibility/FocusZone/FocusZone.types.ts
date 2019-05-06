@@ -33,18 +33,25 @@ export interface IFocusZone {
  */
 export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | FocusZone> {
   /**
+   * Element type the root element will use.
+   * @default div
+   */
+  as?: React.ReactType
+  /**
    * Additional class name to provide on the root element, in addition to the ms-FocusZone class.
    */
   className?: string
 
   /**
    * Defines which arrows to react to.
+   * It has next options: horizontal, vertical, bidirectional.
    * @default FocusZoneDirection.bidirectional
    */
   direction?: FocusZoneDirection
 
   /**
-   * Function which uses root element to select and return the intial tabbable element.
+   * Function which uses root element as parameter to return the intial tabbable element.
+   * For example, when there is a chat with a bottom-up approach, it is expected that the last chat message is tabbable (active), not the first default one.
    */
   defaultTabbableElement?: (root: HTMLElement) => HTMLElement
 
@@ -54,13 +61,15 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
   shouldFocusOnMount?: boolean
 
   /**
-   * If true, focus will go either to defaultTabbableElement if set or first focusable element inside FocusZone,
-   * when FocusZone container receives focus.
+   * if true and FocusZone's root element (container) receives focus, the focus will land either on the defaultTabbableElement
+   * (if set) or on the first tabbable element of this FocusZone.
+   * Usually a case for nested focus zones, when nested focus zone's container is a focusable element.
    */
   shouldFocusInnerElementWhenReceivedFocus?: boolean
 
   /**
-   * If true and handleTab is false, resets current activeElement to null value.
+   * If true and TAB key is not handled by FocusZone, resets current active element to null value.
+   * For example, when roving index is not desirable and focus should always reset to the default tabbable element.
    */
   shouldResetActiveElementWhenTabFromZone?: boolean
 
@@ -71,25 +80,22 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
   disabled?: boolean
 
   /**
-   * Element type the root element will use. Default is "div".
-   */
-  as?: React.ReactType
-
-  /**
    * If true, FocusZone behavior will change to match RTL environments (left/right arrows switched).
    */
   isRtl?: boolean
 
   /**
-   * If set, will cycle to the beginning of the targets once the user navigates to the
-   * next target while at the end, and to the end when navigate to the previous at the beginning.
+   * If true, will cycle to the beginning of the targets once the user attempts to navigate past the last
+   * target while at the end, and to the end when the user attempts to naviagate before the first target.
    */
   isCircularNavigation?: boolean
 
   /**
-   * If provided, this callback will be executed on keypresses to determine if the user
-   * intends to navigate into the inner zone. Returning true will ask the first inner zone to
-   * set focus.
+   * Callback function that will be executed on keypresses to determine if the user intends to navigate into
+   * the inner (nested) zone. Returning true will ask the first inner zone to set focus.
+   * For example, when chat container is FocusZone and chat messages are inner focus zones.
+   * Navigation between messages possible with up/down arrow keys, but when pressing Enter, focus should go to
+   * focusable elements inside message, for example, a link.
    */
   shouldEnterInnerZone?: (ev: React.KeyboardEvent<HTMLElement>) => boolean
 
@@ -106,37 +112,43 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
    */
   shouldReceiveFocus?: (childElement?: HTMLElement) => boolean
 
-  /** Allow focus to move to root */
+  /**
+   * Allow focus to move to root container
+   */
   allowFocusRoot?: boolean
 
   /**
-   * Allows tab key to be handled to tab through a list of items in the focus zone,
-   * an unfortunate side effect is that users will not be able to tab out of the focus zone
-   * and have to hit escape or some other key.
+   * Allows TAB key to be handled, thus alows tabbing through a focusable list of items in the
+   * focus zone. A side effect is that users will not be able to TAB out of the focus zone and
+   * have to hit escape or some other key to exit focus zone.
+   * Enum options:
+   * none - tabbing is not allowed
+   * all - all tabbing action is allowed
+   * inputOnly - tabbing is allowed only on input elements
    */
   handleTabKey?: FocusZoneTabbableElements
 
   /**
    * A callback method to determine if the input element should lose focus on arrow keys.
    * For example: use arrow keys to navigate when an input element is empty or when cursor is at the beginning/end of a string.
-   *  @param {HTMLInputElement} inputElement The input element which is to lose focus.
-   *  @returns True if input element should lose focus or false otherwise.
+   * @param {HTMLInputElement} inputElement The input element which is to lose focus.
+   * @returns True if input element should lose focus or false otherwise.
    */
   shouldInputLoseFocusOnArrowKey?: (inputElement: HTMLInputElement) => boolean
 
   /**
-   * Whether the FocusZone should stop focus event propagation past the FocusZone
+   * If true, focus event propagation will be stopped.
    */
   stopFocusPropagation?: boolean
 
   /**
-   * Callback to notify creators that focus has been set on the FocusZone
-   *  @param {FocusEvent} event - React's original FocusEvent.
+   * Callback called when "focus" event triggered in FocusZone.
+   * @param {FocusEvent} event - React's original FocusEvent.
    */
   onFocus?: (event: React.FocusEvent<HTMLElement | FocusZone>) => void
 
   /**
-   * Whether the FocusZone prevents default when handled a key event
+   * If true, FocusZone prevents default behavior.
    */
   preventDefaultWhenHandled?: boolean
 }
