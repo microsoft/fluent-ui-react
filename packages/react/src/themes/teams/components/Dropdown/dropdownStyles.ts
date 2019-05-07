@@ -55,6 +55,10 @@ const getWidth = (p: DropdownPropsAndState, v: DropdownVariables): string => {
   return v.width
 }
 
+const getContainerBorderRadius = (p, v) => {
+  return p.open ? v.openBorderRadius : v.borderRadius
+}
+
 const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVariables> = {
   root: ({ props: p }): ICSSInJSStyle => ({
     ...(p.inline && {
@@ -73,7 +77,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     outline: 0,
     width: getWidth(p, v),
     borderWidth: p.search ? `0 0 ${v.searchBorderBottomWidth} 0` : v.borderWidth,
-    borderRadius: p.open && !p.search ? v.openBorderRadius : v.borderRadius,
+    borderRadius: getContainerBorderRadius(p, v),
     color: v.color,
     backgroundColor: v.backgroundColor,
     ':hover': {
@@ -138,7 +142,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     maxHeight: v.listMaxHeight,
     overflowY: 'auto',
     width: getWidth(p, v),
-    left: `-${v.borderWidth}`,
+    left: p.search ? '0px' : `-${v.borderWidth}`,
     top: `calc(100% + ${p.search ? v.searchBorderBottomWidth : '0px'})`, // leave room for container + its border
     background: v.listBackgroundColor,
     ...(p.open && {
