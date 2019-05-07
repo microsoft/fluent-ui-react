@@ -1,7 +1,7 @@
+import { RefForward } from '@stardust-ui/react-component-ref'
 import { mount } from 'enzyme'
 import * as React from 'react'
 
-import RefForward from 'src/components/Ref/RefForward'
 import { ForwardedRef } from './fixtures'
 
 describe('RefForward', () => {

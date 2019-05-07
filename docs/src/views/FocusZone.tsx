@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { Header } from '@stardust-ui/react'
+import { CodeSnippet } from '@stardust-ui/docs-components'
 
 import ComponentPropsTable from 'docs/src/components/ComponentDoc/ComponentPropsTable'
-import CodeSnippet from '../components/CodeSnippet'
 import DocPage from '../components/DocPage'
 import { code, link } from '../utils/helpers'
 
