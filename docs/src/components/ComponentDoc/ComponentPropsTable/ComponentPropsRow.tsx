@@ -24,7 +24,7 @@ export default class ComponentPropsRow extends React.Component<any, any> {
   render() {
     const { defaultValue, description, name, required, tags, type } = this.props
     const hideRow = this.docSiteHidden(tags)
-    const slot = this.isSlotProp(tags)
+    const slot = this.isSlotProp(type, tags)
     const rowStyle: React.CSSProperties = {
       borderTopWidth: '1px',
       borderTopStyle: 'solid',
@@ -59,7 +59,10 @@ export default class ComponentPropsRow extends React.Component<any, any> {
   docSiteHidden(tags) {
     return _.some(tags, ['title', 'docSiteIgnore'])
   }
-  isSlotProp(tags) {
+  isSlotProp(type: string, tags): boolean {
+    if (type.startsWith('ShorthandValue') || type.startsWith('ShorthandCollection')) {
+      return true
+    }
     return _.some(tags, ['title', 'slot'])
   }
 }
