@@ -17,7 +17,7 @@ import ListItem, { ListItemProps } from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
-import { ReactProps, ShorthandValue, ComponentEventHandler, withAsType } from '../../types'
+import { ReactProps, ShorthandValue, ComponentEventHandler, withTypedAs } from '../../types'
 
 export interface ListSlotClassNames {
   item: string
@@ -220,4 +220,4 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
 /**
  * A list displays a group of related content.
  */
-export default withAsType<typeof List, 'ul'>(List)
+export default withTypedAs<typeof List, 'ul'>(List)

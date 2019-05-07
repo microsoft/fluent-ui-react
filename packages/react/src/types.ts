@@ -112,7 +112,7 @@ type PickProps<T, Props extends string> = { [K in Intersect<Props, keyof T>]: T[
 
 type InstanceOf<T> = T extends { new (...args: any[]): infer TInstance } ? TInstance : never
 
-export const withAsType = function<
+export const withTypedAs = function<
   TComponentType extends React.ComponentType,
   TAs extends keyof JSX.IntrinsicElements = 'div'
 >(componentType: TComponentType) {

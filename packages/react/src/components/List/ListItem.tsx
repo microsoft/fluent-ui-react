@@ -13,7 +13,7 @@ import {
 import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ShorthandValue, ReactProps, ComponentEventHandler, withAsType } from '../../types'
+import { ShorthandValue, ReactProps, ComponentEventHandler, withTypedAs } from '../../types'
 import Box from '../Box/Box'
 
 export interface ListItemSlotClassNames {
@@ -239,4 +239,4 @@ ListItem.slotClassNames = {
 /**
  * A list item contains a single piece of content within a list.
  */
-export default withAsType<typeof ListItem, 'li'>(ListItem)
+export default withTypedAs<typeof ListItem, 'li'>(ListItem)

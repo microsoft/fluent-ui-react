@@ -5,7 +5,7 @@ import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes 
 import { imageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import { ReactProps, withAsType } from '../../types'
+import { ReactProps, withTypedAs } from '../../types'
 
 export interface ImageProps extends UIComponentProps {
   /**
@@ -72,4 +72,4 @@ Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src' })
  *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior
  *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
  */
-export default withAsType<typeof Image, 'img'>(Image)
+export default withTypedAs<typeof Image, 'img'>(Image)
