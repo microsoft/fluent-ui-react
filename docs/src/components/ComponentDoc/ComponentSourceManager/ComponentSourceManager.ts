@@ -1,8 +1,8 @@
+import { prettifyCode } from '@stardust-ui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
 
 import { ExampleSource } from 'docs/src/types'
-import formatCode from 'docs/src/utils/formatCode'
 import { componentAPIs as APIdefinitions, ComponentAPIs } from './componentAPIs'
 import getExampleSource from './getExampeSource'
 
@@ -116,7 +116,7 @@ export default class ComponentSourceManager extends React.Component<
     const prettierParser = currentCodeLanguage === 'ts' ? 'typescript' : 'babylon'
 
     try {
-      const formattedCode = formatCode(currentCode, prettierParser)
+      const formattedCode = prettifyCode(currentCode, prettierParser)
 
       this.setState({ currentCode: formattedCode, formattedCode })
     } catch (e) {}
