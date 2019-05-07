@@ -177,6 +177,21 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
     },
   })
 
+  /**
+   * In case it generates an id, its uses will ensure that the id on the header
+   * and the value of aria-labelledBy on the dialog will be the same.
+   */
+  private getDefaultAriaLabelledBy() {
+    const { header } = this.props
+    if (this.props['aria-label'] || this.props['aria-labelledby'] || !header) {
+      return undefined
+    }
+    if (typeof header === 'string' || !header['id']) {
+      return _.uniqueId('dialog-header-')
+    }
+    return header['id']
+  }
+
   renderComponent({ accessibility, classes, ElementType, styles, unhandledProps }) {
     const {
       actions,
@@ -189,6 +204,7 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
       trigger,
     } = this.props
     const { open } = this.state
+    const defaultAriaLabelledBy = this.getDefaultAriaLabelledBy()
 
     const dialogContent = (
       <Ref innerRef={this.contentRef}>
@@ -197,10 +213,12 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
           {...accessibility.attributes.popup}
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
+          {...defaultAriaLabelledBy && { 'aria-labelledby': defaultAriaLabelledBy }}
         >
           {Header.create(header, {
             defaultProps: {
               as: 'h2',
+              id: defaultAriaLabelledBy,
               styles: styles.header,
             },
           })}
