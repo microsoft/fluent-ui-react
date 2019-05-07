@@ -42,7 +42,7 @@ const items = [
 
 const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
   <Component open={open} hasSubtree={hasSubtree} {...restProps}>
-    {hasSubtree && <Icon name={open ? 'arrow-down' : 'arrow-right'} />}
+    {hasSubtree && <Icon name={open ? 'arrow down' : 'arrow right'} />}
     <span>{content}</span>
   </Component>
 )
