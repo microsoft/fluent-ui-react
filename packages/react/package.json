@@ -7,10 +7,11 @@
   "dependencies": {
     "@stardust-ui/react-component-event-listener": "^0.29.1",
     "@stardust-ui/react-component-nesting-registry": "^0.29.1",
+    "@stardust-ui/react-component-ref": "^0.29.1",
     "@stardust-ui/react-proptypes": "^0.29.1",
     "classnames": "^2.2.5",
     "css-shorthand-expand": "^1.2.0",
-    "downshift": "^3.2.6",
+    "downshift": "^3.2.10",
     "fast-memoize": "^2.5.1",
     "fela": "^10.2.0",
     "fela-plugin-fallback-value": "^10.2.0",

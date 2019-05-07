@@ -1,10 +1,10 @@
+import { RefFindNode } from '@stardust-ui/react-component-ref'
 import { mount } from 'enzyme'
 import * as React from 'react'
 
-import RefFindNode from 'src/components/Ref/RefFindNode'
 import { CompositeClass, CompositeFunction, DOMClass, DOMFunction } from './fixtures'
 
-const testInnerRef = Component => {
+const testInnerRef = (Component: React.ElementType) => {
   const innerRef = jest.fn()
   const node = mount(
     <RefFindNode innerRef={innerRef}>
