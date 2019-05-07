@@ -23,6 +23,11 @@ import Header from '../Header/Header'
 import Portal from '../Portal/Portal'
 import Flex from '../Flex/Flex'
 
+export interface DialogSlotClassNames {
+  header: string
+  content: string
+}
+
 export interface DialogProps
   extends UIComponentProps,
     ContentComponentProps<ShorthandValue>,
@@ -92,6 +97,8 @@ export interface DialogState {
 class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogState> {
   static displayName = 'Dialog'
   static className = 'ui-dialog'
+
+  static slotClassNames: DialogSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -177,21 +184,6 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
     },
   })
 
-  /**
-   * In case it generates an id, its uses will ensure that the id on the header
-   * and the value of aria-labelledBy on the dialog will be the same.
-   */
-  private getDefaultAriaLabelledBy() {
-    const { header } = this.props
-    if (this.props['aria-label'] || this.props['aria-labelledby'] || !header) {
-      return undefined
-    }
-    if (typeof header === 'string' || !header['id']) {
-      return _.uniqueId('dialog-header-')
-    }
-    return header['id']
-  }
-
   renderComponent({ accessibility, classes, ElementType, styles, unhandledProps }) {
     const {
       actions,
@@ -204,7 +196,6 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
       trigger,
     } = this.props
     const { open } = this.state
-    const defaultAriaLabelledBy = this.getDefaultAriaLabelledBy()
 
     const dialogContent = (
       <Ref innerRef={this.contentRef}>
@@ -213,18 +204,20 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
           {...accessibility.attributes.popup}
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
-          {...defaultAriaLabelledBy && { 'aria-labelledby': defaultAriaLabelledBy }}
         >
           {Header.create(header, {
             defaultProps: {
               as: 'h2',
-              id: defaultAriaLabelledBy,
+              className: Dialog.slotClassNames.header,
               styles: styles.header,
+              ...accessibility.attributes.header,
             },
           })}
           {Box.create(content, {
             defaultProps: {
               styles: styles.content,
+              className: Dialog.slotClassNames.content,
+              ...accessibility.attributes.content,
             },
           })}
 
@@ -272,6 +265,11 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
       </Portal>
     )
   }
+}
+
+Dialog.slotClassNames = {
+  header: `${Dialog.className}__header`,
+  content: `${Dialog.className}__content`,
 }
 
 export default Dialog

@@ -13,7 +13,7 @@ describe('Dialog', () => {
         <Dialog trigger={<Button content="Open a dialog" />} aria-label={ariaLabel} />,
       )
       wrapper.find('.ui-button').simulate('click')
-      const dialog = wrapper.find('.ui-dialog')
+      const dialog = wrapper.find(`.${Dialog.className}`)
 
       expect(getRenderedAttribute(dialog, 'aria-label', '')).toBe(ariaLabel)
     })
@@ -24,7 +24,7 @@ describe('Dialog', () => {
         <Dialog trigger={<Button content="Open a dialog" />} aria-labelledby={ariaLabelledBy} />,
       )
       wrapper.find('.ui-button').simulate('click')
-      const dialog = wrapper.find('.ui-dialog')
+      const dialog = wrapper.find(`.${Dialog.className}`)
 
       expect(getRenderedAttribute(dialog, 'aria-labelledby', '')).toBe(ariaLabelledBy)
     })
@@ -35,7 +35,7 @@ describe('Dialog', () => {
         <Dialog trigger={<Button content="Open a dialog" />} header={{ id: headerId }} />,
       )
       wrapper.find('.ui-button').simulate('click')
-      const dialog = wrapper.find('.ui-dialog')
+      const dialog = wrapper.find(`.${Dialog.className}`)
 
       expect(getRenderedAttribute(dialog, 'aria-labelledby', '')).toBe(headerId)
     })
@@ -45,8 +45,11 @@ describe('Dialog', () => {
         <Dialog trigger={<Button content="Open a dialog" />} header={'Welcome to my life'} />,
       )
       wrapper.find('.ui-button').simulate('click')
-      const dialogHeaderId = wrapper.find('.ui-header').getDOMNode().id
-      const dialog = wrapper.find('.ui-dialog')
+      const dialogHeaderId = wrapper
+        .find(`.${Dialog.slotClassNames.header}`)
+        .filterWhere(n => typeof n.type() === 'string')
+        .getDOMNode().id
+      const dialog = wrapper.find(`.${Dialog.className}`)
 
       expect(dialogHeaderId).toMatch(/dialog-header-\d+/)
       expect(getRenderedAttribute(dialog, 'aria-labelledby', '')).toBe(dialogHeaderId)
@@ -61,7 +64,7 @@ describe('Dialog', () => {
         />,
       )
       wrapper.find('.ui-button').simulate('click')
-      const dialog = wrapper.find('.ui-dialog')
+      const dialog = wrapper.find(`.${Dialog.className}`)
 
       expect(getRenderedAttribute(dialog, 'aria-labelledby', '')).toBe(undefined)
     })
@@ -69,9 +72,46 @@ describe('Dialog', () => {
     it('does not apply default aria-labelledby as header id if header is not supplied as prop', () => {
       const wrapper = mountWithProvider(<Dialog trigger={<Button content="Open a dialog" />} />)
       wrapper.find('.ui-button').simulate('click')
-      const dialog = wrapper.find('.ui-dialog')
+      const dialog = wrapper.find(`.${Dialog.className}`)
 
       expect(getRenderedAttribute(dialog, 'aria-labelledby', '')).toBe(undefined)
+    })
+
+    it('applies aria-describedby if provided as prop', () => {
+      const ariaDescribedBy = 'element-id'
+      const wrapper = mountWithProvider(
+        <Dialog trigger={<Button content="Open a dialog" />} aria-describedby={ariaDescribedBy} />,
+      )
+      wrapper.find('.ui-button').simulate('click')
+      const dialog = wrapper.find(`.${Dialog.className}`)
+
+      expect(getRenderedAttribute(dialog, 'aria-describedby', '')).toBe(ariaDescribedBy)
+    })
+
+    it('applies default aria-describedby as content id if content with id exists', () => {
+      const contentId = 'element-id'
+      const wrapper = mountWithProvider(
+        <Dialog trigger={<Button content="Open a dialog" />} content={{ id: contentId }} />,
+      )
+      wrapper.find('.ui-button').simulate('click')
+      const dialog = wrapper.find(`.${Dialog.className}`)
+
+      expect(getRenderedAttribute(dialog, 'aria-describedby', '')).toBe(contentId)
+    })
+
+    it('applies default aria-describedby as generated content id if content without id exists', () => {
+      const wrapper = mountWithProvider(
+        <Dialog trigger={<Button content="Open a dialog" />} content={'It is so awesome.'} />,
+      )
+      wrapper.find('.ui-button').simulate('click')
+      const dialogContentId = wrapper
+        .find(`.${Dialog.slotClassNames.content}`)
+        .filterWhere(n => typeof n.type() === 'string')
+        .getDOMNode().id
+      const dialog = wrapper.find(`.${Dialog.className}`)
+
+      expect(dialogContentId).toMatch(/dialog-content-\d+/)
+      expect(getRenderedAttribute(dialog, 'aria-describedby', '')).toBe(dialogContentId)
     })
   })
 })
