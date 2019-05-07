@@ -11,10 +11,10 @@ import bookmark from './bookmark'
 import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
-import callPark from './callPark'
-import callControlPresent from './callControlPresent'
+import callParking from './callParking'
 import callControlPresentNew from './callControlPresentNew'
 import callControlStopPresentingNew from './callControlStopPresentingNew'
+import callControlShare from './callControlShare'
 import callDialpad from './callDialpad'
 import callEnd from './callEnd'
 import callPstn from './callPstn'
@@ -23,7 +23,7 @@ import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
 import callMissedLine from './callMissedLine'
-import cast from './cast'
+import screencast from './screencast'
 import chat from './chat'
 import chevronDown from './chevronDown'
 import close from './close'
@@ -101,7 +101,7 @@ import skypeLogo from './skypeLogo'
 import search from './search'
 import send from './send'
 import settings from './settings'
-import closeShareTray from './closeShareTray'
+import callControlCloseTray from './callControlCloseTray'
 import star from './star'
 import sticker from './sticker'
 import strike from './strike'
@@ -135,21 +135,21 @@ export default {
   call,
   'call-dialpad': callDialpad,
   'call-end': callEnd,
-  'call-park': callPark,
+  'call-parking': callParking,
   'call-video': callVideo,
   'call-video-off': callVideoOff,
-  'call-control-present': callControlPresent,
+  'call-control-close-tray': callControlCloseTray,
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
+  'call-control-share': callControlShare,
   'call-missed-line': callMissedLine,
   'call-pstn': callPstn,
   'call-recording': callRecording,
-  cast,
+  screencast,
   'canvas-add-page': canvasAddPage,
   chat,
   'chevron-down': chevronDown,
   close,
-  'close-share-tray': closeShareTray,
   'code-snippet': codeSnippet,
   'files-aftereffects': filesAftereffects,
   'files-code': filesCode,
