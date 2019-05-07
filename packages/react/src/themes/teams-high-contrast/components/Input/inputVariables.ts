@@ -8,5 +8,6 @@ export default (siteVars: any) => {
     fontColor: siteVars.bodyColor,
     iconColor: siteVars.bodyColor,
     inputFocusBorderBottomColor: siteVars.accessibleYellow,
+    placeholderColor: siteVars.colors.white,
   }
 }

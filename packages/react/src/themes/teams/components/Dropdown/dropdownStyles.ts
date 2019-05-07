@@ -1,5 +1,9 @@
 import { ComponentSlotStyle, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { DropdownProps, DropdownState } from '../../../../components/Dropdown/Dropdown'
+import {
+  default as Dropdown,
+  DropdownProps,
+  DropdownState,
+} from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
 import { pxToRem } from '../../../../lib'
 
@@ -65,17 +69,20 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     flexWrap: 'wrap',
     position: 'relative',
     borderStyle: 'solid',
-    borderColor: 'transparent',
+    borderColor: v.borderColor,
     outline: 0,
     width: getWidth(p, v),
-    borderWidth: v.borderWidth,
-    borderRadius: v.borderRadius,
+    borderWidth: p.search ? `0 0 ${v.searchBorderBottomWidth} 0` : v.borderWidth,
+    borderRadius: p.open && !p.search ? v.openBorderRadius : v.borderRadius,
     color: v.color,
     backgroundColor: v.backgroundColor,
     ':hover': {
       backgroundColor: v.backgroundColorHover,
+      [`.${Dropdown.slotClassNames.triggerButton}`]: {
+        // reset all styles
+      },
     },
-    ...(p.focused && { borderBottomColor: v.borderColorFocus }),
+    ...(p.focused && p.search && { borderBottomColor: v.borderColorFocus }),
     ...(p.inline && {
       ...transparentColorStyleObj,
       alignItems: 'center',
@@ -109,6 +116,9 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
         },
         ':active': transparentColorStyle,
       },
+      ':hover': {
+        ...transparentColorStyle,
+      },
       ...(p.inline && {
         paddingLeft: 0,
         paddingRight: 0,
@@ -121,11 +131,15 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     outline: 0,
     position: 'absolute',
     borderRadius: v.listBorderRadius,
+    borderStyle: 'solid',
+    borderWidth: p.open ? v.listBorderWidth : '0px',
+    borderColor: v.listBorderColor,
     zIndex: 1000,
     maxHeight: v.listMaxHeight,
     overflowY: 'auto',
     width: getWidth(p, v),
-    top: 'calc(100% + 2px)', // leave room for container + its border
+    left: `-${v.borderWidth}`,
+    top: `calc(100% + ${p.search ? v.searchBorderBottomWidth : '0px'})`, // leave room for container + its border
     background: v.listBackgroundColor,
     ...(p.open && {
       boxShadow: v.listBoxShadow,
