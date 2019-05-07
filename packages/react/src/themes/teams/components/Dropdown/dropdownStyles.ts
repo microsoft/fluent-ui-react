@@ -112,6 +112,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
       ...(p.multiple && { minWidth: 0, flex: 1 }),
       ...transparentColorStyleObj,
       ':focus': {
+        color: v.color,
         ...transparentColorStyle,
         ':after': {
           top: '0',

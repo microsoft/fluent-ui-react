@@ -23,6 +23,9 @@ export interface DropdownVariables {
   listItemBackgroundColorHover: string
   listItemBackgroundColorActive: string
   listItemColorActive: string
+  selectedItemColor: string
+  selectedItemBackgroundColor: string
+  selectedItemColorFocus: string
   selectedItemBackgroundColorFocus: string
   selectedItemsMaxHeight: string
   toggleIndicatorSize: string
@@ -42,6 +45,7 @@ export default (siteVars): DropdownVariables => ({
   borderWidth: '0px',
   searchBorderBottomWidth: pxToRem(2),
   color: siteVars.bodyColor,
+  selectedItemColor: siteVars.bodyColor,
   comboboxPaddingButton: `0 ${_12px_asRem}`,
   comboboxFlexBasis: pxToRem(50),
   listBackgroundColor: siteVars.colors.white,
@@ -56,6 +60,8 @@ export default (siteVars): DropdownVariables => ({
   listItemBackgroundColorHover: siteVars.gray10, // colors.grey[100] when new color palette checks in
   listItemBackgroundColorActive: siteVars.gray10, // colors.grey[100] when new color palette checks in TODO: what is active?!
   listItemColorActive: '#252423', // colors.grey[750] when new color palette checks in
+  selectedItemBackgroundColor: undefined,
+  selectedItemColorFocus: siteVars.bodyColor,
   selectedItemBackgroundColorFocus: siteVars.colors.primary[100],
   selectedItemsMaxHeight: pxToRem(82),
   toggleIndicatorSize: pxToRem(32),
