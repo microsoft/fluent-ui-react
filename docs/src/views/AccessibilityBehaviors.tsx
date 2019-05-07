@@ -1,7 +1,7 @@
+import { CodeSnippet } from '@stardust-ui/docs-components'
 import * as React from 'react'
 import { Header } from '@stardust-ui/react'
 import DocPage from '../components/DocPage'
-import CodeSnippet from '../components/CodeSnippet'
 import { code, link } from '../utils/helpers'
 import { Link } from 'react-router-dom'
 
@@ -72,6 +72,18 @@ export default () => (
           modified by setting object.{' '}
           <Link to="auto-focus-zone">Read more about AutoFocusZone.</Link>
           <p>Type: {code('AutoFocusZoneProps | boolean')}.</p>
+        </li>
+        <li>
+          <b>childBehaviors</b> - {code('{ [childBehaviorSlot: string]: Accessibility }')} are used
+          for components such as {code('Menu')} that contain children which, in turn, require their
+          own behaviors. For instance, for a {code('Toolbar')} to work properly, the {code('Menu')}{' '}
+          needs to have applied the
+          {code('toolbarBehavior')}, while each {code('MenuItem')} needs to have{' '}
+          {code('toolbarButtonBehavior')}. In this case of parent-child relationship, it makes sense
+          for the {code('toolbarBehavior')} to contain the default option for the {code('Menu')}{' '}
+          children, in this case {code('toolbarButtonBehavior')}. When the {code('Menu')} is
+          created, it will automatically add the default child behaviors for its children:
+          {code('MenuItem')} and {code('MenuDivider')}.
         </li>
       </ul>
     </div>
