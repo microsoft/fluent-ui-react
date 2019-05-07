@@ -25,7 +25,7 @@ class App extends React.Component {
             <Icon name="umbrella" circular bordered />
           </Animation>
           <Attachment header="Document.docx" />
-          <Avatar src="//placehold.it" />
+          <Avatar image={{ src: '//placehold.it' }} />
           <Button content="Click me" />
           <Divider />
           <Header content="This is " />
