@@ -41,18 +41,13 @@ export type ComponentKeyboardEventHandler<TProps> = (
   data?: TProps,
 ) => void
 
-type ChildrenProps = { children: any }
-export type PropsOf<T> = T extends React.Component<ReactProps<infer TProps>>
-  ? (ChildrenProps & TProps)
-  : T extends React.Component<infer TProps>
-  ? (ChildrenProps & TProps)
-  : T extends React.FunctionComponent<ReactProps<infer TProps>>
-  ? (ChildrenProps & TProps)
+export type PropsOf<T> = T extends React.Component<infer TProps>
+  ? TProps
   : T extends React.FunctionComponent<infer TProps>
-  ? (ChildrenProps & TProps)
+  ? TProps
   : T extends keyof JSX.IntrinsicElements
   ? JSX.IntrinsicElements[T]
-  : any
+  : never
 
 // ========================================================
 // Shorthand Factories
@@ -82,10 +77,9 @@ type ReactNode =
 export type ShorthandValue<P = {}> = ReactNode | Props<P>
 export type ShorthandCollection<K = []> = ShorthandValue<{ kind?: K }>[]
 
-/** ======================
- * Experimental
- * =======================
- */
+// ========================================================
+// Components with As prop
+// ========================================================
 
 type ValueOf<TFirst, TSecond, TKey extends keyof (TFirst & TSecond)> = TKey extends keyof TFirst
   ? TFirst[TKey]
@@ -93,43 +87,30 @@ type ValueOf<TFirst, TSecond, TKey extends keyof (TFirst & TSecond)> = TKey exte
   ? TSecond[TKey]
   : {}
 
-export type Extended<TFirst, TSecond> = {
-  [K in keyof (TFirst & TSecond)]: ValueOf<TFirst, TSecond, K>
-}
-
-// export type PropsOfEx<C> = C extends React.FC<infer Props> ? Props :
-//     C extends React.ComponentClass<infer Props> ? Props :
-//     never
+type Extended<TFirst, TSecond> = { [K in keyof (TFirst & TSecond)]: ValueOf<TFirst, TSecond, K> }
 
 type AsHtmlElement<Tag extends keyof JSX.IntrinsicElements, TProps> = {
   as: Tag
 } & JSX.IntrinsicElements[Tag] &
   TProps
 
-// TODO temp solution - allow any props if 'as' is specified
-export type AsComponent<C, TProps> = { as: C } & TProps & { [K: string]: any }
+type AsComponent<C, TProps> = { as: C } & TProps & PropsOf<InstanceOf<C>>
 
-export type CommonStaticProps =
+type CommonStaticProps =
   | 'Group'
   | 'Item'
   | 'className'
   | 'create'
   | 'slotClassNames'
   | 'displayName'
-  | 'propTypes'
 
 type Intersect<First extends string | number | symbol, Second extends string | number | symbol> = {
   [K in First]: K extends Second ? K : never
 }[First]
 
-export type PickProps<T, Props extends string> = { [K in Intersect<Props, keyof T>]: T[K] }
-
-// type SelectKeys<TComponent> = { [K in CommonStaticProps]: K extends keyof TComponent ? K : never }[CommonStaticProps]
-// type Select<TComponent> = { [K in SelectKeys<TComponent>]: TComponent[K] }
+type PickProps<T, Props extends string> = { [K in Intersect<Props, keyof T>]: T[K] }
 
 type InstanceOf<T> = T extends { new (...args: any[]): infer TInstance } ? TInstance : never
-
-// type TypeOf<T, Name extends string> = Name extends keyof T ? T[Name] : never
 
 export const withAsType = function<
   TComponentType extends React.ComponentType,
@@ -141,9 +122,7 @@ export const withAsType = function<
     x: AsHtmlElement<Tag, TProps>,
   ): JSX.Element
   function variadicComponent<Tag>(x: AsComponent<Tag, TProps>): JSX.Element
-  function variadicComponent(
-    x: Extended<ReactProps<TProps>, JSX.IntrinsicElements[TAs]>,
-  ): JSX.Element
+  function variadicComponent(x: Extended<TProps, JSX.IntrinsicElements[TAs]>): JSX.Element
   function variadicComponent(): never {
     throw new Error('Defines unreachable execution scenario')
   }
