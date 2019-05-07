@@ -171,8 +171,8 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     defaultOpen: PropTypes.bool,
     defaultTarget: PropTypes.any,
     inline: PropTypes.bool,
-    mountDocument: PropTypes.instanceOf(Document),
-    mountNode: PropTypes.object,
+    mountDocument: PropTypes.object,
+    mountNode: customPropTypes.domNode,
     mouseLeaveDelay: PropTypes.number,
     on: PropTypes.oneOfType([
       PropTypes.oneOf(['hover', 'click', 'focus']),
