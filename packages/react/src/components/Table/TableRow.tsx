@@ -23,7 +23,7 @@ export interface TableRowProps extends UIComponentProps {
   focusedIndex?: number
   focusable?: boolean
   rowIndex?: number
-  onFocus?: (e, props) => void
+  onClick?: (e, props) => void
 }
 
 /**
@@ -51,7 +51,7 @@ class TableRow extends UIComponent<ReactProps<TableRowProps>, any> {
     headerIndex: PropTypes.number,
     focusedIndex: PropTypes.number,
     focusable: PropTypes.bool,
-    onFocus: PropTypes.func,
+    onClick: PropTypes.func,
     rowIndex: PropTypes.number,
   }
 
@@ -68,14 +68,14 @@ class TableRow extends UIComponent<ReactProps<TableRowProps>, any> {
         ...item,
         focused: index === focusedIndex,
         focusable: this.props.focusable,
-        onFocus: (e, props: TableCellProps) => {
+        onClick: (e, props: TableCellProps) => {
           const data = {
             cellIndex: props.cellIndex,
             rowIndex: this.props.rowIndex,
             ...this.props,
             ...props,
           }
-          _.invoke(this.props, 'onFocus', e, data)
+          _.invoke(this.props, 'onClick', e, data)
         },
         cellIndex: index,
       }
