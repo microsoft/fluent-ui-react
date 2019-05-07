@@ -109,7 +109,9 @@ type Intersect<First extends string | number | symbol, Second extends string | n
   [K in First]: K extends Second ? K : never
 }[First]
 
-type PickProps<T, Props extends string> = { [K in Intersect<Props, keyof T>]: T[K] }
+type PickProps<T, Props extends string | number | symbol> = {
+  [K in Intersect<Props, keyof T>]: T[K]
+}
 
 export type InstanceOf<T> = T extends { new (...args: any[]): infer TInstance } ? TInstance : never
 
@@ -131,3 +133,8 @@ export const withTypedAs = function<
   return (componentType as any) as typeof variadicComponent &
     PickProps<TComponentType, CommonStaticProps>
 }
+
+export type UNSAFE_typed<TComponentType, TProps> = React.FunctionComponent<
+  TProps & { [K: string]: any }
+> &
+  PickProps<TComponentType, keyof TComponentType>
