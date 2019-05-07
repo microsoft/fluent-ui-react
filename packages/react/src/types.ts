@@ -110,7 +110,7 @@ type Intersect<First extends string | number | symbol, Second extends string | n
 
 type PickProps<T, Props extends string> = { [K in Intersect<Props, keyof T>]: T[K] }
 
-type InstanceOf<T> = T extends { new (...args: any[]): infer TInstance } ? TInstance : never
+export type InstanceOf<T> = T extends { new (...args: any[]): infer TInstance } ? TInstance : never
 
 export const withTypedAs = function<
   TComponentType extends React.ComponentType,
