@@ -29,6 +29,7 @@ export interface TableCellProps
 
   focused?: boolean
   focusable?: boolean
+  cellIndex?: number
 }
 
 /**
@@ -59,6 +60,7 @@ class TableCell extends UIComponent<ReactProps<TableCellProps>, any> {
     isHeader: PropTypes.bool,
     focused: PropTypes.bool,
     focusable: PropTypes.bool,
+    cellIndex: PropTypes.number,
   }
 
   public static defaultProps: TableCellProps = {
@@ -98,6 +100,10 @@ class TableCell extends UIComponent<ReactProps<TableCellProps>, any> {
     this.tryFocusCell()
   }
 
+  handleFocus = e => {
+    _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
   public renderComponent({
     accessibility,
     ElementType,
@@ -112,6 +118,7 @@ class TableCell extends UIComponent<ReactProps<TableCellProps>, any> {
         {...accessibility.attributes.root}
         {...unhandledProps}
         ref={this.setRef}
+        onFocus={this.handleFocus}
       >
         {childrenExist(children) ? children : content}
       </ElementType>

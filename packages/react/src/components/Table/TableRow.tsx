@@ -22,6 +22,8 @@ export interface TableRowProps extends UIComponentProps {
 
   focusedIndex?: number
   focusable?: boolean
+  rowIndex?: number
+  onFocus?: (e, props) => void
 }
 
 /**
@@ -49,6 +51,8 @@ class TableRow extends UIComponent<ReactProps<TableRowProps>, any> {
     headerIndex: PropTypes.number,
     focusedIndex: PropTypes.number,
     focusable: PropTypes.bool,
+    onFocus: PropTypes.func,
+    rowIndex: PropTypes.number,
   }
 
   public static defaultProps: TableRowProps = {
@@ -56,7 +60,7 @@ class TableRow extends UIComponent<ReactProps<TableRowProps>, any> {
     accessibility: tableRowBehavior,
   }
 
-  public renderCells() {
+  renderCells() {
     const { items, headerIndex, focusedIndex } = this.props
 
     return _.map(items, (item: TableCellProps, index) => {
@@ -64,6 +68,16 @@ class TableRow extends UIComponent<ReactProps<TableRowProps>, any> {
         ...item,
         focused: index === focusedIndex,
         focusable: this.props.focusable,
+        onFocus: (e, props: TableCellProps) => {
+          const data = {
+            cellIndex: props.cellIndex,
+            rowIndex: this.props.rowIndex,
+            ...this.props,
+            ...props,
+          }
+          _.invoke(this.props, 'onFocus', e, data)
+        },
+        cellIndex: index,
       }
       const headerProps = {
         ...cellProps,

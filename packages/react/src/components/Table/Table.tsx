@@ -131,6 +131,14 @@ class Table extends AutoControlledComponent<ReactProps<TableProps>, TableState> 
     this.columsCount = header && (header as TableRowProps).items.length
   }
 
+  public handleRowFocus = (e, data) => {
+    const { cellIndex, rowIndex } = data
+    this.setState({
+      focusedRow: rowIndex,
+      focusedCol: cellIndex,
+    })
+  }
+
   public renderRows() {
     const { rows } = this.props
     const { focusedRow } = this.state
@@ -140,6 +148,8 @@ class Table extends AutoControlledComponent<ReactProps<TableProps>, TableState> 
         ...row,
         focusedIndex: focusedRow - 1 === index ? this.state.focusedCol : -1,
         focusable: this.state.focusedRow !== -1 || this.state.focusedCol !== -1,
+        rowIndex: this.props.header ? index + 1 : index,
+        onFocus: this.handleRowFocus,
       } as TableRowProps
       return <TableRow {...props} />
     })
@@ -162,6 +172,8 @@ class Table extends AutoControlledComponent<ReactProps<TableProps>, TableState> 
       items: headers,
       focusedIndex: this.state.focusedRow === 0 ? this.state.focusedCol : -1,
       focusable: this.state.focusedRow !== -1 || this.state.focusedCol !== -1,
+      rowIndex: 0,
+      onFocus: this.handleRowFocus,
     } as TableRowProps
 
     return <TableRow {...headerRowProps} />

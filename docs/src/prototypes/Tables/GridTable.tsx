@@ -10,7 +10,7 @@ import {
   Header,
   Input,
 } from '@stardust-ui/react'
-import { renderDropdown } from './dropdown'
+import { renderDropdown } from './multipleDropdown'
 
 const renderPopup = () => (
   <Popup
