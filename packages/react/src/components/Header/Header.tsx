@@ -16,7 +16,7 @@ import {
 import HeaderDescription from './HeaderDescription'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
+import { ReactProps, ShorthandValue, withTypedAs } from '../../types'
 
 export interface HeaderSlotClassNames {
   description: string
@@ -108,4 +108,4 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
 
 Header.create = createShorthandFactory({ Component: Header, mappedProp: 'content' })
 
-export default Header
+export default withTypedAs<typeof Header, 'h1'>(Header)

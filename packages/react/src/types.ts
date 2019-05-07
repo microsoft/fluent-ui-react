@@ -99,6 +99,7 @@ type AsComponent<C, TProps> = { as: C } & TProps & PropsOf<InstanceOf<C>>
 type CommonStaticProps =
   | 'Group'
   | 'Item'
+  | 'Description'
   | 'className'
   | 'create'
   | 'slotClassNames'
