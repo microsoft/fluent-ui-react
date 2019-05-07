@@ -71,9 +71,6 @@ export interface ListItemState {
   isFromKeyboard: boolean
 }
 
-/**
- * A list item contains a single piece of content within a list.
- */
 class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
   static create: Function
 
@@ -239,4 +236,7 @@ ListItem.slotClassNames = {
   endMedia: `${ListItem.className}__endMedia`,
 }
 
-export default withAsType<typeof ListItem>(ListItem)
+/**
+ * A list item contains a single piece of content within a list.
+ */
+export default withAsType<typeof ListItem, 'li'>(ListItem)

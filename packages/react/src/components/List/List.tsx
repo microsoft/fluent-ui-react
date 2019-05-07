@@ -64,9 +64,6 @@ export interface ListState {
   selectedIndex?: number
 }
 
-/**
- * A list displays a group of related content.
- */
 class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   static displayName = 'List'
 
@@ -220,4 +217,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   }
 }
 
-export default withAsType<typeof List>(List)
+/**
+ * A list displays a group of related content.
+ */
+export default withAsType<typeof List, 'ul'>(List)

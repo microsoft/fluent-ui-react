@@ -77,14 +77,6 @@ export interface InputState {
   value?: React.ReactText
 }
 
-/**
- * An input is a field used to elicit a response from a user.
- * @accessibility
- * For good screen reader experience set aria-label or aria-labelledby attribute for input.
- *
- * Other considerations:
- *  - if input is search, then use "role='search'"
- */
 class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> {
   private inputRef = React.createRef<HTMLElement>()
 
@@ -214,4 +206,12 @@ Input.slotClassNames = {
   input: `${Input.className}__input`,
 }
 
+/**
+ * An input is a field used to elicit a response from a user.
+ * @accessibility
+ * For good screen reader experience set aria-label or aria-labelledby attribute for input.
+ *
+ * Other considerations:
+ *  - if input is search, then use "role='search'"
+ */
 export default withAsType<typeof Input, 'input'>(Input)

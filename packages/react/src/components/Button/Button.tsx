@@ -77,13 +77,6 @@ export interface ButtonState {
   isFromKeyboard: boolean
 }
 
-/**
- * A button indicates a possible user action.
- * @accessibility
- * Other considerations:
- *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
- *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
- */
 class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
   static create: Function
 
@@ -182,4 +175,11 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
 
 Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
 
+/**
+ * A button indicates a possible user action.
+ * @accessibility
+ * Other considerations:
+ *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
+ *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
+ */
 export default withAsType<typeof Button, 'button'>(Button)
