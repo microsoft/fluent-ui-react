@@ -213,4 +213,4 @@ Input.slotClassNames = {
  * Other considerations:
  *  - if input is search, then use "role='search'"
  */
-export default withAsType<typeof Input, 'input'>(Input)
+export default withAsType<typeof Input, 'div'>(Input)
