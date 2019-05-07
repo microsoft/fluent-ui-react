@@ -91,6 +91,7 @@ class Table extends AutoControlledComponent<ReactProps<TableProps>, TableState> 
         focusedRow: nextIndex,
       })
     },
+    focus: () => this.focusZone && this.focusZone.focus(),
   }
 
   public static propTypes = {
