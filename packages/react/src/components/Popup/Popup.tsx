@@ -125,9 +125,6 @@ export interface PopupProps
    */
   target?: HTMLElement
 
-  /** Initial value for 'target'. */
-  defaultTarget?: HTMLElement
-
   /** Element to be rendered in-place where the popup is defined. */
   trigger?: JSX.Element
 
@@ -164,7 +161,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     }),
     align: PropTypes.oneOf(ALIGNMENTS),
     defaultOpen: PropTypes.bool,
-    defaultTarget: PropTypes.any,
     inline: PropTypes.bool,
     mouseLeaveDelay: PropTypes.number,
     on: PropTypes.oneOfType([
@@ -190,11 +186,11 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     mouseLeaveDelay: 500,
   }
 
-  static autoControlledProps = ['open', 'target']
+  static autoControlledProps = ['open']
 
   static isBrowserContext = isBrowser()
 
-  triggerRef = React.createRef()
+  triggerRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
 
   triggerDomElement = null
   // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
@@ -395,8 +391,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       triggerElement && (
         <Ref
           innerRef={domNode => {
-            // this.trySetState({ target: domNode })
-            // @ts-ignore
             this.triggerRef.current = domNode
             this.triggerDomElement = domNode
           }}
