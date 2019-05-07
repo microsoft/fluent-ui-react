@@ -29,9 +29,9 @@ class ReferenceProxy {
  *
  * @see https://popper.js.org/popper-documentation.html#referenceObject
  */
-const createReferenceProxy = _.memoize(
+const createPopperReferenceProxy = _.memoize(
   (reference: any) =>
     new ReferenceProxy(isRefObject(reference) ? reference : toRefObject(reference)),
 )
 
-export default createReferenceProxy
+export default createPopperReferenceProxy

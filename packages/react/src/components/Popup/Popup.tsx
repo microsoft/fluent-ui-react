@@ -26,7 +26,7 @@ import {
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 
 import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './positioningHelper'
-import createReferenceProxy from './createReferenceProxy'
+import createPopperReferenceProxy from './createPopperReferenceProxy'
 
 import PopupContent from './PopupContent'
 
@@ -423,7 +423,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       }),
     }
 
-    const referenceElement = createReferenceProxy(target || this.triggerRef)
+    const referenceElement = createPopperReferenceProxy(target || this.triggerRef)
 
     return (
       <Popper
