@@ -87,7 +87,7 @@ export interface DialogState {
 }
 
 /**
- * A Dialog indicates a possible user action.
+ * A Dialog informs users about specific tasks or may contain critical information, require decisions, or involve multiple interactions.
  */
 class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogState> {
   static displayName = 'Dialog'

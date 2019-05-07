@@ -57,7 +57,7 @@ export interface LoaderState {
 }
 
 /**
- * A Loader indicates a possible user action.
+ * A loader alerts a user that content is being loaded or processed and they should wait for the activity to complete.
  */
 class Loader extends UIComponent<ReactProps<LoaderProps>, LoaderState> {
   static create: Function
