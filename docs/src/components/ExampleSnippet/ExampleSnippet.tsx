@@ -1,6 +1,6 @@
+import { CodeSnippet } from '@stardust-ui/docs-components'
 import * as React from 'react'
 
-import CodeSnippet from '../CodeSnippet'
 import renderElementToJSX from './renderElementToJSX'
 
 export type ExampleSnippetProps = {

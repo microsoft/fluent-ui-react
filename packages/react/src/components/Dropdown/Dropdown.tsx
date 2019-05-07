@@ -1,3 +1,4 @@
+import { handleRef, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -27,11 +28,9 @@ import {
   AutoControlledComponent,
   RenderResultConfig,
   commonPropTypes,
-  handleRef,
   UIComponentProps,
 } from '../../lib'
 import List from '../List/List'
-import Ref from '../Ref/Ref'
 import DropdownItem, { DropdownItemProps } from './DropdownItem'
 import DropdownSelectedItem, { DropdownSelectedItemProps } from './DropdownSelectedItem'
 import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'

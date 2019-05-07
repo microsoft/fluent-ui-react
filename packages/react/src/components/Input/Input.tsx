@@ -1,3 +1,4 @@
+import { handleRef, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -11,13 +12,11 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
-  handleRef,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import Icon from '../Icon/Icon'
-import Ref from '../Ref/Ref'
 import Box from '../Box/Box'
 
 export interface InputSlotClassNames {
