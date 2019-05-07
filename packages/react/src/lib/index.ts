@@ -23,8 +23,6 @@ export { default as mergeThemes } from './mergeThemes'
 export { default as renderComponent, RenderResultConfig } from './renderComponent'
 export { default as getElementProp } from './getElementProp'
 
-export { default as handleRef } from './handleRef'
-export { default as toRefObject } from './toRefObject'
 export {
   htmlImageProps,
   htmlInputAttrs,

@@ -1,0 +1,37 @@
+{
+  "name": "@stardust-ui/react-component-ref",
+  "description": "A set of components and utils to deal with React refs.",
+  "version": "0.29.1",
+  "author": "Oleksandr Fediashov <olfedias@microsoft.com>",
+  "bugs": "https://github.com/stardust-ui/react/issues",
+  "dependencies": {
+    "@stardust-ui/react-proptypes": "^0.29.1",
+    "prop-types": "^15.6.1",
+    "react-is": "^16.6.3"
+  },
+  "devDependencies": {
+    "@stardust-ui/internal-tooling": "^0.29.1",
+    "lerna-alias": "^3.0.3-0"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/stardust-ui/react/tree/master/packages/react-component-ref",
+  "jsnext:main": "dist/es/index.js",
+  "license": "MIT",
+  "main": "dist/commonjs/index.js",
+  "module": "dist/es/index.js",
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "stardust-ui/react.git",
+  "scripts": {
+    "build": "cross-env TS_NODE_PROJECT=../../tsconfig.json gulp bundle:package:no-umd --package react-component-ref"
+  },
+  "sideEffects": false,
+  "types": "dist/es/index.d.ts"
+}

@@ -1,5 +1,6 @@
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
+import { handleRef, toRefObject, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
@@ -19,14 +20,11 @@ import {
   StyledComponentProps,
   commonPropTypes,
   isFromKeyboard,
-  handleRef,
   doesNodeContainClick,
   setWhatInputSource,
-  toRefObject,
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 
-import Ref from '../Ref/Ref'
 import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './positioningHelper'
 
 import PopupContent from './PopupContent'

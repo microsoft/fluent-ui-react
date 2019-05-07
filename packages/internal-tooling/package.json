@@ -27,6 +27,7 @@
   },
   "files": [
     "babel",
+    "eslint",
     "jest"
   ],
   "publishConfig": {

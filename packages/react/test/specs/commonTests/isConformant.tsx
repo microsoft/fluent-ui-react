@@ -1,3 +1,4 @@
+import { Ref, RefFindNode } from '@stardust-ui/react-component-ref'
 import * as faker from 'faker'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -5,9 +6,6 @@ import { ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 
 import { ThemeProvider, FelaTheme } from 'react-fela'
-
-import Ref from 'src/components/Ref/Ref'
-import RefFindNode from 'src/components/Ref/RefFindNode'
 
 import isExportedAtTopLevel from './isExportedAtTopLevel'
 import {

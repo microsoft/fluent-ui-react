@@ -1,3 +1,4 @@
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -15,7 +16,6 @@ import {
 import Box from '../Box/Box'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 import Icon from '../Icon/Icon'
-import Ref from '../Ref/Ref'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
 
