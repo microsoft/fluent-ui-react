@@ -10,7 +10,7 @@ import {
   Header,
   Input,
 } from '@stardust-ui/react'
-// import { renderDropdown } from './dropdown'
+import { renderDropdown } from './dropdown'
 
 const renderPopup = () => (
   <Popup
@@ -59,7 +59,7 @@ const rows = [
       { content: '2', accessibility: gridCellBehavior },
       { content: 'Alex', accessibility: gridCellBehavior },
       { content: <Icon name="call-video" />, accessibility: gridCellBehavior },
-      { content: <Button>Click</Button>, accessibility: gridCellBehavior },
+      { content: renderDropdown(), accessibility: gridCellBehavior },
     ],
     headerIndex: 2,
   },
