@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Add Teams dark and hc themeing for `Dialog` [redlines] @codepretty ([#1297](https://github.com/stardust-ui/react/pull/1297))
+
 ### Features
 - Add default child a11y behavior to `Menu` related behaviors @silviuavram ([#1282](https://github.com/stardust-ui/react/pull/1282))
 
