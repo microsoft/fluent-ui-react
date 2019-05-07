@@ -43,7 +43,10 @@ export const renderDropdown = () => (
     }}
     ref={setContainerRef}
   >
-    Wrapper around Dropdown
+    <span>
+      Wrapper around Dropdown. Press Enter to focus dropdown. Press Esc to go back to cell
+      navigation.
+    </span>
     <Dropdown
       multiple
       items={inputItems}
