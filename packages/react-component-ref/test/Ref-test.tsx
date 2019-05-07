@@ -1,9 +1,7 @@
+import { Ref, RefFindNode, RefForward } from '@stardust-ui/react-component-ref'
 import { shallow } from 'enzyme'
 import * as React from 'react'
 
-import Ref from 'src/components/Ref/Ref'
-import RefFindNode from 'src/components/Ref/RefFindNode'
-import RefForward from 'src/components/Ref/RefForward'
 import { CompositeClass, ForwardedRef } from './fixtures'
 
 describe('Ref', () => {
