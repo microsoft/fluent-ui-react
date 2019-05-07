@@ -128,8 +128,8 @@ export const transparentColors = {
     400: 'rgba(255,255,255,0.5)',
     500: undefined,
     600: 'rgba(255,255,255,0.3)',
-    700: undefined,
-    800: 'rgba(255,255,255,0.15)',
+    700: 'rgba(255,255,255,0.2)',
+    800: 'rgba(255,255,255,0.1)',
     900: 'rgba(255,255,255,0.05)',
   },
   ruby: {
@@ -224,14 +224,16 @@ export const colorScheme: ColorSchemeMapping = {
     background2: colors.grey[100],
     background3: colors.grey[150],
 
+    border: colors.grey[200], // buttons
     border1: colors.grey[150],
     border2: colors.grey[200],
-    border: colors.grey[200], // buttons
+    border3: colors.grey[150], // divider
 
     shadow: colors.black, // opacity 10%
-    shadowHover: colors.black,
+    shadowHover: colors.black, // opacity 10%
 
     foregroundHover: colors.grey[750],
+    foregroundHover1: colors.white,
 
     backgroundHover: colors.grey[100],
     backgroundHover1: colors.grey[150],
@@ -249,9 +251,10 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundActive: colors.grey[100],
     backgroundActive1: colors.grey[150],
 
+    borderActive: colors.grey[200], // buttons
     borderActive1: colors.grey[150],
     borderActive2: colors.grey[200],
-    borderActive: colors.grey[200], // buttons
+    borderActive3: colors.grey[150], // divider
 
     shadowActive: undefined,
 
@@ -265,8 +268,9 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundFocus2: colors.grey[100],
     backgroundFocus3: colors.grey[150],
 
-    borderFocus: colors.black,
     borderFocusWithin: colors.white,
+    borderFocus: colors.black,
+
     shadowFocus: undefined,
 
     foregroundDisabled1: colors.grey[250],
@@ -283,20 +287,22 @@ export const colorScheme: ColorSchemeMapping = {
     foreground1: colors.brand[600],
     foreground2: colors.brand[700],
     foreground3: colors.brand[200],
+    foreground4: colors.white,
 
     background: colors.brand[600],
     background1: colors.brand[100],
     background2: colors.brand[900],
     background3: colors.brand[1000],
 
+    border: colors.grey[200],
     border1: colors.brand[200],
     border2: colors.brand[300],
-    border: colors.grey[200],
 
-    shadow: colors.black,
+    shadow: colors.black, // opacity 25%
     shadowHover: colors.black,
 
     foregroundHover: colors.brand[600],
+    foregroundHover1: colors.white,
 
     borderHover: colors.brand[300],
 
@@ -304,6 +310,7 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundHover1: colors.brand[50],
 
     foregroundPressed: colors.brand[800],
+    foregroundPressed1: colors.white,
     backgroundPressed: colors.brand[800], // it's 900 on the button - 800 is same as hover
     borderPressed: colors.brand[300],
     shadowPressed: undefined,
@@ -315,9 +322,9 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundActive: colors.brand[600],
     backgroundActive1: colors.brand[600],
 
+    borderActive: colors.grey[200],
     borderActive1: colors.brand[200],
     borderActive2: colors.brand[300],
-    borderActive: colors.grey[200],
 
     shadowActive: undefined,
 
@@ -325,6 +332,7 @@ export const colorScheme: ColorSchemeMapping = {
     foregroundFocus1: colors.brand[600],
     foregroundFocus2: colors.brand[700],
     foregroundFocus3: colors.brand[200],
+    foregroundFocus4: colors.white,
 
     backgroundFocus: colors.brand[600],
     backgroundFocus1: colors.brand[100],
@@ -332,15 +340,15 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundFocus3: colors.brand[1000],
 
     borderFocus: colors.black,
-    borderFocus1: colors.brand[600], // only input
     borderFocusWithin: colors.white,
+    borderFocus1: colors.brand[600], // only input
     shadowFocus: undefined,
 
-    foregroundDisabled1: colors.grey[250],
     foregroundDisabled: colors.grey[250],
+    foregroundDisabled1: colors.grey[250],
 
-    backgroundDisabled1: colors.grey[150],
     backgroundDisabled: colors.grey[150],
+    backgroundDisabled1: colors.grey[150],
 
     borderDisabled: colors.grey[150],
     shadowDisabled: undefined,

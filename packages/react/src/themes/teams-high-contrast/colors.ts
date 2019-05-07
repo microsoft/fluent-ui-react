@@ -54,14 +54,16 @@ export const colorScheme: ColorSchemeMapping = {
     background2: colors.black,
     background3: colors.black,
 
+    border: colors.white,
     border1: colors.white,
     border2: colors.white,
-    border: colors.white, // buttons
+    border3: colors.white,
 
     shadow: colors.black, // opacity 25%
-    shadowHover: colors.black,
+    shadowHover: colors.black, // opacity 25%
 
     foregroundHover: colors.black,
+    foregroundHover1: colors.black,
 
     backgroundHover: accessibleYellow,
     backgroundHover1: accessibleYellow,
@@ -74,14 +76,15 @@ export const colorScheme: ColorSchemeMapping = {
     shadowPressed: undefined,
 
     foregroundActive: accessibleCyan,
-    foregroundActive1: accessibleCyan,
+    foregroundActive1: colors.black,
 
-    backgroundActive1: accessibleCyan,
     backgroundActive: colors.black,
+    backgroundActive1: accessibleCyan,
 
+    borderActive: accessibleCyan, // buttons
     borderActive1: accessibleCyan,
     borderActive2: accessibleCyan,
-    borderActive: accessibleCyan, // buttons
+    borderActive3: accessibleCyan,
 
     shadowActive: undefined,
 
@@ -95,9 +98,10 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundFocus2: accessibleCyan,
     backgroundFocus3: accessibleCyan,
 
+    borderFocusWithin: colors.black,
     borderFocus: accessibleCyan,
-    borderFocusWithin: accessibleCyan,
-    shadowFocus: accessibleCyan,
+
+    shadowFocus: undefined,
 
     foregroundDisabled1: accessibleGreen,
     foregroundDisabled: colors.black,
@@ -113,20 +117,22 @@ export const colorScheme: ColorSchemeMapping = {
     foreground1: accessibleYellow,
     foreground2: accessibleYellow,
     foreground3: accessibleYellow,
+    foreground4: colors.black,
 
     background: colors.white,
     background1: colors.black,
     background2: colors.black,
     background3: colors.black,
 
+    border: colors.white, // buttons
     border1: colors.white,
     border2: colors.white,
-    border: colors.white, // buttons
 
     shadow: colors.black, // opacity 25%
     shadowHover: colors.black,
 
     foregroundHover: colors.black,
+    foregroundHover1: colors.black,
 
     borderHover: accessibleYellow,
 
@@ -134,6 +140,7 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundHover1: accessibleYellow,
 
     foregroundPressed: colors.black,
+    foregroundPressed1: colors.black,
     backgroundPressed: accessibleYellow,
     borderPressed: accessibleYellow,
     shadowPressed: undefined,
@@ -142,12 +149,12 @@ export const colorScheme: ColorSchemeMapping = {
     foregroundActive1: colors.black,
     foregroundActive2: accessibleCyan,
 
-    backgroundActive1: accessibleCyan,
     backgroundActive: colors.black,
+    backgroundActive1: accessibleCyan,
 
+    borderActive: accessibleCyan, // buttons
     borderActive1: accessibleCyan,
     borderActive2: accessibleCyan,
-    borderActive: accessibleCyan, // buttons
 
     shadowActive: undefined,
 
@@ -155,6 +162,7 @@ export const colorScheme: ColorSchemeMapping = {
     foregroundFocus1: colors.black,
     foregroundFocus2: colors.black,
     foregroundFocus3: colors.black,
+    foregroundFocus4: colors.black,
 
     backgroundFocus: accessibleCyan,
     backgroundFocus1: accessibleCyan,
@@ -162,12 +170,12 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundFocus3: accessibleCyan,
 
     borderFocus: accessibleCyan,
+    borderFocusWithin: colors.black,
     borderFocus1: accessibleCyan,
-    borderFocusWithin: accessibleCyan,
     shadowFocus: undefined,
 
-    foregroundDisabled1: accessibleGreen,
     foregroundDisabled: colors.black,
+    foregroundDisabled1: accessibleGreen,
 
     backgroundDisabled: accessibleGreen,
     backgroundDisabled1: colors.black,
