@@ -50,8 +50,9 @@ const avatarStyles: ComponentSlotStylesInput<AvatarProps, any> = {
   },
   status: ({ variables: v }): ICSSInJSStyle => ({
     position: 'absolute',
-    bottom: `-${v.statusBorderWidth}px`,
-    right: `-${v.statusBorderWidth}px`,
+    bottom: 0,
+    right: 0,
+    boxShadow: `0 0 0 ${pxToRem(v.statusBorderWidth)} ${v.statusBorderColor}`,
   }),
 }
 

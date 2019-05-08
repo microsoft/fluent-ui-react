@@ -1,81 +1,64 @@
-import { pxToRem, SizeValue } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { StatusProps } from '../../../../components/Status/Status'
 import { StatusVariables } from './statusVariables'
+import { ComponentSelectorsAndStyles } from 'src/themes/types'
+import { backportComponentStyle } from 'src/lib/resolveComponentRules'
 
-const getBackgroundColor = (state: string, variables: StatusVariables) => {
-  switch (state) {
-    case 'success':
-      return variables.successBackgroundColor
-    case 'info':
-      return variables.infoBackgroundColor
-    case 'warning':
-      return variables.warningBackgroundColor
-    case 'error':
-      return variables.errorBackgroundColor
-    case 'unknown':
-    default:
-      return variables.defaultBackgroundColor
-  }
-}
+const statusStyles: ComponentSelectorsAndStyles<StatusProps, StatusVariables> = v => ({
+  root: [
+    [
+      null,
+      {
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        verticalAlign: 'middle',
+        width: v.medium,
+        height: v.medium,
+        color: v.defaultTextColor,
+        backgroundColor: v.defaultBackgroundColor,
+        borderRadius: '9999px',
+      },
+    ],
 
-const getTextColor = (state: string, variables: StatusVariables) => {
-  switch (state) {
-    case 'success':
-      return variables.successTextColor
-    case 'info':
-      return variables.infoTextColor
-    case 'warning':
-      return variables.warningTextColor
-    case 'error':
-      return variables.errorTextColor
-    case 'unknown':
-    default:
-      return variables.defaultTextColor
-  }
-}
+    //
+    // Colors
+    //
+    [{ color: 'red' }, { backgroundColor: 'red' }],
+    [{ color: 'orange' }, { backgroundColor: 'orange' }],
+    [{ color: 'yellow' }, { backgroundColor: 'yellow' }],
+    [{ color: 'green' }, { backgroundColor: 'green' }],
+    [{ color: 'blue' }, { backgroundColor: 'blue' }],
+    [{ color: 'violet' }, { backgroundColor: 'violet' }],
 
-const sizeToPxValue: Record<SizeValue, number> = {
-  smallest: 8,
-  smaller: 8,
-  small: 8,
-  medium: 10,
-  large: 12,
-  larger: 14,
-  largest: 16,
-}
+    //
+    // States
+    //
+    [{ state: 'success' }, { backgroundColor: v.successBackgroundColor }],
+    [{ state: 'info' }, { backgroundColor: v.infoBackgroundColor }],
+    [{ state: 'warning' }, { backgroundColor: v.warningBackgroundColor }],
+    [{ state: 'error' }, { backgroundColor: v.errorBackgroundColor }],
 
-export const getSizeStyles = (sizeInPx: number, variables: StatusVariables) => {
-  const borderWidth = (variables.borderColor && variables.borderWidth) || 0
-  const sizeInRem = pxToRem(sizeInPx + 2 * borderWidth)
+    //
+    // Sizes
+    //
+    [{ size: 'smallest' }, { width: v.smallest, height: v.smallest }],
+    [{ size: 'smaller' }, { width: v.smaller, height: v.smaller }],
+    [{ size: 'small' }, { width: v.small, height: v.small }],
+    [{ size: 'medium' }, { width: v.medium, height: v.medium }],
+    [{ size: 'large' }, { width: v.large, height: v.large }],
+    [{ size: 'larger' }, { width: v.larger, height: v.larger }],
+    [{ size: 'largest' }, { width: v.largest, height: v.largest }],
+  ],
 
-  return {
-    height: sizeInRem,
-    width: sizeInRem,
-  }
-}
+  // ----------------------------------------
+  // Icon
+  // ----------------------------------------
+  icon: [
+    [{ state: 'success' }, { color: v.successTextColor }],
+    [{ state: 'info' }, { color: v.infoTextColor }],
+    [{ state: 'warning' }, { color: v.warningTextColor }],
+    [{ state: 'error' }, { color: v.errorTextColor }],
+  ],
+})
 
-const statusStyles: ComponentSlotStylesInput<StatusProps, StatusVariables> = {
-  root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => {
-    return {
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      ...getSizeStyles(sizeToPxValue[size], variables),
-      verticalAlign: 'middle',
-      borderRadius: '9999px',
-      ...(variables.borderColor && {
-        borderColor: variables.borderColor,
-        borderWidth: pxToRem(variables.borderWidth),
-        borderStyle: 'solid',
-      }),
-      backgroundColor: color || getBackgroundColor(state, variables),
-    }
-  },
-
-  icon: ({ props: { state }, variables }): ICSSInJSStyle => ({
-    color: getTextColor(state, variables),
-  }),
-}
-
-export default statusStyles
+export default backportComponentStyle(statusStyles)
