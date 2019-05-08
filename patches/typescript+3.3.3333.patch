@@ -1,5 +1,5 @@
 diff --git a/node_modules/typescript/lib/typescript.js b/node_modules/typescript/lib/typescript.js
-index d2e2e7e..9ef5e63 100644
+index d2e2e7e..061a323 100644
 --- a/node_modules/typescript/lib/typescript.js
 +++ b/node_modules/typescript/lib/typescript.js
 @@ -42342,12 +42342,50 @@ var ts;
@@ -48,7 +48,7 @@ index d2e2e7e..9ef5e63 100644
              // and issue an error. Otherwise, actually compare the structure of the two types.
              function recursiveTypeRelatedTo(source, target, reportErrors, isIntersectionConstituent) {
 +                if (source && source.symbol && source.symbol.escapedName && target && target.symbol && target.symbol.escapedName) {
-+                    console.log(`${getDescriptionOf(source)} => ${getDescriptionOf(target)}`)
++                    // console.log(`${getDescriptionOf(source)} => ${getDescriptionOf(target)}`)
 +                }
                  if (overflow) {
                      return 0 /* False */;
