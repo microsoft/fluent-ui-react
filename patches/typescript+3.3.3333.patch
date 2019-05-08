@@ -1,0 +1,55 @@
+diff --git a/node_modules/typescript/lib/typescript.js b/node_modules/typescript/lib/typescript.js
+index d2e2e7e..9ef5e63 100644
+--- a/node_modules/typescript/lib/typescript.js
++++ b/node_modules/typescript/lib/typescript.js
+@@ -42342,12 +42342,50 @@ var ts;
+                 }
+                 return result;
+             }
++
++            function getTypeNameOf(source) {
++                var c = !!(source && source.symbol)
++                if (!c) return null
++
++                return source.symbol.escapedName
++            }
++
++            function getFileOf(source) {
++                var c = !!(source && source.symbol && source.symbol.valueDeclaration)
++                if (!c) { return null }
++
++                var current = source.symbol.valueDeclaration
++                while (current) {
++                    if (current.fileName) {
++                        return current.fileName
++                    }
++
++                    current = current.parent
++                }
++
++                return null
++            }
++
++            function getPositionOf(source) {
++                var c = !!(source && source.symbol && source.symbol.valueDeclaration)
++                if (!c) return null
++
++                return source.symbol.valueDeclaration.pos
++            }
++
++            function getDescriptionOf(source) {
++                return `${getTypeNameOf(source)} in ${getFileOf(source)}:${getPositionOf(source)}`
++            }
++
+             // Determine if possibly recursive types are related. First, check if the result is already available in the global cache.
+             // Second, check if we have already started a comparison of the given two types in which case we assume the result to be true.
+             // Third, check if both types are part of deeply nested chains of generic type instantiations and if so assume the types are
+             // equal and infinitely expanding. Fourth, if we have reached a depth of 100 nested comparisons, assume we have runaway recursion
+             // and issue an error. Otherwise, actually compare the structure of the two types.
+             function recursiveTypeRelatedTo(source, target, reportErrors, isIntersectionConstituent) {
++                if (source && source.symbol && source.symbol.escapedName && target && target.symbol && target.symbol.escapedName) {
++                    console.log(`${getDescriptionOf(source)} => ${getDescriptionOf(target)}`)
++                }
+                 if (overflow) {
+                     return 0 /* False */;
+                 }
