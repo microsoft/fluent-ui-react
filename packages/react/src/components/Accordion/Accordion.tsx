@@ -21,7 +21,7 @@ import {
   ReactProps,
   ShorthandValue,
   ShorthandRenderFunction,
-  withTypedAs,
+  safeTyped,
 } from '../../types'
 
 export interface AccordionSlotClassNames {
@@ -76,12 +76,6 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
   accessibility?: Accessibility
 }
 
-/**
- * An accordion allows users to toggle the display of sections of content.
- * @accessibility
- * Implements ARIA Accordion design pattern (keyboard navigation not yet supported).
- * Consider using Tree if you intend to wrap Lists in an Accordion.
- */
 class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any> {
   static displayName = 'Accordion'
 
@@ -203,4 +197,10 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
   }
 }
 
-export default withTypedAs<typeof Accordion, AccordionProps>(Accordion)
+/**
+ * An accordion allows users to toggle the display of sections of content.
+ * @accessibility
+ * Implements ARIA Accordion design pattern (keyboard navigation not yet supported).
+ * Consider using Tree if you intend to wrap Lists in an Accordion.
+ */
+export default safeTyped<typeof Accordion, AccordionProps>(Accordion)

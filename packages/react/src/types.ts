@@ -78,7 +78,7 @@ export type ShorthandValue<P = {}> = ReactNode | Props<P>
 export type ShorthandCollection<K = []> = ShorthandValue<{ kind?: K }>[]
 
 // ========================================================
-// Components with As prop
+// Types for As prop support
 // ========================================================
 
 type ValueOf<TFirst, TSecond, TKey extends keyof (TFirst & TSecond)> = TKey extends keyof TFirst
@@ -115,23 +115,21 @@ type PickProps<T, Props extends string | number | symbol> = {
 
 export type InstanceOf<T> = T extends { new (...args: any[]): infer TInstance } ? TInstance : never
 
-export const withTypedAs = function<
+export const safeTyped = function<
   TComponentType extends React.ComponentType,
   TProps,
   TAs extends keyof JSX.IntrinsicElements = 'div'
 >(componentType: TComponentType) {
-  // type TProps = Partial<PropsOf<InstanceOf<TComponentType>>>
-
-  function variadicComponent<Tag extends keyof JSX.IntrinsicElements>(
+  function overloadedComponentType<Tag extends keyof JSX.IntrinsicElements>(
     x: AsHtmlElement<Tag, TProps>,
   ): JSX.Element
-  function variadicComponent<Tag>(x: AsComponent<Tag, TProps>): JSX.Element
-  function variadicComponent(x: Extended<TProps, JSX.IntrinsicElements[TAs]>): JSX.Element
-  function variadicComponent(): never {
+  function overloadedComponentType<Tag>(x: AsComponent<Tag, TProps>): JSX.Element
+  function overloadedComponentType(x: Extended<TProps, JSX.IntrinsicElements[TAs]>): JSX.Element
+  function overloadedComponentType(): never {
     throw new Error('Defines unreachable execution scenario')
   }
 
-  return (componentType as any) as typeof variadicComponent &
+  return (componentType as any) as typeof overloadedComponentType &
     PickProps<TComponentType, CommonStaticProps>
 }
 
@@ -139,3 +137,9 @@ export type UNSAFE_typed<TComponentType, TProps> = React.FunctionComponent<
   TProps & { [K: string]: any }
 > &
   PickProps<TComponentType, keyof TComponentType>
+
+export const UNSAFE_typed = <TComponentType>(componentType: TComponentType) => {
+  return {
+    withProps: <TProps>() => (componentType as any) as UNSAFE_typed<TComponentType, TProps>,
+  }
+}

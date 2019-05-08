@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, ComponentEventHandler, withTypedAs } from '../../types'
+import { ReactProps, ShorthandValue, ComponentEventHandler, safeTyped } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 
@@ -213,4 +213,4 @@ Input.slotClassNames = {
  * Other considerations:
  *  - if input is search, then use "role='search'"
  */
-export default withTypedAs<typeof Input, InputProps, 'div'>(Input)
+export default safeTyped<typeof Input, InputProps, 'div'>(Input)

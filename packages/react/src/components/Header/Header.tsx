@@ -16,7 +16,7 @@ import {
 import HeaderDescription from './HeaderDescription'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, withTypedAs } from '../../types'
+import { ReactProps, ShorthandValue, safeTyped } from '../../types'
 
 export interface HeaderSlotClassNames {
   description: string
@@ -108,4 +108,4 @@ Header.create = createShorthandFactory({ Component: Header, mappedProp: 'content
  *  - when the description property is used in header, readers will narrate both header content and description within the element.
  *    In addition to that, both will be displayed in the list of headings.
  */
-export default withTypedAs<typeof Header, HeaderProps, 'h1'>(Header)
+export default safeTyped<typeof Header, HeaderProps, 'h1'>(Header)
