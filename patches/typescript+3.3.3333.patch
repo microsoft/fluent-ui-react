@@ -1,17 +1,8 @@
 diff --git a/node_modules/typescript/lib/typescript.js b/node_modules/typescript/lib/typescript.js
-index d2e2e7e..3578c8f 100644
+index d2e2e7e..9ef5e63 100644
 --- a/node_modules/typescript/lib/typescript.js
 +++ b/node_modules/typescript/lib/typescript.js
-@@ -41795,6 +41795,8 @@ var ts;
-             var overflow = false;
-             var suppressNextError = false;
-             ts.Debug.assert(relation !== identityRelation || !errorNode, "no error reporting in identity checking");
-+
-+            console.log('--> relation', relation)
-             var result = isRelatedTo(source, target, /*reportErrors*/ !!errorNode, headMessage);
-             if (overflow) {
-                 error(errorNode, ts.Diagnostics.Excessive_stack_depth_comparing_types_0_and_1, typeToString(source), typeToString(target));
-@@ -42342,12 +42344,50 @@ var ts;
+@@ -42342,12 +42342,50 @@ var ts;
                  }
                  return result;
              }
