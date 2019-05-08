@@ -21,6 +21,7 @@ import {
   ReactProps,
   ShorthandValue,
   ShorthandRenderFunction,
+  withTypedAs,
 } from '../../types'
 
 export interface AccordionSlotClassNames {
@@ -202,4 +203,4 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
   }
 }
 
-export default Accordion
+export default withTypedAs<typeof Accordion, AccordionProps>(Accordion)

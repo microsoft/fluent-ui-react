@@ -117,9 +117,10 @@ export type InstanceOf<T> = T extends { new (...args: any[]): infer TInstance } 
 
 export const withTypedAs = function<
   TComponentType extends React.ComponentType,
+  TProps,
   TAs extends keyof JSX.IntrinsicElements = 'div'
 >(componentType: TComponentType) {
-  type TProps = Partial<PropsOf<InstanceOf<TComponentType>>>
+  // type TProps = Partial<PropsOf<InstanceOf<TComponentType>>>
 
   function variadicComponent<Tag extends keyof JSX.IntrinsicElements>(
     x: AsHtmlElement<Tag, TProps>,

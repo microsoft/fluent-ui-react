@@ -220,4 +220,4 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
 /**
  * A list displays a group of related content.
  */
-export default withTypedAs<typeof List, 'ul'>(List)
+export default withTypedAs<typeof List, ListProps, 'ul'>(List)

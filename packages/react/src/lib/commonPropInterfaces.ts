@@ -18,9 +18,6 @@ export interface AnimatedComponentProps {
 export interface UIComponentProps<P = any, V = any>
   extends StyledComponentProps<P, V>,
     AnimatedComponentProps {
-  /** An element type to render as (string or function). */
-  // as?: any
-
   /** Additional CSS class name(s) to apply.  */
   className?: string
 }

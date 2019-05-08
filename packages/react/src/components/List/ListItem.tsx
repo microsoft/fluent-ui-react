@@ -239,4 +239,4 @@ ListItem.slotClassNames = {
 /**
  * A list item contains a single piece of content within a list.
  */
-export default withTypedAs<typeof ListItem, 'li'>(ListItem)
+export default withTypedAs<typeof ListItem, ListItemProps, 'li'>(ListItem)
