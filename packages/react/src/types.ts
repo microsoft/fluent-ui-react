@@ -94,7 +94,7 @@ type AsHtmlElement<Tag extends keyof JSX.IntrinsicElements, TProps> = {
 } & JSX.IntrinsicElements[Tag] &
   TProps
 
-type AsComponent<C, TProps> = { as: C } & TProps & PropsOf<InstanceOf<C>>
+type AsComponent<C, TProps> = { as: C } & TProps & { [K: string]: any } // & PropsOf<InstanceOf<C>>
 
 type CommonStaticProps =
   | 'Group'
