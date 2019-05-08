@@ -2,7 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { ReactProps, ShorthandValue } from '../../types'
+import { ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
 import {
   childrenExist,
   createShorthandFactory,
@@ -45,9 +45,6 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
   message?: ShorthandValue
 }
 
-/**
- * A chat item represents a single event in a chat.
- */
 class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
   static className = 'ui-chat__item'
   static create: Function
@@ -151,4 +148,7 @@ ChatItem.slotClassNames = {
   gutter: `${ChatItem.className}__gutter`,
 }
 
-export default ChatItem
+/**
+ * A chat item represents a single event in a chat.
+ */
+export default withSafeTypeForAs<typeof ChatItem, ChatItemProps, 'li'>(ChatItem)

@@ -12,6 +12,7 @@ import {
   ComponentEventHandler,
   ShorthandCollection,
   ReactProps,
+  withSafeTypeForAs,
 } from '../../types'
 import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
 import Downshift, {
@@ -209,12 +210,6 @@ export interface DropdownState {
   value: ShorthandValue | ShorthandCollection
 }
 
-/**
- * Dropdown allows user to select one or more values from a list of items.
- * Can also be created with search capability.
- * @accessibility
- * Implements ARIA collapsible Listbox design pattern, uses aria-live to announce state changes.
- */
 class Dropdown extends AutoControlledComponent<ReactProps<DropdownProps>, DropdownState> {
   private buttonRef = React.createRef<HTMLElement>()
   private inputRef = React.createRef<HTMLInputElement>()
@@ -1181,4 +1176,10 @@ Dropdown.slotClassNames = {
   triggerButton: `${Dropdown.className}__trigger-button`,
 }
 
-export default Dropdown
+/**
+ * Dropdown allows user to select one or more values from a list of items.
+ * Can also be created with search capability.
+ * @accessibility
+ * Implements ARIA collapsible Listbox design pattern, uses aria-live to announce state changes.
+ */
+export default withSafeTypeForAs<typeof Dropdown, DropdownProps>(Dropdown)

@@ -14,7 +14,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps } from '../../types'
+import { ReactProps, withSafeTypeForAs } from '../../types'
 
 export interface DividerProps
   extends UIComponentProps,
@@ -37,9 +37,6 @@ export interface DividerProps
   important?: boolean
 }
 
-/**
- * A divider visually segments content into groups.
- */
 class Divider extends UIComponent<ReactProps<DividerProps>, any> {
   static displayName = 'Divider'
 
@@ -77,6 +74,7 @@ class Divider extends UIComponent<ReactProps<DividerProps>, any> {
 
 Divider.create = createShorthandFactory({ Component: Divider, mappedProp: 'content' })
 
-export default Divider
-
-export type DividerPropsWithDefaults = DividerProps & typeof Divider.defaultProps
+/**
+ * A divider visually segments content into groups.
+ */
+export default withSafeTypeForAs<typeof Divider, DividerProps>(Divider)

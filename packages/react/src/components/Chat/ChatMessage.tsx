@@ -17,7 +17,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { ReactProps, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import { chatMessageBehavior, toolbarBehavior } from '../../lib/accessibility'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
@@ -94,9 +94,6 @@ export interface ChatMessageState {
   isFromKeyboard: boolean
 }
 
-/**
- * A chat message represents a single statement communicated to a user.
- */
 class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageState> {
   static className = 'ui-chat__message'
 
@@ -270,4 +267,7 @@ ChatMessage.slotClassNames = {
   reactionGroup: `${ChatMessage.className}__reactions`,
 }
 
-export default ChatMessage
+/**
+ * A chat message represents a single statement communicated to a user.
+ */
+export default withSafeTypeForAs<typeof ChatMessage, ChatMessageProps>(ChatMessage)

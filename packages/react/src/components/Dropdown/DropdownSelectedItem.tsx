@@ -10,6 +10,7 @@ import {
   ShorthandValue,
   ReactProps,
   ComponentKeyboardEventHandler,
+  withSafeTypeForAs,
 } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import { createShorthandFactory, UIComponent, RenderResultConfig, commonPropTypes } from '../../lib'
@@ -62,10 +63,6 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
   onRemove?: ComponentEventHandler<DropdownSelectedItemProps>
 }
 
-/**
- * A DropdownSelectedItem is a sub-component of a multiple selection Dropdown.
- * It is used to display selected item.
- */
 class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemProps>, any> {
   private itemRef = React.createRef<HTMLElement>()
 
@@ -181,4 +178,10 @@ DropdownSelectedItem.create = createShorthandFactory({
   mappedProp: 'header',
 })
 
-export default DropdownSelectedItem
+/**
+ * A a sub-component of multiple-selection Dropdown.
+ * Used to display selected item.
+ */
+export default withSafeTypeForAs<typeof DropdownSelectedItem, DropdownSelectedItemProps>(
+  DropdownSelectedItem,
+)

@@ -4,7 +4,6 @@ import cx from 'classnames'
 import * as _ from 'lodash'
 import { UIComponent, commonPropTypes, UIComponentProps } from '../../lib'
 import { mergeStyles } from '../../lib/mergeThemes'
-import { ReactProps } from '../../types'
 
 export type FlexItemChildren =
   | React.ReactElement<any>
@@ -42,7 +41,7 @@ export interface FlexItemProps extends UIComponentProps {
   flexDirection?: 'row' | 'column'
 }
 
-class FlexItem extends UIComponent<ReactProps<FlexItemProps>> {
+class FlexItem extends UIComponent<FlexItemProps> {
   static className = 'ui-flex__item'
 
   static displayName = 'FlexItem'

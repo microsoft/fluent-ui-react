@@ -16,7 +16,7 @@ import {
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
 import Header from '../Header/Header'
@@ -86,9 +86,6 @@ export interface DialogState {
   open?: boolean
 }
 
-/**
- * A Dialog indicates a possible user action.
- */
 class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogState> {
   static displayName = 'Dialog'
   static className = 'ui-dialog'
@@ -256,4 +253,7 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
   }
 }
 
-export default Dialog
+/**
+ * A Dialog indicates a possible user action.
+ */
+export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)

@@ -99,11 +99,15 @@ type AsComponent<C, TProps> = { as: C } & TProps & PropsOf<InstanceOf<C>>
 type CommonStaticProps =
   | 'Group'
   | 'Item'
+  | 'SelectedItem'
   | 'Description'
+  | 'Message'
+  | 'Field'
   | 'className'
   | 'create'
   | 'slotClassNames'
   | 'displayName'
+  | 'isTypeOfElement'
 
 type Intersect<First extends string | number | symbol, Second extends string | number | symbol> = {
   [K in First]: K extends Second ? K : never

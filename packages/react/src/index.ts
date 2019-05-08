@@ -36,11 +36,7 @@ export {
   ChatMessageSlotClassNames,
 } from './components/Chat/ChatMessage'
 
-export {
-  default as Divider,
-  DividerProps,
-  DividerPropsWithDefaults,
-} from './components/Divider/Divider'
+export { default as Divider, DividerProps } from './components/Divider/Divider'
 export { default as Dialog, DialogProps } from './components/Dialog/Dialog'
 
 export {
