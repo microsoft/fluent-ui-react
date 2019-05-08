@@ -1,13 +1,31 @@
+import { pxToRem } from 'src/lib'
+
 export interface AvatarVariables {
   avatarBorderColor: string
-  avatarBorderWidth: number
+  avatarBorderWidth: string
   statusBorderColor: string
-  statusBorderWidth: number
+  statusBorderWidth: string
+
+  smallest: string
+  smaller: string
+  small: string
+  medium: string
+  large: string
+  larger: string
+  largest: string
 }
 
 export default (siteVariables): AvatarVariables => ({
   avatarBorderColor: '',
-  avatarBorderWidth: 0,
+  avatarBorderWidth: '0',
   statusBorderColor: siteVariables.bodyBackground,
-  statusBorderWidth: 2,
+  statusBorderWidth: '2px',
+
+  smallest: pxToRem(24),
+  smaller: pxToRem(24),
+  small: pxToRem(24),
+  medium: pxToRem(32),
+  large: pxToRem(36),
+  larger: pxToRem(42),
+  largest: pxToRem(48),
 })

@@ -1,59 +1,96 @@
-import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSelectorsAndStyles } from '../../../types'
 import { AvatarProps } from '../../../../components/Avatar/Avatar'
+import { AvatarVariables } from 'src/themes/teams/components/Avatar/avatarVariables'
+import { backportComponentStyle } from 'src/lib/resolveComponentRules'
 
-const sizeToPxValue = {
-  smallest: 24,
-  smaller: 24,
-  small: 24,
-  medium: 32,
-  large: 36,
-  larger: 42,
-  largest: 48,
-}
+const avatarStyles: ComponentSelectorsAndStyles<AvatarProps, AvatarVariables> = v => ({
+  root: [
+    [
+      null,
+      {
+        position: 'relative',
+        backgroundColor: 'inherit',
+        display: 'inline-block',
+        verticalAlign: 'middle',
+        height: v.medium,
+        width: v.medium,
+      },
+    ],
 
-const avatarStyles: ComponentSlotStylesInput<AvatarProps, any> = {
-  root: ({ props: { size } }): ICSSInJSStyle => {
-    const sizeInRem = pxToRem(sizeToPxValue[size])
+    //
+    // Sizes
+    //
+    [{ size: 'smallest' }, { width: v.smallest, height: v.smallest }],
+    [{ size: 'smaller' }, { width: v.smaller, height: v.smaller }],
+    [{ size: 'small' }, { width: v.small, height: v.small }],
+    [{ size: 'medium' }, { width: v.medium, height: v.medium }],
+    [{ size: 'large' }, { width: v.large, height: v.large }],
+    [{ size: 'larger' }, { width: v.larger, height: v.larger }],
+    [{ size: 'largest' }, { width: v.largest, height: v.largest }],
+  ],
 
-    return {
-      position: 'relative',
-      backgroundColor: 'inherit',
-      display: 'inline-block',
-      verticalAlign: 'middle',
-      height: sizeInRem,
-      width: sizeInRem,
-    }
-  },
-  image: ({ variables: v }): ICSSInJSStyle => ({
-    borderColor: v.avatarBorderColor,
-    borderStyle: 'solid',
-    borderWidth: `${v.avatarBorderWidth}px`,
+  // ----------------------------------------
+  // Image
+  // ----------------------------------------
+  image: [
+    [
+      null,
+      {
+        borderColor: v.avatarBorderColor,
+        borderStyle: 'solid',
+        borderWidth: v.avatarBorderWidth,
 
-    height: '100%',
-    objectFit: 'cover',
-    verticalAlign: 'top',
-    width: '100%',
-  }),
-  label: ({ props: { size } }): ICSSInJSStyle => {
-    const sizeInRem = pxToRem(sizeToPxValue[size])
-    return {
-      display: 'inline-block',
-      width: sizeInRem,
-      height: sizeInRem,
-      lineHeight: sizeInRem,
-      fontSize: pxToRem(sizeToPxValue[size] / 2.333),
-      verticalAlign: 'top',
-      textAlign: 'center',
-      padding: '0px',
-    }
-  },
-  status: ({ variables: v }): ICSSInJSStyle => ({
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    boxShadow: `0 0 0 ${pxToRem(v.statusBorderWidth)} ${v.statusBorderColor}`,
-  }),
-}
+        height: '100%',
+        objectFit: 'cover',
+        verticalAlign: 'top',
+        width: '100%',
+      },
+    ],
+  ],
 
-export default avatarStyles
+  // ----------------------------------------
+  // Label
+  // ----------------------------------------
+  label: [
+    [
+      null,
+      {
+        display: 'inline-block',
+        width: v.medium,
+        height: v.medium,
+        lineHeight: v.medium,
+        fontSize: `calc(${v.medium} / 2.333)`,
+        verticalAlign: 'top',
+        textAlign: 'center',
+        padding: '0px',
+      },
+    ],
+
+    //
+    // Sizes
+    //
+    [{ size: 'smallest' }, { width: v.smallest, height: v.smallest, lineHeight: v.smallest }],
+    [{ size: 'smaller' }, { width: v.smaller, height: v.smaller, lineHeight: v.smaller }],
+    [{ size: 'small' }, { width: v.small, height: v.small, lineHeight: v.small }],
+    [{ size: 'medium' }, { width: v.medium, height: v.medium, lineHeight: v.medium }],
+    [{ size: 'large' }, { width: v.large, height: v.large, lineHeight: v.large }],
+    [{ size: 'larger' }, { width: v.larger, height: v.larger, lineHeight: v.larger }],
+    [{ size: 'largest' }, { width: v.largest, height: v.largest, lineHeight: v.largest }],
+  ],
+
+  // ----------------------------------------
+  // Status
+  // ----------------------------------------
+  status: [
+    [
+      null,
+      {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        boxShadow: `0 0 0 ${v.statusBorderWidth} ${v.statusBorderColor}`,
+      },
+    ],
+  ],
+})
+export default backportComponentStyle(avatarStyles)
