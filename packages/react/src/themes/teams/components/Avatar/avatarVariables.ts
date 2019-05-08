@@ -1,4 +1,4 @@
-import { pxToRem } from 'src/lib'
+import { pxToRem } from '../../../../lib'
 
 export interface AvatarVariables {
   avatarBorderColor: string

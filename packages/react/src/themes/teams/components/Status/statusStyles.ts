@@ -1,7 +1,7 @@
 import { StatusProps } from '../../../../components/Status/Status'
 import { StatusVariables } from './statusVariables'
-import { ComponentSelectorsAndStyles } from 'src/themes/types'
-import { backportComponentStyle } from 'src/lib/resolveComponentRules'
+import { ComponentSelectorsAndStyles } from '../../../types'
+import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
 
 const statusStyles: ComponentSelectorsAndStyles<StatusProps, StatusVariables> = v => ({
   root: [

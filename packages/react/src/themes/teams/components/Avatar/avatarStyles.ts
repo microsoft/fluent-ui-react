@@ -1,7 +1,7 @@
 import { ComponentSelectorsAndStyles } from '../../../types'
 import { AvatarProps } from '../../../../components/Avatar/Avatar'
-import { AvatarVariables } from 'src/themes/teams/components/Avatar/avatarVariables'
-import { backportComponentStyle } from 'src/lib/resolveComponentRules'
+import { AvatarVariables } from './avatarVariables'
+import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
 
 const avatarStyles: ComponentSelectorsAndStyles<AvatarProps, AvatarVariables> = v => ({
   root: [
