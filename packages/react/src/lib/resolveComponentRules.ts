@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle, SiteVariablesInput } from 'src/themes/types'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from 'src/themes/types'
 
 export function isObject(item): boolean {
   return typeof item === 'object' && !Array.isArray(item) && item !== null
@@ -47,28 +47,7 @@ export const backportComponentStyle = (selectorStyleFunc): ComponentSlotStylesIn
     return selectorStyleFunc
   }
 
-  const withoutVariables = selectorStyleFunc({
-    colors: {
-      white: {},
-      green: {},
-      yellow: {},
-      orange: {},
-      purple: {},
-      grey: {},
-      blue: {},
-      black: {},
-      danger: {},
-      info: {},
-      pink: {},
-      primary: {},
-      red: {},
-      secondary: {},
-      success: {},
-      teal: {},
-      text: {},
-      warning: {},
-    },
-  } as SiteVariablesInput)
+  const withoutVariables = selectorStyleFunc({})
 
   return Object.keys(withoutVariables).reduce((acc, part) => {
     acc[part] = ({ props, variables }) => {

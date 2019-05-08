@@ -23,12 +23,12 @@ const statusStyles: ComponentSelectorsAndStyles<StatusProps, StatusVariables> = 
     //
     // Colors
     //
-    [{ color: 'red' }, { backgroundColor: 'red' }],
-    [{ color: 'orange' }, { backgroundColor: 'orange' }],
-    [{ color: 'yellow' }, { backgroundColor: 'yellow' }],
-    [{ color: 'green' }, { backgroundColor: 'green' }],
-    [{ color: 'blue' }, { backgroundColor: 'blue' }],
-    [{ color: 'violet' }, { backgroundColor: 'violet' }],
+    [{ color: 'red' }, { backgroundColor: v.backgroundRed }],
+    [{ color: 'orange' }, { backgroundColor: v.backgroundOrange }],
+    [{ color: 'yellow' }, { backgroundColor: v.backgroundYellow }],
+    [{ color: 'green' }, { backgroundColor: v.backgroundGreen }],
+    [{ color: 'blue' }, { backgroundColor: v.backgroundBlue }],
+    [{ color: 'violet' }, { backgroundColor: v.backgroundViolet }],
 
     //
     // States
