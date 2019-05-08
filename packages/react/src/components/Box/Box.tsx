@@ -9,17 +9,13 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
-import { ReactProps } from '../../types'
+import { ReactProps, withSafeTypeForAs } from '../../types'
 
 export interface BoxProps
   extends UIComponentProps<BoxProps>,
     ContentComponentProps,
     ChildrenComponentProps {}
 
-/**
- * A Box is an abstract component, is frequently used for slots in other Stardust components.
- * By default it renders a `div` without any styles.
- */
 const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<BoxProps>({
   displayName: 'Box',
 
@@ -47,4 +43,8 @@ const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<Box
 
 Box.create = createShorthandFactory({ Component: Box })
 
-export default Box
+/**
+ * A Box is an abstract component, is frequently used for slots in other Stardust components.
+ * By default it renders a `div` without any styles.
+ */
+export default withSafeTypeForAs<typeof Box, BoxProps>(Box)

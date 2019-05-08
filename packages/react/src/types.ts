@@ -115,7 +115,7 @@ type PickProps<T, Props extends string | number | symbol> = {
 
 export type InstanceOf<T> = T extends { new (...args: any[]): infer TInstance } ? TInstance : never
 
-export const safeTyped = function<
+export const withSafeTypeForAs = function<
   TComponentType extends React.ComponentType,
   TProps,
   TAs extends keyof JSX.IntrinsicElements = 'div'

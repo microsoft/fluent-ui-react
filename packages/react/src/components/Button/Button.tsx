@@ -18,7 +18,7 @@ import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue, safeTyped } from '../../types'
+import { ComponentEventHandler, ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
 import ButtonGroup from './ButtonGroup'
 
 export interface ButtonProps
@@ -182,4 +182,4 @@ Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
  */
-export default safeTyped<typeof Button, ButtonProps, 'button'>(Button)
+export default withSafeTypeForAs<typeof Button, ButtonProps, 'button'>(Button)

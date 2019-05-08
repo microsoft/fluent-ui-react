@@ -21,7 +21,7 @@ import {
   ReactProps,
   ShorthandValue,
   ShorthandRenderFunction,
-  safeTyped,
+  withSafeTypeForAs,
 } from '../../types'
 
 export interface AccordionSlotClassNames {
@@ -203,4 +203,4 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
  * Implements ARIA Accordion design pattern (keyboard navigation not yet supported).
  * Consider using Tree if you intend to wrap Lists in an Accordion.
  */
-export default safeTyped<typeof Accordion, AccordionProps>(Accordion)
+export default withSafeTypeForAs<typeof Accordion, AccordionProps>(Accordion)

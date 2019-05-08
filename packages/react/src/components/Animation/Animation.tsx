@@ -10,7 +10,7 @@ import {
 } from '../../lib'
 import { AnimationProp } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
-import { ReactProps } from '../../types'
+import { ReactProps, withSafeTypeForAs } from '../../types'
 
 export interface AnimationProps
   extends StyledComponentProps,
@@ -79,9 +79,6 @@ export interface AnimationProps
   timingFunction?: string
 }
 
-/**
- * An animation allows the user to animate their own components.
- */
 class Animation extends UIComponent<ReactProps<AnimationProps>, any> {
   static create: Function
 
@@ -140,4 +137,7 @@ class Animation extends UIComponent<ReactProps<AnimationProps>, any> {
   }
 }
 
-export default Animation
+/**
+ * An animation allows the user to animate their own components.
+ */
+export default withSafeTypeForAs<typeof Animation, AnimationProps>(Animation)

@@ -2,7 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { ReactProps, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import {
   UIComponent,
   createShorthandFactory,
@@ -65,9 +65,6 @@ export interface AttachmentState {
   isFromKeyboard: boolean
 }
 
-/**
- * An Attachment displays a file attachment.
- */
 class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentState> {
   static create: Function
 
@@ -169,4 +166,7 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentStat
 
 Attachment.create = createShorthandFactory({ Component: Attachment, mappedProp: 'header' })
 
-export default Attachment
+/**
+ * An Attachment displays a file attachment.
+ */
+export default withSafeTypeForAs<typeof Attachment, AttachmentProps>(Attachment)
