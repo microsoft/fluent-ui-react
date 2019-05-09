@@ -104,10 +104,12 @@ const sumByExample = (measures: ProfilerMeasureCycle[]): PerExamplePerfMeasures 
 const getPercentDiff = (minValue: number, actualValue: number): number =>
   _.round((actualValue / minValue) * 100 - 100, 2)
 
+type NumberPropertyNames<T> = { [K in keyof T]: T[K] extends number ? K : never }[keyof T]
+
 const createMarkdownTable = (
   perExamplePerfMeasures: PerExamplePerfMeasures,
   metricName: MeasuredValues = 'actualTime',
-  fields: ('avg' | 'avgNormalized' | 'median' | 'medianNormalized')[] = [
+  fields: NumberPropertyNames<ReducedMeasures>[] = [
     'avg',
     'avgNormalized',
     'median',

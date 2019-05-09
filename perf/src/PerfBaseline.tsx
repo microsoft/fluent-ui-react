@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 const PerfBaseline = () => (
   <>
     {_.times(1000, i => (
-      <div>perf baseline {i}</div>
+      <div key={i}>perf baseline {i}</div>
     ))}
   </>
 )
