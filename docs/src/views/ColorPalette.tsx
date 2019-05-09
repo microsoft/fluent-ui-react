@@ -17,6 +17,7 @@ import DocPage from 'docs/src/components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet'
 import ColorSchemes from 'docs/src/components/ColorSchemes'
 import GuidesNavigationFooter from 'docs/src/components/GuidesNavigationFooter'
+import { link } from 'docs/src/utils/helpers'
 
 const theme = {
   componentStyles: {
@@ -74,11 +75,12 @@ const ColorPalette = () => (
           </p>
           <ul>
             <li>
-              <b>color palette</b> - central place for all colors available in the application
+              <b>{link('Color scheme', '#color-scheme')}</b> - design tokens for all colors used in
+              the application that should be appropriately map in all themes
             </li>
             <li>
-              <b>color schema</b> - design tokens for all colors used in the application that should
-              be appropriately map in all themes
+              <b>{link('Color palette', '#color-palette')}</b> - central place for all colors
+              available in the application
             </li>
           </ul>
           <p>
@@ -86,7 +88,7 @@ const ColorPalette = () => (
             will work even if you decide to structure the palette and schemas differently in your
             theme)
           </p>
-          <Header as="h2">Color palette</Header>
+          <Header as="h2" content="Color palette" />
           <p>We have structured the color palette in several categories.</p>
 
           <Header as="h3">Primitive colors</Header>
@@ -145,7 +147,7 @@ const ColorPalette = () => (
             ))}
           </Grid>
 
-          <Header as="h2">Color scheme</Header>
+          <Header as="h2" content="Color scheme" />
           <p>
             Now that we know how the color palette is defined, let's see how we can use these
             values, so that they will work correctly when different themes will be applied. As part
