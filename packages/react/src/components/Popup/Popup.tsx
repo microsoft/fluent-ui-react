@@ -239,7 +239,8 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     return (
       <>
         {this.renderTrigger(accessibility)}
-        {inline ? popupContent : mountNode && ReactDOM.createPortal(popupContent, mountNode)}
+        {open &&
+          (inline ? popupContent : mountNode && ReactDOM.createPortal(popupContent, mountNode))}
       </>
     )
   }
