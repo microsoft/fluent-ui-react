@@ -25,14 +25,18 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     },
   }),
 
-  triggerButton: ({ props: p, variables: v }): ICSSInJSStyle => {
-    return {
-      ':hover': {
-        ...transparentColorStyle,
-        color: v.triggerButtonColorHover,
+  triggerButton: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    ':hover': {
+      ...transparentColorStyle,
+      color: v.triggerButtonColorHover,
+    },
+    ':focus': {
+      color: v.color,
+      ':active': {
+        color: v.color,
       },
-    }
-  },
+    },
+  }),
 }
 
 export default dropdownStyles
