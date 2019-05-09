@@ -1,4 +1,4 @@
-import { KnobInspector, KnobProvider } from '@stardust-ui/docs-components'
+import { CodeSnippet, KnobInspector, KnobProvider } from '@stardust-ui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
@@ -31,7 +31,6 @@ import ComponentSourceManager, {
 import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
 import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
-import CodeSnippet from '../../CodeSnippet'
 import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 import ComponentExampleKnobs from './ComponentExampleKnobs'
 
@@ -511,7 +510,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       description,
       title,
     } = this.props
-    const { showCode, showRtl, showTransparent, showVariables } = this.state
+    const { showCode, showRtl, showTransparent } = this.state
 
     return (
       <Flex column>
@@ -535,10 +534,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                     onShowRtl={this.handleShowRtlClick}
                     onShowVariables={this.handleShowVariablesClick}
                     onShowTransparent={this.handleShowTransparentClick}
-                    showCode={showCode}
                     showRtl={showRtl}
-                    showTransparent={showTransparent}
-                    showVariables={showVariables}
                   />
                 </Flex.Item>
               </Flex>

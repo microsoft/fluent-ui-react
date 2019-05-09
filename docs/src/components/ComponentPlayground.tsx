@@ -13,12 +13,12 @@ type ComponentPlaygroundProps = {
 }
 
 const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = props => {
-  const playgroundPath = _.find(playgroundPaths, playgroundPath =>
+  const resultPath = _.find(playgroundPaths, playgroundPath =>
     _.includes(playgroundPath, `/${props.componentName}/`),
   )
 
-  if (playgroundPath) {
-    const PlaygroundComponent: React.FunctionComponent = examplePlaygroundContext(playgroundPath)
+  if (resultPath) {
+    const PlaygroundComponent: React.FunctionComponent = examplePlaygroundContext(resultPath)
       .default
 
     return (

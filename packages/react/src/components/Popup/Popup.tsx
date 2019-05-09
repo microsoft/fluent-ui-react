@@ -1,5 +1,6 @@
 import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
 import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
+import { handleRef, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
@@ -19,13 +20,11 @@ import {
   StyledComponentProps,
   commonPropTypes,
   isFromKeyboard,
-  handleRef,
   doesNodeContainClick,
   setWhatInputSource,
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 
-import Ref from '../Ref/Ref'
 import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './positioningHelper'
 
 import PopupContent from './PopupContent'
@@ -334,7 +333,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   }
 
   getContentProps = (predefinedProps?) => {
-    const contentProps: any = {}
+    const contentHandlerProps: any = {}
 
     const { on } = this.props
     const normalizedOn = _.isArray(on) ? on : [on]
@@ -343,11 +342,11 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
      * The focus is adding the focus and blur events on the content
      */
     if (_.includes(normalizedOn, 'focus')) {
-      contentProps.onFocus = (e, contentProps) => {
+      contentHandlerProps.onFocus = (e, contentProps) => {
         this.trySetOpen(true, e)
         predefinedProps && _.invoke(predefinedProps, 'onFocus', e, contentProps)
       }
-      contentProps.onBlur = (e, contentProps) => {
+      contentHandlerProps.onBlur = (e, contentProps) => {
         if (this.shouldBlurClose(e)) {
           this.trySetOpen(false, e)
         }
@@ -359,21 +358,21 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
      * The hover is adding the mouseEnter, mouseLeave and click event (always opening on click)
      */
     if (_.includes(normalizedOn, 'hover')) {
-      contentProps.onMouseEnter = (e, contentProps) => {
+      contentHandlerProps.onMouseEnter = (e, contentProps) => {
         this.setPopupOpen(true, e)
         predefinedProps && _.invoke(predefinedProps, 'onMouseEnter', e, contentProps)
       }
-      contentProps.onMouseLeave = (e, contentProps) => {
+      contentHandlerProps.onMouseLeave = (e, contentProps) => {
         this.setPopupOpen(false, e)
         predefinedProps && _.invoke(predefinedProps, 'onMouseLeave', e, contentProps)
       }
-      contentProps.onClick = (e, contentProps) => {
+      contentHandlerProps.onClick = (e, contentProps) => {
         this.setPopupOpen(true, e)
         predefinedProps && _.invoke(predefinedProps, 'onClick', e, contentProps)
       }
     }
 
-    return contentProps
+    return contentHandlerProps
   }
 
   shouldBlurClose = e => {

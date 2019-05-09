@@ -1,3 +1,4 @@
+import { handleRef, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -27,11 +28,9 @@ import {
   AutoControlledComponent,
   RenderResultConfig,
   commonPropTypes,
-  handleRef,
   UIComponentProps,
 } from '../../lib'
 import List from '../List/List'
-import Ref from '../Ref/Ref'
 import DropdownItem, { DropdownItemProps } from './DropdownItem'
 import DropdownSelectedItem, { DropdownSelectedItemProps } from './DropdownSelectedItem'
 import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'
@@ -978,7 +977,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     e: React.SyntheticEvent,
     item: ShorthandValue,
     predefinedProps: DropdownSelectedItemProps,
-    DropdownSelectedItemProps: DropdownSelectedItemProps,
+    dropdownSelectedItemProps: DropdownSelectedItemProps,
     rtl: boolean,
   ) {
     const { activeSelectedIndex, value } = this.state as {
@@ -991,7 +990,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     switch (keyboardKey.getCode(e)) {
       case keyboardKey.Delete:
       case keyboardKey.Backspace:
-        this.handleSelectedItemRemove(e, item, predefinedProps, DropdownSelectedItemProps)
+        this.handleSelectedItemRemove(e, item, predefinedProps, dropdownSelectedItemProps)
         break
       case previousKey:
         if (value.length > 0 && !_.isNil(activeSelectedIndex) && activeSelectedIndex > 0) {
@@ -1016,7 +1015,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       default:
         break
     }
-    _.invoke(predefinedProps, 'onKeyDown', e, DropdownSelectedItemProps)
+    _.invoke(predefinedProps, 'onKeyDown', e, dropdownSelectedItemProps)
   }
 
   private handleTriggerButtonOrListFocus = () => {
@@ -1039,13 +1038,13 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     e: React.SyntheticEvent,
     item: ShorthandValue,
     predefinedProps: DropdownSelectedItemProps,
-    DropdownSelectedItemProps: DropdownSelectedItemProps,
+    dropdownSelectedItemProps: DropdownSelectedItemProps,
   ) {
     this.trySetState({ activeSelectedIndex: null })
     this.removeItemFromValue(item)
     this.tryFocusSearchInput()
     this.tryFocusTriggerButton()
-    _.invoke(predefinedProps, 'onRemove', e, DropdownSelectedItemProps)
+    _.invoke(predefinedProps, 'onRemove', e, dropdownSelectedItemProps)
   }
 
   private removeItemFromValue(item?: ShorthandValue) {

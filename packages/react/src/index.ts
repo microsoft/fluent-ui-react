@@ -10,6 +10,7 @@ export * from './themes/colorUtils'
 //
 // Components
 //
+export { Ref, RefProps } from '@stardust-ui/react-component-ref'
 
 export { default as Accordion, AccordionProps } from './components/Accordion/Accordion'
 
@@ -144,7 +145,6 @@ export {
   RadioGroupItemProps,
 } from './components/RadioGroup/RadioGroupItem'
 
-export { default as Ref, RefProps } from './components/Ref/Ref'
 export { default as Segment, SegmentProps } from './components/Segment/Segment'
 
 export { default as Status, StatusProps } from './components/Status/Status'
