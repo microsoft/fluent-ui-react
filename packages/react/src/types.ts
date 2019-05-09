@@ -89,25 +89,25 @@ type ValueOf<TFirst, TSecond, TKey extends keyof (TFirst & TSecond)> = TKey exte
 
 type Extended<TFirst, TSecond> = { [K in keyof (TFirst & TSecond)]: ValueOf<TFirst, TSecond, K> }
 
-type AsHtmlElement<Tag extends keyof JSX.IntrinsicElements, TProps> = {
-  as: Tag
-} & JSX.IntrinsicElements[Tag] &
-  TProps
+// type AsHtmlElement<Tag extends keyof JSX.IntrinsicElements, TProps> = {
+//   as: Tag
+// } & JSX.IntrinsicElements[Tag] &
+//   TProps
 
-type AsComponent<C, TProps> = { as: C } & TProps & { [K: string]: any } // & PropsOf<InstanceOf<C>>
+// type AsComponent<C, TProps> = { as: C } & TProps & { [K: string]: any } // & PropsOf<InstanceOf<C>>
 
-type CommonStaticProps =
-  | 'Group'
-  | 'Item'
-  | 'SelectedItem'
-  | 'Description'
-  | 'Message'
-  | 'Field'
-  | 'className'
-  | 'create'
-  | 'slotClassNames'
-  | 'displayName'
-  | 'isTypeOfElement'
+// type CommonStaticProps =
+//   | 'Group'
+//   | 'Item'
+//   | 'SelectedItem'
+//   | 'Description'
+//   | 'Message'
+//   | 'Field'
+//   | 'className'
+//   | 'create'
+//   | 'slotClassNames'
+//   | 'displayName'
+//   | 'isTypeOfElement'
 
 type Intersect<First extends string | number | symbol, Second extends string | number | symbol> = {
   [K in First]: K extends Second ? K : never
@@ -124,17 +124,16 @@ export const withSafeTypeForAs = function<
   TProps,
   TAs extends keyof JSX.IntrinsicElements = 'div'
 >(componentType: TComponentType) {
-  function overloadedComponentType<Tag extends keyof JSX.IntrinsicElements>(
-    x: AsHtmlElement<Tag, TProps>,
-  ): JSX.Element
-  function overloadedComponentType<Tag>(x: AsComponent<Tag, TProps>): JSX.Element
-  function overloadedComponentType(x: Extended<TProps, JSX.IntrinsicElements[TAs]>): JSX.Element
-  function overloadedComponentType(): never {
-    throw new Error('Defines unreachable execution scenario')
-  }
+  // function overloadedComponentType<Tag extends keyof JSX.IntrinsicElements>(
+  //   x: AsHtmlElement<Tag, TProps>,
+  // ): JSX.Element
+  // function overloadedComponentType<Tag>(x: AsComponent<Tag, TProps>): JSX.Element
+  // function overloadedComponentType(x: Extended<TProps, JSX.IntrinsicElements[TAs]>): JSX.Element
+  // function overloadedComponentType(): never {
+  //   throw new Error('Defines unreachable execution scenario')
+  // }
 
-  return (componentType as any) as typeof overloadedComponentType &
-    PickProps<TComponentType, CommonStaticProps>
+  return componentType as any
 }
 
 export type UNSAFE_typed<TComponentType, TProps> = React.FunctionComponent<
