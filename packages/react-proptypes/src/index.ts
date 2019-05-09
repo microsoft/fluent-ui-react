@@ -369,7 +369,7 @@ export const multipleProp = (possible: string[]) => (
 /**
  * Ensure a component can render as a node passed as a prop value in place of children.
  */
-export const nodeContent = PropTypes.node
+export const nodeContent = every([disallow(['children']), PropTypes.node])
 
 export const wrapperShorthand = PropTypes.oneOfType([
   PropTypes.node,
@@ -381,7 +381,10 @@ export const wrapperShorthand = PropTypes.oneOfType([
  * Item shorthand is a description of a component that can be a literal,
  * a props object, an element or a render function.
  */
-export const itemShorthand = PropTypes.oneOfType([PropTypes.node, PropTypes.object, PropTypes.func])
+export const itemShorthand = every([
+  disallow(['children']),
+  PropTypes.oneOfType([PropTypes.node, PropTypes.object, PropTypes.func]),
+])
 export const itemShorthandWithKindProp = (kindPropValues: string[]) => {
   return every([
     disallow(['children']),
