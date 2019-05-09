@@ -127,7 +127,7 @@ const ColorPalette = () => (
           </Grid>
 
           <Header as="h3">Emphasis colors</Header>
-          <p>This part of the palette may includes primary and secondary colors.</p>
+          <p>This part of the palette may includes primary (brand) and secondary colors.</p>
 
           <Grid columns={2}>
             {_.map(emphasisColors, (variants, color) => (
