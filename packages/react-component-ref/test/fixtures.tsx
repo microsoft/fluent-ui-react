@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-export const DOMFunction = props => <div {...props} id="node" />
+export const DOMFunction: React.FunctionComponent = props => <div {...props} id="node" />
 
-export const CompositeFunction = props => <DOMFunction {...props} />
+export const CompositeFunction: React.FunctionComponent = props => <DOMFunction {...props} />
 
 export class DOMClass extends React.Component {
   render() {
@@ -18,6 +18,6 @@ export class CompositeClass extends React.Component {
 
 export const ForwardedRef = React.forwardRef<HTMLButtonElement>((props, ref) => (
   <div>
-    <button ref={ref} />
+    <button {...props} ref={ref} />
   </div>
 ))
