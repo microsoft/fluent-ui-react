@@ -1,5 +1,6 @@
 import * as faker from 'faker'
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 
 import { ReactWrapper } from 'enzyme'
 import { mountWithProvider as mount } from 'test/utils'
@@ -95,6 +96,19 @@ describe('Input', () => {
       expect(onChange).toBeCalledTimes(1)
       expect(onChange).toHaveBeenCalledWith(
         expect.objectContaining({ type: 'click' }),
+        expect.objectContaining({ value: '' }),
+      )
+    })
+
+    it('calls onChange on Escape key with an `empty` value', () => {
+      const onChange = jest.fn()
+      const wrapper = mount(
+        <Input clearable defaultValue={faker.lorem.word()} onChange={onChange} />,
+      )
+      wrapper.find('input').simulate('keydown', { keyCode: keyboardKey.Escape, key: 'Escape' })
+      expect(onChange).toBeCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'keydown' }),
         expect.objectContaining({ value: '' }),
       )
     })

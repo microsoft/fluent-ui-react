@@ -4,6 +4,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import * as _ from 'lodash'
+import * as keyboardKey from 'keyboard-key'
 
 import {
   AutoControlledComponent,
@@ -153,6 +154,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
                   styles: styles.input,
                   onChange: this.handleChange,
                 },
+                overrideProps: this.handleInputOverrides,
               })}
             </Ref>
             {Icon.create(this.computeIcon(), {
@@ -179,7 +181,15 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
       this.inputRef.current.focus()
       _.invoke(predefinedProps, 'onClick', e, this.props)
     },
-    ...(predefinedProps.onClick && { tabIndex: '0' }),
+  })
+
+  private handleInputOverrides = predefinedProps => ({
+    onKeyDown: (e: React.SyntheticEvent) => {
+      if (keyboardKey.getCode(e) === keyboardKey.Escape) {
+        this.handleOnClear(e)
+      }
+      _.invoke(predefinedProps, 'onKeyDown', e, this.props)
+    },
   })
 
   private handleChange = (e: React.SyntheticEvent) => {
