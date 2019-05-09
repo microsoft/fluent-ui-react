@@ -96,18 +96,18 @@ type Extended<TFirst, TSecond> = { [K in keyof (TFirst & TSecond)]: ValueOf<TFir
 
 // type AsComponent<C, TProps> = { as: C } & TProps & { [K: string]: any } // & PropsOf<InstanceOf<C>>
 
-// type CommonStaticProps =
-//   | 'Group'
-//   | 'Item'
-//   | 'SelectedItem'
-//   | 'Description'
-//   | 'Message'
-//   | 'Field'
-//   | 'className'
-//   | 'create'
-//   | 'slotClassNames'
-//   | 'displayName'
-//   | 'isTypeOfElement'
+type CommonStaticProps =
+  | 'Group'
+  | 'Item'
+  | 'SelectedItem'
+  | 'Description'
+  | 'Message'
+  | 'Field'
+  | 'className'
+  | 'create'
+  | 'slotClassNames'
+  | 'displayName'
+  | 'isTypeOfElement'
 
 type Intersect<First extends string | number | symbol, Second extends string | number | symbol> = {
   [K in First]: K extends Second ? K : never
@@ -133,7 +133,8 @@ export const withSafeTypeForAs = function<
   //   throw new Error('Defines unreachable execution scenario')
   // }
 
-  return componentType as any
+  return (componentType as any) as React.ComponentType<any> &
+    PickProps<TComponentType, CommonStaticProps>
 }
 
 export type UNSAFE_typed<TComponentType, TProps> = React.FunctionComponent<
