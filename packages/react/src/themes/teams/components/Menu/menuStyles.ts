@@ -12,7 +12,7 @@ import { getColorScheme } from '../../colors'
 type MenuPropsAndState = MenuProps & MenuState
 
 export default {
-  root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const { iconOnly, fluid, pointing, pills, primary, underlined, vertical, submenu } = p
     const colorScheme = getColorScheme(v.colorScheme, null, primary)
 
