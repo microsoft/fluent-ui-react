@@ -94,7 +94,7 @@ type Extended<TFirst, TSecond> = { [K in keyof (TFirst & TSecond)]: ValueOf<TFir
 // } & JSX.IntrinsicElements[Tag] &
 //   TProps
 
-// type AsComponent<C, TProps> = { as: C } & TProps & { [K: string]: any } // & PropsOf<InstanceOf<C>>
+type AsComponent<C, TProps> = { as: C } & TProps & { [K: string]: any } // & PropsOf<InstanceOf<C>>
 
 type CommonStaticProps =
   | 'Group'
@@ -127,13 +127,13 @@ export const withSafeTypeForAs = function<
   // function overloadedComponentType<Tag extends keyof JSX.IntrinsicElements>(
   //   x: AsHtmlElement<Tag, TProps>,
   // ): JSX.Element
-  // function overloadedComponentType<Tag>(x: AsComponent<Tag, TProps>): JSX.Element
-  // function overloadedComponentType(x: Extended<TProps, JSX.IntrinsicElements[TAs]>): JSX.Element
-  // function overloadedComponentType(): never {
-  //   throw new Error('Defines unreachable execution scenario')
-  // }
+  function overloadedComponentType<Tag>(x: AsComponent<Tag, TProps>): JSX.Element
+  function overloadedComponentType(x: Extended<TProps, JSX.IntrinsicElements[TAs]>): JSX.Element
+  function overloadedComponentType(): never {
+    throw new Error('Defines unreachable execution scenario')
+  }
 
-  return (componentType as any) as React.ComponentType<any> &
+  return (componentType as any) as typeof overloadedComponentType &
     PickProps<TComponentType, CommonStaticProps>
 }
 
