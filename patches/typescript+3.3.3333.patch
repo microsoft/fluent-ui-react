@@ -48,7 +48,7 @@ index d2e2e7e..9ef5e63 100644
              // and issue an error. Otherwise, actually compare the structure of the two types.
              function recursiveTypeRelatedTo(source, target, reportErrors, isIntersectionConstituent) {
 +                if (source && source.symbol && source.symbol.escapedName && target && target.symbol && target.symbol.escapedName) {
-+                    console.log(`${getDescriptionOf(source)} => ${getDescriptionOf(target)}`)
++                    // console.log(`${getDescriptionOf(source)} => ${getDescriptionOf(target)}`)
 +                }
                  if (overflow) {
                      return 0 /* False */;
