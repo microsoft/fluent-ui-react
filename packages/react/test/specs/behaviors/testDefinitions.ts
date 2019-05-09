@@ -127,6 +127,28 @@ definitions.push({
   },
 })
 
+// Example: Adds attribute 'id' based on the property 'id' of the 'content' component property to the 'content' component's part.
+definitions.push({
+  regexp: /Adds attribute '([\w-]+)' based on the property '([\w-]+)' of the '([\w-]+)' component property to the '([\w-]+)' component's part\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [
+      attributeToBeAdded,
+      subPropertyOfComponentProperty,
+      propertyDependingOn,
+      elementWhereToBeAdded,
+    ] = [...parameters.props]
+    const property = {}
+    const propertyDependingOnValue = 'value of property'
+    property[propertyDependingOn] = { [subPropertyOfComponentProperty]: propertyDependingOnValue }
+    const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
+      attributeToBeAdded
+    ]
+    expect(expectedResult).toEqual(
+      testHelper.convertToMatchingTypeIfApplicable(propertyDependingOnValue),
+    )
+  },
+})
+
 // Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part based on the property '\w+'\. This can be overriden by providing '([\w-]+)' property directly to the component\./g,
