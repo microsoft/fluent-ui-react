@@ -4,11 +4,7 @@ import * as React from 'react'
 import * as PopperJS from 'popper.js'
 
 class ReferenceProxy implements PopperJS.ReferenceObject {
-  ref: React.RefObject<HTMLElement>
-
-  constructor(refObject) {
-    this.ref = refObject
-  }
+  constructor(private ref: React.RefObject<HTMLElement>) {}
 
   getBoundingClientRect() {
     return _.invoke(this.ref.current, 'getBoundingClientRect', {})
