@@ -19,21 +19,19 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### BREAKING CHANGES
 - Rename `context` prop to `mountNode` in `PortalInner` @layershifter ([#1288](https://github.com/stardust-ui/react/pull/1288))
+- Updated Teams' theme color palette values, removed color related site variables @mnajdova ([#1069](https://github.com/stardust-ui/react/pull/1069))
 
 ### Features
-
 - Add default child a11y behavior to `Menu` related behaviors @silviuavram ([#1282](https://github.com/stardust-ui/react/pull/1282))
 - `Ref` component extracted to a `@stardust-ui/react-component-ref` @layershifter ([#1281](https://github.com/stardust-ui/react/pull/1281))
 - added `isRefObject()`, `toRefObject()` utils for React refs @layershifter ([#1281](https://github.com/stardust-ui/react/pull/1281))
 - Add new callings icons in Teams theme @codepretty ([#1264](https://github.com/stardust-ui/react/pull/1264))
 - Add `mountNode` and `mountDocument` props to allow proper multi-window rendering ([#1288](https://github.com/stardust-ui/react/pull/1288))
+- Added default and brand color schemes in Teams' theme @mnajdova ([#1069](https://github.com/stardust-ui/react/pull/1069))
 
 <!--------------------------------[ v0.29.1 ]------------------------------- -->
 ## [v0.29.1](https://github.com/stardust-ui/react/tree/v0.29.1) (2019-05-01)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.29.0...v0.29.1)
-
-### BREAKING CHANGES
-- Updated Teams' theme color palette values, removed color related site variables @mnajdova ([#1069](https://github.com/stardust-ui/react/pull/1069))
 
 ### Fixes
 - Update `ChatMessage` styles in Teams themes @layershifter ([#1246](https://github.com/stardust-ui/react/pull/1246))
@@ -45,7 +43,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Export `call-dialpad` icon in Teams theme @assamad ([#1271](https://github.com/stardust-ui/react/pull/1271))
-- Added default and brand color schemes in Teams' theme @mnajdova ([#1069](https://github.com/stardust-ui/react/pull/1069))
 
 <!--------------------------------[ v0.29.0 ]------------------------------- -->
 ## [v0.29.0](https://github.com/stardust-ui/react/tree/v0.29.0) (2019-04-24)
