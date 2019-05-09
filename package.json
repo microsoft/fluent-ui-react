@@ -18,7 +18,6 @@
     "precommit": "lint-staged",
     "prepush": "gulp git:prepush",
     "postcommit": "git update-index --again",
-    "postinstall": "patch-package",
     "prerelease": "yarn ci && cross-env NODE_ENV=production yarn build",
     "postrelease": "yarn deploy:docs",
     "release:major": "yarn prerelease && lerna publish major && yarn postrelease",
@@ -140,9 +139,5 @@
   },
   "workspaces": [
     "packages/*"
-  ],
-  "dependencies": {
-    "patch-package": "^6.1.2",
-    "postinstall-postinstall": "^2.0.0"
-  }
+  ]
 }
