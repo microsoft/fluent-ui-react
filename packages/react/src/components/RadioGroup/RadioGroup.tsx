@@ -17,7 +17,7 @@ import {
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { ReactProps, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 
 export interface RadioGroupSlotClassNames {
   item: string
@@ -50,11 +50,6 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
   vertical?: boolean
 }
 
-/**
- * A radio group allows a user to select a value from a small set of options.
- * @accessibility
- * Implements ARIA Radio Group design pattern.
- */
 class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, any> {
   static displayName = 'RadioGroup'
 
@@ -200,4 +195,9 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
   }
 }
 
-export default RadioGroup
+/**
+ * A radio group allows a user to select a value from a small set of options.
+ * @accessibility
+ * Implements ARIA Radio Group design pattern.
+ */
+export default withSafeTypeForAs<typeof RadioGroup, RadioGroupProps>(RadioGroup)

@@ -187,7 +187,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   renderElement = (element: React.ReactElement<any>) => {
-    const { showRtl, showTransparent, componentVariables, themeName } = this.state
+    const { showRtl, componentVariables, themeName } = this.state
 
     const theme = themes[themeName]
     const newTheme: ThemeInput = {
@@ -198,13 +198,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       rtl: showRtl,
     }
 
-    const providerVariables = showTransparent ? { background: 'initial' } : undefined
-
-    return (
-      <Provider theme={newTheme} variables={providerVariables}>
-        {element}
-      </Provider>
-    )
+    return <Provider theme={newTheme}>{element}</Provider>
   }
 
   getDisplayName = () => this.props.examplePath.split('/')[1]

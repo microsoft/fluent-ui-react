@@ -23,7 +23,7 @@ import {
   doesNodeContainClick,
   setWhatInputSource,
 } from '../../lib'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, ShorthandValue } from '../../types'
 
 import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './positioningHelper'
 
@@ -144,7 +144,7 @@ export interface PopupState {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-export default class Popup extends AutoControlledComponent<ReactProps<PopupProps>, PopupState> {
+export default class Popup extends AutoControlledComponent<PopupProps, PopupState> {
   static displayName = 'Popup'
 
   static className = 'ui-popup'

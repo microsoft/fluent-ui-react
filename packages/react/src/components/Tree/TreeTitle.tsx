@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps } from '../../types'
+import { ComponentEventHandler, ReactProps, withSafeTypeForAs } from '../../types'
 
 export interface TreeTitleProps
   extends UIComponentProps,
@@ -92,4 +92,4 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
 
 TreeTitle.create = createShorthandFactory({ Component: TreeTitle, mappedProp: 'content' })
 
-export default TreeTitle
+export default withSafeTypeForAs<typeof TreeTitle, TreeTitleProps, 'a'>(TreeTitle)

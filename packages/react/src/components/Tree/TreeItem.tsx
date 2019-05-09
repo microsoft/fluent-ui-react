@@ -21,6 +21,7 @@ import {
   ReactProps,
   ShorthandRenderFunction,
   ShorthandValue,
+  withSafeTypeForAs,
 } from '../../types'
 
 export interface TreeItemSlotClassNames {
@@ -154,4 +155,4 @@ class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
 
 TreeItem.create = createShorthandFactory({ Component: TreeItem, mappedProp: 'title' })
 
-export default TreeItem
+export default withSafeTypeForAs<typeof TreeItem, TreeItemProps, 'li'>(TreeItem)

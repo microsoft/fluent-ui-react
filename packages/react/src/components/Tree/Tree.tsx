@@ -13,7 +13,7 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../types'
+import { ShorthandValue, ShorthandRenderFunction, ReactProps, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { treeBehavior } from '../../lib/accessibility'
 
@@ -54,9 +54,6 @@ export interface TreeState {
   activeIndex: number[] | number
 }
 
-/**
- * Allows users to display data organised in tree-hierarchy.
- */
 class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
   static create: Function
 
@@ -159,4 +156,7 @@ class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
 
 Tree.create = createShorthandFactory({ Component: Tree, mappedArrayProp: 'items' })
 
-export default Tree
+/**
+ * Allows users to display data organised in tree-hierarchy.
+ */
+export default withSafeTypeForAs<typeof Tree, TreeProps, 'ul'>(Tree)

@@ -17,7 +17,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ComponentEventHandler } from '../../types'
+import { ReactProps, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 
 export interface PopupContentProps
@@ -57,11 +57,6 @@ export interface PopupContentProps
   pointerStyle?: PopperChildrenProps['arrowProps']['style']
 }
 
-/**
- * A PopupContent displays the content of a Popup component
- * @accessibility This is example usage of the accessibility tag.
- * This should be replaced with the actual description after the PR is merged
- */
 class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
   public static create: Function
 
@@ -138,4 +133,9 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
 
 PopupContent.create = createShorthandFactory({ Component: PopupContent, mappedProp: 'content' })
 
-export default PopupContent
+/**
+ * A PopupContent displays the content of a Popup component
+ * @accessibility This is example usage of the accessibility tag.
+ * This should be replaced with the actual description after the PR is merged
+ */
+export default withSafeTypeForAs<typeof PopupContent, PopupContentProps>(PopupContent)

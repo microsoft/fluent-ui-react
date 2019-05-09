@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 
-import { ReactProps } from '../../types'
+import { ReactProps, withSafeTypeForAs } from '../../types'
 import { defaultBehavior } from '../../lib/accessibility'
 
 export interface VideoProps extends UIComponentProps {
@@ -27,9 +27,6 @@ export interface VideoProps extends UIComponentProps {
   src?: string
 }
 
-/**
- * An video is a graphicical and audio representation of something.
- */
 class Video extends UIComponent<ReactProps<VideoProps>> {
   static create: Function
 
@@ -102,4 +99,7 @@ class Video extends UIComponent<ReactProps<VideoProps>> {
 
 Video.create = createShorthandFactory({ Component: Video, mappedProp: 'src' })
 
-export default Video
+/**
+ * An video is a graphicical and audio representation of something.
+ */
+export default withSafeTypeForAs<typeof Video, VideoProps, 'video'>(Video)

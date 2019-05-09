@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { commonPropTypes } from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
-import { ReactProps } from '../../types'
 
-const ProviderBox: CreateComponentReturnType<ReactProps<{}>> = createComponent<any>({
+const ProviderBox: CreateComponentReturnType<{}> = createComponent<any>({
   displayName: 'ProviderBox',
 
   className: 'ui-provider__box',

@@ -12,7 +12,7 @@ import {
   commonPropTypes,
   SizeValue,
 } from '../../lib'
-import { ReactProps, ShorthandValue } from '../../types'
+import { ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface StatusProps extends UIComponentProps {
   /**
@@ -34,11 +34,6 @@ export interface StatusProps extends UIComponentProps {
   state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
 }
 
-/**
- * A status graphically represents someone's or something's state.
- * @accessibility
- * The 'img' role is used to identify an element as image. 'Title' attribute have to be provided on status component. Then reader narrate content of 'title' attribute.
- */
 class Status extends UIComponent<ReactProps<StatusProps>, any> {
   static create: Function
 
@@ -83,4 +78,9 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
 
 Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' })
 
-export default Status
+/**
+ * A status graphically represents someone's or something's state.
+ * @accessibility
+ * The 'img' role is used to identify an element as image. 'Title' attribute have to be provided on status component. Then reader narrate content of 'title' attribute.
+ */
+export default withSafeTypeForAs<typeof Status, StatusProps, 'span'>(Status)

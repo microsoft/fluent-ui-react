@@ -14,7 +14,7 @@ import {
   ContentComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps } from '../../types'
+import { ReactProps, withSafeTypeForAs } from '../../types'
 
 export interface MenuDividerProps
   extends UIComponentProps,
@@ -33,9 +33,6 @@ export interface MenuDividerProps
   inSubmenu?: boolean
 }
 
-/**
- * A menu divider visually segments menu items inside menu.
- */
 class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>> {
   static displayName = 'MenuDivider'
 
@@ -74,4 +71,7 @@ class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>> {
 
 MenuDivider.create = createShorthandFactory({ Component: MenuDivider, mappedProp: 'color' })
 
-export default MenuDivider
+/**
+ * A menu divider visually segments menu items inside menu.
+ */
+export default withSafeTypeForAs<typeof MenuDivider, MenuDividerProps, 'li'>(MenuDivider)

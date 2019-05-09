@@ -25,7 +25,6 @@ import {
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
 import ProviderBox from './ProviderBox'
-import { Extendable } from '../../types'
 
 export interface ProviderProps extends ChildrenComponentProps {
   theme: ThemeInput
@@ -34,7 +33,7 @@ export interface ProviderProps extends ChildrenComponentProps {
 /**
  * The Provider passes the CSS in JS renderer and theme to your components.
  */
-class Provider extends React.Component<Extendable<ProviderProps>> {
+class Provider extends React.Component<ProviderProps> {
   static displayName = 'Provider'
 
   static propTypes = {

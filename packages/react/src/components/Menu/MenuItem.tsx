@@ -24,7 +24,13 @@ import Menu from './Menu'
 import Box from '../Box/Box'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue, ShorthandCollection } from '../../types'
+import {
+  ComponentEventHandler,
+  ReactProps,
+  ShorthandValue,
+  ShorthandCollection,
+  withSafeTypeForAs,
+} from '../../types'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
 
 export interface MenuItemSlotClassNames {
@@ -135,9 +141,6 @@ export interface MenuItemState {
   menuOpen: boolean
 }
 
-/**
- * A menu item is an actionable navigation item within a menu.
- */
 class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
@@ -409,4 +412,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
 
 MenuItem.create = createShorthandFactory({ Component: MenuItem, mappedProp: 'content' })
 
-export default MenuItem
+/**
+ * A menu item is an actionable navigation item within a menu.
+ */
+export default withSafeTypeForAs<typeof MenuItem, MenuItemProps, 'a'>(MenuItem)
