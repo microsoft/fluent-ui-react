@@ -13,8 +13,8 @@ type MenuPropsAndState = MenuProps & MenuState
 
 export default {
   root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
-    const { iconOnly, fluid, pointing, pills, primary, color, underlined, vertical, submenu } = p
-    const colorScheme = getColorScheme(v.colorScheme, color, primary)
+    const { iconOnly, fluid, pointing, pills, primary, underlined, vertical, submenu } = p
+    const colorScheme = getColorScheme(v.colorScheme, null, primary)
 
     return {
       display: 'flex',

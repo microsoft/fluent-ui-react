@@ -21,6 +21,9 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
         background: color,
         foreground: 'rgb(232, 232, 232)',
       },
+      brand: {
+        background: siteVars.colorScheme.brand.foreground4,
+      },
     }),
     circularRadius: pxToRem(9999),
     padding: `0 ${pxToRem(4)} 0 ${pxToRem(4)}`,

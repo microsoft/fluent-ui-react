@@ -446,7 +446,7 @@ export const getColorSchemeKey = (color: string, primary?: boolean): string => {
 
 export const getColorScheme = (
   colorScheme: ColorSchemeMapping,
-  color: string,
+  color?: string,
   primary?: boolean,
 ) => {
   return colorScheme[getColorSchemeKey(color, primary)]

@@ -12,7 +12,6 @@ import {
   commonPropTypes,
   getKindProp,
   rtlTextContainer,
-  ColorComponentProps,
 } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
@@ -29,7 +28,7 @@ export interface MenuSlotClassNames {
   item: string
 }
 
-export interface MenuProps extends UIComponentProps, ChildrenComponentProps, ColorComponentProps {
+export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuBehavior
@@ -104,7 +103,6 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
-      color: true,
     }),
     activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -166,7 +164,6 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
       vertical,
       submenu,
       indicator,
-      color,
     } = this.props
     const { activeIndex } = this.state
     const itemsCount = _.filter(items, item => getKindProp(item, 'item') !== 'divider').length
@@ -187,7 +184,6 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
             variables,
             styles: styles.divider,
             inSubmenu: submenu,
-            color,
             accessibility: accessibility.childBehaviors
               ? accessibility.childBehaviors.divider
               : undefined,
@@ -214,7 +210,6 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
           active,
           inSubmenu: submenu,
           indicator,
-          color,
           accessibility: accessibility.childBehaviors
             ? accessibility.childBehaviors.item
             : undefined,

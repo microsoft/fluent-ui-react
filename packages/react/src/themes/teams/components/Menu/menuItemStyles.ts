@@ -18,7 +18,7 @@ export const underlinedItem = (color: string): ICSSInJSStyle => ({
 })
 
 const getActionStyles = ({
-  props: { primary, underlined, iconOnly, color },
+  props: { primary, underlined, iconOnly },
   variables: v,
   colorScheme,
 }: {
@@ -30,7 +30,7 @@ const getActionStyles = ({
     ? {
         color: v.color,
       }
-    : primary || color
+    : primary
     ? {
         color: colorScheme.foregroundActive,
         background: v.backgroundColorActive || colorScheme.backgroundActive1,
@@ -49,10 +49,10 @@ const getFocusedStyles = ({
   variables: MenuVariables
   colorScheme: ColorScheme
 }): ICSSInJSStyle => {
-  const { primary, color, underlined, isFromKeyboard, active, vertical } = props
+  const { primary, underlined, isFromKeyboard, active, vertical } = props
   if (active && !underlined && !vertical) return {}
   return {
-    color: primary || color ? colorScheme.foregroundFocus : v.colorActive,
+    color: primary ? colorScheme.foregroundFocus : v.colorActive,
     background: v.backgroundColorFocus || colorScheme.backgroundFocus1,
     ...(vertical && isFromKeyboard && !primary
       ? {
@@ -135,7 +135,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
   wrapper: ({ props, variables: v, theme }): ICSSInJSStyle => {
     const {
       active,
-      color,
       disabled,
       iconOnly,
       isFromKeyboard,
@@ -147,7 +146,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       primary,
     } = props
 
-    const colorScheme = getColorScheme(v.colorScheme, color, primary)
+    const colorScheme = getColorScheme(v.colorScheme, null, primary)
 
     return {
       color: 'inherit',
@@ -276,10 +275,9 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       underlined,
       vertical,
       disabled,
-      color,
     } = p
 
-    const colorScheme = getColorScheme(v.colorScheme, color, primary)
+    const colorScheme = getColorScheme(v.colorScheme, null, primary)
 
     return {
       color: 'inherit',
@@ -315,7 +313,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       // active styles
       ...(active &&
-        (primary || color
+        (primary
           ? {
               ...(iconOnly && { color: 'inherit' }),
 
@@ -344,7 +342,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           },
         }),
 
-        ...(primary || color
+        ...(primary
           ? {
               ...(iconOnly && {
                 color: 'inherit',

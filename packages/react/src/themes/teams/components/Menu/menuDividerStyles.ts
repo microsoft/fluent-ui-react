@@ -5,7 +5,7 @@ import { getColorScheme } from '../../colors'
 
 const menuDividerStyles: ComponentSlotStylesInput<MenuDividerProps, MenuVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const colorScheme = getColorScheme(v.colorScheme, p.color, p.primary)
+    const colorScheme = getColorScheme(v.colorScheme, null, p.primary)
     const borderColor = p.primary ? v.primaryBorderColor : v.borderColor || colorScheme.border
     const borderType = p.vertical ? 'borderTop' : 'borderLeft'
 

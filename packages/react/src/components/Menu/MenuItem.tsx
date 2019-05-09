@@ -17,7 +17,6 @@ import {
   commonPropTypes,
   isFromKeyboard,
   rtlTextContainer,
-  ColorComponentProps,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Icon from '../Icon/Icon'
@@ -36,8 +35,7 @@ export interface MenuItemSlotClassNames {
 export interface MenuItemProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps,
-    ColorComponentProps {
+    ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuItemBehavior
@@ -153,7 +151,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   static create: Function
 
   static propTypes = {
-    ...commonPropTypes.createCommon({ color: true }),
+    ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
@@ -203,7 +201,6 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
       vertical,
       indicator,
       disabled,
-      color,
     } = this.props
     const indicatorWithDefaults = indicator === undefined ? {} : indicator
 
@@ -252,7 +249,6 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
                 styles: styles.menu,
                 submenu: true,
                 indicator,
-                color,
               },
             })}
           </Ref>
