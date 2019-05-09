@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 
 import { UIComponent, UIComponentProps, commonPropTypes, rtlTextContainer } from '../../lib'
-import { ReactProps } from '../../types'
+import { ReactProps, withSafeTypeForAs } from '../../types'
 import { ICSSInJSStyle } from '../../themes/types'
 
 export interface LayoutSlotClassNames {
@@ -46,9 +46,6 @@ export interface LayoutProps extends UIComponentProps {
   vertical?: boolean
 }
 
-/**
- * (DEPRECATED) A layout is a utility for arranging the content of a component.
- */
 class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
   static className = 'ui-layout'
 
@@ -158,7 +155,7 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
       renderMainArea,
       renderEndArea,
       renderGap,
-    } = this.props as LayoutPropsWithDefaults
+    } = this.props
 
     const startArea = renderStartArea({ ...this.props, classes })
     const mainArea = renderMainArea({ ...this.props, classes })
@@ -212,5 +209,7 @@ Layout.slotClassNames = {
   reducedEnd: `${Layout.className}--reduced__end`,
 }
 
-export default Layout
-export type LayoutPropsWithDefaults = LayoutProps & typeof Layout.defaultProps
+/**
+ * (DEPRECATED) A layout is a utility for arranging the content of a component.
+ */
+export default withSafeTypeForAs<typeof Layout, LayoutProps>(Layout)

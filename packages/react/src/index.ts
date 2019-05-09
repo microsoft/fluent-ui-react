@@ -81,7 +81,6 @@ export { default as Input, InputState, InputProps } from './components/Input/Inp
 
 export {
   default as ItemLayout,
-  ItemLayoutPropsWithDefaults,
   ItemLayoutProps,
   ItemLayoutSlotClassNames,
 } from './components/ItemLayout/ItemLayout'
@@ -89,12 +88,7 @@ export {
 export { default as Label, LabelProps } from './components/Label/Label'
 export { default as Loader, LoaderProps } from './components/Loader/Loader'
 
-export {
-  default as Layout,
-  LayoutPropsWithDefaults,
-  LayoutProps,
-  LayoutSlotClassNames,
-} from './components/Layout/Layout'
+export { default as Layout, LayoutProps, LayoutSlotClassNames } from './components/Layout/Layout'
 
 export { default as List, ListProps } from './components/List/List'
 export { default as ListItem, ListItemProps } from './components/List/ListItem'

@@ -20,7 +20,7 @@ import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
+import { ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
 import {
   ComplexColorPropType,
   ColorValuesWithPrimitiveColors,
@@ -56,9 +56,6 @@ export interface LabelProps
   imagePosition?: 'start' | 'end'
 }
 
-/**
- * A Label is used to classify content.
- */
 class Label extends UIComponent<ReactProps<LabelProps>, any> {
   static displayName = 'Label'
 
@@ -158,4 +155,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
 
 Label.create = createShorthandFactory({ Component: Label, mappedProp: 'content' })
 
-export default Label
+/**
+ * A Label is used to classify content.
+ */
+export default withSafeTypeForAs<typeof Label, LabelProps, 'span'>(Label)

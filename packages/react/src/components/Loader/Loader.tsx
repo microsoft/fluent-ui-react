@@ -12,7 +12,7 @@ import {
 } from '../../lib'
 import { loaderBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ReactProps, ShorthandValue } from '../../types'
+import { ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 
 export type LoaderPosition = 'above' | 'below' | 'start' | 'end'
@@ -56,9 +56,6 @@ export interface LoaderState {
   visible: boolean
 }
 
-/**
- * A Loader indicates a possible user action.
- */
 class Loader extends UIComponent<ReactProps<LoaderProps>, LoaderState> {
   static create: Function
   static displayName = 'Loader'
@@ -150,4 +147,7 @@ class Loader extends UIComponent<ReactProps<LoaderProps>, LoaderState> {
 
 Loader.create = createShorthandFactory({ Component: Loader })
 
-export default Loader
+/**
+ * A Loader indicates a possible user action.
+ */
+export default withSafeTypeForAs<typeof Loader, LoaderProps>(Loader)
