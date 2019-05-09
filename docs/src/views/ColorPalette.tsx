@@ -151,12 +151,12 @@ const ColorPalette = () => (
             values, so that they will work correctly when different themes will be applied. As part
             of each theme, we are defining <b>color scheme</b>, which will define the design tokens
             usages of the different colors from the palette, that make sense for the developers. For
-            example, let's take a look of one color scheme defined for brand in Teams light and high
-            contrast themes.
+            example, let's take a look of one color scheme defined for brand in Teams light, high
+            contrast and dark themes.
           </p>
 
           <ColorSchemes
-            themes={[themes.teams, themes.teamsHighContrast]}
+            themes={[themes.teams, themes.teamsHighContrast, themes.teamsDark]}
             headers={[
               {
                 as: 'h3',
@@ -169,6 +169,10 @@ const ColorPalette = () => (
               {
                 as: 'h3',
                 content: 'HC theme',
+              },
+              {
+                as: 'h3',
+                content: 'Dark theme',
               },
             ]}
             name={'brand'}
