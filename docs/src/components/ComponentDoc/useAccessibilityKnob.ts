@@ -4,9 +4,7 @@ import * as StardustUI from '@stardust-ui/react'
 import componentInfoContext from 'docs/src/utils/componentInfoContext'
 import useComponentProps from './useComponentProps'
 
-const useBehaviorKnob = (
-  componentName: string,
-): [StardustUI.Accessibility, (newValue: string) => void] => {
+const useAccessibilityKnob = (componentName: string): StardustUI.Accessibility => {
   const componentProps = useComponentProps(componentName)
   const accessibilityProp = componentProps.find(propDef => propDef.name === 'accessibility')
 
@@ -18,13 +16,13 @@ const useBehaviorKnob = (
   const availableBehaviors = componentInfoContext.byDisplayName[componentName].behaviors || []
   const behaviorNames = [defaultValue, ...availableBehaviors.map(behavior => behavior.name)]
 
-  const [behaviorName, onChange] = useSelectKnob({
+  const [behaviorName] = useSelectKnob({
     name: 'accessibility',
     initialValue: defaultValue,
     values: behaviorNames,
   })
 
-  return [StardustUI[behaviorName], onChange]
+  return StardustUI[behaviorName]
 }
 
-export default useBehaviorKnob
+export default useAccessibilityKnob
