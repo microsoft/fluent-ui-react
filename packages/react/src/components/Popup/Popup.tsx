@@ -7,7 +7,7 @@ import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
-import { Popper, PopperChildrenProps } from 'react-popper'
+import { PopperChildrenProps } from 'react-popper'
 
 import {
   applyAccessibilityKeyHandlers,
@@ -24,12 +24,8 @@ import {
   setWhatInputSource,
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
-
-import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './positioningHelper'
-import createPopperReferenceProxy from './createPopperReferenceProxy'
-
+import { ALIGNMENTS, POSITIONS, Positioner, PositionCommonProps } from '../../lib/positioner'
 import PopupContent from './PopupContent'
-
 import { popupBehavior } from '../../lib/accessibility'
 import {
   AutoFocusZone,
@@ -44,9 +40,6 @@ import {
   AccessibilityBehavior,
 } from '../../lib/accessibility/types'
 
-const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
-const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
-
 export type PopupEvents = 'click' | 'hover' | 'focus'
 export type RestrictedClickEvents = 'click' | 'focus'
 export type RestrictedHoverEvents = 'hover' | 'focus'
@@ -59,16 +52,14 @@ export interface PopupSlotClassNames {
 export interface PopupProps
   extends StyledComponentProps<PopupProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue> {
+    ContentComponentProps<ShorthandValue>,
+    PositionCommonProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default popupBehavior
    * @available popupFocusTrapBehavior, dialogBehavior
    * */
   accessibility?: Accessibility
-
-  /** Alignment for the popup. */
-  align?: Alignment
 
   /** Additional CSS class name(s) to apply.  */
   className?: string
@@ -88,15 +79,6 @@ export interface PopupProps
   /** Delay in ms for the mouse leave event, before the popup will be closed. */
   mouseLeaveDelay?: number
 
-  /** Offset value to apply to rendered popup. Accepts the following units:
-   * - px or unit-less, interpreted as pixels
-   * - %, percentage relative to the length of the trigger element
-   * - %p, percentage relative to the length of the popup element
-   * - vw, CSS viewport width unit
-   * - vh, CSS viewport height unit
-   */
-  offset?: string
-
   /** Events triggering the popup. */
   on?: PopupEvents | PopupEventsArray
 
@@ -112,13 +94,6 @@ export interface PopupProps
 
   /** A popup can show a pointer to trigger. */
   pointing?: boolean
-
-  /**
-   * Position for the popup. Position has higher priority than align. If position is vertical ('above' | 'below')
-   * and align is also vertical ('top' | 'bottom') or if both position and align are horizontal ('before' | 'after'
-   * and 'start' | 'end' respectively), then provided value for 'align' will be ignored and 'center' will be used instead.
-   */
-  position?: Position
 
   /**
    * Function to render popup content.
@@ -140,7 +115,6 @@ export interface PopupProps
 
 export interface PopupState {
   open: boolean
-  target: HTMLElement
 }
 
 /**
@@ -409,27 +383,16 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     rtl: boolean,
     accessibility: AccessibilityBehavior,
   ): JSX.Element {
-    const { align, position, offset } = this.props
-    const { target } = this.props
-
-    const placement = getPopupPlacement({ align, position, rtl })
-
-    const popperModifiers = {
-      // https://popper.js.org/popper-documentation.html#modifiers..offset
-      ...(offset && {
-        offset: { offset: rtl ? applyRtlToOffset(offset, position) : offset },
-        keepTogether: { enabled: false },
-      }),
-    }
-
-    const referenceElement = createPopperReferenceProxy(target || this.triggerRef)
+    const { align, position, offset, target } = this.props
 
     return (
-      <Popper
-        placement={placement}
-        referenceElement={referenceElement}
+      <Positioner
+        align={align}
+        position={position}
+        offset={offset}
+        rtl={rtl}
+        target={target || this.triggerRef}
         children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
-        modifiers={popperModifiers}
       />
     )
   }

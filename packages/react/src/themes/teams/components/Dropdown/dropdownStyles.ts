@@ -122,7 +122,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     maxHeight: v.listMaxHeight,
     overflowY: 'auto',
     width: getWidth(p, v),
-    top: 'calc(100% + 2px)', // leave room for container + its border
     background: v.listBackgroundColor,
     ...(p.open && {
       boxShadow: v.listBoxShadow,

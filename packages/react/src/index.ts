@@ -123,7 +123,7 @@ export {
   PopupEventsArray,
 } from './components/Popup/Popup'
 export { default as PopupContent, PopupContentProps } from './components/Popup/PopupContent'
-export { Placement, Alignment, Position } from './components/Popup/positioningHelper'
+export { Alignment, Position } from './lib/positioner'
 
 export {
   default as Portal,
