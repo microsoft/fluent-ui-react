@@ -31,7 +31,7 @@ class ReferenceProxy implements PopperJS.ReferenceObject {
  * @see https://popper.js.org/popper-documentation.html#referenceObject
  */
 const createPopperReferenceProxy = _.memoize(
-  (reference: any) =>
+  (reference: HTMLElement | React.RefObject<HTMLElement>) =>
     new ReferenceProxy(isRefObject(reference) ? reference : toRefObject(reference)),
 )
 
