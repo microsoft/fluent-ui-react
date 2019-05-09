@@ -11,8 +11,10 @@ import bookmark from './bookmark'
 import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
+import callParking from './callParking'
 import callControlPresentNew from './callControlPresentNew'
 import callControlStopPresentingNew from './callControlStopPresentingNew'
+import callControlShare from './callControlShare'
 import callDialpad from './callDialpad'
 import callEnd from './callEnd'
 import callPstn from './callPstn'
@@ -21,6 +23,7 @@ import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
 import callMissedLine from './callMissedLine'
+import screencast from './screencast'
 import chat from './chat'
 import chevronDown from './chevronDown'
 import close from './close'
@@ -78,12 +81,15 @@ import menu from './menu'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
+import userPhone from './userPhone'
 import numberList from './numberList'
 import outdent from './outdent'
 import pause from './pause'
+import pauseThick from './pauseThick'
 import paperclip from './paperclip'
 import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
+import phoneArrow from './phoneArrow'
 import play from './play'
 import quote from './quote'
 import readAloud from './read-aloud'
@@ -96,6 +102,7 @@ import skypeLogo from './skypeLogo'
 import search from './search'
 import send from './send'
 import settings from './settings'
+import callControlCloseTray from './callControlCloseTray'
 import star from './star'
 import sticker from './sticker'
 import strike from './strike'
@@ -112,6 +119,8 @@ import triangleUp from './triangleUp'
 import underline from './underline'
 import undo from './undo'
 import urgent from './urgent'
+import userBlur from './userBlur'
+import userFriends from './userFriends'
 import videoCameraEmphasis from './videoCameraEmphasis'
 
 export default {
@@ -127,13 +136,17 @@ export default {
   call,
   'call-dialpad': callDialpad,
   'call-end': callEnd,
+  'call-parking': callParking,
   'call-video': callVideo,
   'call-video-off': callVideoOff,
+  'call-control-close-tray': callControlCloseTray,
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
+  'call-control-share': callControlShare,
   'call-missed-line': callMissedLine,
   'call-pstn': callPstn,
   'call-recording': callRecording,
+  screencast,
   'canvas-add-page': canvasAddPage,
   chat,
   'chevron-down': chevronDown,
@@ -184,13 +197,16 @@ export default {
   mic,
   'mic-off': micOff,
   more,
+  'user-phone': userPhone,
   'number-list': numberList,
   outdent,
   paperclip,
   'participant-add': addParticipant,
   'participant-remove': participantRemove,
   pause,
+  'pause-thick': pauseThick,
   'phone-clock': phoneClock,
+  'phone-arrow': phoneArrow,
   play,
   quote,
   'read-aloud': readAloud,
@@ -219,6 +235,8 @@ export default {
   underline,
   undo,
   urgent,
+  'user-blur': userBlur,
+  'user-friends': userFriends,
   'video-camera-emphasis': videoCameraEmphasis,
 
   // Office icons

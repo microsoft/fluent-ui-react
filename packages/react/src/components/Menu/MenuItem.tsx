@@ -1,4 +1,5 @@
 import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import cx from 'classnames'
@@ -25,7 +26,6 @@ import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ReactProps, ShorthandValue, ShorthandCollection } from '../../types'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
-import Ref from '../Ref/Ref'
 
 export interface MenuItemSlotClassNames {
   wrapper: string
