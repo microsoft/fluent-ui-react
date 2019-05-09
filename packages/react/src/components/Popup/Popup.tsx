@@ -199,7 +199,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   static autoControlledProps = ['open']
 
   triggerRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
-  triggerDomElement = null
   // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
   triggerFocusableDomElement = null
   popupDomElement = null
@@ -265,7 +264,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
     const isOutsidePopupElement = this.popupDomElement && !isInsideNested
     const isOutsideTriggerElement =
-      this.triggerDomElement && !doesNodeContainClick(this.triggerDomElement, e)
+      this.triggerRef.current && !doesNodeContainClick(this.triggerRef.current, e)
 
     return isOutsidePopupElement && isOutsideTriggerElement
   }
@@ -394,12 +393,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const triggerProps = this.getTriggerProps(triggerElement)
     return (
       triggerElement && (
-        <Ref
-          innerRef={domNode => {
-            this.triggerRef.current = domNode
-            this.triggerDomElement = domNode
-          }}
-        >
+        <Ref innerRef={this.triggerRef}>
           {React.cloneElement(triggerElement, {
             ...accessibility.attributes.trigger,
             ...triggerProps,
@@ -568,8 +562,8 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const { mountDocument } = this.props
     const activeElement = mountDocument.activeElement
 
-    this.triggerFocusableDomElement = this.triggerDomElement.contains(activeElement)
+    this.triggerFocusableDomElement = this.triggerRef.current.contains(activeElement)
       ? activeElement
-      : this.triggerDomElement
+      : this.triggerRef.current
   }
 }
