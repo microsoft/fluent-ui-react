@@ -14,7 +14,7 @@ type MenuPropsAndState = MenuProps & MenuState
 export default {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const { iconOnly, fluid, pointing, pills, primary, underlined, vertical, submenu } = p
-    const colorScheme = getColorScheme(v.colorScheme, null, primary)
+    const colors = getColorScheme(v.colorScheme, null, primary)
 
     return {
       display: 'flex',
@@ -44,7 +44,7 @@ export default {
         !underlined && {
           // primary has hardcoded grey border color
           border: `${v.borderWidth} solid ${
-            primary ? v.primaryBorderColor : v.borderColor || colorScheme.border
+            primary ? v.primaryBorderColor : v.borderColor || colors.border
           }`,
           borderRadius: pxToRem(4),
         }),

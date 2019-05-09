@@ -3,10 +3,12 @@ import {
   EmphasisColors,
   NaturalColors,
   PrimitiveColors,
+  ColorScheme,
   ColorSchemeMapping,
   ColorVariants,
   ContextualColors,
 } from '../types'
+import { Extendable } from '../../types'
 
 export const emphasisColors: ContextualColors = {
   brand: {
@@ -448,6 +450,6 @@ export const getColorScheme = (
   colorScheme: ColorSchemeMapping,
   color?: string,
   primary?: boolean,
-) => {
+): Extendable<ColorScheme, string> => {
   return colorScheme[getColorSchemeKey(color, primary)]
 }
