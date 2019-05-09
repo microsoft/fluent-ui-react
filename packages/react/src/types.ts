@@ -146,13 +146,14 @@ export const withSafeTypeForAs = function<
     PickProps<TComponentType, CommonStaticProps>
 }
 
-export type UNSAFE_typed<TComponentType, TProps> = React.FunctionComponent<
+export type UNSAFE_TypedComponent<TComponentType, TProps> = React.FunctionComponent<
   TProps & { [K: string]: any }
 > &
   PickProps<TComponentType, keyof TComponentType>
 
 export const UNSAFE_typed = <TComponentType>(componentType: TComponentType) => {
   return {
-    withProps: <TProps>() => (componentType as any) as UNSAFE_typed<TComponentType, TProps>,
+    withProps: <TProps>() =>
+      (componentType as any) as UNSAFE_TypedComponent<TComponentType, TProps>,
   }
 }
