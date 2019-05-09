@@ -35,7 +35,7 @@ const dialogBehavior: Accessibility = (props: any) => {
 }
 
 /**
- * Returns the element id of the header or generates a default one. Is
+ * Returns the element id of the header or generates a default one. It is
  * used when user does not provide aria-label or aria-labelledby as
  * props. It is also used as default value for header id if there is not
  * any value provided by user as prop.
@@ -49,10 +49,10 @@ const getDefaultAriaLabelledBy = (props: any) => {
 }
 
 /**
- * Returns the element id of the header or generates a default one. Is
- * used when user does not provide aria-label or aria-labelledby as
- * props. It is also used as default value for header id if there is not
- * any value provided by user as prop.
+ * Returns the element id of the content or generates a default one. It is
+ * used when user does not provide aria-describedby as props. It is also
+ * used as default value for content id if there is not any value provided by
+ * user as prop.
  */
 const getDefaultAriaDescribedBy = (props: any) => {
   const { content } = props
