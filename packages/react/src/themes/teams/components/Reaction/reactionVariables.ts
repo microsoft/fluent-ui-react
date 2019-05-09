@@ -16,16 +16,16 @@ export interface ReactionVariables {
 }
 
 export default (siteVars): ReactionVariables => ({
-  meReactingColor: siteVars.colors.primary[500],
-  meReactingColorHover: siteVars.brand04,
-  otherReactingColor: siteVars.gray03,
-  otherReactingColorHover: siteVars.colors.grey[900],
+  meReactingColor: siteVars.colors.brand[600],
+  meReactingColorHover: siteVars.colors.brand[800],
+  otherReactingColor: siteVars.colors.grey[450],
+  otherReactingColorHover: siteVars.colors.grey[750],
   contentFontSize: siteVars.fontSizes.small,
   fontWeightHover: siteVars.fontWeightBold,
-  outlineColorFocus: siteVars.colors.primary[500],
+  outlineColorFocus: siteVars.colors.brand[600],
   outlineWidthFocus: pxToRem(2),
   outlineOffsetFocus: pxToRem(-2),
   meReacting: false,
   boxShadowColor: siteVars.colors.white,
-  borderColorFocus: siteVars.colors.grey[900],
+  borderColorFocus: siteVars.colors.grey[750],
 })
