@@ -3,6 +3,7 @@ import StaticTable from './StaticTable'
 import TableWithFocusableElements from './TableWithFocusableElements'
 import TableNestedNavigation from './TableNestedNavigation'
 import GridTable from './GridTable'
+import AttachmentsTable from './AttachmentsTable'
 
 export default () => (
   <div style={{ display: 'flex', flexDirection: 'column', padding: '20px', width: '350px' }}>
@@ -13,6 +14,10 @@ export default () => (
     <h3>Table with focusable elements:</h3>
     <p>Table has some focusable elements. TAB through focusable elements or use screen reader.</p>
     <TableWithFocusableElements />
+    <br />
+    <h3>Attachments table:</h3>
+    <p> Use up/down arrow keys to navigate between rows.</p>
+    <AttachmentsTable />
     <br />
     <h3>Table with nested rows navigation:</h3>
     <p> Use up/down arrow keys to navigate between rows.</p>

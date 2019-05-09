@@ -217,6 +217,12 @@ export {
 export {
   default as tableRowNestedNavigationBehavior,
 } from './lib/accessibility/Behaviors/Table/tableRowNestedNavigationBehavior'
+export {
+  default as tableHeaderRowNestedNavigationBehavior,
+} from './lib/accessibility/Behaviors/Table/tableHeaderRowNestedNavigationBehavior'
+export {
+  default as tableVerticalNavigationBehavior,
+} from './lib/accessibility/Behaviors/Table/tableVerticalNavigationBehavior'
 
 //
 // Utilities

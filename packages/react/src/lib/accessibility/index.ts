@@ -51,3 +51,9 @@ export {
 export {
   default as tableRowNestedNavigationBehavior,
 } from './Behaviors/Table/tableRowNestedNavigationBehavior'
+export {
+  default as tableHeaderRowNestedNavigationBehavior,
+} from './Behaviors/Table/tableHeaderRowNestedNavigationBehavior'
+export {
+  default as tableVerticalNavigationBehavior,
+} from './Behaviors/Table/tableVerticalNavigationBehavior'

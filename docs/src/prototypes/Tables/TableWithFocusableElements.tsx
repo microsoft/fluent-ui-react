@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { Table, Icon, Button } from '@stardust-ui/react'
+import { Table, Button } from '@stardust-ui/react'
+import avatar from './avatar'
 
 const header = {
   items: [{ content: 'id' }, { content: 'Name' }, { content: 'Picture' }, { content: 'Action' }],
@@ -17,7 +18,7 @@ const rows = [
           </span>
         ),
       },
-      { content: <Icon name="call-video" /> },
+      { content: avatar },
       { content: <Button>Click</Button> },
     ],
     headerIndex: 2,
@@ -26,7 +27,7 @@ const rows = [
     items: [
       { content: '2' },
       { content: 'Alex' },
-      { content: <Icon name="call-video" /> },
+      { content: avatar },
       { content: <Button>Click</Button> },
     ],
     headerIndex: 2,
@@ -35,7 +36,7 @@ const rows = [
     items: [
       { content: '3' },
       { content: 'Ali' },
-      { content: <Icon name="call-video" /> },
+      { content: avatar },
       { content: <Button>Click</Button> },
     ],
     headerIndex: 2,

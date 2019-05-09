@@ -1,10 +1,12 @@
 import * as React from 'react'
+import avatar from './avatar'
+
 import {
   Table,
-  Icon,
   Button,
   tableNestedNavigationBehavior,
   tableRowNestedNavigationBehavior,
+  tableHeaderRowNestedNavigationBehavior,
   Popup,
   popupFocusTrapBehavior,
   Header,
@@ -28,7 +30,7 @@ const renderPopup = () => (
 
 const header = {
   items: [{ content: 'id' }, { content: 'Name' }, { content: 'Picture' }, { content: 'Action' }],
-  accessibility: tableRowNestedNavigationBehavior,
+  accessibility: tableHeaderRowNestedNavigationBehavior,
 }
 
 const rows = [
@@ -43,7 +45,7 @@ const rows = [
           </span>
         ),
       },
-      { content: <Icon name="call-video" /> },
+      { content: avatar },
       { content: renderPopup() },
     ],
     headerIndex: 2,
@@ -53,7 +55,7 @@ const rows = [
     items: [
       { content: '2' },
       { content: 'Alex' },
-      { content: <Icon name="call-video" /> },
+      { content: avatar },
       { content: <Button>Click</Button> },
     ],
     headerIndex: 2,
@@ -63,7 +65,7 @@ const rows = [
     items: [
       { content: '3' },
       { content: 'Ali' },
-      { content: <Icon name="call-video" /> },
+      { content: avatar },
       { content: <Button>Click</Button> },
     ],
     headerIndex: 2,

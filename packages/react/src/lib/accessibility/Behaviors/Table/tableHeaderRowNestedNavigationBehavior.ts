@@ -8,7 +8,7 @@ import { FocusZoneDirection } from '../../FocusZone'
  * Adds a vertical circular focus zone navigation where a user navigates using a Tab key.
  * Adds a key action which prevents up and down arrow keys from navigating in FocusZone, we only want a Tab key to navigate.
  */
-const tableRowNestedNavigationBehavior: Accessibility = (props: any) => ({
+const tableHeaderRowNestedNavigationBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       [IS_FOCUSABLE_ATTRIBUTE]: true,
@@ -18,8 +18,9 @@ const tableRowNestedNavigationBehavior: Accessibility = (props: any) => ({
     mode: FocusZoneMode.Embed,
     props: {
       direction: FocusZoneDirection.horizontal,
+      shouldFocusInnerElementWhenReceivedFocus: true,
     },
   },
 })
 
-export default tableRowNestedNavigationBehavior
+export default tableHeaderRowNestedNavigationBehavior

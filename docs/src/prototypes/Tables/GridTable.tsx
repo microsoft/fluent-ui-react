@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
   Table,
-  Icon,
   Button,
   gridTableBehavior,
   gridCellBehavior,
@@ -11,6 +10,7 @@ import {
   Input,
 } from '@stardust-ui/react'
 import { renderDropdown } from './multipleDropdown'
+import avatar from './avatar'
 
 const renderPopup = () => (
   <Popup
@@ -49,7 +49,7 @@ const rows = [
         ),
         accessibility: gridCellBehavior,
       },
-      { content: <Icon name="call-video" />, accessibility: gridCellBehavior },
+      { content: avatar, accessibility: gridCellBehavior },
       { content: renderPopup(), accessibility: gridCellBehavior },
     ],
     headerIndex: 2,
@@ -58,7 +58,7 @@ const rows = [
     items: [
       { content: '2', accessibility: gridCellBehavior },
       { content: 'Alex', accessibility: gridCellBehavior },
-      { content: <Icon name="call-video" />, accessibility: gridCellBehavior },
+      { content: avatar, accessibility: gridCellBehavior },
       { content: renderDropdown(), accessibility: gridCellBehavior },
     ],
     headerIndex: 2,
@@ -67,7 +67,7 @@ const rows = [
     items: [
       { content: '3', accessibility: gridCellBehavior },
       { content: 'Ali', accessibility: gridCellBehavior },
-      { content: <Icon name="call-video" />, accessibility: gridCellBehavior },
+      { content: avatar, accessibility: gridCellBehavior },
       { content: <Button>Click</Button>, accessibility: gridCellBehavior },
     ],
     headerIndex: 2,
