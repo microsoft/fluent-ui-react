@@ -68,7 +68,6 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
       <Menu
         {...rest}
         fluid
-        color="green"
         pills
         accessibility={toolbarBehavior}
         items={[

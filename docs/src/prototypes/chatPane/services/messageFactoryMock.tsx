@@ -204,7 +204,7 @@ export function generateChatProps(chat: ChatData): ChatItem[] {
     chatProps.splice(
       myLastMsgIndex + 1,
       0,
-      generateDividerProps({ content: 'Last read', color: 'primary', important: true }),
+      generateDividerProps({ content: 'Last read', color: 'brand', important: true }),
     )
   }
 

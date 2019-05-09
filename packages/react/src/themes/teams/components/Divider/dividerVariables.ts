@@ -1,10 +1,10 @@
 import { FontWeightProperty } from 'csstype'
 
-import { ColorValues } from '../../../types'
-import { pxToRem, mapColorsToScheme } from '../../../../lib'
+import { pxToRem } from '../../../../lib'
+import { ColorSchemeMapping } from '../../../types'
 
 export interface DividerVariables {
-  colors: ColorValues<string>
+  colorScheme: ColorSchemeMapping
   dividerColor: string
   textColor: string
   textFontSize: string
@@ -13,16 +13,12 @@ export interface DividerVariables {
   dividerPadding: string
 }
 
-export default (siteVars: any): DividerVariables => {
-  const colorVariant = 500
-
-  return {
-    colors: mapColorsToScheme(siteVars, colorVariant),
-    dividerColor: siteVars.gray09,
-    textColor: siteVars.gray03,
-    textFontSize: siteVars.fontSizeSmall,
-    textLineHeight: siteVars.lineHeightSmall,
-    importantFontWeight: siteVars.fontWeightBold,
-    dividerPadding: pxToRem(4),
-  }
-}
+export default (siteVars: any): DividerVariables => ({
+  colorScheme: siteVars.colorScheme,
+  dividerColor: siteVars.colors.grey[150],
+  textColor: siteVars.colors.grey[450],
+  textFontSize: siteVars.fontSizeSmall,
+  textLineHeight: siteVars.lineHeightSmall,
+  importantFontWeight: siteVars.fontWeightBold,
+  dividerPadding: pxToRem(4),
+})

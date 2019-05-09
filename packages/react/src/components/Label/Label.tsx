@@ -21,16 +21,12 @@ import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import {
-  ComplexColorPropType,
-  ColorValuesWithPrimitiveColors,
-} from '../../lib/commonPropInterfaces'
 
 export interface LabelProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps,
-    ColorComponentProps<ComplexColorPropType<ColorValuesWithPrimitiveColors>> {
+    ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior
@@ -64,7 +60,7 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
   static className = 'ui-label'
 
   static propTypes = {
-    ...commonPropTypes.createCommon({ color: 'complex' }),
+    ...commonPropTypes.createCommon({ color: true }),
     circular: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     iconPosition: PropTypes.oneOf(['start', 'end']),

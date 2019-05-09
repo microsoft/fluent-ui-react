@@ -17,19 +17,21 @@ import { Extendable, ObjectOf, ObjectOrFunc } from '../types'
 /**
  * A type for a palette for a single color.
  */
-export type ColorVariants = {
-  50: string
-  100: string
-  200: string
-  300: string
-  400: string
-  500: string
-  600: string
-  700: string
-  800: string
-  900: string
-}
-
+export type ColorVariants = Extendable<
+  Partial<{
+    50: string
+    100: string
+    200: string
+    300: string
+    400: string
+    500: string
+    600: string
+    700: string
+    800: string
+    900: string
+  }>,
+  string
+>
 /**
  * A type for a predefined natural colors.
  */
@@ -53,6 +55,7 @@ export type NaturalColors = Extendable<NaturalColorsStrict, ColorVariants>
 export type ContextualColorsStrict = Partial<{
   text: ColorVariants
 
+  brand: ColorVariants
   danger: ColorVariants
   info: ColorVariants
   success: ColorVariants
@@ -92,21 +95,50 @@ export type PrimitiveColors = Partial<{
 type ExtendablePalette<T> = T &
   { [K in keyof T]?: K extends keyof PrimitiveColors ? string : ColorVariants }
 
-export type ColorPalette = ExtendablePalette<
-  EmphasisColorsStrict & ContextualColorsStrict & NaturalColorsStrict & PrimitiveColors
+export type ColorPalette<T = {}> = ExtendablePalette<
+  EmphasisColorsStrict & ContextualColorsStrict & NaturalColorsStrict & PrimitiveColors & T
 >
+
+/**
+ * A type for all area names that can define color
+ */
+export type ComponentAreaName =
+  | 'foreground'
+  | 'background'
+  | 'border'
+  | 'shadow'
+  | 'foregroundHover'
+  | 'backgroundHover'
+  | 'borderHover'
+  | 'shadowHover'
+  | 'foregroundActive'
+  | 'backgroundActive'
+  | 'borderActive'
+  | 'shadowActive'
+  | 'foregroundFocus'
+  | 'backgroundFocus'
+  | 'borderFocus'
+  | 'shadowFocus'
+  | 'foregroundPressed'
+  | 'backgroundPressed'
+  | 'borderPressed'
+  | 'shadowPressed'
+  | 'foregroundDisabled'
+  | 'backgroundDisabled'
+  | 'borderDisabled'
+  | 'shadowDisabled'
 
 /**
  * A type for the generic color scheme of a component based on CSS property names
  */
-export type ColorScheme = {
-  foreground: string
-  background: string
-  border: string
-  shadow: string
-}
+export type ColorScheme = Extendable<Record<ComponentAreaName, string>, string>
 
-export type ColorSchemeMapping = ColorValues<ColorScheme> & { default?: ColorScheme }
+export type ColorSchemeMapping = ColorValues<Extendable<ColorScheme, string>> & {
+  default?: Extendable<ColorScheme, string>
+}
+export type ColorSchemeMappingOverrides = ColorValues<Partial<Extendable<ColorScheme, string>>> & {
+  default?: Partial<Extendable<ColorScheme, string>>
+}
 
 // ========================================================
 // Props
@@ -127,13 +159,7 @@ export type State = ObjectOf<any>
 // Variables
 // ========================================================
 
-export interface SiteVariablesInput extends ObjectOf<any> {
-  colors?: ColorPalette
-  colorScheme?: ColorSchemeMapping
-  contextualColors?: ContextualColors
-  emphasisColors?: EmphasisColors
-  naturalColors?: NaturalColorsStrict
-}
+export interface SiteVariablesInput extends ObjectOf<any> {}
 
 export interface SiteVariablesPrepared extends SiteVariablesInput {
   fontSizes: ObjectOf<string>
@@ -195,7 +221,6 @@ export interface ComponentStyleFunctionParam<
   props: State & TProps
   variables: TVars
   theme: ThemePrepared
-  colors: Partial<ColorScheme>
 }
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((
@@ -212,7 +237,6 @@ export interface ComponentSlotStylesInput<TProps = {}, TVars = {}>
 export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
   extends ObjectOf<ComponentSlotStyleFunction<TProps, TVars>> {}
 
-export interface ComponentSlotClasses extends ObjectOf<string> {}
 export interface ComponentSlotClasses extends ObjectOf<string> {}
 
 export type AnimationProp =
