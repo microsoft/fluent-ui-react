@@ -89,11 +89,19 @@ type ValueOf<TFirst, TSecond, TKey extends keyof (TFirst & TSecond)> = TKey exte
 
 type Extended<TFirst, TSecond> = { [K in keyof (TFirst & TSecond)]: ValueOf<TFirst, TSecond, K> }
 
+/**
+ * TODO: introduce back this path once TS compiler issue that leads to
+ * 'JS Heap Out Of Memory' exception will be fixed
+ */
 // type AsHtmlElement<Tag extends keyof JSX.IntrinsicElements, TProps> = {
 //   as: Tag
 // } & JSX.IntrinsicElements[Tag] &
 //   TProps
 
+/**
+ * TODO: restrict type further once TS compiler issue that leads to
+ * 'JS Heap Out Of Memory' exception will be fixed
+ */
 type AsComponent<C, TProps> = { as: C } & TProps & { [K: string]: any } // & PropsOf<InstanceOf<C>>
 
 type CommonStaticProps =
