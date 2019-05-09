@@ -42,7 +42,7 @@ index d2e2e7e..788708d 100644
 +            }
 +
 +            function getDepth() {
-+                return sourceStack ? sourceStack.length : 0
++                return depth
 +            }
 +
              // Determine if possibly recursive types are related. First, check if the result is already available in the global cache.
