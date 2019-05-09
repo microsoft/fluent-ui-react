@@ -98,7 +98,7 @@ const items = [
     key: 'message-id-8',
   },
   {
-    children: <Divider content="Today" color="primary" important />,
+    children: <Divider content="Today" color="brand" important />,
     key: 'message-id-9',
   },
   {

@@ -85,7 +85,7 @@ const ChatMessageExampleStyled = () => (
       componentVariables: {
         ChatMessage: siteVars => ({
           content: {
-            focusOutlineColor: siteVars.red,
+            focusOutlineColor: siteVars.colors.red[400],
           },
         }),
       },

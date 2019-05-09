@@ -6,7 +6,7 @@ export default props => {
   return (
     <Provider.Consumer
       render={({ siteVariables }) => (
-        <Text as="a" content={content} color="primary">
+        <Text as="a" content={content} color="brand">
           {children}
         </Text>
       )}
