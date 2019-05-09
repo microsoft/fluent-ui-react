@@ -1,6 +1,6 @@
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import { EventListener } from '@stardust-ui/react-component-event-listener'
 import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
-import { handleRef, Ref } from '@stardust-ui/react-component-ref'
+import { handleRef, toRefObject, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
@@ -77,6 +77,12 @@ export interface PopupProps
 
   /** Whether the Popup should be rendered inline with the trigger or in the body. */
   inline?: boolean
+
+  /** Existing document the popup should add listeners. */
+  mountDocument?: Document
+
+  /** Existing element the popup should be bound to. */
+  mountNode?: HTMLElement
 
   /** Delay in ms for the mouse leave event, before the popup will be closed. */
   mouseLeaveDelay?: number
@@ -165,6 +171,8 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     defaultOpen: PropTypes.bool,
     defaultTarget: PropTypes.any,
     inline: PropTypes.bool,
+    mountDocument: PropTypes.object,
+    mountNode: customPropTypes.domNode,
     mouseLeaveDelay: PropTypes.number,
     on: PropTypes.oneOfType([
       PropTypes.oneOf(['hover', 'click', 'focus']),
@@ -184,14 +192,14 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   static defaultProps: PopupProps = {
     accessibility: popupBehavior,
     align: 'start',
+    mountDocument: isBrowser() ? document : null,
+    mountNode: isBrowser() ? document.body : null,
     position: 'above',
     on: 'click',
     mouseLeaveDelay: 500,
   }
 
   static autoControlledProps = ['open', 'target']
-
-  static isBrowserContext = isBrowser()
 
   triggerDomElement = null
   // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
@@ -224,17 +232,15 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     rtl,
     accessibility,
   }: RenderResultConfig<PopupProps>): React.ReactNode {
-    const { inline } = this.props
-    const popupContent = this.renderPopupContent(classes.popup, rtl, accessibility)
+    const { inline, mountNode } = this.props
+    const { open } = this.state
+    const popupContent = open && this.renderPopupContent(classes.popup, rtl, accessibility)
 
     return (
       <>
         {this.renderTrigger(accessibility)}
-
-        {this.state.open &&
-          Popup.isBrowserContext &&
-          popupContent &&
-          (inline ? popupContent : ReactDOM.createPortal(popupContent, document.body))}
+        {open &&
+          (inline ? popupContent : mountNode && ReactDOM.createPortal(popupContent, mountNode))}
       </>
     )
   }
@@ -449,8 +455,9 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       style: popupPlacementStyles,
     }: PopperChildrenProps,
   ) => {
-    const { content: propsContent, renderContent, contentRef, pointing } = this.props
+    const { content: propsContent, renderContent, contentRef, mountDocument, pointing } = this.props
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
+    const documentRef = toRefObject(mountDocument)
 
     const popupWrapperAttributes = {
       ...(rtl && { dir: 'rtl' }),
@@ -560,8 +567,11 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
    * Can be either trigger DOM element itself or the element inside it.
    */
   updateTriggerFocusableDomElement() {
-    this.triggerFocusableDomElement = this.triggerDomElement.contains(document.activeElement)
-      ? document.activeElement
+    const { mountDocument } = this.props
+    const activeElement = mountDocument.activeElement
+
+    this.triggerFocusableDomElement = this.triggerDomElement.contains(activeElement)
+      ? activeElement
       : this.triggerDomElement
   }
 }
