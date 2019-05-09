@@ -75,12 +75,12 @@ const ColorPalette = () => (
           </p>
           <ul>
             <li>
-              <b>{link('Color scheme', '#color-scheme')}</b> - design tokens for all colors used in
-              the application that should be appropriately map in all themes
-            </li>
-            <li>
               <b>{link('Color palette', '#color-palette')}</b> - central place for all colors
               available in the application
+            </li>
+            <li>
+              <b>{link('Color scheme', '#color-scheme')}</b> - design tokens for all colors used in
+              the application that should be appropriately map in all themes
             </li>
           </ul>
           <p>
