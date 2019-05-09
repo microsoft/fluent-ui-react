@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 
@@ -76,7 +76,7 @@ export interface InputState {
   value?: React.ReactText
 }
 
-class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> {
+class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> {
   private inputRef = React.createRef<HTMLElement>()
 
   static className = 'ui-input'

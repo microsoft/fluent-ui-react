@@ -6,7 +6,7 @@ import Label from '../Label/Label'
 import Status, { StatusProps } from '../Status/Status'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import {
   createShorthandFactory,
   UIComponent,
@@ -41,7 +41,7 @@ export interface AvatarProps extends UIComponentProps {
   getInitials?: (name: string) => string
 }
 
-class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
+class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
   static create: Function
 
   static className = 'ui-avatar'

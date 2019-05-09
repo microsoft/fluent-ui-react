@@ -12,7 +12,7 @@ import {
 } from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
-import { ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
@@ -32,7 +32,7 @@ export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
   items?: ShorthandValue[]
 }
 
-class Chat extends UIComponent<ReactProps<ChatProps>, any> {
+class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
   static displayName = 'Chat'
 
   static className = 'ui-chat'

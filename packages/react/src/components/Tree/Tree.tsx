@@ -13,7 +13,7 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ShorthandValue, ShorthandRenderFunction, ReactProps, withSafeTypeForAs } from '../../types'
+import { ShorthandValue, ShorthandRenderFunction, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { treeBehavior } from '../../lib/accessibility'
 
@@ -54,7 +54,7 @@ export interface TreeState {
   activeIndex: number[] | number
 }
 
-class Tree extends AutoControlledComponent<ReactProps<TreeProps>, TreeState> {
+class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   static create: Function
 
   static displayName = 'Tree'

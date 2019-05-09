@@ -16,7 +16,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 import ReactionGroup from './ReactionGroup'
@@ -54,7 +54,7 @@ export interface ReactionState {
   isFromKeyboard: boolean
 }
 
-class Reaction extends UIComponent<ReactProps<ReactionProps>, ReactionState> {
+class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
   static create: Function
 
   static className = 'ui-reaction'

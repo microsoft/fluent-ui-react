@@ -18,7 +18,7 @@ import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityBehavior } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
-import { ReactProps, ShorthandCollection, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandCollection, ShorthandValue, withSafeTypeForAs } from '../../types'
 import MenuDivider from './MenuDivider'
 
 export type MenuShorthandKinds = 'divider' | 'item'
@@ -83,7 +83,7 @@ export interface MenuState {
   activeIndex?: number | string
 }
 
-class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
+class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'

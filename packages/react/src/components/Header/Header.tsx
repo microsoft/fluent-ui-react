@@ -16,7 +16,7 @@ import {
 import HeaderDescription from './HeaderDescription'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface HeaderSlotClassNames {
   description: string
@@ -40,7 +40,7 @@ export interface HeaderProps
   textAlign?: 'left' | 'center' | 'right' | 'justified'
 }
 
-class Header extends UIComponent<ReactProps<HeaderProps>, any> {
+class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
   static displayName = 'Header'
 
   static className = 'ui-header'

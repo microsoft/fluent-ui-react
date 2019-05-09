@@ -17,7 +17,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 
 export interface PopupContentProps
@@ -57,7 +57,7 @@ export interface PopupContentProps
   pointerStyle?: PopperChildrenProps['arrowProps']['style']
 }
 
-class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
+class PopupContent extends UIComponent<WithAsProp<PopupContentProps>, any> {
   public static create: Function
 
   public static displayName = 'PopupContent'

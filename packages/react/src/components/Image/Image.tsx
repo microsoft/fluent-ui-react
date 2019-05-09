@@ -5,7 +5,7 @@ import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes 
 import { imageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import { ReactProps, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ImageProps extends UIComponentProps {
   /**
@@ -27,7 +27,7 @@ export interface ImageProps extends UIComponentProps {
   src?: string
 }
 
-class Image extends UIComponent<ReactProps<ImageProps>, any> {
+class Image extends UIComponent<WithAsProp<ImageProps>, any> {
   static create: Function
 
   static className = 'ui-image'

@@ -16,7 +16,7 @@ import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
 import Box from '../Box/Box'
-import { ComponentEventHandler, ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface EmbedSlotClassNames {
   control: string
@@ -67,7 +67,7 @@ export interface EmbedState {
   active: boolean
 }
 
-class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> {
+class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> {
   static create: Function
 
   static className = 'ui-embed'

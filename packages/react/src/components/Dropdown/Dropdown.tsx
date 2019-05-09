@@ -11,7 +11,7 @@ import {
   ShorthandValue,
   ComponentEventHandler,
   ShorthandCollection,
-  ReactProps,
+  WithAsProp,
   withSafeTypeForAs,
 } from '../../types'
 import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
@@ -210,7 +210,7 @@ export interface DropdownState {
   value: ShorthandValue | ShorthandCollection
 }
 
-class Dropdown extends AutoControlledComponent<ReactProps<DropdownProps>, DropdownState> {
+class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, DropdownState> {
   private buttonRef = React.createRef<HTMLElement>()
   private inputRef = React.createRef<HTMLInputElement>()
   private listRef = React.createRef<HTMLElement>()
@@ -272,7 +272,7 @@ class Dropdown extends AutoControlledComponent<ReactProps<DropdownProps>, Dropdo
     ]),
   }
 
-  static defaultProps: ReactProps<DropdownProps> = {
+  static defaultProps: WithAsProp<DropdownProps> = {
     as: 'div',
     clearIndicator: 'stardust-close',
     itemToString: item => {

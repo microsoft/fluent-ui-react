@@ -14,7 +14,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface DividerProps
   extends UIComponentProps,
@@ -37,7 +37,7 @@ export interface DividerProps
   important?: boolean
 }
 
-class Divider extends UIComponent<ReactProps<DividerProps>, any> {
+class Divider extends UIComponent<WithAsProp<DividerProps>, any> {
   static displayName = 'Divider'
 
   static create: Function

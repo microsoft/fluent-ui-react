@@ -8,15 +8,15 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
-import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
-import { ReactProps, withSafeTypeForAs } from '../../types'
+import createComponent from '../../lib/createComponent'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface BoxProps
   extends UIComponentProps<BoxProps>,
     ContentComponentProps,
     ChildrenComponentProps {}
 
-const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<BoxProps>({
+const Box = createComponent<WithAsProp<BoxProps>>({
   displayName: 'Box',
 
   className: 'ui-box',

@@ -14,7 +14,7 @@ import {
   ContentComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface MenuDividerProps
   extends UIComponentProps,
@@ -33,7 +33,7 @@ export interface MenuDividerProps
   inSubmenu?: boolean
 }
 
-class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>> {
+class MenuDivider extends UIComponent<WithAsProp<MenuDividerProps>> {
   static displayName = 'MenuDivider'
 
   static create: Function

@@ -2,7 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import {
   UIComponent,
   childrenExist,
@@ -31,7 +31,7 @@ export interface ReactionGroupProps
   items?: ShorthandValue[]
 }
 
-class ReactionGroup extends UIComponent<ReactProps<ReactionGroupProps>> {
+class ReactionGroup extends UIComponent<WithAsProp<ReactionGroupProps>> {
   static create: Function
 
   public static displayName = 'ReactionGroup'

@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropTypes } from '../../lib'
-import { ShorthandValue, ComponentEventHandler, ReactProps, withSafeTypeForAs } from '../../types'
+import { ShorthandValue, ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
@@ -41,7 +41,7 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   onClick?: ComponentEventHandler<DropdownItemProps>
 }
 
-class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
+class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>, any> {
   static displayName = 'DropdownItem'
 
   static create: Function

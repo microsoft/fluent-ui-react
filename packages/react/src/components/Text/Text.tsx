@@ -16,7 +16,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface TextProps
   extends UIComponentProps,
@@ -60,7 +60,7 @@ export interface TextProps
   truncated?: boolean
 }
 
-class Text extends UIComponent<ReactProps<TextProps>, any> {
+class Text extends UIComponent<WithAsProp<TextProps>, any> {
   static create: Function
 
   static className = 'ui-text'

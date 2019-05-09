@@ -18,7 +18,7 @@ import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import ButtonGroup from './ButtonGroup'
 
 export interface ButtonProps
@@ -77,7 +77,7 @@ export interface ButtonState {
   isFromKeyboard: boolean
 }
 
-class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
+class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   static create: Function
 
   public static displayName = 'Button'

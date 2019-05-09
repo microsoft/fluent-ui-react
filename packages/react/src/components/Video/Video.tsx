@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 
-import { ReactProps, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 import { defaultBehavior } from '../../lib/accessibility'
 
 export interface VideoProps extends UIComponentProps {
@@ -27,7 +27,7 @@ export interface VideoProps extends UIComponentProps {
   src?: string
 }
 
-class Video extends UIComponent<ReactProps<VideoProps>> {
+class Video extends UIComponent<WithAsProp<VideoProps>> {
   static create: Function
 
   static className = 'ui-video'

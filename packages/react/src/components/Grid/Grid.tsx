@@ -11,7 +11,7 @@ import {
   ContentComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 
@@ -33,7 +33,7 @@ export interface GridProps
   rows?: string | number
 }
 
-class Grid extends UIComponent<ReactProps<GridProps>, any> {
+class Grid extends UIComponent<WithAsProp<GridProps>, any> {
   public static displayName = 'Grid'
 
   public static className = 'ui-grid'
@@ -53,7 +53,7 @@ class Grid extends UIComponent<ReactProps<GridProps>, any> {
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }
 
-  public static defaultProps: ReactProps<GridProps> = {
+  public static defaultProps: WithAsProp<GridProps> = {
     as: 'div',
     accessibility: defaultBehavior,
   }

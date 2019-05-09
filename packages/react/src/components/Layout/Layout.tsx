@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 
 import { UIComponent, UIComponentProps, commonPropTypes, rtlTextContainer } from '../../lib'
-import { ReactProps, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 import { ICSSInJSStyle } from '../../themes/types'
 
 export interface LayoutSlotClassNames {
@@ -46,7 +46,7 @@ export interface LayoutProps extends UIComponentProps {
   vertical?: boolean
 }
 
-class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
+class Layout extends UIComponent<WithAsProp<LayoutProps>, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'

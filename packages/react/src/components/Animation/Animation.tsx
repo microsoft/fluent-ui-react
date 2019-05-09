@@ -10,7 +10,7 @@ import {
 } from '../../lib'
 import { AnimationProp } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
-import { ReactProps, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface AnimationProps
   extends StyledComponentProps,
@@ -79,7 +79,7 @@ export interface AnimationProps
   timingFunction?: string
 }
 
-class Animation extends UIComponent<ReactProps<AnimationProps>, any> {
+class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
   static create: Function
 
   static className = 'ui-animation'

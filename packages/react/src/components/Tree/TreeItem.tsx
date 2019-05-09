@@ -18,7 +18,7 @@ import {
 } from '../../lib'
 import {
   ComponentEventHandler,
-  ReactProps,
+  WithAsProp,
   ShorthandRenderFunction,
   ShorthandValue,
   withSafeTypeForAs,
@@ -68,7 +68,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   title?: ShorthandValue
 }
 
-class TreeItem extends UIComponent<ReactProps<TreeItemProps>> {
+class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
   static create: Function
 
   static displayName = 'TreeItem'

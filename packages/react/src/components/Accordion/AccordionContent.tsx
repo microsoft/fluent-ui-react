@@ -11,7 +11,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 
 export interface AccordionContentProps
   extends UIComponentProps,
@@ -29,7 +29,7 @@ export interface AccordionContentProps
   onClick?: ComponentEventHandler<AccordionContentProps>
 }
 
-class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, any> {
+class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, any> {
   static displayName = 'AccordionContent'
 
   static create: Function

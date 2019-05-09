@@ -14,7 +14,7 @@ import { iconBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { SvgIconSpec } from '../../themes/types'
-import { ReactProps, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
@@ -50,7 +50,7 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
   xSpacing?: IconXSpacing
 }
 
-class Icon extends UIComponent<ReactProps<IconProps>, any> {
+class Icon extends UIComponent<WithAsProp<IconProps>, any> {
   static create: Function
 
   static className = 'ui-icon'

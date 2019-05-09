@@ -13,7 +13,7 @@ import {
 } from '../../lib'
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
-import { ReactProps, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ItemLayoutSlotClassNames {
   header: string
@@ -64,7 +64,7 @@ export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps
   endMediaCSS?: ICSSInJSStyle
 }
 
-class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
+class ItemLayout extends UIComponent<WithAsProp<ItemLayoutProps>, any> {
   static create: Function
 
   static displayName = 'ItemLayout'

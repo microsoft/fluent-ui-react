@@ -11,7 +11,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 
 export interface SegmentProps
@@ -28,7 +28,7 @@ export interface SegmentProps
   inverted?: boolean
 }
 
-class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
+class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
   static className = 'ui-segment'
 
   static displayName = 'Segment'

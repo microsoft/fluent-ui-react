@@ -15,7 +15,7 @@ import {
 import { RenderResultConfig } from '../../lib/renderComponent'
 import { alertBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 import Button, { ButtonProps } from '../Button/Button'
 
@@ -62,7 +62,7 @@ export interface AlertState {
   isFromKeyboard: boolean
 }
 
-class Alert extends UIComponent<ReactProps<AlertProps>, AlertState> {
+class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
   static displayName = 'Alert'
   static className = 'ui-alert'
 

@@ -12,7 +12,7 @@ import {
   commonPropTypes,
   SizeValue,
 } from '../../lib'
-import { ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface StatusProps extends UIComponentProps {
   /**
@@ -34,7 +34,7 @@ export interface StatusProps extends UIComponentProps {
   state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
 }
 
-class Status extends UIComponent<ReactProps<StatusProps>, any> {
+class Status extends UIComponent<WithAsProp<StatusProps>, any> {
   static create: Function
 
   static className = 'ui-status'

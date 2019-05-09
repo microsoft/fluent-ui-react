@@ -17,7 +17,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { ReactProps, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import { chatMessageBehavior, toolbarBehavior } from '../../lib/accessibility'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
@@ -94,7 +94,7 @@ export interface ChatMessageState {
   isFromKeyboard: boolean
 }
 
-class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageState> {
+class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageState> {
   static className = 'ui-chat__message'
 
   static create: Function

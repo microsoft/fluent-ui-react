@@ -12,7 +12,7 @@ import {
 } from '../../lib'
 import { loaderBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 
 export type LoaderPosition = 'above' | 'below' | 'start' | 'end'
@@ -56,7 +56,7 @@ export interface LoaderState {
   visible: boolean
 }
 
-class Loader extends UIComponent<ReactProps<LoaderProps>, LoaderState> {
+class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
   static create: Function
   static displayName = 'Loader'
   static className = 'ui-loader'

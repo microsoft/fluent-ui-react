@@ -18,7 +18,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   ComponentEventHandler,
-  ReactProps,
+  WithAsProp,
   ShorthandValue,
   ShorthandRenderFunction,
   withSafeTypeForAs,
@@ -76,7 +76,7 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
   accessibility?: Accessibility
 }
 
-class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any> {
+class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any> {
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'

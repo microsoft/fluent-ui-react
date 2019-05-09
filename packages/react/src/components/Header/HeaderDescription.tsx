@@ -13,7 +13,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface HeaderDescriptionProps
   extends UIComponentProps,
@@ -27,7 +27,7 @@ export interface HeaderDescriptionProps
   accessibility?: Accessibility
 }
 
-class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, any> {
+class HeaderDescription extends UIComponent<WithAsProp<HeaderDescriptionProps>, any> {
   static create: Function
 
   static className = 'ui-header__description'

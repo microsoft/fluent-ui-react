@@ -12,7 +12,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Text from '../Text/Text'
 import Input from '../Input/Input'
 import Box from '../Box/Box'
@@ -49,7 +49,7 @@ export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps
   type?: string
 }
 
-class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
+class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
   public static displayName = 'FormField'
 
   public static className = 'ui-form__field'
@@ -80,7 +80,6 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
     ElementType,
     classes,
     accessibility,
-    variables,
     styles,
     unhandledProps,
   }): React.ReactNode {

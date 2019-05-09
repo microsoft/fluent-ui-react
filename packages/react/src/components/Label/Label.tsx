@@ -20,7 +20,7 @@ import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import {
   ComplexColorPropType,
   ColorValuesWithPrimitiveColors,
@@ -56,7 +56,7 @@ export interface LabelProps
   imagePosition?: 'start' | 'end'
 }
 
-class Label extends UIComponent<ReactProps<LabelProps>, any> {
+class Label extends UIComponent<WithAsProp<LabelProps>, any> {
   static displayName = 'Label'
 
   static create: Function

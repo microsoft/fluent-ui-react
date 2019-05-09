@@ -8,7 +8,7 @@ import keyboardKey from 'keyboard-key'
 import {
   ComponentEventHandler,
   ShorthandValue,
-  ReactProps,
+  WithAsProp,
   ComponentKeyboardEventHandler,
   withSafeTypeForAs,
 } from '../../types'
@@ -63,7 +63,7 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
   onRemove?: ComponentEventHandler<DropdownSelectedItemProps>
 }
 
-class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemProps>, any> {
+class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemProps>, any> {
   private itemRef = React.createRef<HTMLElement>()
 
   static displayName = 'DropdownSelectedItem'

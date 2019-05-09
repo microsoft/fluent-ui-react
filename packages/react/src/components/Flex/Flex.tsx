@@ -3,7 +3,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
-import { ReactProps, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 import FlexItem from './FlexItem'
 
 export interface FlexProps extends UIComponentProps, ChildrenComponentProps {
@@ -38,7 +38,7 @@ export interface FlexProps extends UIComponentProps, ChildrenComponentProps {
   fill?: boolean
 }
 
-class Flex extends UIComponent<ReactProps<FlexProps>> {
+class Flex extends UIComponent<WithAsProp<FlexProps>> {
   static Item = FlexItem
 
   static displayName = 'Flex'

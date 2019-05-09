@@ -13,7 +13,7 @@ import {
 import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ShorthandValue, ReactProps, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import { ShorthandValue, WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 
 export interface ListItemSlotClassNames {
@@ -71,7 +71,7 @@ export interface ListItemState {
   isFromKeyboard: boolean
 }
 
-class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
+class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
   static create: Function
 
   static displayName = 'ListItem'

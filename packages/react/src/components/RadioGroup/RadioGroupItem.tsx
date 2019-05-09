@@ -14,7 +14,7 @@ import {
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Box from '../Box/Box'
-import { ComponentEventHandler, ReactProps, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
@@ -88,7 +88,7 @@ export interface RadioGroupItemState {
 }
 
 class RadioGroupItem extends AutoControlledComponent<
-  ReactProps<RadioGroupItemProps>,
+  WithAsProp<RadioGroupItemProps>,
   RadioGroupItemState
 > {
   private elementRef = React.createRef<HTMLElement>()

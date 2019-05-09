@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropTypes } from '../../lib'
-import { ComponentEventHandler, ReactProps, withSafeTypeForAs } from '../../types'
+import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
 
@@ -62,7 +62,7 @@ export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearc
   placeholder?: string
 }
 
-class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProps>, any> {
+class DropdownSearchInput extends UIComponent<WithAsProp<DropdownSearchInputProps>, any> {
   static displayName = 'DropdownSearchInput'
   static create: Function
   static slotClassNames: DropdownSearchInputSlotClassNames

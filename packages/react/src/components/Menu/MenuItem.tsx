@@ -26,7 +26,7 @@ import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import {
   ComponentEventHandler,
-  ReactProps,
+  WithAsProp,
   ShorthandValue,
   ShorthandCollection,
   withSafeTypeForAs,
@@ -141,7 +141,7 @@ export interface MenuItemState {
   menuOpen: boolean
 }
 
-class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuItemState> {
+class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'

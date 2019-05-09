@@ -17,7 +17,7 @@ import {
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ReactProps, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 
 export interface RadioGroupSlotClassNames {
   item: string
@@ -50,7 +50,7 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
   vertical?: boolean
 }
 
-class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, any> {
+class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, any> {
   static displayName = 'RadioGroup'
 
   static className = 'ui-radiogroup'

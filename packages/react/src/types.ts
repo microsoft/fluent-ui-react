@@ -26,10 +26,7 @@ export type ObjectOrFunc<TResult, TArg = {}> = ((arg: TArg) => TResult) | TResul
 export type Props<T = {}> = T & ObjectOf<any>
 export type ReactChildren = React.ReactNodeArray | React.ReactNode
 
-export type ReactProps<T> = Extended<
-  { [K in keyof T]: NullableIfUndefined<T[K]> } & { as?: any },
-  React.HTMLAttributes<any>
->
+export type WithAsProp<T> = T & { as?: any }
 
 export type ComponentEventHandler<TProps> = (
   event: React.SyntheticEvent<HTMLElement>,
@@ -40,6 +37,8 @@ export type ComponentKeyboardEventHandler<TProps> = (
   event: React.KeyboardEvent<any>,
   data?: TProps,
 ) => void
+
+export type InstanceOf<T> = T extends { new (...args: any[]): infer TInstance } ? TInstance : never
 
 export type PropsOf<T> = T extends React.Component<infer TProps>
   ? TProps
@@ -125,13 +124,15 @@ type PickProps<T, Props extends string | number | symbol> = {
   [K in Intersect<Props, keyof T>]: T[K]
 }
 
-export type InstanceOf<T> = T extends { new (...args: any[]): infer TInstance } ? TInstance : never
-
 export const withSafeTypeForAs = function<
   TComponentType extends React.ComponentType,
   TProps,
   TAs extends keyof JSX.IntrinsicElements = 'div'
 >(componentType: TComponentType) {
+  /**
+   * TODO: introduce overload once TS compiler issue that leads to
+   * 'JS Heap Out Of Memory' exception will be fixed
+   */
   // function overloadedComponentType<Tag extends keyof JSX.IntrinsicElements>(
   //   x: AsHtmlElement<Tag, TProps>,
   // ): JSX.Element
