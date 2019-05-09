@@ -1,5 +1,6 @@
 import { Accessibility } from '../../types'
 import * as _ from 'lodash'
+import * as keyboardKey from 'keyboard-key'
 
 /**
  * @specification
@@ -12,6 +13,13 @@ const inputBehavior: Accessibility = (props: any) => ({
       'aria-disabled': !_.isNil(props['aria-disabled'])
         ? props['aria-disabled']
         : !!props['disabled'],
+    },
+  },
+  keyActions: {
+    input: {
+      clear: {
+        keyCombinations: [{ keyCode: keyboardKey.Escape }],
+      },
     },
   },
 })

@@ -4,7 +4,6 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import * as _ from 'lodash'
-import * as keyboardKey from 'keyboard-key'
 
 import {
   AutoControlledComponent,
@@ -13,9 +12,10 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { inputBehavior } from '../../lib/accessibility'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
@@ -113,13 +113,22 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
+    accessibility: inputBehavior,
     type: 'text',
     wrapper: {},
     iconPosition: 'end',
   }
 
   static autoControlledProps = ['value']
+
+  actionHandlers: AccessibilityActionHandlers = {
+    clear: (e: any) => {
+      if (this.props.clearable && this.state.value !== '') {
+        e.stopPropagation()
+        this.handleOnClear(e)
+      }
+    },
+  }
 
   renderComponent({
     accessibility,
@@ -153,8 +162,8 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
                   className: Input.slotClassNames.input,
                   styles: styles.input,
                   onChange: this.handleChange,
+                  ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
                 },
-                overrideProps: this.handleInputOverrides,
               })}
             </Ref>
             {Icon.create(this.computeIcon(), {
@@ -180,15 +189,6 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
       this.handleOnClear(e)
       this.inputRef.current.focus()
       _.invoke(predefinedProps, 'onClick', e, this.props)
-    },
-  })
-
-  private handleInputOverrides = predefinedProps => ({
-    onKeyDown: (e: React.SyntheticEvent) => {
-      if (keyboardKey.getCode(e) === keyboardKey.Escape) {
-        this.handleOnClear(e)
-      }
-      _.invoke(predefinedProps, 'onKeyDown', e, this.props)
     },
   })
 
