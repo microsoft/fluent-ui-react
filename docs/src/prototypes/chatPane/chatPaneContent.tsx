@@ -73,7 +73,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
     )
   }
 
-  private getElementType = (itemType: ChatItemTypes) => {
+  private getElementType = (itemType: ChatItemTypes): React.ElementType => {
     switch (itemType) {
       case ChatItemTypes.message:
         return Chat.Message
