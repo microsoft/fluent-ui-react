@@ -1,8 +1,9 @@
 import { isRefObject, toRefObject } from '@stardust-ui/react-component-ref'
 import * as _ from 'lodash'
 import * as React from 'react'
+import * as PopperJS from 'popper.js'
 
-class ReferenceProxy {
+class ReferenceProxy implements PopperJS.ReferenceObject {
   ref: React.RefObject<HTMLElement>
 
   constructor(refObject) {
