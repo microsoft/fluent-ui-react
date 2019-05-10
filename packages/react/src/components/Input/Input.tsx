@@ -18,7 +18,7 @@ import { defaultBehavior } from '../../lib/accessibility'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
-import { HtmlInputProps } from 'src/lib/htmlPropsUtils'
+import { HtmlInputProps } from '../../lib/htmlPropsUtils'
 
 export interface InputSlotClassNames {
   input: string
