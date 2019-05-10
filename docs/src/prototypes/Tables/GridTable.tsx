@@ -76,6 +76,7 @@ const rows = [
 
 const TableNestedNavigation = () => (
   <Table
+    aria-label="grid"
     header={header}
     rows={rows}
     accessibility={gridTableBehavior}

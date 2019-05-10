@@ -37,6 +37,6 @@ const rows = [
   },
 ]
 
-const StaticTable = () => <Table header={header} rows={rows} />
+const StaticTable = () => <Table header={header} rows={rows} aria-label="static" />
 
 export default StaticTable

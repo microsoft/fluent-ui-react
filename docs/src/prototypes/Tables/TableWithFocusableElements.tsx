@@ -43,6 +43,8 @@ const rows = [
   },
 ]
 
-const TableWithFocusableElements = () => <Table header={header} rows={rows} />
+const TableWithFocusableElements = () => (
+  <Table header={header} rows={rows} aria-label="focusable elements" />
+)
 
 export default TableWithFocusableElements

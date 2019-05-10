@@ -17,7 +17,7 @@ const rows = [
   {
     items: [
       {
-        content: <Icon name="word-color" />,
+        content: <Icon aria-label="word" name="word-color" />,
       },
       { content: <span>Accessibility stardust patterns</span> },
       { content: <span>7/17/18</span> },
@@ -27,7 +27,7 @@ const rows = [
   {
     items: [
       {
-        content: <Icon name="excel-color" />,
+        content: <Icon aria-label="excel" name="excel-color" />,
       },
       { content: <span>Budget</span> },
       { content: <span>9/25/18</span> },
@@ -37,7 +37,7 @@ const rows = [
   {
     items: [
       {
-        content: <Icon name="powerpoint-color" />,
+        content: <Icon aria-label="powerpoint" name="powerpoint-color" />,
       },
       { content: <span>Accessibility for everyone</span> },
       { content: <span>1/17/19</span> },
@@ -48,6 +48,7 @@ const rows = [
 
 const AttachmentsTable = () => (
   <Table
+    aria-label="Attachments"
     header={header}
     rows={rows}
     accessibility={tableVerticalNavigationBehavior}
