@@ -2,9 +2,9 @@ import { AlertVariables } from '../../../teams/components/Alert/alertVariables'
 
 export default (siteVars: any): Partial<AlertVariables> => {
   return {
-    backgroundColor: siteVars.gray02,
-    borderColor: siteVars.gray09,
-    color: siteVars.gray09,
+    backgroundColor: siteVars.colors.grey[250],
+    borderColor: siteVars.colors.grey[550],
+    color: siteVars.colors.grey[550],
 
     dangerColor: siteVars.colors.red[200],
     dangerBackgroundColor: siteVars.colors.red[800],
