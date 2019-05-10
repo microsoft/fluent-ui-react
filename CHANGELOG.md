@@ -16,11 +16,16 @@
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 ### BREAKING CHANGES
 - Rename `context` prop to `mountNode` in `PortalInner` @layershifter ([#1288](https://github.com/stardust-ui/react/pull/1288))
 - Updated Teams' theme color palette values, removed color related site variables @mnajdova ([#1069](https://github.com/stardust-ui/react/pull/1069))
 - Remove `defaultTarget` prop in `Popup` component @layershifter ([#1153](https://github.com/stardust-ui/react/pull/1153))
 - Add focus border styling mechanism @Bugaa92 in Teams theme ([#1269](https://github.com/stardust-ui/react/pull/1269))
+
+### Fixes
+- Fix double rendering of `Popup` component @layershifter ([#1153](https://github.com/stardust-ui/react/pull/1153))
+- Docs: fix(docs): Set maximum width for examples @miroslavstastny ([#1319](https://github.com/stardust-ui/react/pull/1319))
 
 ### Features
 - Add default child a11y behavior to `Menu` related behaviors @silviuavram ([#1282](https://github.com/stardust-ui/react/pull/1282))
@@ -31,9 +36,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `mountNode` and `mountDocument` props to allow proper multi-window rendering ([#1288](https://github.com/stardust-ui/react/pull/1288))
 - Added default and brand color schemes in Teams' theme @mnajdova ([#1069](https://github.com/stardust-ui/react/pull/1069))
 - Export `files-upload` SVG icon for `Teams` theme @manindr ([#1293](https://github.com/stardust-ui/react/pull/1293))
-
-### Fixes
-- Fix double rendering of `Popup` component @layershifter ([#1153](https://github.com/stardust-ui/react/pull/1153))
 
 <!--------------------------------[ v0.29.1 ]------------------------------- -->
 ## [v0.29.1](https://github.com/stardust-ui/react/tree/v0.29.1) (2019-05-01)
