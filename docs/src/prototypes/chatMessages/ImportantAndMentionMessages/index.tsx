@@ -67,7 +67,7 @@ const items = [
           badge={{ icon: 'mention' }}
           variables={siteVars => ({
             hasMention: true,
-            hasMentionColor: siteVars.colors.primary[500],
+            hasMentionColor: siteVars.colors.brand[600],
           })}
         />
       ),
@@ -86,7 +86,7 @@ const items = [
           badge={{ icon: 'redbang' }}
           variables={siteVars => ({
             isImportant: true,
-            isImportantColor: siteVars.colors.yellow[900],
+            isImportantColor: siteVars.colors.yellow[400],
           })}
         />
       ),

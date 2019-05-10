@@ -4,6 +4,6 @@ export interface TreeTitleVariables {
 
 export default (siteVars: any): TreeTitleVariables => {
   return {
-    defaultColor: siteVars.colors.grey[900],
+    defaultColor: siteVars.colors.grey[750],
   }
 }

@@ -1,8 +1,11 @@
-export default (siteVars: any) => {
+import { InputVariables } from '../../../base/components/Input/inputVariables'
+
+export default (siteVars: any): Partial<InputVariables> => {
   return {
-    backgroundColor: siteVars.gray10,
-    fontColor: siteVars.gray02,
-    inputFocusBorderColor: siteVars.brand,
-    iconColor: siteVars.gray02,
+    backgroundColor: siteVars.colors.grey[600],
+    fontColor: siteVars.colors.grey[250],
+    inputFocusBorderColor: `transparent transparent ${siteVars.colors.brand[600]} transparent`,
+    iconColor: siteVars.colors.grey[250],
+    placeholderColor: siteVars.colors.grey[250],
   }
 }

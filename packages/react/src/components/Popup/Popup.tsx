@@ -26,6 +26,7 @@ import {
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
 
 import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './positioningHelper'
+import createPopperReferenceProxy from './createPopperReferenceProxy'
 
 import PopupContent from './PopupContent'
 
@@ -130,9 +131,6 @@ export interface PopupProps
    */
   target?: HTMLElement
 
-  /** Initial value for 'target'. */
-  defaultTarget?: HTMLElement
-
   /** Element to be rendered in-place where the popup is defined. */
   trigger?: JSX.Element
 
@@ -169,7 +167,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     }),
     align: PropTypes.oneOf(ALIGNMENTS),
     defaultOpen: PropTypes.bool,
-    defaultTarget: PropTypes.any,
     inline: PropTypes.bool,
     mountDocument: PropTypes.object,
     mountNode: customPropTypes.domNode,
@@ -199,9 +196,9 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     mouseLeaveDelay: 500,
   }
 
-  static autoControlledProps = ['open', 'target']
+  static autoControlledProps = ['open']
 
-  triggerDomElement = null
+  triggerRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
   // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
   triggerFocusableDomElement = null
   popupDomElement = null
@@ -267,7 +264,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
     const isOutsidePopupElement = this.popupDomElement && !isInsideNested
     const isOutsideTriggerElement =
-      this.triggerDomElement && !doesNodeContainClick(this.triggerDomElement, e)
+      this.triggerRef.current && !doesNodeContainClick(this.triggerRef.current, e)
 
     return isOutsidePopupElement && isOutsideTriggerElement
   }
@@ -396,12 +393,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const triggerProps = this.getTriggerProps(triggerElement)
     return (
       triggerElement && (
-        <Ref
-          innerRef={domNode => {
-            this.trySetState({ target: domNode })
-            this.triggerDomElement = domNode
-          }}
-        >
+        <Ref innerRef={this.triggerRef}>
           {React.cloneElement(triggerElement, {
             ...accessibility.attributes.trigger,
             ...triggerProps,
@@ -418,7 +410,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     accessibility: AccessibilityBehavior,
   ): JSX.Element {
     const { align, position, offset } = this.props
-    const { target } = this.state
+    const { target } = this.props
 
     const placement = getPopupPlacement({ align, position, rtl })
 
@@ -430,15 +422,15 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       }),
     }
 
+    const referenceElement = createPopperReferenceProxy(target || this.triggerRef)
+
     return (
-      target && (
-        <Popper
-          placement={placement}
-          referenceElement={target}
-          children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
-          modifiers={popperModifiers}
-        />
-      )
+      <Popper
+        placement={placement}
+        referenceElement={referenceElement}
+        children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
+        modifiers={popperModifiers}
+      />
     )
   }
 
@@ -570,8 +562,8 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const { mountDocument } = this.props
     const activeElement = mountDocument.activeElement
 
-    this.triggerFocusableDomElement = this.triggerDomElement.contains(activeElement)
+    this.triggerFocusableDomElement = this.triggerRef.current.contains(activeElement)
       ? activeElement
-      : this.triggerDomElement
+      : this.triggerRef.current
   }
 }

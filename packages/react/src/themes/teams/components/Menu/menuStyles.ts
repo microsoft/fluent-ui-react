@@ -7,18 +7,22 @@ import {
   horizontalPillsRightMargin,
   verticalPointingBottomMargin,
 } from './menuItemStyles'
+import { getColorScheme } from '../../colors'
 
 type MenuPropsAndState = MenuProps & MenuState
 
 export default {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const { iconOnly, fluid, pointing, pills, primary, underlined, vertical, submenu } = p
+    const colors = getColorScheme(v.colorScheme, null, primary)
 
     return {
       display: 'flex',
       minHeight: pxToRem(24),
       margin: 0,
       padding: 0,
+      color: v.color,
+      backgroundColor: v.backgroundColor || 'inherit',
       listStyleType: 'none',
       ...(iconOnly && { alignItems: 'center' }),
       ...(vertical && {
@@ -38,14 +42,14 @@ export default {
         !iconOnly &&
         !(pointing && vertical) &&
         !underlined && {
-          border: `${v.borderWidth} solid ${v.borderColor}`,
-          ...(primary && {
-            border: `${v.borderWidth} solid ${v.primaryBorderColor}`,
-          }),
+          // primary has hardcoded grey border color
+          border: `${v.borderWidth} solid ${
+            primary ? v.primaryBorderColor : v.borderColor || colors.border
+          }`,
           borderRadius: pxToRem(4),
         }),
       ...(underlined && {
-        borderBottom: `${v.underlinedBottomBorderWidth} solid ${v.primaryUnderlinedBorderColor}`,
+        borderBottom: `${v.underlinedBottomBorderWidth} solid ${v.underlinedBorderColor}`,
       }),
     }
   },
