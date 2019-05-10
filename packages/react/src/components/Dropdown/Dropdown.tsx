@@ -702,7 +702,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
     if (this.state.open && _.isNumber(changes.highlightedIndex)) {
       const isFromKeyboard = changes.type !== Downshift.stateChangeTypes.itemMouseEnter
-      this.trySetState({ highlightedIndex: changes.highlightedIndex, isFromKeyboard })
+      this.trySetState({ highlightedIndex: changes.highlightedIndex })
+      this.setState({ isFromKeyboard })
     }
   }
 
