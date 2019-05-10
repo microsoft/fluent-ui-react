@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 import * as minimatch from 'minimatch'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import PerfBaseline from './PerfBaseline'
 
 import { ProfilerMeasure, ProfilerMeasureCycle } from '../types'
 
@@ -78,11 +79,25 @@ window.runMeasures = async (filter: string = '') => {
 
     const Component = performanceExamplesContext(exampleName).default
 
-    performanceMeasures[componentName] = await renderCycle(
+    const baselineMeasures = await renderCycle(
+      `${componentName}#baseline`,
+      PerfBaseline,
+      performanceExampleNames.indexOf(exampleName),
+    )
+
+    const componentMeasures = await renderCycle(
       componentName,
       Component,
       performanceExampleNames.indexOf(exampleName),
     )
+
+    performanceMeasures[componentName] = {
+      ...componentMeasures,
+      baseline: {
+        actualTime: baselineMeasures.actualTime,
+        baseTime: baselineMeasures.baseTime,
+      },
+    }
   }
 
   return performanceMeasures

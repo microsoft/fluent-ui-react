@@ -163,23 +163,23 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
       return acc
     }, {})
 
-    this.state = { ...state, ...initialAutoControlledState }
+    this.state = { ...state, ...initialAutoControlledState, autoControlledProps }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { autoControlledProps } = this.constructor as any
+  static getDerivedStateFromProps(props, state) {
+    const { autoControlledProps } = state
 
     // Solve the next state for autoControlledProps
     const newState = autoControlledProps.reduce((acc, prop) => {
-      const isNextDefined = !_.isUndefined(nextProps[prop])
+      const isNextDefined = !_.isUndefined(props[prop])
 
       // if next is defined then use its value
-      if (isNextDefined) acc[prop] = nextProps[prop]
+      if (isNextDefined) acc[prop] = props[prop]
 
       return acc
     }, {})
 
-    if (Object.keys(newState).length > 0) this.setState(newState)
+    return newState
   }
 
   /**

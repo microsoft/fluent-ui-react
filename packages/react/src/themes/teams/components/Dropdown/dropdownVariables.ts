@@ -53,7 +53,7 @@ export default (siteVars): DropdownVariables => ({
   listBorderColor: 'transparent',
   listBorderWidth: '0px',
   listPadding: `${pxToRem(8)} 0`,
-  listBoxShadow: `0 .2rem .6rem 0 ${siteVars.gray06}`,
+  listBoxShadow: `0 .2rem .6rem 0 ${siteVars.colors.grey[250]}`,
   listMaxHeight: pxToRem(296),
   listItemBackgroundColor: siteVars.colors.white,
   listItemColorHover: '#252423', // colors.grey[750] when new color palette checks in

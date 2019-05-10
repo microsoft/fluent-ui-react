@@ -4,11 +4,8 @@ import * as React from 'react'
 import AceEditor, { AceEditorProps } from 'react-ace'
 import * as ace from 'brace'
 import 'brace/ext/language_tools'
-import 'brace/mode/html'
-import 'brace/mode/json'
 import 'brace/mode/jsx'
-import 'brace/mode/sh'
-import 'brace/theme/tomorrow_night'
+import 'brace/theme/tomorrow_night_eighties'
 
 const parentComponents = []
 
@@ -53,8 +50,8 @@ export interface EditorProps extends AceEditorProps {
   showCursor?: boolean
 }
 
-export const EDITOR_BACKGROUND_COLOR = '#1D1F21'
-export const EDITOR_GUTTER_COLOR = '#26282d'
+export const EDITOR_BACKGROUND_COLOR = '#2D2D2D'
+export const EDITOR_GUTTER_COLOR = '#272727'
 
 class Editor extends React.Component<EditorProps> {
   editorRef = React.createRef<any>()
@@ -70,7 +67,7 @@ class Editor extends React.Component<EditorProps> {
   static defaultProps = {
     value: '',
     mode: 'jsx',
-    theme: 'tomorrow_night',
+    theme: 'tomorrow_night_eighties',
     height: '100px',
     width: '100%',
     active: true,

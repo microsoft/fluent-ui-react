@@ -1,7 +1,7 @@
 import * as React from 'react'
+import { CodeSnippet } from '@stardust-ui/docs-components'
 import { Button, Box, Flex, Header, Segment, Divider } from '@stardust-ui/react'
 
-import CodeSnippet from '../components/CodeSnippet'
 import ExampleSnippet from '../components/ExampleSnippet'
 import DocPage from '../components/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
@@ -209,7 +209,7 @@ export default () => (
       <strong>Each of these examples is optimized in terms of DOM elements rendered</strong>.
     </blockquote>
     <GuidesNavigationFooter
-      previous={{ name: 'Theming Examples', url: 'theming-examples' }}
+      previous={{ name: 'Colors', url: 'color-palette' }}
       next={{ name: 'Integrate Custom Components', url: 'integrate-custom-components' }}
     />
   </DocPage>
