@@ -12,5 +12,5 @@ export default (siteVariables): EmbedVariables => ({
 
   width: undefined,
   height: undefined,
-  focusBorderColor: siteVariables.colors.primary[500],
+  focusBorderColor: siteVariables.colors.brand[500],
 })

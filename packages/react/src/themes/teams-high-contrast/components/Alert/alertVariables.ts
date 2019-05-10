@@ -16,8 +16,6 @@ export default (siteVars: any): Partial<AlertVariables> & AlertHighContrastVaria
     hoverBackgroundColor: siteVars.accessibleYellow,
     focusBackgroundColor: siteVars.accessibleCyan,
 
-    focusInnerBorderColor: siteVars.colors.black,
-
     dangerColor: siteVars.colors.black,
     dangerBackgroundColor: siteVars.colors.white,
     dangerBorderColor: siteVars.colors.white,

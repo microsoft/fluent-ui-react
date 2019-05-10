@@ -1,26 +1,27 @@
 import * as _ from 'lodash'
 
 import { childrenExist, pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesInput, ICSSInJSStyle, ColorScheme } from '../../../types'
 import { DividerPropsWithDefaults } from '../../../../components/Divider/Divider'
 import { DividerVariables } from './dividerVariables'
 
 const beforeAndAfter = (
-  color: string,
   size: number,
   variables: DividerVariables,
+  colors: ColorScheme,
 ): ICSSInJSStyle => ({
   content: '""',
   flex: 1,
   height: `${size + 1}px`,
-  background: _.get(variables.colors, color, variables.dividerColor),
+  background: _.get(colors, 'foreground', variables.dividerColor),
 })
 
 const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, DividerVariables> = {
   root: ({ props, variables }): ICSSInJSStyle => {
     const { children, color, fitted, size, important, content } = props
+    const colors = variables.colorScheme[color]
     return {
-      color: _.get(variables.colors, color, variables.textColor),
+      color: _.get(colors, 'foreground', variables.textColor),
       display: 'flex',
       alignItems: 'center',
       ...(!fitted && {
@@ -36,17 +37,17 @@ const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, DividerV
             fontSize: pxToRem(12 + size),
             lineHeight: variables.textLineHeight,
             '::before': {
-              ...beforeAndAfter(color, size, variables),
+              ...beforeAndAfter(size, variables, colors),
               marginRight: pxToRem(20),
             },
             '::after': {
-              ...beforeAndAfter(color, size, variables),
+              ...beforeAndAfter(size, variables, colors),
               marginLeft: pxToRem(20),
             },
           }
         : {
             '::before': {
-              ...beforeAndAfter(color, size, variables),
+              ...beforeAndAfter(size, variables, colors),
             },
           }),
     }

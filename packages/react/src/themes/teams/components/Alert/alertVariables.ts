@@ -17,9 +17,6 @@ export interface AlertVariables {
   actionSize: string
   actionColor: string
 
-  focusInnerBorderColor: string
-  focusOuterBorderColor: string
-
   dangerColor: string
   dangerBackgroundColor: string
   dangerBorderColor: string
@@ -46,9 +43,9 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     borderStyle: 'solid',
     borderWidth: '1px',
     borderRadius: pxToRem(3),
-    backgroundColor: siteVars.colors.grey[50],
-    borderColor: siteVars.gray06,
-    color: siteVars.gray02,
+    backgroundColor: siteVars.colors.grey[50], // $app-white
+    borderColor: siteVars.colors.grey[250],
+    color: siteVars.colors.grey[500],
     fontWeight: siteVars.fontWeightRegular,
     minHeight,
     padding: `0 0 0 ${pxToRem(16)}`,
@@ -56,25 +53,22 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     actionSize: minHeight,
     actionColor: undefined,
 
-    focusInnerBorderColor: siteVars.colors.white,
-    focusOuterBorderColor: siteVars.colors.black,
-
-    dangerColor: siteVars.red, // red[400] when new color palette PR goes in
-    dangerBackgroundColor: siteVars.red10, // red[50] when new color palette PR goes in
-    dangerBorderColor: siteVars.red08, // red[100] when new color palette PR goes in
+    dangerColor: siteVars.colors.red[400],
+    dangerBackgroundColor: siteVars.colors.red[50],
+    dangerBorderColor: siteVars.colors.red[100],
 
     oof: false,
-    oofColor: siteVars.orchid, // pink[600] when new color palette PR goes in
-    oofBackgroundColor: '#fcf2fa', // pink[50] when new color palette PR goes in
-    oofBorderColor: '#f1dfee', // pink[100] when new color palette PR goes in
+    oofColor: siteVars.colors.pink[600],
+    oofBackgroundColor: siteVars.colors.pink[50],
+    oofBorderColor: siteVars.colors.pink[100],
 
-    infoColor: siteVars.gray02,
-    infoBackgroundColor: siteVars.gray09,
-    infoBorderColor: siteVars.gray08,
+    infoColor: siteVars.colors.grey[500],
+    infoBackgroundColor: siteVars.colors.grey[150],
+    infoBorderColor: siteVars.colors.grey[200],
 
     urgent: false,
     urgentColor: siteVars.colors.white,
-    urgentBackgroundColor: siteVars.red,
-    urgentBorderColor: siteVars.red,
+    urgentBackgroundColor: siteVars.colors.red[400],
+    urgentBorderColor: siteVars.colors.red[400],
   }
 }

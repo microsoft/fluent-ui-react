@@ -23,6 +23,11 @@ import Header from '../Header/Header'
 import Portal from '../Portal/Portal'
 import Flex from '../Flex/Flex'
 
+export interface DialogSlotClassNames {
+  header: string
+  content: string
+}
+
 export interface DialogProps
   extends UIComponentProps,
     ContentComponentProps<ShorthandValue>,
@@ -93,10 +98,13 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
   static displayName = 'Dialog'
   static className = 'ui-dialog'
 
+  static slotClassNames: DialogSlotClassNames
+
   static propTypes = {
     ...commonPropTypes.createCommon({
       children: false,
       content: 'shorthand',
+      color: true,
     }),
     actions: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
@@ -201,12 +209,16 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
           {Header.create(header, {
             defaultProps: {
               as: 'h2',
+              className: Dialog.slotClassNames.header,
               styles: styles.header,
+              ...accessibility.attributes.header,
             },
           })}
           {Box.create(content, {
             defaultProps: {
               styles: styles.content,
+              className: Dialog.slotClassNames.content,
+              ...accessibility.attributes.content,
             },
           })}
 
@@ -254,6 +266,11 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
       </Portal>
     )
   }
+}
+
+Dialog.slotClassNames = {
+  header: `${Dialog.className}__header`,
+  content: `${Dialog.className}__content`,
 }
 
 export default Dialog
