@@ -30,6 +30,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `mountNode` and `mountDocument` props to allow proper multi-window rendering ([#1288](https://github.com/stardust-ui/react/pull/1288))
 - Added default and brand color schemes in Teams' theme @mnajdova ([#1069](https://github.com/stardust-ui/react/pull/1069))
 - Export `files-upload` SVG icon for `Teams` theme @manindr ([#1293](https://github.com/stardust-ui/react/pull/1293))
+- Export `qna` and `yammer` SVG icons for `Teams` theme @manindr ([#1325](https://github.com/stardust-ui/react/pull/1325))
 
 ### Fixes
 - Fix double rendering of `Popup` component @layershifter ([#1153](https://github.com/stardust-ui/react/pull/1153))
