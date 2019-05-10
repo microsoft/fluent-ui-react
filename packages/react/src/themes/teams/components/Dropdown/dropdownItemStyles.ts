@@ -16,6 +16,10 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
         backgroundColor: v.listItemBackgroundColorHover,
       }),
     }),
+    ...(p.selected && {
+      // TODO: define selected state
+      backgroundColor: 'blue',
+    }),
   }),
 }
 

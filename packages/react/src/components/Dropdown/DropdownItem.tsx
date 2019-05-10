@@ -30,7 +30,7 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   /** Item's image. */
   image?: ShorthandValue
 
-  /** Indicated whether the item has ben set active by keyboard. */
+  /** Indicated whether the item has been set active by keyboard. */
   isFromKeyboard?: boolean
 
   /**
@@ -40,6 +40,9 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
    * @param {object} data - All props and proposed value.
    */
   onClick?: ComponentEventHandler<DropdownItemProps>
+
+  /** A dropdown item can be selected if single selection Dropdown is used. */
+  selected?: boolean
 }
 
 /**
@@ -68,6 +71,7 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>> {
     image: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
     isFromKeyboard: PropTypes.bool,
+    selected: PropTypes.bool,
   }
 
   private handleClick = e => {

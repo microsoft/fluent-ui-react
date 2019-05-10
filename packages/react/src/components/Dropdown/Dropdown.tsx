@@ -208,6 +208,7 @@ export interface DropdownState {
   highlightedIndex: number
   value: ShorthandValue | ShorthandCollection
   isFromKeyboard: boolean
+  selectedIndex: number
 }
 
 /**
@@ -315,6 +316,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
       isFromKeyboard: false,
+      selectedIndex: -1,
     }
   }
 
@@ -341,7 +343,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       itemToString,
       toggleIndicator,
     } = this.props
-    const { highlightedIndex, open, searchQuery, value } = this.state
+    const { highlightedIndex, open, searchQuery, value, selectedIndex } = this.state
 
     return (
       <ElementType className={classes.root} {...unhandledProps}>
@@ -432,6 +434,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
                     getMenuProps,
                     getItemProps,
                     getInputProps,
+                    selectedIndex,
                   )}
                 </div>
               </Ref>
@@ -529,6 +532,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     getMenuProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     getInputProps: (options?: GetInputPropsOptions) => any,
+    selectedIndex: number,
   ) {
     const { search } = this.props
     const { open } = this.state
@@ -569,7 +573,11 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           aria-hidden={!open}
           onFocus={this.handleTriggerButtonOrListFocus}
           onBlur={this.handleListBlur}
-          items={open ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []}
+          items={
+            open
+              ? this.renderItems(styles, variables, getItemProps, highlightedIndex, selectedIndex)
+              : []
+          }
         />
       </Ref>
     )
@@ -580,6 +588,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     variables: ComponentVariablesInput,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     highlightedIndex: number,
+    selectedIndex: number,
   ) {
     const { loading, loadingMessage, noResultsMessage, renderItem } = this.props
     const filteredItems = this.getItemsFilteredBySearchQuery()
@@ -589,6 +598,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         defaultProps: {
           className: Dropdown.slotClassNames.item,
           active: highlightedIndex === index,
+          selected: selectedIndex === index,
           isFromKeyboard: this.state.isFromKeyboard,
           variables,
           ...(typeof item === 'object' &&
@@ -669,6 +679,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
   }
 
   private handleStateChange = (changes: StateChangeOptions<ShorthandValue>) => {
+    if (!this.props.multiple && changes.selectedItem) {
+      this.setState({ selectedIndex: this.props.items.indexOf(changes.selectedItem) })
+    }
     if (changes.isOpen !== undefined && changes.isOpen !== this.state.open) {
       const newState = { open: changes.isOpen, highlightedIndex: this.state.highlightedIndex }
 
