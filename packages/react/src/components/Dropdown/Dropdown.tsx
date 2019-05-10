@@ -598,7 +598,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         defaultProps: {
           className: Dropdown.slotClassNames.item,
           active: highlightedIndex === index,
-          selected: selectedIndex === index,
+          selected: !this.props.multiple ? selectedIndex === index : false,
           isFromKeyboard: this.state.isFromKeyboard,
           variables,
           ...(typeof item === 'object' &&
