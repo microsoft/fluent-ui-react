@@ -7,7 +7,7 @@ import { ReactProps } from '../../types'
 
 export interface PortalInnerProps extends ChildrenComponentProps {
   /** Existing element the portal should be bound to. */
-  context?: HTMLElement
+  mountNode?: HTMLElement
 
   /**
    * Called when the portal is mounted on the DOM
@@ -28,7 +28,7 @@ export interface PortalInnerProps extends ChildrenComponentProps {
  * An inner component that allows you to render children outside their parent.
  */
 class PortalInner extends React.Component<ReactProps<PortalInnerProps>> {
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
       animated: false,
@@ -37,27 +37,27 @@ class PortalInner extends React.Component<ReactProps<PortalInnerProps>> {
       content: false,
       styled: false,
     }),
-    context: PropTypes.object,
+    mountNode: PropTypes.object,
     onMount: PropTypes.func,
     onUnmount: PropTypes.func,
   }
 
-  public static defaultProps = {
-    context: isBrowser() ? document.body : null,
+  static defaultProps = {
+    mountNode: isBrowser() ? document.body : null,
   }
 
-  public componentDidMount() {
+  componentDidMount() {
     _.invoke(this.props, 'onMount', this.props)
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     _.invoke(this.props, 'onUnmount', this.props)
   }
 
-  public render() {
-    const { children, context } = this.props
+  render() {
+    const { children, mountNode } = this.props
 
-    return context && ReactDOM.createPortal(children, context)
+    return mountNode && ReactDOM.createPortal(children, mountNode)
   }
 }
 
