@@ -30,11 +30,6 @@ export interface PositionCommonProps {
 
 interface PositionerProps extends PopperProps, PositionCommonProps {
   /**
-   * Content for children using render props API.
-   */
-  children: (props: PopperChildrenProps) => React.ReactNode
-
-  /**
    * rtl attribute for the component
    */
   rtl?: boolean
