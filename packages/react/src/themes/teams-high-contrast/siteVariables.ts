@@ -1,5 +1,6 @@
-export * from './colors'
 import { colors } from '../teams/siteVariables'
+import { accessibleCyan } from './colors'
+export * from './colors'
 
 //
 // BORDER STYLES
