@@ -28,22 +28,13 @@ export default () => (
     <Answer
       content={
         <p>
-          We recommend to render links from react router as Buttons as below:
+          We recommend to render links from React Router as Buttons as below:
           <CodeSnippet
             value={`
-      <>
-          import { Link } from 'react-router-dom'
-          
-          <Button
-            as={Link}
-            content={previous.name}
-            icon="arrow left"
-            iconPosition="before"
-            primary
-            to={previous.url}
-          />
-      </>
-      `}
+            import { Link } from 'react-router-dom'
+
+            <Button as={Link} content={previous.name} to={previous.url} />
+          `}
           />
         </p>
       }
