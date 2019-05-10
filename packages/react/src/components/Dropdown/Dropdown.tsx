@@ -207,6 +207,7 @@ export interface DropdownState {
   searchQuery: string
   highlightedIndex: number
   value: ShorthandValue | ShorthandCollection
+  isFromKeyboard: boolean
 }
 
 /**
@@ -313,6 +314,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       highlightedIndex: this.props.highlightFirstItemOnOpen ? 0 : null,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
+      isFromKeyboard: false,
     }
   }
 
@@ -587,6 +589,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
         defaultProps: {
           className: Dropdown.slotClassNames.item,
           active: highlightedIndex === index,
+          isFromKeyboard: this.state.isFromKeyboard,
           variables,
           ...(typeof item === 'object' &&
             !item.hasOwnProperty('key') && {
@@ -685,7 +688,8 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
 
     if (this.state.open && _.isNumber(changes.highlightedIndex)) {
-      this.trySetState({ highlightedIndex: changes.highlightedIndex })
+      const isFromKeyboard = changes.type !== Downshift.stateChangeTypes.itemMouseEnter
+      this.trySetState({ highlightedIndex: changes.highlightedIndex, isFromKeyboard })
     }
   }
 

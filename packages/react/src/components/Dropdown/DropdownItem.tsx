@@ -9,6 +9,7 @@ import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
 import Box from '../Box/Box'
+import { setWhatInputSource } from 'src/lib'
 
 export interface DropdownItemSlotClassNames {
   content: string
@@ -36,6 +37,8 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
    * @param {object} data - All props and proposed value.
    */
   onClick?: ComponentEventHandler<DropdownItemProps>
+
+  isFromKeyboard?: boolean
 }
 
 /**
@@ -63,10 +66,16 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>> {
     header: customPropTypes.itemShorthand,
     image: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
+    isFromKeyboard: PropTypes.bool,
   }
 
   private handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
+  }
+
+  private onMouseEnter = (e, ...args) => {
+    setWhatInputSource('mouse')
+    _.invoke(this.props, 'onMouseEnter', e, ...args)
   }
 
   public renderComponent({
@@ -78,13 +87,14 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>> {
     return (
       <ListItem
         styles={styles.root}
+        onClick={this.handleClick}
+        onMouseEnter={this.onMouseEnter}
         header={Box.create(header, {
           defaultProps: {
             className: DropdownItem.slotClassNames.header,
             styles: styles.header,
           },
         })}
-        onClick={this.handleClick}
         media={Image.create(image, {
           defaultProps: {
             avatar: true,

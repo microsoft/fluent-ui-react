@@ -36,10 +36,10 @@ export interface DropdownVariables {
 const [_2px_asRem, _3px_asRem, _12px_asRem] = [2, 3, 12].map(v => pxToRem(v))
 
 export default (siteVars): DropdownVariables => ({
-  backgroundColor: siteVars.gray10, // colors.grey[100] when new color palette checks in
-  backgroundColorHover: '#EDEBE9', // colors.grey[150] when new color palette checks in
+  backgroundColor: siteVars.colors.grey[100],
+  backgroundColorHover: siteVars.colors.grey[150],
   borderColor: 'transparent',
-  borderColorFocus: siteVars.colors.primary[500], // colors.primary[600
+  borderColorFocus: siteVars.colors.brand[600],
   borderRadius: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
   openBorderRadius: `${_3px_asRem} ${_3px_asRem} 0 0`,
   borderWidth: '0px',
@@ -56,13 +56,13 @@ export default (siteVars): DropdownVariables => ({
   listBoxShadow: `0 .2rem .6rem 0 ${siteVars.colors.grey[250]}`,
   listMaxHeight: pxToRem(296),
   listItemBackgroundColor: siteVars.colors.white,
-  listItemColorHover: '#252423', // colors.grey[750] when new color palette checks in
-  listItemBackgroundColorHover: siteVars.gray10, // colors.grey[100] when new color palette checks in
-  listItemBackgroundColorActive: siteVars.gray10, // colors.grey[100] when new color palette checks in TODO: what is active?!
-  listItemColorActive: '#252423', // colors.grey[750] when new color palette checks in
+  listItemColorHover: siteVars.colors.grey[750],
+  listItemBackgroundColorHover: siteVars.colors.grey[100],
+  listItemBackgroundColorActive: siteVars.colors.grey[100],
+  listItemColorActive: siteVars.colors.grey[750],
   selectedItemBackgroundColor: undefined,
   selectedItemColorFocus: siteVars.bodyColor,
-  selectedItemBackgroundColorFocus: siteVars.colors.primary[100],
+  selectedItemBackgroundColorFocus: siteVars.colors.brand[200],
   selectedItemsMaxHeight: pxToRem(82),
   toggleIndicatorSize: pxToRem(32),
   triggerButtonColorHover: siteVars.bodyColor,

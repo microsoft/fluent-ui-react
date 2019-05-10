@@ -7,13 +7,15 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
     whiteSpace: 'nowrap',
     backgroundColor: v.listItemBackgroundColor,
     ...(p.active && {
-      color: v.listItemColorActive,
-      backgroundColor: v.listItemBackgroundColorActive,
+      ...(p.isFromKeyboard && {
+        // TODO: define here focus state
+        background: 'green',
+      }),
+      ...(!p.isFromKeyboard && {
+        color: v.listItemColorHover,
+        backgroundColor: v.listItemBackgroundColorHover,
+      }),
     }),
-    ':hover': {
-      color: v.listItemColorHover,
-      backgroundColor: v.listItemBackgroundColorHover,
-    },
   }),
 }
 
