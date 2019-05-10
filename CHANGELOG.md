@@ -16,6 +16,8 @@
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### BREAKING CHANGES
+- Aligned focus styles for `Chat.Message` component with latest Teams theme design @Bugaa92 ([#1269](https://github.com/stardust-ui/react/pull/1269))
 
 ### BREAKING CHANGES
 - Restrict Typescript checks for component props @kuzhelov ([#1290](https://github.com/stardust-ui/react/pull/1290))
