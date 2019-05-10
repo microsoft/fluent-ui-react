@@ -27,6 +27,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - `Ref` component extracted to a `@stardust-ui/react-component-ref` @layershifter ([#1281](https://github.com/stardust-ui/react/pull/1281))
 - added `isRefObject()`, `toRefObject()` utils for React refs @layershifter ([#1281](https://github.com/stardust-ui/react/pull/1281))
 - Add new callings icons in Teams theme @codepretty ([#1264](https://github.com/stardust-ui/react/pull/1264))
+- Add default aria-labelledby and aria-describedby to Dialog @silviuavram ([#1298](https://github.com/stardust-ui/react/pull/1298))
 - Add `mountNode` and `mountDocument` props to allow proper multi-window rendering ([#1288](https://github.com/stardust-ui/react/pull/1288))
 - Added default and brand color schemes in Teams' theme @mnajdova ([#1069](https://github.com/stardust-ui/react/pull/1069))
 - Export `files-upload` SVG icon for `Teams` theme @manindr ([#1293](https://github.com/stardust-ui/react/pull/1293))
