@@ -30,7 +30,7 @@ interface UpdatableListProps {
 const UpdatableComponent: React.FunctionComponent<Extendable<UpdatableListProps>> = props => {
   const { Component, innerRef, scheduleUpdate, updateDependencies, ...rest } = props
 
-  React.useEffect(() => scheduleUpdate && scheduleUpdate(), updateDependencies)
+  React.useEffect(() => scheduleUpdate(), updateDependencies)
 
   if (!innerRef) return <Component {...rest} />
   return (

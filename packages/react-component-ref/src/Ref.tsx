@@ -14,7 +14,7 @@ export interface RefProps {
    *
    * @param {HTMLElement} node - Referred node.
    */
-  innerRef: React.Ref<HTMLElement>
+  innerRef: React.Ref<any>
 }
 
 const Ref: React.FunctionComponent<RefProps> = props => {

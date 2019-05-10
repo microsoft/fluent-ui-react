@@ -247,7 +247,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       content: false,
     }),
     activeSelectedIndex: PropTypes.number,
-    align: PropTypes.oneOf(_.without(ALIGNMENTS)),
+    align: PropTypes.oneOf(ALIGNMENTS),
     clearable: PropTypes.bool,
     clearIndicator: customPropTypes.itemShorthand,
     defaultActiveSelectedIndex: PropTypes.number,
