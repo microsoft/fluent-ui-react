@@ -3,8 +3,8 @@ import { ComponentSlotStylesInput, ICSSInJSStyle, ColorScheme } from '../../../t
 import { Extendable } from '../../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
-import { teamsIconClassNames } from '../Icon/svg'
 import { getColorScheme } from '../../colors'
+import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
@@ -333,14 +333,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         ...(iconOnly && {
           borderRadius: '50%',
           borderColor: v.iconOnlyColorActive,
-
-          [`& .${teamsIconClassNames.filled}`]: {
-            display: 'block',
-          },
-
-          [`& .${teamsIconClassNames.outline}`]: {
-            display: 'none',
-          },
+          ...getIconFillOrOutlineStyles({ outline: false }),
         }),
 
         ...(primary
@@ -369,15 +362,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       ':hover': {
         color: 'inherit',
 
-        ...(iconOnly && {
-          [`& .${teamsIconClassNames.filled}`]: {
-            display: 'block',
-          },
-
-          [`& .${teamsIconClassNames.outline}`]: {
-            display: 'none',
-          },
-        }),
+        ...(iconOnly && getIconFillOrOutlineStyles({ outline: false })),
 
         ...(primary
           ? {

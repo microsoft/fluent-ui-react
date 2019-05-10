@@ -134,6 +134,7 @@ export interface AriaRelationshipAttributes {
 export interface AccessibilityAttributes extends AriaWidgetAttributes, AriaRelationshipAttributes {
   role?: AriaRole
   tabIndex?: number
+  id?: string
   [IS_FOCUSABLE_ATTRIBUTE]?: boolean
 }
 
