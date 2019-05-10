@@ -2,6 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 
 import {
   AutoControlledComponent,
@@ -10,11 +11,12 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
+import { accordionBehavior } from '../../lib/accessibility'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
-import { defaultBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
 import {
   ComponentEventHandler,
@@ -22,6 +24,7 @@ import {
   ShorthandValue,
   ShorthandRenderFunction,
 } from '../../types'
+import { ContainerFocusHandler } from 'src/lib/accessibility/FocusHandling/FocusContainer'
 
 export interface AccordionSlotClassNames {
   content: string
@@ -120,13 +123,51 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
   }
 
   public static defaultProps = {
-    accessibility: defaultBehavior as Accessibility,
+    accessibility: accordionBehavior,
   }
 
   static autoControlledProps = ['activeIndex']
 
   static Title = AccordionTitle
   static Content = AccordionContent
+
+  private focusHandler: ContainerFocusHandler = null
+  private itemRefs = []
+
+  actionHandlers: AccessibilityActionHandlers = {
+    moveNext: e => {
+      e.preventDefault()
+      this.focusHandler.moveNext()
+    },
+    movePrevious: e => {
+      e.preventDefault()
+      this.focusHandler.movePrevious()
+    },
+    moveFirst: e => {
+      e.preventDefault()
+      this.focusHandler.moveFirst()
+    },
+    moveLast: e => {
+      e.preventDefault()
+      this.focusHandler.moveLast()
+    },
+  }
+
+  constructor(props, context) {
+    super(props, context)
+
+    this.focusHandler = new ContainerFocusHandler(
+      () => this.props.panels.length,
+      index => {
+        this.setState({ focusedIndex: index }, () => {
+          const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
+          const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
+
+          targetDomNode && targetDomNode.focus()
+        })
+      },
+    )
+  }
 
   getInitialAutoControlledState({ exclusive }) {
     return { activeIndex: exclusive ? -1 : [-1] }
@@ -163,14 +204,17 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
   renderPanels = () => {
     const children: any[] = []
     const { panels, renderPanelContent, renderPanelTitle } = this.props
+    this.itemRefs = []
 
     _.each(panels, (panel, index) => {
       const { content, title } = panel
       const active = this.isIndexActive(index)
+      const ref = React.createRef()
+      this.itemRefs[index] = ref
 
       children.push(
         AccordionTitle.create(title, {
-          defaultProps: { className: Accordion.slotClassNames.title, active, index },
+          defaultProps: { className: Accordion.slotClassNames.title, active, index, ref },
           overrideProps: this.handleTitleOverrides,
           render: renderPanelTitle,
         }),
@@ -194,6 +238,7 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         className={classes.root}
       >
         {childrenExist(children) ? children : this.renderPanels()}

@@ -16,6 +16,7 @@ import {
 import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../types'
 import Icon from '../Icon/Icon'
 import Layout from '../Layout/Layout'
+import { accordionTitleBehavior } from '../../lib/accessibility'
 
 export interface AccordionTitleProps
   extends UIComponentProps,
@@ -57,11 +58,15 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     indicator: customPropTypes.itemShorthand,
   }
 
+  static defaultProps = {
+    accessibility: accordionTitleBehavior,
+  }
+
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, styles }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
     const { children, content, indicator, active } = this.props
     const indicatorWithDefaults = indicator === undefined ? {} : indicator
 
@@ -81,6 +86,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
       <ElementType
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
+        {...accessibility.attributes.root}
         className={classes.root}
         onClick={this.handleClick}
       >
