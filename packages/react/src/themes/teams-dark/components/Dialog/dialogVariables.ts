@@ -2,7 +2,7 @@ import { DialogVariables } from '../../../teams/components/Dialog/dialogVariable
 
 export default (siteVars: any): Partial<DialogVariables> => {
   return {
-    rootBackground: siteVars.colors.gray[650],
+    rootBackground: siteVars.colors.grey[650],
     foregroundColor: siteVars.colors.white,
   }
 }
