@@ -16,13 +16,15 @@ const transparentColorStyle: ICSSInJSStyle = {
 
 const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVariablesHOC> = {
   container: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    ':hover': {
-      backgroundColor: v.backgroundColorHover,
-      borderColor: v.borderColorHover,
-      [`& .${Dropdown.slotClassNames.triggerButton}`]: {
-        color: v.triggerButtonColorHover,
+    ...(!p.open && {
+      ':hover': {
+        backgroundColor: v.backgroundColorHover,
+        borderColor: v.borderColorHover,
+        [`& .${Dropdown.slotClassNames.triggerButton}`]: {
+          color: v.triggerButtonColorHover,
+        },
       },
-    },
+    }),
   }),
 
   triggerButton: ({ props: p, variables: v }): ICSSInJSStyle => ({
