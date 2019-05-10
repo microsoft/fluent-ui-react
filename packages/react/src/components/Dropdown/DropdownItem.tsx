@@ -85,6 +85,7 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>> {
     const { content, header, image, accessibilityItemProps } = this.props
     return (
       <ListItem
+        className={DropdownItem.className}
         styles={styles.root}
         onClick={this.handleClick}
         header={Box.create(header, {
