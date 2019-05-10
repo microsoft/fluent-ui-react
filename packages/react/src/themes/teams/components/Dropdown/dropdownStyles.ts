@@ -6,6 +6,7 @@ import {
 } from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
 import { pxToRem } from '../../../../lib'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 type DropdownPropsAndState = DropdownProps & DropdownState
 
@@ -68,7 +69,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
 
   clearIndicator: getIndicatorStyles,
 
-  container: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  container: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     display: 'flex',
     flexWrap: 'wrap',
     position: 'relative',
@@ -86,7 +87,15 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
         // reset all styles
       },
     },
-    ...(p.focused && p.search && { borderBottomColor: v.borderColorFocus }),
+    ...(p.focused && {
+      ...(p.search && { borderBottomColor: v.borderColorFocus }),
+      ...(!p.search &&
+        !p.open &&
+        getBorderFocusStyles({
+          siteVariables,
+          isFromKeyboard: true,
+        })[':focus']),
+    }),
     ...(p.inline && {
       ...transparentColorStyleObj,
       alignItems: 'center',

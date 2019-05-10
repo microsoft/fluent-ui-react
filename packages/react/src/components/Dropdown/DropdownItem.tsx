@@ -9,7 +9,6 @@ import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
 import Box from '../Box/Box'
-import { setWhatInputSource } from 'src/lib'
 
 export interface DropdownItemSlotClassNames {
   content: string
@@ -78,11 +77,6 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  private onMouseEnter = (e, ...args) => {
-    setWhatInputSource('mouse')
-    _.invoke(this.props, 'onMouseEnter', e, ...args)
-  }
-
   public renderComponent({
     classes,
     styles,
@@ -93,7 +87,6 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>> {
       <ListItem
         styles={styles.root}
         onClick={this.handleClick}
-        onMouseEnter={this.onMouseEnter}
         header={Box.create(header, {
           defaultProps: {
             className: DropdownItem.slotClassNames.header,

@@ -1,6 +1,7 @@
 import { DropdownSelectedItemProps } from '../../../../components/Dropdown/DropdownSelectedItem'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { DropdownVariables } from './dropdownVariables'
+import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const dropdownSelectedItemStyles: ComponentSlotStylesInput<
   DropdownSelectedItemProps,
@@ -20,6 +21,13 @@ const dropdownSelectedItemStyles: ComponentSlotStylesInput<
     ':hover': {
       color: v.selectedItemColorFocus,
       backgroundColor: v.selectedItemBackgroundColorFocus,
+    },
+  }),
+  icon: ({ variables: v }) => ({
+    ...getIconFillOrOutlineStyles({ outline: true }),
+    ':hover': {
+      color: v.selectedItemColorFocus,
+      ...getIconFillOrOutlineStyles({ outline: false }),
     },
   }),
 }
