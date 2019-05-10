@@ -14,9 +14,9 @@ import * as _ from 'lodash'
  * Adds attribute 'role=dialog' to 'popup' component's part.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'popup' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'popup' component's part.
- * Adds attribute 'id' based on the property 'id' of the 'header' component property to the 'header' component's part.
- * Adds attribute 'id' based on the property 'id' of the 'content' component property to the 'content' component's part.
  * Adds attribute 'role=dialog' to 'popup' component's part.
+ * Generates unique ID and adds it as attribute 'id' to the 'header' component's part if it has not been provided by the user.
+ * Generates unique ID and adds it as attribute 'id' to the 'content' component's part if it has not been provided by the user.
  * Traps focus inside component.
  */
 const dialogBehavior: Accessibility = (props: any) => {

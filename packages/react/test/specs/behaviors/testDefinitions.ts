@@ -127,19 +127,14 @@ definitions.push({
   },
 })
 
-// Example: Adds attribute 'id' based on the property 'id' of the 'content' component property to the 'content' component's part.
+// Example: Generates unique ID and adds it as attribute 'id' to the 'header' component's part if it has not been provided by the user.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)' based on the property '([\w-]+)' of the '([\w-]+)' component property to the '([\w-]+)' component's part\./g,
+  regexp: /Generates unique ID and adds it as attribute '([\w-]+)' to the '([\w-]+)' component's part if it has not been provided by the user\./g,
   testMethod: (parameters: TestMethod) => {
-    const [
-      attributeToBeAdded,
-      subPropertyOfComponentProperty,
-      propertyDependingOn,
-      elementWhereToBeAdded,
-    ] = [...parameters.props]
+    const [attributeToBeAdded, elementWhereToBeAdded] = [...parameters.props]
     const property = {}
     const propertyDependingOnValue = 'value of property'
-    property[propertyDependingOn] = { [subPropertyOfComponentProperty]: propertyDependingOnValue }
+    property[elementWhereToBeAdded] = { id: propertyDependingOnValue }
     const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
       attributeToBeAdded
     ]
