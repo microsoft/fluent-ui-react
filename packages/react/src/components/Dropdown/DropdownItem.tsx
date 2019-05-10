@@ -30,6 +30,9 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   /** Item's image. */
   image?: ShorthandValue
 
+  /** Indicated whether the item has ben set active by keyboard. */
+  isFromKeyboard?: boolean
+
   /**
    * Called on dropdown item click.
    *
@@ -37,8 +40,6 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
    * @param {object} data - All props and proposed value.
    */
   onClick?: ComponentEventHandler<DropdownItemProps>
-
-  isFromKeyboard?: boolean
 }
 
 /**

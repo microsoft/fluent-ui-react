@@ -19,7 +19,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     ':hover': {
       backgroundColor: v.backgroundColorHover,
       borderColor: v.borderColorHover,
-      [`.${Dropdown.slotClassNames.triggerButton}`]: {
+      [`& .${Dropdown.slotClassNames.triggerButton}`]: {
         color: v.triggerButtonColorHover,
       },
     },

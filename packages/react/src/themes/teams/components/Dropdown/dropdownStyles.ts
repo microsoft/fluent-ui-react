@@ -82,7 +82,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     backgroundColor: v.backgroundColor,
     ':hover': {
       backgroundColor: v.backgroundColorHover,
-      [`.${Dropdown.slotClassNames.triggerButton}`]: {
+      [`& .${Dropdown.slotClassNames.triggerButton}`]: {
         // reset all styles
       },
     },
