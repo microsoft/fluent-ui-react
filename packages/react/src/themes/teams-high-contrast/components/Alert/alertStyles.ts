@@ -1,7 +1,7 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { AlertProps } from '../../../../components/Alert/Alert'
 import { AlertHighContrastVariables } from './alertVariables'
-import getBorderFocusStyles from 'src/themes/teams/getBorderFocusStyles'
+import getBorderFocusStyles from '../../../teams/getBorderFocusStyles'
 
 const alertStyles: ComponentSlotStylesInput<AlertProps, AlertHighContrastVariables> = {
   action: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => ({
