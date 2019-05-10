@@ -1,6 +1,7 @@
+import { DialogVariables as BaseDialogVariables } from '../../../base/components/Dialog/dialogVariables'
 import { pxToRem } from '../../../../lib'
 
-export interface DialogVariables {
+export interface DialogVariables extends BaseDialogVariables {
   boxShadow: string
   foregroundColor: string
 
@@ -34,6 +35,6 @@ export default (siteVariables): DialogVariables => ({
   headerFontWeight: siteVariables.fontWeightBold,
   headerMargin: `0 0 ${pxToRem(8)} 0`,
 
-  overlayBackground: 'rgba(37, 36, 36, .74)', // todo: ask daisy what this color should map to
+  overlayBackground: 'rgba(37, 36, 36, .75)', // todo: update to a palette value when daisy has mapped one
   overlayZIndex: 1000,
 })
