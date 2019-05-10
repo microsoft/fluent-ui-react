@@ -32,7 +32,7 @@ import {
   UIComponentProps,
   isFromKeyboard,
 } from '../../lib'
-import List, { ListProps } from '../List/List'
+import List from '../List/List'
 import DropdownItem, { DropdownItemProps } from './DropdownItem'
 import DropdownSelectedItem, { DropdownSelectedItemProps } from './DropdownSelectedItem'
 import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'
@@ -41,13 +41,7 @@ import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/acce
 import ListItem from '../List/ListItem'
 import Icon, { IconProps } from '../Icon/Icon'
 import Portal from '../Portal/Portal'
-import {
-  ALIGNMENTS,
-  POSITIONS,
-  Positioner,
-  PositionCommonProps,
-  UpdatableComponent,
-} from '../../lib/positioner'
+import { ALIGNMENTS, POSITIONS, Positioner, PositionCommonProps } from '../../lib/positioner'
 
 export interface DropdownSlotClassNames {
   clearIndicator: string
@@ -485,7 +479,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                           },
                         }),
                       })}
-                  {this.preparePropsAndRenderItemsList(
+                  {this.renderItemsList(
                     styles,
                     variables,
                     highlightedIndex,
@@ -606,7 +600,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     })
   }
 
-  private preparePropsAndRenderItemsList(
+  private renderItemsList(
     styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
     highlightedIndex: number,
@@ -618,8 +612,11 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     value: ShorthandValue | ShorthandCollection,
     rtl: boolean,
   ) {
-    const { search } = this.props
+    const { align, offset, position, search } = this.props
     const { open } = this.state
+    const items = open
+      ? this.renderItems(styles, variables, getItemProps, highlightedIndex, value)
+      : []
     const { innerRef, ...accessibilityMenuProps } = getMenuProps(
       { refKey: 'innerRef' },
       { suppressRefError: true },
@@ -649,46 +646,28 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           handleRef(innerRef, listElement)
         }}
       >
-        {this.renderItemsList(
-          {
-            className: Dropdown.slotClassNames.itemsList,
-            ...accessibilityMenuProps,
-            styles: styles.list,
-            tabIndex: search ? undefined : -1, // needs to be focused when trigger button is activated.
-            'aria-hidden': !open,
-            onFocus: this.handleTriggerButtonOrListFocus,
-            onBlur: this.handleListBlur,
-            items: open
-              ? this.renderItems(styles, variables, getItemProps, highlightedIndex, value)
-              : [],
-          },
-          rtl,
-        )}
+        <Positioner
+          align={align}
+          position={position}
+          offset={offset}
+          rtl={rtl}
+          target={this.selectedItemsRef}
+          positioningDependencies={[items.length]}
+          children={popperChildrenProps => (
+            <List
+              className={Dropdown.slotClassNames.itemsList}
+              {...accessibilityMenuProps}
+              style={popperChildrenProps.style}
+              styles={styles.list}
+              tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
+              aria-hidden={!open}
+              onFocus={this.handleTriggerButtonOrListFocus}
+              onBlur={this.handleListBlur}
+              items={items}
+            />
+          )}
+        />
       </Ref>
-    )
-  }
-
-  private renderItemsList(listProps: ListProps, rtl: boolean): JSX.Element {
-    const { align, position, offset } = this.props
-
-    return (
-      <Positioner
-        align={align}
-        position={position}
-        offset={offset}
-        rtl={rtl}
-        target={this.selectedItemsRef}
-        children={popperChildrenProps => (
-          <UpdatableComponent
-            Component={List}
-            innerRef={popperChildrenProps.ref}
-            scheduleUpdate={popperChildrenProps.scheduleUpdate}
-            updateDependencies={[listProps.items.length]}
-            style={popperChildrenProps.style}
-            {...listProps}
-          />
-        )}
-      />
     )
   }
 
@@ -1317,8 +1296,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   }
 
   private getToggleIndicatorIconName = (): string => {
-    const { position, open } = this.props
-    const positionedAbove = position === 'above'
+    const { open } = this.state
+    const positionedAbove = this.props.position === 'above'
 
     return (open && !positionedAbove) || (!open && positionedAbove)
       ? 'stardust-arrow-up'

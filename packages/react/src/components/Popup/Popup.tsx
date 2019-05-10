@@ -402,13 +402,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     rtl: boolean,
     accessibility: AccessibilityBehavior,
     // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
-    {
-      arrowProps,
-      placement,
-      ref,
-      scheduleUpdate,
-      style: popupPlacementStyles,
-    }: PopperChildrenProps,
+    { arrowProps, placement, scheduleUpdate, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
     const { content: propsContent, renderContent, contentRef, mountDocument, pointing } = this.props
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
@@ -457,7 +451,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
           <>
             <Ref
               innerRef={domElement => {
-                ref(domElement)
                 this.popupDomElement = domElement
                 handleRef(contentRef, domElement)
                 handleRef(nestingRef, domElement)

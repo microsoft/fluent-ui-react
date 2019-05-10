@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Popper, PopperChildrenProps, PopperProps } from 'react-popper'
+import { Ref } from '@stardust-ui/react-component-ref'
 import { Modifiers } from 'popper.js'
 
 import { Alignment, Position } from './index'
@@ -29,7 +30,7 @@ export interface PositionCommonProps {
 
 interface PositionerProps extends PopperProps, PositionCommonProps {
   /**
-   * Content for children using render props API
+   * Content for children using render props API.
    */
   children: (props: PopperChildrenProps) => React.ReactNode
 
@@ -38,24 +39,41 @@ interface PositionerProps extends PopperProps, PositionCommonProps {
    */
   rtl?: boolean
 
+  /**
+   * Array of conditions to be met in order to trigger a subsequent render to reposition the elements.
+   */
+  positioningDependencies?: any[]
+
+  /**
+   * DOM element or ref representing the target used by the positioning mechanism.
+   */
   target?: HTMLElement | React.RefObject<HTMLElement>
 }
 
 const Positioner: React.FunctionComponent<PositionerProps> = props => {
-  const { align, children, position, offset, rtl, target, ...rest } = props
+  const { align, children, offset, position, positioningDependencies, rtl, target, ...rest } = props
   // https://popper.js.org/popper-documentation.html#modifiers..offset
   const popperModifiers: Modifiers = offset && {
     offset: { offset: rtl ? applyRtlToOffset(offset, position) : offset },
     keepTogether: { enabled: false },
   }
 
+  const scheduleUpdate = React.useRef<PopperChildrenProps['scheduleUpdate']>(null)
+
+  React.useEffect(() => {
+    if (scheduleUpdate.current) scheduleUpdate.current()
+  }, positioningDependencies)
+
   return (
     <Popper
       positionFixed
-      children={children}
       referenceElement={createPopperReferenceProxy(target)}
       placement={getPlacement({ align, position, rtl })}
       modifiers={popperModifiers}
+      children={props => {
+        scheduleUpdate.current = props.scheduleUpdate
+        return <Ref innerRef={props.ref}>{children(props) as React.ReactElement}</Ref>
+      }}
       {...rest}
     />
   )
