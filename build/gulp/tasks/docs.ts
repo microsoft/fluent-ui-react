@@ -23,6 +23,7 @@ import webpackPlugin from '../plugins/gulp-webpack'
 
 const { paths } = config
 const g = require('gulp-load-plugins')()
+
 const { colors, log } = g.util
 
 const handleWatchChange = changedPath => log(`File ${changedPath} was changed, running tasks...`)
@@ -74,6 +75,7 @@ task(
 
 const componentsSrc = [
   `${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`,
+  `${paths.posix.packageSrc('react-component-ref')}/src/[A-Z]*.tsx`,
   `${paths.posix.packageSrc('react')}/lib/accessibility/FocusZone/[A-Z]!(*.types).tsx`,
 ]
 const behaviorSrc = [`${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
