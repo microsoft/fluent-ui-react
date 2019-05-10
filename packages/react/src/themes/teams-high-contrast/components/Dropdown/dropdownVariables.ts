@@ -24,6 +24,7 @@ export default (siteVars): Partial<DropdownVariablesHOC> => ({
   listItemBackgroundColorHover: siteVars.accessibleYellow,
   listItemBackgroundColorActive: siteVars.accessibleYellow,
   listItemColorActive: siteVars.colors.black,
+  listItemSelectedColor: siteVars.accessibleCyan,
   selectedItemBackgroundColor: siteVars.colors.black,
   selectedItemColorFocus: siteVars.colors.black,
   selectedItemBackgroundColorFocus: siteVars.accessibleYellow,

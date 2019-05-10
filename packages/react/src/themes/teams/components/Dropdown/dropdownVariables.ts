@@ -23,6 +23,8 @@ export interface DropdownVariables {
   listItemBackgroundColorHover: string
   listItemBackgroundColorActive: string
   listItemColorActive: string
+  listItemSelectedFontWeight: number
+  listItemSelectedColor: string
   selectedItemColor: string
   selectedItemBackgroundColor: string
   selectedItemColorFocus: string
@@ -60,6 +62,8 @@ export default (siteVars): DropdownVariables => ({
   listItemBackgroundColorHover: siteVars.colors.grey[100],
   listItemBackgroundColorActive: siteVars.colors.grey[100],
   listItemColorActive: siteVars.colors.grey[750],
+  listItemSelectedFontWeight: siteVars.fontWeightSemibold,
+  listItemSelectedColor: siteVars.colors.grey[750],
   selectedItemBackgroundColor: undefined,
   selectedItemColorFocus: siteVars.bodyColor,
   selectedItemBackgroundColorFocus: siteVars.colors.brand[200],
