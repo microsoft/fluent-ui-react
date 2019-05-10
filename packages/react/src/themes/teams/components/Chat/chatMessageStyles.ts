@@ -7,12 +7,13 @@ import {
 import { ChatMessageVariables } from './chatMessageVariables'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../lib'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const chatMessageStyles: ComponentSlotStylesInput<
   ChatMessageProps & ChatMessageState,
   ChatMessageVariables
 > = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     display: 'inline-block',
     position: 'relative',
 
@@ -50,11 +51,8 @@ const chatMessageStyles: ComponentSlotStylesInput<
       },
     }),
 
-    ':focus': {
-      ...(p.isFromKeyboard && {
-        outline: `.2rem solid ${v.contentFocusOutlineColor}`,
-      }),
-    },
+    ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard }),
+
     ':hover': {
       [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
         opacity: 1,
@@ -112,10 +110,12 @@ const chatMessageStyles: ComponentSlotStylesInput<
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     color: v.contentColor,
     display: 'block',
-    '& a:focus': {
+    '& a': {
       outline: 'none',
-      color: v.contentFocusOutlineColor,
-      textDecoration: 'underline',
+      color: v.contentColorFocus,
+      ':focus': {
+        textDecoration: 'underline',
+      },
     },
     ...(p.badge &&
       p.badgePosition === 'end' && {
