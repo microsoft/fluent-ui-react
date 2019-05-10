@@ -125,6 +125,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
     clear: (e: any) => {
       if (this.props.clearable && this.state.value !== '') {
         e.stopPropagation()
+        e.nativeEvent && e.nativeEvent.stopPropagation()
         this.handleOnClear(e)
       }
     },
