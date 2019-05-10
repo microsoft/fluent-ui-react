@@ -7,6 +7,14 @@ import { colors } from './colors'
 export { colors, emphasisColors, naturalColors, primitiveColors, colorScheme } from './colors'
 
 //
+// BORDER STYLES
+//
+export const borderWidth = '1px'
+export const borderRadius = '2px'
+export const focusInnerBorderColor = colors.white
+export const focusOuterBorderColor = colors.black
+
+//
 // SHADOW LEVELS
 //
 export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, .1)'
