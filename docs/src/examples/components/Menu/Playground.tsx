@@ -13,7 +13,16 @@ const MenuPlayground: React.FunctionComponent = () => {
   return (
     <Menu
       accessibility={accessibility}
-      items={['Profile', 'My account', 'Logout']}
+      items={[
+        'Profile',
+        'My account',
+        {
+          key: 'messages',
+          content: 'Messages',
+          menu: ['Drafts', 'Archive'],
+        },
+        'Logout',
+      ]}
       pointing={pointing}
       primary={primary}
       vertical={vertical}
