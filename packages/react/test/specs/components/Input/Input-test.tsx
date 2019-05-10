@@ -1,5 +1,6 @@
 import * as faker from 'faker'
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 
 import { ReactWrapper } from 'enzyme'
 import { mountWithProvider as mount } from 'test/utils'
@@ -97,6 +98,44 @@ describe('Input', () => {
         expect.objectContaining({ type: 'click' }),
         expect.objectContaining({ value: '' }),
       )
+    })
+
+    it('calls onChange on Escape key with an `empty` value and stops propagation when has content', () => {
+      const onChange = jest.fn()
+      const stopPropagation = jest.fn()
+      const nativeEventStopPropagation = jest.fn()
+      const wrapper = mount(
+        <Input clearable defaultValue={faker.lorem.word()} onChange={onChange} />,
+      )
+      wrapper.find('input').simulate('keydown', {
+        keyCode: keyboardKey.Escape,
+        key: 'Escape',
+        stopPropagation,
+        nativeEvent: { stopPropagation: nativeEventStopPropagation },
+      })
+      expect(onChange).toBeCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'keydown' }),
+        expect.objectContaining({ value: '' }),
+      )
+      expect(stopPropagation).toHaveBeenCalledTimes(1)
+      expect(nativeEventStopPropagation).toHaveBeenCalledTimes(1)
+    })
+
+    it('does not call onChange and does not stop propagation if is already empty', () => {
+      const onChange = jest.fn()
+      const stopPropagation = jest.fn()
+      const nativeEventStopPropagation = jest.fn()
+      const wrapper = mount(<Input clearable defaultValue={''} onChange={onChange} />)
+      wrapper.find('input').simulate('keydown', {
+        keyCode: keyboardKey.Escape,
+        key: 'Escape',
+        stopPropagation,
+        nativeEvent: { stopPropagation: nativeEventStopPropagation },
+      })
+      expect(onChange).not.toBeCalled()
+      expect(stopPropagation).not.toBeCalled()
+      expect(nativeEventStopPropagation).not.toBeCalled()
     })
   })
 
