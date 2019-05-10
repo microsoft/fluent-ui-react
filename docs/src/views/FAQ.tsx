@@ -60,6 +60,31 @@ export default () => (
         </p>
       }
     />
+    <Question content="How can I reset or replace existing fonts?" />
+    <Answer
+      content={
+        <>
+          <p>As each theme is reqular JS object you can reassign properties:</p>
+          <CodeSnippet
+            mode="js"
+            value={`
+              import { themes } from '@stardust-ui/react'
+
+              // 💡 Your overrides should be defined before rendering any Stardust components
+
+              // will remove all existing fontFaces
+              themes.teams.fontFaces = []
+              // will replace with own definitions
+              themes.teams.fontFaces = [{
+                name: 'Segoe UI',
+                paths: ['https://...'],
+                style: { fontWeight: 600 },
+              }]
+         `}
+          />
+        </>
+      }
+    />
     <GuidesNavigationFooter
       previous={{ name: 'Quick Start', url: 'quick-start' }}
       next={{ name: 'Accessibility', url: 'accessibility' }}
