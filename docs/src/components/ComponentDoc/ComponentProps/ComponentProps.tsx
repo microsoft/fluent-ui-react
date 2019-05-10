@@ -59,9 +59,7 @@ export default class ComponentProps extends React.Component<any, any> {
             <Flex.Item styles={{ display: 'inline-block' }}>
               <>
                 <Input
-                  input={{
-                    checked: !!activeDisplayName,
-                  }}
+                  checked={!!activeDisplayName}
                   type="checkbox"
                   onClick={this.handleToggle}
                   inline

@@ -18,12 +18,22 @@ import { defaultBehavior } from '../../lib/accessibility'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
+import { HtmlInputProps } from 'src/lib/htmlPropsUtils'
 
 export interface InputSlotClassNames {
   input: string
 }
 
-export interface InputProps extends UIComponentProps, ChildrenComponentProps {
+type SupportedIntrinsicInputProps = {
+  [K in HtmlInputProps]?: K extends keyof JSX.IntrinsicElements['input']
+    ? JSX.IntrinsicElements['input'][K]
+    : any
+}
+
+export interface InputProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    SupportedIntrinsicInputProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior
@@ -34,7 +44,7 @@ export interface InputProps extends UIComponentProps, ChildrenComponentProps {
   clearable?: boolean
 
   /** The default value of the input. */
-  defaultValue?: React.ReactText
+  defaultValue?: string | string[]
 
   /** An input can take the width of its container. */
   fluid?: boolean
