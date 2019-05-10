@@ -97,6 +97,7 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
     ...commonPropTypes.createCommon({
       children: false,
       content: 'shorthand',
+      color: true,
     }),
     actions: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,

@@ -5,6 +5,7 @@ import * as themes from './themes'
 //
 export { themes }
 export * from './themes/types'
+export * from './themes/colorUtils'
 
 //
 // Components

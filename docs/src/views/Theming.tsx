@@ -55,7 +55,7 @@ export default () => (
                   800: '#333333',
                   900: '#1A1A1A',
                 },
-                primary: {
+                brand: {
                   50: 'white',
                   100: 'white',
                   200: 'white',
