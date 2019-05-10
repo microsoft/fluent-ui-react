@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-// import * as keyboardKey from 'keyboard-key'
+import * as keyboardKey from 'keyboard-key'
 
 /**
  * @specification
@@ -12,7 +12,11 @@ const accordionTitleBehavior: Accessibility = (props: any) => ({
     },
   },
   keyActions: {
-    root: {},
+    root: {
+      performClick: {
+        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
+    },
   },
 })
 

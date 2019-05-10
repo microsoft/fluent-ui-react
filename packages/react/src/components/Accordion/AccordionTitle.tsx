@@ -12,11 +12,13 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../types'
 import Icon from '../Icon/Icon'
 import Layout from '../Layout/Layout'
 import { accordionTitleBehavior } from '../../lib/accessibility'
+import { AccessibilityActionHandlers } from 'src/lib/accessibility/types'
 
 export interface AccordionTitleProps
   extends UIComponentProps,
@@ -62,6 +64,13 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     accessibility: accordionTitleBehavior,
   }
 
+  actionHandlers: AccessibilityActionHandlers = {
+    performClick: e => {
+      e.preventDefault()
+      this.handleClick(e)
+    },
+  }
+
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
@@ -89,6 +98,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
         {...accessibility.attributes.root}
         className={classes.root}
         onClick={this.handleClick}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {childrenExist(children) ? children : contentElement}
       </ElementType>
