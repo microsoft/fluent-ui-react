@@ -166,6 +166,7 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
           targetDomNode && targetDomNode.focus()
         })
       },
+      true,
     )
   }
 
