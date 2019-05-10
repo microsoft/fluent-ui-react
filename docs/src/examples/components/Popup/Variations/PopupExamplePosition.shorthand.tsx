@@ -1,54 +1,91 @@
 import * as React from 'react'
-import { Button, Grid, Popup } from '@stardust-ui/react'
+import { Button, Grid, Popup, Alignment, Position } from '@stardust-ui/react'
+import { useBooleanKnob, useSelectKnob } from '@stardust-ui/docs-components'
 
-const PopupWithButton = props => {
-  const { position, align, icon, padding } = props
+const PopupExamplePosition = () => {
+  const [open] = useBooleanKnob({ name: 'open shorthand', initialValue: true })
+
+  const [position] = useSelectKnob<Position>({
+    name: 'position shorthand',
+    initialValue: 'above',
+    values: ['above', 'below', 'before', 'after'],
+  })
+
+  const [positionBeforeOrAfter, setPositionBeforeOrAfter] = React.useState<boolean>(
+    isPositionBeforeOrAfter(position),
+  )
+
+  const [align] = useSelectKnob<Alignment>(
+    positionBeforeOrAfter
+      ? {
+          name: 'h-align shorthand',
+          initialValue: 'top',
+          values: ['top', 'center', 'bottom'],
+        }
+      : {
+          name: 'v-align shorthand',
+          initialValue: 'start',
+          values: ['start', 'center', 'end'],
+        },
+  )
+
+  React.useEffect(() => setPositionBeforeOrAfter(isPositionBeforeOrAfter(position)), [position])
+
+  const buttonStyles = { padding: paddings[position][align], height: '38px', minWidth: '64px' }
 
   return (
-    <Popup
-      align={align}
-      position={position}
-      trigger={<Button icon={icon} styles={{ padding, height: '38px', minWidth: '64px' }} />}
-      content={{
-        content: (
-          <p>
-            The popup is rendered {position} the trigger
-            <br />
-            aligned to the {align}.
-          </p>
-        ),
-      }}
-    />
+    <Grid columns="1" variables={{ padding: '100px 0' }} styles={{ justifyItems: 'center' }}>
+      <Popup
+        pointing
+        open={open}
+        align={align}
+        position={position}
+        trigger={<Button icon={icons[position]} styles={buttonStyles} />}
+        content={{
+          content: (
+            <p>
+              The popup is rendered {position} the trigger
+              <br />
+              aligned to the {align}.
+            </p>
+          ),
+        }}
+      />
+    </Grid>
   )
 }
 
-const triggers = [
-  { position: 'above', align: 'start', icon: 'arrow circle up', padding: '5px 42px 18px 5px' },
-  { position: 'above', align: 'center', icon: 'arrow circle up', padding: '5px 5px 18px 5px' },
-  { position: 'above', align: 'end', icon: 'arrow circle up', padding: '5px 5px 18px 42px' },
-  { position: 'below', align: 'start', icon: 'arrow circle down', padding: '18px 42px 5px 5px' },
-  { position: 'below', align: 'center', icon: 'arrow circle down', padding: '18px 5px 5px 5px' },
-  { position: 'below', align: 'end', icon: 'arrow circle down', padding: '18px 5px 5px 42px' },
-  { position: 'before', align: 'top', icon: 'arrow circle left', padding: '5px 42px 18px 5px' },
-  { position: 'before', align: 'center', icon: 'arrow circle left', padding: '5px 42px 5px 5px' },
-  { position: 'before', align: 'bottom', icon: 'arrow circle left', padding: '18px 42px 5px 5px' },
-  { position: 'after', align: 'top', icon: 'arrow circle right', padding: '5px 5px 18px 42px' },
-  { position: 'after', align: 'center', icon: 'arrow circle right', padding: '5px 5px 5px 42px' },
-  { position: 'after', align: 'bottom', icon: 'arrow circle right', padding: '18px 5px 5px 42px' },
-]
-
-const PopupExamplePosition = () => (
-  <Grid columns="repeat(3, 30px)" variables={{ padding: '30px', gridGap: '80px' }}>
-    {triggers.map(({ position, align, icon, padding }) => (
-      <PopupWithButton
-        position={position}
-        align={align}
-        icon={icon}
-        padding={padding}
-        key={`${position}-${align}`}
-      />
-    ))}
-  </Grid>
-)
-
 export default PopupExamplePosition
+
+const icons: { [key in Position]: string } = {
+  above: 'arrow circle up',
+  below: 'arrow circle down',
+  before: 'arrow circle left',
+  after: 'arrow circle right',
+}
+
+const paddings: { [key in Position]: { [key in Alignment]?: React.CSSProperties['padding'] } } = {
+  above: {
+    start: '5px 42px 18px 5px',
+    center: '5px 5px 18px 5px',
+    end: '5px 5px 18px 42px',
+  },
+  below: {
+    start: '18px 42px 5px 5px',
+    center: '18px 5px 5px 5px',
+    end: '18px 5px 5px 42px',
+  },
+  before: {
+    top: '5px 42px 18px 5px',
+    center: '5px 42px 5px 5px',
+    bottom: '18px 42px 5px 5px',
+  },
+  after: {
+    top: '5px 5px 18px 42px',
+    center: '5px 5px 5px 42px',
+    bottom: '18px 5px 5px 42px',
+  },
+}
+
+const isPositionBeforeOrAfter = (position: Position) =>
+  position === 'before' || position === 'after'

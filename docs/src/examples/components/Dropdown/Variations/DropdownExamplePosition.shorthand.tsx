@@ -1,38 +1,48 @@
 import * as React from 'react'
-import { Grid, Dropdown } from '@stardust-ui/react'
+import { Dropdown, Grid, Alignment, Position } from '@stardust-ui/react'
+import { useSelectKnob, useBooleanKnob } from '@stardust-ui/docs-components'
 
-const inputItems = ['Bruce Wayne', 'Natasha Romanoff', 'Steven Strange', 'Alfred Pennyworth']
+const inputItems = ['Bruce Wayne', 'Natasha Romanoff', 'Steven Strange']
 
-const DropdownArrowExample = props => {
-  const { position, align } = props
+const DropdownExamplePosition = () => {
+  const [open] = useBooleanKnob({ name: 'dropdown open', initialValue: true })
+
+  const [position] = useSelectKnob<Position>({
+    name: 'position',
+    initialValue: 'below',
+    values: ['above', 'below', 'before', 'after'],
+  })
+
+  const [positionBeforeOrAfter, setPositionBeforeOrAfter] = React.useState<boolean>(
+    isPositionBeforeOrAfter(position),
+  )
+
+  const [align] = useSelectKnob<Alignment>({
+    name: 'align N.A.',
+    ...(positionBeforeOrAfter && {
+      name: 'align',
+      initialValue: 'top',
+      values: ['top', 'bottom'],
+    }),
+  })
+
+  React.useEffect(() => setPositionBeforeOrAfter(isPositionBeforeOrAfter(position)), [position])
 
   return (
-    <Dropdown
-      items={inputItems}
-      placeholder={`Opens ${position} trigger aligned to ${align}.`}
-      align={align}
-      position={position}
-    />
+    <Grid columns="1" variables={{ padding: '140px 0' }} styles={{ justifyItems: 'center' }}>
+      <Dropdown
+        inline
+        open={open}
+        items={inputItems}
+        placeholder={`Opens ${position} trigger${align ? ` aligned to ${align}` : ''}.`}
+        align={align}
+        position={position}
+      />
+    </Grid>
   )
 }
 
-const triggers = [
-  { position: 'above', align: 'start' },
-  { position: 'below', align: 'start' },
-  { position: 'above', align: 'end' },
-  { position: 'below', align: 'end' },
-  { position: 'after', align: 'top' },
-  { position: 'before', align: 'top' },
-  { position: 'after', align: 'bottom' },
-  { position: 'before', align: 'bottom' },
-]
-
-const DropdownExamplePosition = () => (
-  <Grid columns="repeat(2, 1fr)" variables={{ padding: '100px', gridGap: '100px' }}>
-    {triggers.map(({ position, align }) => (
-      <DropdownArrowExample position={position} align={align} key={`${position}-${align}`} />
-    ))}
-  </Grid>
-)
-
 export default DropdownExamplePosition
+
+const isPositionBeforeOrAfter = (position: Position) =>
+  position === 'before' || position === 'after'
