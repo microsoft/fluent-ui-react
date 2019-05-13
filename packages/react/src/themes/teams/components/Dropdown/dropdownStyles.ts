@@ -93,7 +93,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
         !p.open &&
         getBorderFocusStyles({
           siteVariables,
-          isFromKeyboard: true,
+          isFromKeyboard: p.isFromKeyboard,
         })[':focus']),
     }),
     ...(p.inline && {

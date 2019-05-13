@@ -29,6 +29,7 @@ import {
   RenderResultConfig,
   commonPropTypes,
   UIComponentProps,
+  isFromKeyboard,
 } from '../../lib'
 import List from '../List/List'
 import DropdownItem, { DropdownItemProps } from './DropdownItem'
@@ -207,8 +208,9 @@ export interface DropdownState {
   searchQuery: string
   highlightedIndex: number
   value: ShorthandValue | ShorthandCollection
-  isFromKeyboard: boolean
+  isFromKeyboardItem: boolean
   selectedIndex: number
+  isFromKeyboard: boolean
 }
 
 /**
@@ -315,8 +317,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       highlightedIndex: this.props.highlightFirstItemOnOpen ? 0 : null,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
-      isFromKeyboard: false,
+      isFromKeyboardItem: false,
       selectedIndex: -1,
+      isFromKeyboard: false,
     }
   }
 
@@ -621,7 +624,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
           className: Dropdown.slotClassNames.item,
           active: highlightedIndex === index,
           selected: !this.props.multiple ? selectedIndex === index : false,
-          isFromKeyboard: this.state.isFromKeyboard,
+          isFromKeyboard: this.state.isFromKeyboardItem,
           variables,
           ...(typeof item === 'object' &&
             !item.hasOwnProperty('key') && {
@@ -723,9 +726,9 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     }
 
     if (this.state.open && _.isNumber(changes.highlightedIndex)) {
-      const isFromKeyboard = changes.type !== Downshift.stateChangeTypes.itemMouseEnter
+      const isFromKeyboardItem = changes.type !== Downshift.stateChangeTypes.itemMouseEnter
       this.trySetState({ highlightedIndex: changes.highlightedIndex })
-      this.setState({ isFromKeyboard })
+      this.setState({ isFromKeyboardItem })
     }
   }
 
@@ -805,6 +808,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       searchInputProps: DropdownSearchInputProps,
     ) => {
       this.setState({ focused: false })
+      this.setState({ isFromKeyboard: isFromKeyboard() })
       e.nativeEvent['preventDownshiftDefault'] = true
       _.invoke(predefinedProps, 'onInputBlur', e, searchInputProps)
     }
@@ -858,6 +862,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
       accessibilityComboboxProps,
       onFocus: (e: React.SyntheticEvent, searchInputProps: DropdownSearchInputProps) => {
         this.setState({ focused: true })
+        this.setState({ isFromKeyboard: isFromKeyboard() })
 
         _.invoke(predefinedProps, 'onFocus', e, searchInputProps)
       },
@@ -1060,17 +1065,20 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
 
   private handleTriggerButtonOrListFocus = () => {
     this.setState({ focused: true })
+    this.setState({ isFromKeyboard: isFromKeyboard() })
   }
 
   private handleTriggerButtonBlur = e => {
     if (this.listRef.current !== e.relatedTarget) {
       this.setState({ focused: false })
+      this.setState({ isFromKeyboard: isFromKeyboard() })
     }
   }
 
   private handleListBlur = e => {
     if (this.buttonRef.current !== e.relatedTarget) {
       this.setState({ focused: false })
+      this.setState({ isFromKeyboard: isFromKeyboard() })
     }
   }
 
