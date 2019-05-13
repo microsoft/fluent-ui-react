@@ -11,7 +11,8 @@ import { Accessibility } from '../../types'
 const iconBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      'aria-hidden': 'true',
+      role: 'img',
+      'aria-hidden': props['alt'] || props['aria-label'] ? undefined : 'true',
     },
   },
 })
