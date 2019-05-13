@@ -5,7 +5,7 @@ import * as React from 'react'
 import TableCell, { TableCellProps } from './TableCell'
 import { UIComponent, RenderResultConfig, UIComponentProps, commonPropTypes } from '../../lib'
 import { ReactProps, ShorthandValue } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { tableRowBehavior, tableRowHeaderBehavior } from '../../lib/accessibility'
 
 export interface TableRowProps extends UIComponentProps {
@@ -60,6 +60,23 @@ class TableRow extends UIComponent<ReactProps<TableRowProps>, any> {
     accessibility: tableRowBehavior,
   }
 
+  protected actionHandlers: AccessibilityActionHandlers = {
+    performClick: event => {
+      event.preventDefault()
+      this.handleClick(event, null)
+    },
+  }
+
+  handleClick = (e, props: TableCellProps) => {
+    const data = {
+      cellIndex: props && props.cellIndex,
+      rowIndex: this.props.rowIndex,
+      ...this.props,
+      ...props,
+    }
+    _.invoke(this.props, 'onClick', e, data)
+  }
+
   renderCells() {
     const { items, headerIndex, focusedIndex } = this.props
 
@@ -68,15 +85,7 @@ class TableRow extends UIComponent<ReactProps<TableRowProps>, any> {
         ...item,
         focused: index === focusedIndex,
         focusable: this.props.focusable,
-        onClick: (e, props: TableCellProps) => {
-          const data = {
-            cellIndex: props.cellIndex,
-            rowIndex: this.props.rowIndex,
-            ...this.props,
-            ...props,
-          }
-          _.invoke(this.props, 'onClick', e, data)
-        },
+        onClick: this.handleClick,
         cellIndex: index,
       }
       const headerProps = {
@@ -99,7 +108,12 @@ class TableRow extends UIComponent<ReactProps<TableRowProps>, any> {
     unhandledProps,
   }: RenderResultConfig<any>): React.ReactNode {
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...unhandledProps}
+      >
         {this.renderCells()}
       </ElementType>
     )

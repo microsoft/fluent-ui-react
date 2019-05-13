@@ -150,7 +150,10 @@ class Table extends AutoControlledComponent<ReactProps<TableProps>, TableState> 
         focusedIndex: focusedRow - 1 === index ? this.state.focusedCol : -1,
         focusable: this.state.focusedRow !== -1 || this.state.focusedCol !== -1,
         rowIndex: this.props.header ? index + 1 : index,
-        onClick: this.handleRowClick,
+        onClick: (e, props) => {
+          this.handleRowClick(e, props)
+          _.invoke(row, 'onClick', e, props)
+        },
       } as TableRowProps
       return <TableRow {...props} />
     })

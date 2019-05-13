@@ -223,6 +223,9 @@ export {
 export {
   default as tableVerticalNavigationBehavior,
 } from './lib/accessibility/Behaviors/Table/tableVerticalNavigationBehavior'
+export {
+  default as tableRowFocusableBehavior,
+} from './lib/accessibility/Behaviors/Table/tableRowFocusableBehavior'
 
 //
 // Utilities

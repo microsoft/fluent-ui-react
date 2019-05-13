@@ -57,3 +57,4 @@ export {
 export {
   default as tableVerticalNavigationBehavior,
 } from './Behaviors/Table/tableVerticalNavigationBehavior'
+export { default as tableRowFocusableBehavior } from './Behaviors/Table/tableRowFocusableBehavior'
