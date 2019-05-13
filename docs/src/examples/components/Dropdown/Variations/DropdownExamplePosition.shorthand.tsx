@@ -20,7 +20,7 @@ const DropdownExamplePosition = () => {
     <Grid columns="1" variables={{ padding: '140px 0' }} styles={{ justifyItems: 'center' }}>
       <Dropdown
         inline
-        open={open || undefined}
+        open={open}
         items={inputItems}
         placeholder={`Opens ${position} trigger${align ? ` aligned to ${align}` : ''}.`}
         align={align}

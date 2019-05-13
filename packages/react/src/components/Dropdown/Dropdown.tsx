@@ -651,6 +651,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           position={position}
           offset={offset}
           rtl={rtl}
+          eventsEnabled={open}
           target={this.selectedItemsRef}
           positioningDependencies={[items.length]}
           children={popperChildrenProps => (

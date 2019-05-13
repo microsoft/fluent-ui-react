@@ -46,11 +46,25 @@ interface PositionerProps extends PopperProps, PositionCommonProps {
 }
 
 const Positioner: React.FunctionComponent<PositionerProps> = props => {
-  const { align, children, offset, position, positioningDependencies, rtl, target, ...rest } = props
+  const {
+    align,
+    children,
+    modifiers,
+    offset,
+    position,
+    positioningDependencies,
+    rtl,
+    target,
+    ...rest
+  } = props
+
   // https://popper.js.org/popper-documentation.html#modifiers..offset
-  const popperModifiers: Modifiers = offset && {
-    offset: { offset: rtl ? applyRtlToOffset(offset, position) : offset },
-    keepTogether: { enabled: false },
+  const popperModifiers: Modifiers = {
+    ...(offset && {
+      offset: { offset: rtl ? applyRtlToOffset(offset, position) : offset },
+      keepTogether: { enabled: false },
+    }),
+    ...modifiers,
   }
 
   const scheduleUpdate = React.useRef<PopperChildrenProps['scheduleUpdate']>(null)
