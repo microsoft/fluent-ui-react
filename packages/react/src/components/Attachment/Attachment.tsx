@@ -2,7 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import {
   UIComponent,
   createShorthandFactory,
@@ -34,6 +34,9 @@ export interface AttachmentProps extends UIComponentProps, ChildrenComponentProp
   /** A string describing the attachment. */
   description?: ShorthandValue
 
+  /** An attachment can show it is currently unable to be interacted with. */
+  disabled?: boolean
+
   /** The name of the attachment. */
   header?: ShorthandValue
 
@@ -62,10 +65,7 @@ export interface AttachmentState {
   isFromKeyboard: boolean
 }
 
-/**
- * An Attachment displays a file attachment.
- */
-class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentState> {
+class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentState> {
   static create: Function
 
   static className = 'ui-attachment'
@@ -104,13 +104,10 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentStat
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        {icon && (
-          <div className={classes.icon}>
-            {Icon.create(icon, {
-              defaultProps: { size: 'larger' },
-            })}
-          </div>
-        )}
+        {icon &&
+          Icon.create(icon, {
+            defaultProps: { size: 'larger', styles: styles.icon },
+          })}
         {(header || description) && (
           <div className={classes.content}>
             {Text.create(header, {
@@ -122,16 +119,13 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentStat
             })}
           </div>
         )}
-        {action && (
-          <div className={classes.action}>
-            {Button.create(action, {
-              defaultProps: { iconOnly: true, text: true },
-            })}
-          </div>
-        )}
+        {action &&
+          Button.create(action, {
+            defaultProps: { iconOnly: true, text: true, styles: styles.action },
+          })}
         {!_.isNil(progress) &&
           Box.create('', {
-            defaultProps: { className: classes.progress },
+            defaultProps: { styles: styles.progress },
           })}
       </ElementType>
     )
@@ -166,4 +160,7 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentStat
 
 Attachment.create = createShorthandFactory({ Component: Attachment, mappedProp: 'header' })
 
-export default Attachment
+/**
+ * An Attachment displays a file attachment.
+ */
+export default withSafeTypeForAs<typeof Attachment, AttachmentProps>(Attachment)

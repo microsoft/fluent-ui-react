@@ -33,12 +33,6 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
       },
     }),
   }),
-
-  action: ({ variables: v }): ICSSInJSStyle => ({
-    ':hover': {
-      outline: `1px solid ${v.textColorHover}`,
-    },
-  }),
 }
 
 export default attachmentStyles

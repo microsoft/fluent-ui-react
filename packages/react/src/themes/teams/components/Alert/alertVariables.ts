@@ -17,9 +17,6 @@ export interface AlertVariables {
   actionSize: string
   actionColor: string
 
-  focusInnerBorderColor: string
-  focusOuterBorderColor: string
-
   dangerColor: string
   dangerBackgroundColor: string
   dangerBorderColor: string
@@ -55,9 +52,6 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
 
     actionSize: minHeight,
     actionColor: undefined,
-
-    focusInnerBorderColor: siteVars.colors.white,
-    focusOuterBorderColor: siteVars.colors.black,
 
     dangerColor: siteVars.colors.red[400],
     dangerBackgroundColor: siteVars.colors.red[50],

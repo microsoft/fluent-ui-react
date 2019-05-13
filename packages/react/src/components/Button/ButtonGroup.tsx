@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { ReactProps, ShorthandValue } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import {
   UIComponent,
   childrenExist,
@@ -35,10 +35,7 @@ export interface ButtonGroupProps
   circular?: boolean
 }
 
-/**
- * A button group presents multiple related actions.
- */
-class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
+class ButtonGroup extends UIComponent<WithAsProp<ButtonGroupProps>, any> {
   public static create: Function
 
   public static displayName = 'ButtonGroup'
@@ -112,4 +109,7 @@ ButtonGroup.create = createShorthandFactory({
   mappedArrayProp: 'buttons',
 })
 
-export default ButtonGroup
+/**
+ * A button group presents multiple related actions.
+ */
+export default withSafeTypeForAs<typeof ButtonGroup, ButtonGroupProps>(ButtonGroup)

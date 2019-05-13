@@ -62,7 +62,7 @@ class IconViewerExample extends React.Component<any, {}> {
         />
 
         <div style={{ marginTop: '15px' }}>
-          <Menu tabular styles={{ margin: '15px 0' }}>
+          <Menu styles={{ margin: '15px 0' }}>
             {Object.keys(this.iconFilters).map(filterName => (
               <Menu.Item
                 content={filterName}

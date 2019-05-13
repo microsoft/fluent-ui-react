@@ -16,12 +16,17 @@ import {
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
 import Header from '../Header/Header'
 import Portal from '../Portal/Portal'
 import Flex from '../Flex/Flex'
+
+export interface DialogSlotClassNames {
+  header: string
+  content: string
+}
 
 export interface DialogProps
   extends UIComponentProps,
@@ -86,12 +91,11 @@ export interface DialogState {
   open?: boolean
 }
 
-/**
- * A Dialog indicates a possible user action.
- */
-class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogState> {
+class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogState> {
   static displayName = 'Dialog'
   static className = 'ui-dialog'
+
+  static slotClassNames: DialogSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -202,12 +206,16 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
           {Header.create(header, {
             defaultProps: {
               as: 'h2',
+              className: Dialog.slotClassNames.header,
               styles: styles.header,
+              ...accessibility.attributes.header,
             },
           })}
           {Box.create(content, {
             defaultProps: {
               styles: styles.content,
+              className: Dialog.slotClassNames.content,
+              ...accessibility.attributes.content,
             },
           })}
 
@@ -257,4 +265,12 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
   }
 }
 
-export default Dialog
+Dialog.slotClassNames = {
+  header: `${Dialog.className}__header`,
+  content: `${Dialog.className}__content`,
+}
+
+/**
+ * A Dialog indicates a possible user action.
+ */
+export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)

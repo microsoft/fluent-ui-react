@@ -39,7 +39,7 @@ class PortalExamplePortal extends React.Component {
         <Divider />
         <div>
           <Flex gap="gap.small" vAlign="center">
-            <Button size="small" onClick={this.clearLog} content="Clear" />
+            <Button onClick={this.clearLog} content="Clear" />
             <span>
               Event Log <Label circular>{logCount}</Label>
             </span>
