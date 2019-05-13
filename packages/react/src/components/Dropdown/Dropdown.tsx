@@ -463,6 +463,17 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     const { triggerButton } = this.props
     const content = this.getSelectedItemAsString(this.state.value)
 
+    const toggleButtonProps = getToggleButtonProps({
+      onFocus: this.handleTriggerButtonOrListFocus,
+      onBlur: this.handleTriggerButtonBlur,
+      onKeyDown: e => {
+        this.handleTriggerButtonKeyDown(e, rtl)
+      },
+      'aria-label': content,
+    })
+
+    const { onClick, onFocus, onBlur, onKeyDown, ...restToggleButtonProps } = toggleButtonProps
+
     return (
       <Ref innerRef={this.buttonRef}>
         {Button.create(triggerButton, {
@@ -471,15 +482,26 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
             content,
             fluid: true,
             styles: styles.triggerButton,
-            ...getToggleButtonProps({
-              onFocus: this.handleTriggerButtonOrListFocus,
-              onBlur: this.handleTriggerButtonBlur,
-              onKeyDown: e => {
-                this.handleTriggerButtonKeyDown(e, rtl)
-              },
-              'aria-label': content,
-            }),
+            ...restToggleButtonProps,
           },
+          overrideProps: (predefinedProps: IconProps) => ({
+            onClick: e => {
+              onClick(e)
+              _.invoke(predefinedProps, 'onClick', e, predefinedProps)
+            },
+            onFocus: e => {
+              onFocus(e)
+              _.invoke(predefinedProps, 'onFocus', e, predefinedProps)
+            },
+            onBlur: e => {
+              onBlur(e)
+              _.invoke(predefinedProps, 'onBlur', e, predefinedProps)
+            },
+            onKeyDown: e => {
+              onKeyDown(e)
+              _.invoke(predefinedProps, 'onKeyDown', e, predefinedProps)
+            },
+          }),
         })}
       </Ref>
     )
