@@ -86,6 +86,7 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>, any> {
         onClick={this.handleClick}
         media={Image.create(image, {
           defaultProps: {
+            avatar: true,
             className: DropdownItem.slotClassNames.image,
             styles: styles.image,
           },

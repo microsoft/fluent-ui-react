@@ -272,7 +272,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     ]),
   }
 
-  static defaultProps: WithAsProp<DropdownProps> = {
+  static defaultProps = {
     as: 'div',
     clearIndicator: 'stardust-close',
     itemToString: item => {
