@@ -2,16 +2,17 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import * as _ from 'lodash'
-import { UIComponent, commonPropTypes, UIComponentProps } from '../../lib'
+import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
 import { mergeStyles } from '../../lib/mergeThemes'
+import { ComponentSlotStylesPrepared } from '../../themes/types'
 
-export type FlexItemChildren =
-  | React.ReactElement<any>
-  | ((
-      { styles: ComponentSlotStylesPrepared, classes: ComponentSlotClasses },
-    ) => React.ReactElement<any>)
+type ChildrenFunction = (
+  params: { styles: ComponentSlotStylesPrepared; classes: string },
+) => React.ReactElement<any>
 
-export interface FlexItemProps extends UIComponentProps {
+export type FlexItemChildren = React.ReactElement<any> | ChildrenFunction
+
+export interface FlexItemProps extends UIComponentProps, ChildrenComponentProps<FlexItemChildren> {
   /** Controls item's alignment. */
   align?: 'auto' | 'start' | 'end' | 'center' | 'baseline' | 'stretch'
 
@@ -48,9 +49,12 @@ class FlexItem extends UIComponent<FlexItemProps> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({
+      children: false,
       accessibility: false,
       content: false,
     }),
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+
     align: PropTypes.oneOf(['auto', 'start', 'end', 'center', 'baseline', 'stretch']),
     size: PropTypes.oneOf(['size.half', 'size.quarter', 'size.small', 'size.medium', 'size.large']),
 
