@@ -14,7 +14,7 @@ import {
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Box from '../Box/Box'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
@@ -87,13 +87,8 @@ export interface RadioGroupItemState {
   isFromKeyboard: boolean
 }
 
-/**
- * A single radio within a radio group.
- * @accessibility
- * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
- */
 class RadioGroupItem extends AutoControlledComponent<
-  ReactProps<RadioGroupItemProps>,
+  WithAsProp<RadioGroupItemProps>,
   RadioGroupItemState
 > {
   private elementRef = React.createRef<HTMLElement>()
@@ -187,4 +182,9 @@ class RadioGroupItem extends AutoControlledComponent<
 
 RadioGroupItem.create = createShorthandFactory({ Component: RadioGroupItem, mappedProp: 'label' })
 
-export default RadioGroupItem
+/**
+ * A single radio within a radio group.
+ * @accessibility
+ * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
+ */
+export default withSafeTypeForAs<typeof RadioGroupItem, RadioGroupItemProps>(RadioGroupItem)

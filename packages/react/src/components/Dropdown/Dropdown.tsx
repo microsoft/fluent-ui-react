@@ -7,11 +7,12 @@ import cx from 'classnames'
 import * as keyboardKey from 'keyboard-key'
 
 import {
-  Extendable,
   ShorthandRenderFunction,
   ShorthandValue,
   ComponentEventHandler,
   ShorthandCollection,
+  WithAsProp,
+  withSafeTypeForAs,
 } from '../../types'
 import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
 import Downshift, {
@@ -209,13 +210,7 @@ export interface DropdownState {
   value: ShorthandValue | ShorthandCollection
 }
 
-/**
- * Dropdown allows user to select one or more values from a list of items.
- * Can also be created with search capability.
- * @accessibility
- * Implements ARIA collapsible Listbox design pattern, uses aria-live to announce state changes.
- */
-class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, DropdownState> {
+class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, DropdownState> {
   private buttonRef = React.createRef<HTMLElement>()
   private inputRef = React.createRef<HTMLInputElement>()
   private listRef = React.createRef<HTMLElement>()
@@ -277,7 +272,7 @@ class Dropdown extends AutoControlledComponent<Extendable<DropdownProps>, Dropdo
     ]),
   }
 
-  static defaultProps: DropdownProps = {
+  static defaultProps = {
     as: 'div',
     clearIndicator: 'stardust-close',
     itemToString: item => {
@@ -1181,4 +1176,10 @@ Dropdown.slotClassNames = {
   triggerButton: `${Dropdown.className}__trigger-button`,
 }
 
-export default Dropdown
+/**
+ * Dropdown allows user to select one or more values from a list of items.
+ * Can also be created with search capability.
+ * @accessibility
+ * Implements ARIA collapsible Listbox design pattern, uses aria-live to announce state changes.
+ */
+export default withSafeTypeForAs<typeof Dropdown, DropdownProps>(Dropdown)

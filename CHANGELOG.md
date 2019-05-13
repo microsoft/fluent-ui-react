@@ -17,6 +17,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Restrict Typescript checks for component props @kuzhelov ([#1290](https://github.com/stardust-ui/react/pull/1290))
+
+### Fix
+- Fixed Flex.Item children prop type @mnajdova ([#1320](https://github.com/stardust-ui/react/pull/1320))
+
 ### Features
 - Export `qna` and `yammer` SVG icons for `Teams` theme @manindr ([#1325](https://github.com/stardust-ui/react/pull/1325))
 
