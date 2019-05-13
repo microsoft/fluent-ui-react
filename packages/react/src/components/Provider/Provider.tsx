@@ -21,6 +21,7 @@ import {
   StaticStyle,
   StaticStyleFunction,
   FontFace,
+  ComponentVariablesInput,
 } from '../../themes/types'
 
 import ProviderConsumer from './ProviderConsumer'
@@ -30,6 +31,7 @@ import { WithAsProp } from '../../types'
 
 export interface ProviderProps extends ChildrenComponentProps {
   theme: ThemeInput
+  variables?: ComponentVariablesInput
 }
 
 /**
@@ -40,6 +42,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
   static propTypes = {
     as: customPropTypes.as,
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
       componentVariables: PropTypes.object,
