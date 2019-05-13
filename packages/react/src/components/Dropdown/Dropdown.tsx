@@ -210,7 +210,6 @@ export interface DropdownState {
   highlightedIndex: number
   value: ShorthandValue | ShorthandCollection
   isFromKeyboardItem: boolean
-  selectedIndex: number
   isFromKeyboard: boolean
 }
 
@@ -313,7 +312,6 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
       isFromKeyboardItem: false,
-      selectedIndex: -1,
       isFromKeyboard: false,
     }
   }
@@ -341,7 +339,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       itemToString,
       toggleIndicator,
     } = this.props
-    const { highlightedIndex, open, searchQuery, value, selectedIndex } = this.state
+    const { highlightedIndex, open, searchQuery, value } = this.state
 
     return (
       <ElementType className={classes.root} {...unhandledProps}>
@@ -432,7 +430,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                     getMenuProps,
                     getItemProps,
                     getInputProps,
-                    selectedIndex,
+                    value,
                   )}
                 </div>
               </Ref>
@@ -552,7 +550,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     getMenuProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     getInputProps: (options?: GetInputPropsOptions) => any,
-    selectedIndex: number,
+    value: ShorthandValue | ShorthandCollection,
   ) {
     const { search } = this.props
     const { open } = this.state
@@ -594,9 +592,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           onFocus={this.handleTriggerButtonOrListFocus}
           onBlur={this.handleListBlur}
           items={
-            open
-              ? this.renderItems(styles, variables, getItemProps, highlightedIndex, selectedIndex)
-              : []
+            open ? this.renderItems(styles, variables, getItemProps, highlightedIndex, value) : []
           }
         />
       </Ref>
@@ -608,7 +604,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     variables: ComponentVariablesInput,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     highlightedIndex: number,
-    selectedIndex: number,
+    value: ShorthandValue | ShorthandCollection,
   ) {
     const { loading, loadingMessage, noResultsMessage, renderItem } = this.props
     const filteredItems = this.getItemsFilteredBySearchQuery()
@@ -618,7 +614,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
         defaultProps: {
           className: Dropdown.slotClassNames.item,
           active: highlightedIndex === index,
-          selected: !this.props.multiple ? selectedIndex === index : false,
+          selected: !this.props.multiple && value === item,
           isFromKeyboard: this.state.isFromKeyboardItem,
           variables,
           ...(typeof item === 'object' &&
@@ -699,9 +695,6 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   }
 
   private handleStateChange = (changes: StateChangeOptions<ShorthandValue>) => {
-    if (!this.props.multiple && changes.selectedItem) {
-      this.setState({ selectedIndex: this.props.items.indexOf(changes.selectedItem) })
-    }
     if (changes.isOpen !== undefined && changes.isOpen !== this.state.open) {
       const newState = { open: changes.isOpen, highlightedIndex: this.state.highlightedIndex }
 
@@ -802,8 +795,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       e: React.SyntheticEvent,
       searchInputProps: DropdownSearchInputProps,
     ) => {
-      this.setState({ focused: false })
-      this.setState({ isFromKeyboard: isFromKeyboard() })
+      this.setState({ focused: false, isFromKeyboard: isFromKeyboard() })
       e.nativeEvent['preventDownshiftDefault'] = true
       _.invoke(predefinedProps, 'onInputBlur', e, searchInputProps)
     }
@@ -856,8 +848,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       // same story as above for getRootProps.
       accessibilityComboboxProps,
       onFocus: (e: React.SyntheticEvent, searchInputProps: DropdownSearchInputProps) => {
-        this.setState({ focused: true })
-        this.setState({ isFromKeyboard: isFromKeyboard() })
+        this.setState({ focused: true, isFromKeyboard: isFromKeyboard() })
 
         _.invoke(predefinedProps, 'onFocus', e, searchInputProps)
       },
@@ -1059,21 +1050,18 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   }
 
   private handleTriggerButtonOrListFocus = () => {
-    this.setState({ focused: true })
-    this.setState({ isFromKeyboard: isFromKeyboard() })
+    this.setState({ focused: true, isFromKeyboard: isFromKeyboard() })
   }
 
   private handleTriggerButtonBlur = e => {
     if (this.listRef.current !== e.relatedTarget) {
-      this.setState({ focused: false })
-      this.setState({ isFromKeyboard: isFromKeyboard() })
+      this.setState({ focused: false, isFromKeyboard: isFromKeyboard() })
     }
   }
 
   private handleListBlur = e => {
     if (this.buttonRef.current !== e.relatedTarget) {
-      this.setState({ focused: false })
-      this.setState({ isFromKeyboard: isFromKeyboard() })
+      this.setState({ focused: false, isFromKeyboard: isFromKeyboard() })
     }
   }
 
