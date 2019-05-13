@@ -134,6 +134,7 @@ export interface AriaRelationshipAttributes {
 export interface AccessibilityAttributes extends AriaWidgetAttributes, AriaRelationshipAttributes {
   role?: AriaRole
   tabIndex?: number
+  id?: string
   [IS_FOCUSABLE_ATTRIBUTE]?: boolean
 }
 
@@ -160,6 +161,7 @@ export interface AccessibilityDefinition {
   focusZone?: FocusZoneDefinition
   focusTrap?: FocusTrapDefinition
   autoFocus?: AutoFocusZoneDefinition
+  childBehaviors?: { [childBehaviorSlot: string]: Accessibility }
 }
 
 export interface AccessibilityBehavior extends AccessibilityDefinition {

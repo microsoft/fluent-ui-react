@@ -42,7 +42,7 @@ const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = p
           </Flex.Item>
 
           <Flex.Item align="start" push>
-            <Segment color="primary">
+            <Segment color="brand">
               <Header as="h4" className="no-anchor" styles={{ marginTop: 0 }}>
                 Props
               </Header>

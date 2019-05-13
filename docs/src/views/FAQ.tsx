@@ -1,9 +1,9 @@
 import * as React from 'react'
 import DocPage from '../components/DocPage/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
-import CodeSnippet from '../components/CodeSnippet'
 import { link } from '../utils/helpers'
 
+import { CodeSnippet } from '@stardust-ui/docs-components'
 import { Header } from '@stardust-ui/react'
 
 const Category = props => <Header as="h2" {...props} />
@@ -57,22 +57,13 @@ export default () => (
     <Answer
       content={
         <p>
-          We recommend to render links from react router as Buttons as below:
+          We recommend to render links from React Router as Buttons as below:
           <CodeSnippet
             value={`
-      <>
-          import { Link } from 'react-router-dom'
-          
-          <Button
-            as={Link}
-            content={previous.name}
-            icon="arrow left"
-            iconPosition="before"
-            primary
-            to={previous.url}
-          />
-      </>
-      `}
+            import { Link } from 'react-router-dom'
+
+            <Button as={Link} content={previous.name} to={previous.url} />
+          `}
           />
         </p>
       }
@@ -101,6 +92,31 @@ export default () => (
           process for adding them is described in{' '}
           {link('Issue 585', 'https://github.com/stardust-ui/react/pull/585')}
         </p>
+      }
+    />
+    <Question content="How can I reset or replace existing fonts?" />
+    <Answer
+      content={
+        <>
+          <p>As each theme is reqular JS object you can reassign properties:</p>
+          <CodeSnippet
+            mode="js"
+            value={`
+              import { themes } from '@stardust-ui/react'
+
+              // 💡 Your overrides should be defined before rendering any Stardust components
+
+              // will remove all existing fontFaces
+              themes.teams.fontFaces = []
+              // will replace with own definitions
+              themes.teams.fontFaces = [{
+                name: 'Segoe UI',
+                paths: ['https://...'],
+                style: { fontWeight: 600 },
+              }]
+         `}
+          />
+        </>
       }
     />
     <GuidesNavigationFooter

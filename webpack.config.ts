@@ -3,6 +3,7 @@ import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import { webpack as lernaAliases } from 'lerna-alias'
 import * as _ from 'lodash'
 import * as webpack from 'webpack'
+import * as TerserPlugin from 'terser-webpack-plugin'
 import { CheckerPlugin as AsyncTypeScriptChecker } from 'awesome-typescript-loader'
 
 import config from './config'
@@ -29,6 +30,10 @@ const webpackConfig: any = {
     '@babel/standalone': 'Babel',
     'anchor-js': 'AnchorJS',
     'prettier/standalone': 'prettier',
+    // These Prettier plugins doesn't have any exports
+    'prettier/parser-babylon': 'window',
+    'prettier/parser-html': 'window',
+    'prettier/parser-typescript': 'window',
     'prop-types': 'PropTypes',
     react: 'React',
     'react-dom': 'ReactDOM',
@@ -93,6 +98,10 @@ const webpackConfig: any = {
         reactVis: require('react-vis/package.json').version,
       },
     }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
@@ -101,6 +110,8 @@ const webpackConfig: any = {
       src: paths.packageSrc('react'),
       docs: paths.base('docs'),
     },
+    // Allows to avoid multiple inclusions of the same module
+    modules: [paths.base('node_modules')],
   },
   performance: {
     hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
@@ -137,6 +148,18 @@ if (__PROD__) {
       minimize: true,
     }),
   )
+
+  webpackConfig.optimization = {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          output: {
+            comments: false,
+          },
+        },
+      }),
+    ],
+  }
 }
 
 export default webpackConfig

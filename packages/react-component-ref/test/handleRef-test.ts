@@ -1,5 +1,5 @@
+import { handleRef } from '@stardust-ui/react-component-ref'
 import * as React from 'react'
-import handleRef from 'src/lib/handleRef'
 
 describe('handleRef', () => {
   it('throws an error when "ref" is string', () => {

@@ -3,10 +3,11 @@ import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../lib'
 import Icon from '../../../../components/Icon/Icon'
-import { teamsIconClassNames } from '../Icon/svg'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
+import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
@@ -19,16 +20,13 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     background: v.backgroundColor,
     color: v.textColor,
     boxShadow: v.boxShadow,
-    border: `${pxToRem(1)} solid ${v.borderColor}`,
+    border: `${siteVariables.borderWidth} solid ${v.borderColor}`,
     borderRadius: v.borderRadius,
 
-    outline: 0,
-
-    ...(p.isFromKeyboard && {
-      ':focus': {
-        borderColor: v.focusInnerBorderColor,
-        boxShadow: `0 0 0 ${pxToRem(1)} ${v.focusOuterBorderColor}`,
-      },
+    ...getBorderFocusStyles({
+      siteVariables,
+      isFromKeyboard: p.isFromKeyboard,
+      borderRadius: v.borderRadius,
     }),
 
     ...((p.actionable || p.onClick) && {
@@ -64,23 +62,28 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     marginRight: v.iconSpace,
   }),
 
-  action: ({ variables: v }): ICSSInJSStyle => ({
-    flex: '0 0 auto',
+  action: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
+    const iconFilledStyles = getIconFillOrOutlineStyles({ outline: false })
 
-    [`& .${Icon.className}`]: {
-      color: v.textColor, // this breaks the color change on hover
-    },
-
-    ':hover': {
-      [`& .${teamsIconClassNames.filled}`]: {
-        display: 'block',
+    return {
+      [`& .${Icon.className}`]: {
+        color: v.textColor, // this breaks the color change on hover
       },
 
-      [`& .${teamsIconClassNames.outline}`]: {
-        display: 'none',
+      ...getIconFillOrOutlineStyles({ outline: true }),
+
+      ':hover': iconFilledStyles,
+
+      ':focus': {
+        ...(p.isFromKeyboard && iconFilledStyles),
+        ...getBorderFocusStyles({
+          siteVariables,
+          isFromKeyboard: p.isFromKeyboard,
+          borderRadius: v.borderRadius,
+        })[':focus'],
       },
-    },
-  }),
+    }
+  },
 
   progress: ({ props: p, variables: v }): ICSSInJSStyle => ({
     transition: 'width 0.2s',

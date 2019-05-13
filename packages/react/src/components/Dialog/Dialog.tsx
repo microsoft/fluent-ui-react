@@ -1,3 +1,4 @@
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -20,8 +21,12 @@ import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
 import Header from '../Header/Header'
 import Portal from '../Portal/Portal'
-import Ref from '../Ref/Ref'
 import Flex from '../Flex/Flex'
+
+export interface DialogSlotClassNames {
+  header: string
+  content: string
+}
 
 export interface DialogProps
   extends UIComponentProps,
@@ -93,10 +98,13 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
   static displayName = 'Dialog'
   static className = 'ui-dialog'
 
+  static slotClassNames: DialogSlotClassNames
+
   static propTypes = {
     ...commonPropTypes.createCommon({
       children: false,
       content: 'shorthand',
+      color: true,
     }),
     actions: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
@@ -201,12 +209,16 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
           {Header.create(header, {
             defaultProps: {
               as: 'h2',
+              className: Dialog.slotClassNames.header,
               styles: styles.header,
+              ...accessibility.attributes.header,
             },
           })}
           {Box.create(content, {
             defaultProps: {
               styles: styles.content,
+              className: Dialog.slotClassNames.content,
+              ...accessibility.attributes.content,
             },
           })}
 
@@ -254,6 +266,11 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
       </Portal>
     )
   }
+}
+
+Dialog.slotClassNames = {
+  header: `${Dialog.className}__header`,
+  content: `${Dialog.className}__content`,
 }
 
 export default Dialog

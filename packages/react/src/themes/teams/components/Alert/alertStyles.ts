@@ -1,14 +1,9 @@
 import * as React from 'react'
-import {
-  ComponentSlotStylesInput,
-  ICSSInJSStyle,
-  SiteVariablesPrepared,
-  NaturalColors,
-} from '../../../types'
+import { ComponentSlotStylesInput, ICSSInJSStyle, SiteVariablesPrepared } from '../../../types'
 import { AlertProps } from '../../../../components/Alert/Alert'
 import { AlertVariables } from './alertVariables'
-import { teamsIconClassNames } from '../Icon/svg'
-import { pxToRem } from '../../../../lib'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
+import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const getIntentColorsFromProps = (
   p: AlertProps,
@@ -16,7 +11,6 @@ const getIntentColorsFromProps = (
   siteVars: SiteVariablesPrepared,
 ): React.CSSProperties => {
   const { colors } = siteVars
-  const naturalColors: NaturalColors = siteVars.naturalColors
 
   if (p.danger) {
     return {
@@ -52,17 +46,17 @@ const getIntentColorsFromProps = (
 
   if (p.success) {
     return {
-      color: colors.green[900], // $app-green-04
+      color: colors.green[600], // $app-green-04
       backgroundColor: colors.grey[50], // $app-white
-      borderColor: naturalColors.lightGreen[900], // $app-green
+      borderColor: colors.green[200], // $app-green
     }
   }
 
   if (p.warning) {
     return {
-      color: siteVars.gray03,
+      color: siteVars.colors.grey[450],
       backgroundColor: colors.grey[50], // $app-white
-      borderColor: colors.yellow[900], // $app-yellow
+      borderColor: colors.yellow[400], // $app-yellow
     }
   }
 
@@ -101,71 +95,28 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     flexGrow: 1,
   }),
 
-  action: ({ variables: v, props: p }): ICSSInJSStyle => ({
-    height: v.actionSize,
-    minWidth: v.actionSize,
-    color: v.actionColor || 'currentColor',
-    border: 0,
-    borderRadius: v.borderRadius,
+  action: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => {
+    const iconFilledStyles = getIconFillOrOutlineStyles({ outline: false })
 
-    [`& .${teamsIconClassNames.filled}`]: {
-      display: 'none',
-    },
+    return {
+      height: v.actionSize,
+      minWidth: v.actionSize,
+      color: v.actionColor || 'currentColor',
+      border: 0,
+      borderRadius: v.borderRadius,
+      ...getIconFillOrOutlineStyles({ outline: true }),
 
-    [`& .${teamsIconClassNames.outline}`]: {
-      display: 'block',
-    },
-
-    ':focus': { outline: 0 },
-
-    ':hover': {
-      color: 'currentColor',
-
-      [`& .${teamsIconClassNames.filled}`]: {
-        display: 'block',
+      ':hover': {
+        color: 'currentColor',
+        ...iconFilledStyles,
       },
 
-      [`& .${teamsIconClassNames.outline}`]: {
-        display: 'none',
-      },
-    },
-
-    ...(p.isFromKeyboard && {
       ':focus': {
-        outline: 0,
-
-        [`& .${teamsIconClassNames.filled}`]: {
-          display: 'block',
-        },
-
-        [`& .${teamsIconClassNames.outline}`]: {
-          display: 'none',
-        },
-
-        ':before': {
-          content: '""',
-          position: 'absolute',
-          top: '1px',
-          right: '1px',
-          bottom: '1px',
-          left: '1px',
-          border: `1px solid ${v.focusInnerBorderColor}`,
-          borderRadius: pxToRem(2),
-        },
-
-        ':after': {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          border: `1px solid ${v.focusOuterBorderColor}`,
-          borderRadius: pxToRem(2),
-        },
+        ...(p.isFromKeyboard && iconFilledStyles),
+        ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard })[':focus'],
       },
-    }),
-  }),
+    }
+  },
 }
 
 export default alertStyles

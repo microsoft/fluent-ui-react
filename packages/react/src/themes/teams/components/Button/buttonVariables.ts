@@ -1,18 +1,16 @@
+import { FontWeightProperty } from 'csstype'
+
 import { pxToRem } from '../../../../lib'
 
 export interface ButtonVariables {
-  [key: string]: string | number
-
   height: string
   minWidth: string
   maxWidth: string
   borderRadius: string
-  circularRadius: string
   paddingLeftRightValue: number
-  contentFontWeight: string
+  contentFontWeight: FontWeightProperty
 
   color: string
-  colorActive: string
   colorHover: string
   colorFocus: string
   colorDisabled: string
@@ -22,15 +20,10 @@ export interface ButtonVariables {
   backgroundColorFocus: string
   backgroundColorDisabled: string
   borderColor: string
-  borderColorActive: string
   borderColorHover: string
-  borderColorFocus: string
-  borderColorFocusIndicator: string
   borderColorDisabled: string
-  borderWidth: number
 
   primaryColor: string
-  primaryColorActive: string
   primaryColorHover: string
   primaryColorFocus: string
   primaryBackgroundColor: string
@@ -38,14 +31,8 @@ export interface ButtonVariables {
   primaryBackgroundColorHover: string
   primaryBackgroundColorFocus: string
   primaryBorderColor: string
-  primaryBorderColorActive: string
-  primaryBorderColorHover: string
-  primaryBorderColorFocus: string
-  primaryBorderColorFocusIndicator: string
-  primaryBorderWidth: number
 
-  primaryCircularBorderColorFocusIndicator: string
-
+  circularBorderRadius: string
   circularColor: string
   circularColorActive: string
   circularBackgroundColor: string
@@ -53,10 +40,8 @@ export interface ButtonVariables {
   circularBackgroundColorHover: string
   circularBackgroundColorFocus: string
   circularBorderColor: string
-  circularBorderColorActive: string
   circularBorderColorHover: string
   circularBorderColorFocus: string
-  circularBorderColorFocusIndicator: string
 
   textColor: string
   textColorHover: string
@@ -66,74 +51,55 @@ export interface ButtonVariables {
   textSecondaryColorHover: string
 
   boxShadow: string
-  borderRadiusFocused: string
 }
 
-export default (siteVars: any): ButtonVariables => {
-  return {
-    height: pxToRem(32),
-    minWidth: pxToRem(96),
-    maxWidth: pxToRem(280),
-    borderRadius: pxToRem(2),
-    circularRadius: pxToRem(999),
-    contentFontWeight: siteVars.fontWeightSemibold,
-    paddingLeftRightValue: 20,
+export default (siteVars: any): ButtonVariables => ({
+  height: pxToRem(32),
+  minWidth: pxToRem(96),
+  maxWidth: pxToRem(280),
+  borderRadius: siteVars.borderRadius,
+  contentFontWeight: siteVars.fontWeightSemibold,
+  paddingLeftRightValue: 20,
 
-    color: siteVars.colors.grey[900],
-    colorActive: siteVars.colors.grey[900],
-    colorHover: siteVars.colors.grey[900],
-    colorFocus: siteVars.colors.grey[900],
-    colorDisabled: siteVars.gray06,
-    backgroundColor: siteVars.colors.white,
-    backgroundColorActive: siteVars.gray08,
-    backgroundColorHover: siteVars.gray14,
-    backgroundColorFocus: siteVars.gray08,
-    backgroundColorDisabled: siteVars.gray09,
-    borderColor: siteVars.gray08,
-    borderColorActive: siteVars.gray06,
-    borderColorHover: siteVars.gray06,
-    borderColorFocus: siteVars.colors.white,
-    borderColorFocusIndicator: siteVars.colors.grey[900],
-    borderColorDisabled: 'transparent',
-    borderWidth: 1,
+  color: siteVars.colors.grey[750],
+  colorHover: siteVars.colors.grey[750],
+  colorFocus: siteVars.colors.grey[750],
+  colorDisabled: siteVars.colors.grey[250],
+  backgroundColor: siteVars.colors.white,
+  backgroundColorActive: siteVars.colors.grey[200],
+  backgroundColorHover: siteVars.colors.grey[50],
+  backgroundColorFocus: siteVars.colors.grey[200],
+  backgroundColorDisabled: siteVars.colors.grey[150],
+  borderColor: siteVars.colors.grey[200],
+  borderColorHover: siteVars.colors.grey[250],
+  borderColorDisabled: 'transparent',
 
-    primaryColor: siteVars.colors.white,
-    primaryColorActive: siteVars.colors.white,
-    primaryColorHover: siteVars.colors.white,
-    primaryColorFocus: siteVars.colors.white,
-    primaryBackgroundColor: siteVars.colors.primary[500],
-    primaryBackgroundColorActive: siteVars.colors.primary[900],
-    primaryBackgroundColorHover: siteVars.brand04,
-    primaryBackgroundColorFocus: siteVars.brand04,
-    primaryBorderColor: 'transparent',
-    primaryBorderColorActive: 'transparent',
-    primaryBorderColorHover: 'transparent',
-    primaryBorderColorFocus: siteVars.colors.white,
-    primaryBorderColorFocusIndicator: siteVars.colors.grey[900],
-    primaryBorderWidth: 1,
+  primaryColor: siteVars.colors.white,
+  primaryColorHover: siteVars.colors.white,
+  primaryColorFocus: siteVars.colors.white,
+  primaryBackgroundColor: siteVars.colors.brand[600],
+  primaryBackgroundColorActive: siteVars.colors.brand[900],
+  primaryBackgroundColorHover: siteVars.colors.brand[800],
+  primaryBackgroundColorFocus: siteVars.colors.brand[800],
+  primaryBorderColor: 'transparent',
 
-    primaryCircularBorderColorFocusIndicator: siteVars.colors.white,
+  circularBorderRadius: pxToRem(999),
+  circularColor: siteVars.colors.grey[500],
+  circularColorActive: siteVars.colors.white,
+  circularBackgroundColor: 'transparent',
+  circularBackgroundColorActive: siteVars.colors.grey[500],
+  circularBackgroundColorHover: siteVars.colors.grey[450],
+  circularBackgroundColorFocus: siteVars.colors.grey[450],
+  circularBorderColor: siteVars.colors.grey[500],
+  circularBorderColorHover: 'transparent',
+  circularBorderColorFocus: 'transparent',
 
-    circularColor: siteVars.gray02,
-    circularColorActive: siteVars.colors.white,
-    circularBackgroundColor: 'transparent',
-    circularBackgroundColorActive: siteVars.gray02,
-    circularBackgroundColorHover: siteVars.gray03,
-    circularBackgroundColorFocus: siteVars.gray03,
-    circularBorderColor: siteVars.gray02,
-    circularBorderColorActive: 'transparent',
-    circularBorderColorHover: 'transparent',
-    circularBorderColorFocus: 'transparent',
-    circularBorderColorFocusIndicator: siteVars.colors.white,
+  textColor: siteVars.colors.brand[600],
+  textColorHover: siteVars.colors.brand[800],
+  textPrimaryColor: siteVars.colors.brand[600],
+  textPrimaryColorHover: siteVars.colors.brand[800],
+  textSecondaryColor: siteVars.colors.grey[450],
+  textSecondaryColorHover: siteVars.colors.brand[800],
 
-    textColor: siteVars.colors.primary[500],
-    textColorHover: siteVars.brand04,
-    textPrimaryColor: siteVars.colors.primary[500],
-    textPrimaryColorHover: siteVars.brand04,
-    textSecondaryColor: siteVars.gray03,
-    textSecondaryColorHover: siteVars.brand04,
-
-    boxShadow: siteVars.shadowLevel1,
-    borderRadiusFocused: pxToRem(3),
-  }
-}
+  boxShadow: siteVars.shadowLevel1,
+})
