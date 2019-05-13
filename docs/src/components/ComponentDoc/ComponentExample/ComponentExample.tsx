@@ -360,7 +360,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     return (
       <Menu
-        size="small"
+        primary
         underlined
         activeIndex={-1}
         styles={codeEditorStyle}
@@ -387,10 +387,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             } as React.CSSProperties
           }
         >
-          <Menu
-            size="small"
-            styles={{ display: 'flex', justifyContent: 'space-between', border: 'none' }}
-          >
+          <Menu styles={{ display: 'flex', justifyContent: 'space-between', border: 'none' }}>
             {this.renderAPIsMenu()}
             {this.renderLanguagesMenu()}
           </Menu>
@@ -408,7 +405,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       <SourceRender.Consumer>
         {({ error }) =>
           error && (
-            <Segment inverted color="red" size="small">
+            <Segment inverted color="red">
               <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
             </Segment>
           )

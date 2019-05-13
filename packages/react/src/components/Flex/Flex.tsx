@@ -3,7 +3,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
-import { ReactProps } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 import FlexItem from './FlexItem'
 
 export interface FlexProps extends UIComponentProps, ChildrenComponentProps {
@@ -38,10 +38,7 @@ export interface FlexProps extends UIComponentProps, ChildrenComponentProps {
   fill?: boolean
 }
 
-/**
- * Arrange group of items aligned towards common direction.
- */
-class Flex extends UIComponent<ReactProps<FlexProps>> {
+class Flex extends UIComponent<WithAsProp<FlexProps>> {
   static Item = FlexItem
 
   static displayName = 'Flex'
@@ -99,4 +96,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
   }
 }
 
-export default Flex
+/**
+ * Arranges group of items aligned towards common direction.
+ */
+export default withSafeTypeForAs<typeof Flex, FlexProps>(Flex)
