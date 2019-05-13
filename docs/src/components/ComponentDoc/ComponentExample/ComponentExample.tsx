@@ -225,15 +225,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }
   }
 
-  exampleMenuVariables = {
-    primaryActiveBackgroundColor: 'transparent',
-    primaryActiveBorderColor: 'white',
-    primaryActiveColor: 'white',
-    primaryBorderColor: 'white',
-    activeColor: 'white',
-    disabledColor: '#ffffff80',
-    color: '#ffffff80',
-  }
+  exampleMenuVariables = siteVars => ({
+    backgroundColorActive: 'transparent',
+    borderColorActive: siteVars.colors.white,
+    colorActive: siteVars.colors.white,
+    primaryBorderColor: siteVars.colors.white,
+    color: siteVars.colors.white,
+  })
 
   renderAPIsMenu = (): JSX.Element => {
     const { componentAPIs, currentCodeAPI } = this.props
@@ -252,7 +250,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     return (
       <Menu
-        primary
         underlined
         items={menuItems}
         variables={this.exampleMenuVariables}
@@ -280,7 +277,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     return (
       <Menu
-        primary
         underlined
         items={menuItems}
         variables={this.exampleMenuVariables}
@@ -368,11 +364,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         underlined
         activeIndex={-1}
         styles={codeEditorStyle}
-        variables={{
-          activeColor: 'white',
-          disabledColor: '#ffffff60',
-          color: '#ffffffb0',
-        }}
+        variables={this.exampleMenuVariables}
         items={menuItems}
       />
     )

@@ -10,13 +10,9 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     backgroundColorFocus: siteVars.accessibleYellow,
     backgroundColorDisabled: siteVars.accessibleGreen,
     borderColor: siteVars.colors.white,
-    borderColorActive: 'transparent',
     borderColorHover: 'transparent',
-    borderColorFocus: siteVars.colors.black,
-    borderColorFocusIndicator: siteVars.colors.white,
 
     primaryColor: siteVars.colors.white,
-    primaryColorActive: siteVars.colors.black,
     primaryColorHover: siteVars.colors.black,
     primaryColorFocus: siteVars.colors.black,
     primaryBackgroundColor: siteVars.colors.black,
@@ -24,11 +20,6 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     primaryBackgroundColorHover: siteVars.accessibleYellow,
     primaryBackgroundColorFocus: siteVars.accessibleYellow,
     primaryBorderColor: siteVars.colors.white,
-    primaryBorderColorFocus: siteVars.colors.black,
-    primaryBorderColorFocusIndicator: siteVars.colors.white,
-    primaryBorderWidth: 2,
-
-    primaryCircularBorderColorFocusIndicator: siteVars.colors.black,
 
     circularColor: siteVars.colors.white,
     circularColorActive: siteVars.colors.black,
@@ -37,10 +28,8 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     circularBackgroundColorHover: siteVars.accessibleYellow,
     circularBackgroundColorFocus: siteVars.accessibleYellow,
     circularBorderColor: siteVars.colors.white,
-    circularBorderColorActive: siteVars.colors.white,
     circularBorderColorHover: siteVars.colors.white,
     circularBorderColorFocus: siteVars.colors.white,
-    circularBorderColorFocusIndicator: siteVars.colors.black,
 
     textColor: siteVars.accessibleYellow,
     textColorHover: siteVars.accessibleYellow,

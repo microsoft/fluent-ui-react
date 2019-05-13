@@ -104,13 +104,10 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        {icon && (
-          <div className={classes.icon}>
-            {Icon.create(icon, {
-              defaultProps: { size: 'larger' },
-            })}
-          </div>
-        )}
+        {icon &&
+          Icon.create(icon, {
+            defaultProps: { size: 'larger', styles: styles.icon },
+          })}
         {(header || description) && (
           <div className={classes.content}>
             {Text.create(header, {
@@ -122,16 +119,13 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
             })}
           </div>
         )}
-        {action && (
-          <div className={classes.action}>
-            {Button.create(action, {
-              defaultProps: { iconOnly: true, text: true },
-            })}
-          </div>
-        )}
+        {action &&
+          Button.create(action, {
+            defaultProps: { iconOnly: true, text: true, styles: styles.action },
+          })}
         {!_.isNil(progress) &&
           Box.create('', {
-            defaultProps: { className: classes.progress },
+            defaultProps: { styles: styles.progress },
           })}
       </ElementType>
     )
