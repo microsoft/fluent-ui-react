@@ -4,6 +4,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { RendererProvider, ThemeProvider } from 'react-fela'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import {
   felaRenderer as felaLtrRenderer,
@@ -20,24 +21,28 @@ import {
   StaticStyle,
   StaticStyleFunction,
   FontFace,
+  ComponentVariablesInput,
 } from '../../themes/types'
 
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
 import ProviderBox from './ProviderBox'
-import { Extendable } from '../../types'
+import { WithAsProp } from '../../types'
 
 export interface ProviderProps extends ChildrenComponentProps {
   theme: ThemeInput
+  variables?: ComponentVariablesInput
 }
 
 /**
  * The Provider passes the CSS in JS renderer and theme to your components.
  */
-class Provider extends React.Component<Extendable<ProviderProps>> {
+class Provider extends React.Component<WithAsProp<ProviderProps>> {
   static displayName = 'Provider'
 
   static propTypes = {
+    as: customPropTypes.as,
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
       componentVariables: PropTypes.object,
@@ -141,7 +146,7 @@ class Provider extends React.Component<Extendable<ProviderProps>> {
   }
 
   render() {
-    const { theme, children, ...unhandledProps } = this.props
+    const { as, theme, variables, children, ...unhandledProps } = this.props
 
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
@@ -168,7 +173,7 @@ class Provider extends React.Component<Extendable<ProviderProps>> {
           return (
             <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
               <ThemeProvider theme={outgoingTheme}>
-                <ProviderBox {...unhandledProps} {...rtlProps}>
+                <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>
                   {children}
                 </ProviderBox>
               </ThemeProvider>

@@ -63,7 +63,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
                       {this.getMessagePreviewForScreenReader(props)}
                     </div>
                   )}
-                  <ElementType {...props} text={undefined} {...maybeAttributesForDivider} />
+                  <ElementType {...props} {...maybeAttributesForDivider} />
                 </>
               ),
             }}
@@ -73,7 +73,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
     )
   }
 
-  private getElementType = (itemType: ChatItemTypes) => {
+  private getElementType = (itemType: ChatItemTypes): React.ElementType => {
     switch (itemType) {
       case ChatItemTypes.message:
         return Chat.Message
