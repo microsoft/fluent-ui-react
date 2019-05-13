@@ -6,7 +6,7 @@ import {
   UIComponentProps,
 } from '../../lib'
 import createComponent from '../../lib/createComponent'
-import { WithAsProp, withSafeTypeForAs } from '../../../src/types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ProviderBoxProps
   extends UIComponentProps<ProviderBoxProps>,
