@@ -146,7 +146,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   }
 
   render() {
-    const { as, theme, children, ...unhandledProps } = this.props
+    const { as, theme, variables, children, ...unhandledProps } = this.props
 
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
@@ -173,7 +173,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
           return (
             <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
               <ThemeProvider theme={outgoingTheme}>
-                <ProviderBox as={as} {...unhandledProps} {...rtlProps}>
+                <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>
                   {children}
                 </ProviderBox>
               </ThemeProvider>
