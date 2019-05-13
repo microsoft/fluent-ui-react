@@ -16,7 +16,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 import ReactionGroup from './ReactionGroup'
@@ -53,10 +53,8 @@ export interface ReactionProps
 export interface ReactionState {
   isFromKeyboard: boolean
 }
-/**
- * A reaction is used to indicate user's reaction.
- */
-class Reaction extends UIComponent<ReactProps<ReactionProps>, ReactionState> {
+
+class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
   static create: Function
 
   static className = 'ui-reaction'
@@ -129,4 +127,7 @@ Reaction.slotClassNames = {
   content: `${Reaction.className}__content`,
 }
 
-export default Reaction
+/**
+ * A reaction is used to indicate user's reaction.
+ */
+export default withSafeTypeForAs<typeof Reaction, ReactionProps, 'span'>(Reaction)

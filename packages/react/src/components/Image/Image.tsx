@@ -5,7 +5,7 @@ import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes 
 import { imageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import { ReactProps } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ImageProps extends UIComponentProps {
   /**
@@ -27,17 +27,7 @@ export interface ImageProps extends UIComponentProps {
   src?: string
 }
 
-/**
- * An image is a graphic representation of something.
- * @accessibility
- * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
- *
- * Other considerations:
- *  - when alt property is empty, then Narrator in scan mode navigates to image and narrates it as empty paragraph
- *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior
- *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
- */
-class Image extends UIComponent<ReactProps<ImageProps>, any> {
+class Image extends UIComponent<WithAsProp<ImageProps>, any> {
   static create: Function
 
   static className = 'ui-image'
@@ -72,4 +62,14 @@ class Image extends UIComponent<ReactProps<ImageProps>, any> {
 
 Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src' })
 
-export default Image
+/**
+ * An image is a graphic representation of something.
+ * @accessibility
+ * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
+ *
+ * Other considerations:
+ *  - when alt property is empty, then Narrator in scan mode navigates to image and narrates it as empty paragraph
+ *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior
+ *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
+ */
+export default withSafeTypeForAs<typeof Image, ImageProps, 'img'>(Image)

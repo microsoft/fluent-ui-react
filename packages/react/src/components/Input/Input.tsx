@@ -16,15 +16,25 @@ import {
 } from '../../lib'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { inputBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
+import { HtmlInputProps } from '../../lib/htmlPropsUtils'
 
 export interface InputSlotClassNames {
   input: string
 }
 
-export interface InputProps extends UIComponentProps, ChildrenComponentProps {
+type SupportedIntrinsicInputProps = {
+  [K in HtmlInputProps]?: K extends keyof JSX.IntrinsicElements['input']
+    ? JSX.IntrinsicElements['input'][K]
+    : any
+}
+
+export interface InputProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    SupportedIntrinsicInputProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior
@@ -35,7 +45,7 @@ export interface InputProps extends UIComponentProps, ChildrenComponentProps {
   clearable?: boolean
 
   /** The default value of the input. */
-  defaultValue?: React.ReactText
+  defaultValue?: string | string[]
 
   /** An input can take the width of its container. */
   fluid?: boolean
@@ -77,15 +87,7 @@ export interface InputState {
   value?: React.ReactText
 }
 
-/**
- * An input is a field used to elicit a response from a user.
- * @accessibility
- * For good screen reader experience set aria-label or aria-labelledby attribute for input.
- *
- * Other considerations:
- *  - if input is search, then use "role='search'"
- */
-class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> {
+class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> {
   private inputRef = React.createRef<HTMLElement>()
 
   static className = 'ui-input'
@@ -224,4 +226,12 @@ Input.slotClassNames = {
   input: `${Input.className}__input`,
 }
 
-export default Input
+/**
+ * An input is a field used to elicit a response from a user.
+ * @accessibility
+ * For good screen reader experience set aria-label or aria-labelledby attribute for input.
+ *
+ * Other considerations:
+ *  - if input is search, then use "role='search'"
+ */
+export default withSafeTypeForAs<typeof Input, InputProps, 'div'>(Input)

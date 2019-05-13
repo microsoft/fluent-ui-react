@@ -14,7 +14,6 @@ const sidebarStyle = {
 type ComponentSidebarProps = {
   activePath: string
   displayName: string
-  examplesRef: HTMLElement
   onItemClick: (e: React.SyntheticEvent, { examplePath: string }) => void
 }
 
@@ -38,7 +37,7 @@ class ComponentSidebar extends React.Component<ComponentSidebarProps, any> {
   }
 
   render() {
-    const { activePath, examplesRef, onItemClick } = this.props
+    const { activePath, onItemClick } = this.props
     const { sections } = this.state
 
     const menuItems = _.map(sections, ({ examples, sectionName, index }) => ({
@@ -56,7 +55,7 @@ class ComponentSidebar extends React.Component<ComponentSidebarProps, any> {
 
     // TODO: use a Sticky component instead of position:fixed, when available
     return (
-      <Segment context={examplesRef} styles={{ padding: 0, position: 'fixed' }}>
+      <Segment styles={{ padding: 0, position: 'fixed' }}>
         <Menu fluid vertical items={menuItems} styles={{ ...sidebarStyle }} />
       </Segment>
     )
