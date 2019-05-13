@@ -145,6 +145,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     mountDocument: PropTypes.object,
     mountNode: customPropTypes.domNode,
     mouseLeaveDelay: PropTypes.number,
+    offset: PropTypes.string,
     on: PropTypes.oneOfType([
       PropTypes.oneOf(['hover', 'click', 'focus']),
       PropTypes.arrayOf(PropTypes.oneOf(['click', 'focus'])),

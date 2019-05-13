@@ -265,6 +265,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     moveFocusOnTab: PropTypes.bool,
     multiple: PropTypes.bool,
     noResultsMessage: customPropTypes.itemShorthand,
+    offset: PropTypes.string,
     onOpenChange: PropTypes.func,
     onSearchQueryChange: PropTypes.func,
     onSelectedChange: PropTypes.func,
