@@ -1,3 +1,4 @@
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -17,6 +18,7 @@ import {
 import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../types'
 import Icon from '../Icon/Icon'
 import Layout from '../Layout/Layout'
+import Button from '../Button/Button'
 import { accordionTitleBehavior } from '../../lib/accessibility'
 import { AccessibilityActionHandlers } from 'src/lib/accessibility/types'
 
@@ -29,6 +31,9 @@ export interface AccordionTitleProps
 
   /** AccordionTitle index inside Accordion. */
   index?: string | number
+
+  /** Ref to the button. */
+  buttonRef?: React.RefObject<HTMLElement>
 
   /**
    * Called on click.
@@ -55,6 +60,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
   static propTypes = {
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
+    buttonRef: PropTypes.object,
     index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClick: PropTypes.func,
     indicator: customPropTypes.itemShorthand,
@@ -62,6 +68,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
 
   static defaultProps = {
     accessibility: accordionTitleBehavior,
+    as: 'dt',
   }
 
   actionHandlers: AccessibilityActionHandlers = {
@@ -76,19 +83,25 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
   }
 
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
-    const { children, content, indicator, active } = this.props
+    const { buttonRef, children, content, indicator, active } = this.props
     const indicatorWithDefaults = indicator === undefined ? {} : indicator
 
     const contentElement = (
-      <Layout
-        start={Icon.create(indicatorWithDefaults, {
-          defaultProps: {
-            name: active ? 'stardust-arrow-down' : 'stardust-arrow-end',
-            styles: styles.indicator,
-          },
-        })}
-        main={rtlTextContainer.createFor({ element: content })}
-      />
+      <Ref innerRef={buttonRef}>
+        <Button
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.button, unhandledProps)}
+        >
+          <Layout
+            start={Icon.create(indicatorWithDefaults, {
+              defaultProps: {
+                name: active ? 'stardust-arrow-down' : 'stardust-arrow-end',
+                styles: styles.indicator,
+              },
+            })}
+            main={rtlTextContainer.createFor({ element: content })}
+          />
+        </Button>
+      </Ref>
     )
 
     return (

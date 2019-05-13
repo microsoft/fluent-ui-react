@@ -124,6 +124,7 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
 
   public static defaultProps = {
     accessibility: accordionBehavior,
+    as: 'dl',
   }
 
   static autoControlledProps = ['activeIndex']
@@ -210,12 +211,12 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
     _.each(panels, (panel, index) => {
       const { content, title } = panel
       const active = this.isIndexActive(index)
-      const ref = React.createRef()
-      this.itemRefs[index] = ref
+      const buttonRef = React.createRef<HTMLElement>()
+      this.itemRefs[index] = buttonRef
 
       children.push(
         AccordionTitle.create(title, {
-          defaultProps: { className: Accordion.slotClassNames.title, active, index, ref },
+          defaultProps: { className: Accordion.slotClassNames.title, active, index, buttonRef },
           overrideProps: this.handleTitleOverrides,
           render: renderPanelTitle,
         }),

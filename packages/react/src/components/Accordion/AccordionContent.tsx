@@ -45,6 +45,10 @@ class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, an
     onClick: PropTypes.func,
   }
 
+  static defaultProps = {
+    as: 'dd',
+  }
+
   renderComponent({ ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
 
