@@ -14,7 +14,7 @@ import {
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { accordionBehavior } from '../../lib/accessibility'
-import AccordionTitle from './AccordionTitle'
+import AccordionTitle, { AccordionTitleProps } from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
@@ -194,6 +194,10 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
       _.invoke(predefinedProps, 'onClick', e, titleProps)
       _.invoke(this.props, 'onTitleClick', e, titleProps)
     },
+    onFocus: (e: React.SyntheticEvent, titleProps: AccordionTitleProps) => {
+      _.invoke(predefinedProps, 'onFocus', e, titleProps)
+      this.setState({ focusedIndex: titleProps.index })
+    },
   })
 
   isIndexActive = (index): boolean => {
@@ -206,7 +210,10 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
   renderPanels = () => {
     const children: any[] = []
     const { panels, renderPanelContent, renderPanelTitle } = this.props
+    const { focusedIndex } = this.state
+
     this.itemRefs = []
+    this.focusHandler.syncFocusedIndex(focusedIndex)
 
     _.each(panels, (panel, index) => {
       const { content, title } = panel

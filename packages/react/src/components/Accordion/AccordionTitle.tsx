@@ -43,6 +43,13 @@ export interface AccordionTitleProps
    */
   onClick?: ComponentEventHandler<AccordionTitleProps>
 
+  /**
+   * Called after user's focus.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onFocus?: ComponentEventHandler<AccordionTitleProps>
+
   /** Shorthand for the active indicator. */
   indicator?: ShorthandValue
 }
@@ -82,6 +89,11 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
+  handleFocus = (e: React.SyntheticEvent) => {
+    e.stopPropagation()
+    _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
     const { buttonRef, children, content, indicator, active } = this.props
     const indicatorWithDefaults = indicator === undefined ? {} : indicator
@@ -89,6 +101,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     const contentElement = (
       <Ref innerRef={buttonRef}>
         <Button
+          onFocus={this.handleFocus}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.button, unhandledProps)}
         >
           <Layout
