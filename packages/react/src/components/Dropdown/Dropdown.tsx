@@ -1260,9 +1260,4 @@ Dropdown.slotClassNames = {
  * @accessibility
  * Implements ARIA collapsible Listbox design pattern, uses aria-live to announce state changes.
  */
-export default withSafeTypeForAs<
-  typeof Dropdown,
-  DropdownProps,
-  'div',
-  'charKeyPressedCleanupTime'
->(Dropdown)
+export default withSafeTypeForAs<typeof Dropdown, DropdownProps>(Dropdown)
