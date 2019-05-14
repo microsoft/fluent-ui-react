@@ -116,10 +116,6 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
           defaultProps: {
             size,
             styles: styles.status,
-            variables: {
-              borderColor: variables.statusBorderColor,
-              borderWidth: variables.statusBorderWidth,
-            },
           },
         })}
       </ElementType>
