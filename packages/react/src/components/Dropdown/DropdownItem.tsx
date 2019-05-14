@@ -32,6 +32,9 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   /** Item's image. */
   image?: ShorthandValue
 
+  /** Indicated whether the item has been set active by keyboard. */
+  isFromKeyboard?: boolean
+
   /**
    * Called on dropdown item click.
    *
@@ -39,9 +42,12 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
    * @param {object} data - All props and proposed value.
    */
   onClick?: ComponentEventHandler<DropdownItemProps>
+
+  /** A dropdown item can be selected if single selection Dropdown is used. */
+  selected?: boolean
 }
 
-class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>, any> {
+class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
   static displayName = 'DropdownItem'
 
   static create: Function
@@ -62,6 +68,8 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>, any> {
     header: customPropTypes.itemShorthand,
     image: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
+    isFromKeyboard: PropTypes.bool,
+    selected: PropTypes.bool,
   }
 
   private handleClick = e => {
@@ -76,14 +84,15 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>, any> {
     const { content, header, image, accessibilityItemProps } = this.props
     return (
       <ListItem
-        className={classes.root}
+        className={DropdownItem.className}
+        styles={styles.root}
+        onClick={this.handleClick}
         header={Box.create(header, {
           defaultProps: {
             className: DropdownItem.slotClassNames.header,
             styles: styles.header,
           },
         })}
-        onClick={this.handleClick}
         media={Image.create(image, {
           defaultProps: {
             avatar: true,
