@@ -16,7 +16,7 @@ import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
 import Box from '../Box/Box'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface EmbedSlotClassNames {
   control: string
@@ -67,15 +67,7 @@ export interface EmbedState {
   active: boolean
 }
 
-/**
- * A GIF is a muted segment of a video
- * @accessibility
- * If GIF should be visible to screen readers, textual representation needs to be provided in 'alt' or 'title' property.
- *
- * Other considerations:
- *  - when alt and title property are empty, then Narrator in scan mode navigates to the gif and narrates it as empty paragraph
- */
-class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> {
+class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> {
   static create: Function
 
   static className = 'ui-embed'
@@ -184,4 +176,12 @@ class Embed extends AutoControlledComponent<ReactProps<EmbedProps>, EmbedState> 
 
 Embed.create = createShorthandFactory({ Component: Embed })
 
-export default Embed
+/**
+ * A GIF is a muted segment of a video
+ * @accessibility
+ * If GIF should be visible to screen readers, textual representation needs to be provided in 'alt' or 'title' property.
+ *
+ * Other considerations:
+ *  - when alt and title property are empty, then Narrator in scan mode navigates to the gif and narrates it as empty paragraph
+ */
+export default withSafeTypeForAs<typeof Embed, EmbedProps, 'span'>(Embed)

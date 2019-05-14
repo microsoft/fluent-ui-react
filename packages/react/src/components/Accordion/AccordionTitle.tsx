@@ -13,7 +13,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../types'
+import { WithAsProp, ComponentEventHandler, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
 import Layout from '../Layout/Layout'
 
@@ -39,10 +39,7 @@ export interface AccordionTitleProps
   indicator?: ShorthandValue
 }
 
-/**
- * A standard AccordionTitle.
- */
-class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
+class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
   static displayName = 'AccordionTitle'
 
   static create: Function
@@ -92,4 +89,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
 
 AccordionTitle.create = createShorthandFactory({ Component: AccordionTitle, mappedProp: 'content' })
 
-export default AccordionTitle
+/**
+ * A standard AccordionTitle.
+ */
+export default withSafeTypeForAs<typeof AccordionTitle, AccordionTitleProps>(AccordionTitle)

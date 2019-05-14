@@ -17,7 +17,7 @@ import ListItem, { ListItemProps } from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 
 export interface ListSlotClassNames {
   item: string
@@ -64,10 +64,7 @@ export interface ListState {
   selectedIndex?: number
 }
 
-/**
- * A list displays a group of related content.
- */
-class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
+class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
   static displayName = 'List'
 
   static className = 'ui-list'
@@ -220,4 +217,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   }
 }
 
-export default List
+/**
+ * A list displays a group of related content.
+ */
+export default withSafeTypeForAs<typeof List, ListProps, 'ul'>(List)
