@@ -20,9 +20,10 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 
 import {
   ComponentEventHandler,
-  ReactProps,
+  WithAsProp,
   ShorthandValue,
   ShorthandRenderFunction,
+  withSafeTypeForAs,
 } from '../../types'
 import { ContainerFocusHandler } from 'src/lib/accessibility/FocusHandling/FocusContainer'
 
@@ -81,13 +82,7 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
   accessibility?: Accessibility
 }
 
-/**
- * An accordion allows users to toggle the display of sections of content.
- * @accessibility
- * Implements ARIA Accordion design pattern (keyboard navigation not yet supported).
- * Consider using Tree if you intend to wrap Lists in an Accordion.
- */
-class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any> {
+class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any> {
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'
@@ -294,4 +289,10 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
   }
 }
 
-export default Accordion
+/**
+ * An accordion allows users to toggle the display of sections of content.
+ * @accessibility
+ * Implements ARIA Accordion design pattern (keyboard navigation not yet supported).
+ * Consider using Tree if you intend to wrap Lists in an Accordion.
+ */
+export default withSafeTypeForAs<typeof Accordion, AccordionProps>(Accordion)

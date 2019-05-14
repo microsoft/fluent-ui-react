@@ -17,10 +17,10 @@ export default (siteVariables): Partial<ProviderBoxVariables> => ({
   scrollbarHeight: pxToRem(16),
   scrollbarWidth: pxToRem(16),
 
-  scrollbarThumbBackgroundColor: siteVariables.gray06,
+  scrollbarThumbBackgroundColor: siteVariables.colors.grey[250],
   scrollbarThumbBorderRadius: pxToRem(9),
   scrollbarThumbBorderSize: pxToRem(4),
 
-  scrollbarThumbHoverBackgroundColor: siteVariables.gray04,
+  scrollbarThumbHoverBackgroundColor: siteVariables.colors.grey[350],
   scrollbarThumbHoverBorderSize: pxToRem(2),
 })

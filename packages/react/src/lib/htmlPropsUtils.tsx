@@ -2,7 +2,78 @@ import * as _ from 'lodash'
 
 export const htmlImageProps = ['alt', 'height', 'src', 'srcSet', 'width']
 
-export const htmlInputAttrs = [
+export type HtmlInputEvents =
+  // keyboard
+  | 'onKeyDown'
+  | 'onKeyPress'
+  | 'onKeyUp'
+  | 'onFocus'
+  | 'onBlur'
+
+  // form
+  | 'onChange'
+  | 'onInput'
+
+  // mouse
+  | 'onClick'
+  | 'onContextMenu'
+  | 'onDrag'
+  | 'onDragEnd'
+  | 'onDragEnter'
+  | 'onDragExit'
+  | 'onDragLeave'
+  | 'onDragOver'
+  | 'onDragStart'
+  | 'onDrop'
+  | 'onMouseDown'
+  | 'onMouseEnter'
+  | 'onMouseLeave'
+  | 'onMouseMove'
+  | 'onMouseOut'
+  | 'onMouseOver'
+  | 'onMouseUp'
+
+  // selection
+  | 'onSelect'
+
+  // touch
+  | 'onTouchCancel'
+  | 'onTouchEnd'
+  | 'onTouchMove'
+  | 'onTouchStart'
+
+export type HtmlInputAttrs =
+  // REACT |
+  | 'selected'
+  | 'defaultValue'
+  | 'defaultChecked'
+
+  // LIMITED HTML PROPS
+  | 'accept'
+  | 'autoCapitalize'
+  | 'autoComplete'
+  | 'autoCorrect'
+  | 'autoFocus'
+  | 'checked'
+  | 'disabled'
+  | 'form'
+  | 'id'
+  | 'list'
+  | 'max'
+  | 'maxLength'
+  | 'min'
+  | 'minLength'
+  | 'multiple'
+  | 'name'
+  | 'pattern'
+  | 'placeholder'
+  | 'readOnly'
+  | 'required'
+  | 'step'
+  | 'type'
+  | 'value'
+
+export const htmlInputAttrs: HtmlInputAttrs[] = [
   // REACT
   'selected',
   'defaultValue',
@@ -34,7 +105,9 @@ export const htmlInputAttrs = [
   'value',
 ]
 
-export const htmlInputEvents = [
+export type HtmlInputProps = HtmlInputAttrs | HtmlInputEvents
+
+export const htmlInputEvents: HtmlInputEvents[] = [
   // EVENTS
   // keyboard
   'onKeyDown',
@@ -78,7 +151,7 @@ export const htmlInputEvents = [
   'onTouchStart',
 ]
 
-export const htmlInputProps = [...htmlInputAttrs, ...htmlInputEvents]
+export const htmlInputProps: HtmlInputProps[] = [...htmlInputAttrs, ...htmlInputEvents]
 
 /**
  * Returns an array of objects consisting of: props of html input element and restProps.

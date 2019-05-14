@@ -18,7 +18,7 @@ import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityBehavior } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
-import { ReactProps, ShorthandCollection, ShorthandValue } from '../../types'
+import { WithAsProp, ShorthandCollection, ShorthandValue, withSafeTypeForAs } from '../../types'
 import MenuDivider from './MenuDivider'
 
 export type MenuShorthandKinds = 'divider' | 'item'
@@ -83,12 +83,7 @@ export interface MenuState {
   activeIndex?: number | string
 }
 
-/**
- * A menu displays grouped navigation actions.
- * @accessibility
- * Implements ARIA Menu, Toolbar or Tabs design pattern, depending on the behavior used.
- */
-class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
+class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -236,4 +231,9 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
 
 Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items' })
 
-export default Menu
+/**
+ * A menu displays grouped navigation actions.
+ * @accessibility
+ * Implements ARIA Menu, Toolbar or Tabs design pattern, depending on the behavior used.
+ */
+export default withSafeTypeForAs<typeof Menu, MenuProps, 'ul'>(Menu)

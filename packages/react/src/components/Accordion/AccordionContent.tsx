@@ -11,7 +11,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ComponentEventHandler } from '../../types'
+import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import { accordionContentBehavior } from '../../lib/accessibility'
 
 export interface AccordionContentProps
@@ -33,10 +33,7 @@ export interface AccordionContentProps
   titleId?: string
 }
 
-/**
- * A standard AccordionContent.
- */
-class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, any> {
+class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, any> {
   static displayName = 'AccordionContent'
 
   static create: Function
@@ -76,4 +73,7 @@ AccordionContent.create = createShorthandFactory({
   mappedProp: 'content',
 })
 
-export default AccordionContent
+/**
+ * A standard AccordionContent.
+ */
+export default withSafeTypeForAs<typeof AccordionContent, AccordionContentProps>(AccordionContent)
