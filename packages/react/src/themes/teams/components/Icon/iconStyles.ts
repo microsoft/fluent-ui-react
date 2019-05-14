@@ -59,10 +59,16 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
         backgroundColor: v.backgroundColor,
         boxSizing: 'border-box',
 
-        // overriding base theme border handling
-        ...((bordered || v.borderColor) &&
-          getBorderedStyles(v.borderColor || getIconColor(v, colors))),
+        // overriding the base theme default transformation as in teams theme the svg/svgFlippingInRtl slots are used for this
+        transform: 'unset',
+
+        height: 'unset',
+        width: 'unset',
       },
+
+      // overriding base theme border handling
+      ...((bordered || v.borderColor) &&
+        getBorderedStyles(v.borderColor || getIconColor(v, colors))),
     }
   },
 

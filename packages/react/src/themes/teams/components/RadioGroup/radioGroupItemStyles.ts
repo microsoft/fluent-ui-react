@@ -64,6 +64,7 @@ const radioStyles: ComponentSlotStylesInput<
     // overrides from icon styles
     backgroundColor: 'transparent',
     boxShadow: 'none',
+    boxSizing: 'border-box',
     borderStyle: 'solid',
     borderWidth: `${pxToRem(1)}`,
     borderColor: 'currentColor',
