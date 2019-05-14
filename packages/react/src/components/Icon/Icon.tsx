@@ -14,7 +14,7 @@ import { iconBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { SvgIconSpec } from '../../themes/types'
-import { ReactProps } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
@@ -50,10 +50,7 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
   xSpacing?: IconXSpacing
 }
 
-/**
- * An icon is a glyph used to represent something else.
- */
-class Icon extends UIComponent<ReactProps<IconProps>, any> {
+class Icon extends UIComponent<WithAsProp<IconProps>, any> {
   static create: Function
 
   static className = 'ui-icon'
@@ -128,4 +125,7 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
 
 Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name' })
 
-export default Icon
+/**
+ * An icon is a glyph used to represent something else.
+ */
+export default withSafeTypeForAs<typeof Icon, IconProps, 'span'>(Icon)

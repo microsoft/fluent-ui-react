@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import { mountWithProvider } from 'test/utils'
-import { Props, PropsOf } from 'src/types'
+import { Props, PropsOf, InstanceOf } from 'src/types'
 
 export type ShorthandTestOptions<TProps = any> = {
   mapsValueToProp: keyof (TProps & React.HTMLProps<HTMLElement>) | false
@@ -14,7 +14,7 @@ export const DefaultShorthandTestOptions: ShorthandTestOptions = {
 export type ShorthandPropTestsRunner<TComponent> = <
   TShorthandComponent extends React.ComponentType
 >(
-  shorthandProp: keyof PropsOf<TComponent>,
+  shorthandProp: keyof PropsOf<InstanceOf<TComponent>>,
   ShorthandComponent: TShorthandComponent,
   options?: ShorthandTestOptions<PropsOf<TShorthandComponent>>,
 ) => any

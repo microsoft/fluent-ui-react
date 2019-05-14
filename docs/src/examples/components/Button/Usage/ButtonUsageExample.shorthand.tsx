@@ -8,7 +8,6 @@ const ButtonUsageExampleShorthand = () => (
         componentVariables: {
           Button: siteVariables => ({
             color: siteVariables.colors.brand[600],
-            colorActive: siteVariables.colors.brand[300],
             colorHover: siteVariables.colors.brand[300],
             colorFocus: siteVariables.colors.brand[900],
             backgroundColor: '#252424', // no mapping color - tried - siteVariables.colors.grey[750]
@@ -16,10 +15,7 @@ const ButtonUsageExampleShorthand = () => (
             backgroundColorHover: siteVariables.colors.brand[50],
             backgroundColorFocus: siteVariables.colors.brand[200],
             borderColor: siteVariables.colors.brand[200],
-            borderColorActive: siteVariables.colors.brand[300],
             borderColorHover: siteVariables.colors.brand[300],
-            borderColorFocus: siteVariables.colors.grey[900],
-            borderColorFocusIndicator: siteVariables.colors.brand[900],
           }),
         },
       }}
@@ -34,7 +30,6 @@ const ButtonUsageExampleShorthand = () => (
         componentVariables: {
           Button: siteVariables => ({
             color: siteVariables.colors.brand[600],
-            colorActive: siteVariables.colors.brand[600],
             colorHover: siteVariables.colors.brand[600],
             colorFocus: siteVariables.colors.brand[900],
             backgroundColor: siteVariables.colors.white,
@@ -42,10 +37,7 @@ const ButtonUsageExampleShorthand = () => (
             backgroundColorHover: siteVariables.colors.brand[50],
             backgroundColorFocus: siteVariables.colors.brand[200],
             borderColor: siteVariables.colors.brand[200],
-            borderColorActive: siteVariables.colors.brand[300],
             borderColorHover: siteVariables.colors.brand[300],
-            borderColorFocus: siteVariables.colors.white,
-            borderColorFocusIndicator: siteVariables.colors.brand[900],
           }),
         },
       }}
