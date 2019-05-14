@@ -337,7 +337,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     const { value } = state
 
     if (!items) {
-      return state
+      return null
     }
 
     const filteredItemsByValue = multiple
@@ -976,14 +976,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       default:
         const keyString = String.fromCharCode(keyCode)
         if (/[a-zA-Z0-9]/.test(keyString)) {
-          const highlightedIndex = this.getHighlightedIndexOnCharKeyDown(keyString)
-          if (highlightedIndex >= 0) {
-            this.setState({
-              highlightedIndex,
-            })
-          }
+          this.setHighlightedIndexOnCharKeyDown(keyString)
         }
-
         accessibilityInputPropsKeyDown(e)
         return
     }
@@ -1077,7 +1071,13 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     }
   }
 
-  private getHighlightedIndexOnCharKeyDown = (keyString: string): number => {
+  /**
+   * Sets highlightedIndex to be the item that starts with the character keys the
+   * user has typed. Only used in non-search dropdowns.
+   *
+   * @param {string} keystring The string the item needs to start with. It is composed by typing keys in fast succession.
+   */
+  private setHighlightedIndexOnCharKeyDown = (keyString: string): void => {
     const { highlightedIndex, filteredItemStrings, startingString } = this.state
     const newStartingString = `${startingString}${keyString.toLowerCase()}`
     let newHighlightedIndex = -1
@@ -1093,10 +1093,16 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     }
 
     if (newHighlightedIndex < 0) {
-      return _.findIndex(filteredItemStrings, item => item.startsWith(newStartingString))
+      newHighlightedIndex = _.findIndex(filteredItemStrings, item =>
+        item.startsWith(newStartingString),
+      )
     }
 
-    return newHighlightedIndex
+    if (newHighlightedIndex >= 0) {
+      this.setState({
+        highlightedIndex: newHighlightedIndex,
+      })
+    }
   }
 
   private handleSelectedItemRemove(

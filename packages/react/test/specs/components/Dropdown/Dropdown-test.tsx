@@ -791,11 +791,11 @@ describe('Dropdown', () => {
       itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
       expect(dropdown.state('highlightedIndex')).toBe(0)
 
-      jest.advanceTimersByTime(200)
+      jest.advanceTimersByTime(Dropdown.charKeyPressedCleanupTime / 2)
       itemsList.simulate('keydown', { keyCode: keyboardKey.L, key: 'L' })
       expect(dropdown.state('highlightedIndex')).toBe(0)
 
-      jest.advanceTimersByTime(200)
+      jest.advanceTimersByTime(Dropdown.charKeyPressedCleanupTime / 2)
       itemsList.simulate('keydown', { keyCode: keyboardKey.E, key: 'E' })
       expect(dropdown.state('highlightedIndex')).toBe(2)
     })
@@ -1010,7 +1010,7 @@ describe('Dropdown', () => {
     })
 
     it('creates message container element', () => {
-      mountWithProvider(<Dropdown options={[]} getA11ySelectionMessage={{}} />)
+      mountWithProvider(<Dropdown items={[]} getA11ySelectionMessage={{}} />)
       expect(
         document.querySelector(
           `[role="status"][aria-live="polite"][aria-relevant="additions text"]`,
