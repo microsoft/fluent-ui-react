@@ -3,7 +3,9 @@ import { StatusVariables } from './statusVariables'
 import { ComponentSelectorsAndStyles } from '../../../types'
 import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
 
-const statusStyles: ComponentSelectorsAndStyles<StatusProps, StatusVariables> = v => ({
+const statusStyles: ComponentSelectorsAndStyles<StatusProps, StatusVariables> = ({
+  variables: v,
+}) => ({
   root: [
     [
       null,

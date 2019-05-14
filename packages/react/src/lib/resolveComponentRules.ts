@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from 'src/themes/types'
+import { ComponentSlotStylesInput, ICSSInJSStyle, SelectorStylesArg } from '../../src/themes/types'
 
 export function isObject(item): boolean {
   return typeof item === 'object' && !Array.isArray(item) && item !== null
@@ -47,12 +47,22 @@ export const backportComponentStyle = (selectorStyleFunc): ComponentSlotStylesIn
     return selectorStyleFunc
   }
 
-  const withoutArguments = selectorStyleFunc({})
+  // NOTE: this styled() wrapper, which guarantees safety for dry run, is only necessary for this scenario, to obtain this slots list.
+  // After transition to selector styles finishes, it won't be necessary to have it wrapped.
+  const resultWithoutArguments = selectorStyleFunc({
+    variables: {},
+    styled: () => ({}),
+  } as SelectorStylesArg)
 
-  return Object.keys(withoutArguments).reduce((acc, part) => {
-    acc[part] = ({ props, variables }) => {
-      // console.warn('variables', variables)
-      return resolveComponentRules(selectorStyleFunc(variables), props)[part]
+  return Object.keys(resultWithoutArguments).reduce((acc, part) => {
+    acc[part] = ({ props, variables, styles }) => {
+      return resolveComponentRules(
+        selectorStyleFunc({
+          variables,
+          styled: applyStyles => applyStyles(styles),
+        } as SelectorStylesArg),
+        props,
+      )[part]
     }
     return acc
   }, {})

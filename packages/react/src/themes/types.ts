@@ -46,6 +46,8 @@ import { TreeProps } from '../../src/components/Tree/Tree'
 import { TreeItemProps } from '../../src/components/Tree/TreeItem'
 import { TreeTitleProps } from '../../src/components/Tree/TreeTitle'
 import { VideoProps } from '../../src/components/Video/Video'
+import { FlexProps } from '../../src/components/Flex/Flex'
+import { FlexItemProps } from '../../src/components/Flex/FlexItem'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -279,8 +281,16 @@ export interface ComponentSlotStylesInput<TProps = {}, TVars = {}, TStyles = Sty
 export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
   extends ObjectOf<ComponentSlotStyleFunction<TProps, TVars>> {}
 
-export type ComponentSelectorsAndStyles<TProps = {}, TVars = {}> = (
-  arg: TVars,
+export type SelectorStylesArg<
+  TVars extends ComponentVariablesObject = ComponentVariablesObject,
+  TStyles = StylesApi
+> = {
+  variables: TVars
+  styled: (arg: (styles: TStyles) => ICSSInJSStyle) => ICSSInJSStyle
+}
+
+export type ComponentSelectorsAndStyles<TProps = {}, TVars = {}, TStyles = StylesApi> = (
+  arg: SelectorStylesArg<TVars, TStyles>,
 ) => { [key in keyof TProps]: [Partial<TProps>, ICSSInJSStyle][] }
 
 export interface ComponentSlotClasses extends ObjectOf<string> {}
@@ -378,6 +388,8 @@ type ThemeStylesProps = {
   DropdownItem?: DropdownItemProps
   DropdownSearchInput?: DropdownSearchInputProps
   Embed?: EmbedProps
+  Flex?: FlexProps
+  FlexItem?: FlexItemProps
   Form?: FormProps
   FormField?: FormFieldProps
   Grid?: GridProps

@@ -3,7 +3,10 @@ import { AvatarProps } from '../../../../components/Avatar/Avatar'
 import { AvatarVariables } from './avatarVariables'
 import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
 
-const avatarStyles: ComponentSelectorsAndStyles<AvatarProps, AvatarVariables> = v => ({
+const avatarStyles: ComponentSelectorsAndStyles<AvatarProps, AvatarVariables> = ({
+  variables: v,
+  styled,
+}) => ({
   root: [
     [
       null,
@@ -85,6 +88,8 @@ const avatarStyles: ComponentSelectorsAndStyles<AvatarProps, AvatarVariables> = 
     [
       null,
       {
+        ...styled(styles => styles.Flex.root({ debug: true })),
+
         position: 'absolute',
         bottom: 0,
         right: 0,
@@ -93,4 +98,5 @@ const avatarStyles: ComponentSelectorsAndStyles<AvatarProps, AvatarVariables> = 
     ],
   ],
 })
+
 export default backportComponentStyle(avatarStyles)
