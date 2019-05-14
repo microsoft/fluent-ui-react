@@ -11,6 +11,7 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\" && yarn lint:old",
     "lint:fix": "yarn lint --fix && yarn lint:old --fix",
     "lint:old": "cross-env NODE_OPTIONS='-r ts-node/register' tslint -t stylish -p . --rules-dir ./build/tslint",
+    "now-build": "cross-env NOW=true yarn predeploy:docs",
     "perf": "cross-env PERF=true gulp perf --times=50",
     "perf:debug": "cross-env PERF=true gulp perf:debug --debug",
     "prettier": "prettier --list-different \"**/*.{ts,tsx}\"",
