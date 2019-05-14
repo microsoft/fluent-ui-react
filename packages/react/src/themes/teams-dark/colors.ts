@@ -240,7 +240,7 @@ export const colorScheme: ColorSchemeMapping = {
     borderDisabled: colors.white,
     shadowDisabled: colors.white,
   },
-  grey: createColorScheme('grey'),
+  grey: createColorScheme('grey', { foreground: colors.grey[250] }),
   green: createColorScheme('green'),
   orange: createColorScheme('orange', {
     background: colors.black,
