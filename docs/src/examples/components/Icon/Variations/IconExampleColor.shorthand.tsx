@@ -41,9 +41,7 @@ const IconExampleColor = () => (
       <ProviderConsumer
         render={({ siteVariables: { emphasisColors, naturalColors } }) =>
           _.keys({ ...emphasisColors, ...naturalColors }).map(color => (
-            <React.Fragment key={color}>
-              <Icon color={color} name="calendar" title={color} />
-            </React.Fragment>
+            <Icon color={color} name="calendar" title={color} key={color} />
           ))
         }
       />
@@ -55,9 +53,7 @@ const IconExampleColor = () => (
       <ProviderConsumer
         render={({ siteVariables: { emphasisColors, naturalColors } }) =>
           _.keys({ ...emphasisColors, ...naturalColors }).map(color => (
-            <React.Fragment key={color}>
-              <Icon color={color} name="calendar" outline title={color} />
-            </React.Fragment>
+            <Icon color={color} name="calendar" outline title={color} key={color} />
           ))
         }
       />
