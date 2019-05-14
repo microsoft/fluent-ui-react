@@ -29,6 +29,9 @@ export interface AccordionTitleProps
   /** Whether or not the title is in the open state. */
   active?: boolean
 
+  /** If at least one panel needs to stay active and this title does not correspond to the last active one. */
+  cannotBeClosed?: boolean
+
   /** AccordionTitle index inside Accordion. */
   index?: string | number
 
@@ -68,6 +71,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     buttonRef: PropTypes.object,
+    cannotBeClosed: PropTypes.bool,
     index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClick: PropTypes.func,
     indicator: customPropTypes.itemShorthand,
@@ -102,6 +106,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
       <Ref innerRef={buttonRef}>
         <Button
           onFocus={this.handleFocus}
+          {...accessibility.attributes.button}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.button, unhandledProps)}
         >
           <Layout

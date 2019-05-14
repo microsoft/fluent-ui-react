@@ -4,17 +4,27 @@ import * as keyboardKey from 'keyboard-key'
 /**
  * @specification
  */
-const accordionTitleBehavior: Accessibility = (props: any) => ({
-  attributes: {
-    root: {},
-  },
-  keyActions: {
-    button: {
-      performClick: {
-        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+const accordionTitleBehavior: Accessibility = (props: any) => {
+  const isHeading = /(h\d{1})$/.test(props.as)
+  return {
+    attributes: {
+      root: {
+        role: isHeading ? undefined : 'heading',
+        'aria-level': isHeading ? undefined : 3,
+      },
+      button: {
+        'aria-expanded': !!props.active,
+        'aria-disabled': !!(props.active && props.cannotBeClosed),
       },
     },
-  },
-})
+    keyActions: {
+      button: {
+        performClick: {
+          keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+        },
+      },
+    },
+  }
+}
 
 export default accordionTitleBehavior

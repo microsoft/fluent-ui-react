@@ -6,7 +6,9 @@ import * as keyboardKey from 'keyboard-key'
  */
 const accordionBehavior: Accessibility = (props: any) => ({
   attributes: {
-    root: {},
+    root: {
+      role: 'presentation',
+    },
   },
   keyActions: {
     root: {

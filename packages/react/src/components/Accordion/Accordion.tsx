@@ -35,6 +35,9 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
   /** Index of the currently active panel. */
   activeIndex?: number[] | number
 
+  /** At least one panel should be active at any time. */
+  alwaysActive?: boolean
+
   /** Initial activeIndex value. */
   defaultActiveIndex?: number[] | number
 
@@ -102,6 +105,7 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
+    alwaysActive: PropTypes.bool,
     defaultActiveIndex: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
@@ -171,13 +175,17 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
     )
   }
 
-  getInitialAutoControlledState({ exclusive }) {
-    return { activeIndex: exclusive ? -1 : [-1] }
+  getInitialAutoControlledState({ alwaysActive, exclusive }: AccordionProps) {
+    return { activeIndex: exclusive ? (alwaysActive ? 0 : -1) : alwaysActive ? [0] : [-1] }
   }
 
   computeNewIndex = index => {
     const { activeIndex } = this.state
     const { exclusive } = this.props
+
+    if (this.isIndexClosingPrevented(index)) {
+      return activeIndex
+    }
 
     if (exclusive) return index === activeIndex ? -1 : index
     // check to see if index is in array, and remove it, if not then add it
@@ -200,11 +208,25 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
     },
   })
 
-  isIndexActive = (index): boolean => {
+  private isIndexActive = (index: number): boolean => {
     const { exclusive } = this.props
     const { activeIndex } = this.state
 
     return exclusive ? activeIndex === index : _.includes(activeIndex, index)
+  }
+
+  private isIndexClosingPrevented = (index: number): boolean => {
+    const { activeIndex } = this.state
+    const { alwaysActive, exclusive } = this.props
+
+    if (alwaysActive) {
+      if (exclusive) {
+        return activeIndex === index
+      }
+      return activeIndex.length === 1 && activeIndex[0] === index
+    }
+
+    return false
   }
 
   renderPanels = () => {
@@ -218,12 +240,19 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
     _.each(panels, (panel, index) => {
       const { content, title } = panel
       const active = this.isIndexActive(index)
+      const cannotBeClosed = this.isIndexClosingPrevented(index)
       const buttonRef = React.createRef<HTMLElement>()
       this.itemRefs[index] = buttonRef
 
       children.push(
         AccordionTitle.create(title, {
-          defaultProps: { className: Accordion.slotClassNames.title, active, index, buttonRef },
+          defaultProps: {
+            className: Accordion.slotClassNames.title,
+            active,
+            index,
+            buttonRef,
+            cannotBeClosed,
+          },
           overrideProps: this.handleTitleOverrides,
           render: renderPanelTitle,
         }),
