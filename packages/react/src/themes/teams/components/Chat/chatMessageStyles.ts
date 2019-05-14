@@ -112,7 +112,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
     display: 'block',
     '& a': {
       outline: 'none',
-      color: v.linkColor,
+      color: p.mine ? v.linkColorMine : v.linkColor,
       ':focus': {
         textDecoration: 'underline',
       },
