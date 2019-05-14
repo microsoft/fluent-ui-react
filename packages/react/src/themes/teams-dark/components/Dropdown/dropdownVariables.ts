@@ -7,7 +7,6 @@ export default (siteVars): Partial<DropdownVariables> => ({
   borderColorFocus: siteVars.colors.brand[400],
   color: siteVars.colors.grey[250],
   selectedItemColor: siteVars.colors.grey[250],
-  listBoxShadow: `0 .2rem .6rem 0 rgba(0, 0, 0, 0.25)`,
   listBackgroundColor: siteVars.colors.grey[650],
   listItemBackgroundColor: siteVars.colors.grey[650],
   listItemColorHover: siteVars.colors.white,

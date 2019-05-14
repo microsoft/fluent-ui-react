@@ -11,6 +11,7 @@ export const focusOuterBorderColor = colors.white
 // SHADOW LEVELS
 //
 export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, .25)'
+export const shadowLevel3 = '0 .8rem 1rem -0.2rem rgba(0, 0, 0, .25)'
 
 //
 // SEMANTIC ASSIGNMENTS
