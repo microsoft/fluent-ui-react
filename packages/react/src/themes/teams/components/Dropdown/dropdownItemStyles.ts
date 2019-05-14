@@ -14,12 +14,10 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
     }),
     position: 'relative',
     ...(p.active && {
-      ...(p.isFromKeyboard && {
-        ...getBorderFocusStyles({
-          siteVariables,
-          isFromKeyboard: true,
-        })[':focus'],
-      }),
+      ...getBorderFocusStyles({
+        siteVariables,
+        isFromKeyboard: p.isFromKeyboard,
+      })[':focus'],
       ...(!p.isFromKeyboard && {
         color: v.listItemColorHover,
         backgroundColor: v.listItemBackgroundColorHover,

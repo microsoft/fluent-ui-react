@@ -4,7 +4,7 @@ import {
   DropdownProps,
   DropdownState,
 } from '../../../../components/Dropdown/Dropdown'
-import { DropdownVariablesHOC } from 'src/themes/teams-high-contrast/components/Dropdown/dropdownVariables'
+import { DropdownVariablesHC } from './dropdownVariables'
 
 type DropdownPropsAndState = DropdownProps & DropdownState
 
@@ -14,7 +14,7 @@ const transparentColorStyle: ICSSInJSStyle = {
   borderBottomColor: 'transparent',
 }
 
-const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVariablesHOC> = {
+const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVariablesHC> = {
   container: ({ props: p, variables: v }): ICSSInJSStyle => ({
     ...(!p.open && {
       ':hover': {
