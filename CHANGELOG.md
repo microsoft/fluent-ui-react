@@ -20,8 +20,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING CHANGES
 - Restrict Typescript checks for component props @kuzhelov ([#1290](https://github.com/stardust-ui/react/pull/1290))
 
-### Fix
+### Fixes
 - Fixed Flex.Item children prop type @mnajdova ([#1320](https://github.com/stardust-ui/react/pull/1320))
+
+### Features
+- Highlight options by character keys in `Dropdown` non-search versions @silviuavram ([#1270](https://github.com/stardust-ui/react/pull/1270))
 
 <!--------------------------------[ v0.30.0 ]------------------------------- -->
 ## [v0.30.0](https://github.com/stardust-ui/react/tree/v0.30.0) (2019-05-10)
@@ -42,7 +45,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add default child a11y behavior to `Menu` related behaviors @silviuavram ([#1282](https://github.com/stardust-ui/react/pull/1282))
 - `Ref` component extracted to a `@stardust-ui/react-component-ref` @layershifter ([#1281](https://github.com/stardust-ui/react/pull/1281))
 - added `isRefObject()`, `toRefObject()` utils for React refs @layershifter ([#1281](https://github.com/stardust-ui/react/pull/1281))
-- Highlight options by character keys in `Dropdown` non-search versions @silviuavram ([#1270](https://github.com/stardust-ui/react/pull/1270))
 - Add new callings icons in Teams theme @codepretty ([#1264](https://github.com/stardust-ui/react/pull/1264))
 - Add default aria-labelledby and aria-describedby to Dialog @silviuavram ([#1298](https://github.com/stardust-ui/react/pull/1298))
 - Add `mountNode` and `mountDocument` props to allow proper multi-window rendering @layershifter ([#1288](https://github.com/stardust-ui/react/pull/1288))
