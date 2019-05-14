@@ -12,6 +12,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler } from '../../types'
+import { accordionContentBehavior } from '../../lib/accessibility'
 
 export interface AccordionContentProps
   extends UIComponentProps,
@@ -27,6 +28,9 @@ export interface AccordionContentProps
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<AccordionContentProps>
+
+  /** Id of the title it belongs to. */
+  titleId?: string
 }
 
 /**
@@ -43,19 +47,22 @@ class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, an
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     onClick: PropTypes.func,
+    titleId: PropTypes.string,
   }
 
   static defaultProps = {
+    accessibility: accordionContentBehavior,
     as: 'dd',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
     const { children, content } = this.props
 
     return (
       <ElementType
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
         {...unhandledProps}
+        {...accessibility.attributes.root}
         className={classes.root}
       >
         {childrenExist(children) ? children : content}

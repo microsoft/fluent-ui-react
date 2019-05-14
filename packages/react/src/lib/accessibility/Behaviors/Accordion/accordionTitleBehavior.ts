@@ -15,6 +15,7 @@ const accordionTitleBehavior: Accessibility = (props: any) => {
       button: {
         'aria-expanded': !!props.active,
         'aria-disabled': !!(props.active && props.cannotBeClosed),
+        'aria-owns': props.contentId,
       },
     },
     keyActions: {

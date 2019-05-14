@@ -242,6 +242,8 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
       const active = this.isIndexActive(index)
       const cannotBeClosed = this.isIndexClosingPrevented(index)
       const buttonRef = React.createRef<HTMLElement>()
+      const titleId = title['id'] || _.uniqueId('accordion-title-')
+      const contentId = content['id'] || _.uniqueId('accordion-content-')
       this.itemRefs[index] = buttonRef
 
       children.push(
@@ -252,6 +254,8 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
             index,
             buttonRef,
             cannotBeClosed,
+            id: titleId,
+            contentId,
           },
           overrideProps: this.handleTitleOverrides,
           render: renderPanelTitle,
@@ -259,7 +263,12 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
       )
       children.push(
         AccordionContent.create(content, {
-          defaultProps: { className: Accordion.slotClassNames.content, active },
+          defaultProps: {
+            className: Accordion.slotClassNames.content,
+            active,
+            id: contentId,
+            titleId,
+          },
           render: renderPanelContent,
         }),
       )
