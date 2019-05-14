@@ -21,7 +21,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Restrict Typescript checks for component props @kuzhelov ([#1290](https://github.com/stardust-ui/react/pull/1290))
 
 ### Fix
-- Fixed Flex.Item children prop type @mnajdova ([#1320](https://github.com/stardust-ui/react/pull/1320))
+- Fixed `Flex.Item` children prop type @mnajdova ([#1320](https://github.com/stardust-ui/react/pull/1320))
+
+### Features
+- Add `DropdownItem` `selected`, `isFromKeyboard` props @mnajdova ([#1299](https://github.com/stardust-ui/react/pull/1299))
+- Add styles for the dark and high contrast Teams themes for the `Dropdown` component @mnajdova ([#1299](https://github.com/stardust-ui/react/pull/1299))
 
 <!--------------------------------[ v0.30.0 ]------------------------------- -->
 ## [v0.30.0](https://github.com/stardust-ui/react/tree/v0.30.0) (2019-05-10)
