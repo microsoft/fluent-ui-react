@@ -1,9 +1,7 @@
 import * as _ from 'lodash'
 
-import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { callable, pxToRem, SizeValue } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
-import { ResultOf } from '../../../../types'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { IconProps } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, IconSizeModifier } from './iconVariables'
@@ -18,10 +16,6 @@ const sizes: Record<SizeValue, number> = {
   largest: 40,
 }
 
-const getDefaultFontIcon = (iconName: string) => {
-  return callable(fontAwesomeIcons(iconName).icon)()
-}
-
 const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),
 })
@@ -31,32 +25,6 @@ const getBorderedStyles = (boxShadowColor: string): ICSSInJSStyle => {
     ...getPaddedStyle(),
 
     boxShadow: `0 0 0 .05rem ${boxShadowColor} inset`,
-  }
-}
-
-const getFontStyles = (
-  size: number,
-  iconName: string,
-  themeIcon?: ResultOf<FontIconSpec>,
-): ICSSInJSStyle => {
-  const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
-  const sizeInRems = pxToRem(size)
-
-  return {
-    fontFamily,
-    fontSize: sizeInRems,
-    lineHeight: 1,
-
-    display: 'inline-flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    width: sizeInRems,
-    height: sizeInRems,
-
-    '::before': {
-      content,
-    },
   }
 }
 
@@ -83,34 +51,18 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   root: ({
     props: { disabled, name, size, bordered, circular, color, xSpacing, rotate },
     variables: v,
-    theme,
   }): ICSSInJSStyle => {
     const colors = v.colorScheme[color]
-    const iconSpec = theme.icons[name]
-    const isFontBased = name && (!iconSpec || !iconSpec.isSvg)
 
     return {
-      backgroundColor: v.backgroundColor,
-      boxSizing: isFontBased ? 'content-box' : 'border-box',
+      '[data-icon-type="svg"]': {
+        backgroundColor: v.backgroundColor,
+        boxSizing: 'border-box',
 
-      // overriding the base theme default transformation as in teams theme the svg/svgFlippingInRtl slots are used for this
-      ...(!isFontBased && {
-        transform: 'unset',
-      }),
-
-      ...(isFontBased && {
-        ...getFontStyles(getIconSize(size, v.sizeModifier), name),
-        fontWeight: 900, // required for the fontAwesome to render
-        color: getIconColor(v, colors),
-        transform: `rotate(${rotate}deg)`,
-        ...(disabled && {
-          color: v.disabledColor,
-        }),
-      }),
-
-      // overriding base theme border handling
-      ...((bordered || v.borderColor) &&
-        getBorderedStyles(v.borderColor || getIconColor(v, colors))),
+        // overriding base theme border handling
+        ...((bordered || v.borderColor) &&
+          getBorderedStyles(v.borderColor || getIconColor(v, colors))),
+      },
     }
   },
 

@@ -1,12 +1,9 @@
 import { pxToRem } from '../../../../lib'
 
-export type IconSizeModifier = 'x' | 'xx'
-
 export interface IconVariables {
-  [key: string]: object | string | number | boolean | undefined
-  color?: string
-  borderColor?: string
-
+  color: string
+  borderColor: string
+  disabledColor: string
   horizontalSpace: string
 }
 

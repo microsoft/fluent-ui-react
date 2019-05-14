@@ -13,6 +13,6 @@ export const icons: ThemeIcons = {
   'stardust-play': fontIcon('23F8'),
 }
 
-const emptyIcon = { icon: { content: '?' } }
+export const emptyIcon: ThemeIconSpec = { icon: { content: '?' } }
 
 export default (name: string): ThemeIconSpec => icons[name] || emptyIcon

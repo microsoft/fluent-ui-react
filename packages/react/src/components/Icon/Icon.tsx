@@ -12,8 +12,6 @@ import {
 } from '../../lib'
 import { iconBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-
-import { SvgIconSpec } from '../../themes/types'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
@@ -80,46 +78,22 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
     rotate: 0,
   }
 
-  private renderFontIcon(ElementType, classes, unhandledProps, accessibility): React.ReactNode {
-    return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-      />
-    )
-  }
-
-  private renderSvgIcon(
-    ElementType,
-    svgIconDescriptor: SvgIconSpec,
-    classes,
-    unhandledProps,
-    accessibility,
-    rtl,
-  ): React.ReactNode {
-    return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {svgIconDescriptor && callable(svgIconDescriptor)({ classes, rtl })}
-      </ElementType>
-    )
-  }
-
   public renderComponent({ ElementType, classes, unhandledProps, accessibility, theme, rtl }) {
     const { icons = {} } = theme
 
     const maybeIcon = icons[this.props.name]
+    const isSvgIcon = maybeIcon && maybeIcon.isSvg
 
-    return maybeIcon && maybeIcon.isSvg
-      ? this.renderSvgIcon(
-          ElementType,
-          maybeIcon.icon as SvgIconSpec,
-          classes,
-          unhandledProps,
-          accessibility,
-          rtl,
-        )
-      : this.renderFontIcon(ElementType, classes, unhandledProps, accessibility)
+    return (
+      <ElementType
+        className={classes.root}
+        data-icon-type={isSvgIcon ? 'svg' : 'font'}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+      >
+        {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl })}
+      </ElementType>
+    )
   }
 }
 

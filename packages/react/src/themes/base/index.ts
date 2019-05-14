@@ -3,7 +3,7 @@ import * as siteVariables from './siteVariables'
 import * as componentVariables from './componentVariables'
 import * as componentStyles from './componentStyles'
 import { FontIconSpec, ThemeIconSpec, ThemeIcons } from 'src/themes/types'
-import { default as fontIcons, icons } from './components/Icon/index'
+import { default as fontIcons, icons } from './components/Icon/iconNames'
 
 const declareFontBased = (fontIcon: FontIconSpec): ThemeIconSpec => ({ icon: fontIcon })
 
