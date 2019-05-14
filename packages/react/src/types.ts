@@ -127,7 +127,8 @@ type PickProps<T, Props extends string | number | symbol> = {
 export const withSafeTypeForAs = function<
   TComponentType extends React.ComponentType,
   TProps,
-  TAs extends keyof JSX.IntrinsicElements = 'div'
+  TAs extends keyof JSX.IntrinsicElements = 'div',
+  TAdditionalProps extends keyof TComponentType = undefined
 >(componentType: TComponentType) {
   /**
    * TODO: introduce overload once TS compiler issue that leads to
@@ -143,7 +144,7 @@ export const withSafeTypeForAs = function<
   }
 
   return (componentType as any) as typeof overloadedComponentType &
-    PickProps<TComponentType, CommonStaticProps>
+    PickProps<TComponentType, CommonStaticProps | TAdditionalProps>
 }
 
 export type UNSAFE_TypedComponent<TComponentType, TProps> = React.FunctionComponent<
