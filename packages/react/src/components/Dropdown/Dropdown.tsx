@@ -459,7 +459,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     const { triggerButton } = this.props
     const content = this.getSelectedItemAsString(this.state.value)
 
-    const toggleButtonProps = getToggleButtonProps({
+    const triggerButtonProps = getToggleButtonProps({
       onFocus: this.handleTriggerButtonOrListFocus,
       onBlur: this.handleTriggerButtonBlur,
       onKeyDown: e => {
@@ -468,7 +468,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       'aria-label': content,
     })
 
-    const { onClick, onFocus, onBlur, onKeyDown, ...restToggleButtonProps } = toggleButtonProps
+    const { onClick, onFocus, onBlur, onKeyDown, ...restTriggerButtonProps } = triggerButtonProps
 
     return (
       <Ref innerRef={this.buttonRef}>
@@ -478,7 +478,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             content,
             fluid: true,
             styles: styles.triggerButton,
-            ...restToggleButtonProps,
+            ...restTriggerButtonProps,
           },
           overrideProps: (predefinedProps: IconProps) => ({
             onClick: e => {
