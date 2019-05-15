@@ -24,50 +24,48 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     // positioningDependencies,
   } = props
 
-  const [placement, setPlacement] = React.useState<PopperJS.Placement>(
-    getPlacement({ align, position, rtl }),
-  )
+  const userPlacement = getPlacement({ align, position, rtl })
+  const [placement, setPlacement] = React.useState<PopperJS.Placement>(userPlacement)
   const popperRef = React.useRef<PopperJS>()
   const contentRef = React.useRef<Element>(null)
 
-  const handleUpdate = React.useCallback((data: PopperJS.Data) => {
-    if (data.placement !== placement) {
-      console.log('handleUpdate old placement: ', placement)
-      console.log('handleUpdate new placement: ', data.placement)
-      setPlacement(data.placement)
-    }
-  }, [])
-
-  React.useEffect(() => {
-    const options: PopperJS.PopperOptions = {
-      placement,
-      eventsEnabled,
-      positionFixed,
-      modifiers: {
-        ...(offset && {
-          offset: { offset: rtl ? applyRtlToOffset(offset, position) : offset },
-          keepTogether: { enabled: false },
-        }),
-        ...modifiers,
-        arrow: {
-          enabled: !!arrowRef.current,
-          element: arrowRef.current,
-        },
-      },
-      onCreate: handleUpdate,
-      onUpdate: handleUpdate,
-    }
-
-    popperRef.current = new PopperJS(targetRef.current, contentRef.current, options)
-
-    return () => popperRef.current.destroy()
-  })
+  const handleUpdate = React.useCallback(
+    (data: PopperJS.Data) => {
+      if (data.placement !== placement) {
+        console.log('handleUpdate old placement: ', placement)
+        console.log('handleUpdate new placement: ', data.placement)
+        setPlacement(data.placement)
+      }
+    },
+    [placement],
+  )
 
   React.useEffect(
     () => {
-      popperRef.current.scheduleUpdate()
+      const options: PopperJS.PopperOptions = {
+        placement: userPlacement,
+        eventsEnabled,
+        positionFixed,
+        modifiers: {
+          ...(offset && {
+            offset: { offset: rtl ? applyRtlToOffset(offset, position) : offset },
+            keepTogether: { enabled: false },
+          }),
+          ...modifiers,
+          arrow: {
+            enabled: !!arrowRef.current,
+            element: arrowRef.current,
+          },
+        },
+        onCreate: handleUpdate,
+        onUpdate: handleUpdate,
+      }
+
+      popperRef.current = new PopperJS(targetRef.current, contentRef.current, options)
+
+      return () => popperRef.current.destroy()
     },
-    [placement],
+    [eventsEnabled, handleUpdate, modifiers, positionFixed, userPlacement],
   )
 
   return (
