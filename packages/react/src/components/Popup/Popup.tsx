@@ -7,7 +7,6 @@ import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
-import { PopperChildrenProps } from 'react-popper'
 
 import {
   applyAccessibilityKeyHandlers,
@@ -24,7 +23,13 @@ import {
   setWhatInputSource,
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue } from '../../types'
-import { ALIGNMENTS, POSITIONS, Popper, PositionCommonProps } from '../../lib/positioner'
+import {
+  ALIGNMENTS,
+  POSITIONS,
+  Popper,
+  PositionCommonProps,
+  PopperChildrenProps,
+} from '../../lib/positioner'
 import PopupContent from './PopupContent'
 import { popupBehavior } from '../../lib/accessibility'
 import {
@@ -173,7 +178,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   static autoControlledProps = ['open']
 
-  arrowRef = React.createRef<HTMLElement>()
+  pointerRef = React.createRef<HTMLElement>()
   triggerRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
   // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
   triggerFocusableDomElement = null
@@ -389,7 +394,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
     return (
       <Popper
-        arrowRef={this.arrowRef}
+        pointerRef={this.pointerRef}
         align={align}
         position={position}
         offset={offset}
@@ -407,7 +412,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
     { placement, scheduleUpdate }: PopperChildrenProps,
   ) => {
-    console.log('[Popup.renderPopperChildren]')
     const { content: propsContent, renderContent, contentRef, mountDocument, pointing } = this.props
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
     const documentRef = toRefObject(mountDocument)
@@ -442,7 +446,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         ...popupContentAttributes,
         placement,
         pointing,
-        pointerRef: this.arrowRef,
+        pointerRef: this.pointerRef,
       },
       overrideProps: this.getContentProps,
     })

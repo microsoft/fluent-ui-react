@@ -1,6 +1,5 @@
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as React from 'react'
-import { PopperChildrenProps } from 'react-popper'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
@@ -18,6 +17,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
+import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 
@@ -52,7 +52,7 @@ export interface PopupContentProps
   pointing?: boolean
 
   /** A ref to a pointer element. */
-  pointerRef?: PopperChildrenProps['arrowProps']['ref'] // TODO: React.Ref
+  pointerRef?: React.RefObject<Element>
 }
 
 class PopupContent extends UIComponent<WithAsProp<PopupContentProps>, any> {

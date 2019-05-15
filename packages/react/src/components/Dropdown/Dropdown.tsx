@@ -41,7 +41,7 @@ import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/acce
 import ListItem from '../List/ListItem'
 import Icon, { IconProps } from '../Icon/Icon'
 import Portal from '../Portal/Portal'
-import { ALIGNMENTS, POSITIONS, Positioner, PositionCommonProps } from '../../lib/positioner'
+import { ALIGNMENTS, POSITIONS, Popper, PositionCommonProps } from '../../lib/positioner'
 
 export interface DropdownSlotClassNames {
   clearIndicator: string
@@ -640,7 +640,6 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       }
     }
 
-    console.log('[Dropdown.renderItemsList')
     return (
       <Ref
         innerRef={(listElement: HTMLElement) => {
@@ -648,30 +647,26 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           handleRef(innerRef, listElement)
         }}
       >
-        <Positioner
+        <Popper
           align={align}
           position={position}
           offset={offset}
           rtl={rtl}
           eventsEnabled={open}
-          target={this.selectedItemsRef}
+          targetRef={this.selectedItemsRef}
           positioningDependencies={[items.length]}
-          children={popperChildrenProps => {
-            console.log('[Dropdown.Positioner.children')
-            return (
-              <List
-                className={Dropdown.slotClassNames.itemsList}
-                {...accessibilityMenuProps}
-                style={popperChildrenProps.style}
-                styles={styles.list}
-                tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
-                aria-hidden={!open}
-                onFocus={this.handleTriggerButtonOrListFocus}
-                onBlur={this.handleListBlur}
-                items={items}
-              />
-            )
-          }}
+          children={() => (
+            <List
+              className={Dropdown.slotClassNames.itemsList}
+              {...accessibilityMenuProps}
+              styles={styles.list}
+              tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
+              aria-hidden={!open}
+              onFocus={this.handleTriggerButtonOrListFocus}
+              onBlur={this.handleListBlur}
+              items={items}
+            />
+          )}
         />
       </Ref>
     )
