@@ -6,6 +6,7 @@ import * as keyboardKey from 'keyboard-key'
  */
 const accordionTitleBehavior: Accessibility = (props: any) => {
   const isHeading = /(h\d{1})$/.test(props.as)
+  const isButton = props.as === 'button'
   return {
     attributes: {
       root: {
@@ -16,6 +17,8 @@ const accordionTitleBehavior: Accessibility = (props: any) => {
         'aria-expanded': !!props.active,
         'aria-disabled': !!(props.active && !props.canBeCollapsed),
         'aria-controls': props.contentId,
+        role: isButton ? undefined : 'button',
+        ...{ tabIndex: isButton ? undefined : 0 },
       },
     },
     keyActions: {

@@ -18,7 +18,7 @@ import {
 import { WithAsProp, ComponentEventHandler, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
 import Layout from '../Layout/Layout'
-import Button from '../Button/Button'
+import Box from '../Box/Box'
 import { accordionTitleBehavior } from '../../lib/accessibility'
 import { AccessibilityActionHandlers } from 'src/lib/accessibility/types'
 
@@ -105,7 +105,7 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
 
     const contentElement = (
       <Ref innerRef={buttonRef}>
-        <Button
+        <Box
           onFocus={this.handleFocus}
           {...accessibility.attributes.button}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.button, unhandledProps)}
@@ -119,7 +119,7 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
             })}
             main={rtlTextContainer.createFor({ element: content })}
           />
-        </Button>
+        </Box>
       </Ref>
     )
 
