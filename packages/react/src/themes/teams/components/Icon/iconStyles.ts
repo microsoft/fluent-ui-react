@@ -38,19 +38,19 @@ const getIconColor = (variables, colors) => {
 }
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
-  svgRoot: ({
-    props: { disabled, name, size, bordered, circular, color, xSpacing, rotate },
-    variables: v,
-  }): ICSSInJSStyle => {
-    const colors = v.colorScheme[color]
+  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+    const colors = v.colorScheme[p.color]
 
+    return {
+      // overriding base theme border handling
+      ...((p.bordered || v.borderColor) &&
+        getBorderedStyles(v.borderColor || getIconColor(v, colors))),
+    }
+  },
+  svgRoot: ({ props: p, variables: v }): ICSSInJSStyle => {
     return {
       backgroundColor: v.backgroundColor,
       boxSizing: 'border-box',
-
-      // overriding base theme border handling
-      ...((bordered || v.borderColor) &&
-        getBorderedStyles(v.borderColor || getIconColor(v, colors))),
     }
   },
 

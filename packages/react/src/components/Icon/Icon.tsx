@@ -85,7 +85,7 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
     const maybeIcon = icons[this.props.name]
     const isSvgIcon = maybeIcon && maybeIcon.isSvg
 
-    const className = cx(isSvgIcon ? classes.svgRoot : classes.fontRoot, classes.root)
+    const className = cx(classes.root, isSvgIcon ? classes.svgRoot : classes.fontRoot)
 
     return (
       <ElementType className={className} {...accessibility.attributes.root} {...unhandledProps}>
