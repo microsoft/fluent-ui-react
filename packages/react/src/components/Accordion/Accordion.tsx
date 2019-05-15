@@ -157,18 +157,22 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any>
     super(props, context)
 
     this.focusHandler = new ContainerFocusHandler(
-      () => this.props.panels.length,
-      index => {
-        this.setState({ focusedIndex: index }, () => {
-          const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
-          const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
-
-          targetDomNode && targetDomNode.focus()
-        })
-      },
+      this.getNavigationItemsSize,
+      this.handleNavigationFocus,
       true,
     )
   }
+
+  private handleNavigationFocus = (index: number) => {
+    this.setState({ focusedIndex: index }, () => {
+      const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
+      const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
+
+      targetDomNode && targetDomNode.focus()
+    })
+  }
+
+  private getNavigationItemsSize = () => this.props.panels.length
 
   getInitialAutoControlledState({ expanded, exclusive }: AccordionProps) {
     const alwaysActiveIndex = expanded ? 0 : -1
