@@ -348,37 +348,28 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     const filteredItemsByValue = multiple
       ? _.difference(items, value as ShorthandCollection)
       : items
-    let filteredResults
 
     if (search) {
       const { itemToString } = props
       const { searchQuery } = state
 
       if (_.isFunction(search)) {
-        filteredResults = {
-          filteredItems: search(filteredItemsByValue, searchQuery),
-        }
-      } else {
-        filteredResults = {
-          filteredItems: filteredItemsByValue.filter(
-            item =>
-              itemToString(item)
-                .toLowerCase()
-                .indexOf(searchQuery.toLowerCase()) !== -1,
-          ),
-        }
+        return { filteredItems: search(filteredItemsByValue, searchQuery) }
       }
-    } else {
-      filteredResults = {
-        filteredItems: filteredItemsByValue,
-        filteredItemStrings: filteredItemsByValue.map(filteredItem =>
-          itemToString(filteredItem).toLowerCase(),
+      return {
+        filteredItems: filteredItemsByValue.filter(
+          item =>
+            itemToString(item)
+              .toLowerCase()
+              .indexOf(searchQuery.toLowerCase()) !== -1,
         ),
       }
     }
     return {
-      ...state,
-      ...filteredResults,
+      filteredItems: filteredItemsByValue,
+      filteredItemStrings: filteredItemsByValue.map(filteredItem =>
+        itemToString(filteredItem).toLowerCase(),
+      ),
     }
   }
 
