@@ -61,9 +61,6 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
         // overriding the base theme default transformation as in teams theme the svg/svgFlippingInRtl slots are used for this
         transform: 'unset',
-
-        height: 'unset',
-        width: 'unset',
       },
 
       // overriding base theme border handling

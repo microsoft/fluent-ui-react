@@ -43,11 +43,13 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       speak: 'none',
       verticalAlign: 'middle',
 
-      fontFamily: icon.fontFamily,
-      fontSize: pxToRem(16),
-      lineHeight: 1,
-      width: pxToRem(16),
-      height: pxToRem(16),
+      '[data-icon-type="font"]': {
+        fontFamily: icon.fontFamily,
+        fontSize: pxToRem(16),
+        lineHeight: 1,
+        width: pxToRem(16),
+        height: pxToRem(16),
+      },
 
       '::before': {
         content: icon.content,
