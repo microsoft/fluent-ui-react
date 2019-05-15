@@ -1,4 +1,5 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import cx from 'classnames'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import {
@@ -78,19 +79,16 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
     rotate: 0,
   }
 
-  public renderComponent({ ElementType, classes, unhandledProps, accessibility, theme, rtl }) {
+  renderComponent({ ElementType, classes, unhandledProps, accessibility, theme, rtl }) {
     const { icons = {} } = theme
 
     const maybeIcon = icons[this.props.name]
     const isSvgIcon = maybeIcon && maybeIcon.isSvg
 
+    const className = cx(isSvgIcon ? classes.svgRoot : classes.fontRoot, classes.root)
+
     return (
-      <ElementType
-        className={classes.root}
-        data-icon-type={isSvgIcon ? 'svg' : 'font'}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-      >
+      <ElementType className={className} {...accessibility.attributes.root} {...unhandledProps}>
         {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl })}
       </ElementType>
     )

@@ -38,20 +38,15 @@ const getIconColor = (variables, colors) => {
 }
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
-  root: ({
+  svgRoot: ({
     props: { disabled, name, size, bordered, circular, color, xSpacing, rotate },
     variables: v,
   }): ICSSInJSStyle => {
     const colors = v.colorScheme[color]
 
     return {
-      '[data-icon-type="svg"]': {
-        backgroundColor: v.backgroundColor,
-        boxSizing: 'border-box',
-
-        // overriding the base theme default transformation as in teams theme the svg/svgFlippingInRtl slots are used for this
-        transform: 'unset',
-      },
+      backgroundColor: v.backgroundColor,
+      boxSizing: 'border-box',
 
       // overriding base theme border handling
       ...((bordered || v.borderColor) &&

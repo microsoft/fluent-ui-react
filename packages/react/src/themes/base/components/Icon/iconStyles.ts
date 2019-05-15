@@ -31,37 +31,36 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
 })
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
-  root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => ({
+    alignItems: 'center',
+    boxSizing: 'content-box',
+    display: 'inline-flex',
+    justifyContent: 'center',
+    speak: 'none',
+    verticalAlign: 'middle',
+
+    ...getXSpacingStyles(p.xSpacing, v.horizontalSpace),
+
+    ...(p.bordered && getBorderedStyles(v.borderColor)),
+    ...(p.circular && { ...getPaddedStyle(), borderRadius: '50%' }),
+    ...(p.disabled && {
+      color: v.disabledColor,
+    }),
+  }),
+  fontRoot: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => {
     const iconSpec = t.icons[p.name] || emptyIcon
     const icon = iconSpec.icon as ResultOf<FontIconSpec>
 
     return {
-      alignItems: 'center',
-      boxSizing: 'content-box',
-      display: 'inline-flex',
-      justifyContent: 'center',
-      speak: 'none',
-      verticalAlign: 'middle',
-
-      '[data-icon-type="font"]': {
-        fontFamily: icon.fontFamily,
-        fontSize: v[`${p.size}Size`],
-        lineHeight: 1,
-        width: v[`${p.size}Size`],
-        height: v[`${p.size}Size`],
-      },
+      fontFamily: icon.fontFamily,
+      fontSize: v[`${p.size}Size`],
+      lineHeight: 1,
+      width: v[`${p.size}Size`],
+      height: v[`${p.size}Size`],
 
       '::before': {
         content: icon.content,
       },
-
-      ...getXSpacingStyles(p.xSpacing, v.horizontalSpace),
-
-      ...(p.bordered && getBorderedStyles(v.borderColor)),
-      ...(p.circular && { ...getPaddedStyle(), borderRadius: '50%' }),
-      ...(p.disabled && {
-        color: v.disabledColor,
-      }),
 
       transform: t.rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
     }
