@@ -45,10 +45,10 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
       '[data-icon-type="font"]': {
         fontFamily: icon.fontFamily,
-        fontSize: pxToRem(16),
+        fontSize: v[`${p.size}Size`],
         lineHeight: 1,
-        width: pxToRem(16),
-        height: pxToRem(16),
+        width: v[`${p.size}Size`],
+        height: v[`${p.size}Size`],
       },
 
       '::before': {

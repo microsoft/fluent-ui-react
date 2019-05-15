@@ -6,16 +6,6 @@ import { IconProps } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, IconSizeModifier } from './iconVariables'
 
-const sizes: Record<SizeValue, number> = {
-  smallest: 7,
-  smaller: 10,
-  small: 12,
-  medium: 16,
-  large: 20,
-  larger: 32,
-  largest: 40,
-}
-
 const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),
 })
@@ -28,9 +18,9 @@ const getBorderedStyles = (boxShadowColor: string): ICSSInJSStyle => {
   }
 }
 
-const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier): number => {
+const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier, v: IconVariables): number => {
   if (!sizeModifier) {
-    return sizes[size]
+    return v[`${size}Size`]
   }
 
   const modifiedSizes = {
@@ -89,7 +79,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
   svg: ({ props: { size, color, disabled, rotate }, variables: v }): ICSSInJSStyle => {
     const colors = v.colorScheme[color]
-    const iconSizeInRems = pxToRem(getIconSize(size, v.sizeModifier))
+    const iconSizeInRems = pxToRem(getIconSize(size, v.sizeModifier, v))
 
     return {
       display: 'block',
