@@ -78,5 +78,24 @@ describe('RefFindNode', () => {
       expect(innerRef).toHaveBeenCalledTimes(1)
       expect(innerRef).toHaveBeenCalledWith(expect.objectContaining({ tagName: 'DIV' }))
     })
+
+    it('handles updates of props', () => {
+      const initialRef = jest.fn()
+      const updatedRef = jest.fn()
+      const wrapper = mount(
+        <RefFindNode innerRef={initialRef}>
+          <div />
+        </RefFindNode>,
+      )
+
+      expect(initialRef).toHaveBeenCalled()
+      expect(updatedRef).not.toHaveBeenCalled()
+
+      jest.resetAllMocks()
+      wrapper.setProps({ innerRef: updatedRef })
+
+      expect(initialRef).not.toHaveBeenCalled()
+      expect(updatedRef).toHaveBeenCalled()
+    })
   })
 })
