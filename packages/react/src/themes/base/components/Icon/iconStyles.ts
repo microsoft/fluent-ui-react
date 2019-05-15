@@ -33,6 +33,7 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => ({
     speak: 'none',
+    verticalAlign: 'middle',
 
     ...getXSpacingStyles(p.xSpacing, v.horizontalSpace),
 
@@ -51,7 +52,6 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       boxSizing: 'content-box',
       display: 'inline-flex',
       justifyContent: 'center',
-      verticalAlign: 'middle',
 
       fontFamily: icon.fontFamily,
       fontSize: v[`${p.size}Size`],

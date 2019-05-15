@@ -49,6 +49,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   },
   svgRoot: ({ props: p, variables: v }): ICSSInJSStyle => {
     return {
+      display: 'inline-block',
       backgroundColor: v.backgroundColor,
       boxSizing: 'border-box',
     }
