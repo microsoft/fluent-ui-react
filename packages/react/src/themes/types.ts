@@ -131,9 +131,14 @@ export type ComponentAreaName =
 /**
  * A type for the generic color scheme of a component based on CSS property names
  */
-export type ColorScheme = Extendable<Record<ComponentAreaName, string>, string>
+export type ColorScheme<T extends string | number | symbol = ComponentAreaName> = Extendable<
+  Record<T, string>,
+  string
+>
 
-export type ColorSchemeMapping = ColorValues<Extendable<ColorScheme, string>> & {
+export type ColorSchemeMapping<Scheme = ColorScheme> = ColorValues<
+  Extendable<ColorScheme, string>
+> & {
   default?: Extendable<ColorScheme, string>
 }
 export type ColorSchemeMappingOverrides = ColorValues<Partial<Extendable<ColorScheme, string>>> & {

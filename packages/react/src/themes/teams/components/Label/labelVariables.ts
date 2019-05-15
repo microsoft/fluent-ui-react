@@ -1,9 +1,16 @@
 import { pxToRem } from '../../../../lib'
-import { SiteVariablesPrepared, ColorSchemeMapping } from '../../../types'
-import { extendColorScheme } from '../../../colorUtils'
+import { SiteVariablesPrepared, ColorSchemeMapping, ColorScheme } from '../../../types'
+import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
+
+// TODO extract this to a util
+const tuple = <T extends string[]>(...args: T) => args
+const labelColorComponentAreasTuple = tuple('foreground', 'background')
+type LabelColorComponentAreas = typeof labelColorComponentAreasTuple[number]
+
+type LabelColorSchemeMapping = ColorSchemeMapping<ColorScheme<LabelColorComponentAreas>>
 
 export interface LabelVariables {
-  colorScheme: ColorSchemeMapping
+  colorScheme: LabelColorSchemeMapping
   circularRadius: string
   padding: string
   startPaddingLeft: string
@@ -15,16 +22,26 @@ export interface LabelVariables {
 export default (siteVars: SiteVariablesPrepared): LabelVariables => {
   const color = 'rgba(0, 0, 0, 0.6)'
 
+  const colorScheme = extendColorScheme(siteVars.colorScheme, {
+    default: {
+      background: color,
+      foreground: 'rgb(232, 232, 232)',
+    },
+    brand: {
+      background: siteVars.colorScheme.brand.foreground4,
+    },
+  })
+
+  console.log(
+    'LABEL: ',
+    pickValuesFromColorScheme<LabelColorComponentAreas>(colorScheme, labelColorComponentAreasTuple),
+  )
+
   return {
-    colorScheme: extendColorScheme(siteVars.colorScheme, {
-      default: {
-        background: color,
-        foreground: 'rgb(232, 232, 232)',
-      },
-      brand: {
-        background: siteVars.colorScheme.brand.foreground4,
-      },
-    }),
+    colorScheme: pickValuesFromColorScheme<LabelColorComponentAreas>(
+      colorScheme,
+      labelColorComponentAreasTuple,
+    ),
     circularRadius: pxToRem(9999),
     padding: `0 ${pxToRem(4)} 0 ${pxToRem(4)}`,
     startPaddingLeft: '0px',
