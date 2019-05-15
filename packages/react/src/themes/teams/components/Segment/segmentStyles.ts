@@ -1,11 +1,11 @@
 import { SegmentProps } from '../../../../components/Segment/Segment'
 import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
 import { SegmentVariables } from './segmentVariables'
-import { getColorScheme } from '../../colors'
+import { getColorSchemeKey } from '../../colors'
 
 const segmentStyles: ComponentSlotStylesInput<SegmentProps, SegmentVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const colors = getColorScheme(v.colorScheme, p.color)
+    const colors = v.colorScheme[getColorSchemeKey(p.color)]
 
     return {
       padding: v.padding,

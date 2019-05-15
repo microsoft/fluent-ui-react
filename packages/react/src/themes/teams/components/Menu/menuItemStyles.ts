@@ -3,7 +3,7 @@ import { ComponentSlotStylesInput, ICSSInJSStyle, ColorScheme } from '../../../t
 import { Extendable } from '../../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
-import { getColorScheme } from '../../colors'
+import { getColorSchemeKey } from '../../colors'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
@@ -147,7 +147,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       primary,
     } = props
 
-    const colors = getColorScheme(v.colorScheme, null, primary)
+    const colors = v.colorScheme[getColorSchemeKey(null, primary)]
 
     return {
       color: 'inherit',
@@ -278,7 +278,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       disabled,
     } = p
 
-    const colors = getColorScheme(v.colorScheme, null, primary)
+    const colors = v.colorScheme[getColorSchemeKey(null, primary)]
 
     return {
       color: 'inherit',

@@ -24,7 +24,7 @@ export const extendColorScheme = (
 
 export function pickValuesFromColorScheme<T extends Partial<ComponentAreaName>>(
   colorScheme: ColorSchemeMapping,
-  componentAreaSubset: string[],
+  componentAreaSubset: T[],
 ): ColorSchemeMapping<ColorScheme<T>> {
   let result = {}
   Object.keys(colorScheme).forEach(color => {

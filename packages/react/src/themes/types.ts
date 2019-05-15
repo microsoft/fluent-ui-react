@@ -136,11 +136,19 @@ export type ColorScheme<T extends string | number | symbol = ComponentAreaName> 
   string
 >
 
-export type ColorSchemeMapping<Scheme = ColorScheme> = ColorValues<
-  Extendable<ColorScheme, string>
-> & {
-  default?: Extendable<ColorScheme, string>
+export type ColorSchemeMapping<Scheme = ColorScheme> = ColorValues<Extendable<Scheme, string>> & {
+  default?: Extendable<Scheme, string>
 }
+
+export type StrictColorScheme<T extends string | number | symbol = ComponentAreaName> = Record<
+  T,
+  string
+>
+
+export type StrictColorSchemeMapping<Scheme = StrictColorScheme> = ColorValues<Scheme> & {
+  default?: Scheme
+}
+
 export type ColorSchemeMappingOverrides = ColorValues<Partial<Extendable<ColorScheme, string>>> & {
   default?: Partial<Extendable<ColorScheme, string>>
 }

@@ -1,18 +1,18 @@
 import { pxToRem } from '../../../../lib'
 import {
   SiteVariablesPrepared,
-  ColorSchemeMapping,
-  ColorScheme,
+  StrictColorSchemeMapping,
+  StrictColorScheme,
   ComponentAreaName,
 } from '../../../types'
 import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
 
 // TODO extract this to a util
-const tuple = <T extends string[]>(...args: T) => args
-const labelColorComponentAreasTuple = tuple<ComponentAreaName[]>('foreground', 'background')
-type LabelColorComponentAreas = typeof labelColorComponentAreasTuple[number]
+const tuple = <T extends ComponentAreaName>(...args: T[]) => args
+const labelColorComponentAreas = tuple('background', 'foreground')
+type LabelColorComponentAreas = typeof labelColorComponentAreas[number]
 
-type LabelColorSchemeMapping = ColorSchemeMapping<ColorScheme<LabelColorComponentAreas>>
+type LabelColorSchemeMapping = StrictColorSchemeMapping<StrictColorScheme<LabelColorComponentAreas>>
 
 export interface LabelVariables {
   colorScheme: LabelColorSchemeMapping
@@ -38,10 +38,7 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
   })
 
   return {
-    colorScheme: pickValuesFromColorScheme<LabelColorComponentAreas>(
-      colorScheme,
-      labelColorComponentAreasTuple,
-    ),
+    colorScheme: pickValuesFromColorScheme(colorScheme, labelColorComponentAreas),
     circularRadius: pxToRem(9999),
     padding: `0 ${pxToRem(4)} 0 ${pxToRem(4)}`,
     startPaddingLeft: '0px',
