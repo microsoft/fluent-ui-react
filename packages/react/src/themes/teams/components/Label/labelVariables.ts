@@ -32,11 +32,6 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
     },
   })
 
-  console.log(
-    'LABEL: ',
-    pickValuesFromColorScheme<LabelColorComponentAreas>(colorScheme, labelColorComponentAreasTuple),
-  )
-
   return {
     colorScheme: pickValuesFromColorScheme<LabelColorComponentAreas>(
       colorScheme,
