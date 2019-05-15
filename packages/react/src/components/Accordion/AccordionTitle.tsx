@@ -30,13 +30,13 @@ export interface AccordionTitleProps
   active?: boolean
 
   /** If at least one panel needs to stay active and this title does not correspond to the last active one. */
-  cannotBeClosed?: boolean
+  canBeCollapsed?: boolean
 
   /** Id of the content it owns. */
   contentId?: string
 
   /** AccordionTitle index inside Accordion. */
-  index?: string | number
+  index?: number
 
   /** Ref to the button. */
   buttonRef?: React.RefObject<HTMLElement>
@@ -71,9 +71,9 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     buttonRef: PropTypes.object,
-    cannotBeClosed: PropTypes.bool,
+    canBeCollapsed: PropTypes.bool,
     contentId: PropTypes.string,
-    index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    index: PropTypes.number,
     onClick: PropTypes.func,
     indicator: customPropTypes.itemShorthand,
   }

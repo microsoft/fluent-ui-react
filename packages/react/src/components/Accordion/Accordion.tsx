@@ -25,7 +25,7 @@ import {
   ShorthandRenderFunction,
   withSafeTypeForAs,
 } from '../../types'
-import { ContainerFocusHandler } from 'src/lib/accessibility/FocusHandling/FocusContainer'
+import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 
 export interface AccordionSlotClassNames {
   content: string
@@ -36,14 +36,14 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
   /** Index of the currently active panel. */
   activeIndex?: number[] | number
 
-  /** At least one panel should be active at any time. */
-  alwaysActive?: boolean
-
   /** Initial activeIndex value. */
   defaultActiveIndex?: number[] | number
 
   /** Only allow one panel open at a time. */
   exclusive?: boolean
+
+  /** At least one panel should be expanded at any time. */
+  expanded?: boolean
 
   /**
    * Called when a panel title is clicked.
@@ -100,12 +100,12 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any>
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
-    alwaysActive: PropTypes.bool,
     defaultActiveIndex: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
     exclusive: PropTypes.bool,
+    expanded: PropTypes.bool,
     onTitleClick: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.func]),
     panels: customPropTypes.every([
       customPropTypes.disallow(['children']),
@@ -170,15 +170,16 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any>
     )
   }
 
-  getInitialAutoControlledState({ alwaysActive, exclusive }: AccordionProps) {
-    return { activeIndex: exclusive ? (alwaysActive ? 0 : -1) : alwaysActive ? [0] : [-1] }
+  getInitialAutoControlledState({ expanded, exclusive }: AccordionProps) {
+    const alwaysActiveIndex = expanded ? 0 : -1
+    return { activeIndex: exclusive ? alwaysActiveIndex : [alwaysActiveIndex] }
   }
 
-  computeNewIndex = index => {
+  private computeNewIndex = (index: number): number | number[] => {
     const { activeIndex } = this.state
     const { exclusive } = this.props
 
-    if (this.isIndexClosingPrevented(index)) {
+    if (!this.isIndexActionable(index)) {
       return activeIndex
     }
 
@@ -187,8 +188,8 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any>
     return _.includes(activeIndex, index) ? _.without(activeIndex, index) : [...activeIndex, index]
   }
 
-  handleTitleOverrides = predefinedProps => ({
-    onClick: (e, titleProps) => {
+  private handleTitleOverrides = (predefinedProps: AccordionTitleProps) => ({
+    onClick: (e: React.SyntheticEvent, titleProps: AccordionTitleProps) => {
       const { index } = titleProps
       const activeIndex = this.computeNewIndex(index)
 
@@ -210,18 +211,24 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any>
     return exclusive ? activeIndex === index : _.includes(activeIndex, index)
   }
 
-  private isIndexClosingPrevented = (index: number): boolean => {
-    const { activeIndex } = this.state
-    const { alwaysActive, exclusive } = this.props
-
-    if (alwaysActive) {
-      if (exclusive) {
-        return activeIndex === index
-      }
-      return activeIndex.length === 1 && activeIndex[0] === index
+  /**
+   * Checks if panel at index can be actioned upon. Used in the case of expanded accordion,
+   * when at least a panel needs to stay active. Will return false if expanded prop is true,
+   * index is active and either it's an exclusive accordion or if there are no other active
+   * panels open besides this one.
+   *
+   * @param {number} index The index of the panel.
+   * @returns {boolean} If the panel can be set active/inactive.
+   */
+  private isIndexActionable = (index: number): boolean => {
+    if (!this.isIndexActive(index)) {
+      return true
     }
 
-    return false
+    const { activeIndex } = this.state
+    const { expanded, exclusive } = this.props
+
+    return !expanded || (!exclusive && activeIndex.length > 1)
   }
 
   renderPanels = () => {
@@ -235,7 +242,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any>
     _.each(panels, (panel, index) => {
       const { content, title } = panel
       const active = this.isIndexActive(index)
-      const cannotBeClosed = this.isIndexClosingPrevented(index)
+      const canBeCollapsed = this.isIndexActionable(index)
       const buttonRef = React.createRef<HTMLElement>()
       const titleId = title['id'] || _.uniqueId('accordion-title-')
       const contentId = content['id'] || _.uniqueId('accordion-content-')
@@ -248,7 +255,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any>
             active,
             index,
             buttonRef,
-            cannotBeClosed,
+            canBeCollapsed,
             id: titleId,
             contentId,
           },
