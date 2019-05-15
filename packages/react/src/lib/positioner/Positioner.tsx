@@ -68,18 +68,20 @@ const Positioner: React.FunctionComponent<PositionerProps> = props => {
   }
 
   const scheduleUpdate = React.useRef<PopperChildrenProps['scheduleUpdate']>(null)
+  // const currentStyle = React.useRef<React.CSSProperties>(null)
 
   React.useEffect(() => {
     if (scheduleUpdate.current) scheduleUpdate.current()
   }, positioningDependencies)
 
+  console.log('[Positioner.render]')
   return (
     <Popper
-      positionFixed
       referenceElement={createPopperReferenceProxy(target)}
       placement={getPlacement({ align, position, rtl })}
       modifiers={popperModifiers}
       children={props => {
+        console.log('[Positioner.children]')
         scheduleUpdate.current = props.scheduleUpdate
         return <Ref innerRef={props.ref}>{children(props) as React.ReactElement}</Ref>
       }}

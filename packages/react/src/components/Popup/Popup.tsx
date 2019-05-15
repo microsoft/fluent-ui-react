@@ -24,7 +24,7 @@ import {
   setWhatInputSource,
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue } from '../../types'
-import { ALIGNMENTS, POSITIONS, Positioner, PositionCommonProps } from '../../lib/positioner'
+import { ALIGNMENTS, POSITIONS, Popper, PositionCommonProps } from '../../lib/positioner'
 import PopupContent from './PopupContent'
 import { popupBehavior } from '../../lib/accessibility'
 import {
@@ -173,6 +173,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   static autoControlledProps = ['open']
 
+  arrowRef = React.createRef<HTMLElement>()
   triggerRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
   // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
   triggerFocusableDomElement = null
@@ -387,12 +388,13 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     const { align, position, offset, target } = this.props
 
     return (
-      <Positioner
+      <Popper
+        arrowRef={this.arrowRef}
         align={align}
         position={position}
         offset={offset}
         rtl={rtl}
-        target={target || this.triggerRef}
+        targetRef={target ? toRefObject(target) : this.triggerRef}
         children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
       />
     )
@@ -403,8 +405,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     rtl: boolean,
     accessibility: AccessibilityBehavior,
     // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
-    { arrowProps, placement, scheduleUpdate, style: popupPlacementStyles }: PopperChildrenProps,
+    { placement, scheduleUpdate }: PopperChildrenProps,
   ) => {
+    console.log('[Popup.renderPopperChildren]')
     const { content: propsContent, renderContent, contentRef, mountDocument, pointing } = this.props
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
     const documentRef = toRefObject(mountDocument)
@@ -414,7 +417,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       ...accessibility.attributes.popup,
       ...accessibility.keyHandlers.popup,
       className: popupPositionClasses,
-      style: popupPlacementStyles,
       ...this.getContentProps(),
     }
 
@@ -440,8 +442,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         ...popupContentAttributes,
         placement,
         pointing,
-        pointerRef: arrowProps.ref,
-        pointerStyle: arrowProps.style,
+        pointerRef: this.arrowRef,
       },
       overrideProps: this.getContentProps,
     })
