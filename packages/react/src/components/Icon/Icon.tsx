@@ -80,9 +80,10 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility, theme, rtl, styles }) {
+    const { className, name } = this.props
     const { icons = {} } = theme
 
-    const maybeIcon = icons[this.props.name]
+    const maybeIcon = icons[name]
     const isSvgIcon = maybeIcon && maybeIcon.isSvg
 
     return Box.create(
@@ -90,7 +91,7 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
       {
         defaultProps: {
           as: ElementType,
-          className: cx(Icon.className, this.props.className),
+          className: cx(Icon.className, className),
           ...accessibility.attributes.root,
           ...unhandledProps,
           styles: {

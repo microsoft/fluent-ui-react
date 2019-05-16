@@ -5,7 +5,7 @@ const fontIcon = (content: string): ThemeIconSpec => ({
 })
 
 export const icons: ThemeIcons = {
-  'stardust-close': fontIcon('2715'),
+  'stardust-close': fontIcon('2A09'),
   'stardust-arrow-down': fontIcon('25BE'),
   'stardust-arrow-end': fontIcon('25B8'),
   'stardust-arrow-up': fontIcon('25B4'),
