@@ -5,6 +5,7 @@ import * as webpack from 'webpack'
 import config from '../../../config'
 
 const g = require('gulp-load-plugins')()
+
 const { log, PluginError } = g.util
 
 // ----------------------------------------
