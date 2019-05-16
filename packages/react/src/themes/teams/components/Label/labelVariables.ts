@@ -6,13 +6,17 @@ import {
   ComponentAreaName,
 } from '../../../types'
 import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
+import { TeamsColorNames } from '../../colors'
 
 // TODO extract this to a util
 const tuple = <T extends ComponentAreaName>(...args: T[]) => args
 const labelColorComponentAreas = tuple('background', 'foreground')
 type LabelColorComponentAreas = typeof labelColorComponentAreas[number]
 
-type LabelColorSchemeMapping = StrictColorSchemeMapping<StrictColorScheme<LabelColorComponentAreas>>
+type LabelColorSchemeMapping = StrictColorSchemeMapping<
+  StrictColorScheme<LabelColorComponentAreas>,
+  TeamsColorNames
+>
 
 export interface LabelVariables {
   colorScheme: LabelColorSchemeMapping
