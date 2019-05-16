@@ -31,7 +31,7 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
 })
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
-  root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => ({
+  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     speak: 'none',
     verticalAlign: 'middle',
 
