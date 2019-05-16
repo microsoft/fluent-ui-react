@@ -13,6 +13,14 @@ export * from './themes/colorUtils'
 export { Ref, RefProps } from '@stardust-ui/react-component-ref'
 
 export { default as Accordion, AccordionProps } from './components/Accordion/Accordion'
+export {
+  default as AccordionTitle,
+  AccordionTitleProps,
+} from './components/Accordion/AccordionTitle'
+export {
+  default as AccordionContent,
+  AccordionContentProps,
+} from './components/Accordion/AccordionContent'
 
 export { default as Alert, AlertProps } from './components/Alert/Alert'
 
