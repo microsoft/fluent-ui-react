@@ -23,11 +23,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Fixed `Flex.Item` children prop type @mnajdova ([#1320](https://github.com/stardust-ui/react/pull/1320))
 - Fixed `Icon`'s color example to align with the latest color updates @mnajdova([#1336](https://github.com/stardust-ui/react/pull/1336))
+- FontAwesome icons is not part of Teams theme more @layershifter ([#1337](https://github.com/stardust-ui/react/pull/1337))
 
 ### Features
 - Add `selected`, `isFromKeyboard` props to `DropdownItem` @mnajdova ([#1299](https://github.com/stardust-ui/react/pull/1299))
 - Add styles for the dark and high contrast Teams themes for the `Dropdown` component @mnajdova ([#1299](https://github.com/stardust-ui/react/pull/1299))
 - Highlight options by character keys in `Dropdown` non-search versions @silviuavram ([#1270](https://github.com/stardust-ui/react/pull/1270))
+- Add FontAwesome theme @layershifter ([#1337](https://github.com/stardust-ui/react/pull/1337))
 
 <!--------------------------------[ v0.30.0 ]------------------------------- -->
 ## [v0.30.0](https://github.com/stardust-ui/react/tree/v0.30.0) (2019-05-10)
