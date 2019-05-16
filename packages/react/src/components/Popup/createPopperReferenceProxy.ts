@@ -21,6 +21,15 @@ class ReferenceProxy implements PopperJS.ReferenceObject {
   get clientHeight() {
     return this.getBoundingClientRect().height
   }
+
+  /**
+   * Required to allow properly finding a node to attach scroll.
+   *
+   * @see https://github.com/FezVrasta/popper.js/blob/v1.15.0/packages/popper/src/utils/getParentNode.js#L12
+   */
+  get parentNode() {
+    return this.ref.current ? this.ref.current.parentNode : undefined
+  }
 }
 
 /**
