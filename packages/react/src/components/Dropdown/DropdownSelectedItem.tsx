@@ -5,7 +5,13 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import keyboardKey from 'keyboard-key'
-import { ComponentEventHandler, ShorthandValue, ReactProps } from '../../types'
+import {
+  ComponentEventHandler,
+  ShorthandValue,
+  WithAsProp,
+  ComponentKeyboardEventHandler,
+  withSafeTypeForAs,
+} from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import { createShorthandFactory, UIComponent, RenderResultConfig, commonPropTypes } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -46,7 +52,7 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onKeyDown?: ComponentEventHandler<DropdownSelectedItemProps>
+  onKeyDown?: ComponentKeyboardEventHandler<DropdownSelectedItemProps>
 
   /**
    * Called when item is removed from the selection list.
@@ -57,11 +63,7 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
   onRemove?: ComponentEventHandler<DropdownSelectedItemProps>
 }
 
-/**
- * A DropdownSelectedItem is a sub-component of a multiple selection Dropdown.
- * It is used to display selected item.
- */
-class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemProps>, any> {
+class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemProps>, any> {
   private itemRef = React.createRef<HTMLElement>()
 
   static displayName = 'DropdownSelectedItem'
@@ -176,4 +178,10 @@ DropdownSelectedItem.create = createShorthandFactory({
   mappedProp: 'header',
 })
 
-export default DropdownSelectedItem
+/**
+ * A a sub-component of multiple-selection Dropdown.
+ * Used to display selected item.
+ */
+export default withSafeTypeForAs<typeof DropdownSelectedItem, DropdownSelectedItemProps>(
+  DropdownSelectedItem,
+)

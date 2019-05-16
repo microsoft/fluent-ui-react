@@ -13,7 +13,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import FormField from './FormField'
 
 export interface FormSlotClassNames {
@@ -41,12 +41,7 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
   onSubmit?: ComponentEventHandler<FormProps>
 }
 
-/**
- * A Form displays a set of related user input fields in a structured way.
- * @accessibility
- * Label needs to be provided by using 'aria-label', or 'aria-labelledby' attributes on the <form> element.
- */
-class Form extends UIComponent<ReactProps<FormProps>, any> {
+class Form extends UIComponent<WithAsProp<FormProps>, any> {
   static create: Function
 
   public static displayName = 'Form'
@@ -106,4 +101,9 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
   }
 }
 
-export default Form
+/**
+ * A Form displays a set of related user input fields in a structured way.
+ * @accessibility
+ * Label needs to be provided by using 'aria-label', or 'aria-labelledby' attributes on the <form> element.
+ */
+export default withSafeTypeForAs<typeof Form, FormProps, 'form'>(Form)

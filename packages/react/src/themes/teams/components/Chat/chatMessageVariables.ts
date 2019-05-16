@@ -15,7 +15,8 @@ export interface ChatMessageVariables {
   authorFontWeight: number
   headerMarginBottom: string
   contentColor: string
-  contentFocusOutlineColor: string
+  linkColor: string
+  linkColorMine: string
   border: string
   badgeShadow: string
   isImportant: boolean
@@ -43,7 +44,8 @@ export default (siteVars): ChatMessageVariables => ({
   authorFontWeight: siteVars.fontWeightRegular,
   headerMarginBottom: pxToRem(2),
   contentColor: siteVars.colors.grey[750],
-  contentFocusOutlineColor: siteVars.colors.brand[600],
+  linkColor: siteVars.colorScheme.brand.foreground1,
+  linkColorMine: siteVars.colorScheme.brand.foreground2,
   border: 'none',
   badgeShadow: siteVars.shadowLevel1Darker,
   isImportant: false,

@@ -16,7 +16,7 @@ import {
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
 import Header from '../Header/Header'
@@ -91,10 +91,7 @@ export interface DialogState {
   open?: boolean
 }
 
-/**
- * A Dialog indicates a possible user action.
- */
-class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogState> {
+class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogState> {
   static displayName = 'Dialog'
   static className = 'ui-dialog'
 
@@ -273,4 +270,7 @@ Dialog.slotClassNames = {
   content: `${Dialog.className}__content`,
 }
 
-export default Dialog
+/**
+ * A Dialog indicates a possible user action.
+ */
+export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)
