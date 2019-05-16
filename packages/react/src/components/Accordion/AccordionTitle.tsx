@@ -22,6 +22,10 @@ import Box from '../Box/Box'
 import { accordionTitleBehavior } from '../../lib/accessibility'
 import { AccessibilityActionHandlers } from 'src/lib/accessibility/types'
 
+export interface AccordionTitleSlotClassNames {
+  button: string
+}
+
 export interface AccordionTitleProps
   extends UIComponentProps,
     ContentComponentProps,
@@ -67,6 +71,8 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
 
   static className = 'ui-accordion__title'
 
+  static slotClassNames: AccordionTitleSlotClassNames
+
   static propTypes = {
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
@@ -107,6 +113,7 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
       <Ref innerRef={buttonRef}>
         <Box
           onFocus={this.handleFocus}
+          className={AccordionTitle.slotClassNames.button}
           {...accessibility.attributes.button}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.button, unhandledProps)}
         >
@@ -139,6 +146,10 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
 }
 
 AccordionTitle.create = createShorthandFactory({ Component: AccordionTitle, mappedProp: 'content' })
+
+AccordionTitle.slotClassNames = {
+  button: `${AccordionTitle.className}__button`,
+}
 
 /**
  * A standard AccordionTitle.
