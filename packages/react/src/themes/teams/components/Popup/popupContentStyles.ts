@@ -1,4 +1,4 @@
-import { PopperChildrenProps } from 'react-popper'
+import { PopperChildrenProps } from '../../../../lib/positioner'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { PopupContentProps } from '../../../../components/Popup/PopupContent'
 import { PopupContentVariables } from './popupContentVariables'

@@ -1,8 +1,6 @@
-export { Placement } from 'popper.js'
 import { Placement } from 'popper.js'
 
-export type Position = 'above' | 'below' | 'before' | 'after'
-export type Alignment = 'top' | 'bottom' | 'start' | 'end' | 'center'
+import { Alignment, Position } from './index'
 
 enum PlacementParts {
   top = 'top',
@@ -56,7 +54,7 @@ const shouldAlignToCenter = (p: Position, a: Alignment) => {
  * | after    | center    |  right          |  left
  * | after    | bottom    |  right-end      |  left-end
  */
-export const getPopupPlacement = ({
+export const getPlacement = ({
   align,
   position,
   rtl,

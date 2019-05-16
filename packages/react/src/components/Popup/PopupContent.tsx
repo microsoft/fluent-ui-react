@@ -1,8 +1,8 @@
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as React from 'react'
-import { PopperChildrenProps } from 'react-popper'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import {
   childrenExist,
@@ -17,6 +17,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
+import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 
@@ -51,10 +52,7 @@ export interface PopupContentProps
   pointing?: boolean
 
   /** A ref to a pointer element. */
-  pointerRef?: PopperChildrenProps['arrowProps']['ref']
-
-  /** An object with positioning styles fof a pointer. */
-  pointerStyle?: PopperChildrenProps['arrowProps']['style']
+  pointerRef?: React.RefObject<Element>
 }
 
 class PopupContent extends UIComponent<WithAsProp<PopupContentProps>, any> {
@@ -69,8 +67,7 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>, any> {
     pointing: PropTypes.bool,
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
-    pointerRef: PropTypes.func,
-    pointerStyle: PropTypes.object,
+    pointerRef: customPropTypes.ref,
   }
 
   static defaultProps = {
@@ -92,7 +89,7 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>, any> {
     unhandledProps,
     styles,
   }: RenderResultConfig<PopupContentProps>): React.ReactNode {
-    const { children, content, pointing, pointerRef, pointerStyle } = this.props
+    const { children, content, pointing, pointerRef } = this.props
 
     return (
       <ElementType
@@ -105,15 +102,7 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>, any> {
       >
         {pointing && (
           <Ref innerRef={pointerRef}>
-            {Box.create(
-              {},
-              {
-                defaultProps: {
-                  style: pointerStyle,
-                  styles: styles.pointer,
-                },
-              },
-            )}
+            {Box.create({}, { defaultProps: { styles: styles.pointer } })}
           </Ref>
         )}
 
