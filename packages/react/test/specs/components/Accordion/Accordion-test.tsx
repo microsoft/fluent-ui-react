@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 
 import Accordion from 'src/components/Accordion/Accordion'
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { mountWithProvider, mountWithProviderAndGetComponent } from 'test/utils'
 import AccordionTitle from 'src/components/Accordion/AccordionTitle'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
@@ -219,5 +219,9 @@ describe('Accordion', () => {
 
       expect(onFocus).toBeCalledTimes(1)
     })
+  })
+
+  describe('accessibility', () => {
+    handlesAccessibility(Accordion, { defaultRootRole: 'presentation' })
   })
 })
