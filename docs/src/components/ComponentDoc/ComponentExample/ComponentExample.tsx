@@ -1,4 +1,4 @@
-import { KnobInspector, KnobProvider } from '@stardust-ui/docs-components'
+import { CodeSnippet, KnobInspector, KnobProvider } from '@stardust-ui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
@@ -31,7 +31,6 @@ import ComponentSourceManager, {
 import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
 import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
-import CodeSnippet from '../../CodeSnippet'
 import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 import ComponentExampleKnobs from './ComponentExampleKnobs'
 
@@ -226,15 +225,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }
   }
 
-  exampleMenuVariables = {
-    primaryActiveBackgroundColor: 'transparent',
-    primaryActiveBorderColor: 'white',
-    primaryActiveColor: 'white',
-    primaryBorderColor: 'white',
-    activeColor: 'white',
-    disabledColor: '#ffffff80',
-    color: '#ffffff80',
-  }
+  exampleMenuVariables = siteVars => ({
+    backgroundColorActive: 'transparent',
+    borderColorActive: siteVars.colors.white,
+    colorActive: siteVars.colors.white,
+    primaryBorderColor: siteVars.colors.white,
+    color: siteVars.colors.white,
+  })
 
   renderAPIsMenu = (): JSX.Element => {
     const { componentAPIs, currentCodeAPI } = this.props
@@ -253,7 +250,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     return (
       <Menu
-        primary
         underlined
         items={menuItems}
         variables={this.exampleMenuVariables}
@@ -281,7 +277,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     return (
       <Menu
-        primary
         underlined
         items={menuItems}
         variables={this.exampleMenuVariables}
@@ -365,16 +360,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     return (
       <Menu
-        size="small"
         primary
         underlined
         activeIndex={-1}
         styles={codeEditorStyle}
-        variables={{
-          activeColor: 'white',
-          disabledColor: '#ffffff60',
-          color: '#ffffffb0',
-        }}
+        variables={this.exampleMenuVariables}
         items={menuItems}
       />
     )
@@ -397,10 +387,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             } as React.CSSProperties
           }
         >
-          <Menu
-            size="small"
-            styles={{ display: 'flex', justifyContent: 'space-between', border: 'none' }}
-          >
+          <Menu styles={{ display: 'flex', justifyContent: 'space-between', border: 'none' }}>
             {this.renderAPIsMenu()}
             {this.renderLanguagesMenu()}
           </Menu>
@@ -418,7 +405,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       <SourceRender.Consumer>
         {({ error }) =>
           error && (
-            <Segment inverted color="red" size="small">
+            <Segment inverted color="red">
               <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
             </Segment>
           )

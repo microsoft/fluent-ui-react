@@ -1,9 +1,7 @@
-import { useKnobValues } from '@stardust-ui/docs-components'
+import { CodeSnippet, useKnobValues } from '@stardust-ui/docs-components'
 import { createComponent, Flex } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
-
-import CodeSnippet from 'docs/src/components/CodeSnippet'
 
 const componentExampleKnobsStyles = {
   background: 'whitesmoke',

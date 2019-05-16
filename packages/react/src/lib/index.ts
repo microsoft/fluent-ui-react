@@ -7,7 +7,6 @@ import * as commonPropTypes from './commonPropTypes'
 export { default as applyAccessibilityKeyHandlers } from './applyAccessibilityKeyHandlers'
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
-export * from './colorUtils'
 export { default as UIComponent } from './UIComponent'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
 export { default as toCompactArray } from './toCompactArray'
@@ -23,7 +22,6 @@ export { default as mergeThemes } from './mergeThemes'
 export { default as renderComponent, RenderResultConfig } from './renderComponent'
 export { default as getElementProp } from './getElementProp'
 
-export { default as handleRef } from './handleRef'
 export {
   htmlImageProps,
   htmlInputAttrs,

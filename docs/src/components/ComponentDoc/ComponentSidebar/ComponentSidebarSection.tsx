@@ -96,14 +96,13 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
         {...restProps}
         styles={treeStyles}
         active={active}
+        onClick={this.handleTitleClick}
       >
         <span>{content}</span>
-        {hasSubtree && <Icon direction={name ? 'arrow-down' : 'arrow-end'} />}
+        {hasSubtree && <Icon name="arrow-down" />}
       </Component>
     )
 
-    return (
-      <Tree items={items} onTitleClick={this.handleTitleClick} renderItemTitle={titleRenderer} />
-    )
+    return <Tree items={items} renderItemTitle={titleRenderer} />
   }
 }

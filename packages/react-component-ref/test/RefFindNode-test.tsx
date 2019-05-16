@@ -1,10 +1,10 @@
+import { RefFindNode } from '@stardust-ui/react-component-ref'
 import { mount } from 'enzyme'
 import * as React from 'react'
 
-import RefFindNode from 'src/components/Ref/RefFindNode'
 import { CompositeClass, CompositeFunction, DOMClass, DOMFunction } from './fixtures'
 
-const testInnerRef = Component => {
+const testInnerRef = (Component: React.ElementType) => {
   const innerRef = jest.fn()
   const node = mount(
     <RefFindNode innerRef={innerRef}>
@@ -77,6 +77,25 @@ describe('RefFindNode', () => {
 
       expect(innerRef).toHaveBeenCalledTimes(1)
       expect(innerRef).toHaveBeenCalledWith(expect.objectContaining({ tagName: 'DIV' }))
+    })
+
+    it('handles updates of props', () => {
+      const initialRef = jest.fn()
+      const updatedRef = jest.fn()
+      const wrapper = mount(
+        <RefFindNode innerRef={initialRef}>
+          <div />
+        </RefFindNode>,
+      )
+
+      expect(initialRef).toHaveBeenCalled()
+      expect(updatedRef).not.toHaveBeenCalled()
+
+      jest.resetAllMocks()
+      wrapper.setProps({ innerRef: updatedRef })
+
+      expect(initialRef).not.toHaveBeenCalled()
+      expect(updatedRef).toHaveBeenCalled()
     })
   })
 })

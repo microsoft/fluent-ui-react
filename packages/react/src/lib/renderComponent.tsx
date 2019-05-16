@@ -31,7 +31,6 @@ import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
-import { generateColorScheme } from './colorUtils'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -152,11 +151,6 @@ const renderComponent = <P extends {}>(
 
   const {
     siteVariables = {
-      colorScheme: {},
-      colors: {},
-      contextualColors: {},
-      emphasisColors: {},
-      naturalColors: {},
       fontSizes: {},
     },
     componentVariables = {},
@@ -188,13 +182,10 @@ const renderComponent = <P extends {}>(
 
   const unhandledProps = getUnhandledProps({ handledProps }, props)
 
-  const colors = generateColorScheme(stateAndProps.color, resolvedVariables.colorScheme)
-
   const styleParam: ComponentStyleFunctionParam = {
     props: stateAndProps,
     variables: resolvedVariables,
     theme,
-    colors,
   }
 
   mergedStyles.root = {

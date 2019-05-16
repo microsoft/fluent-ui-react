@@ -22,23 +22,20 @@ export type AttachmentVariables = {
   descriptionFontSize: string
   descriptionFontWeight: number
   descriptionLineHeight: number
-
-  focusInnerBorderColor: string
-  focusOuterBorderColor: string
 }
 
 export default (siteVariables: any): AttachmentVariables => ({
   padding: `${pxToRem(7)} ${pxToRem(3)} ${pxToRem(7)} ${pxToRem(11)}`, // padding set to 1px less to account for 1px border
   iconSpace: pxToRem(12),
-  borderColor: siteVariables.gray08,
+  borderColor: siteVariables.colors.grey[200],
   borderRadius: pxToRem(3),
-  backgroundColor: siteVariables.gray10,
-  backgroundColorHover: siteVariables.gray08,
-  textColor: siteVariables.colors.grey[900],
-  textColorHover: siteVariables.colors.grey[900],
+  backgroundColor: siteVariables.colors.grey[100],
+  backgroundColorHover: siteVariables.colors.grey[200],
+  textColor: siteVariables.colors.grey[750],
+  textColorHover: siteVariables.colors.grey[750],
   boxShadow: siteVariables.shadowLevel1,
 
-  progressColor: siteVariables.naturalColors.lightGreen[900],
+  progressColor: siteVariables.colors.green[200],
   progressHeight: 4,
 
   headerFontSize: siteVariables.fontSizes.medium,
@@ -48,7 +45,4 @@ export default (siteVariables: any): AttachmentVariables => ({
   descriptionFontSize: siteVariables.fontSizes.small,
   descriptionFontWeight: siteVariables.fontWeightRegular,
   descriptionLineHeight: siteVariables.lineHeightSmall,
-
-  focusInnerBorderColor: siteVariables.colors.white,
-  focusOuterBorderColor: siteVariables.colors.black,
 })

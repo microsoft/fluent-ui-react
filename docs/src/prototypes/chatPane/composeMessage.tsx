@@ -88,13 +88,13 @@ const getMenuItems = (): MenuItemProps[] => {
     icon: {
       name,
       xSpacing: 'both',
-      variables: siteVars => ({ color: siteVars.gray02 }),
+      variables: siteVars => ({ color: siteVars.colors.grey[500] }),
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': `${name} tool`,
   }))
 
-  items.splice(-1, 0, { key: 'separator', styles: { flex: 1 } })
+  items.splice(-1, 0, { key: 'separator', styles: { flex: 1 } } as any)
 
   return items
 }

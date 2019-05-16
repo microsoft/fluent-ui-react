@@ -1,10 +1,10 @@
 import { AttachmentVariables } from '../../../teams/components/Attachment/attachmentVariables'
 
 export default (siteVariables: any): Partial<AttachmentVariables> => ({
-  textColor: siteVariables.colors.grey[50],
-  textColorHover: siteVariables.colors.grey[50],
+  textColor: siteVariables.colors.white,
+  textColorHover: siteVariables.colors.white,
 
-  backgroundColor: siteVariables.gray600,
-  borderColor: siteVariables.gray850,
+  backgroundColor: siteVariables.colors.grey[600],
+  borderColor: siteVariables.colors.grey[850],
   boxShadow: siteVariables.shadowLevel1,
 })

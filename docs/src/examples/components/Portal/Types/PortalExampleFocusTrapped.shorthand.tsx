@@ -64,8 +64,8 @@ class PortalExampleFocusTrapped extends React.Component {
                 Portal doesn't close on outside click. See passed focus trap props.
               </p>
               <p tabIndex={0}>To close, simply click the close button</p>
-              <Button size="small" content="Do nothing" />
-              <Button size="small" content="Close popup" onClick={this.closePortal} />
+              <Button content="Do nothing" />
+              <Button content="Close popup" onClick={this.closePortal} />
             </div>
           }
         />

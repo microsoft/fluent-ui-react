@@ -1,4 +1,5 @@
 import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import cx from 'classnames'
@@ -23,9 +24,14 @@ import Menu from './Menu'
 import Box from '../Box/Box'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue, ShorthandCollection } from '../../types'
+import {
+  ComponentEventHandler,
+  WithAsProp,
+  ShorthandValue,
+  ShorthandCollection,
+  withSafeTypeForAs,
+} from '../../types'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
-import Ref from '../Ref/Ref'
 
 export interface MenuItemSlotClassNames {
   wrapper: string
@@ -135,10 +141,7 @@ export interface MenuItemState {
   menuOpen: boolean
 }
 
-/**
- * A menu item is an actionable navigation item within a menu.
- */
-class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuItemState> {
+class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -409,4 +412,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
 
 MenuItem.create = createShorthandFactory({ Component: MenuItem, mappedProp: 'content' })
 
-export default MenuItem
+/**
+ * A menu item is an actionable navigation item within a menu.
+ */
+export default withSafeTypeForAs<typeof MenuItem, MenuItemProps, 'a'>(MenuItem)

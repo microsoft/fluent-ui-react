@@ -15,10 +15,10 @@ import {
 } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility, AccessibilityBehavior } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
-import { ReactProps, ShorthandCollection, ShorthandValue } from '../../types'
+import { WithAsProp, ShorthandCollection, ShorthandValue, withSafeTypeForAs } from '../../types'
 import MenuDivider from './MenuDivider'
 
 export type MenuShorthandKinds = 'divider' | 'item'
@@ -83,12 +83,7 @@ export interface MenuState {
   activeIndex?: number | string
 }
 
-/**
- * A menu displays grouped navigation actions.
- * @accessibility
- * Implements ARIA Menu, Toolbar or Tabs design pattern, depending on the behavior used.
- */
-class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
+class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -148,7 +143,11 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     },
   })
 
-  renderItems = (styles: ComponentSlotStylesPrepared, variables: ComponentVariablesObject) => {
+  renderItems = (
+    styles: ComponentSlotStylesPrepared,
+    variables: ComponentVariablesObject,
+    accessibility: AccessibilityBehavior,
+  ) => {
     const {
       iconOnly,
       items,
@@ -180,6 +179,9 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
             variables,
             styles: styles.divider,
             inSubmenu: submenu,
+            accessibility: accessibility.childBehaviors
+              ? accessibility.childBehaviors.divider
+              : undefined,
           },
         })
       }
@@ -203,6 +205,9 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
           active,
           inSubmenu: submenu,
           indicator,
+          accessibility: accessibility.childBehaviors
+            ? accessibility.childBehaviors.item
+            : undefined,
         },
         overrideProps: this.handleItemOverrides,
       })
@@ -218,7 +223,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
         {...unhandledProps}
         className={classes.root}
       >
-        {childrenExist(children) ? children : this.renderItems(styles, variables)}
+        {childrenExist(children) ? children : this.renderItems(styles, variables, accessibility)}
       </ElementType>
     )
   }
@@ -226,4 +231,9 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
 
 Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items' })
 
-export default Menu
+/**
+ * A menu displays grouped navigation actions.
+ * @accessibility
+ * Implements ARIA Menu, Toolbar or Tabs design pattern, depending on the behavior used.
+ */
+export default withSafeTypeForAs<typeof Menu, MenuProps, 'ul'>(Menu)

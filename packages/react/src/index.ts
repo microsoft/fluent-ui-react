@@ -5,10 +5,12 @@ import * as themes from './themes'
 //
 export { themes }
 export * from './themes/types'
+export * from './themes/colorUtils'
 
 //
 // Components
 //
+export { Ref, RefProps } from '@stardust-ui/react-component-ref'
 
 export { default as Accordion, AccordionProps } from './components/Accordion/Accordion'
 
@@ -35,11 +37,7 @@ export {
   ChatMessageSlotClassNames,
 } from './components/Chat/ChatMessage'
 
-export {
-  default as Divider,
-  DividerProps,
-  DividerPropsWithDefaults,
-} from './components/Divider/Divider'
+export { default as Divider, DividerProps } from './components/Divider/Divider'
 export { default as Dialog, DialogProps } from './components/Dialog/Dialog'
 
 export {
@@ -84,7 +82,6 @@ export { default as Input, InputState, InputProps } from './components/Input/Inp
 
 export {
   default as ItemLayout,
-  ItemLayoutPropsWithDefaults,
   ItemLayoutProps,
   ItemLayoutSlotClassNames,
 } from './components/ItemLayout/ItemLayout'
@@ -92,12 +89,7 @@ export {
 export { default as Label, LabelProps } from './components/Label/Label'
 export { default as Loader, LoaderProps } from './components/Loader/Loader'
 
-export {
-  default as Layout,
-  LayoutPropsWithDefaults,
-  LayoutProps,
-  LayoutSlotClassNames,
-} from './components/Layout/Layout'
+export { default as Layout, LayoutProps, LayoutSlotClassNames } from './components/Layout/Layout'
 
 export { default as List, ListProps } from './components/List/List'
 export { default as ListItem, ListItemProps } from './components/List/ListItem'
@@ -143,7 +135,6 @@ export {
   RadioGroupItemProps,
 } from './components/RadioGroup/RadioGroupItem'
 
-export { default as Ref, RefProps } from './components/Ref/Ref'
 export { default as Segment, SegmentProps } from './components/Segment/Segment'
 
 export { default as Status, StatusProps } from './components/Status/Status'
@@ -227,6 +218,7 @@ import {
   getPreviousElement,
   focusAsync,
 } from './lib/accessibility/FocusZone/focusUtilities'
+
 export const FocusZoneUtilities = {
   getFirstTabbable,
   getLastTabbable,
