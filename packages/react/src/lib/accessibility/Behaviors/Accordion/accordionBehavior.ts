@@ -3,6 +3,11 @@ import * as keyboardKey from 'keyboard-key'
 
 /**
  * @specification
+ * Adds attribute 'role=presentation' to 'root' component's part.
+ * Triggers 'moveNext' action with 'ArrowDown' on 'root'.
+ * Triggers 'movePrevious' action with 'ArrowUp' on 'root'.
+ * Triggers 'moveFirst' action with 'Home' on 'root'.
+ * Triggers 'moveLast' action with 'End' on 'root'.
  */
 const accordionBehavior: Accessibility = (props: any) => ({
   attributes: {
