@@ -4,7 +4,14 @@ import { colors } from './colors'
 //
 // COLORS
 //
-export { colors, emphasisColors, naturalColors, primitiveColors, colorScheme } from './colors'
+export {
+  colors,
+  contextualColors,
+  naturalColors,
+  primitiveColors,
+  transparentColors,
+  colorScheme,
+} from './colors'
 
 //
 // BORDER STYLES

@@ -59,7 +59,9 @@ const ColorPalette = () => (
     }}
   >
     <ProviderConsumer
-      render={({ siteVariables: { colors, emphasisColors, naturalColors } }) => (
+      render={({
+        siteVariables: { colors, contextualColors, naturalColors, transparentColors },
+      }) => (
         <DocPage title="Colors">
           <Header as="h2">Introduction</Header>
           <p>
@@ -126,11 +128,14 @@ const ColorPalette = () => (
             ))}
           </Grid>
 
-          <Header as="h3">Emphasis colors</Header>
-          <p>This part of the palette may include primary (brand) and secondary colors.</p>
+          <Header as="h3">Contextual colors</Header>
+          <p>
+            This part of the palette may include brand color as well as danger, success, info colors
+            etc.
+          </p>
 
           <Grid columns={2}>
-            {_.map(emphasisColors, (variants, color) => (
+            {_.map(contextualColors, (variants, color) => (
               <div key={color}>
                 <ColorBox name={color} rounded size="big" value={colors[color][600]} />
               </div>
@@ -138,13 +143,16 @@ const ColorPalette = () => (
           </Grid>
 
           <Header as="h3">All colors</Header>
-          <p>This are all colors available in the color palette.</p>
+          <p>These are all colors available in the color palette.</p>
           <Grid columns={2} variables={{ gridGap: '2rem' }}>
-            {_.map({ ...emphasisColors, ...naturalColors }, (variants, color) => (
-              <div key={color}>
-                <ColorVariants name={color} />
-              </div>
-            ))}
+            {_.map(
+              { ...contextualColors, ...naturalColors, ...transparentColors },
+              (variants, color) => (
+                <div key={color}>
+                  <ColorVariants name={color} />
+                </div>
+              ),
+            )}
           </Grid>
 
           <Header as="h2" content="Color scheme" />
