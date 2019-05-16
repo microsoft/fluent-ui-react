@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 
 import Accordion from 'src/components/Accordion/Accordion'
 import { isConformant } from 'test/specs/commonTests'
@@ -24,9 +25,9 @@ const panels = [
   },
 ]
 
-const getTitleAtIndex = (wrapper: ReactWrapper, index: number): CommonWrapper => {
+const getTitleButtonAtIndex = (wrapper: ReactWrapper, index: number): CommonWrapper => {
   return wrapper
-    .find(`.${AccordionTitle.className}`)
+    .find(`.${AccordionTitle.slotClassNames.button}`)
     .filterWhere(n => typeof n.type() === 'string')
     .at(index)
 }
@@ -76,8 +77,8 @@ describe('Accordion', () => {
     it('contains the indexes clicked by the user if the panels were closed', () => {
       const wrapper = mountWithProvider(<Accordion panels={panels} />)
       const accordion = wrapper.find(Accordion)
-      getTitleAtIndex(wrapper, 0).simulate('click')
-      getTitleAtIndex(wrapper, 2).simulate('click')
+      getTitleButtonAtIndex(wrapper, 0).simulate('click')
+      getTitleButtonAtIndex(wrapper, 2).simulate('click')
 
       expect(accordion.state('activeIndex')).toEqual(expect.arrayContaining([0, 2]))
     })
@@ -85,8 +86,8 @@ describe('Accordion', () => {
     it('contains the only one index clicked by the user if exclusive prop is passed', () => {
       const wrapper = mountWithProvider(<Accordion panels={panels} exclusive />)
       const accordion = wrapper.find(Accordion)
-      getTitleAtIndex(wrapper, 0).simulate('click')
-      getTitleAtIndex(wrapper, 2).simulate('click')
+      getTitleButtonAtIndex(wrapper, 0).simulate('click')
+      getTitleButtonAtIndex(wrapper, 2).simulate('click')
 
       expect(accordion.state('activeIndex')).toEqual(2)
     })
@@ -96,8 +97,8 @@ describe('Accordion', () => {
         <Accordion panels={panels} defaultActiveIndex={[0, 1, 2]} />,
       )
       const accordion = wrapper.find(Accordion)
-      getTitleAtIndex(wrapper, 0).simulate('click')
-      getTitleAtIndex(wrapper, 2).simulate('click')
+      getTitleButtonAtIndex(wrapper, 0).simulate('click')
+      getTitleButtonAtIndex(wrapper, 2).simulate('click')
 
       expect(accordion.state('activeIndex')).toEqual(expect.arrayContaining([1]))
     })
@@ -107,11 +108,116 @@ describe('Accordion', () => {
         <Accordion panels={panels} defaultActiveIndex={[0]} expanded />,
       )
       const accordion = wrapper.find(Accordion)
-      getTitleAtIndex(wrapper, 0).simulate('click')
+      getTitleButtonAtIndex(wrapper, 0).simulate('click')
 
       expect(accordion.state('activeIndex')).toEqual(expect.arrayContaining([0]))
     })
   })
 
-  describe('focusedIndex', () => {})
+  describe('focusedIndex', () => {
+    it('is set at title click', () => {
+      const wrapper = mountWithProvider(<Accordion panels={panels} />)
+      const accordion = wrapper.find(Accordion)
+      getTitleButtonAtIndex(wrapper, 1).simulate('click')
+      expect(accordion.state('focusedIndex')).toEqual(1)
+    })
+
+    it('is changed by arrow key navigation', () => {
+      const wrapper = mountWithProvider(<Accordion panels={panels} />)
+      const accordion = wrapper.find(Accordion)
+      getTitleButtonAtIndex(wrapper, 1).simulate('click')
+      getTitleButtonAtIndex(wrapper, 1).simulate('keydown', {
+        keyCode: keyboardKey.ArrowUp,
+        key: 'ArrowUp',
+      })
+      expect(accordion.state('focusedIndex')).toEqual(0)
+
+      getTitleButtonAtIndex(wrapper, 0).simulate('keydown', {
+        keyCode: keyboardKey.ArrowDown,
+        key: 'ArrowDown',
+      })
+      expect(accordion.state('focusedIndex')).toEqual(1)
+    })
+
+    it('is changed by arrow key navigation in a circular way', () => {
+      const wrapper = mountWithProvider(<Accordion panels={panels} />)
+      const accordion = wrapper.find(Accordion)
+      getTitleButtonAtIndex(wrapper, 0).simulate('click')
+      getTitleButtonAtIndex(wrapper, 0).simulate('keydown', {
+        keyCode: keyboardKey.ArrowUp,
+        key: 'ArrowUp',
+      })
+      expect(accordion.state('focusedIndex')).toEqual(panels.length - 1)
+
+      getTitleButtonAtIndex(wrapper, panels.length - 1).simulate('keydown', {
+        keyCode: keyboardKey.ArrowDown,
+        key: 'ArrowDown',
+      })
+      expect(accordion.state('focusedIndex')).toEqual(0)
+    })
+
+    it('is changed to `0` at Home keydown', () => {
+      const wrapper = mountWithProvider(<Accordion panels={panels} />)
+      const accordion = wrapper.find(Accordion)
+      getTitleButtonAtIndex(wrapper, 2).simulate('click')
+      getTitleButtonAtIndex(wrapper, 2).simulate('keydown', {
+        keyCode: keyboardKey.Home,
+        key: 'Home',
+      })
+      expect(accordion.state('focusedIndex')).toEqual(0)
+    })
+
+    it('is changed to last index at End keydown', () => {
+      const wrapper = mountWithProvider(<Accordion panels={panels} />)
+      const accordion = wrapper.find(Accordion)
+      getTitleButtonAtIndex(wrapper, 0).simulate('click')
+      getTitleButtonAtIndex(wrapper, 0).simulate('keydown', {
+        keyCode: keyboardKey.End,
+        key: 'End',
+      })
+      expect(accordion.state('focusedIndex')).toEqual(panels.length - 1)
+    })
+
+    it('focuses the button element when is changed via focus handler', () => {
+      const wrapper = mountWithProvider(<Accordion panels={panels} />)
+      const title = getTitleButtonAtIndex(wrapper, 1)
+      title.simulate('click')
+      title.simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+      expect(document.activeElement).toEqual(getTitleButtonAtIndex(wrapper, 0).getDOMNode())
+    })
+  })
+
+  describe('panels', () => {
+    it('when clicked call onClick and onTitleClick if provided by the user', () => {
+      const onTitleClick = jest.fn()
+      const onClick = jest.fn()
+      const panels = [
+        {
+          key: 'one',
+          title: { key: 'oneTitle', content: 'One', onClick },
+          content: '2 3 4',
+        },
+      ]
+      const wrapper = mountWithProvider(<Accordion panels={panels} onTitleClick={onTitleClick} />)
+      getTitleButtonAtIndex(wrapper, 0).simulate('click')
+
+      expect(onTitleClick).toBeCalledTimes(1)
+      expect(onClick).toBeCalledTimes(1)
+    })
+
+    it('when focused call onFocus if provided by the user', () => {
+      const onFocus = jest.fn()
+      const panels = [
+        {
+          key: 'one',
+          title: { key: 'oneTitle', content: 'One', onFocus },
+          content: '2 3 4',
+        },
+      ]
+      const wrapper = mountWithProvider(<Accordion panels={panels} />)
+      getTitleButtonAtIndex(wrapper, 0).simulate('focus')
+
+      expect(onFocus).toBeCalledTimes(1)
+    })
+  })
 })
