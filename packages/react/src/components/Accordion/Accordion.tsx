@@ -82,7 +82,12 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
   accessibility?: Accessibility
 }
 
-class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any> {
+export interface AccordionState {
+  activeIndex: number[] | number
+  focusedIndex: number
+}
+
+class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, AccordionState> {
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'
@@ -189,7 +194,9 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any>
 
     if (exclusive) return index === activeIndex ? -1 : index
     // check to see if index is in array, and remove it, if not then add it
-    return _.includes(activeIndex, index) ? _.without(activeIndex, index) : [...activeIndex, index]
+    return _.includes(activeIndex as number[], index)
+      ? _.without(activeIndex as number[], index)
+      : [...(activeIndex as number[]), index]
   }
 
   private handleTitleOverrides = (predefinedProps: AccordionTitleProps) => ({
@@ -212,7 +219,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any>
     const { exclusive } = this.props
     const { activeIndex } = this.state
 
-    return exclusive ? activeIndex === index : _.includes(activeIndex, index)
+    return exclusive ? activeIndex === index : _.includes(activeIndex as number[], index)
   }
 
   /**
@@ -232,7 +239,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any>
     const { activeIndex } = this.state
     const { expanded, exclusive } = this.props
 
-    return !expanded || (!exclusive && activeIndex.length > 1)
+    return !expanded || (!exclusive && (activeIndex as number[]).length > 1)
   }
 
   renderPanels = () => {
