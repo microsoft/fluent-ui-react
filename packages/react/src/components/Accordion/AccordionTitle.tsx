@@ -132,11 +132,11 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
 
     return (
       <ElementType
-        {...rtlTextContainer.getAttributes({ forElements: [children] })}
-        {...unhandledProps}
-        {...accessibility.attributes.root}
         className={classes.root}
         onClick={this.handleClick}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {childrenExist(children) ? children : contentElement}
@@ -152,6 +152,6 @@ AccordionTitle.slotClassNames = {
 }
 
 /**
- * A standard AccordionTitle.
+ * A standard AccordionTitle that is used to expand or collapse content.
  */
 export default withSafeTypeForAs<typeof AccordionTitle, AccordionTitleProps>(AccordionTitle)
