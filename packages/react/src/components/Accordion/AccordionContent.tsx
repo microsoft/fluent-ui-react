@@ -1,5 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as _ from 'lodash'
 
 import {
   childrenExist,
@@ -52,14 +53,19 @@ class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, an
     as: 'dd',
   }
 
+  private handleClick = (e: React.SyntheticEvent) => {
+    _.invoke(this.props, 'onClick', e, this.props)
+  }
+
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
     const { children, content } = this.props
 
     return (
       <ElementType
+        onClick={this.handleClick}
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
-        {...unhandledProps}
         {...accessibility.attributes.root}
+        {...unhandledProps}
         className={classes.root}
       >
         {childrenExist(children) ? children : content}
@@ -74,6 +80,6 @@ AccordionContent.create = createShorthandFactory({
 })
 
 /**
- * A standard AccordionContent.
+ * A standard AccordionContent that is used to display content hosted in an accordion.
  */
 export default withSafeTypeForAs<typeof AccordionContent, AccordionContentProps>(AccordionContent)

@@ -14,7 +14,6 @@ const accordionContentBehavior: Accessibility = (props: any) => {
         'aria-labelledby': props.titleId,
       },
     },
-    keyActions: {},
   }
 }
 
