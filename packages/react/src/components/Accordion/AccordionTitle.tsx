@@ -43,7 +43,7 @@ export interface AccordionTitleProps
   index?: number
 
   /** Ref to the button. */
-  buttonRef?: React.RefObject<HTMLElement>
+  buttonRef: React.Ref<HTMLElement>
 
   /**
    * Called on click.
@@ -76,7 +76,7 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
   static propTypes = {
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
-    buttonRef: PropTypes.object,
+    buttonRef: customPropTypes.ref,
     canBeCollapsed: PropTypes.bool,
     contentId: PropTypes.string,
     index: PropTypes.number,
@@ -92,15 +92,15 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
   actionHandlers: AccessibilityActionHandlers = {
     performClick: e => {
       e.preventDefault()
-      this.handleClick(e)
+      this.handleClick(e as any)
     },
   }
 
-  handleClick = e => {
+  private handleClick = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  handleFocus = (e: React.SyntheticEvent) => {
+  private handleFocus = (e: React.SyntheticEvent) => {
     e.stopPropagation()
     _.invoke(this.props, 'onFocus', e, this.props)
   }
@@ -113,6 +113,7 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
       <Ref innerRef={buttonRef}>
         <Box
           onFocus={this.handleFocus}
+          onClick={this.handleClick}
           className={AccordionTitle.slotClassNames.button}
           {...accessibility.attributes.button}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.button, unhandledProps)}
@@ -133,7 +134,6 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
     return (
       <ElementType
         className={classes.root}
-        onClick={this.handleClick}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...accessibility.attributes.root}
         {...unhandledProps}
