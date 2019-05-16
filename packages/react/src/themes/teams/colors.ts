@@ -20,7 +20,7 @@ export type TeamsTransparentColors = {
   onyx: ColorVariants
 }
 
-export const emphasisColors: TeamsContextualColors = {
+export const contextualColors: TeamsContextualColors = {
   brand: {
     50: '#F4F4FC', // siteVariables.brand16, same as prev
     100: '#E5E5F1', // brand15
@@ -123,7 +123,7 @@ export const naturalColors: TeamsNaturalColors = {
 }
 
 const contextualAndNaturalColors: TeamsContextualColors & TeamsNaturalColors = {
-  ...emphasisColors,
+  ...contextualColors,
   ...naturalColors,
 }
 
