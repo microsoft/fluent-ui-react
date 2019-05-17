@@ -95,8 +95,8 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
           ...accessibility.attributes.root,
           ...unhandledProps,
           styles: {
-            ...(isSvgIcon ? styles.svgRoot : styles.fontRoot),
             ...styles.root,
+            ...(isSvgIcon ? styles.svgRoot : styles.fontRoot),
           },
         },
       },

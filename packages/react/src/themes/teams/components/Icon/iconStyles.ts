@@ -42,16 +42,17 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
     const colors = v.colorScheme[p.color]
 
     return {
+      display: 'inline-block', // we overriding this for Base theme
+
       // overriding base theme border handling
       ...((p.bordered || v.borderColor) &&
         getBorderedStyles(v.borderColor || getIconColor(v, colors))),
     }
   },
+
   svgRoot: ({ props: p, variables: v }): ICSSInJSStyle => {
     return {
-      display: 'inline-block',
       backgroundColor: v.backgroundColor,
-      boxSizing: 'border-box',
     }
   },
 

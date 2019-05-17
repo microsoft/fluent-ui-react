@@ -7,6 +7,7 @@ import { RadioGroupItemVariables } from './radioGroupItemVariables'
 import { pxToRem } from '../../../../lib'
 import Icon from '../../../../components/Icon/Icon'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
+import getIconFillOrOutlineStyles from 'src/themes/teams/getIconFillOrOutlineStyles'
 
 const restHoverFocusTextColor = textColor => ({
   color: textColor,
@@ -64,13 +65,9 @@ const radioStyles: ComponentSlotStylesInput<
     // overrides from icon styles
     backgroundColor: 'transparent',
     boxShadow: 'none',
-    boxSizing: 'border-box',
-    borderStyle: 'solid',
-    borderWidth: `${pxToRem(1)}`,
-    borderColor: 'currentColor',
     margin: `0 ${pxToRem(12)} 0 0`,
-    height: `${pxToRem(12)}`,
-    width: `${pxToRem(12)}`,
+
+    ...getIconFillOrOutlineStyles({ outline: !p.checked }),
 
     ...(p.checked && {
       backgroundColor: v.iconBackgroundColorChecked,
@@ -78,12 +75,12 @@ const radioStyles: ComponentSlotStylesInput<
     }),
 
     ...(p.disabled && {
-      borderColor: v.colorDisabled,
+      color: v.colorDisabled,
     }),
 
     ...(p.checked &&
       p.disabled && {
-        backgroundColor: v.colorDisabled,
+        color: v.colorDisabled,
       }),
   }),
 }
