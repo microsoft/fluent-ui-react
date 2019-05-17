@@ -36,6 +36,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentation
 - Clearly identify Slots in DocSite @hughreeling ([#1292](https://github.com/stardust-ui/react/pull/1292))
+- Adding table of contents to FAQ page @hughreeling ([#1291](https://github.com/stardust-ui/react/pull/1291))
 
 <!--------------------------------[ v0.30.0 ]------------------------------- -->
 ## [v0.30.0](https://github.com/stardust-ui/react/tree/v0.30.0) (2019-05-10)

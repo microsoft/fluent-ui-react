@@ -34,6 +34,8 @@ export default () => (
             )}
           </li>
         </ul>
+      </li>
+      <li>
         {link('Teams Specific', '#teams-specific')}
         <ul>
           <li>{link('How to add Icons to Stardust?', '#how-to-add-icons-to-stardust')}</li>
@@ -73,11 +75,11 @@ export default () => (
     <Answer
       content={
         <p>
-          You need to set the default value on the input slot.
+          You need to set the default value on the component used in the control slot.
           <CodeSnippet
             value={`
-      <Form.Field control={{as: Input, defaultValue:'some value'}} />
-      `}
+            <Form.Field control={{as: Input, defaultValue:'some value'}} />
+            `}
           />
         </p>
       }
