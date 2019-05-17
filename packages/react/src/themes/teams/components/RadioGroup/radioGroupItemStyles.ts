@@ -63,15 +63,13 @@ const radioStyles: ComponentSlotStylesInput<
 
   icon: ({ props: p, variables: v }): ICSSInJSStyle => ({
     // overrides from icon styles
-    backgroundColor: 'transparent',
     boxShadow: 'none',
     margin: `0 ${pxToRem(12)} 0 0`,
 
     ...getIconFillOrOutlineStyles({ outline: !p.checked }),
 
     ...(p.checked && {
-      backgroundColor: v.iconBackgroundColorChecked,
-      borderColor: v.iconBorderColorChecked,
+      color: v.iconBackgroundColorChecked,
     }),
 
     ...(p.disabled && {
