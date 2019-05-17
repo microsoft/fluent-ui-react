@@ -62,13 +62,13 @@ export interface AlertState {
   isFromKeyboard: boolean
 }
 
-class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
+class _Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
   static displayName = 'Alert'
   static className = 'ui-alert'
 
   static slotClassNames: AlertSlotClassNames = {
-    content: `${Alert.className}__content`,
-    action: `${Alert.className}__action`,
+    content: `${_Alert.className}__content`,
+    action: `${_Alert.className}__action`,
   }
 
   static propTypes = {
@@ -99,7 +99,7 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
       <>
         {Box.create(content, {
           defaultProps: {
-            className: Alert.slotClassNames.content,
+            className: _Alert.slotClassNames.content,
             styles: styles.content,
             ...accessibility.attributes.content,
           },
@@ -108,7 +108,7 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
           defaultProps: {
             iconOnly: true,
             text: true,
-            className: Alert.slotClassNames.action,
+            className: _Alert.slotClassNames.action,
             styles: styles.action,
           },
         })}
@@ -141,4 +141,4 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
  *  - by default, content from warning and danger variants is announced by the screen reader. To announce the content of other variants, a mechanism similar to react-aria-live can be used
  *  - if Alert contains action slot, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
  */
-export default withSafeTypeForAs<typeof Alert, AlertProps>(Alert)
+export const Alert = withSafeTypeForAs<typeof _Alert, AlertProps>(_Alert)

@@ -76,14 +76,14 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
   accessibility?: Accessibility
 }
 
-class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any> {
+class _Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any> {
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'
 
   static slotClassNames: AccordionSlotClassNames = {
-    content: `${Accordion.className}__content`,
-    title: `${Accordion.className}__title`,
+    content: `${_Accordion.className}__content`,
+    title: `${_Accordion.className}__title`,
   }
 
   static propTypes = {
@@ -165,14 +165,14 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any>
 
       children.push(
         AccordionTitle.create(title, {
-          defaultProps: { className: Accordion.slotClassNames.title, active, index },
+          defaultProps: { className: _Accordion.slotClassNames.title, active, index },
           overrideProps: this.handleTitleOverrides,
           render: renderPanelTitle,
         }),
       )
       children.push(
         AccordionContent.create(content, {
-          defaultProps: { className: Accordion.slotClassNames.content, active },
+          defaultProps: { className: _Accordion.slotClassNames.content, active },
           render: renderPanelContent,
         }),
       )
@@ -203,4 +203,4 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any>
  * Implements ARIA Accordion design pattern (keyboard navigation not yet supported).
  * Consider using Tree if you intend to wrap Lists in an Accordion.
  */
-export default withSafeTypeForAs<typeof Accordion, AccordionProps>(Accordion)
+export default withSafeTypeForAs<typeof _Accordion, AccordionProps>(_Accordion)

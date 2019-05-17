@@ -12,9 +12,9 @@ export * from './themes/colorUtils'
 //
 export { Ref, RefProps } from '@stardust-ui/react-component-ref'
 
-export { default as Accordion, AccordionProps } from './components/Accordion/Accordion'
+export * from './components/Accordion/Accordion'
 
-export { default as Alert, AlertProps } from './components/Alert/Alert'
+export * from './components/Alert/Alert'
 
 export { default as Attachment, AttachmentProps } from './components/Attachment/Attachment'
 
@@ -207,6 +207,8 @@ export {
   SizeValue,
 } from './lib'
 export { ShorthandValue, ShorthandRenderer } from './types'
+
+export * from './types'
 
 //
 // FocusZone
