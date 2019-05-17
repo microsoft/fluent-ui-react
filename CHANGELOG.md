@@ -27,6 +27,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fixed `TreeTitle` - `tabIndex` prop should be camel case in behavior @sophieH29 ([#1345](https://github.com/stardust-ui/react/pull/1345))
 - Fixed handle refs on updates of `innerRef` prop in `Ref` component @layershifter ([#1331](https://github.com/stardust-ui/react/pull/1331))
 - Fixed positioing of `Popup` in scrollable container @layershifter ([#1341](https://github.com/stardust-ui/react/pull/1341))
+- Add Teams dark and hc themeing for `Dialog` [redlines] @codepretty ([#1297](https://github.com/stardust-ui/react/pull/1297))
 
 ### Features
 - Add `selected`, `isFromKeyboard` props to `DropdownItem` @mnajdova ([#1299](https://github.com/stardust-ui/react/pull/1299))
