@@ -205,15 +205,6 @@ const createColorScheme = (color: string, customValues = {}) => {
   }
 }
 
-const lightColorOverrides = {
-  background: colors.black,
-  foregroundHover: colors.black,
-  foregroundActive: colors.black,
-  foregroundFocus: colors.black,
-  foregroundFocusWithin: colors.black,
-  foregroundDisabled: colors.black,
-}
-
 export const colorScheme: ColorSchemeMapping = {
   default: {
     foreground: colors.grey[750],
@@ -421,8 +412,10 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.white,
   },
   grey: createColorScheme('grey'),
-  green: createColorScheme('green'),
-  orange: createColorScheme('orange', lightColorOverrides),
+  green: createColorScheme('green', {
+    background: colors.white,
+  }),
+  orange: createColorScheme('orange'),
   pink: createColorScheme('pink'),
   red: {
     foreground: colors.red[400],
@@ -463,7 +456,9 @@ export const colorScheme: ColorSchemeMapping = {
     borderDisabled: undefined,
     shadowDisabled: undefined,
   },
-  yellow: createColorScheme('yellow', lightColorOverrides),
+  yellow: createColorScheme('yellow', {
+    background: colors.yellow[100],
+  }),
 }
 
 export const availableColors = [

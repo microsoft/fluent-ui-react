@@ -244,15 +244,10 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.white,
   },
   grey: createColorScheme('grey', { foreground: colors.grey[250] }),
-  green: createColorScheme('green'),
-  orange: createColorScheme('orange', {
-    background: colors.black,
-    foregroundHover: colors.black,
-    foregroundActive: colors.black,
-    foregroundFocus: colors.black,
-    foregroundFocusWithin: colors.black,
-    foregroundDisabled: colors.black,
+  green: createColorScheme('green', {
+    background: colors.white,
   }),
+  orange: createColorScheme('orange'),
   pink: createColorScheme('pink'),
   red: {
     foreground: colors.red[200],
@@ -294,11 +289,6 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: undefined,
   },
   yellow: createColorScheme('yellow', {
-    background: colors.black,
-    foregroundHover: colors.black,
-    foregroundActive: colors.black,
-    foregroundFocus: colors.black,
-    foregroundFocusWithin: colors.black,
-    foregroundDisabled: colors.black,
+    background: colors.yellow[100],
   }),
 }

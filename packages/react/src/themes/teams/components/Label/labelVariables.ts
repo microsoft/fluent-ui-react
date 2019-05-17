@@ -11,23 +11,27 @@ export interface LabelVariables {
   height: string
 }
 
-export default (siteVars: SiteVariablesPrepared): LabelVariables => {
-  const originalColorScheme = siteVars.colorScheme
-  const invertedColorScheme = Object.keys(originalColorScheme).reduce((accumulator, key) => {
-    const foreground = originalColorScheme[key].foreground
-    const background = originalColorScheme[key].background
+export const invertColorScheme = colorScheme => {
+  return Object.keys(colorScheme).reduce((accumulator, key) => {
+    const foreground = colorScheme[key].foreground
+    const background = colorScheme[key].background
     return {
       ...accumulator,
       [key]: {
-        ...originalColorScheme[key],
+        ...colorScheme[key],
         foreground: background,
         background: foreground,
       },
     }
   }, {})
+}
+
+export default (siteVars: SiteVariablesPrepared): LabelVariables => {
+  const invertedColorScheme = invertColorScheme(siteVars.colorScheme)
 
   return {
     colorScheme: extendColorScheme(invertedColorScheme, {
+      // TODO use here some color scheme values, after the designs are delivered
       default: {
         foreground: 'rgba(0, 0, 0, 0.6)',
         background: 'rgb(232, 232, 232)',
