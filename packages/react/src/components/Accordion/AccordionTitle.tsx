@@ -30,20 +30,20 @@ export interface AccordionTitleProps
   extends UIComponentProps,
     ContentComponentProps,
     ChildrenComponentProps {
+  /** Id of the content it owns. */
+  accordionContentId?: string
+
   /** Whether or not the title is in the open state. */
   active?: boolean
 
   /** If at least one panel needs to stay active and this title does not correspond to the last active one. */
   canBeCollapsed?: boolean
 
-  /** Id of the content it owns. */
-  contentId?: string
-
   /** AccordionTitle index inside Accordion. */
   index?: number
 
-  /** Ref to the button. */
-  buttonRef: React.Ref<HTMLElement>
+  /** Ref to the clickable element that contains the title. */
+  contentRef: React.Ref<HTMLElement>
 
   /**
    * Called on click.
@@ -75,10 +75,10 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
+    accordionContentId: PropTypes.string,
     active: PropTypes.bool,
-    buttonRef: customPropTypes.ref,
+    contentRef: customPropTypes.ref,
     canBeCollapsed: PropTypes.bool,
-    contentId: PropTypes.string,
     index: PropTypes.number,
     onClick: PropTypes.func,
     indicator: customPropTypes.itemShorthand,
@@ -106,11 +106,11 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
   }
 
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
-    const { buttonRef, children, content, indicator, active } = this.props
+    const { contentRef, children, content, indicator, active } = this.props
     const indicatorWithDefaults = indicator === undefined ? {} : indicator
 
     const contentElement = (
-      <Ref innerRef={buttonRef}>
+      <Ref innerRef={contentRef}>
         <Box
           onFocus={this.handleFocus}
           onClick={this.handleClick}

@@ -19,6 +19,9 @@ export interface AccordionContentProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
+  /** Id of the title it belongs to. */
+  accordionTitleId?: string
+
   /** Whether or not the content is visible. */
   active?: boolean
 
@@ -29,9 +32,6 @@ export interface AccordionContentProps
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<AccordionContentProps>
-
-  /** Id of the title it belongs to. */
-  titleId?: string
 }
 
 class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, any> {
@@ -43,9 +43,9 @@ class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, an
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
+    accordionTitleId: PropTypes.string,
     active: PropTypes.bool,
     onClick: PropTypes.func,
-    titleId: PropTypes.string,
   }
 
   static defaultProps = {

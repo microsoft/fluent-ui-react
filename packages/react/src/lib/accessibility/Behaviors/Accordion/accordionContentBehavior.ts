@@ -11,7 +11,7 @@ const accordionContentBehavior: Accessibility = (props: any) => {
   return {
     attributes: {
       root: {
-        'aria-labelledby': props.titleId,
+        'aria-labelledby': props.accordionTitleId,
       },
     },
   }

@@ -255,10 +255,10 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
       const { content, title } = panel
       const active = this.isIndexActive(index)
       const canBeCollapsed = this.isIndexActionable(index)
-      const buttonRef = React.createRef<HTMLElement>()
+      const contentRef = React.createRef<HTMLElement>()
       const titleId = title['id'] || _.uniqueId('accordion-title-')
       const contentId = content['id'] || _.uniqueId('accordion-content-')
-      this.itemRefs[index] = buttonRef
+      this.itemRefs[index] = contentRef
 
       children.push(
         AccordionTitle.create(title, {
@@ -266,10 +266,10 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
             className: Accordion.slotClassNames.title,
             active,
             index,
-            buttonRef,
+            contentRef,
             canBeCollapsed,
             id: titleId,
-            contentId,
+            accordionContentId: contentId,
           },
           overrideProps: this.handleTitleOverrides,
           render: renderPanelTitle,
@@ -281,7 +281,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
             className: Accordion.slotClassNames.content,
             active,
             id: contentId,
-            titleId,
+            accordionTitleId: titleId,
           },
           render: renderPanelContent,
         }),

@@ -11,7 +11,7 @@ describe('AccordionTitle', () => {
       onClick: `.${AccordionTitle.slotClassNames.button}`,
     },
     requiredProps: {
-      buttonRef: _.noop,
+      contentRef: _.noop,
     },
   })
 
@@ -20,7 +20,7 @@ describe('AccordionTitle', () => {
       handlesAccessibility(AccordionTitle, {
         requiredProps: {
           as: 'h3',
-          buttonRef: _.noop,
+          contentRef: _.noop,
         },
         defaultRootRole: undefined,
       })
@@ -28,7 +28,7 @@ describe('AccordionTitle', () => {
     describe('div header', () => {
       handlesAccessibility(AccordionTitle, {
         requiredProps: {
-          buttonRef: _.noop,
+          contentRef: _.noop,
         },
         defaultRootRole: 'heading',
       })
@@ -38,7 +38,7 @@ describe('AccordionTitle', () => {
       test('is set to true, if active and cannot be collapsed', () => {
         const renderedComponent = mountWithProviderAndGetComponent(
           AccordionTitle,
-          <AccordionTitle active canBeCollapsed={false} buttonRef={_.noop} />,
+          <AccordionTitle active canBeCollapsed={false} contentRef={_.noop} />,
         )
         expect(
           getRenderedAttribute(
@@ -52,7 +52,7 @@ describe('AccordionTitle', () => {
       test('is set to false, if active and can be collapsed', () => {
         const renderedComponent = mountWithProviderAndGetComponent(
           AccordionTitle,
-          <AccordionTitle active canBeCollapsed buttonRef={_.noop} />,
+          <AccordionTitle active canBeCollapsed contentRef={_.noop} />,
         )
         expect(
           getRenderedAttribute(
@@ -66,7 +66,7 @@ describe('AccordionTitle', () => {
       test('is set to false, if not active', () => {
         const renderedComponent = mountWithProviderAndGetComponent(
           AccordionTitle,
-          <AccordionTitle buttonRef={_.noop} />,
+          <AccordionTitle contentRef={_.noop} />,
         )
         expect(
           getRenderedAttribute(
@@ -82,7 +82,7 @@ describe('AccordionTitle', () => {
       test('is set to true, if actived', () => {
         const renderedComponent = mountWithProviderAndGetComponent(
           AccordionTitle,
-          <AccordionTitle buttonRef={_.noop} active />,
+          <AccordionTitle contentRef={_.noop} active />,
         )
         expect(
           getRenderedAttribute(
@@ -96,7 +96,7 @@ describe('AccordionTitle', () => {
       test('is set to true, if actived', () => {
         const renderedComponent = mountWithProviderAndGetComponent(
           AccordionTitle,
-          <AccordionTitle buttonRef={_.noop} />,
+          <AccordionTitle contentRef={_.noop} />,
         )
         expect(
           getRenderedAttribute(
@@ -112,7 +112,7 @@ describe('AccordionTitle', () => {
       test('takes the value of the contentId', () => {
         const renderedComponent = mountWithProviderAndGetComponent(
           AccordionTitle,
-          <AccordionTitle buttonRef={_.noop} contentId={'nice-contentId'} />,
+          <AccordionTitle contentRef={_.noop} accordionContentId={'nice-contentId'} />,
         )
         expect(
           getRenderedAttribute(
@@ -128,7 +128,7 @@ describe('AccordionTitle', () => {
       test('is always `0`', () => {
         const renderedComponent = mountWithProviderAndGetComponent(
           AccordionTitle,
-          <AccordionTitle buttonRef={_.noop} />,
+          <AccordionTitle contentRef={_.noop} />,
         )
         expect(
           getRenderedAttribute(
