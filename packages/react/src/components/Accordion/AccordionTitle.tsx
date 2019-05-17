@@ -23,7 +23,7 @@ import { accordionTitleBehavior } from '../../lib/accessibility'
 import { AccessibilityActionHandlers } from 'src/lib/accessibility/types'
 
 export interface AccordionTitleSlotClassNames {
-  button: string
+  content: string
 }
 
 export interface AccordionTitleProps
@@ -114,7 +114,7 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
         <Box
           onFocus={this.handleFocus}
           onClick={this.handleClick}
-          className={AccordionTitle.slotClassNames.button}
+          className={AccordionTitle.slotClassNames.content}
           {...accessibility.attributes.button}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.button, unhandledProps)}
         >
@@ -148,7 +148,7 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
 AccordionTitle.create = createShorthandFactory({ Component: AccordionTitle, mappedProp: 'content' })
 
 AccordionTitle.slotClassNames = {
-  button: `${AccordionTitle.className}__button`,
+  content: `${AccordionTitle.className}__content`,
 }
 
 /**

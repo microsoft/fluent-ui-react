@@ -12,7 +12,7 @@ import * as keyboardKey from 'keyboard-key'
  * Adds attribute 'role=button' to 'button' component's part.
  * Adds attribute 'tabIndex=0' to 'button' component's part.
  * Adds attribute 'aria-expanded=true' based on the property 'active' to 'button' component's part.
- * Adds attribute 'aria-controls=content-id' based on the property 'contentId' to 'button' component's part.
+ * Adds attribute 'aria-controls=content-id' based on the property 'accordionContentId' to 'button' component's part.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'button'.
  */
 const accordionTitleBehavior: Accessibility = (props: any) => {

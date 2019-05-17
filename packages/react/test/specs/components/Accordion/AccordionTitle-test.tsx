@@ -8,7 +8,7 @@ import { mountWithProviderAndGetComponent } from 'test/utils'
 describe('AccordionTitle', () => {
   isConformant(AccordionTitle, {
     eventTargets: {
-      onClick: `.${AccordionTitle.slotClassNames.button}`,
+      onClick: `.${AccordionTitle.slotClassNames.content}`,
     },
     requiredProps: {
       contentRef: _.noop,
@@ -44,7 +44,7 @@ describe('AccordionTitle', () => {
           getRenderedAttribute(
             renderedComponent,
             'aria-disabled',
-            `.${AccordionTitle.slotClassNames.button}`,
+            `.${AccordionTitle.slotClassNames.content}`,
           ),
         ).toBe('true')
       })
@@ -58,7 +58,7 @@ describe('AccordionTitle', () => {
           getRenderedAttribute(
             renderedComponent,
             'aria-disabled',
-            `.${AccordionTitle.slotClassNames.button}`,
+            `.${AccordionTitle.slotClassNames.content}`,
           ),
         ).toBe('false')
       })
@@ -72,7 +72,7 @@ describe('AccordionTitle', () => {
           getRenderedAttribute(
             renderedComponent,
             'aria-disabled',
-            `.${AccordionTitle.slotClassNames.button}`,
+            `.${AccordionTitle.slotClassNames.content}`,
           ),
         ).toBe('false')
       })
@@ -88,7 +88,7 @@ describe('AccordionTitle', () => {
           getRenderedAttribute(
             renderedComponent,
             'aria-expanded',
-            `.${AccordionTitle.slotClassNames.button}`,
+            `.${AccordionTitle.slotClassNames.content}`,
           ),
         ).toBe('true')
       })
@@ -102,7 +102,7 @@ describe('AccordionTitle', () => {
           getRenderedAttribute(
             renderedComponent,
             'aria-expanded',
-            `.${AccordionTitle.slotClassNames.button}`,
+            `.${AccordionTitle.slotClassNames.content}`,
           ),
         ).toBe('false')
       })
@@ -118,7 +118,7 @@ describe('AccordionTitle', () => {
           getRenderedAttribute(
             renderedComponent,
             'aria-controls',
-            `.${AccordionTitle.slotClassNames.button}`,
+            `.${AccordionTitle.slotClassNames.content}`,
           ),
         ).toBe('nice-contentId')
       })
@@ -134,7 +134,7 @@ describe('AccordionTitle', () => {
           getRenderedAttribute(
             renderedComponent,
             'tabindex',
-            `.${AccordionTitle.slotClassNames.button}`,
+            `.${AccordionTitle.slotClassNames.content}`,
           ),
         ).toBe('0')
       })
