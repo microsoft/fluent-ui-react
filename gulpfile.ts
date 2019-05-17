@@ -3,6 +3,7 @@ import * as path from 'path'
 import * as tsPaths from 'tsconfig-paths'
 
 import config from './config'
+
 const { compilerOptions } = require('./build/tsconfig.common.json')
 
 // add node_modules/.bin to the path so we can invoke .bin CLIs in tasks

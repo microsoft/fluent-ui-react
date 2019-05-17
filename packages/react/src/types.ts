@@ -103,18 +103,9 @@ type Extended<TFirst, TSecond> = { [K in keyof (TFirst & TSecond)]: ValueOf<TFir
  */
 type AsComponent<C, TProps> = { as: C } & TProps & { [K: string]: any } // & PropsOf<InstanceOf<C>>
 
-type CommonStaticProps =
-  | 'Group'
-  | 'Item'
-  | 'SelectedItem'
-  | 'Description'
-  | 'Message'
-  | 'Field'
-  | 'className'
-  | 'create'
-  | 'slotClassNames'
+type HoistedStaticPropsOf<T> =
+  | Exclude<keyof T, keyof React.ComponentType | 'prototype'>
   | 'displayName'
-  | 'isTypeOfElement'
 
 type Intersect<First extends string | number | symbol, Second extends string | number | symbol> = {
   [K in First]: K extends Second ? K : never
@@ -127,7 +118,8 @@ type PickProps<T, Props extends string | number | symbol> = {
 export const withSafeTypeForAs = function<
   TComponentType extends React.ComponentType,
   TProps,
-  TAs extends keyof JSX.IntrinsicElements = 'div'
+  TAs extends keyof JSX.IntrinsicElements = 'div',
+  TAdditionalProps extends keyof TComponentType = undefined
 >(componentType: TComponentType) {
   /**
    * TODO: introduce overload once TS compiler issue that leads to
@@ -143,7 +135,7 @@ export const withSafeTypeForAs = function<
   }
 
   return (componentType as any) as typeof overloadedComponentType &
-    PickProps<TComponentType, CommonStaticProps>
+    PickProps<TComponentType, HoistedStaticPropsOf<TComponentType>>
 }
 
 export type UNSAFE_TypedComponent<TComponentType, TProps> = React.FunctionComponent<

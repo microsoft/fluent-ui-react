@@ -7,8 +7,9 @@ import { argv } from 'yargs'
 import config from '../../../config'
 import sh from '../sh'
 
-const { paths } = config
 const g = require('gulp-load-plugins')()
+
+const { paths } = config
 const { log, PluginError } = g.util
 
 const packageName = (argv.package as string) || 'react'

@@ -9,6 +9,7 @@ import * as requestHttp from 'request-promise-native'
 import config from '../../../config'
 
 const g = require('gulp-load-plugins')()
+
 const { paths } = config
 const { log, PluginError } = g.util
 
