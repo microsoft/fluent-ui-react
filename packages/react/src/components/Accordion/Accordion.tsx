@@ -2,7 +2,6 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 
 import {
   AutoControlledComponent,
@@ -171,9 +170,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
   private handleNavigationFocus = (index: number) => {
     this.setState({ focusedIndex: index }, () => {
       const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
-      const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
-
-      targetDomNode && targetDomNode.focus()
+      targetComponent && targetComponent.focus()
     })
   }
 
