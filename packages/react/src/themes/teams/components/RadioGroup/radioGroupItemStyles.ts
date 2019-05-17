@@ -7,7 +7,7 @@ import { RadioGroupItemVariables } from './radioGroupItemVariables'
 import { pxToRem } from '../../../../lib'
 import Icon from '../../../../components/Icon/Icon'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
-import getIconFillOrOutlineStyles from 'src/themes/teams/getIconFillOrOutlineStyles'
+import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const restHoverFocusTextColor = textColor => ({
   color: textColor,
