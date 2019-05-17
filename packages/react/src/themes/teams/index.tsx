@@ -44,7 +44,7 @@ const circleIcon = declareSvg(({ classes }) => (
         className={cx(teamsIconClassNames.filled, classes.filledPart)}
         cx="16"
         cy="16"
-        r="7"
+        r="8"
       />
     </g>
   </svg>
