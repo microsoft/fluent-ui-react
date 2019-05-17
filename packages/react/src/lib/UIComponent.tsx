@@ -13,6 +13,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
   static defaultProps: { [key: string]: any }
   static displayName: string
   static className: string
+  static variantName?: string
 
   static contextType = ThemeContext
   static propTypes: any
@@ -27,6 +28,10 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
     }
 
     return this._handledPropsCache
+  }
+
+  static set handledProps(handledProps: string[]) {
+    this._handledPropsCache = handledProps
   }
 
   protected actionHandlers: AccessibilityActionHandlers
@@ -56,6 +61,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
         className: this.childClass.className,
         defaultProps: this.childClass.defaultProps,
         displayName: this.childClass.displayName,
+        variantName: (this.childClass as any).variantName || (this.props as any).variant,
         handledProps: this.childClass.handledProps,
         props: this.props,
         state: this.state,

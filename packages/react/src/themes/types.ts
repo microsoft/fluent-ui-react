@@ -285,6 +285,7 @@ export interface ThemeInput {
   siteVariables?: SiteVariablesInput
   componentVariables?: ThemeComponentVariablesInput
   componentStyles?: ThemeComponentStylesInput
+  componentVariants?: any
   rtl?: boolean
   renderer?: Renderer
   fontFaces?: FontFaces
@@ -305,6 +306,7 @@ export interface ThemePrepared {
   siteVariables: SiteVariablesPrepared
   componentVariables: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
   componentStyles: { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
+  componentVariants?: any
   icons: ThemeIcons
   rtl: boolean
   renderer: Renderer

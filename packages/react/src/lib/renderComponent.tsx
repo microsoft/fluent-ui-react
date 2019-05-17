@@ -16,6 +16,7 @@ import {
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
+  ComponentVariablesPrepared,
 } from '../themes/types'
 import { Props } from '../types'
 import {
@@ -49,6 +50,7 @@ export interface RenderConfig<P> {
   className?: string
   defaultProps?: { [key: string]: any }
   displayName: string
+  variantName?: string
   handledProps: string[]
   props: PropsWithVarsAndStyles
   state: State
@@ -137,6 +139,7 @@ const renderComponent = <P extends {}>(
     className,
     defaultProps,
     displayName,
+    variantName,
     handledProps,
     props,
     state,
@@ -155,24 +158,35 @@ const renderComponent = <P extends {}>(
     },
     componentVariables = {},
     componentStyles = {},
+    componentVariants = {},
     rtl = false,
     renderer = felaRenderer,
   } = theme || {}
   const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
+  const componentVariant =
+    componentVariants[displayName] && componentVariants[displayName][variantName]
 
   const stateAndProps = { ...state, ...props }
+
+  const variantVariables: ComponentVariablesPrepared =
+    componentVariant && componentVariant.variables ? componentVariant.variables : {}
 
   // Resolve variables for this component, allow props.variables to override
   const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
     componentVariables[displayName],
+    variantVariables,
     props.variables,
   )(siteVariables)
 
   const animationCSSProp = props.animation ? createAnimationStyles(props.animation, theme) : {}
 
+  const variantStyles: ComponentSlotStylesPrepared =
+    componentVariant && componentVariant.styles ? componentVariant.styles : {}
+
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
     componentStyles[displayName],
+    variantStyles,
     {
       root: props.styles,
     },
