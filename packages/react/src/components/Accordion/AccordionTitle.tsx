@@ -115,8 +115,8 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
           onFocus={this.handleFocus}
           onClick={this.handleClick}
           className={AccordionTitle.slotClassNames.content}
-          {...accessibility.attributes.button}
-          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.button, unhandledProps)}
+          {...accessibility.attributes.content}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.content, unhandledProps)}
         >
           <Layout
             start={Icon.create(indicatorWithDefaults, {
