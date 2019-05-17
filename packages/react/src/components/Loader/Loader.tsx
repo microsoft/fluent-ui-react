@@ -56,6 +56,9 @@ export interface LoaderState {
   visible: boolean
 }
 
+/**
+ * A loader alerts a user that content is being loaded or processed and they should wait for the activity to complete.
+ */
 class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
   static create: Function
   static displayName = 'Loader'
