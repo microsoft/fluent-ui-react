@@ -6,7 +6,7 @@ import { ThemeContext } from 'react-fela'
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/reactTypes'
 import { createShorthandFactory } from './factories'
-import { ObjectOf, ProviderContextPrepared } from '../types'
+import { ObjectOf, Omit, ProviderContextPrepared } from '../types'
 
 export interface CreateComponentConfig<P> {
   displayName: string
@@ -16,7 +16,7 @@ export interface CreateComponentConfig<P> {
   handledProps?: string[]
   propTypes?: React.WeakValidationMap<P>
   actionHandlers?: AccessibilityActionHandlers
-  render: (config: RenderResultConfig<P>, props: P) => React.ReactNode
+  render: (config: Omit<RenderResultConfig<P>, 'wrap'>, props: P) => React.ReactNode
 }
 
 export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
@@ -34,33 +34,26 @@ const createComponent = <P extends ObjectOf<any> = any>({
   actionHandlers,
   render,
 }: CreateComponentConfig<P>): CreateComponentReturnType<P> => {
-  const mergedDefaultProps = {
-    as: 'div',
-    ...(defaultProps as any),
-  }
-
   const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
     const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
-    return renderComponent(
-      {
-        className,
-        defaultProps,
-        displayName,
-        handledProps: _.keys(propTypes).concat(handledProps),
-        props,
-        state: {},
-        actionHandlers,
-        render: config => render(config, props),
-      },
+    const { wrap, ...config } = renderComponent<P>({
+      className,
+      displayName,
+      handledProps: _.keys(propTypes).concat(handledProps),
+      props,
+      state: {},
+      actionHandlers,
       context,
-    )
+    })
+
+    return wrap(render(config, props))
   }
 
   StardustComponent.className = className
 
   StardustComponent.create = createShorthandFactory({
-    Component: mergedDefaultProps.as,
+    Component: StardustComponent,
     mappedProp: shorthandPropName,
   })
 
@@ -68,7 +61,7 @@ const createComponent = <P extends ObjectOf<any> = any>({
 
   StardustComponent.propTypes = propTypes // TODO: generate prop types
 
-  StardustComponent.defaultProps = mergedDefaultProps
+  StardustComponent.defaultProps = defaultProps
 
   return StardustComponent
 }

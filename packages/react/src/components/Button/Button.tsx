@@ -21,6 +21,8 @@ import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import ButtonGroup from './ButtonGroup'
+import { createDialogManager } from '@stardust-ui/state'
+import createManager from '@stardust-ui/state/src/createManager'
 
 export interface ButtonProps
   extends UIComponentProps,
@@ -69,9 +71,12 @@ export interface ButtonProps
 
   /** A button can be formatted to show different levels of emphasis. */
   secondary?: boolean
+
+  stateManager
 }
 
 export interface ButtonState {
+  [key: string]: any
   isFromKeyboard: boolean
 }
 
@@ -105,6 +110,20 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   }
 
   static Group = ButtonGroup
+
+  stateManager = createManager({
+    actions: {
+      isFromKeyboard: val => (state, actions) => ({
+        isFromKeyboard: val,
+      }),
+    },
+
+    sideEffects: [
+      manager => {
+        this.setState(manager.state)
+      },
+    ],
+  })
 
   state = {
     isFromKeyboard: false,
@@ -173,7 +192,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
+    this.stateManager.actions.isFromKeyboard(isFromKeyboard())
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }

@@ -31,7 +31,7 @@ import { ObjectOf } from '../types'
  */
 export const mergeComponentStyles = (
   target: ComponentSlotStylesInput,
-  ...sources: (ComponentSlotStylesInput | null | undefined)[]
+  ...sources: (ComponentSlotStylesInput | null | undefined)[] | undefined
 ): ComponentSlotStylesPrepared => {
   const initial: ComponentSlotStylesPrepared = _.mapValues(target, partStyle => {
     return callable(partStyle)

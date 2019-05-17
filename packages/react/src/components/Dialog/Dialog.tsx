@@ -1,7 +1,7 @@
-import { Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { useStateManager } from '@stardust-ui/react-bindings'
+import { createDialogManager, DialogManagerFactory } from '@stardust-ui/state'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -9,52 +9,56 @@ import * as React from 'react'
 import {
   UIComponentProps,
   commonPropTypes,
+  ColorComponentProps,
   ContentComponentProps,
-  AutoControlledComponent,
   doesNodeContainClick,
   applyAccessibilityKeyHandlers,
-  getOrGenerateIdFromShorthand,
+  getUnhandledProps,
+  getElementType,
 } from '../../lib'
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { ComponentEventHandler, ShorthandValue } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
-import Header, { HeaderProps } from '../Header/Header'
-import Portal, { TriggerAccessibility } from '../Portal/Portal'
+import Header from '../Header/Header'
+import Portal from '../Portal/Portal'
 import Flex from '../Flex/Flex'
+import createComponent from 'src/lib/createComponent'
+import useStardust from '@stardust-ui/react-bindings/src/useStardust'
 
 export interface DialogSlotClassNames {
   header: string
-  headerAction: string
   content: string
-  overlay: string
 }
 
 export interface DialogProps
   extends UIComponentProps,
-    ContentComponentProps<ShorthandValue<BoxProps>> {
-  /** Accessibility behavior if overridden by the user. */
+    ContentComponentProps<ShorthandValue>,
+    ColorComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default dialogBehavior
+   */
   accessibility?: Accessibility
 
   /** A dialog can contain actions. */
-  actions?: ShorthandValue<BoxProps>
+  actions?: ShorthandValue
 
   /** A dialog can contain a cancel button. */
-  cancelButton?: ShorthandValue<ButtonProps>
+  cancelButton?: ShorthandValue
 
   /** A dialog can contain a confirm button. */
-  confirmButton?: ShorthandValue<ButtonProps>
+  confirmButton?: ShorthandValue
 
   /** Initial value for 'open'. */
   defaultOpen?: boolean
 
   /** A dialog can contain a header. */
-  header?: ShorthandValue<HeaderProps>
+  header?: ShorthandValue
 
-  /** A dialog can contain a button next to the header. */
-  headerAction?: ShorthandValue<ButtonProps>
+  stateManager: DialogManagerFactory
 
   /**
    * Called after user's click a cancel button.
@@ -81,7 +85,7 @@ export interface DialogProps
   open?: boolean
 
   /** A dialog can contain a overlay. */
-  overlay?: ShorthandValue<BoxProps>
+  overlay?: ShorthandValue
 
   /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value. */
   trapFocus?: true | FocusTrapZoneProps
@@ -90,245 +94,268 @@ export interface DialogProps
   trigger?: JSX.Element
 }
 
-export interface DialogState {
-  contentId?: string
-  headerId?: string
-  open?: boolean
+const slotClassNames: DialogSlotClassNames = {
+  header: `ui-dialog__header`,
+  content: `'ui-dialog__content`,
 }
 
-class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogState> {
-  static displayName = 'Dialog'
-  static className = 'ui-dialog'
+const Dialog: React.FC<DialogProps> = props => {
+  const {
+    actions,
+    confirmButton,
+    cancelButton,
+    content,
+    header,
+    overlay,
+    trapFocus,
+    trigger,
+    ...rest
+  } = props
 
-  static slotClassNames: DialogSlotClassNames
+  // TODO?: 1st Phase: Enable state, style and accessibility ONLY
+  // TODO?: 2nd Phase: Enable best practices
 
-  static propTypes = {
-    ...commonPropTypes.createCommon({
-      children: false,
-      content: 'shorthand',
-    }),
-    actions: customPropTypes.itemShorthand,
-    headerAction: customPropTypes.itemShorthand,
-    cancelButton: customPropTypes.itemShorthand,
-    confirmButton: customPropTypes.itemShorthand,
-    defaultOpen: PropTypes.bool,
-    header: customPropTypes.itemShorthand,
-    onCancel: PropTypes.func,
-    onConfirm: PropTypes.func,
-    onOpen: PropTypes.func,
-    open: PropTypes.bool,
-    overlay: customPropTypes.itemShorthand,
-    trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-    trigger: PropTypes.any,
-  }
+  const unhandledProps = getUnhandledProps([], props)
+  const ElementType = getElementType(props)
 
-  static defaultProps = {
-    accessibility: dialogBehavior,
-    actions: {},
-    overlay: {},
-    trapFocus: true,
-  }
+  // const manager = useStateManager(createDialogManager, {}) // optional second param config
+  // const { classes, styles } = useStyles('Dialog', { ...props, ...state })
 
-  static autoControlledProps = ['open']
+  const contentRef = React.useRef<HTMLElement>()
+  const triggerRef = React.useRef<HTMLElement>()
 
-  actionHandlers = {
-    closeAndFocusTrigger: e => {
-      this.handleDialogCancel(e)
-      e.stopPropagation()
+  // ---------------------------------------------------------
+  // TODO: Solve useStardust() and the smaller use*() hooks
+  //       Accessibility has a circular dep on manager due to actionHandlers
+  // TODO: Solve useStardust() and the smaller use*() hooks
+  //       Accessibility has a circular dep on manager due to actionHandlers
+  // TODO: Solve useStardust() and the smaller use*() hooks
+  //       Accessibility has a circular dep on manager due to actionHandlers
+  // TODO: Solve useStardust() and the smaller use*() hooks
+  //       Accessibility has a circular dep on manager due to actionHandlers
+  // TODO: Solve useStardust() and the smaller use*() hooks
+  //       Accessibility has a circular dep on manager due to actionHandlers
+  // TODO: Solve useStardust() and the smaller use*() hooks
+  //       Accessibility has a circular dep on manager due to actionHandlers
 
-      _.invoke(this.triggerRef, 'current.focus')
-    },
-    close: e => this.handleDialogCancel(e),
-  }
-  contentRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
-  overlayRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
-  triggerRef = React.createRef<HTMLElement>()
+  const { manager, accessibility, classes, styles } = useStardust<DialogProps>({
+    displayName: '',
+    props,
+    accessibilityBehavior: dialogBehavior,
+    autoControlledProps: ['open'],
 
-  getInitialAutoControlledState(): DialogState {
-    return {
-      open: false,
-    }
-  }
+    stateManager: createDialogManager,
 
-  static getAutoControlledStateFromProps(
-    props: DialogProps,
-    state: DialogState,
-  ): Partial<DialogState> {
-    return {
-      contentId: getOrGenerateIdFromShorthand('dialog-content-', props.content, state.contentId),
-      headerId: getOrGenerateIdFromShorthand('dialog-header-', props.header, state.headerId),
-    }
-  }
+    actionHandlers: {
+      closeAndFocusTrigger: e => {
+        handleDialogCancel2(e)
+        e.stopPropagation()
 
-  handleDialogCancel = (e: Event | React.SyntheticEvent) => {
-    _.invoke(this.props, 'onCancel', e, { ...this.props, open: false })
-    this.trySetState({ open: false })
-  }
-
-  handleDialogConfirm = (e: React.SyntheticEvent) => {
-    _.invoke(this.props, 'onConfirm', e, { ...this.props, open: false })
-    this.trySetState({ open: false })
-  }
-
-  handleDialogOpen = (e: React.SyntheticEvent) => {
-    _.invoke(this.props, 'onOpen', e, { ...this.props, open: true })
-    this.trySetState({ open: true })
-  }
-
-  handleCancelButtonOverrides = (predefinedProps: ButtonProps) => ({
-    onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
-      _.invoke(predefinedProps, 'onClick', e, buttonProps)
-      this.handleDialogCancel(e)
+        _.invoke(triggerRef, 'current.focus')
+      },
+      close: e => handleDialogCancel(e), // What we can do?
     },
   })
 
-  handleConfirmButtonOverrides = (predefinedProps: ButtonProps) => ({
+  const handleDialogCancel2 = (e: Event | React.SyntheticEvent) => {
+    _.invoke(props, 'onCancel', e, { ...props, open: false })
+    manager.actions.close()
+  }
+
+  // ---------------------------------------------------------
+
+  console.log('Dialog render props:', props.open)
+  // const manager = useStateManager(Dialog, createDialogManager, ['open'], props)
+  console.log('Dialog manager.state:', manager.state.open)
+
+  const handleDialogCancel = (e: Event | React.SyntheticEvent) => {
+    _.invoke(props, 'onCancel', e, { ...props, open: false })
+    manager.actions.close()
+  }
+
+  const handleDialogConfirm = (e: React.SyntheticEvent) => {
+    _.invoke(props, 'onConfirm', e, { ...props, open: false })
+    manager.actions.close()
+  }
+
+  const handleDialogOpen = (e: React.SyntheticEvent) => {
+    _.invoke(props, 'onOpen', e, { ...props, open: true })
+    manager.actions.open()
+  }
+
+  const handleCancelButtonOverrides = (predefinedProps: ButtonProps) => ({
     onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
       _.invoke(predefinedProps, 'onClick', e, buttonProps)
-      this.handleDialogConfirm(e)
+      handleDialogCancel(e)
     },
   })
 
-  handleOverlayClick = (e: MouseEvent) => {
-    // Dialog has different conditions to close than Popup, so we don't need to iterate across all
-    // refs
-    const isInsideContentClick = doesNodeContainClick(this.contentRef.current, e)
-    const isInsideOverlayClick = doesNodeContainClick(this.overlayRef.current, e)
+  const handleConfirmButtonOverrides = (predefinedProps: ButtonProps) => ({
+    onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+      _.invoke(predefinedProps, 'onClick', e, buttonProps)
+      handleDialogConfirm(e)
+    },
+  })
 
-    const shouldClose = !isInsideContentClick && isInsideOverlayClick
+  const handleOverlayOverrides = (content: JSX.Element) => (predefinedProps: BoxProps) => ({
+    content,
+    onClick: (e: React.SyntheticEvent, overlayProps: BoxProps) => {
+      _.invoke(predefinedProps, 'onClick', e, overlayProps)
 
-    if (shouldClose) {
-      this.handleDialogCancel(e)
-    }
-  }
+      if (!doesNodeContainClick(contentRef.current, e)) {
+        handleDialogCancel(e)
+      }
+    },
+  })
 
-  renderComponent({ accessibility, classes, ElementType, styles, unhandledProps }) {
-    const {
-      actions,
-      confirmButton,
-      cancelButton,
-      content,
-      header,
-      headerAction,
-      overlay,
-      trapFocus,
-      trigger,
-    } = this.props
-    const { open } = this.state
+  const accessibility = useAccessibility(
+    dialogBehavior,
+    { ...props, ...state },
+    {
+      actionHandlers: {
+        closeAndFocusTrigger: e => {
+          handleDialogCancel(e)
+          e.stopPropagation()
 
-    const dialogContent = (
-      <Ref innerRef={this.contentRef}>
-        <ElementType
-          className={classes.root}
-          {...accessibility.attributes.popup}
-          {...unhandledProps}
-          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
-        >
-          {Header.create(header, {
-            defaultProps: {
-              as: 'h2',
-              className: Dialog.slotClassNames.header,
-              styles: styles.header,
-              ...accessibility.attributes.header,
-            },
-          })}
-          {Button.create(headerAction, {
-            defaultProps: {
-              className: Dialog.slotClassNames.headerAction,
-              styles: styles.headerAction,
-              text: true,
-              iconOnly: true,
-              ...accessibility.attributes.headerAction,
-            },
-          })}
-          {Box.create(content, {
-            defaultProps: {
-              styles: styles.content,
-              className: Dialog.slotClassNames.content,
-              ...accessibility.attributes.content,
-            },
-          })}
+          _.invoke(triggerRef, 'current.focus')
+        },
+        close: e => handleDialogCancel(e), // What we can do?
+      },
+    },
+  )
 
-          {Box.create(actions, {
-            defaultProps: {
-              styles: styles.actions,
-            },
-            overrideProps: {
-              content: (
-                <Flex gap="gap.smaller" hAlign="end">
-                  {Button.create(cancelButton, {
-                    overrideProps: this.handleCancelButtonOverrides,
-                  })}
-                  {Button.create(confirmButton, {
-                    defaultProps: {
-                      primary: true,
-                    },
-                    overrideProps: this.handleConfirmButtonOverrides,
-                  })}
-                </Flex>
-              ),
-            },
-          })}
-        </ElementType>
-      </Ref>
-    )
-    const triggerAccessibility: TriggerAccessibility = {
-      attributes: accessibility.attributes.trigger,
-      keyHandlers: accessibility.keyHandlers.trigger,
-    }
-
-    return (
-      <Portal
-        onTriggerClick={this.handleDialogOpen}
-        open={open}
-        trapFocus={trapFocus}
-        trigger={trigger}
-        triggerAccessibility={triggerAccessibility}
-        triggerRef={this.triggerRef}
+  const dialogContent = (
+    <Ref innerRef={contentRef}>
+      <ElementType
+        className={classes.root}
+        {...sd.root.props}
+        // {...accessibility.attributes.popup}
+        // {...unhandledProps}
+        // {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
       >
-        <Unstable_NestingAuto>
-          {(getRefs, nestingRef) => (
-            <>
-              <Ref
-                innerRef={(contentNode: HTMLElement) => {
-                  this.overlayRef.current = contentNode
-                  nestingRef.current = contentNode
-                }}
-              >
-                {Box.create(overlay, {
+        {Header.create(header, {
+          defaultProps: {
+            as: 'h2',
+            ...sd.header.props,
+            className: cx(slotClassNames.header, sd.header.props.className),
+            styles: styles.header,
+            // ...accessibility.attributes.header,
+          },
+        })}
+        {Box.create(content, {
+          defaultProps: sd.content.props,
+          // defaultProps: {
+          //   styles: styles.content,
+          //   className: slotClassNames.content,
+          //   ...accessibility.attributes.content,
+          // },
+        })}
+
+        {Box.create(actions, {
+          defaultProps: {
+            styles: styles.actions,
+          },
+          overrideProps: {
+            content: (
+              <Flex gap="gap.smaller" hAlign="end">
+                {Button.create(cancelButton, { overrideProps: handleCancelButtonOverrides })}
+                {Button.create(confirmButton, {
                   defaultProps: {
-                    className: Dialog.slotClassNames.overlay,
-                    styles: styles.overlay,
+                    primary: true,
                   },
-                  overrideProps: { content: dialogContent },
+                  overrideProps: handleConfirmButtonOverrides,
                 })}
-              </Ref>
-              <EventListener
-                listener={this.handleOverlayClick}
-                targetRef={documentRef}
-                type="click"
-                capture
-              />
-            </>
-          )}
-        </Unstable_NestingAuto>
-      </Portal>
-    )
+              </Flex>
+            ),
+          },
+        })}
+      </ElementType>
+    </Ref>
+  )
+  const triggerAccessibility = {
+    attributes: accessibility.attributes.trigger,
+    keyHandlers: accessibility.keyHandlers.trigger,
   }
+
+  return (
+    <Portal
+      onTriggerClick={handleDialogOpen}
+      open={manager.state.open}
+      trapFocus={trapFocus}
+      trigger={trigger}
+      triggerAccessibility={triggerAccessibility}
+      triggerRef={triggerRef}
+    >
+      {Box.create(overlay, {
+        defaultProps: {
+          styles: styles.overlay,
+        },
+        overrideProps: handleOverlayOverrides(dialogContent),
+      })}
+    </Portal>
+  )
 }
 
-Dialog.slotClassNames = {
-  header: `${Dialog.className}__header`,
-  headerAction: `${Dialog.className}__headerAction`,
-  content: `${Dialog.className}__content`,
-  overlay: `${Dialog.className}__overlay`,
+// TODO: what to do with this?
+// TODO:  - not needed but useful, _meta :/
+// TODO:  - could be done wth some kind of generateClassName() somewhere higher up
+Dialog.className = 'ui-dialog'
+
+Dialog.displayName = 'Dialog'
+
+Dialog.propTypes = {
+  ...commonPropTypes.createCommon({
+    children: false,
+    content: 'shorthand',
+    color: true,
+  }),
+  actions: customPropTypes.itemShorthand,
+  cancelButton: customPropTypes.itemShorthand,
+  confirmButton: customPropTypes.itemShorthand,
+  defaultOpen: PropTypes.bool,
+  header: customPropTypes.itemShorthand,
+  onCancel: PropTypes.func,
+  onConfirm: PropTypes.func,
+  onOpen: PropTypes.func,
+  open: PropTypes.bool,
+  overlay: customPropTypes.itemShorthand,
+  trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  trigger: PropTypes.any,
+} as any
+
+Dialog.defaultProps = {
+  accessibility: dialogBehavior,
+  stateManager: createDialogManager,
+  actions: {},
+  overlay: {},
+  trapFocus: true,
 }
 
 /**
- * A Dialog displays important information on top of a page which usually requires user's attention, confirmation or interaction.
- * Dialogs are purposefully interruptive, so they should be used sparingly.
- *
- * @accessibility
- * Implements [ARIA Dialog (Modal)](https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal) design pattern.
+ * A Dialog indicates a possible user action.
  */
-export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)
+export default Dialog
+
+// export default class Dialog extends React.Component<DialogProps> {}
+
+const truncateSelectedItems = count => (prev, next, actions) => {
+  ///
+}
+
+const Dropdown = createComponent({
+  accessibility: () => {},
+  state: () => {},
+  style: () => {},
+  render: () => {},
+})
+
+const d = <Dropdown middleware={[truncateSelectedItems(5)]} styles={} accessibility={} />
+
+const dia = (
+  <Button
+    as="div"
+    onClick={() => {
+      console.log('hi')
+    }}
+  />
+)

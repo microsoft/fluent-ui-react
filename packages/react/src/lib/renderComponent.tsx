@@ -18,12 +18,7 @@ import {
   ThemePrepared,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import {
-  AccessibilityDefinition,
-  FocusZoneMode,
-  FocusZoneDefinition,
-  Accessibility,
-} from './accessibility/types'
+import { Accessibility, AccessibilityDefinition, FocusZoneMode } from './accessibility/types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
@@ -40,19 +35,22 @@ export interface RenderResultConfig<P> {
   accessibility: ReactAccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
+  wrap: RenderComponentCallback<P>
 }
 
-export type RenderComponentCallback<P> = (config: RenderResultConfig<P>) => any
+// TODO: can we rename?
+export type RenderComponentCallback<P> = (
+  children: React.ReactNode | React.ReactNodeArray,
+) => React.ReactElement<P>
 
 export interface RenderConfig<P> {
   className?: string
-  defaultProps?: { [key: string]: any }
   displayName: string
-  handledProps: string[]
+  handledProps?: string[]
   props: PropsWithVarsAndStyles
   state: State
   actionHandlers: AccessibilityActionHandlers
-  render: RenderComponentCallback<P>
+  context: ProviderContextPrepared
 }
 
 const emptyBehavior: ReactAccessibilityBehavior = {
@@ -61,17 +59,16 @@ const emptyBehavior: ReactAccessibilityBehavior = {
 }
 
 const getAccessibility = (
-  props: State & PropsWithVarsAndStyles & { accessibility?: Accessibility },
+  behavior: Accessibility,
+  props: State & PropsWithVarsAndStyles,
   actionHandlers: AccessibilityActionHandlers,
   isRtlEnabled: boolean,
 ): ReactAccessibilityBehavior => {
-  const { accessibility } = props
-
-  if (_.isNil(accessibility)) {
+  if (!behavior) {
     return emptyBehavior
   }
 
-  const definition: AccessibilityDefinition = accessibility(props)
+  const definition: AccessibilityDefinition = behavior(props)
   const keyHandlers = getKeyDownHandlers(actionHandlers, definition.keyActions, isRtlEnabled)
 
   return {
@@ -81,66 +78,15 @@ const getAccessibility = (
   }
 }
 
-/**
- * This function provides compile-time type checking for the following:
- * - if FocusZone implements FocusZone interface,
- * - if FocusZone properties extend FocusZoneProps, and
- * - if the passed properties extend FocusZoneProps.
- *
- * Should the FocusZone implementation change at any time, this function should provide a compile-time guarantee
- * that the new implementation is backwards compatible with the old implementation.
- */
-function wrapInGenericFocusZone<
-  COMPONENT_PROPS extends FocusZoneProps,
-  PROPS extends COMPONENT_PROPS,
-  COMPONENT extends FocusZone & React.Component<COMPONENT_PROPS>
->(
-  FocusZone: { new (...args: any[]): COMPONENT },
-  props: PROPS | undefined,
-  children: React.ReactNode,
-) {
-  props[FOCUSZONE_WRAP_ATTRIBUTE] = true
-  return <FocusZone {...props}>{children}</FocusZone>
-}
-
-const renderWithFocusZone = <P extends {}>(
-  render: RenderComponentCallback<P>,
-  focusZoneDefinition: FocusZoneDefinition,
-  config: RenderResultConfig<P>,
-): any => {
-  if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
-    return wrapInGenericFocusZone(
-      FocusZone,
-      {
-        ...focusZoneDefinition.props,
-        isRtl: config.rtl,
-      },
-      render(config),
-    )
-  }
-  if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
-    const originalElementType = config.ElementType
-    config.ElementType = FocusZone as any
-    config.unhandledProps = { ...config.unhandledProps, ...focusZoneDefinition.props }
-    config.unhandledProps.as = originalElementType
-    config.unhandledProps.isRtl = config.rtl
-  }
-  return render(config)
-}
-
-const renderComponent = <P extends {}>(
-  config: RenderConfig<P>,
-  context: ProviderContextPrepared,
-): React.ReactElement<P> => {
+const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultConfig<P> => {
   const {
     className,
-    defaultProps,
     displayName,
     handledProps,
     props,
     state,
     actionHandlers,
-    render,
+    context,
   } = config
 
   if (_.isEmpty(context)) {
@@ -157,7 +103,7 @@ const renderComponent = <P extends {}>(
     componentStyles = {},
   } = (context.theme as ThemePrepared) || {}
 
-  const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
+  const ElementType = getElementType(props) as React.ReactType<P>
 
   const stateAndProps = { ...state, ...props }
 
@@ -180,12 +126,13 @@ const renderComponent = <P extends {}>(
   )
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
+    props.accessibility,
     stateAndProps,
     actionHandlers,
     rtl,
   )
 
-  const unhandledProps = getUnhandledProps({ handledProps }, props)
+  const unhandledProps = getUnhandledProps(handledProps, props)
 
   const styleParam: ComponentStyleFunctionParam = {
     props: stateAndProps,
@@ -217,13 +164,33 @@ const renderComponent = <P extends {}>(
     accessibility,
     rtl,
     theme: context.theme,
+    wrap: (element: React.ReactElement<P>) => element,
   }
 
-  if (accessibility.focusZone) {
-    return renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
+  if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
+    resolvedConfig.wrap = children => (
+      <FocusZone
+        isRtl={resolvedConfig.rtl}
+        {...accessibility.focusZone.props}
+        {...{ [FOCUSZONE_WRAP_ATTRIBUTE]: true }}
+      >
+        {children}
+      </FocusZone>
+    )
   }
 
-  return render(resolvedConfig)
+  if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Embed) {
+    const originalElementType = resolvedConfig.ElementType
+    resolvedConfig.ElementType = FocusZone as any
+    resolvedConfig.unhandledProps = {
+      ...resolvedConfig.unhandledProps,
+      ...accessibility.focusZone.props,
+    }
+    resolvedConfig.unhandledProps.as = originalElementType
+    resolvedConfig.unhandledProps.isRtl = resolvedConfig.rtl
+  }
+
+  return resolvedConfig
 }
 
 export default renderComponent

@@ -77,10 +77,7 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
 
   render(): JSX.Element {
     const { className, forceFocusInsideTrapOnOutsideFocus, ariaLabelledBy } = this.props
-    const unhandledProps = getUnhandledProps(
-      { handledProps: [..._.keys(FocusTrapZone.propTypes)] },
-      this.props,
-    )
+    const unhandledProps = getUnhandledProps(_.keys(FocusTrapZone.propTypes), this.props)
     const ElementType = getElementType({ defaultProps: FocusTrapZone.defaultProps }, this.props)
 
     return (

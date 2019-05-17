@@ -13,7 +13,7 @@ const applyAccessibilityKeyHandlers = (
   const valIsPropsObject = _.isPlainObject(value)
   const valIsReactElement = React.isValidElement(value)
 
-  const slotProps =
+  const props =
     (valIsReactElement && (value as React.ReactElement<Props>).props) ||
     (valIsPropsObject && (value as Props)) ||
     {}
@@ -25,7 +25,7 @@ const applyAccessibilityKeyHandlers = (
       ...args: any[]
     ) => {
       accessibilityHandler(e)
-      _.invoke(slotProps, handleName, e, ...args)
+      _.invoke(props, handleName, e, ...args)
     },
   )
 }

@@ -5,11 +5,11 @@ import { ThemeContext } from 'react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/reactTypes'
+import { Omit } from '@stardust-ui/react'
 
 // TODO @Bugaa92: deprecated by createComponent.tsx
 class UIComponent<P, S = {}> extends React.Component<P, S> {
   readonly childClass = this.constructor as typeof UIComponent
-  static defaultProps: { [key: string]: any }
   static displayName: string
   static className: string
 
@@ -44,24 +44,22 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
     this.renderComponent = this.renderComponent.bind(this)
   }
 
-  renderComponent(config: RenderResultConfig<P>): React.ReactNode {
+  renderComponent(config: Omit<RenderResultConfig<P>, 'wrap'>): React.ReactNode {
     throw new Error('renderComponent is not implemented.')
   }
 
   render() {
-    return renderComponent(
-      {
-        className: this.childClass.className,
-        defaultProps: this.childClass.defaultProps,
-        displayName: this.childClass.displayName,
-        handledProps: this.childClass.handledProps,
-        props: this.props,
-        state: this.state,
-        actionHandlers: this.actionHandlers,
-        render: this.renderComponent,
-      },
-      this.context,
-    )
+    const { wrap, ...config } = renderComponent<P>({
+      className: this.childClass.className,
+      displayName: this.childClass.displayName,
+      handledProps: this.childClass.handledProps,
+      props: this.props,
+      state: this.state,
+      actionHandlers: this.actionHandlers,
+      context: this.context,
+    })
+
+    return wrap(this.renderComponent(config))
   }
 }
 

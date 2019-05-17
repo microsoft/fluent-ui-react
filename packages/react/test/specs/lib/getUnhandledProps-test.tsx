@@ -6,7 +6,7 @@ import { getUnhandledProps } from 'src/lib'
 // Then, we can test the props of the rendered result.
 // This is the intended usage of the util.
 const TestComponent: any = props => {
-  return <div {...getUnhandledProps(TestComponent, props)} />
+  return <div {...getUnhandledProps(TestComponent.handledProps, props)} />
 }
 
 describe('getUnhandledProps', () => {
