@@ -22,13 +22,14 @@ export const extendColorScheme = (
   return result
 }
 
+// TODO add unit tests
 export function pickValuesFromColorScheme<T extends Partial<ComponentAreaName>>(
   colorScheme: ColorSchemeMapping,
-  componentAreaSubset: T[],
+  componentAreas: T[],
 ): ColorSchemeMapping<ColorScheme<T>> {
   let result = {}
   Object.keys(colorScheme).forEach(color => {
-    const colorValues = componentAreaSubset.reduce((accumulator, area) => {
+    const colorValues = componentAreas.reduce((accumulator, area) => {
       return {
         ...accumulator,
         [area]: colorScheme[color][area],
