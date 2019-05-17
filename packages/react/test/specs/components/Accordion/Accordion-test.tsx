@@ -87,8 +87,9 @@ describe('Accordion', () => {
       const wrapper = mountWithProvider(<Accordion panels={panels} exclusive />)
       const accordion = wrapper.find(Accordion)
       getTitleButtonAtIndex(wrapper, 0).simulate('click')
-      getTitleButtonAtIndex(wrapper, 2).simulate('click')
+      expect(accordion.state('activeIndex')).toEqual(0)
 
+      getTitleButtonAtIndex(wrapper, 2).simulate('click')
       expect(accordion.state('activeIndex')).toEqual(2)
     })
 
@@ -190,11 +191,10 @@ describe('Accordion', () => {
   describe('panels', () => {
     it('when clicked call onClick and onTitleClick if provided by the user', () => {
       const onTitleClick = jest.fn()
-      const onClick = jest.fn()
       const panels = [
         {
           key: 'one',
-          title: { key: 'oneTitle', content: 'One', onClick },
+          title: 'One',
           content: '2 3 4',
         },
       ]
@@ -202,22 +202,6 @@ describe('Accordion', () => {
       getTitleButtonAtIndex(wrapper, 0).simulate('click')
 
       expect(onTitleClick).toBeCalledTimes(1)
-      expect(onClick).toBeCalledTimes(1)
-    })
-
-    it('when focused call onFocus if provided by the user', () => {
-      const onFocus = jest.fn()
-      const panels = [
-        {
-          key: 'one',
-          title: { key: 'oneTitle', content: 'One', onFocus },
-          content: '2 3 4',
-        },
-      ]
-      const wrapper = mountWithProvider(<Accordion panels={panels} />)
-      getTitleButtonAtIndex(wrapper, 0).simulate('focus')
-
-      expect(onFocus).toBeCalledTimes(1)
     })
   })
 
