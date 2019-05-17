@@ -220,11 +220,14 @@ export const colorScheme: ColorSchemeMapping = {
     foreground1: colors.grey[500],
     foreground2: colors.grey[450],
     foreground3: colors.white,
+    foreground4: colors.white,
+    foreground5: colors.grey[200],
 
     background: colors.white,
     background1: colors.grey[50],
     background2: colors.grey[100],
     background3: colors.grey[150],
+    background4: colors.grey[500],
 
     border: colors.grey[200], // buttons
     border1: colors.grey[150],
@@ -421,7 +424,45 @@ export const colorScheme: ColorSchemeMapping = {
   green: createColorScheme('green'),
   orange: createColorScheme('orange', lightColorOverrides),
   pink: createColorScheme('pink'),
-  red: createColorScheme('red'),
+  red: {
+    foreground: colors.red[400],
+    foreground1: colors.white,
+    foreground2: colors.white,
+
+    background: colors.red[400],
+    background1: colors.red[50],
+    background2: colors.ruby[500],
+    background3: colors.red[400],
+
+    border: colors.red[100],
+
+    shadow: undefined,
+
+    foregroundHover: colors.white,
+    backgroundHover: colors.ruby[600],
+    borderHover: undefined,
+    shadowHover: undefined,
+
+    foregroundActive: undefined,
+    backgroundActive: undefined,
+    borderActive: undefined,
+    shadowActive: undefined,
+
+    foregroundFocus: undefined,
+    backgroundFocus: undefined,
+    borderFocus: undefined,
+    shadowFocus: undefined,
+
+    foregroundPressed: colors.white,
+    backgroundPressed: colors.ruby[600],
+    borderPressed: undefined,
+    shadowPressed: undefined,
+
+    foregroundDisabled: undefined,
+    backgroundDisabled: undefined,
+    borderDisabled: undefined,
+    shadowDisabled: undefined,
+  },
   yellow: createColorScheme('yellow', lightColorOverrides),
 }
 

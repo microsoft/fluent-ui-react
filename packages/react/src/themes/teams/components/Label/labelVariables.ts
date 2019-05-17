@@ -9,20 +9,34 @@ export interface LabelVariables {
   startPaddingLeft: string
   endPaddingRight: string
   height: string
-  iconColor: string
 }
 
 export default (siteVars: SiteVariablesPrepared): LabelVariables => {
-  const color = 'rgba(0, 0, 0, 0.6)'
+  const originalColorScheme = siteVars.colorScheme
+  const invertedColorScheme = Object.keys(originalColorScheme).reduce((accumulator, key) => {
+    const foreground = originalColorScheme[key].foreground
+    const background = originalColorScheme[key].background
+    return {
+      ...accumulator,
+      [key]: {
+        ...originalColorScheme[key],
+        foreground: background,
+        background: foreground,
+      },
+    }
+  }, {})
 
   return {
-    colorScheme: extendColorScheme(siteVars.colorScheme, {
+    colorScheme: extendColorScheme(invertedColorScheme, {
       default: {
-        background: color,
-        foreground: 'rgb(232, 232, 232)',
+        foreground: 'rgba(0, 0, 0, 0.6)',
+        background: 'rgb(232, 232, 232)',
       },
       brand: {
-        background: siteVars.colorScheme.brand.foreground4,
+        foreground: siteVars.colorScheme.brand.foreground4,
+      },
+      red: {
+        foreground: siteVars.colorScheme.red.foreground1,
       },
     }),
     circularRadius: pxToRem(9999),
@@ -30,8 +44,5 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
     startPaddingLeft: '0px',
     endPaddingRight: '0px',
     height: pxToRem(20),
-
-    // variables for 'icon' part
-    iconColor: color,
   }
 }

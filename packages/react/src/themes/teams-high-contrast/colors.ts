@@ -48,11 +48,14 @@ export const colorScheme: ColorSchemeMapping = {
     foreground1: colors.white,
     foreground2: colors.white,
     foreground3: colors.white,
+    foreground4: colors.black,
+    foreground5: colors.white,
 
     background: colors.black,
     background1: colors.black,
     background2: colors.black,
     background3: colors.black,
+    background4: colors.white,
 
     border: colors.white,
     border1: colors.white,
@@ -189,6 +192,44 @@ export const colorScheme: ColorSchemeMapping = {
   green: createColorScheme(),
   orange: createColorScheme(),
   pink: createColorScheme(),
-  red: createColorScheme(),
+  red: {
+    foreground: colors.white,
+    foreground1: colors.black,
+    foreground2: colors.black,
+
+    background: colors.white,
+    background1: colors.white,
+    background2: colors.black,
+    background3: colors.white,
+
+    border: colors.white,
+
+    shadow: undefined,
+
+    foregroundHover: colors.black,
+    backgroundHover: accessibleYellow,
+    borderHover: undefined,
+    shadowHover: undefined,
+
+    foregroundActive: undefined,
+    backgroundActive: undefined,
+    borderActive: undefined,
+    shadowActive: undefined,
+
+    foregroundFocus: undefined,
+    backgroundFocus: undefined,
+    borderFocus: undefined,
+    shadowFocus: undefined,
+
+    foregroundPressed: colors.black,
+    backgroundPressed: accessibleYellow,
+    borderPressed: undefined,
+    shadowPressed: undefined,
+
+    foregroundDisabled: undefined,
+    backgroundDisabled: undefined,
+    borderDisabled: undefined,
+    shadowDisabled: undefined,
+  },
   yellow: createColorScheme(),
 }
