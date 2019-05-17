@@ -7,7 +7,6 @@ export default (siteVars: any): Partial<ChatMessageVariables> => {
     authorColor: siteVars.colors.white,
     contentColor: siteVars.colors.white,
     color: siteVars.colors.white,
-    contentFocusOutlineColor: siteVars.colors.yellow[900], // Red flag (should this be accessibleYellow?)
     border: `1px solid ${siteVars.colors.white}`,
     hasMentionColor: siteVars.accessibleYellow,
     hasMentionNubbinColor: siteVars.accessibleYellow,

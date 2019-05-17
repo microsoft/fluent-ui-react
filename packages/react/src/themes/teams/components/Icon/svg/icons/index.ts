@@ -91,6 +91,7 @@ import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
 import phoneArrow from './phoneArrow'
 import play from './play'
+import qna from './qna'
 import quote from './quote'
 import readAloud from './read-aloud'
 import redbang from './redbang'
@@ -122,6 +123,7 @@ import urgent from './urgent'
 import userBlur from './userBlur'
 import userFriends from './userFriends'
 import videoCameraEmphasis from './videoCameraEmphasis'
+import yammer from './yammer'
 
 export default {
   accept,
@@ -208,6 +210,7 @@ export default {
   'phone-clock': phoneClock,
   'phone-arrow': phoneArrow,
   play,
+  qna,
   quote,
   'read-aloud': readAloud,
   redbang,
@@ -238,6 +241,7 @@ export default {
   'user-blur': userBlur,
   'user-friends': userFriends,
   'video-camera-emphasis': videoCameraEmphasis,
+  yammer,
 
   // Office icons
   word: filesWord,

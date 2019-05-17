@@ -91,6 +91,9 @@ export interface DialogState {
   open?: boolean
 }
 
+/**
+ * A Dialog informs users about specific tasks or may contain critical information, require decisions, or involve multiple interactions.
+ */
 class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogState> {
   static displayName = 'Dialog'
   static className = 'ui-dialog'
