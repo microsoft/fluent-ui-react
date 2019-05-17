@@ -22,7 +22,6 @@ export const extendColorScheme = (
   return result
 }
 
-// TODO add unit tests
 export function pickValuesFromColorScheme<T extends Partial<ComponentAreaName>>(
   colorScheme: ColorSchemeMapping,
   componentAreas: T[],
