@@ -5,19 +5,8 @@ export interface DialogVariables extends BaseDialogVariables {
   boxShadow: string
   foregroundColor: string
 
-  rootBackground: string
-  rootBorderRadius: string
-  rootPadding: string
-  rootWidth: string
-
-  contentMargin: string
-
   headerFontSize: string
   headerFontWeight: number
-  headerMargin: string
-
-  overlayBackground: string
-  overlayZIndex: number
 }
 
 export default (siteVariables): DialogVariables => ({
