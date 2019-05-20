@@ -20,7 +20,7 @@ import Icon from '../Icon/Icon'
 import Layout from '../Layout/Layout'
 import Box from '../Box/Box'
 import { accordionTitleBehavior } from '../../lib/accessibility'
-import { AccessibilityActionHandlers } from 'src/lib/accessibility/types'
+import { AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
 export interface AccordionTitleSlotClassNames {
   content: string
