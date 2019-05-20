@@ -105,6 +105,7 @@ import send from './send'
 import settings from './settings'
 import callControlCloseTray from './callControlCloseTray'
 import star from './star'
+import stardustCircle from './stardustCircle'
 import sticker from './sticker'
 import strike from './strike'
 import table from './table'
@@ -126,6 +127,8 @@ import videoCameraEmphasis from './videoCameraEmphasis'
 import yammer from './yammer'
 
 export default {
+  'stardust-circle': stardustCircle,
+
   accept,
   add,
   'arrow-up': arrowUp,
