@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Aligned focus styles for `Chat.Message` component with latest Teams theme design @Bugaa92 ([#1269](https://github.com/stardust-ui/react/pull/1269))
 - Fix styles for `fill` prop of `Flex` @kuzhelov ([#1352](https://github.com/stardust-ui/react/pull/1352))
 - FontAwesome icons is not part of Teams theme more @layershifter ([#1337](https://github.com/stardust-ui/react/pull/1337))
+- Replace `react-popper` package with custom `Popper` component @Bugaa92 ([#1358](https://github.com/stardust-ui/react/pull/1358))
 
 ### Fixes
 - Fixed `Flex.Item` children prop type @mnajdova ([#1320](https://github.com/stardust-ui/react/pull/1320))
