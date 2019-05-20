@@ -52,10 +52,10 @@ export interface PopupContentProps
   pointing?: boolean
 
   /** A ref to a pointer element. */
-  pointerRef?: React.RefObject<Element>
+  pointerRef?: React.Ref<Element>
 }
 
-class PopupContent extends UIComponent<WithAsProp<PopupContentProps>, any> {
+class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
   public static create: Function
 
   public static displayName = 'PopupContent'
