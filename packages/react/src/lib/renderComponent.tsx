@@ -16,7 +16,8 @@ import {
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
-  ComponentVariablesPrepared,
+  ComponentSlotStylesInput,
+  ComponentVariablesInput,
 } from '../themes/types'
 import { Props } from '../types'
 import {
@@ -168,7 +169,7 @@ const renderComponent = <P extends {}>(
 
   const stateAndProps = { ...state, ...props }
 
-  const variantVariables: ComponentVariablesPrepared =
+  const variantVariables: ComponentVariablesInput =
     componentVariant && componentVariant.variables ? componentVariant.variables : {}
 
   // Resolve variables for this component, allow props.variables to override
@@ -180,7 +181,7 @@ const renderComponent = <P extends {}>(
 
   const animationCSSProp = props.animation ? createAnimationStyles(props.animation, theme) : {}
 
-  const variantStyles: ComponentSlotStylesPrepared =
+  const variantStyles: ComponentSlotStylesInput =
     componentVariant && componentVariant.styles ? componentVariant.styles : {}
 
   // Resolve styles using resolved variables, merge results, allow props.styles to override

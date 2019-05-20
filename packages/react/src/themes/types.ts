@@ -285,7 +285,7 @@ export interface ThemeInput {
   siteVariables?: SiteVariablesInput
   componentVariables?: ThemeComponentVariablesInput
   componentStyles?: ThemeComponentStylesInput
-  componentVariants?: any
+  componentVariants?: ThemeComponentVariants
   rtl?: boolean
   renderer?: Renderer
   fontFaces?: FontFaces
@@ -306,7 +306,7 @@ export interface ThemePrepared {
   siteVariables: SiteVariablesPrepared
   componentVariables: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
   componentStyles: { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
-  componentVariants?: any
+  componentVariants?: ThemeComponentVariants
   icons: ThemeIcons
   rtl: boolean
   renderer: Renderer
@@ -362,6 +362,11 @@ export interface ThemeComponentStylesInput {
   TreeItem?: ComponentSlotStylesInput
   TreeTitle?: ComponentSlotStylesInput
   Video?: ComponentSlotStylesInput
+}
+
+export type ComponentVariant = {
+  styles?: ComponentSlotStylesInput
+  variables?: ComponentVariablesInput
 }
 
 export interface ThemeComponentStylesPrepared {
@@ -505,6 +510,9 @@ export interface ThemeComponentVariablesPrepared {
   TreeItem?: ComponentVariablesPrepared
   TreeTitle?: ComponentVariablesPrepared
   Video?: ComponentVariablesPrepared
+}
+export type ThemeComponentVariants = {
+  [componentName: string]: { [variantName: string]: ComponentVariant }
 }
 
 export interface Renderer extends FelaRenderer {}

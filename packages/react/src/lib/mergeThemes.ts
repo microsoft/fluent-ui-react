@@ -17,6 +17,7 @@ import {
   ThemeIcons,
   ComponentSlotStyle,
   ThemeAnimation,
+  ThemeComponentVariants,
 } from '../themes/types'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
@@ -161,8 +162,38 @@ export const mergeThemeStyles = (
   }, initial)
 }
 
-export const mergeComponentVariants = (target: any = {}, ...sources: any[]) => {
-  return sources.reduce((acc, next) => ({ ...acc, ...next }), target)
+export const mergeComponentVariants = (
+  target: ThemeComponentVariants = {},
+  ...sources: (ThemeComponentVariants | null | undefined)[]
+): ThemeComponentVariants => {
+  return sources.reduce((acc, next) => {
+    if (!next) {
+      return acc
+    }
+
+    Object.keys(next).forEach(componentName => {
+      Object.keys(next[componentName]).forEach(variantName => {
+        if (!acc[componentName]) {
+          acc[componentName] = next[componentName]
+        } else if (!acc[componentName][variantName]) {
+          acc[componentName][variantName] = next[componentName][variantName]
+        } else {
+          acc[componentName][variantName] = {
+            styles: mergeComponentStyles(
+              acc[componentName][variantName].styles,
+              next[componentName][variantName].styles,
+            ),
+            variables: mergeComponentVariables(
+              acc[componentName][variantName].variables,
+              next[componentName][variantName].variables,
+            ),
+          }
+        }
+      })
+    })
+
+    return acc
+  }, target)
 }
 
 export const mergeRTL = (target, ...sources) => {
