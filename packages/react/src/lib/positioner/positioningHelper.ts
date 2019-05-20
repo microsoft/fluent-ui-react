@@ -1,6 +1,6 @@
 import { Placement } from 'popper.js'
 
-import { Alignment, Position } from './index'
+import { Alignment, Position } from './types'
 
 enum PlacementParts {
   top = 'top',

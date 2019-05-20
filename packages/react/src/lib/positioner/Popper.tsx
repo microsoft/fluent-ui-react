@@ -3,7 +3,7 @@ import PopperJS from 'popper.js'
 import { Ref } from '@stardust-ui/react-component-ref'
 
 import { getPlacement, applyRtlToOffset } from './positioningHelper'
-import { Alignment, Position } from './index'
+import { Alignment, Position } from './types'
 
 export interface PositionCommonProps {
   /** Alignment for the component. */
@@ -28,7 +28,7 @@ export interface PositionCommonProps {
   /**
    * Array of conditions to be met in order to trigger a subsequent render to reposition the elements.
    */
-  positioningDependencies?: any[]
+  positioningDependencies?: React.DependencyList
 }
 
 export interface PopperChildrenProps {
@@ -78,11 +78,6 @@ interface PopperProps extends PositionCommonProps {
    * Rtl attribute for the component.
    */
   rtl?: boolean
-
-  /**
-   * Array of conditions to be met in order to trigger a subsequent render to reposition the elements.
-   */
-  positioningDependencies?: any[]
 }
 
 /**
@@ -98,7 +93,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     pointerRef,
     position,
     positionFixed,
-    positioningDependencies,
+    positioningDependencies = [],
     rtl,
     targetRef,
   } = props
@@ -112,9 +107,20 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     proposedPlacement,
   )
 
+  const computedModifiers: PopperJS.Modifiers = React.useMemo(
+    () =>
+      offset && {
+        offset: { offset: rtl ? applyRtlToOffset(offset, position) : offset },
+        keepTogether: { enabled: false },
+      },
+    [rtl, offset, position],
+  )
+
   React.useEffect(
     () => {
       const handleUpdate = (data: PopperJS.Data) => {
+        // PopperJS performs computations that might update the computed placement: auto positioning, flipping the
+        // placement in case the popper box should be rendered at the edge of the viewport and does not fit
         if (data.placement !== latestPlacement.current) {
           latestPlacement.current = data.placement
           setComputedPlacement(data.placement)
@@ -127,10 +133,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
         eventsEnabled,
         positionFixed,
         modifiers: {
-          ...(offset && {
-            offset: { offset: rtl ? applyRtlToOffset(offset, position) : offset },
-            keepTogether: { enabled: false },
-          }),
+          ...computedModifiers,
           ...modifiers,
           arrow: {
             enabled: !!pointerRefElement,
@@ -144,22 +147,22 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       popperRef.current = new PopperJS(targetRef.current, contentRef.current, options)
       return () => popperRef.current.destroy()
     },
-    [eventsEnabled, modifiers, offset, position, positionFixed, rtl, proposedPlacement],
+    [computedModifiers, eventsEnabled, modifiers, positionFixed, proposedPlacement],
   )
 
   React.useEffect(
     () => {
       popperRef.current.scheduleUpdate()
     },
-    [...(positioningDependencies || []), computedPlacement],
+    [...positioningDependencies, computedPlacement],
   )
 
-  let processedChildren = children
-  if (typeof children === 'function') {
-    processedChildren = (children as PopperChildrenFn)({ placement: computedPlacement })
-  }
+  const child =
+    typeof children === 'function'
+      ? (children as PopperChildrenFn)({ placement: computedPlacement })
+      : React.Children.only(children)
 
-  return <Ref innerRef={contentRef}>{processedChildren as React.ReactElement}</Ref>
+  return <Ref innerRef={contentRef}>{child as React.ReactElement}</Ref>
 }
 
 Popper.defaultProps = {
