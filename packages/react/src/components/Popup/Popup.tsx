@@ -101,12 +101,15 @@ export interface PopupProps
   pointing?: boolean
 
   /**
+<<<<<<< HEAD
    * Function to render popup content.
    * @param {Function} updatePosition - function to request popup position update.
    */
   renderContent?: (updatePosition: Function) => ShorthandValue
 
   /**
+=======
+>>>>>>> 1dd557434d9eff41cc2777db686b8e49a58bdda7
    * DOM element that should be used as popup's target - instead of 'trigger' element that is used by default.
    */
   target?: HTMLElement
@@ -160,7 +163,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     onOpenChange: PropTypes.func,
     pointing: PropTypes.bool,
     position: PropTypes.oneOf(POSITIONS),
-    renderContent: PropTypes.func,
+    positioningDependencies: PropTypes.arrayOf(PropTypes.any),
     target: PropTypes.any,
     trigger: PropTypes.any,
     contentRef: customPropTypes.ref,
@@ -390,7 +393,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     rtl: boolean,
     accessibility: AccessibilityBehavior,
   ): JSX.Element {
-    const { align, position, offset, target } = this.props
+    const { align, position, offset, positioningDependencies, target } = this.props
 
     return (
       <Popper
@@ -400,6 +403,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         offset={offset}
         rtl={rtl}
         targetRef={target ? toRefObject(target) : this.triggerRef}
+        positioningDependencies={positioningDependencies}
         children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
       />
     )
@@ -409,11 +413,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     popupPositionClasses: string,
     rtl: boolean,
     accessibility: AccessibilityBehavior,
-    // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
-    { placement, scheduleUpdate }: PopperChildrenProps,
+    { placement }: PopperChildrenProps,
   ) => {
-    const { content: propsContent, renderContent, contentRef, mountDocument, pointing } = this.props
-    const content = renderContent ? renderContent(scheduleUpdate) : propsContent
+    const { content, contentRef, mountDocument, pointing } = this.props
     const documentRef = toRefObject(mountDocument)
 
     const popupWrapperAttributes = {
