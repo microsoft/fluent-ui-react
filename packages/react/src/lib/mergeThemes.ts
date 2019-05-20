@@ -163,7 +163,6 @@ export const mergeThemeStyles = (
 }
 
 export const mergeComponentVariants = (
-  target: ThemeComponentVariants = {},
   ...sources: (ThemeComponentVariants | null | undefined)[]
 ): ThemeComponentVariants => {
   return sources.reduce((acc, next) => {
@@ -172,10 +171,13 @@ export const mergeComponentVariants = (
     }
 
     Object.keys(next).forEach(componentName => {
+      if (!acc[componentName]) {
+        acc[componentName] = next[componentName]
+        return
+      }
+
       Object.keys(next[componentName]).forEach(variantName => {
-        if (!acc[componentName]) {
-          acc[componentName] = next[componentName]
-        } else if (!acc[componentName][variantName]) {
+        if (!acc[componentName][variantName]) {
           acc[componentName][variantName] = next[componentName][variantName]
         } else {
           acc[componentName][variantName] = {
@@ -193,7 +195,7 @@ export const mergeComponentVariants = (
     })
 
     return acc
-  }, target)
+  }, {})
 }
 
 export const mergeRTL = (target, ...sources) => {
