@@ -7,7 +7,6 @@ import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
-import { Popper, PopperChildrenProps } from 'react-popper'
 
 import {
   applyAccessibilityKeyHandlers,
@@ -24,12 +23,14 @@ import {
   setWhatInputSource,
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue } from '../../types'
-
-import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './positioningHelper'
-import createPopperReferenceProxy from './createPopperReferenceProxy'
-
+import {
+  ALIGNMENTS,
+  POSITIONS,
+  Popper,
+  PositionCommonProps,
+  PopperChildrenProps,
+} from '../../lib/positioner'
 import PopupContent from './PopupContent'
-
 import { popupBehavior } from '../../lib/accessibility'
 import {
   AutoFocusZone,
@@ -44,9 +45,6 @@ import {
   AccessibilityBehavior,
 } from '../../lib/accessibility/types'
 
-const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
-const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
-
 export type PopupEvents = 'click' | 'hover' | 'focus'
 export type RestrictedClickEvents = 'click' | 'focus'
 export type RestrictedHoverEvents = 'hover' | 'focus'
@@ -59,16 +57,14 @@ export interface PopupSlotClassNames {
 export interface PopupProps
   extends StyledComponentProps<PopupProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue> {
+    ContentComponentProps<ShorthandValue>,
+    PositionCommonProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default popupBehavior
    * @available popupFocusTrapBehavior, dialogBehavior
    * */
   accessibility?: Accessibility
-
-  /** Alignment for the popup. */
-  align?: Alignment
 
   /** Additional CSS class name(s) to apply.  */
   className?: string
@@ -88,15 +84,6 @@ export interface PopupProps
   /** Delay in ms for the mouse leave event, before the popup will be closed. */
   mouseLeaveDelay?: number
 
-  /** Offset value to apply to rendered popup. Accepts the following units:
-   * - px or unit-less, interpreted as pixels
-   * - %, percentage relative to the length of the trigger element
-   * - %p, percentage relative to the length of the popup element
-   * - vw, CSS viewport width unit
-   * - vh, CSS viewport height unit
-   */
-  offset?: string
-
   /** Events triggering the popup. */
   on?: PopupEvents | PopupEventsArray
 
@@ -114,19 +101,6 @@ export interface PopupProps
   pointing?: boolean
 
   /**
-   * Position for the popup. Position has higher priority than align. If position is vertical ('above' | 'below')
-   * and align is also vertical ('top' | 'bottom') or if both position and align are horizontal ('before' | 'after'
-   * and 'start' | 'end' respectively), then provided value for 'align' will be ignored and 'center' will be used instead.
-   */
-  position?: Position
-
-  /**
-   * Function to render popup content.
-   * @param {Function} updatePosition - function to request popup position update.
-   */
-  renderContent?: (updatePosition: Function) => ShorthandValue
-
-  /**
    * DOM element that should be used as popup's target - instead of 'trigger' element that is used by default.
    */
   target?: HTMLElement
@@ -140,7 +114,6 @@ export interface PopupProps
 
 export interface PopupState {
   open: boolean
-  target: HTMLElement
 }
 
 /**
@@ -171,6 +144,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     mountDocument: PropTypes.object,
     mountNode: customPropTypes.domNode,
     mouseLeaveDelay: PropTypes.number,
+    offset: PropTypes.string,
     on: PropTypes.oneOfType([
       PropTypes.oneOf(['hover', 'click', 'focus']),
       PropTypes.arrayOf(PropTypes.oneOf(['click', 'focus'])),
@@ -180,7 +154,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     onOpenChange: PropTypes.func,
     pointing: PropTypes.bool,
     position: PropTypes.oneOf(POSITIONS),
-    renderContent: PropTypes.func,
+    positioningDependencies: PropTypes.arrayOf(PropTypes.any),
     target: PropTypes.any,
     trigger: PropTypes.any,
     contentRef: customPropTypes.ref,
@@ -198,6 +172,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   static autoControlledProps = ['open']
 
+  pointerRef = React.createRef<HTMLElement>()
   triggerRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
   // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
   triggerFocusableDomElement = null
@@ -407,27 +382,18 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     rtl: boolean,
     accessibility: AccessibilityBehavior,
   ): JSX.Element {
-    const { align, position, offset } = this.props
-    const { target } = this.props
-
-    const placement = getPopupPlacement({ align, position, rtl })
-
-    const popperModifiers = {
-      // https://popper.js.org/popper-documentation.html#modifiers..offset
-      ...(offset && {
-        offset: { offset: rtl ? applyRtlToOffset(offset, position) : offset },
-        keepTogether: { enabled: false },
-      }),
-    }
-
-    const referenceElement = createPopperReferenceProxy(target || this.triggerRef)
+    const { align, position, offset, positioningDependencies, target } = this.props
 
     return (
       <Popper
-        placement={placement}
-        referenceElement={referenceElement}
+        pointerRef={this.pointerRef}
+        align={align}
+        position={position}
+        offset={offset}
+        rtl={rtl}
+        targetRef={target ? toRefObject(target) : this.triggerRef}
+        positioningDependencies={positioningDependencies}
         children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
-        modifiers={popperModifiers}
       />
     )
   }
@@ -436,18 +402,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     popupPositionClasses: string,
     rtl: boolean,
     accessibility: AccessibilityBehavior,
-    // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
-    {
-      arrowProps,
-      placement,
-      ref,
-      scheduleUpdate,
-      style: popupPlacementStylesRaw,
-    }: PopperChildrenProps,
+    { placement }: PopperChildrenProps,
   ) => {
-    const { content: propsContent, renderContent, contentRef, mountDocument, pointing } = this.props
-    const popupPlacementStyles = _.omitBy(popupPlacementStylesRaw, _.isNaN)
-    const content = renderContent ? renderContent(scheduleUpdate) : propsContent
+    const { content, contentRef, mountDocument, pointing } = this.props
     const documentRef = toRefObject(mountDocument)
 
     const popupWrapperAttributes = {
@@ -455,7 +412,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       ...accessibility.attributes.popup,
       ...accessibility.keyHandlers.popup,
       className: popupPositionClasses,
-      style: popupPlacementStyles,
       ...this.getContentProps(),
     }
 
@@ -481,8 +437,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         ...popupContentAttributes,
         placement,
         pointing,
-        pointerRef: arrowProps.ref,
-        pointerStyle: arrowProps.style,
+        pointerRef: this.pointerRef,
       },
       overrideProps: this.getContentProps,
     })
@@ -493,7 +448,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
           <>
             <Ref
               innerRef={domElement => {
-                ref(domElement)
                 this.popupDomElement = domElement
                 handleRef(contentRef, domElement)
                 handleRef(nestingRef, domElement)
