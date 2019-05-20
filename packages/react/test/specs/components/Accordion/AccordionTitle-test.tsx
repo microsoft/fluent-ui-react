@@ -1,9 +1,7 @@
-import * as React from 'react'
 import * as _ from 'lodash'
 
 import AccordionTitle from 'src/components/Accordion/AccordionTitle'
-import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
-import { mountWithProviderAndGetComponent } from 'test/utils'
+import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 
 describe('AccordionTitle', () => {
   isConformant(AccordionTitle, {
@@ -31,112 +29,6 @@ describe('AccordionTitle', () => {
           contentRef: _.noop,
         },
         defaultRootRole: 'heading',
-      })
-    })
-
-    describe('aria-disabled', () => {
-      test('is set to true, if active and cannot be collapsed', () => {
-        const renderedComponent = mountWithProviderAndGetComponent(
-          AccordionTitle,
-          <AccordionTitle active canBeCollapsed={false} contentRef={_.noop} />,
-        )
-        expect(
-          getRenderedAttribute(
-            renderedComponent,
-            'aria-disabled',
-            `.${AccordionTitle.slotClassNames.content}`,
-          ),
-        ).toBe('true')
-      })
-
-      test('is set to false, if active and can be collapsed', () => {
-        const renderedComponent = mountWithProviderAndGetComponent(
-          AccordionTitle,
-          <AccordionTitle active canBeCollapsed contentRef={_.noop} />,
-        )
-        expect(
-          getRenderedAttribute(
-            renderedComponent,
-            'aria-disabled',
-            `.${AccordionTitle.slotClassNames.content}`,
-          ),
-        ).toBe('false')
-      })
-
-      test('is set to false, if not active', () => {
-        const renderedComponent = mountWithProviderAndGetComponent(
-          AccordionTitle,
-          <AccordionTitle contentRef={_.noop} />,
-        )
-        expect(
-          getRenderedAttribute(
-            renderedComponent,
-            'aria-disabled',
-            `.${AccordionTitle.slotClassNames.content}`,
-          ),
-        ).toBe('false')
-      })
-    })
-
-    describe('aria-expanded', () => {
-      test('is set to true, if actived', () => {
-        const renderedComponent = mountWithProviderAndGetComponent(
-          AccordionTitle,
-          <AccordionTitle contentRef={_.noop} active />,
-        )
-        expect(
-          getRenderedAttribute(
-            renderedComponent,
-            'aria-expanded',
-            `.${AccordionTitle.slotClassNames.content}`,
-          ),
-        ).toBe('true')
-      })
-
-      test('is set to true, if actived', () => {
-        const renderedComponent = mountWithProviderAndGetComponent(
-          AccordionTitle,
-          <AccordionTitle contentRef={_.noop} />,
-        )
-        expect(
-          getRenderedAttribute(
-            renderedComponent,
-            'aria-expanded',
-            `.${AccordionTitle.slotClassNames.content}`,
-          ),
-        ).toBe('false')
-      })
-    })
-
-    describe('aria-controls', () => {
-      test('takes the value of the contentId', () => {
-        const renderedComponent = mountWithProviderAndGetComponent(
-          AccordionTitle,
-          <AccordionTitle contentRef={_.noop} accordionContentId={'nice-contentId'} />,
-        )
-        expect(
-          getRenderedAttribute(
-            renderedComponent,
-            'aria-controls',
-            `.${AccordionTitle.slotClassNames.content}`,
-          ),
-        ).toBe('nice-contentId')
-      })
-    })
-
-    describe('tabIndex', () => {
-      test('is always `0`', () => {
-        const renderedComponent = mountWithProviderAndGetComponent(
-          AccordionTitle,
-          <AccordionTitle contentRef={_.noop} />,
-        )
-        expect(
-          getRenderedAttribute(
-            renderedComponent,
-            'tabindex',
-            `.${AccordionTitle.slotClassNames.content}`,
-          ),
-        ).toBe('0')
       })
     })
   })

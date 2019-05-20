@@ -5,10 +5,9 @@ import * as keyboardKey from 'keyboard-key'
  * @description
  * Adds accessibility attributed to implement the Accordion design pattern.
  * Adds 'aria-disabled' to the 'content' component's part with a value based on active and canBeCollapsed props.
+ * Adds role='heading' and aria-level='3' if the element type is not a header.
  *
  * @specification
- * Adds attribute 'role=heading' to 'root' component's part if element type is other than 'h3'.
- * Adds attribute 'aria-level=3' to 'root' component's part if element type is other than 'h3'.
  * Adds attribute 'role=button' to 'content' component's part.
  * Adds attribute 'tabIndex=0' to 'content' component's part.
  * Adds attribute 'aria-expanded=true' based on the property 'active' to 'content' component's part.
