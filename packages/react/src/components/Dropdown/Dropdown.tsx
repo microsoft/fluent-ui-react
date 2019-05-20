@@ -655,19 +655,18 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           eventsEnabled={open}
           targetRef={this.selectedItemsRef}
           positioningDependencies={[items.length]}
-          children={() => (
-            <List
-              className={Dropdown.slotClassNames.itemsList}
-              {...accessibilityMenuProps}
-              styles={styles.list}
-              tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
-              aria-hidden={!open}
-              onFocus={this.handleTriggerButtonOrListFocus}
-              onBlur={this.handleListBlur}
-              items={items}
-            />
-          )}
-        />
+        >
+          <List
+            className={Dropdown.slotClassNames.itemsList}
+            {...accessibilityMenuProps}
+            styles={styles.list}
+            tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
+            aria-hidden={!open}
+            onFocus={this.handleTriggerButtonOrListFocus}
+            onBlur={this.handleListBlur}
+            items={items}
+          />
+        </Popper>
       </Ref>
     )
   }
