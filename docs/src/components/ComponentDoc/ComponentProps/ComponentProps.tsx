@@ -52,7 +52,7 @@ export default class ComponentProps extends React.Component<any, any> {
     const description = _.get(docblock, 'description', [])
 
     return (
-      <Flex column>
+      <Flex column gap="gap.small">
         <Flex.Item styles={{ display: 'block', verticalAlign: 'middle' }}>
           <Flex>
             {/* Should be toggle component - need to associate text with checkbox.   */}
@@ -64,7 +64,7 @@ export default class ComponentProps extends React.Component<any, any> {
                   onClick={this.handleToggle}
                   inline
                 />
-                <Text content="Props" styles={{ marginBottom: '0' }} />
+                <Text content="&nbsp;Props&nbsp;" styles={{ marginBottom: '0' }} />
               </>
             </Flex.Item>
             <Flex.Item>

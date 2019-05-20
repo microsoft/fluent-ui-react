@@ -1,26 +1,10 @@
 import * as _ from 'lodash'
 
-import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { callable, pxToRem, SizeValue } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
-import { ResultOf } from '../../../../types'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { IconProps } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, IconSizeModifier } from './iconVariables'
-
-const sizes: Record<SizeValue, number> = {
-  smallest: 7,
-  smaller: 10,
-  small: 12,
-  medium: 16,
-  large: 20,
-  larger: 32,
-  largest: 40,
-}
-
-const getDefaultFontIcon = (iconName: string) => {
-  return callable(fontAwesomeIcons(iconName).icon)()
-}
 
 const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),
@@ -34,35 +18,9 @@ const getBorderedStyles = (boxShadowColor: string): ICSSInJSStyle => {
   }
 }
 
-const getFontStyles = (
-  size: number,
-  iconName: string,
-  themeIcon?: ResultOf<FontIconSpec>,
-): ICSSInJSStyle => {
-  const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
-  const sizeInRems = pxToRem(size)
-
-  return {
-    fontFamily,
-    fontSize: sizeInRems,
-    lineHeight: 1,
-
-    display: 'inline-flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    width: sizeInRems,
-    height: sizeInRems,
-
-    '::before': {
-      content,
-    },
-  }
-}
-
-const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier): number => {
+const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier, v: IconVariables): string => {
   if (!sizeModifier) {
-    return sizes[size]
+    return v[`${size}Size`]
   }
 
   const modifiedSizes = {
@@ -72,7 +30,7 @@ const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier): number =>
     },
   }
 
-  return modifiedSizes[size] && modifiedSizes[size][sizeModifier]
+  return modifiedSizes[size] && pxToRem(modifiedSizes[size][sizeModifier])
 }
 
 const getIconColor = (variables, colors) => {
@@ -80,37 +38,21 @@ const getIconColor = (variables, colors) => {
 }
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
-  root: ({
-    props: { disabled, name, size, bordered, circular, color, xSpacing, rotate },
-    variables: v,
-    theme,
-  }): ICSSInJSStyle => {
-    const colors = v.colorScheme[color]
-    const iconSpec = theme.icons[name]
-    const isFontBased = name && (!iconSpec || !iconSpec.isSvg)
+  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+    const colors = v.colorScheme[p.color]
 
     return {
-      backgroundColor: v.backgroundColor,
-      boxSizing: isFontBased ? 'content-box' : 'border-box',
-
-      // overriding the base theme default transformation as in teams theme the svg/svgFlippingInRtl slots are used for this
-      ...(!isFontBased && {
-        transform: 'unset',
-      }),
-
-      ...(isFontBased && {
-        ...getFontStyles(getIconSize(size, v.sizeModifier), name),
-        fontWeight: 900, // required for the fontAwesome to render
-        color: getIconColor(v, colors),
-        transform: `rotate(${rotate}deg)`,
-        ...(disabled && {
-          color: v.disabledColor,
-        }),
-      }),
+      display: 'inline-block', // we overriding this for Base theme
 
       // overriding base theme border handling
-      ...((bordered || v.borderColor) &&
+      ...((p.bordered || v.borderColor) &&
         getBorderedStyles(v.borderColor || getIconColor(v, colors))),
+    }
+  },
+
+  svgRoot: ({ props: p, variables: v }): ICSSInJSStyle => {
+    return {
+      backgroundColor: v.backgroundColor,
     }
   },
 
@@ -134,7 +76,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
   svg: ({ props: { size, color, disabled, rotate }, variables: v }): ICSSInJSStyle => {
     const colors = v.colorScheme[color]
-    const iconSizeInRems = pxToRem(getIconSize(size, v.sizeModifier))
+    const iconSizeInRems = getIconSize(size, v.sizeModifier, v)
 
     return {
       display: 'block',
