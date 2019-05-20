@@ -498,7 +498,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       description,
       title,
     } = this.props
-    const { showCode, showRtl, showTransparent } = this.state
+    const { showCode, showRtl, showTransparent, themeName } = this.state
 
     return (
       <Flex column>
@@ -540,6 +540,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               render={this.renderElement}
               renderHtml={showCode}
               resolver={importResolver}
+              themeName={themeName}
             >
               <Provider.Consumer
                 render={({ siteVariables }) => {

@@ -11,7 +11,7 @@ const treeTitleBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       ...(props.hasSubtree && { 'aria-expanded': props.open ? 'true' : 'false' }),
-      tabindex: 0,
+      tabIndex: 0,
       [IS_FOCUSABLE_ATTRIBUTE]: true,
     },
   },

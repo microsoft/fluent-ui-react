@@ -1311,6 +1311,4 @@ const fontAwesomeIcons: ThemeIcons = {
   'star empty': outline('f089'),
 }
 
-const emptyIcon = { icon: { content: '?', fontFamily: '' } }
-
-export default (name: string): ThemeIconSpec => fontAwesomeIcons[name] || emptyIcon
+export default fontAwesomeIcons
