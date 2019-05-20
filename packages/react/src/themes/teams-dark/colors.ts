@@ -40,8 +40,8 @@ export const colorScheme: ColorSchemeMapping = {
   default: {
     foreground: colors.white,
     foreground1: colors.grey[250],
-    foreground3: colors.grey[300],
-    foreground4: colors.white,
+    foreground2: colors.grey[300],
+    foreground3: colors.white,
 
     background: colors.grey[650],
     background1: colors.grey[700],
@@ -241,23 +241,51 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.white,
   },
   grey: createColorScheme('grey', { foreground: colors.grey[250] }),
-  green: createColorScheme('green'),
-  orange: createColorScheme('orange', {
-    background: colors.black,
-    foregroundHover: colors.black,
-    foregroundActive: colors.black,
-    foregroundFocus: colors.black,
-    foregroundFocusWithin: colors.black,
-    foregroundDisabled: colors.black,
+  green: createColorScheme('green', {
+    background: colors.white,
   }),
+  orange: createColorScheme('orange'),
   pink: createColorScheme('pink'),
-  red: createColorScheme('red'),
+  red: {
+    foreground: colors.red[200],
+    foreground1: colors.white,
+    foreground2: colors.grey[800],
+
+    background: colors.red[300],
+    background1: colors.red[800],
+    background2: colors.ruby[500],
+    background3: colors.red[400],
+
+    border: colors.red[900],
+
+    shadow: undefined,
+
+    foregroundHover: colors.white,
+    backgroundHover: colors.ruby[600],
+    borderHover: undefined,
+    shadowHover: undefined,
+
+    foregroundActive: undefined,
+    backgroundActive: undefined,
+    borderActive: undefined,
+    shadowActive: undefined,
+
+    foregroundFocus: undefined,
+    backgroundFocus: undefined,
+    borderFocus: undefined,
+    shadowFocus: undefined,
+
+    foregroundPressed: colors.white,
+    backgroundPressed: colors.ruby[600],
+    borderPressed: undefined,
+    shadowPressed: undefined,
+
+    foregroundDisabled: undefined,
+    backgroundDisabled: undefined,
+    borderDisabled: undefined,
+    shadowDisabled: undefined,
+  },
   yellow: createColorScheme('yellow', {
-    background: colors.black,
-    foregroundHover: colors.black,
-    foregroundActive: colors.black,
-    foregroundFocus: colors.black,
-    foregroundFocusWithin: colors.black,
-    foregroundDisabled: colors.black,
+    background: colors.yellow[100],
   }),
 }
