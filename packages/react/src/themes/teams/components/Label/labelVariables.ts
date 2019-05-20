@@ -11,14 +11,14 @@ export interface LabelVariables {
   height: string
 }
 
-export const invertColorScheme = colorScheme => {
-  return Object.keys(colorScheme).reduce((accumulator, key) => {
-    const foreground = colorScheme[key].foreground
-    const background = colorScheme[key].background
+export const invertColorScheme = (colorScheme: ColorSchemeMapping): ColorSchemeMapping => {
+  return Object.keys(colorScheme).reduce((accumulator, colorName: string) => {
+    const foreground = colorScheme[colorName].foreground
+    const background = colorScheme[colorName].background
     return {
       ...accumulator,
-      [key]: {
-        ...colorScheme[key],
+      [colorName]: {
+        ...colorScheme[colorName],
         foreground: background,
         background: foreground,
       },
