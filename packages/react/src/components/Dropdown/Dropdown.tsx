@@ -462,8 +462,10 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                     : Icon.create(toggleIndicator, {
                         defaultProps: {
                           className: Dropdown.slotClassNames.toggleIndicator,
-                          name: open ? 'stardust-arrow-up' : 'stardust-arrow-down',
+                          name: 'chevron-down',
                           styles: styles.toggleIndicator,
+                          outline: true,
+                          size: 'small',
                         },
                         overrideProps: (predefinedProps: IconProps) => ({
                           onClick: (e, indicatorProps: IconProps) => {

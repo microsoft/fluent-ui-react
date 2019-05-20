@@ -36,15 +36,15 @@ export interface DropdownVariables {
   width: string
 }
 
-const [_2px_asRem, _3px_asRem, _12px_asRem] = [2, 3, 12].map(v => pxToRem(v))
+const [cornerRadius, _12px_asRem] = [3, 12].map(v => pxToRem(v))
 
 export default (siteVars): DropdownVariables => ({
   backgroundColor: siteVars.colors.grey[100],
   backgroundColorHover: siteVars.colors.grey[150],
   borderColor: 'transparent',
   borderColorFocus: siteVars.colors.brand[600],
-  borderRadius: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
-  openBorderRadius: `${_3px_asRem} ${_3px_asRem} 0 0`,
+  borderRadius: `${cornerRadius}`,
+  openBorderRadius: `${cornerRadius} ${cornerRadius} 0 0`,
   borderWidth: '0px',
   searchBorderBottomWidth: pxToRem(2),
   color: siteVars.bodyColor,
@@ -52,10 +52,10 @@ export default (siteVars): DropdownVariables => ({
   comboboxPaddingButton: `0 ${_12px_asRem}`,
   comboboxFlexBasis: pxToRem(50),
   listBackgroundColor: siteVars.colors.white,
-  listBorderRadius: `0 0 ${_3px_asRem} ${_3px_asRem}`,
+  listBorderRadius: `0 0 ${cornerRadius} ${cornerRadius}`,
   listBorderColor: 'transparent',
   listBorderWidth: '0px',
-  listPadding: `${pxToRem(8)} 0`,
+  listPadding: `${pxToRem(8)} 0 ${pxToRem(6)}`,
   listBoxShadow: siteVars.shadowLevel3,
   listMaxHeight: pxToRem(296),
   listItemBackgroundColor: siteVars.colors.white,

@@ -39,8 +39,8 @@ const getIndicatorStyles: ComponentSlotStyle<DropdownPropsAndState, DropdownVari
 
   margin: 0,
   position: 'absolute',
-  right: pxToRem(5),
-  height: v.toggleIndicatorSize,
+  right: pxToRem(-2),
+  height: '100%',
   width: v.toggleIndicatorSize,
 })
 
@@ -117,7 +117,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
       margin: '0',
       justifyContent: 'left',
       padding: v.comboboxPaddingButton,
-      height: pxToRem(30),
+      height: pxToRem(32),
       ...(p.multiple && { minWidth: 0, flex: 1 }),
       ...transparentColorStyleObj,
       ':focus': {
