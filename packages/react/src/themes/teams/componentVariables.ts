@@ -13,6 +13,8 @@ export { default as Chat } from './components/Chat/chatVariables'
 export { default as ChatItem } from './components/Chat/chatItemVariables'
 export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 
+export { default as Dialog } from './components/Dialog/dialogVariables'
+
 export { default as Divider } from './components/Divider/dividerVariables'
 
 export { default as Dropdown } from './components/Dropdown/dropdownVariables'

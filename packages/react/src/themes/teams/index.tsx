@@ -1,4 +1,4 @@
-import { ThemeIconSpec, ThemeIcons, FontIconSpec, SvgIconSpec } from '../types'
+import { ThemeIconSpec, ThemeIcons, SvgIconSpec } from '../types'
 
 import mergeThemes from '../../lib/mergeThemes'
 import base from '../base'
@@ -10,7 +10,6 @@ import fontFaces from './fontFaces'
 import staticStyles from './staticStyles'
 
 import { default as svgIconsAndStyles } from './components/Icon/svg'
-import { default as fontIcons } from './components/Icon/font'
 
 import { TeamsSvgIconSpec, SvgIconSpecWithStyles } from './components/Icon/svg/types'
 
@@ -18,8 +17,6 @@ const declareSvg = (svgIcon: SvgIconSpec): ThemeIconSpec => ({
   isSvg: true,
   icon: svgIcon,
 })
-
-const declareFontBased = (fontIcon: FontIconSpec): ThemeIconSpec => ({ icon: fontIcon })
 
 export const getIcon = (iconAndMaybeStyles): SvgIconSpec => {
   return (iconAndMaybeStyles as any).styles
@@ -37,12 +34,9 @@ const themeIcons: ThemeIcons = Object.keys(svgIconsAndStyles as {
   return { ...accIcons, ...{ [iconName]: declareSvg(icon) } }
 }, {})
 
-Object.keys(fontIcons).forEach(iconName => {
-  themeIcons[iconName] = declareFontBased(fontIcons[iconName])
-})
-
 const icons: ThemeIcons = {
   ...themeIcons,
+  'stardust-circle': themeIcons['stardust-circle'],
   'stardust-close': themeIcons['close'],
   'stardust-arrow-up': themeIcons['triangle-up'],
   'stardust-arrow-down': themeIcons['triangle-down'],
