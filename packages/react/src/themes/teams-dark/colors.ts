@@ -42,14 +42,11 @@ export const colorScheme: ColorSchemeMapping = {
     foreground1: colors.grey[250],
     foreground2: colors.grey[300],
     foreground3: colors.white,
-    foreground4: colors.grey[650],
-    foreground5: colors.grey[500],
 
     background: colors.grey[650],
     background1: colors.grey[700],
     background2: colors.grey[800],
     background3: colors.grey[550],
-    background4: colors.grey[250],
 
     border: colors.grey[450], // buttons
     border1: colors.grey[850],

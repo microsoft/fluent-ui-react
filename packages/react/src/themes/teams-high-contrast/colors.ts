@@ -48,14 +48,11 @@ export const colorScheme: ColorSchemeMapping = {
     foreground1: colors.white,
     foreground2: colors.white,
     foreground3: colors.white,
-    foreground4: colors.black,
-    foreground5: colors.white,
 
     background: colors.black,
     background1: colors.black,
     background2: colors.black,
     background3: colors.black,
-    background4: colors.white,
 
     border: colors.white,
     border1: colors.white,
