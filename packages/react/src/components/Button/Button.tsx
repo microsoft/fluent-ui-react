@@ -165,7 +165,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
       return
     }
 
-    _.invoke(this.props, 'onClick', e, this.props)
+    _.invoke(this.prop, 'onClick', e, this.props)
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
