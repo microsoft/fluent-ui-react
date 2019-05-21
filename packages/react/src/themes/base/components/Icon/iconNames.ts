@@ -5,6 +5,7 @@ const fontIcon = (content: string): ThemeIconSpec => ({
 })
 
 export const icons: ThemeIcons = {
+  'stardust-circle': fontIcon('25CF'),
   'stardust-close': fontIcon('2715'),
   'stardust-arrow-down': fontIcon('25BE'),
   'stardust-arrow-end': fontIcon('25B8'),
@@ -13,6 +14,6 @@ export const icons: ThemeIcons = {
   'stardust-play': fontIcon('23F8'),
 }
 
-const emptyIcon = { icon: { content: '?' } }
+export const emptyIcon: ThemeIconSpec = { icon: { content: '?' } }
 
 export default (name: string): ThemeIconSpec => icons[name] || emptyIcon
