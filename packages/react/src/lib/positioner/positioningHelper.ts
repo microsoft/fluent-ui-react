@@ -12,22 +12,20 @@ enum PlacementParts {
   center = '',
 }
 
-type PlacementCb = (rtl: boolean) => PlacementParts
+const getPositionMap = (rtl: boolean): { [key in Position]: PlacementParts } => ({
+  above: PlacementParts.top,
+  below: PlacementParts.bottom,
+  before: rtl ? PlacementParts.right : PlacementParts.left,
+  after: rtl ? PlacementParts.left : PlacementParts.right,
+})
 
-const positionMap: Map<Position, PlacementCb> = new Map([
-  ['above', () => PlacementParts.top],
-  ['below', () => PlacementParts.bottom],
-  ['before', rtl => (rtl ? PlacementParts.right : PlacementParts.left)],
-  ['after', rtl => (rtl ? PlacementParts.left : PlacementParts.right)],
-] as [Position, PlacementCb][])
-
-const alignmentMap: Map<Alignment, PlacementCb> = new Map([
-  ['start', rtl => (rtl ? PlacementParts.end : PlacementParts.start)],
-  ['end', rtl => (rtl ? PlacementParts.start : PlacementParts.end)],
-  ['top', () => PlacementParts.start],
-  ['bottom', () => PlacementParts.end],
-  ['center', () => PlacementParts.center],
-] as [Alignment, PlacementCb][])
+const getAlignmentMap = (rtl: boolean): { [key in Alignment]: PlacementParts } => ({
+  start: rtl ? PlacementParts.end : PlacementParts.start,
+  end: rtl ? PlacementParts.start : PlacementParts.end,
+  top: PlacementParts.start,
+  bottom: PlacementParts.end,
+  center: PlacementParts.center,
+})
 
 const shouldAlignToCenter = (p: Position, a: Alignment) => {
   const positionedVertically = p === 'above' || p === 'below'
@@ -64,10 +62,8 @@ export const getPlacement = ({
   rtl: boolean
 }): Placement => {
   const alignment: Alignment = shouldAlignToCenter(position, align) ? 'center' : align
-
-  const computedPosition = positionMap.get(position)(rtl)
-  const computedAlignmnent = alignmentMap.get(alignment)(rtl)
-
+  const computedPosition = getPositionMap(rtl)[position]
+  const computedAlignmnent = getAlignmentMap(rtl)[alignment]
   const stringifiedAlignment = computedAlignmnent && `-${computedAlignmnent}`
 
   return `${computedPosition}${stringifiedAlignment}` as Placement
