@@ -142,7 +142,6 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
           {Box.create(label, {
             defaultProps: { className: Loader.slotClassNames.label, styles: styles.label },
           })}
-          222
         </ElementType>
       )
     )
