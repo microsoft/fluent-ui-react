@@ -1,7 +1,7 @@
 module.exports = {
   extends: ['airbnb', 'plugin:prettier/recommended'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'jest', 'import', 'prettier', 'react-hooks'],
+  plugins: ['@typescript-eslint', 'jest', 'import', 'react-hooks', 'prettier'],
   env: {
     browser: true,
     'jest/globals': true,
@@ -12,7 +12,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
 
     'import/no-unresolved': 'off',
-    'prettier/prettier': 'error',
+    'prettier/prettier': 'off', // we are using standalone prettier
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.tsx'] }],
     'no-shadow': 'off', // https://github.com/stardust-ui/react/pull/1261#pullrequestreview-231005092
     'no-unused-vars': 'off', // we use @typescript-eslint/no-unused-vars instead

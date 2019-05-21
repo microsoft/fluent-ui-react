@@ -135,6 +135,8 @@ export {
   RadioGroupItemProps,
 } from './components/RadioGroup/RadioGroupItem'
 
+export { default as ResizeGroup } from './components/ResizeGroup/ResizeGroup'
+
 export { default as Segment, SegmentProps } from './components/Segment/Segment'
 
 export { default as Status, StatusProps } from './components/Status/Status'
