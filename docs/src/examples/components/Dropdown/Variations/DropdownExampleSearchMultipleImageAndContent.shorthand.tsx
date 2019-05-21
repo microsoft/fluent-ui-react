@@ -68,21 +68,21 @@ const getA11ySelectionMessage = {
 
 const getA11yStatusMessage = ({
   isOpen,
-  itemToString,
-  previousResultCount,
-  resultCount,
   selectedItem,
+  resultCount,
+  previousResultCount,
+  itemToString,
 }) => {
   if (!isOpen) {
     return selectedItem ? itemToString(selectedItem) : ''
   }
   if (!resultCount) {
-    return `Aucun résultat trouvé.`
+    return 'No results are available.'
   }
   if (resultCount !== previousResultCount) {
-    return `${resultCount} résultat${
-      resultCount === 1 ? ' est disponible' : 's sont disponibles'
-    }, touches fléchées ascendante et descendante pour naviguer. Appuyez sur la touche Entrée pour sélectionner. Appuyez sur les touches fléchées gauche et droite pour parcourir les options sélectionnées.`
+    return `${resultCount} result${
+      resultCount === 1 ? ' is' : 's are'
+    } available, use up and down arrow keys to navigate. Press Enter key to select. Press left and right arrow keys to navigate through the selected options.`
   }
   return ''
 }

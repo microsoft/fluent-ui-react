@@ -46,7 +46,7 @@ const getA11yStatusMessage = ({
   if (resultCount !== previousResultCount) {
     return `${resultCount} result${
       resultCount === 1 ? ' is' : 's are'
-    } available, use up and down arrow keys to navigate. Press Enter key to select. Press left and right arrow keys to navigate through selected options.`
+    } available, use up and down arrow keys to navigate. Press Enter key to select. Press left and right arrow keys to navigate through the selected options.`
   }
   return ''
 }
