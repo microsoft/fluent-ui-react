@@ -1,27 +1,21 @@
 import { pxToRem } from '../../../../lib'
 import { ColorSchemeMapping } from '../../../types'
+import { IconVariables as BaseIconVariables } from 'src/themes/base/components/Icon/iconVariables'
 
 export type IconSizeModifier = 'x' | 'xx'
 
-export interface IconVariables {
-  [key: string]: object | string | number | boolean | undefined
+export interface IconVariables extends BaseIconVariables {
   colorScheme?: ColorSchemeMapping
-  color?: string
-  backgroundColor?: string
-  borderColor?: string
   brandColor?: string
   secondaryColor: string
   redColor?: string
-  disabledColor: string
 
-  horizontalSpace: string
   sizeModifier?: IconSizeModifier
 }
 
-export default (siteVars): IconVariables => ({
+export default (siteVars): Partial<IconVariables> => ({
   colorScheme: siteVars.colorScheme,
   color: undefined,
-  backgroundColor: undefined,
   borderColor: undefined,
   brandColor: siteVars.brandColor,
   secondaryColor: siteVars.colors.white,
