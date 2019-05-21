@@ -549,6 +549,7 @@ export type ThemeIconSpec = {
 }
 
 export type RequiredIconNames =
+  | 'stardust-circle'
   | 'stardust-close'
   | 'stardust-arrow-end'
   | 'stardust-arrow-up'
