@@ -1,4 +1,3 @@
-import { PopperChildrenProps } from '../../../../lib/positioner'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { PopupContentProps } from '../../../../components/Popup/PopupContent'
 import { PopupContentVariables } from './popupContentVariables'
@@ -11,7 +10,7 @@ const rtlMapping = {
 const getPointerStyles = (
   v: PopupContentVariables,
   rtl: boolean,
-  popperPlacement?: PopperChildrenProps['placement'],
+  popperPlacement?: PopupContentProps['placement'],
 ) => {
   const placementValue = (popperPlacement || '').split('-', 1).pop()
   const placement = (rtl && rtlMapping[placementValue]) || placementValue
