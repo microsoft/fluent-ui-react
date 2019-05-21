@@ -153,7 +153,6 @@ export { default as Video } from './components/Video/Video'
 //
 // Accessibility
 //
-export * from './lib/accessibility/types'
 export { default as menuBehavior } from './lib/accessibility/Behaviors/Menu/menuBehavior'
 export { default as menuItemBehavior } from './lib/accessibility/Behaviors/Menu/menuItemBehavior'
 export {
