@@ -6,6 +6,7 @@ const ToolbarExampleShorthand = () => (
     <a href="https://www.w3.org/TR/wai-aria-practices-1.1/examples/toolbar/toolbar.html">
       W3 Aria Toolbar
     </a>
+
     <Toolbar
       items={[
         // red circular recording status icon
@@ -15,11 +16,9 @@ const ToolbarExampleShorthand = () => (
 
         { primary: true, icon: 'video' },
         { primary: true, icon: 'microphone' },
-        { primary: true, icon: 'scree-share-stop' },
-        { primary: true, icon: 'horizontal ellipsis' },
+        { primary: true, icon: 'call-control-present-new' },
         {
-          secondary: true,
-          icon: 'horizontal ellipsis',
+          icon: 'more',
           menu: [
             { icon: 'list', content: 'Show meeting notes' },
             // ...
@@ -35,7 +34,10 @@ const ToolbarExampleShorthand = () => (
           //  Radios do not allow you unselect an option this way.
           kind: 'group',
           // Consider a top level 'onItemClick', easier integration with lists of items passed in
-          items: [{ icon: 'chat', secondary: true }, { icon: 'add user', secondary: true }],
+          items: [
+            { icon: { name: 'chat', outline: true }, secondary: true },
+            { icon: { name: 'user-friends', outline: true }, secondary: true },
+          ],
         },
 
         { kind: 'divider' },
@@ -48,7 +50,7 @@ const ToolbarExampleShorthand = () => (
 
         { kind: 'button', content: 'Stop Presenting' },
 
-        { danger: true, icon: 'phone hang up' },
+        { danger: true, icon: 'call-end' },
       ]}
     />
     <Image
