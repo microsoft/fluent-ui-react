@@ -23,7 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add keyboard navigation and screen reader support for `Accordion` @silviuavram ([#1322](https://github.com/stardust-ui/react/pull/1322))
 - Add `expanded` prop to `Accordion` @silviuavram ([#1322](https://github.com/stardust-ui/react/pull/1322))
-- Replace `react-popper` package with custom `Popper` component @Bugaa92 ([#1358](https://github.com/stardust-ui/react/pull/1358))
+- Replace `react-popper` package with custom `Popper` component and exposed as `UNSTABLE_Popper` positioning helper @Bugaa92 ([#1358](https://github.com/stardust-ui/react/pull/1358))
 
 ### Fixes
 - Changing icon behavior as for some cases icon could be visible ([#1327](https://github.com/stardust-ui/react/pull/1327))
