@@ -20,7 +20,7 @@ class App extends React.Component<any, ThemeContextData> {
       <ThemeContext.Provider value={this.state}>
         <Provider
           as={React.Fragment}
-          theme={mergeThemes(themes[themeName], {
+          theme={mergeThemes(themes.fontAwesome, themes[themeName], {
             // adjust Teams' theme to Semantic UI's font size scheme
             staticStyles: [
               {
