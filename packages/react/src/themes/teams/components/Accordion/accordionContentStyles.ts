@@ -5,6 +5,7 @@ const accordionContentStyles = {
     display: 'none',
     verticalAlign: 'middle',
     ...(props.active && { display: 'block' }),
+    marginInlineStart: 0,
   }),
 }
 
