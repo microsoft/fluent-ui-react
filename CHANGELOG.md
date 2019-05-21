@@ -21,8 +21,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - ESC key pressed on a trigger element should propagate event if `Popup` is closed @sophieH29 ([#1373](https://github.com/stardust-ui/react/pull/1373))
 
 ### Features
-- Add keyboard navigation and screen reader support for `Accordion` @silviuavram ([#1322](https://github.com/stardust-ui/react/pull/1322)) 
-- Add `expanded` prop to `Accordion` @silviuavram ([#1322](https://github.com/stardust-ui/react/pull/1322)) 
+- Add keyboard navigation and screen reader support for `Accordion` @silviuavram ([#1322](https://github.com/stardust-ui/react/pull/1322))
+- Add `expanded` prop to `Accordion` @silviuavram ([#1322](https://github.com/stardust-ui/react/pull/1322))
+- Replace `react-popper` package with custom `Popper` component @Bugaa92 ([#1358](https://github.com/stardust-ui/react/pull/1358))
 
 ### Fixes
 - Changing icon behavior as for some cases icon could be visible ([#1327](https://github.com/stardust-ui/react/pull/1327))
@@ -54,7 +55,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Export `qna` and `yammer` SVG icons for `Teams` theme @manindr ([#1325](https://github.com/stardust-ui/react/pull/1325))
 - Add FontAwesome theme @layershifter ([#1337](https://github.com/stardust-ui/react/pull/1337))
 - Add red color scheme in Teams theme @mnajdova ([#1353](https://github.com/stardust-ui/react/pull/1353))
-- Replace `react-popper` package with custom `Popper` component @Bugaa92 ([#1358](https://github.com/stardust-ui/react/pull/1358))
 
 ### Documentation
 - Clearly identify Slots in DocSite @hughreeling ([#1292](https://github.com/stardust-ui/react/pull/1292))
