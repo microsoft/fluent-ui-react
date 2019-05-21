@@ -6,10 +6,13 @@ import { getPlacement, applyRtlToOffset } from './positioningHelper'
 import { Alignment, Position } from './types'
 
 export interface PositionCommonProps {
-  /** Alignment for the component. */
+  /**
+   * Alignment for the component.
+   */
   align?: Alignment
 
-  /** Offset value to apply to rendered component. Accepts the following units:
+  /**
+   * Offset value to apply to rendered component. Accepts the following units:
    * - px or unit-less, interpreted as pixels
    * - %, percentage relative to the length of the trigger element
    * - %p, percentage relative to the length of the component element
@@ -24,11 +27,6 @@ export interface PositionCommonProps {
    * and 'start' | 'end' respectively), then provided value for 'align' will be ignored and 'center' will be used instead.
    */
   position?: Position
-
-  /**
-   * Array of conditions to be met in order to trigger a subsequent render to reposition the elements.
-   */
-  positioningDependencies?: React.DependencyList
 }
 
 export interface PopperChildrenProps {
@@ -36,6 +34,11 @@ export interface PopperChildrenProps {
    * Popper's placement.
    */
   placement: PopperJS.Placement
+
+  /**
+   * Function that updates the position of the Popper box, computing the new offsets and applying the new style.
+   */
+  scheduleUpdate(): void
 }
 
 type PopperChildrenFn = (props: PopperChildrenProps) => React.ReactNode
@@ -62,6 +65,11 @@ interface PopperProps extends PositionCommonProps {
    * They provide most of the functionality of Popper.js.
    */
   modifiers?: PopperJS.Modifiers
+
+  /**
+   * Array of conditions to be met in order to trigger a subsequent render to reposition the elements.
+   */
+  positioningDependencies?: React.DependencyList
 
   /**
    * Enables the Popper box to position itself in 'fixed' mode (default value is position: 'absolute')
@@ -159,7 +167,10 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
 
   const child =
     typeof children === 'function'
-      ? (children as PopperChildrenFn)({ placement: computedPlacement })
+      ? (children as PopperChildrenFn)({
+          placement: computedPlacement,
+          scheduleUpdate: () => popperRef.current && popperRef.current.scheduleUpdate(),
+        })
       : React.Children.only(children)
 
   return <Ref innerRef={contentRef}>{child as React.ReactElement}</Ref>
