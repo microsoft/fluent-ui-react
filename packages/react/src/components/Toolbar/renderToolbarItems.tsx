@@ -13,6 +13,7 @@ export type ToolbarItemShorthandCollection = ShorthandCollection<ToolbarItemShor
 export const collectionShorthandToolbarItem = () =>
   customPropTypes.collectionShorthandWithKindProp(['divider', 'item', 'button', 'group'])
 
+// TODO: what about nested groups? Do we want to explicitly deny them?
 export const renderToolbarItems = items => {
   return _.map(items, (item, index) => {
     const kind = _.get(item, 'kind', 'item')

@@ -16,6 +16,8 @@ import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 import ToolbarItem from './ToolbarItem'
 import ToolbarDivider from './ToolbarDivider'
+import ToolbarGroup from './ToolbarGroup'
+
 import {
   collectionShorthandToolbarItem,
   renderToolbarItems,
@@ -54,6 +56,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
 
   static Item = ToolbarItem
   static Divider = ToolbarDivider
+  static Group = ToolbarGroup
 
   renderComponent({ accessibility, ElementType, classes, unhandledProps }): React.ReactNode {
     const { children, items } = this.props
@@ -75,7 +78,6 @@ Toolbar.create = createShorthandFactory({ Component: Toolbar, mappedProp: 'conte
 
 /**
  * A Toolbar component groups actions.
- * @accessibility
- * TODO
+ * TODO: add meaningful description
  */
 export default withSafeTypeForAs<typeof Toolbar, ToolbarProps>(Toolbar)

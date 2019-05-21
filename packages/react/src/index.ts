@@ -140,7 +140,11 @@ export { default as Segment, SegmentProps } from './components/Segment/Segment'
 export { default as Status, StatusProps } from './components/Status/Status'
 
 export { default as Text, TextProps } from './components/Text/Text'
+
 export { default as Toolbar, ToolbarProps } from './components/Toolbar/Toolbar'
+export { default as ToolbarDivider, ToolbarDividerProps } from './components/Toolbar/ToolbarDivider'
+export { default as ToolbarItem, ToolbarItemProps } from './components/Toolbar/ToolbarItem'
+export { default as ToolbarGroup, ToolbarGroupProps } from './components/Toolbar/ToolbarGroup'
 
 export { default as Animation, AnimationProps } from './components/Animation/Animation'
 

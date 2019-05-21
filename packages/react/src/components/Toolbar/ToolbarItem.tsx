@@ -11,6 +11,8 @@ import {
 } from '../../lib'
 import { ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
+
 import Icon from '../Icon/Icon'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 
@@ -20,9 +22,7 @@ export interface ToolbarItemProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default menuItemBehavior
-   * @available toolbarButtonBehavior, tabBehavior
-   * */
+   */
   accessibility?: Accessibility
 
   /** Name or shorthand for Toolbar Item Icon */
@@ -43,14 +43,23 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
 
   static defaultProps = {
     as: 'button',
+    accessibility: defaultBehavior as Accessibility,
   }
 
-  renderComponent({ ElementType }) {
+  renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
     const { icon, children } = this.props
-    return <ElementType>{childrenExist(children) ? children : Icon.create(icon)}</ElementType>
+    return (
+      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
+        {childrenExist(children) ? children : Icon.create(icon)}
+      </ElementType>
+    )
   }
 }
 
 ToolbarItem.create = createShorthandFactory({ Component: ToolbarItem, mappedProp: 'content' })
 
+/**
+ * Toolbar item.
+ * TODO: add meaningful description
+ */
 export default withSafeTypeForAs<typeof ToolbarItem, ToolbarItemProps, 'button'>(ToolbarItem)

@@ -2,13 +2,14 @@ import * as React from 'react'
 import {
   ChildrenComponentProps,
   ContentComponentProps,
+  createShorthandFactory,
   UIComponentProps,
   UIComponent,
   commonPropTypes,
-} from 'src/lib'
-import { Accessibility } from '@stardust-ui/react'
-import { WithAsProp, withSafeTypeForAs } from 'src/types'
-import { createShorthandFactory } from 'src/lib/factories'
+} from '../../lib'
+import { Accessibility } from '../../lib/accessibility/types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
+import { defaultBehavior } from '../../lib/accessibility'
 
 export interface ToolbarDividerProps
   extends UIComponentProps,
@@ -32,14 +33,23 @@ class ToolbarDivider extends UIComponent<WithAsProp<ToolbarDividerProps>> {
     ...commonPropTypes.createCommon(),
   }
 
-  renderComponent({ ElementType }) {
-    return <ElementType>|</ElementType>
+  static defaultProps = {
+    accessibility: defaultBehavior as Accessibility,
+  }
+
+  renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
+    return (
+      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
+        |
+      </ElementType>
+    )
   }
 }
 
 ToolbarDivider.create = createShorthandFactory({ Component: ToolbarDivider, mappedProp: 'content' })
 
 /**
- * Toolbar divider
+ * Toolbar divider.
+ * TODO: add meaningful description
  */
 export default withSafeTypeForAs<typeof ToolbarDivider, ToolbarDividerProps>(ToolbarDivider)
