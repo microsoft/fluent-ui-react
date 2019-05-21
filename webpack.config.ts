@@ -60,7 +60,10 @@ const webpackConfig: any = {
     ],
   },
   plugins: [
-    new ForkTsCheckerWebpackPlugin({ tsconfig: paths.base('build/tsconfig.docs.json') }),
+    new ForkTsCheckerWebpackPlugin({
+      tsconfig: paths.base('build/tsconfig.docs.json'),
+      watch: [paths.docsSrc(), paths.packages()],
+    }),
     new webpack.DefinePlugin(config.compiler_globals),
     new webpack.ContextReplacementPlugin(
       /node_modules[\\|/]typescript[\\|/]lib/,

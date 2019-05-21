@@ -1,3 +1,3 @@
 module.exports = {
-  babelrcRoots: ['./docs/*', './packages/*'],
+  babelrcRoots: ['./docs/*', './packages/*', './perf/*'],
 }
