@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import { IconVariables as BaseIconVariables } from 'src/themes/base/components/Icon/iconVariables'
+import { IconVariables as BaseIconVariables } from '../../../base/components/Icon/iconVariables'
 import { StrictColorSchemeMapping, StrictColorScheme } from '../../../types'
 import { TeamsColorNames } from '../../colors'
 import { generateComponentAreas, pickValuesFromColorScheme } from '../../../colorUtils'

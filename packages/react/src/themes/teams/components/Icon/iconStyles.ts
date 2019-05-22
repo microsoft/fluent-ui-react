@@ -4,8 +4,7 @@ import { callable, pxToRem, SizeValue } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle, StrictColorScheme } from '../../../types'
 import { IconProps } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
-import { IconVariables, IconSizeModifier } from './iconVariables'
-import { IconColorComponentAreas } from 'src/themes/teams/components/Icon/iconVariables'
+import { IconVariables, IconSizeModifier, IconColorComponentAreas } from './iconVariables'
 
 const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),

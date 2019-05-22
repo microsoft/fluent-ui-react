@@ -1,9 +1,9 @@
 import { FontWeightProperty } from 'csstype'
 
 import { pxToRem } from '../../../../lib'
-import { StrictColorSchemeMapping, StrictColorScheme } from 'src/themes/types'
-import { TeamsColorNames } from 'src/themes/teams/colors'
-import { generateComponentAreas, pickValuesFromColorScheme } from 'src/themes/colorUtils'
+import { StrictColorSchemeMapping, StrictColorScheme } from '../../../types'
+import { TeamsColorNames } from '../../colors'
+import { generateComponentAreas, pickValuesFromColorScheme } from '../../../colorUtils'
 
 export const dividerColorComponentAreas = generateComponentAreas('foreground')
 export type DividerColorComponentAreas = typeof dividerColorComponentAreas[number]
