@@ -25,19 +25,19 @@ export interface LabelVariables {
   startPaddingLeft: string
   endPaddingRight: string
   height: string
-  iconColor: string
 }
 
 export default (siteVars: SiteVariablesPrepared): LabelVariables => {
-  const color = 'rgba(0, 0, 0, 0.6)'
-
   const colorScheme = extendColorScheme(siteVars.colorScheme, {
     default: {
-      background: color,
+      background: 'rgba(0, 0, 0, 0.6)',
       foreground: 'rgb(232, 232, 232)',
     },
     brand: {
       background: siteVars.colorScheme.brand.foreground4,
+    },
+    red: {
+      background: siteVars.colorScheme.red.foreground1,
     },
   })
 
@@ -48,8 +48,5 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
     startPaddingLeft: '0px',
     endPaddingRight: '0px',
     height: pxToRem(20),
-
-    // variables for 'icon' part
-    iconColor: color,
   }
 }

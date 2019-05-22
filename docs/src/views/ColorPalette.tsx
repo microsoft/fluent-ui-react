@@ -59,7 +59,9 @@ const ColorPalette = () => (
     }}
   >
     <ProviderConsumer
-      render={({ siteVariables: { colors, contextualColors, naturalColors } }) => (
+      render={({
+        siteVariables: { colors, contextualColors, naturalColors, transparentColors },
+      }) => (
         <DocPage title="Colors">
           <Header as="h2">Introduction</Header>
           <p>
@@ -143,11 +145,14 @@ const ColorPalette = () => (
           <Header as="h3">All colors</Header>
           <p>These are all colors available in the color palette.</p>
           <Grid columns={2} variables={{ gridGap: '2rem' }}>
-            {_.map({ ...contextualColors, ...naturalColors }, (variants, color) => (
-              <div key={color}>
-                <ColorVariants name={color} />
-              </div>
-            ))}
+            {_.map(
+              { ...contextualColors, ...naturalColors, ...transparentColors },
+              (variants, color) => (
+                <div key={color}>
+                  <ColorVariants name={color} />
+                </div>
+              ),
+            )}
           </Grid>
 
           <Header as="h2" content="Color scheme" />
