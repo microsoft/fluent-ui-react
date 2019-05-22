@@ -43,15 +43,10 @@ const makeConfig = (srcPath, name) => ({
     rules: [
       {
         test: /\.(js|ts|tsx)$/,
-        loader: 'ts-loader',
-        include: /src/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
         options: {
-          configFile: paths.base('build/tsconfig.es.json'),
-          transpileOnly: true,
-          onlyCompileBundledFiles: true,
-          compilerOptions: {
-            declaration: false,
-          },
+          cacheDirectory: true,
         },
       },
     ],
