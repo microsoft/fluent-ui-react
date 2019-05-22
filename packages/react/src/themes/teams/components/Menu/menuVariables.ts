@@ -1,8 +1,11 @@
 import { pxToRem } from '../../../../lib'
-import { extendColorScheme, generateComponentAreas } from '../../../colorUtils'
+import {
+  extendColorScheme,
+  generateComponentAreas,
+  pickValuesFromColorScheme,
+} from '../../../colorUtils'
 import { StrictColorSchemeMapping, StrictColorScheme } from '../../../types'
 import { TeamsColorNames } from '../../colors'
-import { pickValuesFromColorScheme } from 'src/themes/colorUtils'
 
 const menuColorComponentAreas = generateComponentAreas(
   'border',

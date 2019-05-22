@@ -1,10 +1,9 @@
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesInput, ICSSInJSStyle, StrictColorScheme } from '../../../types'
 import { MenuVariables, MenuColorComponentAreas } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 import { getColorSchemeKey } from '../../colors'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
-import { StrictColorScheme } from 'src/themes/types'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
