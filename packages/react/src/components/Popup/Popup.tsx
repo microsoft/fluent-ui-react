@@ -444,10 +444,11 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       placement,
       ref,
       scheduleUpdate,
-      style: popupPlacementStyles,
+      style: popupPlacementStylesRaw,
     }: PopperChildrenProps,
   ) => {
     const { content: propsContent, renderContent, contentRef, mountDocument, pointing } = this.props
+    const popupPlacementStyles = _.omitBy(popupPlacementStylesRaw, _.isNaN)
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
     const documentRef = toRefObject(mountDocument)
 
