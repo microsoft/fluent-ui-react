@@ -98,7 +98,7 @@ export default () => (
         </li>
         <li>
           specify <b>labels</b>, especially for components without textual information (icon only
-          buttons)
+          buttons) and for containers (menus, toolbars and so on)
         </li>
         <li>
           specify texts for <b>state change announcements</b> (number of available items in
@@ -113,7 +113,8 @@ export default () => (
           are appearing/disappearing or other cases){' '}
         </li>
         <li>
-          list cases when <b>focus</b> needs to be <b>trapped</b> in sections of the UI
+          list cases when <b>focus</b> needs to be <b>trapped</b> in sections of the UI (for dialogs
+          and popups or for hierarchical navigation)
         </li>
         <li>
           if extending existing functionality, how does it fit into current experience with regards
