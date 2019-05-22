@@ -1471,5 +1471,12 @@ describe('Dropdown', () => {
       expect(label.exists()).toBe(true)
       expect(label.getDOMNode().textContent).toBe(labelText)
     })
+
+    it('is missing if not passed as prop', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} />)
+      const label = getLabelWrapper(wrapper)
+
+      expect(label.exists()).toBe(false)
+    })
   })
 })
