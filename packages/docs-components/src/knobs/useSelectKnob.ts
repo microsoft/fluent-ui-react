@@ -1,9 +1,9 @@
 import { UseKnobOptions } from './types'
 import useKnob from './useKnob'
 
-const useSelectKnob = (options: UseKnobOptions<string>) =>
-  useKnob<string>({
-    initialValue: '',
+const useSelectKnob = <T extends string>(options: UseKnobOptions<T>) =>
+  useKnob<T>({
+    initialValue: '' as T,
     type: 'select',
     ...options,
   })

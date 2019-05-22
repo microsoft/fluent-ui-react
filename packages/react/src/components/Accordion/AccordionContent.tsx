@@ -1,5 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as _ from 'lodash'
 
 import {
   childrenExist,
@@ -11,12 +12,16 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ComponentEventHandler } from '../../types'
+import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import { accordionContentBehavior } from '../../lib/accessibility'
 
 export interface AccordionContentProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
+  /** Id of the title it belongs to. */
+  accordionTitleId?: string
+
   /** Whether or not the content is visible. */
   active?: boolean
 
@@ -29,10 +34,7 @@ export interface AccordionContentProps
   onClick?: ComponentEventHandler<AccordionContentProps>
 }
 
-/**
- * A standard AccordionContent.
- */
-class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, any> {
+class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, any> {
   static displayName = 'AccordionContent'
 
   static create: Function
@@ -41,16 +43,28 @@ class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, an
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
+    accordionTitleId: PropTypes.string,
     active: PropTypes.bool,
     onClick: PropTypes.func,
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  static defaultProps = {
+    accessibility: accordionContentBehavior,
+    as: 'dd',
+  }
+
+  private handleClick = (e: React.SyntheticEvent) => {
+    _.invoke(this.props, 'onClick', e, this.props)
+  }
+
+  renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
     const { children, content } = this.props
 
     return (
       <ElementType
+        onClick={this.handleClick}
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...accessibility.attributes.root}
         {...unhandledProps}
         className={classes.root}
       >
@@ -65,4 +79,7 @@ AccordionContent.create = createShorthandFactory({
   mappedProp: 'content',
 })
 
-export default AccordionContent
+/**
+ * A standard AccordionContent that is used to display content hosted in an accordion.
+ */
+export default withSafeTypeForAs<typeof AccordionContent, AccordionContentProps>(AccordionContent)

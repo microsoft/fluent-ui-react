@@ -1,5 +1,5 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
-import * as React from 'react'
+import cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import {
   callable,
@@ -12,9 +12,8 @@ import {
 } from '../../lib'
 import { iconBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-
-import { SvgIconSpec } from '../../themes/types'
-import { ReactProps } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
+import Box from '../Box/Box'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
@@ -50,10 +49,7 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
   xSpacing?: IconXSpacing
 }
 
-/**
- * An icon is a glyph used to represent something else.
- */
-class Icon extends UIComponent<ReactProps<IconProps>, any> {
+class Icon extends UIComponent<WithAsProp<IconProps>, any> {
   static create: Function
 
   static className = 'ui-icon'
@@ -83,49 +79,34 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
     rotate: 0,
   }
 
-  private renderFontIcon(ElementType, classes, unhandledProps, accessibility): React.ReactNode {
-    return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-      />
-    )
-  }
-
-  private renderSvgIcon(
-    ElementType,
-    svgIconDescriptor: SvgIconSpec,
-    classes,
-    unhandledProps,
-    accessibility,
-    rtl,
-  ): React.ReactNode {
-    return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {svgIconDescriptor && callable(svgIconDescriptor)({ classes, rtl })}
-      </ElementType>
-    )
-  }
-
-  public renderComponent({ ElementType, classes, unhandledProps, accessibility, theme, rtl }) {
+  renderComponent({ ElementType, classes, unhandledProps, accessibility, theme, rtl, styles }) {
+    const { className, name } = this.props
     const { icons = {} } = theme
 
-    const maybeIcon = icons[this.props.name]
+    const maybeIcon = icons[name]
+    const isSvgIcon = maybeIcon && maybeIcon.isSvg
 
-    return maybeIcon && maybeIcon.isSvg
-      ? this.renderSvgIcon(
-          ElementType,
-          maybeIcon.icon as SvgIconSpec,
-          classes,
-          unhandledProps,
-          accessibility,
-          rtl,
-        )
-      : this.renderFontIcon(ElementType, classes, unhandledProps, accessibility)
+    return Box.create(
+      { content: isSvgIcon && callable(maybeIcon.icon)({ classes, rtl }) },
+      {
+        defaultProps: {
+          as: ElementType,
+          className: cx(Icon.className, className),
+          ...accessibility.attributes.root,
+          ...unhandledProps,
+          styles: {
+            ...styles.root,
+            ...(isSvgIcon ? styles.svgRoot : styles.fontRoot),
+          },
+        },
+      },
+    )
   }
 }
 
 Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name' })
 
-export default Icon
+/**
+ * An icon is a glyph used to represent something else.
+ */
+export default withSafeTypeForAs<typeof Icon, IconProps, 'span'>(Icon)

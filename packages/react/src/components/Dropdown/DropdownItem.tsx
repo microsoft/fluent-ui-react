@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropTypes } from '../../lib'
-import { ShorthandValue, ComponentEventHandler, ReactProps } from '../../types'
+import { ShorthandValue, ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
@@ -20,6 +20,9 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   /** A dropdown item can be active. */
   active?: boolean
 
+  /** Item's accessibility props. */
+  accessibilityItemProps?: any
+
   /** Item's content. */
   content?: ShorthandValue
 
@@ -29,6 +32,9 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   /** Item's image. */
   image?: ShorthandValue
 
+  /** Indicated whether the item has been set active by keyboard. */
+  isFromKeyboard?: boolean
+
   /**
    * Called on dropdown item click.
    *
@@ -36,13 +42,12 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
    * @param {object} data - All props and proposed value.
    */
   onClick?: ComponentEventHandler<DropdownItemProps>
+
+  /** A dropdown item can be selected if single selection Dropdown is used. */
+  selected?: boolean
 }
 
-/**
- * A DropdownItem is a sub-component of the Dropdown,
- * used to display items of the dropdown list.
- */
-class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
+class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
   static displayName = 'DropdownItem'
 
   static create: Function
@@ -63,6 +68,8 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
     header: customPropTypes.itemShorthand,
     image: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
+    isFromKeyboard: PropTypes.bool,
+    selected: PropTypes.bool,
   }
 
   private handleClick = e => {
@@ -77,14 +84,15 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
     const { content, header, image, accessibilityItemProps } = this.props
     return (
       <ListItem
-        className={classes.root}
+        className={DropdownItem.className}
+        styles={styles.root}
+        onClick={this.handleClick}
         header={Box.create(header, {
           defaultProps: {
             className: DropdownItem.slotClassNames.header,
             styles: styles.header,
           },
         })}
-        onClick={this.handleClick}
         media={Image.create(image, {
           defaultProps: {
             avatar: true,
@@ -115,4 +123,8 @@ DropdownItem.slotClassNames = {
 
 DropdownItem.create = createShorthandFactory({ Component: DropdownItem, mappedProp: 'header' })
 
-export default DropdownItem
+/**
+ * A sub-component of the Dropdown.
+ * Used to display items of the dropdown list.
+ */
+export default withSafeTypeForAs<typeof DropdownItem, DropdownItemProps>(DropdownItem)

@@ -32,11 +32,15 @@ export default class RefFindNode extends React.Component<RefFindNodeProps> {
     handleRef(this.props.innerRef, this.prevNode)
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps: RefFindNodeProps) {
     const currentNode = ReactDOM.findDOMNode(this)
 
     if (this.prevNode !== currentNode) {
       this.prevNode = currentNode
+      handleRef(this.props.innerRef, currentNode)
+    }
+
+    if (prevProps.innerRef !== this.props.innerRef) {
       handleRef(this.props.innerRef, currentNode)
     }
   }

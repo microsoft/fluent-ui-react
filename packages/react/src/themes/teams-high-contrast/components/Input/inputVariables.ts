@@ -7,5 +7,6 @@ export default (siteVars: any): Partial<InputVariables> => {
     fontColor: siteVars.bodyColor,
     iconColor: siteVars.bodyColor,
     inputFocusBorderColor: `transparent transparent ${siteVars.accessibleYellow} transparent`,
+    placeholderColor: siteVars.colors.white,
   }
 }

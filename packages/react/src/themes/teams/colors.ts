@@ -205,15 +205,6 @@ const createColorScheme = (color: string, customValues = {}) => {
   }
 }
 
-const lightColorOverrides = {
-  background: colors.black,
-  foregroundHover: colors.black,
-  foregroundActive: colors.black,
-  foregroundFocus: colors.black,
-  foregroundFocusWithin: colors.black,
-  foregroundDisabled: colors.black,
-}
-
 export const colorScheme: ColorSchemeMapping = {
   default: {
     foreground: colors.grey[750],
@@ -418,11 +409,53 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: colors.white,
   },
   grey: createColorScheme('grey'),
-  green: createColorScheme('green'),
-  orange: createColorScheme('orange', lightColorOverrides),
+  green: createColorScheme('green', {
+    background: colors.white,
+  }),
+  orange: createColorScheme('orange'),
   pink: createColorScheme('pink'),
-  red: createColorScheme('red'),
-  yellow: createColorScheme('yellow', lightColorOverrides),
+  red: {
+    foreground: colors.red[400],
+    foreground1: colors.white,
+    foreground2: colors.white,
+
+    background: colors.red[400],
+    background1: colors.red[50],
+    background2: colors.ruby[500],
+    background3: colors.red[400],
+
+    border: colors.red[100],
+
+    shadow: undefined,
+
+    foregroundHover: colors.white,
+    backgroundHover: colors.ruby[600],
+    borderHover: undefined,
+    shadowHover: undefined,
+
+    foregroundActive: undefined,
+    backgroundActive: undefined,
+    borderActive: undefined,
+    shadowActive: undefined,
+
+    foregroundFocus: undefined,
+    backgroundFocus: undefined,
+    borderFocus: undefined,
+    shadowFocus: undefined,
+
+    foregroundPressed: colors.white,
+    backgroundPressed: colors.ruby[600],
+    borderPressed: undefined,
+    shadowPressed: undefined,
+
+    foregroundDisabled: undefined,
+    backgroundDisabled: undefined,
+    borderDisabled: undefined,
+    shadowDisabled: undefined,
+  },
+  yellow: createColorScheme('yellow', {
+    background: colors.yellow[100],
+  }),
 }
 
 export const availableColors = [

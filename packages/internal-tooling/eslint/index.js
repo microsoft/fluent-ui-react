@@ -33,7 +33,6 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'import/no-named-default': 'off',
     'import/no-useless-path-segments': 'off',
-    'import/newline-after-import': 'off',
     'import/prefer-default-export': 'off',
     'react/button-has-type': 'off',
     'react/destructuring-assignment': 'off',

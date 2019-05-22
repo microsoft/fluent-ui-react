@@ -18,7 +18,7 @@ import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import ButtonGroup from './ButtonGroup'
 
 export interface ButtonProps
@@ -40,7 +40,9 @@ export interface ButtonProps
   /** A button can take the width of its container. */
   fluid?: boolean
 
-  /** Button can have an icon. */
+  /** Button can have an icon.
+   * @slot
+   */
   icon?: ShorthandValue
 
   /** A button may indicate that it has only icon. */
@@ -77,14 +79,7 @@ export interface ButtonState {
   isFromKeyboard: boolean
 }
 
-/**
- * A button indicates a possible user action.
- * @accessibility
- * Other considerations:
- *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
- *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
- */
-class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
+class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   static create: Function
 
   public static displayName = 'Button'
@@ -182,4 +177,11 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
 
 Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
 
-export default Button
+/**
+ * A button indicates a possible user action.
+ * @accessibility
+ * Other considerations:
+ *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
+ *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
+ */
+export default withSafeTypeForAs<typeof Button, ButtonProps, 'button'>(Button)
