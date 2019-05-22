@@ -274,7 +274,7 @@ Dialog.slotClassNames = {
 }
 
 /**
- * A Dialog indicates a possible user action.
+ * A Dialog displays important information on top of a page which usually requires user's attention, confirmation or interaction
  * @accessibility
  * Implements ARIA Dialog (Modal) design pattern
  */
