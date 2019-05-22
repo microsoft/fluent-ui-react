@@ -24,6 +24,7 @@ import Downshift, {
   GetInputPropsOptions,
   GetToggleButtonPropsOptions,
   GetItemPropsOptions,
+  GetLabelPropsOptions,
 } from 'downshift'
 import {
   AutoControlledComponent,
@@ -41,6 +42,7 @@ import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/acce
 import ListItem from '../List/ListItem'
 import Icon, { IconProps } from '../Icon/Icon'
 import Portal from '../Portal/Portal'
+import Text from '../Text/Text'
 
 export interface DropdownSlotClassNames {
   clearIndicator: string
@@ -121,6 +123,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    * - converts an item to string (if the item is a primitive)
    */
   itemToString?: (item: ShorthandValue) => string
+
+  /** A dropdown may have a label associated to it. */
+  label?: ShorthandValue
 
   /** A dropdown can show that it is currently loading data. */
   loading?: boolean
@@ -256,6 +261,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     inline: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
+    label: customPropTypes.itemShorthand,
     loading: PropTypes.bool,
     loadingMessage: customPropTypes.itemShorthand,
     moveFocusOnTab: PropTypes.bool,
@@ -384,6 +390,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     const {
       clearable,
       clearIndicator,
+      label,
       search,
       multiple,
       getA11yStatusMessage,
@@ -412,6 +419,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             getMenuProps,
             getRootProps,
             getToggleButtonProps,
+            getLabelProps,
             toggleMenu,
             highlightedIndex,
             selectItemAtIndex,
@@ -423,68 +431,79 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             const showClearIndicator = clearable && !this.isValueEmpty(value)
 
             return (
-              <Ref innerRef={innerRef}>
-                <div
-                  className={cx(Dropdown.slotClassNames.container, classes.container)}
-                  onClick={search && !open ? this.handleContainerClick : undefined}
-                >
+              <>
+                {label && this.renderLabel(getLabelProps)}
+                <Ref innerRef={innerRef}>
                   <div
-                    ref={this.selectedItemsRef}
-                    className={cx(Dropdown.slotClassNames.selectedItems, classes.selectedItems)}
+                    className={cx(Dropdown.slotClassNames.container, classes.container)}
+                    onClick={search && !open ? this.handleContainerClick : undefined}
                   >
-                    {multiple && this.renderSelectedItems(variables, rtl)}
-                    {search
-                      ? this.renderSearchInput(
-                          accessibilityRootPropsRest,
-                          rtl,
-                          highlightedIndex,
-                          getInputProps,
-                          selectItemAtIndex,
-                          toggleMenu,
-                          variables,
-                        )
-                      : this.renderTriggerButton(styles, rtl, getToggleButtonProps)}
+                    <div
+                      ref={this.selectedItemsRef}
+                      className={cx(Dropdown.slotClassNames.selectedItems, classes.selectedItems)}
+                    >
+                      {multiple && this.renderSelectedItems(variables, rtl)}
+                      {search
+                        ? this.renderSearchInput(
+                            accessibilityRootPropsRest,
+                            rtl,
+                            highlightedIndex,
+                            getInputProps,
+                            selectItemAtIndex,
+                            toggleMenu,
+                            variables,
+                          )
+                        : this.renderTriggerButton(
+                            styles,
+                            rtl,
+                            getToggleButtonProps,
+                            getLabelProps,
+                          )}
+                    </div>
+                    {showClearIndicator
+                      ? Icon.create(clearIndicator, {
+                          defaultProps: {
+                            className: Dropdown.slotClassNames.clearIndicator,
+                            styles: styles.clearIndicator,
+                            xSpacing: 'none',
+                          },
+                          overrideProps: (predefinedProps: IconProps) => ({
+                            onClick: (
+                              e: React.SyntheticEvent<HTMLElement>,
+                              iconProps: IconProps,
+                            ) => {
+                              _.invoke(predefinedProps, 'onClick', e, iconProps)
+                              this.handleClear(e)
+                            },
+                          }),
+                        })
+                      : Icon.create(toggleIndicator, {
+                          defaultProps: {
+                            className: Dropdown.slotClassNames.toggleIndicator,
+                            name: open ? 'stardust-arrow-up' : 'stardust-arrow-down',
+                            styles: styles.toggleIndicator,
+                          },
+                          overrideProps: (predefinedProps: IconProps) => ({
+                            onClick: (e, indicatorProps: IconProps) => {
+                              _.invoke(predefinedProps, 'onClick', e, indicatorProps)
+                              getToggleButtonProps().onClick(e)
+                            },
+                          }),
+                        })}
+                    {this.renderItemsList(
+                      styles,
+                      variables,
+                      highlightedIndex,
+                      toggleMenu,
+                      selectItemAtIndex,
+                      getMenuProps,
+                      getItemProps,
+                      getInputProps,
+                      value,
+                    )}
                   </div>
-                  {showClearIndicator
-                    ? Icon.create(clearIndicator, {
-                        defaultProps: {
-                          className: Dropdown.slotClassNames.clearIndicator,
-                          styles: styles.clearIndicator,
-                          xSpacing: 'none',
-                        },
-                        overrideProps: (predefinedProps: IconProps) => ({
-                          onClick: (e: React.SyntheticEvent<HTMLElement>, iconProps: IconProps) => {
-                            _.invoke(predefinedProps, 'onClick', e, iconProps)
-                            this.handleClear(e)
-                          },
-                        }),
-                      })
-                    : Icon.create(toggleIndicator, {
-                        defaultProps: {
-                          className: Dropdown.slotClassNames.toggleIndicator,
-                          name: open ? 'stardust-arrow-up' : 'stardust-arrow-down',
-                          styles: styles.toggleIndicator,
-                        },
-                        overrideProps: (predefinedProps: IconProps) => ({
-                          onClick: (e, indicatorProps: IconProps) => {
-                            _.invoke(predefinedProps, 'onClick', e, indicatorProps)
-                            getToggleButtonProps().onClick(e)
-                          },
-                        }),
-                      })}
-                  {this.renderItemsList(
-                    styles,
-                    variables,
-                    highlightedIndex,
-                    toggleMenu,
-                    selectItemAtIndex,
-                    getMenuProps,
-                    getItemProps,
-                    getInputProps,
-                    value,
-                  )}
-                </div>
-              </Ref>
+                </Ref>
+              </>
             )
           }}
         </Downshift>
@@ -506,17 +525,18 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     styles: ComponentSlotStylesInput,
     rtl: boolean,
     getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
+    getLabelProps: (options?: GetLabelPropsOptions) => any,
   ): JSX.Element {
-    const { triggerButton } = this.props
+    const { label, triggerButton } = this.props
     const content = this.getSelectedItemAsString(this.state.value)
-
+    const labelProps = getLabelProps()
     const triggerButtonProps = getToggleButtonProps({
       onFocus: this.handleTriggerButtonOrListFocus,
       onBlur: this.handleTriggerButtonBlur,
       onKeyDown: e => {
         this.handleTriggerButtonKeyDown(e, rtl)
       },
-      'aria-label': content,
+      'aria-label': undefined,
     })
 
     const { onClick, onFocus, onBlur, onKeyDown, ...restTriggerButtonProps } = triggerButtonProps
@@ -529,6 +549,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             content,
             fluid: true,
             styles: styles.triggerButton,
+            ...(label && { 'aria-labelledby': labelProps['id'] }),
             ...restTriggerButtonProps,
           },
           overrideProps: (predefinedProps: IconProps) => ({
@@ -718,6 +739,17 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
         render: renderSelectedItem,
       }),
     )
+  }
+
+  private renderLabel(getLabelProps: (options?: GetLabelPropsOptions) => any) {
+    const { label, search } = this.props
+    return Text.create(label, {
+      defaultProps: {
+        as: 'label',
+        ...getLabelProps(),
+        ...(!search && { htmlFor: undefined }),
+      },
+    })
   }
 
   private handleSearchQueryChange = (searchQuery: string) => {
