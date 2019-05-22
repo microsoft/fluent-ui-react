@@ -33,6 +33,9 @@ const getItemAtIndexWrapper = (wrapper: ReactWrapper, index: number = 0): Common
 const getSelectedItemAtIndexWrapper = (wrapper: ReactWrapper, index: number = 0): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`).at(index)
 
+const getLabelWrapper = (wrapper: ReactWrapper): CommonWrapper =>
+  findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.label}`)
+
 const getSelectedItemHeaderAtIndexWrapper = (
   wrapper: ReactWrapper,
   index: number = 0,
@@ -1414,7 +1417,7 @@ describe('Dropdown', () => {
   })
 
   describe('items', () => {
-    it('have onClick called when passed stop event from being propagated', () => {
+    it('have onClick called if passed and stop the event from being propagated', () => {
       const onClick = jest.fn()
       const stopPropagation = jest.fn()
       const stopImmediatePropagation = jest.fn()
@@ -1438,11 +1441,10 @@ describe('Dropdown', () => {
       expect(stopImmediatePropagation).toBeCalledTimes(1)
     })
 
-    it('when selected have onClick called when passed stop event from being propagated', () => {
+    it('when selected have onClick called if passed and stop the event from being propagated', () => {
       const onClick = jest.fn()
       const stopPropagation = jest.fn()
-      const stopImmediatePropagation = jest.fn()
-      const mockedEvent = { stopPropagation, nativeEvent: { stopImmediatePropagation } }
+      const mockedEvent = { stopPropagation, nativeEvent: { stopImmediatePropagation: jest.fn() } }
       const items = [{ header: 'Venom', onClick }]
       const wrapper = mountWithProvider(<Dropdown items={items} value={items} multiple />)
       const selectedItemHeaderAtIndex0 = getSelectedItemHeaderAtIndexWrapper(wrapper, 0)
@@ -1457,6 +1459,17 @@ describe('Dropdown', () => {
         }),
       )
       expect(stopPropagation).toBeCalledTimes(1)
+    })
+  })
+
+  describe('label', () => {
+    it('is rendered with the text passed as prop', () => {
+      const labelText = 'Add People'
+      const wrapper = mountWithProvider(<Dropdown items={items} label={labelText} />)
+      const label = getLabelWrapper(wrapper)
+
+      expect(label.exists()).toBe(true)
+      expect(label.getDOMNode().textContent).toBe(labelText)
     })
   })
 })

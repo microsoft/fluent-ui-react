@@ -54,6 +54,7 @@ export interface DropdownSlotClassNames {
   selectedItem: string
   selectedItems: string
   triggerButton: string
+  label: string
 }
 
 export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownState> {
@@ -746,6 +747,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     return Text.create(label, {
       defaultProps: {
         as: 'label',
+        className: Dropdown.slotClassNames.label,
         ...getLabelProps(),
         ...(!search && { htmlFor: undefined }),
       },
@@ -1317,6 +1319,7 @@ Dropdown.slotClassNames = {
   selectedItem: `${Dropdown.className}__selecteditem`,
   selectedItems: `${Dropdown.className}__selected-items`,
   triggerButton: `${Dropdown.className}__trigger-button`,
+  label: `${Dropdown.className}__label`,
 }
 
 /**
