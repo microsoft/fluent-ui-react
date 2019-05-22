@@ -278,20 +278,19 @@ definitions.push({
 
 // Example: Adds attribute 'aria-hidden=true', if there is no 'alt' property provided.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=(\w+)', if there is no 'alt' property provided\./g,
+  regexp: /Adds attribute '([\w-]+)=(\w+)', if there is no '([\w-]+)' property provided\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, attributeExpectedValue] = [...parameters.props]
+    const [attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = [...parameters.props]
     const property = {}
     const expectedResult = parameters.behavior(property).attributes.root[attributeToBeAdded]
     expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toBe(
       testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
     )
 
-    const propertyWithAlt = { alt: 'mockText' }
-    const expectedResultWithAlt = parameters.behavior(propertyWithAlt).attributes.root[
-      attributeToBeAdded
-    ]
-    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultWithAlt)).toBe(
+    const dependingOnProperty = { [propertyDependingOn]: 'mockText' }
+    const expectedResultForPropertyDependingOn = parameters.behavior(dependingOnProperty).attributes
+      .root[attributeToBeAdded]
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultForPropertyDependingOn)).toBe(
       testHelper.convertToMatchingTypeIfApplicable(undefined),
     )
   },
