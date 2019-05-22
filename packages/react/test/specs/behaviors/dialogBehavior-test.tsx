@@ -2,13 +2,6 @@ import { dialogBehavior } from 'src/lib/accessibility'
 import Button from 'src/components/Button/Button'
 import * as React from 'react'
 
-const popupBehaviorMock = jest.fn()
-
-jest.doMock('src/lib/accessibility', () => ({
-  popupBehavior: popupBehaviorMock,
-  dialogBehavior,
-}))
-
 describe('DialogBehavior.ts', () => {
   test('adds tabIndex=0 to trigger if element is not tabbable and tabIndex attribute is not provided', () => {
     const expectedResult = dialogBehavior({ trigger: <div /> })
