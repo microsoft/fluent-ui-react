@@ -5,6 +5,8 @@ const accordionStyles = {
     verticalAlign: 'middle',
     display: 'flex',
     flexDirection: 'column',
+    marginBlockEnd: 0,
+    marginBlockStart: 0,
   }),
 }
 

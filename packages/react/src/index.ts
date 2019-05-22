@@ -14,6 +14,10 @@ export * from '@stardust-ui/react-component-ref'
 
 export * from './components/Accordion/Accordion'
 export { default as Accordion } from './components/Accordion/Accordion'
+export * from './components/Accordion/AccordionTitle'
+export { default as AccordionTitle } from './components/Accordion/AccordionTitle'
+export * from './components/Accordion/AccordionContent'
+export { default as AccordionContent } from './components/Accordion/AccordionContent'
 
 export * from './components/Alert/Alert'
 export { default as Alert } from './components/Alert/Alert'
