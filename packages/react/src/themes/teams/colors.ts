@@ -500,7 +500,7 @@ export const getColorSchemeKey = (color: string, primary?: boolean): string => {
   return color && isValidColor(color) ? color : primary ? 'brand' : 'default'
 }
 
-export const getColorScheme = <T extends ComponentAreaName>(
+export const getColorScheme = <T extends ComponentAreaName | string>(
   colorScheme: StrictColorSchemeMapping<StrictColorScheme<T>, TeamsColorNames>,
   color?: string,
   primary?: boolean,

@@ -2,7 +2,7 @@ import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle, StrictColorScheme } from '../../../types'
 import { MenuVariables, MenuColorComponentAreas } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
-import { getColorSchemeKey } from '../../colors'
+import { getColorScheme } from '../../colors'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
@@ -154,7 +154,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       primary,
     } = props
 
-    const colors = v.colorScheme[getColorSchemeKey(null, primary)]
+    const colors = getColorScheme(v.colorScheme, null, primary)
 
     return {
       color: 'inherit',
@@ -285,7 +285,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       disabled,
     } = p
 
-    const colors = v.colorScheme[getColorSchemeKey(null, primary)]
+    const colors = getColorScheme(v.colorScheme, null, primary)
 
     return {
       color: 'inherit',
