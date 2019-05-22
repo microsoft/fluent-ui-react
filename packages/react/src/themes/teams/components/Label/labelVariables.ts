@@ -1,16 +1,13 @@
 import { pxToRem } from '../../../../lib'
+import { SiteVariablesPrepared, StrictColorSchemeMapping, StrictColorScheme } from '../../../types'
 import {
-  SiteVariablesPrepared,
-  StrictColorSchemeMapping,
-  StrictColorScheme,
-  ComponentAreaName,
-} from '../../../types'
-import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
+  extendColorScheme,
+  pickValuesFromColorScheme,
+  generateComponentAreas,
+} from '../../../colorUtils'
 import { TeamsColorNames } from '../../colors'
 
-// TODO extract this to a util
-const tuple = <T extends ComponentAreaName>(...args: T[]) => args
-const labelColorComponentAreas = tuple('background', 'foreground')
+const labelColorComponentAreas = generateComponentAreas('foreground', 'background')
 type LabelColorComponentAreas = typeof labelColorComponentAreas[number]
 
 type LabelColorSchemeMapping = StrictColorSchemeMapping<
