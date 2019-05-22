@@ -1,10 +1,11 @@
 import * as _ from 'lodash'
 
 import { callable, pxToRem, SizeValue } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesInput, ICSSInJSStyle, StrictColorScheme } from '../../../types'
 import { IconProps } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, IconSizeModifier } from './iconVariables'
+import { IconColorComponentAreas } from 'src/themes/teams/components/Icon/iconVariables'
 
 const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),
@@ -33,7 +34,7 @@ const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier, v: IconVar
   return modifiedSizes[size] && pxToRem(modifiedSizes[size][sizeModifier])
 }
 
-const getIconColor = (variables, colors) => {
+const getIconColor = (variables, colors: StrictColorScheme<IconColorComponentAreas>) => {
   return _.get(colors, 'foreground', variables.color || 'currentColor')
 }
 

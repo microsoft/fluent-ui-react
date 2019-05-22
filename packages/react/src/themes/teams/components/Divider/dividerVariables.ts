@@ -1,10 +1,20 @@
 import { FontWeightProperty } from 'csstype'
 
 import { pxToRem } from '../../../../lib'
-import { ColorSchemeMapping } from '../../../types'
+import { StrictColorSchemeMapping, StrictColorScheme } from 'src/themes/types'
+import { TeamsColorNames } from 'src/themes/teams/colors'
+import { generateComponentAreas, pickValuesFromColorScheme } from 'src/themes/colorUtils'
+
+export const dividerColorComponentAreas = generateComponentAreas('foreground')
+export type DividerColorComponentAreas = typeof dividerColorComponentAreas[number]
+
+export type DividerColorSchemeMapping = StrictColorSchemeMapping<
+  StrictColorScheme<DividerColorComponentAreas>,
+  TeamsColorNames
+>
 
 export interface DividerVariables {
-  colorScheme: ColorSchemeMapping
+  colorScheme: DividerColorSchemeMapping
   dividerColor: string
   textColor: string
   textFontSize: string
@@ -14,7 +24,7 @@ export interface DividerVariables {
 }
 
 export default (siteVars: any): DividerVariables => ({
-  colorScheme: siteVars.colorScheme,
+  colorScheme: pickValuesFromColorScheme(siteVars.colorScheme, dividerColorComponentAreas),
   dividerColor: siteVars.colors.grey[150],
   textColor: siteVars.colors.grey[450],
   textFontSize: siteVars.fontSizeSmall,
