@@ -7,7 +7,7 @@ import {
 import { StrictColorSchemeMapping, StrictColorScheme } from '../../../types'
 import { TeamsColorNames } from '../../colors'
 
-const menuColorComponentAreas = generateComponentAreas(
+export const menuColorComponentAreas = generateComponentAreas(
   'border',
   'borderActive',
   'foregroundActive',

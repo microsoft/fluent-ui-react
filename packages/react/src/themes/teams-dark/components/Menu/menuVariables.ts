@@ -1,21 +1,30 @@
-import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
-import { extendColorScheme } from '../../../colorUtils'
+import {
+  MenuVariables,
+  menuColorComponentAreas,
+} from '../../../teams/components/Menu/menuVariables'
+import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
 
 export default (siteVars: any): Partial<MenuVariables> => ({
-  colorScheme: extendColorScheme(siteVars.colorScheme, {
-    default: {
-      borderActive: siteVars.colors.grey[600],
-      backgroundFocus1: siteVars.colors.grey[500],
-    },
-    brand: {
-      foregroundHover: siteVars.colors.white,
-      backgroundHover: siteVars.colors.brand[300],
-      borderActive: siteVars.colors.brand[400],
-      foregroundActive: siteVars.colors.white,
-      foregroundFocus: siteVars.colors.white,
-      backgroundFocus1: siteVars.colors.brand[300],
-    },
-  }),
+  colorScheme: pickValuesFromColorScheme(
+    extendColorScheme(siteVars.colorScheme, {
+      default: {
+        borderActive: siteVars.colors.grey[600],
+        backgroundFocus: siteVars.colors.grey[500],
+        backgroundActive: siteVars.colorScheme.default.backgroundActive1,
+        foregroundDisabled: siteVars.colorScheme.default.foregroundDisabled1,
+      },
+      brand: {
+        foregroundHover: siteVars.colors.white,
+        backgroundHover: siteVars.colors.brand[300],
+        borderActive: siteVars.colors.brand[400],
+        foregroundActive: siteVars.colors.white,
+        foregroundFocus: siteVars.colors.white,
+        backgroundFocus: siteVars.colors.brand[300],
+        foregroundDisabled: siteVars.colorScheme.brand.foregroundDisabled1,
+      },
+    }),
+    menuColorComponentAreas,
+  ),
 
   color: siteVars.colors.grey[250],
   colorActive: siteVars.colors.white,
