@@ -685,6 +685,13 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
+"@babel/runtime@^7.4.5":
+  version "7.4.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.5.tgz#582bb531f5f9dc67d2fcb682979894f75e253f12"
+  integrity sha512-TuI4qpWZP6lGOGIuGWtp9sPluqYICmbk8T/1vpSysqJxRPkudh/ofFWyqdcMsDf2s7KvDL4/YHgKyvcS3g9CJQ==
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
 "@babel/standalone@^7.3.2":
   version "7.3.2"
   resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.3.2.tgz#0395f807a728201af306994f7cd27d1f3a671ff6"
@@ -4476,12 +4483,12 @@ deep-is@~0.1.3:
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
   integrity sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=
 
-deepmerge@3.1.0, deepmerge@^3.1.0:
+deepmerge@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-3.1.0.tgz#a612626ce4803da410d77554bfd80361599c034d"
   integrity sha512-/TnecbwXEdycfbsM2++O3eGiatEFHjjNciHEwJclM+T5Kd94qD1AP+2elP/Mq0L5b9VZJao5znR01Mz6eX8Seg==
 
-deepmerge@^2.0.1:
+deepmerge@^2.0.1, deepmerge@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.2.1.tgz#5d3ff22a01c00f645405a2fbc17d0778a1801170"
   integrity sha512-R9hc1Xa/NOBi9WRVUWg19rl1UB7Tt4kuPd+thNJgFZoxXsTz7ncaPaeIm+40oSGuP33DfMb4sZt1QIGiJzC4EA==
@@ -11634,6 +11641,11 @@ react-element-to-jsx-string@^14.0.2:
     is-plain-object "2.0.4"
     stringify-object "3.2.2"
 
+react-fast-compare@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
+  integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
+
 react-fela@^10.2.0:
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/react-fela/-/react-fela-10.2.0.tgz#dd702239e228847b5ac6504a62fdea8bcd8f9650"
@@ -11727,15 +11739,16 @@ react-side-effect@^1.0.2:
     exenv "^1.2.1"
     shallowequal "^1.0.1"
 
-react-source-render@2.0.0-beta.6:
-  version "2.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/react-source-render/-/react-source-render-2.0.0-beta.6.tgz#d83a530ae914922517bd88207dc11fddb3622d70"
-  integrity sha512-6umjXJE8ijGjjnOGmnlU2Iwk0v3BLGz+G2+/oUoPbxM6zutEur6aXCUB/Rsf5c88LfGOM6vwNrgR7D6NaY5/4A==
+react-source-render@3.0.0-2:
+  version "3.0.0-2"
+  resolved "https://registry.yarnpkg.com/react-source-render/-/react-source-render-3.0.0-2.tgz#a147753c86d8560644c417f6e5e8d8430dde5868"
+  integrity sha512-ct26efgKnWpCHEfOEdyxo1xC5+2IyupiXUm0Z6diFw2UnNPjnXUQ9uSKK3UMV+qmodScMYYGLJIAJ532DvF0Hg==
   dependencies:
-    deepmerge "^3.1.0"
-    fast-memoize "^2.5.1"
+    "@babel/runtime" "^7.4.5"
+    deepmerge "^2.2.1"
     prop-types "^15.6.2"
-    react-is "^16.8.1"
+    react-fast-compare "^2.0.4"
+    react-is "^16.6.3"
 
 react-test-renderer@^16.0.0-0, react-test-renderer@^16.8.5:
   version "16.8.6"
@@ -12019,6 +12032,11 @@ regenerator-runtime@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.12.0.tgz#8052ac952d85b10f3425192cd0c53f45cf65c6cb"
   integrity sha512-SpV2LhF5Dm9UYMEprB3WwsBnWwqTrmjrm2UZb42cl2G02WVGgx7Mg8aa9pdLEKp6hZ+/abcMc2NxKA8f02EG2w==
+
+regenerator-runtime@^0.13.2:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
+  integrity sha512-S/TQAZJO+D3m9xeN1WTI8dLKBBiRgXBlTJvbWjCThHWZj9EvHK70Ff50/tYj2J/fvBY6JtFVwRuazHN2E7M9BA==
 
 regenerator-transform@^0.13.4:
   version "0.13.4"

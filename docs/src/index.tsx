@@ -28,10 +28,9 @@ if (__DEV__) {
     module.hot.accept('./app', () => {
       // restore scroll
       const { scrollLeft, scrollTop } = document.scrollingElement!
-      ReactDOM.unmountComponentAtNode(mountNode)
 
       try {
-        render(require('./app').default)
+        render(App)
         document.scrollingElement!.scrollTop = scrollTop
         document.scrollingElement!.scrollLeft = scrollLeft
       } catch (e) {
