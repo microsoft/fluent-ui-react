@@ -34,6 +34,7 @@ const ColorSchemes = createComponent<ColorVariantsProps>({
 
     const elements = _.flatMap(_.head(colorSchemes), (i, token) => [
       <ColorBox
+        header={true}
         name={token}
         key={`${token}schema`}
         size="small"
