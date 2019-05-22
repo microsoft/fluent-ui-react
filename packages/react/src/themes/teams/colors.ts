@@ -4,8 +4,10 @@ import {
   ColorSchemeMapping,
   ColorVariants,
   ComponentAreaName,
+  ColorScheme,
+  StrictColorSchemeMapping,
+  StrictColorScheme,
 } from '../types'
-import { ColorScheme, StrictColorSchemeMapping, StrictColorScheme } from 'src/themes/types'
 
 export type TeamsContextualColors = {
   brand: ColorVariants
