@@ -1,5 +1,5 @@
 import { EventHandler, EventTypes } from '../types'
-import { ListenerActionOptions } from '../types.private'
+import { ListenerActionOptions } from '../types.internal'
 
 const addEventListener = (listener: EventHandler<EventTypes>, options: ListenerActionOptions) => {
   const { targetRef, type, capture } = options
