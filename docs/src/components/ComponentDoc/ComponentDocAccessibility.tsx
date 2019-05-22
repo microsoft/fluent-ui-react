@@ -17,28 +17,45 @@ const ComponentDocAccessibility = ({ info }) => {
 
   if (!behaviorName && !description) return null
 
+  const formattedDescription =
+    description &&
+    description.split('\r').map(line => (
+      <>
+        {line}
+        <br />
+      </>
+    ))
+
   const accessibilityDetails = (
     <>
-      {description && <Text style={{ whiteSpace: 'pre-line' }}>{description}</Text>}
+      {formattedDescription && (
+        <Text style={{ whiteSpace: 'pre-line' }}>{formattedDescription}</Text>
+      )}
 
       {behaviorName && (
-        <Text>
-          Default behavior:{' '}
-          <a href={`behaviors/${behaviorName}#${_.kebabCase(stem)}`}>{behaviorName}</a>
-        </Text>
+        <>
+          <Text>
+            Default behavior:{' '}
+            <a href={`behaviors/${behaviorName}#${_.kebabCase(stem)}`}>{behaviorName}</a>
+          </Text>
+          <br />
+        </>
       )}
 
       {info.behaviors && (
-        <Text>
-          Available behaviors:{' '}
-          {info.behaviors.map(behavior => (
-            <React.Fragment key={`${behavior.category}-${behavior.name}`}>
-              <a href={`behaviors/${behavior.category}#${_.kebabCase(behavior.name)}`}>
-                {behavior.displayName}
-              </a>{' '}
-            </React.Fragment>
-          ))}
-        </Text>
+        <>
+          <Text>
+            Available behaviors:{' '}
+            {info.behaviors.map(behavior => (
+              <React.Fragment key={`${behavior.category}-${behavior.name}`}>
+                <a href={`behaviors/${behavior.category}#${_.kebabCase(behavior.name)}`}>
+                  {behavior.displayName}
+                </a>{' '}
+              </React.Fragment>
+            ))}
+          </Text>
+          <br />
+        </>
       )}
     </>
   )
@@ -47,7 +64,7 @@ const ComponentDocAccessibility = ({ info }) => {
     {
       key: 'accessibility',
       content: { content: accessibilityDetails },
-      title: { content: 'Accessibility', as: 'h2' },
+      title: { content: <Text as="h2" content="Accessibility" />, as: 'span' },
     },
   ]
 

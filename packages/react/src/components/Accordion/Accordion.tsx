@@ -201,6 +201,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, any>
  * An accordion allows users to toggle the display of sections of content.
  * @accessibility
  * Implements ARIA Accordion design pattern (keyboard navigation not yet supported).
- * Consider using Tree if you intend to wrap Lists in an Accordion.
+ * DO use Accordion for grouping parts of the UI (multipart forms, articales...)
+ * DO use Tree component to display a hierarchical structure that allows user to select one item
  */
 export default withSafeTypeForAs<typeof Accordion, AccordionProps>(Accordion)

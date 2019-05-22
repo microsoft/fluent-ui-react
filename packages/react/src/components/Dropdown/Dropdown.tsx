@@ -1292,5 +1292,7 @@ Dropdown.slotClassNames = {
  * Can also be created with search capability.
  * @accessibility
  * Implements ARIA collapsible Listbox design pattern, uses aria-live to announce state changes.
+ * DO provide getA11ySelectionMessage, getA11yStatusMessage, noResultsMessage and loadingMessage props to announce state changes correctly
+ * DO provide aria-label to triggerButton slot for non-searchable variants if the placeholder prop is not used
  */
 export default withSafeTypeForAs<typeof Dropdown, DropdownProps>(Dropdown)

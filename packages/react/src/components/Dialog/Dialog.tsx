@@ -275,5 +275,7 @@ Dialog.slotClassNames = {
 
 /**
  * A Dialog indicates a possible user action.
+ * @accessibility
+ * Implements ARIA Dialog (Modal) design pattern
  */
 export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)
