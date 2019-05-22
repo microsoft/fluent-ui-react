@@ -1,5 +1,11 @@
-import { ColorPalette, PrimitiveColors, ColorSchemeMapping, ColorVariants } from '../types'
-import { ColorScheme } from 'src/themes/types'
+import {
+  ColorPalette,
+  PrimitiveColors,
+  ColorSchemeMapping,
+  ColorVariants,
+  ComponentAreaName,
+} from '../types'
+import { ColorScheme, StrictColorSchemeMapping, StrictColorScheme } from 'src/themes/types'
 
 export type TeamsContextualColors = {
   brand: ColorVariants
@@ -492,4 +498,12 @@ export const isValidColor = (color: string): boolean => {
 
 export const getColorSchemeKey = (color: string, primary?: boolean): string => {
   return color && isValidColor(color) ? color : primary ? 'brand' : 'default'
+}
+
+export const getColorScheme = <T extends ComponentAreaName>(
+  colorScheme: StrictColorSchemeMapping<StrictColorScheme<T>, TeamsColorNames>,
+  color?: string,
+  primary?: boolean,
+): StrictColorScheme<T> => {
+  return colorScheme[getColorSchemeKey(color, primary)]
 }

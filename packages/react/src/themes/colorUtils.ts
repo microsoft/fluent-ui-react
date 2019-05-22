@@ -22,7 +22,7 @@ export const extendColorScheme = (
   return result
 }
 
-export function pickValuesFromColorScheme<T extends Partial<ComponentAreaName>>(
+export function pickValuesFromColorScheme<T extends ComponentAreaName | string = ComponentAreaName>(
   colorScheme: ColorSchemeMapping,
   componentAreas: T[],
 ): ColorSchemeMapping<ColorScheme<T>> {
@@ -42,7 +42,7 @@ export function pickValuesFromColorScheme<T extends Partial<ComponentAreaName>>(
   return result
 }
 
-export const generateComponentAreas = <T extends ComponentAreaName>(...args: T[]): T[] => {
-  const tuple = <T extends ComponentAreaName>(...args: T[]) => args
+export const generateComponentAreas = <T extends ComponentAreaName | string>(...args: T[]): T[] => {
+  const tuple = <T extends ComponentAreaName | string>(...args: T[]) => args
   return tuple(...args)
 }
