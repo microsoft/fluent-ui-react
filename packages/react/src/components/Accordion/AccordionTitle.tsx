@@ -18,7 +18,6 @@ import {
 import { WithAsProp, ComponentEventHandler, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
 import Layout from '../Layout/Layout'
-import Box from '../Box/Box'
 import { accordionTitleBehavior } from '../../lib/accessibility'
 import { AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
@@ -111,23 +110,20 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
 
     const contentElement = (
       <Ref innerRef={contentRef}>
-        <Box
+        <Layout
           onFocus={this.handleFocus}
           onClick={this.handleClick}
           className={AccordionTitle.slotClassNames.content}
           {...accessibility.attributes.content}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.content, unhandledProps)}
-        >
-          <Layout
-            start={Icon.create(indicatorWithDefaults, {
-              defaultProps: {
-                name: active ? 'stardust-arrow-down' : 'stardust-arrow-end',
-                styles: styles.indicator,
-              },
-            })}
-            main={rtlTextContainer.createFor({ element: content })}
-          />
-        </Box>
+          start={Icon.create(indicatorWithDefaults, {
+            defaultProps: {
+              name: active ? 'stardust-arrow-down' : 'stardust-arrow-end',
+              styles: styles.indicator,
+            },
+          })}
+          main={rtlTextContainer.createFor({ element: content })}
+        />
       </Ref>
     )
 
