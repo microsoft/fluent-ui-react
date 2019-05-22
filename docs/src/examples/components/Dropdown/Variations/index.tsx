@@ -19,6 +19,11 @@ const Variations = () => (
       description="A multiple search dropdown that uses French to provide information and accessibility."
       examplePath="components/Dropdown/Variations/DropdownExampleSearchMultipleFrenchLanguage"
     />
+    <ComponentExample
+      title="Multiple Search with a Label"
+      description="A multiple search dropdown that also has a label attached to it"
+      examplePath="components/Dropdown/Variations/DropdownExampleSearchMultipleLabel"
+    />
   </ExampleSection>
 )
 
