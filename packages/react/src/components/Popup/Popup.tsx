@@ -27,7 +27,7 @@ import {
   ALIGNMENTS,
   POSITIONS,
   Popper,
-  PositionCommonProps,
+  PositioningProps,
   PopperChildrenProps,
 } from '../../lib/positioner'
 import PopupContent from './PopupContent'
@@ -58,7 +58,7 @@ export interface PopupProps
   extends StyledComponentProps<PopupProps>,
     ChildrenComponentProps,
     ContentComponentProps<ShorthandValue>,
-    PositionCommonProps {
+    PositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default popupBehavior

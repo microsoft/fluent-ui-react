@@ -7,7 +7,7 @@ export const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center
 
 export type PopperChildrenFn = (props: PopperChildrenProps) => React.ReactNode
 
-export interface PositionCommonProps {
+export interface PositioningProps {
   /**
    * Alignment for the component.
    */
@@ -31,7 +31,7 @@ export interface PositionCommonProps {
   position?: Position
 }
 
-export interface PopperProps extends PositionCommonProps {
+export interface PopperProps extends PositioningProps {
   /**
    * Ref object containing the pointer node.
    */

@@ -202,7 +202,7 @@ export {
   Alignment,
   Position,
   Popper as UNSTABLE_Popper,
-  PositionCommonProps,
+  PositioningProps,
   PopperChildrenProps,
 } from './lib/positioner'
 
