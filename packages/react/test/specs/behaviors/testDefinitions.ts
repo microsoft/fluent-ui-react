@@ -110,13 +110,16 @@ definitions.push({
   },
 })
 
-// Example: Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
+// Example: Adds attribute 'aria-expanded=true' based on the property 'active' to 'button' component's part.
+//          Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)' based on the property '([\w-]+)' to '([\w-]+)' component's part\./g,
+  regexp: /Adds attribute '([\w-]+)=*([\w-]*)' based on the property '([\w-]+)' to '([\w-]+)' component's part\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, propertyDependingOn, elementWhereToBeAdded] = [...parameters.props]
+    const [attributeToBeAdded, attibuteValue, propertyDependingOn, elementWhereToBeAdded] = [
+      ...parameters.props,
+    ]
     const property = {}
-    const propertyDependingOnValue = 'value of property'
+    const propertyDependingOnValue = attibuteValue || 'value of property'
     property[propertyDependingOn] = propertyDependingOnValue
     const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
       attributeToBeAdded
@@ -338,17 +341,42 @@ definitions.push({
 
 // Example: Adds role='button' if element type is other than 'button'.
 definitions.push({
-  regexp: /Adds role='(\w+)' if element type is other than '\w+'\./g,
+  regexp: /Adds role='(\w+)' if element type is other than '(\w+)'\./g,
   testMethod: (parameters: TestMethod) => {
-    const [roleToBeAdded] = [...parameters.props]
+    const [roleToBeAdded, as] = [...parameters.props]
     const property = {}
     const expectedResult = parameters.behavior(property).attributes.root.role
     expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toBe(
       testHelper.convertToMatchingTypeIfApplicable(roleToBeAdded),
     )
 
-    const propertyAsButton = { as: 'button' }
+    const propertyAsButton = { as }
     const expectedResultAsButton = parameters.behavior(propertyAsButton).attributes.root.role
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAsButton)).toBe(
+      testHelper.convertToMatchingTypeIfApplicable(undefined),
+    )
+  },
+})
+
+// Example: Adds attribute 'role=button' to 'button' component's part if element type is other than 'button'.
+definitions.push({
+  regexp: /Adds attribute '([\w-]+)=(\w+)' to '(\w+)' component's part if element type is other than '(\w+)'\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [attributeToBeAdded, attributeExpectedValue, elementWhereToBeAdded, as] = [
+      ...parameters.props,
+    ]
+    const property = {}
+    const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
+      attributeToBeAdded
+    ]
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toBe(
+      testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
+    )
+
+    const propertyAsButton = { as }
+    const expectedResultAsButton = parameters.behavior(propertyAsButton).attributes[
+      elementWhereToBeAdded
+    ][attributeToBeAdded]
     expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAsButton)).toBe(
       testHelper.convertToMatchingTypeIfApplicable(undefined),
     )

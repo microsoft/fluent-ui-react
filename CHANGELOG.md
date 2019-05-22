@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add keyboard navigation and screen reader support for `Accordion` @silviuavram ([#1322](https://github.com/stardust-ui/react/pull/1322)) 
+- Add `expanded` prop to `Accordion` @silviuavram ([#1322](https://github.com/stardust-ui/react/pull/1322)) 
+
 <!--------------------------------[ v0.31.0 ]------------------------------- -->
 ## [v0.31.0](https://github.com/stardust-ui/react/tree/v0.31.0) (2019-05-21)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.30.0...v0.31.0)

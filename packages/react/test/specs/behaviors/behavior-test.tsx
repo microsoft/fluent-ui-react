@@ -36,6 +36,9 @@ import {
   gridBehavior,
   statusBehavior,
   alertWarningBehavior,
+  accordionBehavior,
+  accordionTitleBehavior,
+  accordionContentBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -76,5 +79,8 @@ testHelper.addBehavior('gridBehavior', gridBehavior)
 testHelper.addBehavior('dialogBehavior', dialogBehavior)
 testHelper.addBehavior('statusBehavior', statusBehavior)
 testHelper.addBehavior('alertWarningBehavior', alertWarningBehavior)
+testHelper.addBehavior('accordionBehavior', accordionBehavior)
+testHelper.addBehavior('accordionTitleBehavior', accordionTitleBehavior)
+testHelper.addBehavior('accordionContentBehavior', accordionContentBehavior)
 
 testHelper.run(behaviorMenuItems)
