@@ -1,1 +1,2 @@
-export { default, ComponentExampleProps } from './ComponentExample'
+export * from './ComponentExample'
+export { default } from './ComponentExample'
