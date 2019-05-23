@@ -32,6 +32,7 @@ import { WithAsProp } from '../../types'
 export interface ProviderProps extends ChildrenComponentProps {
   theme: ThemeInput
   variables?: ComponentVariablesInput
+  disableAnimations?: boolean
 }
 
 /**
@@ -68,6 +69,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       animations: PropTypes.object,
     }),
     children: PropTypes.node.isRequired,
+    disableAnimations: PropTypes.bool,
   }
 
   static Consumer = ProviderConsumer

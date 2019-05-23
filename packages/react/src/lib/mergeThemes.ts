@@ -167,6 +167,12 @@ export const mergeRTL = (target, ...sources) => {
   }, target)
 }
 
+export const mergeDisableAnimations = (target, ...sources) => {
+  return sources.reduce((acc, next) => {
+    return typeof next === 'boolean' ? next : acc
+  }, target)
+}
+
 export const mergeFontFaces = (...sources: FontFace[]) => {
   return toCompactArray<FontFace>(...sources)
 }
@@ -225,6 +231,15 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
 
     // Use the correct renderer for RTL
     acc.renderer = acc.rtl ? felaRtlRenderer : felaRenderer
+
+    // Latest disableAnimations value wins
+    const mergedDisableAnimations = mergeDisableAnimations(
+      acc.disableAnimations,
+      next.disableAnimations,
+    )
+    if (typeof mergedDisableAnimations === 'boolean') {
+      acc.disableAnimations = mergedDisableAnimations
+    }
 
     acc.fontFaces = mergeFontFaces(...acc.fontFaces, ...(next.fontFaces || []))
 
