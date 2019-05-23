@@ -1,4 +1,6 @@
 import * as React from 'react'
+import * as _ from 'lodash'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import {
   childrenExist,
@@ -12,17 +14,13 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { WithAsProp, withSafeTypeForAs } from '../../types'
+import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 
 import ToolbarItem from './ToolbarItem'
 import ToolbarDivider from './ToolbarDivider'
-import ToolbarGroup from './ToolbarGroup'
+import ToolbarRadioGroup from './ToolbarRadioGroup'
 
-import {
-  collectionShorthandToolbarItem,
-  renderToolbarItems,
-  ToolbarItemShorthandCollection,
-} from './renderToolbarItems'
+export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'button' | 'group'
 
 export interface ToolbarProps
   extends UIComponentProps,
@@ -35,7 +33,7 @@ export interface ToolbarProps
    */
   accessibility?: Accessibility
 
-  items?: ToolbarItemShorthandCollection
+  items?: ShorthandCollection<ToolbarItemShorthandKinds>
 }
 
 class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
@@ -47,7 +45,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
-    items: collectionShorthandToolbarItem(),
+    items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item', 'button', 'group']),
   }
 
   static defaultProps = {
@@ -56,7 +54,22 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
 
   static Item = ToolbarItem
   static Divider = ToolbarDivider
-  static Group = ToolbarGroup
+  static RadioGroup = ToolbarRadioGroup
+
+  private renderItems(items) {
+    return _.map(items, (item, index) => {
+      const kind = _.get(item, 'kind', 'item')
+
+      switch (kind) {
+        case 'divider':
+          return ToolbarDivider.create(item)
+        case 'group':
+          return ToolbarRadioGroup.create(item)
+        default:
+          return ToolbarItem.create(item)
+      }
+    })
+  }
 
   renderComponent({ accessibility, ElementType, classes, unhandledProps }): React.ReactNode {
     const { children, items } = this.props
@@ -68,7 +81,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
         {...accessibility.attributes.root}
         {...unhandledProps}
       >
-        {childrenExist(children) ? children : renderToolbarItems(items)}
+        {childrenExist(children) ? children : this.renderItems(items)}
       </ElementType>
     )
   }
