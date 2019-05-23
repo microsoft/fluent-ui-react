@@ -1,4 +1,5 @@
-import { EventHandler, EventTypes, ListenerActionOptions } from '../types'
+import { EventHandler, EventTypes } from '../types'
+import { ListenerActionOptions } from '../types.internal'
 
 const removeEventListener = (
   listener: EventHandler<EventTypes>,

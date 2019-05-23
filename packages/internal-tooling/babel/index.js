@@ -1,25 +1,16 @@
 module.exports = {
   presets: [
-    [
-      '@babel/preset-env',
-      {
-        useBuiltIns: 'entry',
-      },
-    ],
+    ['@babel/preset-env', { modules: false }],
     '@babel/preset-react',
     '@babel/preset-typescript',
   ],
-  plugins: ['@babel/plugin-proposal-class-properties'],
+  plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime'],
   env: {
+    delelopment: {
+      plugins: ['react-hot-loader/babel'],
+    },
     test: {
-      plugins: [
-        [
-          '@babel/plugin-transform-runtime',
-          {
-            regenerator: true,
-          },
-        ],
-      ],
+      presets: [['@babel/preset-env', { modules: 'commonjs' }]],
     },
   },
 }

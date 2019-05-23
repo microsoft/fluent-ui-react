@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 export interface EventListenerProps {
@@ -18,18 +17,4 @@ export interface EventListenerProps {
 export type EventHandler<T extends EventTypes> = (e: DocumentEventMap[T]) => void
 export type EventTypes = keyof DocumentEventMap
 
-export type ListenerActionOptions = {
-  capture: boolean
-  targetRef: TargetRef
-  type: EventTypes
-}
 export type TargetRef = React.RefObject<Node | Window>
-
-export const listenerPropTypes = {
-  capture: PropTypes.bool,
-  listener: PropTypes.func.isRequired,
-  targetRef: PropTypes.shape({
-    current: PropTypes.object,
-  }).isRequired,
-  type: PropTypes.string.isRequired,
-} as Record<keyof EventListenerProps, any>
