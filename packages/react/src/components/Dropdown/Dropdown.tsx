@@ -41,7 +41,7 @@ import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/acce
 import ListItem from '../List/ListItem'
 import Icon, { IconProps } from '../Icon/Icon'
 import Portal from '../Portal/Portal'
-import { ALIGNMENTS, POSITIONS, Popper, PositionCommonProps } from '../../lib/positioner'
+import { ALIGNMENTS, POSITIONS, Popper, PositioningProps } from '../../lib/positioner'
 
 export interface DropdownSlotClassNames {
   clearIndicator: string
@@ -57,7 +57,7 @@ export interface DropdownSlotClassNames {
 
 export interface DropdownProps
   extends UIComponentProps<DropdownProps, DropdownState>,
-    PositionCommonProps {
+    PositioningProps {
   /** The index of the currently active selected item, if dropdown has a multiple selection. */
   activeSelectedIndex?: number
 
