@@ -1,31 +1,30 @@
 import * as React from 'react'
-import { Button, Popup, Segment, Loader } from '@stardust-ui/react'
+import { Button, Popup, Segment } from '@stardust-ui/react'
 
-const AsyncDataLoader: React.FunctionComponent<{ onLoaded: Function }> = props => {
-  const [data, setData] = React.useState<React.ReactElement>(<Loader />)
+class AsyncDataLoader extends React.Component<any, any> {
+  state = {
+    data: 'loading..',
+  }
 
-  React.useEffect(() => {
+  componentDidMount() {
     setTimeout(() => {
-      setData(<Segment styles={{ minHeight: '300px' }}>Hello from loaded data!</Segment>)
-      props.onLoaded()
+      this.setState({
+        data: <Segment styles={{ minHeight: '300px' }}>Hello from loaded data!</Segment>,
+      })
+      this.props.onLoaded()
     }, 1000)
-  }, [])
+  }
 
-  return data
+  render() {
+    return this.state.data
+  }
 }
 
-const PopupExampleAsync = () => {
-  const [loading, setLoading] = React.useState<boolean>(true)
-  return (
-    <Popup
-      onOpenChange={(e, data) => {
-        if (!data.open) setLoading(true)
-      }}
-      trigger={<Button icon="expand" content="Click me!" />}
-      positioningDependencies={[loading]}
-      content={{ content: <AsyncDataLoader onLoaded={() => setLoading(false)} /> }}
-    />
-  )
-}
+const PopupExampleAsync = () => (
+  <Popup
+    trigger={<Button icon="expand" content="Click me!" />}
+    renderContent={updatePosition => ({ content: <AsyncDataLoader onLoaded={updatePosition} /> })}
+  />
+)
 
 export default PopupExampleAsync
