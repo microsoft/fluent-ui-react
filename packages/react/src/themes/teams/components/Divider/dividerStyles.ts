@@ -9,6 +9,7 @@ import {
 } from '../../../types'
 import { DividerVariables, dividerColorAreas } from './dividerVariables'
 import { DividerProps } from '../../../../components/Divider/Divider'
+import { getColorScheme } from '../../colors'
 
 const beforeAndAfter = (
   size: number,
@@ -24,7 +25,8 @@ const beforeAndAfter = (
 const dividerStyles: ComponentSlotStylesInput<DividerProps, DividerVariables> = {
   root: ({ props, variables }): ICSSInJSStyle => {
     const { children, color, fitted, size, important, content } = props
-    const colors = variables.colorScheme[color]
+    const colors = getColorScheme(variables.colorScheme, color)
+
     return {
       color: _.get(colors, 'foreground', variables.textColor),
       display: 'flex',
