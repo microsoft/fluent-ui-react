@@ -1,5 +1,23 @@
+import { AnimationProp } from '../../../types'
+import createAnimationStyles from '../../../../lib/createAnimationStyles'
+
 export default {
   root: () => ({
     display: 'inline-block',
   }),
+  children: ({ props, theme }) => {
+    const animation: AnimationProp = {
+      name: props.name,
+      keyframeParams: props.keyframeParams,
+      duration: props.duration,
+      delay: props.delay,
+      iterationCount: props.iterationCount,
+      direction: props.direction,
+      fillMode: props.fillMode,
+      playState: props.playState,
+      timingFunction: props.timingFunction,
+    }
+
+    return createAnimationStyles(animation, theme)
+  },
 }
