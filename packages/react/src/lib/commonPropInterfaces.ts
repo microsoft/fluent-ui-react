@@ -13,6 +13,8 @@ export interface StyledComponentProps<P = any, V = any> {
 export interface AnimatedComponentProps {
   /** Generic animation property that can be used for applying different theme animations. */
   animation?: AnimationProp
+  // TODO: add description and check why the Icon is not working
+  neverDisableAnimation?: boolean
 }
 
 export interface UIComponentProps<P = any, V = any>
