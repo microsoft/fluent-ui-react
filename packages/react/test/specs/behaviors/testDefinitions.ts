@@ -142,7 +142,7 @@ definitions.push({
   },
 })
 
-// Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
+// Example: Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part based on the property '\w+'\. This can be overriden by providing '([\w-]+)' property directly to the component\./g,
   testMethod: (parameters: TestMethod) => {
