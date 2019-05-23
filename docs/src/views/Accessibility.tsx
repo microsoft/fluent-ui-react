@@ -56,31 +56,71 @@ export default () => (
 
     <Header as="h2" content="Goals of Accessibility" />
     <p>
-      As much as possible, accessibility should just work when you put together and integrate
-      Stardust components. Specially users should be able to navigate around the application using
-      the keyboard or screen readers, and virtual screen reader navigation modes are supported by
-      default, and high contrast themes are provided.
+      Stardust components follow{' '}
+      {link('WAI-ARIA 1.1 authoring practises', 'https://www.w3.org/TR/wai-aria-practices-1.1/')}.
+      They can be easily composed into accesible experiences with correct keyboard navigation,
+      screen reader support, high contrast theme and zooming.
     </p>
     <p>
-      The components themselves have accessibility build in - so, for example, a dropdown menu will
-      be focusable, you can navigate between the options with arrow keys, and select the desired
-      option. Of course, if you want to enhance / override the default behavior this is also
-      supported.
+      Stardust introduces the concept of accessibility behaviors which are responsible for
+      translating the natural Stardust API into correct ARIA roles, attributes and keyboard key
+      handlers. Default behaviors can be overriden and customized.
     </p>
     <p>
       The consumer of the library should generally be shielded from the intricates of applying the
-      correct ARIA roles, testing on multiple screen reader / os combinations.
+      correct ARIA roles, testing on multiple screen reader / os combinations. This allows spending
+      more time on the usability aspects of accessibility.
     </p>
     <p>
-      While Stardust itself focuses on providing keyboard navigation, screen reader support, zooming
-      and high contrast themes, there are other, perhaps broader considerations to be taken into
-      account when designing applications for accessibility. In particular the ordering and choice
-      of elements within the page is critical and discussed in more detail below.
-    </p>
-    <p>
-      Stardust attempts to follow the{' '}
-      {link('ARIA best practises', 'https://www.w3.org/TR/wai-aria-practices-1.1/')}
-      and validates them with subject matter experts.
+      Following steps help to design an accessible user experience:
+      <ol>
+        <li>
+          decompose UI to parts and <b>identify components, variants and behaviors to use</b>
+        </li>
+        <li>
+          define usage of{' '}
+          <b>
+            {link(
+              'headings and landmarks',
+              'https://www.w3.org/TR/wai-aria-practices/examples/landmarks/index.html',
+            )}
+          </b>
+        </li>
+        <li>
+          verify usage of{' '}
+          <b>
+            {link('color and contrast', 'https://accessibility.umn.edu/core-skills/color-contrast')}
+          </b>{' '}
+          to convey information
+        </li>
+        <li>
+          define <b>tab order and arrow key navigation</b>
+        </li>
+        <li>
+          specify <b>labels</b>, especially for components without textual information (icon only
+          buttons) and for containers (menus, toolbars and so on)
+        </li>
+        <li>
+          specify texts for <b>state change announcements</b> (number of available items in
+          dropdown, error messages, confirmations, ...)
+        </li>
+        <li>
+          identify UI parts that appear on <b>hover or focus</b> and specify keyboard and screen
+          reader interaction with them
+        </li>
+        <li>
+          list cases when <b>focus</b> needs to be <b>moved programatically</b> (if parts of the UI
+          are appearing/disappearing or other cases){' '}
+        </li>
+        <li>
+          list cases when <b>focus</b> needs to be <b>trapped</b> in sections of the UI (for dialogs
+          and popups or for hierarchical navigation)
+        </li>
+        <li>
+          if extending existing functionality, how does it fit into current experience with regards
+          to discoverability, interaction, keyboard navigation and screen reader navigation?
+        </li>
+      </ol>
     </p>
 
     <Header as="h3" content="Out of Scope" />
