@@ -15,6 +15,7 @@ export const examplePlaygroundContext = require.context(
 /**
  * The Webpack Context for doc site example sources.
  */
+//                          It's required for a hot reload
 // eslint-disable-next-line import/no-mutable-exports
 export let exampleSourcesContext = require.context(
   'docs/src/exampleSources/',
