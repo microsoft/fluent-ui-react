@@ -178,7 +178,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   static autoControlledProps = ['open']
 
-  pointerRef = React.createRef<HTMLElement>()
+  pointerTargetRef = React.createRef<HTMLElement>()
   triggerRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
   // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
   triggerFocusableDomElement = null
@@ -392,7 +392,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
     return (
       <Popper
-        pointerRef={this.pointerRef}
+        pointerTargetRef={this.pointerTargetRef}
         align={align}
         position={position}
         offset={offset}
@@ -443,7 +443,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         ...popupContentAttributes,
         placement,
         pointing,
-        pointerRef: this.pointerRef,
+        pointerRef: this.pointerTargetRef,
       },
       overrideProps: this.getContentProps,
     })

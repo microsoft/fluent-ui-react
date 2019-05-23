@@ -198,13 +198,8 @@ export { default as mergeThemes } from './lib/mergeThemes'
 export * from './lib/createStardustComponent'
 export * from './lib'
 export * from './types'
-export {
-  Alignment,
-  Position,
-  Popper as UNSTABLE_Popper,
-  PositioningProps,
-  PopperChildrenProps,
-} from './lib/positioner'
+export { Popper as UNSTABLE_Popper } from './lib/positioner'
+export * from './lib/positioner/types'
 
 //
 // FocusZone

@@ -2,8 +2,6 @@ import PopperJS from 'popper.js'
 
 export type Position = 'above' | 'below' | 'before' | 'after'
 export type Alignment = 'top' | 'bottom' | 'start' | 'end' | 'center'
-export const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
-export const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 
 export type PopperChildrenFn = (props: PopperChildrenProps) => React.ReactNode
 
@@ -35,7 +33,7 @@ export interface PopperProps extends PositioningProps {
   /**
    * Ref object containing the pointer node.
    */
-  pointerRef?: React.RefObject<Element>
+  pointerTargetRef?: React.RefObject<Element>
 
   /**
    * The content of the Popper box (the element that is going to be repositioned).
