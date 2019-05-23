@@ -8,12 +8,14 @@ import {
   MenuProps,
   Ref,
   ShorthandValue,
+  Alignment,
+  Position,
+  UNSTABLE_Popper,
 } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
 import * as PopperJS from 'popper.js'
 import * as React from 'react'
-import { Manager as PopperManager, Reference as PopperReference, Popper } from 'react-popper'
 
 import { focusMenuItem, focusNearest } from './focusUtils'
 import menuButtonBehavior from './menuButtonBehavior'
@@ -44,15 +46,15 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
     menuOpen: false,
   }
 
-  buttonNode: HTMLButtonElement
-  menuNode: HTMLUListElement
+  buttonRef = React.createRef<HTMLButtonElement>()
+  menuRef = React.createRef<HTMLUListElement>()
 
   componentDidUpdate(_, prevState: MenuButtonState) {
     if (!prevState.menuOpen && this.state.menuOpen) {
       document.addEventListener('click', this.handleDocumentClick)
 
       focusMenuItem(
-        this.menuNode,
+        this.menuRef.current,
         this.state.lastKeyCode === keyboardKey.ArrowUp ? 'last' : 'first',
       )
     }
@@ -63,11 +65,11 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
       switch (this.state.lastKeyCode) {
         case keyboardKey.Enter:
         case keyboardKey.Escape:
-          this.buttonNode.focus()
+          this.buttonRef.current.focus()
           break
 
         case keyboardKey.Tab:
-          focusNearest(this.buttonNode, this.state.lastShiftKey ? 'previous' : 'next')
+          focusNearest(this.buttonRef.current, this.state.lastShiftKey ? 'previous' : 'next')
           break
       }
     }
@@ -87,7 +89,8 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
     const { menuOpen } = this.state
     const target = e.target as HTMLElement
     const isInside =
-      _.invoke(this.buttonNode, 'contains', target) || _.invoke(this.menuNode, 'contains', target)
+      _.invoke(this.buttonRef.current, 'contains', target) ||
+      _.invoke(this.menuRef.current, 'contains', target)
 
     if (menuOpen && !isInside) {
       this.setState({ lastKeyCode: null, menuOpen: false })
@@ -146,6 +149,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
   render() {
     const { button, disabled, menu, placement } = this.props
     const { menuOpen } = this.state
+    const [position, align] = _.split(placement, '-') as [Position, Alignment]
     const accessibilityBehavior: AccessibilityBehavior = menuButtonBehavior({
       ...this.props,
       ...this.state,
@@ -156,53 +160,32 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
         onKeyDown={this.handleKeyDown}
         style={{ boxSizing: 'border-box', display: 'inline-block' }}
       >
-        <PopperManager>
-          <PopperReference>
-            {({ ref }) => (
-              <Ref
-                innerRef={(buttonNode: HTMLButtonElement) => {
-                  this.buttonNode = buttonNode
-                  ref(buttonNode)
-                }}
-              >
-                {Button.create(button, {
-                  defaultProps: {
-                    ...accessibilityBehavior.attributes.button,
-                    disabled,
-                  },
-                  overrideProps: this.handleButtonOverrides,
-                })}
-              </Ref>
-            )}
-          </PopperReference>
-          <Popper placement={placement}>
-            {({ placement, ref, style }) =>
-              menuOpen && (
-                <Ref
-                  innerRef={(menuNode: HTMLUListElement) => {
-                    this.menuNode = menuNode
-                    ref(menuNode)
-                  }}
-                >
-                  {Menu.create(menu, {
-                    defaultProps: {
-                      ...accessibilityBehavior.attributes.menu,
-                      'data-placement': placement,
-                      styles: { background: '#fff', zIndex: 1 },
-                      vertical: true,
-                    },
-                    overrideProps: {
-                      items: this.handleMenuItemOverrides(
-                        accessibilityBehavior.attributes.menuItem,
-                      ),
-                      style,
-                    },
-                  })}
-                </Ref>
-              )
-            }
-          </Popper>
-        </PopperManager>
+        <Ref innerRef={this.buttonRef}>
+          {Button.create(button, {
+            defaultProps: {
+              ...accessibilityBehavior.attributes.button,
+              disabled,
+            },
+            overrideProps: this.handleButtonOverrides,
+          })}
+        </Ref>
+        {menuOpen && (
+          <UNSTABLE_Popper align={align} position={position} targetRef={this.buttonRef}>
+            <Ref innerRef={this.menuRef}>
+              {Menu.create(menu, {
+                defaultProps: {
+                  ...accessibilityBehavior.attributes.menu,
+                  'data-placement': placement,
+                  styles: { background: '#fff', zIndex: 1 },
+                  vertical: true,
+                },
+                overrideProps: {
+                  items: this.handleMenuItemOverrides(accessibilityBehavior.attributes.menuItem),
+                },
+              })}
+            </Ref>
+          </UNSTABLE_Popper>
+        )}
       </div>
     )
   }

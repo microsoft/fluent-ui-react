@@ -1,5 +1,5 @@
-import { extendColorScheme } from 'src/themes/colorUtils'
-import { ColorSchemeMapping } from 'src/themes/types'
+import { extendColorScheme, pickValuesFromColorScheme } from 'src/themes/colorUtils'
+import { ColorSchemeMapping, ComponentAreaName } from 'src/themes/types'
 
 const generateColorSchemeValues = color => ({
   foreground: color,
@@ -76,6 +76,27 @@ describe('colorUtils', () => {
         primary: {
           ...baseColorScheme.primary,
           background1: 'red',
+        },
+      })
+    })
+  })
+  describe('pickValuesFromColorScheme', () => {
+    test('picks the provided values from the color scheme', () => {
+      const baseColorScheme: ColorSchemeMapping = {
+        default: generateColorSchemeValues('grey'),
+        primary: generateColorSchemeValues('purple'),
+      }
+
+      const componentAreas: ComponentAreaName[] = ['foreground', 'background']
+
+      expect(pickValuesFromColorScheme(baseColorScheme, componentAreas)).toMatchObject({
+        default: {
+          foreground: 'grey',
+          background: 'grey',
+        },
+        primary: {
+          foreground: 'purple',
+          background: 'purple',
         },
       })
     })

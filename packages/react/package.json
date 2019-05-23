@@ -21,10 +21,10 @@
     "keyboard-key": "^1.0.1",
     "lodash": "^4.17.11",
     "mdn-polyfills": "^5.15.0",
+    "popper.js": "^1.14.6",
     "prop-types": "^15.6.1",
     "react-fela": "^10.2.0",
     "react-is": "^16.6.3",
-    "react-popper": "^1.3.2",
     "tslib": "^1.9.3"
   },
   "devDependencies": {

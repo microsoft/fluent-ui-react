@@ -8,6 +8,11 @@ export * from './themes/types'
 export * from './themes/colorUtils'
 
 //
+// Teams theme
+//
+export * from './themes/teams/types'
+
+//
 // Components
 //
 export * from '@stardust-ui/react-component-ref'
@@ -116,7 +121,6 @@ export * from './components/Popup/Popup'
 export { default as Popup } from './components/Popup/Popup'
 export * from './components/Popup/PopupContent'
 export { default as PopupContent } from './components/Popup/PopupContent'
-export * from './components/Popup/positioningHelper'
 
 export * from './components/Portal/Portal'
 export { default as Portal } from './components/Portal/Portal'
@@ -199,6 +203,8 @@ export { default as mergeThemes } from './lib/mergeThemes'
 export * from './lib/createStardustComponent'
 export * from './lib'
 export * from './types'
+export { Popper as UNSTABLE_Popper } from './lib/positioner'
+export * from './lib/positioner/types'
 
 //
 // FocusZone

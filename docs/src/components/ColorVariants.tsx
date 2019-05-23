@@ -22,7 +22,7 @@ const ColorVariants = createComponent<ColorVariantsProps>({
     <ProviderConsumer
       render={({ siteVariables: { colors } }) => (
         <div className={classes.root}>
-          <ColorBox name={name} size="big" value={colors[name][500]} />
+          <ColorBox name={name} size="big" value={colors[name][500]} copyToClipboardIcon={false} />
 
           {_.map(colors[name], (value, variable) => (
             <ColorBox key={variable} name={variable} size="small" value={value} />
