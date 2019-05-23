@@ -255,8 +255,8 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
       const active = this.isIndexActive(index)
       const canBeCollapsed = this.isIndexActionable(index)
       const contentRef = React.createRef<HTMLElement>()
-      const titleId = title['id'] || this.defaultAccordionTitleId
-      const contentId = content['id'] || this.defaultAccordionContentId
+      const titleId = title['id'] || `${this.defaultAccordionTitleId}${index}`
+      const contentId = content['id'] || `${this.defaultAccordionContentId}${index}`
       this.itemRefs[index] = contentRef
 
       children.push(
