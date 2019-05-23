@@ -1,16 +1,20 @@
 import {
   ColorPalette,
-  EmphasisColors,
-  NaturalColors,
   PrimitiveColors,
-  ColorScheme,
   ColorSchemeMapping,
-  ColorVariants,
-  ContextualColors,
+  ComponentAreaName,
+  ColorScheme,
+  StrictColorSchemeMapping,
+  StrictColorScheme,
 } from '../types'
-import { Extendable } from '../../types'
+import {
+  TeamsColorNames,
+  TeamsContextualColors,
+  TeamsNaturalColors,
+  TeamsTransparentColors,
+} from './types'
 
-export const emphasisColors: ContextualColors = {
+export const contextualColors: TeamsContextualColors = {
   brand: {
     50: '#F4F4FC', // siteVariables.brand16, same as prev
     100: '#E5E5F1', // brand15
@@ -26,7 +30,7 @@ export const emphasisColors: ContextualColors = {
   },
 }
 
-export const naturalColors: NaturalColors = {
+export const naturalColors: TeamsNaturalColors = {
   grey: {
     0: '#FFFFFF', // white
     25: '#FCFCFB', // old $app-density-message-initial-hover-focus
@@ -112,8 +116,8 @@ export const naturalColors: NaturalColors = {
   },
 }
 
-const emphasisAndNaturalColors: EmphasisColors & NaturalColors = {
-  ...emphasisColors,
+const contextualAndNaturalColors: TeamsContextualColors & TeamsNaturalColors = {
+  ...contextualColors,
   ...naturalColors,
 }
 
@@ -122,7 +126,7 @@ export const primitiveColors: PrimitiveColors = {
   white: '#fff',
 }
 
-export const transparentColors = {
+export const transparentColors: TeamsTransparentColors = {
   silver: {
     100: undefined,
     200: 'rgba(255,255,255,0.75)',
@@ -158,14 +162,8 @@ export const transparentColors = {
   },
 }
 
-type TransparentColors = Partial<{
-  silver: ColorVariants
-  ruby: ColorVariants
-  onyx: ColorVariants
-}>
-
-export const colors: ColorPalette<TransparentColors> = {
-  ...emphasisAndNaturalColors,
+export const colors: ColorPalette<TeamsTransparentColors> = {
+  ...contextualAndNaturalColors,
   ...primitiveColors,
   ...transparentColors,
 }
@@ -205,7 +203,7 @@ const createColorScheme = (color: string, customValues = {}) => {
   }
 }
 
-export const colorScheme: ColorSchemeMapping = {
+export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
   default: {
     foreground: colors.grey[750],
     foreground1: colors.grey[500],
@@ -479,10 +477,10 @@ export const getColorSchemeKey = (color: string, primary?: boolean): string => {
   return color && isValidColor(color) ? color : primary ? 'brand' : 'default'
 }
 
-export const getColorScheme = (
-  colorScheme: ColorSchemeMapping,
+export const getColorScheme = <T extends ComponentAreaName | string>(
+  colorScheme: StrictColorSchemeMapping<StrictColorScheme<T>, TeamsColorNames>,
   color?: string,
   primary?: boolean,
-): Extendable<ColorScheme, string> => {
+): StrictColorScheme<T> => {
   return colorScheme[getColorSchemeKey(color, primary)]
 }
