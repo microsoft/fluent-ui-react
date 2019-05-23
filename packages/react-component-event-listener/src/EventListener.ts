@@ -3,7 +3,8 @@ import * as React from 'react'
 import addEventListener from './lib/addEventListener'
 import removeEventListener from './lib/removeEventListener'
 import shouldUpdateListener from './lib/shouldUpdateListener'
-import { EventListenerProps, listenerPropTypes } from './types'
+import { EventListenerProps } from './types'
+import { listenerPropTypes } from './types.internal'
 
 class EventListener extends React.Component<EventListenerProps> {
   static displayName = 'EventListener'

@@ -14,6 +14,7 @@
     "typeRoots": ["../types", "../node_modules/@types"],
     "jsx": "react",
     "importHelpers": true,
+    "isolatedModules": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "allowJs": false,

@@ -45,6 +45,9 @@ const packStardustPackages = async (logger: Function): Promise<PackedPackages> =
   // as lernaAliases append 'src' by default
   const stardustPackages = lernaAliases({ sourceDirectory: false })
 
+  // We don't want to pack a package with our dev tools
+  delete stardustPackages['@stardust-ui/internal-tooling']
+
   await Promise.all(
     Object.keys(stardustPackages).map(async (packageName: string) => {
       const filename = tmp.tmpNameSync({ prefix: `stardust-`, postfix: '.tgz' })

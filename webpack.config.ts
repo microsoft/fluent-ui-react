@@ -4,7 +4,7 @@ import { webpack as lernaAliases } from 'lerna-alias'
 import * as _ from 'lodash'
 import * as webpack from 'webpack'
 import * as TerserPlugin from 'terser-webpack-plugin'
-import { CheckerPlugin as AsyncTypeScriptChecker } from 'awesome-typescript-loader'
+import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
 import config from './config'
 
@@ -51,18 +51,19 @@ const webpackConfig: any = {
     rules: [
       {
         test: /\.(js|ts|tsx)$/,
-        loader: 'awesome-typescript-loader',
+        loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          useCache: true,
-          configFileName: paths.base('build/tsconfig.docs.json'),
-          errorsAsWarnings: __DEV__,
+          cacheDirectory: true,
         },
       },
     ],
   },
   plugins: [
-    new AsyncTypeScriptChecker(),
+    new ForkTsCheckerWebpackPlugin({
+      tsconfig: paths.base('build/tsconfig.docs.json'),
+      watch: [paths.docsSrc(), paths.packages()],
+    }),
     new webpack.DefinePlugin(config.compiler_globals),
     new webpack.ContextReplacementPlugin(
       /node_modules[\\|/]typescript[\\|/]lib/,
