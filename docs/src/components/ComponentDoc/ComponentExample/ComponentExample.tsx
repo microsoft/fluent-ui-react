@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import * as copyToClipboard from 'copy-to-clipboard'
-import SourceRender from 'react-source-render/dist-web'
+import SourceRender from 'react-source-render'
 
 import {
   Divider,
