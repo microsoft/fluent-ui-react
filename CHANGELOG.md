@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add keyboard navigation and screen reader support for `Accordion` @silviuavram ([#1322](https://github.com/stardust-ui/react/pull/1322)) 
 - Add `expanded` prop to `Accordion` @silviuavram ([#1322](https://github.com/stardust-ui/react/pull/1322)) 
+- Add strict types for the `colorScheme` props used in the components' `variables` @mnajdova([#1340](https://github.com/stardust-ui/react/pull/1340))
 
 ### Fixes
 - Changing icon behavior as for some cases icon could be visible ([#1327](https://github.com/stardust-ui/react/pull/1327))
