@@ -11432,10 +11432,10 @@ react-side-effect@^1.0.2:
     exenv "^1.2.1"
     shallowequal "^1.0.1"
 
-react-source-render@3.0.0-2:
-  version "3.0.0-2"
-  resolved "https://registry.yarnpkg.com/react-source-render/-/react-source-render-3.0.0-2.tgz#a147753c86d8560644c417f6e5e8d8430dde5868"
-  integrity sha512-ct26efgKnWpCHEfOEdyxo1xC5+2IyupiXUm0Z6diFw2UnNPjnXUQ9uSKK3UMV+qmodScMYYGLJIAJ532DvF0Hg==
+react-source-render@3.0.0-3:
+  version "3.0.0-3"
+  resolved "https://registry.yarnpkg.com/react-source-render/-/react-source-render-3.0.0-3.tgz#6d624fc8489f2b3bdf6c2234e224edc82c570488"
+  integrity sha512-l/xnrmdwV2VKEWG/dmSB6gaeCgDFdXrPP/glNuMLJDInejwNzv3Gs8wgzwGSAlSp4JPCrQmxiQq/59LC2CdSOQ==
   dependencies:
     "@babel/runtime" "^7.4.5"
     deepmerge "^2.2.1"
