@@ -73,6 +73,7 @@ import italic from './italic'
 import leave from './leave'
 import like from './like'
 import link from './link'
+import lightning from './lightning'
 import lock from './lock'
 import markAsUnread from './markAsUnread'
 import meetingNew from './meetingNew'
@@ -193,6 +194,7 @@ export default {
   italic,
   leave,
   like,
+  lightning,
   link,
   lock,
   'mark-as-unread': markAsUnread,
