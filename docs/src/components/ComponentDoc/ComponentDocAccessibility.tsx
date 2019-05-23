@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Flex, Text, Accordion } from '@stardust-ui/react'
+import { Flex, Loader, Text, Accordion } from '@stardust-ui/react'
+
+const AccessibilityDescription = React.lazy(() => import('./AccessibilityDescription'))
 
 const behaviorMenu = require('docs/src/behaviorMenu')
 
@@ -17,19 +19,14 @@ const ComponentDocAccessibility = ({ info }) => {
 
   if (!behaviorName && !description) return null
 
-  const formattedDescription =
-    description &&
-    description.split('\r').map(line => (
-      <>
-        {line}
-        <br />
-      </>
-    ))
-
   const accessibilityDetails = (
     <>
-      {formattedDescription && (
-        <Text style={{ whiteSpace: 'pre-line' }}>{formattedDescription}</Text>
+      {description && (
+        <Text style={{ whiteSpace: 'pre-line' }}>
+          <React.Suspense fallback={<Loader />}>
+            <AccessibilityDescription value={description} />
+          </React.Suspense>
+        </Text>
       )}
 
       {behaviorName && (

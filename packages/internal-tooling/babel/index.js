@@ -4,7 +4,11 @@ module.exports = {
     '@babel/preset-react',
     '@babel/preset-typescript',
   ],
-  plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime'],
+  plugins: [
+    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-syntax-dynamic-import',
+    '@babel/plugin-transform-runtime',
+  ],
   env: {
     delelopment: {
       plugins: ['react-hot-loader/babel'],
