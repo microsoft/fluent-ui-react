@@ -208,11 +208,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   protected actionHandlers: AccessibilityActionHandlers = {
     closeAndFocusTrigger: e => {
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
-      e.stopPropagation()
     },
     close: e => {
       this.close(e)
-      e.stopPropagation()
     },
     toggle: e => {
       e.preventDefault()
@@ -552,6 +550,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     if (this.state.open) {
       this.trySetOpen(false, e)
       onClose && onClose()
+      e.stopPropagation()
     }
   }
 
