@@ -41,46 +41,40 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     [rtl, offset, position],
   )
 
-  React.useEffect(
-    () => {
-      const handleUpdate = (data: PopperJS.Data) => {
-        // PopperJS performs computations that might update the computed placement: auto positioning, flipping the
-        // placement in case the popper box should be rendered at the edge of the viewport and does not fit
-        if (data.placement !== latestPlacement.current) {
-          latestPlacement.current = data.placement
-          setComputedPlacement(data.placement)
-        }
+  React.useEffect(() => {
+    const handleUpdate = (data: PopperJS.Data) => {
+      // PopperJS performs computations that might update the computed placement: auto positioning, flipping the
+      // placement in case the popper box should be rendered at the edge of the viewport and does not fit
+      if (data.placement !== latestPlacement.current) {
+        latestPlacement.current = data.placement
+        setComputedPlacement(data.placement)
       }
+    }
 
-      const pointerRefElement = pointerRef && pointerRef.current
-      const options: PopperJS.PopperOptions = {
-        placement: proposedPlacement,
-        eventsEnabled,
-        positionFixed,
-        modifiers: {
-          ...computedModifiers,
-          ...modifiers,
-          arrow: {
-            enabled: !!pointerRefElement,
-            element: pointerRefElement,
-          },
+    const pointerRefElement = pointerRef && pointerRef.current
+    const options: PopperJS.PopperOptions = {
+      placement: proposedPlacement,
+      eventsEnabled,
+      positionFixed,
+      modifiers: {
+        ...computedModifiers,
+        ...modifiers,
+        arrow: {
+          enabled: !!pointerRefElement,
+          element: pointerRefElement,
         },
-        onCreate: handleUpdate,
-        onUpdate: handleUpdate,
-      }
+      },
+      onCreate: handleUpdate,
+      onUpdate: handleUpdate,
+    }
 
-      popperRef.current = new PopperJS(targetRef.current, contentRef.current, options)
-      return () => popperRef.current.destroy()
-    },
-    [computedModifiers, eventsEnabled, modifiers, positionFixed, proposedPlacement],
-  )
+    popperRef.current = new PopperJS(targetRef.current, contentRef.current, options)
+    return () => popperRef.current.destroy()
+  }, [computedModifiers, eventsEnabled, modifiers, positionFixed, proposedPlacement])
 
-  React.useEffect(
-    () => {
-      popperRef.current.scheduleUpdate()
-    },
-    [...positioningDependencies, computedPlacement],
-  )
+  React.useEffect(() => {
+    popperRef.current.scheduleUpdate()
+  }, [...positioningDependencies, computedPlacement])
 
   const child =
     typeof children === 'function'
