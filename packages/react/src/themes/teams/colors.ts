@@ -6,11 +6,13 @@ import {
   ColorScheme,
   StrictColorSchemeMapping,
   StrictColorScheme,
+} from '../types'
+import {
   TeamsColorNames,
   TeamsContextualColors,
   TeamsNaturalColors,
   TeamsTransparentColors,
-} from '../types'
+} from './types'
 
 export const contextualColors: TeamsContextualColors = {
   brand: {

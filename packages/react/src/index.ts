@@ -8,6 +8,11 @@ export * from './themes/types'
 export * from './themes/colorUtils'
 
 //
+// Teams theme
+//
+export * from './themes/teams/types'
+
+//
 // Components
 //
 export * from '@stardust-ui/react-component-ref'

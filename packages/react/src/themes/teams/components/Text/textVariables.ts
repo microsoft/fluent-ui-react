@@ -1,5 +1,6 @@
 import { TextVariables } from '../../../base/components/Text/textVariables'
-import { TeamsSchemeMappingWithAreas, ItemType } from '../../../../themes/types'
+import { ItemType } from '../../../../themes/types'
+import { TeamsSchemeMappingWithAreas } from '../../types'
 import { stringLiteralsArray } from '../../../../lib'
 import { pickValuesFromColorScheme } from '../../../colorUtils'
 

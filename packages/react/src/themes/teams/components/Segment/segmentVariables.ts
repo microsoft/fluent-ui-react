@@ -1,4 +1,5 @@
-import { ItemType, TeamsSchemeMappingWithAreas } from '../../../../themes/types'
+import { ItemType } from '../../../../themes/types'
+import { TeamsSchemeMappingWithAreas } from '../../types'
 import { pickValuesFromColorScheme } from '../../../colorUtils'
 import { stringLiteralsArray } from '../../../../lib'
 

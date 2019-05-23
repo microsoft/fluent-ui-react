@@ -1,6 +1,7 @@
 import { pxToRem, stringLiteralsArray } from '../../../../lib'
 import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
-import { ItemType, TeamsSchemeMappingWithAreas } from '../../../types'
+import { ItemType } from '../../../types'
+import { TeamsSchemeMappingWithAreas } from '../../types'
 
 export const menuColorAreas = stringLiteralsArray(
   'border',

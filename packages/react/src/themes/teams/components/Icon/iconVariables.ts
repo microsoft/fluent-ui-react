@@ -1,6 +1,7 @@
 import { pxToRem, stringLiteralsArray } from '../../../../lib'
 import { IconVariables as BaseIconVariables } from '../../../base/components/Icon/iconVariables'
-import { ItemType, TeamsSchemeMappingWithAreas } from '../../../types'
+import { ItemType } from '../../../types'
+import { TeamsSchemeMappingWithAreas } from '../../types'
 import { pickValuesFromColorScheme } from '../../../colorUtils'
 
 export type IconSizeModifier = 'x' | 'xx'

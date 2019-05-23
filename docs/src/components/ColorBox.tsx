@@ -14,7 +14,7 @@ import CopyToClipboard from './CopyToClipboard'
 type ColorBoxProps = {
   children?: React.ReactNode
   name?: string
-  header?: boolean
+  copyToClipboardIcon?: boolean
   rounded?: boolean
   size?: 'small' | 'normal' | 'big'
   value: string
@@ -78,11 +78,11 @@ export const colorBoxStyles: ComponentSlotStylesInput<ColorBoxProps, ColorBoxVar
 
 const ColorBox = createComponent<ColorBoxProps>({
   displayName: 'ColorBox',
-  render: ({ children, name, value, header, stardust: { classes } }) => (
+  render: ({ children, name, value, copyToClipboardIcon, stardust: { classes } }) => (
     <div className={classes.root}>
       <div className={classes.name}>{children || _.startCase(name)}</div>
 
-      {!header && (
+      {copyToClipboardIcon && (
         <CopyToClipboard
           render={(active, onClick) => (
             <div className={classes.value}>
@@ -101,6 +101,7 @@ const ColorBox = createComponent<ColorBoxProps>({
 
 ColorBox.defaultProps = {
   size: 'normal',
+  copyToClipboardIcon: true,
 }
 
 export default ColorBox

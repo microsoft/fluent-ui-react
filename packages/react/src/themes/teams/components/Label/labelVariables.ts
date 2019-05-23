@@ -1,5 +1,6 @@
 import { pxToRem, stringLiteralsArray } from '../../../../lib'
-import { SiteVariablesPrepared, ItemType, TeamsSchemeMappingWithAreas } from '../../../types'
+import { SiteVariablesPrepared, ItemType } from '../../../types'
+import { TeamsSchemeMappingWithAreas } from '../../types'
 import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
 
 export const labelColorAreas = stringLiteralsArray('foreground', 'background')
