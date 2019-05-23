@@ -35,3 +35,6 @@ export { default as treeTitleBehavior } from './Behaviors/Tree/treeTitleBehavior
 export { default as dialogBehavior } from './Behaviors/Dialog/dialogBehavior'
 export { default as statusBehavior } from './Behaviors/Status/statusBehavior'
 export { default as embedBehavior } from './Behaviors/Embed/embedBehavior'
+export { default as accordionBehavior } from './Behaviors/Accordion/accordionBehavior'
+export { default as accordionTitleBehavior } from './Behaviors/Accordion/accordionTitleBehavior'
+export { default as accordionContentBehavior } from './Behaviors/Accordion/accordionContentBehavior'
