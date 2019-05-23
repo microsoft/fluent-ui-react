@@ -116,7 +116,6 @@ export * from './components/Popup/Popup'
 export { default as Popup } from './components/Popup/Popup'
 export * from './components/Popup/PopupContent'
 export { default as PopupContent } from './components/Popup/PopupContent'
-export * from './components/Popup/positioningHelper'
 
 export * from './components/Portal/Portal'
 export { default as Portal } from './components/Portal/Portal'
@@ -199,6 +198,8 @@ export { default as mergeThemes } from './lib/mergeThemes'
 export * from './lib/createStardustComponent'
 export * from './lib'
 export * from './types'
+export { Popper as UNSTABLE_Popper } from './lib/positioner'
+export * from './lib/positioner/types'
 
 //
 // FocusZone
