@@ -6,7 +6,7 @@ module.exports = {
   ],
   plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime'],
   env: {
-    delelopment: {
+    development: {
       plugins: ['react-hot-loader/babel'],
     },
     test: {
