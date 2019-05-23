@@ -27,7 +27,7 @@ import {
   ALIGNMENTS,
   POSITIONS,
   Popper,
-  PositionCommonProps,
+  PositioningProps,
   PopperChildrenProps,
 } from '../../lib/positioner'
 import PopupContent from './PopupContent'
@@ -58,7 +58,7 @@ export interface PopupProps
   extends StyledComponentProps<PopupProps>,
     ChildrenComponentProps,
     ContentComponentProps<ShorthandValue>,
-    PositionCommonProps {
+    PositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default popupBehavior
@@ -101,15 +101,12 @@ export interface PopupProps
   pointing?: boolean
 
   /**
-<<<<<<< HEAD
    * Function to render popup content.
    * @param {Function} updatePosition - function to request popup position update.
    */
   renderContent?: (updatePosition: Function) => ShorthandValue
 
   /**
-=======
->>>>>>> 1dd557434d9eff41cc2777db686b8e49a58bdda7
    * DOM element that should be used as popup's target - instead of 'trigger' element that is used by default.
    */
   target?: HTMLElement
@@ -163,7 +160,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     onOpenChange: PropTypes.func,
     pointing: PropTypes.bool,
     position: PropTypes.oneOf(POSITIONS),
-    positioningDependencies: PropTypes.arrayOf(PropTypes.any),
+    renderContent: PropTypes.func,
     target: PropTypes.any,
     trigger: PropTypes.any,
     contentRef: customPropTypes.ref,
@@ -181,7 +178,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   static autoControlledProps = ['open']
 
-  pointerRef = React.createRef<HTMLElement>()
+  pointerTargetRef = React.createRef<HTMLElement>()
   triggerRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
   // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
   triggerFocusableDomElement = null
@@ -192,11 +189,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   protected actionHandlers: AccessibilityActionHandlers = {
     closeAndFocusTrigger: e => {
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
-      e.stopPropagation()
     },
     close: e => {
       this.close(e)
-      e.stopPropagation()
     },
     toggle: e => {
       e.preventDefault()
@@ -393,17 +388,16 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     rtl: boolean,
     accessibility: AccessibilityBehavior,
   ): JSX.Element {
-    const { align, position, offset, positioningDependencies, target } = this.props
+    const { align, position, offset, target } = this.props
 
     return (
       <Popper
-        pointerRef={this.pointerRef}
+        pointerTargetRef={this.pointerTargetRef}
         align={align}
         position={position}
         offset={offset}
         rtl={rtl}
         targetRef={target ? toRefObject(target) : this.triggerRef}
-        positioningDependencies={positioningDependencies}
         children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
       />
     )
@@ -413,9 +407,10 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     popupPositionClasses: string,
     rtl: boolean,
     accessibility: AccessibilityBehavior,
-    { placement }: PopperChildrenProps,
+    { placement, scheduleUpdate }: PopperChildrenProps,
   ) => {
-    const { content, contentRef, mountDocument, pointing } = this.props
+    const { content: propsContent, renderContent, contentRef, mountDocument, pointing } = this.props
+    const content = renderContent ? renderContent(scheduleUpdate) : propsContent
     const documentRef = toRefObject(mountDocument)
 
     const popupWrapperAttributes = {
@@ -448,7 +443,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         ...popupContentAttributes,
         placement,
         pointing,
-        pointerRef: this.pointerRef,
+        pointerRef: this.pointerTargetRef,
       },
       overrideProps: this.getContentProps,
     })
@@ -515,6 +510,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     if (this.state.open) {
       this.trySetOpen(false, e)
       onClose && onClose()
+      e.stopPropagation()
     }
   }
 

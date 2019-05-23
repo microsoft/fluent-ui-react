@@ -1,2 +1,3 @@
 export * from './types'
-export { default as Popper, PositionCommonProps, PopperChildrenProps } from './Popper'
+export * from './types.internal'
+export { default as Popper } from './Popper'
