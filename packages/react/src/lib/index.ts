@@ -11,6 +11,7 @@ export { default as UIComponent } from './UIComponent'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
 export { default as toCompactArray } from './toCompactArray'
 export { default as rtlTextContainer } from './rtlTextContainer'
+export { default as stringLiteralsArray } from './stringLiteralsArray'
 
 export * from './factories'
 export { default as callable } from './callable'

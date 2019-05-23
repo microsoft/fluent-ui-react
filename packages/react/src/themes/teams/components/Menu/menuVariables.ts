@@ -1,13 +1,8 @@
-import { pxToRem } from '../../../../lib'
-import {
-  extendColorScheme,
-  generateComponentAreas,
-  pickValuesFromColorScheme,
-} from '../../../colorUtils'
-import { StrictColorSchemeMapping, StrictColorScheme } from '../../../types'
-import { TeamsColorNames } from '../../colors'
+import { pxToRem, stringLiteralsArray } from '../../../../lib'
+import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
+import { ItemType, TeamsSchemeMappingWithAreas } from '../../../types'
 
-export const menuColorComponentAreas = generateComponentAreas(
+export const menuColorAreas = stringLiteralsArray(
   'border',
   'borderActive',
   'foregroundActive',
@@ -19,12 +14,7 @@ export const menuColorComponentAreas = generateComponentAreas(
   'foregroundFocus',
   'foregroundDisabled',
 )
-export type MenuColorComponentAreas = typeof menuColorComponentAreas[number]
-
-export type MenuColorSchemeMapping = StrictColorSchemeMapping<
-  StrictColorScheme<MenuColorComponentAreas>,
-  TeamsColorNames
->
+export type MenuColorSchemeMapping = TeamsSchemeMappingWithAreas<ItemType<typeof menuColorAreas>>
 
 export interface MenuVariables {
   colorScheme: MenuColorSchemeMapping
@@ -90,7 +80,7 @@ export default (siteVars: any): MenuVariables => {
           foregroundDisabled: siteVars.colorScheme.brand.foregroundDisabled1,
         },
       }),
-      menuColorComponentAreas,
+      menuColorAreas,
     ),
     color: siteVars.colors.grey[500],
     colorActive: siteVars.colors.black,

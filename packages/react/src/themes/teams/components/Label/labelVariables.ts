@@ -1,19 +1,9 @@
-import { pxToRem } from '../../../../lib'
-import { SiteVariablesPrepared, StrictColorSchemeMapping, StrictColorScheme } from '../../../types'
-import {
-  extendColorScheme,
-  pickValuesFromColorScheme,
-  generateComponentAreas,
-} from '../../../colorUtils'
-import { TeamsColorNames } from '../../colors'
+import { pxToRem, stringLiteralsArray } from '../../../../lib'
+import { SiteVariablesPrepared, ItemType, TeamsSchemeMappingWithAreas } from '../../../types'
+import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
 
-const labelColorComponentAreas = generateComponentAreas('foreground', 'background')
-type LabelColorComponentAreas = typeof labelColorComponentAreas[number]
-
-type LabelColorSchemeMapping = StrictColorSchemeMapping<
-  StrictColorScheme<LabelColorComponentAreas>,
-  TeamsColorNames
->
+export const labelColorAreas = stringLiteralsArray('foreground', 'background')
+export type LabelColorSchemeMapping = TeamsSchemeMappingWithAreas<ItemType<typeof labelColorAreas>>
 
 export interface LabelVariables {
   colorScheme: LabelColorSchemeMapping
@@ -39,7 +29,7 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
   })
 
   return {
-    colorScheme: pickValuesFromColorScheme(colorScheme, labelColorComponentAreas),
+    colorScheme: pickValuesFromColorScheme(colorScheme, labelColorAreas),
     circularRadius: pxToRem(9999),
     padding: `0 ${pxToRem(4)} 0 ${pxToRem(4)}`,
     startPaddingLeft: '0px',

@@ -41,8 +41,3 @@ export function pickValuesFromColorScheme<T extends ComponentAreaName | string =
   })
   return result
 }
-
-export const generateComponentAreas = <T extends ComponentAreaName | string>(...args: T[]): T[] => {
-  const tuple = <T extends ComponentAreaName | string>(...args: T[]) => args
-  return tuple(...args)
-}

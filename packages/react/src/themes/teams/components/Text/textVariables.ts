@@ -1,17 +1,12 @@
 import { TextVariables } from '../../../base/components/Text/textVariables'
-import { StrictColorSchemeMapping, StrictColorScheme } from '../../../../themes/types'
-import { TeamsColorNames } from '../../colors'
-import { generateComponentAreas } from '../../../colorUtils'
+import { TeamsSchemeMappingWithAreas, ItemType } from '../../../../themes/types'
+import { stringLiteralsArray } from '../../../../lib'
+import { pickValuesFromColorScheme } from '../../../colorUtils'
 
-const textColorComponentAreas = generateComponentAreas('foreground')
-export type TextColorComponentAreas = typeof textColorComponentAreas[number]
+export const textColorAreas = stringLiteralsArray('foreground')
+export type TextColorSchemeMapping = TeamsSchemeMappingWithAreas<ItemType<typeof textColorAreas>>
 
-export type TextColorSchemeMapping = StrictColorSchemeMapping<
-  StrictColorScheme<TextColorComponentAreas>,
-  TeamsColorNames
->
-
-export interface TeamsTextVariables extends TextVariables {
+export interface TeamsTextVariables extends TextVariables<TextColorSchemeMapping> {
   atMentionMeFontWeight: number
   importantWeight: number
   timestampHoverColor: string
@@ -19,8 +14,7 @@ export interface TeamsTextVariables extends TextVariables {
 
 export default (siteVariables): Partial<TeamsTextVariables> => {
   return {
-    // TODO: how can we specify these typings here, when this is already defined and used in the base theme!?
-    colorScheme: siteVariables.colorScheme,
+    colorScheme: pickValuesFromColorScheme(siteVariables.colorScheme, textColorAreas),
     atMentionOtherColor: siteVariables.colors.brand[600],
     atMentionMeColor: siteVariables.colors.orange[400],
     atMentionMeFontWeight: siteVariables.fontWeightBold,

@@ -1,7 +1,4 @@
-import {
-  MenuVariables,
-  menuColorComponentAreas,
-} from '../../../teams/components/Menu/menuVariables'
+import { MenuVariables, menuColorAreas } from '../../../teams/components/Menu/menuVariables'
 import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
 
 export default (siteVars: any): Partial<MenuVariables> => ({
@@ -17,7 +14,7 @@ export default (siteVars: any): Partial<MenuVariables> => ({
         foregroundDisabled: siteVars.colorScheme.brand.foregroundDisabled1,
       },
     }),
-    menuColorComponentAreas,
+    menuColorAreas,
   ),
   color: siteVars.colors.white,
   colorActive: siteVars.colors.black,

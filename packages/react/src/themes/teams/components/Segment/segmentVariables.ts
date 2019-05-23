@@ -1,14 +1,12 @@
-import { StrictColorSchemeMapping, StrictColorScheme } from '../../../../themes/types'
-import { generateComponentAreas, pickValuesFromColorScheme } from '../../../colorUtils'
-import { TeamsColorNames } from '../../colors'
+import { ItemType, TeamsSchemeMappingWithAreas } from '../../../../themes/types'
+import { pickValuesFromColorScheme } from '../../../colorUtils'
+import { stringLiteralsArray } from '../../../../lib'
 
-const segmentColorComponentAreas = generateComponentAreas('foreground')
-export type SegmentColorComponentAreas = typeof segmentColorComponentAreas[number]
-
-export type SegmentColorSchemeMapping = StrictColorSchemeMapping<
-  StrictColorScheme<SegmentColorComponentAreas>,
-  TeamsColorNames
+export const segmentColorAreas = stringLiteralsArray('foreground')
+export type SegmentColorSchemeMapping = TeamsSchemeMappingWithAreas<
+  ItemType<typeof segmentColorAreas>
 >
+
 export interface SegmentVariables {
   colorScheme: SegmentColorSchemeMapping
   color: string
@@ -20,7 +18,7 @@ export interface SegmentVariables {
 
 export default (siteVariables): SegmentVariables => {
   return {
-    colorScheme: pickValuesFromColorScheme(siteVariables.colorScheme, segmentColorComponentAreas),
+    colorScheme: pickValuesFromColorScheme(siteVariables.colorScheme, segmentColorAreas),
     color: siteVariables.bodyColor,
     backgroundColor: siteVariables.bodyBackground,
     padding: '1em',

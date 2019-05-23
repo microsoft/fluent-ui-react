@@ -1,6 +1,11 @@
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle, StrictColorScheme } from '../../../types'
-import { MenuVariables, MenuColorComponentAreas } from './menuVariables'
+import {
+  ComponentSlotStylesInput,
+  ICSSInJSStyle,
+  StrictColorScheme,
+  ItemType,
+} from '../../../types'
+import { MenuVariables, menuColorAreas } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 import { getColorScheme } from '../../colors'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
@@ -24,7 +29,7 @@ const getActionStyles = ({
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  colors: StrictColorScheme<MenuColorComponentAreas>
+  colors: StrictColorScheme<ItemType<typeof menuColorAreas>>
 }): ICSSInJSStyle =>
   underlined || iconOnly
     ? {
@@ -47,7 +52,7 @@ const getFocusedStyles = ({
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  colors: StrictColorScheme<MenuColorComponentAreas>
+  colors: StrictColorScheme<ItemType<typeof menuColorAreas>>
 }): ICSSInJSStyle => {
   const { primary, underlined, isFromKeyboard, active, vertical } = props
   if (active && !underlined && !vertical) return {}
@@ -72,7 +77,7 @@ const getHoverStyles = ({
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  colors: StrictColorScheme<MenuColorComponentAreas>
+  colors: StrictColorScheme<ItemType<typeof menuColorAreas>>
 }): ICSSInJSStyle => {
   const { underlined, active, vertical } = props
   if (active && !underlined && !vertical) return {}
@@ -95,7 +100,7 @@ const pointingBeak = ({
 }: {
   props: MenuItemProps
   variables: MenuVariables
-  colors: StrictColorScheme<MenuColorComponentAreas>
+  colors: StrictColorScheme<ItemType<typeof menuColorAreas>>
 }): ICSSInJSStyle => {
   const { pointing, primary } = props
 

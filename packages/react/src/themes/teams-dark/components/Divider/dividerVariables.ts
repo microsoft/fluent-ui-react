@@ -1,6 +1,6 @@
 import {
   DividerVariables,
-  dividerColorComponentAreas,
+  dividerColorAreas,
 } from '../../../teams/components/Divider/dividerVariables'
 import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
 
@@ -12,7 +12,7 @@ export default (siteVars: any): Partial<DividerVariables> => ({
         border: siteVars.colors.brand[400],
       },
     }),
-    dividerColorComponentAreas,
+    dividerColorAreas,
   ),
   textColor: siteVars.colors.grey[250],
   dividerColor: siteVars.colors.grey[550],

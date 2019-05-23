@@ -2,31 +2,15 @@ import {
   ColorPalette,
   PrimitiveColors,
   ColorSchemeMapping,
-  ColorVariants,
   ComponentAreaName,
   ColorScheme,
   StrictColorSchemeMapping,
   StrictColorScheme,
+  TeamsColorNames,
+  TeamsContextualColors,
+  TeamsNaturalColors,
+  TeamsTransparentColors,
 } from '../types'
-
-export type TeamsContextualColors = {
-  brand: ColorVariants
-}
-
-export type TeamsNaturalColors = {
-  grey: ColorVariants
-  green: ColorVariants
-  orange: ColorVariants
-  red: ColorVariants
-  yellow: ColorVariants
-  pink: ColorVariants
-}
-
-export type TeamsTransparentColors = {
-  silver: ColorVariants
-  ruby: ColorVariants
-  onyx: ColorVariants
-}
 
 export const contextualColors: TeamsContextualColors = {
   brand: {
@@ -176,18 +160,7 @@ export const transparentColors: TeamsTransparentColors = {
   },
 }
 
-export type TeamsColorNames = keyof (TeamsContextualColors &
-  TeamsNaturalColors &
-  PrimitiveColors &
-  TeamsTransparentColors)
-
-type TransparentColors = Partial<{
-  silver: ColorVariants
-  ruby: ColorVariants
-  onyx: ColorVariants
-}>
-
-export const colors: ColorPalette<TransparentColors> = {
+export const colors: ColorPalette<TeamsTransparentColors> = {
   ...contextualAndNaturalColors,
   ...primitiveColors,
   ...transparentColors,

@@ -1,14 +1,12 @@
-import { StrictColorSchemeMapping, StrictColorScheme } from '../../../types'
-import { TeamsColorNames } from '../../colors'
-import { generateComponentAreas, pickValuesFromColorScheme } from '../../../colorUtils'
+import { ItemType, TeamsSchemeMappingWithAreas } from '../../../types'
+import { pickValuesFromColorScheme } from '../../../colorUtils'
+import { stringLiteralsArray } from '../../../../lib'
 
-const headerColorComponentAreas = generateComponentAreas('foreground')
-export type HeaderColorComponentAreas = typeof headerColorComponentAreas[number]
-
-export type HeaderColorSchemeMapping = StrictColorSchemeMapping<
-  StrictColorScheme<HeaderColorComponentAreas>,
-  TeamsColorNames
+export const headerColorAreas = stringLiteralsArray('foreground')
+export type HeaderColorSchemeMapping = TeamsSchemeMappingWithAreas<
+  ItemType<typeof headerColorAreas>
 >
+
 export interface HeaderVariables {
   colorScheme?: HeaderColorSchemeMapping
   color: string
@@ -17,7 +15,7 @@ export interface HeaderVariables {
 
 export default (siteVars: any): HeaderVariables => {
   return {
-    colorScheme: pickValuesFromColorScheme(siteVars.colorScheme, headerColorComponentAreas),
+    colorScheme: pickValuesFromColorScheme(siteVars.colorScheme, headerColorAreas),
     color: siteVars.colors.grey[750],
     descriptionColor: undefined,
   }

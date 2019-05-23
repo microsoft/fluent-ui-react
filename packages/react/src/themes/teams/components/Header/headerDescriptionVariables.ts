@@ -1,23 +1,18 @@
-import { StrictColorSchemeMapping, StrictColorScheme } from '../../../types'
-import { TeamsColorNames } from '../../colors'
-import { generateComponentAreas, pickValuesFromColorScheme } from '../../../colorUtils'
+import { ItemType, TeamsSchemeMappingWithAreas } from '../../../types'
+import { pickValuesFromColorScheme } from '../../../colorUtils'
+import { stringLiteralsArray } from '../../../../lib'
 
-export const headerDescriptionColorComponentAreas = generateComponentAreas('foreground')
-export type HeaderDescriptionColorComponentAreas = typeof headerDescriptionColorComponentAreas[number]
-
-export type HeaderDescriptionColorSchemeMapping = StrictColorSchemeMapping<
-  StrictColorScheme<HeaderDescriptionColorComponentAreas>,
-  TeamsColorNames
+export const headerDescriptionColorAreas = stringLiteralsArray('foreground')
+export type HeaderDescriptionColorSchemeMapping = TeamsSchemeMappingWithAreas<
+  ItemType<typeof headerDescriptionColorAreas>
 >
+
 export interface HeaderDescriptionVariables {
   colorScheme?: HeaderDescriptionColorSchemeMapping
   color: string
 }
 
 export default (siteVariables: any): HeaderDescriptionVariables => ({
-  colorScheme: pickValuesFromColorScheme(
-    siteVariables.colorScheme,
-    headerDescriptionColorComponentAreas,
-  ),
+  colorScheme: pickValuesFromColorScheme(siteVariables.colorScheme, headerDescriptionColorAreas),
   color: siteVariables.colors.grey[350],
 })
