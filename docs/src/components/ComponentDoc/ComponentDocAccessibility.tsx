@@ -60,8 +60,13 @@ const ComponentDocAccessibility = ({ info }) => {
   const accessPanels = [
     {
       key: 'accessibility',
-      content: { content: accessibilityDetails },
-      title: { content: <Text as="h2" content="Accessibility" />, as: 'span' },
+      content: { content: accessibilityDetails, styles: { paddingLeft: '14px' } },
+      title: {
+        content: <Text content="Accessibility" />,
+        as: 'span',
+        'aria-level': '2',
+        styles: { paddingBottom: '0', paddingTop: '0' },
+      },
     },
   ]
 

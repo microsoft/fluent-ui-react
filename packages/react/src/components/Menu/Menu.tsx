@@ -235,7 +235,7 @@ Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items'
  * A menu displays grouped navigation actions.
  * @accessibility
  * Implements ARIA Menu, Toolbar or Tabs design pattern, depending on the behavior used
- * DO choose desired accessibility behavior depending on the use case
- * DO provide label to the Menu component using aria-label or aria-labelledby prop
+ * Do choose desired accessibility behavior depending on the use case
+ * Do provide label to the Menu component using aria-label or aria-labelledby prop
  */
 export default withSafeTypeForAs<typeof Menu, MenuProps, 'ul'>(Menu)

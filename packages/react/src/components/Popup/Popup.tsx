@@ -124,8 +124,8 @@ export interface PopupState {
 
 /**
  * A Popup displays additional information on top of a page.
- * @accessibility This is example usage of the accessibility tag.
- * This should be replaced with the actual description after the PR is merged
+ * @accessibility
+ * Do use popupFocusTrapBehavior if the focus needs to be trapped inside of the Popup
  */
 export default class Popup extends AutoControlledComponent<PopupProps, PopupState> {
   static displayName = 'Popup'
