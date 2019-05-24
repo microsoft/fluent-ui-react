@@ -10,7 +10,7 @@
     "deploy:docs": "gulp deploy:docs",
     "lint": "eslint \"**/*.{js,ts,tsx}\" && yarn lint:old",
     "lint:fix": "yarn lint --fix && yarn lint:old --fix",
-    "lint:old": "cross-env NODE_OPTIONS='-r ts-node/register' tslint -t stylish -p . --rules-dir ./build/tslint",
+    "lint:old": "tslint -t stylish -p",
     "perf": "cross-env PERF=true gulp perf --times=50",
     "perf:debug": "cross-env PERF=true gulp perf:debug --debug",
     "prettier": "prettier --list-different \"**/*.{ts,tsx}\"",
@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/register": "^7.4.4",
     "@babel/standalone": "^7.3.2",
     "@types/babel__traverse": "^7.0.4",
     "@types/color": "^3.0.0",
@@ -64,6 +65,7 @@
     "@types/react-dom": "^16.8.3",
     "@types/react-is": "^16.7.1",
     "@types/react-router": "^4.0.27",
+    "@types/rimraf": "^2.0.2",
     "babel-loader": "^8.0.6",
     "circular-dependency-plugin": "^5.0.2",
     "clean-webpack-plugin": "^0.1.19",
@@ -128,7 +130,6 @@
     "syncpack": "^4.3.1",
     "through2": "^2.0.3",
     "tmp": "^0.0.33",
-    "ts-node": "^6.1.0",
     "tsconfig-paths": "^3.7.0",
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.1",

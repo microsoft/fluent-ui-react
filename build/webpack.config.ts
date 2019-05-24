@@ -1,12 +1,13 @@
-import * as CopyWebpackPlugin from 'copy-webpack-plugin'
-import * as HtmlWebpackPlugin from 'html-webpack-plugin'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { webpack as lernaAliases } from 'lerna-alias'
 import * as _ from 'lodash'
 import * as webpack from 'webpack'
 import * as TerserPlugin from 'terser-webpack-plugin'
-import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
-import config from './config'
+import config from '../config'
+
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 const { paths } = config
 const { __DEV__, __PROD__ } = config.compiler_globals
@@ -61,7 +62,7 @@ const webpackConfig: any = {
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin({
-      tsconfig: paths.base('build/tsconfig.docs.json'),
+      tsconfig: paths.base('docs', 'tsconfig.json'),
       watch: [paths.docsSrc(), paths.packages()],
     }),
     new webpack.DefinePlugin(config.compiler_globals),
@@ -95,7 +96,7 @@ const webpackConfig: any = {
         propTypes: require('prop-types/package.json').version,
         react: require('react/package.json').version,
         reactDOM: require('react-dom/package.json').version,
-        stardust: require('./package.json').version,
+        stardust: require('../package.json').version,
         reactVis: require('react-vis/package.json').version,
       },
     }),

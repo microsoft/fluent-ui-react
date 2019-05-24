@@ -1,10 +1,17 @@
-import { task, series, parallel } from 'gulp'
-import * as path from 'path'
-import * as tsPaths from 'tsconfig-paths'
+require('@babel/register')({
+  extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  presets: [
+    ['@babel/preset-env', { targets: { node: 'current' }, useBuiltIns: false }],
+    '@babel/preset-typescript',
+  ],
+})
 
-import config from './config'
+const { task, series, parallel } = require('gulp')
+const path = require('path')
+const tsPaths = require('tsconfig-paths')
 
-const { compilerOptions } = require('./build/tsconfig.common.json')
+const config = require('./config').default
+const { compilerOptions } = require('./docs/tsconfig.json')
 
 // add node_modules/.bin to the path so we can invoke .bin CLIs in tasks
 process.env.PATH =

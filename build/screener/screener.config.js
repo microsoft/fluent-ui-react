@@ -1,4 +1,4 @@
-require('ts-node').register()
+require('@babel/register')
 
 const config = require('../../config').default
 const { compilerOptions } = require('../../build/tsconfig.common.json')
