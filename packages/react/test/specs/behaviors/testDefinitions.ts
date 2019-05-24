@@ -14,7 +14,7 @@ const testHelper = new TestHelper()
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=(\w+)' based on the property '(\w+)'\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = [...parameters.props]
+    const [attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = parameters.props
     const property = {}
     property[propertyDependingOn] = attributeExpectedValue
 
@@ -22,17 +22,6 @@ definitions.push({
     expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toEqual(
       testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
     )
-  },
-})
-
-// Example:  Adds attribute 'aria-hidden=true' to icon
-definitions.push({
-  regexp: /Adds attribute '([\w-]+)=(\w+)' to \w+/g,
-  testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, attributeExpectedValue] = [...parameters.props]
-    const property = {}
-    const expectedResult = parameters.behavior(property).attributes!.root[attributeToBeAdded]
-    expect(expectedResult).toEqual(attributeExpectedValue)
   },
 })
 
@@ -51,7 +40,7 @@ definitions.push({
 definitions.push({
   regexp: /Adds role '(\w+)' to '([\w-]+)' component's part/g,
   testMethod: (parameters: TestMethod) => {
-    const [roleToBeAdded, elementWhereToBeAdded] = [...parameters.props]
+    const [roleToBeAdded, elementWhereToBeAdded] = parameters.props
     const property = {}
     const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded]['role']
     expect(expectedResult).toEqual(roleToBeAdded)
@@ -63,9 +52,7 @@ definitions.push({
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, attributeExpectedValue, elementWhereToBeAdded] = [
-      ...parameters.props,
-    ]
+    const [attributeToBeAdded, attributeExpectedValue, elementWhereToBeAdded] = parameters.props
     const property = {}
     const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
       attributeToBeAdded
@@ -86,7 +73,7 @@ definitions.push({
       propertyBasedOn,
       propertyDependingOn,
       elementWhereToBeAdded,
-    ] = [...parameters.props]
+    ] = parameters.props
     const property = {}
     property[propertyDependingOn] = [{}, {}]
     property[propertyBasedOn] = true
@@ -120,9 +107,12 @@ definitions.push({
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=*([\w-]*)' based on the property '([\w-]+)' to '([\w-]+)' component's part\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, attibuteValue, propertyDependingOn, elementWhereToBeAdded] = [
-      ...parameters.props,
-    ]
+    const [
+      attributeToBeAdded,
+      attibuteValue,
+      propertyDependingOn,
+      elementWhereToBeAdded,
+    ] = parameters.props
     const property = {}
     const propertyDependingOnValue = attibuteValue || 'value of property'
     property[propertyDependingOn] = propertyDependingOnValue
@@ -139,7 +129,7 @@ definitions.push({
 definitions.push({
   regexp: /Generates unique ID and adds it as attribute '([\w-]+)' to the '([\w-]+)' component's part if it has not been provided by the user\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, elementWhereToBeAdded] = [...parameters.props]
+    const [attributeToBeAdded, elementWhereToBeAdded] = parameters.props
     const property = {}
     const propertyDependingOnValue = 'value of property'
     property[elementWhereToBeAdded] = { id: propertyDependingOnValue }
@@ -152,13 +142,16 @@ definitions.push({
   },
 })
 
-// Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
+// Example: Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part based on the property '\w+'\. This can be overriden by providing '([\w-]+)' property directly to the component\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, valueOfAttributeToBeAdded, component, overridingProperty] = [
-      ...parameters.props,
-    ]
+    const [
+      attributeToBeAdded,
+      valueOfAttributeToBeAdded,
+      component,
+      overridingProperty,
+    ] = parameters.props
 
     const propertyWithOverride = {}
     propertyWithOverride[overridingProperty] = valueOfAttributeToBeAdded
@@ -175,9 +168,7 @@ definitions.push({
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=([\w\d]+)' based on the property '\w+'\. This can be overriden by providing '([\w-]+)' property directly to the component\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, valueOfAttributeToBeAdded, overridingProperty] = [
-      ...parameters.props,
-    ]
+    const [attributeToBeAdded, valueOfAttributeToBeAdded, overridingProperty] = parameters.props
     const propertyWithOverride = {}
     propertyWithOverride[overridingProperty] = valueOfAttributeToBeAdded
     const expectedResultAttributeDefined = parameters.behavior(propertyWithOverride).attributes
@@ -217,9 +208,12 @@ function testMethodConditionallyAddAttribute(
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part if '([\w-]+)' property is true\. Does not set the attribute otherwise\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, valueOfAttributeToBeAdded, component, propertyDependsOn] = [
-      ...parameters.props,
-    ]
+    const [
+      attributeToBeAdded,
+      valueOfAttributeToBeAdded,
+      component,
+      propertyDependsOn,
+    ] = parameters.props
 
     testMethodConditionallyAddAttribute(
       parameters,
@@ -243,7 +237,7 @@ definitions.push({
       component,
       propertyDependsOn,
       valueOfAttributeToBeAddedOtherwise,
-    ] = [...parameters.props]
+    ] = parameters.props
 
     testMethodConditionallyAddAttribute(
       parameters,
@@ -267,7 +261,7 @@ definitions.push({
       component,
       propertyDependsOn,
       valueOfAttributeToBeAddedOtherwise,
-    ] = [...parameters.props]
+    ] = parameters.props
 
     testMethodConditionallyAddAttribute(
       parameters,
@@ -285,7 +279,7 @@ definitions.push({
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=(\w+)', if there is no '([\w-]+)' property provided\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = [...parameters.props]
+    const [attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = parameters.props
     const property = {}
     const expectedResult = parameters.behavior(property).attributes.root[attributeToBeAdded]
     expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toBe(
@@ -310,7 +304,7 @@ definitions.push({
       attributeExpectedValue,
       propertyDependingOnFirst,
       propertyDependingOnSecond,
-    ] = [...parameters.props]
+    ] = parameters.props
 
     const property = {}
 
@@ -347,7 +341,7 @@ definitions.push({
 definitions.push({
   regexp: /Adds role='(\w+)' if element type is other than '(\w+)'\./g,
   testMethod: (parameters: TestMethod) => {
-    const [roleToBeAdded, as] = [...parameters.props]
+    const [roleToBeAdded, as] = parameters.props
     const property = {}
     const expectedResult = parameters.behavior(property).attributes.root.role
     expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toBe(
@@ -356,31 +350,6 @@ definitions.push({
 
     const propertyAsButton = { as }
     const expectedResultAsButton = parameters.behavior(propertyAsButton).attributes.root.role
-    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAsButton)).toBe(
-      testHelper.convertToMatchingTypeIfApplicable(undefined),
-    )
-  },
-})
-
-// Example: Adds attribute 'role=button' to 'button' component's part if element type is other than 'button'.
-definitions.push({
-  regexp: /Adds attribute '([\w-]+)=(\w+)' to '(\w+)' component's part if element type is other than '(\w+)'\./g,
-  testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, attributeExpectedValue, elementWhereToBeAdded, as] = [
-      ...parameters.props,
-    ]
-    const property = {}
-    const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
-      attributeToBeAdded
-    ]
-    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toBe(
-      testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
-    )
-
-    const propertyAsButton = { as }
-    const expectedResultAsButton = parameters.behavior(propertyAsButton).attributes[
-      elementWhereToBeAdded
-    ][attributeToBeAdded]
     expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAsButton)).toBe(
       testHelper.convertToMatchingTypeIfApplicable(undefined),
     )

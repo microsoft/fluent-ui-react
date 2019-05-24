@@ -10,6 +10,7 @@ import { Accessibility } from '../../types'
  * @specification
  * Adds role 'presentation' to 'root' component's part.
  * Adds attribute 'aria-hidden=true', if there is no 'alt' property provided.
+ * Adds attribute 'tabIndex=0' to 'root' component's part.
  */
 const embedBehavior: Accessibility = (props: any) => ({
   attributes: {
