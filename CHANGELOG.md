@@ -26,6 +26,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `expanded` prop to `Accordion` @silviuavram ([#1322](https://github.com/stardust-ui/react/pull/1322))
 - Replace `react-popper` package with custom `Popper` component and exposed as `UNSTABLE_Popper` positioning helper @Bugaa92 ([#1358](https://github.com/stardust-ui/react/pull/1358))
 - Add strict types for the `colorScheme` props used in the components' `variables` @mnajdova([#1340](https://github.com/stardust-ui/react/pull/1340))
+- Add and Export message-seen, presence-available, presence-stroke and open-outside  icons in Teams Theme @joheredi ([#1390](https://github.com/stardust-ui/react/pull/1390))
 
 ### Documentation
 - Accessibility: improve introduction section @jurokapsiar ([#1368](https://github.com/stardust-ui/react/pull/1368))
