@@ -44,8 +44,8 @@ const componentsSrc = [
 ]
 
 task('bundle:package:commonjs', () => {
-  const tsConfig = paths.base('build/tsconfig.commonjs.json')
-  const settings = { declaration: true }
+  const tsConfig = paths.packages(packageName, 'tsconfig.json')
+  const settings = { declaration: true, module: 'commonjs' }
 
   const typescript = g.typescript.createProject(tsConfig, settings)
   const { dts, js } = src(componentsSrc).pipe(typescript())
@@ -57,7 +57,7 @@ task('bundle:package:commonjs', () => {
 })
 
 task('bundle:package:es', () => {
-  const tsConfig = paths.base('build/tsconfig.es.json')
+  const tsConfig = paths.packages(packageName, 'tsconfig.json')
   const settings = { declaration: true }
 
   const typescript = g.typescript.createProject(tsConfig, settings)

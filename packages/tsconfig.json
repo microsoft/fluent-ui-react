@@ -1,0 +1,11 @@
+{
+  "files": [],
+  "references": [
+    { "path": "docs-components" },
+    { "path": "react" },
+    { "path": "react-component-event-listener" },
+    { "path": "react-component-nesting-registry" },
+    { "path": "react-component-ref" },
+    { "path": "react-proptypes" }
+  ]
+}

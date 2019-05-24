@@ -1,11 +1,7 @@
 {
-  "extends": "../../build/tsconfig.common",
+  "extends": "@stardust-ui/internal-tooling/ts/tsconfig.json",
   "compilerOptions": {
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "noUnusedParameters": true,
-    "strictNullChecks": true
+    "composite": true
   },
   "include": ["src", "test"]
 }

@@ -1,6 +1,7 @@
 {
   "extends": "../../../build/tsconfig.common",
   "compilerOptions": {
+    "baseUrl": "../../../",
     "paths": {
       "docs/*": ["docs/*"],
       "src/*": ["packages/react/src/*"],

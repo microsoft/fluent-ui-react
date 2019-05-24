@@ -1,4 +1,7 @@
 {
-  "extends": "../../build/tsconfig.common",
-  "include": ["src"]
+  "extends": "@stardust-ui/internal-tooling/ts/tsconfig.json",
+  "compilerOptions": {
+    "composite": true
+  },
+  "include": ["src", "test"]
 }
