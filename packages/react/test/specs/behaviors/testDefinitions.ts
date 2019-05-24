@@ -359,7 +359,6 @@ definitions.push({
 /*
  * ********************** FOCUS ZONE **********************
  */
-// Embeds FocusZone into component allowing arrow key navigation through the children of the component.
 definitions.push({
   regexp: /Embeds component into FocusZone\./g,
   testMethod: (parameters: TestMethod) => {
