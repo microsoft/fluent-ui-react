@@ -1,5 +1,4 @@
 import { dialogBehavior } from 'src/lib/accessibility'
-import Button from 'src/components/Button/Button'
 import * as React from 'react'
 
 describe('DialogBehavior.ts', () => {
@@ -14,7 +13,7 @@ describe('DialogBehavior.ts', () => {
   })
 
   test('does not add tabIndex if element is already tabbable', () => {
-    const expectedResult = dialogBehavior({ trigger: <Button /> })
+    const expectedResult = dialogBehavior({ trigger: <button /> })
     expect(expectedResult.attributes.trigger.tabIndex).toBeUndefined()
   })
 })
