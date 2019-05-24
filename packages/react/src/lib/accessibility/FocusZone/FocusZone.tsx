@@ -68,6 +68,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     isCircularNavigation: false,
     direction: FocusZoneDirection.bidirectional,
     as: 'div',
+    preventDefaultWhenHandled: true,
   }
 
   static displayName = 'FocusZone'

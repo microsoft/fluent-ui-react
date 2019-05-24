@@ -3,7 +3,9 @@ import { FocusZoneDirection } from '../../FocusZone'
 
 /**
  * @specification
- * Embeds FocusZone into component allowing circular arrow key navigation through the children of the component.
+ * Embeds component into FocusZone.
+ * Provides arrow key navigation in vertical direction.
+ * Keyboard navigation is circular.
  */
 const treeBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -13,7 +15,6 @@ const treeBehavior: Accessibility = (props: any) => ({
     mode: FocusZoneMode.Embed,
     props: {
       isCircularNavigation: true,
-      preventDefaultWhenHandled: true,
       direction: FocusZoneDirection.vertical,
     },
   },
