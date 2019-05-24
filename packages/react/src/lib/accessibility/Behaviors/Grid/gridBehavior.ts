@@ -4,7 +4,7 @@ import { FocusZoneDirection } from '../../FocusZone'
 /**
  * @specification
  * Embeds component into FocusZone.
- * Provides arrows key navigation in bidirectional direction.
+ * Provides arrow key navigation in bidirectional direction.
  */
 const gridBehavior: Accessibility = (props: any) => ({
   attributes: {},

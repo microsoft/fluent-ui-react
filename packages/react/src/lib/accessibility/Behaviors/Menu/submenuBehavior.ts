@@ -9,7 +9,7 @@ import menuItemBehavior from './menuItemBehavior'
  * @specification
  * Adds role='menu'.
  * Embeds component into FocusZone.
- * Provides arrows key navigation in vertical direction.
+ * Provides arrow key navigation in vertical direction.
  * Keyboard navigation is circular.
  * Component will get focus when mounted.
  */

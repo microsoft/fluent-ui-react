@@ -401,7 +401,7 @@ definitions.push({
 })
 
 definitions.push({
-  regexp: /arrows key navigation in horizontal direction/g,
+  regexp: /arrow key navigation in horizontal direction/g,
   testMethod: (parameters: TestMethod) => {
     const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
     expect(actualFocusZoneHorizontal.props.direction).toBe(FocusZoneDirection.horizontal)
@@ -409,7 +409,7 @@ definitions.push({
 })
 
 definitions.push({
-  regexp: /arrows key navigation in vertical direction/g,
+  regexp: /arrow key navigation in vertical direction/g,
   testMethod: (parameters: TestMethod) => {
     const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
     expect(actualFocusZoneHorizontal.props.direction).toBe(FocusZoneDirection.vertical)
@@ -417,7 +417,7 @@ definitions.push({
 })
 
 definitions.push({
-  regexp: /arrows key navigation in bidirectional direction/g,
+  regexp: /arrow key navigation in bidirectional direction/g,
   testMethod: (parameters: TestMethod) => {
     const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
     expect(actualFocusZoneHorizontal.props.direction).toBe(FocusZoneDirection.bidirectional)

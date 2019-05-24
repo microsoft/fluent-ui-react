@@ -9,7 +9,7 @@ import tabBehavior from './tabBehavior'
  * @specification
  * Adds role 'tablist' to 'root' component's part.
  * Embeds component into FocusZone.
- * Provides arrows key navigation in bidirectional direction.
+ * Provides arrow key navigation in bidirectional direction.
  * When component's container element receives focus, focus will be set to the default focusable child element of the component.
  */
 const tabListBehavior: Accessibility = (props: any) => ({

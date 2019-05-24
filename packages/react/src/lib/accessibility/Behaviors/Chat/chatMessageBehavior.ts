@@ -11,7 +11,7 @@ import { FocusZoneTabbableElements, FocusZoneDirection } from '../../FocusZone'
  *
  * @specification
  * Embeds component into FocusZone.
- * Provides arrows key navigation in vertical direction.
+ * Provides arrow key navigation in vertical direction.
  * Keyboard navigation is circular.
  * Focus is moved within the focusable children of the component using TAB key.
  */

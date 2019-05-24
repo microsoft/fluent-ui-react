@@ -11,7 +11,7 @@ import menuDividerBehavior from './menuDividerBehavior'
  * @specification
  * Adds role='menu'.
  * Embeds component into FocusZone.
- * Provides arrows key navigation in horizontal direction.
+ * Provides arrow key navigation in horizontal direction.
  * When 'vertical' prop is used, provides keyboard navigation in vertical direction.
  * Keyboard navigation is circular.
  */

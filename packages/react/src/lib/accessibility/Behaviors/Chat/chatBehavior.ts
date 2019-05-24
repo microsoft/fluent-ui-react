@@ -11,7 +11,7 @@ const CHAT_FOCUSZONE_ATTRIBUTE = 'chat-focuszone'
  *
  * @specification
  * Embeds component into FocusZone.
- * Provides arrows key navigation in vertical direction.
+ * Provides arrow key navigation in vertical direction.
  * Focus is set initially on the specified default tabbable element.
  * Focused active element of the component is reset when TAB from the component.
  * Focus can be moved inside a child component with embeded inner FocusZone by pressing a specified key.
