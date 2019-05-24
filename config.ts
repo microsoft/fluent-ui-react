@@ -10,6 +10,8 @@ const __PERF__ = !!process.env.PERF
 const __PROD__ = env === 'production'
 const __BASENAME__ = __PROD__ ? '/react/' : '/'
 
+const __SKIP_ERRORS__ = !!process.env.SKIP_ERRORS
+
 const envConfig = {
   env,
 
@@ -70,6 +72,7 @@ const config = {
     __PERF__,
     __PROD__,
     __BASENAME__: JSON.stringify(__BASENAME__),
+    __SKIP_ERRORS__,
     'process.env': {
       NODE_ENV: JSON.stringify(env),
     },
