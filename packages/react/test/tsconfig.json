@@ -1,12 +1,11 @@
 {
-  "extends": "./tsconfig.common.json",
+  "extends": "../../../build/tsconfig.common",
   "compilerOptions": {
-    "module": "esnext",
     "paths": {
       "docs/*": ["docs/*"],
       "src/*": ["packages/react/src/*"],
       "test/*": ["packages/react/test/*"]
     }
   },
-  "include": ["../docs/src", "../packages/react/src", "../types"]
+  "include": ["**/*"]
 }
