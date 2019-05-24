@@ -137,6 +137,8 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
 
   private focusHandler: ContainerFocusHandler = null
   private itemRefs = []
+  private defaultAccordionTitleId = _.uniqueId('accordion-title-')
+  private defaultAccordionContentId = _.uniqueId('accordion-content-')
 
   actionHandlers: AccessibilityActionHandlers = {
     moveNext: e => {
@@ -253,8 +255,8 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
       const active = this.isIndexActive(index)
       const canBeCollapsed = this.isIndexActionable(index)
       const contentRef = React.createRef<HTMLElement>()
-      const titleId = title['id'] || _.uniqueId('accordion-title-')
-      const contentId = content['id'] || _.uniqueId('accordion-content-')
+      const titleId = title['id'] || `${this.defaultAccordionTitleId}${index}`
+      const contentId = content['id'] || `${this.defaultAccordionContentId}${index}`
       this.itemRefs[index] = contentRef
 
       children.push(
