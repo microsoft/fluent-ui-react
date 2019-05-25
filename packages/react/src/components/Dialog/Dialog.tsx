@@ -274,8 +274,8 @@ Dialog.slotClassNames = {
 }
 
 /**
- * A Dialog displays important information on top of a page which usually requires user's attention, confirmation or interaction
+ * A Dialog displays important information on top of a page which usually requires user's attention, confirmation or interaction.
  * @accessibility
- * Implements ARIA Dialog (Modal) design pattern
+ * Implements [ARIA Dialog (Modal)](https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal) design pattern.
  */
 export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)

@@ -104,6 +104,6 @@ class Form extends UIComponent<WithAsProp<FormProps>, any> {
 /**
  * A Form displays a set of related user input fields in a structured way.
  * @accessibility
- * Do provide label by using 'aria-label', or 'aria-labelledby' prop
+ * Do provide label by using 'aria-label', or 'aria-labelledby' prop.
  */
 export default withSafeTypeForAs<typeof Form, FormProps, 'form'>(Form)
