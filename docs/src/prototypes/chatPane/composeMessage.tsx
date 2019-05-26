@@ -4,7 +4,6 @@ import {
   Input,
   Menu,
   Provider,
-  menuAsToolbarButtonBehavior,
   menuAsToolbarBehavior,
   MenuItemProps,
 } from '@stardust-ui/react'
@@ -90,7 +89,6 @@ const getMenuItems = (): MenuItemProps[] => {
       xSpacing: 'both',
       variables: siteVars => ({ color: siteVars.colors.grey[500] }),
     },
-    accessibility: menuAsToolbarButtonBehavior,
     'aria-label': `${name} tool`,
   }))
 

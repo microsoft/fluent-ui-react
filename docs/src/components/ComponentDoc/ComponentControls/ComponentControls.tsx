@@ -1,10 +1,4 @@
-import {
-  Menu,
-  Provider,
-  ThemeInput,
-  menuAsToolbarBehavior,
-  menuAsToolbarButtonBehavior,
-} from '@stardust-ui/react'
+import { Menu, Provider, ThemeInput, menuAsToolbarBehavior } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
@@ -75,7 +69,6 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
             key: 'show-code',
             content: <ComponentButton iconName="code" label="Try it" />,
             onClick: onShowCode,
-            accessibility: menuAsToolbarButtonBehavior,
           },
           {
             key: 'show-codesandbox',
@@ -86,25 +79,21 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
                 exampleName={examplePath}
               />
             ),
-            accessibility: menuAsToolbarButtonBehavior,
           },
           {
             key: 'show-variables',
             content: <ComponentButton iconName="paint brush" label="Theme it" />,
             onClick: onShowVariables,
-            accessibility: menuAsToolbarButtonBehavior,
           },
           {
             key: 'show-transparent',
             content: <ComponentButton iconName="adjust" label="Transparent" />,
             onClick: onShowTransparent,
-            accessibility: menuAsToolbarButtonBehavior,
           },
           {
             key: 'show-rtl',
             content: <ComponentButton iconName="align right" label="RTL" />,
             onClick: onShowRtl,
-            accessibility: menuAsToolbarButtonBehavior,
           },
           {
             key: 'maximize',
@@ -118,7 +107,6 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
             )}/${showRtl}`,
             target: '_blank',
             rel: 'noopener noreferrer',
-            accessibility: menuAsToolbarButtonBehavior,
           },
           {
             key: 'copy-link',
@@ -135,7 +123,6 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
               />
             ),
             onClick: onCopyLink,
-            accessibility: menuAsToolbarButtonBehavior,
           },
         ]}
       />

@@ -1,9 +1,4 @@
-import {
-  Accessibility,
-  Menu,
-  menuAsToolbarBehavior,
-  menuAsToolbarButtonBehavior,
-} from '@stardust-ui/react'
+import { Accessibility, Menu, menuAsToolbarBehavior } from '@stardust-ui/react'
 import * as React from 'react'
 import cx from 'classnames'
 
@@ -48,33 +43,28 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             key: 'smile',
             icon: 'smile',
             className: 'smile-emoji',
-            accessibility: menuAsToolbarButtonBehavior,
             'aria-label': 'smile one',
           },
           {
             key: 'smile2',
             icon: 'smile',
             className: 'smile-emoji',
-            accessibility: menuAsToolbarButtonBehavior,
             'aria-label': 'smile two',
           },
           {
             key: 'smile3',
             icon: 'smile',
             className: 'smile-emoji',
-            accessibility: menuAsToolbarButtonBehavior,
             'aria-label': 'smile three',
           },
           {
             key: 'a',
             icon: 'thumbs up',
-            accessibility: menuAsToolbarButtonBehavior,
             'aria-label': 'thumbs up',
           },
           {
             key: 'c',
             icon: 'ellipsis horizontal',
-            accessibility: menuAsToolbarButtonBehavior,
             'aria-label': 'more options',
             indicator: false,
             menu: {
