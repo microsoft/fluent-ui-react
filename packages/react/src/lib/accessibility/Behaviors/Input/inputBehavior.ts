@@ -5,6 +5,7 @@ import * as keyboardKey from 'keyboard-key'
 /**
  * @specification
  * Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
+ * Triggers 'clear' action with 'Escape' on 'input'.
  */
 
 const inputBehavior: Accessibility = (props: any) => ({

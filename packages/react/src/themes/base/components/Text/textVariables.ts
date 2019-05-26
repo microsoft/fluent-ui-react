@@ -1,7 +1,7 @@
 import { ColorSchemeMapping } from '../../../types'
 
-export interface TextVariables {
-  colorScheme: ColorSchemeMapping
+export interface TextVariables<TColorSchemeMapping = ColorSchemeMapping> {
+  colorScheme: TColorSchemeMapping
 
   atMentionMeColor: string
   atMentionOtherColor: string

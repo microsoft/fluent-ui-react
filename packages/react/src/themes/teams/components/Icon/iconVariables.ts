@@ -1,11 +1,15 @@
-import { pxToRem } from '../../../../lib'
-import { ColorSchemeMapping } from '../../../types'
-import { IconVariables as BaseIconVariables } from 'src/themes/base/components/Icon/iconVariables'
+import { pxToRem, stringLiteralsArray } from '../../../../lib'
+import { IconVariables as BaseIconVariables } from '../../../base/components/Icon/iconVariables'
+import { ItemType } from '../../../types'
+import { TeamsSchemeMappingWithAreas } from '../../types'
+import { pickValuesFromColorScheme } from '../../../colorUtils'
 
 export type IconSizeModifier = 'x' | 'xx'
+export const iconColorAreas = stringLiteralsArray('foreground')
+export type IconColorSchemeMapping = TeamsSchemeMappingWithAreas<ItemType<typeof iconColorAreas>>
 
 export interface IconVariables extends BaseIconVariables {
-  colorScheme?: ColorSchemeMapping
+  colorScheme?: IconColorSchemeMapping
   brandColor?: string
   secondaryColor: string
   redColor?: string
@@ -14,7 +18,7 @@ export interface IconVariables extends BaseIconVariables {
 }
 
 export default (siteVars): Partial<IconVariables> => ({
-  colorScheme: siteVars.colorScheme,
+  colorScheme: pickValuesFromColorScheme(siteVars.colorScheme, iconColorAreas),
   color: undefined,
   borderColor: undefined,
   brandColor: siteVars.brandColor,

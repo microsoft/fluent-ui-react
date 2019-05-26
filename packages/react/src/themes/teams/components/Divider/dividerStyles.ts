@@ -1,14 +1,19 @@
 import * as _ from 'lodash'
 
 import { childrenExist, pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle, ColorScheme } from '../../../types'
-import { DividerVariables } from './dividerVariables'
-import { DividerProps } from 'src/components/Divider/Divider'
+import {
+  ComponentSlotStylesInput,
+  ICSSInJSStyle,
+  StrictColorScheme,
+  ItemType,
+} from '../../../types'
+import { DividerVariables, dividerColorAreas } from './dividerVariables'
+import { DividerProps } from '../../../../components/Divider/Divider'
 
 const beforeAndAfter = (
   size: number,
   variables: DividerVariables,
-  colors: ColorScheme,
+  colors: StrictColorScheme<ItemType<typeof dividerColorAreas>>,
 ): ICSSInJSStyle => ({
   content: '""',
   flex: 1,

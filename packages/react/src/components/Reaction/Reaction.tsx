@@ -129,5 +129,8 @@ Reaction.slotClassNames = {
 
 /**
  * A reaction is used to indicate user's reaction.
+ * @accessibility
+ * Do use actionable components (for example Button) if the reactions need to be actionable.
+ * Do add textual representation to the icon slot if it only contains an icon (using title, aria-label or aria-labelledby props on the slot).
  */
 export default withSafeTypeForAs<typeof Reaction, ReactionProps, 'span'>(Reaction)

@@ -1,8 +1,7 @@
-import { ThemeInput, ThemeIconSpec, SvgIconSpec } from '../types'
+import { ThemeInput, ThemeIconSpec, SvgIconSpec, ThemeIcons } from '../types'
 
 import { default as svgIconsAndStyles } from './components/Icon/svg/ProcessedIcons'
 import { TeamsProcessedSvgIconSpec } from './components/Icon/svg/types'
-import { ThemeIcons } from 'src/themes/types'
 import { getIcon } from './index'
 
 type ThemeProcessedIconSpec = ThemeIconSpec &
