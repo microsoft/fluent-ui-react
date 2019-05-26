@@ -10,7 +10,7 @@ module.exports = {
     '@babel/plugin-transform-runtime',
   ],
   env: {
-    delelopment: {
+    development: {
       plugins: ['react-hot-loader/babel'],
     },
     test: {
