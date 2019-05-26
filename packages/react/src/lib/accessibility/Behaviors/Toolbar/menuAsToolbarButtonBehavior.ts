@@ -22,7 +22,7 @@ import * as _ from 'lodash'
  * Triggers 'openMenu' action with 'ArrowDown' on 'wrapper', when orientation is horizontal.
  * Triggers 'doNotNavigateNextParentItem' action with 'ArrowLeft' or 'ArrowRight' on 'wrapper', when toolbar button has submenu and it is opened.
  */
-const toolbarButtonBehavior: Accessibility = (props: any) => ({
+const menuAsToolbarButtonBehavior: Accessibility = (props: any) => ({
   attributes: {
     wrapper: {
       role: 'presentation',
@@ -64,4 +64,4 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default toolbarButtonBehavior
+export default menuAsToolbarButtonBehavior

@@ -168,10 +168,12 @@ export {
 } from './lib/accessibility/Behaviors/Menu/menuDividerBehavior'
 export { default as tabBehavior } from './lib/accessibility/Behaviors/Tab/tabBehavior'
 export { default as tabListBehavior } from './lib/accessibility/Behaviors/Tab/tabListBehavior'
-export { default as toolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/toolbarBehavior'
 export {
-  default as toolbarButtonBehavior,
-} from './lib/accessibility/Behaviors/Toolbar/toolbarButtonBehavior'
+  default as menuAsToolbarBehavior,
+} from './lib/accessibility/Behaviors/Toolbar/menuAsToolbarBehavior'
+export {
+  default as menuAsToolbarButtonBehavior,
+} from './lib/accessibility/Behaviors/Toolbar/menuAsToolbarButtonBehavior'
 export {
   default as radioGroupBehavior,
 } from './lib/accessibility/Behaviors/Radio/radioGroupBehavior'

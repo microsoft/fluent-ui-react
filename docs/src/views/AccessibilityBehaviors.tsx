@@ -78,11 +78,12 @@ export default () => (
           for components such as {code('Menu')} that contain children which, in turn, require their
           own behaviors. For instance, for a {code('Toolbar')} to work properly, the {code('Menu')}{' '}
           needs to have applied the
-          {code('toolbarBehavior')}, while each {code('MenuItem')} needs to have{' '}
-          {code('toolbarButtonBehavior')}. In this case of parent-child relationship, it makes sense
-          for the {code('toolbarBehavior')} to contain the default option for the {code('Menu')}{' '}
-          children, in this case {code('toolbarButtonBehavior')}. When the {code('Menu')} is
-          created, it will automatically add the default child behaviors for its children:
+          {code('menuAsToolbarBehavior')}, while each {code('MenuItem')} needs to have{' '}
+          {code('menuAsToolbarButtonBehavior')}. In this case of parent-child relationship, it makes
+          sense for the {code('menuAsToolbarBehavior')} to contain the default option for the{' '}
+          {code('Menu')} children, in this case {code('menuAsToolbarButtonBehavior')}. When the{' '}
+          {code('Menu')} is created, it will automatically add the default child behaviors for its
+          children:
           {code('MenuItem')} and {code('MenuDivider')}.
         </li>
       </ul>

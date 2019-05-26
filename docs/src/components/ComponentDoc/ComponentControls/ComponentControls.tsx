@@ -2,8 +2,8 @@ import {
   Menu,
   Provider,
   ThemeInput,
-  toolbarBehavior,
-  toolbarButtonBehavior,
+  menuAsToolbarBehavior,
+  menuAsToolbarButtonBehavior,
 } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -69,13 +69,13 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
         {...rest}
         fluid
         pills
-        accessibility={toolbarBehavior}
+        accessibility={menuAsToolbarBehavior}
         items={[
           {
             key: 'show-code',
             content: <ComponentButton iconName="code" label="Try it" />,
             onClick: onShowCode,
-            accessibility: toolbarButtonBehavior,
+            accessibility: menuAsToolbarButtonBehavior,
           },
           {
             key: 'show-codesandbox',
@@ -86,25 +86,25 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
                 exampleName={examplePath}
               />
             ),
-            accessibility: toolbarButtonBehavior,
+            accessibility: menuAsToolbarButtonBehavior,
           },
           {
             key: 'show-variables',
             content: <ComponentButton iconName="paint brush" label="Theme it" />,
             onClick: onShowVariables,
-            accessibility: toolbarButtonBehavior,
+            accessibility: menuAsToolbarButtonBehavior,
           },
           {
             key: 'show-transparent',
             content: <ComponentButton iconName="adjust" label="Transparent" />,
             onClick: onShowTransparent,
-            accessibility: toolbarButtonBehavior,
+            accessibility: menuAsToolbarButtonBehavior,
           },
           {
             key: 'show-rtl',
             content: <ComponentButton iconName="align right" label="RTL" />,
             onClick: onShowRtl,
-            accessibility: toolbarButtonBehavior,
+            accessibility: menuAsToolbarButtonBehavior,
           },
           {
             key: 'maximize',
@@ -118,7 +118,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
             )}/${showRtl}`,
             target: '_blank',
             rel: 'noopener noreferrer',
-            accessibility: toolbarButtonBehavior,
+            accessibility: menuAsToolbarButtonBehavior,
           },
           {
             key: 'copy-link',
@@ -135,7 +135,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
               />
             ),
             onClick: onCopyLink,
-            accessibility: toolbarButtonBehavior,
+            accessibility: menuAsToolbarButtonBehavior,
           },
         ]}
       />
