@@ -430,10 +430,11 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
               { suppressRefError: true },
             )
             const showClearIndicator = clearable && !this.isValueEmpty(value)
+            const labelAccessibilityProps = this.getLabeAccessibilityProps(getLabelProps)
 
             return (
               <>
-                {label && this.renderLabel(getLabelProps)}
+                {label && this.renderLabel(labelAccessibilityProps)}
                 <Ref innerRef={innerRef}>
                   <div
                     className={cx(Dropdown.slotClassNames.container, classes.container)}
@@ -742,14 +743,20 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     )
   }
 
-  private renderLabel(getLabelProps: (options?: GetLabelPropsOptions) => any) {
-    const { label, search } = this.props
+  private getLabeAccessibilityProps(getLabelProps: (options?: GetLabelPropsOptions) => any) {
+    return {
+      ...getLabelProps(), // from Downshift
+      ...(!this.props.search && { htmlFor: undefined }), // 'for' attribute from Downshift points to an <input>
+    }
+  }
+
+  private renderLabel(accessibilityProps: any) {
+    const { label } = this.props
     return Text.create(label, {
       defaultProps: {
         as: 'label',
         className: Dropdown.slotClassNames.label,
-        ...getLabelProps(),
-        ...(!search && { htmlFor: undefined }),
+        ...accessibilityProps,
       },
     })
   }
