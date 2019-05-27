@@ -61,7 +61,7 @@ const webpackConfig: any = {
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin({
-      tsconfig: paths.base('docs', 'tsconfig.json'),
+      tsconfig: paths.base('build/tsconfig.docs.json'),
       watch: [paths.docsSrc(), paths.packages()],
     }),
     new webpack.DefinePlugin(config.compiler_globals),
