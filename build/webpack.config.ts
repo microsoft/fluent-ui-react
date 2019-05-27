@@ -1,13 +1,12 @@
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { webpack as lernaAliases } from 'lerna-alias'
-import * as _ from 'lodash'
-import * as webpack from 'webpack'
-import * as TerserPlugin from 'terser-webpack-plugin'
+import _ from 'lodash'
+import webpack from 'webpack'
+import TerserPlugin from 'terser-webpack-plugin'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
 import config from '../config'
-
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 const { paths } = config
 const { __DEV__, __PROD__ } = config.compiler_globals
