@@ -22,14 +22,15 @@ import {
   ComponentVariablesInput,
   ProviderContextInput,
   ProviderContextPrepared,
+  Renderer,
+  ThemeInput,
 } from '../../themes/types'
 
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
 import ProviderBox from './ProviderBox'
 import { WithAsProp } from '../../types'
-import mergeContexts from 'src/lib/mergeContexts'
-import { Renderer, ThemeInput } from 'src/themes/types'
+import mergeContexts from '../../lib/mergeContexts'
 
 export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
