@@ -8,6 +8,7 @@ import {
   tableVerticalNavigationBehavior,
 } from '@stardust-ui/react'
 
+// TODO: FIX shift + TAB for headings
 class AttachmentsTable extends React.Component {
   state = {
     rowIndexClicked: -1,
