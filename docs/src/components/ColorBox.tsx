@@ -14,6 +14,7 @@ import CopyToClipboard from './CopyToClipboard'
 type ColorBoxProps = {
   children?: React.ReactNode
   name?: string
+  copyToClipboardIcon?: boolean
   rounded?: boolean
   size?: 'small' | 'normal' | 'big'
   value: string
@@ -77,27 +78,30 @@ export const colorBoxStyles: ComponentSlotStylesInput<ColorBoxProps, ColorBoxVar
 
 const ColorBox = createComponent<ColorBoxProps>({
   displayName: 'ColorBox',
-  render: ({ children, name, value, stardust: { classes } }) => (
+  render: ({ children, name, value, copyToClipboardIcon, stardust: { classes } }) => (
     <div className={classes.root}>
       <div className={classes.name}>{children || _.startCase(name)}</div>
 
-      <CopyToClipboard
-        render={(active, onClick) => (
-          <div className={classes.value}>
-            <span onClick={onClick}>
-              {value && <Icon name={active ? 'checkmark' : 'copy outline'} size="small" />}
-              {value}
-            </span>
-          </div>
-        )}
-        value={value}
-      />
+      {copyToClipboardIcon && (
+        <CopyToClipboard
+          render={(active, onClick) => (
+            <div className={classes.value}>
+              <span onClick={onClick}>
+                {value && <Icon name={active ? 'checkmark' : 'copy outline'} size="small" />}
+                {value || 'Not defined'}
+              </span>
+            </div>
+          )}
+          value={value}
+        />
+      )}
     </div>
   ),
 })
 
 ColorBox.defaultProps = {
   size: 'normal',
+  copyToClipboardIcon: true,
 }
 
 export default ColorBox
