@@ -33,6 +33,7 @@ import PopupsPrototype from './prototypes/popups'
 import IconViewerPrototype from './prototypes/IconViewer'
 import MenuButtonPrototype from './prototypes/MenuButton'
 import AlertsPrototype from './prototypes/alerts'
+import ShareTrayPrototype from './prototypes/shareTray'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -115,6 +116,12 @@ const Router = () => (
             key="/prototype-alerts"
             path="/prototype-alerts"
             component={AlertsPrototype}
+          />,
+          <DocsLayout
+            exact
+            key="/prototype-share-tray"
+            path="/prototype-share-tray"
+            component={ShareTrayPrototype}
           />,
         ]}
         <DocsLayout exact path="/faq" component={FAQ} />

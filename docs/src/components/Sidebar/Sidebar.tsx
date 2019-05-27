@@ -437,6 +437,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'sharetray',
+        content: 'Share Tray',
+        as: NavLink,
+        to: '/prototype-share-tray',
+        styles: menuItemStyles,
+      },
+      {
         key: 'divider4',
         kind: 'divider',
         styles: dividerStyles,
