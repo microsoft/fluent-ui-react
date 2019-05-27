@@ -10,7 +10,7 @@
     "deploy:docs": "gulp deploy:docs",
     "lint": "eslint \"**/*.{js,ts,tsx}\" && yarn lint:old",
     "lint:fix": "yarn lint --fix && yarn lint:old --fix",
-    "lint:old": "tslint -t stylish -p",
+    "lint:old": "tslint -t stylish -p .",
     "perf": "cross-env PERF=true gulp perf --times=50",
     "perf:debug": "cross-env PERF=true gulp perf:debug --debug",
     "prettier": "prettier --list-different \"**/*.{ts,tsx}\"",
