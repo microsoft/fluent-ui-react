@@ -2,13 +2,7 @@ import * as _ from 'lodash'
 
 export default () => {
   const disableAnimations = (styles: Object, type?, renderer?, props?) => {
-    if (
-      props &&
-      props.theme &&
-      props.theme.disableAnimations &&
-      props.props &&
-      !props.props.neverDisableAnimation
-    ) {
+    if (props && props.theme && props.theme.disableAnimations) {
       return Object.keys(styles).reduce((acc, cssPropertyName) => {
         const cssPropertyValue = styles[cssPropertyName]
 

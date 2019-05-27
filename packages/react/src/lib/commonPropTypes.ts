@@ -29,7 +29,6 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
     }),
     ...(animated && {
       animation: customPropTypes.animation,
-      neverDisableAnimation: PropTypes.bool,
     }),
     ...(as && {
       as: customPropTypes.as,
