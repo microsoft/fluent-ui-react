@@ -5,7 +5,7 @@ const path = require('path')
 const tsPaths = require('tsconfig-paths')
 
 const config = require('./config').default
-const { compilerOptions } = require('./docs/tsconfig.json')
+const { compilerOptions } = require('./build/tsconfig.docs.json')
 
 // add node_modules/.bin to the path so we can invoke .bin CLIs in tasks
 process.env.PATH =

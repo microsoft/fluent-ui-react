@@ -1,7 +1,7 @@
 require('../../babel.register')
 
 const config = require('../../config').default
-const { compilerOptions } = require('./build/tsconfig.common.json')
+const { compilerOptions } = require('./build/tsconfig.docs.json')
 
 require('tsconfig-paths').register({
   baseUrl: config.path_base,
