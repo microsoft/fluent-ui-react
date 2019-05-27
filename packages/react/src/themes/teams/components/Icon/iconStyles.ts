@@ -95,10 +95,10 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   },
 
   svgFlippingInRtl: config => {
-    const { props, theme } = config
+    const { props, rtl } = config
     return {
       ...callable(iconStyles.svg)(config),
-      ...(theme.rtl && {
+      ...(rtl && {
         transform: `scaleX(-1) rotate(${-1 * props.rotate}deg)`,
       }),
     }

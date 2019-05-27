@@ -43,7 +43,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       color: v.disabledColor,
     }),
   }),
-  fontRoot: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => {
+  fontRoot: ({ props: p, variables: v, theme: t, rtl }): ICSSInJSStyle => {
     const iconSpec = t.icons[p.name] || emptyIcon
     const icon = iconSpec.icon as ResultOf<FontIconSpec>
 
@@ -63,7 +63,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
         content: icon.content,
       },
 
-      transform: t.rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
+      transform: rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
     }
   },
 }

@@ -39,7 +39,11 @@ const IconExampleColor = () => (
     </Text>
     <Flex gap="gap.smaller">
       <ProviderConsumer
-        render={({ siteVariables: { emphasisColors, naturalColors } }) =>
+        render={({
+          theme: {
+            siteVariables: { emphasisColors, naturalColors },
+          },
+        }) =>
           _.keys({ ...emphasisColors, ...naturalColors }).map(color => (
             <Icon color={color} name="calendar" title={color} key={color} />
           ))
@@ -51,7 +55,11 @@ const IconExampleColor = () => (
     </Text>
     <Flex gap="gap.smaller">
       <ProviderConsumer
-        render={({ siteVariables: { emphasisColors, naturalColors } }) =>
+        render={({
+          theme: {
+            siteVariables: { emphasisColors, naturalColors },
+          },
+        }) =>
           _.keys({ ...emphasisColors, ...naturalColors }).map(color => (
             <Icon color={color} name="calendar" outline title={color} key={color} />
           ))

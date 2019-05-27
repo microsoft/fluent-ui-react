@@ -1,9 +1,9 @@
-import { ThemePrepared, AnimationProp } from '../themes/types'
+import { AnimationProp, ProviderContextPrepared } from '../themes/types'
 import callable from './callable'
 
-const createAnimationStyles = (animation: AnimationProp, theme: ThemePrepared) => {
+const createAnimationStyles = (animation: AnimationProp, context: ProviderContextPrepared) => {
   let animationCSSProp = {}
-  const { animations = {} } = theme
+  const { animations = {} } = context.theme
 
   if (animation) {
     const animationName = typeof animation === 'string' ? animation : animation.name
@@ -31,7 +31,7 @@ const createAnimationStyles = (animation: AnimationProp, theme: ThemePrepared) =
       const evaluatedKeyframe =
         typeof keyframe === 'string'
           ? keyframe
-          : theme.renderer.renderKeyframe(callable(keyframe), mergedKeyframeParams)
+          : context.renderer.renderKeyframe(callable(keyframe), mergedKeyframeParams)
 
       if (typeof animation === 'string') {
         animationCSSProp = {

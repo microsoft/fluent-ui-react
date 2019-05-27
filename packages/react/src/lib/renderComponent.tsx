@@ -16,6 +16,8 @@ import {
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
+  ProviderContextPrepared,
+  Renderer,
 } from '../themes/types'
 import { Props } from '../types'
 import {
@@ -40,6 +42,8 @@ export interface RenderResultConfig<P> {
   styles: ComponentSlotStylesPrepared
   accessibility: AccessibilityBehavior
   rtl: boolean
+  renderer: Renderer
+  disableAnimations: boolean
   theme: ThemePrepared
 }
 
@@ -131,7 +135,7 @@ const renderWithFocusZone = <P extends {}>(
 
 const renderComponent = <P extends {}>(
   config: RenderConfig<P>,
-  theme: ThemePrepared,
+  context: ProviderContextPrepared,
 ): React.ReactElement<P> => {
   const {
     className,
@@ -145,9 +149,12 @@ const renderComponent = <P extends {}>(
     render,
   } = config
 
-  if (_.isEmpty(theme)) {
+  if (_.isEmpty(context)) {
     logProviderMissingWarning()
   }
+
+  const { theme = {}, rtl = false, renderer = felaRenderer, disableAnimations = false } =
+    context || {}
 
   const {
     siteVariables = {
@@ -155,9 +162,8 @@ const renderComponent = <P extends {}>(
     },
     componentVariables = {},
     componentStyles = {},
-    rtl = false,
-    renderer = felaRenderer,
-  } = theme || {}
+  } = theme as ThemePrepared
+
   const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
 
   const stateAndProps = { ...state, ...props }
@@ -168,7 +174,7 @@ const renderComponent = <P extends {}>(
     props.variables,
   )(siteVariables)
 
-  const animationCSSProp = props.animation ? createAnimationStyles(props.animation, theme) : {}
+  const animationCSSProp = props.animation ? createAnimationStyles(props.animation, context) : {}
 
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
@@ -185,7 +191,10 @@ const renderComponent = <P extends {}>(
   const styleParam: ComponentStyleFunctionParam = {
     props: stateAndProps,
     variables: resolvedVariables,
-    theme,
+    theme: context.theme,
+    renderer,
+    rtl,
+    disableAnimations,
   }
 
   mergedStyles.root = {
@@ -209,7 +218,9 @@ const renderComponent = <P extends {}>(
     styles: resolvedStyles,
     accessibility,
     rtl,
-    theme,
+    theme: context.theme,
+    renderer,
+    disableAnimations,
   }
 
   if (accessibility.focusZone) {

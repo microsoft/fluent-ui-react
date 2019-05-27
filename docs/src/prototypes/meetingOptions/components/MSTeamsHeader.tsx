@@ -5,7 +5,7 @@ import { middleColumnStyles } from '../styles'
 export default props => {
   return (
     <Provider.Consumer
-      render={({ siteVariables }) => {
+      render={({ theme: { siteVariables } }) => {
         return (
           <div style={{ backgroundColor: siteVariables.colors.brand[600] }}>
             <div style={{ ...middleColumnStyles }}>{props.content}</div>

@@ -19,7 +19,6 @@ import {
   ThemeAnimation,
 } from '../themes/types'
 import callable from './callable'
-import { felaRenderer, felaRtlRenderer } from './felaRenderer'
 import toCompactArray from './toCompactArray'
 import { ObjectOf } from '../types'
 
@@ -161,18 +160,6 @@ export const mergeThemeStyles = (
   }, initial)
 }
 
-export const mergeRTL = (target, ...sources) => {
-  return sources.reduce((acc, next) => {
-    return typeof next === 'boolean' ? next : acc
-  }, target)
-}
-
-export const mergeDisableAnimations = (target, ...sources) => {
-  return sources.reduce((acc, next) => {
-    return typeof next === 'boolean' ? next : acc
-  }, target)
-}
-
 export const mergeFontFaces = (...sources: FontFace[]) => {
   return toCompactArray<FontFace>(...sources)
 }
@@ -222,24 +209,6 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
 
     // Merge icons set, last one wins in case of collisions
     acc.icons = mergeIcons(acc.icons, next.icons)
-
-    // Latest RTL value wins
-    const mergedRTL = mergeRTL(acc.rtl, next.rtl)
-    if (typeof mergedRTL === 'boolean') {
-      acc.rtl = mergedRTL
-    }
-
-    // Use the correct renderer for RTL
-    acc.renderer = acc.rtl ? felaRtlRenderer : felaRenderer
-
-    // Latest disableAnimations value wins
-    const mergedDisableAnimations = mergeDisableAnimations(
-      acc.disableAnimations,
-      next.disableAnimations,
-    )
-    if (typeof mergedDisableAnimations === 'boolean') {
-      acc.disableAnimations = mergedDisableAnimations
-    }
 
     acc.fontFaces = mergeFontFaces(...acc.fontFaces, ...(next.fontFaces || []))
 

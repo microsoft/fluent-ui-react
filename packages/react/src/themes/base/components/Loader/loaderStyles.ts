@@ -26,8 +26,9 @@ export default {
     props: p,
     theme: t,
     variables: v,
+    renderer,
   }: ComponentStyleFunctionParam<LoaderProps, LoaderVariables>): ICSSInJSStyle => {
-    const animationName = t.renderer.renderKeyframe(
+    const animationName = renderer.renderKeyframe(
       () =>
         ({
           from: {

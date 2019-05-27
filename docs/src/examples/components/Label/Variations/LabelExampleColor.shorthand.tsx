@@ -4,7 +4,11 @@ import * as _ from 'lodash'
 
 const LabelExampleColor = () => (
   <Provider.Consumer
-    render={({ siteVariables: { primitiveColors, emphasisColors, naturalColors } }) =>
+    render={({
+      theme: {
+        siteVariables: { primitiveColors, emphasisColors, naturalColors },
+      },
+    }) =>
       _.keys({ ...primitiveColors, ...emphasisColors, ...naturalColors }).map(color => (
         <span key={color}>
           <Label color={color} content={color} />{' '}

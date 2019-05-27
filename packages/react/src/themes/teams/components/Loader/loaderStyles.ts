@@ -25,9 +25,10 @@ export default {
     props: p,
     theme: t,
     variables: v,
+    renderer,
   }: ComponentStyleFunctionParam<LoaderProps, LoaderVariables>) => {
     const outerAnimation: ICSSInJSStyle = {
-      animationName: t.renderer.renderKeyframe(
+      animationName: renderer.renderKeyframe(
         () =>
           ({
             to: {
@@ -48,7 +49,7 @@ export default {
       position: 'relative',
     }
     const svgAnimation: ICSSInJSStyle = {
-      animationName: t.renderer.renderKeyframe(
+      animationName: renderer.renderKeyframe(
         () =>
           ({
             to: {

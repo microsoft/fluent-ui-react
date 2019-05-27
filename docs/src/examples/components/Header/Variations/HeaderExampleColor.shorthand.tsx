@@ -4,7 +4,11 @@ import { Header, ProviderConsumer } from '@stardust-ui/react'
 
 const HeaderExampleColor = () => (
   <ProviderConsumer
-    render={({ siteVariables: { emphasisColors, naturalColors } }) =>
+    render={({
+      theme: {
+        siteVariables: { emphasisColors, naturalColors },
+      },
+    }) =>
       _.keys({ ...emphasisColors, ...naturalColors }).map(color => (
         <Header
           key={color}

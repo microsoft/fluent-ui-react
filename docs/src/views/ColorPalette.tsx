@@ -59,7 +59,11 @@ const ColorPalette = () => (
     }}
   >
     <ProviderConsumer
-      render={({ siteVariables: { colors, emphasisColors, naturalColors, transparentColors } }) => (
+      render={({
+        theme: {
+          siteVariables: { colors, emphasisColors, naturalColors, transparentColors },
+        },
+      }) => (
         <DocPage title="Colors">
           <Header as="h2">Introduction</Header>
           <p>

@@ -8,7 +8,7 @@ import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
 import { createShorthandFactory } from './factories'
 import { ObjectOf } from '../types'
-import { ThemePrepared } from '../themes/types'
+import { ProviderContextPrepared } from '../themes/types'
 
 export interface CreateComponentConfig<P> {
   displayName: string
@@ -43,7 +43,7 @@ const createComponent = <P extends ObjectOf<any> = any>({
   }
 
   const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
-    const theme: ThemePrepared = React.useContext(ThemeContext)
+    const theme: ProviderContextPrepared = React.useContext(ThemeContext)
 
     return renderComponent(
       {

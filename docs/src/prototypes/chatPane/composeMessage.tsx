@@ -19,7 +19,7 @@ type ComposeMessageProps = Props<{
 
 const ComposeMessage: React.FunctionComponent<ComposeMessageProps> = props => (
   <Provider.Consumer
-    render={({ siteVariables: siteVars }) => (
+    render={({ theme: { siteVariables: siteVars } }) => (
       <Flex column role="region" aria-labelledby="chat-compose-reader-text" style={props.style}>
         <div>
           <div

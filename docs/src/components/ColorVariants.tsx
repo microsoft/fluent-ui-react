@@ -20,7 +20,11 @@ const ColorVariants = createComponent<ColorVariantsProps>({
   displayName: 'ColorVariants',
   render: ({ name, stardust: { classes } }) => (
     <ProviderConsumer
-      render={({ siteVariables: { colors } }) => (
+      render={({
+        theme: {
+          siteVariables: { colors },
+        },
+      }) => (
         <div className={classes.root}>
           <ColorBox name={name} size="big" value={colors[name][500]} />
 

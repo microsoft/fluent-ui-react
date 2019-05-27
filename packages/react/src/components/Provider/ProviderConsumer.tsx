@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { FelaTheme } from 'react-fela'
 
-import { ThemePrepared } from '../../themes/types'
+import { ProviderContextPrepared } from '../../themes/types'
 
 export interface ProviderConsumerProps {
   /**
@@ -10,7 +10,7 @@ export interface ProviderConsumerProps {
    * @param {object} theme
    * @param {object} theme.siteVariables - The siteVariables passed from the nearest Provider.
    */
-  render: (theme: ThemePrepared) => React.ReactNode
+  render: (context: ProviderContextPrepared) => React.ReactNode
 }
 
 /**

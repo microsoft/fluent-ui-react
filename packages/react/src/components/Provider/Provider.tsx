@@ -10,26 +10,31 @@ import {
   felaRenderer as felaLtrRenderer,
   felaRtlRenderer,
   isBrowser,
-  mergeThemes,
   ChildrenComponentProps,
 } from '../../lib'
 
 import {
   ThemePrepared,
-  ThemeInput,
   StaticStyleObject,
   StaticStyle,
   StaticStyleFunction,
   FontFace,
   ComponentVariablesInput,
+  ProviderContextInput,
+  ProviderContextPrepared,
 } from '../../themes/types'
 
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
 import ProviderBox from './ProviderBox'
 import { WithAsProp } from '../../types'
+import mergeContexts from 'src/lib/mergeContexts'
+import { Renderer, ThemeInput } from 'src/themes/types'
 
 export interface ProviderProps extends ChildrenComponentProps {
+  renderer?: Renderer
+  rtl?: boolean
+  disableAnimations?: boolean
   theme: ThemeInput
   variables?: ComponentVariablesInput
 }
@@ -47,7 +52,6 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       siteVariables: PropTypes.object,
       componentVariables: PropTypes.object,
       componentStyles: PropTypes.object,
-      rtl: PropTypes.bool,
       fontFaces: PropTypes.arrayOf(
         PropTypes.shape({
           name: PropTypes.string,
@@ -67,7 +71,14 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       ),
       animations: PropTypes.object,
     }),
+    renderer: PropTypes.object,
+    rtl: PropTypes.bool,
+    disableAnimations: PropTypes.bool,
     children: PropTypes.node.isRequired,
+  }
+
+  static defaultProps = {
+    theme: {},
   }
 
   static Consumer = ProviderConsumer
@@ -79,7 +90,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
   private get topLevelFelaRenderer() {
     if (!Provider._topLevelFelaRenderer) {
-      Provider._topLevelFelaRenderer = this.props.theme.rtl ? felaRtlRenderer : felaLtrRenderer
+      Provider._topLevelFelaRenderer = this.props.rtl ? felaRtlRenderer : felaLtrRenderer
     }
     return Provider._topLevelFelaRenderer
   }
@@ -146,33 +157,47 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   }
 
   render() {
-    const { as, theme, variables, children, ...unhandledProps } = this.props
-
+    const {
+      as,
+      theme,
+      rtl,
+      disableAnimations,
+      renderer,
+      variables,
+      children,
+      ...unhandledProps
+    } = this.props
+    const context: ProviderContextInput = {
+      theme,
+      rtl,
+      disableAnimations,
+      renderer,
+    }
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
     return (
       <ProviderConsumer
-        render={(incomingTheme: ThemePrepared) => {
-          const outgoingTheme: ThemePrepared = mergeThemes(incomingTheme, theme)
+        render={(incomingContext: ProviderContextPrepared) => {
+          const outgoingContext: ProviderContextPrepared = mergeContexts(incomingContext, context)
 
           // Heads up!
           // We should call render() to ensure that a subscription for DOM updates was created
           // https://github.com/stardust-ui/react/issues/581
-          if (isBrowser()) render(outgoingTheme.renderer)
-          this.renderStaticStylesOnce(outgoingTheme)
+          if (isBrowser()) render(outgoingContext.renderer)
+          this.renderStaticStylesOnce(outgoingContext.theme)
 
           const rtlProps: { dir?: 'rtl' | 'ltr' } = {}
           // only add dir attribute for top level provider or when direction changes from parent to child
           if (
-            !incomingTheme ||
-            (incomingTheme.rtl !== outgoingTheme.rtl && _.isBoolean(outgoingTheme.rtl))
+            !incomingContext ||
+            (incomingContext.rtl !== outgoingContext.rtl && _.isBoolean(outgoingContext.rtl))
           ) {
-            rtlProps.dir = outgoingTheme.rtl ? 'rtl' : 'ltr'
+            rtlProps.dir = outgoingContext.rtl ? 'rtl' : 'ltr'
           }
 
           return (
-            <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
-              <ThemeProvider theme={outgoingTheme}>
+            <RendererProvider renderer={outgoingContext.renderer} {...{ rehydrate: false }}>
+              <ThemeProvider theme={outgoingContext}>
                 <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>
                   {children}
                 </ProviderBox>

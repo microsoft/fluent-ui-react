@@ -11,7 +11,7 @@ const ProviderExampleShorthand = () => (
       </p>
 
       <Provider.Consumer
-        render={theme => <code>theme.siteVariables.brand = {theme.siteVariables.brand}</code>}
+        render={({ theme }) => <code>theme.siteVariables.brand = {theme.siteVariables.brand}</code>}
       />
     </div>
   </Provider>

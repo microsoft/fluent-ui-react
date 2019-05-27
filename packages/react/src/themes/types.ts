@@ -221,6 +221,9 @@ export interface ComponentStyleFunctionParam<
   props: State & TProps
   variables: TVars
   theme: ThemePrepared
+  rtl: boolean
+  renderer: Renderer
+  disableAnimations: boolean
 }
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((
@@ -285,13 +288,17 @@ export interface ThemeInput {
   siteVariables?: SiteVariablesInput
   componentVariables?: ThemeComponentVariablesInput
   componentStyles?: ThemeComponentStylesInput
-  rtl?: boolean
-  renderer?: Renderer
   fontFaces?: FontFaces
   staticStyles?: StaticStyles
   icons?: ThemeIcons
   animations?: { [key: string]: ThemeAnimation }
+}
+
+export interface ProviderContextInput {
+  renderer?: Renderer
+  rtl?: boolean
   disableAnimations?: boolean
+  theme?: ThemeInput
 }
 
 // Component variables and styles must be resolved by the component after
@@ -307,12 +314,16 @@ export interface ThemePrepared {
   componentVariables: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
   componentStyles: { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
   icons: ThemeIcons
-  rtl: boolean
-  renderer: Renderer
   fontFaces: FontFaces
   staticStyles: StaticStyles
   animations: { [key: string]: ThemeAnimation }
-  disableAnimations?: boolean
+}
+
+export interface ProviderContextPrepared {
+  renderer: Renderer
+  rtl: boolean
+  disableAnimations: boolean
+  theme: ThemePrepared
 }
 
 export interface ThemeComponentStylesInput {

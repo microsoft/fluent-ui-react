@@ -58,9 +58,13 @@ class ExternalExampleLayout extends React.Component<
     const theme = this.getTheme()
 
     return (
-      <Provider key={this.state.renderId} theme={theme}>
+      <Provider
+        key={this.state.renderId}
+        theme={theme}
+        rtl={this.props.match.params.rtl === 'true'}
+      >
         <Provider.Consumer
-          render={({ siteVariables }) => (
+          render={({ theme: { siteVariables } }) => (
             <SourceRender
               babelConfig={babelConfig}
               source={exampleSource.js}
@@ -87,10 +91,7 @@ class ExternalExampleLayout extends React.Component<
 
   private getTheme = (): ThemeInput => {
     const { themeName } = this.state
-    const theme: ThemeInput = (themeName && themes[themeName]) || {}
-
-    theme.rtl = this.props.match.params.rtl === 'true'
-    return theme
+    return (themeName && themes[themeName]) || {}
   }
 }
 
