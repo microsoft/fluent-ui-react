@@ -2,13 +2,7 @@ import { felaRenderer, felaRtlRenderer } from './felaRenderer'
 import { ProviderContextPrepared, ProviderContextInput } from '../themes/types'
 import mergeThemes from './mergeThemes'
 
-export const mergeRTL = (target, ...sources) => {
-  return sources.reduce((acc, next) => {
-    return typeof next === 'boolean' ? next : acc
-  }, target)
-}
-
-export const mergeDisableAnimations = (target, ...sources) => {
+export const mergeBooleanValues = (target, ...sources) => {
   return sources.reduce((acc, next) => {
     return typeof next === 'boolean' ? next : acc
   }, target)
@@ -37,7 +31,7 @@ const mergeContexts = (...contexts: ProviderContextInput[]): ProviderContextPrep
       acc.theme = mergeThemes(acc.theme, next.theme)
 
       // Latest RTL value wins
-      const mergedRTL = mergeRTL(acc.rtl, next.rtl)
+      const mergedRTL = mergeBooleanValues(acc.rtl, next.rtl)
       if (typeof mergedRTL === 'boolean') {
         acc.rtl = mergedRTL
       }
@@ -46,7 +40,7 @@ const mergeContexts = (...contexts: ProviderContextInput[]): ProviderContextPrep
       acc.renderer = acc.rtl ? felaRtlRenderer : felaRenderer
 
       // Latest disableAnimations value wins
-      const mergedDisableAnimations = mergeDisableAnimations(
+      const mergedDisableAnimations = mergeBooleanValues(
         acc.disableAnimations,
         next.disableAnimations,
       )
