@@ -1,8 +1,8 @@
-import * as gutil from 'gulp-util'
-import * as fs from 'fs'
-import * as path from 'path'
-import * as through2 from 'through2'
-import * as Vinyl from 'vinyl'
+import gutil from 'gulp-util'
+import fs from 'fs'
+import path from 'path'
+import through2 from 'through2'
+import Vinyl from 'vinyl'
 
 import config from '../../../config'
 import getComponentInfo from './util/getComponentInfo'

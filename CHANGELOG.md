@@ -27,9 +27,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Replace `react-popper` package with custom `Popper` component and exposed as `UNSTABLE_Popper` positioning helper @Bugaa92 ([#1358](https://github.com/stardust-ui/react/pull/1358))
 - Add strict types for the `colorScheme` props used in the components' `variables` @mnajdova([#1340](https://github.com/stardust-ui/react/pull/1340))
 - Add and Export message-seen, presence-available, presence-stroke and open-outside  icons in Teams Theme @joheredi ([#1390](https://github.com/stardust-ui/react/pull/1390))
+- Add 'lightning' icon @notandrew ([#1385](https://github.com/stardust-ui/react/pull/1385))
 
 ### Documentation
 - Accessibility: improve introduction section @jurokapsiar ([#1368](https://github.com/stardust-ui/react/pull/1368))
+- Accessibility: improve accessibility descriptions for components @jurokapsiar ([#1371](https://github.com/stardust-ui/react/pull/1371))
 
 <!--------------------------------[ v0.31.0 ]------------------------------- -->
 ## [v0.31.0](https://github.com/stardust-ui/react/tree/v0.31.0) (2019-05-21)
