@@ -1,4 +1,4 @@
-import { mergeRTL } from '../../../../src/lib/mergeThemes'
+import { mergeRTL } from '../../../../src/lib/mergeContexts'
 
 describe('mergeRTL', () => {
   test('latest boolean value wins', () => {
