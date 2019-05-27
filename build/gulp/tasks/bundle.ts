@@ -1,7 +1,7 @@
 import { task, series, parallel, src, dest } from 'gulp'
-import * as merge2 from 'merge2'
-import * as rimraf from 'rimraf'
-import * as webpack from 'webpack'
+import merge2 from 'merge2'
+import rimraf from 'rimraf'
+import webpack from 'webpack'
 import { argv } from 'yargs'
 
 import config from '../../../config'
