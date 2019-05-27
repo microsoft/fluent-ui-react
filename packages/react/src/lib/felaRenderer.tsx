@@ -16,6 +16,7 @@ try {
 
 if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
   if (felaDevMode) {
+    /* eslint-disable no-console */
     console.warn(
       [
         '@stardust-ui/react:',
@@ -24,6 +25,7 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
       ].join(' '),
     )
   } else {
+    /* eslint-disable no-console */
     console.warn(
       [
         '@stardust-ui/react:',

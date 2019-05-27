@@ -82,6 +82,7 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
       const { defaultProps, name, propTypes } = this.constructor as any
       // require static autoControlledProps
       if (!autoControlledProps) {
+        /* eslint-disable no-console */
         console.error(`Auto controlled ${name} must specify a static autoControlledProps array.`)
       }
 
@@ -90,12 +91,14 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
         const defaultProp = getDefaultPropName(prop)
         // regular prop
         if (!_.has(propTypes, defaultProp)) {
+          /* eslint-disable no-console */
           console.error(
             `${name} is missing "${defaultProp}" propTypes validation for auto controlled prop "${prop}".`,
           )
         }
         // its default prop
         if (!_.has(propTypes, prop)) {
+          /* eslint-disable no-console */
           console.error(
             `${name} is missing propTypes validation for auto controlled prop "${prop}".`,
           )
@@ -114,6 +117,7 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
       // https://babeljs.io/blog/2015/06/07/react-on-es6-plus#property-initializers
       const illegalDefaults = _.intersection(autoControlledProps, _.keys(defaultProps))
       if (!_.isEmpty(illegalDefaults)) {
+        /* eslint-disable no-console */
         console.error(
           [
             'Do not set defaultProps for autoControlledProps. You can set defaults by',
@@ -132,6 +136,7 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
         _.startsWith(prop, 'default'),
       )
       if (!_.isEmpty(illegalAutoControlled)) {
+        /* eslint-disable no-console */
         console.error(
           [
             'Do not add default props to autoControlledProps.',
@@ -154,6 +159,7 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
         const { name } = this.constructor
         // prevent defaultFoo={} along side foo={}
         if (!_.isUndefined(this.props[defaultPropName]) && !_.isUndefined(this.props[prop])) {
+          /* eslint-disable no-console */
           console.error(
             `${name} prop "${prop}" is auto controlled. Specify either ${defaultPropName} or ${prop}, but not both.`,
           )
