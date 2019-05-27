@@ -3,19 +3,9 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import handleRef from './handleRef'
+import { RefProps } from './types'
 
-export interface RefForwardProps {
-  children: React.ReactElement<any>
-
-  /**
-   * Called when a child component will be mounted or updated.
-   *
-   * @param {HTMLElement} node - Referred node.
-   */
-  innerRef: React.Ref<any>
-}
-
-export default class RefForward extends React.Component<RefForwardProps> {
+export default class RefForward extends React.Component<RefProps> {
   static displayName = 'RefForward'
 
   static propTypes = {

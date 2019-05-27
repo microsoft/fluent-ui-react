@@ -7,7 +7,7 @@ describe('toRefObject', () => {
   })
 
   it('handles "null" as input', () => {
-    expect(toRefObject(null)).toHaveProperty('current', null)
+    expect(toRefObject(null as any)).toHaveProperty('current', null)
   })
 
   it('returned object is memoized', () => {
