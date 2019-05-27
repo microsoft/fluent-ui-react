@@ -30,7 +30,7 @@ import {
   tabListBehavior,
   toggleButtonBehavior,
   menuAsToolbarBehavior,
-  menuAsToolbarButtonBehavior,
+  menuItemAsToolbarButtonBehavior,
   treeBehavior,
   treeTitleBehavior,
   gridBehavior,
@@ -74,7 +74,7 @@ testHelper.addBehavior('tabBehavior', tabBehavior)
 testHelper.addBehavior('tabListBehavior', tabListBehavior)
 testHelper.addBehavior('menuAsToolbarBehavior', menuAsToolbarBehavior)
 testHelper.addBehavior('toggleButtonBehavior', toggleButtonBehavior)
-testHelper.addBehavior('menuAsToolbarButtonBehavior', menuAsToolbarButtonBehavior)
+testHelper.addBehavior('menuItemAsToolbarButtonBehavior', menuItemAsToolbarButtonBehavior)
 testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
 testHelper.addBehavior('treeBehavior', treeBehavior)
 testHelper.addBehavior('gridBehavior', gridBehavior)

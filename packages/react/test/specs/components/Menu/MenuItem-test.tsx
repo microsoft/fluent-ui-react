@@ -4,7 +4,7 @@ import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/s
 import { mountWithProviderAndGetComponent } from 'test/utils'
 import MenuItem from 'src/components/Menu/MenuItem'
 import Box from 'src/components/Box/Box'
-import { menuAsToolbarButtonBehavior, tabBehavior } from '../../../../src/lib/accessibility'
+import { menuItemAsToolbarButtonBehavior, tabBehavior } from '../../../../src/lib/accessibility'
 import { Accessibility } from '../../../../src/lib/accessibility/types'
 
 describe('MenuItem', () => {
@@ -49,8 +49,8 @@ describe('MenuItem', () => {
     const behaviors: { name: string; behavior: Accessibility; expectedAnchorRole: string }[] = [
       { name: 'default', behavior: undefined, expectedAnchorRole: 'menuitem' },
       {
-        name: 'menuAsToolbarButtonBehavior',
-        behavior: menuAsToolbarButtonBehavior,
+        name: 'menuItemAsToolbarButtonBehavior',
+        behavior: menuItemAsToolbarButtonBehavior,
         expectedAnchorRole: 'button',
       },
       { name: 'tabBehavior', behavior: tabBehavior, expectedAnchorRole: 'tab' },

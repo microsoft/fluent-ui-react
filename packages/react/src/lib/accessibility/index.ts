@@ -22,8 +22,8 @@ export { default as tabBehavior } from './Behaviors/Tab/tabBehavior'
 export { default as tabListBehavior } from './Behaviors/Tab/tabListBehavior'
 export { default as menuAsToolbarBehavior } from './Behaviors/Toolbar/menuAsToolbarBehavior'
 export {
-  default as menuAsToolbarButtonBehavior,
-} from './Behaviors/Toolbar/menuAsToolbarButtonBehavior'
+  default as menuItemAsToolbarButtonBehavior,
+} from './Behaviors/Toolbar/menuItemAsToolbarButtonBehavior'
 export { default as radioGroupBehavior } from './Behaviors/Radio/radioGroupBehavior'
 export { default as radioGroupItemBehavior } from './Behaviors/Radio/radioGroupItemBehavior'
 export { default as popupBehavior } from './Behaviors/Popup/popupBehavior'

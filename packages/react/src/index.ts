@@ -172,8 +172,8 @@ export {
   default as menuAsToolbarBehavior,
 } from './lib/accessibility/Behaviors/Toolbar/menuAsToolbarBehavior'
 export {
-  default as menuAsToolbarButtonBehavior,
-} from './lib/accessibility/Behaviors/Toolbar/menuAsToolbarButtonBehavior'
+  default as menuItemAsToolbarButtonBehavior,
+} from './lib/accessibility/Behaviors/Toolbar/menuItemAsToolbarButtonBehavior'
 export {
   default as radioGroupBehavior,
 } from './lib/accessibility/Behaviors/Radio/radioGroupBehavior'

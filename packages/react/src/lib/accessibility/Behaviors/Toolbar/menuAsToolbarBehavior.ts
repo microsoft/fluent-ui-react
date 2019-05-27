@@ -1,11 +1,11 @@
 import { Accessibility, FocusZoneMode } from '../../types'
 import { FocusZoneDirection } from '../../FocusZone'
-import menuAsToolbarButtonBehavior from './menuAsToolbarButtonBehavior'
+import menuItemAsToolbarButtonBehavior from './menuItemAsToolbarButtonBehavior'
 
 /**
  * @description
  * Implements ARIA Toolbar design pattern.
- * Child item components need to have menuAsToolbarButtonBehavior assigned.
+ * Child item components need to have menuItemAsToolbarButtonBehavior assigned.
  * @specification
  * Adds role 'toolbar' to 'root' component's part.
  * Embeds component into FocusZone.
@@ -26,7 +26,7 @@ const menuAsToolbarBehavior: Accessibility = (props: any) => ({
     },
   },
   childBehaviors: {
-    item: menuAsToolbarButtonBehavior,
+    item: menuItemAsToolbarButtonBehavior,
   },
 })
 
