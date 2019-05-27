@@ -65,6 +65,8 @@ import processedIcons_readaloud from './icons-read-aloud'
 import processedIcons_quote from './icons-quote'
 import processedIcons_quickresponse from './icons-quick-response'
 import processedIcons_qna from './icons-qna'
+import processedIcons_presenceAvailable from './icons-presence-available'
+import processedIcons_presenceStroke from './icons-presence-stroke'
 import processedIcons_promoted from './icons-promoted'
 import processedIcons_pluscircled from './icons-plus-circled'
 import processedIcons_playsoundmute from './icons-play-sound-mute'
@@ -133,6 +135,7 @@ import processedIcons_megaphone from './icons-megaphone'
 import processedIcons_meetingnotes from './icons-meeting-notes'
 import processedIcons_meetingnew from './icons-meeting-new'
 import processedIcons_mediaoff from './icons-media-off'
+import processedIcons_messageSeen from './icons-message-seen'
 import processedIcons_markasunread from './icons-mark-as-unread'
 import processedIcons_markasread from './icons-mark-as-read'
 import processedIcons_manageteams from './icons-manage-teams'
@@ -367,6 +370,8 @@ export default {
   processedIcons_quote,
   processedIcons_quickresponse,
   processedIcons_qna,
+  processedIcons_presenceAvailable,
+  processedIcons_presenceStroke,
   processedIcons_promoted,
   processedIcons_pluscircled,
   processedIcons_playsoundmute,
@@ -435,6 +440,7 @@ export default {
   processedIcons_meetingnotes,
   processedIcons_meetingnew,
   processedIcons_mediaoff,
+  processedIcons_messageSeen,
   processedIcons_markasunread,
   processedIcons_markasread,
   processedIcons_manageteams,
