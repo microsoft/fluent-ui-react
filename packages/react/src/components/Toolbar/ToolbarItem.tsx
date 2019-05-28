@@ -28,6 +28,12 @@ export interface ToolbarItemProps
    */
   accessibility?: Accessibility
 
+  /** A toolbar item can be active. */
+  active?: boolean
+
+  /** A toolbar item can show it is currently unable to be interacted with. */
+  disabled?: boolean
+
   /** Name or shorthand for Toolbar Item Icon */
   icon?: ShorthandValue
 
@@ -67,6 +73,8 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
+    active: PropTypes.bool,
+    disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
@@ -107,6 +115,13 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
   }
 
   private handleClick = (e: React.SyntheticEvent) => {
+    const { disabled } = this.props
+
+    if (disabled) {
+      e.preventDefault()
+      return
+    }
+
     _.invoke(this.props, 'onClick', e, this.props)
   }
 }

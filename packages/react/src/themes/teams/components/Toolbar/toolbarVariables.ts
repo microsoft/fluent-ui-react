@@ -9,6 +9,12 @@ export interface ToolbarVariables {
   backgroundHover: string
   borderHover: string
 
+  foregroundActive: string
+  backgroundActive: string
+
+  foregroundDisabled: string
+  backgroundDisabled: string
+
   itemHeight: string
   borderWidth: string
   borderRadius: string
@@ -21,8 +27,14 @@ export default (siteVars: any): ToolbarVariables => ({
   dividerBorder: siteVars.colors.grey[200],
 
   foregroundHover: siteVars.colors.brand[600],
-  backgroundHover: undefined,
+  backgroundHover: 'transparent',
   borderHover: siteVars.colors.brand[600],
+
+  foregroundActive: siteVars.colors.brand[600],
+  backgroundActive: 'transparent',
+
+  foregroundDisabled: siteVars.colors.grey[250],
+  backgroundDisabled: 'transparent',
 
   itemHeight: pxToRem(32),
   borderWidth: '2px',

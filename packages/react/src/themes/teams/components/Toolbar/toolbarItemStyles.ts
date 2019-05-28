@@ -17,10 +17,17 @@ const toolbarItemStyles: ComponentSlotStylesInput<ToolbarItemPropsAndState, Tool
       height: v.itemHeight,
       minWidth: v.itemHeight,
       color: v.foreground,
+      cursor: 'pointer',
 
       ':focus': {
         outline: 0,
       },
+
+      ...(p.active && {
+        color: v.foregroundActive,
+        backgroundColor: v.backgroundActive,
+        ...getIconFillOrOutlineStyles({ outline: false }),
+      }),
 
       ':hover': {
         color: v.foregroundHover,
@@ -33,6 +40,15 @@ const toolbarItemStyles: ComponentSlotStylesInput<ToolbarItemPropsAndState, Tool
         backgroundColor: v.backgroundHover,
         borderColor: v.borderHover,
         ...getIconFillOrOutlineStyles({ outline: false }),
+      }),
+
+      ...(p.disabled && {
+        color: v.foregroundDisabled,
+        backgroundColor: v.backgroundDisabled,
+        cursor: 'default',
+        ':hover': {
+          // empty to overwrite all existing hover styles
+        },
       }),
     }
   },

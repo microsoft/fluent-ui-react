@@ -7,6 +7,10 @@ export default (siteVars: any): Partial<ToolbarVariables> => ({
   foregroundHover: siteVars.colors.black,
   backgroundHover: siteVars.accessibleYellow,
 
+  foregroundActive: siteVars.accessibleYellow,
+
+  foregroundDisabled: siteVars.accessibleGreen,
+
   borderWidth: '0',
   borderRadius: undefined,
 })
