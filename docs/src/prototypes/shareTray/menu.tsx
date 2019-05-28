@@ -8,24 +8,24 @@ import GridFilePicker from './GridFilePicker/GridFilePicker'
 export const screenShareGrid = (
   <GridFilePicker
     gridColumns={1}
-    items={data.getItemsData(data.screenshare, data.shareScreenText, 'home')}
+    items={data.getItemsData(data.screenshare, data.shareScreenText, 'home', 'menuitem')}
     title="Screenshare"
-    asMenu={true}
+    role="menu"
   />
 )
 export const powerPointGrid = (
   <GridFilePicker
-    items={data.getItemsData(data.powerPoint, data.shareFileText, 'powerpoint-color')}
+    items={data.getItemsData(data.powerPoint, data.shareFileText, 'powerpoint-color', 'menuitem')}
     title="PowerPoint"
-    asMenu={true}
+    role="menu"
   />
 )
 
 export const whiteBoardGrid = (
   <GridFilePicker
-    items={data.getItemsData(data.whiteBoard, data.shareText, 'star')}
+    items={data.getItemsData(data.whiteBoard, data.shareText, 'star', 'menuitem')}
     title="Whiteboard"
-    asMenu={true}
+    role="menu"
   />
 )
 

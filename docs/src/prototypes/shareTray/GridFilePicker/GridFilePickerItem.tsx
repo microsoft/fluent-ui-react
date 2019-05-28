@@ -26,23 +26,17 @@ class GridImagePickerItem extends React.Component<GridPickerItemProps> {
       icon,
       role = 'listitem',
       backgroundColor = '#252626',
-      asMenuItem,
     } = this.props
     const itemProps = {
       role,
       style: imageButtonStyles,
       onClick,
       'aria-label': title,
-      'data-is-focusable': true,
     }
 
     return (
-      <li {...(asMenuItem ? { role: 'presentation' } : itemProps)}>
-        <Flex
-          column
-          gap="gap.small"
-          {...(asMenuItem ? { ...itemProps, role: 'menuitem' } : undefined)}
-        >
+      <li {...itemProps}>
+        <Flex column gap="gap.small" {...{ role: 'button', 'data-is-focusable': true }}>
           <Box
             styles={{
               backgroundColor,
