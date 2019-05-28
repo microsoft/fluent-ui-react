@@ -42,6 +42,12 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   /** Initial open value. */
   defaultOpen?: boolean
 
+  /** Ref that will store the first child title of this tree item. */
+  firstTitleChildRef?: React.Ref<HTMLElement>
+
+  /** Function to focus the parent title of this tree. */
+  focusParent?: Function
+
   /** The index of the item among its sibbling */
   index: number
 
@@ -90,6 +96,8 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     items: customPropTypes.collectionShorthand,
     index: PropTypes.number,
     exclusive: PropTypes.bool,
+    firstTitleChildRef: customPropTypes.ref,
+    focusParent: PropTypes.func,
     onTitleClick: PropTypes.func,
     open: PropTypes.bool,
     renderItemTitle: PropTypes.func,
@@ -102,10 +110,28 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     accessibility: defaultBehavior,
   }
 
-  handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
+  private titleRef = React.createRef<HTMLElement>()
+  private firstTitleChildRef = React.createRef<HTMLElement>()
+
+  private handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
     onClick: (e, titleProps) => {
       _.invoke(this.props, 'onTitleClick', e, this.props)
       _.invoke(predefinedProps, 'onClick', e, titleProps)
+    },
+    contentRef: this.titleRef,
+    focusFirstChild: () => {
+      this.firstTitleChildRef.current && this.firstTitleChildRef.current.focus()
+    },
+    focusParent: () => {
+      _.invoke(this.props, 'focusParent')
+    },
+    firstTitleChildRef: this.props.firstTitleChildRef,
+  })
+
+  private handleTreeOverrides = () => ({
+    firstTitleChildRef: this.firstTitleChildRef,
+    focusParent: () => {
+      this.titleRef.current.focus()
     },
   })
 
@@ -132,6 +158,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
               exclusive,
               renderItemTitle,
             },
+            overrideProps: this.handleTreeOverrides,
           })}
       </>
     )

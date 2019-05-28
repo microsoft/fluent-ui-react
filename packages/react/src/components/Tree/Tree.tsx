@@ -37,6 +37,12 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /** Only allow one subtree to be open at a time. */
   exclusive?: boolean
 
+  /** Ref to the first child title ref. */
+  firstTitleChildRef?: React.Ref<HTMLElement>
+
+  /** Function that focuses the parent title of this tree. */
+  focusParent?: Function
+
   /** Shorthand array of props for Tree. */
   items: ShorthandValue[]
 
@@ -78,6 +84,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
     exclusive: PropTypes.bool,
+    firstTitleChildRef: customPropTypes.ref,
+    focusParent: PropTypes.func,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
     rtlAttributes: PropTypes.func,
@@ -117,6 +125,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       this.trySetState({ activeIndex: this.computeNewIndex(treeItemProps.index) })
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
+    focusParent: this.props.focusParent,
+    firstTitleChildRef: this.props.firstTitleChildRef,
   })
 
   renderContent() {
