@@ -1,5 +1,3 @@
-import isBrowser from './isBrowser'
-
 /**
  * Returns the parentNode or the host of the element
  * @argument {Node} node
@@ -34,8 +32,6 @@ const getStyleComputedProperty = (node: Node, property?: string) => {
  * @returns {Node} scroll parent
  */
 const getScrollParent = (node: Node): Node => {
-  if (!isBrowser()) return null
-
   // Return body, `getScroll` will take care to get the correct `scrollTop` from it
   if (!node) return document.body
 
