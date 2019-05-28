@@ -110,10 +110,13 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   }
 
   computeNewIndex = (index: number) => {
-    const { exclusive } = this.props
+    const { exclusive, items } = this.props
+    const activeIndexes = this.getActiveIndexes()
+    if (!items[index]['items']) {
+      return activeIndexes
+    }
 
     if (exclusive) return index
-    const activeIndexes = this.getActiveIndexes()
     // check to see if index is in array, and remove it, if not then add it
     return _.includes(activeIndexes, index)
       ? _.without(activeIndexes, index)
