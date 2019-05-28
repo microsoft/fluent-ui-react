@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 import { ThemeContext } from 'react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
-import { AccessibilityActionHandlers } from './accessibility/types'
+import { AccessibilityActionHandlers } from './accessibility/reactTypes'
 import { FocusZone } from './accessibility/FocusZone'
 
 // TODO @Bugaa92: deprecated by createComponent.tsx

@@ -23,7 +23,7 @@ import Icon from '../Icon/Icon'
 import Menu from './Menu'
 import Box from '../Box/Box'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import {
   ComponentEventHandler,
   WithAsProp,
@@ -295,7 +295,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     }
   }
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  protected actionHandlers = {
     performClick: event => !event.defaultPrevented && this.handleClick(event),
     openMenu: event => this.openMenu(event),
     closeAllMenusAndFocusNextParentItem: event => this.closeAllMenus(event),
