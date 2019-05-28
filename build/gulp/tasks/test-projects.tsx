@@ -1,16 +1,16 @@
-import * as express from 'express'
-import * as fs from 'fs'
+import express from 'express'
+import fs from 'fs'
 import { series, task } from 'gulp'
 import { rollup as lernaAliases } from 'lerna-alias'
-import * as path from 'path'
-import * as portfinder from 'portfinder'
-import * as puppeteer from 'puppeteer'
+import path from 'path'
+import portfinder from 'portfinder'
+import puppeteer from 'puppeteer'
 import sh from '../sh'
-import * as rimraf from 'rimraf'
+import rimraf from 'rimraf'
 
 import config from '../../../config'
-import * as tmp from 'tmp'
-import * as http from 'http'
+import tmp from 'tmp'
+import http from 'http'
 
 type PackedPackages = Record<string, string>
 
@@ -44,6 +44,9 @@ const packStardustPackages = async (logger: Function): Promise<PackedPackages> =
   // packages/react/src -> packages/react,
   // as lernaAliases append 'src' by default
   const stardustPackages = lernaAliases({ sourceDirectory: false })
+
+  // We don't want to pack a package with our dev tools
+  delete stardustPackages['@stardust-ui/internal-tooling']
 
   await Promise.all(
     Object.keys(stardustPackages).map(async (packageName: string) => {

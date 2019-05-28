@@ -11,6 +11,7 @@ export { default as UIComponent } from './UIComponent'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
 export { default as toCompactArray } from './toCompactArray'
 export { default as rtlTextContainer } from './rtlTextContainer'
+export { default as stringLiteralsArray } from './stringLiteralsArray'
 
 export * from './factories'
 export { default as callable } from './callable'
@@ -19,7 +20,10 @@ export { default as getClasses } from './getClasses'
 export { default as getElementType } from './getElementType'
 export { default as getUnhandledProps } from './getUnhandledProps'
 export { default as mergeThemes } from './mergeThemes'
-export { default as renderComponent, RenderResultConfig } from './renderComponent'
+
+export * from './renderComponent'
+export { default as renderComponent } from './renderComponent'
+
 export { default as getElementProp } from './getElementProp'
 
 export {

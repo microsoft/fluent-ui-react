@@ -177,7 +177,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
 Embed.create = createShorthandFactory({ Component: Embed })
 
 /**
- * A GIF is a muted segment of a video
+ * A GIF is a muted segment of a video.
  * @accessibility
  * If GIF should be visible to screen readers, textual representation needs to be provided in 'alt' or 'title' property.
  *
