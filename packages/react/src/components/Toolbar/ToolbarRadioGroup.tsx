@@ -15,8 +15,8 @@ import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 
-import ToolbarDivider from 'src/components/Toolbar/ToolbarDivider'
-import ToolbarItem from 'src/components/Toolbar/ToolbarItem'
+import ToolbarDivider from './ToolbarDivider'
+import ToolbarItem from './ToolbarItem'
 
 export type ToolbarRadioGroupItemShorthandKinds = 'divider' | 'item'
 
