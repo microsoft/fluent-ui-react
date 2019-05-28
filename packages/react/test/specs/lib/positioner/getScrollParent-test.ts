@@ -53,26 +53,32 @@ describe('getScrollParent', () => {
   beforeAll(() => testsSetup.init())
   beforeEach(() => testsSetup.resetStyles())
 
-  describe('returns document.body', () => {
-    test('when argument is document.body', () => {
+  describe('when argument is document.body', () => {
+    test('returns document.body', () => {
       expect(getScrollParent(document.body)).toBe(document.body)
     })
+  })
 
-    test('when argument is document.documentElement', () => {
+  describe('when argument is document.documentElement', () => {
+    test('returns document.body', () => {
       expect(getScrollParent(document.documentElement)).toBe(document.body)
     })
+  })
 
-    test('when argument is document', () => {
+  describe('when argument is document', () => {
+    test('returns document.body', () => {
       expect(getScrollParent(document)).toBe(document.body)
     })
+  })
 
-    test('when there is no scrollable parent for the node argument', () => {
+  describe('when there is no scrollable parent for the node argument', () => {
+    test('returns document.body', () => {
       expect(getScrollParent(testsSetup.element)).toBe(document.body)
     })
   })
 
-  describe('returns the first parent node when there are scrollable parents for the node argument', () => {
-    test('when there are scrollable parents for the node argument', () => {
+  describe('when there are scrollable parents for the node argument', () => {
+    test('returns the first parent node', () => {
       overflowStyles.forEach(styles => {
         setStylesForElements(
           [testsSetup.scrollableParent, testsSetup.scrollableGrandparent],
@@ -82,8 +88,10 @@ describe('getScrollParent', () => {
         expect(getScrollParent(testsSetup.element)).toBe(testsSetup.scrollableParent)
       })
     })
+  })
 
-    test('when there are scrollable parents for the node argument and the node argument is scrollable', () => {
+  describe('when there are scrollable parents for the node argument and the node argument is scrollable', () => {
+    test('returns the first parent node', () => {
       overflowStyles.forEach(styles => {
         setStylesForElements(
           [testsSetup.element, testsSetup.scrollableParent, testsSetup.scrollableGrandparent],
