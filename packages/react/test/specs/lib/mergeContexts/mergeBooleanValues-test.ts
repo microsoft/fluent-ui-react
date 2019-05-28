@@ -1,6 +1,6 @@
 import { mergeBooleanValues } from '../../../../src/lib/mergeContexts'
 
-describe('mergeRTL', () => {
+describe('mergeBooleanValues', () => {
   test('latest boolean value wins', () => {
     expect(mergeBooleanValues(false, true)).toEqual(true)
     expect(mergeBooleanValues(true, false)).toEqual(false)
