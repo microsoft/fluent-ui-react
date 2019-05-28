@@ -9,7 +9,7 @@ const warning = {
 
 const logProviderMissingWarning = (): void => {
   if (!warning.wasLogged) {
-    /* eslint-disable no-console */
+    /* eslint-disable-next-line no-console */
     console.error(warning.message)
     warning.wasLogged = true
   }

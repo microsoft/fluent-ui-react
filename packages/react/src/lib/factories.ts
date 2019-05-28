@@ -161,7 +161,7 @@ function createShorthandFromValue({
     !valIsReactElement &&
     !valIsNoop
   ) {
-    /* eslint-disable no-console */
+    /* eslint-disable-next-line no-console */
     console.error(
       [
         'Shorthand value must be a string|number|object|array|ReactElements.',

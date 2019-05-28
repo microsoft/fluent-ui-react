@@ -276,7 +276,7 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
 
     if (bodyChildren.length && !document.body.contains(this._root.current)) {
       // In case popup render options will change
-      /* eslint-disable no-console */
+      /* eslint-disable-next-line no-console */
       console.warn(
         'Body element does not contain trap zone element. Please, ensure the trap zone element is placed inside body, so it will work properly.',
       )
