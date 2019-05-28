@@ -9,6 +9,11 @@ const Types = () => (
       description="A Toolbar component."
       examplePath="components/Toolbar/Types/ToolbarExample"
     />
+    <ComponentExample
+      title="Text editor toolbar"
+      description="A Toolbar use case for a text editor."
+      examplePath="components/Toolbar/Types/ToolbarExampleEditor"
+    />
   </ExampleSection>
 )
 
