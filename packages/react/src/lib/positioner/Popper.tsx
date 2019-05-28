@@ -7,11 +7,6 @@ import { getPlacement, applyRtlToOffset } from './positioningHelper'
 import { PopperProps, PopperChildrenFn } from './types'
 import getScrollParent from '../getScrollParent'
 
-const flipForScrollParentModifiers: PopperJS.Modifiers = {
-  preventOverflow: { escapeWithReference: true },
-  flip: { boundariesElement: 'scrollParent' },
-}
-
 /**
  * Popper relies on the 3rd party library [Popper.js](https://github.com/FezVrasta/popper.js) for positioning.
  */
@@ -54,7 +49,10 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       const popperHasScrollableParent = getScrollParent(contentRef.current) !== document.body
 
       const modifiers: PopperJS.Modifiers = _.merge(
-        popperHasScrollableParent && flipForScrollParentModifiers,
+        popperHasScrollableParent && {
+          preventOverflow: { escapeWithReference: true },
+          flip: { boundariesElement: 'scrollParent' },
+        },
         computedModifiers,
         userModifiers,
         {
