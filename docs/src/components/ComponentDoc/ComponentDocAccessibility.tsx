@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Flex, Text, Accordion } from '@stardust-ui/react'
+import { Flex, Loader, Text, Accordion } from '@stardust-ui/react'
+
+const AccessibilityDescription = React.lazy(() => import('./AccessibilityDescription'))
 
 const behaviorMenu = require('docs/src/behaviorMenu')
 
@@ -19,26 +21,38 @@ const ComponentDocAccessibility = ({ info }) => {
 
   const accessibilityDetails = (
     <>
-      {description && <Text style={{ whiteSpace: 'pre-line' }}>{description}</Text>}
-
-      {behaviorName && (
-        <Text>
-          Default behavior:{' '}
-          <a href={`behaviors/${behaviorName}#${_.kebabCase(stem)}`}>{behaviorName}</a>
+      {description && (
+        <Text style={{ whiteSpace: 'pre-line' }}>
+          <React.Suspense fallback={<Loader />}>
+            <AccessibilityDescription value={description} />
+          </React.Suspense>
         </Text>
       )}
 
+      {behaviorName && (
+        <>
+          <Text>
+            Default behavior:{' '}
+            <a href={`behaviors/${behaviorName}#${_.kebabCase(stem)}`}>{behaviorName}</a>
+          </Text>
+          <br />
+        </>
+      )}
+
       {info.behaviors && (
-        <Text>
-          Available behaviors:{' '}
-          {info.behaviors.map(behavior => (
-            <React.Fragment key={`${behavior.category}-${behavior.name}`}>
-              <a href={`behaviors/${behavior.category}#${_.kebabCase(behavior.name)}`}>
-                {behavior.displayName}
-              </a>{' '}
-            </React.Fragment>
-          ))}
-        </Text>
+        <>
+          <Text>
+            Available behaviors:{' '}
+            {info.behaviors.map(behavior => (
+              <React.Fragment key={`${behavior.category}-${behavior.name}`}>
+                <a href={`behaviors/${behavior.category}#${_.kebabCase(behavior.name)}`}>
+                  {behavior.displayName}
+                </a>{' '}
+              </React.Fragment>
+            ))}
+          </Text>
+          <br />
+        </>
       )}
     </>
   )
@@ -46,8 +60,13 @@ const ComponentDocAccessibility = ({ info }) => {
   const accessPanels = [
     {
       key: 'accessibility',
-      content: { content: accessibilityDetails },
-      title: { content: 'Accessibility', as: 'h2' },
+      content: { content: accessibilityDetails, styles: { paddingLeft: '14px' } },
+      title: {
+        content: <Text content="Accessibility" />,
+        as: 'span',
+        'aria-level': '2',
+        styles: { paddingBottom: '0', paddingTop: '0' },
+      },
     },
   ]
 

@@ -68,8 +68,8 @@ Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src' })
  * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
  *
  * Other considerations:
- *  - when alt property is empty, then Narrator in scan mode navigates to image and narrates it as empty paragraph
- *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior
+ *  - when alt property is empty, then Narrator in scan mode navigates to image and narrates it as empty paragraph.
+ *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior.
  *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
  */
 export default withSafeTypeForAs<typeof Image, ImageProps, 'img'>(Image)

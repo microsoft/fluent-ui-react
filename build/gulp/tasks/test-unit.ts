@@ -1,5 +1,5 @@
 import { parallel, series, task } from 'gulp'
-import * as yargs from 'yargs'
+import yargs from 'yargs'
 
 import sh from '../sh'
 

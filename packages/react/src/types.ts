@@ -8,13 +8,8 @@ export type Extendable<T, V = any> = T & {
   [key: string]: V
 }
 
-export type Nullable<T> = T | null
-export type NullableIfUndefined<T> = T extends undefined ? Nullable<T> : T
-
-export type ArgOf<T> = T extends (arg: infer TArg) => any ? TArg : never
 export type ResultOf<T> = T extends (...arg: any[]) => infer TResult ? TResult : never
 
-export type OneOrArray<T> = T | T[]
 export type ObjectOf<T> = { [key: string]: T }
 
 export type ObjectOrFunc<TResult, TArg = {}> = ((arg: TArg) => TResult) | TResult
@@ -115,12 +110,13 @@ type PickProps<T, Props extends string | number | symbol> = {
   [K in Intersect<Props, keyof T>]: T[K]
 }
 
-export const withSafeTypeForAs = function<
+export const withSafeTypeForAs = <
   TComponentType extends React.ComponentType,
   TProps,
-  TAs extends keyof JSX.IntrinsicElements = 'div',
-  TAdditionalProps extends keyof TComponentType = undefined
->(componentType: TComponentType) {
+  TAs extends keyof JSX.IntrinsicElements = 'div'
+>(
+  componentType: TComponentType,
+) => {
   /**
    * TODO: introduce overload once TS compiler issue that leads to
    * 'JS Heap Out Of Memory' exception will be fixed

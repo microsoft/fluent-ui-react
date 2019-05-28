@@ -1,5 +1,10 @@
 import { TestDefinition, TestMethod, TestHelper } from './testHelper'
-import { FocusZoneMode, FocusZoneDefinition } from '../../../src/lib/accessibility/types'
+import { FocusZoneMode } from '../../../src/lib/accessibility/types'
+import {
+  FocusZoneDirection,
+  FocusZoneTabbableElements,
+} from '../../../src/lib/accessibility/FocusZone'
+
 import * as keyboardKey from 'keyboard-key'
 
 const definitions: TestDefinition[] = []
@@ -9,7 +14,7 @@ const testHelper = new TestHelper()
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=(\w+)' based on the property '(\w+)'\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = [...parameters.props]
+    const [attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = parameters.props
     const property = {}
     property[propertyDependingOn] = attributeExpectedValue
 
@@ -17,17 +22,6 @@ definitions.push({
     expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toEqual(
       testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
     )
-  },
-})
-
-// Example:  Adds attribute 'aria-hidden=true' to icon
-definitions.push({
-  regexp: /Adds attribute '([\w-]+)=(\w+)' to \w+/g,
-  testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, attributeExpectedValue] = [...parameters.props]
-    const property = {}
-    const expectedResult = parameters.behavior(property).attributes!.root[attributeToBeAdded]
-    expect(expectedResult).toEqual(attributeExpectedValue)
   },
 })
 
@@ -46,7 +40,7 @@ definitions.push({
 definitions.push({
   regexp: /Adds role '(\w+)' to '([\w-]+)' component's part/g,
   testMethod: (parameters: TestMethod) => {
-    const [roleToBeAdded, elementWhereToBeAdded] = [...parameters.props]
+    const [roleToBeAdded, elementWhereToBeAdded] = parameters.props
     const property = {}
     const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded]['role']
     expect(expectedResult).toEqual(roleToBeAdded)
@@ -58,9 +52,7 @@ definitions.push({
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, attributeExpectedValue, elementWhereToBeAdded] = [
-      ...parameters.props,
-    ]
+    const [attributeToBeAdded, attributeExpectedValue, elementWhereToBeAdded] = parameters.props
     const property = {}
     const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
       attributeToBeAdded
@@ -81,7 +73,7 @@ definitions.push({
       propertyBasedOn,
       propertyDependingOn,
       elementWhereToBeAdded,
-    ] = [...parameters.props]
+    ] = parameters.props
     const property = {}
     property[propertyDependingOn] = [{}, {}]
     property[propertyBasedOn] = true
@@ -110,13 +102,19 @@ definitions.push({
   },
 })
 
-// Example: Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
+// Example: Adds attribute 'aria-expanded=true' based on the property 'active' to 'button' component's part.
+//          Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)' based on the property '([\w-]+)' to '([\w-]+)' component's part\./g,
+  regexp: /Adds attribute '([\w-]+)=*([\w-]*)' based on the property '([\w-]+)' to '([\w-]+)' component's part\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, propertyDependingOn, elementWhereToBeAdded] = [...parameters.props]
+    const [
+      attributeToBeAdded,
+      attibuteValue,
+      propertyDependingOn,
+      elementWhereToBeAdded,
+    ] = parameters.props
     const property = {}
-    const propertyDependingOnValue = 'value of property'
+    const propertyDependingOnValue = attibuteValue || 'value of property'
     property[propertyDependingOn] = propertyDependingOnValue
     const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
       attributeToBeAdded
@@ -131,7 +129,7 @@ definitions.push({
 definitions.push({
   regexp: /Generates unique ID and adds it as attribute '([\w-]+)' to the '([\w-]+)' component's part if it has not been provided by the user\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, elementWhereToBeAdded] = [...parameters.props]
+    const [attributeToBeAdded, elementWhereToBeAdded] = parameters.props
     const property = {}
     const propertyDependingOnValue = 'value of property'
     property[elementWhereToBeAdded] = { id: propertyDependingOnValue }
@@ -144,13 +142,16 @@ definitions.push({
   },
 })
 
-// Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
+// Example: Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part based on the property '\w+'\. This can be overriden by providing '([\w-]+)' property directly to the component\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, valueOfAttributeToBeAdded, component, overridingProperty] = [
-      ...parameters.props,
-    ]
+    const [
+      attributeToBeAdded,
+      valueOfAttributeToBeAdded,
+      component,
+      overridingProperty,
+    ] = parameters.props
 
     const propertyWithOverride = {}
     propertyWithOverride[overridingProperty] = valueOfAttributeToBeAdded
@@ -167,9 +168,7 @@ definitions.push({
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=([\w\d]+)' based on the property '\w+'\. This can be overriden by providing '([\w-]+)' property directly to the component\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, valueOfAttributeToBeAdded, overridingProperty] = [
-      ...parameters.props,
-    ]
+    const [attributeToBeAdded, valueOfAttributeToBeAdded, overridingProperty] = parameters.props
     const propertyWithOverride = {}
     propertyWithOverride[overridingProperty] = valueOfAttributeToBeAdded
     const expectedResultAttributeDefined = parameters.behavior(propertyWithOverride).attributes
@@ -209,9 +208,12 @@ function testMethodConditionallyAddAttribute(
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part if '([\w-]+)' property is true\. Does not set the attribute otherwise\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, valueOfAttributeToBeAdded, component, propertyDependsOn] = [
-      ...parameters.props,
-    ]
+    const [
+      attributeToBeAdded,
+      valueOfAttributeToBeAdded,
+      component,
+      propertyDependsOn,
+    ] = parameters.props
 
     testMethodConditionallyAddAttribute(
       parameters,
@@ -235,7 +237,7 @@ definitions.push({
       component,
       propertyDependsOn,
       valueOfAttributeToBeAddedOtherwise,
-    ] = [...parameters.props]
+    ] = parameters.props
 
     testMethodConditionallyAddAttribute(
       parameters,
@@ -259,7 +261,7 @@ definitions.push({
       component,
       propertyDependsOn,
       valueOfAttributeToBeAddedOtherwise,
-    ] = [...parameters.props]
+    ] = parameters.props
 
     testMethodConditionallyAddAttribute(
       parameters,
@@ -275,20 +277,19 @@ definitions.push({
 
 // Example: Adds attribute 'aria-hidden=true', if there is no 'alt' property provided.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=(\w+)', if there is no 'alt' property provided\./g,
+  regexp: /Adds attribute '([\w-]+)=(\w+)', if there is no '([\w-]+)' property provided\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, attributeExpectedValue] = [...parameters.props]
+    const [attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = parameters.props
     const property = {}
     const expectedResult = parameters.behavior(property).attributes.root[attributeToBeAdded]
     expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toBe(
       testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
     )
 
-    const propertyWithAlt = { alt: 'mockText' }
-    const expectedResultWithAlt = parameters.behavior(propertyWithAlt).attributes.root[
-      attributeToBeAdded
-    ]
-    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultWithAlt)).toBe(
+    const dependingOnProperty = { [propertyDependingOn]: 'mockText' }
+    const expectedResultForPropertyDependingOn = parameters.behavior(dependingOnProperty).attributes
+      .root[attributeToBeAdded]
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultForPropertyDependingOn)).toBe(
       testHelper.convertToMatchingTypeIfApplicable(undefined),
     )
   },
@@ -303,7 +304,7 @@ definitions.push({
       attributeExpectedValue,
       propertyDependingOnFirst,
       propertyDependingOnSecond,
-    ] = [...parameters.props]
+    ] = parameters.props
 
     const property = {}
 
@@ -338,16 +339,16 @@ definitions.push({
 
 // Example: Adds role='button' if element type is other than 'button'.
 definitions.push({
-  regexp: /Adds role='(\w+)' if element type is other than '\w+'\./g,
+  regexp: /Adds role='(\w+)' if element type is other than '(\w+)'\./g,
   testMethod: (parameters: TestMethod) => {
-    const [roleToBeAdded] = [...parameters.props]
+    const [roleToBeAdded, as] = parameters.props
     const property = {}
     const expectedResult = parameters.behavior(property).attributes.root.role
     expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toBe(
       testHelper.convertToMatchingTypeIfApplicable(roleToBeAdded),
     )
 
-    const propertyAsButton = { as: 'button' }
+    const propertyAsButton = { as }
     const expectedResultAsButton = parameters.behavior(propertyAsButton).attributes.root.role
     expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAsButton)).toBe(
       testHelper.convertToMatchingTypeIfApplicable(undefined),
@@ -355,92 +356,112 @@ definitions.push({
   },
 })
 
-// Embeds FocusZone into component allowing arrow key navigation through the children of the component.
+/*
+ * ********************** FOCUS ZONE **********************
+ */
 definitions.push({
-  regexp: /Embeds FocusZone into component allowing arrow key navigation through the children of the component\./g,
+  regexp: /Embeds component into FocusZone\./g,
   testMethod: (parameters: TestMethod) => {
     const actualFocusZone = parameters.behavior({}).focusZone
 
-    const expectedFocusZone: FocusZoneDefinition = {
-      mode: FocusZoneMode.Embed,
-      props: {
-        isCircularNavigation: false,
-        preventDefaultWhenHandled: true,
-      },
-    }
-
-    verifyFocusZones(expectedFocusZone, actualFocusZone)
+    const expectedFocusZoneMode = FocusZoneMode.Embed
+    expect(actualFocusZone.mode).toBe(expectedFocusZoneMode)
   },
 })
 
-// [Circular navigation] Embeds FocusZone into component allowing circular arrow key navigation through the children of the component.
 definitions.push({
-  regexp: /Embeds FocusZone into component allowing circular arrow key navigation through the children of the component\./g,
+  regexp: /arrow key navigation in horizontal direction/g,
+  testMethod: (parameters: TestMethod) => {
+    const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
+    expect(actualFocusZoneHorizontal.props.direction).toBe(FocusZoneDirection.horizontal)
+  },
+})
+
+definitions.push({
+  regexp: /arrow key navigation in vertical direction/g,
+  testMethod: (parameters: TestMethod) => {
+    const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
+    expect(actualFocusZoneHorizontal.props.direction).toBe(FocusZoneDirection.vertical)
+  },
+})
+
+definitions.push({
+  regexp: /arrow key navigation in bidirectional direction/g,
+  testMethod: (parameters: TestMethod) => {
+    const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
+    expect(actualFocusZoneHorizontal.props.direction).toBe(FocusZoneDirection.bidirectional)
+  },
+})
+
+definitions.push({
+  regexp: /Keyboard navigation is circular/g,
   testMethod: (parameters: TestMethod) => {
     const actualFocusZone = parameters.behavior({}).focusZone
-
-    const expectedFocusZone: FocusZoneDefinition = {
-      mode: FocusZoneMode.Embed,
-      props: {
-        isCircularNavigation: true,
-        preventDefaultWhenHandled: true,
-      },
-    }
-
-    verifyFocusZones(expectedFocusZone, actualFocusZone)
+    expect(actualFocusZone.props.isCircularNavigation).toBe(true)
   },
 })
 
-// Wraps component in FocusZone allowing arrow key navigation through the children of the component.
+// for e.g If 'vertical' prop is used, provides keyboard navigation in vertical direction.
 definitions.push({
-  regexp: /Wraps component in FocusZone allowing arrow key navigation through the children of the component\./g,
+  regexp: /.'vertical' prop is used.*vertical direction/g,
   testMethod: (parameters: TestMethod) => {
-    const actualFocusZone = parameters.behavior({}).focusZone
-
-    const expectedFocusZone: FocusZoneDefinition = {
-      mode: FocusZoneMode.Wrap,
-      props: {
-        isCircularNavigation: false,
-        preventDefaultWhenHandled: true,
-      },
-    }
-
-    verifyFocusZones(expectedFocusZone, actualFocusZone)
+    const actualFocusZoneVertical = parameters.behavior({ vertical: true }).focusZone
+    expect(actualFocusZoneVertical.props.direction).toBe(FocusZoneDirection.vertical)
   },
 })
 
-// [Circular navigation] Wraps component in FocusZone allowing circular arrow key navigation through the children of the component.
 definitions.push({
-  regexp: /Wraps component in FocusZone allowing circular arrow key navigation through the children of the component\./g,
+  regexp: /Focused active element of the component is reset when TAB from the component/g,
   testMethod: (parameters: TestMethod) => {
-    const actualFocusZone = parameters.behavior({}).focusZone
-
-    const expectedFocusZone: FocusZoneDefinition = {
-      mode: FocusZoneMode.Wrap,
-      props: {
-        isCircularNavigation: true,
-        preventDefaultWhenHandled: true,
-      },
-    }
-
-    verifyFocusZones(expectedFocusZone, actualFocusZone)
+    const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
+    expect(actualFocusZoneHorizontal.props.shouldResetActiveElementWhenTabFromZone).toBe(true)
   },
 })
 
-function verifyFocusZones(
-  expectedFocusZone: FocusZoneDefinition,
-  actualFocusZone: FocusZoneDefinition,
-) {
-  expect(expectedFocusZone.mode).toBe(actualFocusZone.mode)
-  expect(expectedFocusZone.props.isCircularNavigation).toBe(
-    actualFocusZone.props.isCircularNavigation,
-  )
-  expect(expectedFocusZone.props.preventDefaultWhenHandled).toBe(
-    actualFocusZone.props.preventDefaultWhenHandled,
-  )
-}
+definitions.push({
+  regexp: /Focus is set initially on the specified default tabbable element/g,
+  testMethod: (parameters: TestMethod) => {
+    const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
+    expect(actualFocusZoneHorizontal.props.defaultTabbableElement).toBeTruthy()
+  },
+})
 
-// [FocusTrapZone] Traps focus inside component
+definitions.push({
+  regexp: /Focus can be moved inside a child component with embeded inner FocusZone by pressing a specified key/g,
+  testMethod: (parameters: TestMethod) => {
+    const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
+    expect(actualFocusZoneHorizontal.props.shouldEnterInnerZone).toBeTruthy()
+  },
+})
+
+definitions.push({
+  regexp: /Focus is moved within the focusable children of the component using TAB key/g,
+  testMethod: (parameters: TestMethod) => {
+    const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
+    expect(actualFocusZoneHorizontal.props.handleTabKey).toBe(FocusZoneTabbableElements.all)
+  },
+})
+
+definitions.push({
+  regexp: /Component will get focus when mounted/g,
+  testMethod: (parameters: TestMethod) => {
+    const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
+    expect(actualFocusZoneHorizontal.props.shouldFocusOnMount).toBe(true)
+  },
+})
+
+// for e.g. When component's container element receives focus, focus will be set to the default focusable child element of the component.
+definitions.push({
+  regexp: /.container element receives focus.*focus .*set .*default focusable child element/g,
+  testMethod: (parameters: TestMethod) => {
+    const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
+    expect(actualFocusZoneHorizontal.props.shouldFocusInnerElementWhenReceivedFocus).toBe(true)
+  },
+})
+
+/*
+ * ********************** FOCUS TRAP ZONE **********************
+ */
 definitions.push({
   regexp: /Traps focus inside component/,
   testMethod: (parameters: TestMethod) => {
@@ -457,7 +478,9 @@ definitions.push({
   },
 })
 
-// [AutoFocusZone] Automatically focus the first focusable element inside component
+/*
+ * ********************** AUTO FOCUS ZONE **********************
+ */
 definitions.push({
   regexp: /Automatically focus the first focusable element inside component/,
   testMethod: (parameters: TestMethod) => {

@@ -1,5 +1,5 @@
 import config from '../config'
-import webpackConfig from '../webpack.config'
+import webpackConfig from './webpack.config'
 
 const { paths } = config
 

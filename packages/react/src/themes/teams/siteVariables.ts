@@ -6,7 +6,7 @@ import { colors } from './colors'
 //
 export {
   colors,
-  emphasisColors,
+  contextualColors,
   naturalColors,
   primitiveColors,
   colorScheme,

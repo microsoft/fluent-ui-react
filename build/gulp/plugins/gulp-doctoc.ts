@@ -1,4 +1,4 @@
-import * as through2 from 'through2'
+import through2 from 'through2'
 import sh from '../sh'
 
 export default () =>

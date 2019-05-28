@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { hot } from 'react-hot-loader/root'
 import { Provider, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from 'src/lib'
@@ -40,4 +41,4 @@ class App extends React.Component<any, ThemeContextData> {
   }
 }
 
-export default App
+export default hot(App)

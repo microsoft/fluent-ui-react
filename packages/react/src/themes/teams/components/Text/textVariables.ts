@@ -1,6 +1,13 @@
 import { TextVariables } from '../../../base/components/Text/textVariables'
+import { ItemType } from '../../../../themes/types'
+import { TeamsSchemeMappingWithAreas } from '../../types'
+import { stringLiteralsArray } from '../../../../lib'
+import { pickValuesFromColorScheme } from '../../../colorUtils'
 
-export interface TeamsTextVariables extends TextVariables {
+export const textColorAreas = stringLiteralsArray('foreground')
+export type TextColorSchemeMapping = TeamsSchemeMappingWithAreas<ItemType<typeof textColorAreas>>
+
+export interface TeamsTextVariables extends TextVariables<TextColorSchemeMapping> {
   atMentionMeFontWeight: number
   importantWeight: number
   timestampHoverColor: string
@@ -8,7 +15,7 @@ export interface TeamsTextVariables extends TextVariables {
 
 export default (siteVariables): Partial<TeamsTextVariables> => {
   return {
-    colorScheme: siteVariables.colorScheme,
+    colorScheme: pickValuesFromColorScheme(siteVariables.colorScheme, textColorAreas),
     atMentionOtherColor: siteVariables.colors.brand[600],
     atMentionMeColor: siteVariables.colors.orange[400],
     atMentionMeFontWeight: siteVariables.fontWeightBold,

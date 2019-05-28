@@ -10,7 +10,7 @@ describe('Icon', () => {
 
   describe('accessibility', () => {
     handlesAccessibility(Icon, {
-      defaultRootRole: undefined,
+      defaultRootRole: 'img',
     })
 
     describe('aria-hidden', () => {

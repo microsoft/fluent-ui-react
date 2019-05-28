@@ -1,4 +1,5 @@
-import * as CopyWebpackPlugin from 'copy-webpack-plugin'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import { webpack as lernaAliases } from 'lerna-alias'
 import { argv } from 'yargs'
 
@@ -32,16 +33,16 @@ const webpackConfig: any = {
     rules: [
       {
         test: /\.(js|ts|tsx)$/,
-        loader: 'awesome-typescript-loader',
+        loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          configFileName: paths.base('build/tsconfig.perf.json'),
-          useCache: true,
+          cacheDirectory: true,
         },
       },
     ],
   },
   plugins: [
+    new ForkTsCheckerWebpackPlugin({ tsconfig: paths.base('build/tsconfig.perf.json') }),
     new CopyWebpackPlugin([
       {
         from: paths.perfSrc('index.html'),
