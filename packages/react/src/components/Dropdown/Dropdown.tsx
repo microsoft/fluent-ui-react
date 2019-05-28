@@ -224,6 +224,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   private inputRef = React.createRef<HTMLInputElement>()
   private listRef = React.createRef<HTMLElement>()
   private selectedItemsRef = React.createRef<HTMLDivElement>()
+  private containerRef = React.createRef<HTMLDivElement>()
 
   static displayName = 'Dropdown'
 
@@ -433,6 +434,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             return (
               <Ref innerRef={innerRef}>
                 <div
+                  ref={this.containerRef}
                   className={cx(Dropdown.slotClassNames.container, classes.container)}
                   onClick={search && !open ? this.handleContainerClick : undefined}
                 >
@@ -653,7 +655,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           offset={offset}
           rtl={rtl}
           eventsEnabled={open}
-          targetRef={this.selectedItemsRef}
+          targetRef={this.containerRef}
           positioningDependencies={[items.length]}
         >
           <List

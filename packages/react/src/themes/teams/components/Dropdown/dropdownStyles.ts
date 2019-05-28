@@ -117,7 +117,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
       margin: '0',
       justifyContent: 'left',
       padding: v.comboboxPaddingButton,
-      height: pxToRem(30),
       ...(p.multiple && { minWidth: 0, flex: 1 }),
       ...transparentColorStyleObj,
       ':focus': {
@@ -144,7 +143,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
 
   list: ({ props: p, variables: v }): ICSSInJSStyle => ({
     outline: 0,
-    position: 'absolute',
     borderRadius: v.listBorderRadius,
     borderStyle: 'solid',
     borderWidth: p.open ? v.listBorderWidth : '0px',
@@ -153,8 +151,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     maxHeight: v.listMaxHeight,
     overflowY: 'auto',
     width: getWidth(p, v),
-    left: p.search ? '0px' : `-${v.borderWidth}`,
-    top: `calc(100% + ${p.search ? v.searchBorderBottomWidth : '0px'})`, // leave room for container + its border
     background: v.listBackgroundColor,
     ...(p.open && {
       boxShadow: v.listBoxShadow,
