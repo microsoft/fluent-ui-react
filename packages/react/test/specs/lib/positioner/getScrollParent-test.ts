@@ -1,3 +1,5 @@
+import * as _ from 'lodash'
+
 import getScrollParent from 'src/lib/positioner/getScrollParent'
 
 const overflowStyles: Partial<CSSStyleDeclaration>[] = [
@@ -21,9 +23,7 @@ const resetOverflowStyles = (element: HTMLElement) =>
   ['overflow', 'overflowX', 'overflowY'].map(prop => (element.style[prop] = ''))
 
 const testsSetupFactory = () => {
-  const treeElements = Array(4)
-    .fill(undefined)
-    .map(() => document.createElement('div'))
+  const treeElements = _.range(4).map(() => document.createElement('div'))
   const [element, nonScrollableParent, scrollableParent, scrollableGrandparent] = treeElements
 
   return {
@@ -53,32 +53,32 @@ describe('getScrollParent', () => {
   beforeAll(() => testsSetup.init())
   beforeEach(() => testsSetup.resetStyles())
 
-  describe('when argument is document.body', () => {
-    test('returns document.body', () => {
+  describe('when argument is <body />', () => {
+    test('returns <body />', () => {
       expect(getScrollParent(document.body)).toBe(document.body)
     })
   })
 
-  describe('when argument is document.documentElement', () => {
-    test('returns document.body', () => {
+  describe('when argument is <html />', () => {
+    test('returns <body />', () => {
       expect(getScrollParent(document.documentElement)).toBe(document.body)
     })
   })
 
-  describe('when argument is document', () => {
-    test('returns document.body', () => {
+  describe('when argument is <document />', () => {
+    test('returns <body />', () => {
       expect(getScrollParent(document)).toBe(document.body)
     })
   })
 
   describe('when there is no scrollable parent for the node argument', () => {
-    test('returns document.body', () => {
+    test('returns <body />', () => {
       expect(getScrollParent(testsSetup.element)).toBe(document.body)
     })
   })
 
   describe('when there are scrollable parents for the node argument', () => {
-    test('returns the first parent node', () => {
+    test('returns the first scrollable parent node', () => {
       overflowStyles.forEach(styles => {
         setStylesForElements(
           [testsSetup.scrollableParent, testsSetup.scrollableGrandparent],
@@ -91,7 +91,7 @@ describe('getScrollParent', () => {
   })
 
   describe('when there are scrollable parents for the node argument and the node argument is scrollable', () => {
-    test('returns the first parent node', () => {
+    test('returns the first scrollable parent node', () => {
       overflowStyles.forEach(styles => {
         setStylesForElements(
           [testsSetup.element, testsSetup.scrollableParent, testsSetup.scrollableGrandparent],
