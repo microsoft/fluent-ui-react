@@ -398,12 +398,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  menu: ({ props: p }) => ({
-    zIndex: '1000',
-    position: 'absolute',
-    top: p.vertical ? '0' : '100%',
-    left: p.vertical ? '100%' : '0',
-  }),
+  menu: () => ({ zIndex: '1000' }),
 
   indicator: () => ({
     position: 'relative',
