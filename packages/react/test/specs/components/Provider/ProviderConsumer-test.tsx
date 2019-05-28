@@ -35,7 +35,7 @@ describe('ProviderConsumer', () => {
       mount(
         <Provider theme={inputTheme}>
           <Provider.Consumer
-            render={({ theme: preparedTheme }) => {
+            render={preparedTheme => {
               // siteVariables
               expect(preparedTheme).toHaveProperty('siteVariables.a', 'b')
 
