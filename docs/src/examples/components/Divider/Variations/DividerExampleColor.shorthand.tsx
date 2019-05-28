@@ -4,11 +4,7 @@ import { Divider, ProviderConsumer } from '@stardust-ui/react'
 
 const DividerExampleColor = () => (
   <ProviderConsumer
-    render={({
-      theme: {
-        siteVariables: { emphasisColors, naturalColors },
-      },
-    }) =>
+    render={({ siteVariables: { emphasisColors, naturalColors } }) =>
       _.map({ ...emphasisColors, ...naturalColors }, (variants, name) => (
         <Divider key={name} color={name} content={_.startCase(name)} />
       ))

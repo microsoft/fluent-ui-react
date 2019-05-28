@@ -13,7 +13,7 @@ class MSTeamsLogo extends React.Component<LogoProps, any> {
     const { companyName, icon, style } = this.props
     return (
       <Provider.Consumer
-        render={({ theme: { siteVariables } }) => {
+        render={({ siteVariables }) => {
           return (
             <div style={style}>
               {Icon.create(icon, {

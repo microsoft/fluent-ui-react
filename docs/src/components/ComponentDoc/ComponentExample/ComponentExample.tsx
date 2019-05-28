@@ -28,7 +28,7 @@ import ComponentExampleTitle from './ComponentExampleTitle'
 import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager'
-import { ThemeInput, ProviderContextPrepared } from 'packages/react/src/themes/types'
+import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
 import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import CopyToClipboard from 'docs/src/components/CopyToClipboard'
@@ -441,7 +441,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           <span style={{ opacity: 0.5 }}>Theme</span>
         </Divider>
         <Provider.Consumer
-          render={({ theme: { siteVariables, componentVariables } }: ProviderContextPrepared) => {
+          render={({ siteVariables, componentVariables }: ThemePrepared) => {
             const mergedVariables = mergeThemeVariables(componentVariables, {
               [displayName]: this.state.componentVariables,
             })
@@ -542,7 +542,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               themeName={themeName}
             >
               <Provider.Consumer
-                render={({ theme: { siteVariables } }) => {
+                render={({ siteVariables }) => {
                   return (
                     <Segment
                       className={`rendered-example ${this.getKebabExamplePath()}`}

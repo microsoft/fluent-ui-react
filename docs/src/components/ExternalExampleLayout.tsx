@@ -64,7 +64,7 @@ class ExternalExampleLayout extends React.Component<
         rtl={this.props.match.params.rtl === 'true'}
       >
         <Provider.Consumer
-          render={({ theme: { siteVariables } }) => (
+          render={({ siteVariables }) => (
             <SourceRender
               babelConfig={babelConfig}
               source={exampleSource.js}

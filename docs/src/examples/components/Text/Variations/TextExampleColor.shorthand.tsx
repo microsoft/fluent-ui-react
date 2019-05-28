@@ -4,11 +4,7 @@ import { Text, ProviderConsumer } from '@stardust-ui/react'
 
 const TextExampleColor = () => (
   <ProviderConsumer
-    render={({
-      theme: {
-        siteVariables: { emphasisColors, naturalColors },
-      },
-    }) =>
+    render={({ siteVariables: { emphasisColors, naturalColors } }) =>
       _.keys({ ...emphasisColors, ...naturalColors }).map(color => (
         <React.Fragment key={color}>
           <Text color={color} content={_.startCase(color)} />

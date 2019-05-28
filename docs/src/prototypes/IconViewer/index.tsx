@@ -75,7 +75,7 @@ class IconViewerExample extends React.Component<any, {}> {
 
           <Provider theme={themeWithProcessedIcons}>
             <Provider.Consumer
-              render={({ theme }) => (
+              render={theme => (
                 <div>
                   <div>
                     <Header as="h3" content="Regular" textAlign="center" />

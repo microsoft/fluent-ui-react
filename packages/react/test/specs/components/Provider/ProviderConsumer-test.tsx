@@ -15,8 +15,8 @@ describe('ProviderConsumer', () => {
   })
 
   describe('render', () => {
-    test('is a callback that receives the prepared theme, rtl, renderer and disabledAnimations', () => {
-      expect.assertions(16)
+    test('is a callback that receives the prepared theme', () => {
+      expect.assertions(13)
 
       const inputTheme: ThemeInput = {
         siteVariables: { a: 'b' },
@@ -32,13 +32,10 @@ describe('ProviderConsumer', () => {
         },
       }
 
-      const inputRtl = true
-      const inputDisableAnimations = true
-
       mount(
-        <Provider theme={inputTheme} rtl={inputRtl} disableAnimations={inputDisableAnimations}>
+        <Provider theme={inputTheme}>
           <Provider.Consumer
-            render={({ theme: preparedTheme, rtl, disableAnimations, renderer }) => {
+            render={({ theme: preparedTheme }) => {
               // siteVariables
               expect(preparedTheme).toHaveProperty('siteVariables.a', 'b')
 
@@ -67,15 +64,6 @@ describe('ProviderConsumer', () => {
               // icons
               expect(preparedTheme).toHaveProperty('icons')
               expect(preparedTheme.icons).toMatchObject(inputTheme.icons)
-
-              // rtl
-              expect(rtl).toEqual(inputRtl)
-
-              // disableAnimations
-              expect(disableAnimations).toEqual(inputDisableAnimations)
-
-              // renderer
-              expect(renderer).toBeDefined()
               return null
             }}
           />

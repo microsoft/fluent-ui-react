@@ -3,7 +3,8 @@ import { render } from 'fela-dom'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { RendererProvider, ThemeProvider } from 'react-fela'
+// @ts-ignore
+import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import {
@@ -84,6 +85,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
   static Consumer = ProviderConsumer
   static Box = ProviderBox
+  static contextType = ThemeContext
 
   staticStylesRendered: boolean = false
 
@@ -176,37 +178,31 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     }
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
+    const outgoingContext: ProviderContextPrepared = mergeContexts(this.context, context)
+
+    // Heads up!
+    // We should call render() to ensure that a subscription for DOM updates was created
+    // https://github.com/stardust-ui/react/issues/581
+    if (isBrowser()) render(outgoingContext.renderer)
+    this.renderStaticStylesOnce(outgoingContext.theme)
+
+    const rtlProps: { dir?: 'rtl' | 'ltr' } = {}
+    // only add dir attribute for top level provider or when direction changes from parent to child
+    if (
+      !this.context ||
+      (this.context.rtl !== outgoingContext.rtl && _.isBoolean(outgoingContext.rtl))
+    ) {
+      rtlProps.dir = outgoingContext.rtl ? 'rtl' : 'ltr'
+    }
+
     return (
-      <ProviderConsumer
-        render={(incomingContext: ProviderContextPrepared) => {
-          const outgoingContext: ProviderContextPrepared = mergeContexts(incomingContext, context)
-
-          // Heads up!
-          // We should call render() to ensure that a subscription for DOM updates was created
-          // https://github.com/stardust-ui/react/issues/581
-          if (isBrowser()) render(outgoingContext.renderer)
-          this.renderStaticStylesOnce(outgoingContext.theme)
-
-          const rtlProps: { dir?: 'rtl' | 'ltr' } = {}
-          // only add dir attribute for top level provider or when direction changes from parent to child
-          if (
-            !incomingContext ||
-            (incomingContext.rtl !== outgoingContext.rtl && _.isBoolean(outgoingContext.rtl))
-          ) {
-            rtlProps.dir = outgoingContext.rtl ? 'rtl' : 'ltr'
-          }
-
-          return (
-            <RendererProvider renderer={outgoingContext.renderer} {...{ rehydrate: false }}>
-              <ThemeProvider theme={outgoingContext}>
-                <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>
-                  {children}
-                </ProviderBox>
-              </ThemeProvider>
-            </RendererProvider>
-          )
-        }}
-      />
+      <RendererProvider renderer={outgoingContext.renderer} {...{ rehydrate: false }}>
+        <ThemeProvider theme={outgoingContext}>
+          <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>
+            {children}
+          </ProviderBox>
+        </ThemeProvider>
+      </RendererProvider>
     )
   }
 

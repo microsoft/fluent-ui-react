@@ -43,7 +43,7 @@ const createComponent = <P extends ObjectOf<any> = any>({
   }
 
   const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
-    const theme: ProviderContextPrepared = React.useContext(ThemeContext)
+    const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
     return renderComponent(
       {
@@ -57,7 +57,7 @@ const createComponent = <P extends ObjectOf<any> = any>({
         focusZoneRef,
         render: config => render(config, props),
       },
-      theme,
+      context,
     )
   }
 

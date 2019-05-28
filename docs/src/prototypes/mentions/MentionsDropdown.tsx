@@ -20,7 +20,7 @@ const MentionsDropdown: React.FunctionComponent<MentionsContainerProps> = props 
 
   return (
     <Provider.Consumer
-      render={({ theme: { siteVariables: siteVars } }) => (
+      render={({ siteVariables: siteVars }) => (
         <Dropdown
           defaultOpen={true}
           inline
