@@ -9,7 +9,7 @@ describe('felaDisableAnimationsPlugin', () => {
       margin: '0px 10px',
     }
 
-    expect(disableAnimationsPlugin(style)).toMatchObject(style)
+    expect(disableAnimationsPlugin(style, 'RULE')).toMatchObject(style)
   })
 
   test('does not disable animations if the disableAnimations flag is undefined', () => {
@@ -19,7 +19,7 @@ describe('felaDisableAnimationsPlugin', () => {
     }
 
     expect(
-      disableAnimationsPlugin(style, undefined, undefined, { disableAnimations: undefined }),
+      disableAnimationsPlugin(style, 'RULE', undefined, { disableAnimations: undefined }),
     ).toMatchObject(style)
   })
 
@@ -31,7 +31,7 @@ describe('felaDisableAnimationsPlugin', () => {
     }
 
     expect(
-      disableAnimationsPlugin(style, undefined, undefined, { disableAnimations: false }),
+      disableAnimationsPlugin(style, 'RULE', undefined, { disableAnimations: false }),
     ).toMatchObject(style)
   })
 
@@ -43,7 +43,7 @@ describe('felaDisableAnimationsPlugin', () => {
     }
 
     expect(
-      disableAnimationsPlugin(style, undefined, undefined, { disableAnimations: true }),
+      disableAnimationsPlugin(style, 'RULE', undefined, { disableAnimations: true }),
     ).toMatchObject({ margin: '0px 10px' })
   })
 
@@ -54,7 +54,7 @@ describe('felaDisableAnimationsPlugin', () => {
     }
 
     expect(
-      disableAnimationsPlugin(style, undefined, undefined, { disableAnimations: true }),
+      disableAnimationsPlugin(style, 'RULE', undefined, { disableAnimations: true }),
     ).toMatchObject({ margin: '0px 10px' })
   })
 })
