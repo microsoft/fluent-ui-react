@@ -4,10 +4,7 @@
  * @returns {Node} - parent DOM node.
  */
 const getParentNode = (node: Node): Node => {
-  if (node.nodeName === 'HTML') {
-    return node
-  }
-
+  if (node.nodeName === 'HTML') return node
   return node.parentNode || (node as any).host
 }
 
@@ -17,9 +14,7 @@ const getParentNode = (node: Node): Node => {
  * @returns {Partial<CSSStyleDeclaration>} - CSS styles.
  */
 const getStyleComputedProperty = (node: Node): Partial<CSSStyleDeclaration> => {
-  if (node.nodeType !== 1) {
-    return {}
-  }
+  if (node.nodeType !== 1) return {}
 
   const window = node.ownerDocument.defaultView
   return window.getComputedStyle(node as Element, null)
@@ -32,21 +27,22 @@ const getStyleComputedProperty = (node: Node): Partial<CSSStyleDeclaration> => {
  */
 const getScrollParent = (node: Node): Node => {
   // Return body, `getScroll` will take care to get the correct `scrollTop` from it
-  if (!node) return document.body
+  const parentNode = node && getParentNode(node)
+  if (!parentNode) return document.body
 
-  switch (node.nodeName) {
+  switch (parentNode.nodeName) {
     case 'HTML':
     case 'BODY':
-      return node.ownerDocument.body
+      return parentNode.ownerDocument.body
     case '#document':
-      return (node as Document).body
+      return (parentNode as Document).body
   }
 
   // If any of the overflow props is defined for the node then we return it as the parent
-  const { overflow, overflowX, overflowY } = getStyleComputedProperty(node)
-  if (/(auto|scroll|overlay)/.test(overflow + overflowY + overflowX)) return node
+  const { overflow, overflowX, overflowY } = getStyleComputedProperty(parentNode)
+  if (/(auto|scroll|overlay)/.test(overflow + overflowY + overflowX)) return parentNode
 
-  return getScrollParent(getParentNode(node))
+  return getScrollParent(parentNode)
 }
 
 export default getScrollParent

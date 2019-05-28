@@ -5,7 +5,7 @@ import { Ref } from '@stardust-ui/react-component-ref'
 
 import { getPlacement, applyRtlToOffset } from './positioningHelper'
 import { PopperProps, PopperChildrenFn } from './types'
-import getScrollParent from '../getScrollParent'
+import getScrollParent from './getScrollParent'
 
 /**
  * Popper relies on the 3rd party library [Popper.js](https://github.com/FezVrasta/popper.js) for positioning.
