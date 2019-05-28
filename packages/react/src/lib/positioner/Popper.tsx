@@ -58,6 +58,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
         eventsEnabled,
         positionFixed,
         modifiers: {
+          preventOverflow: { padding: 0 },
           ...computedModifiers,
           ...modifiers,
           arrow: {
