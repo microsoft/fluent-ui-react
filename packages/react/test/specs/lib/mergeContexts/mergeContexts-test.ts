@@ -1,4 +1,5 @@
 import mergeContexts from 'src/lib/mergeContexts'
+import { felaRenderer, felaRtlRenderer } from 'src/lib'
 
 describe('mergeContexts', () => {
   test(`always returns an object`, () => {
@@ -50,5 +51,16 @@ describe('mergeContexts', () => {
       disableAnimations: false,
     }
     expect(() => mergeContexts(target, source)).not.toThrow()
+  })
+
+  describe('renderer', () => {
+    test('felaRtlRenderer is chosen if rtl is true', () => {
+      expect(mergeContexts({ rtl: true })).toHaveProperty('renderer', felaRtlRenderer)
+    })
+    test('felaRenderer is chosen if rtl is not true', () => {
+      expect(mergeContexts({ rtl: false })).toHaveProperty('renderer', felaRenderer)
+      expect(mergeContexts({ rtl: null })).toHaveProperty('renderer', felaRenderer)
+      expect(mergeContexts({ rtl: undefined })).toHaveProperty('renderer', felaRenderer)
+    })
   })
 })
