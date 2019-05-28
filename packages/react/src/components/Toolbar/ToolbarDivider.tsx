@@ -39,9 +39,11 @@ class ToolbarDivider extends UIComponent<WithAsProp<ToolbarDividerProps>> {
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
     return (
-      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
-        |
-      </ElementType>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+        className={classes.root}
+      />
     )
   }
 }

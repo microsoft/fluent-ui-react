@@ -16,20 +16,22 @@ const ToolbarExampleShorthand = () => {
       <Toolbar
         items={[
           // red circular recording status icon
-          // meeting time counter
+          <div>00:01</div>,
 
-          { kind: 'divider' },
+          { key: 'divider1', kind: 'divider' },
 
           {
+            key: 'video',
             primary: true,
             icon: videoEnabled ? videoIconEnabled : videoIconDisabled,
             onClick: () => {
               setVideoEnabled(!videoEnabled)
             },
           },
-          { primary: true, icon: 'microphone' },
-          { primary: true, icon: 'call-control-present-new' },
+          { key: 'microphone', primary: true, icon: 'microphone' },
+          { key: 'sharing', primary: true, icon: 'call-control-present-new' },
           {
+            key: 'more',
             icon: 'more',
             menu: [
               { icon: 'list', content: 'Show meeting notes' },
@@ -40,6 +42,7 @@ const ToolbarExampleShorthand = () => {
             ],
           },
           {
+            key: 'sidebar',
             // TODO:
             //  note that these don't act like radios exactly.
             //  You can unselect all options by clicking an option twice.
@@ -52,17 +55,17 @@ const ToolbarExampleShorthand = () => {
             ],
           },
 
-          { kind: 'divider' },
+          { key: 'divider2', kind: 'divider' },
 
           // TODO:
           //  how would FocusZone work in this area?
           //  should this be a "spin button"?
           //  should this be 3 separate controls?
-          { content: <div>{/*  Pagination Control */}</div> },
+          { key: 'pagination', content: <div>{/*  Pagination Control */}</div> },
 
-          { kind: 'button', content: 'Stop Presenting' },
+          { key: 'stop-presenting', kind: 'button', content: 'Stop Presenting' },
 
-          { danger: true, icon: 'call-end' },
+          { key: 'call-end', danger: true, icon: 'call-end' },
         ]}
       />
       <Image

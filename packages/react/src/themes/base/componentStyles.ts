@@ -13,6 +13,8 @@ export { default as ProviderBox } from './components/Provider/providerBoxStyles'
 
 export { default as Text } from './components/Text/textStyles'
 
+export { default as Toolbar } from './components/Toolbar/toolbarStyles'
+
 export { default as Grid } from './components/Grid/gridStyles'
 
 export { default as Image } from './components/Image/imageStyles'

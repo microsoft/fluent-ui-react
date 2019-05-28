@@ -11,6 +11,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
   childrenExist,
+  isFromKeyboard,
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -53,7 +54,11 @@ export interface ToolbarItemProps
   onBlur?: ComponentEventHandler<ToolbarItemProps>
 }
 
-class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
+export interface ToolbarItemState {
+  isFromKeyboard: boolean
+}
+
+class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemState> {
   static displayName = 'ToolbarItem'
 
   static className = 'ui-toolbar__item'
@@ -90,10 +95,14 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
   }
 
   private handleBlur = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: false })
+
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: isFromKeyboard() })
+
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 

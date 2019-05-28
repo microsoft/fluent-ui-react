@@ -7,10 +7,6 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-const MenuExample = () => (
-  <Menu defaultActiveIndex={0} items={items} onFocus={() => {}}>
-    <Menu.Item onBlur={() => {}}>x</Menu.Item>
-  </Menu>
-)
+const MenuExample = () => <Menu defaultActiveIndex={0} items={items} />
 
 export default MenuExample

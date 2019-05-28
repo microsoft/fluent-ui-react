@@ -48,27 +48,30 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
     accessibility: defaultBehavior as Accessibility,
   }
 
-  private renderItems(items) {
+  handleItemOverrides = variables => predefinedProps => ({
+    variables: {
+      ...variables,
+      ...predefinedProps.variables,
+    },
+  })
+
+  private renderItems(items, variables) {
+    const itemOverridesFn = this.handleItemOverrides(variables)
     return _.map(items, (item, index) => {
       const kind = _.get(item, 'kind', 'item')
 
       if (kind === 'divider') {
-        return ToolbarDivider.create(item)
+        return ToolbarDivider.create(item, { overrideProps: itemOverridesFn })
       }
-      return ToolbarItem.create(item)
+      return ToolbarItem.create(item, { overrideProps: itemOverridesFn })
     })
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
+  renderComponent({ ElementType, classes, variables, accessibility, unhandledProps }) {
     const { children, items } = this.props
     return (
-      <ElementType
-        style={{ outline: '1px solid blue' }}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        className={classes.root}
-      >
-        {childrenExist(children) ? children : this.renderItems(items)}
+      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
+        {childrenExist(children) ? children : this.renderItems(items, variables)}
       </ElementType>
     )
   }

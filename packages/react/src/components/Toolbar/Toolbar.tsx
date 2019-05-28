@@ -56,32 +56,41 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
   static Divider = ToolbarDivider
   static RadioGroup = ToolbarRadioGroup
 
-  private renderItems(items) {
+  handleItemOverrides = variables => predefinedProps => ({
+    variables: {
+      ...variables,
+      ...predefinedProps.variables,
+    },
+  })
+
+  private renderItems(items, variables) {
+    const itemOverridesFn = this.handleItemOverrides(variables)
     return _.map(items, (item, index) => {
       const kind = _.get(item, 'kind', 'item')
 
       switch (kind) {
         case 'divider':
-          return ToolbarDivider.create(item)
+          return ToolbarDivider.create(item, { overrideProps: itemOverridesFn })
         case 'group':
-          return ToolbarRadioGroup.create(item)
+          return ToolbarRadioGroup.create(item, { overrideProps: itemOverridesFn })
         default:
-          return ToolbarItem.create(item)
+          return ToolbarItem.create(item, { overrideProps: itemOverridesFn })
       }
     })
   }
 
-  renderComponent({ accessibility, ElementType, classes, unhandledProps }): React.ReactNode {
+  renderComponent({
+    accessibility,
+    ElementType,
+    classes,
+    variables,
+    unhandledProps,
+  }): React.ReactNode {
     const { children, items } = this.props
 
     return (
-      <ElementType
-        style={{ display: 'flex', outline: '1px solid salmon' }}
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-      >
-        {childrenExist(children) ? children : this.renderItems(items)}
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
+        {childrenExist(children) ? children : this.renderItems(items, variables)}
       </ElementType>
     )
   }
