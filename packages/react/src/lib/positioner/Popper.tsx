@@ -49,12 +49,20 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       const popperHasScrollableParent = getScrollParent(contentRef.current) !== document.body
 
       const modifiers: PopperJS.Modifiers = _.merge(
+        /**
+         * When the popper box is placed in the context of a scrollable element, we need to set
+         * preventOverflow.escapeWithReference to true and flip.boundariesElement to 'scrollParent' (default is 'viewport')
+         * so that the popper box will stick with the targetRef when we scroll targetRef out of the viewport.
+         */
         popperHasScrollableParent && {
           preventOverflow: { escapeWithReference: true },
           flip: { boundariesElement: 'scrollParent' },
         },
         computedModifiers,
         userModifiers,
+        /**
+         * This modifier is necessary in order to render the pointer.
+         */
         {
           arrow: {
             enabled: !!pointerTargetRefElement,
