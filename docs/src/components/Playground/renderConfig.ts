@@ -1,5 +1,6 @@
 import * as DocsComponent from '@stardust-ui/docs-components'
 import * as Stardust from '@stardust-ui/react'
+import * as faker from 'faker'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
@@ -20,6 +21,7 @@ export const imports = {
   '@stardust-ui/docs-components': DocsComponent,
   '@stardust-ui/react': Stardust,
   classnames: Classnames,
+  faker,
   lodash: _,
   react: React,
   'react-dom': ReactDOM,

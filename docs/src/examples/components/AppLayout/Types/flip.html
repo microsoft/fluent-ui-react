@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Flip</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
+    />
+    <style>
+      @font-face {
+        font-weight: 400;
+        src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-regular.woff2')
+          format('woff2');
+        font-family: 'Segoe UI';
+      }
+      @font-face {
+        font-weight: 600;
+        src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semibold.woff2')
+          format('woff2');
+        font-family: 'Segoe UI';
+      }
+      @font-face {
+        font-weight: 700;
+        src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-bold.woff2')
+          format('woff2');
+        font-family: 'Segoe UI';
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #ccc;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      body,
+      html {
+        padding: 0;
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      html {
+        background: rgb(203, 202, 201);
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        font-size: 14px;
+        line-height: 21px;
+        background: rgb(243, 242, 241);
+      }
+
+      .header {
+        flex: 0 0 auto;
+        background: rgb(97, 101, 162);
+        height: 3rem;
+      }
+
+      .main {
+        flex: 1;
+        display: flex;
+        padding: 0 5rem;
+        height: 100%;
+        flex-direction: column;
+      }
+
+      .main .messages {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding: 1rem;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      }
+
+      .main .messages .message {
+        padding: 1rem;
+        margin: 0.5rem 0 0 auto;
+        max-width: 70%;
+        background: rgb(229, 229, 240);
+        border-radius: 0.25em;
+        color: rgba(0, 0, 0, 0.7);
+        overflow-wrap: break-word;
+        white-space: pre-wrap;
+      }
+
+      .main .input {
+        padding: 0.75rem 1rem;
+        margin: 1rem;
+        background: #ffffff;
+        border: none;
+        border-bottom: 2px solid transparent;
+        border-radius: 0.2em;
+      }
+      .main .input:focus {
+        outline: none;
+        border-color: #888;
+        border-bottom-color: rgb(97, 101, 162);
+      }
+    </style>
+    <div class="header"></div>
+    <div class="main">
+      <div class="messages"></div>
+      <input class="input" placeholder="Type a new message" autofocus />
+    </div>
+
+    <script>
+      const TIMEOUT = 500
+      const PARTIAL_SCALE = 0.1
+
+      const flip = (source, target) => {
+        const $source = (window.$source = document.querySelector(source))
+        const $target = (window.$target = document.querySelector(target))
+
+        const sourceBox = (window.sourceBox = $source.getBoundingClientRect())
+        const targetBox = (window.targetBox = $target.getBoundingClientRect())
+
+        $target.style.opacity = 0
+
+        const translateY = (sourceBox.top - targetBox.top) * PARTIAL_SCALE
+        const translateX = (sourceBox.left - targetBox.left) * (PARTIAL_SCALE * 0.1)
+
+        console.log({ sourceBox, targetBox, translateX, translateY })
+        console.log(
+          `translate3d(${translateX}px, ${translateY}px, 0)`,
+        )
+
+        $target.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`
+        $target.style.transformOrigin = `top left`
+
+        // document.body.appendChild($ghost)
+
+        setTimeout(() => {
+          $target.style.transition = `transform ${TIMEOUT}ms, opacity ${TIMEOUT}ms`
+          $target.style.transitionTimingFunction = `cubic-bezier(0.1, 0.1, 0.1, 0.9)`
+          // $ghost.style.opacity = 1
+          // $ghost.style.transform = ``
+
+          $target.style.opacity = ''
+          $target.style.transform = ``
+
+          setTimeout(() => {
+            // $target.style.visibility = ''
+            // $ghost.style.opacity = 0
+
+            setTimeout(() => {
+              // document.body.removeChild($ghost)
+            }, TIMEOUT)
+          }, TIMEOUT)
+        })
+      }
+
+      // const isTargetVisible =
+      //   target &&
+      //   (target === document.body || target.offsetParent !== null || target.style.position === 'fixed'
+
+      const messages = []
+
+      const send = str => {
+        const $message = document.createElement('div')
+        $message.textContent = str
+        $message.classList.add('message')
+
+        const $messages = document.querySelector('.messages')
+        $messages.appendChild($message)
+        $messages.scrollTo(0, 9999999)
+
+        flip('.input', '.message:last-child')
+      }
+
+      const $input = document.querySelector('.input')
+
+      $input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          if (e.target.value.trim() !== '') {
+            send(e.target.value)
+          }
+          e.target.value = ''
+        }
+      })
+    </script>
+  </body>
+</html>

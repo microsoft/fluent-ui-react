@@ -1,3 +1,5 @@
+export { default as AppLayout } from './components/AppLayout/appLayoutVariables'
+
 export { default as Checkbox } from './components/Checkbox/checkboxVariables'
 
 export { default as Dialog } from './components/Dialog/dialogVariables'

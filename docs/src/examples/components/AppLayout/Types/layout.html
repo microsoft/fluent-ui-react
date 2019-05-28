@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Layout</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
+    />
+    <style>
+      <!--
+        header|description|progress
+        100>|action|icon
+        header
+        action
+        progress
+        icon
+        header
+        action
+        icon
+        description
+        progress
+        icon
+        header
+        action
+        icon
+        description
+        action
+        --
+        > * {
+        box-sizing: border-box;
+      }
+      div {
+        border: 1px solid black;
+        padding: 0.25em;
+      }
+
+      .layout-a {
+        display: flex;
+        flex-wrap: wrap;
+        border: 5px solid greenyellow;
+      }
+      .layout-a .header {
+        flex: 0 0 100%;
+      }
+      .layout-a .start-bar {
+        flex: 1;
+      }
+      .layout-a .content {
+        flex: 1;
+      }
+      .layout-a .end-bar {
+        flex: 1;
+      }
+      .layout-a .footer {
+        flex: 0 0 100%;
+      }
+
+      .layout-b {
+        display: grid;
+        grid-template:
+          'start-bar header  end-bar'
+          'start-bar content end-bar'
+          'start-bar footer  end-bar';
+        border: 5px solid greenyellow;
+      }
+      .layout-b .header {
+        grid-area: header;
+      }
+      .layout-b .start-bar {
+        grid-area: start-bar;
+      }
+      .layout-b .content {
+        grid-area: content;
+      }
+      .layout-b .end-bar {
+        grid-area: end-bar;
+      }
+      .layout-b .footer {
+        grid-area: footer;
+      }
+
+      .layout-c {
+        display: grid;
+        grid-template:
+          'start-bar  header  end-bar'
+          'start-bar  content end-bar';
+        border: 5px solid greenyellow;
+      }
+      .layout-c .header {
+        grid-area: header;
+      }
+      .layout-c .start-bar {
+        grid-area: start-bar;
+      }
+      .layout-c .content {
+        grid-area: content;
+      }
+      .layout-c .end-bar {
+        grid-area: end-bar;
+      }
+      /*.layout-c .footer {*/
+      /*  grid-area: footer;*/
+      /*}*/
+    </style>
+  </head>
+  <body>
+    <h1>Layout A</h1>
+    <pre>
+      header    header  header
+      start-bar content end-bar
+      footer    footer  footer
+    </pre>
+    <section class="layout-a">
+      <div class="header">header</div>
+      <div class="start-bar">start-bar</div>
+      <div class="content">content</div>
+      <div class="end-bar">end-bar</div>
+      <div class="footer">footer</div>
+    </section>
+
+    <h1>Layout B</h1>
+    <pre>
+      50px  start-bar  header   end-bar
+      25px  start-bar  content  end-bar
+      10px  start-bar  footer   end-bar /
+            200px      100px    50px
+    </pre>
+    <section class="layout-b">
+      <div class="start-bar">start-bar</div>
+      <div class="header">header</div>
+      <div class="content">content</div>
+      <div class="footer">footer</div>
+      <div class="end-bar">end-bar</div>
+    </section>
+
+    <h1>Layout C</h1>
+    <pre>
+      &lt;Layout
+        template={`
+          start-bar  header  end-bar
+          start-bar  content end-bar
+        `}
+        content={{
+          template: 'footer'
+        }}
+      /&gt;
+    </pre>
+    <section class="layout-c">
+      <div class="start-bar">start-bar</div>
+      <div class="header">header</div>
+      <div class="content">
+        content
+        <div class="footer">footer</div>
+      </div>
+      <div class="end-bar">end-bar</div>
+    </section>
+
+    <script>
+      const renderLayout = (contents, layout) => {
+        const html = ''
+      }
+
+      const contents = {
+        header: 'header',
+        content: 'content',
+        'start-bar': 'start-bar',
+        'end-bar': 'end-bar',
+        footer: 'footer',
+      }
+
+      const layoutA = `
+        header    header  header
+        start-bar content end-bar
+        footer    footer  footer
+      `
+
+      // .A { width: 200px; flex: 0 0 auto; }
+
+      // <div class='A'></div>
+      // <div class='B'></div>
+      // <div class='C'>
+      //   <div className='E'></div>
+      // </div>
+      // <div class='D'></div>
+
+      const layoutB = `
+      start-bar  header   end-bar
+      start-bar  content  end-bar
+      start-bar  footer   end-bar
+    `
+
+      renderLayout(contents, layoutA)
+      renderLayout(contents, layoutB)
+
+      const a = `header | description | progress 100 >| action`
+
+      const b = `
+        icon      header  action
+        progress
+      `
+
+      const c = `
+        icon      header       action
+        icon      description
+        progress
+      `
+
+      const d = `
+        icon header      action
+        icon description action
+      `
+
+      const parseLayout = str => {
+        const style = { display: 'grid', gridTemplate: str }
+
+        console.log(style)
+      }
+
+      <Attachment
+        progress={}
+      />
+
+      parseLayout(a)
+      const {html, css} => parseLayout(b)
+      parseLayout(c)
+      parseLayout(d)
+    </script>
+  </body>
+</html>

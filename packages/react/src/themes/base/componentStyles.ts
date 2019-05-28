@@ -1,3 +1,6 @@
+export { default as AppLayout } from './components/AppLayout/appLayoutStyles'
+export { default as AppLayoutArea } from './components/AppLayout/appLayoutAreaStyles'
+
 export { default as Checkbox } from './components/Checkbox/checkboxStyles'
 
 export { default as Dialog } from './components/Dialog/dialogStyles'

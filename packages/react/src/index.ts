@@ -27,6 +27,9 @@ export { default as AccordionContent } from './components/Accordion/AccordionCon
 export * from './components/Alert/Alert'
 export { default as Alert } from './components/Alert/Alert'
 
+export * from './components/AppLayout/AppLayout'
+export { default as AppLayout } from './components/AppLayout/AppLayout'
+
 export * from './components/Attachment/Attachment'
 export { default as Attachment } from './components/Attachment/Attachment'
 
@@ -208,6 +211,7 @@ export * from './lib'
 export * from './types'
 export { Popper as UNSTABLE_Popper } from './lib/positioner'
 export * from './lib/positioner/types'
+export { default as BrowserWindow } from './components/AppLayout/BrowserWindow'
 
 //
 // FocusZone
