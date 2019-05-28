@@ -1,16 +1,17 @@
 import { Accessibility, FocusZoneMode } from '../../types'
+import { FocusZoneDirection } from '../../FocusZone'
 
 /**
  * @specification
- * Embeds FocusZone into component allowing arrow key navigation through the children of the component.
+ * Embeds component into FocusZone.
+ * Provides arrow key navigation in bidirectional direction.
  */
 const gridBehavior: Accessibility = (props: any) => ({
   attributes: {},
   focusZone: {
     mode: FocusZoneMode.Embed,
     props: {
-      isCircularNavigation: false,
-      preventDefaultWhenHandled: true,
+      direction: FocusZoneDirection.bidirectional,
     },
   },
 })

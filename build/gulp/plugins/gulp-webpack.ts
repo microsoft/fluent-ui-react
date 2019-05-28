@@ -1,8 +1,10 @@
-import * as webpack from 'webpack'
+import webpack from 'webpack'
 import config from '../../../config'
 
-const { __DEV__ } = config.compiler_globals
+const { __DEV__, __SKIP_ERRORS__ } = config.compiler_globals
 const { log, PluginError } = require('gulp-load-plugins')().util
+
+const DEV_SKIP_ERRORS = __DEV__ && __SKIP_ERRORS__
 
 const webpackPlugin = (webpackConfig, cb, onComplete = (err: any, stats: any) => {}) => {
   webpack(webpackConfig).run((err, stats) => {
@@ -15,11 +17,11 @@ const webpackPlugin = (webpackConfig, cb, onComplete = (err: any, stats: any) =>
       log('Webpack compiler encountered a fatal error.')
       throw new PluginError('webpack', err.toString())
     }
-    if (!__DEV__ && errors.length > 0) {
+    if (!DEV_SKIP_ERRORS && errors.length > 0) {
       log('Webpack compiler encountered errors.')
       throw new PluginError('webpack', errors.toString())
     }
-    if (!__DEV__ && warnings.length > 0) {
+    if (!DEV_SKIP_ERRORS && warnings.length > 0) {
       throw new PluginError('webpack', warnings.toString())
     }
 

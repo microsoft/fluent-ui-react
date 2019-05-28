@@ -1,7 +1,7 @@
-import * as CleanWebpackPlugin from 'clean-webpack-plugin'
-import * as fs from 'fs'
-import * as path from 'path'
-import * as webpack from 'webpack'
+import CleanWebpackPlugin from 'clean-webpack-plugin'
+import fs from 'fs'
+import path from 'path'
+import webpack from 'webpack'
 import config from '../config'
 
 const { paths } = config

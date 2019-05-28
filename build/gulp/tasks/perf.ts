@@ -1,10 +1,10 @@
-import * as express from 'express'
-import * as fs from 'fs'
+import express from 'express'
+import fs from 'fs'
 import { task, series } from 'gulp'
-import * as _ from 'lodash'
-import * as ProgressBar from 'progress'
-import * as puppeteer from 'puppeteer'
-import * as rimraf from 'rimraf'
+import _ from 'lodash'
+import ProgressBar from 'progress'
+import puppeteer from 'puppeteer'
+import rimraf from 'rimraf'
 import { argv } from 'yargs'
 
 import {
