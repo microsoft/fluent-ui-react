@@ -1070,7 +1070,7 @@ describe('Dropdown', () => {
   })
 
   describe('searchQuery', () => {
-    it("updates component's state", () => {
+    it("updates component's state on props updates", () => {
       const wrapper = mountWithProvider(<Dropdown items={items} search searchQuery="foo" />)
 
       expect(wrapper.find(Dropdown).state('searchQuery')).toBe('foo')
