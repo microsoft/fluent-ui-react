@@ -4,6 +4,7 @@ import { Flex, Icon } from '@stardust-ui/react'
 const IconExample = () => (
   <Flex gap="gap.smaller">
     <Icon name="call-video" />
+    <Icon name="stardust-checkmark" />
     <Icon name="chess rook" />
     <Icon name="book" />
     <Icon name="circle" />

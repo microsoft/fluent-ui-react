@@ -36,6 +36,7 @@ const themeIcons: ThemeIcons = Object.keys(svgIconsAndStyles as {
 
 const icons: ThemeIcons = {
   ...themeIcons,
+  'stardust-checkmark': themeIcons['stardust-checkmark'],
   'stardust-circle': themeIcons['stardust-circle'],
   'stardust-close': themeIcons['close'],
   'stardust-arrow-up': themeIcons['triangle-up'],
