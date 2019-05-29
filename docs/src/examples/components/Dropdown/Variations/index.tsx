@@ -19,6 +19,16 @@ const Variations = () => (
       description="A multiple search dropdown that uses French to provide information and accessibility."
       examplePath="components/Dropdown/Variations/DropdownExampleSearchMultipleFrenchLanguage"
     />
+    <ComponentExample
+      title="Alignment and Position"
+      description="A dropdown can be positioned around its trigger and aligned relative to the trigger's margins. Click on a button to open a dropdown on a specific position and alignment."
+      examplePath="components/Dropdown/Variations/DropdownExamplePosition"
+    />
+    <ComponentExample
+      title="Offset"
+      description="Dropdown position could be further customized by providing offset value. Note that percentage values of both trigger and dropdown elements' lengths are supported."
+      examplePath="components/Dropdown/Variations/DropdownExampleOffset"
+    />
   </ExampleSection>
 )
 

@@ -12,14 +12,14 @@ enum PlacementParts {
   center = '',
 }
 
-const getPositionMap = (rtl: boolean): { [key in Position]: PlacementParts } => ({
+const getPositionMap = (rtl: boolean): Record<Position, PlacementParts> => ({
   above: PlacementParts.top,
   below: PlacementParts.bottom,
   before: rtl ? PlacementParts.right : PlacementParts.left,
   after: rtl ? PlacementParts.left : PlacementParts.right,
 })
 
-const getAlignmentMap = (rtl: boolean): { [key in Alignment]: PlacementParts } => ({
+const getAlignmentMap = (rtl: boolean): Record<Alignment, PlacementParts> => ({
   start: rtl ? PlacementParts.end : PlacementParts.start,
   end: rtl ? PlacementParts.start : PlacementParts.end,
   top: PlacementParts.start,

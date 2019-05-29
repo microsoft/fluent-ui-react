@@ -1070,6 +1070,15 @@ describe('Dropdown', () => {
   })
 
   describe('searchQuery', () => {
+    it("updates component's state on props updates", () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} search searchQuery="foo" />)
+
+      expect(wrapper.find(Dropdown).state('searchQuery')).toBe('foo')
+
+      wrapper.setProps({ children: <Dropdown items={items} search searchQuery="bar" /> })
+      expect(wrapper.find(Dropdown).state('searchQuery')).toBe('bar')
+    })
+
     it('closes dropdown when changed to empty string', () => {
       const dropdown = mountWithProvider(<Dropdown items={items} search />).find(Dropdown)
 
