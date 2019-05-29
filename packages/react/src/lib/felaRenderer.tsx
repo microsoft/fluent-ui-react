@@ -8,6 +8,7 @@ import felaDisableAnimationsPlugin from './felaDisableAnimationsPlugin'
 import rtl from 'fela-plugin-rtl'
 
 import { Renderer } from '../themes/types'
+import felaRenderKeyframesPlugin from './felaRenderKeyframesPlugin'
 
 let felaDevMode = false
 
@@ -60,6 +61,7 @@ const createRendererConfig = (options: any = {}) => ({
     // This is required after fela-plugin-prefixer to resolve the array of fallback values prefixer produces.
     felaPluginFallbackValue(),
     felaDisableAnimationsPlugin(),
+    felaRenderKeyframesPlugin(),
     ...(options.isRtl ? [rtl()] : []),
   ],
   filterClassName,

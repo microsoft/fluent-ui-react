@@ -16,7 +16,6 @@ import {
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
-  Renderer,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
 import {
@@ -41,8 +40,6 @@ export interface RenderResultConfig<P> {
   styles: ComponentSlotStylesPrepared
   accessibility: AccessibilityBehavior
   rtl: boolean
-  renderer: Renderer
-  disableAnimations: boolean
   theme: ThemePrepared
 }
 
@@ -191,9 +188,8 @@ const renderComponent = <P extends {}>(
     props: stateAndProps,
     variables: resolvedVariables,
     theme: context.theme,
-    renderer,
     rtl,
-    disableAnimations,
+    disableAnimations, // TODO: cannot remove this, as this is where it is read in the fela plugin
   }
 
   mergedStyles.root = {
@@ -218,8 +214,6 @@ const renderComponent = <P extends {}>(
     accessibility,
     rtl,
     theme: context.theme,
-    renderer,
-    disableAnimations,
   }
 
   if (accessibility.focusZone) {

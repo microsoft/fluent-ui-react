@@ -26,10 +26,9 @@ export default {
     props: p,
     theme: t,
     variables: v,
-    renderer,
   }: ComponentStyleFunctionParam<LoaderProps, LoaderVariables>): ICSSInJSStyle => {
-    const animationName = renderer.renderKeyframe(
-      () =>
+    const animationName = {
+      keyframe: () =>
         ({
           from: {
             transform: 'rotate(0deg)',
@@ -38,8 +37,7 @@ export default {
             transform: 'rotate(360deg)',
           },
         } as any),
-      {},
-    )
+    }
     const borderColor = `${v.foregroundColor} ${v.backgroundColor} ${v.backgroundColor}`
 
     return {
