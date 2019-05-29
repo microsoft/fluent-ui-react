@@ -67,7 +67,7 @@ const positionAndAlignValues: PositionAndAlign[] = [
   'after-bottom',
 ]
 
-const icons: { [key in Position]: string } = {
+const icons: Record<Position, string> = {
   above: 'arrow circle up',
   below: 'arrow circle down',
   before: 'arrow circle left',
