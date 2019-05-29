@@ -49,6 +49,8 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       const popperHasScrollableParent = getScrollParent(contentRef.current) !== document.body
 
       const modifiers: PopperJS.Modifiers = _.merge(
+        { preventOverflow: { padding: 0 } },
+        { flip: { padding: 0 } },
         /**
          * When the popper box is placed in the context of a scrollable element, we need to set
          * preventOverflow.escapeWithReference to true and flip.boundariesElement to 'scrollParent' (default is 'viewport')
