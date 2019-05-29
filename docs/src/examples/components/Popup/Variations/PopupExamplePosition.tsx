@@ -7,7 +7,7 @@ const PopupExamplePosition = () => {
   const [open] = useBooleanKnob({ name: 'open', initialValue: true })
 
   const [positionAndAlign] = useSelectKnob<PositionAndAlign>({
-    name: 'position-align',
+    name: 'position-align-c',
     initialValue: 'above-start',
     values: positionAndAlignValues,
   })

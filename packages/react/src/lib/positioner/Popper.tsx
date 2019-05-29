@@ -1,9 +1,11 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 import PopperJS from 'popper.js'
 import { Ref } from '@stardust-ui/react-component-ref'
 
 import { getPlacement, applyRtlToOffset } from './positioningHelper'
 import { PopperProps, PopperChildrenFn } from './types'
+import getScrollParent from './getScrollParent'
 
 /**
  * Popper relies on the 3rd party library [Popper.js](https://github.com/FezVrasta/popper.js) for positioning.
@@ -13,7 +15,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     align,
     children,
     eventsEnabled,
-    modifiers,
+    modifiers: userModifiers,
     offset,
     pointerTargetRef,
     position,
@@ -43,6 +45,33 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
 
   React.useEffect(
     () => {
+      const pointerTargetRefElement = pointerTargetRef && pointerTargetRef.current
+      const popperHasScrollableParent = getScrollParent(contentRef.current) !== document.body
+
+      const modifiers: PopperJS.Modifiers = _.merge(
+        { preventOverflow: { padding: 0 } },
+        /**
+         * When the popper box is placed in the context of a scrollable element, we need to set
+         * preventOverflow.escapeWithReference to true and flip.boundariesElement to 'scrollParent' (default is 'viewport')
+         * so that the popper box will stick with the targetRef when we scroll targetRef out of the viewport.
+         */
+        popperHasScrollableParent && {
+          preventOverflow: { escapeWithReference: true },
+          flip: { boundariesElement: 'scrollParent' },
+        },
+        computedModifiers,
+        userModifiers,
+        /**
+         * This modifier is necessary in order to render the pointer.
+         */
+        {
+          arrow: {
+            enabled: !!pointerTargetRefElement,
+            element: pointerTargetRefElement,
+          },
+        },
+      )
+
       const handleUpdate = (data: PopperJS.Data) => {
         // PopperJS performs computations that might update the computed placement: auto positioning, flipping the
         // placement in case the popper box should be rendered at the edge of the viewport and does not fit
@@ -52,20 +81,11 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
         }
       }
 
-      const pointerTargetRefElement = pointerTargetRef && pointerTargetRef.current
       const options: PopperJS.PopperOptions = {
         placement: proposedPlacement,
         eventsEnabled,
         positionFixed,
-        modifiers: {
-          preventOverflow: { padding: 0 },
-          ...computedModifiers,
-          ...modifiers,
-          arrow: {
-            enabled: !!pointerTargetRefElement,
-            element: pointerTargetRefElement,
-          },
-        },
+        modifiers,
         onCreate: handleUpdate,
         onUpdate: handleUpdate,
       }
@@ -73,7 +93,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       popperRef.current = new PopperJS(targetRef.current, contentRef.current, options)
       return () => popperRef.current.destroy()
     },
-    [computedModifiers, eventsEnabled, modifiers, positionFixed, proposedPlacement],
+    [computedModifiers, eventsEnabled, userModifiers, positionFixed, proposedPlacement],
   )
 
   React.useEffect(

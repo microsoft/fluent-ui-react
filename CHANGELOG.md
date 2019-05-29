@@ -31,6 +31,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add strict types for the `colorScheme` props used in the components' `variables` @mnajdova([#1340](https://github.com/stardust-ui/react/pull/1340))
 - Export `message-seen`, `presence-available`, `presence-stroke`, `open-outside` and `eye-friendlier`  icons to Teams theme @joheredi ([#1390](https://github.com/stardust-ui/react/pull/1390))
 - Add 'lightning' icon @notandrew ([#1385](https://github.com/stardust-ui/react/pull/1385))
+- Add automatic positioning inside viewport for `Menu` with submenus @Bugaa92 ([#1384](https://github.com/stardust-ui/react/pull/1384))
 - Add `align`, `position`, `offset` props for `Dropdown` component @Bugaa92 ([#1312](https://github.com/stardust-ui/react/pull/1312))
 
 ### Documentation

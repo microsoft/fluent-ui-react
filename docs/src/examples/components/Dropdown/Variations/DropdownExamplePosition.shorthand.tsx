@@ -19,7 +19,6 @@ const DropdownExamplePosition = () => {
   return (
     <Grid columns="1" variables={{ padding: '140px 0' }} styles={{ justifyItems: 'center' }}>
       <Dropdown
-        inline
         open={open}
         items={inputItems}
         placeholder={`Opens ${position} trigger${align ? ` aligned to ${align}` : ''}.`}

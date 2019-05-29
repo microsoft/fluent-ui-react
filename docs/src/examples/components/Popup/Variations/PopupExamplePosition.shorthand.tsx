@@ -7,7 +7,7 @@ const PopupExamplePosition = () => {
   const [open] = useBooleanKnob({ name: 'open', initialValue: true })
 
   const [positionAndAlign] = useSelectKnob<PositionAndAlign>({
-    name: 'position-align',
+    name: 'position-align-s',
     initialValue: 'above-start',
     values: positionAndAlignValues,
   })
@@ -18,7 +18,6 @@ const PopupExamplePosition = () => {
   return (
     <Grid columns="1" variables={{ padding: '100px 0' }} styles={{ justifyItems: 'center' }}>
       <Popup
-        pointing
         open={open || undefined}
         align={align}
         position={position}
