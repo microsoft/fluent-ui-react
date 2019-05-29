@@ -4,7 +4,7 @@ import { Button, Grid, Popup, Alignment, Position } from '@stardust-ui/react'
 import { useBooleanKnob, useSelectKnob } from '@stardust-ui/docs-components'
 
 const PopupExamplePosition = () => {
-  const [open] = useBooleanKnob({ name: 'open', initialValue: true })
+  const [open] = useBooleanKnob({ name: 'open-c', initialValue: true })
 
   const [positionAndAlign] = useSelectKnob({
     name: 'position-align-c',
