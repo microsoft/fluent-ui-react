@@ -30,16 +30,21 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
   },
 
   image: ({ variables: v }): ICSSInJSStyle => ({
+    marginRight: '10px',
     height: v.height,
     width: v.height,
   }),
 
-  icon: ({ props: p }): ICSSInJSStyle =>
-    p.icon &&
-    typeof p.icon === 'object' &&
-    (p.icon as any).onClick && {
-      cursor: 'pointer',
-    },
+  icon: ({ props: p }): ICSSInJSStyle => {
+    return {
+      padding: '8px',
+      ...(p.icon &&
+        typeof p.icon === 'object' &&
+        (p.icon as any).onClick && {
+          cursor: 'pointer',
+        }),
+    }
+  },
 }
 
 export default labelStyles
