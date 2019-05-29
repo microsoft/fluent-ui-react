@@ -8,7 +8,7 @@ const inputItems = ['Bruce Wayne', 'Natasha Romanoff', 'Steven Strange']
 const DropdownExamplePosition = () => {
   const [open] = useBooleanKnob({ name: 'open', initialValue: true })
 
-  const [positionAndAlign] = useSelectKnob<PositionAndAlign>({
+  const [positionAndAlign] = useSelectKnob({
     name: 'position-align',
     initialValue: 'below',
     values: positionAndAlignValues,
@@ -31,15 +31,7 @@ const DropdownExamplePosition = () => {
 
 export default DropdownExamplePosition
 
-type PositionAndAlign =
-  | 'above'
-  | 'below'
-  | 'before-top'
-  | 'before-bottom'
-  | 'after-top'
-  | 'after-bottom'
-
-const positionAndAlignValues: PositionAndAlign[] = [
+const positionAndAlignValues = [
   'above',
   'below',
   'before-top',

@@ -6,7 +6,7 @@ import { useBooleanKnob, useSelectKnob } from '@stardust-ui/docs-components'
 const PopupExamplePosition = () => {
   const [open] = useBooleanKnob({ name: 'open', initialValue: true })
 
-  const [positionAndAlign] = useSelectKnob<PositionAndAlign>({
+  const [positionAndAlign] = useSelectKnob({
     name: 'position-align-s',
     initialValue: 'above-start',
     values: positionAndAlignValues,
@@ -38,21 +38,7 @@ const PopupExamplePosition = () => {
 
 export default PopupExamplePosition
 
-type PositionAndAlign =
-  | 'above-start'
-  | 'above-center'
-  | 'above-end'
-  | 'below-start'
-  | 'below-center'
-  | 'below-end'
-  | 'before-top'
-  | 'before-center'
-  | 'before-bottom'
-  | 'after-top'
-  | 'after-center'
-  | 'after-bottom'
-
-const positionAndAlignValues: PositionAndAlign[] = [
+const positionAndAlignValues = [
   'above-start',
   'above-center',
   'above-end',
@@ -74,7 +60,7 @@ const icons: Record<Position, string> = {
   after: 'arrow circle right',
 }
 
-const paddings: Record<PositionAndAlign, React.CSSProperties['padding']> = {
+const paddings: Record<string, React.CSSProperties['padding']> = {
   'above-start': '5px 42px 18px 5px',
   'above-center': '5px 5px 18px 5px',
   'above-end': '5px 5px 18px 42px',

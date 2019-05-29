@@ -3,15 +3,18 @@ import { pxToRem } from '../../../../lib'
 export interface DropdownVariables {
   backgroundColor: string
   backgroundColorHover: string
-  borderBottomRadius: string
   borderColor: string
   borderColorFocus: string
-  borderTopRadius: string
   borderWidth: string
+  containerBorderRadius: string
+  openAboveContainerBorderRadius: string
+  openBelowContainerBorderRadius: string
   searchBorderBottomWidth: string
   color: string
   comboboxPaddingButton: string
   comboboxFlexBasis: string
+  aboveListBorderRadius: string
+  belowListBorderRadius: string
   listBackgroundColor: string
   listBorderColor: string
   listBorderWidth: string
@@ -40,16 +43,19 @@ const [_2px_asRem, _3px_asRem, _12px_asRem] = [2, 3, 12].map(v => pxToRem(v))
 export default (siteVars): DropdownVariables => ({
   backgroundColor: siteVars.colors.grey[100],
   backgroundColorHover: siteVars.colors.grey[150],
-  borderBottomRadius: _2px_asRem,
   borderColor: 'transparent',
   borderColorFocus: siteVars.colors.brand[600],
-  borderTopRadius: _3px_asRem,
   borderWidth: '0px',
+  containerBorderRadius: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
+  openAboveContainerBorderRadius: `0 0 ${_2px_asRem} ${_2px_asRem}`,
+  openBelowContainerBorderRadius: `${_3px_asRem} ${_3px_asRem} 0 0`,
   searchBorderBottomWidth: pxToRem(2),
   color: siteVars.bodyColor,
   selectedItemColor: siteVars.bodyColor,
   comboboxPaddingButton: `0 ${_12px_asRem}`,
   comboboxFlexBasis: pxToRem(50),
+  aboveListBorderRadius: `${_3px_asRem} ${_3px_asRem} 0 0`,
+  belowListBorderRadius: `0 0 ${_2px_asRem} ${_2px_asRem}`,
   listBackgroundColor: siteVars.colors.white,
   listBorderColor: 'transparent',
   listBorderWidth: '0px',
