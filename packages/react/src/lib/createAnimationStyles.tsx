@@ -1,4 +1,5 @@
-import { AnimationProp, ProviderContextPrepared } from '../themes/types'
+import { AnimationProp } from '../themes/types'
+import { ProviderContextPrepared } from '../types'
 import callable from './callable'
 
 const createAnimationStyles = (animation: AnimationProp, context: ProviderContextPrepared) => {

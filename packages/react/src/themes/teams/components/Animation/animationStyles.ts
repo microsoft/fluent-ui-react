@@ -1,4 +1,5 @@
-import { AnimationProp, ProviderContextPrepared } from '../../../types'
+import { AnimationProp } from '../../../types'
+import { ProviderContextPrepared } from '../../../../types'
 import createAnimationStyles from '../../../../lib/createAnimationStyles'
 
 export default {

@@ -19,7 +19,7 @@ export { default as getClasses } from './getClasses'
 export { default as getElementType } from './getElementType'
 export { default as getUnhandledProps } from './getUnhandledProps'
 export { default as mergeThemes } from './mergeThemes'
-export { default as mergeContexts } from './mergeContexts'
+export { default as mergeProviderContexts } from './mergeProviderContexts'
 
 export * from './renderComponent'
 export { default as renderComponent } from './renderComponent'

@@ -1,5 +1,5 @@
 import { IStyle } from 'fela'
-import { render } from 'fela-dom'
+import { render as felaDomRender } from 'fela-dom'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -21,8 +21,6 @@ import {
   StaticStyleFunction,
   FontFace,
   ComponentVariablesInput,
-  ProviderContextInput,
-  ProviderContextPrepared,
   Renderer,
   ThemeInput,
 } from '../../themes/types'
@@ -30,8 +28,8 @@ import {
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
 import ProviderBox from './ProviderBox'
-import { WithAsProp } from '../../types'
-import mergeContexts from '../../lib/mergeContexts'
+import { WithAsProp, ProviderContextInput, ProviderContextPrepared } from '../../types'
+import mergeContexts from '../../lib/mergeProviderContexts'
 
 export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
@@ -170,7 +168,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       children,
       ...unhandledProps
     } = this.props
-    const context: ProviderContextInput = {
+    const inputContext: ProviderContextInput = {
       theme,
       rtl,
       disableAnimations,
@@ -178,12 +176,12 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     }
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
-    const outgoingContext: ProviderContextPrepared = mergeContexts(this.context, context)
+    const outgoingContext: ProviderContextPrepared = mergeContexts(this.context, inputContext)
 
     // Heads up!
     // We should call render() to ensure that a subscription for DOM updates was created
     // https://github.com/stardust-ui/react/issues/581
-    if (isBrowser()) render(outgoingContext.renderer)
+    if (isBrowser()) felaDomRender(outgoingContext.renderer)
     this.renderStaticStylesOnce(outgoingContext.theme)
 
     const rtlProps: { dir?: 'rtl' | 'ltr' } = {}

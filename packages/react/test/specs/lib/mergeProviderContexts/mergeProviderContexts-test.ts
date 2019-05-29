@@ -1,20 +1,20 @@
-import mergeContexts from 'src/lib/mergeContexts'
+import mergeProviderContexts from 'src/lib/mergeProviderContexts'
 import { felaRenderer, felaRtlRenderer } from 'src/lib'
 
 describe('mergeContexts', () => {
   test(`always returns an object`, () => {
-    expect(mergeContexts({}, {})).toMatchObject({})
-    expect(mergeContexts(null, null)).toMatchObject({})
-    expect(mergeContexts(undefined, undefined)).toMatchObject({})
+    expect(mergeProviderContexts({}, {})).toMatchObject({})
+    expect(mergeProviderContexts(null, null)).toMatchObject({})
+    expect(mergeProviderContexts(undefined, undefined)).toMatchObject({})
 
-    expect(mergeContexts(null, undefined)).toMatchObject({})
-    expect(mergeContexts(undefined, null)).toMatchObject({})
+    expect(mergeProviderContexts(null, undefined)).toMatchObject({})
+    expect(mergeProviderContexts(undefined, null)).toMatchObject({})
 
-    expect(mergeContexts({}, undefined)).toMatchObject({})
-    expect(mergeContexts(undefined, {})).toMatchObject({})
+    expect(mergeProviderContexts({}, undefined)).toMatchObject({})
+    expect(mergeProviderContexts(undefined, {})).toMatchObject({})
 
-    expect(mergeContexts({}, null)).toMatchObject({})
-    expect(mergeContexts(null, {})).toMatchObject({})
+    expect(mergeProviderContexts({}, null)).toMatchObject({})
+    expect(mergeProviderContexts(null, {})).toMatchObject({})
   })
 
   test('gracefully handles merging a theme in with undefined values', () => {
@@ -32,7 +32,7 @@ describe('mergeContexts', () => {
       rtl: undefined,
       disableAnimations: undefined,
     }
-    expect(() => mergeContexts(target, source)).not.toThrow()
+    expect(() => mergeProviderContexts(target, source)).not.toThrow()
   })
 
   test('gracefully handles merging onto a theme with undefined values', () => {
@@ -50,17 +50,17 @@ describe('mergeContexts', () => {
       rtl: true,
       disableAnimations: false,
     }
-    expect(() => mergeContexts(target, source)).not.toThrow()
+    expect(() => mergeProviderContexts(target, source)).not.toThrow()
   })
 
   describe('renderer', () => {
     test('felaRtlRenderer is chosen if rtl is true', () => {
-      expect(mergeContexts({ rtl: true })).toHaveProperty('renderer', felaRtlRenderer)
+      expect(mergeProviderContexts({ rtl: true })).toHaveProperty('renderer', felaRtlRenderer)
     })
     test('felaRenderer is chosen if rtl is not true', () => {
-      expect(mergeContexts({ rtl: false })).toHaveProperty('renderer', felaRenderer)
-      expect(mergeContexts({ rtl: null })).toHaveProperty('renderer', felaRenderer)
-      expect(mergeContexts({ rtl: undefined })).toHaveProperty('renderer', felaRenderer)
+      expect(mergeProviderContexts({ rtl: false })).toHaveProperty('renderer', felaRenderer)
+      expect(mergeProviderContexts({ rtl: null })).toHaveProperty('renderer', felaRenderer)
+      expect(mergeProviderContexts({ rtl: undefined })).toHaveProperty('renderer', felaRenderer)
     })
   })
 })

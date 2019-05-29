@@ -294,13 +294,6 @@ export interface ThemeInput {
   animations?: { [key: string]: ThemeAnimation }
 }
 
-export interface ProviderContextInput {
-  renderer?: Renderer
-  rtl?: boolean
-  disableAnimations?: boolean
-  theme?: ThemeInput
-}
-
 // Component variables and styles must be resolved by the component after
 // all cascading is complete, not by any Provider in the middle of the tree.
 // This ensures the final site variables are used in the component's variables
@@ -317,13 +310,6 @@ export interface ThemePrepared {
   fontFaces: FontFaces
   staticStyles: StaticStyles
   animations: { [key: string]: ThemeAnimation }
-}
-
-export interface ProviderContextPrepared {
-  renderer: Renderer
-  rtl: boolean
-  disableAnimations: boolean
-  theme: ThemePrepared
 }
 
 export interface ThemeComponentStylesInput {

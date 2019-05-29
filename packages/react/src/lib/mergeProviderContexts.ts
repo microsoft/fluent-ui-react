@@ -1,5 +1,5 @@
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
-import { ProviderContextPrepared, ProviderContextInput } from '../themes/types'
+import { ProviderContextPrepared, ProviderContextInput } from '../types'
 import mergeThemes from './mergeThemes'
 
 export const mergeBooleanValues = (target, ...sources) => {
@@ -8,7 +8,7 @@ export const mergeBooleanValues = (target, ...sources) => {
   }, target)
 }
 
-const mergeContexts = (...contexts: ProviderContextInput[]): ProviderContextPrepared => {
+const mergeProviderContexts = (...contexts: ProviderContextInput[]): ProviderContextPrepared => {
   const emptyContext = {
     theme: {
       siteVariables: {},
@@ -53,4 +53,4 @@ const mergeContexts = (...contexts: ProviderContextInput[]): ProviderContextPrep
   )
 }
 
-export default mergeContexts
+export default mergeProviderContexts

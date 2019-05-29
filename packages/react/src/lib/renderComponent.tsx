@@ -16,10 +16,9 @@ import {
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
-  ProviderContextPrepared,
   Renderer,
 } from '../themes/types'
-import { Props } from '../types'
+import { Props, ProviderContextPrepared } from '../types'
 import {
   AccessibilityBehavior,
   AccessibilityDefinition,

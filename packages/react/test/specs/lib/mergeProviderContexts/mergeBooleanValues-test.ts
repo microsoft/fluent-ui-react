@@ -1,4 +1,4 @@
-import { mergeBooleanValues } from '../../../../src/lib/mergeContexts'
+import { mergeBooleanValues } from '../../../../src/lib/mergeProviderContexts'
 
 describe('mergeBooleanValues', () => {
   test('latest boolean value wins', () => {

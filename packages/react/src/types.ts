@@ -3,6 +3,7 @@
 // ========================================================
 
 import * as React from 'react'
+import { ThemeInput, Renderer, ThemePrepared } from 'src/themes/types'
 
 export type Extendable<T, V = any> = T & {
   [key: string]: V
@@ -143,4 +144,22 @@ export const UNSAFE_typed = <TComponentType>(componentType: TComponentType) => {
     withProps: <TProps>() =>
       (componentType as any) as UNSAFE_TypedComponent<TComponentType, TProps>,
   }
+}
+
+// ========================================================
+// Provider's context
+// ========================================================
+
+export interface ProviderContextInput {
+  renderer?: Renderer
+  rtl?: boolean
+  disableAnimations?: boolean
+  theme?: ThemeInput
+}
+
+export interface ProviderContextPrepared {
+  renderer: Renderer
+  rtl: boolean
+  disableAnimations: boolean
+  theme: ThemePrepared
 }
