@@ -338,9 +338,14 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
    * @param state
    */
   static getDerivedStateFromProps(props: DropdownProps, state: DropdownState) {
-    const { items, itemToString, multiple, search } = props
+    // Due inheritance of AutoControlled component we should call its getDerivedStateFromProps()
     const autoState = AutoControlledComponent.getDerivedStateFromProps(props, state)
-    const { value } = autoState
+    // `autoState` will contain only values that were passed from props, to properly compute next
+    // state we should merge it with existing
+    const actualState: DropdownState = { ...state, ...autoState }
+
+    const { items, itemToString, multiple, search } = props
+    const { searchQuery, value } = actualState
 
     if (!items) {
       return autoState
@@ -351,12 +356,10 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       : items
 
     if (search) {
-      const { itemToString } = props
-      const { searchQuery } = state
-
       if (_.isFunction(search)) {
         return { ...autoState, filteredItems: search(filteredItemsByValue, searchQuery) }
       }
+
       return {
         ...autoState,
         filteredItems: filteredItemsByValue.filter(
