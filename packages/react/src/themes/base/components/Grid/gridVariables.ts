@@ -7,7 +7,7 @@ export interface GridVariables {
 }
 
 export default (): GridVariables => ({
-  height: '100%',
+  height: 'auto',
   width: '100%',
   defaultColumnCount: 5,
   gridGap: undefined,
