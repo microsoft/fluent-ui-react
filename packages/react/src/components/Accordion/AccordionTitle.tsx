@@ -42,7 +42,7 @@ export interface AccordionTitleProps
   index?: number
 
   /** Ref to the clickable element that contains the title. */
-  contentRef: React.Ref<HTMLElement>
+  contentRef?: React.Ref<HTMLElement>
 
   /**
    * Called on click.
