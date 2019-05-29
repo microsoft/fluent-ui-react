@@ -339,10 +339,11 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
    */
   static getDerivedStateFromProps(props: DropdownProps, state: DropdownState) {
     const { items, itemToString, multiple, search } = props
-    const { value } = state
+    const autoState = AutoControlledComponent.getDerivedStateFromProps(props, state)
+    const { value } = autoState
 
     if (!items) {
-      return null
+      return autoState
     }
 
     const filteredItemsByValue = multiple
@@ -354,9 +355,10 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       const { searchQuery } = state
 
       if (_.isFunction(search)) {
-        return { filteredItems: search(filteredItemsByValue, searchQuery) }
+        return { ...autoState, filteredItems: search(filteredItemsByValue, searchQuery) }
       }
       return {
+        ...autoState,
         filteredItems: filteredItemsByValue.filter(
           item =>
             itemToString(item)
@@ -365,7 +367,9 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
         ),
       }
     }
+
     return {
+      ...autoState,
       filteredItems: filteredItemsByValue,
       filteredItemStrings: filteredItemsByValue.map(filteredItem =>
         itemToString(filteredItem).toLowerCase(),
