@@ -3,7 +3,7 @@
 // ========================================================
 
 import * as React from 'react'
-import { ThemeInput, Renderer, ThemePrepared } from 'src/themes/types'
+import { ThemeInput, Renderer, ThemePrepared } from './themes/types'
 
 export type Extendable<T, V = any> = T & {
   [key: string]: V
