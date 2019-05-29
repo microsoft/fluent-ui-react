@@ -41,6 +41,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Documentation
 - Accessibility: improve introduction section @jurokapsiar ([#1368](https://github.com/stardust-ui/react/pull/1368))
 - Accessibility: improve accessibility descriptions for components @jurokapsiar ([#1371](https://github.com/stardust-ui/react/pull/1371))
+- Fix layout issue rendering extra space when viewing documentation in Firefox @notandrew ([#1427](https://github.com/stardust-ui/react/pull/1427)) 
 
 <!--------------------------------[ v0.31.0 ]------------------------------- -->
 ## [v0.31.0](https://github.com/stardust-ui/react/tree/v0.31.0) (2019-05-21)
