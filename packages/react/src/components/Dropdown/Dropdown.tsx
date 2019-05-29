@@ -41,6 +41,7 @@ import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/acce
 import ListItem from '../List/ListItem'
 import Icon, { IconProps } from '../Icon/Icon'
 import Portal from '../Portal/Portal'
+import { ALIGNMENTS, POSITIONS, Popper, PositioningProps } from '../../lib/positioner'
 
 export interface DropdownSlotClassNames {
   clearIndicator: string
@@ -54,7 +55,9 @@ export interface DropdownSlotClassNames {
   triggerButton: string
 }
 
-export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownState> {
+export interface DropdownProps
+  extends UIComponentProps<DropdownProps, DropdownState>,
+    PositioningProps {
   /** The index of the currently active selected item, if dropdown has a multiple selection. */
   activeSelectedIndex?: number
 
@@ -221,6 +224,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   private inputRef = React.createRef<HTMLInputElement>()
   private listRef = React.createRef<HTMLElement>()
   private selectedItemsRef = React.createRef<HTMLDivElement>()
+  private containerRef = React.createRef<HTMLDivElement>()
 
   static displayName = 'Dropdown'
 
@@ -238,6 +242,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       content: false,
     }),
     activeSelectedIndex: PropTypes.number,
+    align: PropTypes.oneOf(ALIGNMENTS),
     clearable: PropTypes.bool,
     clearIndicator: customPropTypes.itemShorthand,
     defaultActiveSelectedIndex: PropTypes.number,
@@ -261,11 +266,13 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     moveFocusOnTab: PropTypes.bool,
     multiple: PropTypes.bool,
     noResultsMessage: customPropTypes.itemShorthand,
+    offset: PropTypes.string,
     onOpenChange: PropTypes.func,
     onSearchQueryChange: PropTypes.func,
     onSelectedChange: PropTypes.func,
     open: PropTypes.bool,
     placeholder: PropTypes.string,
+    position: PropTypes.oneOf(POSITIONS),
     renderItem: PropTypes.func,
     renderSelectedItem: PropTypes.func,
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
@@ -280,6 +287,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   }
 
   static defaultProps = {
+    align: 'start',
     as: 'div',
     clearIndicator: 'stardust-close',
     itemToString: item => {
@@ -290,6 +298,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       // targets DropdownItem shorthand objects
       return (item as any).header || String(item)
     },
+    position: 'below',
     toggleIndicator: {},
     triggerButton: {},
   }
@@ -425,6 +434,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             return (
               <Ref innerRef={innerRef}>
                 <div
+                  ref={this.containerRef}
                   className={cx(Dropdown.slotClassNames.container, classes.container)}
                   onClick={search && !open ? this.handleContainerClick : undefined}
                 >
@@ -482,6 +492,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                     getItemProps,
                     getInputProps,
                     value,
+                    rtl,
                   )}
                 </div>
               </Ref>
@@ -602,9 +613,13 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     getInputProps: (options?: GetInputPropsOptions) => any,
     value: ShorthandValue | ShorthandCollection,
+    rtl: boolean,
   ) {
-    const { search } = this.props
+    const { align, offset, position, search } = this.props
     const { open } = this.state
+    const items = open
+      ? this.renderItems(styles, variables, getItemProps, highlightedIndex, value)
+      : []
     const { innerRef, ...accessibilityMenuProps } = getMenuProps(
       { refKey: 'innerRef' },
       { suppressRefError: true },
@@ -634,18 +649,26 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           handleRef(innerRef, listElement)
         }}
       >
-        <List
-          className={Dropdown.slotClassNames.itemsList}
-          {...accessibilityMenuProps}
-          styles={styles.list}
-          tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
-          aria-hidden={!open}
-          onFocus={this.handleTriggerButtonOrListFocus}
-          onBlur={this.handleListBlur}
-          items={
-            open ? this.renderItems(styles, variables, getItemProps, highlightedIndex, value) : []
-          }
-        />
+        <Popper
+          align={align}
+          position={position}
+          offset={offset}
+          rtl={rtl}
+          eventsEnabled={open}
+          targetRef={this.containerRef}
+          positioningDependencies={[items.length]}
+        >
+          <List
+            className={Dropdown.slotClassNames.itemsList}
+            {...accessibilityMenuProps}
+            styles={styles.list}
+            tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
+            aria-hidden={!open}
+            onFocus={this.handleTriggerButtonOrListFocus}
+            onBlur={this.handleListBlur}
+            items={items}
+          />
+        </Popper>
       </Ref>
     )
   }

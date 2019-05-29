@@ -32,6 +32,7 @@ import {
   withSafeTypeForAs,
 } from '../../types'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
+import { Popper } from '../../lib/positioner'
 
 export interface MenuItemSlotClassNames {
   wrapper: string
@@ -242,18 +243,25 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
       menu && active && menuOpen ? (
         <>
           <Ref innerRef={this.menuRef}>
-            {Menu.create(menu, {
-              defaultProps: {
-                accessibility: submenuBehavior,
-                className: MenuItem.slotClassNames.submenu,
-                vertical: true,
-                primary,
-                secondary,
-                styles: styles.menu,
-                submenu: true,
-                indicator,
-              },
-            })}
+            <Popper
+              align={vertical ? 'top' : 'start'}
+              position={vertical ? 'after' : 'below'}
+              targetRef={this.itemRef}
+              modifiers={{ flip: { flipVariationsByContent: true } }}
+            >
+              {Menu.create(menu, {
+                defaultProps: {
+                  accessibility: submenuBehavior,
+                  className: MenuItem.slotClassNames.submenu,
+                  vertical: true,
+                  primary,
+                  secondary,
+                  styles: styles.menu,
+                  submenu: true,
+                  indicator,
+                },
+              })}
+            </Popper>
           </Ref>
           <EventListener listener={this.outsideClickHandler} targetRef={documentRef} type="click" />
         </>
