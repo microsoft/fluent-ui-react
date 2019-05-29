@@ -182,7 +182,18 @@ export interface ICSSPseudoElementStyle extends ICSSInJSStyle {
   content?: string
 }
 
-export interface ICSSInJSStyle extends React.CSSProperties {
+export interface StardustAnimationName {
+  keyframe?: any
+  params?: object
+}
+
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
+export type CSSProperties = Omit<React.CSSProperties, 'animationName'> & {
+  animationName?: StardustAnimationName | string | 'none'
+}
+
+export interface ICSSInJSStyle extends CSSProperties {
   // TODO Questionable: how else would users target their own children?
   [key: string]: any
 
@@ -222,7 +233,6 @@ export interface ComponentStyleFunctionParam<
   variables: TVars
   theme: ThemePrepared
   rtl: boolean
-  renderer: Renderer
   disableAnimations: boolean
 }
 
