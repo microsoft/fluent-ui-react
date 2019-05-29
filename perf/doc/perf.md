@@ -46,11 +46,11 @@ Not only the rendering speed is affecting perceived performance. The size of the
 Bundle size numbers are stored at the same infrastructure used for storing performance measures - however, they are not displayed anywhere yet.
 
 ## Future plans
-- explore possible ways to make the measurements more stable,
-- add perf examples (charts) for more components and more variants,
-- add perf examples for compound examples (whole app page example built with multiple Stardust components),
-- make perf charts available in public docsite (https://stardust-ui.github.io/react/),
-- make bundle size charts available in docsite,
+- explore possible ways to make the measurements more stable
+- add perf examples (charts) for more components and more variants
+- add perf examples for compound examples (whole app page example built with multiple Stardust components)
+- make perf charts available in public docsite (https://stardust-ui.github.io/react/)
+- make bundle size charts available in docsite
 
 ## FAQ
 
