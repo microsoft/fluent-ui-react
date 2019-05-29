@@ -345,8 +345,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
    * their string equivalents, in order to be used throughout the component.
    */
   static getDerivedStateFromProps(props: DropdownProps, currentState: DropdownState) {
-    // Due inheritance of AutoControlled component we should call its getDerivedStateFromProps(),
-    // to properly compute next state we should merge it with existing
+    // Due to the inheritance of the AutoControlledComponent we should call its
+    // getDerivedStateFromProps() and merge it with the existing state
     const state: DropdownState = {
       ...currentState,
       ...AutoControlledComponent.getDerivedStateFromProps(props, currentState),
