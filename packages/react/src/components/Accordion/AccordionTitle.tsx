@@ -86,6 +86,7 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
   static defaultProps = {
     accessibility: accordionTitleBehavior,
     as: 'dt',
+    contentRef: _.noop,
   }
 
   actionHandlers: AccessibilityActionHandlers = {
