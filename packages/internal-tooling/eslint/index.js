@@ -37,6 +37,7 @@ module.exports = {
     'react/button-has-type': 'off',
     'react/destructuring-assignment': 'off',
     'react/default-props-match-prop-types': 'off',
+    'react/forbid-foreign-prop-types': 'off',
     'react/jsx-curly-brace-presence': 'off',
     'react/jsx-boolean-value': 'off',
     'react/jsx-no-bind': 'off',
