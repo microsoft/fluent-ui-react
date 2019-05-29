@@ -20,7 +20,7 @@ import ToolbarItem from './ToolbarItem'
 import ToolbarDivider from './ToolbarDivider'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
 
-export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'button' | 'group'
+export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group'
 
 export interface ToolbarProps
   extends UIComponentProps,
@@ -33,6 +33,7 @@ export interface ToolbarProps
    */
   accessibility?: Accessibility
 
+  /** Shorthand array of props for Toolbar. */
   items?: ShorthandCollection<ToolbarItemShorthandKinds>
 }
 
@@ -45,7 +46,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
-    items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item', 'button', 'group']),
+    items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item', 'group']),
   }
 
   static defaultProps = {
@@ -99,7 +100,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
 Toolbar.create = createShorthandFactory({ Component: Toolbar, mappedProp: 'content' })
 
 /**
- * A Toolbar component groups actions.
- * TODO: add meaningful description
+ * A Toolbar component displays grouped actions.
  */
 export default withSafeTypeForAs<typeof Toolbar, ToolbarProps>(Toolbar)

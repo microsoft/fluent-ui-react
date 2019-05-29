@@ -47,7 +47,6 @@ const ToolbarExampleShorthand = () => {
         { key: 'highlight', icon: { name: 'highlight', outline: true } },
         { key: 'font-color', icon: { name: 'font-color', outline: true } },
         { key: 'font-size', icon: { name: 'font-size', outline: true } },
-        { key: 'paragraph', kind: 'button' },
         { key: 'remove-format', icon: { name: 'remove-format', outline: true } },
         { key: 'divider2', kind: 'divider' },
         { key: 'outdent', icon: { name: 'outdent', outline: true } },

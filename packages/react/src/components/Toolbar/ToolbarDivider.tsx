@@ -17,7 +17,7 @@ export interface ToolbarDividerProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default menuDividerBehavior
+   * @default defaultBehavior
    */
   accessibility?: Accessibility
 }
@@ -52,6 +52,6 @@ ToolbarDivider.create = createShorthandFactory({ Component: ToolbarDivider, mapp
 
 /**
  * Toolbar divider.
- * TODO: add meaningful description
+ * Adds visual non-selectable separator between items.
  */
 export default withSafeTypeForAs<typeof ToolbarDivider, ToolbarDividerProps>(ToolbarDivider)

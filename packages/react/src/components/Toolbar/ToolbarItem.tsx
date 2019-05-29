@@ -130,6 +130,6 @@ ToolbarItem.create = createShorthandFactory({ Component: ToolbarItem, mappedProp
 
 /**
  * Toolbar item.
- * TODO: add meaningful description
+ * The item renders as a button with an icon.
  */
 export default withSafeTypeForAs<typeof ToolbarItem, ToolbarItemProps, 'button'>(ToolbarItem)

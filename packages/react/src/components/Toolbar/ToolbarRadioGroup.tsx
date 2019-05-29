@@ -29,6 +29,7 @@ export interface ToolbarRadioGroupProps
    */
   accessibility?: Accessibility
 
+  /** Shorthand array of props for ToolbarRadioGroup. */
   items?: ShorthandCollection<ToolbarRadioGroupItemShorthandKinds>
 }
 
@@ -83,8 +84,8 @@ ToolbarRadioGroup.create = createShorthandFactory({
 })
 
 /**
- * Toolbar radiogroup.
- * TODO: add meaningful description
+ * Toolbar radiogroup groups items where only one item can be active.
+ * The radiogroup does not guarantee that, it just serves accessibility purposes.
  */
 export default withSafeTypeForAs<typeof ToolbarRadioGroup, ToolbarRadioGroupProps>(
   ToolbarRadioGroup,
