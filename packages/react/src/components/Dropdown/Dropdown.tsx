@@ -334,21 +334,20 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   /**
    * Used to compute the filtered items (by value and search query) and, if needed,
    * their string equivalents, in order to be used throughout the component.
-   * @param props
-   * @param state
    */
-  static getDerivedStateFromProps(props: DropdownProps, state: DropdownState) {
-    // Due inheritance of AutoControlled component we should call its getDerivedStateFromProps()
-    const autoState = AutoControlledComponent.getDerivedStateFromProps(props, state)
-    // `autoState` will contain only values that were passed from props, to properly compute next
-    // state we should merge it with existing
-    const actualState: DropdownState = { ...state, ...autoState }
+  static getDerivedStateFromProps(props: DropdownProps, currentState: DropdownState) {
+    // Due inheritance of AutoControlled component we should call its getDerivedStateFromProps(),
+    // to properly compute next state we should merge it with existing
+    const state: DropdownState = {
+      ...currentState,
+      ...AutoControlledComponent.getDerivedStateFromProps(props, currentState),
+    }
 
     const { items, itemToString, multiple, search } = props
-    const { searchQuery, value } = actualState
+    const { searchQuery, value } = state
 
     if (!items) {
-      return autoState
+      return state
     }
 
     const filteredItemsByValue = multiple
@@ -357,11 +356,11 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
 
     if (search) {
       if (_.isFunction(search)) {
-        return { ...autoState, filteredItems: search(filteredItemsByValue, searchQuery) }
+        return { ...state, filteredItems: search(filteredItemsByValue, searchQuery) }
       }
 
       return {
-        ...autoState,
+        ...state,
         filteredItems: filteredItemsByValue.filter(
           item =>
             itemToString(item)
@@ -372,7 +371,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     }
 
     return {
-      ...autoState,
+      ...state,
       filteredItems: filteredItemsByValue,
       filteredItemStrings: filteredItemsByValue.map(filteredItem =>
         itemToString(filteredItem).toLowerCase(),
