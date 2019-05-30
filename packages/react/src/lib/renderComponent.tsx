@@ -170,7 +170,9 @@ const renderComponent = <P extends {}>(
     props.variables,
   )(siteVariables)
 
-  const animationCSSProp = props.animation ? createAnimationStyles(props.animation, context) : {}
+  const animationCSSProp = props.animation
+    ? createAnimationStyles(props.animation, context.theme)
+    : {}
 
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
@@ -189,7 +191,7 @@ const renderComponent = <P extends {}>(
     variables: resolvedVariables,
     theme: context.theme,
     rtl,
-    disableAnimations, // TODO: cannot remove this, as this is where it is read in the fela plugin
+    disableAnimations,
   }
 
   mergedStyles.root = {

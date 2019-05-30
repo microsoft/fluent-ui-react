@@ -1,9 +1,8 @@
-import { AnimationProp } from '../themes/types'
-import { ProviderContextPrepared } from '../types'
+import { AnimationProp, ThemePrepared } from '../themes/types'
 
-const createAnimationStyles = (animation: AnimationProp, context: ProviderContextPrepared) => {
+const createAnimationStyles = (animation: AnimationProp, theme: ThemePrepared) => {
   let animationCSSProp = {}
-  const { animations = {} } = context.theme
+  const { animations = {} } = theme
 
   if (animation) {
     const animationName = typeof animation === 'string' ? animation : animation.name

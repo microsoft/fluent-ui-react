@@ -1,5 +1,4 @@
-import { createAnimationStyles, felaRenderer } from 'src/lib'
-import { ProviderContextPrepared } from 'src/types'
+import { createAnimationStyles } from 'src/lib'
 
 const theme = {
   siteVariables: { fontSizes: {} },
@@ -29,16 +28,9 @@ const theme = {
   },
 }
 
-const context: ProviderContextPrepared = {
-  theme,
-  rtl: false,
-  renderer: felaRenderer,
-  disableAnimations: false,
-}
-
 describe('createAnimationStyles', () => {
   test('applies all animation props from the theme if the animation is string', () => {
-    expect(createAnimationStyles('spinner', context)).toMatchObject({
+    expect(createAnimationStyles('spinner', theme)).toMatchObject({
       animationName: {
         keyframe: {
           from: {
@@ -61,7 +53,7 @@ describe('createAnimationStyles', () => {
 
   test('overrides theme props if the animation prop is object', () => {
     expect(
-      createAnimationStyles({ name: 'spinner', duration: '1s', delay: '3s' }, context),
+      createAnimationStyles({ name: 'spinner', duration: '1s', delay: '3s' }, theme),
     ).toMatchObject({
       animationName: {
         keyframe: {

@@ -48,16 +48,12 @@ export default {
     }
     const svgAnimation: ICSSInJSStyle = {
       animationName: {
-        keyframe: ({ from, to }) =>
+        keyframe: () =>
           ({
             to: {
-              transform: `translate3d(, ${v.svgTranslatePosition[p.size]}, 0)`,
+              transform: `translate3d(0, ${v.svgTranslatePosition[p.size]}, 0)`,
             },
           } as any),
-        params: {
-          from: 0,
-          to: 360,
-        },
       },
       animationDelay: '0s',
       animationDirection: 'normal',

@@ -33,7 +33,7 @@ export default () => {
 
         return {
           ...acc,
-          cssPropertyName: styles[cssPropertyName],
+          [cssPropertyName]: styles[cssPropertyName],
         }
       }
       if (typeof cssPropertyValue === 'object') {

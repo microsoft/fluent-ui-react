@@ -1,12 +1,11 @@
 import { AnimationProp } from '../../../types'
-import { ProviderContextPrepared } from '../../../../types'
 import createAnimationStyles from '../../../../lib/createAnimationStyles'
 
 export default {
   root: () => ({
     display: 'inline-block',
   }),
-  children: ({ props, variables, ...context }) => {
+  children: ({ props, variables, theme }) => {
     const animation: AnimationProp = {
       name: props.name,
       keyframeParams: props.keyframeParams,
@@ -19,6 +18,6 @@ export default {
       timingFunction: props.timingFunction,
     }
 
-    return createAnimationStyles(animation, context as ProviderContextPrepared)
+    return createAnimationStyles(animation, theme)
   },
 }

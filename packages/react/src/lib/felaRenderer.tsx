@@ -52,7 +52,7 @@ const createRendererConfig = (options: any = {}) => ({
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
     felaSanitizeCss({
-      skip: ['content'],
+      skip: ['content', 'keyframe'],
     }),
 
     felaExpandCssShorthandsPlugin(),
