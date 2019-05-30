@@ -7,6 +7,8 @@ import { getPlacement, applyRtlToOffset } from './positioningHelper'
 import { PopperProps, PopperChildrenFn } from './types'
 import getScrollParent from './getScrollParent'
 
+// `popper.js` has a UMD build without `.default`, it breaks CJS builds:
+// https://github.com/rollup/rollup/issues/1267#issuecomment-446681320
 const createPopper = (
   reference: Element,
   popper: Element,
