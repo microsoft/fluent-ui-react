@@ -4,8 +4,16 @@ module.exports = {
   ...commonConfig,
   name: 'e2e',
   testRegex: '.*-test\\.tsx?$',
-  moduleNameMapper: {
-    ...require('lerna-alias').jest(),
+  transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest',
   },
-  setupFilesAfterEnv: ['./setup.test.js'],
+  globals: {
+    'ts-jest': {
+      tsConfig: `${__dirname}/tsconfig.json`,
+      diagnostics: {
+        ignoreCodes: 151001,
+      },
+    },
+  },
+  setupFilesAfterEnv: ['./setup.test.ts'],
 }
