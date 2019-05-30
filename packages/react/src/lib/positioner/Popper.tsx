@@ -1,11 +1,17 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import PopperJS from 'popper.js'
+import PopperJS, * as _PopperJS from 'popper.js'
 import { Ref } from '@stardust-ui/react-component-ref'
 
 import { getPlacement, applyRtlToOffset } from './positioningHelper'
 import { PopperProps, PopperChildrenFn } from './types'
 import getScrollParent from './getScrollParent'
+
+const createPopper = (
+  reference: Element,
+  popper: Element,
+  options?: PopperJS.PopperOptions,
+): PopperJS => new ((_PopperJS as any).default || _PopperJS)(reference, popper, options)
 
 /**
  * Popper relies on the 3rd party library [Popper.js](https://github.com/FezVrasta/popper.js) for positioning.
@@ -91,7 +97,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
         onUpdate: handleUpdate,
       }
 
-      popperRef.current = new PopperJS(targetRef.current, contentRef.current, options)
+      popperRef.current = createPopper(targetRef.current, contentRef.current, options)
       return () => popperRef.current.destroy()
     },
     [computedModifiers, eventsEnabled, userModifiers, positionFixed, proposedPlacement],
