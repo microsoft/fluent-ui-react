@@ -2,12 +2,15 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ToolbarItemProps, ToolbarItemState } from '../../../../components/Toolbar/ToolbarItem'
 import { ToolbarVariables } from './toolbarVariables'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
+import { getColorScheme } from '../../colors'
 
 type ToolbarItemPropsAndState = ToolbarItemProps & ToolbarItemState
 
 const toolbarItemStyles: ComponentSlotStylesInput<ToolbarItemPropsAndState, ToolbarVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const { isFromKeyboard } = p
+    const { active, disabled, isFromKeyboard } = p
+    const colors = getColorScheme(v.colorScheme)
+
     return {
       backgroundColor: v.background,
       borderWidth: v.borderWidth,
@@ -16,34 +19,34 @@ const toolbarItemStyles: ComponentSlotStylesInput<ToolbarItemPropsAndState, Tool
       borderRadius: v.borderRadius,
       height: v.itemHeight,
       minWidth: v.itemHeight,
-      color: v.foreground,
+      color: v.foreground || colors.foreground1,
       cursor: 'pointer',
 
       ':focus': {
         outline: 0,
       },
 
-      ...(p.active && {
-        color: v.foregroundActive,
+      ...(active && {
+        color: v.foregroundActive || colors.foregroundActive,
         backgroundColor: v.backgroundActive,
         ...getIconFillOrOutlineStyles({ outline: false }),
       }),
 
       ':hover': {
-        color: v.foregroundHover,
-        backgroundColor: v.backgroundHover,
+        color: v.foregroundHover || colors.foregroundHover,
+        backgroundColor: v.backgroundHover || colors.backgroundHover,
         ...getIconFillOrOutlineStyles({ outline: false }),
       },
 
       ...(isFromKeyboard && {
-        color: v.foregroundHover,
-        backgroundColor: v.backgroundHover,
-        borderColor: v.borderHover,
+        color: v.foregroundFocus || colors.foregroundFocus,
+        backgroundColor: v.backgroundFocus || colors.backgroundFocus,
+        borderColor: v.borderFocus || colors.borderFocus,
         ...getIconFillOrOutlineStyles({ outline: false }),
       }),
 
-      ...(p.disabled && {
-        color: v.foregroundDisabled,
+      ...(disabled && {
+        color: v.foregroundDisabled || colors.foregroundDisabled1,
         backgroundColor: v.backgroundDisabled,
         cursor: 'default',
         ':hover': {

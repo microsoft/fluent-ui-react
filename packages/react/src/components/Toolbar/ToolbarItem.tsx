@@ -87,11 +87,12 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
-    const { icon, children } = this.props
+    const { icon, children, disabled } = this.props
     return (
       <ElementType
         {...accessibility.attributes.root}
         {...unhandledProps}
+        disabled={disabled}
         className={classes.root}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}

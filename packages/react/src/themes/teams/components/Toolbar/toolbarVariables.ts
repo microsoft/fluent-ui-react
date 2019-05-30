@@ -1,13 +1,40 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem, stringLiteralsArray } from '../../../../lib'
+import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
+import { ItemType } from '../../../types'
+import { TeamsSchemeMappingWithAreas } from '../../types'
+
+export const toolbarColorAreas = stringLiteralsArray(
+  'foreground1',
+  'border',
+
+  'foregroundActive',
+
+  'foregroundHover',
+  'backgroundHover',
+
+  'foregroundFocus',
+  'backgroundFocus',
+  'borderFocus',
+
+  'foregroundDisabled1',
+)
+
+export type ToolbarColorSchemeMapping = TeamsSchemeMappingWithAreas<
+  ItemType<typeof toolbarColorAreas>
+>
 
 export interface ToolbarVariables {
+  colorScheme: ToolbarColorSchemeMapping
   foreground: string
   background: string
   dividerBorder: string
 
   foregroundHover: string
   backgroundHover: string
-  borderHover: string
+
+  foregroundFocus: string
+  backgroundFocus: string
+  borderFocus: string
 
   foregroundActive: string
   backgroundActive: string
@@ -22,18 +49,34 @@ export interface ToolbarVariables {
 }
 
 export default (siteVars: any): ToolbarVariables => ({
-  foreground: siteVars.colors.grey[500],
+  colorScheme: pickValuesFromColorScheme(
+    extendColorScheme(siteVars.colorScheme, {
+      default: {
+        borderFocus: siteVars.colorScheme.brand.borderFocus1,
+        foregroundHover: siteVars.colorScheme.brand.foregroundHover,
+        backgroundHover: 'transparent',
+        foregroundFocus: siteVars.colorScheme.brand.foregroundFocus,
+        backgroundFocus: 'transparent',
+        foregroundActive: siteVars.colorScheme.brand.foregroundActive,
+      },
+    }),
+    toolbarColorAreas,
+  ),
+  foreground: undefined,
   background: 'transparent',
-  dividerBorder: siteVars.colors.grey[200],
+  dividerBorder: undefined,
 
-  foregroundHover: siteVars.colors.brand[600],
-  backgroundHover: 'transparent',
-  borderHover: siteVars.colors.brand[600],
+  foregroundHover: undefined,
+  backgroundHover: undefined,
 
-  foregroundActive: siteVars.colors.brand[600],
+  foregroundFocus: undefined,
+  backgroundFocus: undefined,
+  borderFocus: undefined,
+
+  foregroundActive: undefined,
   backgroundActive: 'transparent',
 
-  foregroundDisabled: siteVars.colors.grey[250],
+  foregroundDisabled: undefined,
   backgroundDisabled: 'transparent',
 
   itemHeight: pxToRem(32),
