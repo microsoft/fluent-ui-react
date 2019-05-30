@@ -343,15 +343,20 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   /**
    * Used to compute the filtered items (by value and search query) and, if needed,
    * their string equivalents, in order to be used throughout the component.
-   * @param props
-   * @param state
    */
-  static getDerivedStateFromProps(props: DropdownProps, state: DropdownState) {
+  static getDerivedStateFromProps(props: DropdownProps, currentState: DropdownState) {
+    // Due to the inheritance of the AutoControlledComponent we should call its
+    // getDerivedStateFromProps() and merge it with the existing state
+    const state: DropdownState = {
+      ...currentState,
+      ...AutoControlledComponent.getDerivedStateFromProps(props, currentState),
+    }
+
     const { items, itemToString, multiple, search } = props
-    const { value } = state
+    const { searchQuery, value } = state
 
     if (!items) {
-      return null
+      return state
     }
 
     const filteredItemsByValue = multiple
@@ -359,13 +364,12 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       : items
 
     if (search) {
-      const { itemToString } = props
-      const { searchQuery } = state
-
       if (_.isFunction(search)) {
-        return { filteredItems: search(filteredItemsByValue, searchQuery) }
+        return { ...state, filteredItems: search(filteredItemsByValue, searchQuery) }
       }
+
       return {
+        ...state,
         filteredItems: filteredItemsByValue.filter(
           item =>
             itemToString(item)
@@ -374,7 +378,9 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
         ),
       }
     }
+
     return {
+      ...state,
       filteredItems: filteredItemsByValue,
       filteredItemStrings: filteredItemsByValue.map(filteredItem =>
         itemToString(filteredItem).toLowerCase(),
