@@ -57,7 +57,7 @@ describe('Provider', () => {
   describe('RTL', () => {
     test('Sets dir="rtl" on the div for RTL theme', () => {
       const component = mount(
-        <Provider id="top-level-provider" rtl={true}>
+        <Provider id="top-level-provider" rtl>
           <span />
         </Provider>,
       )
@@ -68,7 +68,7 @@ describe('Provider', () => {
 
     test('Sets dir="ltr" on the div for LTR theme', () => {
       const component = mount(
-        <Provider id="top-level-provider" theme={{}}>
+        <Provider id="top-level-provider">
           <span />
         </Provider>,
       )
