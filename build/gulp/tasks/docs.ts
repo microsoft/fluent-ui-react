@@ -1,5 +1,3 @@
-import historyApiFallback from 'connect-history-api-fallback'
-import express from 'express'
 import { task, src, dest, lastRun, parallel, series, watch } from 'gulp'
 import cache from 'gulp-cache'
 import remember from 'gulp-remember'
@@ -20,11 +18,13 @@ import gulpExampleSource from '../plugins/gulp-example-source'
 import gulpReactDocgen from '../plugins/gulp-react-docgen'
 import { getRelativePathToSourceFile } from '../plugins/util'
 import webpackPlugin from '../plugins/gulp-webpack'
+import { Server } from 'http'
+import serve, { forceClose } from '../serve'
 
 const { paths } = config
 const g = require('gulp-load-plugins')()
 
-const { colors, log } = g.util
+const { log } = g.util
 
 const handleWatchChange = changedPath => log(`File ${changedPath} was changed, running tasks...`)
 const handleWatchUnlink = (group, changedPath) => {
@@ -175,48 +175,36 @@ task(
 
 task('deploy:docs', cb => {
   const relativePath = path.relative(process.cwd(), paths.docsDist())
-  sh(`gh-pages -d ${relativePath} -m "deploy docs [ci skip]"`)
-    .then(cb)
-    .catch(cb)
+  return sh(`gh-pages -d ${relativePath} -m "deploy docs [ci skip]"`)
 })
 
 // ----------------------------------------
 // Serve
 // ----------------------------------------
 
-task('serve:docs', cb => {
-  const app = express()
+let server: Server
+task('serve:docs', async () => {
   const webpackConfig = require('../../webpack.config').default
   const compiler = webpack(webpackConfig)
 
-  app
-    .use(
-      historyApiFallback({
-        verbose: false,
-      }),
-    )
-
-    .use(
-      WebpackDevMiddleware(compiler, {
-        publicPath: webpackConfig.output.publicPath,
-        contentBase: paths.docsSrc(),
-        hot: true,
-        quiet: false,
-        noInfo: true, // must be quiet for hot middleware to show overlay
-        lazy: false,
-        stats: config.compiler_stats,
-      }),
-    )
-
-    .use(WebpackHotMiddleware(compiler))
-
-    .use(express.static(paths.docsDist()))
-
-    .listen(config.server_port, config.server_host, () => {
-      log(colors.yellow('Server running at http://%s:%d'), config.server_host, config.server_port)
-      cb()
-    })
+  server = await serve(paths.docsDist(), config.server_host, config.server_port, app =>
+    app
+      .use(
+        WebpackDevMiddleware(compiler, {
+          publicPath: webpackConfig.output.publicPath,
+          contentBase: paths.docsSrc(),
+          hot: true,
+          quiet: false,
+          noInfo: true, // must be quiet for hot middleware to show overlay
+          lazy: false,
+          stats: config.compiler_stats,
+        }),
+      )
+      .use(WebpackHotMiddleware(compiler)),
+  )
 })
+
+task('serve:docs:stop', () => forceClose(server))
 
 // ----------------------------------------
 // Watch

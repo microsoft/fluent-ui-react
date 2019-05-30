@@ -26,6 +26,7 @@ require('./build/gulp/tasks/git')
 require('./build/gulp/tasks/test-unit')
 require('./build/gulp/tasks/test-projects')
 require('./build/gulp/tasks/perf')
+require('./build/gulp/tasks/test-e2e')
 require('./build/gulp/tasks/test-vulns')
 require('./build/gulp/tasks/test-circulars')
 
