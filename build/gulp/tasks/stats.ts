@@ -1,10 +1,10 @@
-import * as fs from 'fs'
+import fs from 'fs'
 import { task, parallel, series } from 'gulp'
-import * as _ from 'lodash'
-import * as webpack from 'webpack'
-import * as stableStringify from 'json-stable-stringify-without-jsonify'
+import _ from 'lodash'
+import webpack from 'webpack'
+import stableStringify from 'json-stable-stringify-without-jsonify'
 import { argv } from 'yargs'
-import * as requestHttp from 'request-promise-native'
+import requestHttp from 'request-promise-native'
 
 import config from '../../../config'
 

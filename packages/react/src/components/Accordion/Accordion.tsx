@@ -137,6 +137,8 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
 
   private focusHandler: ContainerFocusHandler = null
   private itemRefs = []
+  private defaultAccordionTitleId = _.uniqueId('accordion-title-')
+  private defaultAccordionContentId = _.uniqueId('accordion-content-')
 
   actionHandlers: AccessibilityActionHandlers = {
     moveNext: e => {
@@ -253,8 +255,8 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
       const active = this.isIndexActive(index)
       const canBeCollapsed = this.isIndexActionable(index)
       const contentRef = React.createRef<HTMLElement>()
-      const titleId = title['id'] || _.uniqueId('accordion-title-')
-      const contentId = content['id'] || _.uniqueId('accordion-content-')
+      const titleId = title['id'] || `${this.defaultAccordionTitleId}${index}`
+      const contentId = content['id'] || `${this.defaultAccordionContentId}${index}`
       this.itemRefs[index] = contentRef
 
       children.push(
@@ -308,7 +310,8 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
 /**
  * An accordion allows users to toggle the display of sections of content.
  * @accessibility
- * Implements ARIA Accordion design pattern (keyboard navigation not yet supported).
- * Consider using Tree if you intend to wrap Lists in an Accordion.
+ * Implements [ARIA Accordion](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion) design pattern (keyboard navigation not yet supported).
+ * Do use Accordion for grouping parts of the UI (multipart forms, articales...).
+ * Do use Tree component to display a hierarchical structure that allows user to select one item.
  */
 export default withSafeTypeForAs<typeof Accordion, AccordionProps>(Accordion)

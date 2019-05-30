@@ -1,21 +1,6 @@
-export type Placement =
-  | 'auto-start'
-  | 'auto'
-  | 'auto-end'
-  | 'top-start'
-  | 'top'
-  | 'top-end'
-  | 'right-start'
-  | 'right'
-  | 'right-end'
-  | 'bottom-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'left-end'
-  | 'left'
-  | 'left-start'
-export type Position = 'above' | 'below' | 'before' | 'after'
-export type Alignment = 'top' | 'bottom' | 'start' | 'end' | 'center'
+import { Placement } from 'popper.js'
+
+import { Alignment, Position } from './types'
 
 enum PlacementParts {
   top = 'top',
@@ -27,22 +12,20 @@ enum PlacementParts {
   center = '',
 }
 
-type PlacementCb = (rtl: boolean) => PlacementParts
+const getPositionMap = (rtl: boolean): Record<Position, PlacementParts> => ({
+  above: PlacementParts.top,
+  below: PlacementParts.bottom,
+  before: rtl ? PlacementParts.right : PlacementParts.left,
+  after: rtl ? PlacementParts.left : PlacementParts.right,
+})
 
-const positionMap: Map<Position, PlacementCb> = new Map([
-  ['above', () => PlacementParts.top],
-  ['below', () => PlacementParts.bottom],
-  ['before', rtl => (rtl ? PlacementParts.right : PlacementParts.left)],
-  ['after', rtl => (rtl ? PlacementParts.left : PlacementParts.right)],
-] as [Position, PlacementCb][])
-
-const alignmentMap: Map<Alignment, PlacementCb> = new Map([
-  ['start', rtl => (rtl ? PlacementParts.end : PlacementParts.start)],
-  ['end', rtl => (rtl ? PlacementParts.start : PlacementParts.end)],
-  ['top', () => PlacementParts.start],
-  ['bottom', () => PlacementParts.end],
-  ['center', () => PlacementParts.center],
-] as [Alignment, PlacementCb][])
+const getAlignmentMap = (rtl: boolean): Record<Alignment, PlacementParts> => ({
+  start: rtl ? PlacementParts.end : PlacementParts.start,
+  end: rtl ? PlacementParts.start : PlacementParts.end,
+  top: PlacementParts.start,
+  bottom: PlacementParts.end,
+  center: PlacementParts.center,
+})
 
 const shouldAlignToCenter = (p: Position, a: Alignment) => {
   const positionedVertically = p === 'above' || p === 'below'
@@ -69,7 +52,7 @@ const shouldAlignToCenter = (p: Position, a: Alignment) => {
  * | after    | center    |  right          |  left
  * | after    | bottom    |  right-end      |  left-end
  */
-export const getPopupPlacement = ({
+export const getPlacement = ({
   align,
   position,
   rtl,
@@ -79,10 +62,8 @@ export const getPopupPlacement = ({
   rtl: boolean
 }): Placement => {
   const alignment: Alignment = shouldAlignToCenter(position, align) ? 'center' : align
-
-  const computedPosition = positionMap.get(position)(rtl)
-  const computedAlignmnent = alignmentMap.get(alignment)(rtl)
-
+  const computedPosition = getPositionMap(rtl)[position]
+  const computedAlignmnent = getAlignmentMap(rtl)[alignment]
   const stringifiedAlignment = computedAlignmnent && `-${computedAlignmnent}`
 
   return `${computedPosition}${stringifiedAlignment}` as Placement

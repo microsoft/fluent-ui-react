@@ -399,36 +399,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     ) : null
   }
 
-  renderError = () => {
-    return (
-      <SourceRender.Consumer>
-        {({ error }) =>
-          error && (
-            <Segment inverted color="red">
-              <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
-            </Segment>
-          )
-        }
-      </SourceRender.Consumer>
-    )
-  }
-
-  renderHTML = () => {
-    const { showCode } = this.state
-    if (!showCode) return null
-
-    return (
-      <SourceRender.Consumer>
-        {props => (
-          <div {...props}>
-            <Divider fitted />
-            <CodeSnippet fitted label="Rendered HTML" mode="html" value={props.markup} />
-          </div>
-        )}
-      </SourceRender.Consumer>
-    )
-  }
-
   renderVariables = () => {
     const { showVariables } = this.state
     if (!showVariables) return undefined
@@ -536,39 +506,53 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             <SourceRender
               babelConfig={babelConfig}
               source={currentCode}
-              render={this.renderElement}
               renderHtml={showCode}
               resolver={importResolver}
               themeName={themeName}
+              wrap={this.renderElement}
+              unstable_hot
             >
-              <Provider.Consumer
-                render={({ siteVariables }) => {
-                  return (
-                    <Segment
-                      className={`rendered-example ${this.getKebabExamplePath()}`}
-                      styles={{
-                        padding: '2rem',
-                        color: siteVariables.bodyColor,
-                        backgroundColor: siteVariables.bodyBackground,
-                        ...(showTransparent && {
-                          backgroundImage:
-                            'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                          backgroundRepeat: 'repeat',
-                        }),
-                      }}
-                    >
-                      <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
-                    </Segment>
-                  )
-                }}
-              />
-              <Segment styles={{ padding: 0 }}>
-                {this.renderSourceCode()}
-                {this.renderError()}
-                {this.renderHTML()}
-                {this.renderVariables()}
-              </Segment>
-              <div style={{ paddingBottom: '10px' }} />
+              {({ element, error, markup }) => (
+                <>
+                  <Provider.Consumer
+                    render={({ siteVariables }) => {
+                      return (
+                        <Segment
+                          className={`rendered-example ${this.getKebabExamplePath()}`}
+                          styles={{
+                            padding: '2rem',
+                            color: siteVariables.bodyColor,
+                            backgroundColor: siteVariables.bodyBackground,
+                            ...(showTransparent && {
+                              backgroundImage:
+                                'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                              backgroundRepeat: 'repeat',
+                            }),
+                          }}
+                        >
+                          {element}
+                        </Segment>
+                      )
+                    }}
+                  />
+                  <Segment styles={{ padding: 0 }}>
+                    {this.renderSourceCode()}
+                    {error && (
+                      <Segment inverted color="red">
+                        <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
+                      </Segment>
+                    )}
+                    {showCode && (
+                      <div>
+                        <Divider fitted />
+                        <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup} />
+                      </div>
+                    )}
+                    {this.renderVariables()}
+                  </Segment>
+                  <div style={{ paddingBottom: '10px' }} />
+                </>
+              )}
             </SourceRender>
           </KnobProvider>
         </Flex.Item>

@@ -1,14 +1,14 @@
-import * as historyApiFallback from 'connect-history-api-fallback'
-import * as express from 'express'
+import historyApiFallback from 'connect-history-api-fallback'
+import express from 'express'
 import { task, src, dest, lastRun, parallel, series, watch } from 'gulp'
-import * as cache from 'gulp-cache'
-import * as remember from 'gulp-remember'
-import * as fs from 'fs'
-import * as path from 'path'
-import * as rimraf from 'rimraf'
-import * as webpack from 'webpack'
-import * as WebpackDevMiddleware from 'webpack-dev-middleware'
-import * as WebpackHotMiddleware from 'webpack-hot-middleware'
+import cache from 'gulp-cache'
+import remember from 'gulp-remember'
+import fs from 'fs'
+import path from 'path'
+import rimraf from 'rimraf'
+import webpack from 'webpack'
+import WebpackDevMiddleware from 'webpack-dev-middleware'
+import WebpackHotMiddleware from 'webpack-hot-middleware'
 
 import sh from '../sh'
 import config from '../../../config'
@@ -155,7 +155,7 @@ task('build:docs:toc', () =>
 )
 
 task('build:docs:webpack', cb => {
-  webpackPlugin(require('../../../webpack.config').default, cb)
+  webpackPlugin(require('../../webpack.config').default, cb)
 })
 
 task(
@@ -186,7 +186,7 @@ task('deploy:docs', cb => {
 
 task('serve:docs', cb => {
   const app = express()
-  const webpackConfig = require('../../../webpack.config').default
+  const webpackConfig = require('../../webpack.config').default
   const compiler = webpack(webpackConfig)
 
   app

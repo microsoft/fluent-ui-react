@@ -52,6 +52,7 @@ import emoji from './emoji'
 import error from './error'
 import exclamationCircle from './exclamationCircle'
 import eye from './eye'
+import eyeFriendlier from './eyeFriendlier'
 import eyeSlash from './eyeSlash'
 import filesExcel from './filesExcel'
 import filesExcelBrand from './filesExcelBrand'
@@ -73,17 +74,20 @@ import italic from './italic'
 import leave from './leave'
 import like from './like'
 import link from './link'
+import lightning from './lightning'
 import lock from './lock'
 import markAsUnread from './markAsUnread'
 import meetingNew from './meetingNew'
 import mention from './mention'
 import menu from './menu'
+import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
 import userPhone from './userPhone'
 import numberList from './numberList'
 import outdent from './outdent'
+import openOutside from './openOutside'
 import pause from './pause'
 import pauseThick from './pauseThick'
 import paperclip from './paperclip'
@@ -91,6 +95,8 @@ import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
 import phoneArrow from './phoneArrow'
 import play from './play'
+import presenceAvailable from './presenceAvailable'
+import presenceStroke from './presenceStroke'
 import qna from './qna'
 import quote from './quote'
 import readAloud from './read-aloud'
@@ -181,6 +187,7 @@ export default {
   error,
   'exclamation-circle': exclamationCircle,
   eye,
+  'eye-friendlier': eyeFriendlier,
   'eye-slash': eyeSlash,
   format,
   'font-color': fontColor,
@@ -193,17 +200,20 @@ export default {
   italic,
   leave,
   like,
+  lightning,
   link,
   lock,
   'mark-as-unread': markAsUnread,
   'meeting-new': meetingNew,
   mention,
   menu,
+  'message-seen': messageSeen,
   mic,
   'mic-off': micOff,
   more,
   'user-phone': userPhone,
   'number-list': numberList,
+  'open-outside': openOutside,
   outdent,
   paperclip,
   'participant-add': addParticipant,
@@ -213,6 +223,8 @@ export default {
   'phone-clock': phoneClock,
   'phone-arrow': phoneArrow,
   play,
+  'presence-available': presenceAvailable,
+  'presence-stroke': presenceStroke,
   qna,
   quote,
   'read-aloud': readAloud,

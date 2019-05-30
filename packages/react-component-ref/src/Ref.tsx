@@ -5,17 +5,7 @@ import * as ReactIs from 'react-is'
 
 import RefFindNode from './RefFindNode'
 import RefForward from './RefForward'
-
-export interface RefProps {
-  children: React.ReactElement<any>
-
-  /**
-   * Called when a child component will be mounted or updated.
-   *
-   * @param {HTMLElement} node - Referred node.
-   */
-  innerRef: React.Ref<any>
-}
+import { RefProps } from './types'
 
 const Ref: React.FunctionComponent<RefProps> = props => {
   const { children, innerRef } = props
