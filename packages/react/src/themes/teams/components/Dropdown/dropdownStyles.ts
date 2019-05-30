@@ -56,15 +56,9 @@ const getWidth = (p: DropdownPropsAndState, v: DropdownVariables): string => {
   return v.width
 }
 
-const getContainerBorderRadius = (p, v) => {
-  return p.open ? v.openBorderRadius : v.borderRadius
-}
-
 const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVariables> = {
   root: ({ props: p }): ICSSInJSStyle => ({
-    ...(p.inline && {
-      display: 'inline-flex',
-    }),
+    ...(p.inline && { display: 'inline-flex' }),
   }),
 
   clearIndicator: getIndicatorStyles,
@@ -78,9 +72,11 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     outline: 0,
     width: getWidth(p, v),
     borderWidth: p.search ? `0 0 ${v.searchBorderBottomWidth} 0` : v.borderWidth,
-    borderRadius: getContainerBorderRadius(p, v),
     color: v.color,
     backgroundColor: v.backgroundColor,
+    borderRadius: v.containerBorderRadius,
+    ...(p.open && p.position === 'above' && { borderRadius: v.openAboveContainerBorderRadius }),
+    ...(p.open && p.position === 'below' && { borderRadius: v.openBelowContainerBorderRadius }),
     ':hover': {
       backgroundColor: v.backgroundColorHover,
       [`& .${Dropdown.slotClassNames.triggerButton}`]: {
@@ -144,8 +140,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
 
   list: ({ props: p, variables: v }): ICSSInJSStyle => ({
     outline: 0,
-    position: 'absolute',
-    borderRadius: v.listBorderRadius,
     borderStyle: 'solid',
     borderWidth: p.open ? v.listBorderWidth : '0px',
     borderColor: v.listBorderColor,
@@ -153,9 +147,9 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     maxHeight: v.listMaxHeight,
     overflowY: 'auto',
     width: getWidth(p, v),
-    left: p.search ? '0px' : `-${v.borderWidth}`,
-    top: `calc(100% + ${p.search ? v.searchBorderBottomWidth : '0px'})`, // leave room for container + its border
     background: v.listBackgroundColor,
+    ...(p.position === 'above' && { borderRadius: v.aboveListBorderRadius }),
+    ...(p.position === 'below' && { borderRadius: v.belowListBorderRadius }),
     ...(p.open && {
       boxShadow: v.listBoxShadow,
       padding: v.listPadding,

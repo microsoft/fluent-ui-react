@@ -5,16 +5,18 @@ export interface DropdownVariables {
   backgroundColorHover: string
   borderColor: string
   borderColorFocus: string
-  borderRadius: string
-  openBorderRadius: string
   borderWidth: string
+  containerBorderRadius: string
+  openAboveContainerBorderRadius: string
+  openBelowContainerBorderRadius: string
   searchBorderBottomWidth: string
   color: string
   comboboxPaddingButton: string
   comboboxFlexBasis: string
+  aboveListBorderRadius: string
+  belowListBorderRadius: string
   listBackgroundColor: string
   listBorderColor: string
-  listBorderRadius: string
   listBorderWidth: string
   listPadding: string
   listBoxShadow: string
@@ -43,16 +45,18 @@ export default (siteVars): DropdownVariables => ({
   backgroundColorHover: siteVars.colors.grey[150],
   borderColor: 'transparent',
   borderColorFocus: siteVars.colors.brand[600],
-  borderRadius: `${cornerRadius}`,
-  openBorderRadius: `${cornerRadius} ${cornerRadius} 0 0`,
   borderWidth: '0px',
+  containerBorderRadius: `${cornerRadius}`,
+  openAboveContainerBorderRadius: `0 0 ${cornerRadius} ${cornerRadius}`,
+  openBelowContainerBorderRadius: `${cornerRadius} ${cornerRadius} 0 0`,
   searchBorderBottomWidth: pxToRem(2),
   color: siteVars.bodyColor,
   selectedItemColor: siteVars.bodyColor,
   comboboxPaddingButton: `0 ${_12px_asRem}`,
   comboboxFlexBasis: pxToRem(50),
+  aboveListBorderRadius: `${cornerRadius} ${cornerRadius} 0 0`,
+  belowListBorderRadius: `0 0 ${cornerRadius} ${cornerRadius}`,
   listBackgroundColor: siteVars.colors.white,
-  listBorderRadius: `0 0 ${cornerRadius} ${cornerRadius}`,
   listBorderColor: 'transparent',
   listBorderWidth: '0px',
   listPadding: `${pxToRem(8)} 0 ${pxToRem(6)}`,
