@@ -1,6 +1,4 @@
-require('@babel/register')({
-  extensions: ['.js', '.ts', '.tsx'],
-})
+require('@stardust-ui/internal-tooling/babel/register')
 
 const config = require('../../config').default
 const { compilerOptions } = require('../../build/tsconfig.docs.json')
