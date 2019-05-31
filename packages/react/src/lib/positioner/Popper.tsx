@@ -119,6 +119,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
 
       popperRef.current = createPopper(targetRef.current, contentRef.current, options)
     },
+    // TODO review dependencies for popperHasScrollableParent
     [computedModifiers, enabled, userModifiers, positionFixed, proposedPlacement],
   )
 
