@@ -10,6 +10,10 @@ const { compilerOptions } = require('./build/tsconfig.docs.json')
 process.env.PATH =
   process.env.PATH + path.delimiter + path.resolve(__dirname, 'node_modules', '.bin')
 
+// `gulp` uses `interpret` to get extensions to register.
+// Multiple extensions are not supported, it means that `gulpfile.ts` will register `*.ts` only
+require('@babel/register')({ extensions: ['.js', '.ts', '.tsx'] })
+
 tsPaths.register({
   baseUrl: config.path_base,
   paths: compilerOptions.paths,

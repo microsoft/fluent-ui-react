@@ -1,7 +1,6 @@
 const isBabelRegister = caller => {
   return !!(caller && caller.name === '@babel/register')
 }
-
 const isJest = caller => {
   return !!(caller && caller.name === 'babel-jest')
 }
