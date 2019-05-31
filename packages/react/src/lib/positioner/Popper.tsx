@@ -37,8 +37,10 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
 
   const popperRef = React.useRef<PopperJS>()
   const contentRef = React.useRef<HTMLElement>(null)
-  const latestPlacement = React.useRef<PopperJS.Placement>()
-  const [computedPlacement, setComputedPlacement] = React.useState<PopperJS.Placement>()
+  const latestPlacement = React.useRef<PopperJS.Placement>(proposedPlacement)
+  const [computedPlacement, setComputedPlacement] = React.useState<PopperJS.Placement>(
+    proposedPlacement,
+  )
 
   const computedModifiers: PopperJS.Modifiers = React.useMemo(
     () =>
@@ -49,32 +51,18 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     [rtl, offset, position],
   )
 
-  const scheduleUpdate = React.useCallback(
-    () => {
-      if (popperRef.current) {
-        popperRef.current.scheduleUpdate()
-      }
-    },
-    [popperRef.current],
-  )
+  const scheduleUpdate = React.useCallback(() => {
+    if (popperRef.current) {
+      popperRef.current.scheduleUpdate()
+    }
+  }, [])
 
-  const destroyInstance = React.useCallback(
-    () => {
-      if (popperRef.current) {
-        popperRef.current.destroy()
-        popperRef.current = null
-      }
-    },
-    [popperRef.current],
-  )
-
-  const instanceDependencies = [
-    computedModifiers,
-    enabled,
-    userModifiers,
-    positionFixed,
-    proposedPlacement,
-  ]
+  const destroyInstance = React.useCallback(() => {
+    if (popperRef.current) {
+      popperRef.current.destroy()
+      popperRef.current = null
+    }
+  }, [])
 
   const createInstance = React.useCallback(
     () => {
@@ -131,7 +119,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
 
       popperRef.current = createPopper(targetRef.current, contentRef.current, options)
     },
-    [targetRef.current, contentRef.current, ...instanceDependencies],
+    [computedModifiers, enabled, userModifiers, positionFixed, proposedPlacement],
   )
 
   React.useEffect(
@@ -139,7 +127,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       createInstance()
       return destroyInstance
     },
-    [computedModifiers, enabled, userModifiers, positionFixed, proposedPlacement],
+    [createInstance],
   )
 
   React.useEffect(scheduleUpdate, [...positioningDependencies, computedPlacement])
