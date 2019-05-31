@@ -46,7 +46,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => {
     const colors = v.colorScheme[p.color]
 
-    const maybeIcon = t.icons[name]
+    const maybeIcon = t.icons[p.name]
     const isSvgIcon = maybeIcon && maybeIcon.isSvg
 
     return {
