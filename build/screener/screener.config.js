@@ -1,4 +1,6 @@
-require('../../babel.register')
+require('@babel/register', {
+  extensions: ['.js', '.ts', '.tsx'],
+})
 
 const config = require('../../config').default
 const { compilerOptions } = require('../../build/tsconfig.docs.json')
