@@ -112,7 +112,6 @@ import settings from './settings'
 import callControlCloseTray from './callControlCloseTray'
 import star from './star'
 import stardustCircle from './stardustCircle'
-import stardustCheckmark from './stardustCheckmark'
 import sticker from './sticker'
 import strike from './strike'
 import table from './table'
@@ -135,7 +134,6 @@ import yammer from './yammer'
 
 export default {
   'stardust-circle': stardustCircle,
-  'stardust-checkmark': stardustCheckmark,
 
   accept,
   add,
