@@ -22,7 +22,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
   const {
     align,
     children,
-    eventsEnabled,
+    enabled,
     modifiers: userModifiers,
     offset,
     pointerTargetRef,
@@ -37,10 +37,8 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
 
   const popperRef = React.useRef<PopperJS>()
   const contentRef = React.useRef<HTMLElement>(null)
-  const latestPlacement = React.useRef<PopperJS.Placement>(proposedPlacement)
-  const [computedPlacement, setComputedPlacement] = React.useState<PopperJS.Placement>(
-    proposedPlacement,
-  )
+  const latestPlacement = React.useRef<PopperJS.Placement>()
+  const [computedPlacement, setComputedPlacement] = React.useState<PopperJS.Placement>()
 
   const computedModifiers: PopperJS.Modifiers = React.useMemo(
     () =>
@@ -51,8 +49,41 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     [rtl, offset, position],
   )
 
-  React.useEffect(
+  const scheduleUpdate = React.useCallback(
     () => {
+      if (popperRef.current) {
+        popperRef.current.scheduleUpdate()
+      }
+    },
+    [popperRef.current],
+  )
+
+  const destroyInstance = React.useCallback(
+    () => {
+      if (popperRef.current) {
+        popperRef.current.destroy()
+        popperRef.current = null
+      }
+    },
+    [popperRef.current],
+  )
+
+  const instanceDependencies = [
+    computedModifiers,
+    enabled,
+    userModifiers,
+    positionFixed,
+    proposedPlacement,
+  ]
+
+  const createInstance = React.useCallback(
+    () => {
+      destroyInstance()
+
+      if (!enabled || !targetRef.current || !contentRef.current) {
+        return
+      }
+
       const pointerTargetRefElement = pointerTargetRef && pointerTargetRef.current
       const popperHasScrollableParent = getScrollParent(contentRef.current) !== document.body
 
@@ -92,7 +123,6 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
 
       const options: PopperJS.PopperOptions = {
         placement: proposedPlacement,
-        eventsEnabled,
         positionFixed,
         modifiers,
         onCreate: handleUpdate,
@@ -100,31 +130,42 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       }
 
       popperRef.current = createPopper(targetRef.current, contentRef.current, options)
-      return () => popperRef.current.destroy()
     },
-    [computedModifiers, eventsEnabled, userModifiers, positionFixed, proposedPlacement],
+    [targetRef.current, contentRef.current, ...instanceDependencies],
   )
 
   React.useEffect(
     () => {
-      popperRef.current.scheduleUpdate()
+      createInstance()
+      return destroyInstance
     },
-    [...positioningDependencies, computedPlacement],
+    [computedModifiers, enabled, userModifiers, positionFixed, proposedPlacement],
   )
+
+  React.useEffect(scheduleUpdate, [...positioningDependencies, computedPlacement])
 
   const child =
     typeof children === 'function'
       ? (children as PopperChildrenFn)({
           placement: computedPlacement,
-          scheduleUpdate: () => popperRef.current && popperRef.current.scheduleUpdate(),
+          scheduleUpdate,
         })
       : React.Children.only(children)
 
-  return <Ref innerRef={contentRef}>{child as React.ReactElement}</Ref>
+  return (
+    <Ref
+      innerRef={contentElement => {
+        contentRef.current = contentElement
+        createInstance()
+      }}
+    >
+      {child as React.ReactElement}
+    </Ref>
+  )
 }
 
 Popper.defaultProps = {
-  eventsEnabled: true,
+  enabled: true,
   positionFixed: false,
   positioningDependencies: [],
 }
