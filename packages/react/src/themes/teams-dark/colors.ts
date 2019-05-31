@@ -60,7 +60,7 @@ export const colorScheme: ColorSchemeMapping = {
     foregroundHover1: colors.white,
 
     backgroundHover: colors.grey[550],
-    backgroundHover2: colors.grey[550],
+    backgroundHover1: colors.grey[550],
 
     borderHover: colors.grey[400],
 
