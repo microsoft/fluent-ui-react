@@ -1,11 +1,53 @@
 import * as React from 'react'
-import { Toolbar } from '@stardust-ui/react'
+import { Toolbar, Input, Button, Form } from '@stardust-ui/react'
+
+const fields = [
+  {
+    label: 'First name',
+    name: 'firstName',
+    id: 'first-name-inline-shorthand',
+    key: 'first-name',
+    required: true,
+    inline: true,
+  },
+  {
+    label: 'Last name',
+    name: 'lastName',
+    id: 'last-name-inline-shorthand',
+    key: 'last-name',
+    required: true,
+    inline: true,
+  },
+  {
+    label: 'I agree to the Terms and Conditions',
+    control: {
+      as: 'input',
+    },
+    type: 'checkbox',
+    id: 'conditions-inline-shorthand',
+    key: 'conditions',
+  },
+  {
+    control: {
+      as: Button,
+      content: 'Submit',
+    },
+    key: 'submit',
+  },
+]
+
+const HighlightPopup = ({ onConfirm }) => {
+  return <Form onSubmit={onConfirm} fields={fields} />
+  // return <Button primary content="OK" onClick={onConfirm} />
+}
 
 const ToolbarExampleShorthand = () => {
   const [isBold, setBold] = React.useState(true)
   const [isItalic, setItalic] = React.useState(false)
   const [isUnderline, setUnderline] = React.useState(false)
   const [isStrike, setStrike] = React.useState(false)
+
+  const [highlightOpen, setHighlightOpen] = React.useState(false)
 
   return (
     <Toolbar
@@ -44,8 +86,31 @@ const ToolbarExampleShorthand = () => {
           },
         },
         { key: 'divider1', kind: 'divider' },
-        { key: 'highlight', icon: { name: 'highlight', outline: true } },
-        { key: 'font-color', icon: { name: 'font-color', outline: true } },
+        {
+          key: 'highlight',
+          icon: { name: 'highlight', outline: true },
+          active: highlightOpen,
+          popup: {
+            content: {
+              content: (
+                <HighlightPopup
+                  onConfirm={() => {
+                    setHighlightOpen(false)
+                  }}
+                />
+              ),
+            },
+            onOpenChange: (e, { open }) => {
+              setHighlightOpen(open)
+            },
+            open: highlightOpen,
+          },
+        },
+        {
+          key: 'font-color',
+          icon: { name: 'font-color', outline: true },
+          popup: { content: { content: <Input icon="search" placeholder="Search..." /> } },
+        },
         { key: 'font-size', icon: { name: 'font-size', outline: true } },
         { key: 'remove-format', icon: { name: 'remove-format', outline: true } },
         { key: 'divider2', kind: 'divider' },

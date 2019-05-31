@@ -15,9 +15,10 @@ import {
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+import { defaultBehavior, popupFocusTrapBehavior } from '../../lib/accessibility'
 
 import Icon from '../Icon/Icon'
+import Popup from '../Popup/Popup'
 
 export interface ToolbarItemProps
   extends UIComponentProps,
@@ -58,6 +59,8 @@ export interface ToolbarItemProps
    * @param {object} data - All props.
    */
   onBlur?: ComponentEventHandler<ToolbarItemProps>
+
+  popup?: ShorthandValue
 }
 
 export interface ToolbarItemState {
@@ -79,6 +82,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
+    popup: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
@@ -87,8 +91,8 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
-    const { icon, children, disabled } = this.props
-    return (
+    const { icon, children, disabled, popup } = this.props
+    const renderedItem = (
       <ElementType
         {...accessibility.attributes.root}
         {...unhandledProps}
@@ -101,6 +105,20 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
         {childrenExist(children) ? children : Icon.create(icon)}
       </ElementType>
     )
+
+    if (popup) {
+      return Popup.create(popup, {
+        defaultProps: {
+          accessibility: popupFocusTrapBehavior,
+        },
+        overrideProps: {
+          trigger: renderedItem,
+          children: undefined,
+        },
+      })
+    }
+
+    return renderedItem
   }
 
   private handleBlur = (e: React.SyntheticEvent) => {
