@@ -150,16 +150,17 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
           placement: computedPlacement,
           scheduleUpdate,
         })
-      : React.Children.only(children)
+      : children
 
   return (
     <Ref
       innerRef={contentElement => {
         contentRef.current = contentElement
+        // for correct positioning we need to create the PopperJS instance immediately after we get a ref to the popper box
         createInstance()
       }}
     >
-      {child as React.ReactElement}
+      {React.Children.only(child) as React.ReactElement}
     </Ref>
   )
 }
