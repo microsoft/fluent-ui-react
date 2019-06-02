@@ -8,7 +8,7 @@ const launchOptions = {
   slowMo: 10,
 
   // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568
-  args: ['--single-process'],
+  args: [process.env.CI && '--single-process'].filter(Boolean),
 }
 
 export class E2EApiClass {
