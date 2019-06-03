@@ -12,7 +12,6 @@ export const menuColorAreas = stringLiteralsArray(
   'backgroundHover',
   'backgroundActive',
   'backgroundFocus',
-  'foregroundFocus',
   'foregroundDisabled',
 )
 export type MenuColorSchemeMapping = TeamsSchemeMappingWithAreas<ItemType<typeof menuColorAreas>>
