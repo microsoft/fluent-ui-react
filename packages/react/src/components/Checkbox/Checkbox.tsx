@@ -140,6 +140,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
         className={classes.root}
         onClick={this.handleClick}
         onChange={this.handleChange}
+        onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
