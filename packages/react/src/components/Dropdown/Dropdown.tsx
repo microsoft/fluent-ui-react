@@ -125,6 +125,8 @@ export interface DropdownProps
    */
   itemToString?: (item: ShorthandValue) => string
 
+  labelId?: string
+
   /** A dropdown can show that it is currently loading data. */
   loading?: boolean
 
@@ -261,6 +263,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     inline: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
+    labelId: PropTypes.string,
     loading: PropTypes.bool,
     loadingMessage: customPropTypes.itemShorthand,
     moveFocusOnTab: PropTypes.bool,
@@ -388,6 +391,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     }
   }
 
+  private defaultTriggerButtonId = _.uniqueId('dropdown-trigger-button-')
+
   public renderComponent({
     ElementType,
     classes,
@@ -399,6 +404,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     const {
       clearable,
       clearIndicator,
+      labelId,
       search,
       multiple,
       getA11yStatusMessage,
@@ -420,6 +426,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           getA11yStatusMessage={getA11yStatusMessage}
           highlightedIndex={highlightedIndex}
           onStateChange={this.handleStateChange}
+          labelId={labelId}
         >
           {({
             getInputProps,
@@ -524,8 +531,9 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     rtl: boolean,
     getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
   ): JSX.Element {
-    const { triggerButton } = this.props
+    const { labelId, triggerButton } = this.props
     const content = this.getSelectedItemAsString(this.state.value)
+    const triggerButtonId = triggerButton['id'] || this.defaultTriggerButtonId
 
     const triggerButtonProps = getToggleButtonProps({
       onFocus: this.handleTriggerButtonOrListFocus,
@@ -533,7 +541,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       onKeyDown: e => {
         this.handleTriggerButtonKeyDown(e, rtl)
       },
-      'aria-label': content,
+      'aria-label': undefined,
+      'aria-labelledby': `${labelId} ${triggerButtonId}`,
     })
 
     const { onClick, onFocus, onBlur, onKeyDown, ...restTriggerButtonProps } = triggerButtonProps
@@ -544,6 +553,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           defaultProps: {
             className: Dropdown.slotClassNames.triggerButton,
             content,
+            id: triggerButtonId,
             fluid: true,
             styles: styles.triggerButton,
             ...restTriggerButtonProps,
