@@ -7,7 +7,7 @@ const Types = () => (
   <ExampleSection title="Types">
     <ComponentExample
       title="IFrame"
-      description="A Embed component can embed any iframe."
+      description="A embed component can embed any iframe."
       examplePath="components/Embed/Slots/EmbedExampleIframe"
     />
   </ExampleSection>
