@@ -177,11 +177,11 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
 Embed.create = createShorthandFactory({ Component: Embed })
 
 /**
- * A GIF is a muted segment of a video.
- * @accessibility
- * If GIF should be visible to screen readers, textual representation needs to be provided in 'alt' or 'title' property.
+ * An embed component displays a placeholder and matching content based on user's interaction. Any content can be
+ * embedded from other websites like YouTube, Vimeo and Google Maps.
  *
- * Other considerations:
- *  - when alt and title property are empty, then Narrator in scan mode navigates to the gif and narrates it as empty paragraph
+ * @accessibility
+ * A `placeholder` slot represents an [`Image`](/components/image) component, please follow recommendations from its
+ * accessibility section.
  */
 export default withSafeTypeForAs<typeof Embed, EmbedProps, 'span'>(Embed)
