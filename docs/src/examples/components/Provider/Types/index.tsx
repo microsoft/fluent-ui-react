@@ -15,12 +15,12 @@ const Types = () => (
       <ComponentExample
         title="Rtl"
         description="A Provider can specify that the content inside it should be in rtl mode."
-        examplePath="components/Provider/Types/ProviderExampleRtl"
+        examplePath="components/Provider/Types/ProviderRtlExample"
       />
       <ComponentExample
         title="Disable animations"
         description="A Provider can specify that the animations inside it's content should be disabled."
-        examplePath="components/Provider/Types/ProviderExampleDisableAnimations"
+        examplePath="components/Provider/Types/ProviderDisableAnimationsExample"
       />
     </ExampleSection>
     <NonPublicSection title="Types for visual tests">

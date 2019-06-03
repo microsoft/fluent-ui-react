@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { Provider } from '@stardust-ui/react'
 
-const ProviderExampleRtl = () => (
+const ProviderRtlExample = () => (
   <Provider rtl>
     <div>{'مثال النص'}</div>
   </Provider>
 )
 
-export default ProviderExampleRtl
+export default ProviderRtlExample
