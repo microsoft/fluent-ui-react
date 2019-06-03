@@ -177,8 +177,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
 Embed.create = createShorthandFactory({ Component: Embed })
 
 /**
- * An embed component displays a placeholder and matching content based on user's interaction. Any content can be
- * embedded from other websites like YouTube, Vimeo and Google Maps.
+ * An embed component displays a placeholder and matching content based on user's interaction.
  *
  * @accessibility
  * A `placeholder` slot represents an [`Image`](/components/image) component, please follow recommendations from its
