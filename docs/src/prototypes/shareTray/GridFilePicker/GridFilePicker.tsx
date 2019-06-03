@@ -41,6 +41,7 @@ class GridImagePicker extends React.Component<GridPickerProps> {
           columns={gridColumns}
           style={gridColumns === 1 ? { ...gridStyles, width: '200px' } : gridStyles}
           content={this.renderGridItems()}
+          aria-orientation="horizontal"
         />
       </Box>
     )
