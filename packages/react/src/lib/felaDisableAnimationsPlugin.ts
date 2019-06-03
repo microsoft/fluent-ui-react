@@ -1,4 +1,14 @@
-import * as _ from 'lodash'
+const animationProps = [
+  'animation',
+  'animationName',
+  'animationDuration',
+  'animationTimingFunction',
+  'animationDelay',
+  'animationIterationCount',
+  'animationDirection',
+  'animationFillMode',
+  'animationPlayState',
+]
 
 /**
  * Fela plugin for disabling animations. The animations are disabled or not based on the
@@ -10,7 +20,7 @@ import * as _ from 'lodash'
  */
 export default () => {
   const disableAnimations = (styles: Object, type?, renderer?, props?) => {
-    if (props && props.disableAnimations && type && type === 'RULE') {
+    if (props && props.disableAnimations && type === 'RULE') {
       return Object.keys(styles).reduce((acc, cssPropertyName) => {
         const cssPropertyValue = styles[cssPropertyName]
 
@@ -21,7 +31,7 @@ export default () => {
           }
         }
 
-        if (_.startsWith(cssPropertyName, 'animation')) {
+        if (animationProps.indexOf(cssPropertyName) !== -1) {
           return acc
         }
         return { ...acc, [cssPropertyName]: styles[cssPropertyName] }

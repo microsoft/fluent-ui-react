@@ -214,7 +214,7 @@ export interface StardustAnimationName {
   params?: object
 }
 
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
 export type CSSProperties = Omit<React.CSSProperties, 'animationName'> & {
   animationName?: StardustAnimationName | string | 'none'

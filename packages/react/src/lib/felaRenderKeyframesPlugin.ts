@@ -1,9 +1,8 @@
 import callable from './callable'
 
 /**
- * Fela plugin for disabling animations. The animations are disabled or not based on the
- * props' disableAnimations param. If the value of the prop is true, all animation related
- * styles are removed.
+ * Fela plugin for rendering keyframes. The keyframes, defined in the animationName prop, are rendered
+ * with the params object, if defined in the animationName prop.
  *
  * Caution! Infinite recursion is possible in case if style object has links to self in the props
  * tree.

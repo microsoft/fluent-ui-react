@@ -5,17 +5,17 @@ export default {
   root: () => ({
     display: 'inline-block',
   }),
-  children: ({ props, variables, theme }) => {
+  children: ({ props: p, theme }) => {
     const animation: AnimationProp = {
-      name: props.name,
-      keyframeParams: props.keyframeParams,
-      duration: props.duration,
-      delay: props.delay,
-      iterationCount: props.iterationCount,
-      direction: props.direction,
-      fillMode: props.fillMode,
-      playState: props.playState,
-      timingFunction: props.timingFunction,
+      name: p.name,
+      keyframeParams: p.keyframeParams,
+      duration: p.duration,
+      delay: p.delay,
+      iterationCount: p.iterationCount,
+      direction: p.direction,
+      fillMode: p.fillMode,
+      playState: p.playState,
+      timingFunction: p.timingFunction,
     }
 
     return createAnimationStyles(animation, theme)

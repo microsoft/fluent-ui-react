@@ -1,4 +1,4 @@
-import { Provider, themes, ThemeInput } from '@stardust-ui/react'
+import { Provider, themes } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { match } from 'react-router'
@@ -55,7 +55,9 @@ class ExternalExampleLayout extends React.Component<
     if (!examplePath) return <PageNotFound />
 
     const exampleSource: ExampleSource = exampleSourcesContext(examplePath)
-    const theme = this.getTheme()
+
+    const { themeName } = this.state
+    const theme = (themeName && themes[themeName]) || {}
 
     return (
       <Provider
@@ -80,11 +82,6 @@ class ExternalExampleLayout extends React.Component<
         </SourceRender>
       </Provider>
     )
-  }
-
-  private getTheme = (): ThemeInput => {
-    const { themeName } = this.state
-    return (themeName && themes[themeName]) || {}
   }
 }
 

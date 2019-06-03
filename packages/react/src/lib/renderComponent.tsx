@@ -149,8 +149,7 @@ const renderComponent = <P extends {}>(
     logProviderMissingWarning()
   }
 
-  const { theme = {}, rtl = false, renderer = felaRenderer, disableAnimations = false } =
-    context || {}
+  const { rtl = false, renderer = felaRenderer, disableAnimations = false } = context || {}
 
   const {
     siteVariables = {
@@ -158,7 +157,7 @@ const renderComponent = <P extends {}>(
     },
     componentVariables = {},
     componentStyles = {},
-  } = theme as ThemePrepared
+  } = (context.theme as ThemePrepared) || {}
 
   const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
 
