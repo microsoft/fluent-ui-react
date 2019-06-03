@@ -254,7 +254,6 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
               align={vertical ? 'top' : 'start'}
               position={vertical ? 'after' : 'below'}
               targetRef={this.itemRef}
-              modifiers={{ flip: { flipVariationsByContent: true } }}
             >
               {Menu.create(menu, {
                 defaultProps: {

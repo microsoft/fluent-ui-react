@@ -1,6 +1,6 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
-import cx from 'classnames'
 import * as PropTypes from 'prop-types'
+import * as React from 'react'
 import {
   callable,
   UIComponent,
@@ -13,7 +13,6 @@ import {
 import { iconBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
@@ -80,26 +79,16 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility, theme, rtl, styles }) {
-    const { className, name } = this.props
+    const { name } = this.props
     const { icons = {} } = theme
 
     const maybeIcon = icons[name]
     const isSvgIcon = maybeIcon && maybeIcon.isSvg
 
-    return Box.create(
-      { content: isSvgIcon && callable(maybeIcon.icon)({ classes, rtl }) },
-      {
-        defaultProps: {
-          as: ElementType,
-          className: cx(Icon.className, className),
-          ...accessibility.attributes.root,
-          ...unhandledProps,
-          styles: {
-            ...styles.root,
-            ...(isSvgIcon ? styles.svgRoot : styles.fontRoot),
-          },
-        },
-      },
+    return (
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
+        {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl })}
+      </ElementType>
     )
   }
 }

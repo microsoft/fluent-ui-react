@@ -1,3 +1,4 @@
+import * as React from 'react'
 import PopperJS from 'popper.js'
 
 export type Position = 'above' | 'below' | 'before' | 'after'
@@ -42,9 +43,9 @@ export interface PopperProps extends PositioningProps {
 
   /**
    * Enables events (resize, scroll).
-   * @prop {Boolean} eventsEnabled=true
+   * @prop {Boolean} enabled=true
    */
-  eventsEnabled?: boolean
+  enabled?: boolean
 
   /**
    * List of modifiers used to modify the offsets before they are applied to the Popper box.
@@ -66,7 +67,7 @@ export interface PopperProps extends PositioningProps {
   /**
    * Ref object containing the target node (the element that we're using as reference for Popper box).
    */
-  targetRef?: React.RefObject<Element>
+  targetRef: React.RefObject<Element>
 
   /**
    * Rtl attribute for the component.

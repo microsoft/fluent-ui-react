@@ -31,6 +31,7 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
 
     '::placeholder': {
       color: v.placeholderColor,
+      opacity: 1, // undo Firefox default opacity
     },
 
     ':focus': {
