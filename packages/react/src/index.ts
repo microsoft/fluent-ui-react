@@ -48,6 +48,9 @@ export { default as ChatItem } from './components/Chat/ChatItem'
 export * from './components/Chat/ChatMessage'
 export { default as ChatMessage } from './components/Chat/ChatMessage'
 
+export * from './components/Checkbox/Checkbox'
+export { default as Checkbox } from './components/Checkbox/Checkbox'
+
 export * from './components/Divider/Divider'
 export { default as Divider } from './components/Divider/Divider'
 
@@ -146,6 +149,15 @@ export { default as Text } from './components/Text/Text'
 
 export * from './components/Animation/Animation'
 export { default as Animation } from './components/Animation/Animation'
+
+export * from './components/Toolbar/Toolbar'
+export { default as Toolbar } from './components/Toolbar/Toolbar'
+export * from './components/Toolbar/ToolbarDivider'
+export { default as ToolbarDivider } from './components/Toolbar/ToolbarDivider'
+export * from './components/Toolbar/ToolbarItem'
+export { default as ToolbarItem } from './components/Toolbar/ToolbarItem'
+export * from './components/Toolbar/ToolbarRadioGroup'
+export { default as ToolbarRadioGroup } from './components/Toolbar/ToolbarRadioGroup'
 
 export * from './components/Tree'
 export { default as Tree } from './components/Tree'

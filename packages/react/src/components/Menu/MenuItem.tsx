@@ -32,6 +32,7 @@ import {
   withSafeTypeForAs,
 } from '../../types'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
+import { Popper } from '../../lib/positioner'
 
 export interface MenuItemSlotClassNames {
   wrapper: string
@@ -71,8 +72,7 @@ export interface MenuItemProps
   itemsCount?: number
 
   /**
-   * Called on click. When passed, the component will render as an `a`
-   * tag by default instead of a `div`.
+   * Called on click.
    *
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
@@ -85,6 +85,13 @@ export interface MenuItemProps
    * @param {object} data - All props.
    */
   onFocus?: ComponentEventHandler<MenuItemProps>
+
+  /**
+   * Called after item blur.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onBlur?: ComponentEventHandler<MenuItemProps>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
@@ -164,6 +171,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     itemsCount: PropTypes.number,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
     pills: PropTypes.bool,
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
@@ -242,18 +250,24 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
       menu && active && menuOpen ? (
         <>
           <Ref innerRef={this.menuRef}>
-            {Menu.create(menu, {
-              defaultProps: {
-                accessibility: submenuBehavior,
-                className: MenuItem.slotClassNames.submenu,
-                vertical: true,
-                primary,
-                secondary,
-                styles: styles.menu,
-                submenu: true,
-                indicator,
-              },
-            })}
+            <Popper
+              align={vertical ? 'top' : 'start'}
+              position={vertical ? 'after' : 'below'}
+              targetRef={this.itemRef}
+            >
+              {Menu.create(menu, {
+                defaultProps: {
+                  accessibility: submenuBehavior,
+                  className: MenuItem.slotClassNames.submenu,
+                  vertical: true,
+                  primary,
+                  secondary,
+                  styles: styles.menu,
+                  submenu: true,
+                  indicator,
+                },
+              })}
+            </Popper>
           </Ref>
           <EventListener listener={this.outsideClickHandler} targetRef={documentRef} type="click" />
         </>

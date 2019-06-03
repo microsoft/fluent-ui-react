@@ -22,9 +22,10 @@ const MentionsDropdown: React.FunctionComponent<MentionsContainerProps> = props 
     <Provider.Consumer
       render={({ siteVariables: siteVars }) => (
         <Dropdown
-          defaultOpen={true}
+          defaultOpen
           inline
           search
+          position="above"
           items={items}
           renderItem={
             searchQuery
