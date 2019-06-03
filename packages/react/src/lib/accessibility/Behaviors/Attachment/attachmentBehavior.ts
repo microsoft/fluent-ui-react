@@ -10,7 +10,7 @@ const attachmentBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       tabIndex: 0,
-      'data-is-focusable': true,
+      [IS_FOCUSABLE_ATTRIBUTE]: true,
     },
   },
   keyActions: {
