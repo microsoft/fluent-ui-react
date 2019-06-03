@@ -58,6 +58,10 @@ jobs:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)
 
+      - run:
+        name: E2E Tests
+        command: yarn test:e2e
+
       - restore_cache:
           key: v1.1-vuln-scans-{{ checksum "yarn.lock" }}
       - run:
