@@ -124,7 +124,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
   static Item = MenuItem
   static Divider = MenuDivider
 
-  handleItemOverrides = predefinedProps => ({
+  handleItemOverrides = variables => predefinedProps => ({
     onClick: (e, itemProps) => {
       const { index } = itemProps
 
@@ -140,6 +140,17 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
         this.trySetState({ activeIndex: null })
       }
       _.invoke(predefinedProps, 'onActiveChanged', e, props)
+    },
+    variables: {
+      ...variables,
+      ...predefinedProps.variables,
+    },
+  })
+
+  handleDividerOverrides = variables => predefinedProps => ({
+    variables: {
+      ...variables,
+      ...predefinedProps.variables,
     },
   })
 
@@ -164,6 +175,9 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     const itemsCount = _.filter(items, item => getKindProp(item, 'item') !== 'divider').length
     let itemPosition = 0
 
+    const itemOverridesFn = this.handleItemOverrides(variables)
+    const dividerOverridesFn = this.handleDividerOverrides(variables)
+
     return _.map(items, (item, index) => {
       const active =
         (typeof activeIndex === 'string' ? parseInt(activeIndex, 10) : activeIndex) === index
@@ -176,13 +190,13 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
             primary,
             secondary,
             vertical,
-            variables,
             styles: styles.divider,
             inSubmenu: submenu,
             accessibility: accessibility.childBehaviors
               ? accessibility.childBehaviors.divider
               : undefined,
           },
+          overrideProps: dividerOverridesFn,
         })
       }
 
@@ -197,7 +211,6 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
           primary,
           secondary,
           underlined,
-          variables,
           vertical,
           index,
           itemPosition,
@@ -209,7 +222,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
             ? accessibility.childBehaviors.item
             : undefined,
         },
-        overrideProps: this.handleItemOverrides,
+        overrideProps: itemOverridesFn,
       })
     })
   }

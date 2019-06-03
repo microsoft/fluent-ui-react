@@ -118,6 +118,38 @@ describe('Menu', () => {
       })
     })
 
+    describe('variables', () => {
+      it('are passed from Menu to MenuItem and correctly merged', () => {
+        const menu = mountWithProvider(
+          <Menu
+            variables={{ a: 'menu', b: 'menu' }}
+            items={[
+              { key: 1, content: 'menu item', variables: { b: 'overwritten', c: 'item' } },
+              {
+                key: 'd1',
+                kind: 'divider',
+                variables: { b: 'overwrittenInDivider', c: 'divider' },
+              },
+            ]}
+          />,
+        )
+
+        expect(
+          menu
+            .find('MenuItem')
+            .first()
+            .prop('variables'),
+        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwritten', c: 'item' }))
+
+        expect(
+          menu
+            .find('MenuDivider')
+            .first()
+            .prop('variables'),
+        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwrittenInDivider', c: 'divider' }))
+      })
+    })
+
     describe('accessibility', () => {
       handlesAccessibility(Menu, {
         defaultRootRole: 'menu',
