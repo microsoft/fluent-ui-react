@@ -102,12 +102,25 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     return { checked: false, isFromKeyboard: false }
   }
 
+  handleChange = (e: React.ChangeEvent) => {
+    // Checkbox component doesn't present any `input` component in markup, however all of our
+    // components should handle events transparently.
+    const { disabled } = this.props
+    const checked = !this.state.checked
+
+    if (!disabled) {
+      this.trySetState({ checked })
+      _.invoke(this.props, 'onChange', e, { ...this.props, checked })
+    }
+  }
+
   handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     const { disabled } = this.props
     const checked = !this.state.checked
 
     if (!disabled) {
       this.trySetState({ checked })
+
       _.invoke(this.props, 'onClick', e, { ...this.props, checked })
       _.invoke(this.props, 'onChange', e, { ...this.props, checked })
     }
@@ -126,6 +139,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
       <ElementType
         className={classes.root}
         onClick={this.handleClick}
+        onChange={this.handleChange}
         {...accessibility.attributes.root}
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
