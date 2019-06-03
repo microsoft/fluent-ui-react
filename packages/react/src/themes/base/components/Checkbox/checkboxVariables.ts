@@ -51,7 +51,7 @@ export default (siteVars: any): CheckboxVariables => ({
   toggleBackground: 'transparent',
   toggleBorderColor: siteVars.colors.grey[300],
   toggleBorderStyle: `solid`,
-  toggleBorderRadius: pxToRem(8),
+  toggleBorderRadius: pxToRem(999),
   toggleBorderWidth: pxToRem(1),
   toggleColor: 'inherit',
   toggleMargin: `0 ${pxToRem(12)} 0 0`,
