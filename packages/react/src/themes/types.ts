@@ -565,10 +565,10 @@ type SvgIconFuncArg = {
 }
 
 export type SvgIconSpec = ObjectOrFunc<React.ReactNode, SvgIconFuncArg>
-export type FontIconSpec = ObjectOrFunc<{
+export type FontIconSpec = {
   content: string
   fontFamily: string
-}>
+}
 
 export type ThemeIconSpec = {
   isSvg?: boolean

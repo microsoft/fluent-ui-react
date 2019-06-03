@@ -1,6 +1,10 @@
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
-import { ResultOf } from '../../../../types'
+import {
+  ComponentSlotStylesInput,
+  ICSSInJSStyle,
+  FontIconSpec,
+  ThemeIconSpec,
+} from '../../../types'
 import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
 import { IconVariables } from './iconVariables'
 import { emptyIcon } from './iconNames'
@@ -31,39 +35,40 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
 })
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    speak: 'none',
-    verticalAlign: 'middle',
-
-    ...getXSpacingStyles(p.xSpacing, v.horizontalSpace),
-
-    ...(p.bordered && getBorderedStyles(v.borderColor)),
-    ...(p.circular && { ...getPaddedStyle(), borderRadius: '50%' }),
-    ...(p.disabled && {
-      color: v.disabledColor,
-    }),
-  }),
-  fontRoot: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => {
-    const iconSpec = t.icons[p.name] || emptyIcon
-    const icon = iconSpec.icon as ResultOf<FontIconSpec>
+  root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => {
+    const iconSpec: ThemeIconSpec = t.icons[p.name] || emptyIcon
+    const isFontIcon = !iconSpec.isSvg
 
     return {
-      alignItems: 'center',
-      boxSizing: 'content-box',
-      display: 'inline-flex',
-      justifyContent: 'center',
+      speak: 'none',
+      verticalAlign: 'middle',
 
-      fontFamily: icon.fontFamily,
-      fontSize: v[`${p.size}Size`],
-      lineHeight: 1,
-      width: v[`${p.size}Size`],
-      height: v[`${p.size}Size`],
+      ...getXSpacingStyles(p.xSpacing, v.horizontalSpace),
 
-      '::before': {
-        content: icon.content,
-      },
+      ...(p.bordered && getBorderedStyles(v.borderColor)),
+      ...(p.circular && { ...getPaddedStyle(), borderRadius: '50%' }),
+      ...(p.disabled && {
+        color: v.disabledColor,
+      }),
 
-      transform: t.rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
+      ...(isFontIcon && {
+        alignItems: 'center',
+        boxSizing: 'content-box',
+        display: 'inline-flex',
+        justifyContent: 'center',
+
+        fontFamily: (iconSpec.icon as FontIconSpec).fontFamily,
+        fontSize: v[`${p.size}Size`],
+        lineHeight: 1,
+        width: v[`${p.size}Size`],
+        height: v[`${p.size}Size`],
+
+        '::before': {
+          content: (iconSpec.icon as FontIconSpec).content,
+        },
+
+        transform: t.rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
+      }),
     }
   },
 }

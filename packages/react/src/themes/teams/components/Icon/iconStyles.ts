@@ -43,16 +43,20 @@ const getIconColor = (variables, colors: StrictColorScheme<ItemType<typeof iconC
 }
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => {
     const colors = v.colorScheme[p.color]
 
+    const maybeIcon = t.icons[p.name]
+    const isSvgIcon = maybeIcon && maybeIcon.isSvg
+
     return {
-      backgroundColor: v.backgroundColor,
       display: 'inline-block', // we overriding this for Base theme
 
       // overriding base theme border handling
       ...((p.bordered || v.borderColor) &&
         getBorderedStyles(v.borderColor || getIconColor(v, colors))),
+
+      ...(isSvgIcon && { backgroundColor: v.backgroundColor }),
     }
   },
 
