@@ -34,7 +34,7 @@ task(
 task(
   'test:e2e',
   series(
-    argv.skipBuild ? cb => cb() : 'build:docs',
+    ...(argv.skipBuild ? [] : ['dll', 'build:docs']),
     'test:e2e:serve',
     'test:e2e:run',
     'test:e2e:serve:stop',
