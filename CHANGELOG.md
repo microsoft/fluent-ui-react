@@ -20,9 +20,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING CHANGES
 - Rename `toolbarBehavior` to `menuAsToolbarBehavior` and `toolbarButtonBehavior` to `menuItemAsToolbarButtonBehavior` ([#1393](https://github.com/stardust-ui/react/pull/1393))
 - Rename types related to accessibility ([#1421](https://github.com/stardust-ui/react/pull/1421))
+- Moved the `rtl` and `renderer` props from the `theme` prop object to the `Provider`'s props API @mnajdova ([#1377](https://github.com/stardust-ui/react/pull/1377))
 
 ### Features
 - Add `Toolbar` component @miroslavstastny ([#1408](https://github.com/stardust-ui/react/pull/1408))
+- Add `disableAnimations` boolean prop on the `Provider` @mnajdova ([#1377](https://github.com/stardust-ui/react/pull/1377))
+
+### Fixes
+- Fix click handling on focus for `action` slot in `Attachment` component @Bugaa92 ([#1444](https://github.com/stardust-ui/react/pull/1444))
 
 ### Fixes
 - Generate IDs for `header` and `content` slots once ([#1449](https://github.com/stardust-ui/react/pull/1449))
