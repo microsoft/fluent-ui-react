@@ -1,8 +1,7 @@
-// TODO: should be
-// import { Dropdown } from '@stardust-ui/react'
+import { Dropdown } from '@stardust-ui/react'
 
 describe('Dropdown', () => {
-  const triggerButton = '.ui-dropdown__trigger-button'
+  const triggerButton = `.${Dropdown.slotClassNames.triggerButton}`
 
   describe('Selection', () => {
     beforeEach(async () => {
