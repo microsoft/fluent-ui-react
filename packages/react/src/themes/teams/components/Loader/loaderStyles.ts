@@ -27,15 +27,14 @@ export default {
     variables: v,
   }: ComponentStyleFunctionParam<LoaderProps, LoaderVariables>) => {
     const outerAnimation: ICSSInJSStyle = {
-      animationName: t.renderer.renderKeyframe(
-        () =>
+      animationName: {
+        keyframe: () =>
           ({
             to: {
               opacity: 1,
             },
           } as any),
-        {},
-      ),
+      },
       animationDelay: '1.5s',
       animationDirection: 'normal',
       animationDuration: '.3s',
@@ -48,15 +47,14 @@ export default {
       position: 'relative',
     }
     const svgAnimation: ICSSInJSStyle = {
-      animationName: t.renderer.renderKeyframe(
-        () =>
+      animationName: {
+        keyframe: () =>
           ({
             to: {
               transform: `translate3d(0, ${v.svgTranslatePosition[p.size]}, 0)`,
             },
           } as any),
-        {},
-      ),
+      },
       animationDelay: '0s',
       animationDirection: 'normal',
       animationDuration: '2s',

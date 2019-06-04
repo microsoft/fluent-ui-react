@@ -80,7 +80,7 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility, theme, rtl, styles }) {
     const { name } = this.props
-    const { icons = {} } = theme
+    const { icons = {} } = theme || {}
 
     const maybeIcon = icons[name]
     const isSvgIcon = maybeIcon && maybeIcon.isSvg

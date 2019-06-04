@@ -14,7 +14,7 @@ const renderElementToJSX = (element: React.ReactNode, triggerErrorOnRenderFn: bo
       (typeof element.type === 'function' ? 'NoDisplayName' : element.type),
     showDefaultProps: false,
     showFunctions: true,
-    filterProps: ['accessibility'],
+    filterProps: ['accessibility', 'onClick', 'onChange'],
     functionValue: () => (renderHasFunction = true),
   })
 
