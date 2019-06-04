@@ -1,15 +1,14 @@
-import { Page, Browser, launch } from 'puppeteer'
+import { Page, Browser, launch, LaunchOptions } from 'puppeteer'
 import config from '../config'
+import { safeLaunchOptions } from '../build/puppeteer.config'
 
 const serverUrl = `http://${config.server_host}:${config.e2e_port}`
-const launchOptions = {
-  dumpio: false,
-  headless: true,
-  slowMo: 10,
 
-  // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568
-  args: [process.env.CI && '--single-process'].filter(Boolean),
-}
+const launchOptions: LaunchOptions = safeLaunchOptions({
+  headless: true,
+  dumpio: false,
+  slowMo: 10,
+})
 
 export class E2EApiClass {
   private browser: Browser
