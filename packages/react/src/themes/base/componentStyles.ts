@@ -1,3 +1,5 @@
+export { default as Checkbox } from './components/Checkbox/checkboxStyles'
+
 export { default as Dialog } from './components/Dialog/dialogStyles'
 
 export { default as Flex } from './components/Flex/flexStyles'
@@ -12,6 +14,8 @@ export { default as Loader } from './components/Loader/loaderStyles'
 export { default as ProviderBox } from './components/Provider/providerBoxStyles'
 
 export { default as Text } from './components/Text/textStyles'
+
+export { default as Toolbar } from './components/Toolbar/toolbarStyles'
 
 export { default as Grid } from './components/Grid/gridStyles'
 

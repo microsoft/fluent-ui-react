@@ -376,13 +376,19 @@ export const wrapperShorthand = PropTypes.oneOfType([
 ])
 
 /**
+ * A shorthand prop which can be used together with `children`.
+ */
+export const shorthandAllowingChildren = PropTypes.oneOfType([
+  PropTypes.node,
+  PropTypes.object,
+  PropTypes.func,
+])
+
+/**
  * Item shorthand is a description of a component that can be a literal,
  * a props object, an element or a render function.
  */
-export const itemShorthand = every([
-  disallow(['children']),
-  PropTypes.oneOfType([PropTypes.node, PropTypes.object, PropTypes.func]),
-])
+export const itemShorthand = every([disallow(['children']), shorthandAllowingChildren])
 export const itemShorthandWithKindProp = (kindPropValues: string[]) => {
   return every([
     disallow(['children']),

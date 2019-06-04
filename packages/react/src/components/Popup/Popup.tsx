@@ -139,7 +139,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     ...commonPropTypes.createCommon({
       animated: false,
       as: false,
-      content: 'shorthand',
+      content: false,
     }),
     align: PropTypes.oneOf(ALIGNMENTS),
     defaultOpen: PropTypes.bool,
@@ -159,7 +159,8 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     position: PropTypes.oneOf(POSITIONS),
     renderContent: PropTypes.func,
     target: PropTypes.any,
-    trigger: PropTypes.any,
+    trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
+    content: customPropTypes.shorthandAllowingChildren,
     contentRef: customPropTypes.ref,
   }
 

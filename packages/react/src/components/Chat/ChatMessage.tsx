@@ -18,7 +18,7 @@ import {
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import { chatMessageBehavior, toolbarBehavior } from '../../lib/accessibility'
+import { chatMessageBehavior, menuAsToolbarBehavior } from '../../lib/accessibility'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -214,7 +214,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
             {Menu.create(actionMenu, {
               defaultProps: {
                 [IS_FOCUSABLE_ATTRIBUTE]: true,
-                accessibility: toolbarBehavior,
+                accessibility: menuAsToolbarBehavior,
                 className: ChatMessage.slotClassNames.actionMenu,
                 styles: styles.actionMenu,
               },
