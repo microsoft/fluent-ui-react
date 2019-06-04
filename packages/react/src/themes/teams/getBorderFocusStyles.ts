@@ -22,6 +22,7 @@ const getPseudoElementStyles = (args: BorderPseudoElementStyles): ICSSInJSStyle 
     content: '""',
     position: 'absolute',
     borderStyle: 'solid',
+    pointerEvents: 'none',
     top: borderEdgeValue,
     right: borderEdgeValue,
     bottom: borderEdgeValue,

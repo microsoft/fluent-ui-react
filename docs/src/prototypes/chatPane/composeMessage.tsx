@@ -4,8 +4,7 @@ import {
   Input,
   Menu,
   Provider,
-  toolbarButtonBehavior,
-  toolbarBehavior,
+  menuAsToolbarBehavior,
   MenuItemProps,
 } from '@stardust-ui/react'
 
@@ -42,7 +41,7 @@ const ComposeMessage: React.FunctionComponent<ComposeMessageProps> = props => (
           defaultActiveIndex={0}
           items={getMenuItems()}
           iconOnly
-          accessibility={toolbarBehavior}
+          accessibility={menuAsToolbarBehavior}
           aria-label="Compose Editor"
           styles={{ marginTop: '10px' }}
         />
@@ -90,7 +89,6 @@ const getMenuItems = (): MenuItemProps[] => {
       xSpacing: 'both',
       variables: siteVars => ({ color: siteVars.colors.grey[500] }),
     },
-    accessibility: toolbarButtonBehavior,
     'aria-label': `${name} tool`,
   }))
 

@@ -1,5 +1,4 @@
-import { ThemePrepared, AnimationProp } from '../themes/types'
-import callable from './callable'
+import { AnimationProp, ThemePrepared } from '../themes/types'
 
 const createAnimationStyles = (animation: AnimationProp, theme: ThemePrepared) => {
   let animationCSSProp = {}
@@ -28,14 +27,12 @@ const createAnimationStyles = (animation: AnimationProp, theme: ThemePrepared) =
           ? animationThemeKeyframeParams
           : { ...animationThemeKeyframeParams, ...(animationPropKeyframeParams || {}) }
 
-      const evaluatedKeyframe =
-        typeof keyframe === 'string'
-          ? keyframe
-          : theme.renderer.renderKeyframe(callable(keyframe), mergedKeyframeParams)
+      const keyframeDefinition =
+        typeof keyframe === 'string' ? keyframe : { keyframe, params: mergedKeyframeParams }
 
       if (typeof animation === 'string') {
         animationCSSProp = {
-          animationName: evaluatedKeyframe,
+          animationName: keyframeDefinition,
           animationDelay: delay,
           animationDirection: direction,
           animationDuration: duration,
@@ -46,7 +43,7 @@ const createAnimationStyles = (animation: AnimationProp, theme: ThemePrepared) =
         }
       } else {
         animationCSSProp = {
-          animationName: evaluatedKeyframe,
+          animationName: keyframeDefinition,
           animationDelay: animation.delay || delay,
           animationDirection: animation.direction || direction,
           animationDuration: animation.duration || duration,
@@ -56,6 +53,27 @@ const createAnimationStyles = (animation: AnimationProp, theme: ThemePrepared) =
           animationTimingFunction: animation.timingFunction || timingFunction,
         }
       }
+    } else {
+      // animations was not found in the theme object
+      animationCSSProp =
+        typeof animation === 'string'
+          ? {
+              animationName: animation,
+            }
+          : {
+              animationName: animation.name,
+              ...(animation.delay && { animationDelay: animation.delay }),
+              ...(animation.direction && { animationDirection: animation.direction }),
+              ...(animation.duration && { animationDuration: animation.duration }),
+              ...(animation.fillMode && { animationFillMode: animation.fillMode }),
+              ...(animation.iterationCount && {
+                animationIterationCount: animation.iterationCount,
+              }),
+              ...(animation.playState && { animationPlayState: animation.playState }),
+              ...(animation.timingFunction && {
+                animationTimingFunction: animation.timingFunction,
+              }),
+            }
     }
   }
   return animationCSSProp
