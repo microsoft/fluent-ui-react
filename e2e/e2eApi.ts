@@ -1,9 +1,10 @@
 import config from '../config'
+import { Page } from 'puppeteer'
 
 const serverUrl = `http://${config.server_host}:${config.e2e_port}`
 
 export class E2EApi {
-  constructor(private readonly page) {}
+  constructor(private readonly page: Page) {}
 
   public goto = async (docsUrl: string, waitForSelector: string) => {
     await this.page.goto(`${serverUrl}/${docsUrl.replace(/^\//, '')}`)
