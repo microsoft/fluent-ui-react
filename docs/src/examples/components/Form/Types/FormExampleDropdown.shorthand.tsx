@@ -13,7 +13,7 @@ const fields = [
       items: ['John Doe', 'Dohn Joe', 'John Joe', 'Dohn Doe'],
       labelId,
       search: true,
-      placeholder: 'Choose friend',
+      placeholder: 'Choose a friend',
     },
   },
   { control: { as: Button, content: 'Submit' }, key: 'submit' },

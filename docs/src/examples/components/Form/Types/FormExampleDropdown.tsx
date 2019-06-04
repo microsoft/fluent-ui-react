@@ -16,7 +16,7 @@ const FormExample = () => (
         items: ['John Doe', 'Dohn Joe', 'John Joe', 'Dohn Doe'],
         labelId,
         search: true,
-        placeholder: 'Choose friend',
+        placeholder: 'Choose a friend',
       }}
       name="chooseFriend"
       required
