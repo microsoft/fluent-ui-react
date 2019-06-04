@@ -21,6 +21,12 @@ const treeTitleBehavior: Accessibility = (props: any) => ({
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
+      expandOrFocusFirstChild: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+      },
+      collapseOrFocusParent: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+      },
     },
   },
 })

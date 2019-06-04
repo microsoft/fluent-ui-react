@@ -16,6 +16,7 @@ import {
 import { ShorthandValue, ShorthandRenderFunction, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { treeBehavior } from '../../lib/accessibility'
+import { Ref, handleRef } from '@stardust-ui/react-component-ref'
 
 export interface TreeSlotClassNames {
   item: string
@@ -39,6 +40,9 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
 
   /** Shorthand array of props for Tree. */
   items: ShorthandValue[]
+
+  /** Ref for this tree. */
+  contentRef?: React.Ref<HTMLElement>
 
   /**
    * A custom render function for the title slot.
@@ -79,6 +83,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     ]),
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
+    contentRef: customPropTypes.ref,
     renderItemTitle: PropTypes.func,
     rtlAttributes: PropTypes.func,
   }
@@ -102,10 +107,13 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   }
 
   computeNewIndex = (index: number) => {
+    const activeIndexes = this.getActiveIndexes()
+    if (!this.props.items || this.props.items.length === 0) {
+      return activeIndexes
+    }
     const { exclusive } = this.props
 
     if (exclusive) return index
-    const activeIndexes = this.getActiveIndexes()
     // check to see if index is in array, and remove it, if not then add it
     return _.includes(activeIndexes, index)
       ? _.without(activeIndexes, index)
@@ -139,9 +147,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
-    const { children } = this.props
-
-    return (
+    const { children, contentRef } = this.props
+    const component = (
       <ElementType
         className={classes.root}
         {...accessibility.attributes.root}
@@ -150,6 +157,18 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       >
         {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
+    )
+
+    return contentRef ? (
+      <Ref
+        innerRef={(treeElement: HTMLElement) => {
+          handleRef(contentRef, treeElement)
+        }}
+      >
+        {component}
+      </Ref>
+    ) : (
+      component
     )
   }
 }
