@@ -18,13 +18,8 @@ import {
   ThemePrepared,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import {
-  AccessibilityBehavior,
-  AccessibilityDefinition,
-  AccessibilityActionHandlers,
-  FocusZoneMode,
-  FocusZoneDefinition,
-} from './accessibility/types'
+import { AccessibilityDefinition, FocusZoneMode, FocusZoneDefinition } from './accessibility/types'
+import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import { defaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
@@ -38,7 +33,7 @@ export interface RenderResultConfig<P> {
   unhandledProps: Props
   variables: ComponentVariablesObject
   styles: ComponentSlotStylesPrepared
-  accessibility: AccessibilityBehavior
+  accessibility: ReactAccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
 }
@@ -181,7 +176,11 @@ const renderComponent = <P extends {}>(
     },
   )
 
-  const accessibility: AccessibilityBehavior = getAccessibility(stateAndProps, actionHandlers, rtl)
+  const accessibility: ReactAccessibilityBehavior = getAccessibility(
+    stateAndProps,
+    actionHandlers,
+    rtl,
+  )
 
   const unhandledProps = getUnhandledProps({ handledProps }, props)
 

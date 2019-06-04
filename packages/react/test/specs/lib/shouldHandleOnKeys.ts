@@ -1,4 +1,4 @@
-import keyboardHandlerFilter from 'src/lib/keyboardHandlerFilter'
+import shouldHandleOnKeys from 'src/lib/shouldHandleOnKeys'
 
 const getEventArg = (
   keyCode: number,
@@ -16,10 +16,8 @@ const getEventArg = (
   }
 }
 
-describe('addKeyDownHandler', () => {
-  test('should invoke handler', () => {
-    const handlerSpy = jest.fn()
-
+describe('shouldHandleOnKeys', () => {
+  test('should return `true`', () => {
     // keys mapping defined for actions
     const keyCombinations = [
       { keyCode: 27 },
@@ -38,16 +36,11 @@ describe('addKeyDownHandler', () => {
         keyCombination.shiftKey,
       )
 
-      const eventHandler = keyboardHandlerFilter(handlerSpy, keyCombinations)
-      eventHandler(eventArg)
-      expect(handlerSpy).toHaveBeenCalled()
-      expect(handlerSpy).toHaveBeenCalledWith(eventArg)
+      expect(shouldHandleOnKeys(eventArg, keyCombinations)).toBe(true)
     })
   })
 
-  test('should not invoke handler', () => {
-    const handlerSpy = jest.fn()
-
+  test('should return `false`', () => {
     // keys mapping defined for actions
     const keyCombinations = [
       { keyCode: 27, ctrlKey: true },
@@ -72,9 +65,7 @@ describe('addKeyDownHandler', () => {
         keyCombination.shiftKey,
       )
 
-      const eventHandler = keyboardHandlerFilter(handlerSpy, keyCombinations)
-      eventHandler(eventArg)
-      expect(handlerSpy).not.toHaveBeenCalled()
+      expect(shouldHandleOnKeys(eventArg, keyCombinations)).toBe(false)
     })
   })
 })
