@@ -7,8 +7,7 @@ import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/reactTypes'
 import { FocusZone } from './accessibility/FocusZone'
 import { createShorthandFactory } from './factories'
-import { ObjectOf } from '../types'
-import { ThemePrepared } from '../themes/types'
+import { ObjectOf, ProviderContextPrepared } from '../types'
 
 export interface CreateComponentConfig<P> {
   displayName: string
@@ -43,7 +42,7 @@ const createComponent = <P extends ObjectOf<any> = any>({
   }
 
   const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
-    const theme: ThemePrepared = React.useContext(ThemeContext)
+    const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
     return renderComponent(
       {
@@ -57,7 +56,7 @@ const createComponent = <P extends ObjectOf<any> = any>({
         focusZoneRef,
         render: config => render(config, props),
       },
-      theme,
+      context,
     )
   }
 
