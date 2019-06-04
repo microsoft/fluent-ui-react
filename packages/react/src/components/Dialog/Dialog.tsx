@@ -88,6 +88,8 @@ export interface DialogProps
 }
 
 export interface DialogState {
+  contentId?: string
+  headerId?: string
   open?: boolean
 }
 
@@ -142,7 +144,21 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   triggerRef = React.createRef<HTMLElement>()
 
   getInitialAutoControlledState(): DialogState {
-    return { open: false }
+    return {
+      contentId: _.uniqueId('dialog-content-'),
+      headerId: _.uniqueId('dialog-header-'),
+      open: false,
+    }
+  }
+
+  static getAutoControlledStateFromProps(
+    props: DialogProps,
+    state: DialogState,
+  ): Partial<DialogState> {
+    return {
+      contentId: (props.content && props.content['id']) || state.contentId,
+      headerId: (props.header && props.header['id']) || state.headerId,
+    }
   }
 
   handleDialogCancel = (e: Event | React.SyntheticEvent) => {
