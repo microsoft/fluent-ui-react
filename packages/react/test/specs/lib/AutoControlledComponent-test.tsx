@@ -140,7 +140,9 @@ describe('extending AutoControlledComponent', () => {
       const autoControlledProps = _.keys(props)
 
       TestClass = createTestClass({ autoControlledProps, state: {} })
-      expect(shallow(<TestClass {...props} />).state()).toEqual({ autoControlledProps, ...props })
+      expect(shallow(<TestClass {...props} />).state()).toEqual(
+        expect.objectContaining({ autoControlledProps, ...props }),
+      )
     })
 
     test('does not include non autoControlledProps', () => {
@@ -210,10 +212,7 @@ describe('extending AutoControlledComponent', () => {
       consoleUtil.disableOnce()
       TestClass.autoControlledProps.push('value')
 
-      expect(shallow(<TestClass multiple />).state()).toEqual({
-        autoControlledProps: ['value'],
-        value: [],
-      })
+      expect(shallow(<TestClass multiple />).state()).toHaveProperty('value', [])
     })
   })
 
@@ -226,10 +225,9 @@ describe('extending AutoControlledComponent', () => {
       const defaultProps = makeDefaultProps(props)
 
       TestClass = createTestClass({ autoControlledProps, state: {} })
-      expect(shallow(<TestClass {...defaultProps} />).state()).toEqual({
-        autoControlledProps,
-        ...props,
-      })
+      expect(shallow(<TestClass {...defaultProps} />).state()).toEqual(
+        expect.objectContaining(props),
+      )
     })
 
     test('are not applied to state for normal props', () => {
