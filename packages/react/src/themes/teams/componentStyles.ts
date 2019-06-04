@@ -15,6 +15,8 @@ export { default as Chat } from './components/Chat/chatStyles'
 export { default as ChatItem } from './components/Chat/chatItemStyles'
 export { default as ChatMessage } from './components/Chat/chatMessageStyles'
 
+export { default as Checkbox } from './components/Checkbox/checkboxStyles'
+
 export { default as Dialog } from './components/Dialog/dialogStyles'
 
 export { default as Divider } from './components/Divider/dividerStyles'
@@ -66,6 +68,9 @@ export { default as ReactionGroup } from './components/Reaction/reactionGroupSty
 export { default as Status } from './components/Status/statusStyles'
 
 export { default as Text } from './components/Text/textStyles'
+
+export { default as ToolbarDivider } from './components/Toolbar/toolbarDividerStyles'
+export { default as ToolbarItem } from './components/Toolbar/toolbarItemStyles'
 
 export { default as Tree } from './components/Tree/treeStyles'
 export { default as TreeItem } from './components/Tree/treeItemStyles'

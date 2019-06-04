@@ -57,7 +57,7 @@ describe('Provider', () => {
   describe('RTL', () => {
     test('Sets dir="rtl" on the div for RTL theme', () => {
       const component = mount(
-        <Provider id="top-level-provider" theme={{ rtl: true }}>
+        <Provider id="top-level-provider" rtl>
           <span />
         </Provider>,
       )
@@ -68,7 +68,7 @@ describe('Provider', () => {
 
     test('Sets dir="ltr" on the div for LTR theme', () => {
       const component = mount(
-        <Provider id="top-level-provider" theme={{}}>
+        <Provider id="top-level-provider">
           <span />
         </Provider>,
       )
@@ -113,8 +113,8 @@ describe('Provider', () => {
     parentChildMatrix.forEach(({ parentIsRtl, childIsRtl, expectedChildDir }) => {
       test(`Nested providers: parent is RTL: ${parentIsRtl}, child is RTL: ${childIsRtl}, expected child dir: ${expectedChildDir}`, () => {
         const component = mount(
-          <Provider theme={{ rtl: parentIsRtl }}>
-            <Provider id="nested-provider" theme={{ rtl: childIsRtl }}>
+          <Provider rtl={parentIsRtl}>
+            <Provider id="nested-provider" rtl={childIsRtl}>
               <span />
             </Provider>
           </Provider>,

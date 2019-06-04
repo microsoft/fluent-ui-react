@@ -3,11 +3,11 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import { ComponentSlotClasses, ComponentSlotStylesPrepared } from '../themes/types'
-import { AccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/types'
+import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import { ObjectOf } from '../types'
 
 export interface RenderStardustResultConfig {
-  accessibility: AccessibilityBehavior
+  accessibility: ReactAccessibilityBehavior
   classes: ComponentSlotClasses
   rtl: boolean
   styles: ComponentSlotStylesPrepared
