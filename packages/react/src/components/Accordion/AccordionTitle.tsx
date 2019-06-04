@@ -19,7 +19,6 @@ import { WithAsProp, ComponentEventHandler, ShorthandValue, withSafeTypeForAs } 
 import Icon from '../Icon/Icon'
 import Layout from '../Layout/Layout'
 import { accordionTitleBehavior } from '../../lib/accessibility'
-import { AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
 export interface AccordionTitleSlotClassNames {
   content: string
@@ -89,10 +88,10 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
     contentRef: _.noop,
   }
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     performClick: e => {
       e.preventDefault()
-      this.handleClick(e as any)
+      this.handleClick(e)
     },
   }
 

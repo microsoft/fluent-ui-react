@@ -4,8 +4,7 @@ import {
   Chat,
   Menu,
   Provider,
-  toolbarBehavior,
-  toolbarButtonBehavior,
+  menuAsToolbarBehavior,
 } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -30,7 +29,7 @@ interface PopoverState {
 }
 
 const popoverBehavior: Accessibility = (props: any) => {
-  const behavior = toolbarBehavior(props)
+  const behavior = menuAsToolbarBehavior(props)
 
   behavior.focusZone.props.defaultTabbableElement = (root: HTMLElement): HTMLElement => {
     return root.querySelector('[aria-label="thumbs up"]')
@@ -62,33 +61,28 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             key: 'smile',
             icon: 'smile',
             className: 'smile-emoji',
-            accessibility: toolbarButtonBehavior,
             'aria-label': 'smile one',
           },
           {
             key: 'smile2',
             icon: 'smile',
             className: 'smile-emoji',
-            accessibility: toolbarButtonBehavior,
             'aria-label': 'smile two',
           },
           {
             key: 'smile3',
             icon: 'smile',
             className: 'smile-emoji',
-            accessibility: toolbarButtonBehavior,
             'aria-label': 'smile three',
           },
           {
             key: 'a',
             icon: 'thumbs up',
-            accessibility: toolbarButtonBehavior,
             'aria-label': 'thumbs up',
           },
           {
             key: 'c',
             icon: 'ellipsis horizontal',
-            accessibility: toolbarButtonBehavior,
             'aria-label': 'more options',
             indicator: false,
             menu: {
