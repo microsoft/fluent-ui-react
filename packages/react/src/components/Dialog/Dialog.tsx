@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
@@ -129,7 +129,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 
   static autoControlledProps = ['open']
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     closeAndFocusTrigger: e => {
       this.handleDialogCancel(e)
       e.stopPropagation()

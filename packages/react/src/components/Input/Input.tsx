@@ -14,7 +14,7 @@ import {
   commonPropTypes,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { inputBehavior } from '../../lib/accessibility'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
@@ -123,8 +123,8 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
 
   static autoControlledProps = ['value']
 
-  actionHandlers: AccessibilityActionHandlers = {
-    clear: (e: any) => {
+  actionHandlers = {
+    clear: (e: React.KeyboardEvent) => {
       if (this.props.clearable && this.state.value !== '') {
         e.stopPropagation()
         e.nativeEvent && e.nativeEvent.stopPropagation()
