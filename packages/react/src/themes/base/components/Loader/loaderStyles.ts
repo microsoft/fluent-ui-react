@@ -27,18 +27,21 @@ export default {
     theme: t,
     variables: v,
   }: ComponentStyleFunctionParam<LoaderProps, LoaderVariables>): ICSSInJSStyle => {
-    const animationName = t.renderer.renderKeyframe(
-      () =>
+    const animationName = {
+      keyframe: ({ from, to }) =>
         ({
           from: {
-            transform: 'rotate(0deg)',
+            transform: `rotate(${from})`,
           },
           to: {
-            transform: 'rotate(360deg)',
+            transform: `rotate(${to}})`,
           },
         } as any),
-      {},
-    )
+      params: {
+        from: '0deg',
+        to: '360deg',
+      },
+    }
     const borderColor = `${v.foregroundColor} ${v.backgroundColor} ${v.backgroundColor}`
 
     return {

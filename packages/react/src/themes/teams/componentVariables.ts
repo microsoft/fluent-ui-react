@@ -65,6 +65,10 @@ export { default as Status } from './components/Status/statusVariables'
 
 export { default as Text } from './components/Text/textVariables'
 
+export { default as Toolbar } from './components/Toolbar/toolbarVariables'
+export { default as ToolbarItem } from './components/Toolbar/toolbarItemVariables'
+export { default as ToolbarDivider } from './components/Toolbar/toolbarDividerVariables'
+
 export { default as TreeTitle } from './components/Tree/treeTitleVariables'
 
 export { default as Animation } from './components/Animation/animationVariables'
