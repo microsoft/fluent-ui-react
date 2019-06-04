@@ -1,11 +1,32 @@
-import e2e from './e2eApi'
+import { Browser, Page, LaunchOptions, launch } from 'puppeteer'
+import { safeLaunchOptions } from '../build/puppeteer.config'
+import { E2EApi } from './e2eApi'
 
 jest.setTimeout(10000)
 
-global['e2e'] = e2e
+let browser: Browser
+let page: Page
 
-beforeAll(e2e.beforeAll)
-beforeEach(e2e.beforeEach)
+const launchOptions: LaunchOptions = safeLaunchOptions({
+  headless: true,
+  dumpio: false,
+  slowMo: 10,
+})
 
-afterEach(e2e.afterEach)
-afterAll(e2e.afterAll)
+beforeAll(async () => {
+  browser = await launch(launchOptions)
+})
+
+beforeEach(async () => {
+  page = await browser.newPage()
+  global['e2e'] = new E2EApi(page)
+})
+
+afterEach(async () => {
+  await page.close()
+  global['e2e'] = null
+})
+
+afterAll(async () => {
+  await browser.close()
+})

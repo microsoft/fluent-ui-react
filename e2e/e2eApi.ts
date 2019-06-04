@@ -1,26 +1,9 @@
-import { Page, Browser, launch, LaunchOptions } from 'puppeteer'
 import config from '../config'
-import { safeLaunchOptions } from '../build/puppeteer.config'
 
 const serverUrl = `http://${config.server_host}:${config.e2e_port}`
 
-const launchOptions: LaunchOptions = safeLaunchOptions({
-  headless: true,
-  dumpio: false,
-  slowMo: 10,
-})
-
-export class E2EApiClass {
-  private browser: Browser
-  private page: Page
-
-  public beforeAll = async () => {
-    this.browser = await launch(launchOptions)
-  }
-
-  public beforeEach = async () => {
-    this.page = await this.browser.newPage()
-  }
+export class E2EApi {
+  constructor(private readonly page) {}
 
   public goto = async (docsUrl: string, waitForSelector: string) => {
     await this.page.goto(`${serverUrl}/${docsUrl.replace(/^\//, '')}`)
@@ -59,15 +42,4 @@ export class E2EApiClass {
       await this.page.keyboard.up(modifier)
     }
   }
-
-  public afterEach = async () => await this.page.close()
-
-  public afterAll = async () => await this.browser.close()
 }
-
-export type E2EApi = Pick<
-  E2EApiClass,
-  'goto' | 'getElement' | 'clickOn' | 'textOf' | 'focusOn' | 'isFocused' | 'pressKey'
->
-
-export default new E2EApiClass()
