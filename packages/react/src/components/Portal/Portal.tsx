@@ -16,12 +16,12 @@ import {
 } from '../../lib'
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
-import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
+import { AccessibilityAttributes } from '../../lib/accessibility/types'
+import { AccessibilityKeyHandlers } from '../../lib/accessibility/reactTypes'
 
-type ReactMouseEvent = React.MouseEvent<HTMLElement>
 export type TriggerAccessibility = {
   attributes?: AccessibilityAttributes
-  keyHandlers?: OnKeyDownHandler
+  keyHandlers?: AccessibilityKeyHandlers
 }
 
 export interface PortalProps extends ChildrenComponentProps, ContentComponentProps {
@@ -62,14 +62,14 @@ export interface PortalProps extends ChildrenComponentProps, ContentComponentPro
    *
    * @param {object} data - All props.
    */
-  onTriggerClick?: (e: ReactMouseEvent) => void
+  onTriggerClick?: (e: React.MouseEvent) => void
 
   /**
    * Called when `click` event was invoked outside portal or trigger nodes.
    *
    * @param {object} data - All props.
    */
-  onOutsideClick?: (e: ReactMouseEvent) => void
+  onOutsideClick?: (e: React.MouseEvent) => void
 }
 
 export interface PortalState {
@@ -180,7 +180,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
     handleRef(this.props.triggerRef, triggerNode)
   }
 
-  private handleTriggerClick = (e: ReactMouseEvent, ...unhandledProps) => {
+  private handleTriggerClick = (e: React.MouseEvent, ...unhandledProps) => {
     const { trigger } = this.props
 
     _.invoke(this.props, 'onTriggerClick', e) // Call handler from parent component

@@ -1,10 +1,9 @@
 import * as keyboardKey from 'keyboard-key'
 import { Accessibility } from '../../types'
 
-// TODO: use after https://github.com/stardust-ui/react/pull/1421
-// type CheckboxBehaviorProps = {
-//   checked: boolean
-// }
+type CheckboxBehaviorProps = {
+  checked: boolean
+}
 
 /**
  * @specification
@@ -12,7 +11,7 @@ import { Accessibility } from '../../types'
  * Adds attribute 'aria-checked=true' based on the property 'checked'.
  * Adds attribute 'tabIndex=0' to 'root' component's part.
  */
-const checkboxBehavior: Accessibility = props => ({
+const checkboxBehavior: Accessibility<CheckboxBehaviorProps> = props => ({
   attributes: {
     root: {
       'aria-checked': props.checked,

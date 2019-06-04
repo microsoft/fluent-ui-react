@@ -11,7 +11,7 @@ import {
   AutoControlledComponent,
 } from '../../lib'
 import { embedBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
@@ -101,7 +101,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     control: `${Embed.className}__control`,
   }
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     performClick: event => this.handleClick(event),
   }
 

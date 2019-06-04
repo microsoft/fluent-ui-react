@@ -240,3 +240,4 @@ export const FocusZoneUtilities = {
 }
 export * from './lib/accessibility/FocusZone/FocusZone.types'
 export * from './lib/accessibility/types'
+export * from './lib/accessibility/reactTypes'
