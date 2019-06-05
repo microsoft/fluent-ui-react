@@ -127,16 +127,15 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
               styles: styles.action,
               ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.action, {}),
             },
-            overrideProps: props => {
-              const previous = props.onKeyDown
-
-              props.onKeyDown = e => {
-                console.warn('HANDLING KEY DOWN')
-                e.stopPropagation()
-                previous && previous(e)
-              }
-              return props
-            },
+            // overrideProps: props => {
+            //       const previous = props.onKeyDown
+            //   props.onKeyDown = e => {
+            //     // console.warn('HANDLING KEY DOWN')
+            //     e.stopPropagation()
+            //     previous && previous(e)
+            //   }
+            //   return props
+            // },
           })}
         {!_.isNil(progress) &&
           Box.create('', {
@@ -151,8 +150,10 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
   }
 
   private performClick = e => {
-    e.stopPropagation()
-    this.handleClick(e)
+    if (e.currentTarget === e.target) {
+      e.stopPropagation()
+      this.handleClick(e)
+    }
   }
 
   private handleClick = (e: React.SyntheticEvent) => {
