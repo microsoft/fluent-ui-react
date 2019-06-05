@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['airbnb', 'prettier'],
+  extends: ['airbnb', 'prettier', 'plugin:@stardust-ui/all'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'jest', 'import', 'react-hooks', '@stardust-ui'],
   env: {
@@ -7,8 +7,6 @@ module.exports = {
     'jest/globals': true,
   },
   rules: {
-    '@stardust-ui/no-visibility-modifiers': 'error',
-
     // False positive on arg types:
     // https://github.com/typescript-eslint/typescript-eslint/issues/46
     '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
