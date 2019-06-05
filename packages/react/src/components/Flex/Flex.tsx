@@ -48,7 +48,7 @@ class Flex extends UIComponent<WithAsProp<FlexProps>> {
     as: 'div',
   }
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
       content: false,

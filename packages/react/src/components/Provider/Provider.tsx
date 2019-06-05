@@ -77,7 +77,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
   static _topLevelFelaRenderer = undefined
 
-  private get topLevelFelaRenderer() {
+  get topLevelFelaRenderer() {
     if (!Provider._topLevelFelaRenderer) {
       Provider._topLevelFelaRenderer = this.props.theme.rtl ? felaRtlRenderer : felaLtrRenderer
     }

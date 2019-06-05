@@ -132,12 +132,12 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     reactionGroupPosition: 'start',
   }
 
-  public state = {
+  state = {
     focused: false,
     isFromKeyboard: false,
   }
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers: AccessibilityActionHandlers = {
     // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys
     // as navigation (only Tab key should work)
     preventDefault: event => {

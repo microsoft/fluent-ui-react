@@ -78,7 +78,7 @@ class ExternalExampleLayout extends React.Component<
     )
   }
 
-  private getTheme = (): ThemeInput => {
+  getTheme = (): ThemeInput => {
     const { themeName } = this.state
     const theme: ThemeInput = (themeName && themes[themeName]) || {}
 

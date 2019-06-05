@@ -116,7 +116,7 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
     isFromKeyboard: false,
   }
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers: AccessibilityActionHandlers = {
     performClick: event => {
       this.handleClick(event)
       event.preventDefault()

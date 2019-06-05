@@ -56,12 +56,12 @@ export interface PopupContentProps
 }
 
 class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
-  public static create: Function
+  static create: Function
 
-  public static displayName = 'PopupContent'
-  public static className = 'ui-popup__content'
+  static displayName = 'PopupContent'
+  static className = 'ui-popup__content'
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon(),
     placement: PropTypes.string,
     pointing: PropTypes.bool,
@@ -74,15 +74,15 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
     accessibility: defaultBehavior,
   }
 
-  private handleMouseEnter = e => {
+  handleMouseEnter = e => {
     _.invoke(this.props, 'onMouseEnter', e, this.props)
   }
 
-  private handleMouseLeave = e => {
+  handleMouseLeave = e => {
     _.invoke(this.props, 'onMouseLeave', e, this.props)
   }
 
-  public renderComponent({
+  renderComponent({
     accessibility,
     ElementType,
     classes,

@@ -1,0 +1,10 @@
+{
+  "name": "@stardust-ui/eslint-plugin",
+  "version": "0.31.0",
+  "files": [
+    "no-visibility-modifiers"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

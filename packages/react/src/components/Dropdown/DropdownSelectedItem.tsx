@@ -64,7 +64,7 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
 }
 
 class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemProps>, any> {
-  private itemRef = React.createRef<HTMLElement>()
+  itemRef = React.createRef<HTMLElement>()
 
   static displayName = 'DropdownSelectedItem'
   static create: Function
@@ -95,15 +95,15 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
     }
   }
 
-  private handleClick = (e: React.SyntheticEvent) => {
+  handleClick = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  private handleKeyDown = (e: React.SyntheticEvent) => {
+  handleKeyDown = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onKeyDown', e, this.props)
   }
 
-  private handleIconOverrides = (predefinedProps: IconProps) => ({
+  handleIconOverrides = (predefinedProps: IconProps) => ({
     onClick: (e: React.SyntheticEvent, iconProps: IconProps) => {
       e.stopPropagation()
       _.invoke(this.props, 'onRemove', e, this.props)
@@ -118,7 +118,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
     },
   })
 
-  public renderComponent({
+  renderComponent({
     unhandledProps,
     classes,
     styles,

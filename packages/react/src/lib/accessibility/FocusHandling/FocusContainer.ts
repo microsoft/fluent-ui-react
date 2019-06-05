@@ -1,15 +1,18 @@
 export class ContainerFocusHandler {
-  private focusedIndex = 0
+  focusedIndex = 0
+  getItemsCount: () => number
+  readonly setFocusAt: (number) => void
+  circular = false
 
-  constructor(
-    private getItemsCount: () => number,
-    private readonly setFocusAt: (number) => void,
-    private circular = false,
-  ) {}
+  constructor(getItemsCount: () => number, setFocusAt: (number) => void, circular = false) {
+    this.getItemsCount = getItemsCount
+    this.setFocusAt = setFocusAt
+    this.circular = circular
+  }
 
-  private noItems = (): boolean => this.getItemsCount() === 0
+  noItems = (): boolean => this.getItemsCount() === 0
 
-  private constrainFocusedIndex(): void {
+  constrainFocusedIndex(): void {
     const itemsCount = this.getItemsCount()
     if (this.focusedIndex < 0) {
       this.focusedIndex = this.circular ? itemsCount - 1 : 0
@@ -20,15 +23,15 @@ export class ContainerFocusHandler {
     }
   }
 
-  public getFocusedIndex(): number {
+  getFocusedIndex(): number {
     return this.focusedIndex
   }
 
-  public syncFocusedIndex(withCurrentIndex: number) {
+  syncFocusedIndex(withCurrentIndex: number) {
     this.focusedIndex = withCurrentIndex
   }
 
-  public movePrevious(): void {
+  movePrevious(): void {
     if (this.noItems()) {
       return
     }
@@ -39,7 +42,7 @@ export class ContainerFocusHandler {
     this.setFocusAt(this.focusedIndex)
   }
 
-  public moveNext(): void {
+  moveNext(): void {
     if (this.noItems()) {
       return
     }
@@ -50,7 +53,7 @@ export class ContainerFocusHandler {
     this.setFocusAt(this.focusedIndex)
   }
 
-  public moveFirst(): void {
+  moveFirst(): void {
     if (this.noItems()) {
       return
     }
@@ -59,7 +62,7 @@ export class ContainerFocusHandler {
     this.setFocusAt(this.focusedIndex)
   }
 
-  public moveLast(): void {
+  moveLast(): void {
     if (this.noItems()) {
       return
     }
