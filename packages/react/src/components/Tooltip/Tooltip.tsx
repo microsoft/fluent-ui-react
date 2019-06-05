@@ -31,16 +31,8 @@ import {
   PopperChildrenProps,
 } from '../../lib/positioner'
 import TooltipContent from './TooltipContent'
-import {
-  AutoFocusZone,
-  AutoFocusZoneProps,
-  FocusTrapZone,
-  FocusTrapZoneProps,
-} from '../../lib/accessibility/FocusZone'
-
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
-import popupBehavior from '../../lib/accessibility/Behaviors/Popup/popupBehavior'
 
 export interface TooltipSlotClassNames {
   content: string
@@ -138,7 +130,6 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   }
 
   static defaultProps: TooltipProps = {
-    accessibility: popupBehavior,
     align: 'start',
     mountDocument: isBrowser() ? document : null,
     mountNode: isBrowser() ? document.body : null,
@@ -155,23 +146,6 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   tooltipDomElement = null
 
   closeTimeoutId
-
-  protected actionHandlers = {
-    closeAndFocusTrigger: e => {
-      this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
-    },
-    close: e => {
-      this.close(e)
-    },
-    toggle: e => {
-      e.preventDefault()
-      this.trySetOpen(!this.state.open, e)
-    },
-    open: e => {
-      e.preventDefault()
-      this.setTooltipOpen(true, e)
-    },
-  }
 
   renderComponent({
     classes,
@@ -232,10 +206,6 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       }
       _.invoke(triggerElement, 'props.onBlur', e, ...args)
     }
-    triggerProps.onClick = (e, ...args) => {
-      this.setTooltipOpen(true, e)
-      _.invoke(triggerElement, 'props.onClick', e, ...args)
-    }
 
     triggerProps.onMouseEnter = (e, ...args) => {
       this.setTooltipOpen(true, e)
@@ -252,17 +222,6 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
   getContentProps = (predefinedProps?) => {
     const contentHandlerProps: any = {}
-
-    contentHandlerProps.onFocus = (e, contentProps) => {
-      this.trySetOpen(true, e)
-      predefinedProps && _.invoke(predefinedProps, 'onFocus', e, contentProps)
-    }
-    contentHandlerProps.onBlur = (e, contentProps) => {
-      if (this.shouldBlurClose(e)) {
-        this.trySetOpen(false, e)
-      }
-      predefinedProps && _.invoke(predefinedProps, 'onBlur', e, contentProps)
-    }
 
     contentHandlerProps.onMouseEnter = (e, contentProps) => {
       this.setTooltipOpen(true, e)
@@ -332,30 +291,13 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
     const documentRef = toRefObject(mountDocument)
 
-    const tooltipWrapperAttributes = {
+    const tooltipContentAttributes = {
       ...(rtl && { dir: 'rtl' }),
       ...accessibility.attributes.tooltip,
       ...accessibility.keyHandlers.tooltip,
       className: tooltipPositionClasses,
       ...this.getContentProps(),
     }
-
-    const focusTrapProps = {
-      ...(typeof accessibility.focusTrap === 'boolean' ? {} : accessibility.focusTrap),
-      ...tooltipWrapperAttributes,
-    } as FocusTrapZoneProps
-
-    const autoFocusProps = {
-      ...(typeof accessibility.autoFocus === 'boolean' ? {} : accessibility.autoFocus),
-      ...tooltipWrapperAttributes,
-    } as AutoFocusZoneProps
-
-    /**
-     * if there is no focus trap  or auto focus wrapper, we should apply
-     * HTML attributes and positioning to tooltip content directly
-     */
-    const tooltipContentAttributes =
-      accessibility.focusTrap || accessibility.autoFocus ? {} : tooltipWrapperAttributes
 
     const tooltipContent = Tooltip.Content.create(content, {
       defaultProps: {
@@ -378,13 +320,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
                 handleRef(nestingRef, domElement)
               }}
             >
-              {accessibility.focusTrap ? (
-                <FocusTrapZone {...focusTrapProps}>{tooltipContent}</FocusTrapZone>
-              ) : accessibility.autoFocus ? (
-                <AutoFocusZone {...autoFocusProps}>{tooltipContent}</AutoFocusZone>
-              ) : (
-                tooltipContent
-              )}
+              {tooltipContent}
             </Ref>
 
             <EventListener
