@@ -1,4 +1,5 @@
 import { Box, Flex, Icon, Text } from '@stardust-ui/react'
+import * as keyboardKey from 'keyboard-key'
 
 import * as React from 'react'
 
@@ -44,6 +45,17 @@ class GridImagePickerItem extends React.Component<GridPickerItemProps> {
             'data-is-focusable': true,
             'aria-label': title,
             'aria-roledescription': 'grid item',
+          }}
+          onClick={() => {
+            alert('Item Clicked!')
+          }}
+          onKeyDown={event => {
+            const keycode = keyboardKey.getCode(event)
+            const isEnterOrSpace = keycode === keyboardKey.Enter || keycode === keyboardKey.Spacebar
+            if (isEnterOrSpace) {
+              event.preventDefault()
+              alert('Item Clicked!')
+            }
           }}
         >
           <Box
