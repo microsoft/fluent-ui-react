@@ -195,13 +195,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       componentVariables: mergeThemeVariables(theme.componentVariables, {
         [this.getDisplayName()]: componentVariables,
       }),
-      rtl: showRtl,
     }
 
     const providerVariables = showTransparent ? { background: 'initial' } : undefined
 
     return (
-      <Provider theme={newTheme} variables={providerVariables}>
+      <Provider theme={newTheme} rtl={showRtl} variables={providerVariables}>
         {element}
       </Provider>
     )

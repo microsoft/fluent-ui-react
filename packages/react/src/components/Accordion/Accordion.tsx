@@ -15,7 +15,7 @@ import {
 import { accordionBehavior } from '../../lib/accessibility'
 import AccordionTitle, { AccordionTitleProps } from './AccordionTitle'
 import AccordionContent from './AccordionContent'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   ComponentEventHandler,
@@ -140,7 +140,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
   defaultAccordionTitleId = _.uniqueId('accordion-title-')
   defaultAccordionContentId = _.uniqueId('accordion-content-')
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     moveNext: e => {
       e.preventDefault()
       this.focusHandler.moveNext()

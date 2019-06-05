@@ -13,7 +13,7 @@ import {
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 
@@ -56,7 +56,7 @@ class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
   static Item = ChatItem
   static Message = ChatMessage
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     focus: () => this.focusZone && this.focusZone.focus(),
   }
 

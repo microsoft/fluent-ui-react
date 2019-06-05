@@ -16,7 +16,7 @@ import {
 } from '../../lib'
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 
 export interface RadioGroupSlotClassNames {
@@ -96,7 +96,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     )
   }
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     nextItem: event => this.setCheckedItem(event, 1),
     prevItem: event => this.setCheckedItem(event, -1),
   }

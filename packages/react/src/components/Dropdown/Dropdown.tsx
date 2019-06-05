@@ -100,7 +100,7 @@ export interface DropdownProps
   }
 
   /**
-   * Callback that creates custom accessability message for dropdown status change. Involves changes in highlighted item in the list, selection, toggle status.
+   * Callback that provides status announcement message with number of items in the list, using Arrow Up/Down keys to navigate through them and, if multiple, using Arrow Left/Right to navigate through selected items.
    * @param {DownshiftA11yStatusMessageOptions<ShorthandValue>} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
    */
   getA11yStatusMessage?: (options: DownshiftA11yStatusMessageOptions<ShorthandValue>) => string
@@ -1321,5 +1321,6 @@ Dropdown.slotClassNames = {
  * Implements [ARIA Combo Box](https://www.w3.org/TR/wai-aria-practices-1.1/#combobox) design pattern, uses aria-live to announce state changes.
  * Do provide getA11ySelectionMessage, getA11yStatusMessage, noResultsMessage and loadingMessage props to announce state changes correctly.
  * Do provide aria-label to triggerButton slot for non-searchable variants if the placeholder prop is not used.
+ *
  */
 export default withSafeTypeForAs<typeof Dropdown, DropdownProps>(Dropdown)

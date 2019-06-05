@@ -15,7 +15,7 @@ import Button from '../Button/Button'
 import Text from '../Text/Text'
 import Box from '../Box/Box'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { attachmentBehavior } from '../../lib/accessibility'
 
 export interface AttachmentProps extends UIComponentProps, ChildrenComponentProps {
@@ -131,7 +131,7 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
     )
   }
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     performClick: event => this.performClick(event),
   }
 
