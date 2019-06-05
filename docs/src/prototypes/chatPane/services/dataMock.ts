@@ -10,24 +10,21 @@ export interface ChatOptions {
 const userStatuses: UserStatus[] = ['Available', 'Away', 'DoNotDisturb', 'Offline']
 
 class ChatMock {
-  static readonly minUserCount = 2
-  static readonly defaultCount = 10
-  static readonly daysAgo = 40
+  private static readonly minUserCount = 2
+  private static readonly defaultCount = 10
+  private static readonly daysAgo = 40
 
-  userIds: string[] = []
-  usersMap: Map<string, UserData> = new Map()
-  chatMessages: MessageData[] = []
-  chat: ChatData
-  options: ChatOptions
+  private userIds: string[] = []
+  private usersMap: Map<string, UserData> = new Map()
+  private chatMessages: MessageData[] = []
+  public chat: ChatData
 
   constructor(
-    options: ChatOptions = {
+    private options: ChatOptions = {
       userCount: ChatMock.defaultCount,
       msgCount: ChatMock.defaultCount,
     },
   ) {
-    this.options = options
-
     if (this.options.userCount < ChatMock.minUserCount) {
       throw `[ChatMock]: A chat has a minimum of ${ChatMock.minUserCount} users`
     }
@@ -84,7 +81,7 @@ class ChatMock {
     }
   }
 
-  getRandomUser(max: number = this.usersMap.size - 1): UserData {
+  private getRandomUser(max: number = this.usersMap.size - 1): UserData {
     return this.usersMap.get(this.userIds[random.number({ max, precision: 1 })])
   }
 }

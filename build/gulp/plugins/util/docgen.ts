@@ -207,15 +207,15 @@ const getComponentSymbolOfType = (type: MaybeIntersectType) => {
 }
 
 export class Parser {
-  checker: ts.TypeChecker
-  propFilter: PropFilter
+  private checker: ts.TypeChecker
+  private propFilter: PropFilter
 
   constructor(program: ts.Program, opts: ParserOptions) {
     this.checker = program.getTypeChecker()
     this.propFilter = defaultPropFilter
   }
 
-  getComponentInfo(
+  public getComponentInfo(
     symbolParam: ts.Symbol,
     source: ts.SourceFile,
     componentNameResolver: ComponentNameResolver = () => undefined,
@@ -294,7 +294,7 @@ export class Parser {
     return null
   }
 
-  extractPropsFromTypeIfStatelessComponent(type: ts.Type): ts.Symbol | null {
+  public extractPropsFromTypeIfStatelessComponent(type: ts.Type): ts.Symbol | null {
     const callSignatures = type.getCallSignatures()
 
     if (callSignatures.length) {
@@ -318,7 +318,7 @@ export class Parser {
     return null
   }
 
-  extractPropsFromTypeIfStatefulComponent(type: ts.Type): ts.Symbol | null {
+  public extractPropsFromTypeIfStatefulComponent(type: ts.Type): ts.Symbol | null {
     const constructSignatures = type.getConstructSignatures()
 
     if (constructSignatures.length) {
@@ -338,7 +338,7 @@ export class Parser {
     return null
   }
 
-  getPropsInfo(propsObj: ts.Symbol, defaultProps: StringIndexedObject<string> = {}): Props {
+  public getPropsInfo(propsObj: ts.Symbol, defaultProps: StringIndexedObject<string> = {}): Props {
     if (!propsObj.valueDeclaration) {
       return {}
     }
@@ -383,7 +383,7 @@ export class Parser {
     return result
   }
 
-  findDocComment(symbol: ts.Symbol): JSDoc {
+  public findDocComment(symbol: ts.Symbol): JSDoc {
     const comment = this.getFullJsDocComment(symbol)
     if (comment.fullComment) {
       return comment
@@ -407,7 +407,7 @@ export class Parser {
    * though TypeScript has broken down the JsDoc comment into plain
    * text and JsDoc tags.
    */
-  getFullJsDocComment(symbol: ts.Symbol): JSDoc {
+  public getFullJsDocComment(symbol: ts.Symbol): JSDoc {
     // in some cases this can be undefined (Pick<Type, 'prop1'|'prop2'>)
     if (symbol.getDocumentationComment === undefined) {
       return defaultJSDoc
@@ -441,7 +441,7 @@ export class Parser {
     }
   }
 
-  extractDefaultPropsFromComponent(symbol: ts.Symbol, source: ts.SourceFile) {
+  public extractDefaultPropsFromComponent(symbol: ts.Symbol, source: ts.SourceFile) {
     let possibleStatements = source.statements
       // ensure that name property is available
       .filter(stmt => !!(stmt as ts.ClassDeclaration).name)
@@ -513,7 +513,7 @@ export class Parser {
     return {}
   }
 
-  getLiteralValueFromPropertyAssignment(property: ts.PropertyAssignment): string | null {
+  public getLiteralValueFromPropertyAssignment(property: ts.PropertyAssignment): string | null {
     let { initializer } = property
 
     // Shorthand properties, so inflect their actual value
@@ -559,7 +559,7 @@ export class Parser {
     }
   }
 
-  getPropMap(properties: ts.NodeArray<ts.PropertyAssignment>): StringIndexedObject<string> {
+  public getPropMap(properties: ts.NodeArray<ts.PropertyAssignment>): StringIndexedObject<string> {
     const propMap = properties.reduce(
       (acc, property) => {
         if (ts.isSpreadAssignment(property) || !property.name) {

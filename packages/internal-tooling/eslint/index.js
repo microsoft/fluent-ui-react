@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['airbnb', 'prettier', 'plugin:@stardust-ui/all'],
+  extends: ['airbnb', 'prettier'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'jest', 'import', 'react-hooks', '@stardust-ui'],
   env: {
@@ -107,6 +107,12 @@ module.exports = {
       files: '**/test/**/*.{ts,tsx}',
       rules: {
         'import/no-extraneous-dependencies': 'off',
+      },
+    },
+    {
+      files: '**/*.tsx',
+      rules: {
+        '@stardust-ui/no-visibility-modifiers': 'error',
       },
     },
   ],
