@@ -6,7 +6,7 @@ import * as React from 'react'
 import Tree from './Tree'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
 import { defaultBehavior, treeItemBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import {
   UIComponent,
   childrenExist,
@@ -107,7 +107,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
   private titleRef = React.createRef<HTMLElement>()
   private treeRef = React.createRef<HTMLElement>()
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  protected actionHandlers = {
     getFocusFromParent: e => {
       const { open } = this.props
       if (open) {
