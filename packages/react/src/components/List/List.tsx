@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import ListItem, { ListItemProps } from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 
@@ -106,7 +106,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
   private focusHandler: ContainerFocusHandler = null
   private itemRefs = []
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     moveNext: e => {
       e.preventDefault()
       this.focusHandler.moveNext()

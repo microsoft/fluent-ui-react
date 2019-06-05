@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Menu, toolbarBehavior } from '@stardust-ui/react'
+import { Menu, menuAsToolbarBehavior } from '@stardust-ui/react'
 
 const items = [
   {
@@ -122,7 +122,7 @@ class MenuExampleToolbarShorthand extends React.Component {
         defaultActiveIndex={0}
         items={items}
         iconOnly
-        accessibility={toolbarBehavior}
+        accessibility={menuAsToolbarBehavior}
         aria-label="Compose Editor"
       />
     )

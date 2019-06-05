@@ -4,9 +4,11 @@ import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
 import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
 import felaPluginPrefixer from 'fela-plugin-prefixer'
+import felaDisableAnimationsPlugin from './felaDisableAnimationsPlugin'
 import rtl from 'fela-plugin-rtl'
 
 import { Renderer } from '../themes/types'
+import felaRenderKeyframesPlugin from './felaRenderKeyframesPlugin'
 
 let felaDevMode = false
 
@@ -50,7 +52,7 @@ const createRendererConfig = (options: any = {}) => ({
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
     felaSanitizeCss({
-      skip: ['content'],
+      skip: ['content', 'keyframe'],
     }),
 
     felaExpandCssShorthandsPlugin(),
@@ -60,6 +62,8 @@ const createRendererConfig = (options: any = {}) => ({
     // Heads up!
     // This is required after fela-plugin-prefixer to resolve the array of fallback values prefixer produces.
     felaPluginFallbackValue(),
+    felaDisableAnimationsPlugin(),
+    felaRenderKeyframesPlugin(),
     ...(options.isRtl ? [rtl()] : []),
   ],
   filterClassName,
@@ -75,5 +79,4 @@ export const felaRenderer: Renderer = createRenderer(
 export const felaRtlRenderer: Renderer = createRenderer(
   createRendererConfig({ isRtl: true, rendererId: 'rtl' }),
 )
-
 export default felaRenderer

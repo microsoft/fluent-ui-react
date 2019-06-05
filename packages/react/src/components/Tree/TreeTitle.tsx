@@ -16,7 +16,7 @@ import {
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { treeTitleBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface TreeTitleProps
@@ -67,7 +67,7 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
     accessibility: treeTitleBehavior,
   }
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  protected actionHandlers = {
     performClick: e => {
       e.preventDefault()
       this.handleClick(e)
