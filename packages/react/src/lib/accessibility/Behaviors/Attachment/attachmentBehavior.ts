@@ -1,5 +1,6 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 
 /**
  * @specification
@@ -10,6 +11,7 @@ const attachmentBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       tabIndex: 0,
+      [IS_FOCUSABLE_ATTRIBUTE]: true,
     },
   },
   keyActions: {

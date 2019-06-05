@@ -100,6 +100,7 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
   }),
   endMedia: ({ props: p }) => ({
     ...(p.selectable && { display: 'none' }),
+    flexShrink: 0,
   }),
   main: () => ({
     minWidth: 0, // needed for the truncate styles to work

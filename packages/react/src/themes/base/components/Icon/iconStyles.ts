@@ -35,7 +35,7 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
 })
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
-  root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, theme: t, rtl }): ICSSInJSStyle => {
     const iconSpec: ThemeIconSpec = t.icons[p.name] || emptyIcon
     const isFontIcon = !iconSpec.isSvg
 
@@ -67,7 +67,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
           content: (iconSpec.icon as FontIconSpec).content,
         },
 
-        transform: t.rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
+        transform: rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
       }),
     }
   },

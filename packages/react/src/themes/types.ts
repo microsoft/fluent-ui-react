@@ -209,7 +209,18 @@ export interface ICSSPseudoElementStyle extends ICSSInJSStyle {
   content?: string
 }
 
-export interface ICSSInJSStyle extends React.CSSProperties {
+export interface StardustAnimationName {
+  keyframe?: any
+  params?: object
+}
+
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
+export type CSSProperties = Omit<React.CSSProperties, 'animationName'> & {
+  animationName?: StardustAnimationName | string | 'none'
+}
+
+export interface ICSSInJSStyle extends CSSProperties {
   // TODO Questionable: how else would users target their own children?
   [key: string]: any
 
@@ -248,6 +259,8 @@ export interface ComponentStyleFunctionParam<
   props: State & TProps
   variables: TVars
   theme: ThemePrepared
+  rtl: boolean
+  disableAnimations: boolean
 }
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((
@@ -312,8 +325,6 @@ export interface ThemeInput {
   siteVariables?: SiteVariablesInput
   componentVariables?: ThemeComponentVariablesInput
   componentStyles?: ThemeComponentStylesInput
-  rtl?: boolean
-  renderer?: Renderer
   fontFaces?: FontFaces
   staticStyles?: StaticStyles
   icons?: ThemeIcons
@@ -333,8 +344,6 @@ export interface ThemePrepared {
   componentVariables: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
   componentStyles: { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
   icons: ThemeIcons
-  rtl: boolean
-  renderer: Renderer
   fontFaces: FontFaces
   staticStyles: StaticStyles
   animations: { [key: string]: ThemeAnimation }
@@ -576,6 +585,7 @@ export type ThemeIconSpec = {
 }
 
 export type RequiredIconNames =
+  | 'stardust-checkmark'
   | 'stardust-circle'
   | 'stardust-close'
   | 'stardust-arrow-end'

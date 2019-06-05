@@ -12,7 +12,7 @@ import {
 } from '../../lib'
 import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { ShorthandValue, WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 
@@ -116,14 +116,14 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
     isFromKeyboard: false,
   }
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  protected actionHandlers = {
     performClick: event => {
       this.handleClick(event)
       event.preventDefault()
     },
   }
 
-  handleClick = e => {
+  handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 

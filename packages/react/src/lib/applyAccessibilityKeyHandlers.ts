@@ -2,10 +2,10 @@ import * as _ from 'lodash'
 import * as React from 'react'
 
 import { Props, ShorthandValue } from '../types'
-import { KeyboardHandler, OnKeyDownHandler } from './accessibility/types'
+import { AccessibilityHandlerProps, KeyboardEventHandler } from './accessibility/reactTypes'
 
 const applyAccessibilityKeyHandlers = (
-  keyHandlers: OnKeyDownHandler,
+  keyHandlers: AccessibilityHandlerProps,
   value: Props | ShorthandValue,
 ) => {
   const valIsPropsObject = _.isPlainObject(value)
@@ -18,8 +18,8 @@ const applyAccessibilityKeyHandlers = (
 
   return _.mapValues(
     keyHandlers,
-    (accessibilityHandler: KeyboardHandler, handleName: string) => (
-      e: KeyboardEvent,
+    (accessibilityHandler: KeyboardEventHandler, handleName: string) => (
+      e: React.KeyboardEvent,
       ...args: any[]
     ) => {
       accessibilityHandler(e)
