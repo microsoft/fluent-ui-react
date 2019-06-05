@@ -1,58 +1,7 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { TooltipContentProps } from '../../../../components/Tooltip/TooltipContent'
 import { TooltipContentVariables } from './tooltipContentVariables'
-
-const rtlMapping = {
-  left: 'right',
-  right: 'left',
-}
-
-const getPointerStyles = (
-  v: TooltipContentVariables,
-  rtl: boolean,
-  popperPlacement?: TooltipContentProps['placement'],
-) => {
-  const placementValue = (popperPlacement || '').split('-', 1).pop()
-  const placement = (rtl && rtlMapping[placementValue]) || placementValue
-
-  const rootStyles = {
-    top: {
-      marginBottom: v.pointerMargin,
-    },
-    right: {
-      marginLeft: v.pointerMargin,
-    },
-    bottom: {
-      marginTop: v.pointerMargin,
-    },
-    left: {
-      marginRight: v.pointerMargin,
-    },
-  }
-  const pointerStyles = {
-    top: {
-      bottom: `-${v.pointerOffset}`,
-      transform: 'rotate(45deg)',
-    },
-    right: {
-      left: `-${v.pointerOffset}`,
-      transform: 'rotate(135deg)',
-    },
-    bottom: {
-      top: `-${v.pointerOffset}`,
-      transform: 'rotate(-135deg)',
-    },
-    left: {
-      right: `-${v.pointerOffset}`,
-      transform: 'rotate(-45deg)',
-    },
-  }
-
-  return {
-    root: rootStyles[placement],
-    pointer: pointerStyles[placement],
-  }
-}
+import getPointerStyles from '../../getPointerStyles'
 
 const tooltipContentStyles: ComponentSlotStylesInput<
   TooltipContentProps,
@@ -63,7 +12,7 @@ const tooltipContentStyles: ComponentSlotStylesInput<
     display: 'block',
     maxWidth: v.maxWidth,
 
-    ...(p.pointing && getPointerStyles(v, rtl, p.placement).root),
+    ...(p.pointing && getPointerStyles(v.pointerOffset, v.pointerMargin, rtl, p.placement).root),
   }),
   pointer: ({ props: p, variables: v, rtl }): ICSSInJSStyle => ({
     display: 'block',
@@ -76,7 +25,7 @@ const tooltipContentStyles: ComponentSlotStylesInput<
     height: v.pointerSize,
     width: v.pointerSize,
 
-    ...getPointerStyles(v, rtl, p.placement).pointer,
+    ...getPointerStyles(v.pointerOffset, v.pointerMargin, rtl, p.placement).pointer,
   }),
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
