@@ -12,6 +12,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { ShorthandValue, ShorthandRenderFunction, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -90,6 +91,22 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   static autoControlledProps = ['activeIndex']
 
+  protected actionHandlers = {
+    expandSiblings: e => {
+      const { items, exclusive } = this.props
+      e.preventDefault()
+      e.stopPropagation()
+
+      if (exclusive) {
+        return
+      }
+
+      this.setState({
+        activeIndex: Array.from(Array(items.length).keys()),
+      })
+    },
+  }
+
   getInitialAutoControlledState({ exclusive }): TreeState {
     return {
       activeIndex: exclusive ? -1 : [],
@@ -147,6 +164,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
