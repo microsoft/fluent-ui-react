@@ -33,11 +33,25 @@ import PopupsPrototype from './prototypes/popups'
 import IconViewerPrototype from './prototypes/IconViewer'
 import MenuButtonPrototype from './prototypes/MenuButton'
 import AlertsPrototype from './prototypes/alerts'
+import { Routes as BrowserTestRoutes } from '../../e2e'
+import { match } from 'react-router'
+
+type E2EProps = {
+  match: match<{
+    exampleName: string
+  }>
+}
+
+const E2EExample: React.FC<E2EProps> = ({ match }) => {
+  const Component = BrowserTestRoutes[match.params.exampleName]
+  return <Component />
+}
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
     <Switch>
       <Route exact path="/maximize/:exampleName/:rtl?" component={ExternalExampleLayout} />
+      <Route exact path="/e2e/:exampleName" component={E2EExample} />
       <Switch>
         <DocsLayout exact path="/" component={Introduction} />
         <DocsLayout exact path="/:type/:name" component={DocsRoot} sidebar />
