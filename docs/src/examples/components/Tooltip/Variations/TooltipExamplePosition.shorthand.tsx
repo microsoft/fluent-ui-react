@@ -25,9 +25,7 @@ const TooltipExamplePosition = () => {
         content={{
           content: (
             <p>
-              The tooltip is rendered {position} the trigger
-              <br />
-              aligned to the {align}.
+              The tooltip is rendered {position} the trigger, aligned to the {align}.
             </p>
           ),
         }}

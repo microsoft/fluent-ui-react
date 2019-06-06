@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Button, Grid, Popup, Alignment, Position } from '@stardust-ui/react'
+import { Button, Grid, Tooltip, Alignment, Position } from '@stardust-ui/react'
 import { useBooleanKnob, useSelectKnob } from '@stardust-ui/docs-components'
 
 const TooltipExamplePosition = () => {
@@ -17,22 +17,20 @@ const TooltipExamplePosition = () => {
 
   return (
     <Grid columns="1" variables={{ padding: '100px 0' }} styles={{ justifyItems: 'center' }}>
-      <Popup
+      <Tooltip
         open={open || undefined}
         align={align}
         position={position}
         content={{
           content: (
             <p>
-              The popup is rendered {position} the trigger
-              <br />
-              aligned to the {align}.
+              The tooltip is rendered {position} the trigger, aligned to the {align}.
             </p>
           ),
         }}
       >
         <Button icon={icons[position]} styles={buttonStyles} />
-      </Popup>
+      </Tooltip>
     </Grid>
   )
 }

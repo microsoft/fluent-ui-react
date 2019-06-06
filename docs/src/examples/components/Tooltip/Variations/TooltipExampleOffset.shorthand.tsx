@@ -19,13 +19,7 @@ const TooltipExamplePosition = () => (
       offset="-100%p"
       trigger={renderButton('-45deg')}
       content={{
-        content: (
-          <p>
-            The tooltip is rendered at above-start
-            <br />
-            corner of the trigger.
-          </p>
-        ),
+        content: <p>The tooltip is rendered at above-start corner of the trigger.</p>,
       }}
       key="above-start"
     />
