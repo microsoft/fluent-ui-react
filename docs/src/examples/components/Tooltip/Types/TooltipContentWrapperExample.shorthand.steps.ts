@@ -3,9 +3,11 @@ import { Button } from '@stardust-ui/react'
 const config: ScreenerTestsConfig = {
   themes: ['teams', 'teamsDark', 'teamsHighContrast'],
   steps: [
-    builder => builder.focus(`.${Button.className}`).snapshot('Shows plain tooltip'),
-    builder =>
-      builder.focus(`.${Button.className}:nth-of-type(2)`).snapshot('Shows wrapper tooltip'),
+    (builder, keys) => builder.keys('body', keys.tab).snapshot('Shows plain tooltip'),
+    (builder, keys) =>
+      builder
+        .keys(`.${Button.className}:nth-of-type(1)`, keys.tab)
+        .snapshot('Shows wrapper tooltip'),
   ],
 }
 
