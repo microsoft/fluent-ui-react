@@ -2,6 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { Ref } from '@stardust-ui/react-component-ref'
 
 import Tree from './Tree'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
@@ -104,10 +105,10 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     accessibility: treeItemBehavior,
   }
 
-  private titleRef = React.createRef<HTMLElement>()
-  private treeRef = React.createRef<HTMLElement>()
+  titleRef = React.createRef<HTMLElement>()
+  treeRef = React.createRef<HTMLElement>()
 
-  protected actionHandlers = {
+  actionHandlers = {
     getFocusFromParent: e => {
       const { open } = this.props
       if (open) {
@@ -126,7 +127,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     },
   }
 
-  private handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
+  handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
     onClick: (e, titleProps) => {
       _.invoke(this.props, 'onTitleClick', e, this.props)
       _.invoke(predefinedProps, 'onClick', e, titleProps)
@@ -139,26 +140,29 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
     return (
       <>
-        {TreeTitle.create(title, {
-          defaultProps: {
-            className: TreeItem.slotClassNames.title,
-            contentRef: this.titleRef,
-            open,
-            hasSubtree,
-          },
-          render: renderItemTitle,
-          overrideProps: this.handleTitleOverrides,
-        })}
-        {open &&
-          Tree.create(items, {
+        <Ref innerRef={this.titleRef}>
+          {TreeTitle.create(title, {
             defaultProps: {
-              accessibility: defaultBehavior,
-              className: TreeItem.slotClassNames.subtree,
-              exclusive,
-              contentRef: this.treeRef,
-              renderItemTitle,
+              className: TreeItem.slotClassNames.title,
+              open,
+              hasSubtree,
             },
+            render: renderItemTitle,
+            overrideProps: this.handleTitleOverrides,
           })}
+        </Ref>
+        {open && (
+          <Ref innerRef={this.treeRef}>
+            {Tree.create(items, {
+              defaultProps: {
+                accessibility: defaultBehavior,
+                className: TreeItem.slotClassNames.subtree,
+                exclusive,
+                renderItemTitle,
+              },
+            })}
+          </Ref>
+        )}
       </>
     )
   }
