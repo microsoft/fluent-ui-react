@@ -9,7 +9,7 @@ export interface ChatPaneHeaderProps {
 }
 
 class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
-  public render() {
+  render() {
     return (
       <Flex column>
         <Flex.Item>{this.renderBanner()}</Flex.Item>
@@ -19,7 +19,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
     )
   }
 
-  private renderBanner(): React.ReactElement {
+  renderBanner(): React.ReactElement {
     return (
       <Segment
         content={
@@ -41,7 +41,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
     )
   }
 
-  private renderMainArea(): React.ReactElement {
+  renderMainArea(): React.ReactElement {
     const { chat } = this.props
 
     return (
@@ -74,7 +74,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
     )
   }
 
-  private renderHeaderButtons(): React.ReactElement {
+  renderHeaderButtons(): React.ReactElement {
     return (
       <div style={{ display: 'inline-flex' }}>
         <Button.Group

@@ -27,7 +27,7 @@ class FocusTrapZoneTestComponent extends React.Component<
     this.state = { isShowingFirst: true, isShowingSecond: false }
   }
 
-  public render() {
+  render() {
     return (
       <div>
         <FocusTrapZone forceFocusInsideTrap={true} isClickableOutsideFocusTrap={false}>
@@ -53,8 +53,8 @@ class FocusTrapZoneTestComponent extends React.Component<
     )
   }
 
-  private _toggleFirst = () => this.setState({ isShowingFirst: !this.state.isShowingFirst })
-  private _toggleSecond = () => this.setState({ isShowingSecond: !this.state.isShowingSecond })
+  _toggleFirst = () => this.setState({ isShowingFirst: !this.state.isShowingFirst })
+  _toggleSecond = () => this.setState({ isShowingSecond: !this.state.isShowingSecond })
 }
 
 describe('FocusTrapZone', () => {

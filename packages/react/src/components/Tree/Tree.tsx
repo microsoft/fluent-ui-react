@@ -88,7 +88,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     rtlAttributes: PropTypes.func,
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     as: 'ul',
     accessibility: treeBehavior,
   }

@@ -99,7 +99,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     title: customPropTypes.itemShorthand,
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     as: 'li',
     accessibility: treeItemBehavior,
   }

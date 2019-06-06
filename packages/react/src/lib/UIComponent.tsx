@@ -9,7 +9,7 @@ import { FocusZone } from './accessibility/FocusZone'
 
 // TODO @Bugaa92: deprecated by createComponent.tsx
 class UIComponent<P, S = {}> extends React.Component<P, S> {
-  private readonly childClass = this.constructor as typeof UIComponent
+  readonly childClass = this.constructor as typeof UIComponent
   static defaultProps: { [key: string]: any }
   static displayName: string
   static className: string
@@ -20,7 +20,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
   /** Array of props to exclude from list of handled ones. */
   static unhandledProps: string[] = []
 
-  private static _handledPropsCache: string[] = undefined
+  static _handledPropsCache: string[] = undefined
   static get handledProps() {
     if (!this._handledPropsCache) {
       this._handledPropsCache = _.difference(_.keys(this.propTypes), this.unhandledProps).sort()
@@ -29,8 +29,8 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
     return this._handledPropsCache
   }
 
-  protected actionHandlers: AccessibilityActionHandlers
-  protected focusZone: FocusZone
+  actionHandlers: AccessibilityActionHandlers
+  focusZone: FocusZone
 
   constructor(props, context) {
     super(props, context)
@@ -67,7 +67,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
     )
   }
 
-  private setFocusZoneRef = (focusZone: FocusZone): void => {
+  setFocusZoneRef = (focusZone: FocusZone): void => {
     this.focusZone = focusZone
   }
 }
