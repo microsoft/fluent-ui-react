@@ -13,7 +13,6 @@ const treeBehavior: Accessibility = (props: any) => ({
   focusZone: {
     mode: FocusZoneMode.Embed,
     props: {
-      isCircularNavigation: false,
       direction: FocusZoneDirection.vertical,
     },
   },
