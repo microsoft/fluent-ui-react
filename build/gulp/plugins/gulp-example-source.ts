@@ -20,6 +20,8 @@ const createExampleSourceCode = (file: Vinyl): ExampleSource => {
   const tsSource = file.contents.toString()
 
   const babelResult = Babel.transform(tsSource, {
+    // This plugin transforms TS files for docs, we want to apply exactly this config.
+    configFile: false,
     plugins: [transformStarImportPlugin],
     presets: [['@babel/preset-typescript', { allExtensions: true, isTSX: true }]],
     sourceType: 'module',

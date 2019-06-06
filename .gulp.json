@@ -1,0 +1,5 @@
+{
+  "flags": {
+    "require": "@stardust-ui/internal-tooling/babel/register"
+  }
+}
