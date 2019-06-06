@@ -34,11 +34,11 @@ export interface GridProps
 }
 
 class Grid extends UIComponent<WithAsProp<GridProps>, any> {
-  public static displayName = 'Grid'
+  static displayName = 'Grid'
 
-  public static className = 'ui-grid'
+  static className = 'ui-grid'
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
     }),
@@ -53,12 +53,12 @@ class Grid extends UIComponent<WithAsProp<GridProps>, any> {
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }
 
-  public static defaultProps: WithAsProp<GridProps> = {
+  static defaultProps: WithAsProp<GridProps> = {
     as: 'div',
     accessibility: defaultBehavior,
   }
 
-  public renderComponent({
+  renderComponent({
     accessibility,
     ElementType,
     classes,

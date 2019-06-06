@@ -103,8 +103,8 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selectable', 'truncateContent', 'truncateHeader', 'variables']
 
-  private focusHandler: ContainerFocusHandler = null
-  private itemRefs = []
+  focusHandler: ContainerFocusHandler = null
+  itemRefs = []
 
   actionHandlers = {
     moveNext: e => {
