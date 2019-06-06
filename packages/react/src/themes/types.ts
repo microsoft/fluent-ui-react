@@ -558,6 +558,7 @@ export interface FontFaceStyle {
 
 export interface FontFace {
   name: string
+  localAliases?: []
   paths: string[]
   style: FontFaceStyle
 }
