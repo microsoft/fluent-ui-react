@@ -64,9 +64,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
     },
   })
 
-  private renderItems(items, variables) {
+  renderItems(items, variables) {
     const itemOverridesFn = this.handleItemOverrides(variables)
-    return _.map(items, (item, index) => {
+    return _.map(items, item => {
       const kind = _.get(item, 'kind', 'item')
 
       switch (kind) {
