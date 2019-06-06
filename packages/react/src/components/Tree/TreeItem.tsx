@@ -23,6 +23,7 @@ import {
   ShorthandValue,
   withSafeTypeForAs,
 } from '../../types'
+import subtreeBehavior from '../../lib/accessibility/Behaviors/Tree/subtreeBehavior'
 
 export interface TreeItemSlotClassNames {
   title: string
@@ -127,7 +128,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
         {open &&
           Tree.create(items, {
             defaultProps: {
-              accessibility: defaultBehavior,
+              accessibility: subtreeBehavior,
               className: TreeItem.slotClassNames.subtree,
               exclusive,
               renderItemTitle,

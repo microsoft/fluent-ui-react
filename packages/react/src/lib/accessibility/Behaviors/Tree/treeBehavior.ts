@@ -1,32 +1,33 @@
 import { Accessibility, FocusZoneMode } from '../../types'
 import { FocusZoneDirection } from '../../FocusZone'
-import * as keyboardKey from 'keyboard-key'
+import subtreeBehavior from './subtreeBehavior'
 
 /**
  * @specification
  * Embeds component into FocusZone.
  * Provides arrow key navigation in vertical direction.
- * Keyboard navigation is circular.
  * Triggers 'expandSiblings' action with '*' on 'root'.
  */
-const treeBehavior: Accessibility = (props: any) => ({
-  attributes: {
-    root: {},
-  },
-  keyActions: {
-    root: {
-      expandSiblings: {
-        keyCombinations: [{ keyCode: keyboardKey['*'] }],
+const treeBehavior: Accessibility = (props: any) => {
+  const subtreeBehaviorData = subtreeBehavior(props)
+  return {
+    attributes: {
+      root: {
+        ...subtreeBehaviorData.attributes.root,
       },
     },
-  },
-  focusZone: {
-    mode: FocusZoneMode.Embed,
-    props: {
-      isCircularNavigation: true,
-      direction: FocusZoneDirection.vertical,
+    keyActions: {
+      root: {
+        ...subtreeBehaviorData.keyActions.root,
+      },
     },
-  },
-})
+    focusZone: {
+      mode: FocusZoneMode.Embed,
+      props: {
+        direction: FocusZoneDirection.vertical,
+      },
+    },
+  }
+}
 
 export default treeBehavior
