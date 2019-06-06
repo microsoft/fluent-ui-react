@@ -195,7 +195,7 @@ task('serve:docs', async () => {
           contentBase: paths.docsSrc(),
           hot: true,
           quiet: false,
-          noInfo: true, // must be quiet for hot middleware to show overlay
+          noInfo: true, // must be quite for hot middleware to show overlay
           lazy: false,
           stats: config.compiler_stats,
         }),
