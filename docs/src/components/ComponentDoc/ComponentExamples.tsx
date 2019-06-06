@@ -13,11 +13,11 @@ interface ComponentExamplesProps {
 }
 
 export default class ComponentExamples extends React.Component<ComponentExamplesProps, any> {
-  public static propTypes = {
+  static propTypes = {
     displayName: PropTypes.string.isRequired,
   }
 
-  public render() {
+  render() {
     return this.renderExamples() || this.renderMissingExamples()
   }
 
@@ -29,7 +29,7 @@ export default class ComponentExamples extends React.Component<ComponentExamples
    * 2. for every ./docs/src/components/{...}/{...}MyComponent{...}Example{...}.tsx there needs to be a shorthand version of it:
    *              ./docs/src/components/{...}/{...}MyComponent{...}Example{...}.shorthand.tsx
    */
-  private renderExamples = (): JSX.Element | null => {
+  renderExamples = (): JSX.Element | null => {
     const { displayName } = this.props
 
     // rule #1
@@ -56,7 +56,7 @@ export default class ComponentExamples extends React.Component<ComponentExamples
     )
   }
 
-  private renderMissingExamples = () => {
+  renderMissingExamples = () => {
     const { displayName } = this.props
 
     return this.renderElementWrappedInGrid(
@@ -66,7 +66,7 @@ export default class ComponentExamples extends React.Component<ComponentExamples
     )
   }
 
-  private renderMissingShorthandExamples = (missingPaths: string[]) => {
+  renderMissingShorthandExamples = (missingPaths: string[]) => {
     return this.renderElementWrappedInGrid(
       <ContributionPrompt>
         <div>Looks like we're missing examples at following paths:</div>
@@ -75,9 +75,9 @@ export default class ComponentExamples extends React.Component<ComponentExamples
     )
   }
 
-  private renderElementWrappedInGrid = (Element: JSX.Element) => <Segment content={Element} />
+  renderElementWrappedInGrid = (Element: JSX.Element) => <Segment content={Element} />
 
-  private getMissingExamplePaths(displayName: string, allPaths: string[]): string[] {
+  getMissingExamplePaths(displayName: string, allPaths: string[]): string[] {
     const examplesPattern = `\./${displayName}/[\\w/]+Example`
     const [normalExtension, shorthandExtension] = [
       componentAPIs.children.fileSuffix,
