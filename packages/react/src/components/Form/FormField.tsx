@@ -50,13 +50,13 @@ export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps
 }
 
 class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
-  public static displayName = 'FormField'
+  static displayName = 'FormField'
 
-  public static className = 'ui-form__field'
+  static className = 'ui-form__field'
 
   static create: Function
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
     }),
@@ -70,13 +70,13 @@ class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
     type: PropTypes.string,
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     accessibility: defaultBehavior,
     as: 'div',
     control: { as: Input },
   }
 
-  public renderComponent({
+  renderComponent({
     ElementType,
     classes,
     accessibility,
@@ -119,7 +119,7 @@ class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
     )
   }
 
-  private shouldControlAppearFirst = () => {
+  shouldControlAppearFirst = () => {
     const { type } = this.props
     return type && (type === 'checkbox' || type === 'radio')
   }

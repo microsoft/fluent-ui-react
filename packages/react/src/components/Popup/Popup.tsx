@@ -184,7 +184,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   closeTimeoutId
 
-  protected actionHandlers = {
+  actionHandlers = {
     closeAndFocusTrigger: e => {
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
     },

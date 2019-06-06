@@ -80,12 +80,12 @@ export interface PortalState {
  * A component that allows you to render children outside their parent.
  */
 class Portal extends AutoControlledComponent<PortalProps, PortalState> {
-  private portalNode: HTMLElement
-  private triggerNode: HTMLElement
+  portalNode: HTMLElement
+  triggerNode: HTMLElement
 
-  public static autoControlledProps = ['open']
+  static autoControlledProps = ['open']
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
       animated: false,
@@ -105,11 +105,11 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
     trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }
 
-  public static defaultProps: PortalProps = {
+  static defaultProps: PortalProps = {
     triggerAccessibility: {},
   }
 
-  public renderComponent(): React.ReactNode {
+  renderComponent(): React.ReactNode {
     return (
       <React.Fragment>
         {this.renderPortal()}
@@ -118,7 +118,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
     )
   }
 
-  private renderPortal(): JSX.Element | undefined {
+  renderPortal(): JSX.Element | undefined {
     const { children, content, trapFocus } = this.props
     const { open } = this.state
     const contentToRender = childrenExist(children) ? children : content
@@ -148,7 +148,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
     )
   }
 
-  private renderTrigger(): JSX.Element | undefined {
+  renderTrigger(): JSX.Element | undefined {
     const { trigger, triggerAccessibility } = this.props
 
     return (
@@ -163,24 +163,24 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
       )
     )
   }
-  private handleMount = () => {
+  handleMount = () => {
     _.invoke(this.props, 'onMount', this.props)
   }
 
-  private handleUnmount = () => {
+  handleUnmount = () => {
     _.invoke(this.props, 'onUnmount', this.props)
   }
 
-  private handlePortalRef = (portalNode: HTMLElement) => {
+  handlePortalRef = (portalNode: HTMLElement) => {
     this.portalNode = portalNode
   }
 
-  private handleTriggerRef = (triggerNode: HTMLElement) => {
+  handleTriggerRef = (triggerNode: HTMLElement) => {
     this.triggerNode = triggerNode
     handleRef(this.props.triggerRef, triggerNode)
   }
 
-  private handleTriggerClick = (e: React.MouseEvent, ...unhandledProps) => {
+  handleTriggerClick = (e: React.MouseEvent, ...unhandledProps) => {
     const { trigger } = this.props
 
     _.invoke(this.props, 'onTriggerClick', e) // Call handler from parent component
@@ -188,7 +188,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
     this.trySetState({ open: !this.state.open })
   }
 
-  private handleDocumentClick = (e: MouseEvent) => {
+  handleDocumentClick = (e: MouseEvent) => {
     if (
       !this.portalNode || // no portal
       doesNodeContainClick(this.triggerNode, e) || // event happened in trigger (delegate to trigger handlers)

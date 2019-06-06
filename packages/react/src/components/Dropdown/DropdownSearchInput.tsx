@@ -85,23 +85,23 @@ class DropdownSearchInput extends UIComponent<WithAsProp<DropdownSearchInputProp
     placeholder: PropTypes.string,
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
-  private handleInputKeyDown = (e: React.SyntheticEvent) => {
+  handleInputKeyDown = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onInputKeyDown', e, this.props)
   }
 
-  private handleInputBlur = (e: React.SyntheticEvent) => {
+  handleInputBlur = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onInputBlur', e, this.props)
   }
 
-  private handleKeyUp = (e: React.SyntheticEvent) => {
+  handleKeyUp = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onKeyUp', e, this.props)
   }
 
-  public renderComponent({ unhandledProps, styles }: RenderResultConfig<DropdownSearchInputProps>) {
+  renderComponent({ unhandledProps, styles }: RenderResultConfig<DropdownSearchInputProps>) {
     const {
       accessibilityComboboxProps,
       accessibilityInputProps,

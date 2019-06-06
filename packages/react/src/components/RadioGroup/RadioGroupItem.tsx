@@ -91,7 +91,7 @@ class RadioGroupItem extends AutoControlledComponent<
   WithAsProp<RadioGroupItemProps>,
   RadioGroupItemState
 > {
-  private elementRef = React.createRef<HTMLElement>()
+  elementRef = React.createRef<HTMLElement>()
 
   static create: Function
 
