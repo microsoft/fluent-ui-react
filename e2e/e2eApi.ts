@@ -1,7 +1,18 @@
 import config from '../config'
 import { Page } from 'puppeteer'
+import * as path from 'path'
+import * as _ from 'lodash'
 
 const serverUrl = `http://${config.server_host}:${config.e2e_port}`
+
+export const exampleUrlTokenFromFilePath = (filePath: string) => {
+  const testName = path
+    .basename(filePath)
+    .replace(/^(.+)-test.tsx?$/, '$1')
+    .replace(/^(.+)-example.tsx?$/, '$1')
+
+  return _.kebabCase(testName)
+}
 
 export class E2EApi {
   constructor(private readonly page: Page) {}
@@ -11,8 +22,17 @@ export class E2EApi {
     await this.page.waitForSelector(waitForSelector, { timeout: 30 * 1000 })
   }
 
+  public gotoTestCase = async (testFilePath: string, waitForSelector: string) => {
+    const testCaseUrl = `/e2e/${exampleUrlTokenFromFilePath(testFilePath)}`
+    await this.goto(testCaseUrl, waitForSelector)
+  }
+
   public getElement = async (selector: string) => {
-    return await this.page.waitForSelector(selector, { timeout: 3 * 1000 })
+    return await this.page.waitForSelector(selector, { timeout: 10 * 1000 })
+  }
+
+  public count = async (selector: string) => {
+    return (await this.page.$$(selector)).length
   }
 
   public clickOn = async (selector: string) => await (await this.getElement(selector)).click()
