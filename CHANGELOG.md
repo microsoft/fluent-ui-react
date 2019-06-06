@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add `Toolbar` component @miroslavstastny ([#1408](https://github.com/stardust-ui/react/pull/1408))
 - Add `disableAnimations` boolean prop on the `Provider` @mnajdova ([#1377](https://github.com/stardust-ui/react/pull/1377))
+- Expand all `Tree` siblings on `asterisk` key @silviuavram ([#1457](https://github.com/stardust-ui/react/pull/1457))
 
 ### Fixes
 - Fix click handling on focus for `action` slot in `Attachment` component @Bugaa92 ([#1444](https://github.com/stardust-ui/react/pull/1444))
