@@ -44,15 +44,9 @@ module.exports = createRule({
      */
     function checkMethodAccessibilityModifier(methodDefinition) {
       let nodeType = 'method definition'
-      switch (methodDefinition.kind) {
-        case 'method':
-          break
-        case 'constructor':
-          break
-        case 'get':
-        case 'set':
-          nodeType = `${methodDefinition.kind} property accessor`
-          break
+
+      if (['get', 'set'].includes(methodDefinition.kind)) {
+        nodeType = `${methodDefinition.kind} property accessor`
       }
 
       if (util.isTypeScriptFile(context.getFilename())) {
