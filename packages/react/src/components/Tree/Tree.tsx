@@ -101,9 +101,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         return
       }
 
-      this.setState({
-        activeIndex: Array.from(Array(items.length).keys()),
-      })
+      this.trySetState({ activeIndex: _.range(0, items.length) })
     },
   }
 
