@@ -1,11 +1,8 @@
-import { EventListener } from '@stardust-ui/react-component-event-listener'
-import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
-import { handleRef, toRefObject, Ref } from '@stardust-ui/react-component-ref'
+import { toRefObject, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
-import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 
 import {
@@ -19,7 +16,6 @@ import {
   StyledComponentProps,
   commonPropTypes,
   isFromKeyboard,
-  doesNodeContainClick,
   setWhatInputSource,
 } from '../../lib'
 import { ShorthandValue } from '../../types'
@@ -55,9 +51,6 @@ export interface TooltipProps
   /** Additional CSS class name(s) to apply.  */
   className?: string
 
-  /** Existing document the tooltip should add listeners. */
-  mountDocument?: Document
-
   /** Existing element the tooltip should be bound to. */
   mountNode?: HTMLElement
 
@@ -80,9 +73,6 @@ export interface TooltipProps
 
   /** Element to be rendered in-place where the tooltip is defined. */
   trigger?: JSX.Element
-
-  /** Ref for Tooltip content DOM node. */
-  contentRef?: React.Ref<HTMLElement>
 }
 
 /**
@@ -109,15 +99,9 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     align: PropTypes.oneOf(ALIGNMENTS),
     defaultOpen: PropTypes.bool,
     inline: PropTypes.bool,
-    mountDocument: PropTypes.object,
     mountNode: customPropTypes.domNode,
     mouseLeaveDelay: PropTypes.number,
     offset: PropTypes.string,
-    on: PropTypes.oneOfType([
-      PropTypes.oneOf(['hover', 'click', 'focus']),
-      PropTypes.arrayOf(PropTypes.oneOf(['click', 'focus'])),
-      PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus'])),
-    ]),
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
     pointing: PropTypes.bool,
@@ -126,12 +110,10 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     target: PropTypes.any,
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
     content: customPropTypes.shorthandAllowingChildren,
-    contentRef: customPropTypes.ref,
   }
 
   static defaultProps: TooltipProps = {
     align: 'start',
-    mountDocument: isBrowser() ? document : null,
     mountNode: isBrowser() ? document.body : null,
     position: 'above',
     mouseLeaveDelay: 500,
@@ -141,8 +123,6 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
   pointerTargetRef = React.createRef<HTMLElement>()
   triggerRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
-  // focusable element which has triggered Tooltip, can be either triggerDomElement or the element inside it
-  triggerFocusableDomElement = null
   tooltipDomElement = null
 
   closeTimeoutId
@@ -162,33 +142,6 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
         {open && mountNode && ReactDOM.createPortal(tooltipContent, mountNode)}
       </>
     )
-  }
-
-  handleDocumentClick = (getRefs: Function) => e => {
-    if (this.isOutsideTooltipElementAndOutsideTriggerElement(getRefs(), e)) {
-      this.trySetOpen(false, e)
-    }
-  }
-
-  handleDocumentKeyDown = (getRefs: Function) => (e: KeyboardEvent) => {
-    const keyCode = keyboardKey.getCode(e)
-    const isMatchingKey = keyCode === keyboardKey.Enter || keyCode === keyboardKey.Spacebar
-
-    if (isMatchingKey && this.isOutsideTooltipElementAndOutsideTriggerElement(getRefs(), e)) {
-      this.trySetOpen(false, e)
-    }
-  }
-
-  isOutsideTooltipElementAndOutsideTriggerElement(refs: NodeRef[], e) {
-    const isInsideNested = _.some(refs, (childRef: NodeRef) => {
-      return doesNodeContainClick(childRef.current, e)
-    })
-
-    const isOutsideTooltipElement = this.tooltipDomElement && !isInsideNested
-    const isOutsideTriggerElement =
-      this.triggerRef.current && !doesNodeContainClick(this.triggerRef.current, e)
-
-    return isOutsideTooltipElement && isOutsideTriggerElement
   }
 
   getTriggerProps(triggerElement) {
@@ -287,9 +240,8 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     accessibility: ReactAccessibilityBehavior,
     { placement, scheduleUpdate }: PopperChildrenProps,
   ) => {
-    const { content: propsContent, renderContent, contentRef, mountDocument, pointing } = this.props
+    const { content: propsContent, renderContent, pointing } = this.props
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
-    const documentRef = toRefObject(mountDocument)
 
     const tooltipContentAttributes = {
       ...(rtl && { dir: 'rtl' }),
@@ -309,41 +261,10 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       overrideProps: this.getContentProps,
     })
 
-    return (
-      <Unstable_NestingAuto>
-        {(getRefs, nestingRef) => (
-          <>
-            <Ref
-              innerRef={domElement => {
-                this.tooltipDomElement = domElement
-                handleRef(contentRef, domElement)
-                handleRef(nestingRef, domElement)
-              }}
-            >
-              {tooltipContent}
-            </Ref>
-
-            <EventListener
-              listener={this.handleDocumentClick(getRefs)}
-              targetRef={documentRef}
-              type="click"
-            />
-            <EventListener
-              listener={this.handleDocumentKeyDown(getRefs)}
-              targetRef={documentRef}
-              type="keydown"
-            />
-          </>
-        )}
-      </Unstable_NestingAuto>
-    )
+    return tooltipContent
   }
 
   trySetOpen(newValue: boolean, eventArgs: any) {
-    // when new state 'open' === 'true', save the last focused element
-    if (newValue) {
-      this.updateTriggerFocusableDomElement()
-    }
     this.trySetState({ open: newValue })
     _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
   }
@@ -367,18 +288,5 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       onClose && onClose()
       e.stopPropagation()
     }
-  }
-
-  /**
-   * Save DOM element which had focus before Tooltip opens.
-   * Can be either trigger DOM element itself or the element inside it.
-   */
-  updateTriggerFocusableDomElement() {
-    const { mountDocument } = this.props
-    const activeElement = mountDocument.activeElement
-
-    this.triggerFocusableDomElement = this.triggerRef.current.contains(activeElement)
-      ? activeElement
-      : this.triggerRef.current
   }
 }
