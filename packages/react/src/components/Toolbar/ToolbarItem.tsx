@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+import { toolbarItemBehavior } from '../../lib/accessibility'
 
 import Icon from '../Icon/Icon'
 
@@ -25,6 +25,7 @@ export interface ToolbarItemProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
+   * @default toolbarItemBehavior
    */
   accessibility?: Accessibility
 
@@ -83,7 +84,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
 
   static defaultProps = {
     as: 'button',
-    accessibility: defaultBehavior as Accessibility,
+    accessibility: toolbarItemBehavior as Accessibility,
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {

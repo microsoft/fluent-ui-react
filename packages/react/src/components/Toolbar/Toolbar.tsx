@@ -13,7 +13,7 @@ import {
   ColorComponentProps,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+import { toolbarBehavior } from '../../lib/accessibility'
 import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 
 import ToolbarItem from './ToolbarItem'
@@ -29,7 +29,7 @@ export interface ToolbarProps
     ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
+   * @default toolbarBehavior
    */
   accessibility?: Accessibility
 
@@ -50,7 +50,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
+    accessibility: toolbarBehavior,
   }
 
   static Item = ToolbarItem
