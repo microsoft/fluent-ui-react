@@ -131,7 +131,6 @@
     "syncpack": "^4.3.1",
     "through2": "^2.0.3",
     "tmp": "^0.0.33",
-    "ts-jest": "^24.0.2",
     "tsconfig-paths": "^3.7.0",
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.1",
