@@ -15,7 +15,7 @@ import {
 import { accordionBehavior } from '../../lib/accessibility'
 import AccordionTitle, { AccordionTitleProps } from './AccordionTitle'
 import AccordionContent from './AccordionContent'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   ComponentEventHandler,
@@ -125,7 +125,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
     renderPanelContent: PropTypes.func,
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     accessibility: accordionBehavior,
     as: 'dl',
   }
@@ -135,12 +135,12 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
   static Title = AccordionTitle
   static Content = AccordionContent
 
-  private focusHandler: ContainerFocusHandler = null
-  private itemRefs = []
-  private defaultAccordionTitleId = _.uniqueId('accordion-title-')
-  private defaultAccordionContentId = _.uniqueId('accordion-content-')
+  focusHandler: ContainerFocusHandler = null
+  itemRefs = []
+  defaultAccordionTitleId = _.uniqueId('accordion-title-')
+  defaultAccordionContentId = _.uniqueId('accordion-content-')
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     moveNext: e => {
       e.preventDefault()
       this.focusHandler.moveNext()
@@ -169,21 +169,21 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
     )
   }
 
-  private handleNavigationFocus = (index: number) => {
+  handleNavigationFocus = (index: number) => {
     this.setState({ focusedIndex: index }, () => {
       const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
       targetComponent && targetComponent.focus()
     })
   }
 
-  private getNavigationItemsSize = () => this.props.panels.length
+  getNavigationItemsSize = () => this.props.panels.length
 
   getInitialAutoControlledState({ expanded, exclusive }: AccordionProps) {
     const alwaysActiveIndex = expanded ? 0 : -1
     return { activeIndex: exclusive ? alwaysActiveIndex : [alwaysActiveIndex] }
   }
 
-  private computeNewIndex = (index: number): number | number[] => {
+  computeNewIndex = (index: number): number | number[] => {
     const { activeIndex } = this.state
     const { exclusive } = this.props
 
@@ -198,7 +198,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
       : [...(activeIndex as number[]), index]
   }
 
-  private handleTitleOverrides = (predefinedProps: AccordionTitleProps) => ({
+  handleTitleOverrides = (predefinedProps: AccordionTitleProps) => ({
     onClick: (e: React.SyntheticEvent, titleProps: AccordionTitleProps) => {
       const { index } = titleProps
       const activeIndex = this.computeNewIndex(index)
@@ -215,7 +215,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
     },
   })
 
-  private isIndexActive = (index: number): boolean => {
+  isIndexActive = (index: number): boolean => {
     const { exclusive } = this.props
     const { activeIndex } = this.state
 
@@ -231,7 +231,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
    * @param {number} index The index of the panel.
    * @returns {boolean} If the panel can be set active/inactive.
    */
-  private isIndexActionable = (index: number): boolean => {
+  isIndexActionable = (index: number): boolean => {
     if (!this.isIndexActive(index)) {
       return true
     }

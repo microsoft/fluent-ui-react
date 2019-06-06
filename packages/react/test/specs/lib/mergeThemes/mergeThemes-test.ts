@@ -1,5 +1,4 @@
 import mergeThemes, { mergeStyles } from 'src/lib/mergeThemes'
-import { felaRenderer, felaRtlRenderer } from 'src/lib'
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from 'src/themes/types'
 
 describe('mergeThemes', () => {
@@ -304,48 +303,6 @@ describe('mergeThemes', () => {
       ).toMatchObject({
         staticStyles: [{ body: { color: 'red' } }, '*{box-sizing:border-box;}'],
       })
-    })
-  })
-
-  describe('rtl', () => {
-    test('latest boolean value wins', () => {
-      expect(mergeThemes({ rtl: false }, { rtl: true })).toHaveProperty('rtl', true)
-      expect(mergeThemes({ rtl: true }, { rtl: false })).toHaveProperty('rtl', false)
-
-      expect(mergeThemes({ rtl: null }, { rtl: true })).toHaveProperty('rtl', true)
-      expect(mergeThemes({ rtl: null }, { rtl: false })).toHaveProperty('rtl', false)
-
-      expect(mergeThemes({ rtl: undefined }, { rtl: true })).toHaveProperty('rtl', true)
-      expect(mergeThemes({ rtl: undefined }, { rtl: false })).toHaveProperty('rtl', false)
-    })
-
-    test('null values do not override boolean values', () => {
-      expect(mergeThemes({ rtl: false }, { rtl: null })).toHaveProperty('rtl', false)
-      expect(mergeThemes({ rtl: true }, { rtl: null })).toHaveProperty('rtl', true)
-    })
-
-    test('undefined values do not override boolean values', () => {
-      expect(mergeThemes({ rtl: false }, { rtl: undefined })).toHaveProperty('rtl', false)
-      expect(mergeThemes({ rtl: true }, { rtl: undefined })).toHaveProperty('rtl', true)
-    })
-
-    test('is NOT set if no boolean was provided', () => {
-      expect(mergeThemes({ rtl: null }, { rtl: null })).not.toHaveProperty('rtl')
-      expect(mergeThemes({ rtl: null }, { rtl: undefined })).not.toHaveProperty('rtl')
-
-      expect(mergeThemes({ rtl: undefined }, { rtl: null })).not.toHaveProperty('rtl')
-      expect(mergeThemes({ rtl: undefined }, { rtl: undefined })).not.toHaveProperty('rtl')
-    })
-  })
-
-  describe('renderer', () => {
-    test('felaRtlRenderer is chosen if rtl is true', () => {
-      expect(mergeThemes({ rtl: true })).toHaveProperty('renderer', felaRtlRenderer)
-    })
-    test('felaRenderer is chosen if rtl is not true', () => {
-      expect(mergeThemes({ rtl: false })).toHaveProperty('renderer', felaRenderer)
-      expect(mergeThemes({ rtl: null })).toHaveProperty('renderer', felaRenderer)
-      expect(mergeThemes({ rtl: undefined })).toHaveProperty('renderer', felaRenderer)
     })
   })
 

@@ -13,7 +13,7 @@ export default class RefForward extends React.Component<RefProps> {
     innerRef: customPropTypes.ref.isRequired as PropTypes.Validator<React.Ref<any>>,
   }
 
-  private handleRefOverride = (node: HTMLElement) => {
+  handleRefOverride = (node: HTMLElement) => {
     const { children, innerRef } = this.props
 
     handleRef((children as React.ReactElement<any> & { ref: React.Ref<any> }).ref, node)

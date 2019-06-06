@@ -17,6 +17,26 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add 'data-is-focusable' attribute to `attachmentBehavior` @sophieH29 ([#1445](https://github.com/stardust-ui/react/pull/1445))
+
+### BREAKING CHANGES
+- Rename `toolbarBehavior` to `menuAsToolbarBehavior` and `toolbarButtonBehavior` to `menuItemAsToolbarButtonBehavior` ([#1393](https://github.com/stardust-ui/react/pull/1393))
+- Rename types related to accessibility ([#1421](https://github.com/stardust-ui/react/pull/1421))
+- Moved the `rtl` and `renderer` props from the `theme` prop object to the `Provider`'s props API @mnajdova ([#1377](https://github.com/stardust-ui/react/pull/1377))
+
+### Features
+- Add `Toolbar` component @miroslavstastny ([#1408](https://github.com/stardust-ui/react/pull/1408))
+- Add `disableAnimations` boolean prop on the `Provider` @mnajdova ([#1377](https://github.com/stardust-ui/react/pull/1377))
+
+### Fixes
+- Fix click handling on focus for `action` slot in `Attachment` component @Bugaa92 ([#1444](https://github.com/stardust-ui/react/pull/1444))
+- Fix Teams' theme list item end media styles @mnajdova ([#1448](https://github.com/stardust-ui/react/pull/1448))
+
+<!--------------------------------[ v0.32.0 ]------------------------------- -->
+## [v0.32.0](https://github.com/stardust-ui/react/tree/v0.32.0) (2019-06-03)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.31.0...v0.32.0)
+
 ### BREAKING CHANGES
 - Remove convoluted conditions from component's element type calculations @kuzhelov ([#1396](https://github.com/stardust-ui/react/pull/1396))
 - Replace `Dropdown` variables: `borderRadius` with `containerBorderRadius`, `openBorderRadius` with `openAboveContainerBorderRadius` and `openBelowContainerBorderRadius`, `listBorderRadius` with `aboveListBorderRadius` and `belowListBorderRadius` @Bugaa92 ([#1312](https://github.com/stardust-ui/react/pull/1312))
@@ -27,7 +47,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Firefox: placeholder color should match redlines @notandrew ([#1406](https://github.com/stardust-ui/react/pull/1406))
 - `Popup` - fix proptypes for `content` and `trigger` props @miroslavstastny ([#1420](https://github.com/stardust-ui/react/pull/1420))
 - Make `contentRef` prop optional for `Accordion.Title` @Bugaa92 ([#1418](https://github.com/stardust-ui/react/pull/1418))
-- Call `getDerivedStateFromProps()` from `AutoControlledComponent` in `Dropdown` ([#1416](https://github.com/stardust-ui/react/pull/1416))
+- Call `getDerivedStateFromProps()` from `AutoControlledComponent` in `Dropdown` @layershifter ([#1416](https://github.com/stardust-ui/react/pull/1416))
+- Fix `backgroundHover1` color in the Teams dark theme `colorScheme` @mnajdova ([1437](https://github.com/stardust-ui/react/pull/1437))
+- Revert changes with different roots in `Icon` component @layershifter ([#1435](https://github.com/stardust-ui/react/pull/1435))
+- Fix flickering issues with `Dropdown` and `Popup` components @Bugaa92 ([#1434](https://github.com/stardust-ui/react/pull/1434))
 
 ### Features
 - Add keyboard navigation and screen reader support for `Accordion` @silviuavram ([#1322](https://github.com/stardust-ui/react/pull/1322))
@@ -38,6 +61,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add 'lightning' icon to Teams theme @notandrew ([#1385](https://github.com/stardust-ui/react/pull/1385))
 - Add automatic positioning inside viewport for `Menu` with submenus @Bugaa92 ([#1384](https://github.com/stardust-ui/react/pull/1384))
 - Add `align`, `position`, `offset` props for `Dropdown` component @Bugaa92 ([#1312](https://github.com/stardust-ui/react/pull/1312))
+- Add `Checkbox` component and `toggle` prop for it @layershifter ([#1405](https://github.com/stardust-ui/react/pull/1405))
 
 ### Documentation
 - Accessibility: improve introduction section @jurokapsiar ([#1368](https://github.com/stardust-ui/react/pull/1368))

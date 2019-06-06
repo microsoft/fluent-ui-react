@@ -55,13 +55,13 @@ const getPointerStyles = (
 }
 
 const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupContentVariables> = {
-  root: ({ props: p, theme: t, variables: v }): ICSSInJSStyle => ({
+  root: ({ props: p, variables: v, rtl }): ICSSInJSStyle => ({
     borderRadius: v.borderRadius,
     display: 'block',
 
-    ...(p.pointing && getPointerStyles(v, t.rtl, p.placement).root),
+    ...(p.pointing && getPointerStyles(v, rtl, p.placement).root),
   }),
-  pointer: ({ props: p, theme: t, variables: v }): ICSSInJSStyle => ({
+  pointer: ({ props: p, variables: v, rtl }): ICSSInJSStyle => ({
     display: 'block',
     position: 'absolute',
 
@@ -72,7 +72,7 @@ const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupConte
     height: v.pointerSize,
     width: v.pointerSize,
 
-    ...getPointerStyles(v, t.rtl, p.placement).pointer,
+    ...getPointerStyles(v, rtl, p.placement).pointer,
   }),
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
