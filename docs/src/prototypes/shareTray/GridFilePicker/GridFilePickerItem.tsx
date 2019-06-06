@@ -36,28 +36,24 @@ class GridImagePickerItem extends React.Component<GridPickerItemProps> {
     }
 
     return (
-      <li {...itemProps}>
-        <Flex
-          column
-          gap="gap.small"
-          {...{
-            role: 'button',
-            'data-is-focusable': true,
-            'aria-label': title,
-            'aria-roledescription': 'grid item',
-          }}
-          onClick={() => {
+      <li
+        {...itemProps}
+        data-is-focusable={true}
+        onClick={() => {
+          alert('Item Clicked!')
+        }}
+        onKeyDown={event => {
+          const keycode = keyboardKey.getCode(event)
+          const isEnterOrSpace = keycode === keyboardKey.Enter || keycode === keyboardKey.Spacebar
+          if (isEnterOrSpace) {
+            event.preventDefault()
             alert('Item Clicked!')
-          }}
-          onKeyDown={event => {
-            const keycode = keyboardKey.getCode(event)
-            const isEnterOrSpace = keycode === keyboardKey.Enter || keycode === keyboardKey.Spacebar
-            if (isEnterOrSpace) {
-              event.preventDefault()
-              alert('Item Clicked!')
-            }
-          }}
-        >
+          }
+        }}
+        aria-roledescription={'grid item'}
+        aria-label={title}
+      >
+        <Flex column gap="gap.small">
           <Box
             styles={{
               backgroundColor,
