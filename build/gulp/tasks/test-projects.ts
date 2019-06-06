@@ -47,6 +47,7 @@ const packStardustPackages = async (logger: Function): Promise<PackedPackages> =
   const stardustPackages = lernaAliases({ sourceDirectory: false })
 
   // We don't want to pack a package with our dev tools
+  delete stardustPackages['@stardust-ui/eslint-plugin']
   delete stardustPackages['@stardust-ui/internal-tooling']
 
   await Promise.all(
