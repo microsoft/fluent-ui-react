@@ -1,20 +1,21 @@
-import { Browser, Page, LaunchOptions, launch } from 'puppeteer'
+import puppeteer from 'puppeteer'
+
 import { safeLaunchOptions } from '../build/puppeteer.config'
 import { E2EApi } from './e2eApi'
 
 jest.setTimeout(10000)
 
-let browser: Browser
-let page: Page
+let browser: puppeteer.Browser
+let page: puppeteer.Page
 
-const launchOptions: LaunchOptions = safeLaunchOptions({
+const launchOptions: puppeteer.LaunchOptions = safeLaunchOptions({
   headless: true,
   dumpio: false,
   slowMo: 10,
 })
 
 beforeAll(async () => {
-  browser = await launch(launchOptions)
+  browser = await puppeteer.launch(launchOptions)
 })
 
 beforeEach(async () => {
