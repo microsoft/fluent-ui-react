@@ -14,7 +14,7 @@ export type JestPluginConfig = {
 }
 
 const jest = (config: JestPluginConfig = {}) => cb => {
-  process.env.NODE_ENV = 'test' // ?
+  process.env.NODE_ENV = 'test'
 
   // in watch mode jest never exits
   // let the gulp task complete to prevent blocking subsequent tasks
