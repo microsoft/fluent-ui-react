@@ -91,7 +91,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   static autoControlledProps = ['activeIndex']
 
-  protected actionHandlers = {
+  actionHandlers = {
     expandSiblings: e => {
       const { items, exclusive } = this.props
       e.preventDefault()
