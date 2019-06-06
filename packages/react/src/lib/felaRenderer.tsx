@@ -55,13 +55,13 @@ const createRendererConfig = (options: any = {}) => ({
       skip: ['content', 'keyframe'],
     }),
 
-    felaExpandCssShorthandsPlugin(),
     felaPluginPlaceholderPrefixer(),
     felaPluginPrefixer(),
 
     // Heads up!
     // This is required after fela-plugin-prefixer to resolve the array of fallback values prefixer produces.
     felaPluginFallbackValue(),
+    felaExpandCssShorthandsPlugin(),
     felaDisableAnimationsPlugin(),
     felaRenderKeyframesPlugin(),
     ...(options.isRtl ? [rtl()] : []),
