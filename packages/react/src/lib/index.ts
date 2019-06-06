@@ -8,7 +8,7 @@ export { default as applyAccessibilityKeyHandlers } from './applyAccessibilityKe
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
 export { default as UIComponent } from './UIComponent'
-export { felaRenderer, felaRtlRenderer } from './felaRenderer'
+export { default as felaRenderer } from './felaRenderer'
 export { default as toCompactArray } from './toCompactArray'
 export { default as rtlTextContainer } from './rtlTextContainer'
 export { default as stringLiteralsArray } from './stringLiteralsArray'
