@@ -171,8 +171,8 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     const itemsCount = _.filter(items, item => getKindProp(item, 'item') !== 'divider').length
     let itemPosition = 0
 
-    const itemOverridesFn = this.handleItemOverrides(variables)
-    const dividerOverridesFn = this.handleDividerOverrides(variables)
+    const overrideItemProps = this.handleItemOverrides(variables)
+    const overrideDividerProps = this.handleDividerOverrides(variables)
 
     return _.map(items, (item, index) => {
       const active =
@@ -192,7 +192,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
               ? accessibility.childBehaviors.divider
               : undefined,
           },
-          overrideProps: dividerOverridesFn,
+          overrideProps: overrideDividerProps,
         })
       }
 
@@ -218,7 +218,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
             ? accessibility.childBehaviors.item
             : undefined,
         },
-        overrideProps: itemOverridesFn,
+        overrideProps: overrideItemProps,
       })
     })
   }
