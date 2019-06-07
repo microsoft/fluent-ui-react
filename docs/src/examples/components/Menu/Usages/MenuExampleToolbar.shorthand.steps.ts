@@ -11,7 +11,7 @@ const config: ScreenerTestsConfig = {
   themes: ['teams', 'teamsDark', 'teamsHighContrast'],
   steps: [
     (builder, keys) =>
-      getScreenerSteps()[0](builder, keys)
+      getScreenerSteps({ startIdx: 2, endIdx: 4 })[0](builder, keys)
         .click(selectors.lastItem)
         .snapshot('Clicks on the last item and opens submenu')
 
