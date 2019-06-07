@@ -160,6 +160,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     renderContent: PropTypes.func,
     target: PropTypes.any,
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
+    unstable_pinned: PropTypes.bool,
     content: customPropTypes.shorthandAllowingChildren,
     contentRef: customPropTypes.ref,
   }

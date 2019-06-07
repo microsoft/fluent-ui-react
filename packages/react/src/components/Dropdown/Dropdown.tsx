@@ -280,6 +280,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     searchInput: customPropTypes.itemShorthand,
     toggleIndicator: customPropTypes.itemShorthand,
     triggerButton: customPropTypes.itemShorthand,
+    unstable_pinned: PropTypes.bool,
     value: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
       customPropTypes.collectionShorthand,
