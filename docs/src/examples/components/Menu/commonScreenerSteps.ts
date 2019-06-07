@@ -11,9 +11,11 @@ const selectors = {
   item: (itemIndex: number) => `.${Menu.className} li:nth-child(${itemIndex}) a`,
 }
 
-const getScreenerSteps = (
-  { vertical, startItem, endItem }: StepsOptions = { startItem: 2, endItem: 3 },
-): ScreenerSteps => [
+const getScreenerSteps = ({
+  vertical,
+  startItem = 2,
+  endItem = 3,
+}: StepsOptions = {}): ScreenerSteps => [
   (builder, keys) =>
     builder
       .hover(selectors.item(startItem))
