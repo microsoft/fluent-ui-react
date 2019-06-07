@@ -13,6 +13,8 @@ import {
   getKindProp,
   rtlTextContainer,
 } from '../../lib'
+import { mergeComponentVariables } from '../../lib/mergeThemes'
+
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityBehavior } from '../../lib/accessibility/types'
@@ -141,17 +143,11 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
       }
       _.invoke(predefinedProps, 'onActiveChanged', e, props)
     },
-    variables: {
-      ...variables,
-      ...predefinedProps.variables,
-    },
+    variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
   handleDividerOverrides = variables => predefinedProps => ({
-    variables: {
-      ...variables,
-      ...predefinedProps.variables,
-    },
+    variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
   renderItems = (
