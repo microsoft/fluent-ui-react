@@ -1,7 +1,7 @@
 import sh from '../sh'
 
 export type JestPluginConfig = {
-  config?: string
+  config: string
   coverage?: boolean
   detectLeaks?: boolean
   maxWorkers?: number
@@ -13,7 +13,7 @@ export type JestPluginConfig = {
   watchAll?: boolean
 }
 
-const jest = (config: JestPluginConfig = {}) => cb => {
+const jest = (config: JestPluginConfig) => cb => {
   process.env.NODE_ENV = 'test'
 
   // in watch mode jest never exits
