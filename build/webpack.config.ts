@@ -55,6 +55,7 @@ const webpackConfig: any = {
         exclude: /node_modules/,
         options: {
           cacheDirectory: true,
+          plugins: [__DEV__ && 'react-hot-loader/babel'].filter(Boolean),
         },
       },
     ],
