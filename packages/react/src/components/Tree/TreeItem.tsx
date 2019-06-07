@@ -117,12 +117,15 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
       }
     },
     setFocusToFirstChild: e => {
-      if (open) {
-        e.stopPropagation()
-        const element = getFirstFocusable(this.treeRef.current, this.treeRef.current, true)
-        if (element) {
-          element.focus()
-        }
+      if (!open) {
+        return
+      }
+
+      e.stopPropagation()
+
+      const element = getFirstFocusable(this.treeRef.current, this.treeRef.current, true)
+      if (element) {
+        element.focus()
       }
     },
   }
