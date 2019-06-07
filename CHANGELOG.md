@@ -18,6 +18,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 - Fix the order of the fela plugin @mnajdova ([#1461](https://github.com/stardust-ui/react/pull/1461))
 - Fix `MenuItem` `iconOnly` active styles in Teams theme @mnajdova ([#1464](https://github.com/stardust-ui/react/pull/1464))
+- Fix layout positioning of `Popup` @layershifter ([#1471](https://github.com/stardust-ui/react/pull/1471))
+- Add `unstable_pinned` prop to `Popup` and `Dropdown` components @Bugaa92 ([#1471](https://github.com/stardust-ui/react/pull/1471))
 
 <!--------------------------------[ v0.32.0 ]------------------------------- -->
 ## [v0.32.0](https://github.com/stardust-ui/react/tree/v0.32.0) (2019-06-03)
