@@ -119,7 +119,7 @@ describe('Menu', () => {
     })
 
     describe('variables', () => {
-      it('are passed from Menu to MenuItem and correctly merged', () => {
+      it('are passed from Menu to MenuItem and MenuDivider and correctly merged', () => {
         const menu = mountWithProvider(
           <Menu
             variables={{ a: 'menu', b: 'menu' }}
@@ -149,7 +149,7 @@ describe('Menu', () => {
         ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwrittenInDivider', c: 'divider' }))
       })
 
-      it('as functions are passed from Menu to MenuItem and correctly merged', () => {
+      it('as functions are passed from Menu to MenuItem and MenuDivider and correctly merged', () => {
         const menu = mountWithProvider(
           <Menu
             variables={() => ({ a: 'menu', b: 'menu' })}
