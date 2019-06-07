@@ -17,6 +17,7 @@ import {
 } from '../../../perf/types'
 import config from '../../../config'
 import webpackPlugin from '../plugins/gulp-webpack'
+import { safeLaunchOptions } from 'build/puppeteer.config'
 
 const { paths } = config
 const { colors, log } = require('gulp-load-plugins')().util
@@ -170,12 +171,7 @@ task('perf:run', async () => {
   let browser
 
   try {
-    browser = await puppeteer.launch({
-      args: [
-        // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568
-        process.env.CI && '--single-process',
-      ].filter(Boolean),
-    })
+    browser = await puppeteer.launch(safeLaunchOptions())
 
     for (let i = 0; i < times; i++) {
       const page = await browser.newPage()
