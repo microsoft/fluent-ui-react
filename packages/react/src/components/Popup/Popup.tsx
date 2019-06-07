@@ -386,7 +386,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     rtl: boolean,
     accessibility: ReactAccessibilityBehavior,
   ): JSX.Element {
-    const { align, position, offset, target } = this.props
+    const { align, position, offset, target, unstable_pinned } = this.props
 
     return (
       <Popper
@@ -395,6 +395,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         position={position}
         offset={offset}
         rtl={rtl}
+        unstable_pinned={unstable_pinned}
         targetRef={target ? toRefObject(target) : this.triggerRef}
         children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
       />

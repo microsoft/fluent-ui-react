@@ -617,7 +617,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     value: ShorthandValue | ShorthandCollection,
     rtl: boolean,
   ) {
-    const { align, offset, position, search } = this.props
+    const { align, offset, position, search, unstable_pinned } = this.props
     const { open } = this.state
     const items = open
       ? this.renderItems(styles, variables, getItemProps, highlightedIndex, value)
@@ -658,6 +658,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           rtl={rtl}
           enabled={open}
           targetRef={this.containerRef}
+          unstable_pinned={unstable_pinned}
           positioningDependencies={[items.length]}
         >
           <List

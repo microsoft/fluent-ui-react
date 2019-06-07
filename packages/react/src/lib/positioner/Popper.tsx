@@ -31,6 +31,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     positioningDependencies = [],
     rtl,
     targetRef,
+    unstable_pinned,
   } = props
 
   const proposedPlacement = getPlacement({ align, position, rtl })
@@ -87,6 +88,12 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
           preventOverflow: { escapeWithReference: true },
           flip: { boundariesElement: 'scrollParent' },
         },
+        /**
+         * unstable_pinned disables the flip modifier by setting flip.enabled to false; this disables automatic
+         * repositioning of the popper box; it will always be placed according to the values of `align` and
+         * `position` props, regardless of the size of the component, the reference element or the viewport.
+         */
+        unstable_pinned && { flip: { enabled: false } },
         computedModifiers,
         userModifiers,
         /**
@@ -120,7 +127,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       popperRef.current = createPopper(targetRef.current, contentRef.current, options)
     },
     // TODO review dependencies for popperHasScrollableParent
-    [computedModifiers, enabled, userModifiers, positionFixed, proposedPlacement],
+    [computedModifiers, enabled, userModifiers, positionFixed, proposedPlacement, unstable_pinned],
   )
 
   React.useEffect(

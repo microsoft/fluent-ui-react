@@ -23,6 +23,12 @@ export interface PositioningProps {
   offset?: string
 
   /**
+   * Disables automatic repositioning of the component; it will always be placed according to the values of `align` and
+   * `position` props, regardless of the size of the component, the reference element or the viewport.
+   */
+  unstable_pinned?: boolean
+
+  /**
    * Position for the component. Position has higher priority than align. If position is vertical ('above' | 'below')
    * and align is also vertical ('top' | 'bottom') or if both position and align are horizontal ('before' | 'after'
    * and 'start' | 'end' respectively), then provided value for 'align' will be ignored and 'center' will be used instead.
