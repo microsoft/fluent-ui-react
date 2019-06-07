@@ -100,8 +100,15 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       if (exclusive) {
         return
       }
-
-      this.trySetState({ activeIndex: _.range(0, items.length) })
+      const activeIndex = items
+        ? items.reduce<number[]>((acc, item, index) => {
+            if (item['items']) {
+              return [...acc, index]
+            }
+            return acc
+          }, [])
+        : []
+      this.trySetState({ activeIndex })
     },
   }
 
