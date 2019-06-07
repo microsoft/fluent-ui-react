@@ -130,7 +130,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     [computedModifiers, enabled, userModifiers, positionFixed, proposedPlacement, unstable_pinned],
   )
 
-  React.useEffect(
+  React.useLayoutEffect(
     () => {
       createInstance()
       return destroyInstance
@@ -148,17 +148,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
         })
       : children
 
-  return (
-    <Ref
-      innerRef={contentElement => {
-        contentRef.current = contentElement
-        // for correct positioning we need to create the PopperJS instance immediately after we get a ref to the popper box
-        createInstance()
-      }}
-    >
-      {React.Children.only(child) as React.ReactElement}
-    </Ref>
-  )
+  return <Ref innerRef={contentRef}>{React.Children.only(child) as React.ReactElement}</Ref>
 }
 
 Popper.defaultProps = {
