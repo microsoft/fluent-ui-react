@@ -2,8 +2,8 @@ import { Menu } from '@stardust-ui/react'
 
 interface StepsOptions {
   vertical?: boolean
-  startIdx?: number
-  endIdx?: number
+  startItem?: number
+  endItem?: number
 }
 
 const selectors = {
@@ -12,17 +12,17 @@ const selectors = {
 }
 
 const getScreenerSteps = (
-  { vertical, startIdx, endIdx }: StepsOptions = { startIdx: 2, endIdx: 3 },
+  { vertical, startItem, endItem }: StepsOptions = { startItem: 2, endItem: 3 },
 ): ScreenerSteps => [
   (builder, keys) =>
     builder
-      .hover(selectors.item(startIdx))
+      .hover(selectors.item(startItem))
       .snapshot('Hovers 2nd item (hover state styles)')
-      .click(selectors.item(startIdx))
+      .click(selectors.item(startItem))
       .snapshot('Clicks on 2nd item (active state styles)')
-      .keys(selectors.item(startIdx), vertical ? keys.downArrow : keys.rightArrow)
+      .keys(selectors.item(startItem), vertical ? keys.downArrow : keys.rightArrow)
       .snapshot('Navigates to next item (focus state styles)')
-      .keys(selectors.item(endIdx), vertical ? keys.upArrow : keys.leftArrow)
+      .keys(selectors.item(endItem), vertical ? keys.upArrow : keys.leftArrow)
       .snapshot('Navigates to previous item (active and focus state styles)'),
 ]
 
