@@ -12,6 +12,7 @@ import {
   commonPropTypes,
   childrenExist,
   isFromKeyboard,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -87,11 +88,19 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     accessibility: toolbarItemBehavior as Accessibility,
   }
 
+  actionHandlers = {
+    performClick: event => {
+      event.preventDefault()
+      this.handleClick(event)
+    },
+  }
+
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
     const { icon, children, disabled } = this.props
     return (
       <ElementType
         {...accessibility.attributes.root}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...unhandledProps}
         disabled={disabled}
         className={classes.root}

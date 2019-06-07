@@ -13,6 +13,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
@@ -114,6 +115,13 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     isFromKeyboard: false,
   }
 
+  actionHandlers = {
+    performClick: event => {
+      event.preventDefault()
+      this.handleClick(event)
+    },
+  }
+
   renderComponent({
     ElementType,
     classes,
@@ -132,6 +140,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
       >
