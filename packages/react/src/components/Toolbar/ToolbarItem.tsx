@@ -16,7 +16,7 @@ import {
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
-import { toolbarItemBehavior } from '../../lib/accessibility'
+import { buttonBehavior } from '../../lib/accessibility'
 
 import Icon from '../Icon/Icon'
 
@@ -85,7 +85,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
 
   static defaultProps = {
     as: 'button',
-    accessibility: toolbarItemBehavior as Accessibility,
+    accessibility: buttonBehavior as Accessibility,
   }
 
   actionHandlers = {

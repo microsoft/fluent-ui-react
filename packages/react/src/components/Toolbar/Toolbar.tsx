@@ -13,14 +13,14 @@ import {
   ColorComponentProps,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { toolbarBehavior } from '../../lib/accessibility'
+import { toolbarBehavior, toggleButtonBehavior } from '../../lib/accessibility'
 import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 
 import ToolbarItem from './ToolbarItem'
 import ToolbarDivider from './ToolbarDivider'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
 
-export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group'
+export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group' | 'toggle'
 
 export interface ToolbarProps
   extends UIComponentProps,
@@ -46,7 +46,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
-    items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item', 'group']),
+    items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item', 'group', 'toggle']),
   }
 
   static defaultProps = {
@@ -74,6 +74,11 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
           return ToolbarDivider.create(item, { overrideProps: itemOverridesFn })
         case 'group':
           return ToolbarRadioGroup.create(item, { overrideProps: itemOverridesFn })
+        case 'toggle':
+          return ToolbarItem.create(item, {
+            defaultProps: { accessibility: toggleButtonBehavior },
+            overrideProps: itemOverridesFn,
+          })
         default:
           return ToolbarItem.create(item, { overrideProps: itemOverridesFn })
       }

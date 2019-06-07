@@ -1,6 +1,5 @@
 import { Accessibility, FocusZoneMode } from '../../types'
 import { FocusZoneDirection } from '../../FocusZone'
-import toolbarItemBehavior from './toolbarItemBehavior'
 
 /**
  * @description
@@ -24,9 +23,6 @@ const toolbarBehavior: Accessibility = (props: any) => ({
       shouldFocusInnerElementWhenReceivedFocus: true,
       direction: FocusZoneDirection.horizontal,
     },
-  },
-  childBehaviors: {
-    item: toolbarItemBehavior,
   },
 })
 
