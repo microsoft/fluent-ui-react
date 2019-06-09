@@ -20,13 +20,14 @@ const ComponentPropsComponents: any = ({
         : displayName.replace(parentDisplayName, `${parentDisplayName}.`),
     name: displayName,
     onClick: onItemClick,
+    styles: { paddingTop: '0px' },
   }))
 
   return (
     <Menu
-      styles={{ color: 'green', display: 'inline-flex' }}
+      styles={{ display: 'inline-flex', borderBottomWidth: '0px' }}
       primary
-      pills
+      underlined
       accessibility={tabListBehavior}
       items={items}
     />

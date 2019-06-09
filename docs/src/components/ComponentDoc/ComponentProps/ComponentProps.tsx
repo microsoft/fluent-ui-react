@@ -6,7 +6,7 @@ import { getComponentGroup } from 'docs/src/utils'
 import ComponentTableProps from '../ComponentPropsTable'
 import ComponentPropsComponents from './ComponentPropsComponents'
 import ComponentPropsDescription from './ComponentPropsDescription'
-import { ICSSInJSStyle, Input, Text, Flex } from '@stardust-ui/react'
+import { ICSSInJSStyle, Flex, Checkbox } from '@stardust-ui/react'
 
 const propsContainerStyle: ICSSInJSStyle = { overflowX: 'auto' }
 
@@ -54,27 +54,14 @@ export default class ComponentProps extends React.Component<any, any> {
     return (
       <Flex column gap="gap.small">
         <Flex.Item styles={{ display: 'block', verticalAlign: 'middle' }}>
-          <Flex>
-            {/* Should be toggle component - need to associate text with checkbox.   */}
-            <Flex.Item styles={{ display: 'inline-block' }}>
-              <>
-                <Input
-                  type="checkbox"
-                  checked={!!activeDisplayName}
-                  onClick={this.handleToggle}
-                  inline
-                />
-                <Text content="&nbsp;Props&nbsp;" styles={{ marginBottom: '0' }} />
-              </>
-            </Flex.Item>
-            <Flex.Item>
-              <ComponentPropsComponents
-                activeDisplayName={activeDisplayName}
-                displayNames={displayNames}
-                onItemClick={this.handleComponentClick}
-                parentDisplayName={displayName}
-              />
-            </Flex.Item>
+          <Flex gap="gap.medium">
+            <Checkbox checked={!!activeDisplayName} onClick={this.handleToggle} label="Props" />
+            <ComponentPropsComponents
+              activeDisplayName={activeDisplayName}
+              displayNames={displayNames}
+              onItemClick={this.handleComponentClick}
+              parentDisplayName={displayName}
+            />
           </Flex>
         </Flex.Item>
         {activeDisplayName && (
