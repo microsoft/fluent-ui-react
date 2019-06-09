@@ -9,7 +9,6 @@ export type CodeSnippetProps = {
   fitted?: boolean
   label?: React.ReactNode | false
   mode?: CodeSnippetMode
-  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
   style?: React.CSSProperties
   value: CodeSnippetValue
 }

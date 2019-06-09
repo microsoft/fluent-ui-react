@@ -59,7 +59,6 @@ CodeSnippet.propTypes = {
   fitted: PropTypes.bool,
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
   mode: PropTypes.oneOf(['bash', 'json', 'js', 'jsx', 'html'] as CodeSnippetMode[]),
-  onClick: PropTypes.func,
   style: PropTypes.object,
   value: PropTypes.oneOfType([
     PropTypes.string,
