@@ -234,5 +234,6 @@ ItemLayout.slotClassNames = {
 
 /**
  * (DEPRECATED) The Item Layout handles layout styles for menu items, list items and other similar item templates.
+ * @category utility
  */
 export default withSafeTypeForAs<typeof ItemLayout, ItemLayoutProps>(ItemLayout)

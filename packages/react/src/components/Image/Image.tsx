@@ -64,6 +64,7 @@ Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src' })
 
 /**
  * An image is a graphic representation of something.
+ * @category content
  * @accessibility
  * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
  *

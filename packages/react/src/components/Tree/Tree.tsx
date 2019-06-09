@@ -158,5 +158,6 @@ Tree.create = createShorthandFactory({ Component: Tree, mappedArrayProp: 'items'
 
 /**
  * Allows users to display data organised in tree-hierarchy.
+ * @category actionable
  */
 export default withSafeTypeForAs<typeof Tree, TreeProps, 'ul'>(Tree)

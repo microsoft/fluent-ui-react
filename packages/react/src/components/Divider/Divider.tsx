@@ -76,5 +76,6 @@ Divider.create = createShorthandFactory({ Component: Divider, mappedProp: 'conte
 
 /**
  * A divider visually segments content into groups.
+ * @category content
  */
 export default withSafeTypeForAs<typeof Divider, DividerProps>(Divider)

@@ -101,5 +101,6 @@ Video.create = createShorthandFactory({ Component: Video, mappedProp: 'src' })
 
 /**
  * An video is a graphicical and audio representation of something.
+ * @category content
  */
 export default withSafeTypeForAs<typeof Video, VideoProps, 'video'>(Video)

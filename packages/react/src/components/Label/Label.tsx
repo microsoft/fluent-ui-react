@@ -153,5 +153,6 @@ Label.create = createShorthandFactory({ Component: Label, mappedProp: 'content' 
 
 /**
  * A Label is used to classify content.
+ * @category content
  */
 export default withSafeTypeForAs<typeof Label, LabelProps, 'span'>(Label)

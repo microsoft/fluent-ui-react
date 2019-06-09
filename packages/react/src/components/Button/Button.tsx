@@ -181,5 +181,6 @@ Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content
  * A button indicates a possible user action.
  * @accessibility
  * Do add textual representation if the component only contains an icon (using title, aria-label or aria-labelledby props).
+ * @category actionable
  */
 export default withSafeTypeForAs<typeof Button, ButtonProps, 'button'>(Button)

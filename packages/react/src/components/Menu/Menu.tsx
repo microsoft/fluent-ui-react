@@ -234,6 +234,7 @@ Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items'
 
 /**
  * A menu displays grouped navigation actions.
+ * @category actionable
  * @accessibility
  * Implements ARIA [Menu](https://www.w3.org/TR/wai-aria-practices-1.1/#menu), [Toolbar](https://www.w3.org/TR/wai-aria-practices-1.1/#toolbar) or [Tabs](https://www.w3.org/TR/wai-aria-practices-1.1/#tabpanel) design pattern, depending on the behavior used.
  * Do choose desired accessibility behavior depending on the use case.

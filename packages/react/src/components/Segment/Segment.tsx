@@ -64,5 +64,6 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
 
 /**
  * A segment is used to create a grouping of related content.
+ * @category utility
  */
 export default withSafeTypeForAs<typeof Segment, SegmentProps>(Segment)

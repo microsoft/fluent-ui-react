@@ -211,5 +211,6 @@ Layout.slotClassNames = {
 
 /**
  * (DEPRECATED) A layout is a utility for arranging the content of a component.
+ * @category utility
  */
 export default withSafeTypeForAs<typeof Layout, LayoutProps>(Layout)

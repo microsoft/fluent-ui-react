@@ -78,6 +78,7 @@ export interface PortalState {
 
 /**
  * A component that allows you to render children outside their parent.
+ * @category utility
  */
 class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   portalNode: HTMLElement

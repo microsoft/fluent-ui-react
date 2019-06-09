@@ -98,5 +98,6 @@ class Flex extends UIComponent<WithAsProp<FlexProps>> {
 
 /**
  * Arranges group of items aligned towards common direction.
+ * @category layout
  */
 export default withSafeTypeForAs<typeof Flex, FlexProps>(Flex)

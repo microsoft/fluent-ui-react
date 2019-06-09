@@ -128,5 +128,6 @@ Avatar.create = createShorthandFactory({ Component: Avatar, mappedProp: 'name' }
 
 /**
  * An avatar is a graphic representation of user.
+ * @category content
  */
 export default withSafeTypeForAs<typeof Avatar, AvatarProps>(Avatar)

@@ -219,5 +219,6 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
 
 /**
  * A list displays a group of related content.
+ * @category actionable
  */
 export default withSafeTypeForAs<typeof List, ListProps, 'ul'>(List)

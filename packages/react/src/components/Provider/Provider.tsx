@@ -41,6 +41,7 @@ export interface ProviderProps extends ChildrenComponentProps {
 
 /**
  * The Provider passes the CSS in JS renderer and theme to your components.
+ * @category utility
  */
 class Provider extends React.Component<WithAsProp<ProviderProps>> {
   static displayName = 'Provider'

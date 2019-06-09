@@ -178,7 +178,7 @@ Embed.create = createShorthandFactory({ Component: Embed })
 
 /**
  * An embed component displays a placeholder and matching content based on user's interaction.
- *
+ * @category surface
  * @accessibility
  * A `placeholder` slot represents an [`Image`](/components/image) component, please follow recommendations from its
  * accessibility section.

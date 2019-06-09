@@ -81,6 +81,7 @@ class Grid extends UIComponent<WithAsProp<GridProps>, any> {
 
 /**
  * A grid is used to harmonize negative space in a layout.
+ * @category layout
  * @accessibility
  * Do use Grid behavior for bidirectional keyboard navigation. Use appropriate ARIA role for the grid and actionable components inside of it.
  * Don't use grid component as a replacement for table.

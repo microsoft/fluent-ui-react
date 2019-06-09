@@ -162,5 +162,6 @@ Attachment.create = createShorthandFactory({ Component: Attachment, mappedProp: 
 
 /**
  * An Attachment displays a file attachment.
+ * @category actionable
  */
 export default withSafeTypeForAs<typeof Attachment, AttachmentProps>(Attachment)

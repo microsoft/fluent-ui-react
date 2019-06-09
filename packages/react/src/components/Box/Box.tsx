@@ -46,5 +46,6 @@ Box.create = createShorthandFactory({ Component: Box })
 /**
  * A Box is an abstract component, is frequently used for slots in other Stardust components.
  * By default it renders a `div` without any styles.
+ * @category utility
  */
 export default withSafeTypeForAs<typeof Box, BoxProps>(Box)

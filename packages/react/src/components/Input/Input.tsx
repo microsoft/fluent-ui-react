@@ -228,6 +228,7 @@ Input.slotClassNames = {
 
 /**
  * An input is a field used to elicit a response from a user.
+ * @category input
  * @accessibility
  * For good screen reader experience set aria-label or aria-labelledby attribute for input.
  *

@@ -101,5 +101,6 @@ Toolbar.create = createShorthandFactory({ Component: Toolbar, mappedProp: 'conte
 
 /**
  * A Toolbar component displays grouped actions.
+ * @category actionable
  */
 export default withSafeTypeForAs<typeof Toolbar, ToolbarProps>(Toolbar)

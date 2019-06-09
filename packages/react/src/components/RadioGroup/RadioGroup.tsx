@@ -197,6 +197,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
 
 /**
  * A radio group allows a user to select a value from a small set of options.
+ * @category input
  * @accessibility
  * Implements [ARIA Radio Group](https://www.w3.org/TR/wai-aria-practices-1.1/#radiobutton) design pattern.
  */

@@ -152,5 +152,6 @@ Loader.create = createShorthandFactory({ Component: Loader })
 
 /**
  * A Loader indicates a possible user action.
+ * @category content
  */
 export default withSafeTypeForAs<typeof Loader, LoaderProps>(Loader)

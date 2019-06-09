@@ -121,6 +121,7 @@ export interface PopupState {
 
 /**
  * A Popup displays additional information on top of a page.
+ * @category surface
  * @accessibility
  * Do use popupFocusTrapBehavior if the focus needs to be trapped inside of the Popup.
  */

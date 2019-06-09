@@ -164,5 +164,6 @@ Checkbox.create = createShorthandFactory({
 
 /**
  * A single checkbox within a checkbox group.
+ * @category input
  */
 export default withSafeTypeForAs<typeof Checkbox, CheckboxProps>(Checkbox)

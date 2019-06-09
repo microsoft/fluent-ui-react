@@ -2,10 +2,11 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router'
-import { Flex, Header, Icon, Dropdown, Text, Grid, Divider } from '@stardust-ui/react'
+import { Flex, Icon, Dropdown, Text, Grid, Divider } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
+import ComponentDocHeader from './ComponentDocHeader'
 import ComponentDocLinks from './ComponentDocLinks'
 import ComponentDocSee from './ComponentDocSee'
 import ComponentExamples from './ComponentExamples'
@@ -111,12 +112,7 @@ class ComponentDoc extends React.Component<any, any> {
             <>
               <Flex styles={{ justifyContent: 'space-between' }}>
                 <Flex.Item>
-                  <Header
-                    as="h1"
-                    aria-level={2}
-                    content={info.displayName}
-                    variables={{ color: 'black' }}
-                  />
+                  <ComponentDocHeader info={info} />
                 </Flex.Item>
                 <Flex.Item>
                   <ComponentDocLinks
