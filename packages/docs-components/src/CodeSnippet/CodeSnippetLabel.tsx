@@ -9,13 +9,12 @@ type CopySnippetLabelProps = Pick<CodeSnippetProps, 'copyable' | 'label' | 'mode
 
 const CodeSnippetLabel: React.FunctionComponent<CopySnippetLabelProps> = props => {
   const { copyable, label, mode, value } = props
+  const hasLabel = label !== false
+
   const [active, onCopy] = useCopyToClipboard(value)
 
-  const hasLabel = label !== false
-  const visible = copyable || hasLabel
-
   return (
-    visible && (
+    hasLabel && (
       <div
         onClick={copyable ? onCopy : undefined}
         style={{
