@@ -31,7 +31,7 @@ export default {
         to: {
           opacity: 1,
         },
-      } as any,
+      },
       animationDelay: '1.5s',
       animationDirection: 'normal',
       animationDuration: '.3s',
