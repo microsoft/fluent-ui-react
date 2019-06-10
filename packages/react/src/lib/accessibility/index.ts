@@ -34,6 +34,7 @@ export { default as chatMessageBehavior } from './Behaviors/Chat/chatMessageBeha
 export { default as gridBehavior } from './Behaviors/Grid/gridBehavior'
 export { default as treeBehavior } from './Behaviors/Tree/treeBehavior'
 export { default as treeTitleBehavior } from './Behaviors/Tree/treeTitleBehavior'
+export { default as subtreeBehavior } from './Behaviors/Tree/subtreeBehavior'
 export { default as dialogBehavior } from './Behaviors/Dialog/dialogBehavior'
 export { default as statusBehavior } from './Behaviors/Status/statusBehavior'
 export { default as embedBehavior } from './Behaviors/Embed/embedBehavior'
