@@ -7,7 +7,7 @@ import 'prettier/parser-typescript'
 
 import { CodeSnippetMode, CodeSnippetValue } from './types'
 
-// `fast-memoize` is a CJS library, there are known issues with them:
+// `prettier` is a CJS library, there are known issues with them:
 // https://github.com/rollup/rollup/issues/1267#issuecomment-446681320
 const prettier = (_prettier as any).default || _prettier
 
