@@ -38,7 +38,6 @@ const fields = [
 
 const HighlightPopup = ({ onConfirm }) => {
   return <Form onSubmit={onConfirm} fields={fields} />
-  // return <Button primary content="OK" onClick={onConfirm} />
 }
 
 const ToolbarExampleShorthand = () => {
@@ -48,6 +47,7 @@ const ToolbarExampleShorthand = () => {
   const [isStrike, setStrike] = React.useState(false)
 
   const [highlightOpen, setHighlightOpen] = React.useState(false)
+  const [fontColorActive, setFontColorActive] = React.useState(false)
 
   return (
     <Toolbar
@@ -109,7 +109,13 @@ const ToolbarExampleShorthand = () => {
         {
           key: 'font-color',
           icon: { name: 'font-color', outline: true },
-          popup: { content: { content: <Input icon="search" placeholder="Search..." /> } },
+          active: fontColorActive,
+          popup: {
+            content: { content: <Input icon="search" placeholder="Search..." /> },
+            onOpenChange: () => {
+              setFontColorActive(!fontColorActive)
+            },
+          },
         },
         { key: 'font-size', icon: { name: 'font-size', outline: true } },
         { key: 'remove-format', icon: { name: 'remove-format', outline: true } },
