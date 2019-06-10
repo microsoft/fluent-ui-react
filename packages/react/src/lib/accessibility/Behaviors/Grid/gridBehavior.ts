@@ -6,7 +6,7 @@ import { FocusZoneDirection } from '../../FocusZone'
  * Embeds component into FocusZone.
  * Provides arrow key navigation in bidirectional direction.
  */
-const gridBehavior: Accessibility = (props: any) => ({
+const gridBehavior: Accessibility = () => ({
   attributes: {},
   focusZone: {
     mode: FocusZoneMode.Embed,

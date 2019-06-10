@@ -2,6 +2,7 @@ import * as keyboardKey from 'keyboard-key'
 import { Accessibility } from '../../types'
 
 type CheckboxBehaviorProps = {
+  /** Whether or not item is checked. */
   checked: boolean
 }
 

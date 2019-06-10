@@ -3,6 +3,11 @@ import { FocusZoneDirection } from '../../FocusZone'
 import menuItemBehavior from './menuItemBehavior'
 import menuDividerBehavior from './menuDividerBehavior'
 
+type MenuBehaviorProps = {
+  /** Indicates if menu has its items displayed vertically. */
+  vertical: boolean
+}
+
 /**
  * @description
  * Implements ARIA Menu design pattern.
@@ -15,8 +20,7 @@ import menuDividerBehavior from './menuDividerBehavior'
  * When 'vertical' prop is used, provides keyboard navigation in vertical direction.
  * Keyboard navigation is circular.
  */
-
-const menuBehavior: Accessibility = (props: any) => ({
+const menuBehavior: Accessibility<MenuBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'menu',

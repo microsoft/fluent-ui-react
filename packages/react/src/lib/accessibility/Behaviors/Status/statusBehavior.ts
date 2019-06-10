@@ -7,7 +7,7 @@ import { Accessibility } from '../../types'
  * @specification
  * Adds role='img'.
  */
-const statusBehavior: Accessibility = (props: any) => ({
+const statusBehavior: Accessibility = () => ({
   attributes: {
     root: {
       role: 'img',

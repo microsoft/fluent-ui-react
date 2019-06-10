@@ -1,7 +1,7 @@
 import { Accessibility } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as keyboardKey from 'keyboard-key'
-import * as _ from 'lodash'
+import { MenuItemBehaviorProps } from '../Menu/menuItemBehavior'
 
 /**
  * @description
@@ -22,7 +22,7 @@ import * as _ from 'lodash'
  * Triggers 'openMenu' action with 'ArrowDown' on 'wrapper', when orientation is horizontal.
  * Triggers 'doNotNavigateNextParentItem' action with 'ArrowLeft' or 'ArrowRight' on 'wrapper', when toolbar button has submenu and it is opened.
  */
-const menuItemAsToolbarButtonBehavior: Accessibility = (props: any) => ({
+const menuItemAsToolbarButtonBehavior: Accessibility<MenuItemBehaviorProps> = props => ({
   attributes: {
     wrapper: {
       role: 'presentation',
@@ -31,15 +31,11 @@ const menuItemAsToolbarButtonBehavior: Accessibility = (props: any) => ({
       role: 'button',
       tabIndex: 0,
       'aria-haspopup': props.menu ? 'true' : undefined,
-      'aria-disabled': !_.isNil(props['aria-disabled'])
-        ? props['aria-disabled']
-        : !!props['disabled']
-        ? true
-        : undefined,
+      'aria-disabled': props.disabled,
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
       'aria-describedby': props['aria-describedby'],
-      [IS_FOCUSABLE_ATTRIBUTE]: !props['disabled'],
+      [IS_FOCUSABLE_ATTRIBUTE]: !props.disabled,
     },
   },
 

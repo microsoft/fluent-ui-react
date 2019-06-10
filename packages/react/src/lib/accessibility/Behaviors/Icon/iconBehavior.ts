@@ -1,5 +1,11 @@
 import { Accessibility } from '../../types'
 
+type IconBehaviorProps = {
+  /** Alternative text. */
+  alt?: string
+  'aria-label'?: string
+}
+
 /**
  * @description
  * Icon is usually only visual representation and therefore is hidden from screen readers, unless 'alt' or 'aria-label' property is provided.
@@ -9,12 +15,11 @@ import { Accessibility } from '../../types'
  * Adds attribute 'aria-hidden=true', if there is no 'alt' property provided.
  * Adds attribute 'aria-hidden=true', if there is no 'aria-label' property provided.
  */
-
-const iconBehavior: Accessibility = (props: any) => ({
+const iconBehavior: Accessibility<IconBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'img',
-      'aria-hidden': props['alt'] || props['aria-label'] ? undefined : 'true',
+      'aria-hidden': props.alt || props['aria-label'] ? undefined : 'true',
     },
   },
 })

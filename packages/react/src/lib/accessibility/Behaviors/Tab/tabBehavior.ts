@@ -1,7 +1,17 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
-import * as _ from 'lodash'
+
+type TabBehaviorProps = {
+  /** Indicates if tab is selected. */
+  active?: boolean
+  /** Indicates if tab is disabled. */
+  disabled?: boolean
+  'aria-label'?: string
+  'aria-labelledby'?: string
+  'aria-describedby'?: string
+  'aria-controls'?: string
+}
 
 /**
  * @specification
@@ -17,7 +27,7 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-disabled=true' to 'root' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
  */
-const tabBehavior: Accessibility = (props: any) => ({
+const tabBehavior: Accessibility<TabBehaviorProps> = props => ({
   attributes: {
     wrapper: {
       role: 'presentation',
@@ -25,19 +35,13 @@ const tabBehavior: Accessibility = (props: any) => ({
     root: {
       role: 'tab',
       tabIndex: 0,
-      'aria-selected': !_.isNil(props['aria-selected'])
-        ? props['aria-selected']
-        : !!props['active'],
+      'aria-selected': !!props.active,
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
       'aria-describedby': props['aria-describedby'],
       'aria-controls': props['aria-controls'],
-      'aria-disabled': !_.isNil(props['aria-disabled'])
-        ? props['aria-disabled']
-        : !!props['disabled']
-        ? true
-        : undefined,
-      [IS_FOCUSABLE_ATTRIBUTE]: !props['disabled'],
+      'aria-disabled': props.disabled,
+      [IS_FOCUSABLE_ATTRIBUTE]: !props.disabled,
     },
   },
 

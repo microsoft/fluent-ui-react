@@ -1,5 +1,6 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
+import { ListItemBehaviorProps } from './listItemBehavior'
 
 /**
  * @specification
@@ -7,12 +8,11 @@ import * as keyboardKey from 'keyboard-key'
  * Adds attribute 'aria-selected=true' based on the property 'selected'. Based on this screen readers will recognize the selected state of the item.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
  */
-
-const selectableListItemBehavior: Accessibility = (props: any) => ({
+const selectableListItemBehavior: Accessibility<ListItemBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'option',
-      'aria-selected': !!props['selected'],
+      'aria-selected': !!props.selected,
     },
   },
   keyActions: {

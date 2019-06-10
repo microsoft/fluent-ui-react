@@ -1,6 +1,19 @@
 import { Accessibility } from '../../types'
 import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
+import { PopupBehaviorProps } from '../Popup/popupBehavior'
 import * as _ from 'lodash'
+
+type DialogBehaviorProps = {
+  header?: {
+    id?: string
+  }
+  content?: {
+    id?: string
+  }
+  'aria-label'?: string
+  'aria-labelledby'?: string
+  'aria-describedby'?: string
+} & PopupBehaviorProps
 
 /**
  * @description
@@ -17,7 +30,7 @@ import * as _ from 'lodash'
  * Generates unique ID and adds it as attribute 'id' to the 'content' component's part if it has not been provided by the user.
  * Traps focus inside component.
  */
-const dialogBehavior: Accessibility = (props: any) => {
+const dialogBehavior: Accessibility<DialogBehaviorProps> = props => {
   const behaviorData = popupFocusTrapBehavior(props)
   const defaultAriaLabelledBy = getDefaultAriaLabelledBy(props)
   const defaultAriaDescribedBy = getDefaultAriaDescribedBy(props)

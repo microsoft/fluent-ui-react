@@ -1,6 +1,25 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
+import { PopupEvents, PopupEventsArray } from '../../../../components/Popup/Popup'
+
+export type PopupBehaviorProps = {
+  /** Events triggering the popup. */
+  on?: PopupEvents | PopupEventsArray
+  /** Indicates if popup's trigger is disabled. */
+  disabled?: boolean
+  /** Element which triggers popup */
+  trigger?: {
+    props?: {
+      /** Element type. */
+      as?: string
+      href?: string
+      [attributeName: string]: string
+    }
+    /** Element type. */
+    type?: string
+  }
+}
 
 /**
  * @description
@@ -10,17 +29,13 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Does not set the attribute otherwise.
  * Adds attribute 'role=complementary' to 'popup' component's part.
  */
-const popupBehavior: Accessibility = (props: any) => {
+const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
   const onAsArray = _.isArray(props.on) ? props.on : [props.on]
   return {
     attributes: {
       trigger: {
         tabIndex: getAriaAttributeFromProps('tabIndex', props, 0),
-        'aria-disabled': !_.isNil(props['aria-disabled'])
-          ? props['aria-disabled']
-          : !!props['disabled']
-          ? true
-          : undefined,
+        'aria-disabled': props.disabled,
       },
       popup: {
         role: 'complementary',

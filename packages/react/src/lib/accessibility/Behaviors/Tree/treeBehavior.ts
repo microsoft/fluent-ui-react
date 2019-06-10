@@ -7,7 +7,7 @@ import { FocusZoneDirection } from '../../FocusZone'
  * Provides arrow key navigation in vertical direction.
  * Keyboard navigation is circular.
  */
-const treeBehavior: Accessibility = (props: any) => ({
+const treeBehavior: Accessibility = () => ({
   attributes: {
     root: {},
   },
