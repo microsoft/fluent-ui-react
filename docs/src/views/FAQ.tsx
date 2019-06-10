@@ -49,10 +49,15 @@ export default () => (
 
     <Question content="How can @mixins be used in the Stardust's styles" />
     <Answer
-      content="
-      As the styles in Stardust are defined using CSS in JS, mixins can be defined as simple
-      functions that can be reused on multiple places.
-      "
+      content={
+        <p>
+          As the styles in Stardust are defined using CSS in JS, mixins can be defined as simple
+          functions that can be reused on multiple places.
+          <br />
+          For example, in Stardust the method 'getBorderFocusStyles' is re-used multiple times in
+          many component styles.
+        </p>
+      }
     />
 
     <Question content="How to use Links and React-Router?" />
