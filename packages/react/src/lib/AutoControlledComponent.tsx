@@ -215,6 +215,9 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
     return newStateFromProps
   }
 
+  /**
+   * Override this method to use getDerivedStateFromProps() in child components.
+   */
   static getAutoControlledStateFromProps(props, state) {
     return null
   }
