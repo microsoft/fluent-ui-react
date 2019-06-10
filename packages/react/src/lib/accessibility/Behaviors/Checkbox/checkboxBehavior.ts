@@ -3,7 +3,7 @@ import { Accessibility } from '../../types'
 
 type CheckboxBehaviorProps = {
   checked: boolean
-  disabled: boolean
+  disabled?: boolean
 }
 
 /**
