@@ -19,11 +19,7 @@ const CodeSnippet: React.FunctionComponent<CodeSnippetProps> = props => {
 
   const codeClassName = `language-${mode}`
   const code = formatCode(value, mode)
-
   const codeRef = React.useRef(null)
-  const handleCodeClick = React.useCallback(() => {
-    window.getSelection().selectAllChildren(codeRef.current)
-  }, [])
 
   React.useLayoutEffect(() => {
     Prism.highlightElement(codeRef.current)
@@ -40,7 +36,7 @@ const CodeSnippet: React.FunctionComponent<CodeSnippetProps> = props => {
       <CodeSnippetLabel {...props} value={code} />
 
       <pre style={{ margin: fitted ? '0' : undefined }}>
-        <code className={codeClassName} onClick={handleCodeClick} ref={codeRef}>
+        <code className={codeClassName} ref={codeRef}>
           {code}
         </code>
       </pre>
