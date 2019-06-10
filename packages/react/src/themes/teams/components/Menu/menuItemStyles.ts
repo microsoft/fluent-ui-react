@@ -325,11 +325,14 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       }),
 
       // active styles
-      ...(active &&
-        (primary
-          ? {
-              ...(iconOnly && { color: 'inherit' }),
+      ...(active && {
+        ...(iconOnly && {
+          color: v.iconOnlyColorActive,
+          ...getIconFillOrOutlineStyles({ outline: false }),
+        }),
 
+        ...(primary
+          ? {
               ...(underlined && {
                 color: colors.borderActive,
                 ...underlinedItem(v.borderColorActive || colors.borderActive),
@@ -338,7 +341,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           : underlined && {
               fontWeight: 700,
               ...underlinedItem(v.colorActive),
-            })),
+            }),
+      }),
 
       // focus styles
       ...(isFromKeyboard && {
