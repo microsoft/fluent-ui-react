@@ -38,7 +38,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Remove unfinished themes from the docs themes dropdown on components examples pages @alinais ([#1473](https://github.com/stardust-ui/react/pull/1473)
 
 ### Performance
-- Use minified version of `normalize.css` @layershifter  ([#1476](https://github.com/stardust-ui/react/pull/1476))
+- Use minified version of `normalize.css` and update it to `8.0.1` @layershifter ([#1476](https://github.com/stardust-ui/react/pull/1476))
 
 <!--------------------------------[ v0.32.0 ]------------------------------- -->
 ## [v0.32.0](https://github.com/stardust-ui/react/tree/v0.32.0) (2019-06-03)
