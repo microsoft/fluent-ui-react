@@ -25,9 +25,20 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add `Toolbar` component @miroslavstastny ([#1408](https://github.com/stardust-ui/react/pull/1408))
 - Add `disableAnimations` boolean prop on the `Provider` @mnajdova ([#1377](https://github.com/stardust-ui/react/pull/1377))
+- Add 'data-is-focusable' attribute to `attachmentBehavior` @sophieH29 ([#1445](https://github.com/stardust-ui/react/pull/1445))
+- Improve accessibility for `Checkbox` @jurokapsiar ([1479](https://github.com/stardust-ui/react/pull/1479))
 
 ### Fixes
 - Fix click handling on focus for `action` slot in `Attachment` component @Bugaa92 ([#1444](https://github.com/stardust-ui/react/pull/1444))
+- Fix Teams' theme list item end media styles @mnajdova ([#1448](https://github.com/stardust-ui/react/pull/1448))
+- Fix the order of the fela plugin @mnajdova ([#1461](https://github.com/stardust-ui/react/pull/1461))
+- Fix `active` styles for `iconOnly` `MenuItem` in Teams theme @mnajdova ([#1464](https://github.com/stardust-ui/react/pull/1464))
+
+### Documentation
+- Remove unfinished themes from the docs themes dropdown on components examples pages @alinais ([#1473](https://github.com/stardust-ui/react/pull/1473)
+
+### Performance
+- Use minified version of `normalize.css` and update it to `8.0.1` @layershifter ([#1476](https://github.com/stardust-ui/react/pull/1476))
 
 ### Fixes
 - Generate IDs for `header` and `content` slots once ([#1449](https://github.com/stardust-ui/react/pull/1449))

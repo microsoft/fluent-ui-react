@@ -4,7 +4,6 @@ import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
 /**
  * @description
  * Implements ARIA Dialog (Modal) design pattern.
- * Adds role='button' to 'trigger' component's part, if it is not focusable element and no role attribute provided.
  * Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
  *
  * @specification
@@ -13,7 +12,6 @@ import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
  * Adds attribute 'role=dialog' to 'popup' component's part.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'popup' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'popup' component's part.
- * Adds attribute 'role=dialog' to 'popup' component's part.
  * Traps focus inside component.
  */
 const dialogBehavior: Accessibility = (props: any) => {
