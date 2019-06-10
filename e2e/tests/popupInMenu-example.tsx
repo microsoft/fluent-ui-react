@@ -4,6 +4,7 @@ import { Menu, Popup } from '@stardust-ui/react'
 export const selectors = {
   menuId: 'menu',
   menuItemId: index => `menu-item-${index}`,
+  popupContentClass: Popup.slotClassNames.content,
   popupContentId: index => `popup-content-${index}`,
 }
 
