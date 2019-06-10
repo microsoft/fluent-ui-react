@@ -156,7 +156,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
             overrideProps: this.handleTitleOverrides,
           })}
         </Ref>
-        {open && (
+        {hasSubtree && open && (
           <Ref innerRef={this.treeRef}>
             {Tree.create(items, {
               defaultProps: {

@@ -139,14 +139,24 @@ describe('Tree', () => {
       checkOpenTitles(wrapper, ['1', '11', '12', '2', '21', '22', '3'])
     })
 
-    it('should expand subtrees only on current level', () => {
+    it('should expand subtrees only on current level on asterisk key', () => {
       const wrapper = mountWithProvider(<Tree items={items} defaultActiveIndex={[0]} />)
 
       wrapper
         .find(`.${TreeTitle.className}`)
         .at(1) // title 11
         .simulate('keydown', { keyCode: keyboardKey['*'] })
-      checkOpenTitles(wrapper, ['1', '11', '12', '121', '2', '21', '22', '3'])
+      checkOpenTitles(wrapper, ['1', '11', '12', '121', '2', '3'])
+    })
+
+    it('should not be changed on asterisk key if all siblings are already expanded', () => {
+      const wrapper = mountWithProvider(<Tree items={items} defaultActiveIndex={[0, 1, 2]} />)
+
+      wrapper
+        .find(`.${TreeTitle.className}`)
+        .at(0) // title 1
+        .simulate('keydown', { keyCode: keyboardKey['*'] })
+      checkOpenTitles(wrapper, ['1', '11', '12', '2', '21', '22', '3'])
     })
   })
 })
