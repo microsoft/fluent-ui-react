@@ -66,7 +66,7 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
       e.preventDefault()
       this.handleClick(e)
     },
-    expandOrFocusFirstChild: e => {
+    expand: e => {
       const { open } = this.props
       e.preventDefault()
       if (!open) {
@@ -74,7 +74,7 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
         this.handleClick(e)
       }
     },
-    collapseOrFocusParent: e => {
+    collapse: e => {
       const { open } = this.props
       e.preventDefault()
       if (open) {
