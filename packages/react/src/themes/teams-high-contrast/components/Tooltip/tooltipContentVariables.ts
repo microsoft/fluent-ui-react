@@ -2,6 +2,6 @@ import { TooltipContentVariables } from '../../../teams/components/Tooltip/toolt
 
 export default (): Partial<TooltipContentVariables> => {
   return {
-    borderColor: undefined,
+    boxShadowColor: undefined,
   }
 }

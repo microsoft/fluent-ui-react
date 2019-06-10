@@ -6,12 +6,21 @@ export type Alignment = 'top' | 'bottom' | 'start' | 'end' | 'center'
 
 export type PopperChildrenFn = (props: PopperChildrenProps) => React.ReactNode
 
-export interface PositioningProps {
+export interface SimplifiedPositioningProps {
   /**
    * Alignment for the component.
    */
   align?: Alignment
 
+  /**
+   * Position for the component. Position has higher priority than align. If position is vertical ('above' | 'below')
+   * and align is also vertical ('top' | 'bottom') or if both position and align are horizontal ('before' | 'after'
+   * and 'start' | 'end' respectively), then provided value for 'align' will be ignored and 'center' will be used instead.
+   */
+  position?: Position
+}
+
+export interface PositioningProps extends SimplifiedPositioningProps {
   /**
    * Offset value to apply to rendered component. Accepts the following units:
    * - px or unit-less, interpreted as pixels
@@ -21,13 +30,6 @@ export interface PositioningProps {
    * - vh, CSS viewport height unit
    */
   offset?: string
-
-  /**
-   * Position for the component. Position has higher priority than align. If position is vertical ('above' | 'below')
-   * and align is also vertical ('top' | 'bottom') or if both position and align are horizontal ('before' | 'after'
-   * and 'start' | 'end' respectively), then provided value for 'align' will be ignored and 'center' will be used instead.
-   */
-  position?: Position
 }
 
 export interface PopperProps extends PositioningProps {

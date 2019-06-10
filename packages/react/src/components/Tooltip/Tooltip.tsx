@@ -23,7 +23,7 @@ import {
   ALIGNMENTS,
   POSITIONS,
   Popper,
-  PositioningProps,
+  SimplifiedPositioningProps,
   PopperChildrenProps,
 } from '../../lib/positioner'
 import TooltipContent from './TooltipContent'
@@ -42,7 +42,7 @@ export interface TooltipProps
   extends StyledComponentProps<TooltipProps>,
     ChildrenComponentProps,
     ContentComponentProps<ShorthandValue>,
-    PositioningProps {
+    SimplifiedPositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
    * */
@@ -101,7 +101,6 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     inline: PropTypes.bool,
     mountNode: customPropTypes.domNode,
     mouseLeaveDelay: PropTypes.number,
-    offset: PropTypes.string,
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
     pointing: PropTypes.bool,
@@ -113,10 +112,11 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   }
 
   static defaultProps: TooltipProps = {
-    align: 'start',
+    align: 'center',
     mountNode: isBrowser() ? document.body : null,
     position: 'above',
     mouseLeaveDelay: 500,
+    pointing: true,
   }
 
   static autoControlledProps = ['open']
@@ -219,14 +219,13 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     rtl: boolean,
     accessibility: ReactAccessibilityBehavior,
   ): JSX.Element {
-    const { align, position, offset, target } = this.props
+    const { align, position, target } = this.props
 
     return (
       <Popper
         pointerTargetRef={this.pointerTargetRef}
         align={align}
         position={position}
-        offset={offset}
         rtl={rtl}
         targetRef={target ? toRefObject(target) : this.triggerRef}
         children={this.renderPopperChildren.bind(this, tooltipPositionClasses, rtl, accessibility)}

@@ -19,8 +19,6 @@ const tooltipContentStyles: ComponentSlotStylesInput<
     position: 'absolute',
 
     backgroundColor: 'inherit',
-    borderBottom: `${v.borderSize} solid ${v.borderColor}`,
-    borderRight: `${v.borderSize} solid ${v.borderColor}`,
 
     height: v.pointerSize,
     width: v.pointerSize,
@@ -31,9 +29,8 @@ const tooltipContentStyles: ComponentSlotStylesInput<
     display: 'block',
     padding: v.padding,
 
-    border: `${v.borderSize} solid ${v.borderColor}`,
     borderRadius: 'inherit',
-    boxShadow: `0 2px 4px 0 ${v.borderColor}, 0 2px 10px 0 ${v.borderColor}`,
+    boxShadow: `0 2px 4px 0 ${v.boxShadowColor}, 0 2px 10px 0 ${v.boxShadowColor}`,
   }),
 }
 

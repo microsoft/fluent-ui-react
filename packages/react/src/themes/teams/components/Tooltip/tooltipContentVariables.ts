@@ -1,7 +1,7 @@
 import { pxToRem } from '../../../../lib'
 
 export interface TooltipContentVariables {
-  borderColor: string
+  boxShadowColor: string
   borderRadius: string
   borderSize: string
   padding: string
@@ -15,7 +15,7 @@ export interface TooltipContentVariables {
 
 export default (siteVars: any): TooltipContentVariables => {
   return {
-    borderColor: siteVars.colors.grey[250],
+    boxShadowColor: siteVars.colors.grey[250],
     borderRadius: pxToRem(3),
     borderSize: '1px',
     padding: `${pxToRem(5)} ${pxToRem(12)} ${pxToRem(7)} ${pxToRem(12)}`,
