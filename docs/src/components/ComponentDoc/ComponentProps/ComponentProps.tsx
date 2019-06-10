@@ -55,7 +55,7 @@ export default class ComponentProps extends React.Component<any, any> {
       <Flex column gap="gap.small">
         <Flex.Item styles={{ display: 'block', verticalAlign: 'middle' }}>
           <Flex gap="gap.medium">
-            <Checkbox checked={!!activeDisplayName} onClick={this.handleToggle} label="Props" />
+            <Checkbox checked={!!activeDisplayName} onChange={this.handleToggle} label="Props" />
             <ComponentPropsComponents
               activeDisplayName={activeDisplayName}
               displayNames={displayNames}
