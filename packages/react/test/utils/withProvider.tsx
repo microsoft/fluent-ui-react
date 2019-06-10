@@ -1,17 +1,16 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
-// @ts-ignore
-import { ThemeContext } from 'react-fela'
+import { ThemeProvider } from 'react-fela'
 import { felaRenderer } from 'src/lib'
 import { ThemeInput } from 'src/themes/types'
 
-export const MockProvider: React.FunctionComponent = props => (
-  <ThemeContext.Provider value={{ renderer: felaRenderer }}>{props.children}</ThemeContext.Provider>
+export const EmptyThemeProvider: React.FunctionComponent = ({ children }) => (
+  <ThemeProvider theme={{ renderer: felaRenderer }}>{children}</ThemeProvider>
 )
 
 export const mountWithProvider = (node, options?, theme?: ThemeInput) => {
   return mount(node, {
-    wrappingComponent: MockProvider,
+    wrappingComponent: EmptyThemeProvider,
     ...options,
   })
 }

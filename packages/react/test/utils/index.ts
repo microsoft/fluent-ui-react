@@ -4,4 +4,8 @@ export { default as domEvent } from './domEvent'
 export { default as getDisplayName } from './getDisplayName'
 export { default as syntheticEvent } from './syntheticEvent'
 export { default as nextFrame } from './nextFrame'
-export { MockProvider, mountWithProvider, mountWithProviderAndGetComponent } from './withProvider'
+export {
+  EmptyThemeProvider,
+  mountWithProvider,
+  mountWithProviderAndGetComponent,
+} from './withProvider'

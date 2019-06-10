@@ -5,9 +5,6 @@ import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 
-// @ts-ignore
-import { ThemeContext, FelaTheme } from 'react-fela'
-
 import isExportedAtTopLevel from './isExportedAtTopLevel'
 import {
   assertBodyContains,
@@ -57,7 +54,7 @@ export default (Component, options: Conformant = {}) => {
   const componentType = typeof Component
 
   const helperComponentNames = [
-    ...[ThemeContext.Provider, FelaTheme, Ref, RefFindNode],
+    ...[Ref, RefFindNode],
     ...(wrapperComponent ? [wrapperComponent] : []),
   ].map(getDisplayName)
 
