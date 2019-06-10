@@ -4,7 +4,6 @@
     "arrow-parens": false,
     "align": [false],
     "import-name": [false],
-    "jsx-attribute-name": true,
     "linebreak-style": [true, "LF"],
     "max-line-length": [false],
     "no-increment-decrement": false,

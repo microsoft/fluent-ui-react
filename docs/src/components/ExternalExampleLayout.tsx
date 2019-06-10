@@ -1,4 +1,4 @@
-import { Provider, themes, ThemeInput } from '@stardust-ui/react'
+import { Provider, themes } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { match } from 'react-router'
@@ -55,42 +55,33 @@ class ExternalExampleLayout extends React.Component<
     if (!examplePath) return <PageNotFound />
 
     const exampleSource: ExampleSource = exampleSourcesContext(examplePath)
-    const theme = this.getTheme()
+
+    const { themeName } = this.state
+    const theme = (themeName && themes[themeName]) || {}
 
     return (
-      <Provider key={this.state.renderId} theme={theme}>
-        <Provider.Consumer
-          render={({ siteVariables }) => (
-            <SourceRender
-              babelConfig={babelConfig}
-              source={exampleSource.js}
-              renderHtml={false}
-              resolver={importResolver}
-            >
-              <SourceRender.Consumer>
-                {({ element, error }) => (
-                  <>
-                    {element}
-                    {/* This block allows to see issues with examples as visual regressions. */}
-                    {error && (
-                      <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>
-                    )}
-                  </>
-                )}
-              </SourceRender.Consumer>
-            </SourceRender>
+      <Provider
+        key={this.state.renderId}
+        theme={theme}
+        rtl={this.props.match.params.rtl === 'true'}
+      >
+        <SourceRender
+          babelConfig={babelConfig}
+          source={exampleSource.js}
+          renderHtml={false}
+          resolver={importResolver}
+          unstable_hot
+        >
+          {({ element, error }) => (
+            <>
+              {element}
+              {/* This block allows to see issues with examples as visual regressions. */}
+              {error && <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>}
+            </>
           )}
-        />
+        </SourceRender>
       </Provider>
     )
-  }
-
-  private getTheme = (): ThemeInput => {
-    const { themeName } = this.state
-    const theme: ThemeInput = (themeName && themes[themeName]) || {}
-
-    theme.rtl = this.props.match.params.rtl === 'true'
-    return theme
   }
 }
 

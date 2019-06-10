@@ -1,6 +1,6 @@
 import { task, series } from 'gulp'
-import * as rimraf from 'rimraf'
-import * as webpack from 'webpack'
+import rimraf from 'rimraf'
+import webpack from 'webpack'
 
 import config from '../../../config'
 

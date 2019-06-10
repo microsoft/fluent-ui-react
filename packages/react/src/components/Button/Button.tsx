@@ -82,11 +82,11 @@ export interface ButtonState {
 class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   static create: Function
 
-  public static displayName = 'Button'
+  static displayName = 'Button'
 
-  public static className = 'ui-button'
+  static className = 'ui-button'
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
     }),
@@ -103,18 +103,18 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     as: 'button',
     accessibility: buttonBehavior as Accessibility,
   }
 
   static Group = ButtonGroup
 
-  public state = {
+  state = {
     isFromKeyboard: false,
   }
 
-  public renderComponent({
+  renderComponent({
     ElementType,
     classes,
     accessibility,
@@ -145,7 +145,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     )
   }
 
-  public renderIcon = (variables, styles) => {
+  renderIcon = (variables, styles) => {
     const { icon, iconPosition, content } = this.props
 
     return Icon.create(icon, {
@@ -157,7 +157,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     })
   }
 
-  private handleClick = (e: React.SyntheticEvent) => {
+  handleClick = (e: React.SyntheticEvent) => {
     const { disabled } = this.props
 
     if (disabled) {
@@ -168,7 +168,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
 
     _.invoke(this.props, 'onFocus', e, this.props)
@@ -180,8 +180,6 @@ Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content
 /**
  * A button indicates a possible user action.
  * @accessibility
- * Other considerations:
- *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
- *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
+ * Do add textual representation if the component only contains an icon (using title, aria-label or aria-labelledby props).
  */
 export default withSafeTypeForAs<typeof Button, ButtonProps, 'button'>(Button)

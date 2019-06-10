@@ -1,4 +1,4 @@
-import { RadioGroupItemVariables } from 'src/themes/teams/components/RadioGroup/radioGroupItemVariables'
+import { RadioGroupItemVariables } from '../../../teams/components/RadioGroup/radioGroupItemVariables'
 
 export default (siteVars: any): Partial<RadioGroupItemVariables> => ({
   colorDisabled: siteVars.colors.grey[450],

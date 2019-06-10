@@ -1,9 +1,9 @@
 import * as Babel from '@babel/core'
 import { CLIEngine } from 'eslint'
-import * as gutil from 'gulp-util'
-import * as prettier from 'prettier'
-import * as through from 'through2'
-import * as Vinyl from 'vinyl'
+import gutil from 'gulp-util'
+import prettier from 'prettier'
+import through from 'through2'
+import Vinyl from 'vinyl'
 
 const prettierConfig = require('../../../.prettierrc.json')
 
@@ -20,6 +20,8 @@ const createExampleSourceCode = (file: Vinyl): ExampleSource => {
   const tsSource = file.contents.toString()
 
   const babelResult = Babel.transform(tsSource, {
+    // This plugin transforms TS files for docs, we want to apply exactly this config.
+    configFile: false,
     plugins: [transformStarImportPlugin],
     presets: [['@babel/preset-typescript', { allExtensions: true, isTSX: true }]],
     sourceType: 'module',

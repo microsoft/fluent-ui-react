@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import ListItem, { ListItemProps } from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 
@@ -103,10 +103,10 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selectable', 'truncateContent', 'truncateHeader', 'variables']
 
-  private focusHandler: ContainerFocusHandler = null
-  private itemRefs = []
+  focusHandler: ContainerFocusHandler = null
+  itemRefs = []
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     moveNext: e => {
       e.preventDefault()
       this.focusHandler.moveNext()

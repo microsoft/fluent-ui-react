@@ -155,6 +155,7 @@ export type FocusTrapDefinition = FocusTrapZoneProps | boolean
 export type AutoFocusZoneDefinition = AutoFocusZoneProps | boolean
 
 export type KeyActions = { [partName: string]: { [actionName: string]: KeyAction } }
+
 export interface AccessibilityDefinition {
   attributes?: AccessibilityAttributesBySlot
   keyActions?: KeyActions
@@ -162,10 +163,6 @@ export interface AccessibilityDefinition {
   focusTrap?: FocusTrapDefinition
   autoFocus?: AutoFocusZoneDefinition
   childBehaviors?: { [childBehaviorSlot: string]: Accessibility }
-}
-
-export interface AccessibilityBehavior extends AccessibilityDefinition {
-  keyHandlers?: ActionsKeyHandler
 }
 
 export interface KeyAction {
@@ -180,19 +177,4 @@ export interface KeyCombinations {
   metaKey?: boolean
 }
 
-export type AccessibilityActionHandlers = {
-  [actionName: string]: EventHandler
-}
-
-export type ActionsKeyHandler = {
-  [partName: string]: OnKeyDownHandler
-}
-
-export type OnKeyDownHandler = {
-  onKeyDown?: KeyboardHandler
-}
-
-export type KeyboardHandler = (event: KeyboardEvent) => void
-export type EventHandler = (event: Event) => void
-
-export type Accessibility = (props: any) => AccessibilityDefinition
+export type Accessibility<P = any> = (props: P) => AccessibilityDefinition

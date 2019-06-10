@@ -78,7 +78,7 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
 
   static Group = ReactionGroup
 
-  public state = {
+  state = {
     isFromKeyboard: false,
   }
 
@@ -115,7 +115,7 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
     )
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
     _.invoke(this.props, 'onFocus', e, this.props)
   }
@@ -129,5 +129,8 @@ Reaction.slotClassNames = {
 
 /**
  * A reaction is used to indicate user's reaction.
+ * @accessibility
+ * Do use actionable components (for example Button) if the reactions need to be actionable.
+ * Do add textual representation to the icon slot if it only contains an icon (using title, aria-label or aria-labelledby props on the slot).
  */
 export default withSafeTypeForAs<typeof Reaction, ReactionProps, 'span'>(Reaction)

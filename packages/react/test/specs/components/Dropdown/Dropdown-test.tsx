@@ -7,33 +7,36 @@ import DropdownSearchInput from 'src/components/Dropdown/DropdownSearchInput'
 import DropdownSelectedItem from 'src/components/Dropdown/DropdownSelectedItem'
 import { isConformant } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
-import { ReactWrapper } from 'enzyme'
+import { ReactWrapper, CommonWrapper } from 'enzyme'
 
 jest.dontMock('keyboard-key')
 jest.useFakeTimers()
 
-const findIntrinsicElement = (wrapper: ReactWrapper, selector: string) =>
+const findIntrinsicElement = (wrapper: ReactWrapper, selector: string): CommonWrapper =>
   wrapper.find(selector).filterWhere(n => typeof n.type() === 'string')
 
-const getTriggerButtonWrapper = (wrapper: ReactWrapper) =>
+const getTriggerButtonWrapper = (wrapper: ReactWrapper): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.triggerButton}`)
 
-const getToggleIndicatorWrapper = (wrapper: ReactWrapper) =>
+const getToggleIndicatorWrapper = (wrapper: ReactWrapper): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.toggleIndicator}`)
 
-const getSearchInputWrapper = (wrapper: ReactWrapper) =>
+const getSearchInputWrapper = (wrapper: ReactWrapper): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${DropdownSearchInput.slotClassNames.input}`)
 
-const getItemsListWrapper = (wrapper: ReactWrapper) =>
+const getItemsListWrapper = (wrapper: ReactWrapper): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.itemsList}`)
 
-const getItemAtIndexWrapper = (wrapper: ReactWrapper, index: number = 0) =>
+const getItemAtIndexWrapper = (wrapper: ReactWrapper, index: number = 0): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.item}`).at(index)
 
-const getSelectedItemAtIndexWrapper = (wrapper: ReactWrapper, index: number = 0) =>
+const getSelectedItemAtIndexWrapper = (wrapper: ReactWrapper, index: number = 0): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`).at(index)
 
-const getSelectedItemHeaderAtIndexWrapper = (wrapper: ReactWrapper, index: number = 0) =>
+const getSelectedItemHeaderAtIndexWrapper = (
+  wrapper: ReactWrapper,
+  index: number = 0,
+): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${DropdownSelectedItem.slotClassNames.header}`).at(index)
 
 describe('Dropdown', () => {
@@ -1067,6 +1070,15 @@ describe('Dropdown', () => {
   })
 
   describe('searchQuery', () => {
+    it("updates component's state on props updates", () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} search searchQuery="foo" />)
+
+      expect(wrapper.find(Dropdown).state('searchQuery')).toBe('foo')
+
+      wrapper.setProps({ children: <Dropdown items={items} search searchQuery="bar" /> })
+      expect(wrapper.find(Dropdown).state('searchQuery')).toBe('bar')
+    })
+
     it('closes dropdown when changed to empty string', () => {
       const dropdown = mountWithProvider(<Dropdown items={items} search />).find(Dropdown)
 

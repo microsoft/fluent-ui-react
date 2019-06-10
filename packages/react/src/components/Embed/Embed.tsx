@@ -11,7 +11,7 @@ import {
   AutoControlledComponent,
 } from '../../lib'
 import { embedBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
@@ -101,7 +101,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     control: `${Embed.className}__control`,
   }
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     performClick: event => this.handleClick(event),
   }
 
@@ -177,11 +177,10 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
 Embed.create = createShorthandFactory({ Component: Embed })
 
 /**
- * A GIF is a muted segment of a video
- * @accessibility
- * If GIF should be visible to screen readers, textual representation needs to be provided in 'alt' or 'title' property.
+ * An embed component displays a placeholder and matching content based on user's interaction.
  *
- * Other considerations:
- *  - when alt and title property are empty, then Narrator in scan mode navigates to the gif and narrates it as empty paragraph
+ * @accessibility
+ * A `placeholder` slot represents an [`Image`](/components/image) component, please follow recommendations from its
+ * accessibility section.
  */
 export default withSafeTypeForAs<typeof Embed, EmbedProps, 'span'>(Embed)

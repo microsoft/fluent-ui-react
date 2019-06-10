@@ -33,7 +33,7 @@ const renderStardustIconName = (icon, isOutline = false) => {
 }
 
 class IconViewerExample extends React.Component<any, {}> {
-  private readonly iconFilters = {
+  readonly iconFilters = {
     All: () => true,
     Exported: (icon: TeamsProcessedSvgIconSpec) => icon.exportedAs,
     'Not Exported': (icon: TeamsProcessedSvgIconSpec) => !icon.exportedAs,

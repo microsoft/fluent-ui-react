@@ -4,7 +4,7 @@ import * as tsPaths from 'tsconfig-paths'
 
 import config from './config'
 
-const { compilerOptions } = require('./build/tsconfig.common.json')
+const { compilerOptions } = require('./build/tsconfig.docs.json')
 
 // add node_modules/.bin to the path so we can invoke .bin CLIs in tasks
 process.env.PATH =
@@ -25,6 +25,7 @@ require('./build/gulp/tasks/git')
 require('./build/gulp/tasks/test-unit')
 require('./build/gulp/tasks/test-projects')
 require('./build/gulp/tasks/perf')
+require('./build/gulp/tasks/test-e2e')
 require('./build/gulp/tasks/test-vulns')
 require('./build/gulp/tasks/test-circulars')
 

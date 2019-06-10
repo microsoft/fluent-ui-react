@@ -87,7 +87,7 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
     )
   }
 
-  private renderChatItem(styles: ComponentSlotStylesPrepared) {
+  renderChatItem(styles: ComponentSlotStylesPrepared) {
     const { gutter, contentPosition } = this.props
     const gutterElement =
       gutter &&

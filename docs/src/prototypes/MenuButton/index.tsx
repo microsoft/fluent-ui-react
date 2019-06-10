@@ -36,19 +36,18 @@ class MenuButtonPrototype extends React.Component<{}, MenuButtonPrototypeState> 
           <Header as="h4" content="Choose placement:" />
           <Dropdown
             items={[
-              'auto',
-              'top',
-              'top-start',
-              'top-end',
-              'right',
-              'right-start',
-              'right-end',
-              'bottom',
-              'bottom-start',
-              'bottom-end',
-              'left',
-              'left-start',
-              'left-end',
+              'above-start',
+              'above-center',
+              'above-end',
+              'below-start',
+              'below-center',
+              'below-end',
+              'before-top',
+              'before-center',
+              'before-bottom',
+              'after-top',
+              'after-center',
+              'after-bottom',
             ]}
             onSelectedChange={this.handleChange}
             value={placement}

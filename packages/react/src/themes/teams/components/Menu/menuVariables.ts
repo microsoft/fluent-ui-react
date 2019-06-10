@@ -1,9 +1,23 @@
-import { pxToRem } from '../../../../lib'
-import { ColorSchemeMapping } from '../../../types'
-import { extendColorScheme } from '../../../colorUtils'
+import { pxToRem, stringLiteralsArray } from '../../../../lib'
+import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
+import { ItemType } from '../../../types'
+import { TeamsSchemeMappingWithAreas } from '../../types'
+
+export const menuColorAreas = stringLiteralsArray(
+  'border',
+  'borderActive',
+  'foregroundActive',
+  'foregroundFocus',
+  'foregroundHover',
+  'backgroundHover',
+  'backgroundActive',
+  'backgroundFocus',
+  'foregroundDisabled',
+)
+export type MenuColorSchemeMapping = TeamsSchemeMappingWithAreas<ItemType<typeof menuColorAreas>>
 
 export interface MenuVariables {
-  colorScheme: ColorSchemeMapping
+  colorScheme: MenuColorSchemeMapping
   color: string
 
   backgroundColor: string
@@ -47,20 +61,27 @@ export interface MenuVariables {
 
 export default (siteVars: any): MenuVariables => {
   return {
-    colorScheme: extendColorScheme(siteVars.colorScheme, {
-      default: {
-        borderActive: siteVars.colors.grey[600],
-      },
-      brand: {
-        foregroundHover: siteVars.colors.white,
-        backgroundHover: siteVars.colors.brand[300],
-        foregroundActive: siteVars.colors.white,
-        borderActive: siteVars.colors.brand[600],
-        backgroundActive1: siteVars.colors.brand[500], // it's 600 in the color scheme
-        foregroundFocus: siteVars.colors.white,
-        backgroundFocus1: siteVars.colors.brand[300],
-      },
-    }),
+    colorScheme: pickValuesFromColorScheme(
+      extendColorScheme(siteVars.colorScheme, {
+        default: {
+          borderActive: siteVars.colors.grey[600],
+          backgroundActive: siteVars.colorScheme.default.backgroundActive1,
+          backgroundFocus: siteVars.colorScheme.default.backgroundFocus1,
+          foregroundDisabled: siteVars.colorScheme.default.foregroundDisabled1,
+        },
+        brand: {
+          foregroundHover: siteVars.colors.white,
+          backgroundHover: siteVars.colors.brand[300],
+          foregroundActive: siteVars.colors.white,
+          borderActive: siteVars.colors.brand[600],
+          backgroundActive: siteVars.colors.brand[500], // it's 600 in the color scheme
+          foregroundFocus: siteVars.colors.white,
+          backgroundFocus: siteVars.colors.brand[300],
+          foregroundDisabled: siteVars.colorScheme.brand.foregroundDisabled1,
+        },
+      }),
+      menuColorAreas,
+    ),
     color: siteVars.colors.grey[500],
     colorActive: siteVars.colors.black,
     colorFocus: siteVars.colors.white,

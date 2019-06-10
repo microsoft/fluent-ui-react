@@ -1,7 +1,11 @@
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle, ColorScheme } from '../../../types'
-import { Extendable } from '../../../../types'
-import { MenuVariables } from './menuVariables'
+import {
+  ComponentSlotStylesInput,
+  ICSSInJSStyle,
+  StrictColorScheme,
+  ItemType,
+} from '../../../types'
+import { MenuVariables, menuColorAreas } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 import { getColorScheme } from '../../colors'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
@@ -25,7 +29,7 @@ const getActionStyles = ({
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  colors: Extendable<ColorScheme, string>
+  colors: StrictColorScheme<ItemType<typeof menuColorAreas>>
 }): ICSSInJSStyle =>
   underlined || iconOnly
     ? {
@@ -34,11 +38,11 @@ const getActionStyles = ({
     : primary
     ? {
         color: colors.foregroundActive,
-        background: v.backgroundColorActive || colors.backgroundActive1,
+        background: v.backgroundColorActive || colors.backgroundActive,
       }
     : {
         color: v.color,
-        background: v.backgroundColorActive || colors.backgroundActive1,
+        background: v.backgroundColorActive || colors.backgroundActive,
       }
 
 const getFocusedStyles = ({
@@ -48,19 +52,19 @@ const getFocusedStyles = ({
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  colors: Extendable<ColorScheme, string>
+  colors: StrictColorScheme<ItemType<typeof menuColorAreas>>
 }): ICSSInJSStyle => {
   const { primary, underlined, isFromKeyboard, active, vertical } = props
   if (active && !underlined && !vertical) return {}
   return {
     color: primary ? colors.foregroundFocus : v.colorActive,
-    background: v.backgroundColorFocus || colors.backgroundFocus1,
+    background: v.backgroundColorFocus || colors.backgroundFocus,
     ...(vertical && isFromKeyboard && !primary
       ? {
           border: `solid 1px ${v.borderColorFocus}`,
           outline: `solid 1px ${v.outlineColorFocus}`,
           margin: pxToRem(1),
-          background: v.verticalBackgroundColorFocus || colors.backgroundFocus1,
+          background: v.verticalBackgroundColorFocus || colors.backgroundFocus,
         }
       : {}),
   }
@@ -73,7 +77,7 @@ const getHoverStyles = ({
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  colors: Extendable<ColorScheme, string>
+  colors: StrictColorScheme<ItemType<typeof menuColorAreas>>
 }): ICSSInJSStyle => {
   const { underlined, active, vertical } = props
   if (active && !underlined && !vertical) return {}
@@ -89,13 +93,21 @@ const getHoverStyles = ({
   }
 }
 
-const pointingBeak = ({ props, variables: v, colors }): ICSSInJSStyle => {
+const pointingBeak = ({
+  props,
+  variables: v,
+  colors,
+}: {
+  props: MenuItemProps
+  variables: MenuVariables
+  colors: StrictColorScheme<ItemType<typeof menuColorAreas>>
+}): ICSSInJSStyle => {
   const { pointing, primary } = props
 
   let top: string
   let borders: ICSSInJSStyle
 
-  const backgroundColor = v.backgroundColorActive || colors.backgroundActive1
+  const backgroundColor = v.backgroundColorActive || colors.backgroundActive
   const borderColor = v.borderColor || primary ? v.primaryBorderColor : colors.border
 
   if (pointing === 'start') {
@@ -258,7 +270,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       },
 
       ...(disabled && {
-        color: v.colorDisabled || colors.foregroundDisabled1,
+        color: v.colorDisabled || colors.foregroundDisabled,
         ':hover': {
           // empty - overwrite all existing hover styles
         },
@@ -313,11 +325,14 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       }),
 
       // active styles
-      ...(active &&
-        (primary
-          ? {
-              ...(iconOnly && { color: 'inherit' }),
+      ...(active && {
+        ...(iconOnly && {
+          color: v.iconOnlyColorActive,
+          ...getIconFillOrOutlineStyles({ outline: false }),
+        }),
 
+        ...(primary
+          ? {
               ...(underlined && {
                 color: colors.borderActive,
                 ...underlinedItem(v.borderColorActive || colors.borderActive),
@@ -326,7 +341,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           : underlined && {
               fontWeight: 700,
               ...underlinedItem(v.colorActive),
-            })),
+            }),
+      }),
 
       // focus styles
       ...(isFromKeyboard && {
@@ -369,11 +385,11 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
               ...(iconOnly && { color: 'inherit' }),
               ...(!active &&
                 underlined &&
-                underlinedItem(v.underlinedBorderColor || colors.backgroundActive1)),
+                underlinedItem(v.underlinedBorderColor || colors.backgroundActive)),
             }
           : !active &&
             underlined &&
-            underlinedItem(v.backgroundColorActive || colors.backgroundActive1)),
+            underlinedItem(v.backgroundColorActive || colors.backgroundActive)),
       },
 
       ...(disabled && {
@@ -386,12 +402,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  menu: ({ props: p }) => ({
-    zIndex: '1000',
-    position: 'absolute',
-    top: p.vertical ? '0' : '100%',
-    left: p.vertical ? '100%' : '0',
-  }),
+  menu: () => ({ zIndex: '1000' }),
 
   indicator: () => ({
     position: 'relative',

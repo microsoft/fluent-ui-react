@@ -1,10 +1,10 @@
-import * as express from 'express'
-import * as fs from 'fs'
+import express from 'express'
+import fs from 'fs'
 import { task, series } from 'gulp'
-import * as _ from 'lodash'
-import * as ProgressBar from 'progress'
-import * as puppeteer from 'puppeteer'
-import * as rimraf from 'rimraf'
+import _ from 'lodash'
+import ProgressBar from 'progress'
+import puppeteer from 'puppeteer'
+import rimraf from 'rimraf'
 import { argv } from 'yargs'
 
 import {
@@ -17,6 +17,7 @@ import {
 } from '../../../perf/types'
 import config from '../../../config'
 import webpackPlugin from '../plugins/gulp-webpack'
+import { safeLaunchOptions } from 'build/puppeteer.config'
 
 const { paths } = config
 const { colors, log } = require('gulp-load-plugins')().util
@@ -170,12 +171,7 @@ task('perf:run', async () => {
   let browser
 
   try {
-    browser = await puppeteer.launch({
-      args: [
-        // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568
-        process.env.CI && '--single-process',
-      ].filter(Boolean),
-    })
+    browser = await puppeteer.launch(safeLaunchOptions())
 
     for (let i = 0; i < times; i++) {
       const page = await browser.newPage()

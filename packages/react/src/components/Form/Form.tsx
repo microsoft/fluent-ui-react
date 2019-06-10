@@ -44,15 +44,15 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
 class Form extends UIComponent<WithAsProp<FormProps>, any> {
   static create: Function
 
-  public static displayName = 'Form'
+  static displayName = 'Form'
 
-  public static className = 'ui-form'
+  static className = 'ui-form'
 
   static slotClassNames: FormSlotClassNames = {
     field: `${Form.className}__field`,
   }
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
     }),
@@ -61,14 +61,14 @@ class Form extends UIComponent<WithAsProp<FormProps>, any> {
     onSubmit: PropTypes.func,
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     accessibility: defaultBehavior,
     as: 'form',
   }
 
-  public static Field = FormField
+  static Field = FormField
 
-  public renderComponent({ accessibility, ElementType, classes, unhandledProps }): React.ReactNode {
+  renderComponent({ accessibility, ElementType, classes, unhandledProps }): React.ReactNode {
     const { action, children } = this.props
     return (
       <ElementType
@@ -84,7 +84,7 @@ class Form extends UIComponent<WithAsProp<FormProps>, any> {
     )
   }
 
-  private handleSubmit = (e, ...args) => {
+  handleSubmit = (e, ...args) => {
     const { action } = this.props
 
     // Heads up! Third party libs can pass own data as first argument, we need to check that it has preventDefault()
@@ -93,7 +93,7 @@ class Form extends UIComponent<WithAsProp<FormProps>, any> {
     _.invoke(this.props, 'onSubmit', e, this.props, ...args)
   }
 
-  private renderFields = () => {
+  renderFields = () => {
     const { fields } = this.props
     return _.map(fields, field =>
       FormField.create(field, { defaultProps: { className: Form.slotClassNames.field } }),
@@ -104,6 +104,6 @@ class Form extends UIComponent<WithAsProp<FormProps>, any> {
 /**
  * A Form displays a set of related user input fields in a structured way.
  * @accessibility
- * Label needs to be provided by using 'aria-label', or 'aria-labelledby' attributes on the <form> element.
+ * Do provide label by using 'aria-label', or 'aria-labelledby' prop.
  */
 export default withSafeTypeForAs<typeof Form, FormProps, 'form'>(Form)

@@ -1,10 +1,15 @@
 import * as _ from 'lodash'
 
 import { callable, pxToRem, SizeValue } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import {
+  ComponentSlotStylesInput,
+  ICSSInJSStyle,
+  StrictColorScheme,
+  ItemType,
+} from '../../../types'
 import { IconProps } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
-import { IconVariables, IconSizeModifier } from './iconVariables'
+import { IconVariables, IconSizeModifier, iconColorAreas } from './iconVariables'
 
 const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),
@@ -33,13 +38,16 @@ const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier, v: IconVar
   return modifiedSizes[size] && pxToRem(modifiedSizes[size][sizeModifier])
 }
 
-const getIconColor = (variables, colors) => {
+const getIconColor = (variables, colors: StrictColorScheme<ItemType<typeof iconColorAreas>>) => {
   return _.get(colors, 'foreground', variables.color || 'currentColor')
 }
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => {
     const colors = v.colorScheme[p.color]
+
+    const maybeIcon = t.icons[p.name]
+    const isSvgIcon = maybeIcon && maybeIcon.isSvg
 
     return {
       display: 'inline-block', // we overriding this for Base theme
@@ -47,12 +55,8 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       // overriding base theme border handling
       ...((p.bordered || v.borderColor) &&
         getBorderedStyles(v.borderColor || getIconColor(v, colors))),
-    }
-  },
 
-  svgRoot: ({ props: p, variables: v }): ICSSInJSStyle => {
-    return {
-      backgroundColor: v.backgroundColor,
+      ...(isSvgIcon && { backgroundColor: v.backgroundColor }),
     }
   },
 
@@ -95,10 +99,10 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   },
 
   svgFlippingInRtl: config => {
-    const { props, theme } = config
+    const { props, rtl } = config
     return {
       ...callable(iconStyles.svg)(config),
-      ...(theme.rtl && {
+      ...(rtl && {
         transform: `scaleX(-1) rotate(${-1 * props.rotate}deg)`,
       }),
     }

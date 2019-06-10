@@ -4,7 +4,8 @@ import addEventListener from './lib/addEventListener'
 import removeEventListener from './lib/removeEventListener'
 import * as listenerRegistries from './lib/listenerRegistries'
 import shouldUpdateListener from './lib/shouldUpdateListener'
-import { EventListenerProps, listenerPropTypes } from './types'
+import { EventListenerProps } from './types'
+import { listenerPropTypes } from './types.internal'
 
 class StackableEventListener extends React.Component<EventListenerProps> {
   static displayName = 'StackableEventListener'

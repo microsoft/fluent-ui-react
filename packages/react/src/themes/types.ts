@@ -82,7 +82,10 @@ export type ColorNames = keyof (EmphasisColorsStrict & NaturalColorsStrict)
 /**
  * A type for an extendable set of ColorNames properties of type T
  */
-export type ColorValues<T> = Extendable<Partial<Record<ColorNames, T>>, T>
+export type ColorValues<T, Colors extends string | number | symbol = ColorNames> = Extendable<
+  Partial<Record<Colors, T>>,
+  T
+>
 
 /**
  * A type for a base colors.
@@ -131,14 +134,38 @@ export type ComponentAreaName =
 /**
  * A type for the generic color scheme of a component based on CSS property names
  */
-export type ColorScheme = Extendable<Record<ComponentAreaName, string>, string>
+export type ColorScheme<T extends string | number | symbol = ComponentAreaName> = Extendable<
+  Record<T, string>,
+  string
+>
 
-export type ColorSchemeMapping = ColorValues<Extendable<ColorScheme, string>> & {
-  default?: Extendable<ColorScheme, string>
+export type ColorSchemeMapping<
+  Scheme = ColorScheme,
+  Colors extends string | number | symbol = ColorNames
+> = ColorValues<Extendable<Scheme, string>, Colors> & {
+  default?: Extendable<Scheme, string>
 }
-export type ColorSchemeMappingOverrides = ColorValues<Partial<Extendable<ColorScheme, string>>> & {
+
+export type StrictColorScheme<T extends string | number | symbol = ComponentAreaName> = Record<
+  T,
+  string
+>
+
+export type StrictColorSchemeMapping<
+  Scheme = StrictColorScheme,
+  Colors extends string | number | symbol = ColorNames
+> = ColorValues<Scheme, Colors> & {
+  default?: Scheme
+}
+
+export type ColorSchemeMappingOverrides<
+  Scheme = ColorScheme,
+  Colors extends string | number | symbol = ColorNames
+> = ColorValues<Partial<Extendable<Scheme, string>>, Colors> & {
   default?: Partial<Extendable<ColorScheme, string>>
 }
+
+export type ItemType<T> = T extends (infer TItem)[] ? TItem : never
 
 // ========================================================
 // Props
@@ -182,7 +209,18 @@ export interface ICSSPseudoElementStyle extends ICSSInJSStyle {
   content?: string
 }
 
-export interface ICSSInJSStyle extends React.CSSProperties {
+export interface StardustAnimationName {
+  keyframe?: any
+  params?: object
+}
+
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
+export type CSSProperties = Omit<React.CSSProperties, 'animationName'> & {
+  animationName?: StardustAnimationName | string | 'none'
+}
+
+export interface ICSSInJSStyle extends CSSProperties {
   // TODO Questionable: how else would users target their own children?
   [key: string]: any
 
@@ -221,6 +259,8 @@ export interface ComponentStyleFunctionParam<
   props: State & TProps
   variables: TVars
   theme: ThemePrepared
+  rtl: boolean
+  disableAnimations: boolean
 }
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((
@@ -285,8 +325,6 @@ export interface ThemeInput {
   siteVariables?: SiteVariablesInput
   componentVariables?: ThemeComponentVariablesInput
   componentStyles?: ThemeComponentStylesInput
-  rtl?: boolean
-  renderer?: Renderer
   fontFaces?: FontFaces
   staticStyles?: StaticStyles
   icons?: ThemeIcons
@@ -306,8 +344,6 @@ export interface ThemePrepared {
   componentVariables: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
   componentStyles: { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
   icons: ThemeIcons
-  rtl: boolean
-  renderer: Renderer
   fontFaces: FontFaces
   staticStyles: StaticStyles
   animations: { [key: string]: ThemeAnimation }
@@ -538,10 +574,10 @@ type SvgIconFuncArg = {
 }
 
 export type SvgIconSpec = ObjectOrFunc<React.ReactNode, SvgIconFuncArg>
-export type FontIconSpec = ObjectOrFunc<{
+export type FontIconSpec = {
   content: string
   fontFamily: string
-}>
+}
 
 export type ThemeIconSpec = {
   isSvg?: boolean
@@ -549,6 +585,7 @@ export type ThemeIconSpec = {
 }
 
 export type RequiredIconNames =
+  | 'stardust-checkmark'
   | 'stardust-circle'
   | 'stardust-close'
   | 'stardust-arrow-end'

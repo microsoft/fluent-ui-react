@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
@@ -129,7 +129,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 
   static autoControlledProps = ['open']
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     closeAndFocusTrigger: e => {
       this.handleDialogCancel(e)
       e.stopPropagation()
@@ -274,6 +274,8 @@ Dialog.slotClassNames = {
 }
 
 /**
- * A Dialog indicates a possible user action.
+ * A Dialog displays important information on top of a page which usually requires user's attention, confirmation or interaction.
+ * @accessibility
+ * Implements [ARIA Dialog (Modal)](https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal) design pattern.
  */
 export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)

@@ -15,7 +15,8 @@ import {
 } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityBehavior } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
+import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import { WithAsProp, ShorthandCollection, ShorthandValue, withSafeTypeForAs } from '../../types'
@@ -32,7 +33,7 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuBehavior
-   * @available toolbarBehavior, tabListBehavior
+   * @available menuAsToolbarBehavior, tabListBehavior
    * */
   accessibility?: Accessibility
 
@@ -146,7 +147,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
   renderItems = (
     styles: ComponentSlotStylesPrepared,
     variables: ComponentVariablesObject,
-    accessibility: AccessibilityBehavior,
+    accessibility: ReactAccessibilityBehavior,
   ) => {
     const {
       iconOnly,
@@ -234,6 +235,8 @@ Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items'
 /**
  * A menu displays grouped navigation actions.
  * @accessibility
- * Implements ARIA Menu, Toolbar or Tabs design pattern, depending on the behavior used.
+ * Implements ARIA [Menu](https://www.w3.org/TR/wai-aria-practices-1.1/#menu), [Toolbar](https://www.w3.org/TR/wai-aria-practices-1.1/#toolbar) or [Tabs](https://www.w3.org/TR/wai-aria-practices-1.1/#tabpanel) design pattern, depending on the behavior used.
+ * Do choose desired accessibility behavior depending on the use case.
+ * Do provide label to the Menu component using aria-label or aria-labelledby prop.
  */
 export default withSafeTypeForAs<typeof Menu, MenuProps, 'ul'>(Menu)
