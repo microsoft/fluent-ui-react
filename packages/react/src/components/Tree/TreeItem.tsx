@@ -117,6 +117,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
       }
     },
     setFocusToFirstChild: e => {
+      const { open } = this.props
       if (!open) {
         return
       }
