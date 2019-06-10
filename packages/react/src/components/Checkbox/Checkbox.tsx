@@ -164,5 +164,7 @@ Checkbox.create = createShorthandFactory({
 
 /**
  * A single checkbox within a checkbox group.
+ * @accessibility
+ * Implements [ARIA Checkbox](https://www.w3.org/TR/wai-aria-practices-1.1/#checkbox) design pattern.
  */
 export default withSafeTypeForAs<typeof Checkbox, CheckboxProps>(Checkbox)
