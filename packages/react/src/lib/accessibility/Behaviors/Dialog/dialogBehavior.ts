@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import { Accessibility } from '../../types'
 import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
 
@@ -16,8 +17,10 @@ import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
  */
 const dialogBehavior: Accessibility = (props: any) => {
   const behaviorData = popupFocusTrapBehavior(props)
+
   const defaultAriaLabelledBy = getDefaultAriaLabelledBy(props)
   const defaultAriaDescribedBy = getDefaultAriaDescribedBy(props)
+
   behaviorData.attributes.popup = {
     ...behaviorData.attributes.popup,
     role: 'dialog',
@@ -39,7 +42,7 @@ const dialogBehavior: Accessibility = (props: any) => {
  * aria-labelledby as props.
  */
 const getDefaultAriaLabelledBy = (props: any) => {
-  if (props['aria-label'] || props['aria-labelledby'] || !props.header) {
+  if (props['aria-label'] || props['aria-labelledby'] || _.isNil(props.header)) {
     return undefined
   }
   return props.headerId
@@ -50,7 +53,7 @@ const getDefaultAriaLabelledBy = (props: any) => {
  * as props.
  */
 const getDefaultAriaDescribedBy = (props: any) => {
-  if (props['aria-describedby'] || !props.content) {
+  if (props['aria-describedby'] || _.isNil(props.content)) {
     return undefined
   }
   return props.contentId

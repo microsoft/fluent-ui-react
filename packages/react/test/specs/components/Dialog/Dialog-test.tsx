@@ -2,116 +2,50 @@ import * as React from 'react'
 
 import Dialog from 'src/components/Dialog/Dialog'
 import Button from 'src/components/Button/Button'
-import { getRenderedAttribute } from 'test/specs/commonTests'
-import { mountWithProvider } from 'test/utils'
+import { mountWithProvider, findIntrinsicElement } from 'test/utils'
 
 describe('Dialog', () => {
-  describe('accessibility', () => {
-    it('applies aria-label if provided as prop', () => {
-      const ariaLabel = 'super label'
-      const wrapper = mountWithProvider(
-        <Dialog trigger={<Button content="Open a dialog" />} aria-label={ariaLabel} />,
-      )
-      wrapper.find('.ui-button').simulate('click')
-      const dialog = wrapper.find(`.${Dialog.className}`)
-
-      expect(getRenderedAttribute(dialog, 'aria-label', '')).toBe(ariaLabel)
-    })
-
-    it('applies aria-labelledby if provided as prop', () => {
-      const ariaLabelledBy = 'element-id'
-      const wrapper = mountWithProvider(
-        <Dialog trigger={<Button content="Open a dialog" />} aria-labelledby={ariaLabelledBy} />,
-      )
-      wrapper.find('.ui-button').simulate('click')
-      const dialog = wrapper.find(`.${Dialog.className}`)
-
-      expect(getRenderedAttribute(dialog, 'aria-labelledby', '')).toBe(ariaLabelledBy)
-    })
-
-    it('applies default aria-labelledby as header id if header with id exists', () => {
-      const headerId = 'element-id'
-      const wrapper = mountWithProvider(
-        <Dialog trigger={<Button content="Open a dialog" />} header={{ id: headerId }} />,
-      )
-      wrapper.find('.ui-button').simulate('click')
-      const dialog = wrapper.find(`.${Dialog.className}`)
-
-      expect(getRenderedAttribute(dialog, 'aria-labelledby', '')).toBe(headerId)
-    })
-
-    it('applies default aria-labelledby as generated header id if header without id exists', () => {
-      const wrapper = mountWithProvider(
-        <Dialog trigger={<Button content="Open a dialog" />} header={'Welcome to my life'} />,
-      )
-      wrapper.find('.ui-button').simulate('click')
-      const dialogHeaderId = wrapper
-        .find(`.${Dialog.slotClassNames.header}`)
-        .filterWhere(n => typeof n.type() === 'string')
-        .getDOMNode().id
-      const dialog = wrapper.find(`.${Dialog.className}`)
-
-      expect(dialogHeaderId).toMatch(/dialog-header-\d+/)
-      expect(getRenderedAttribute(dialog, 'aria-labelledby', '')).toBe(dialogHeaderId)
-    })
-
-    it('does not apply default aria-labelledby as header id if aria-label is supplied as prop', () => {
-      const wrapper = mountWithProvider(
-        <Dialog
-          trigger={<Button content="Open a dialog" />}
-          aria-label={'bla-bla-label'}
-          header={{ id: 'bla-bla-id' }}
-        />,
-      )
-      wrapper.find('.ui-button').simulate('click')
-      const dialog = wrapper.find(`.${Dialog.className}`)
-
-      expect(getRenderedAttribute(dialog, 'aria-labelledby', '')).toBe(undefined)
-    })
-
-    it('does not apply default aria-labelledby as header id if header is not supplied as prop', () => {
-      const wrapper = mountWithProvider(<Dialog trigger={<Button content="Open a dialog" />} />)
-      wrapper.find('.ui-button').simulate('click')
-      const dialog = wrapper.find(`.${Dialog.className}`)
-
-      expect(getRenderedAttribute(dialog, 'aria-labelledby', '')).toBe(undefined)
-    })
-
-    it('applies aria-describedby if provided as prop', () => {
-      const ariaDescribedBy = 'element-id'
-      const wrapper = mountWithProvider(
-        <Dialog trigger={<Button content="Open a dialog" />} aria-describedby={ariaDescribedBy} />,
-      )
-      wrapper.find('.ui-button').simulate('click')
-      const dialog = wrapper.find(`.${Dialog.className}`)
-
-      expect(getRenderedAttribute(dialog, 'aria-describedby', '')).toBe(ariaDescribedBy)
-    })
-
-    it('applies default aria-describedby as content id if content with id exists', () => {
+  describe('content', () => {
+    it('uses "id" if "content" with "id" is passed', () => {
       const contentId = 'element-id'
-      const wrapper = mountWithProvider(
-        <Dialog trigger={<Button content="Open a dialog" />} content={{ id: contentId }} />,
-      )
-      wrapper.find('.ui-button').simulate('click')
-      const dialog = wrapper.find(`.${Dialog.className}`)
 
-      expect(getRenderedAttribute(dialog, 'aria-describedby', '')).toBe(contentId)
+      const wrapper = mountWithProvider(
+        <Dialog defaultOpen trigger={<Button />} content={{ id: contentId }} />,
+      )
+      const content = findIntrinsicElement(wrapper, `.${Dialog.slotClassNames.content}`)
+
+      expect(content.prop('id')).toBe(contentId)
     })
 
-    it('applies default aria-describedby as generated content id if content without id exists', () => {
+    it('uses computed "id" if "content" is passed without "id"', () => {
       const wrapper = mountWithProvider(
-        <Dialog trigger={<Button content="Open a dialog" />} content={'It is so awesome.'} />,
+        <Dialog defaultOpen trigger={<Button />} content="Welcome" />,
       )
-      wrapper.find('.ui-button').simulate('click')
-      const dialogContentId = wrapper
-        .find(`.${Dialog.slotClassNames.content}`)
-        .filterWhere(n => typeof n.type() === 'string')
-        .getDOMNode().id
-      const dialog = wrapper.find(`.${Dialog.className}`)
+      const content = findIntrinsicElement(wrapper, `.${Dialog.slotClassNames.content}`)
 
-      expect(dialogContentId).toMatch(/dialog-content-\d+/)
-      expect(getRenderedAttribute(dialog, 'aria-describedby', '')).toBe(dialogContentId)
+      expect(content.prop('id')).toMatch(/dialog-content-\d+/)
+    })
+  })
+
+  describe('header', () => {
+    it('uses "id" if "header" with "id" is passed', () => {
+      const headerId = 'element-id'
+
+      const wrapper = mountWithProvider(
+        <Dialog defaultOpen trigger={<Button />} header={{ id: headerId }} />,
+      )
+      const header = findIntrinsicElement(wrapper, `.${Dialog.slotClassNames.header}`)
+
+      expect(header.prop('id')).toBe(headerId)
+    })
+
+    it('uses computed "id" if "header" is passed without "id"', () => {
+      const wrapper = mountWithProvider(
+        <Dialog defaultOpen trigger={<Button />} header="Welcome" />,
+      )
+      const header = findIntrinsicElement(wrapper, `.${Dialog.slotClassNames.header}`)
+
+      expect(header.prop('id')).toMatch(/dialog-header-\d+/)
     })
   })
 })
