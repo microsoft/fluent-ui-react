@@ -5,11 +5,11 @@ type AccordionTitleBehaviorProps = {
   /** Element type. */
   as: string
   /** Whether or not the title is in the open state. */
-  active: boolean
+  active?: boolean
   /** If at least one panel needs to stay active and this title does not correspond to the last active one. */
-  canBeCollapsed: boolean
+  canBeCollapsed?: boolean
   /** Id of the content it owns. */
-  accordionContentId: string
+  accordionContentId?: string
 }
 
 /**

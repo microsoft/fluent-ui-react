@@ -4,7 +4,7 @@ export type ButtonBehaviorProps = {
   /** Element type. */
   as: string
   /** A button can show it is currently unable to be interacted with. */
-  disabled: boolean
+  disabled?: boolean
 }
 
 /**

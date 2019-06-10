@@ -2,7 +2,7 @@ import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 
 type InputBehaviorProps = {
-  disabled: boolean
+  disabled?: boolean
 }
 
 /**

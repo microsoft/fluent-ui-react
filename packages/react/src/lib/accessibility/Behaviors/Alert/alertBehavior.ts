@@ -4,9 +4,9 @@ import defaultBehavior from '../defaultBehavior'
 
 type AlertBehaviorProps = {
   /** An alert may be formatted to display a danger message. */
-  danger: boolean
+  danger?: boolean
   /** An alert may be formatted to display a warning message. */
-  warning: boolean
+  warning?: boolean
 }
 
 /**

@@ -5,7 +5,7 @@ import menuDividerBehavior from './menuDividerBehavior'
 
 type MenuBehaviorProps = {
   /** Indicates if menu has its items displayed vertically. */
-  vertical: boolean
+  vertical?: boolean
 }
 
 /**

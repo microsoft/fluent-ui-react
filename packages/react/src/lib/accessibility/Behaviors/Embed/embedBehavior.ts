@@ -3,9 +3,9 @@ import { Accessibility } from '../../types'
 
 type EmbedBehaviorProps = {
   /** Corresponds to HTML title attribute. */
-  title: string
+  title?: string
   /** Alternative text. */
-  alt: string
+  alt?: string
 }
 
 /**

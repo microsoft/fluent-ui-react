@@ -1,7 +1,8 @@
 import { Accessibility } from '../../types'
 
 type AccordionContentBehaviorProps = {
-  accordionTitleId: string
+  /** id of the accordion title element. */
+  accordionTitleId?: string
 }
 
 /**
