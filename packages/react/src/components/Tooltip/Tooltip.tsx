@@ -133,13 +133,12 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     accessibility,
   }: RenderResultConfig<TooltipProps>): React.ReactNode {
     const { mountNode } = this.props
-    const { open } = this.state
-    const tooltipContent = open && this.renderTooltipContent(classes.content, rtl, accessibility)
+    const tooltipContent = this.renderTooltipContent(classes.content, rtl, accessibility)
 
     return (
       <>
         {this.renderTrigger(accessibility)}
-        {open && mountNode && ReactDOM.createPortal(tooltipContent, mountNode)}
+        {mountNode && ReactDOM.createPortal(tooltipContent, mountNode)}
       </>
     )
   }

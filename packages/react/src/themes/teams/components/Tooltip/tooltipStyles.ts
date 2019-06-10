@@ -5,7 +5,10 @@ import { TooltipVariables } from './tooltipVariables'
 const tooltipStyles: ComponentSlotStylesInput<PopupProps, TooltipVariables> = {
   root: (): ICSSInJSStyle => ({}),
 
-  content: ({ variables: v }): ICSSInJSStyle => ({
+  content: ({ variables: v, props: p }): ICSSInJSStyle => ({
+    ...(!p.open && {
+      display: 'none',
+    }),
     zIndex: v.zIndex,
     position: 'absolute',
     textAlign: 'left',
