@@ -6,7 +6,7 @@ import { Ref } from '@stardust-ui/react-component-ref'
 
 import Tree from './Tree'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
-import { defaultBehavior, treeItemBehavior } from '../../lib/accessibility'
+import { treeItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import {
   UIComponent,
@@ -26,6 +26,7 @@ import {
   withSafeTypeForAs,
 } from '../../types'
 import { getFirstFocusable } from '../../lib/accessibility/FocusZone/focusUtilities'
+import subtreeBehavior from '../../lib/accessibility/Behaviors/Tree/subtreeBehavior'
 
 export interface TreeItemSlotClassNames {
   title: string
@@ -159,7 +160,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
           <Ref innerRef={this.treeRef}>
             {Tree.create(items, {
               defaultProps: {
-                accessibility: defaultBehavior,
+                accessibility: subtreeBehavior,
                 className: TreeItem.slotClassNames.subtree,
                 exclusive,
                 renderItemTitle,

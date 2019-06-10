@@ -128,5 +128,25 @@ describe('Tree', () => {
         .simulate('keydown', { keyCode: keyboardKey.ArrowLeft })
       checkOpenTitles(wrapper, ['1', '2', '21', '22', '3'])
     })
+
+    it('should have all TreeItems with a subtree open on asterisk key', () => {
+      const wrapper = mountWithProvider(<Tree items={items} />)
+
+      wrapper
+        .find(`.${TreeTitle.className}`)
+        .at(0) // title 1
+        .simulate('keydown', { keyCode: keyboardKey['*'] })
+      checkOpenTitles(wrapper, ['1', '11', '12', '2', '21', '22', '3'])
+    })
+
+    it('should expand subtrees only on current level', () => {
+      const wrapper = mountWithProvider(<Tree items={items} defaultActiveIndex={[0]} />)
+
+      wrapper
+        .find(`.${TreeTitle.className}`)
+        .at(1) // title 11
+        .simulate('keydown', { keyCode: keyboardKey['*'] })
+      checkOpenTitles(wrapper, ['1', '11', '12', '121', '2', '21', '22', '3'])
+    })
   })
 })
