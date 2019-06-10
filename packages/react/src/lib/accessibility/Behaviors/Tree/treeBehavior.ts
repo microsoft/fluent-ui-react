@@ -3,13 +3,18 @@ import { FocusZoneDirection } from '../../FocusZone'
 
 /**
  * @specification
+ * Adds role 'tree' to 'root' component's part.
+ * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' component's part.
  * Embeds component into FocusZone.
  * Provides arrow key navigation in vertical direction.
  * Keyboard navigation is circular.
  */
 const treeBehavior: Accessibility = (props: any) => ({
   attributes: {
-    root: {},
+    root: {
+      role: 'tree',
+      'aria-labelledby': props['aria-labelledby'],
+    },
   },
   focusZone: {
     mode: FocusZoneMode.Embed,

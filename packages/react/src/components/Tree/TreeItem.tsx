@@ -5,7 +5,7 @@ import * as React from 'react'
 
 import Tree from './Tree'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
-import { defaultBehavior } from '../../lib/accessibility'
+import { treeItemBehavior, subtreeBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import {
   UIComponent,
@@ -15,6 +15,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import {
   ComponentEventHandler,
@@ -32,7 +33,7 @@ export interface TreeItemSlotClassNames {
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
+   * @default treeItemBehavior
    */
   accessibility?: Accessibility
 
@@ -99,7 +100,15 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
   static defaultProps = {
     as: 'li',
-    accessibility: defaultBehavior,
+    accessibility: treeItemBehavior,
+  }
+
+  actionHandlers = {
+    performClick: e => {
+      e.preventDefault()
+      e.stopPropagation()
+      _.invoke(this.props, 'onTitleClick', e, this.props)
+    },
   }
 
   handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
@@ -120,6 +129,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
             className: TreeItem.slotClassNames.title,
             open,
             hasSubtree,
+            as: hasSubtree ? 'span' : 'a',
           },
           render: renderItemTitle,
           overrideProps: this.handleTitleOverrides,
@@ -127,7 +137,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
         {open &&
           Tree.create(items, {
             defaultProps: {
-              accessibility: defaultBehavior,
+              accessibility: subtreeBehavior,
               className: TreeItem.slotClassNames.subtree,
               exclusive,
               renderItemTitle,
@@ -145,6 +155,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
         className={classes.root}
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...unhandledProps}
       >
         {childrenExist(children) ? children : this.renderContent()}
