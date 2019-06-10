@@ -41,7 +41,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Use minified version of `normalize.css` and update it to `8.0.1` @layershifter ([#1476](https://github.com/stardust-ui/react/pull/1476))
 
 ### Fixes
-- Generate IDs for `header` and `content` slots once ([#1449](https://github.com/stardust-ui/react/pull/1449))
+- Generate IDs for `header` and `content` slots once in `Dialog` component ([#1449](https://github.com/stardust-ui/react/pull/1449))
 
 <!--------------------------------[ v0.32.0 ]------------------------------- -->
 ## [v0.32.0](https://github.com/stardust-ui/react/tree/v0.32.0) (2019-06-03)
