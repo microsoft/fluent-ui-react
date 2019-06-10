@@ -121,19 +121,19 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     return renderedItem
   }
 
-  private handleBlur = (e: React.SyntheticEvent) => {
+  handleBlur = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: false })
 
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
-  private handleClick = (e: React.SyntheticEvent) => {
+  handleClick = (e: React.SyntheticEvent) => {
     const { disabled } = this.props
 
     if (disabled) {

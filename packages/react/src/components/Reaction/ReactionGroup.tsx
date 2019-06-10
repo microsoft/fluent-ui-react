@@ -34,20 +34,20 @@ export interface ReactionGroupProps
 class ReactionGroup extends UIComponent<WithAsProp<ReactionGroupProps>> {
   static create: Function
 
-  public static displayName = 'ReactionGroup'
+  static displayName = 'ReactionGroup'
 
-  public static className = 'ui-reactions'
+  static className = 'ui-reactions'
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon(),
     items: customPropTypes.collectionShorthand,
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     accessibility: defaultBehavior,
   }
 
-  public renderComponent({
+  renderComponent({
     ElementType,
     classes,
     accessibility,

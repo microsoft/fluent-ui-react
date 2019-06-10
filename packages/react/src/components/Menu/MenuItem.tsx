@@ -23,7 +23,7 @@ import Icon from '../Icon/Icon'
 import Menu from './Menu'
 import Box from '../Box/Box'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import {
   ComponentEventHandler,
   WithAsProp,
@@ -46,7 +46,7 @@ export interface MenuItemProps
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuItemBehavior
-   * @available toolbarButtonBehavior, tabBehavior
+   * @available menuItemAsToolbarButtonBehavior, tabBehavior
    * */
   accessibility?: Accessibility
 
@@ -196,8 +196,8 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
 
   static autoControlledProps = ['menuOpen']
 
-  private menuRef = React.createRef<HTMLElement>()
-  private itemRef = React.createRef<HTMLElement>()
+  menuRef = React.createRef<HTMLElement>()
+  itemRef = React.createRef<HTMLElement>()
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
     const {
@@ -295,13 +295,13 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     return menuItemInner
   }
 
-  private handleWrapperBlur = e => {
+  handleWrapperBlur = e => {
     if (!this.props.inSubmenu && !e.currentTarget.contains(e.relatedTarget)) {
       this.trySetMenuOpen(false, e)
     }
   }
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     performClick: event => !event.defaultPrevented && this.handleClick(event),
     openMenu: event => this.openMenu(event),
     closeAllMenusAndFocusNextParentItem: event => this.closeAllMenus(event),
@@ -312,7 +312,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     },
   }
 
-  private outsideClickHandler = e => {
+  outsideClickHandler = e => {
     if (!this.isSubmenuOpen()) return
     if (
       !doesNodeContainClick(this.itemRef.current, e) &&
@@ -322,7 +322,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     }
   }
 
-  private performClick = e => {
+  performClick = e => {
     const { active, menu } = this.props
 
     if (menu) {
@@ -338,7 +338,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     }
   }
 
-  private handleClick = (e: Event | React.SyntheticEvent) => {
+  handleClick = (e: Event | React.SyntheticEvent) => {
     const { disabled } = this.props
 
     if (disabled) {
@@ -350,26 +350,26 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  private handleBlur = (e: React.SyntheticEvent) => {
+  handleBlur = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: false })
 
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
-  private isSubmenuOpen = (): boolean => {
+  isSubmenuOpen = (): boolean => {
     const { menu } = this.props
     const { menuOpen } = this.state
 
     return !!(menu && menuOpen)
   }
 
-  private closeAllMenus = (e: Event) => {
+  closeAllMenus = (e: Event) => {
     if (!this.isSubmenuOpen()) {
       return
     }
@@ -381,7 +381,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     })
   }
 
-  private closeMenu = (e: Event, forceTriggerFocus?: boolean) => {
+  closeMenu = (e: Event, forceTriggerFocus?: boolean) => {
     if (!this.isSubmenuOpen()) {
       return
     }
@@ -399,7 +399,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     }
   }
 
-  private openMenu = (e: Event) => {
+  openMenu = (e: Event) => {
     const { menu } = this.props
     const { menuOpen } = this.state
     if (menu && !menuOpen) {
@@ -410,7 +410,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     }
   }
 
-  private trySetMenuOpen(newValue: boolean, e: Event | React.SyntheticEvent, onStateChanged?: any) {
+  trySetMenuOpen(newValue: boolean, e: Event | React.SyntheticEvent, onStateChanged?: any) {
     this.trySetState({ menuOpen: newValue })
     // The reason why post-effect is not passed as callback to trySetState method
     // is that in 'controlled' mode the post-effect is applied before final re-rendering

@@ -16,7 +16,7 @@ import {
 } from '../../lib'
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 
 export interface RadioGroupSlotClassNames {
@@ -96,16 +96,16 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     )
   }
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     nextItem: event => this.setCheckedItem(event, 1),
     prevItem: event => this.setCheckedItem(event, -1),
   }
 
-  private getItemProps = (item): RadioGroupItemProps => {
+  getItemProps = (item): RadioGroupItemProps => {
     return (item as React.ReactElement<RadioGroupItemProps>).props || item
   }
 
-  private setCheckedItem = (event, direction) => {
+  setCheckedItem = (event, direction) => {
     const nextItem = this.findNextEnabledCheckedItem(direction)
 
     if (nextItem) {
@@ -119,7 +119,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     event.preventDefault()
   }
 
-  private findNextEnabledCheckedItem = (direction): RadioGroupItemProps => {
+  findNextEnabledCheckedItem = (direction): RadioGroupItemProps => {
     if (!this.props.items || !this.props.items.length) {
       return undefined
     }
@@ -152,7 +152,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     return undefined
   }
 
-  private handleItemOverrides = predefinedProps => ({
+  handleItemOverrides = predefinedProps => ({
     checked:
       typeof this.state.checkedValue !== 'undefined' &&
       this.state.checkedValue === predefinedProps.value,
@@ -166,7 +166,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     shouldFocus: this.state.shouldFocus,
   })
 
-  private renderItems = (vertical: boolean) => {
+  renderItems = (vertical: boolean) => {
     const { items } = this.props
 
     return _.map(items, item =>
@@ -177,7 +177,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     )
   }
 
-  private setCheckedValue({
+  setCheckedValue({
     checkedValue,
     shouldFocus,
     event,
