@@ -1,12 +1,5 @@
 import { Accessibility } from '../../types'
 
-type RadioGroupItemBehaviorProps = {
-  /** Indicates if radio item is selected. */
-  checked?: boolean
-  /** Indicates if radio item is disabled. */
-  disabled?: boolean
-}
-
 /**
  * @specification
  *  Adds role='radio'. This allows screen readers to handle the component as a radio button.
@@ -26,3 +19,10 @@ const radioGroupItemBehavior: Accessibility<RadioGroupItemBehaviorProps> = props
 })
 
 export default radioGroupItemBehavior
+
+type RadioGroupItemBehaviorProps = {
+  /** Indicates if radio item is selected. */
+  checked?: boolean
+  /** Indicates if radio item is disabled. */
+  disabled?: boolean
+}

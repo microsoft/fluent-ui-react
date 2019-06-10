@@ -1,13 +1,6 @@
 import * as keyboardKey from 'keyboard-key'
 import { Accessibility } from '../../types'
 
-type EmbedBehaviorProps = {
-  /** Corresponds to HTML title attribute. */
-  title?: string
-  /** Alternative text. */
-  alt?: string
-}
-
 /**
  * @description
  * GIFs are visual representation only so hidden unless alt or title applied.
@@ -37,3 +30,10 @@ const embedBehavior: Accessibility<EmbedBehaviorProps> = props => ({
 })
 
 export default embedBehavior
+
+type EmbedBehaviorProps = {
+  /** Corresponds to HTML title attribute. */
+  title?: string
+  /** Alternative text. */
+  alt?: string
+}

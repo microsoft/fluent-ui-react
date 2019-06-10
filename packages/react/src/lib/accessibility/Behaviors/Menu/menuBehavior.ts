@@ -3,11 +3,6 @@ import { FocusZoneDirection } from '../../FocusZone'
 import menuItemBehavior from './menuItemBehavior'
 import menuDividerBehavior from './menuDividerBehavior'
 
-type MenuBehaviorProps = {
-  /** Indicates if menu has its items displayed vertically. */
-  vertical?: boolean
-}
-
 /**
  * @description
  * Implements ARIA Menu design pattern.
@@ -41,3 +36,8 @@ const menuBehavior: Accessibility<MenuBehaviorProps> = props => ({
 })
 
 export default menuBehavior
+
+type MenuBehaviorProps = {
+  /** Indicates if menu has its items displayed vertically. */
+  vertical?: boolean
+}

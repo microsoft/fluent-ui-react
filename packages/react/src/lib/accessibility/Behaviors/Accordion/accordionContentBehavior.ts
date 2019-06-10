@@ -1,10 +1,5 @@
 import { Accessibility } from '../../types'
 
-type AccordionContentBehaviorProps = {
-  /** id of the accordion title element. */
-  accordionTitleId?: string
-}
-
 /**
  * @description
  * Optionally, an accordion content can have the 'role=region'. It is not applied by default.
@@ -23,3 +18,8 @@ const accordionContentBehavior: Accessibility<AccordionContentBehaviorProps> = p
 }
 
 export default accordionContentBehavior
+
+type AccordionContentBehaviorProps = {
+  /** id of the accordion title element. */
+  accordionTitleId?: string
+}

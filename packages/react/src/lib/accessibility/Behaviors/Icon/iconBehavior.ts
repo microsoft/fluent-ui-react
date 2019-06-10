@@ -1,11 +1,5 @@
 import { Accessibility } from '../../types'
 
-type IconBehaviorProps = {
-  /** Alternative text. */
-  alt?: string
-  'aria-label'?: string
-}
-
 /**
  * @description
  * Icon is usually only visual representation and therefore is hidden from screen readers, unless 'alt' or 'aria-label' property is provided.
@@ -25,3 +19,9 @@ const iconBehavior: Accessibility<IconBehaviorProps> = props => ({
 })
 
 export default iconBehavior
+
+type IconBehaviorProps = {
+  /** Alternative text. */
+  alt?: string
+  'aria-label'?: string
+}

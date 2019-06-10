@@ -2,17 +2,6 @@ import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 
-type TabBehaviorProps = {
-  /** Indicates if tab is selected. */
-  active?: boolean
-  /** Indicates if tab is disabled. */
-  disabled?: boolean
-  'aria-label'?: string
-  'aria-labelledby'?: string
-  'aria-describedby'?: string
-  'aria-controls'?: string
-}
-
 /**
  * @specification
  * Adds role 'presentation' to 'wrapper' component's part.
@@ -40,7 +29,7 @@ const tabBehavior: Accessibility<TabBehaviorProps> = props => ({
       'aria-labelledby': props['aria-labelledby'],
       'aria-describedby': props['aria-describedby'],
       'aria-controls': props['aria-controls'],
-      'aria-disabled': props.disabled,
+      'aria-disabled': props['disabled'],
       [IS_FOCUSABLE_ATTRIBUTE]: !props.disabled,
     },
   },
@@ -55,3 +44,14 @@ const tabBehavior: Accessibility<TabBehaviorProps> = props => ({
 })
 
 export default tabBehavior
+
+type TabBehaviorProps = {
+  /** Indicates if tab is selected. */
+  active?: boolean
+  /** Indicates if tab is disabled. */
+  disabled?: boolean
+  'aria-label'?: string
+  'aria-labelledby'?: string
+  'aria-describedby'?: string
+  'aria-controls'?: string
+}

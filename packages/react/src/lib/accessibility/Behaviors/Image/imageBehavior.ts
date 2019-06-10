@@ -1,11 +1,5 @@
 import { Accessibility } from '../../types'
 
-type ImageBehaviorProps = {
-  /** Alternative text. */
-  alt?: string
-  'aria-label'?: string
-}
-
 /**
  * @description
  * Image is usually only visual representation and therefore is hidden from screen readers, unless 'alt' property is provided.
@@ -23,3 +17,9 @@ const imageBehavior: Accessibility<ImageBehaviorProps> = props => ({
 })
 
 export default imageBehavior
+
+type ImageBehaviorProps = {
+  /** Alternative text. */
+  alt?: string
+  'aria-label'?: string
+}

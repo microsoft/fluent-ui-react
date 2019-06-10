@@ -3,24 +3,6 @@ import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import { PopupEvents, PopupEventsArray } from '../../../../components/Popup/Popup'
 
-export type PopupBehaviorProps = {
-  /** Events triggering the popup. */
-  on?: PopupEvents | PopupEventsArray
-  /** Indicates if popup's trigger is disabled. */
-  disabled?: boolean
-  /** Element which triggers popup */
-  trigger?: {
-    props?: {
-      /** Element type. */
-      as?: string
-      href?: string
-      [attributeName: string]: string
-    }
-    /** Element type. */
-    type?: string
-  }
-}
-
 /**
  * @description
  * Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
@@ -100,3 +82,21 @@ const getAriaAttributeFromProps = (
 }
 
 export default popupBehavior
+
+export type PopupBehaviorProps = {
+  /** Events triggering the popup. */
+  on?: PopupEvents | PopupEventsArray
+  /** Indicates if popup's trigger is disabled. */
+  disabled?: boolean
+  /** Element which triggers popup */
+  trigger?: {
+    props?: {
+      /** Element type. */
+      as?: string
+      href?: string
+      [attributeName: string]: string
+    }
+    /** Element type. */
+    type?: string
+  }
+}

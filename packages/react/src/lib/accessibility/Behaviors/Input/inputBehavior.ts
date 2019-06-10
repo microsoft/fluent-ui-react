@@ -1,10 +1,6 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 
-type InputBehaviorProps = {
-  disabled?: boolean
-}
-
 /**
  * @specification
  * Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
@@ -26,3 +22,7 @@ const inputBehavior: Accessibility<InputBehaviorProps> = props => ({
 })
 
 export default inputBehavior
+
+type InputBehaviorProps = {
+  disabled?: boolean
+}

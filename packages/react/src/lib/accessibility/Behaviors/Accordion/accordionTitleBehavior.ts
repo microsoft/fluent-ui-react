@@ -1,17 +1,6 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 
-type AccordionTitleBehaviorProps = {
-  /** Element type. */
-  as: string
-  /** Whether or not the title is in the open state. */
-  active?: boolean
-  /** If at least one panel needs to stay active and this title does not correspond to the last active one. */
-  canBeCollapsed?: boolean
-  /** Id of the content it owns. */
-  accordionContentId?: string
-}
-
 /**
  * @description
  * Adds accessibility attributed to implement the Accordion design pattern.
@@ -52,3 +41,14 @@ const accordionTitleBehavior: Accessibility<AccordionTitleBehaviorProps> = props
 }
 
 export default accordionTitleBehavior
+
+type AccordionTitleBehaviorProps = {
+  /** Element type. */
+  as: string
+  /** Whether or not the title is in the open state. */
+  active?: boolean
+  /** If at least one panel needs to stay active and this title does not correspond to the last active one. */
+  canBeCollapsed?: boolean
+  /** Id of the content it owns. */
+  accordionContentId?: string
+}

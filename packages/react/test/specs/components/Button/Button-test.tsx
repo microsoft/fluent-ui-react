@@ -39,9 +39,9 @@ describe('Button', () => {
         expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('true')
       })
 
-      test('is set to false, if disabled attribute is not provided', () => {
+      test('is set to undefined, if disabled attribute is not provided', () => {
         const renderedComponent = mountWithProviderAndGetComponent(Button, <Button />)
-        expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
+        expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe(undefined)
       })
     })
 

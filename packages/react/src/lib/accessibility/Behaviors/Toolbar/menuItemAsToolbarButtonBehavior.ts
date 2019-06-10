@@ -31,7 +31,7 @@ const menuItemAsToolbarButtonBehavior: Accessibility<MenuItemBehaviorProps> = pr
       role: 'button',
       tabIndex: 0,
       'aria-haspopup': props.menu ? 'true' : undefined,
-      'aria-disabled': props.disabled,
+      'aria-disabled': props['disabled'],
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
       'aria-describedby': props['aria-describedby'],

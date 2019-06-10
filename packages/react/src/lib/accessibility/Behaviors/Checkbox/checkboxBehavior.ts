@@ -1,11 +1,6 @@
 import * as keyboardKey from 'keyboard-key'
 import { Accessibility } from '../../types'
 
-type CheckboxBehaviorProps = {
-  /** Whether or not item is checked. */
-  checked: boolean
-}
-
 /**
  * @specification
  * Adds role='checkbox'. This allows screen readers to handle the component as a checkbox button.
@@ -30,3 +25,8 @@ const checkboxBehavior: Accessibility<CheckboxBehaviorProps> = props => ({
 })
 
 export default checkboxBehavior
+
+type CheckboxBehaviorProps = {
+  /** Whether or not item is checked. */
+  checked: boolean
+}

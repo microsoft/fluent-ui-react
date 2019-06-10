@@ -1,12 +1,5 @@
 import { Accessibility } from '../../types'
 
-export type ButtonBehaviorProps = {
-  /** Element type. */
-  as: string
-  /** A button can show it is currently unable to be interacted with. */
-  disabled?: boolean
-}
-
 /**
  * @specification
  * Adds role='button' if element type is other than 'button'. This allows screen readers to handle the component as a button.
@@ -22,3 +15,10 @@ const buttonBehavior: Accessibility<ButtonBehaviorProps> = props => ({
 })
 
 export default buttonBehavior
+
+export type ButtonBehaviorProps = {
+  /** Element type. */
+  as: string
+  /** A button can show it is currently unable to be interacted with. */
+  disabled?: boolean
+}

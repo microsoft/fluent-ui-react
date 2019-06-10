@@ -3,18 +3,6 @@ import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
 import { PopupBehaviorProps } from '../Popup/popupBehavior'
 import * as _ from 'lodash'
 
-type DialogBehaviorProps = {
-  header?: {
-    id?: string
-  }
-  content?: {
-    id?: string
-  }
-  'aria-label'?: string
-  'aria-labelledby'?: string
-  'aria-describedby'?: string
-} & PopupBehaviorProps
-
 /**
  * @description
  * Implements ARIA Dialog (Modal) design pattern.
@@ -79,3 +67,15 @@ const getDefaultAriaDescribedBy = (props: any) => {
 }
 
 export default dialogBehavior
+
+type DialogBehaviorProps = {
+  header?: {
+    id?: string
+  }
+  content?: {
+    id?: string
+  }
+  'aria-label'?: string
+  'aria-labelledby'?: string
+  'aria-describedby'?: string
+} & PopupBehaviorProps
