@@ -14,12 +14,11 @@ const FormExample = () => (
       control={{
         as: Dropdown,
         items: ['John Doe', 'Dohn Joe', 'John Joe', 'Dohn Doe'],
-        labelId,
+        'aria-labelledby': labelId,
         search: true,
         placeholder: 'Choose a friend',
       }}
       name="chooseFriend"
-      required
     />
     <Form.Field control={{ as: Button, content: 'Submit' }} />
   </Form>

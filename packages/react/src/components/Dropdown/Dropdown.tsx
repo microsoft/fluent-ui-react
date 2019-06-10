@@ -125,8 +125,6 @@ export interface DropdownProps
    */
   itemToString?: (item: ShorthandValue) => string
 
-  labelId?: string
-
   /** A dropdown can show that it is currently loading data. */
   loading?: boolean
 
@@ -263,7 +261,6 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     inline: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
-    labelId: PropTypes.string,
     loading: PropTypes.bool,
     loadingMessage: customPropTypes.itemShorthand,
     moveFocusOnTab: PropTypes.bool,
@@ -403,7 +400,6 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     const {
       clearable,
       clearIndicator,
-      labelId,
       search,
       multiple,
       getA11yStatusMessage,
@@ -425,7 +421,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           getA11yStatusMessage={getA11yStatusMessage}
           highlightedIndex={highlightedIndex}
           onStateChange={this.handleStateChange}
-          labelId={labelId}
+          labelId={this.props['aria-labelledby']}
         >
           {({
             getInputProps,
@@ -530,7 +526,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     rtl: boolean,
     getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
   ): JSX.Element {
-    const { labelId, triggerButton } = this.props
+    const { triggerButton } = this.props
     const content = this.getSelectedItemAsString(this.state.value)
     const triggerButtonId = triggerButton['id'] || this.defaultTriggerButtonId
 
@@ -541,7 +537,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
         this.handleTriggerButtonKeyDown(e, rtl)
       },
       'aria-label': undefined,
-      'aria-labelledby': `${labelId} ${triggerButtonId}`,
+      'aria-labelledby': `${this.props['aria-labelledby']} ${triggerButtonId}`,
     })
 
     const { onClick, onFocus, onBlur, onKeyDown, ...restTriggerButtonProps } = triggerButtonProps

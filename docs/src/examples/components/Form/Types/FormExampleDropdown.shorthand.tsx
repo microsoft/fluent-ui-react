@@ -7,11 +7,10 @@ const fields = [
     label: { content: `Your best friend's name is:`, id: labelId },
     name: 'chooseFriend',
     key: 'choose-friend',
-    required: true,
     control: {
       as: Dropdown,
       items: ['John Doe', 'Dohn Joe', 'John Joe', 'Dohn Doe'],
-      labelId,
+      'aria-labelledby': labelId,
       search: true,
       placeholder: 'Choose a friend',
     },
