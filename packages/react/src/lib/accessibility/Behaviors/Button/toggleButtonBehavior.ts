@@ -12,7 +12,6 @@ import buttonBehavior from '../Button/buttonBehavior'
 
 const toggleButtonBehavior: Accessibility = (props: any) => {
   const behaviorData = buttonBehavior(props)
-  console.log('toggleButtonBehavior', !!props['active'])
   behaviorData.attributes.root = {
     ...behaviorData.attributes.root,
     'aria-pressed': !!props['active'],

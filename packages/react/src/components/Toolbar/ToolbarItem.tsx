@@ -26,7 +26,7 @@ export interface ToolbarItemProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default toolbarItemBehavior
+   * @default buttonBehavior
    */
   accessibility?: Accessibility
 
