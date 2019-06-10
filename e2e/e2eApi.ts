@@ -35,6 +35,10 @@ export class E2EApi {
     return (await this.page.$$(selector)).length
   }
 
+  public exists = async (selector: string) => {
+    return (await this.count(selector)) > 0
+  }
+
   public clickOn = async (selector: string) => await (await this.getElement(selector)).click()
 
   public textOf = async (selector: string) => {

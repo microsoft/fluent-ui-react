@@ -17,6 +17,6 @@ describe('Popup - on ESC key press', () => {
     await e2e.pressKey('Escape') // closes dropdown list
 
     expect(await e2e.isFocused(dropdownTriggerButton)).toBe(true)
-    expect(await e2e.count(popupContent)).toBeGreaterThan(0)
+    expect(await e2e.exists(popupContent)).toBe(true)
   })
 })
