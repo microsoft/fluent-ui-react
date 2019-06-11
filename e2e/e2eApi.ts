@@ -23,7 +23,7 @@ export class E2EApi {
   }
 
   public gotoTestCase = async (testFilePath: string, waitForSelector: string) => {
-    const testCaseUrl = `/e2e/${exampleUrlTokenFromFilePath(testFilePath)}`
+    const testCaseUrl = `/${exampleUrlTokenFromFilePath(testFilePath)}`
     await this.goto(testCaseUrl, waitForSelector)
   }
 

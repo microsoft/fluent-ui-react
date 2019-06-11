@@ -7,7 +7,7 @@ import { Provider, themes } from '@stardust-ui/react'
 const App = () => (
   <BrowserRouter>
     <Provider theme={themes.teams}>
-      <Route exact path="/e2e/:exampleName" component={E2EExample} />
+      <Route exact path="/:exampleName" component={E2EExample} />
     </Provider>
   </BrowserRouter>
 )
