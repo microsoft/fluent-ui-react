@@ -1,8 +1,8 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Ref } from '@stardust-ui/react-component-ref'
 
 import Tree from './Tree'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
@@ -115,7 +115,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
       _.invoke(this.props, 'onTitleClick', e, this.props)
     },
-    getFocusFromParent: e => {
+    collapseOrReceiveFocus: e => {
       const { items, open } = this.props
 
       e.preventDefault()
@@ -128,7 +128,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
         _.invoke(this.props, 'onTitleClick', e, this.props)
       }
     },
-    setFocusToFirstChild: e => {
+    expandOrPassFocus: e => {
       const { open } = this.props
 
       e.preventDefault()
