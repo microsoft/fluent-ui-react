@@ -207,8 +207,7 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
         ...newStateFromProps,
       })
 
-      // However, we should follow the idea of getDerivedStateFromProps() and return only modified
-      // state
+      // We should follow the idea of getDerivedStateFromProps() and return only modified state
       return { ...newStateFromProps, ...computedState }
     }
 
