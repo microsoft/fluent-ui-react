@@ -94,7 +94,7 @@ export type PopupBehaviorProps = {
       /** Element type. */
       as?: string
       href?: string
-      [attributeName: string]: string
+      tabIndex?: string
     }
     /** Element type. */
     type?: string
