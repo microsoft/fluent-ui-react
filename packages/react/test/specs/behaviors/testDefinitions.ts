@@ -520,7 +520,7 @@ definitions.push({
 
 // Triggers 'click' action with 'Enter' or 'Spacebar' on 'root'.
 definitions.push({
-  regexp: /Triggers '(\w+)' action with '(\w+)' or '(\w+)' on '(\w+)'\./g,
+  regexp: /Triggers '(\w+)' action with '(\S+)' or '(\S+)' on '(\w+)'\./g,
   testMethod: (parameters: TestMethod) => {
     const [action, firstKey, secondKey, elementToPerformAction] = [...parameters.props]
     const property = {}
@@ -537,7 +537,7 @@ definitions.push({
 
 // Triggers 'closeAllMenus' action with 'Escape' on 'root'.
 definitions.push({
-  regexp: /Triggers '(\w+)' action with '(\w+)' on '(\w+)'\./g,
+  regexp: /Triggers '(\w+)' action with '(\S+)' on '(\w+)'\./g,
   testMethod: (parameters: TestMethod) => {
     const [action, key, elementToPerformAction] = [...parameters.props]
     const property = {}
