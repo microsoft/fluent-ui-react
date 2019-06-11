@@ -34,6 +34,7 @@ import {
   menuItemAsToolbarButtonBehavior,
   treeBehavior,
   treeTitleBehavior,
+  treeItemBehavior,
   subtreeBehavior,
   gridBehavior,
   statusBehavior,
@@ -80,6 +81,7 @@ testHelper.addBehavior('toggleButtonBehavior', toggleButtonBehavior)
 testHelper.addBehavior('menuItemAsToolbarButtonBehavior', menuItemAsToolbarButtonBehavior)
 testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
 testHelper.addBehavior('treeBehavior', treeBehavior)
+testHelper.addBehavior('treeItemBehavior', treeItemBehavior)
 testHelper.addBehavior('subtreeBehavior', subtreeBehavior)
 testHelper.addBehavior('gridBehavior', gridBehavior)
 testHelper.addBehavior('dialogBehavior', dialogBehavior)

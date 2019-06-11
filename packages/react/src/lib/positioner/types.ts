@@ -30,6 +30,12 @@ export interface PositioningProps extends BasicPositioningProps {
    * - vh, CSS viewport height unit
    */
   offset?: string
+
+  /**
+   * Disables automatic repositioning of the component; it will always be placed according to the values of `align` and
+   * `position` props, regardless of the size of the component, the reference element or the viewport.
+   */
+  unstable_pinned?: boolean
 }
 
 export interface PopperProps extends PositioningProps {
