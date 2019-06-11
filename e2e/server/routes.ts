@@ -1,6 +1,6 @@
-import { exampleUrlTokenFromFilePath } from './e2eApi'
+import { exampleUrlTokenFromFilePath } from '../e2eApi'
 
-const e2eExampleContext = require.context('./tests/', false, /-example.tsx$/)
+const e2eExampleContext = require.context('../tests/', false, /-example.tsx$/)
 
 export const routes = e2eExampleContext.keys().reduce((acc, key) => {
   const exampleNameUrlToken = exampleUrlTokenFromFilePath(key.replace(/^.\//, ''))

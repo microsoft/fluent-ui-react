@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import ExternalExampleLayout from './components/ExternalExampleLayout'
 import DocsLayout from './components/DocsLayout'
 import DocsRoot from './components/DocsRoot'
-import E2EExample from './components/E2EExample'
 
 import Accessibility from './views/Accessibility'
 import ColorPalette from './views/ColorPalette'
@@ -39,7 +38,6 @@ const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
     <Switch>
       <Route exact path="/maximize/:exampleName/:rtl?" component={ExternalExampleLayout} />
-      <Route exact path="/e2e/:exampleName" component={E2EExample} />
       <Switch>
         <DocsLayout exact path="/" component={Introduction} />
         <DocsLayout exact path="/:type/:name" component={DocsRoot} sidebar />

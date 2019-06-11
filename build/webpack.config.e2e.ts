@@ -1,7 +1,6 @@
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import { webpack as lernaAliases } from 'lerna-alias'
-import { argv } from 'yargs'
 
 import config from '../config'
 
@@ -12,13 +11,12 @@ const webpackConfig: any = {
   target: 'web',
   mode: 'development',
   entry: {
-    app: paths.perfSrc('index'),
+    app: paths.e2eSrc('app'),
   },
   output: {
     filename: `[name].js`,
-    path: paths.perfDist(),
+    path: paths.e2eDist(),
     pathinfo: true,
-    publicPath: config.compiler_public_path,
   },
   devtool: config.compiler_devtool,
   node: {
@@ -42,32 +40,20 @@ const webpackConfig: any = {
     ],
   },
   plugins: [
-    new ForkTsCheckerWebpackPlugin({ tsconfig: paths.build('tsconfig.perf.json') }),
+    new ForkTsCheckerWebpackPlugin({ tsconfig: paths.build('tsconfig.e2e.json') }),
     new CopyWebpackPlugin([
       {
-        from: paths.perfSrc('index.html'),
-        to: paths.perfDist(),
+        from: paths.e2eSrc('index.html'),
+        to: paths.e2eDist(),
       },
     ]),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
-    alias: {
-      ...lernaAliases(),
-      docs: paths.base('docs'),
-      src: paths.packageSrc('react'),
-
-      // We are using React in production mode with tracing.
-      // https://gist.github.com/bvaughn/25e6233aeb1b4f0cdb8d8366e54a3977
-      'react-dom$': 'react-dom/profiling',
-      'scheduler/tracing': 'scheduler/tracing-profiling',
-    },
+    alias: lernaAliases(),
   },
   performance: {
     hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
-  },
-  optimization: {
-    nodeEnv: !!argv.debug ? 'development' : 'production',
   },
 }
 
