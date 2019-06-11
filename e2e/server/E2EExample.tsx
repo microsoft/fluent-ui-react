@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { routes as browserTestRoutes } from './routes'
+import browserTestRoutes from './routes'
 import { RouteComponentProps } from 'react-router'
 
 type E2EProps = RouteComponentProps<{ exampleName: string }>
