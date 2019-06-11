@@ -31,6 +31,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Expand all `Tree` siblings on `asterisk` key @silviuavram ([#1457](https://github.com/stardust-ui/react/pull/1457))
 - Add 'data-is-focusable' attribute to `attachmentBehavior` @sophieH29 ([#1445](https://github.com/stardust-ui/react/pull/1445))
 - Improve accessibility for `Checkbox` @jurokapsiar ([1479](https://github.com/stardust-ui/react/pull/1479))
+- Add `unstable_pinned` prop to `Popup` and `Dropdown` components @Bugaa92 ([#1471](https://github.com/stardust-ui/react/pull/1471))
 
 ### Fixes
 - Fix click handling on focus for `action` slot in `Attachment` component @Bugaa92 ([#1444](https://github.com/stardust-ui/react/pull/1444))
