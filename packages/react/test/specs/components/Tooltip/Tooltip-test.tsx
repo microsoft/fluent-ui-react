@@ -7,28 +7,34 @@ import { mountWithProvider } from '../../../utils'
 describe('Tooltip', () => {
   describe('onOpenChange', () => {
     test('is called on hover', () => {
-      const spy = jest.fn()
+      const onOpenChange = jest.fn()
 
-      mountWithProvider(<Tooltip trigger={<button />} content="Hi" onOpenChange={spy} />)
+      mountWithProvider(<Tooltip trigger={<button />} content="Hi" onOpenChange={onOpenChange} />)
         .find('button')
         .simulate('mouseEnter')
 
-      expect(spy).toHaveBeenCalledTimes(1)
-      expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
+      expect(onOpenChange).toHaveBeenCalledTimes(1)
+      expect(onOpenChange).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'mouseEnter' }),
+        expect.objectContaining({ open: true }),
+      )
     })
 
     // https://github.com/stardust-ui/react/pull/619
     test('is called on hover when controlled', () => {
-      const spy = jest.fn()
+      const onOpenChange = jest.fn()
 
       mountWithProvider(
-        <Tooltip open={false} trigger={<button />} content="Hi" onOpenChange={spy} />,
+        <Tooltip open={false} trigger={<button />} content="Hi" onOpenChange={onOpenChange} />,
       )
         .find('button')
         .simulate('mouseEnter')
 
-      expect(spy).toHaveBeenCalledTimes(1)
-      expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
+      expect(onOpenChange).toHaveBeenCalledTimes(1)
+      expect(onOpenChange).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'mouseEnter' }),
+        expect.objectContaining({ open: true }),
+      )
     })
   })
 })
