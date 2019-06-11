@@ -2,7 +2,7 @@ import { parallel, series, task } from 'gulp'
 import yargs from 'yargs'
 
 import sh from '../sh'
-import jest from '../plugins/gulp-jest'
+import jest, { JestPluginConfig } from '../plugins/gulp-jest'
 
 const argv = yargs
   .option('runInBand', {})
@@ -10,6 +10,14 @@ const argv = yargs
   .option('detectLeaks', {})
   .option('testNamePattern', { alias: 't' })
   .option('testFilePattern', { alias: 'F' }).argv
+
+const jestConfigFromArgv: Partial<JestPluginConfig> = {
+  runInBand: argv.runInBand as boolean,
+  maxWorkers: argv.maxWorkers as number,
+  detectLeaks: argv.detectLeaks as boolean,
+  testNamePattern: argv.testNamePattern as string,
+  testFilePattern: argv.testFilePattern as string,
+}
 
 task('test:jest:pre', () => sh('yarn satisfied'))
 
@@ -26,15 +34,18 @@ task(
   jest({
     config: './jest.config.js',
     coverage: true,
-    runInBand: argv.runInBand as boolean,
-    maxWorkers: argv.maxWorkers as number,
-    detectLeaks: argv.detectLeaks as boolean,
-    testNamePattern: argv.testNamePattern as string,
-    testFilePattern: argv.testFilePattern as string,
+    ...jestConfigFromArgv,
   }),
 )
 
-task('test:jest:watch', jest({ watchAll: true }))
+task(
+  'test:jest:watch',
+  jest({
+    config: './jest.config.js',
+    watchAll: true,
+    ...jestConfigFromArgv,
+  }),
+)
 
 // ----------------------------------------
 // Tests
