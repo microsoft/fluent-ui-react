@@ -1,4 +1,5 @@
 import { Accessibility } from '../../types'
+import * as keyboardKey from 'keyboard-key'
 
 /**
  * @specification
@@ -9,6 +10,13 @@ const subtreeBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'group',
+    },
+  },
+  keyActions: {
+    root: {
+      expandSiblings: {
+        keyCombinations: [{ keyCode: keyboardKey['*'] }],
+      },
     },
   },
 })

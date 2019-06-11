@@ -1,5 +1,6 @@
 import { Accessibility, FocusZoneMode } from '../../types'
 import { FocusZoneDirection } from '../../FocusZone'
+import subtreeBehavior from './subtreeBehavior'
 
 /**
  * @specification
@@ -7,22 +8,30 @@ import { FocusZoneDirection } from '../../FocusZone'
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' component's part.
  * Embeds component into FocusZone.
  * Provides arrow key navigation in vertical direction.
- * Keyboard navigation is circular.
+ * Triggers 'expandSiblings' action with '*' on 'root'.
  */
-const treeBehavior: Accessibility = (props: any) => ({
-  attributes: {
-    root: {
-      role: 'tree',
-      'aria-labelledby': props['aria-labelledby'],
+const treeBehavior: Accessibility = (props: any) => {
+  const subtreeBehaviorData = subtreeBehavior(props)
+  return {
+    attributes: {
+      root: {
+        ...subtreeBehaviorData.attributes.root,
+        role: 'tree',
+        'aria-labelledby': props['aria-labelledby'],
+      },
     },
-  },
-  focusZone: {
-    mode: FocusZoneMode.Embed,
-    props: {
-      isCircularNavigation: true,
-      direction: FocusZoneDirection.vertical,
+    keyActions: {
+      root: {
+        ...subtreeBehaviorData.keyActions.root,
+      },
     },
-  },
-})
+    focusZone: {
+      mode: FocusZoneMode.Embed,
+      props: {
+        direction: FocusZoneDirection.vertical,
+      },
+    },
+  }
+}
 
 export default treeBehavior

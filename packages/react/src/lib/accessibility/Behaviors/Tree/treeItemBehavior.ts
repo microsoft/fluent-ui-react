@@ -22,6 +22,12 @@ const treeItemBehavior: Accessibility = (props: any) => ({
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
+      getFocusFromParent: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+      },
+      setFocusToFirstChild: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+      },
     },
   },
 })

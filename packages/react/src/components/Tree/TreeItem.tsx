@@ -2,6 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { Ref } from '@stardust-ui/react-component-ref'
 
 import Tree from './Tree'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
@@ -24,6 +25,7 @@ import {
   ShorthandValue,
   withSafeTypeForAs,
 } from '../../types'
+import { getFirstFocusable } from '../../lib/accessibility/FocusZone/focusUtilities'
 
 export interface TreeItemSlotClassNames {
   title: string
@@ -103,11 +105,34 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     accessibility: treeItemBehavior,
   }
 
+  titleRef = React.createRef<HTMLElement>()
+  treeRef = React.createRef<HTMLElement>()
+
   actionHandlers = {
     performClick: e => {
       e.preventDefault()
       e.stopPropagation()
       _.invoke(this.props, 'onTitleClick', e, this.props)
+    },
+    getFocusFromParent: e => {
+      const { open } = this.props
+      if (open) {
+        e.stopPropagation()
+        this.titleRef.current.focus()
+      }
+    },
+    setFocusToFirstChild: e => {
+      const { open } = this.props
+      if (!open) {
+        return
+      }
+
+      e.stopPropagation()
+
+      const element = getFirstFocusable(this.treeRef.current, this.treeRef.current, true)
+      if (element) {
+        element.focus()
+      }
     },
   }
 
@@ -124,25 +149,32 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
     return (
       <>
-        {TreeTitle.create(title, {
-          defaultProps: {
-            className: TreeItem.slotClassNames.title,
-            open,
-            hasSubtree,
-            as: hasSubtree ? 'span' : 'a',
-          },
-          render: renderItemTitle,
-          overrideProps: this.handleTitleOverrides,
-        })}
-        {open &&
-          Tree.create(items, {
+        <Ref innerRef={this.titleRef}>
+          {TreeTitle.create(title, {
             defaultProps: {
-              accessibility: subtreeBehavior,
-              className: TreeItem.slotClassNames.subtree,
-              exclusive,
-              renderItemTitle,
+              className: TreeItem.slotClassNames.title,
+              open,
+              hasSubtree,
+              as: hasSubtree ? 'span' : 'a',
             },
+            render: renderItemTitle,
+            overrideProps: this.handleTitleOverrides,
           })}
+        </Ref>
+        {hasSubtree && open && (
+          <Ref innerRef={this.treeRef}>
+            {Tree.create(items, {
+              defaultProps: {
+                accessibility: subtreeBehavior,
+                className: TreeItem.slotClassNames.subtree,
+                exclusive,
+                renderItemTitle,
+              },
+              render: renderItemTitle,
+              overrideProps: this.handleTitleOverrides,
+            })}
+          </Ref>
+        )}
       </>
     )
   }
@@ -157,6 +189,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
