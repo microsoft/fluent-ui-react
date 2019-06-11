@@ -61,12 +61,6 @@ export interface TooltipProps
   pointing?: boolean
 
   /**
-   * Function to render tooltip content.
-   * @param {Function} updatePosition - function to request tooltip position update.
-   */
-  renderContent?: (updatePosition: Function) => ShorthandValue
-
-  /**
    * DOM element that should be used as tooltip's target - instead of 'trigger' element that is used by default.
    */
   target?: HTMLElement
@@ -105,7 +99,6 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     onOpenChange: PropTypes.func,
     pointing: PropTypes.bool,
     position: PropTypes.oneOf(POSITIONS),
-    renderContent: PropTypes.func,
     target: PropTypes.any,
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
     content: customPropTypes.shorthandAllowingChildren,
@@ -132,12 +125,23 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     rtl,
     accessibility,
   }: RenderResultConfig<TooltipProps>): React.ReactNode {
-    const { mountNode } = this.props
+    const { mountNode, children, trigger } = this.props
     const tooltipContent = this.renderTooltipContent(classes.content, rtl, accessibility)
+
+    const triggerElement = childrenExist(children) ? children : (trigger as any)
+    const triggerProps = this.getTriggerProps(triggerElement)
 
     return (
       <>
-        {this.renderTrigger(accessibility)}
+        {triggerElement && (
+          <Ref innerRef={this.triggerRef}>
+            {React.cloneElement(triggerElement, {
+              ...accessibility.attributes.trigger,
+              ...triggerProps,
+              ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.trigger, triggerProps),
+            })}
+          </Ref>
+        )}
         {mountNode && ReactDOM.createPortal(tooltipContent, mountNode)}
       </>
     )
@@ -153,7 +157,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       _.invoke(triggerElement, 'props.onFocus', e, ...args)
     }
     triggerProps.onBlur = (e, ...args) => {
-      if (this.shouldBlurClose(e)) {
+      if (this.shouldClose(e)) {
         this.trySetOpen(false, e)
       }
       _.invoke(triggerElement, 'props.onBlur', e, ...args)
@@ -177,39 +181,22 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
     contentHandlerProps.onMouseEnter = (e, contentProps) => {
       this.setTooltipOpen(true, e)
-      predefinedProps && _.invoke(predefinedProps, 'onMouseEnter', e, contentProps)
+      _.invoke(predefinedProps, 'onMouseEnter', e, contentProps)
     }
     contentHandlerProps.onMouseLeave = (e, contentProps) => {
       this.setTooltipOpen(false, e)
-      predefinedProps && _.invoke(predefinedProps, 'onMouseLeave', e, contentProps)
+      _.invoke(predefinedProps, 'onMouseLeave', e, contentProps)
     }
 
     return contentHandlerProps
   }
 
-  shouldBlurClose = e => {
+  shouldClose = e => {
     return (
       !e.currentTarget ||
       !this.tooltipDomElement ||
       (!e.currentTarget.contains(e.relatedTarget) &&
         !this.tooltipDomElement.contains(e.relatedTarget))
-    )
-  }
-
-  renderTrigger(accessibility) {
-    const { children, trigger } = this.props
-    const triggerElement = childrenExist(children) ? children : (trigger as any)
-    const triggerProps = this.getTriggerProps(triggerElement)
-    return (
-      triggerElement && (
-        <Ref innerRef={this.triggerRef}>
-          {React.cloneElement(triggerElement, {
-            ...accessibility.attributes.trigger,
-            ...triggerProps,
-            ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.trigger, triggerProps),
-          })}
-        </Ref>
-      )
     )
   }
 
@@ -238,8 +225,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     accessibility: ReactAccessibilityBehavior,
     { placement, scheduleUpdate }: PopperChildrenProps,
   ) => {
-    const { content: propsContent, renderContent, pointing } = this.props
-    const content = renderContent ? renderContent(scheduleUpdate) : propsContent
+    const { content, pointing } = this.props
 
     const tooltipContentAttributes = {
       ...(rtl && { dir: 'rtl' }),
@@ -259,7 +245,15 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       overrideProps: this.getContentProps,
     })
 
-    return tooltipContent
+    return (
+      <Ref
+        innerRef={domElement => {
+          this.tooltipDomElement = domElement
+        }}
+      >
+        {tooltipContent}
+      </Ref>
+    )
   }
 
   trySetOpen(newValue: boolean, eventArgs: any) {

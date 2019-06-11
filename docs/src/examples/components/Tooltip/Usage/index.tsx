@@ -6,9 +6,9 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Usage = () => (
   <ExampleSection title="Usage">
     <ComponentExample
-      title="Async tooltip position update"
-      description="A tooltip can be forced to update its position - this comes in handy in async data loading scenarios."
-      examplePath="components/Tooltip/Usage/TooltipExampleAsync"
+      title="Custom Target"
+      description="By default Tooltip uses trigger element as the one it is displayed for, but it is possible to provide any DOM element as tooltip's target."
+      examplePath="components/Tooltip/Usage/TooltipCustomTargetExample"
     />
   </ExampleSection>
 )
