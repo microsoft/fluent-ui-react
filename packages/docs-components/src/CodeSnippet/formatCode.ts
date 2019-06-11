@@ -1,11 +1,15 @@
 import * as _ from 'lodash'
-import prettier from 'prettier/standalone'
+import * as _prettier from 'prettier/standalone'
 
 import 'prettier/parser-babylon'
 import 'prettier/parser-html'
 import 'prettier/parser-typescript'
 
 import { CodeSnippetMode, CodeSnippetValue } from './types'
+
+// `prettier` is a CJS library, there are known issues with them:
+// https://github.com/rollup/rollup/issues/1267#issuecomment-446681320
+const prettier = (_prettier as any).default || _prettier
 
 const prettierConfig = {
   htmlWhitespaceSensitivity: 'ignore',
@@ -14,7 +18,7 @@ const prettierConfig = {
   semi: false,
   singleQuote: true,
   trailingComma: 'all',
-  plugins: (window as any).prettierPlugins,
+  plugins: typeof window !== 'undefined' ? (window as any).prettierPlugins : [],
 }
 
 const normalizeToString = (value: CodeSnippetValue): string => {

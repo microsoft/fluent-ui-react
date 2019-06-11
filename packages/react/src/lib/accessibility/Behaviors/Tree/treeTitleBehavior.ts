@@ -6,6 +6,8 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  * @specification
  * Adds attribute 'aria-expanded=true' based on the property 'open' if the component has 'hasSubtree' property.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
+ * Triggers 'expand' action with 'ArrowRight' on 'root'.
+ * Triggers 'collapse' action with 'ArrowLeft' on 'root'.
  */
 const treeTitleBehavior: Accessibility<TreeTitleBehavior> = props => ({
   attributes: {
@@ -20,6 +22,12 @@ const treeTitleBehavior: Accessibility<TreeTitleBehavior> = props => ({
     root: {
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
+      expand: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+      },
+      collapse: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
       },
     },
   },

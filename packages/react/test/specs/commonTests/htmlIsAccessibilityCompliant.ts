@@ -1,6 +1,7 @@
+import * as React from 'react'
 import * as ReactDOMServer from 'react-dom/server'
 import { axe, toHaveNoViolations } from 'jest-axe'
-import { withProvider } from 'test/utils'
+import { EmptyThemeProvider } from 'test/utils'
 
 type AxeMatcher<R> = jest.Matchers<R> & {
   toHaveNoViolations: () => R
@@ -14,7 +15,7 @@ const expectAxe = expect as AxeExpect
 expect.extend(toHaveNoViolations)
 
 export default async (jsx: React.ReactElement<any>) => {
-  const html = ReactDOMServer.renderToString(withProvider(jsx))
+  const html = ReactDOMServer.renderToString(React.createElement(EmptyThemeProvider, null, jsx))
   const results = await axe(html)
   expectAxe(results).toHaveNoViolations()
 }
