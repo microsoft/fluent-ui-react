@@ -84,7 +84,7 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
       // require usage of getAutoControlledStateFromProps()
       if (getDerivedStateFromProps !== AutoControlledComponent.getDerivedStateFromProps) {
         /* eslint-disable-next-line no-console */
-        console.log(
+        console.error(
           `Auto controlled ${name} must specify a static getAutoControlledStateFromProps() instead of getDerivedStateFromProps().`,
         )
       }
