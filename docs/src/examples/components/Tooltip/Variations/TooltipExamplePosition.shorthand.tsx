@@ -5,6 +5,7 @@ import { useBooleanKnob, useSelectKnob } from '@stardust-ui/docs-components'
 
 const TooltipExamplePosition = () => {
   const [open] = useBooleanKnob({ name: 'open-s', initialValue: true })
+  const [pointing] = useBooleanKnob({ name: 'pointing-s', initialValue: true })
 
   const [positionAndAlign] = useSelectKnob({
     name: 'position-align-s',
@@ -21,6 +22,7 @@ const TooltipExamplePosition = () => {
         open={open || undefined}
         align={align}
         position={position}
+        pointing={pointing}
         trigger={<Button icon={icons[position]} styles={buttonStyles} />}
         content={{
           content: (
