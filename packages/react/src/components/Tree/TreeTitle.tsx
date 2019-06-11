@@ -66,22 +66,6 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
       e.preventDefault()
       this.handleClick(e)
     },
-    expand: e => {
-      const { open } = this.props
-      e.preventDefault()
-      if (!open) {
-        e.stopPropagation()
-        this.handleClick(e)
-      }
-    },
-    collapse: e => {
-      const { open } = this.props
-      e.preventDefault()
-      if (open) {
-        e.stopPropagation()
-        this.handleClick(e)
-      }
-    },
   }
 
   handleClick = e => {

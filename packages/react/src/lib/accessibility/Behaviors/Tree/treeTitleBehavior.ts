@@ -27,12 +27,6 @@ const treeTitleBehavior: Accessibility = (props: any) => ({
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
-      expand: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
-      },
-      collapse: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
-      },
     },
   },
 })
