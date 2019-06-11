@@ -470,11 +470,13 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
               listener={this.handleDocumentClick(getRefs)}
               targetRef={documentRef}
               type="click"
+              capture
             />
             <EventListener
               listener={this.handleDocumentKeyDown(getRefs)}
               targetRef={documentRef}
               type="keydown"
+              capture
             />
           </>
         )}
