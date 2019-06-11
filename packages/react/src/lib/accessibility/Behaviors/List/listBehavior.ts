@@ -6,8 +6,12 @@ import basicListBehavior from './basicListBehavior'
  * @description
  * Defines a behavior 'BasicListBehavior' or 'SelectableListBehavior' based on property 'selectable'.
  */
-
-const ListBehavior: Accessibility = (props: any) =>
+const ListBehavior: Accessibility<ListBehaviorProps> = props =>
   props.selectable ? selectableListBehavior(props) : basicListBehavior(props)
 
 export default ListBehavior
+
+export type ListBehaviorProps = {
+  /** Indicates if a list is a selectable list. */
+  selectable?: boolean
+}

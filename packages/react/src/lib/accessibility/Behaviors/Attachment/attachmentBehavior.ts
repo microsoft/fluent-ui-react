@@ -7,7 +7,7 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  * Adds attribute 'tabIndex=0' to 'root' component's part.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
  */
-const attachmentBehavior: Accessibility = (props: any) => ({
+const attachmentBehavior: Accessibility = () => ({
   attributes: {
     root: {
       tabIndex: 0,
