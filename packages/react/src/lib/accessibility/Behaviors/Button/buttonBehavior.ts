@@ -1,6 +1,5 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
-import * as _ from 'lodash'
 
 /**
  * @specification
@@ -9,17 +8,12 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
  */
-
-const buttonBehavior: Accessibility = (props: any) => ({
+const buttonBehavior: Accessibility<ButtonBehaviorProps> = props => ({
   attributes: {
     root: {
       role: props.as === 'button' ? undefined : 'button',
       tabIndex: props.as === 'button' ? undefined : 0,
-      'aria-disabled': !_.isNil(props['aria-disabled'])
-        ? props['aria-disabled']
-        : !!props['disabled']
-        ? true
-        : undefined,
+      'aria-disabled': props.disabled,
     },
   },
 
@@ -35,3 +29,10 @@ const buttonBehavior: Accessibility = (props: any) => ({
 })
 
 export default buttonBehavior
+
+export type ButtonBehaviorProps = {
+  /** Element type. */
+  as: string
+  /** A button can show it is currently unable to be interacted with. */
+  disabled?: boolean
+}

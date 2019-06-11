@@ -5,7 +5,7 @@ import * as keyboardKey from 'keyboard-key'
  * @specification
  * Triggers 'expandSiblings' action with '*' on 'root'.
  */
-const subtreeBehavior: Accessibility = (props: any) => ({
+const subtreeBehavior: Accessibility = () => ({
   attributes: {
     root: {},
   },

@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import buttonBehavior from '../Button/buttonBehavior'
+import buttonBehavior, { ButtonBehaviorProps } from './buttonBehavior'
 
 /**
  * @specification
@@ -21,3 +21,8 @@ const toggleButtonBehavior: Accessibility = (props: any) => {
 }
 
 export default toggleButtonBehavior
+
+type ToggleButtonBehaviorProps = ButtonBehaviorProps & {
+  /** Indicates if a button is in pressed state. */
+  active: boolean
+}

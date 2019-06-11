@@ -12,7 +12,7 @@ import menuItemAsToolbarButtonBehavior from './menuItemAsToolbarButtonBehavior'
  * Provides arrow key navigation in bidirectional direction.
  * When component's container element receives focus, focus will be set to the default focusable child element of the component.
  */
-const menuAsToolbarBehavior: Accessibility = (props: any) => ({
+const menuAsToolbarBehavior: Accessibility = () => ({
   attributes: {
     root: {
       role: 'toolbar',
