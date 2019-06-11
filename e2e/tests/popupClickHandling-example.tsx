@@ -10,25 +10,23 @@ export const selectors = {
 const PopupClickHandlingExample = () => {
   const [show, setShow] = React.useState(true)
   return (
-    <>
-      <Popup
-        trigger={
-          <Button id={selectors.triggerButtonId} icon="expand" onClick={() => setShow(true)} />
-        }
-        content={{
-          content: !!show && (
-            <Button
-              id={selectors.popupContentButtonId}
-              content="click me"
-              onClick={e => {
-                e.preventDefault()
-                setShow(!show)
-              }}
-            />
-          ),
-        }}
-      />
-    </>
+    <Popup
+      trigger={
+        <Button id={selectors.triggerButtonId} icon="expand" onClick={() => setShow(true)} />
+      }
+      content={{
+        content: !!show && (
+          <Button
+            id={selectors.popupContentButtonId}
+            content="click me"
+            onClick={e => {
+              e.preventDefault()
+              setShow(!show)
+            }}
+          />
+        ),
+      }}
+    />
   )
 }
 
