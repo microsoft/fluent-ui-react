@@ -1,5 +1,6 @@
 import * as keyboardKey from 'keyboard-key'
 import { Accessibility } from '../../types'
+import { ListBehaviorProps } from './listBehavior'
 
 /**
  * @description
@@ -12,7 +13,7 @@ import { Accessibility } from '../../types'
  * Triggers 'moveFirst' action with 'Home' on 'root'.
  * Triggers 'moveLast' action with 'End' on 'root'.
  */
-const selectableListBehavior: Accessibility = (props: any) => ({
+const selectableListBehavior: Accessibility<ListBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'listbox',

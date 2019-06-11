@@ -8,8 +8,8 @@ import subtreeBehavior from './subtreeBehavior'
  * Provides arrow key navigation in vertical direction.
  * Triggers 'expandSiblings' action with '*' on 'root'.
  */
-const treeBehavior: Accessibility = (props: any) => {
-  const subtreeBehaviorData = subtreeBehavior(props)
+const treeBehavior: Accessibility = () => {
+  const subtreeBehaviorData = subtreeBehavior({})
   return {
     attributes: {
       root: {
