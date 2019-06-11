@@ -6,7 +6,7 @@ export type Alignment = 'top' | 'bottom' | 'start' | 'end' | 'center'
 
 export type PopperChildrenFn = (props: PopperChildrenProps) => React.ReactNode
 
-export interface SimplifiedPositioningProps {
+export interface BasicPositioningProps {
   /**
    * Alignment for the component.
    */
@@ -20,7 +20,7 @@ export interface SimplifiedPositioningProps {
   position?: Position
 }
 
-export interface PositioningProps extends SimplifiedPositioningProps {
+export interface PositioningProps extends BasicPositioningProps {
   /**
    * Offset value to apply to rendered component. Accepts the following units:
    * - px or unit-less, interpreted as pixels

@@ -23,7 +23,7 @@ import {
   ALIGNMENTS,
   POSITIONS,
   Popper,
-  SimplifiedPositioningProps,
+  BasicPositioningProps,
   PopperChildrenProps,
 } from '../../lib/positioner'
 import TooltipContent from './TooltipContent'
@@ -42,7 +42,7 @@ export interface TooltipProps
   extends StyledComponentProps<TooltipProps>,
     ChildrenComponentProps,
     ContentComponentProps<ShorthandValue>,
-    SimplifiedPositioningProps {
+    BasicPositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
    * */
