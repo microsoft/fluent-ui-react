@@ -39,15 +39,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `active` styles for `iconOnly` `MenuItem` in Teams theme @mnajdova ([#1464](https://github.com/stardust-ui/react/pull/1464))
 - Fix keypress/click handling for `Popup` content @kuzhelov ([#1482](https://github.com/stardust-ui/react/pull/1482))
 - Fix `PopupContent` background color in Teams theme @mnajdova ([#1484](https://github.com/stardust-ui/react/pull/1484))
+- Generate IDs for `header` and `content` slots once in `Dialog` component ([#1449](https://github.com/stardust-ui/react/pull/1449))
 
 ### Documentation
 - Remove unfinished themes from the docs themes dropdown on components examples pages @alinais ([#1473](https://github.com/stardust-ui/react/pull/1473)
 
 ### Performance
 - Use minified version of `normalize.css` and update it to `8.0.1` @layershifter ([#1476](https://github.com/stardust-ui/react/pull/1476))
-
-### Fixes
-- Generate IDs for `header` and `content` slots once in `Dialog` component ([#1449](https://github.com/stardust-ui/react/pull/1449))
 
 <!--------------------------------[ v0.32.0 ]------------------------------- -->
 ## [v0.32.0](https://github.com/stardust-ui/react/tree/v0.32.0) (2019-06-03)
