@@ -1,24 +1,17 @@
 import * as React from 'react'
 import { Button, Tooltip } from '@stardust-ui/react'
+import { useBooleanKnob } from '@stardust-ui/docs-components'
 
-class TooltipControlledExample extends React.Component {
-  state = { open: false }
+const TooltipControlledExample = () => {
+  const [open] = useBooleanKnob({ name: 'open-c', initialValue: true })
 
-  handleOpenChange = (e, { open }) => {
-    console.log(`Tooltip requested to change its open state to "${open}".`)
-    this.setState({ open })
-  }
-
-  render() {
-    return (
-      <Tooltip
-        open={this.state.open}
-        onOpenChange={this.handleOpenChange}
-        trigger={<Button icon="expand" />}
-        content={{ content: 'This is a controlled Tooltip' }}
-      />
-    )
-  }
+  return (
+    <Tooltip
+      open={open}
+      trigger={<Button icon="expand" />}
+      content={{ content: 'This is a controlled Tooltip' }}
+    />
+  )
 }
 
 export default TooltipControlledExample

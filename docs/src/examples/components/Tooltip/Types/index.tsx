@@ -17,13 +17,8 @@ const Types = () => (
     />
     <ComponentExample
       title="Controlled"
-      description="Note that if Tooltip is controlled, then its 'open' prop value could be changed either by parent component, or by user actions (e.g. key press) - thus it is necessary to handle 'onOpenChange' event. Try to type some text into tooltip's input field and press ESC to see the effect."
+      description="Note that if Tooltip is controlled, then its 'open' prop value could be changed either by parent component, or by user actions (e.g. key press) - thus it is necessary to handle 'onOpenChange' event."
       examplePath="components/Tooltip/Types/TooltipControlledExample"
-    />
-    <ComponentExample
-      title="Content Wrapper"
-      description="Use 'content' prop of the Tooltip to set whether Tooltip content should be rendered with the default wrapper."
-      examplePath="components/Tooltip/Types/TooltipContentWrapperExample"
     />
     <ComponentExample
       title="Custom Target"
