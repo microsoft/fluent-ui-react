@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import popupBehavior from './popupBehavior'
+import popupBehavior, { PopupBehaviorProps } from './popupBehavior'
 
 /**
  * @description
@@ -9,7 +9,7 @@ import popupBehavior from './popupBehavior'
  * Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Does not set the attribute otherwise.
  * Automatically focus the first focusable element inside component.
  */
-const popupAutoFocusBehavior: Accessibility = (props: any) => ({
+const popupAutoFocusBehavior: Accessibility<PopupBehaviorProps> = props => ({
   ...popupBehavior(props),
   autoFocus: true,
 })

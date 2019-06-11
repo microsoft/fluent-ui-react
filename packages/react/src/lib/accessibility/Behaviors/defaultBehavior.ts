@@ -1,6 +1,6 @@
 import { Accessibility } from '../types'
 
-const defaultBehavior: Accessibility = (props: any) => ({
+const defaultBehavior: Accessibility = () => ({
   attributes: {
     root: {},
   },
