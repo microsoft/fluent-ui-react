@@ -127,7 +127,7 @@ definitions.push({
 
 // Example: Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part based on the property '\w+'\. This can be overriden by providing '([\w-]+)' property directly to the component\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part based on the property '([\w-]+)'\. This can be overriden by providing '[\w-]+' property directly to the component\./g,
   testMethod: (parameters: TestMethod) => {
     const [
       attributeToBeAdded,
@@ -149,7 +149,7 @@ definitions.push({
 
 // Example: Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' based on the property '\w+'\. This can be overriden by providing '([\w-]+)' property directly to the component\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' based on the property '([\w-]+)'\. This can be overriden by providing '[\w-]+' property directly to the component\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, valueOfAttributeToBeAdded, overridingProperty] = parameters.props
     const propertyWithOverride = {}
@@ -482,7 +482,7 @@ definitions.push({
 
 // Triggers 'click' action with 'Enter' or 'Spacebar' on 'root'.
 definitions.push({
-  regexp: /Triggers '(\w+)' action with '(\w+)' or '(\w+)' on '(\w+)'\./g,
+  regexp: /Triggers '(\w+)' action with '(\S+)' or '(\S+)' on '(\w+)'\./g,
   testMethod: (parameters: TestMethod) => {
     const [action, firstKey, secondKey, elementToPerformAction] = [...parameters.props]
     const property = {}
@@ -499,7 +499,7 @@ definitions.push({
 
 // Triggers 'closeAllMenus' action with 'Escape' on 'root'.
 definitions.push({
-  regexp: /Triggers '(\w+)' action with '(\w+)' on '(\w+)'\./g,
+  regexp: /Triggers '(\w+)' action with '(\S+)' on '(\w+)'\./g,
   testMethod: (parameters: TestMethod) => {
     const [action, key, elementToPerformAction] = [...parameters.props]
     const property = {}

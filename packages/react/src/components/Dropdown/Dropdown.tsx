@@ -334,6 +334,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
 
   a11yStatusTimeout: any
   charKeysPressedTimeout: any
+  defaultTriggerButtonId = _.uniqueId('dropdown-trigger-button-')
 
   componentWillUnmount() {
     clearTimeout(this.a11yStatusTimeout)
@@ -411,6 +412,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           getA11yStatusMessage={getA11yStatusMessage}
           highlightedIndex={highlightedIndex}
           onStateChange={this.handleStateChange}
+          labelId={this.props['aria-labelledby']}
         >
           {({
             getInputProps,
@@ -517,6 +519,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   ): JSX.Element {
     const { triggerButton } = this.props
     const content = this.getSelectedItemAsString(this.state.value)
+    const triggerButtonId = triggerButton['id'] || this.defaultTriggerButtonId
 
     const triggerButtonProps = getToggleButtonProps({
       onFocus: this.handleTriggerButtonOrListFocus,
@@ -524,7 +527,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       onKeyDown: e => {
         this.handleTriggerButtonKeyDown(e, rtl)
       },
-      'aria-label': content,
+      'aria-label': undefined,
+      'aria-labelledby': `${this.props['aria-labelledby']} ${triggerButtonId}`,
     })
 
     const { onClick, onFocus, onBlur, onKeyDown, ...restTriggerButtonProps } = triggerButtonProps
@@ -535,6 +539,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           defaultProps: {
             className: Dropdown.slotClassNames.triggerButton,
             content,
+            id: triggerButtonId,
             fluid: true,
             styles: styles.triggerButton,
             ...restTriggerButtonProps,

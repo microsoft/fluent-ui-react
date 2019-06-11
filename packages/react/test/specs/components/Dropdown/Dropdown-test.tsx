@@ -1072,7 +1072,7 @@ describe('Dropdown', () => {
 
       expect(wrapper.find(Dropdown).state('searchQuery')).toBe('foo')
 
-      wrapper.setProps({ children: <Dropdown items={items} search searchQuery="bar" /> })
+      wrapper.setProps({ searchQuery: 'bar' })
       expect(wrapper.find(Dropdown).state('searchQuery')).toBe('bar')
     })
 

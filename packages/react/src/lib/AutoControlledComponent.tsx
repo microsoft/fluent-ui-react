@@ -84,7 +84,7 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
       // require usage of getAutoControlledStateFromProps()
       if (getDerivedStateFromProps !== AutoControlledComponent.getDerivedStateFromProps) {
         /* eslint-disable-next-line no-console */
-        console.log(
+        console.error(
           `Auto controlled ${name} must specify a static getAutoControlledStateFromProps() instead of getDerivedStateFromProps().`,
         )
       }
@@ -207,14 +207,16 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
         ...newStateFromProps,
       })
 
-      // However, we should follow the idea of getDerivedStateFromProps() and return only modified
-      // state
+      // We should follow the idea of getDerivedStateFromProps() and return only modified state
       return { ...newStateFromProps, ...computedState }
     }
 
     return newStateFromProps
   }
 
+  /**
+   * Override this method to use getDerivedStateFromProps() in child components.
+   */
   static getAutoControlledStateFromProps(props, state) {
     return null
   }

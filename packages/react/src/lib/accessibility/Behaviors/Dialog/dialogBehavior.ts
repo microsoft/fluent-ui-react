@@ -1,6 +1,7 @@
-import * as _ from 'lodash'
-import { Accessibility } from '../../types'
+import { Accessibility, AccessibilityAttributes } from '../../types'
 import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
+import { PopupBehaviorProps } from '../Popup/popupBehavior'
+import * as _ from 'lodash'
 
 /**
  * @description
@@ -15,7 +16,7 @@ import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'popup' component's part.
  * Traps focus inside component.
  */
-const dialogBehavior: Accessibility = (props: any) => {
+const dialogBehavior: Accessibility<DialogBehaviorProps> = props => {
   const behaviorData = popupFocusTrapBehavior(props)
 
   const defaultAriaLabelledBy = getDefaultAriaLabelledBy(props)
@@ -41,7 +42,7 @@ const dialogBehavior: Accessibility = (props: any) => {
  * Returns the element id of the header, it is used when user does not provide aria-label or
  * aria-labelledby as props.
  */
-const getDefaultAriaLabelledBy = (props: any) => {
+const getDefaultAriaLabelledBy = (props: DialogBehaviorProps) => {
   if (props['aria-label'] || props['aria-labelledby'] || _.isNil(props.header)) {
     return undefined
   }
@@ -52,7 +53,7 @@ const getDefaultAriaLabelledBy = (props: any) => {
  * Returns the element id of the content, it is used when user does not provide aria-describedby
  * as props.
  */
-const getDefaultAriaDescribedBy = (props: any) => {
+const getDefaultAriaDescribedBy = (props: DialogBehaviorProps) => {
   if (props['aria-describedby'] || _.isNil(props.content)) {
     return undefined
   }
@@ -60,3 +61,11 @@ const getDefaultAriaDescribedBy = (props: any) => {
 }
 
 export default dialogBehavior
+
+type DialogBehaviorProps = {
+  header?: string | object
+  headerId?: string
+  content?: string | object
+  contentId?: string
+} & PopupBehaviorProps &
+  Pick<AccessibilityAttributes, 'aria-label' | 'aria-labelledby' | 'aria-describedby'>
