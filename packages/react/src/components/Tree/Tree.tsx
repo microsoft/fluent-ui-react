@@ -123,11 +123,16 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     return _.isArray(activeIndex) ? activeIndex : [activeIndex]
   }
 
-  computeNewIndex = (index: number) => {
+  computeNewIndex = (treeItemProps: TreeItemProps) => {
+    const { index, items } = treeItemProps
+    const activeIndexes = this.getActiveIndexes()
     const { exclusive } = this.props
+    if (!items) {
+      return activeIndexes
+    }
 
     if (exclusive) return index
-    const activeIndexes = this.getActiveIndexes()
+
     // check to see if index is in array, and remove it, if not then add it
     return _.includes(activeIndexes, index)
       ? _.without(activeIndexes, index)
@@ -136,7 +141,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
     onTitleClick: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      this.trySetState({ activeIndex: this.computeNewIndex(treeItemProps.index) })
+      this.trySetState({ activeIndex: this.computeNewIndex(treeItemProps) })
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
   })
