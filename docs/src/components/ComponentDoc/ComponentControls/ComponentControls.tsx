@@ -1,3 +1,4 @@
+import { CopyToClipboard } from '@stardust-ui/docs-components'
 import { Menu, Provider, ThemeInput, menuAsToolbarBehavior } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -6,7 +7,6 @@ import { NavLink } from 'react-router-dom'
 import ComponentButton from './ComponentButton'
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
 import ComponentControlsCodeSandbox from './ComponentControlsCodeSandbox/ComponentControlsCodeSandbox'
-import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 
 type ComponentControlsProps = {
   exampleCode: string
@@ -111,16 +111,15 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
           {
             key: 'copy-link',
             content: (
-              <CopyToClipboard
-                render={(active, onClick) => (
+              <CopyToClipboard value={anchorName}>
+                {(active, onClick) => (
                   <ComponentButton
                     iconName="linkify"
                     label={active ? 'Copied!' : 'Permalink'}
                     onClick={onClick}
                   />
                 )}
-                value={anchorName}
-              />
+              </CopyToClipboard>
             ),
             onClick: onCopyLink,
           },
