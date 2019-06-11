@@ -1,4 +1,4 @@
-import { Accessibility } from '../../types'
+import { Accessibility, AccessibilityAttributes } from '../../types'
 
 /**
  * @description
@@ -22,4 +22,4 @@ type ImageBehaviorProps = {
   /** Alternative text. */
   alt?: string
   'aria-label'?: string
-}
+} & Pick<AccessibilityAttributes, 'aria-label'>

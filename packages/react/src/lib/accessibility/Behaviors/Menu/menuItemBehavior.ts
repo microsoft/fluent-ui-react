@@ -1,4 +1,4 @@
-import { Accessibility } from '../../types'
+import { Accessibility, AccessibilityAttributes } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as keyboardKey from 'keyboard-key'
 
@@ -76,7 +76,4 @@ export type MenuItemBehaviorProps = {
   disabled?: boolean
   /** If a menu displays elements vertically. */
   vertical?: boolean
-  'aria-label'?: string
-  'aria-labelledby'?: string
-  'aria-describedby'?: string
-}
+} & Pick<AccessibilityAttributes, 'aria-label' | 'aria-labelledby' | 'aria-describedby'>

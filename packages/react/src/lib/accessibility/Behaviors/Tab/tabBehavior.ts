@@ -1,4 +1,4 @@
-import { Accessibility } from '../../types'
+import { Accessibility, AccessibilityAttributes } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 
@@ -50,8 +50,7 @@ type TabBehaviorProps = {
   active?: boolean
   /** Indicates if tab is disabled. */
   disabled?: boolean
-  'aria-label'?: string
-  'aria-labelledby'?: string
-  'aria-describedby'?: string
-  'aria-controls'?: string
-}
+} & Pick<
+  AccessibilityAttributes,
+  'aria-label' | 'aria-labelledby' | 'aria-describedby' | 'aria-controls'
+>

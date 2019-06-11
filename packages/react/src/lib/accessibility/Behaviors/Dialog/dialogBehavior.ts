@@ -1,4 +1,4 @@
-import { Accessibility } from '../../types'
+import { Accessibility, AccessibilityAttributes } from '../../types'
 import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
 import { PopupBehaviorProps } from '../Popup/popupBehavior'
 import * as _ from 'lodash'
@@ -75,7 +75,5 @@ type DialogBehaviorProps = {
   content?: {
     id?: string
   }
-  'aria-label'?: string
-  'aria-labelledby'?: string
-  'aria-describedby'?: string
-} & PopupBehaviorProps
+} & PopupBehaviorProps &
+  Pick<AccessibilityAttributes, 'aria-label' | 'aria-labelledby' | 'aria-describedby'>
