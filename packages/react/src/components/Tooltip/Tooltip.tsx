@@ -225,7 +225,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     tooltipPositionClasses: string,
     rtl: boolean,
     accessibility: ReactAccessibilityBehavior,
-    { placement, scheduleUpdate }: PopperChildrenProps,
+    { placement }: PopperChildrenProps,
   ) => {
     const { content, pointing } = this.props
 
