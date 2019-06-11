@@ -16,7 +16,7 @@ class CopyToClipboard extends React.Component<CopyToClipboardProps, CopyToClipbo
     active: false,
   }
 
-  private timeoutId
+  timeoutId
 
   static defaultProps = {
     timeout: 3000,

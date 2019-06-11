@@ -56,7 +56,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
     },
   })
 
-  private renderItems(items, variables) {
+  renderItems(items, variables) {
     const itemOverridesFn = this.handleItemOverrides(variables)
     return _.map(items, (item, index) => {
       const kind = _.get(item, 'kind', 'item')

@@ -5,7 +5,6 @@ import * as _ from 'lodash'
 /**
  * @description
  * Implements ARIA Dialog (Modal) design pattern.
- * Adds role='button' to 'trigger' component's part, if it is not focusable element and no role attribute provided.
  * Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
  *
  * @specification
@@ -14,7 +13,6 @@ import * as _ from 'lodash'
  * Adds attribute 'role=dialog' to 'popup' component's part.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'popup' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'popup' component's part.
- * Adds attribute 'role=dialog' to 'popup' component's part.
  * Generates unique ID and adds it as attribute 'id' to the 'header' component's part if it has not been provided by the user.
  * Generates unique ID and adds it as attribute 'id' to the 'content' component's part if it has not been provided by the user.
  * Traps focus inside component.

@@ -11,6 +11,7 @@ import rimraf from 'rimraf'
 import config from '../../../config'
 import tmp from 'tmp'
 import http from 'http'
+import { safeLaunchOptions } from 'build/puppeteer.config'
 
 type PackedPackages = Record<string, string>
 
@@ -46,6 +47,7 @@ const packStardustPackages = async (logger: Function): Promise<PackedPackages> =
   const stardustPackages = lernaAliases({ sourceDirectory: false })
 
   // We don't want to pack a package with our dev tools
+  delete stardustPackages['@stardust-ui/eslint-plugin']
   delete stardustPackages['@stardust-ui/internal-tooling']
 
   await Promise.all(
@@ -103,12 +105,7 @@ const startServer = (publicDirectory: string, listenPort: number) =>
 const performBrowserTest = async (publicDirectory: string, listenPort: number) => {
   const server = await startServer(publicDirectory, listenPort)
 
-  const browser = await puppeteer.launch({
-    args: [
-      // Workaround for newPage hang in CircleCI: https://github.com/GoogleChrome/puppeteer/issues/1409#issuecomment-453845568
-      process.env.CI && '--single-process',
-    ].filter(Boolean),
-  })
+  const browser = await puppeteer.launch(safeLaunchOptions())
   const page = await browser.newPage()
   let error: Error
 

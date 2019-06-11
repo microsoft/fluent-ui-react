@@ -56,12 +56,12 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
     hasSubtree: PropTypes.bool,
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     as: 'a',
     accessibility: treeTitleBehavior,
   }
 
-  protected actionHandlers = {
+  actionHandlers = {
     performClick: e => {
       e.preventDefault()
       this.handleClick(e)

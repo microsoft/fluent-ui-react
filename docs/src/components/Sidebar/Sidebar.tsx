@@ -52,7 +52,7 @@ class Sidebar extends React.Component<any, any> {
     this._searchInput = (findDOMNode(this) as any).querySelector('.ui.input input')
   }
 
-  private handleDocumentKeyDown = e => {
+  handleDocumentKeyDown = e => {
     const code = keyboardKey.getCode(e)
     const isAZ = code >= 65 && code <= 90
     const hasModifier = e.altKey || e.ctrlKey || e.metaKey
@@ -61,7 +61,7 @@ class Sidebar extends React.Component<any, any> {
     if (!hasModifier && isAZ && bodyHasFocus) this._searchInput.focus()
   }
 
-  private handleItemClick = () => {
+  handleItemClick = () => {
     const { query } = this.state
 
     if (query) this.setState({ query: '' })

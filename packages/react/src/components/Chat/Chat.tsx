@@ -56,7 +56,7 @@ class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
   static Item = ChatItem
   static Message = ChatMessage
 
-  protected actionHandlers = {
+  actionHandlers = {
     focus: () => this.focusZone && this.focusZone.focus(),
   }
 
