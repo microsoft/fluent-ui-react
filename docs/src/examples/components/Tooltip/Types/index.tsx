@@ -10,6 +10,11 @@ const Types = () => (
       description="A default tooltip."
       examplePath="components/Tooltip/Types/TooltipExample"
     />
+    <ComponentExample
+      title="Pointing"
+      description="A tooltip can have a pointer."
+      examplePath="components/Tooltip/Types/TooltipExamplePointing"
+    />
   </ExampleSection>
 )
 

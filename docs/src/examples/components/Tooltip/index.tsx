@@ -10,8 +10,8 @@ const TooltipExamples = () => (
   <>
     <Types />
     <Variations />
-    <Usage />
     <States />
+    <Usage />
     <Rtl />
   </>
 )

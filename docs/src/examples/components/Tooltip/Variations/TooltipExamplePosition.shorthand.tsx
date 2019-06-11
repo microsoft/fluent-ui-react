@@ -1,12 +1,9 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import { Button, Grid, Tooltip, Alignment, Position } from '@stardust-ui/react'
-import { useBooleanKnob, useSelectKnob } from '@stardust-ui/docs-components'
+import { useSelectKnob } from '@stardust-ui/docs-components'
 
 const TooltipExamplePosition = () => {
-  const [open] = useBooleanKnob({ name: 'open-s', initialValue: true })
-  const [pointing] = useBooleanKnob({ name: 'pointing-s', initialValue: true })
-
   const [positionAndAlign] = useSelectKnob({
     name: 'position-align-s',
     initialValue: 'above-start',
@@ -19,18 +16,11 @@ const TooltipExamplePosition = () => {
   return (
     <Grid columns="1" variables={{ padding: '100px 0' }} styles={{ justifyItems: 'center' }}>
       <Tooltip
-        open={open || undefined}
+        open
         align={align}
         position={position}
-        pointing={pointing}
         trigger={<Button icon={icons[position]} styles={buttonStyles} />}
-        content={{
-          content: (
-            <p>
-              The tooltip is rendered {position} the trigger, aligned to the {align}.
-            </p>
-          ),
-        }}
+        content={`The tooltip is rendered ${position} the trigger, aligned to the ${align}.`}
       />
     </Grid>
   )

@@ -99,7 +99,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     onOpenChange: PropTypes.func,
     pointing: PropTypes.bool,
     position: PropTypes.oneOf(POSITIONS),
-    target: PropTypes.any,
+    target: customPropTypes.domNode,
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.element]),
     content: customPropTypes.shorthandAllowingChildren,
   }
@@ -116,7 +116,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
   pointerTargetRef = React.createRef<HTMLElement>()
   triggerRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
-  tooltipDomElement = null
+  contentRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
 
   closeTimeoutId
 
@@ -159,7 +159,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       _.invoke(triggerElement, 'props.onFocus', e, ...args)
     }
     triggerProps.onBlur = (e, ...args) => {
-      if (this.shouldClose(e)) {
+      if (!this.shouldStayOpen(e)) {
         this.trySetOpen(false, e)
       }
       _.invoke(triggerElement, 'props.onBlur', e, ...args)
@@ -193,14 +193,9 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     return contentHandlerProps
   }
 
-  shouldClose = e => {
-    return (
-      !e.currentTarget ||
-      !this.tooltipDomElement ||
-      (!e.currentTarget.contains(e.relatedTarget) &&
-        !this.tooltipDomElement.contains(e.relatedTarget))
-    )
-  }
+  shouldStayOpen = e =>
+    _.invoke(e, 'currentTarget.contains', e.relatedTarget) ||
+    _.invoke(this.contentRef.current, 'contains', e.relatedTarget)
 
   renderTooltipContent(
     tooltipPositionClasses: string,
@@ -247,15 +242,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       overrideProps: this.getContentProps,
     })
 
-    return (
-      <Ref
-        innerRef={domElement => {
-          this.tooltipDomElement = domElement
-        }}
-      >
-        {tooltipContent}
-      </Ref>
-    )
+    return <Ref innerRef={this.contentRef}>{tooltipContent}</Ref>
   }
 
   trySetOpen(newValue: boolean, eventArgs: any) {
