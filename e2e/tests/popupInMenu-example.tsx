@@ -14,7 +14,7 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-const MenuExample = () => (
+const PopupInMenuExample = () => (
   <Menu
     id={selectors.menuId}
     defaultActiveIndex={0}
@@ -33,4 +33,4 @@ const renderItem = (MenuItem, props, index) => {
   )
 }
 
-export default MenuExample
+export default PopupInMenuExample

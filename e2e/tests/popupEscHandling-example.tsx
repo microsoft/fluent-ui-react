@@ -9,7 +9,7 @@ export const selectors = {
   dropdownTriggerClass: Dropdown.slotClassNames.triggerButton,
 }
 
-const PopupExample = () => (
+const PopupEscHandlingExample = () => (
   <Popup
     trigger={<Button id={selectors.popupTriggerId} content="Open popup" style={{ margin: 50 }} />}
     content={{
@@ -30,4 +30,4 @@ const PopupExample = () => (
   />
 )
 
-export default PopupExample
+export default PopupEscHandlingExample

@@ -7,10 +7,10 @@ export const selectors = {
   popupContentButtonId: 'content-button',
 }
 
-const PopupExample = () => {
+const PopupClickHandlingExample = () => {
   const [show, setShow] = React.useState(true)
   return (
-    <React.Fragment>
+    <>
       <Popup
         trigger={
           <Button id={selectors.triggerButtonId} icon="expand" onClick={() => setShow(true)} />
@@ -28,8 +28,8 @@ const PopupExample = () => {
           ),
         }}
       />
-    </React.Fragment>
+    </>
   )
 }
 
-export default PopupExample
+export default PopupClickHandlingExample
