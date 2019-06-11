@@ -18,7 +18,7 @@ import {
   isFromKeyboard,
   setWhatInputSource,
 } from '../../lib'
-import { ShorthandValue } from '../../types'
+import { ShorthandValue, Props } from '../../types'
 import {
   ALIGNMENTS,
   POSITIONS,
@@ -100,7 +100,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     pointing: PropTypes.bool,
     position: PropTypes.oneOf(POSITIONS),
     target: PropTypes.any,
-    trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
+    trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.element]),
     content: customPropTypes.shorthandAllowingChildren,
   }
 
@@ -128,7 +128,9 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     const { mountNode, children, trigger } = this.props
     const tooltipContent = this.renderTooltipContent(classes.content, rtl, accessibility)
 
-    const triggerElement = childrenExist(children) ? children : (trigger as any)
+    const triggerElement = React.Children.only(
+      childrenExist(children) ? children : trigger,
+    ) as React.ReactElement<any>
     const triggerProps = this.getTriggerProps(triggerElement)
 
     return (
@@ -148,7 +150,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   }
 
   getTriggerProps(triggerElement) {
-    const triggerProps: any = {}
+    const triggerProps: Props = {}
 
     triggerProps.onFocus = (e, ...args) => {
       if (isFromKeyboard()) {
@@ -177,7 +179,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   }
 
   getContentProps = (predefinedProps?) => {
-    const contentHandlerProps: any = {}
+    const contentHandlerProps: Props = {}
 
     contentHandlerProps.onMouseEnter = (e, contentProps) => {
       this.setTooltipOpen(true, e)
