@@ -78,7 +78,7 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
 
   static Group = ReactionGroup
 
-  public state = {
+  state = {
     isFromKeyboard: false,
   }
 
@@ -115,7 +115,7 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
     )
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
     _.invoke(this.props, 'onFocus', e, this.props)
   }

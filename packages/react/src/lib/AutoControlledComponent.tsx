@@ -75,11 +75,20 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
   constructor(props, ctx) {
     super(props, ctx)
 
-    const { autoControlledProps } = this.constructor as any
+    const { autoControlledProps, getAutoControlledStateFromProps } = this.constructor as any
     const state = _.invoke(this, 'getInitialAutoControlledState', this.props) || {}
 
     if (process.env.NODE_ENV !== 'production') {
-      const { defaultProps, name, propTypes } = this.constructor as any
+      const { defaultProps, name, propTypes, getDerivedStateFromProps } = this.constructor as any
+
+      // require usage of getAutoControlledStateFromProps()
+      if (getDerivedStateFromProps !== AutoControlledComponent.getDerivedStateFromProps) {
+        /* eslint-disable-next-line no-console */
+        console.error(
+          `Auto controlled ${name} must specify a static getAutoControlledStateFromProps() instead of getDerivedStateFromProps().`,
+        )
+      }
+
       // require static autoControlledProps
       if (!autoControlledProps) {
         /* eslint-disable-next-line no-console */
@@ -169,14 +178,19 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
       return acc
     }, {})
 
-    this.state = { ...state, ...initialAutoControlledState, autoControlledProps }
+    this.state = {
+      ...state,
+      ...initialAutoControlledState,
+      autoControlledProps,
+      getAutoControlledStateFromProps,
+    }
   }
 
   static getDerivedStateFromProps(props, state) {
-    const { autoControlledProps } = state
+    const { autoControlledProps, getAutoControlledStateFromProps } = state
 
     // Solve the next state for autoControlledProps
-    const newState = autoControlledProps.reduce((acc, prop) => {
+    const newStateFromProps = autoControlledProps.reduce((acc, prop) => {
       const isNextDefined = !_.isUndefined(props[prop])
 
       // if next is defined then use its value
@@ -185,7 +199,26 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
       return acc
     }, {})
 
-    return newState
+    // Due to the inheritance of the AutoControlledComponent we should call its
+    // getAutoControlledStateFromProps() and merge it with the existing state
+    if (getAutoControlledStateFromProps) {
+      const computedState = getAutoControlledStateFromProps(props, {
+        ...state,
+        ...newStateFromProps,
+      })
+
+      // We should follow the idea of getDerivedStateFromProps() and return only modified state
+      return { ...newStateFromProps, ...computedState }
+    }
+
+    return newStateFromProps
+  }
+
+  /**
+   * Override this method to use getDerivedStateFromProps() in child components.
+   */
+  static getAutoControlledStateFromProps(props, state) {
+    return null
   }
 
   /**

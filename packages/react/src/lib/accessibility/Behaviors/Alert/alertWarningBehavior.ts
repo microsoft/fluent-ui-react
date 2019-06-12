@@ -6,7 +6,7 @@ import { Accessibility } from '../../types'
  * Adds attribute 'aria-live=polite' to 'content' component's part.
  */
 
-const alertWarningBehavior: Accessibility = (props: any) => ({
+const alertWarningBehavior: Accessibility = () => ({
   attributes: {
     content: {
       role: 'alert',

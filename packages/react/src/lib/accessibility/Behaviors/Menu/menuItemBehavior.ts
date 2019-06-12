@@ -1,7 +1,6 @@
-import { Accessibility } from '../../types'
+import { Accessibility, AccessibilityAttributes } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as keyboardKey from 'keyboard-key'
-import * as _ from 'lodash'
 
 /**
  * @description
@@ -25,8 +24,7 @@ import * as _ from 'lodash'
  * Triggers 'openMenu' action with 'ArrowDown' on 'wrapper', when orientation is horizontal.
  * Triggers 'openMenu' action with 'ArrowRight' on 'wrapper', when orientation is vertical.
  */
-
-const menuItemBehavior: Accessibility = (props: any) => ({
+const menuItemBehavior: Accessibility<MenuItemBehaviorProps> = props => ({
   attributes: {
     wrapper: {
       role: 'presentation',
@@ -39,12 +37,8 @@ const menuItemBehavior: Accessibility = (props: any) => ({
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
       'aria-describedby': props['aria-describedby'],
-      'aria-disabled': !_.isNil(props['aria-disabled'])
-        ? props['aria-disabled']
-        : !!props['disabled']
-        ? true
-        : undefined,
-      [IS_FOCUSABLE_ATTRIBUTE]: !props['disabled'],
+      'aria-disabled': props.disabled,
+      [IS_FOCUSABLE_ATTRIBUTE]: !props.disabled,
     },
   },
 
@@ -72,3 +66,14 @@ const menuItemBehavior: Accessibility = (props: any) => ({
 })
 
 export default menuItemBehavior
+
+export type MenuItemBehaviorProps = {
+  /** Indicated if menu item has submenu. */
+  menu?: boolean | object
+  /** Defines if submenu is opened. */
+  menuOpen?: boolean
+  /** If a menu item can is currently unable to be interacted with. */
+  disabled?: boolean
+  /** If a menu displays elements vertically. */
+  vertical?: boolean
+} & Pick<AccessibilityAttributes, 'aria-label' | 'aria-labelledby' | 'aria-describedby'>

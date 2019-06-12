@@ -12,6 +12,7 @@ import {
   tabBehavior,
 } from 'src/lib/accessibility'
 import { AccessibilityDefinition } from 'src/lib/accessibility/types'
+import { ReactWrapper } from 'enzyme'
 
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
 
@@ -115,6 +116,60 @@ describe('Menu', () => {
 
         expect(menuDividers.at(0).prop('itemsCount')).toBeUndefined()
         expect(menuDividers.at(0).prop('itemPosition')).toBeUndefined()
+      })
+    })
+
+    describe('variables', () => {
+      function checkMergedVariables(menu: ReactWrapper): void {
+        expect(
+          (menu
+            .find('MenuItem')
+            .first()
+            .prop('variables') as Function)(),
+        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwritten', c: 'item' }))
+
+        expect(
+          (menu
+            .find('MenuDivider')
+            .first()
+            .prop('variables') as Function)(),
+        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwrittenInDivider', c: 'divider' }))
+      }
+
+      it('are passed from Menu to MenuItem and MenuDivider and correctly merged', () => {
+        const menu = mountWithProvider(
+          <Menu
+            variables={{ a: 'menu', b: 'menu' }}
+            items={[
+              { key: 1, content: 'menu item', variables: { b: 'overwritten', c: 'item' } },
+              {
+                key: 'd1',
+                kind: 'divider',
+                variables: { b: 'overwrittenInDivider', c: 'divider' },
+              },
+            ]}
+          />,
+        )
+
+        checkMergedVariables(menu)
+      })
+
+      it('as functions are passed from Menu to MenuItem and MenuDivider and correctly merged', () => {
+        const menu = mountWithProvider(
+          <Menu
+            variables={() => ({ a: 'menu', b: 'menu' })}
+            items={[
+              { key: 1, content: 'menu item', variables: () => ({ b: 'overwritten', c: 'item' }) },
+              {
+                key: 'd1',
+                kind: 'divider',
+                variables: () => ({ b: 'overwrittenInDivider', c: 'divider' }),
+              },
+            ]}
+          />,
+        )
+
+        checkMergedVariables(menu)
       })
     })
 

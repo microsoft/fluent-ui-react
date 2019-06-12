@@ -95,11 +95,11 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
     },
   }
 
-  private handleClick = (e: React.SyntheticEvent) => {
+  handleClick = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     e.stopPropagation()
     _.invoke(this.props, 'onFocus', e, this.props)
   }

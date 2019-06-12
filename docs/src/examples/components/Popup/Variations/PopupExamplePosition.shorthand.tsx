@@ -5,6 +5,7 @@ import { useBooleanKnob, useSelectKnob } from '@stardust-ui/docs-components'
 
 const PopupExamplePosition = () => {
   const [open] = useBooleanKnob({ name: 'open-s', initialValue: true })
+  const [unstable_pinned] = useBooleanKnob({ name: 'unstable_pinned-s', initialValue: false })
 
   const [positionAndAlign] = useSelectKnob({
     name: 'position-align-s',
@@ -21,6 +22,7 @@ const PopupExamplePosition = () => {
         open={open || undefined}
         align={align}
         position={position}
+        unstable_pinned={unstable_pinned}
         trigger={<Button icon={icons[position]} styles={buttonStyles} />}
         content={{
           content: (
