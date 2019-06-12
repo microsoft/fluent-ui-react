@@ -31,6 +31,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     positioningDependencies = [],
     rtl,
     targetRef,
+    unstable_pinned,
   } = props
 
   const proposedPlacement = getPlacement({ align, position, rtl })
@@ -87,6 +88,12 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
           preventOverflow: { escapeWithReference: true },
           flip: { boundariesElement: 'scrollParent' },
         },
+        /**
+         * unstable_pinned disables the flip modifier by setting flip.enabled to false; this disables automatic
+         * repositioning of the popper box; it will always be placed according to the values of `align` and
+         * `position` props, regardless of the size of the component, the reference element or the viewport.
+         */
+        unstable_pinned && { flip: { enabled: false } },
         computedModifiers,
         userModifiers,
         /**
@@ -120,10 +127,10 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       popperRef.current = createPopper(targetRef.current, contentRef.current, options)
     },
     // TODO review dependencies for popperHasScrollableParent
-    [computedModifiers, enabled, userModifiers, positionFixed, proposedPlacement],
+    [computedModifiers, enabled, userModifiers, positionFixed, proposedPlacement, unstable_pinned],
   )
 
-  React.useEffect(
+  React.useLayoutEffect(
     () => {
       createInstance()
       return destroyInstance
@@ -141,17 +148,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
         })
       : children
 
-  return (
-    <Ref
-      innerRef={contentElement => {
-        contentRef.current = contentElement
-        // for correct positioning we need to create the PopperJS instance immediately after we get a ref to the popper box
-        createInstance()
-      }}
-    >
-      {React.Children.only(child) as React.ReactElement}
-    </Ref>
-  )
+  return <Ref innerRef={contentRef}>{React.Children.only(child) as React.ReactElement}</Ref>
 }
 
 Popper.defaultProps = {

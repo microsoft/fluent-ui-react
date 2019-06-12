@@ -12,7 +12,7 @@ import { Accessibility } from '../../types'
  * Adds attribute 'aria-hidden=true', if there is no 'alt' property provided.
  * Adds attribute 'tabIndex=0' to 'root' component's part.
  */
-const embedBehavior: Accessibility = (props: any) => ({
+const embedBehavior: Accessibility<EmbedBehaviorProps> = props => ({
   attributes: {
     root: {
       'aria-hidden': props.alt || props.title ? undefined : true,
@@ -30,3 +30,10 @@ const embedBehavior: Accessibility = (props: any) => ({
 })
 
 export default embedBehavior
+
+type EmbedBehaviorProps = {
+  /** Corresponds to HTML title attribute. */
+  title?: string
+  /** Alternative text. */
+  alt?: string
+}

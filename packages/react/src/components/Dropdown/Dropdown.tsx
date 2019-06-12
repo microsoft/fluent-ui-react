@@ -280,6 +280,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     searchInput: customPropTypes.itemShorthand,
     toggleIndicator: customPropTypes.itemShorthand,
     triggerButton: customPropTypes.itemShorthand,
+    unstable_pinned: PropTypes.bool,
     value: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
       customPropTypes.collectionShorthand,
@@ -334,6 +335,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
 
   a11yStatusTimeout: any
   charKeysPressedTimeout: any
+  defaultTriggerButtonId = _.uniqueId('dropdown-trigger-button-')
 
   componentWillUnmount() {
     clearTimeout(this.a11yStatusTimeout)
@@ -344,19 +346,12 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
    * Used to compute the filtered items (by value and search query) and, if needed,
    * their string equivalents, in order to be used throughout the component.
    */
-  static getDerivedStateFromProps(props: DropdownProps, currentState: DropdownState) {
-    // Due to the inheritance of the AutoControlledComponent we should call its
-    // getDerivedStateFromProps() and merge it with the existing state
-    const state: DropdownState = {
-      ...currentState,
-      ...AutoControlledComponent.getDerivedStateFromProps(props, currentState),
-    }
-
+  static getAutoControlledStateFromProps(props: DropdownProps, state: DropdownState) {
     const { items, itemToString, multiple, search } = props
     const { searchQuery, value } = state
 
     if (!items) {
-      return state
+      return null
     }
 
     const filteredItemsByValue = multiple
@@ -369,7 +364,6 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       }
 
       return {
-        ...state,
         filteredItems: filteredItemsByValue.filter(
           item =>
             itemToString(item)
@@ -380,7 +374,6 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     }
 
     return {
-      ...state,
       filteredItems: filteredItemsByValue,
       filteredItemStrings: filteredItemsByValue.map(filteredItem =>
         itemToString(filteredItem).toLowerCase(),
@@ -420,6 +413,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           getA11yStatusMessage={getA11yStatusMessage}
           highlightedIndex={highlightedIndex}
           onStateChange={this.handleStateChange}
+          labelId={this.props['aria-labelledby']}
         >
           {({
             getInputProps,
@@ -526,6 +520,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   ): JSX.Element {
     const { triggerButton } = this.props
     const content = this.getSelectedItemAsString(this.state.value)
+    const triggerButtonId = triggerButton['id'] || this.defaultTriggerButtonId
 
     const triggerButtonProps = getToggleButtonProps({
       onFocus: this.handleTriggerButtonOrListFocus,
@@ -533,7 +528,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       onKeyDown: e => {
         this.handleTriggerButtonKeyDown(e, rtl)
       },
-      'aria-label': content,
+      'aria-label': undefined,
+      'aria-labelledby': `${this.props['aria-labelledby']} ${triggerButtonId}`,
     })
 
     const { onClick, onFocus, onBlur, onKeyDown, ...restTriggerButtonProps } = triggerButtonProps
@@ -544,6 +540,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           defaultProps: {
             className: Dropdown.slotClassNames.triggerButton,
             content,
+            id: triggerButtonId,
             fluid: true,
             styles: styles.triggerButton,
             ...restTriggerButtonProps,
@@ -621,7 +618,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     value: ShorthandValue | ShorthandCollection,
     rtl: boolean,
   ) {
-    const { align, offset, position, search } = this.props
+    const { align, offset, position, search, unstable_pinned } = this.props
     const { open } = this.state
     const items = open
       ? this.renderItems(styles, variables, getItemProps, highlightedIndex, value)
@@ -662,6 +659,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           rtl={rtl}
           enabled={open}
           targetRef={this.containerRef}
+          unstable_pinned={unstable_pinned}
           positioningDependencies={[items.length]}
         >
           <List
