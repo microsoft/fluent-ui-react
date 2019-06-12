@@ -24,6 +24,25 @@ const hasAddedLinesAfterVersionInChangelog = async (): Promise<boolean> => {
   return addedLines.some(line => line.ln > versionLineNumber)
 }
 
+const checkChangelogFormat = async () => {
+  const changelogDiff = await danger.git.structuredDiffForFile(CHANGELOG_FILE)
+  const addedLines = changelogDiff.chunks.reduce((acc, chunk) => {
+    const filteredLines = chunk.changes.filter(change => change.type === 'add')
+    return acc.concat(filteredLines)
+  }, [])
+
+  // +- description @githubname ([#DDDD](https://github.com/stardust-ui/react/pull/DDDD))
+  const validEntry = /^\+- .*@\S+ \(\[#\d+]\(https:\/\/github\.com\/stardust-ui\/react\/pull\/\d+\)\)$/
+
+  addedLines
+    .filter(line => line.content.startsWith('+-'))
+    .forEach(line => {
+      if (!validEntry.test(line.content)) {
+        fail(`Invalid entry format in ${CHANGELOG_FILE}: >${line.content}<`)
+      }
+    })
+}
+
 async function getChangedDependencies(filepath, dependenciesKey = 'dependencies') {
   const diff = await danger.git.JSONDiffForFile(filepath)
   if (!diff[dependenciesKey]) {
@@ -93,6 +112,7 @@ export default async () => {
       'There are no updates provided to CHANGELOG. Ensure there are no publicly visible changes introduced by this PR.',
     )
   } else {
+    await checkChangelogFormat()
     hasAddedLinesAfterVersionInChangelog().then(hasLine => {
       if (hasLine) {
         fail(`All of your entries in ${CHANGELOG_FILE} should be in the **Unreleased** section!`)
