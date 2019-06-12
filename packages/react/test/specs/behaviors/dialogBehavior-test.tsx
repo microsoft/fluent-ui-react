@@ -17,15 +17,15 @@ describe('DialogBehavior.ts', () => {
     expect(expectedResult.attributes.trigger.tabIndex).toBeUndefined()
   })
 
-  test('uses computed "aria-describedby" based on "contentId" if "content" is present', () => {
-    const expectedResult = dialogBehavior({ content: 'header', contentId: 'content-id' })
+  test('uses computed "aria-describedby" based on "contentId"', () => {
+    const expectedResult = dialogBehavior({ contentId: 'content-id' })
 
     expect(expectedResult.attributes.popup['aria-describedby']).toEqual('content-id')
     expect(expectedResult.attributes.content.id).toEqual('content-id')
   })
 
-  test.only('uses computed "aria-labelledby" based on "headerId" if "header" is present', () => {
-    const expectedResult = dialogBehavior({ header: 'header', headerId: 'header-id' })
+  test.only('uses computed "aria-labelledby" based on "headerId"', () => {
+    const expectedResult = dialogBehavior({ headerId: 'header-id' })
 
     expect(expectedResult.attributes.popup['aria-labelledby']).toEqual('header-id')
     expect(expectedResult.attributes.header.id).toEqual('header-id')
