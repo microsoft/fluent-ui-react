@@ -13,7 +13,7 @@ const ContentList = () => (
       <List
         items={_.keys(routes).map(testExampleUrl => ({
           key: testExampleUrl,
-          header: <Link to={testExampleUrl}>{_.startCase(testExampleUrl)}</Link>,
+          header: { as: Link, to: testExampleUrl, content: _.startCase(testExampleUrl) },
         }))}
       />
     </Flex>
