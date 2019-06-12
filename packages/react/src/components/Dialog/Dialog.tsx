@@ -165,8 +165,6 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 
   getInitialAutoControlledState(): DialogState {
     return {
-      contentId: _.uniqueId('dialog-content-'),
-      headerId: _.uniqueId('dialog-header-'),
       open: false,
     }
   }
@@ -177,7 +175,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   ): Partial<DialogState> {
     return {
       contentId: getOrGenerateIdFromShorthand('content', props.content, state.contentId),
-      headerId: getOrGenerateIdFromShorthand('content', props.header, state.headerId),
+      headerId: getOrGenerateIdFromShorthand('header', props.header, state.headerId),
     }
   }
 
