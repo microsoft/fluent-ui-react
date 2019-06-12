@@ -5,7 +5,7 @@ describe('Dropdown', () => {
 
   describe('Focus behavior', () => {
     beforeEach(async () => {
-      await e2e.goto('/maximize/dropdown-example-multiple-shorthand/false', triggerButton)
+      await e2e.gotoTestCase(__filename, triggerButton)
     })
 
     it('keeps focused on TAB from the dropdown list', async () => {
