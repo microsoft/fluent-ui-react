@@ -19,3 +19,4 @@ export { default as ProviderBox } from './components/Provider/providerBoxVariabl
 export { default as Dropdown } from './components/Dropdown/dropdownVariables'
 export { default as Label } from './components/Label/labelVariables'
 export { default as PopupContent } from './components/Popup/popupContentVariables'
+export { default as TooltipContent } from './components/Tooltip/tooltipContentVariables'
