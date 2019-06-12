@@ -125,23 +125,6 @@ definitions.push({
   },
 })
 
-// Example: Generates unique ID and adds it as attribute 'id' to the 'header' component's part if it has not been provided by the user.
-definitions.push({
-  regexp: /Generates unique ID and adds it as attribute '([\w-]+)' to the '([\w-]+)' component's part if it has not been provided by the user\./g,
-  testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, elementWhereToBeAdded] = parameters.props
-    const property = {}
-    const propertyDependingOnValue = 'value of property'
-    property[elementWhereToBeAdded] = { id: propertyDependingOnValue }
-    const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
-      attributeToBeAdded
-    ]
-    expect(expectedResult).toEqual(
-      testHelper.convertToMatchingTypeIfApplicable(propertyDependingOnValue),
-    )
-  },
-})
-
 // Example: Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part based on the property '([\w-]+)'\. This can be overriden by providing '[\w-]+' property directly to the component\./g,

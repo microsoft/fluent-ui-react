@@ -41,6 +41,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix keypress/click handling for `Popup` content @kuzhelov ([#1482](https://github.com/stardust-ui/react/pull/1482))
 - Fix `PopupContent` background color in Teams theme @mnajdova ([#1484](https://github.com/stardust-ui/react/pull/1484))
 - Fix merging of item variables in `Menu` and `Toolbar` @miroslavstastny ([#1447](https://github.com/stardust-ui/react/pull/1447)) 
+- Generate IDs for `header` and `content` slots once in `Dialog` component @layershifter ([#1449](https://github.com/stardust-ui/react/pull/1449))
 
 ### Documentation
 - Remove unfinished themes from the docs themes dropdown on components examples pages @alinais ([#1473](https://github.com/stardust-ui/react/pull/1473))

@@ -16,4 +16,18 @@ describe('DialogBehavior.ts', () => {
     const expectedResult = dialogBehavior({ trigger: <button /> })
     expect(expectedResult.attributes.trigger.tabIndex).toBeUndefined()
   })
+
+  test('uses computed "aria-describedby" based on "contentId"', () => {
+    const expectedResult = dialogBehavior({ contentId: 'content-id' })
+
+    expect(expectedResult.attributes.popup['aria-describedby']).toEqual('content-id')
+    expect(expectedResult.attributes.content.id).toEqual('content-id')
+  })
+
+  test('uses computed "aria-labelledby" based on "headerId"', () => {
+    const expectedResult = dialogBehavior({ headerId: 'header-id' })
+
+    expect(expectedResult.attributes.popup['aria-labelledby']).toEqual('header-id')
+    expect(expectedResult.attributes.header.id).toEqual('header-id')
+  })
 })
