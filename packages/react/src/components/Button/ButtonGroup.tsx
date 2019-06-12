@@ -36,24 +36,24 @@ export interface ButtonGroupProps
 }
 
 class ButtonGroup extends UIComponent<WithAsProp<ButtonGroupProps>, any> {
-  public static create: Function
+  static create: Function
 
-  public static displayName = 'ButtonGroup'
+  static displayName = 'ButtonGroup'
 
-  public static className = 'ui-buttons'
+  static className = 'ui-buttons'
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon(),
     buttons: customPropTypes.collectionShorthand,
     circular: PropTypes.bool,
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     accessibility: defaultBehavior,
     as: 'div',
   }
 
-  public renderComponent({
+  renderComponent({
     ElementType,
     classes,
     accessibility,

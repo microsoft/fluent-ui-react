@@ -17,7 +17,8 @@ import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityBehavior } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
+import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import { WithAsProp, ShorthandCollection, ShorthandValue, withSafeTypeForAs } from '../../types'
@@ -153,7 +154,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
   renderItems = (
     styles: ComponentSlotStylesPrepared,
     variables: ComponentVariablesObject,
-    accessibility: AccessibilityBehavior,
+    accessibility: ReactAccessibilityBehavior,
   ) => {
     const {
       iconOnly,

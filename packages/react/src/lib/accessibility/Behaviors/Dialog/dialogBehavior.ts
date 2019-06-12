@@ -1,11 +1,11 @@
-import { Accessibility } from '../../types'
+import { Accessibility, AccessibilityAttributes } from '../../types'
 import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
+import { PopupBehaviorProps } from '../Popup/popupBehavior'
 import * as _ from 'lodash'
 
 /**
  * @description
  * Implements ARIA Dialog (Modal) design pattern.
- * Adds role='button' to 'trigger' component's part, if it is not focusable element and no role attribute provided.
  * Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
  *
  * @specification
@@ -14,12 +14,11 @@ import * as _ from 'lodash'
  * Adds attribute 'role=dialog' to 'popup' component's part.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'popup' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'popup' component's part.
- * Adds attribute 'role=dialog' to 'popup' component's part.
  * Generates unique ID and adds it as attribute 'id' to the 'header' component's part if it has not been provided by the user.
  * Generates unique ID and adds it as attribute 'id' to the 'content' component's part if it has not been provided by the user.
  * Traps focus inside component.
  */
-const dialogBehavior: Accessibility = (props: any) => {
+const dialogBehavior: Accessibility<DialogBehaviorProps> = props => {
   const behaviorData = popupFocusTrapBehavior(props)
   const defaultAriaLabelledBy = getDefaultAriaLabelledBy(props)
   const defaultAriaDescribedBy = getDefaultAriaDescribedBy(props)
@@ -68,3 +67,13 @@ const getDefaultAriaDescribedBy = (props: any) => {
 }
 
 export default dialogBehavior
+
+type DialogBehaviorProps = {
+  header?: {
+    id?: string
+  }
+  content?: {
+    id?: string
+  }
+} & PopupBehaviorProps &
+  Pick<AccessibilityAttributes, 'aria-label' | 'aria-labelledby' | 'aria-describedby'>

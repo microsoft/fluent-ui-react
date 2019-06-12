@@ -20,7 +20,7 @@ import {
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import { chatMessageBehavior, menuAsToolbarBehavior } from '../../lib/accessibility'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 
 import Box from '../Box/Box'
 import Label from '../Label/Label'
@@ -132,12 +132,12 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     reactionGroupPosition: 'start',
   }
 
-  public state = {
+  state = {
     focused: false,
     isFromKeyboard: false,
   }
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys
     // as navigation (only Tab key should work)
     preventDefault: event => {

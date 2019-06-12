@@ -14,7 +14,7 @@ import {
   commonPropTypes,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { inputBehavior } from '../../lib/accessibility'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
@@ -88,7 +88,7 @@ export interface InputState {
 }
 
 class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> {
-  private inputRef = React.createRef<HTMLElement>()
+  inputRef = React.createRef<HTMLElement>()
 
   static className = 'ui-input'
 
@@ -123,8 +123,8 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
 
   static autoControlledProps = ['value']
 
-  actionHandlers: AccessibilityActionHandlers = {
-    clear: (e: any) => {
+  actionHandlers = {
+    clear: (e: React.KeyboardEvent) => {
       if (this.props.clearable && this.state.value !== '') {
         e.stopPropagation()
         e.nativeEvent && e.nativeEvent.stopPropagation()
@@ -187,7 +187,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     })
   }
 
-  private handleIconOverrides = predefinedProps => ({
+  handleIconOverrides = predefinedProps => ({
     onClick: (e: React.SyntheticEvent) => {
       this.handleOnClear(e)
       this.inputRef.current.focus()
@@ -195,7 +195,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     },
   })
 
-  private handleChange = (e: React.SyntheticEvent) => {
+  handleChange = (e: React.SyntheticEvent) => {
     const value = _.get(e, 'target.value')
 
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
@@ -203,14 +203,14 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     this.trySetState({ value })
   }
 
-  private handleOnClear = (e: React.SyntheticEvent) => {
+  handleOnClear = (e: React.SyntheticEvent) => {
     if (this.props.clearable) {
       _.invoke(this.props, 'onChange', e, { ...this.props, value: '' })
       this.trySetState({ value: '' })
     }
   }
 
-  private computeIcon = (): ShorthandValue => {
+  computeIcon = (): ShorthandValue => {
     const { clearable, icon } = this.props
     const { value } = this.state
 

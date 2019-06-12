@@ -8,7 +8,7 @@ import { Accessibility } from '../../types'
  * Adds role 'presentation' to 'root' component's part.
  */
 
-const menuDividerBehavior: Accessibility = (props: any) => ({
+const menuDividerBehavior: Accessibility = () => ({
   attributes: {
     root: {
       role: 'presentation',

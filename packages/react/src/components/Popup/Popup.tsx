@@ -39,11 +39,8 @@ import {
   FocusTrapZoneProps,
 } from '../../lib/accessibility/FocusZone'
 
-import {
-  Accessibility,
-  AccessibilityActionHandlers,
-  AccessibilityBehavior,
-} from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
+import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 export type PopupEvents = 'click' | 'hover' | 'focus'
 export type RestrictedClickEvents = 'click' | 'focus'
@@ -163,6 +160,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     renderContent: PropTypes.func,
     target: PropTypes.any,
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
+    unstable_pinned: PropTypes.bool,
     content: customPropTypes.shorthandAllowingChildren,
     contentRef: customPropTypes.ref,
   }
@@ -187,7 +185,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   closeTimeoutId
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     closeAndFocusTrigger: e => {
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
     },
@@ -387,9 +385,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   renderPopupContent(
     popupPositionClasses: string,
     rtl: boolean,
-    accessibility: AccessibilityBehavior,
+    accessibility: ReactAccessibilityBehavior,
   ): JSX.Element {
-    const { align, position, offset, target } = this.props
+    const { align, position, offset, target, unstable_pinned } = this.props
 
     return (
       <Popper
@@ -398,6 +396,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         position={position}
         offset={offset}
         rtl={rtl}
+        unstable_pinned={unstable_pinned}
         targetRef={target ? toRefObject(target) : this.triggerRef}
         children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
       />
@@ -407,7 +406,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   renderPopperChildren = (
     popupPositionClasses: string,
     rtl: boolean,
-    accessibility: AccessibilityBehavior,
+    accessibility: ReactAccessibilityBehavior,
     { placement, scheduleUpdate }: PopperChildrenProps,
   ) => {
     const { content: propsContent, renderContent, contentRef, mountDocument, pointing } = this.props
@@ -473,11 +472,13 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
               listener={this.handleDocumentClick(getRefs)}
               targetRef={documentRef}
               type="click"
+              capture
             />
             <EventListener
               listener={this.handleDocumentKeyDown(getRefs)}
               targetRef={documentRef}
               type="keydown"
+              capture
             />
           </>
         )}

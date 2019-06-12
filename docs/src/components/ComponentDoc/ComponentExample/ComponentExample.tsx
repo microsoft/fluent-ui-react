@@ -1,4 +1,9 @@
-import { CodeSnippet, KnobInspector, KnobProvider } from '@stardust-ui/docs-components'
+import {
+  CopyToClipboard,
+  CodeSnippet,
+  KnobInspector,
+  KnobProvider,
+} from '@stardust-ui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
@@ -31,7 +36,6 @@ import ComponentSourceManager, {
 import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
 import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
-import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 import ComponentExampleKnobs from './ComponentExampleKnobs'
 
 export interface ComponentExampleProps
@@ -195,13 +199,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       componentVariables: mergeThemeVariables(theme.componentVariables, {
         [this.getDisplayName()]: componentVariables,
       }),
-      rtl: showRtl,
     }
 
     const providerVariables = showTransparent ? { background: 'initial' } : undefined
 
     return (
-      <Provider theme={newTheme} variables={providerVariables}>
+      <Provider theme={newTheme} rtl={showRtl} variables={providerVariables}>
         {element}
       </Provider>
     )
@@ -333,9 +336,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       },
       render =>
         render({ content: 'Copy' }, (Component, props) => (
-          <CopyToClipboard
-            key="copy"
-            render={(active, onClick) => (
+          <CopyToClipboard key="copy" value={currentCode}>
+            {(active, onClick) => (
               <Component
                 {...props}
                 active={active}
@@ -343,8 +345,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                 onClick={onClick}
               />
             )}
-            value={currentCode}
-          />
+          </CopyToClipboard>
         )),
       {
         disabled: currentCodeLanguage !== 'ts',
