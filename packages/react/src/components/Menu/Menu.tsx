@@ -13,6 +13,8 @@ import {
   getKindProp,
   rtlTextContainer,
 } from '../../lib'
+import { mergeComponentVariables } from '../../lib/mergeThemes'
+
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -125,7 +127,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
   static Item = MenuItem
   static Divider = MenuDivider
 
-  handleItemOverrides = predefinedProps => ({
+  handleItemOverrides = variables => predefinedProps => ({
     onClick: (e, itemProps) => {
       const { index } = itemProps
 
@@ -142,6 +144,11 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
       }
       _.invoke(predefinedProps, 'onActiveChanged', e, props)
     },
+    variables: mergeComponentVariables(variables, predefinedProps.variables),
+  })
+
+  handleDividerOverrides = variables => predefinedProps => ({
+    variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
   renderItems = (
@@ -165,6 +172,9 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     const itemsCount = _.filter(items, item => getKindProp(item, 'item') !== 'divider').length
     let itemPosition = 0
 
+    const overrideItemProps = this.handleItemOverrides(variables)
+    const overrideDividerProps = this.handleDividerOverrides(variables)
+
     return _.map(items, (item, index) => {
       const active =
         (typeof activeIndex === 'string' ? parseInt(activeIndex, 10) : activeIndex) === index
@@ -177,13 +187,13 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
             primary,
             secondary,
             vertical,
-            variables,
             styles: styles.divider,
             inSubmenu: submenu,
             accessibility: accessibility.childBehaviors
               ? accessibility.childBehaviors.divider
               : undefined,
           },
+          overrideProps: overrideDividerProps,
         })
       }
 
@@ -198,7 +208,6 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
           primary,
           secondary,
           underlined,
-          variables,
           vertical,
           index,
           itemPosition,
@@ -210,7 +219,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
             ? accessibility.childBehaviors.item
             : undefined,
         },
-        overrideProps: this.handleItemOverrides,
+        overrideProps: overrideItemProps,
       })
     })
   }
