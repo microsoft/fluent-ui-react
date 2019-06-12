@@ -7,7 +7,7 @@ import { Accessibility } from '../../types'
  * @specification
  * Adds attribute 'aria-labelledby' based on the property 'accordionTitleId' to 'root' component's part.
  */
-const accordionContentBehavior: Accessibility = (props: any) => {
+const accordionContentBehavior: Accessibility<AccordionContentBehaviorProps> = props => {
   return {
     attributes: {
       root: {
@@ -18,3 +18,8 @@ const accordionContentBehavior: Accessibility = (props: any) => {
 }
 
 export default accordionContentBehavior
+
+type AccordionContentBehaviorProps = {
+  /** id of the accordion title element. */
+  accordionTitleId?: string
+}

@@ -10,7 +10,7 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  * @specification
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
  */
-const treeTitleBehavior: Accessibility = (props: any) => ({
+const treeTitleBehavior: Accessibility<TreeTitleBehavior> = props => ({
   attributes: {
     root: {
       ...(!props.hasSubtree && {
@@ -30,3 +30,10 @@ const treeTitleBehavior: Accessibility = (props: any) => ({
 })
 
 export default treeTitleBehavior
+
+type TreeTitleBehavior = {
+  /** Indicated if tree title has a subtree */
+  hasSubtree?: boolean
+  /** If subtree is opened. */
+  open?: boolean
+}

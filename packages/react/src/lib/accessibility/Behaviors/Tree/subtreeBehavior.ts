@@ -6,7 +6,7 @@ import * as keyboardKey from 'keyboard-key'
  * Triggers 'expandSiblings' action with '*' on 'root'.
  * Adds role 'group' to 'root' component's part.
  */
-const subtreeBehavior: Accessibility = (props: any) => ({
+const subtreeBehavior: Accessibility = () => ({
   attributes: {
     root: {
       role: 'group',
