@@ -27,6 +27,7 @@ const PopupInMenuExample = () => (
 const renderItem = (MenuItem, props, index) => {
   return (
     <Popup
+      key={index}
       trigger={<MenuItem id={selectors.menuItemId(index)} {...props} />}
       content={{ content: 'Test Content', id: selectors.popupContentId(index) }}
     />

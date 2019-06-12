@@ -12,7 +12,12 @@ const PopupClickHandlingExample = () => {
   return (
     <Popup
       trigger={
-        <Button id={selectors.triggerButtonId} icon="expand" onClick={() => setShow(true)} />
+        <Button
+          id={selectors.triggerButtonId}
+          content="Open Popup"
+          icon="expand"
+          onClick={() => setShow(true)}
+        />
       }
       content={{
         content: !!show && (
