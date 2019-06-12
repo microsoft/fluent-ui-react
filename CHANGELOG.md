@@ -18,8 +18,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING CHANGES
-- Rename `toolbarBehavior` to `menuAsToolbarBehavior` and `toolbarButtonBehavior` to `menuItemAsToolbarButtonBehavior` ([#1393](https://github.com/stardust-ui/react/pull/1393))
-- Rename types related to accessibility ([#1421](https://github.com/stardust-ui/react/pull/1421))
+- Rename `toolbarBehavior` to `menuAsToolbarBehavior` and `toolbarButtonBehavior` to `menuItemAsToolbarButtonBehavior` @miroslavstastny ([#1393](https://github.com/stardust-ui/react/pull/1393))
+- Rename types related to accessibility @layershifter ([#1421](https://github.com/stardust-ui/react/pull/1421))
 - Moved the `rtl` and `renderer` props from the `theme` prop object to the `Provider`'s props API @mnajdova ([#1377](https://github.com/stardust-ui/react/pull/1377))
 
 ### Features
@@ -44,7 +44,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix merging of item variables in `Menu` and `Toolbar` @miroslavstastny ([#1447](https://github.com/stardust-ui/react/pull/1447)) 
 
 ### Documentation
-- Remove unfinished themes from the docs themes dropdown on components examples pages @alinais ([#1473](https://github.com/stardust-ui/react/pull/1473)
+- Remove unfinished themes from the docs themes dropdown on components examples pages @alinais ([#1473](https://github.com/stardust-ui/react/pull/1473))
 
 ### Performance
 - Use minified version of `normalize.css` and update it to `8.0.1` @layershifter ([#1476](https://github.com/stardust-ui/react/pull/1476))
