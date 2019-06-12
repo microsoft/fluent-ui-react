@@ -9,7 +9,7 @@ const supportsESM = caller => {
 }
 
 module.exports = api => {
-  const isDistBuild = api.caller(isDistCaller)
+  const isDistBundle = api.caller(isDistCaller)
   const isNode = api.caller(isNodeCaller)
   const useESModules = !isNode && api.caller(supportsESM)
 
@@ -30,7 +30,7 @@ module.exports = api => {
     '@babel/plugin-syntax-dynamic-import',
     ['@babel/plugin-transform-runtime', { useESModules }],
 
-    isDistBuild && 'lodash',
+    isDistBundle && 'lodash',
   ].filter(Boolean)
 
   return {
