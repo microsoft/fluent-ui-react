@@ -168,6 +168,11 @@ export { default as ReactionGroup } from './components/Reaction/ReactionGroup'
 export * from './components/Video/Video'
 export { default as Video } from './components/Video/Video'
 
+export * from './components/Tooltip/Tooltip'
+export { default as Tooltip } from './components/Tooltip/Tooltip'
+export * from './components/Tooltip/TooltipContent'
+export { default as TooltipContent } from './components/Tooltip/TooltipContent'
+
 //
 // Accessibility
 //
