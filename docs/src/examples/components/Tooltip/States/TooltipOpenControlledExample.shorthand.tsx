@@ -3,7 +3,7 @@ import { Button, Tooltip } from '@stardust-ui/react'
 import { useBooleanKnob } from '@stardust-ui/docs-components'
 
 const TooltipOpenExample = () => {
-  const [open, setOpen] = useBooleanKnob({ name: 'open-c', initialValue: true })
+  const [open, setOpen] = useBooleanKnob({ name: 'open', initialValue: true })
 
   return (
     <Tooltip

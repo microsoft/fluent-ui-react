@@ -9,16 +9,18 @@ type KnobProviderProps = {
 }
 
 const KnobProvider: React.FunctionComponent<KnobProviderProps> = props => {
+  const { children, components } = props
   const [knobs, setKnobs] = React.useState<KnobSet>({})
 
   const registerKnob = (knob: KnobDefinition) => {
-    if (process.env.NODE_ENV !== 'production') {
-      if (knobs[knob.name]) {
-        throw new Error(`Knob with name "${knob.name}" has been already registered`)
+    setKnobs(prevKnobs => {
+      if (process.env.NODE_ENV !== 'production') {
+        if (prevKnobs[knob.name]) {
+          throw new Error(`Knob with name "${knob.name}" has been already registered`)
+        }
       }
-    }
-
-    setKnobs(prevKnob => ({ ...prevKnob, [knob.name]: knob }))
+      return { ...prevKnobs, [knob.name]: knob }
+    })
   }
   const setKnobValue = (knobName: KnobName, knobValue: any) => {
     setKnobs(prevKnob => ({
@@ -27,8 +29,8 @@ const KnobProvider: React.FunctionComponent<KnobProviderProps> = props => {
     }))
   }
   const unregisterKnob = (knobName: KnobName) => {
-    setKnobs(prevKnob => {
-      const newKnobs = { ...prevKnob }
+    setKnobs(prevKnobs => {
+      const newKnobs = { ...prevKnobs }
       delete newKnobs[knobName]
 
       return newKnobs
@@ -37,16 +39,16 @@ const KnobProvider: React.FunctionComponent<KnobProviderProps> = props => {
 
   const value: KnobContextValue = React.useMemo(
     () => ({
-      components: { ...defaultComponents, ...props.components },
+      components: { ...defaultComponents, ...components },
       knobs,
       registerKnob,
       setKnobValue,
       unregisterKnob,
     }),
-    [knobs, props.components],
+    [knobs, components],
   )
 
-  return <KnobsContext.Provider value={value}>{props.children}</KnobsContext.Provider>
+  return <KnobsContext.Provider value={value}>{children}</KnobsContext.Provider>
 }
 
 KnobProvider.defaultProps = {
