@@ -28,7 +28,7 @@ module.exports = api => {
   const plugins = [
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-syntax-dynamic-import',
-    ['@babel/plugin-transform-runtime', { corejs: false, useESModules }],
+    ['@babel/plugin-transform-runtime', { useESModules }],
 
     isDistBuild && 'lodash',
   ].filter(Boolean)
