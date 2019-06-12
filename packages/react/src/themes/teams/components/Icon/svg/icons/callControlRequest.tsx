@@ -3,7 +3,7 @@ import { TeamsProcessedSvgIconSpec } from '../types'
 
 export default {
   icon: ({ classes }) => (
-    <svg role="presentation" focusable="false" viewBox="0 0 32 32" className={classes.svg}>
+    <svg role="presentation" focusable="false" viewBox="8 8 16 16" className={classes.svg}>
       <path
         d="M12.125,20.4066315c0.2761421,0,0.5,0.2238579,0.5,0.5s-0.2238579,0.5-0.5,0.5H9.5
         c-0.8284273,0-1.5-0.6715736-1.5-1.5v-9c0-0.8284273,0.6715727-1.5,1.5-1.5h13c0.8284264,0,1.5,0.6715727,1.5,1.5v6.4375h-0.0038681
