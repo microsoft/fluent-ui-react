@@ -12,6 +12,7 @@ import {
   tabBehavior,
 } from 'src/lib/accessibility'
 import { AccessibilityDefinition } from 'src/lib/accessibility/types'
+import { ReactWrapper } from 'enzyme'
 
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
 
@@ -119,6 +120,22 @@ describe('Menu', () => {
     })
 
     describe('variables', () => {
+      function checkMergedVariables(menu: ReactWrapper): void {
+        expect(
+          (menu
+            .find('MenuItem')
+            .first()
+            .prop('variables') as Function)(),
+        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwritten', c: 'item' }))
+
+        expect(
+          (menu
+            .find('MenuDivider')
+            .first()
+            .prop('variables') as Function)(),
+        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwrittenInDivider', c: 'divider' }))
+      }
+
       it('are passed from Menu to MenuItem and MenuDivider and correctly merged', () => {
         const menu = mountWithProvider(
           <Menu
@@ -134,19 +151,7 @@ describe('Menu', () => {
           />,
         )
 
-        expect(
-          (menu
-            .find('MenuItem')
-            .first()
-            .prop('variables') as Function)(),
-        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwritten', c: 'item' }))
-
-        expect(
-          (menu
-            .find('MenuDivider')
-            .first()
-            .prop('variables') as Function)(),
-        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwrittenInDivider', c: 'divider' }))
+        checkMergedVariables(menu)
       })
 
       it('as functions are passed from Menu to MenuItem and MenuDivider and correctly merged', () => {
@@ -164,19 +169,7 @@ describe('Menu', () => {
           />,
         )
 
-        expect(
-          (menu
-            .find('MenuItem')
-            .first()
-            .prop('variables') as Function)(),
-        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwritten', c: 'item' }))
-
-        expect(
-          (menu
-            .find('MenuDivider')
-            .first()
-            .prop('variables') as Function)(),
-        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwrittenInDivider', c: 'divider' }))
+        checkMergedVariables(menu)
       })
     })
 

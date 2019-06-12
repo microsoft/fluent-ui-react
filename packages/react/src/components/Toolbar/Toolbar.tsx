@@ -12,6 +12,8 @@ import {
   commonPropTypes,
   ColorComponentProps,
 } from '../../lib'
+import { mergeComponentVariables } from '../../lib/mergeThemes'
+
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
@@ -58,10 +60,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
   static RadioGroup = ToolbarRadioGroup
 
   handleItemOverrides = variables => predefinedProps => ({
-    variables: {
-      ...variables,
-      ...predefinedProps.variables,
-    },
+    variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
   private renderItems(items, variables) {
