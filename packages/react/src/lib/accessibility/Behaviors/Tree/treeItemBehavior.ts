@@ -12,7 +12,7 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  * Triggers 'collapseOrReceiveFocus' action with 'ArrowLeft' on 'root'.
  * Triggers 'expandOrPassFocus' action with 'ArrowRight' on 'root'.
  */
-const treeItemBehavior: Accessibility = (props: any) => ({
+const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'none',
@@ -39,5 +39,10 @@ const treeItemBehavior: Accessibility = (props: any) => ({
     },
   },
 })
+
+export type TreeItemBehaviorProps = {
+  items?: object[]
+  open?: boolean
+}
 
 export default treeItemBehavior
