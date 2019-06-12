@@ -47,5 +47,14 @@ describe('Dialog', () => {
 
       expect(header.prop('id')).toMatch(/dialog-header-\d+/)
     })
+
+    it('uses "id" if "header" is React Element with "id" is passed', () => {
+      const wrapper = mountWithProvider(
+        <Dialog defaultOpen trigger={<Button />} header={<span id="header-id" />} />,
+      )
+      const header = findIntrinsicElement(wrapper, `.${Dialog.slotClassNames.header}`)
+
+      expect(header.prop('id')).toBe('header-id')
+    })
   })
 })
