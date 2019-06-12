@@ -160,38 +160,13 @@ const ColorPalette = () => (
             Now that we know how the color palette is defined, let's see how we can use these
             values, so that they will work correctly when different themes will be applied. As part
             of each theme, we are defining <b>color scheme</b>, which will define the design tokens
-            usages of the different colors from the palette, that make sense for the developers. For
-            example, let's take a look of one color scheme defined for brand in Teams light, high
-            contrast and dark themes.
+            usages of the different colors from the palette, that make sense for the developers.
           </p>
 
-          <ColorSchemes
-            themes={[themes.teams, themes.teamsHighContrast, themes.teamsDark]}
-            headers={[
-              {
-                as: 'h3',
-                content: 'Design token',
-              },
-              {
-                as: 'h3',
-                content: 'Light theme',
-              },
-              {
-                as: 'h3',
-                content: 'HC theme',
-              },
-              {
-                as: 'h3',
-                content: 'Dark theme',
-              },
-            ]}
-            name={'brand'}
-          />
-
           <p>
-            With this example, we can see that the user can safely use any token from the color
-            scheme in the styles consistently, as those will be mapped to the correct values in all
-            themes. The following example will illustrate this:
+            Let's see how the user can safely use the tokens from the color scheme in the styles, as
+            those will be mapped to the correct values in all themes. The following example will
+            illustrate this:
           </p>
 
           <ExampleSnippet
@@ -242,6 +217,34 @@ const ColorPalette = () => (
                 </Provider>
               </Provider>
             )}
+          />
+
+          <p>
+            Here is how one color scheme looks like, defined for brand in Teams light, high contrast
+            and dark themes.
+          </p>
+
+          <ColorSchemes
+            themes={[themes.teams, themes.teamsHighContrast, themes.teamsDark]}
+            headers={[
+              {
+                as: 'h3',
+                content: 'Design token',
+              },
+              {
+                as: 'h3',
+                content: 'Light theme',
+              },
+              {
+                as: 'h3',
+                content: 'HC theme',
+              },
+              {
+                as: 'h3',
+                content: 'Dark theme',
+              },
+            ]}
+            name={'brand'}
           />
 
           <p>
