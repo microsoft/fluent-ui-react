@@ -13,12 +13,18 @@ import {
   childrenExist,
   isFromKeyboard,
 } from '../../lib'
-import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
+import {
+  ComponentEventHandler,
+  ShorthandValue,
+  WithAsProp,
+  withSafeTypeForAs,
+  Omit,
+} from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior, popupFocusTrapBehavior } from '../../lib/accessibility'
 
 import Icon from '../Icon/Icon'
-import Popup from '../Popup/Popup'
+import Popup, { PopupProps } from '../Popup/Popup'
 
 export interface ToolbarItemProps
   extends UIComponentProps,
@@ -60,7 +66,12 @@ export interface ToolbarItemProps
    */
   onBlur?: ComponentEventHandler<ToolbarItemProps>
 
-  popup?: ShorthandValue
+  /**
+   * Attaches a `Popup` component to the ToolbarItem.
+   * Accepts all props as a `Popup`, except `trigger` and `children`.
+   * Sets `accessibility` to `popupFocusTrapBehavior` by default.
+   */
+  popup?: Omit<PopupProps, 'trigger' | 'children'>
 }
 
 export interface ToolbarItemState {
@@ -82,7 +93,11 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
-    popup: customPropTypes.itemShorthand,
+    popup: PropTypes.shape({
+      ...Popup.propTypes,
+      trigger: customPropTypes.never,
+      children: customPropTypes.never,
+    }),
   }
 
   static defaultProps = {
@@ -113,7 +128,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
         },
         overrideProps: {
           trigger: renderedItem,
-          children: undefined,
+          children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger
         },
       })
     }
