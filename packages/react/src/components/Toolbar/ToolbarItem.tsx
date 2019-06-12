@@ -71,7 +71,7 @@ export interface ToolbarItemProps
    * Accepts all props as a `Popup`, except `trigger` and `children`.
    * Sets `accessibility` to `popupFocusTrapBehavior` by default.
    */
-  popup?: Omit<PopupProps, 'trigger' | 'children'>
+  popup?: Omit<PopupProps, 'trigger' | 'children'> | string
 }
 
 export interface ToolbarItemState {
@@ -93,11 +93,14 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
-    popup: PropTypes.shape({
-      ...Popup.propTypes,
-      trigger: customPropTypes.never,
-      children: customPropTypes.never,
-    }),
+    popup: PropTypes.oneOfType([
+      PropTypes.shape({
+        ...Popup.propTypes,
+        trigger: customPropTypes.never,
+        children: customPropTypes.never,
+      }),
+      PropTypes.string,
+    ]),
   }
 
   static defaultProps = {
