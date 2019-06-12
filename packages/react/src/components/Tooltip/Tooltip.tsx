@@ -115,8 +115,8 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   static autoControlledProps = ['open']
 
   pointerTargetRef = React.createRef<HTMLElement>()
-  triggerRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
-  contentRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
+  triggerRef = React.createRef<HTMLElement>()
+  contentRef = React.createRef<HTMLElement>()
 
   closeTimeoutId
 
