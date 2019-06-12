@@ -1,7 +1,7 @@
 {
   "name": "@stardust-ui/docs-components",
   "description": "Registers a DOM nodes within a context.",
-  "version": "0.32.0",
+  "version": "0.32.1-rc1",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
