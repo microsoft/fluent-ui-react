@@ -9,7 +9,7 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  * Triggers 'expand' action with 'ArrowRight' on 'root'.
  * Triggers 'collapse' action with 'ArrowLeft' on 'root'.
  */
-const treeTitleBehavior: Accessibility = (props: any) => ({
+const treeTitleBehavior: Accessibility<TreeTitleBehavior> = props => ({
   attributes: {
     root: {
       ...(props.hasSubtree && { 'aria-expanded': props.open ? 'true' : 'false' }),
@@ -34,3 +34,10 @@ const treeTitleBehavior: Accessibility = (props: any) => ({
 })
 
 export default treeTitleBehavior
+
+type TreeTitleBehavior = {
+  /** Indicated if tree title has a subtree */
+  hasSubtree?: boolean
+  /** If subtree is opened. */
+  open?: boolean
+}

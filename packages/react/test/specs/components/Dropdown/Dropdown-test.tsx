@@ -6,14 +6,11 @@ import Dropdown from 'src/components/Dropdown/Dropdown'
 import DropdownSearchInput from 'src/components/Dropdown/DropdownSearchInput'
 import DropdownSelectedItem from 'src/components/Dropdown/DropdownSelectedItem'
 import { isConformant } from 'test/specs/commonTests'
-import { mountWithProvider } from 'test/utils'
+import { findIntrinsicElement, mountWithProvider } from 'test/utils'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 
 jest.dontMock('keyboard-key')
 jest.useFakeTimers()
-
-const findIntrinsicElement = (wrapper: ReactWrapper, selector: string): CommonWrapper =>
-  wrapper.find(selector).filterWhere(n => typeof n.type() === 'string')
 
 const getTriggerButtonWrapper = (wrapper: ReactWrapper): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.triggerButton}`)

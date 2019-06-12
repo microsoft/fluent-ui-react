@@ -14,6 +14,11 @@ const Types = () => (
       description="The form controls can appear next to the label instead of below it."
       examplePath="components/Form/Types/FormExampleInline"
     />
+    <ComponentExample
+      title="Dropdown"
+      description="The form that has a Dropdown as a field."
+      examplePath="components/Form/Types/FormExampleDropdown"
+    />
   </ExampleSection>
 )
 
