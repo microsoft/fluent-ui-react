@@ -15,8 +15,6 @@ export * from './themes/teams/types'
 //
 // Components
 //
-export * from '@stardust-ui/react-component-ref'
-
 export * from './components/Accordion/Accordion'
 export { default as Accordion } from './components/Accordion/Accordion'
 export * from './components/Accordion/AccordionTitle'
@@ -241,3 +239,5 @@ export const FocusZoneUtilities = {
 export * from './lib/accessibility/FocusZone/FocusZone.types'
 export * from './lib/accessibility/types'
 export * from './lib/accessibility/reactTypes'
+
+export * from '@stardust-ui/react-component-ref'
