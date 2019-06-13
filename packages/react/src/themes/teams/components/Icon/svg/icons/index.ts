@@ -251,7 +251,7 @@ export default {
   'table-add': tableAdd,
   'table-delete': tableDelete,
   teams,
-  toDoList,
+  'to-do-list': toDoList,
   translation,
   'trash-can': trashCan,
   'triangle-down': triangleDown,
