@@ -5,7 +5,7 @@ import 'mdn-polyfills/String.prototype.includes'
 import * as commonPropTypes from './commonPropTypes'
 
 export { default as applyAccessibilityKeyHandlers } from './applyAccessibilityKeyHandlers'
-export { default as AutoControlledComponent } from './AutoControlledComponent'
+export { default as withControlledState } from './withControlledState'
 export { default as childrenExist } from './childrenExist'
 export { default as UIComponent } from './UIComponent'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'

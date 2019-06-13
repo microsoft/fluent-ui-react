@@ -35,7 +35,7 @@ const makeDefaultProps = (props: Props): Props =>
 const getAutoControlledInstance = (wrapper: ShallowWrapper = shallow(<TestClass />)) =>
   wrapper.instance() as AutoControlledComponent
 
-describe('extending AutoControlledComponent', () => {
+xdescribe('extending AutoControlledComponent', () => {
   beforeEach(() => {
     TestClass = createTestClass({ autoControlledProps: [], state: {} })
   })

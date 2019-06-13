@@ -6,12 +6,13 @@ import * as PropTypes from 'prop-types'
 
 import {
   childrenExist,
-  AutoControlledComponent,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  UIComponent,
+  withControlledState,
 } from '../../lib'
 import ListItem, { ListItemProps } from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
@@ -64,7 +65,7 @@ export interface ListState {
   selectedIndex?: number
 }
 
-class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
+class List extends UIComponent<WithAsProp<ListProps>, ListState> {
   static displayName = 'List'
 
   static className = 'ui-list'
@@ -90,12 +91,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
   static defaultProps = {
     as: 'ul',
     accessibility: listBehavior as Accessibility,
-  }
-
-  static autoControlledProps = ['selectedIndex']
-
-  getInitialAutoControlledState() {
-    return { selectedIndex: -1, focusedIndex: 0 }
+    defaultSelectedIndex: -1,
   }
 
   static Item = ListItem
@@ -124,6 +120,13 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
       this.focusHandler.moveLast()
     },
   }
+
+  state = {
+    selectedIndex: this.props.defaultSelectedIndex,
+    focusedIndex: 0,
+  }
+
+  getControlledState = withControlledState(() => this.props, () => this.state)
 
   constructor(props, context) {
     super(props, context)
@@ -156,7 +159,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
         _.invoke(predefinedProps, 'onClick', e, itemProps)
 
         if (selectable) {
-          this.trySetState({ selectedIndex: itemProps.index })
+          this.setState({ selectedIndex: itemProps.index })
           _.invoke(this.props, 'onSelectedIndexChange', e, {
             ...this.props,
             ...{ selectedIndex: itemProps.index },
@@ -184,7 +187,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
 
   renderItems() {
     const { items, selectable } = this.props
-    const { focusedIndex, selectedIndex } = this.state
+    const { focusedIndex, selectedIndex } = this.getControlledState()
 
     this.focusHandler.syncFocusedIndex(focusedIndex)
 

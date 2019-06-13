@@ -6,13 +6,14 @@ import cx from 'classnames'
 import * as _ from 'lodash'
 
 import {
-  AutoControlledComponent,
   RenderResultConfig,
   partitionHTMLProps,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
   applyAccessibilityKeyHandlers,
+  UIComponent,
+  withControlledState,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { inputBehavior } from '../../lib/accessibility'
@@ -77,17 +78,17 @@ export interface InputProps
   inputRef?: React.Ref<HTMLElement>
 
   /** The value of the input. */
-  value?: React.ReactText
+  value?: string | string[]
 
   /** Shorthand for the wrapper component. */
   wrapper?: ShorthandValue
 }
 
 export interface InputState {
-  value?: React.ReactText
+  value?: string | string[]
 }
 
-class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> {
+class Input extends UIComponent<WithAsProp<InputProps>, InputState> {
   inputRef = React.createRef<HTMLElement>()
 
   static className = 'ui-input'
@@ -116,22 +117,27 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
 
   static defaultProps = {
     accessibility: inputBehavior,
+    defaultValue: '',
+    iconPosition: 'end',
     type: 'text',
     wrapper: {},
-    iconPosition: 'end',
   }
-
-  static autoControlledProps = ['value']
 
   actionHandlers = {
     clear: (e: React.KeyboardEvent) => {
-      if (this.props.clearable && this.state.value !== '') {
+      if (this.props.clearable && this.getControlledState().value !== '') {
         e.stopPropagation()
         e.nativeEvent && e.nativeEvent.stopPropagation()
         this.handleOnClear(e)
       }
     },
   }
+
+  state = {
+    value: this.props.defaultValue,
+  }
+
+  getControlledState = withControlledState(() => this.props, () => this.state)
 
   renderComponent({
     accessibility,
@@ -141,7 +147,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     variables,
   }: RenderResultConfig<InputProps>) {
     const { className, input, inputRef, type, wrapper } = this.props
-    const { value = '' } = this.state
+    const { value } = this.getControlledState()
     const [htmlInputProps, restProps] = partitionHTMLProps(unhandledProps)
 
     return Box.create(wrapper, {
@@ -200,19 +206,19 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
 
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
 
-    this.trySetState({ value })
+    this.setState({ value: value || '' })
   }
 
   handleOnClear = (e: React.SyntheticEvent) => {
     if (this.props.clearable) {
       _.invoke(this.props, 'onChange', e, { ...this.props, value: '' })
-      this.trySetState({ value: '' })
+      this.setState({ value: '' })
     }
   }
 
   computeIcon = (): ShorthandValue => {
     const { clearable, icon } = this.props
-    const { value } = this.state
+    const { value } = this.getControlledState()
 
     if (clearable && (value as string).length !== 0) {
       return 'stardust-close'

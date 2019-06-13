@@ -5,7 +5,6 @@ import * as React from 'react'
 
 import TreeItem, { TreeItemProps } from './TreeItem'
 import {
-  AutoControlledComponent,
   childrenExist,
   commonPropTypes,
   createShorthandFactory,
@@ -13,6 +12,8 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  UIComponent,
+  withControlledState,
 } from '../../lib'
 import { ShorthandValue, ShorthandRenderFunction, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -55,7 +56,7 @@ export interface TreeState {
   activeIndex: number[] | number
 }
 
-class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
+class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
   static create: Function
 
   static displayName = 'Tree'
@@ -89,8 +90,6 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     accessibility: treeBehavior,
   }
 
-  static autoControlledProps = ['activeIndex']
-
   actionHandlers = {
     expandSiblings: e => {
       const { items, exclusive } = this.props
@@ -108,18 +107,23 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
             return acc
           }, [])
         : []
-      this.trySetState({ activeIndex })
+      this.setState({ activeIndex })
     },
   }
 
-  getInitialAutoControlledState({ exclusive }): TreeState {
-    return {
-      activeIndex: exclusive ? -1 : [],
-    }
+  state: TreeState = {
+    activeIndex:
+      this.props.defaultActiveIndex != null
+        ? this.props.defaultActiveIndex
+        : this.props.exclusive
+        ? -1
+        : [],
   }
 
+  getControlledState = withControlledState(() => this.props, () => this.state)
+
   getActiveIndexes(): number[] {
-    const { activeIndex } = this.state
+    const { activeIndex } = this.getControlledState()
     return _.isArray(activeIndex) ? activeIndex : [activeIndex]
   }
 
@@ -141,14 +145,14 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
     onTitleClick: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      this.trySetState({ activeIndex: this.computeNewIndex(treeItemProps) })
+      this.setState({ activeIndex: this.computeNewIndex(treeItemProps) })
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
   })
 
   renderContent() {
     const { items, renderItemTitle, exclusive } = this.props
-    const { activeIndex } = this.state
+    const { activeIndex } = this.getControlledState()
     const activeIndexes = this.getActiveIndexes()
 
     return _.map(items, (item: ShorthandValue, index: number) =>

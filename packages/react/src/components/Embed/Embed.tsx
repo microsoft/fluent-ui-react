@@ -8,7 +8,8 @@ import {
   UIComponentProps,
   applyAccessibilityKeyHandlers,
   commonPropTypes,
-  AutoControlledComponent,
+  UIComponent,
+  withControlledState,
 } from '../../lib'
 import { embedBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -67,7 +68,7 @@ export interface EmbedState {
   active: boolean
 }
 
-class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> {
+class Embed extends UIComponent<WithAsProp<EmbedProps>, EmbedState> {
   static create: Function
 
   static className = 'ui-embed'
@@ -93,9 +94,8 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     as: 'span',
     accessibility: embedBehavior as Accessibility,
     control: {},
+    defaultActive: false,
   }
-
-  static autoControlledProps = ['active']
 
   static slotClassNames: EmbedSlotClassNames = {
     control: `${Embed.className}__control`,
@@ -105,23 +105,28 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     performClick: event => this.handleClick(event),
   }
 
-  getInitialAutoControlledState(): EmbedState {
-    return { active: false }
+  state = {
+    active: this.props.defaultActive,
   }
+
+  getControlledState = withControlledState(() => this.props, () => this.state)
 
   handleClick = e => {
     e.stopPropagation()
     e.preventDefault()
 
-    this.trySetState({ active: !this.state.active })
+    this.setState({ active: !this.getControlledState().active })
 
-    _.invoke(this.props, 'onActiveChanged', e, { ...this.props, active: !this.state.active })
-    _.invoke(this.props, 'onClick', e, { ...this.props, active: !this.state.active })
+    _.invoke(this.props, 'onActiveChanged', e, {
+      ...this.props,
+      active: !this.getControlledState().active,
+    })
+    _.invoke(this.props, 'onClick', e, { ...this.props, active: !this.getControlledState().active })
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { control, iframe, placeholder, video } = this.props
-    const { active } = this.state
+    const { active } = this.getControlledState()
 
     return (
       <ElementType

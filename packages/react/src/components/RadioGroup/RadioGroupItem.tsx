@@ -5,13 +5,14 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import {
-  AutoControlledComponent,
   createShorthandFactory,
   isFromKeyboard,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
   applyAccessibilityKeyHandlers,
+  UIComponent,
+  withControlledState,
 } from '../../lib'
 import Box from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
@@ -84,13 +85,10 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
 
 export interface RadioGroupItemState {
   checked: boolean
-  isFromKeyboard: boolean
+  isFromKeyboard?: boolean
 }
 
-class RadioGroupItem extends AutoControlledComponent<
-  WithAsProp<RadioGroupItemProps>,
-  RadioGroupItemState
-> {
+class RadioGroupItem extends UIComponent<WithAsProp<RadioGroupItemProps>, RadioGroupItemState> {
   elementRef = React.createRef<HTMLElement>()
 
   static create: Function
@@ -123,10 +121,14 @@ class RadioGroupItem extends AutoControlledComponent<
     accessibility: radioGroupItemBehavior as Accessibility,
   }
 
-  static autoControlledProps = ['checked']
+  state = {
+    checked: this.props.defaultChecked,
+  }
+
+  getControlledState = withControlledState(() => this.props, () => this.state)
 
   componentDidUpdate(prevProps, prevState) {
-    const checked = this.state.checked
+    const checked = this.getControlledState().checked
     if (checked !== prevState.checked) {
       checked && this.props.shouldFocus && this.elementRef.current.focus()
       _.invoke(this.props, 'checkedChanged', undefined, { ...this.props, checked })

@@ -4,13 +4,14 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
-  AutoControlledComponent,
   childrenExist,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  UIComponent,
+  withControlledState,
 } from '../../lib'
 import { accordionBehavior } from '../../lib/accessibility'
 import AccordionTitle, { AccordionTitleProps } from './AccordionTitle'
@@ -83,10 +84,10 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
 
 export interface AccordionState {
   activeIndex: number[] | number
-  focusedIndex: number
+  focusedIndex?: number
 }
 
-class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, AccordionState> {
+class Accordion extends UIComponent<WithAsProp<AccordionProps>, AccordionState> {
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'
@@ -130,8 +131,6 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
     as: 'dl',
   }
 
-  static autoControlledProps = ['activeIndex']
-
   static Title = AccordionTitle
   static Content = AccordionContent
 
@@ -159,6 +158,8 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
     },
   }
 
+  getControlledState = withControlledState(() => this.props, () => this.state)
+
   constructor(props, context) {
     super(props, context)
 
@@ -167,6 +168,16 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
       this.handleNavigationFocus,
       true,
     )
+
+    const alwaysActiveIndex = this.props.expanded ? 0 : -1
+    this.state = {
+      activeIndex:
+        this.props.defaultActiveIndex != null
+          ? this.props.defaultActiveIndex
+          : this.props.exclusive
+          ? alwaysActiveIndex
+          : [alwaysActiveIndex],
+    }
   }
 
   handleNavigationFocus = (index: number) => {
@@ -178,13 +189,8 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
 
   getNavigationItemsSize = () => this.props.panels.length
 
-  getInitialAutoControlledState({ expanded, exclusive }: AccordionProps) {
-    const alwaysActiveIndex = expanded ? 0 : -1
-    return { activeIndex: exclusive ? alwaysActiveIndex : [alwaysActiveIndex] }
-  }
-
   computeNewIndex = (index: number): number | number[] => {
-    const { activeIndex } = this.state
+    const { activeIndex } = this.getControlledState()
     const { exclusive } = this.props
 
     if (!this.isIndexActionable(index)) {
@@ -203,7 +209,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
       const { index } = titleProps
       const activeIndex = this.computeNewIndex(index)
 
-      this.trySetState({ activeIndex })
+      this.setState({ activeIndex })
       this.setState({ focusedIndex: index })
 
       _.invoke(predefinedProps, 'onClick', e, titleProps)
@@ -217,7 +223,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
 
   isIndexActive = (index: number): boolean => {
     const { exclusive } = this.props
-    const { activeIndex } = this.state
+    const { activeIndex } = this.getControlledState()
 
     return exclusive ? activeIndex === index : _.includes(activeIndex as number[], index)
   }
@@ -236,7 +242,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
       return true
     }
 
-    const { activeIndex } = this.state
+    const { activeIndex } = this.getControlledState()
     const { expanded, exclusive } = this.props
 
     return !expanded || (!exclusive && (activeIndex as number[]).length > 1)
@@ -245,7 +251,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
   renderPanels = () => {
     const children: any[] = []
     const { panels, renderPanelContent, renderPanelTitle } = this.props
-    const { focusedIndex } = this.state
+    const { focusedIndex } = this.getControlledState()
 
     this.itemRefs = []
     this.focusHandler.syncFocusedIndex(focusedIndex)

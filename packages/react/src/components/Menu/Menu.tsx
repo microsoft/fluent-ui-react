@@ -4,7 +4,6 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
-  AutoControlledComponent,
   childrenExist,
   createShorthandFactory,
   UIComponentProps,
@@ -12,6 +11,8 @@ import {
   commonPropTypes,
   getKindProp,
   rtlTextContainer,
+  UIComponent,
+  withControlledState,
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
@@ -86,7 +87,7 @@ export interface MenuState {
   activeIndex?: number | string
 }
 
-class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
+class Menu extends UIComponent<WithAsProp<MenuProps>, MenuState> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -122,25 +123,29 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     accessibility: menuBehavior as Accessibility,
   }
 
-  static autoControlledProps = ['activeIndex']
-
   static Item = MenuItem
   static Divider = MenuDivider
+
+  state = {
+    activeIndex: this.props.defaultActiveIndex,
+  }
+
+  getControlledState = withControlledState(() => this.props, () => this.state)
 
   handleItemOverrides = variables => predefinedProps => ({
     onClick: (e, itemProps) => {
       const { index } = itemProps
 
-      this.trySetState({ activeIndex: index })
+      this.setState({ activeIndex: index })
 
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },
     onActiveChanged: (e, props) => {
       const { index, active } = props
       if (active) {
-        this.trySetState({ activeIndex: index })
-      } else if (this.state.activeIndex === index) {
-        this.trySetState({ activeIndex: null })
+        this.setState({ activeIndex: index })
+      } else if (this.getControlledState().activeIndex === index) {
+        this.setState({ activeIndex: null })
       }
       _.invoke(predefinedProps, 'onActiveChanged', e, props)
     },
@@ -168,7 +173,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
       submenu,
       indicator,
     } = this.props
-    const { activeIndex } = this.state
+    const { activeIndex } = this.getControlledState()
     const itemsCount = _.filter(items, item => getKindProp(item, 'item') !== 'divider').length
     let itemPosition = 0
 

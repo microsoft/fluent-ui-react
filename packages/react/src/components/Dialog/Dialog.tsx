@@ -9,9 +9,10 @@ import {
   commonPropTypes,
   ColorComponentProps,
   ContentComponentProps,
-  AutoControlledComponent,
   doesNodeContainClick,
   applyAccessibilityKeyHandlers,
+  UIComponent,
+  withControlledState,
 } from '../../lib'
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
@@ -94,7 +95,7 @@ export interface DialogState {
 /**
  * A Dialog informs users about specific tasks or may contain critical information, require decisions, or involve multiple interactions.
  */
-class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogState> {
+class Dialog extends UIComponent<WithAsProp<DialogProps>, DialogState> {
   static displayName = 'Dialog'
   static className = 'ui-dialog'
 
@@ -123,11 +124,10 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   static defaultProps = {
     accessibility: dialogBehavior,
     actions: {},
+    defaultOpen: false,
     overlay: {},
     trapFocus: true,
   }
-
-  static autoControlledProps = ['open']
 
   actionHandlers = {
     closeAndFocusTrigger: e => {
@@ -141,23 +141,24 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   contentRef = React.createRef<HTMLElement>()
   triggerRef = React.createRef<HTMLElement>()
 
-  getInitialAutoControlledState(): DialogState {
-    return { open: false }
+  getControlledState = withControlledState(() => this.props, () => this.state)
+  state = {
+    open: this.props.defaultOpen,
   }
 
   handleDialogCancel = (e: Event | React.SyntheticEvent) => {
     _.invoke(this.props, 'onCancel', e, { ...this.props, open: false })
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 
   handleDialogConfirm = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onConfirm', e, { ...this.props, open: false })
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 
   handleDialogOpen = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onOpen', e, { ...this.props, open: true })
-    this.trySetState({ open: true })
+    this.setState({ open: true })
   }
 
   handleCancelButtonOverrides = (predefinedProps: ButtonProps) => ({
@@ -196,7 +197,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       trapFocus,
       trigger,
     } = this.props
-    const { open } = this.state
+    const { open } = this.getControlledState()
 
     const dialogContent = (
       <Ref innerRef={this.contentRef}>

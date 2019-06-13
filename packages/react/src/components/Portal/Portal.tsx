@@ -7,12 +7,13 @@ import * as _ from 'lodash'
 
 import {
   childrenExist,
-  AutoControlledComponent,
   doesNodeContainClick,
   ChildrenComponentProps,
   commonPropTypes,
   ContentComponentProps,
   rtlTextContainer,
+  UIComponent,
+  withControlledState,
 } from '../../lib'
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
@@ -79,11 +80,9 @@ export interface PortalState {
 /**
  * A component that allows you to render children outside their parent.
  */
-class Portal extends AutoControlledComponent<PortalProps, PortalState> {
+class Portal extends UIComponent<PortalProps, PortalState> {
   portalNode: HTMLElement
   triggerNode: HTMLElement
-
-  static autoControlledProps = ['open']
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -109,6 +108,12 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
     triggerAccessibility: {},
   }
 
+  state = {
+    open: this.props.defaultOpen,
+  }
+
+  getControlledState = withControlledState(() => this.props, () => this.state)
+
   renderComponent(): React.ReactNode {
     return (
       <React.Fragment>
@@ -120,7 +125,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
 
   renderPortal(): JSX.Element | undefined {
     const { children, content, trapFocus } = this.props
-    const { open } = this.state
+    const { open } = this.getControlledState()
     const contentToRender = childrenExist(children) ? children : content
     const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
 
@@ -185,7 +190,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
 
     _.invoke(this.props, 'onTriggerClick', e) // Call handler from parent component
     _.invoke(trigger, 'props.onClick', e, ...unhandledProps) // Call original event handler
-    this.trySetState({ open: !this.state.open })
+    this.setState({ open: !this.getControlledState().open })
   }
 
   handleDocumentClick = (e: MouseEvent) => {
@@ -197,7 +202,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
       return // ignore the click
     }
     _.invoke(this.props, 'onOutsideClick', e)
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 }
 

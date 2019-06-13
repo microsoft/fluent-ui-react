@@ -5,12 +5,13 @@ import * as PropTypes from 'prop-types'
 
 import {
   applyAccessibilityKeyHandlers,
-  AutoControlledComponent,
   createShorthandFactory,
   ChildrenComponentProps,
   commonPropTypes,
   isFromKeyboard,
   UIComponentProps,
+  UIComponent,
+  withControlledState,
 } from '../../lib'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
@@ -60,10 +61,10 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
 
 export interface CheckboxState {
   checked: boolean
-  isFromKeyboard: boolean
+  isFromKeyboard?: boolean
 }
 
-class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, CheckboxState> {
+class Checkbox extends UIComponent<WithAsProp<CheckboxProps>, CheckboxState> {
   static create: Function
 
   static displayName = 'Checkbox'
@@ -89,7 +90,11 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     icon: {},
   }
 
-  static autoControlledProps = ['checked']
+  state = {
+    checked: this.props.defaultChecked,
+  }
+
+  getControlledState = withControlledState(() => this.props, () => this.state)
 
   actionHandlers = {
     performClick: (e: any /* TODO: use React.KeyboardEvent */) => {
@@ -98,28 +103,24 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     },
   }
 
-  getInitialAutoControlledState(): CheckboxState {
-    return { checked: false, isFromKeyboard: false }
-  }
-
   handleChange = (e: React.ChangeEvent) => {
     // Checkbox component doesn't present any `input` component in markup, however all of our
     // components should handle events transparently.
     const { disabled } = this.props
-    const checked = !this.state.checked
+    const checked = !this.getControlledState().checked
 
     if (!disabled) {
-      this.trySetState({ checked })
+      this.setState({ checked })
       _.invoke(this.props, 'onChange', e, { ...this.props, checked })
     }
   }
 
   handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     const { disabled } = this.props
-    const checked = !this.state.checked
+    const checked = !this.getControlledState().checked
 
     if (!disabled) {
-      this.trySetState({ checked })
+      this.setState({ checked })
 
       _.invoke(this.props, 'onClick', e, { ...this.props, checked })
       _.invoke(this.props, 'onChange', e, { ...this.props, checked })

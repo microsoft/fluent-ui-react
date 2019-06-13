@@ -7,7 +7,6 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
-  AutoControlledComponent,
   childrenExist,
   createShorthandFactory,
   doesNodeContainClick,
@@ -18,6 +17,8 @@ import {
   isFromKeyboard,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  UIComponent,
+  withControlledState,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Menu from './Menu'
@@ -144,11 +145,11 @@ export interface MenuItemProps
 }
 
 export interface MenuItemState {
-  isFromKeyboard: boolean
+  isFromKeyboard?: boolean
   menuOpen: boolean
 }
 
-class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuItemState> {
+class MenuItem extends UIComponent<WithAsProp<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -194,7 +195,11 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     wrapper: { as: 'li' },
   }
 
-  static autoControlledProps = ['menuOpen']
+  state = {
+    menuOpen: this.props.defaultMenuOpen,
+  }
+
+  getControlledState = withControlledState(() => this.props, () => this.state)
 
   menuRef = React.createRef<HTMLElement>()
   itemRef = React.createRef<HTMLElement>()
@@ -215,7 +220,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     } = this.props
     const indicatorWithDefaults = indicator === undefined ? {} : indicator
 
-    const { menuOpen } = this.state
+    const { menuOpen } = this.getControlledState()
 
     const menuItemInner = childrenExist(children) ? (
       children
@@ -331,7 +336,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
         this.trySetMenuOpen(false, e, () => focusAsync(this.itemRef.current))
       } else {
         // the menuItem element was clicked => toggle the open/close and stop propagation
-        this.trySetMenuOpen(active ? !this.state.menuOpen : true, e)
+        this.trySetMenuOpen(active ? !this.getControlledState().menuOpen : true, e)
         e.stopPropagation()
         e.preventDefault()
       }
@@ -364,7 +369,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
 
   isSubmenuOpen = (): boolean => {
     const { menu } = this.props
-    const { menuOpen } = this.state
+    const { menuOpen } = this.getControlledState()
 
     return !!(menu && menuOpen)
   }
@@ -401,7 +406,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
 
   openMenu = (e: Event) => {
     const { menu } = this.props
-    const { menuOpen } = this.state
+    const { menuOpen } = this.getControlledState()
     if (menu && !menuOpen) {
       this.trySetMenuOpen(true, e)
       _.invoke(this.props, 'onActiveChanged', e, { ...this.props, active: true })
@@ -411,7 +416,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
   }
 
   trySetMenuOpen(newValue: boolean, e: Event | React.SyntheticEvent, onStateChanged?: any) {
-    this.trySetState({ menuOpen: newValue })
+    this.setState({ menuOpen: newValue })
     // The reason why post-effect is not passed as callback to trySetState method
     // is that in 'controlled' mode the post-effect is applied before final re-rendering
     // which cause a broken behavior: for e.g. when it is needed to focus submenu trigger on ESC.

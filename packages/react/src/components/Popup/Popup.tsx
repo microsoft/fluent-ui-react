@@ -11,7 +11,6 @@ import * as _ from 'lodash'
 import {
   applyAccessibilityKeyHandlers,
   childrenExist,
-  AutoControlledComponent,
   RenderResultConfig,
   isBrowser,
   ChildrenComponentProps,
@@ -21,6 +20,8 @@ import {
   isFromKeyboard,
   doesNodeContainClick,
   setWhatInputSource,
+  UIComponent,
+  withControlledState,
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue } from '../../types'
 import {
@@ -124,7 +125,7 @@ export interface PopupState {
  * @accessibility
  * Do use popupFocusTrapBehavior if the focus needs to be trapped inside of the Popup.
  */
-export default class Popup extends AutoControlledComponent<PopupProps, PopupState> {
+export default class Popup extends UIComponent<PopupProps, PopupState> {
   static displayName = 'Popup'
 
   static className = 'ui-popup'
@@ -175,7 +176,11 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     mouseLeaveDelay: 500,
   }
 
-  static autoControlledProps = ['open']
+  state = {
+    open: this.props.defaultOpen,
+  }
+
+  getControlledState = withControlledState(() => this.props, () => this.state)
 
   pointerTargetRef = React.createRef<HTMLElement>()
   triggerRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
@@ -194,7 +199,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     },
     toggle: e => {
       e.preventDefault()
-      this.trySetOpen(!this.state.open, e)
+      this.trySetOpen(!this.getControlledState().open, e)
     },
     open: e => {
       e.preventDefault()
@@ -208,7 +213,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     accessibility,
   }: RenderResultConfig<PopupProps>): React.ReactNode {
     const { inline, mountNode } = this.props
-    const { open } = this.state
+    const { open } = this.getControlledState()
     const popupContent = open && this.renderPopupContent(classes.popup, rtl, accessibility)
 
     return (
@@ -280,7 +285,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
      */
     if (_.includes(normalizedOn, 'click')) {
       triggerProps.onClick = (e, ...args) => {
-        this.trySetOpen(!this.state.open, e)
+        this.trySetOpen(!this.getControlledState().open, e)
         _.invoke(triggerElement, 'props.onClick', e, ...args)
       }
     }
@@ -491,7 +496,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     if (newValue) {
       this.updateTriggerFocusableDomElement()
     }
-    this.trySetState({ open: newValue })
+    this.setState({ open: newValue })
     _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
   }
 
@@ -509,7 +514,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 
   close = (e, onClose?: Function) => {
-    if (this.state.open) {
+    if (this.getControlledState().open) {
       this.trySetOpen(false, e)
       onClose && onClose()
       e.stopPropagation()
