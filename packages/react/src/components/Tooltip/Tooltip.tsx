@@ -120,7 +120,7 @@ export default class Tooltip extends UIComponent<TooltipProps, TooltipState> {
   }
 
   state = {
-    open: this.props.open,
+    open: this.props.defaultOpen,
   }
 
   getControlledState = withControlledState(() => this.props, () => this.state)
