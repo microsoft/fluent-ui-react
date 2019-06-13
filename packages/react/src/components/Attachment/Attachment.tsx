@@ -121,12 +121,7 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
         )}
         {action &&
           Button.create(action, {
-            defaultProps: {
-              iconOnly: true,
-              text: true,
-              styles: styles.action,
-              ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.action, {}),
-            },
+            defaultProps: { iconOnly: true, text: true, styles: styles.action },
           })}
         {!_.isNil(progress) &&
           Box.create('', {
