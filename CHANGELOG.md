@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.33.0 ]------------------------------- -->
+## [v0.33.0](https://github.com/stardust-ui/react/tree/v0.33.0) (2019-06-13)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.32.0...v0.33.0)
+
 ### BREAKING CHANGES
 - Rename `toolbarBehavior` to `menuAsToolbarBehavior` and `toolbarButtonBehavior` to `menuItemAsToolbarButtonBehavior` @miroslavstastny ([#1393](https://github.com/stardust-ui/react/pull/1393))
 - Rename types related to accessibility @layershifter ([#1421](https://github.com/stardust-ui/react/pull/1421))
@@ -25,6 +29,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Define types for accessibility behaviors props. Do not render `aria-disabled` if the value is `false` @sophieH29 ([#1481](https://github.com/stardust-ui/react/pull/1481))
 - Add `Toolbar` component @miroslavstastny ([#1408](https://github.com/stardust-ui/react/pull/1408))
+- Add `popup` prop to `Toolbar` component @miroslavstastny ([#1408](https://github.com/stardust-ui/react/pull/1480))
 - Add `disableAnimations` boolean prop on the `Provider` @mnajdova ([#1377](https://github.com/stardust-ui/react/pull/1377))
 - Integrate `Dropdown` with `Form.Field` @silviuavram ([#1446](https://github.com/stardust-ui/react/pull/1446))
 - Add expand/collapse and navigation with `ArrowUp` and `ArrowDown` to `Tree` @silviuavram ([#1457](https://github.com/stardust-ui/react/pull/1457))

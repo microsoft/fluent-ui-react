@@ -23,6 +23,7 @@ const ComponentExampleKnobs = createComponent({
           {({ classes }) => (
             <CodeSnippet
               className={classes}
+              copyable={false}
               fitted
               label="Knobs"
               mode="json"

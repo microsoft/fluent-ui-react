@@ -5,7 +5,7 @@ import { useSelectKnob } from '@stardust-ui/docs-components'
 
 const TooltipExamplePosition = () => {
   const [positionAndAlign] = useSelectKnob({
-    name: 'position-align-s',
+    name: 'position-align',
     initialValue: 'above-start',
     values: positionAndAlignValues,
   })
