@@ -53,7 +53,7 @@ class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, an
     as: 'dd',
   }
 
-  private handleClick = (e: React.SyntheticEvent) => {
+  handleClick = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 

@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import * as _ from 'lodash'
+import { ButtonBehaviorProps } from './buttonBehavior'
 
 /**
  * @specification
@@ -7,17 +7,19 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-pressed=true' based on the property 'active'. This can be overriden by providing 'aria-presssed' property directly to the component.
  * Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
  */
-
-const toggleButtonBehavior: Accessibility = (props: any) => ({
+const toggleButtonBehavior: Accessibility<ToggleButtonBehaviorProps> = props => ({
   attributes: {
     root: {
       role: props.as === 'button' ? undefined : 'button',
-      'aria-disabled': !_.isNil(props['aria-disabled'])
-        ? props['aria-disabled']
-        : !!props['disabled'],
-      'aria-pressed': !_.isNil(props['aria-presssed']) ? props['aria-presssed'] : !!props['active'],
+      'aria-disabled': props.disabled,
+      'aria-pressed': !!props.active,
     },
   },
 })
 
 export default toggleButtonBehavior
+
+type ToggleButtonBehaviorProps = ButtonBehaviorProps & {
+  /** Indicates if a button is in pressed state. */
+  active: boolean
+}

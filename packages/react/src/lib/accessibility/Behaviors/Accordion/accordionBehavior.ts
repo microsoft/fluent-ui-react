@@ -9,7 +9,7 @@ import * as keyboardKey from 'keyboard-key'
  * Triggers 'moveFirst' action with 'Home' on 'root'.
  * Triggers 'moveLast' action with 'End' on 'root'.
  */
-const accordionBehavior: Accessibility = (props: any) => ({
+const accordionBehavior: Accessibility = () => ({
   attributes: {
     root: {
       role: 'presentation',

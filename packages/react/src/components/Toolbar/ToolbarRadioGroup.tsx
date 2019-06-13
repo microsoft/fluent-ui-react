@@ -11,6 +11,8 @@ import {
   childrenExist,
   commonPropTypes,
 } from '../../lib'
+import { mergeComponentVariables } from '../../lib/mergeThemes'
+
 import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
@@ -50,13 +52,10 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
   }
 
   handleItemOverrides = variables => predefinedProps => ({
-    variables: {
-      ...variables,
-      ...predefinedProps.variables,
-    },
+    variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
-  private renderItems(items, variables) {
+  renderItems(items, variables) {
     const itemOverridesFn = this.handleItemOverrides(variables)
     return _.map(items, (item, index) => {
       const kind = _.get(item, 'kind', 'item')

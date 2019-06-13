@@ -88,7 +88,7 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
     accessibility: attachmentBehavior as Accessibility,
   }
 
-  public state = {
+  state = {
     isFromKeyboard: false,
   }
 
@@ -145,18 +145,18 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
     )
   }
 
-  protected actionHandlers = {
+  actionHandlers = {
     performClick: event => this.performClick(event),
   }
 
-  private performClick = e => {
+  performClick = e => {
     if (e.currentTarget === e.target) {
       e.stopPropagation()
       this.handleClick(e)
     }
   }
 
-  private handleClick = (e: React.SyntheticEvent) => {
+  handleClick = (e: React.SyntheticEvent) => {
     const { disabled } = this.props
 
     if (disabled) {
@@ -167,7 +167,7 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
 
     _.invoke(this.props, 'onFocus', e, this.props)

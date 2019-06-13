@@ -14,7 +14,7 @@ import * as keyboardKey from 'keyboard-key'
  * Adds attribute 'aria-controls=content-id' based on the property 'accordionContentId' to 'content' component's part.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'content'.
  */
-const accordionTitleBehavior: Accessibility = (props: any) => {
+const accordionTitleBehavior: Accessibility<AccordionTitleBehaviorProps> = props => {
   const isHeading = /(h\d{1})$/.test(props.as)
   return {
     attributes: {
@@ -41,3 +41,14 @@ const accordionTitleBehavior: Accessibility = (props: any) => {
 }
 
 export default accordionTitleBehavior
+
+type AccordionTitleBehaviorProps = {
+  /** Element type. */
+  as: string
+  /** Whether or not the title is in the open state. */
+  active?: boolean
+  /** If at least one panel needs to stay active and this title does not correspond to the last active one. */
+  canBeCollapsed?: boolean
+  /** Id of the content it owns. */
+  accordionContentId?: string
+}
