@@ -20,7 +20,6 @@ const DropdownExampleMultiple = () => (
     placeholder="Select your heroes"
     getA11ySelectionMessage={getA11ySelectionMessage}
     noResultsMessage="We couldn't find any matches."
-    highlightFirstItemOnOpen
   />
 )
 
