@@ -8,7 +8,6 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  * Adds 'aria-expanded' with a value based on the 'open' prop if item is not a leaf.
  *
  * @specification
- * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
  * Triggers 'collapseOrReceiveFocus' action with 'ArrowLeft' on 'root'.
  * Triggers 'expandOrPassFocus' action with 'ArrowRight' on 'root'.
  */
@@ -27,9 +26,6 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
   },
   keyActions: {
     root: {
-      performClick: {
-        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
-      },
       collapseOrReceiveFocus: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
       },
@@ -41,6 +37,7 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
 })
 
 export type TreeItemBehaviorProps = {
+  /** The items which are rendered in subtree. */
   items?: object[]
   open?: boolean
 }

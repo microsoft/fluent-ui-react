@@ -109,17 +109,12 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
   treeRef = React.createRef<HTMLElement>()
 
   actionHandlers = {
-    performClick: e => {
-      e.preventDefault()
-      e.stopPropagation()
-
-      _.invoke(this.props, 'onTitleClick', e, this.props)
-    },
     collapseOrReceiveFocus: e => {
       const { items, open } = this.props
 
       e.preventDefault()
 
+      // Focuses the title if the event comes from a child item.
       if (e.currentTarget !== e.target && items && items.length) {
         e.stopPropagation()
         this.itemRef.current.focus()
@@ -195,7 +190,6 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
           {...rtlTextContainer.getAttributes({ forElements: [children] })}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
           {...unhandledProps}
-          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           {childrenExist(children) ? children : this.renderContent()}
         </ElementType>

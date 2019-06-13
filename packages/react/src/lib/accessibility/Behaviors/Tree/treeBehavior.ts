@@ -10,7 +10,7 @@ import subtreeBehavior from './subtreeBehavior'
  * Provides arrow key navigation in vertical direction.
  * Triggers 'expandSiblings' action with '*' on 'root'.
  */
-const treeBehavior: Accessibility<TreeBehaviorProps> = props => {
+const treeBehavior: Accessibility = props => {
   const subtreeBehaviorData = subtreeBehavior({})
   return {
     attributes: {
@@ -33,7 +33,5 @@ const treeBehavior: Accessibility<TreeBehaviorProps> = props => {
     },
   }
 }
-
-export type TreeBehaviorProps = {}
 
 export default treeBehavior
