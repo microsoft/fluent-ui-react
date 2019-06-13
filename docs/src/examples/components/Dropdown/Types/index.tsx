@@ -8,21 +8,25 @@ const Types = () => (
       title="Selection"
       description="A dropdown can be used to select between choices in a form."
       examplePath="components/Dropdown/Types/DropdownExample"
+      previewHtml={false}
     />
     <ComponentExample
       title="Multiple Selection"
       description="A dropdown can be used to select multiple items from a form."
       examplePath="components/Dropdown/Types/DropdownExampleMultiple"
+      previewHtml={false}
     />
     <ComponentExample
       title="Search Selection"
       description="A dropdown can be searchable."
       examplePath="components/Dropdown/Types/DropdownExampleSearch"
+      previewHtml={false}
     />
     <ComponentExample
       title="Search Multiple Selection"
       description="A dropdown can be searchable and allow a multiple selection."
       examplePath="components/Dropdown/Types/DropdownExampleSearchMultiple"
+      previewHtml={false}
     />
     <ComponentExample
       title="Clearable"

@@ -45,6 +45,7 @@ export interface ComponentExampleProps
   title: React.ReactNode
   description?: React.ReactNode
   examplePath: string
+  previewHtml?: boolean
   themeName?: string
 }
 
@@ -69,6 +70,10 @@ const childrenStyle: React.CSSProperties = {
 class ComponentExample extends React.Component<ComponentExampleProps, ComponentExampleState> {
   anchorName: string
   kebabExamplePath: string
+
+  static defaultProps = {
+    previewHtml: true,
+  }
 
   constructor(props) {
     super(props)
@@ -467,6 +472,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       currentCodeLanguage,
       currentCodePath,
       description,
+      previewHtml,
       title,
     } = this.props
     const { showCode, showRtl, showTransparent, themeName } = this.state
@@ -508,7 +514,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             <SourceRender
               babelConfig={babelConfig}
               source={currentCode}
-              renderHtml={showCode}
+              renderHtml={previewHtml && showCode}
               resolver={importResolver}
               themeName={themeName}
               wrap={this.renderElement}
@@ -547,12 +553,17 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                     {showCode && (
                       <div>
                         <Divider fitted />
-                        <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup} />
+                        {previewHtml ? (
+                          <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup} />
+                        ) : (
+                          <Segment color="red" styles={{ fontSize: '0.8rem' }}>
+                            HTML preview is disabled for this example.
+                          </Segment>
+                        )}
                       </div>
                     )}
                     {this.renderVariables()}
                   </Segment>
-                  <div style={{ paddingBottom: '10px' }} />
                 </>
               )}
             </SourceRender>

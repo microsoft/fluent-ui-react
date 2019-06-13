@@ -8,16 +8,19 @@ const Variations = () => (
       title="Multiple Search with Image and Content"
       description="A multiple search dropdown which items have header, content and image."
       examplePath="components/Dropdown/Variations/DropdownExampleSearchMultipleImageAndContent"
+      previewHtml={false}
     />
     <ComponentExample
       title="Multiple Search Fluid"
       description="A multiple search dropdown that fits the width of the container."
       examplePath="components/Dropdown/Variations/DropdownExampleSearchMultipleFluid"
+      previewHtml={false}
     />
     <ComponentExample
       title="Multiple Search Using French Language"
       description="A multiple search dropdown that overrides visual and accessibility texts with French equivalents."
       examplePath="components/Dropdown/Variations/DropdownExampleSearchMultipleFrenchLanguage"
+      previewHtml={false}
     />
     <ComponentExample
       title="Alignment and Position"
