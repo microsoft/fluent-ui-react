@@ -42,6 +42,7 @@ import {
 
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import { createShorthandFactory } from '../../lib/factories'
 
 export type PopupEvents = 'click' | 'hover' | 'focus'
 export type RestrictedClickEvents = 'click' | 'focus'
@@ -129,6 +130,8 @@ export default class Popup extends UIComponent<PopupProps, PopupState> {
   static displayName = 'Popup'
 
   static className = 'ui-popup'
+
+  static create: Function
 
   static slotClassNames: PopupSlotClassNames = {
     content: `${Popup.className}__content`,
@@ -534,3 +537,5 @@ export default class Popup extends UIComponent<PopupProps, PopupState> {
       : this.triggerRef.current
   }
 }
+
+Popup.create = createShorthandFactory({ Component: Popup, mappedProp: 'content' })

@@ -15,6 +15,8 @@ export type ObjectOf<T> = { [key: string]: T }
 
 export type ObjectOrFunc<TResult, TArg = {}> = ((arg: TArg) => TResult) | TResult
 
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
 // ========================================================
 // Props
 // ========================================================
