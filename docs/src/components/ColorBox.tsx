@@ -17,6 +17,7 @@ type ColorBoxProps = {
   rounded?: boolean
   size?: 'small' | 'normal' | 'big'
   value: string
+  showColorValue?: boolean
   styles?: ComponentSlotStyle
 }
 
@@ -77,7 +78,14 @@ export const colorBoxStyles: ComponentSlotStylesInput<ColorBoxProps, ColorBoxVar
 
 const ColorBox = createComponent<ColorBoxProps>({
   displayName: 'ColorBox',
-  render: ({ children, name, value, copyToClipboardIcon, stardust: { classes } }) => (
+  render: ({
+    children,
+    name,
+    value,
+    showColorValue,
+    copyToClipboardIcon,
+    stardust: { classes },
+  }) => (
     <div className={classes.root}>
       <div className={classes.name}>{children || _.startCase(name)}</div>
 
@@ -93,6 +101,9 @@ const ColorBox = createComponent<ColorBoxProps>({
           )}
         </CopyToClipboard>
       )}
+      {!copyToClipboardIcon && showColorValue && (
+        <span className={classes.value}>{value || 'Not defined'}</span>
+      )}
     </div>
   ),
 })
@@ -100,6 +111,7 @@ const ColorBox = createComponent<ColorBoxProps>({
 ColorBox.defaultProps = {
   size: 'normal',
   copyToClipboardIcon: true,
+  showColorValue: true,
 }
 
 export default ColorBox

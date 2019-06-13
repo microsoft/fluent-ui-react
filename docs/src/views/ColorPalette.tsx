@@ -10,8 +10,10 @@ import {
 } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 
 import ColorBox, { colorBoxStyles, colorBoxVariables } from 'docs/src/components/ColorBox'
+import Fader, { faderStyles } from 'docs/src/components/Fader'
 import ColorVariants, { colorVariantsStyles } from 'docs/src/components/ColorVariants'
 import DocPage from 'docs/src/components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet'
@@ -47,6 +49,7 @@ const ColorPalette = () => (
       componentStyles: {
         ColorBox: colorBoxStyles,
         ColorVariants: colorVariantsStyles,
+        Fader: faderStyles,
         Header: {
           root: {
             fontWeight: 700,
@@ -224,28 +227,30 @@ const ColorPalette = () => (
             and dark themes.
           </p>
 
-          <ColorSchemes
-            themes={[themes.teams, themes.teamsHighContrast, themes.teamsDark]}
-            headers={[
-              {
-                as: 'h3',
-                content: 'Design token',
-              },
-              {
-                as: 'h3',
-                content: 'Light theme',
-              },
-              {
-                as: 'h3',
-                content: 'HC theme',
-              },
-              {
-                as: 'h3',
-                content: 'Dark theme',
-              },
-            ]}
-            name={'brand'}
-          />
+          <Fader url={'color-schemes'}>
+            <ColorSchemes
+              themes={[themes.teams, themes.teamsHighContrast, themes.teamsDark]}
+              headers={[
+                {
+                  as: 'h3',
+                  content: 'Design token',
+                },
+                {
+                  as: 'h3',
+                  content: 'Light theme',
+                },
+                {
+                  as: 'h3',
+                  content: 'HC theme',
+                },
+                {
+                  as: 'h3',
+                  content: 'Dark theme',
+                },
+              ]}
+              name={'brand'}
+            />
+          </Fader>
 
           <p>
             The color scheme is just a recommendation of how the color design tokens can be
@@ -253,7 +258,9 @@ const ColorPalette = () => (
             specific to the parts of the application that looks different. If your design team has
             provided you with different names for the design tokens, you can use those, by
             introducing values in the <code>siteVariables</code>, just be sure that they will be
-            mapped to the correct color from the palette in each theme.
+            mapped to the correct color from the palette in each theme. You can see all color
+            schemes defined for Teams' themes{' '}
+            <Text as={Link} content="here" color="brand" to="color-schemes" />
           </p>
           <GuidesNavigationFooter
             previous={{ name: 'Theming Examples', url: 'theming-examples' }}
