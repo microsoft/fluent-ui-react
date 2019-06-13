@@ -127,15 +127,6 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
               styles: styles.action,
               ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.action, {}),
             },
-            // overrideProps: props => {
-            //       const previous = props.onKeyDown
-            //   props.onKeyDown = e => {
-            //     // console.warn('HANDLING KEY DOWN')
-            //     e.stopPropagation()
-            //     previous && previous(e)
-            //   }
-            //   return props
-            // },
           })}
         {!_.isNil(progress) &&
           Box.create('', {

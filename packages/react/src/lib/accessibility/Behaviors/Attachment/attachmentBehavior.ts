@@ -20,11 +20,6 @@ const attachmentBehavior: Accessibility = () => ({
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
     },
-    // action: {
-    //   performClick: {
-    //     keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
-    //   },
-    // },
   },
 })
 
