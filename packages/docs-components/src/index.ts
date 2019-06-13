@@ -1,3 +1,4 @@
+export { default as unstable_KnobContext } from './knobs/KnobContext'
 export { default as KnobInspector } from './knobs/KnobInspector'
 export { default as KnobProvider } from './knobs/KnobProvider'
 
