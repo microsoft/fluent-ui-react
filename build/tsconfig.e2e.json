@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.common.json",
   "compilerOptions": {
-    "isolatedModules": false,
     "module": "esnext"
-  }
+  },
+  "include": ["../packages/react/src", "../e2e", "../types"]
 }
