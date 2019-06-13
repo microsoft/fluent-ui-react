@@ -70,6 +70,7 @@ export interface ToolbarItemProps
    * Attaches a `Popup` component to the ToolbarItem.
    * Accepts all props as a `Popup`, except `trigger` and `children`.
    * Sets `accessibility` to `popupFocusTrapBehavior` by default.
+   * @see PopupProps
    */
   popup?: Omit<PopupProps, 'trigger' | 'children'> | string
 }
