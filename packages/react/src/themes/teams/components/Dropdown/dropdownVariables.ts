@@ -21,6 +21,10 @@ export interface DropdownVariables {
   listPadding: string
   listBoxShadow: string
   listMaxHeight: string
+  listItemHeaderFontSize: string
+  listItemHeaderColor: string
+  listItemContentFontSize: string
+  listItemContentColor: string
   listItemBackgroundColor: string
   listItemColorHover: string
   listItemBackgroundColorHover: string
@@ -62,6 +66,12 @@ export default (siteVars): DropdownVariables => ({
   listPadding: `${pxToRem(8)} 0 ${pxToRem(6)}`,
   listBoxShadow: siteVars.shadowLevel3,
   listMaxHeight: pxToRem(296),
+  // these should only apply when there is content in the image/media slot:
+  listItemHeaderFontSize: siteVars.fontSizes.medium,
+  listItemHeaderColor: siteVars.colors.grey[1000],
+  listItemContentFontSize: siteVars.fontSizes.small,
+  listItemContentColor: siteVars.colors.grey[450],
+  // - probably different styles should apply if no media/image slot...
   listItemBackgroundColor: siteVars.colors.white,
   listItemColorHover: siteVars.colors.grey[750],
   listItemBackgroundColorHover: siteVars.colors.grey[100],

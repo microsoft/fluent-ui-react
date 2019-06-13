@@ -6,7 +6,8 @@ import { pxToRem } from '../../../../lib'
 
 const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
-    minHeight: pxToRem(28),
+    minHeight: pxToRem(0),
+    padding: `${pxToRem(4)} ${pxToRem(11)}`,
     whiteSpace: 'nowrap',
     border: `1px solid transparent`,
     backgroundColor: v.listItemBackgroundColor,
@@ -26,6 +27,25 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
         backgroundColor: v.listItemBackgroundColorHover,
       }),
     }),
+  }),
+  image: (): ICSSInJSStyle => ({
+    margin: `${pxToRem(3)} ${pxToRem(12)} ${pxToRem(3)} ${pxToRem(4)}`,
+  }),
+  header: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    fontSize: v.listItemHeaderFontSize,
+    color: v.listItemHeaderColor,
+    ...(p.content && {
+      // if there is content it needs to be "tightened up" to the header
+      // this could just as easily rely on the image being present.
+      marginBottom: pxToRem(-1),
+    }),
+    ...(p.selected && {
+      background: 'red',
+    }),
+  }),
+  content: ({ variables: v }): ICSSInJSStyle => ({
+    fontSize: v.listItemContentFontSize,
+    color: v.listItemContentColor,
   }),
 }
 
