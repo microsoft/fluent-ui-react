@@ -55,6 +55,7 @@ export interface PopupContentProps
   pointerRef?: React.Ref<Element>
 
   /**
+   * @deprecated
    * Indicates that PopupContent is wrapped with FocusZone. Do not use it, it used only for internal implementation and
    * will be removed in future releases.
    */
