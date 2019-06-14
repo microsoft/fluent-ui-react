@@ -106,7 +106,10 @@ const Colors = () => (
             differently in your theme).
           </p>
           <Header as="h2" content="Color palette" />
-          <p>Colors in color palette have the following categorization.</p>
+          <p>
+            Colors in {link('Teams color palette', '/color-palette')} have the following
+            categorization.
+          </p>
 
           <Header as="h3">Primitive colors</Header>
           <p>
@@ -134,15 +137,19 @@ const Colors = () => (
             This part of palette includes colors from those that are the most commonly used among
             popular frameworks ({code('blue')}, {code('green')}, {code('grey')},{code('orange')},{' '}
             {code('pink')}, {code('purple')}, {code('teal')}, {code('red')}, {code('yellow')}). Each
-            color includes at least ten gradients, this allows us to satisfy most common needs. This
-            decision is experienced from Material UI and allows to define more variants than by
-            using semantical naming ({code('lightest')}, {code('lighter')}, etc.).
+            color includes at least ten gradients, this allows us to satisfy most common needs.
           </p>
           <p>
-            There is no requirement for client to define all the gradient values for each color - it
-            is just enough to define those that are actually used in the app.
+            This decision is experienced from Material UI and allows to define more variants than by
+            using semantical naming ({code('lightest')}, {code('lighter')}, etc.). However, there is
+            no requirement for client to define all the gradient values for each color - it is just
+            enough to define those that are actually used in the app.
           </p>
-
+          <p>
+            Below there is an example of base tints of Teams' natural colors provided. Full list of
+            all gradient values for them can be found on{' '}
+            {link('Teams color palette page', '/color-palette')}.
+          </p>
           <Grid columns={2} variables={{ gridGap: '2rem' }}>
             {_.map(naturalColors, (variants, color) => (
               <div key={color}>
@@ -178,8 +185,8 @@ const Colors = () => (
 
           <Header as="h3">All colors</Header>
           <p>
-            If the theme requires more colors, they can be added as well as available options in the
-            color palette. These are all colors available in the Teams' theme color palette.
+            If the theme requires more colors, they can be added to color palette as needed. These
+            are all colors available in the Teams' theme color palette.
           </p>
           <Grid columns={2} variables={{ gridGap: '2rem' }}>
             {_.map(['black', 'white'], color => (
@@ -212,23 +219,25 @@ const Colors = () => (
             values, so that they will work correctly when different themes will be applied. As part
             of each theme, we are defining <b>color scheme</b>, which will define the design tokens
             usages of the different colors from the palette. The color scheme is a prop of
-            siteVariables, containing schemas for the colors available in the palette. This is the
-            typical usage example of color scheme{' '}
+            {code('siteVariables')}, containing schemas for the colors available in the palette.
+          </p>
+          <p>
+            This is the typical usage example of color scheme{' '}
             <code>siteVariables.colorScheme.brand.foreground</code>, where:
             <ul>
-              <li>colorScheme is the object containing all color tokens</li>
+              <li>{code('colorScheme')} is the object containing all color tokens</li>
               <li>
-                brand is categorization of the tokens per color - contains all tokens for the{' '}
-                <code>brand</code> color
+                {code('brand')} is categorization of the tokens per color - contains all tokens for
+                the <code>brand</code> color
               </li>
               <li>
-                foreground is a{' '}
+                {code('foreground')} is a{' '}
                 <b>
                   color token (theme-dependent value) that should be used as value in styles. Note
                   that actual token's value is dependent on theme.
                 </b>{' '}
                 You can see an example of tokens defined for Teams theme{' '}
-                <Text as={Link} weight="bold" content="here" color="brand" to="color-schemes" />
+                <Text as={Link} weight="bold" content="here" color="brand" to="color-schemes" />.
               </li>
             </ul>
           </p>
@@ -238,7 +247,7 @@ const Colors = () => (
             schema, it will be mapped to the correct color value provided by the current theme.
           </p>
 
-          <p>Let's illustrate this with an example:</p>
+          <p>Let's illustrate this with code example:</p>
 
           <ExampleSnippet
             value={`
@@ -322,13 +331,13 @@ const Colors = () => (
 
           <p>
             The color scheme is just a recommendation of how the color design tokens can be
-            organized. If needed, you can add multiple color schemes per theme, like inverted, or
-            specific to the parts of the application that looks different. If your design team has
-            provided you with different names for the design tokens, you can use those, by
-            introducing values in the <code>siteVariables</code>, just be sure that they will be
-            mapped to the correct color from the palette in each theme. You can see all color
-            schemes defined for Teams' themes{' '}
-            <Text as={Link} weight="bold" content="here" color="brand" to="color-schemes" />
+            organized. If needed, you can add multiple color schemes per theme, like{' '}
+            {code('inverted')}, or specific to the parts of the application that looks different. If
+            your design team has provided you with different names for the design tokens, you can
+            use those, by introducing values in the <code>siteVariables</code>, just be sure that
+            they will be mapped to the correct color from the palette in each theme. You can see all
+            color schemes defined for Teams' themes{' '}
+            <Text as={Link} weight="bold" content="here" color="brand" to="color-schemes" />.
           </p>
           <GuidesNavigationFooter
             previous={{ name: 'Theming Examples', url: 'theming-examples' }}
