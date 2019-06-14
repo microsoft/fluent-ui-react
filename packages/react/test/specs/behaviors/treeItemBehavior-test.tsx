@@ -4,7 +4,7 @@ describe('TreeItemBehavior.ts', () => {
   describe('tabIndex', () => {
     test(`is added with '0' value to an item that is expandable`, () => {
       const expectedResult = treeItemBehavior({ items: [{ key: '1' }] })
-      expect(expectedResult.attributes.root.tabIndex).toEqual(0)
+      expect(expectedResult.attributes.root.tabIndex).toEqual(-1)
     })
 
     test(`is not added to a leaf item (no items)`, () => {

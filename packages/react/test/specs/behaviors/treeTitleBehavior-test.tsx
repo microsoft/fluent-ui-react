@@ -4,7 +4,7 @@ describe('TreeTitleBehavior.ts', () => {
   describe('tabIndex', () => {
     test(`is added with '0' value to a title with hasSubtree prop false`, () => {
       const expectedResult = treeTitleBehavior({ hasSubtree: false })
-      expect(expectedResult.attributes.root.tabIndex).toEqual(0)
+      expect(expectedResult.attributes.root.tabIndex).toEqual(-1)
     })
 
     test(`is not added to a title with hasSubtree prop true`, () => {
