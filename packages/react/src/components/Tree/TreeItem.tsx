@@ -109,6 +109,12 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
   treeRef = React.createRef<HTMLElement>()
 
   actionHandlers = {
+    performClick: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      _.invoke(this.props, 'onTitleClick', e, this.props)
+    },
     collapseOrReceiveFocus: e => {
       const { items, open } = this.props
 

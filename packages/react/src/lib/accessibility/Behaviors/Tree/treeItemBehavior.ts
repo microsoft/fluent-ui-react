@@ -26,6 +26,9 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
   },
   keyActions: {
     root: {
+      performClick: {
+        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
       collapseOrReceiveFocus: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
       },
