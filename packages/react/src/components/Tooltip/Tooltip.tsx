@@ -51,11 +51,17 @@ export interface TooltipProps
   /** Additional CSS class name(s) to apply.  */
   className?: string
 
+  /** Initial value for 'open'. */
+  defaultOpen?: boolean
+
   /** Existing element the tooltip should be bound to. */
   mountNode?: HTMLElement
 
   /** Delay in ms for the mouse leave event, before the tooltip will be closed. */
   mouseLeaveDelay?: number
+
+  /** Defines whether tooltip is displayed. */
+  open?: boolean
 
   /** A tooltip can show a pointer to trigger. */
   pointing?: boolean
