@@ -19,7 +19,7 @@ import DocPage from 'docs/src/components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet'
 import ColorSchemes from 'docs/src/components/ColorSchemes'
 import GuidesNavigationFooter from 'docs/src/components/GuidesNavigationFooter'
-import { link } from 'docs/src/utils/helpers'
+import { link, code } from 'docs/src/utils/helpers'
 
 const theme = {
   componentStyles: {
@@ -81,26 +81,26 @@ const ColorPalette = () => (
           <ul>
             <li>
               <b>{link('Color palette', '#color-palette')}</b> - central place for all colors
-              available in the application
+              available in the application,
             </li>
             <li>
               <b>{link('Color scheme', '#color-scheme')}</b> - design tokens for all colors used in
-              the application that should be appropriately map in all themes
+              the application that should be appropriately mapped in all themes.
             </li>
           </ul>
           <p>
-            Be aware that everything that follows is our recommendation, not requirement (everything
-            will work even if you decide to structure the palette and schemas differently in your
-            theme)
+            Be aware that everything that follows is our recommendation, not the requirement
+            (everything will work even if you'll decide to structure the palette and schemas
+            differently in your theme).
           </p>
           <Header as="h2" content="Color palette" />
-          <p>We have structured the color palette in several categories.</p>
+          <p>Colors in color palette have the following categorization.</p>
 
           <Header as="h3">Primitive colors</Header>
           <p>
-            This part of the palette includes only <i>black</i> and <i>white</i> colors, we decided
-            to separate by semantical ideas. There is nothing blacker than black and nothing whiter
-            than white.
+            This part of the palette contains colors that, semantically, cannot have any tints. This
+            group is represented by two colors, {code('black')} and {code('white')} - as there is
+            nothing blacker than black and nothing whiter than white.
           </p>
 
           <Grid columns={2}>
@@ -113,14 +113,16 @@ const ColorPalette = () => (
 
           <Header as="h3">Natural colors</Header>
           <p>
-            This part of palette includes several colors from the set of colors that are the most
-            frequently used among popular frameworks (blue, green, grey, orange, pink, purple, teal,
-            red, yellow). Each color includes at least ten gradients, this allows us to satisfy most
-            common needs. This decision is experienced from Material UI and allows to define more
-            variants than semantical naming (lightest, lighter, etc.). The reason why we don't
-            require all colors to be implemented, is just becase some application may not use some
-            of these colors, so we don't want to add overheader for defining things which are not
-            necessary.
+            This part of palette includes colors from those that are the most commonly used among
+            popular frameworks ({code('blue')}, {code('green')}, {code('grey')},{code('orange')},{' '}
+            {code('pink')}, {code('purple')}, {code('teal')}, {code('red')}, {code('yellow')}). Each
+            color includes at least ten gradients, this allows us to satisfy most common needs. This
+            decision is experienced from Material UI and allows to define more variants than by
+            using semantical naming ({code('lightest')}, {code('lighter')}, etc.).
+          </p>
+          <p>
+            There is no requirement for client to define all the gradient values for each color - it
+            is just enough to define those that are actually used in the app.
           </p>
 
           <Grid columns={2} variables={{ gridGap: '2rem' }}>
@@ -133,8 +135,8 @@ const ColorPalette = () => (
 
           <Header as="h3">Contextual colors</Header>
           <p>
-            This part of the palette may include brand color as well as danger, success, info colors
-            etc.
+            This part of the palette may include {code('brand')} color as well as {code('danger')},{' '}
+            {code('success')}, {code('info')} colors, etc.
           </p>
 
           <Grid columns={2}>
