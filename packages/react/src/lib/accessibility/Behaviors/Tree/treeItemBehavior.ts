@@ -41,8 +41,9 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
 })
 
 export type TreeItemBehaviorProps = {
-  /** The items which are rendered in subtree. */
+  /** If item is a subtree, it contains items. */
   items?: object[]
+  /** If item is a subtree, it indicates if it's open. */
   open?: boolean
 }
 
