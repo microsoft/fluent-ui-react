@@ -1,4 +1,4 @@
-import { Accessibility, FocusZoneMode } from '../../types'
+import { Accessibility, AccessibilityAttributes, FocusZoneMode } from '../../types'
 import { FocusZoneDirection } from '../../FocusZone'
 import subtreeBehavior from './subtreeBehavior'
 
@@ -10,7 +10,7 @@ import subtreeBehavior from './subtreeBehavior'
  * Provides arrow key navigation in vertical direction.
  * Triggers 'expandSiblings' action with '*' on 'root'.
  */
-const treeBehavior: Accessibility = props => {
+const treeBehavior: Accessibility<TreeBehaviorProps> = props => {
   const subtreeBehaviorData = subtreeBehavior({})
   return {
     attributes: {
@@ -33,5 +33,7 @@ const treeBehavior: Accessibility = props => {
     },
   }
 }
+
+type TreeBehaviorProps = {} & Pick<AccessibilityAttributes, 'aria-labelledby'>
 
 export default treeBehavior
