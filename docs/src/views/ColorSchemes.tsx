@@ -59,7 +59,7 @@ export default () => {
             name={color}
           />
         </Flex>
-        <GuidesNavigationFooter previous={{ name: 'Colors', url: 'color-palette' }} />
+        <GuidesNavigationFooter previous={{ name: 'Colors', url: 'colors' }} />
       </DocPage>
     </Provider>
   )
