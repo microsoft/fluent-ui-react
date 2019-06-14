@@ -23,23 +23,18 @@ import GuidesNavigationFooter from 'docs/src/components/GuidesNavigationFooter'
 import { link, code } from 'docs/src/utils/helpers'
 
 const theme = {
+  componentVariables: {
+    Box: siteVariables => ({
+      color: siteVariables.colorScheme.brand.foreground3,
+      backgroundColor: siteVariables.colorScheme.brand.background3,
+    }),
+  },
   componentStyles: {
     Box: {
-      root: ({ theme: { siteVariables } }) => {
-        const colorScheme = siteVariables.colorScheme
-        return {
-          textAlign: 'center',
-          padding: '5px',
-          color: colorScheme.brand.foreground3,
-          backgroundColor: colorScheme.brand.background3,
-          border: `1px solid ${colorScheme.brand.border}`,
-          ':hover': {
-            color: colorScheme.brand.foregroundHover,
-            backgroundColor: colorScheme.brand.backgroundHover1,
-            border: `1px solid ${colorScheme.brand.borderHover}`,
-          },
-        }
-      },
+      root: ({ variables }) => ({
+        color: variables.color,
+        backgroundColor: variables.backgroundColor,
+      }),
     },
   },
 }
@@ -253,21 +248,18 @@ const Colors = () => (
             import { Button } from '@stardust-ui/react'
 
             const theme = {
+              componentVariables: {
+                Box: (siteVariables) => ({
+                  color: siteVariables.colorScheme.brand.foreground3,
+                  backgroundColor: siteVariables.colorScheme.brand.background3,
+                }),
+              },
               componentStyles: {
                 Box: {
-                  root: ({ theme: { siteVariables } }) => {
-                    const colorScheme = siteVariables.colorScheme
-                    return {
-                      color: colorScheme.brand.foreground3,
-                      backgroundColor: colorScheme.brand.background,
-                      border: \`1px solid \${colorScheme.brand.border}\`,
-                      ':hover': {
-                        color: colorScheme.brand.foregroundHover,
-                        backgroundColor: colorScheme.brand.backgroundHover,
-                        border: \`1px solid \${colorScheme.brand.borderHover}\`,
-                      },
-                    }
-                  },
+                  root: ({ variables }) => ({
+                    color: variables.color,
+                    backgroundColor: variables.backgroundColor,
+                  }),
                 },
               },
             }
@@ -275,10 +267,10 @@ const Colors = () => (
             const ColorSchemeExample = () => (
               <Provider theme={mergeThemes(themes.teams, theme)}>
                  <Text content={'Box in light theme'} />
-                 <Box content={'LIGHT THEME - HOVER ME'}/>
+                 <Box content={'LIGHT THEME'}/>
                  <Text content={'Box in high contrast theme'} />
                  <Provider theme={themes.teamsHighContrast}>
-                   <Box content={'HIGH CONTRAST THEME - HOVER ME'}/>
+                   <Box content={'HIGH CONTRAST THEME'}/>
                  </Provider>
               </Provider>
             )
@@ -288,10 +280,10 @@ const Colors = () => (
             render={() => (
               <Provider theme={mergeThemes(themes.teams, theme)}>
                 <Text content={'Box in light theme'} />
-                <Box content={'LIGHT THEME - HOVER ME'} />
+                <Box content={'LIGHT THEME'} />
                 <Text content={'Box in high contrast theme'} />
                 <Provider theme={themes.teamsHighContrast}>
-                  <Box content={'HIGH CONTRAST THEME - HOVER ME'} />
+                  <Box content={'HIGH CONTRAST THEME'} />
                 </Provider>
               </Provider>
             )}
