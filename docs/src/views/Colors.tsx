@@ -282,14 +282,13 @@ export default ColorSchemeExample;
           <CodeSnippet
             mode="js"
             value={`
-          // ⚠️ Be sure that they will be mapped to the correct color from the palette in each theme
-          export const colorScheme = {
+// ⚠️ Be sure that they will be mapped to the correct color from the palette in each theme
+export const colorScheme = {
   inverted: {
     inputBorder: colors.black[750],
     textAreaBorder: colors.black[450],
   }
 }
-
           `}
           />
 
