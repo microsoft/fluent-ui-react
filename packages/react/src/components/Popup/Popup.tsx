@@ -447,6 +447,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         placement,
         pointing,
         pointerRef: this.pointerTargetRef,
+        unstable_wrapped: accessibility.focusTrap || accessibility.autoFocus,
       },
       overrideProps: this.getContentProps,
     })

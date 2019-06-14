@@ -53,6 +53,13 @@ export interface PopupContentProps
 
   /** A ref to a pointer element. */
   pointerRef?: React.Ref<Element>
+
+  /**
+   * @deprecated
+   * Indicates that PopupContent is wrapped with FocusZone. Do not use it, it used only for internal implementation and
+   * will be removed in future releases.
+   */
+  unstable_wrapped?: boolean
 }
 
 class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
@@ -68,6 +75,7 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
     pointerRef: customPropTypes.ref,
+    unstable_wrapped: PropTypes.bool,
   }
 
   static defaultProps = {
