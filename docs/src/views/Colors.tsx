@@ -1,3 +1,4 @@
+import { CodeSnippet } from '@stardust-ui/docs-components'
 import {
   Provider,
   ProviderConsumer,
@@ -274,8 +275,28 @@ export default ColorSchemeExample;
           />
 
           <p>
-            Here is how one color scheme looks like, defined for brand in Teams light, high contrast
-            and dark themes.
+            You can add multiple color schemes per theme like {code('inverted')} or for specific
+            parts of the application that looks different. Your design team can provide you
+            different names for the design tokens:
+          </p>
+          <CodeSnippet
+            mode="js"
+            value={`
+          // ⚠️ Be sure that they will be mapped to the correct color from the palette in each theme
+          export const colorScheme = {
+  inverted: {
+    inputBorder: colors.black[750],
+    textAreaBorder: colors.black[450],
+  }
+}
+
+          `}
+          />
+
+          <p>
+            You can see use color schemes defined for Teams' themes as reference to create own,
+            below is definition for <code>brand</code> color in in Teams light, high contrast and
+            dark themes.
           </p>
 
           <Fader url={'color-schemes'}>
@@ -303,16 +324,6 @@ export default ColorSchemeExample;
             />
           </Fader>
 
-          <p>
-            The color scheme is just a recommendation of how the color design tokens can be
-            organized. If needed, you can add multiple color schemes per theme, like{' '}
-            {code('inverted')}, or specific to the parts of the application that looks different. If
-            your design team has provided you with different names for the design tokens, you can
-            use those, by introducing values in the <code>siteVariables</code>, just be sure that
-            they will be mapped to the correct color from the palette in each theme. You can see all
-            color schemes defined for Teams' themes{' '}
-            <Text as={Link} weight="bold" content="here" color="brand" to="color-schemes" />.
-          </p>
           <GuidesNavigationFooter
             previous={{ name: 'Theming Examples', url: 'theming-examples' }}
             next={{ name: 'Layout', url: 'layout' }}
