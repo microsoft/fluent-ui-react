@@ -96,13 +96,16 @@ const Colors = () => (
             </li>
           </ul>
           <Alert info>
-            Everything that follows it's our recommendation and not the requirement. You can make
-            own decision on the structure you want to use in your theme.
+            Everything that follows it's our recommendation and not a requirement. You can make own
+            decision on the structure you want to use in your theme.
           </Alert>
           <Header as="h2" content="Color palette" />
           <p>
-            Colors in {link('Teams color palette', '/color-palette')} have the following
-            categorization.
+            Colors in{' '}
+            <Text color="brand" weight="bold">
+              {link('Teams color palette', '/color-palette')}
+            </Text>{' '}
+            have the following categorization.
           </p>
 
           <Header as="h3">Primitive colors</Header>
@@ -142,7 +145,10 @@ const Colors = () => (
           <p>
             Below there is an example of base tints of Teams' natural colors provided. Full list of
             all gradient values for them can be found on{' '}
-            {link('Teams color palette page', '/color-palette')}.
+            <Text color="brand" weight="bold">
+              {link('Teams color palette page', '/color-palette')}
+            </Text>
+            .
           </p>
           <Grid columns={2} variables={{ gridGap: '.5rem', padding: '.75rem' }}>
             {_.map(naturalColors, (variants, color) => (
@@ -212,7 +218,7 @@ const Colors = () => (
           <Header as="h2" content="Color scheme" />
           <p>
             Each our theme defines <b>color scheme</b>, which will define the design tokens usages
-            of the different colors from the palette. The color scheme is a prop of
+            of the different colors from the palette. The color scheme is a prop of{' '}
             {code('siteVariables')} via {code('colorScheme')} that contains all schemas for the
             colors available in the palette.
           </p>
@@ -276,8 +282,8 @@ export default ColorSchemeExample;
 
           <p>
             You can add multiple color schemes per theme like {code('inverted')} or for specific
-            parts of the application that looks different. Your design team can provide you
-            different names for the design tokens:
+            parts of the application that look different. Your design team can provide you different
+            names for the design tokens:
           </p>
           <CodeSnippet
             mode="js"
