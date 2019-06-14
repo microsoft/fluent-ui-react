@@ -24,9 +24,9 @@ import { link, code } from 'docs/src/utils/helpers'
 
 const theme = {
   componentVariables: {
-    Box: siteVariables => ({
-      color: siteVariables.colorScheme.brand.foreground3,
-      backgroundColor: siteVariables.colorScheme.brand.background3,
+    Box: ({ colorScheme }) => ({
+      color: colorScheme.brand.foreground3,
+      backgroundColor: colorScheme.brand.background3,
     }),
   },
   componentStyles: {
@@ -262,14 +262,14 @@ const ColorSchemeExample = () => (
 export default ColorSchemeExample;
         `}
             render={() => (
-              <Provider theme={mergeThemes(themes.teams, theme)}>
-                <Text content={'Box in light theme'} />
-                <Box content={'LIGHT THEME'} />
-                <Text content={'Box in high contrast theme'} />
-                <Provider theme={themes.teamsHighContrast}>
-                  <Box content={'HIGH CONTRAST THEME'} />
+              <React.Fragment>
+                <Provider theme={mergeThemes(themes.teams, theme)}>
+                  <Box content="themes.teams" />
                 </Provider>
-              </Provider>
+                <Provider theme={mergeThemes(themes.teamsHighContrast, theme)}>
+                  <Box content="themes.teamsHighContrast" />
+                </Provider>
+              </React.Fragment>
             )}
           />
 
