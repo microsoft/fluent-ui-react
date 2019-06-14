@@ -6,7 +6,9 @@ import DocsLayout from './components/DocsLayout'
 import DocsRoot from './components/DocsRoot'
 
 import Accessibility from './views/Accessibility'
+import Colors from './views/Colors'
 import ColorPalette from './views/ColorPalette'
+import ColorSchemes from './views/ColorSchemes'
 
 import FAQ from './views/FAQ'
 import ShorthandProps from './views/ShorthandProps'
@@ -132,7 +134,9 @@ const Router = () => (
           path="/integrate-custom-components"
           component={IntegrateCustomComponents}
         />
+        <DocsLayout exact path="/colors" component={Colors} />
         <DocsLayout exact path="/color-palette" component={ColorPalette} />
+        <DocsLayout exact path="/color-schemes" component={ColorSchemes} />
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>
     </Switch>

@@ -305,7 +305,7 @@ class Sidebar extends React.Component<any, any> {
         key: 'colorpalette',
         content: 'Colors',
         as: NavLink,
-        to: '/color-palette',
+        to: '/colors',
         styles: menuItemStyles,
       },
       {

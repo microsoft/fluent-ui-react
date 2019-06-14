@@ -369,7 +369,7 @@ export default () => (
 
     <GuidesNavigationFooter
       previous={{ name: 'Theming', url: 'theming' }}
-      next={{ name: 'Colors', url: 'color-palette' }}
+      next={{ name: 'Colors', url: 'colors' }}
     />
   </DocPage>
 )
