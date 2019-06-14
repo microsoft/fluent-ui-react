@@ -1,6 +1,6 @@
 import { treeTitleBehavior } from 'src/lib/accessibility'
 
-describe('TreeTitleBehavior.ts', () => {
+describe('TreeTitleBehavior', () => {
   describe('tabIndex', () => {
     test(`is added with '0' value to a title with hasSubtree prop false`, () => {
       const expectedResult = treeTitleBehavior({ hasSubtree: false })

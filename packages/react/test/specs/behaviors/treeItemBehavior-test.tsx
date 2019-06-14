@@ -1,6 +1,6 @@
 import { treeItemBehavior } from 'src/lib/accessibility'
 
-describe('TreeItemBehavior.ts', () => {
+describe('TreeItemBehavior', () => {
   describe('tabIndex', () => {
     test(`is added with '0' value to an item that is expandable`, () => {
       const expectedResult = treeItemBehavior({ items: [{ key: '1' }] })
