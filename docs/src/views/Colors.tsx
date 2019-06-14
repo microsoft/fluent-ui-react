@@ -211,14 +211,34 @@ const Colors = () => (
             Now that we know how the color palette is defined, let's see how we can use these
             values, so that they will work correctly when different themes will be applied. As part
             of each theme, we are defining <b>color scheme</b>, which will define the design tokens
-            usages of the different colors from the palette, that make sense for the developers.
+            usages of the different colors from the palette. The color scheme is a prop of
+            siteVariables, containing schemas for the colors available in the palette. This is the
+            typical usage example of color scheme{' '}
+            <code>siteVariables.colorScheme.brand.foreground</code>, where:
+            <ul>
+              <li>colorScheme is the object containing all color tokens</li>
+              <li>
+                brand is categorization of the tokens per color - contains all tokens for the{' '}
+                <code>brand</code> color
+              </li>
+              <li>
+                foreground is a{' '}
+                <b>
+                  color token (theme-dependent value) that should be used as value in styles. Note
+                  that actual token's value is dependent on theme.
+                </b>{' '}
+                You can see an example of tokens defined for Teams theme{' '}
+                <Text as={Link} weight="bold" content="here" color="brand" to="color-schemes" />
+              </li>
+            </ul>
+          </p>
+          <p>
+            The color tokens defined in the color scheme are mapped to actual values for all themes
+            used in the application. This means that, if the developers use some token from the
+            schema, it will be mapped to the correct color value provided by the current theme.
           </p>
 
-          <p>
-            Let's see how the user can safely use the tokens from the color scheme in the styles, as
-            those will be mapped to the correct values in all themes. The following example will
-            illustrate this:
-          </p>
+          <p>Let's illustrate this with an example:</p>
 
           <ExampleSnippet
             value={`
