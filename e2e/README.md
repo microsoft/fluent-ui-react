@@ -3,13 +3,13 @@ This directory provides end-to-end (in-browser) tests for critical scenarios for
 All test scripts, as well as examples this scripts are running against, are contained in `./tests` directory.
 
 ## Run browser tests
-The following `yarn` scripts provided to deal with browser tests:
+The following `yarn` scripts are provided to deal with browser tests:
 - `yarn test:e2e` - independent task: builds, serves and runs tests. Supports flags:
     - `--skip-build` - disables prior (re)build of Docs site which end-to-end tests are running against.
 - `yarn test:e2e:serve` - builds and serves site with E2E examples. Index page of this site contains link to all E2E examples.
 
 ## Add browser test
-Lets suppose that one would like to introduce tests for some scenario with `<scenarioName>`. This is set of steps to follow:
+Lets suppose that one would like to introduce tests for some scenario with `<scenarioName>`. This is the set of steps to follow:
 - all test files should be added  to `e2e/tests` directory of the repo
 - create React example file named as `<scenarioName>-example.tsx`
   - provide component to render, export it as the default one
@@ -27,5 +27,5 @@ There is global `e2e` object provided to each test function that serves as a thi
 This is what happens when `yarn test:e2e` script is executed:
 - test files in `./tests` directory are discovered
 - bundled, all the bundle artifacts go to `./dist` directory
-- server starts on dedicated for end-to-end tests port, it serves from `./dist`
+- server starts on dedicated for end-to-end tests port (value is defined in config and will be presented in console output), it serves from `./dist`
 - each test scenario in `./tests` is executed against the test examples served
