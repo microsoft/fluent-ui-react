@@ -5,6 +5,7 @@ import {
   Header,
   Box,
   Text,
+  Alert,
   mergeThemes,
   themes,
 } from '@stardust-ui/react'
@@ -76,14 +77,12 @@ const Colors = () => (
           <Header as="h2">Introduction</Header>
           <p>
             The organizing of the colors for an application has many requirements and constraints.
-            There is a need to be intentional and functional with color use. We analyzed existing
-            frameworks and picked the best ideas from them. In Stardust, the colors mechanisms are
-            completely based on the <code>siteVariables</code>, we don't have any additional API
-            specific to the colors.
+            In Stardust, the colors mechanisms are completely based on the{' '}
+            <code>siteVariables</code>.
           </p>
           <p>
-            There are two things important in order for colors to work transparently when the theme
-            switching is in play:
+            We have two concepts in order for colors to work transparently when the theme switching
+            is in play:
           </p>
           <ul>
             <li>
@@ -100,11 +99,10 @@ const Colors = () => (
               mapped in all themes.
             </li>
           </ul>
-          <p>
-            Be aware that everything that follows is our recommendation, not the requirement
-            (everything will work even if you'll decide to structure the palette and schemas
-            differently in your theme).
-          </p>
+          <Alert info>
+            Everything that follows it's our recommendation and not the requirement. You can make
+            own decision on the structure you want to use in your theme.
+          </Alert>
           <Header as="h2" content="Color palette" />
           <p>
             Colors in {link('Teams color palette', '/color-palette')} have the following
@@ -118,13 +116,13 @@ const Colors = () => (
             nothing blacker than black and nothing whiter than white.
           </p>
 
-          <Grid columns={2}>
+          <Grid columns={2} variables={{ gridGap: '.5rem', padding: '.75rem' }}>
             {_.map(['black', 'white'], color => (
               <div key={color}>
                 <ColorBox
                   name={color}
                   rounded
-                  size="big"
+                  size="small"
                   value={colors[color]}
                   copyToClipboardIcon={false}
                 />
@@ -150,12 +148,13 @@ const Colors = () => (
             all gradient values for them can be found on{' '}
             {link('Teams color palette page', '/color-palette')}.
           </p>
-          <Grid columns={2} variables={{ gridGap: '2rem' }}>
+          <Grid columns={2} variables={{ gridGap: '.5rem', padding: '.75rem' }}>
             {_.map(naturalColors, (variants, color) => (
               <div key={color}>
                 <ColorBox
                   name={color}
                   rounded
+                  size="small"
                   value={colors[color][600]}
                   copyToClipboardIcon={false}
                 />
@@ -169,13 +168,13 @@ const Colors = () => (
             {code('success')}, {code('info')} colors, etc.
           </p>
 
-          <Grid columns={2}>
+          <Grid columns={2} variables={{ gridGap: '.5rem', padding: '.75rem' }}>
             {_.map(contextualColors, (variants, color) => (
               <div key={color}>
                 <ColorBox
                   name={color}
                   rounded
-                  size="big"
+                  size="small"
                   value={colors[color][600]}
                   copyToClipboardIcon={false}
                 />
@@ -188,12 +187,13 @@ const Colors = () => (
             If the theme requires more colors, they can be added to color palette as needed. These
             are all colors available in the Teams' theme color palette.
           </p>
-          <Grid columns={2} variables={{ gridGap: '2rem' }}>
+          <Grid columns={2} variables={{ gridGap: '.5rem', padding: '.75rem' }}>
             {_.map(['black', 'white'], color => (
               <div key={color}>
                 <ColorBox
                   name={color}
-                  size="big"
+                  size="small"
+                  rounded
                   value={colors[color]}
                   copyToClipboardIcon={false}
                 />
@@ -203,7 +203,7 @@ const Colors = () => (
               { ...contextualColors, ...naturalColors, ...transparentColors },
               (variants, color) => (
                 <div key={color}>
-                  <ColorVariants name={color} headerOnly />
+                  <ColorVariants name={color} headerOnly size="small" />
                 </div>
               ),
             )}
@@ -215,10 +215,8 @@ const Colors = () => (
 
           <Header as="h2" content="Color scheme" />
           <p>
-            Now that we know how the color palette is defined, let's see how we can use these
-            values, so that they will work correctly when different themes will be applied. As part
-            of each theme, we are defining <b>color scheme</b>, which will define the design tokens
-            usages of the different colors from the palette. The color scheme is a prop of
+            Each our theme defines <b>color scheme</b>, which will define the design tokens usages
+            of the different colors from the palette. The color scheme is a prop of
             {code('siteVariables')}, containing schemas for the colors available in the palette.
           </p>
           <p>
