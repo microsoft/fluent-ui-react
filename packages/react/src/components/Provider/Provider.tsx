@@ -35,6 +35,8 @@ export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
   rtl?: boolean
   disableAnimations?: boolean
+  /** Experimental feature, is noop now. Do not use. */
+  target?: Document
   theme: ThemeInput
   variables?: ComponentVariablesInput
 }
@@ -75,6 +77,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     rtl: PropTypes.bool,
     disableAnimations: PropTypes.bool,
     children: PropTypes.node.isRequired,
+    target: PropTypes.object,
   }
 
   static defaultProps = {
