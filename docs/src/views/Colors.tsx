@@ -217,23 +217,23 @@ const Colors = () => (
           <p>
             This is the typical usage example of color scheme{' '}
             <code>siteVariables.colorScheme.brand.foreground</code>, where:
-            <ul>
-              <li>{code('colorScheme')} is the object containing all color tokens</li>
-              <li>
-                {code('brand')} is categorization of the tokens per color - contains all tokens for
-                the <code>brand</code> color
-              </li>
-              <li>
-                {code('foreground')} is a{' '}
-                <b>
-                  color token (theme-dependent value) that should be used as value in styles. Note
-                  that actual token's value is dependent on theme.
-                </b>{' '}
-                You can see an example of tokens defined for Teams theme{' '}
-                <Text as={Link} weight="bold" content="here" color="brand" to="color-schemes" />.
-              </li>
-            </ul>
           </p>
+          <ul>
+            <li>{code('colorScheme')} is the object containing all color tokens</li>
+            <li>
+              {code('brand')} is categorization of the tokens per color - contains all tokens for
+              the <code>brand</code> color
+            </li>
+            <li>
+              {code('foreground')} is a{' '}
+              <b>
+                color token (theme-dependent value) that should be used as value in styles. Note
+                that actual token's value is dependent on theme.
+              </b>{' '}
+              You can see an example of tokens defined for Teams theme{' '}
+              <Text as={Link} weight="bold" content="here" color="brand" to="color-schemes" />.
+            </li>
+          </ul>
           <p>
             The color tokens defined in the color scheme are mapped to actual values for all themes
             used in the application. This means that, if the developers use some token from the
@@ -245,7 +245,7 @@ const Colors = () => (
           <ExampleSnippet
             value={`
             import React from 'react'
-            import { Button } from '@stardust-ui/react'
+            import { Box, Provider, Text, mergeThemes, themes } from '@stardust-ui/react'
 
             const theme = {
               componentVariables: {
