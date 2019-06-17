@@ -1,7 +1,7 @@
 import { ICSSInJSStyle } from '../../../types'
 import { pxToRem } from '../../../../lib'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
-import TreeTitle from 'src/components/Tree/TreeTitle'
+import TreeTitle from '../../../../components/Tree/TreeTitle'
 
 const treeItemStyles = {
   root: ({ theme: { siteVariables } }): ICSSInJSStyle => ({
