@@ -22,9 +22,6 @@ export interface AccordionContentProps
   /** Id of the title it belongs to. */
   accordionTitleId?: string
 
-  /** Whether or not the content is visible. */
-  active?: boolean
-
   /**
    * Called on click.
    *
@@ -44,7 +41,6 @@ class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, an
   static propTypes = {
     ...commonPropTypes.createCommon(),
     accordionTitleId: PropTypes.string,
-    active: PropTypes.bool,
     onClick: PropTypes.func,
   }
 

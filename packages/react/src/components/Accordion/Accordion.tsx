@@ -242,7 +242,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
     return !expanded || (!exclusive && (activeIndex as number[]).length > 1)
   }
 
-  renderPanels = () => {
+  renderPanels = (styles: any) => {
     const children: any[] = []
     const { panels, renderPanelContent, renderPanelTitle } = this.props
     const { focusedIndex } = this.state
@@ -277,8 +277,8 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
       children.push(
         AccordionContent.create(content, {
           defaultProps: {
+            style: active ? styles.expandedContent : styles.collapsedContent,
             className: Accordion.slotClassNames.content,
-            active,
             id: contentId,
             accordionTitleId: titleId,
           },
@@ -290,7 +290,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
     return children
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
+  renderComponent({ ElementType, styles, classes, accessibility, unhandledProps }) {
     const { children } = this.props
 
     return (
@@ -301,7 +301,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         className={classes.root}
       >
-        {childrenExist(children) ? children : this.renderPanels()}
+        {childrenExist(children) ? children : this.renderPanels(styles)}
       </ElementType>
     )
   }

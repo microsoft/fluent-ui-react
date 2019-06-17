@@ -1,10 +1,8 @@
 import { ICSSInJSStyle } from '../../../types'
 
 const accordionContentStyles = {
-  root: ({ props }): ICSSInJSStyle => ({
-    display: 'none',
+  root: (): ICSSInJSStyle => ({
     verticalAlign: 'middle',
-    ...(props.active && { display: 'block' }),
     marginInlineStart: 0,
   }),
 }

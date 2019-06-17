@@ -8,6 +8,12 @@ const accordionStyles = {
     marginBlockEnd: 0,
     marginBlockStart: 0,
   }),
+  expandedContent: (): ICSSInJSStyle => ({
+    display: 'block',
+  }),
+  collapsedContent: (): ICSSInJSStyle => ({
+    display: 'none',
+  }),
 }
 
 export default accordionStyles
