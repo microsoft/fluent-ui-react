@@ -7,7 +7,6 @@ const treeTitleStyles = {
     padding: `${pxToRem(1)} 0`,
     cursor: 'pointer',
     color: variables.defaultColor,
-    border: `${pxToRem(2)} transparent solid`,
     position: 'relative',
     ...getBorderFocusStyles({
       siteVariables,
