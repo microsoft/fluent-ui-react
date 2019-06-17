@@ -24,8 +24,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix prop types of `Tooltip` component @kuzhelov ([#1499](https://github.com/stardust-ui/react/pull/1499))
 - Fix `Popup` styling with `pointer` when it is wrapped by `FocusZones` @layershifter ([#1492](https://github.com/stardust-ui/react/pull/1492))
 
+### Features
+- Integrate ARIA HTML design pattern in the `Tree` component @silviuavram ([#1488](https://github.com/stardust-ui/react/pull/1488))
+
 ### Documentation
 - Add dedicated docs for the `color palette` and `color schema` @mnajdova ([#1494](https://github.com/stardust-ui/react/pull/1494))
+
 <!--------------------------------[ v0.33.0 ]------------------------------- -->
 ## [v0.33.0](https://github.com/stardust-ui/react/tree/v0.33.0) (2019-06-13)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.32.0...v0.33.0)
