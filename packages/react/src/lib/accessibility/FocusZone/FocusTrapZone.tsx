@@ -58,18 +58,16 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
 
   componentDidMount(): void {
     FocusTrapZone._focusStack.push(this)
-    const { disableFirstFocus = false } = this.props
-
-    this._previouslyFocusedElementOutsideTrapZone = this._getPreviouslyFocusedElementOutsideTrapZone()
-
-    if (
-      !this._root.current.contains(this._previouslyFocusedElementOutsideTrapZone) &&
-      !disableFirstFocus
-    ) {
-      this._findElementAndFocusAsync()
-    }
-
+    this._bringFocusIntoZone()
     this._hideContentFromAccessibilityTree()
+  }
+
+  componentDidUpdate(): void {
+    const activeElement = document.activeElement as HTMLElement
+    // if after componentDidUpdate focus is not inside the focus trap, bring it back
+    if (!this._root.current.contains(activeElement)) {
+      this._bringFocusIntoZone()
+    }
   }
 
   render(): JSX.Element {
@@ -141,6 +139,19 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
     ) {
       lastActiveFocusTrap._root.current.removeAttribute(HIDDEN_FROM_ACC_TREE)
       lastActiveFocusTrap._root.current.removeAttribute('aria-hidden')
+    }
+  }
+
+  _bringFocusIntoZone = () => {
+    const { disableFirstFocus = false } = this.props
+
+    this._previouslyFocusedElementOutsideTrapZone = this._getPreviouslyFocusedElementOutsideTrapZone()
+
+    if (
+      !this._root.current.contains(this._previouslyFocusedElementOutsideTrapZone) &&
+      !disableFirstFocus
+    ) {
+      this._findElementAndFocusAsync()
     }
   }
 
