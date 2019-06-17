@@ -401,7 +401,6 @@ export interface ThemePrepared {
   animations: { [key: string]: ThemeAnimation }
 }
 
-// AccordionTitle, AccordionContent, Flex ..., Checkbox, Toolbar, Tooltip
 type ThemeStylesProps = {
   Accordion?: AccordionProps
   AccordionTitle?: AccordionTitleProps
