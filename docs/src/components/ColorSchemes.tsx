@@ -35,6 +35,7 @@ const ColorSchemes = createComponent<ColorVariantsProps>({
     const elements = _.flatMap(_.head(colorSchemes), (i, token) => [
       <ColorBox
         copyToClipboardIcon={false}
+        showColorValue={false}
         name={token}
         key={`${token}schema`}
         size="small"
@@ -42,7 +43,12 @@ const ColorSchemes = createComponent<ColorVariantsProps>({
         styles={{ backgroundColor: '#f2f2f2' }}
       />,
       ..._.map(colorSchemes, (colorScheme, i) => (
-        <ColorBox key={`${token}${i}`} size="small" value={colorScheme[token]} />
+        <ColorBox
+          key={`${token}${i}`}
+          size="small"
+          value={colorScheme[token]}
+          copyToClipboardIcon={false}
+        />
       )),
     ])
 
