@@ -54,6 +54,7 @@ const ToolbarExampleShorthand = () => {
       items={[
         {
           key: 'bold',
+          kind: 'toggle',
           active: isBold,
           icon: { name: 'bold', outline: true },
           onClick: () => {
@@ -62,6 +63,7 @@ const ToolbarExampleShorthand = () => {
         },
         {
           key: 'italic',
+          kind: 'toggle',
           active: isItalic,
           icon: { name: 'italic', outline: true },
           onClick: () => {
@@ -70,6 +72,7 @@ const ToolbarExampleShorthand = () => {
         },
         {
           key: 'underline',
+          kind: 'toggle',
           active: isUnderline,
           icon: { name: 'underline', outline: true },
           onClick: () => {
@@ -78,6 +81,7 @@ const ToolbarExampleShorthand = () => {
         },
         {
           key: 'strike',
+          kind: 'toggle',
           active: isStrike,
           disabled: true,
           icon: { name: 'strike', outline: true },
