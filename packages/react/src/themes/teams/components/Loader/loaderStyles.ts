@@ -28,12 +28,9 @@ export default {
   }: ComponentStyleFunctionParam<LoaderProps, LoaderVariables>) => {
     const outerAnimation: ICSSInJSStyle = {
       animationName: {
-        keyframe: () =>
-          ({
-            to: {
-              opacity: 1,
-            },
-          } as any),
+        to: {
+          opacity: 1,
+        },
       },
       animationDelay: '1.5s',
       animationDirection: 'normal',
@@ -48,12 +45,9 @@ export default {
     }
     const svgAnimation: ICSSInJSStyle = {
       animationName: {
-        keyframe: () =>
-          ({
-            to: {
-              transform: `translate3d(0, ${v.svgTranslatePosition[p.size]}, 0)`,
-            },
-          } as any),
+        to: {
+          transform: `translate3d(0, ${v.svgTranslatePosition[p.size]}, 0)`,
+        },
       },
       animationDelay: '0s',
       animationDirection: 'normal',
