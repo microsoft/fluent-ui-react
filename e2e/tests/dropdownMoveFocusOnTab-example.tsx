@@ -13,24 +13,18 @@ const inputItems = [
   'Selina Kyle',
 ]
 
-const DropdownExampleMultiple = () => (
+export const selectors = {
+  previousFocusableSibling: 'previous-focusable-sibling',
+  nextFocusableSibling: 'next-focusable-sibling',
+  triggerButtonClass: Dropdown.slotClassNames.triggerButton,
+}
+
+const DropdownMoveFocusOnTabExample = () => (
   <>
-    <button id="previous-button" />
-    <Dropdown
-      multiple
-      moveFocusOnTab
-      items={inputItems}
-      placeholder="Select your heroes"
-      getA11ySelectionMessage={getA11ySelectionMessage}
-      noResultsMessage="We couldn't find any matches."
-    />
-    <button id="next-button" />
+    <button id={selectors.previousFocusableSibling} />
+    <Dropdown multiple moveFocusOnTab items={inputItems} placeholder="Select your heroes" />
+    <button id={selectors.nextFocusableSibling} />
   </>
 )
 
-const getA11ySelectionMessage = {
-  onAdd: item => `${item} has been selected.`,
-  onRemove: item => `${item} has been removed.`,
-}
-
-export default DropdownExampleMultiple
+export default DropdownMoveFocusOnTabExample

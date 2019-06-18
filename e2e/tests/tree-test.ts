@@ -1,10 +1,10 @@
-import { Tree, TreeItem, TreeTitle } from '@stardust-ui/react'
+import { selectors } from './tree-example'
+
+const tree = `.${selectors.treeClass}`
+const treeItem = index => `.${selectors.treeItemClass}:nth-child(${index})`
+const treeTitle = index => `.${selectors.treeTitleClass}:nth-child(${index})`
 
 describe('Tree', () => {
-  const tree = `.${Tree.className}`
-  const treeItem = index => `.${TreeItem.className}:nth-child(${index})`
-  const treeTitle = index => `.${TreeTitle.className}:nth-child(${index})`
-
   describe('Focus behavior', () => {
     beforeEach(async () => {
       await e2e.gotoTestCase(__filename, tree)
@@ -19,8 +19,8 @@ describe('Tree', () => {
 
     it('moves focus to parent from one of its children', async () => {
       await e2e.clickOn(treeTitle(1)) // expands first subtree and focuses it.
-      await e2e.focusOn(`${treeItem(1)} ${treeItem(1)}`) // move focus to first child.
-      await e2e.pressKey('ArrowLeft') // moves focus back to parent.
+      await e2e.focusOn(`${treeItem(1)} ${treeItem(1)}`) // move focus to first child of first subtree.
+      await e2e.pressKey('ArrowLeft') // moves focus back to the parent of first subtree.
 
       expect(await e2e.isFocused(treeItem(1))).toBe(true)
     })

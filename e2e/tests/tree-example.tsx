@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tree } from '@stardust-ui/react'
+import { Tree, TreeItem, TreeTitle } from '@stardust-ui/react'
 
 const items = [
   {
@@ -69,6 +69,12 @@ const items = [
     ],
   },
 ]
+
+export const selectors = {
+  treeClass: Tree.className,
+  treeItemClass: TreeItem.className,
+  treeTitleClass: TreeTitle.className,
+}
 
 const TreeExample = () => <Tree items={items} />
 

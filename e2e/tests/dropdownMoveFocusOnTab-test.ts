@@ -1,10 +1,10 @@
-import { Dropdown } from '@stardust-ui/react'
+import { selectors } from './dropdownMoveFocusOnTab-example'
+
+const triggerButton = `.${selectors.triggerButtonClass}`
+const nextFocusableSibling = `#${selectors.nextFocusableSibling}`
+const previousFocusableSibling = `#${selectors.previousFocusableSibling}`
 
 describe('Dropdown', () => {
-  const triggerButton = `.${Dropdown.slotClassNames.triggerButton}`
-  const nextButton = '#next-button'
-  const previousButton = '#previous-button'
-
   describe('Focus behavior', () => {
     beforeEach(async () => {
       await e2e.gotoTestCase(__filename, triggerButton)
@@ -17,7 +17,7 @@ describe('Dropdown', () => {
       await e2e.pressKey('Tab') // TAB from opened dropdown list
 
       expect(await e2e.isFocused(triggerButton)).toBe(false)
-      expect(await e2e.isFocused(nextButton)).toBe(true)
+      expect(await e2e.isFocused(nextFocusableSibling)).toBe(true)
     })
 
     it('moves focus to previous element on Shift-Tab', async () => {
@@ -27,7 +27,7 @@ describe('Dropdown', () => {
       await e2e.pressKey('Tab', 'Shift') // Shift+TAB from opened dropdown list
 
       expect(await e2e.isFocused(triggerButton)).toBe(false)
-      expect(await e2e.isFocused(previousButton)).toBe(true)
+      expect(await e2e.isFocused(previousFocusableSibling)).toBe(true)
     })
   })
 })
