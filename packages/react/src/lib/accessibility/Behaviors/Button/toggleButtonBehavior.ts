@@ -10,7 +10,7 @@ import buttonBehavior, { ButtonBehaviorProps } from './buttonBehavior'
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
  */
 
-const toggleButtonBehavior: Accessibility = (props: any) => {
+const toggleButtonBehavior: Accessibility<ToggleButtonBehaviorProps> = props => {
   const behaviorData = buttonBehavior(props)
   behaviorData.attributes.root = {
     ...behaviorData.attributes.root,
