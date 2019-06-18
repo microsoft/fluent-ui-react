@@ -82,12 +82,6 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   staticStylesRendered: boolean = false
 
   renderStaticStyles = (mergedTheme: ThemePrepared) => {
-    // RTL WARNING
-    // This function sets static styles which are global and renderer agnostic.
-    // Top level fela renderer (the first one rendered) is used to render static styles.
-    // With current implementation, static styles cannot differ between LTR and RTL
-    // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
-
     const { siteVariables } = mergedTheme
     const { staticStyles } = this.props.theme
 
@@ -116,12 +110,6 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   }
 
   renderFontFaces = () => {
-    // RTL WARNING
-    // This function sets static styles which are global and renderer agnostic.
-    // Top level fela renderer (the first one rendered) is used to render static styles.
-    // With current implementation, static styles cannot differ between LTR and RTL
-    // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
-
     const { fontFaces } = this.props.theme
 
     if (!fontFaces) return
