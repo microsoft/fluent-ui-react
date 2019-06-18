@@ -12,6 +12,7 @@ import {
   commonPropTypes,
   childrenExist,
   isFromKeyboard,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import {
   ComponentEventHandler,
@@ -21,7 +22,7 @@ import {
   Omit,
 } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior, popupFocusTrapBehavior } from '../../lib/accessibility'
+import { buttonBehavior, popupFocusTrapBehavior } from '../../lib/accessibility'
 
 import Icon from '../Icon/Icon'
 import Popup, { PopupProps } from '../Popup/Popup'
@@ -32,6 +33,7 @@ export interface ToolbarItemProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
+   * @default buttonBehavior
    */
   accessibility?: Accessibility
 
@@ -106,7 +108,14 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
 
   static defaultProps = {
     as: 'button',
-    accessibility: defaultBehavior as Accessibility,
+    accessibility: buttonBehavior as Accessibility,
+  }
+
+  actionHandlers = {
+    performClick: event => {
+      event.preventDefault()
+      this.handleClick(event)
+    },
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
@@ -114,6 +123,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     const renderedItem = (
       <ElementType
         {...accessibility.attributes.root}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...unhandledProps}
         disabled={disabled}
         className={classes.root}
