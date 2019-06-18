@@ -30,6 +30,7 @@ export type AriaWidgetRole =
   | 'tooltip'
   | 'treeitem'
   | 'switch'
+  | 'none'
 
 export type AriaCompositeRole =
   | 'combobox'

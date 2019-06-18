@@ -1,7 +1,7 @@
 import * as CSSType from 'csstype'
 import { IRenderer as FelaRenderer } from 'fela'
 import * as React from 'react'
-import { Extendable, ObjectOf, ObjectOrFunc } from '../types'
+import { Extendable, ObjectOf, ObjectOrFunc, Omit } from '../types'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -215,8 +215,6 @@ export interface StardustAnimationName<P = Record<string, any>> {
   keyframe?: AnimationKeyFrame | ((params: P) => AnimationKeyFrame)
   params?: P
 }
-
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
 export type CSSProperties = Omit<React.CSSProperties, 'animationName'> & {
   animationName?: StardustAnimationName | AnimationKeyFrame | string | 'none'

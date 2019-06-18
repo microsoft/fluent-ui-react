@@ -1,4 +1,4 @@
-import * as values from 'object.values'
+import values from 'object.values'
 import * as React from 'react'
 
 import KnobsContext from './KnobContext'

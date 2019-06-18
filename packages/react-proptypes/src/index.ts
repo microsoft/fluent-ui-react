@@ -22,11 +22,11 @@ export const as = PropTypes.oneOfType([
  */
 export const domNode = (props: ObjectOf<any>, propName: string) => {
   // skip if prop is undefined
-  if (props[propName] === undefined) return
+  if (props[propName] === undefined) return undefined
   // skip if prop is valid
-  if (props[propName] instanceof Element) return
+  if (props[propName] instanceof Element) return undefined
 
-  throw new Error(`Invalid prop "${propName}" supplied, expected a DOM node.`)
+  return new Error(`Invalid prop "${propName}" supplied, expected a DOM node.`)
 }
 
 /**
@@ -111,6 +111,16 @@ export const suggest = (suggestions: string[]) => {
       ].join(''),
     )
   }
+}
+
+/**
+ * The prop cannot be used.
+ * Similar to `deprecate` but with different error message.
+ */
+export const never = (props: ObjectOf<any>, propName: string, componentName: string) => {
+  if (_.isNil(props[propName]) || props[propName] === false) return undefined
+
+  return new Error(`Prop \`${propName}\` in \`${componentName}\` cannot be used.`)
 }
 
 /**

@@ -5,6 +5,8 @@ import { isConformant } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
 import Tree from 'src/components/Tree/Tree'
 import TreeTitle from 'src/components/Tree/TreeTitle'
+import TreeItem from 'src/components/Tree/TreeItem'
+import { ReactWrapper, CommonWrapper } from 'enzyme'
 
 const items = [
   {
@@ -36,8 +38,8 @@ const items = [
         title: '21',
         items: [
           {
-            key: '221',
-            title: '221',
+            key: '211',
+            title: '211',
           },
         ],
       },
@@ -53,26 +55,104 @@ const items = [
   },
 ]
 
+const getTitles = (wrapper: ReactWrapper): CommonWrapper =>
+  wrapper.find(`.${TreeTitle.className}`).filterWhere(n => typeof n.type() === 'string')
+const getItems = (wrapper: ReactWrapper): CommonWrapper =>
+  wrapper.find(`.${TreeItem.className}`).filterWhere(n => typeof n.type() === 'string')
+
+const checkOpenTitles = (wrapper: ReactWrapper, expected: string[]): void => {
+  const titles = getTitles(wrapper)
+  expect(titles.length).toEqual(expected.length)
+
+  expected.forEach((expectedTitle, index) => {
+    expect(titles.at(index).getDOMNode().textContent).toEqual(expectedTitle)
+  })
+}
+
 describe('Tree', () => {
   isConformant(Tree)
 
   describe('activeIndex', () => {
-    it('should have all TreeItems with a subtree open on asterisk key', () => {
+    it('should contain index of item open at click', () => {
       const wrapper = mountWithProvider(<Tree items={items} />)
-      const tree = wrapper.find(Tree).at(0)
-      const firstTreeTitle = wrapper.find(`.${TreeTitle.className}`).at(0)
 
-      firstTreeTitle.simulate('keydown', { keyCode: keyboardKey['*'] })
-      expect(tree.state('activeIndex')).toEqual([0, 1])
+      getTitles(wrapper)
+        .at(0) // title 1
+        .simulate('click')
+      checkOpenTitles(wrapper, ['1', '11', '12', '2', '3'])
+
+      getTitles(wrapper)
+        .at(3) // title 2
+        .simulate('click')
+      checkOpenTitles(wrapper, ['1', '11', '12', '2', '21', '22', '3'])
     })
 
-    it('should expand subtrees only on current level', () => {
-      const wrapper = mountWithProvider(<Tree items={items} />)
-      const firstTreeTitle = wrapper.find(`.${TreeTitle.className}`).at(0)
+    it('should have index of item removed when closed at click', () => {
+      const wrapper = mountWithProvider(<Tree items={items} defaultActiveIndex={[0, 1]} />)
 
-      firstTreeTitle.simulate('keydown', { keyCode: keyboardKey['*'] })
-      const tree = wrapper.find(Tree)
-      expect(tree.length).toBe(3) // Parent tree + its 2 subtrees (1, 2). Did not expand the other 2 subtrees (12, 21).
+      getTitles(wrapper)
+        .at(0) // title 1
+        .simulate('click')
+      checkOpenTitles(wrapper, ['1', '2', '21', '22', '3'])
+    })
+
+    it('should contain only one index at a time if exclusive', () => {
+      const wrapper = mountWithProvider(<Tree items={items} exclusive />)
+
+      getTitles(wrapper)
+        .at(0) // title 1
+        .simulate('click')
+      checkOpenTitles(wrapper, ['1', '11', '12', '2', '3'])
+
+      getTitles(wrapper)
+        .at(3) // title 2
+        .simulate('click')
+      checkOpenTitles(wrapper, ['1', '2', '21', '22', '3'])
+    })
+
+    it('should contain index of item open by ArrowRight', () => {
+      const wrapper = mountWithProvider(<Tree items={items} />)
+
+      getTitles(wrapper)
+        .at(0) // title 1
+        .simulate('keydown', { keyCode: keyboardKey.ArrowRight })
+      checkOpenTitles(wrapper, ['1', '11', '12', '2', '3'])
+    })
+
+    it('should have index of item removed if closed by ArrowLeft', () => {
+      const wrapper = mountWithProvider(<Tree items={items} defaultActiveIndex={[0, 1]} />)
+
+      getItems(wrapper)
+        .at(0) // title 1
+        .simulate('keydown', { keyCode: keyboardKey.ArrowLeft })
+      checkOpenTitles(wrapper, ['1', '2', '21', '22', '3'])
+    })
+
+    it('should have all TreeItems with a subtree open on asterisk key', () => {
+      const wrapper = mountWithProvider(<Tree items={items} />)
+
+      getTitles(wrapper)
+        .at(0) // title 1
+        .simulate('keydown', { keyCode: keyboardKey['*'] })
+      checkOpenTitles(wrapper, ['1', '11', '12', '2', '21', '22', '3'])
+    })
+
+    it('should expand subtrees only on current level on asterisk key', () => {
+      const wrapper = mountWithProvider(<Tree items={items} defaultActiveIndex={[0]} />)
+
+      getTitles(wrapper)
+        .at(1) // title 11
+        .simulate('keydown', { keyCode: keyboardKey['*'] })
+      checkOpenTitles(wrapper, ['1', '11', '12', '121', '2', '3'])
+    })
+
+    it('should not be changed on asterisk key if all siblings are already expanded', () => {
+      const wrapper = mountWithProvider(<Tree items={items} defaultActiveIndex={[0, 1, 2]} />)
+
+      getTitles(wrapper)
+        .at(0) // title 1
+        .simulate('keydown', { keyCode: keyboardKey['*'] })
+      checkOpenTitles(wrapper, ['1', '11', '12', '2', '21', '22', '3'])
     })
   })
 })

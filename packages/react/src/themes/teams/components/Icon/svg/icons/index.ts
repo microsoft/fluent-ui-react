@@ -12,6 +12,8 @@ import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
 import callParking from './callParking'
+import callControlRelease from './callControlRelease'
+import callControlRequest from './callControlRequest'
 import callControlPresentNew from './callControlPresentNew'
 import callControlStopPresentingNew from './callControlStopPresentingNew'
 import callControlShare from './callControlShare'
@@ -150,6 +152,8 @@ export default {
   'call-parking': callParking,
   'call-video': callVideo,
   'call-video-off': callVideoOff,
+  'call-control-release': callControlRelease,
+  'call-control-request': callControlRequest,
   'call-control-close-tray': callControlCloseTray,
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
