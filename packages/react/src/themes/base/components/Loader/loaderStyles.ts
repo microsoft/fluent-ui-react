@@ -2,7 +2,7 @@ import { FlexDirectionProperty } from 'csstype'
 
 import { pxToRem } from '../../../../lib'
 import { LoaderProps } from '../../../../components/Loader/Loader'
-import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
+import { ComponentStyleFunctionParam, ICSSInJSStyle, StardustAnimationName } from '../../../types'
 import { ObjectOf } from '../../../../types'
 import { LoaderVariables } from './loaderVariables'
 
@@ -27,16 +27,15 @@ export default {
     theme: t,
     variables: v,
   }: ComponentStyleFunctionParam<LoaderProps, LoaderVariables>): ICSSInJSStyle => {
-    const animationName = {
-      keyframe: ({ from, to }) =>
-        ({
-          from: {
-            transform: `rotate(${from})`,
-          },
-          to: {
-            transform: `rotate(${to}})`,
-          },
-        } as any),
+    const animationName: StardustAnimationName = {
+      keyframe: ({ from, to }) => ({
+        from: {
+          transform: `rotate(${from})`,
+        },
+        to: {
+          transform: `rotate(${to})`,
+        },
+      }),
       params: {
         from: '0deg',
         to: '360deg',

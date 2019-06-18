@@ -209,13 +209,15 @@ export interface ICSSPseudoElementStyle extends ICSSInJSStyle {
   content?: string
 }
 
-export interface StardustAnimationName {
-  keyframe?: any
-  params?: object
+type AnimationKeyFrame = Record<'from' | 'to' | string, ICSSInJSStyle>
+
+export interface StardustAnimationName<P = Record<string, any>> {
+  keyframe?: AnimationKeyFrame | ((params: P) => AnimationKeyFrame)
+  params?: P
 }
 
 export type CSSProperties = Omit<React.CSSProperties, 'animationName'> & {
-  animationName?: StardustAnimationName | string | 'none'
+  animationName?: StardustAnimationName | AnimationKeyFrame | string | 'none'
 }
 
 export interface ICSSInJSStyle extends CSSProperties {

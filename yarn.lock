@@ -5720,95 +5720,103 @@ fd-slicer@~1.0.1:
   dependencies:
     pend "~1.2.0"
 
-fela-bindings@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/fela-bindings/-/fela-bindings-10.2.0.tgz#4e3d47fec7da0396c616cd3734af3d9f65c481ac"
-  integrity sha512-d8VM7mYHgbJXuT4OjNxMBTVhrLtsT5d1EnmzMnH+XA39xZrBjm155XYoYzPleKHFWt2Gl7q3+3uM/+320kw82g==
+fela-bindings@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/fela-bindings/-/fela-bindings-10.5.0.tgz#b9c18c236333303827aa107db4a6954a1b5044d5"
+  integrity sha512-Shfea8Cp5uIOGaxOcYKMXkQi3t4vjTuMkrQHAesIb57kH8kQjHo17PMinWFd1HrlNIbF1CN/V40htdVHniha+A==
   dependencies:
     fast-loops "^1.0.0"
-    fela-dom "^10.2.0"
-    fela-tools "^10.2.0"
+    fela-dom "^10.5.0"
+    fela-tools "^10.5.0"
     react-addons-shallow-compare "^15.6.2"
     shallow-equal "^1.0.0"
 
-fela-dom@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/fela-dom/-/fela-dom-10.2.0.tgz#7f4b25d1669b56bb1042c6b3ce630d5424ceb5f3"
-  integrity sha512-ethH4ddg1KBMlhHWlzBNSUN5gtdBNt+0ecbMVWU24kc3BxI+fQAKQGVdMf0/T4vNjhnG1qBn/AYyv+tOGH4R6Q==
+fela-dom@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/fela-dom/-/fela-dom-10.5.0.tgz#2f42c962ea1f6123f9a7ae4ec240728506f158ea"
+  integrity sha512-UrECLCy6lnOWxqbO3Z8SdsXd6blu4frKcDujtc9cVUNpvNs89qtxrlj5iyt6qBFDrPCD+R0Ff4m+744Nu52RDQ==
   dependencies:
     css-in-js-utils "^3.0.0"
     fast-loops "^1.0.1"
-    fela-utils "^10.2.0"
+    fela-utils "^10.5.0"
 
-fela-plugin-custom-property@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/fela-plugin-custom-property/-/fela-plugin-custom-property-10.2.0.tgz#ebd95a41e5092eecc3acc95b053e85af06bdb721"
-  integrity sha512-Iw3S6wNj9upWO2yHJnssU70aiGSgtmhPj9ZRU3x7eEfwiK3qihmecM8GzY070mCwj0EWU8Q33AiXY9c4wx8H3w==
+fela-plugin-custom-property@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/fela-plugin-custom-property/-/fela-plugin-custom-property-10.5.0.tgz#cda6c247c1c8cbe0602a1334ff0259a16e8c8f39"
+  integrity sha512-r0LsY/nBTJ8xq82rORaTo0IoxAahX4Pcvm/AV/cbWjfg/i9lVq5MIis2ouD1Zq7ZukaC1OGL9g1Raw43LFqCyQ==
   dependencies:
     css-in-js-utils "^3.0.0"
     isobject "^3.0.1"
 
-fela-plugin-fallback-value@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/fela-plugin-fallback-value/-/fela-plugin-fallback-value-10.2.0.tgz#5e3e41e8938c179ef6cc33026a76c689855c14d2"
-  integrity sha512-zukUFeKFDc5cPP2wZUaMaTK/aTALEI6uwGGGrNfTH3/fuyJ2a8fyv5QjvXVLwNzGvtycuB68Qc2nox5ruNv/GQ==
+fela-plugin-embedded@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/fela-plugin-embedded/-/fela-plugin-embedded-10.5.0.tgz#b97b9e200479dd5907ef208f7ace3896ccc0c8e7"
+  integrity sha512-brYKcwe/AbrtdXyTjP4SJtguryGQTn82hPmOUV1oFgq5np2e55RriFbPUpDETSxI8Kjw2sTgJ3ZHyyoI/tD3nQ==
+  dependencies:
+    fast-loops "^1.0.0"
+    isobject "^3.0.1"
+
+fela-plugin-fallback-value@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/fela-plugin-fallback-value/-/fela-plugin-fallback-value-10.5.0.tgz#829be50180f7d2da8d76cf99811a919a458a22da"
+  integrity sha512-CgirjSPtTvoRxoS3JfTAIKtvlrqe2PzXyELUIQ2V1o2lWVozBJc9lmRC493FPPtyPpgP8Zn311JLxaUC2hOGVQ==
   dependencies:
     css-in-js-utils "^3.0.0"
     isobject "^3.0.1"
 
-fela-plugin-placeholder-prefixer@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/fela-plugin-placeholder-prefixer/-/fela-plugin-placeholder-prefixer-10.2.0.tgz#aaf919b6d7faffa5c62c66ec21f5d6ba8478cde7"
-  integrity sha512-HrnbgeJE6DEkrHSf348t4xGX9DqdLDaDXIEDU/K6tQ49PzZRygPq3OBn6HleNxPcs5HuTCpvuS4lMIe5Qw+I2Q==
+fela-plugin-placeholder-prefixer@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/fela-plugin-placeholder-prefixer/-/fela-plugin-placeholder-prefixer-10.5.0.tgz#561983ab3422228b75e873d237eeaffac8c7523a"
+  integrity sha512-2+DNpapbdjeZsT4oNJvBiM+2AhMG0TNPPvRgsP+c5ZhPZnG+s4P8AjYwAXEu8t/++aVkT/DPdD+9j3gLYSJHIA==
   dependencies:
     fast-loops "^1.0.0"
-    fela-plugin-custom-property "^10.2.0"
+    fela-plugin-custom-property "^10.5.0"
 
-fela-plugin-prefixer@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/fela-plugin-prefixer/-/fela-plugin-prefixer-10.2.0.tgz#962db8ebe9ec51de2f37f30dec14c55ebb72e6be"
-  integrity sha512-7FTzbUkFtdNrzaZtI1Q9uGTlXzmSdOnKiR+bBmG+kbvryJwfvv+AbHUuGLXFoCgXIThMgJAAN6ZP5WsDyIRzhw==
+fela-plugin-prefixer@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/fela-plugin-prefixer/-/fela-plugin-prefixer-10.5.0.tgz#3bf383fa4829bb6afe0d91ca2c16677520571251"
+  integrity sha512-gDGcRaSVndI8tJbnrW95z7Tx+W31MrkYKvot4eUAQ89XiziAFcGgW+39TGeGgPjBbVK6D++xUWePsCKLDPlaTw==
   dependencies:
     css-in-js-utils "^3.0.0"
     fast-loops "^1.0.0"
-    fela-plugin-fallback-value "^10.2.0"
+    fela-plugin-fallback-value "^10.5.0"
     inline-style-prefixer "^5.0.1"
     isobject "^3.0.1"
 
-fela-plugin-rtl@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/fela-plugin-rtl/-/fela-plugin-rtl-10.2.0.tgz#b876c0313e4e9230491276870ec0dba33bf38a2b"
-  integrity sha512-olOJkU5aGUCpGzY3r85ZlUNRwkdWejs5LLYnNbKy6ascYD+xK9aR4JxDgD7rMSQfMAWGZg2yTf+e0hQXU2Lbsw==
+fela-plugin-rtl@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/fela-plugin-rtl/-/fela-plugin-rtl-10.5.0.tgz#a4ccb51e0ce6504fe7ea705b23d89ca7f0423244"
+  integrity sha512-kZWEgZrU8DpV4fA7VnCliEpbO8ag5hj+BPoakSFgHtjSieb/r9iY6B+ZCvz4OLYgU+84X+RonnddAFwukAwk/w==
   dependencies:
     rtl-css-js "^1.1.3"
 
-fela-tools@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/fela-tools/-/fela-tools-10.2.0.tgz#da6a2801b763ebcc0e56ff701fb30aa36b54e9f3"
-  integrity sha512-U1Xp6UEAOMe0LlxD/CgSVPx3VAIWln2oATssUmZ8fJvpI/EvIQyfsa2HPPg74gre/xQ86pV4N7Blqxhz2eB7hA==
+fela-tools@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/fela-tools/-/fela-tools-10.5.0.tgz#cb1cfc27e2e1f8142be4768af45730e9532c4e39"
+  integrity sha512-O7YJVZlvK1r3WcrMAll7X43sVuYK/tXnpXrgSPscjce5I4DS/y2MI8HNFp+Ib7dKm3LDFfXN8TOUiO3ZTXKlIQ==
   dependencies:
     css-in-js-utils "^3.0.0"
     fast-loops "^1.0.0"
-    fela "^10.2.0"
-    fela-utils "^10.2.0"
+    fela "^10.5.0"
+    fela-utils "^10.5.0"
 
-fela-utils@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/fela-utils/-/fela-utils-10.2.0.tgz#cefc2ec05969445467417325c7e4b2c4da64459e"
-  integrity sha512-XrLrnoM3e4Z2KQMags+9QkAGvyufxood+P9hhpBXh+AkWSsMuV6AhMfcxd1URfaDUNdjMMGG05DqqKIGsq7JeQ==
+fela-utils@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/fela-utils/-/fela-utils-10.5.0.tgz#29ddce082c52639b6e3789741b187cab0da8d886"
+  integrity sha512-2kH3Om6i/HQ+Ld7WV+fJSN0bMWT9fkndCl1LhcOpsQpqdFqDfVHv5eRrbZKEZ+Fk6Gb4R793/S+w8KIkW7vKZg==
   dependencies:
     css-in-js-utils "^3.0.0"
     fast-loops "^1.0.0"
 
-fela@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/fela/-/fela-10.2.0.tgz#20da3ac0cb68e6a0d3240c0ba2a99b9f0eafd0a7"
-  integrity sha512-FpKtCVRdUPQyTiUStIeH7h3QYWr9TT5C1QAdI3Yn2QhyQMPzsRQhwIFlsHPB2uwWSERAsn6smB5xzo7cBCWlGQ==
+fela@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/fela/-/fela-10.5.0.tgz#32f49e7d680be9d7a20b71f7be900c2122d3c3e2"
+  integrity sha512-lSWkHOEkN5LIbLst/2PT0QK+g5QRsvNey6H89hcmiahaNDkRUxDmjIStfpVL94GfSZYHKyVlicH3DFT9Efne9A==
   dependencies:
     css-in-js-utils "^3.0.0"
     csstype "^2.5.5"
     fast-loops "^1.0.0"
-    fela-utils "^10.2.0"
+    fela-utils "^10.5.0"
     isobject "^3.0.1"
 
 figgy-pudding@^3.4.1, figgy-pudding@^3.5.1:
@@ -11475,13 +11483,13 @@ react-fast-compare@^2.0.4:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
-react-fela@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/react-fela/-/react-fela-10.2.0.tgz#dd702239e228847b5ac6504a62fdea8bcd8f9650"
-  integrity sha512-joey+ZnnNbnH/7EGNt++OMTtt62m+3pllXLKDIUAhpJgA/FrGH1G57T7FaQYHaAn71Zw+5KQuV5f/gmme1hIoA==
+react-fela@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/react-fela/-/react-fela-10.5.0.tgz#0196f138bc1f5478767fa1e5b6f1d2bbd136f38c"
+  integrity sha512-/7AMhuglq5bH7VKNRPGLvG4dV3syoHrBmB7Cp1X0rNnZRhNi1r+iQW8OyN/9pQrkgIetP3RzBKFk9PgxUxO73g==
   dependencies:
-    fela-bindings "^10.2.0"
-    fela-dom "^10.2.0"
+    fela-bindings "^10.5.0"
+    fela-dom "^10.5.0"
     prop-types "^15.5.8"
 
 react-hot-loader@^4.8.2:

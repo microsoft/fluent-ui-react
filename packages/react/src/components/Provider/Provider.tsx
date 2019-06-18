@@ -1,5 +1,4 @@
 import { IStyle } from 'fela'
-import { render as felaDomRender } from 'fela-dom'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -7,12 +6,7 @@ import * as React from 'react'
 import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 
-import {
-  felaRenderer as felaLtrRenderer,
-  felaRtlRenderer,
-  isBrowser,
-  ChildrenComponentProps,
-} from '../../lib'
+import { felaRenderer, ChildrenComponentProps } from '../../lib'
 
 import {
   ThemePrepared,
@@ -87,22 +81,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
   staticStylesRendered: boolean = false
 
-  static _topLevelFelaRenderer = undefined
-
-  get topLevelFelaRenderer() {
-    if (!Provider._topLevelFelaRenderer) {
-      Provider._topLevelFelaRenderer = this.props.rtl ? felaRtlRenderer : felaLtrRenderer
-    }
-    return Provider._topLevelFelaRenderer
-  }
-
   renderStaticStyles = (mergedTheme: ThemePrepared) => {
-    // RTL WARNING
-    // This function sets static styles which are global and renderer agnostic.
-    // Top level fela renderer (the first one rendered) is used to render static styles.
-    // With current implementation, static styles cannot differ between LTR and RTL
-    // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
-
     const { siteVariables } = mergedTheme
     const { staticStyles } = this.props.theme
 
@@ -110,13 +89,13 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
     const renderObject = (object: StaticStyleObject) => {
       _.forEach(object, (style, selector) => {
-        this.topLevelFelaRenderer.renderStatic(style as IStyle, selector)
+        felaRenderer.renderStatic(style as IStyle, selector)
       })
     }
 
     staticStyles.forEach((staticStyle: StaticStyle) => {
       if (typeof staticStyle === 'string') {
-        this.topLevelFelaRenderer.renderStatic(staticStyle)
+        felaRenderer.renderStatic(staticStyle)
       } else if (_.isPlainObject(staticStyle)) {
         renderObject(staticStyle as StaticStyleObject)
       } else if (_.isFunction(staticStyle)) {
@@ -131,12 +110,6 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   }
 
   renderFontFaces = () => {
-    // RTL WARNING
-    // This function sets static styles which are global and renderer agnostic.
-    // Top level fela renderer (the first one rendered) is used to render static styles.
-    // With current implementation, static styles cannot differ between LTR and RTL
-    // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
-
     const { fontFaces } = this.props.theme
 
     if (!fontFaces) return
@@ -145,7 +118,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       if (!_.isPlainObject(font)) {
         throw new Error(`fontFaces must be objects, got: ${typeof font}`)
       }
-      this.topLevelFelaRenderer.renderFont(font.name, font.paths, font.style)
+      felaRenderer.renderFont(font.name, font.paths, font.style)
     }
 
     fontFaces.forEach((font: FontFace) => {
@@ -178,10 +151,6 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
     const outgoingContext: ProviderContextPrepared = mergeContexts(this.context, inputContext)
 
-    // Heads up!
-    // We should call render() to ensure that a subscription for DOM updates was created
-    // https://github.com/stardust-ui/react/issues/581
-    if (isBrowser()) felaDomRender(outgoingContext.renderer)
     this.renderStaticStylesOnce(outgoingContext.theme)
 
     const rtlProps: { dir?: 'rtl' | 'ltr' } = {}
