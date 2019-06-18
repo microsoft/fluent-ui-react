@@ -15,8 +15,6 @@ export * from './themes/teams/types'
 //
 // Components
 //
-export * from '@stardust-ui/react-component-ref'
-
 export * from './components/Accordion/Accordion'
 export { default as Accordion } from './components/Accordion/Accordion'
 export * from './components/Accordion/AccordionTitle'
@@ -170,6 +168,11 @@ export { default as ReactionGroup } from './components/Reaction/ReactionGroup'
 export * from './components/Video/Video'
 export { default as Video } from './components/Video/Video'
 
+export * from './components/Tooltip/Tooltip'
+export { default as Tooltip } from './components/Tooltip/Tooltip'
+export * from './components/Tooltip/TooltipContent'
+export { default as TooltipContent } from './components/Tooltip/TooltipContent'
+
 //
 // Accessibility
 //
@@ -245,3 +248,5 @@ export const FocusZoneUtilities = {
 export * from './lib/accessibility/FocusZone/FocusZone.types'
 export * from './lib/accessibility/types'
 export * from './lib/accessibility/reactTypes'
+
+export * from '@stardust-ui/react-component-ref'

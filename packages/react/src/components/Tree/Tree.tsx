@@ -28,7 +28,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
 
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
+   * @default treeBehavior
    */
   accessibility?: Accessibility
 
