@@ -97,6 +97,7 @@ import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
 import phoneArrow from './phoneArrow'
 import play from './play'
+import poll from './poll'
 import presenceAvailable from './presenceAvailable'
 import presenceStroke from './presenceStroke'
 import qna from './qna'
@@ -121,6 +122,7 @@ import tableAdd from './tableAdd'
 import tableDelete from './tableDelete'
 import teamCreate from './teamCreate'
 import teams from './teams'
+import toDoList from './toDoList'
 import translation from './translation'
 import trashCan from './trashCan'
 import triangleDown from './triangleDown'
@@ -227,6 +229,7 @@ export default {
   'phone-clock': phoneClock,
   'phone-arrow': phoneArrow,
   play,
+  poll,
   'presence-available': presenceAvailable,
   'presence-stroke': presenceStroke,
   qna,
@@ -248,6 +251,7 @@ export default {
   'table-add': tableAdd,
   'table-delete': tableDelete,
   teams,
+  'to-do-list': toDoList,
   translation,
   'trash-can': trashCan,
   'triangle-down': triangleDown,

@@ -26,17 +26,22 @@ describe('shouldHandleOnKeys', () => {
       { keyCode: 39, ctrlKey: true },
       { keyCode: 42, altKey: true, ctrlKey: true, shiftKey: true, metaKey: true },
     ]
-
-    keyCombinations.forEach(keyCombination => {
-      const eventArg = getEventArg(
+    const events = [
+      ...keyCombinations,
+      { keyCode: 27, altKey: true },
+      { keyCode: 27, altKey: false },
+    ].map(keyCombination =>
+      getEventArg(
         keyCombination.keyCode,
         keyCombination.altKey,
         keyCombination.ctrlKey,
         keyCombination.metaKey,
         keyCombination.shiftKey,
-      )
+      ),
+    )
 
-      expect(shouldHandleOnKeys(eventArg, keyCombinations)).toBe(true)
+    events.forEach(event => {
+      expect(shouldHandleOnKeys(event, keyCombinations)).toBe(true)
     })
   })
 
@@ -47,25 +52,26 @@ describe('shouldHandleOnKeys', () => {
       { keyCode: 32 },
       { keyCode: 32, altKey: true },
       { keyCode: 39, shiftKey: true, metaKey: true },
+      { keyCode: 41, shiftKey: false },
     ]
-
     // other keys mapping, that will be passed as keydown event
-    const otherKeysMapping = [
+    const events = [
       { keyCode: 27, ctrlKey: false },
       { keyCode: 31, altKey: true },
       { keyCode: 39, shiftKey: false, metaKey: false },
-    ]
-
-    otherKeysMapping.forEach(keyCombination => {
-      const eventArg = getEventArg(
+      { keyCode: 41, shiftKey: true },
+    ].map(keyCombination =>
+      getEventArg(
         keyCombination.keyCode,
         keyCombination.altKey,
         keyCombination.ctrlKey,
         keyCombination.metaKey,
         keyCombination.shiftKey,
-      )
+      ),
+    )
 
-      expect(shouldHandleOnKeys(eventArg, keyCombinations)).toBe(false)
+    events.forEach(event => {
+      expect(shouldHandleOnKeys(event, keyCombinations)).toBe(false)
     })
   })
 })
