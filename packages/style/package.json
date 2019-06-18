@@ -1,0 +1,8 @@
+{
+  "name": "@stardust-ui/style",
+  "version": "1.0.0",
+  "description": "Tools for creating and building framework agnostic themes.",
+  "main": "index.js",
+  "repository": "https://github.com/stardust-ui/react",
+  "license": "MIT"
+}

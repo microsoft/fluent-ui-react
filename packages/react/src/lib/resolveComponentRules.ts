@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from 'src/themes/types'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../themes/types'
 
 export function isObject(item): boolean {
   return typeof item === 'object' && !Array.isArray(item) && item !== null

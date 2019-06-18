@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import { SiteVariablesInput } from 'src/themes/types'
+import { SiteVariablesInput } from '../../../types'
 
 export interface StatusVariables {
   successBackgroundColor: string
