@@ -15,8 +15,6 @@ export * from './themes/teams/types'
 //
 // Components
 //
-export * from '@stardust-ui/react-component-ref'
-
 export * from './components/Accordion/Accordion'
 export { default as Accordion } from './components/Accordion/Accordion'
 export * from './components/Accordion/AccordionTitle'
@@ -47,6 +45,9 @@ export * from './components/Chat/ChatItem'
 export { default as ChatItem } from './components/Chat/ChatItem'
 export * from './components/Chat/ChatMessage'
 export { default as ChatMessage } from './components/Chat/ChatMessage'
+
+export * from './components/Checkbox/Checkbox'
+export { default as Checkbox } from './components/Checkbox/Checkbox'
 
 export * from './components/Divider/Divider'
 export { default as Divider } from './components/Divider/Divider'
@@ -147,8 +148,21 @@ export { default as Text } from './components/Text/Text'
 export * from './components/Animation/Animation'
 export { default as Animation } from './components/Animation/Animation'
 
-export * from './components/Tree'
-export { default as Tree } from './components/Tree'
+export * from './components/Toolbar/Toolbar'
+export { default as Toolbar } from './components/Toolbar/Toolbar'
+export * from './components/Toolbar/ToolbarDivider'
+export { default as ToolbarDivider } from './components/Toolbar/ToolbarDivider'
+export * from './components/Toolbar/ToolbarItem'
+export { default as ToolbarItem } from './components/Toolbar/ToolbarItem'
+export * from './components/Toolbar/ToolbarRadioGroup'
+export { default as ToolbarRadioGroup } from './components/Toolbar/ToolbarRadioGroup'
+
+export * from './components/Tree/Tree'
+export { default as Tree } from './components/Tree/Tree'
+export * from './components/Tree/TreeItem'
+export { default as TreeItem } from './components/Tree/TreeItem'
+export * from './components/Tree/TreeTitle'
+export { default as TreeTitle } from './components/Tree/TreeTitle'
 
 export * from './components/Reaction/Reaction'
 export { default as Reaction } from './components/Reaction/Reaction'
@@ -158,9 +172,17 @@ export { default as ReactionGroup } from './components/Reaction/ReactionGroup'
 export * from './components/Video/Video'
 export { default as Video } from './components/Video/Video'
 
+export * from './components/Tooltip/Tooltip'
+export { default as Tooltip } from './components/Tooltip/Tooltip'
+export * from './components/Tooltip/TooltipContent'
+export { default as TooltipContent } from './components/Tooltip/TooltipContent'
+
 //
 // Accessibility
 //
+export {
+  default as toggleButtonBehavior,
+} from './lib/accessibility/Behaviors/Button/toggleButtonBehavior'
 export { default as menuBehavior } from './lib/accessibility/Behaviors/Menu/menuBehavior'
 export { default as menuItemBehavior } from './lib/accessibility/Behaviors/Menu/menuItemBehavior'
 export {
@@ -168,10 +190,13 @@ export {
 } from './lib/accessibility/Behaviors/Menu/menuDividerBehavior'
 export { default as tabBehavior } from './lib/accessibility/Behaviors/Tab/tabBehavior'
 export { default as tabListBehavior } from './lib/accessibility/Behaviors/Tab/tabListBehavior'
-export { default as toolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/toolbarBehavior'
 export {
-  default as toolbarButtonBehavior,
-} from './lib/accessibility/Behaviors/Toolbar/toolbarButtonBehavior'
+  default as menuAsToolbarBehavior,
+} from './lib/accessibility/Behaviors/Toolbar/menuAsToolbarBehavior'
+export {
+  default as menuItemAsToolbarButtonBehavior,
+} from './lib/accessibility/Behaviors/Toolbar/menuItemAsToolbarButtonBehavior'
+export { default as toolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/toolbarBehavior'
 export {
   default as radioGroupBehavior,
 } from './lib/accessibility/Behaviors/Radio/radioGroupBehavior'
@@ -226,3 +251,6 @@ export const FocusZoneUtilities = {
 }
 export * from './lib/accessibility/FocusZone/FocusZone.types'
 export * from './lib/accessibility/types'
+export * from './lib/accessibility/reactTypes'
+
+export * from '@stardust-ui/react-component-ref'

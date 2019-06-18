@@ -9,6 +9,7 @@ import {
   basicListBehavior,
   basicListItemBehavior,
   buttonBehavior,
+  checkboxBehavior,
   embedBehavior,
   iconBehavior,
   imageBehavior,
@@ -29,10 +30,12 @@ import {
   tabBehavior,
   tabListBehavior,
   toggleButtonBehavior,
-  toolbarBehavior,
-  toolbarButtonBehavior,
+  menuAsToolbarBehavior,
+  menuItemAsToolbarButtonBehavior,
   treeBehavior,
   treeTitleBehavior,
+  treeItemBehavior,
+  subtreeBehavior,
   gridBehavior,
   statusBehavior,
   alertWarningBehavior,
@@ -41,6 +44,7 @@ import {
   accordionContentBehavior,
   chatBehavior,
   chatMessageBehavior,
+  toolbarBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -54,6 +58,7 @@ testHelper.addBehavior('attachmentBehavior', attachmentBehavior)
 testHelper.addBehavior('basicListBehavior', basicListBehavior)
 testHelper.addBehavior('basicListItemBehavior', basicListItemBehavior)
 testHelper.addBehavior('buttonBehavior', buttonBehavior)
+testHelper.addBehavior('checkboxBehavior', checkboxBehavior)
 testHelper.addBehavior('embedBehavior', embedBehavior)
 testHelper.addBehavior('iconBehavior', iconBehavior)
 testHelper.addBehavior('inputBehavior', inputBehavior)
@@ -72,11 +77,13 @@ testHelper.addBehavior('selectableListBehavior', selectableListBehavior)
 testHelper.addBehavior('selectableListItemBehavior', selectableListItemBehavior)
 testHelper.addBehavior('tabBehavior', tabBehavior)
 testHelper.addBehavior('tabListBehavior', tabListBehavior)
-testHelper.addBehavior('toolbarBehavior', toolbarBehavior)
+testHelper.addBehavior('menuAsToolbarBehavior', menuAsToolbarBehavior)
 testHelper.addBehavior('toggleButtonBehavior', toggleButtonBehavior)
-testHelper.addBehavior('toolbarButtonBehavior', toolbarButtonBehavior)
+testHelper.addBehavior('menuItemAsToolbarButtonBehavior', menuItemAsToolbarButtonBehavior)
 testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
 testHelper.addBehavior('treeBehavior', treeBehavior)
+testHelper.addBehavior('treeItemBehavior', treeItemBehavior)
+testHelper.addBehavior('subtreeBehavior', subtreeBehavior)
 testHelper.addBehavior('gridBehavior', gridBehavior)
 testHelper.addBehavior('dialogBehavior', dialogBehavior)
 testHelper.addBehavior('statusBehavior', statusBehavior)
@@ -86,5 +93,6 @@ testHelper.addBehavior('accordionTitleBehavior', accordionTitleBehavior)
 testHelper.addBehavior('accordionContentBehavior', accordionContentBehavior)
 testHelper.addBehavior('chatBehavior', chatBehavior)
 testHelper.addBehavior('chatMessageBehavior', chatMessageBehavior)
+testHelper.addBehavior('toolbarBehavior', toolbarBehavior)
 
 testHelper.run(behaviorMenuItems)

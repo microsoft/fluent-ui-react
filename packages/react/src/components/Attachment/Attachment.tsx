@@ -15,7 +15,7 @@ import Button from '../Button/Button'
 import Text from '../Text/Text'
 import Box from '../Box/Box'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { attachmentBehavior } from '../../lib/accessibility'
 
 export interface AttachmentProps extends UIComponentProps, ChildrenComponentProps {
@@ -88,7 +88,7 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
     accessibility: attachmentBehavior as Accessibility,
   }
 
-  public state = {
+  state = {
     isFromKeyboard: false,
   }
 
@@ -131,16 +131,18 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
     )
   }
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     performClick: event => this.performClick(event),
   }
 
-  private performClick = e => {
-    e.stopPropagation()
-    this.handleClick(e)
+  performClick = e => {
+    if (e.currentTarget === e.target) {
+      e.stopPropagation()
+      this.handleClick(e)
+    }
   }
 
-  private handleClick = (e: React.SyntheticEvent) => {
+  handleClick = (e: React.SyntheticEvent) => {
     const { disabled } = this.props
 
     if (disabled) {
@@ -151,7 +153,7 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
 
     _.invoke(this.props, 'onFocus', e, this.props)

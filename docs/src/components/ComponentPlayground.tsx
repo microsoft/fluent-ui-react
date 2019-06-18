@@ -1,4 +1,4 @@
-import { KnobInspector, KnobProvider } from '@stardust-ui/docs-components'
+import { KnobInspector, KnobProvider, unstable_KnobContext } from '@stardust-ui/docs-components'
 import { Flex, Header, Segment } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -10,6 +10,17 @@ const playgroundPaths = examplePlaygroundContext.keys()
 
 type ComponentPlaygroundProps = {
   componentName: string
+}
+
+const NoopKnobProvider: React.FunctionComponent = props => {
+  const knobContext = React.useContext(unstable_KnobContext)
+  const noopContext = { ...knobContext, registerKnob: _.noop, unregisterKnob: _.noop }
+
+  return (
+    <unstable_KnobContext.Provider value={noopContext}>
+      {props.children}
+    </unstable_KnobContext.Provider>
+  )
 }
 
 const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = props => {
@@ -37,7 +48,13 @@ const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = p
                   <PlaygroundComponent />
                 </Segment>
               </Flex.Item>
-              <ComponentPlaygroundSnippet component={PlaygroundComponent} />
+              {/* ComponentPlaygroundSnippet will evaluate passed component again and if it contains
+                  knobs it will execute them again and will fail because hooks with that name have
+                  been already registered.
+                */}
+              <NoopKnobProvider>
+                <ComponentPlaygroundSnippet component={PlaygroundComponent} />
+              </NoopKnobProvider>
             </Flex>
           </Flex.Item>
 

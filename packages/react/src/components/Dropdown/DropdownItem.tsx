@@ -72,15 +72,11 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
     selected: PropTypes.bool,
   }
 
-  private handleClick = e => {
+  handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  public renderComponent({
-    classes,
-    styles,
-    unhandledProps,
-  }: RenderResultConfig<DropdownItemProps>) {
+  renderComponent({ classes, styles, unhandledProps }: RenderResultConfig<DropdownItemProps>) {
     const { content, header, image, accessibilityItemProps } = this.props
     return (
       <ListItem

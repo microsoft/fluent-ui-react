@@ -1,5 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import cx from 'classnames'
 
 import {
   UIComponent,
@@ -8,8 +9,6 @@ import {
   commonPropTypes,
   ChildrenComponentProps,
 } from '../../lib'
-import { AnimationProp } from '../../themes/types'
-import createAnimationStyles from '../../lib/createAnimationStyles'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface AnimationProps
@@ -104,28 +103,14 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
     timingFunction: PropTypes.string,
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, styles, variables, theme }) {
-    const { children, name } = this.props
-
-    const animation: AnimationProp = {
-      name,
-      keyframeParams: this.props.keyframeParams,
-      duration: this.props.duration,
-      delay: this.props.delay,
-      iterationCount: this.props.iterationCount,
-      direction: this.props.direction,
-      fillMode: this.props.fillMode,
-      playState: this.props.playState,
-      timingFunction: this.props.timingFunction,
-    }
-
-    const animationStyle = createAnimationStyles(animation, theme)
+  renderComponent({ ElementType, classes, unhandledProps }) {
+    const { children } = this.props
 
     const child =
       childrenExist(children) && (React.Children.only(children) as React.ReactElement<any>)
     const result = child
       ? React.cloneElement(child, {
-          style: { ...animationStyle, ...(child.props && child.props.style) },
+          className: cx(child.props.className, classes.children),
         })
       : ''
 
