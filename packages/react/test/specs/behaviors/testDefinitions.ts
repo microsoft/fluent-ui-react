@@ -339,6 +339,27 @@ definitions.push({
   },
 })
 
+// Example: Adds attribute 'tabIndex=0' if element type is other than 'button'.
+definitions.push({
+  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' if element type is other than '(\w+)'\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [attributeToBeAdded, attributeExpectedValue, as] = parameters.props
+    const property = {}
+    const expectedResult = parameters.behavior(property).attributes.root[attributeToBeAdded]
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toBe(
+      testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
+    )
+
+    const propertyAsButton = { as }
+    const expectedResultAsButton = parameters.behavior(propertyAsButton).attributes.root[
+      attributeToBeAdded
+    ]
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAsButton)).toBe(
+      testHelper.convertToMatchingTypeIfApplicable(undefined),
+    )
+  },
+})
+
 /*
  * ********************** FOCUS ZONE **********************
  */
