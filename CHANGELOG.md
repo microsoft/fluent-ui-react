@@ -18,8 +18,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING CHANGES
-- Type `FontFaceStyle` was renamed to `FontFaceProps` @layershifter ([1487](https://github.com/stardust-ui/react/pull/1487))
-- Type `style` was renamed to `props` on `FontFace` @layershifter ([1487](https://github.com/stardust-ui/react/pull/1487))
+- Type `FontFaceStyle` was renamed to `FontFaceProps` @layershifter ([#1487](https://github.com/stardust-ui/react/pull/1487))
+- Type `style` was renamed to `props` on `FontFace` @layershifter ([#1487](https://github.com/stardust-ui/react/pull/1487))
 
 ### Fixes
 - Fix prop types of `Tooltip` component @kuzhelov ([#1499](https://github.com/stardust-ui/react/pull/1499))
