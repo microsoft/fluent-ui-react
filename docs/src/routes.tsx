@@ -4,7 +4,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import ExternalExampleLayout from './components/ExternalExampleLayout'
 import DocsLayout from './components/DocsLayout'
 import DocsRoot from './components/DocsRoot'
+import MarkdownPage from 'docs/src/components/MarkdownPage'
 
+import * as Composition from './pages/Composition.mdx'
 import Accessibility from './views/Accessibility'
 import Colors from './views/Colors'
 import ColorPalette from './views/ColorPalette'
@@ -57,7 +59,6 @@ const Router = () => (
             path="/prototype-chat-messages"
             component={ChatMessagesPrototype}
           />,
-          ,
           <DocsLayout
             exact
             key="/prototype-async-shorthand"
@@ -134,6 +135,7 @@ const Router = () => (
           path="/integrate-custom-components"
           component={IntegrateCustomComponents}
         />
+        <MarkdownPage exact path="/composition" page={Composition} />
         <DocsLayout exact path="/colors" component={Colors} />
         <DocsLayout exact path="/color-palette" component={ColorPalette} />
         <DocsLayout exact path="/color-schemes" component={ColorSchemes} />
