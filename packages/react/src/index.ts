@@ -176,6 +176,9 @@ export { default as TooltipContent } from './components/Tooltip/TooltipContent'
 //
 // Accessibility
 //
+export {
+  default as toggleButtonBehavior,
+} from './lib/accessibility/Behaviors/Button/toggleButtonBehavior'
 export { default as menuBehavior } from './lib/accessibility/Behaviors/Menu/menuBehavior'
 export { default as menuItemBehavior } from './lib/accessibility/Behaviors/Menu/menuItemBehavior'
 export {
@@ -189,6 +192,7 @@ export {
 export {
   default as menuItemAsToolbarButtonBehavior,
 } from './lib/accessibility/Behaviors/Toolbar/menuItemAsToolbarButtonBehavior'
+export { default as toolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/toolbarBehavior'
 export {
   default as radioGroupBehavior,
 } from './lib/accessibility/Behaviors/Radio/radioGroupBehavior'
