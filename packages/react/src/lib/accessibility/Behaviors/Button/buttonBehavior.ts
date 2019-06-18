@@ -19,11 +19,12 @@ const buttonBehavior: Accessibility<ButtonBehaviorProps> = props => ({
 
   keyActions: {
     root: {
-      ...(props.as !== 'button' && {
-        performClick: {
-          keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
-        },
-      }),
+      ...(props.as !== 'button' &&
+        props.as !== 'a' && {
+          performClick: {
+            keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+          },
+        }),
     },
   },
 })
