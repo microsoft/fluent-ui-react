@@ -552,13 +552,13 @@ export interface FontFaceStyle {
   fontStyle?: string
   fontVariant?: string
   fontWeight?: number
-  localAlias?: string
+  localAlias?: string | string[]
   unicodeRange?: string
 }
 
 export interface FontFace {
   name: string
-  localAliases?: []
+  localAliases?: string[]
   paths: string[]
   style: FontFaceStyle
 }
