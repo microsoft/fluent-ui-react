@@ -8,7 +8,7 @@ import callable from './callable'
  * tree.
  */
 export default () => {
-  const invokeKeyframes = (styles: Object, type?, renderer?, props?) => {
+  const invokeKeyframes = (styles: Object) => {
     return Object.keys(styles).reduce((acc, cssPropertyName) => {
       const cssPropertyValue = styles[cssPropertyName]
 
@@ -28,7 +28,7 @@ export default () => {
       if (typeof cssPropertyValue === 'object') {
         return {
           ...acc,
-          [cssPropertyName]: invokeKeyframes(cssPropertyValue, type, renderer, props),
+          [cssPropertyName]: invokeKeyframes(cssPropertyValue),
         }
       }
 
