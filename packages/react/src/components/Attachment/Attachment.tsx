@@ -136,8 +136,10 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
   }
 
   performClick = e => {
-    e.stopPropagation()
-    this.handleClick(e)
+    if (e.currentTarget === e.target) {
+      e.stopPropagation()
+      this.handleClick(e)
+    }
   }
 
   handleClick = (e: React.SyntheticEvent) => {
