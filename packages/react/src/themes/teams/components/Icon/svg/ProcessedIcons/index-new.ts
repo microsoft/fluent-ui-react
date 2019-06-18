@@ -263,6 +263,8 @@ import processedIcons_callincomingvideo from './icons-call-incoming-video'
 import processedIcons_callhold from './icons-call-hold'
 import processedIcons_callend from './icons-call-end'
 import processedIcons_calldialpad from './icons-call-dialpad'
+import processedIcons_callcontrolrelease from './icons-call-control-release'
+import processedIcons_callcontrolrequest from './icons-call-control-request'
 import processedIcons_callcontrolstoppresentingnew from './icons-call-control-stop-presenting-new'
 import processedIcons_callcontrolpresentnew from './icons-call-control-present-new'
 import processedIcons_callblocked from './icons-call-blocked'
@@ -566,6 +568,8 @@ export default {
   processedIcons_callhold,
   processedIcons_callend,
   processedIcons_calldialpad,
+  processedIcons_callcontrolrelease,
+  processedIcons_callcontrolrequest,
   processedIcons_callcontrolstoppresentingnew,
   processedIcons_callcontrolpresentnew,
   processedIcons_callblocked,

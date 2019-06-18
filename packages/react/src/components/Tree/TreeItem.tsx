@@ -1,11 +1,12 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import Tree from './Tree'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
-import { defaultBehavior } from '../../lib/accessibility'
+import { treeItemBehavior, subtreeBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import {
   UIComponent,
@@ -15,6 +16,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import {
   ComponentEventHandler,
@@ -23,7 +25,7 @@ import {
   ShorthandValue,
   withSafeTypeForAs,
 } from '../../types'
-import subtreeBehavior from '../../lib/accessibility/Behaviors/Tree/subtreeBehavior'
+import { getFirstFocusable } from '../../lib/accessibility/FocusZone/focusUtilities'
 
 export interface TreeItemSlotClassNames {
   title: string
@@ -33,7 +35,7 @@ export interface TreeItemSlotClassNames {
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
+   * @default treeItemBehavior
    */
   accessibility?: Accessibility
 
@@ -100,7 +102,48 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
   static defaultProps = {
     as: 'li',
-    accessibility: defaultBehavior,
+    accessibility: treeItemBehavior,
+  }
+
+  itemRef = React.createRef<HTMLElement>()
+  treeRef = React.createRef<HTMLElement>()
+
+  actionHandlers = {
+    performClick: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      _.invoke(this.props, 'onTitleClick', e, this.props)
+    },
+    collapseOrReceiveFocus: e => {
+      const { items, open } = this.props
+
+      e.preventDefault()
+
+      // Focuses the title if the event comes from a child item.
+      if (e.currentTarget !== e.target && items && items.length) {
+        e.stopPropagation()
+        this.itemRef.current.focus()
+      } else if (open) {
+        e.stopPropagation()
+        _.invoke(this.props, 'onTitleClick', e, this.props)
+      }
+    },
+    expandOrPassFocus: e => {
+      const { open } = this.props
+
+      e.preventDefault()
+      e.stopPropagation()
+
+      if (!open) {
+        _.invoke(this.props, 'onTitleClick', e, this.props)
+      } else {
+        const element = getFirstFocusable(this.treeRef.current, this.treeRef.current, true)
+        if (element) {
+          element.focus()
+        }
+      }
+    },
   }
 
   handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
@@ -121,19 +164,23 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
             className: TreeItem.slotClassNames.title,
             open,
             hasSubtree,
+            as: hasSubtree ? 'span' : 'a',
           },
           render: renderItemTitle,
           overrideProps: this.handleTitleOverrides,
         })}
-        {open &&
-          Tree.create(items, {
-            defaultProps: {
-              accessibility: subtreeBehavior,
-              className: TreeItem.slotClassNames.subtree,
-              exclusive,
-              renderItemTitle,
-            },
-          })}
+        {hasSubtree && open && (
+          <Ref innerRef={this.treeRef}>
+            {Tree.create(items, {
+              defaultProps: {
+                accessibility: subtreeBehavior,
+                className: TreeItem.slotClassNames.subtree,
+                exclusive,
+                renderItemTitle,
+              },
+            })}
+          </Ref>
+        )}
       </>
     )
   }
@@ -142,14 +189,17 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     const { children } = this.props
 
     return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...rtlTextContainer.getAttributes({ forElements: [children] })}
-        {...unhandledProps}
-      >
-        {childrenExist(children) ? children : this.renderContent()}
-      </ElementType>
+      <Ref innerRef={this.itemRef}>
+        <ElementType
+          className={classes.root}
+          {...accessibility.attributes.root}
+          {...rtlTextContainer.getAttributes({ forElements: [children] })}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+          {...unhandledProps}
+        >
+          {childrenExist(children) ? children : this.renderContent()}
+        </ElementType>
+      </Ref>
     )
   }
 }
