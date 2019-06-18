@@ -12,15 +12,17 @@ export type StylesToClassesProps = {
   styles: ComponentSlotStyle
 }
 
+const displayName = 'StylesToClasses'
+
 const StylesToClasses: React.FC<StylesToClassesProps> = props => {
   const children = props.children as React.ReactElement
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
   return renderComponent(
     {
-      className: `ui-${_.kebabCase(this.displayName)}`,
+      className: `ui-${_.kebabCase(displayName)}`,
       defaultProps: {},
-      displayName: this.displayName,
+      displayName,
       handledProps: stylesToClassesHandledProps,
       props,
       state: {},
