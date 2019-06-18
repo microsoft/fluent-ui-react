@@ -1,9 +1,13 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import cx from 'classnames'
 import * as _ from 'lodash'
-import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
-import { mergeStyles } from '../../lib/mergeThemes'
+import {
+  UIComponent,
+  commonPropTypes,
+  UIComponentProps,
+  ChildrenComponentProps,
+  applyStyles,
+} from '../../lib'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 type ChildrenFunction = (
@@ -90,30 +94,8 @@ class FlexItem extends UIComponent<FlexItemProps> {
     }
 
     if (_.isNil(children)) return children
-    return applyStyles(React.Children.only(children) as React.ReactElement<any>, styles, classes)
+    return applyStyles(React.Children.only(children) as React.ReactElement, styles.root)
   }
 }
 
 export default FlexItem
-
-const applyStyles = (
-  element: React.ReactElement<any>,
-  styles,
-  classes,
-): React.ReactElement<any> => {
-  if (!styles) {
-    return element
-  }
-
-  // if element is DOM element
-  if (typeof element.type === 'string') {
-    return React.cloneElement(element, {
-      className: cx(element.props.className, classes.root),
-    })
-  }
-
-  // assuming element is Stardust element
-  return React.cloneElement(element, {
-    styles: mergeStyles(styles.root || {}, element.props.styles),
-  })
-}

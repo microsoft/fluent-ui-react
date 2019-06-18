@@ -10,6 +10,7 @@ import {
   ShorthandRenderer,
 } from '../types'
 import { mergeStyles } from './mergeThemes'
+import applyStyles from './applyStyles'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
@@ -247,7 +248,9 @@ function createShorthandFromValue({
   }
 
   // Clone ReactElements
-  if (valIsReactElement) return React.cloneElement(value as React.ReactElement<Props>, props)
+  if (valIsReactElement) {
+    return applyStyles(React.cloneElement(value as React.ReactElement<Props>, props), props.styles)
+  }
 
   // Create ReactElements from built up props
   if (valIsPrimitive || valIsPropsObject || valIsArray) {

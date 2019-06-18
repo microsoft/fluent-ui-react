@@ -6,6 +6,7 @@ import { ThemeContext } from 'react-fela'
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/reactTypes'
 import { FocusZone } from './accessibility/FocusZone'
+import { IS_STARDUST_PROP_NAME } from './applyStyles'
 
 // TODO @Bugaa92: deprecated by createComponent.tsx
 class UIComponent<P, S = {}> extends React.Component<P, S> {
@@ -71,5 +72,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
     this.focusZone = focusZone
   }
 }
+
+UIComponent[IS_STARDUST_PROP_NAME] = true
 
 export default UIComponent

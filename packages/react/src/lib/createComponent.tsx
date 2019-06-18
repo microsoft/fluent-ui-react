@@ -8,6 +8,7 @@ import { AccessibilityActionHandlers } from './accessibility/reactTypes'
 import { FocusZone } from './accessibility/FocusZone'
 import { createShorthandFactory } from './factories'
 import { ObjectOf, ProviderContextPrepared } from '../types'
+import { IS_STARDUST_PROP_NAME } from './applyStyles'
 
 export interface CreateComponentConfig<P> {
   displayName: string
@@ -70,6 +71,8 @@ const createComponent = <P extends ObjectOf<any> = any>({
   StardustComponent.propTypes = propTypes // TODO: generate prop types
 
   StardustComponent.defaultProps = mergedDefaultProps
+
+  StardustComponent[IS_STARDUST_PROP_NAME] = true
 
   return StardustComponent
 }

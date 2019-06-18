@@ -277,7 +277,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
       children.push(
         AccordionContent.create(content, {
           defaultProps: {
-            style: active ? styles.expandedContent : styles.collapsedContent,
+            styles: active ? styles.expandedContent : styles.collapsedContent,
             className: Accordion.slotClassNames.content,
             id: contentId,
             accordionTitleId: titleId,
