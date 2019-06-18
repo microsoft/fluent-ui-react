@@ -17,9 +17,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add 'poll' and 'to-do-list' icons to Teams theme @natashamayurshah ([#1498](https://github.com/stardust-ui/react/pull/1498))
+
 ### Fixes
 - Fix prop types of `Tooltip` component @kuzhelov ([#1499](https://github.com/stardust-ui/react/pull/1499))
 - Fix `Popup` styling with `pointer` when it is wrapped by `FocusZones` @layershifter ([#1492](https://github.com/stardust-ui/react/pull/1492))
+- Apply custom focus style on `TreeItem` and `TreeTitle` @silviuavram ([#1506](https://github.com/stardust-ui/react/pull/1506))
 
 ### Features
 - Add `toolbarBehavior` for `Toolbar` component and apply `buttonBehavior` for `ToolbarItem` component @sophieH29 ([#1468](https://github.com/stardust-ui/react/pull/1468))
