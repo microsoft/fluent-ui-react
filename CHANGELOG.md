@@ -32,6 +32,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Documentation
 - Add dedicated docs for the `color palette` and `color schema` @mnajdova ([#1494](https://github.com/stardust-ui/react/pull/1494))
 
+### Performance
+- Use single Fela renderer for LTR & RTL @layershifter ([#1459](https://github.com/stardust-ui/react/pull/1459))
+
 <!--------------------------------[ v0.33.0 ]------------------------------- -->
 ## [v0.33.0](https://github.com/stardust-ui/react/tree/v0.33.0) (2019-06-13)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.32.0...v0.33.0)
