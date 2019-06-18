@@ -547,19 +547,19 @@ export interface Renderer extends FelaRenderer {}
 // Fonts
 // ========================================================
 
-export interface FontFaceStyle {
+export interface FontFaceProps {
   fontStretch?: string
   fontStyle?: string
   fontVariant?: string
   fontWeight?: number
-  localAlias?: string
+  localAlias?: string | string[]
   unicodeRange?: string
 }
 
 export interface FontFace {
   name: string
   paths: string[]
-  style: FontFaceStyle
+  props: FontFaceProps
 }
 
 export type FontFaces = FontFace[]
