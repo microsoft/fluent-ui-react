@@ -1,4 +1,4 @@
-import { Icon, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import { Icon, Input, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
@@ -6,7 +6,6 @@ import keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { findDOMNode } from 'react-dom'
 import { withRouter } from 'react-router'
 
 import { NavLink } from 'react-router-dom'
@@ -36,20 +35,10 @@ class Sidebar extends React.Component<any, any> {
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleDocumentKeyDown)
-    this.setSearchInput()
-  }
-
-  componentDidUpdate() {
-    this.setSearchInput()
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleDocumentKeyDown)
-  }
-
-  setSearchInput() {
-    // TODO: Replace findDOMNode with Ref component when it will be merged
-    this._searchInput = (findDOMNode(this) as any).querySelector('.ui.input input')
   }
 
   handleDocumentKeyDown = e => {
@@ -65,64 +54,91 @@ class Sidebar extends React.Component<any, any> {
     const { query } = this.state
 
     if (query) this.setState({ query: '' })
-    // TODO: as part of search input re-enabling
-    // if (document.activeElement === this._searchInput) this._searchInput.blur()
+
+    if (document.activeElement === this._searchInput) this._searchInput.blur()
   }
 
-  /* TODO: as part of search input re-enabling
-    private renderSearchItems = () => {
-      const { selectedItemIndex, query } = this.state
-      if (!query) return undefined
+  handleSearchChange = e => {
+    // ignore first "/" on search focus
+    if (e.target.value === '/') return
 
-      let itemIndex = -1
-      const startsWithMatches: ComponentMenuItem[] = []
-      const containsMatches: ComponentMenuItem[] = []
-      const escapedQuery = _.escapeRegExp(query)
-
-      _.each(componentMenu, info => {
-        if (new RegExp(`^${escapedQuery}`, 'i').test(info.displayName)) {
-          startsWithMatches.push(info)
-        } else if (new RegExp(escapedQuery, 'i').test(info.displayName)) {
-          containsMatches.push(info)
-        }
-      })
-
-      this.filteredMenu = [...startsWithMatches, ...containsMatches]
-      const menuItems = _.map(this.filteredMenu, info => {
-        itemIndex += 1
-        const isSelected = itemIndex === selectedItemIndex
-
-        if (isSelected) this.selectedRoute = getComponentPathname(info)
-
-        return (
-          <Menu.Item
-            key={info.displayName}
-            content={info.displayName}
-            onClick={this.handleItemClick}
-            active={isSelected}
-            as={NavLink}
-            to={getComponentPathname(info)}
-          />
-        )
-      }, this.filteredMenu)
-
-      return (
-        <Menu.Item
-          key={info.displayName}
-          name={info.displayName}
-          onClick={this.handleItemClick}
-          active={isSelected}
-          as={NavLink}
-          to={getComponentPathname(info)}
-        >
-          {info.displayName}
-          {isSelected && selectedItemLabel}
-        </Menu.Item>
-      )
+    this.setState({
+      selectedItemIndex: 0,
+      query: e.target.value,
     })
-*/
+  }
+
+  handleSearchKeyDown = e => {
+    const { history } = this.props
+    const { selectedItemIndex } = this.state
+    const code = keyboardKey.getCode(e)
+
+    if (code === keyboardKey.Enter && this.selectedRoute) {
+      e.preventDefault()
+      history.push(this.selectedRoute)
+      this.selectedRoute = null
+      this.setState({ query: '' })
+    }
+
+    if (code === keyboardKey.ArrowDown) {
+      e.preventDefault()
+      const next = _.min([selectedItemIndex + 1, this.filteredMenu.length - 1])
+      this.selectedRoute = getComponentPathname(this.filteredMenu[next])
+      this.setState({ selectedItemIndex: next })
+    }
+
+    if (code === keyboardKey.ArrowUp) {
+      e.preventDefault()
+      const next = _.max([selectedItemIndex - 1, 0])
+      this.selectedRoute = getComponentPathname(this.filteredMenu[next])
+      this.setState({ selectedItemIndex: next })
+    }
+  }
+
+  handleSearchRef = c => {
+    this._searchInput = c && c.querySelector('input')
+  }
+
+  renderSearchItems = () => {
+    const { selectedItemIndex, query } = this.state
+    if (!query) return undefined
+
+    let itemIndex = -1
+    const startsWithMatches: ComponentMenuItem[] = []
+    const containsMatches: ComponentMenuItem[] = []
+    const escapedQuery = _.escapeRegExp(query)
+
+    _.each(componentMenu, info => {
+      if (new RegExp(`^${escapedQuery}`, 'i').test(info.displayName)) {
+        startsWithMatches.push(info)
+      } else if (new RegExp(escapedQuery, 'i').test(info.displayName)) {
+        containsMatches.push(info)
+      }
+    })
+
+    this.filteredMenu = [...startsWithMatches, ...containsMatches]
+    const menuItems = _.map(this.filteredMenu, info => {
+      itemIndex += 1
+      const isSelected = itemIndex === selectedItemIndex
+
+      if (isSelected) this.selectedRoute = getComponentPathname(info)
+
+      return {
+        key: info.displayName,
+        content: info.displayName,
+        onClick: this.handleItemClick,
+        active: isSelected,
+        as: NavLink,
+        to: getComponentPathname(info),
+      }
+    })
+
+    return menuItems
+  }
 
   render() {
+    const { query } = this.state
+
     // Should be applied by provider
     const sidebarStyles: ICSSInJSStyle = {
       background: '#201f1f',
@@ -166,6 +182,11 @@ class Sidebar extends React.Component<any, any> {
         color: 'white',
         backgroundColor: 'none',
       },
+    }
+
+    const menuInputStyles: ICSSInJSStyle = {
+      padding: 0,
+      border: 0,
     }
 
     const dividerStyles: ICSSInJSStyle = {
@@ -327,21 +348,6 @@ class Sidebar extends React.Component<any, any> {
         kind: 'divider',
         styles: dividerStyles,
       },
-      // TODO: to re-enable the search input - will modify the list of the components depending on the search results
-      // {query ? this.renderSearchItems() : this.menuItemsByType},
-      // {
-      //   key: 'search',
-      //   content: (
-      //     <Input
-      //       className="transparent inverted icon"
-      //       icon="search"
-      //       placeholder="Search components..."
-      //       value={query}
-      //       onChange={this.handleSearchChange}
-      //       onKeyDown={this.handleSearchKeyDown}
-      //     />
-      //   ),
-      // },
     ]
 
     const prototypesMenuItemTitle = {
@@ -448,6 +454,25 @@ class Sidebar extends React.Component<any, any> {
         ? menuItems.concat(prototypesMenuItemTitle).concat(prototypesMenuItems)
         : menuItems
 
+    const searchInput = [
+      {
+        key: 'search',
+        content: (
+          <Input
+            fluid
+            className="transparent inverted icon"
+            icon="search"
+            placeholder="Search components..."
+            value={query}
+            onChange={this.handleSearchChange}
+            onKeyDown={this.handleSearchKeyDown}
+            inputRef={this.handleSearchRef}
+          />
+        ),
+        styles: menuInputStyles,
+      },
+    ]
+
     const componentMenuItem = {
       key: 'components',
       content: 'Components',
@@ -461,7 +486,12 @@ class Sidebar extends React.Component<any, any> {
       disabled: true,
     }
 
-    const withComponents = withPrototypes.concat(componentMenuItem).concat(menuItemsByType[0].items)
+    const shownMenuItems = query ? this.renderSearchItems() : menuItemsByType[0].items
+
+    const withComponents = withPrototypes
+      .concat(searchInput)
+      .concat(componentMenuItem)
+      .concat(shownMenuItems)
     const allItems = withComponents
       .concat({
         key: 'divider5',
