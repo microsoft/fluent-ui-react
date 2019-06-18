@@ -119,7 +119,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
         throw new Error(`fontFaces must be objects, got: ${typeof font}`)
       }
       const properties = { ...font.style, localAlias: font.localAliases }
-      console.log(properties)
+
       felaRenderer.renderFont(font.name, font.paths, properties)
     }
 
