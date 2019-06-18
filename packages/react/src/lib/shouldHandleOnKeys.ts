@@ -3,8 +3,8 @@ import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as React from 'react'
 
-const shouldHandleModifier = (modifierValue: boolean, combinationValue?: boolean) => {
-  if (typeof combinationValue === 'undefined') {
+const isKeyModifiersMatch = (modifierValue: boolean, combinationValue?: boolean) => {
+  if (combinationValue === undefined) {
     return true
   }
 
@@ -19,10 +19,10 @@ const shouldHandleOnKeys = (
     keysCombinations,
     (keysCombination: KeyCombinations) =>
       keysCombination.keyCode === keyboardKey.getCode(event) &&
-      shouldHandleModifier(event.altKey, keysCombination.altKey) &&
-      shouldHandleModifier(event.shiftKey, keysCombination.shiftKey) &&
-      shouldHandleModifier(event.metaKey, keysCombination.metaKey) &&
-      shouldHandleModifier(event.ctrlKey, keysCombination.ctrlKey),
+      isKeyModifiersMatch(event.altKey, keysCombination.altKey) &&
+      isKeyModifiersMatch(event.shiftKey, keysCombination.shiftKey) &&
+      isKeyModifiersMatch(event.metaKey, keysCombination.metaKey) &&
+      isKeyModifiersMatch(event.ctrlKey, keysCombination.ctrlKey),
   )
 
 export default shouldHandleOnKeys
