@@ -18,8 +18,10 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { toolbarBehavior, toggleButtonBehavior } from '../../lib/accessibility'
 import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 
-import ToolbarItem from './ToolbarItem'
 import ToolbarDivider from './ToolbarDivider'
+import ToolbarItem from './ToolbarItem'
+import ToolbarMenu from './ToolbarMenu'
+import ToolbarMenuItem from './ToolbarMenuItem'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
 
 export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group' | 'toggle'
@@ -55,8 +57,10 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
     accessibility: toolbarBehavior,
   }
 
-  static Item = ToolbarItem
   static Divider = ToolbarDivider
+  static Item = ToolbarItem
+  static Menu = ToolbarMenu
+  static MenuItem = ToolbarMenuItem
   static RadioGroup = ToolbarRadioGroup
 
   handleItemOverrides = variables => predefinedProps => ({

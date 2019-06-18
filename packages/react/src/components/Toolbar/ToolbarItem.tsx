@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Ref } from '@stardust-ui/react-component-ref'
 
 import {
   UIComponent,
@@ -20,12 +21,16 @@ import {
   WithAsProp,
   withSafeTypeForAs,
   Omit,
+  ShorthandCollection,
 } from '../../types'
+import { Popper } from '../../lib/positioner'
 import { Accessibility } from '../../lib/accessibility/types'
 import { buttonBehavior, popupFocusTrapBehavior } from '../../lib/accessibility'
 
+import ToolbarMenu from './ToolbarMenu'
 import Icon from '../Icon/Icon'
 import Popup, { PopupProps } from '../Popup/Popup'
+import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 export interface ToolbarItemProps
   extends UIComponentProps,
@@ -45,6 +50,12 @@ export interface ToolbarItemProps
 
   /** Name or shorthand for Toolbar Item Icon */
   icon?: ShorthandValue
+
+  /** Shorthand for the submenu. */
+  menu?: ShorthandValue | ShorthandCollection
+
+  /** Indicates if the menu inside the item is open. */
+  menuOpen?: boolean
 
   /**
    * Called on click.
@@ -93,6 +104,8 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     active: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
+    menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.collectionShorthand]), // collides with popup
+    menuOpen: PropTypes.bool,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
@@ -118,7 +131,9 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     },
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
+  itemRef = React.createRef<HTMLElement>()
+
+  renderComponent({ ElementType, classes, unhandledProps, accessibility, variables }) {
     const { icon, children, disabled, popup } = this.props
     const renderedItem = (
       <ElementType
@@ -135,6 +150,16 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
       </ElementType>
     )
 
+    const submenu = this.props.menuOpen ? (
+      <Popper align="start" position="above" targetRef={this.itemRef}>
+        {ToolbarMenu.create(this.props.menu, {
+          overrideProps: predefinedProps => ({
+            variables: mergeComponentVariables(variables, predefinedProps),
+          }),
+        })}
+      </Popper>
+    ) : null
+
     if (popup) {
       return Popup.create(popup, {
         defaultProps: {
@@ -147,7 +172,12 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
       })
     }
 
-    return renderedItem
+    return (
+      <>
+        <Ref innerRef={this.itemRef}>{renderedItem}</Ref>
+        {submenu}
+      </>
+    )
   }
 
   handleBlur = (e: React.SyntheticEvent) => {

@@ -49,6 +49,8 @@ const ToolbarExampleShorthand = () => {
   const [highlightOpen, setHighlightOpen] = React.useState(false)
   const [fontColorActive, setFontColorActive] = React.useState(false)
 
+  const [moreMenuOpen, setMoreMenuOpen] = React.useState(false)
+
   return (
     <Toolbar
       items={[
@@ -129,7 +131,35 @@ const ToolbarExampleShorthand = () => {
         { key: 'bullets', icon: { name: 'bullets', outline: true } },
         { key: 'number-list', icon: { name: 'number-list', outline: true } },
         { key: 'divider3', kind: 'divider' },
-        { key: 'more', icon: { name: 'more', outline: true } },
+        {
+          key: 'more',
+          icon: { name: 'more', outline: true },
+          active: moreMenuOpen,
+          menu: {
+            items: [
+              {
+                content: 'Quote',
+                icon: 'quote',
+                onClick: () => alert('... -> Quote'),
+              },
+              {
+                content: 'Link',
+                icon: 'link',
+                disabled: true,
+                onClick: () => alert('SHOULD NOT BE CALLED, ITEM IS DISABLED... -> Link'),
+              },
+              {
+                content: 'Code snippet',
+                icon: 'code-snippet',
+                onClick: () => alert('... -> Code snippet'),
+              },
+            ],
+          },
+          menuOpen: moreMenuOpen,
+          onClick: () => {
+            setMoreMenuOpen(!moreMenuOpen)
+          },
+        },
       ]}
     />
   )

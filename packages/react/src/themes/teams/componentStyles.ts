@@ -71,6 +71,8 @@ export { default as Text } from './components/Text/textStyles'
 
 export { default as ToolbarDivider } from './components/Toolbar/toolbarDividerStyles'
 export { default as ToolbarItem } from './components/Toolbar/toolbarItemStyles'
+export { default as ToolbarMenu } from './components/Toolbar/toolbarMenuStyles'
+export { default as ToolbarMenuItem } from './components/Toolbar/toolbarMenuItemStyles'
 
 export { default as Tree } from './components/Tree/treeStyles'
 export { default as TreeItem } from './components/Tree/treeItemStyles'
