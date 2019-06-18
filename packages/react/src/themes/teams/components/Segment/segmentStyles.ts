@@ -8,16 +8,28 @@ const segmentStyles: ComponentSlotStylesInput<SegmentProps, SegmentVariables> = 
     const colors = getColorScheme(v.colorScheme, p.color)
 
     return {
-      padding: v.padding,
-      borderTop: `2px solid transparent`,
+      borderColor: 'transparent',
       borderRadius: v.borderRadius,
-      boxShadow: `0 1px 1px 1px ${v.boxShadowColor}`,
+      borderStyle: v.borderStyle,
+      borderWidth: v.borderWidth,
+      boxShadow: v.boxShadow,
+      padding: v.padding,
       color: v.color,
       backgroundColor: v.backgroundColor,
       ...(p.color && { borderColor: colors.foreground }),
       ...(p.inverted && {
         color: v.backgroundColor,
         backgroundColor: p.color ? colors.foreground : v.color,
+      }),
+      ...(p.disabled && {
+        boxShadow: 'none',
+        borderColor: v.borderColorDisabled,
+        color: v.colorDisabled,
+        backgroundColor: v.backgroundColorDisabled,
+        ...(p.inverted && {
+          color: v.backgroundColorDisabled,
+          backgroundColor: v.colorDisabled,
+        }),
       }),
     }
   },

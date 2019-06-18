@@ -24,6 +24,9 @@ export interface SegmentProps
    */
   accessibility?: Accessibility
 
+  /** An segment can show it is currently unable to be interacted with. */
+  disabled?: boolean
+
   /** A segment can have its colors inverted for contrast. */
   inverted?: boolean
 }
@@ -37,6 +40,7 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
     }),
+    disabled: PropTypes.bool,
     inverted: PropTypes.bool,
     rtlAttributes: PropTypes.func,
   }
@@ -47,7 +51,7 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
   }
 
   renderComponent({ accessibility, ElementType, classes, unhandledProps }) {
-    const { children, content } = this.props
+    const { children, content, disabled } = this.props
 
     return (
       <ElementType
@@ -55,6 +59,7 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
         {...accessibility.attributes.root}
         {...unhandledProps}
         className={classes.root}
+        disabled={disabled}
       >
         {childrenExist(children) ? children : Box.create(content)}
       </ElementType>
