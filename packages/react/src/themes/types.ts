@@ -263,13 +263,15 @@ export interface ICSSPseudoElementStyle extends ICSSInJSStyle {
   content?: string
 }
 
-export interface StardustAnimationName {
-  keyframe?: any
-  params?: object
+type AnimationKeyFrame = Record<'from' | 'to' | string, ICSSInJSStyle>
+
+export interface StardustAnimationName<P = Record<string, any>> {
+  keyframe?: AnimationKeyFrame | ((params: P) => AnimationKeyFrame)
+  params?: P
 }
 
 export type CSSProperties = Omit<React.CSSProperties, 'animationName'> & {
-  animationName?: StardustAnimationName | string | 'none'
+  animationName?: StardustAnimationName | AnimationKeyFrame | string | 'none'
 }
 
 export interface ICSSInJSStyle extends CSSProperties {
@@ -484,19 +486,19 @@ export interface Renderer extends FelaRenderer {}
 // Fonts
 // ========================================================
 
-export interface FontFaceStyle {
+export interface FontFaceProps {
   fontStretch?: string
   fontStyle?: string
   fontVariant?: string
   fontWeight?: number
-  localAlias?: string
+  localAlias?: string | string[]
   unicodeRange?: string
 }
 
 export interface FontFace {
   name: string
   paths: string[]
-  style: FontFaceStyle
+  props: FontFaceProps
 }
 
 export type FontFaces = FontFace[]
