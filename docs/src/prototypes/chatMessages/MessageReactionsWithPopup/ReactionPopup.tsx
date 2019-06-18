@@ -35,16 +35,14 @@ class ReactionPopup extends React.Component<ReactionProps, any> {
             aria-label={getAriaLabel(this.props)}
           />
         }
-        content={{
-          content: (
-            <Menu
-              items={['Jane Doe', 'John Doe']}
-              vertical
-              variables={{ borderColor: 'transparent' }}
-              onKeyDown={this.handleKeyDownOnMenu}
-            />
-          ),
-        }}
+        content={
+          <Menu
+            items={['Jane Doe', 'John Doe']}
+            vertical
+            variables={{ borderColor: 'transparent' }}
+            onKeyDown={this.handleKeyDownOnMenu}
+          />
+        }
         inline
         on="hover"
         open={this.state.open}

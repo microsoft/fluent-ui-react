@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, Icon } from '@stardust-ui/react'
+import { Avatar } from '@stardust-ui/react'
 
 const AvatarExampleImageCustomizationShorthand = () => (
   <>
@@ -10,21 +10,6 @@ const AvatarExampleImageCustomizationShorthand = () => (
     &emsp;
     <Avatar
       image="public/images/avatar/large/jerry.png"
-      status={{ color: 'green', icon: 'check', title: 'Available' }}
-    />
-    &emsp;
-    <Avatar
-      image={
-        // This example does not react to the avatar size variable
-        // and otherwise produces bad results when border is applied compared to "normal" image
-        <Icon
-          name="lock"
-          circular
-          bordered
-          variables={{ color: 'blue' }}
-          styles={{ boxSizing: 'border-box', padding: '8px' }}
-        />
-      }
       status={{ color: 'green', icon: 'check', title: 'Available' }}
     />
   </>

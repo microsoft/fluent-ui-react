@@ -686,21 +686,24 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   ) {
     const { loading, loadingMessage, noResultsMessage, renderItem } = this.props
     const { filteredItems } = this.state
-    const items = _.map(filteredItems, (item, index) =>
-      DropdownItem.create(item, {
-        defaultProps: {
-          className: Dropdown.slotClassNames.item,
-          active: highlightedIndex === index,
-          selected: !this.props.multiple && value === item,
-          isFromKeyboard: this.state.itemIsFromKeyboard,
-          variables,
-          ...(typeof item === 'object' &&
-            !item.hasOwnProperty('key') && {
-              key: (item as any).header,
-            }),
-        },
-        overrideProps: this.handleItemOverrides(item, index, getItemProps),
-        render: renderItem,
+
+    const items = _.map(filteredItems, (item, index) => render =>
+      render(item, () => {
+        return DropdownItem.create(item, {
+          defaultProps: {
+            className: Dropdown.slotClassNames.item,
+            active: highlightedIndex === index,
+            selected: !this.props.multiple && value === item,
+            isFromKeyboard: this.state.itemIsFromKeyboard,
+            variables,
+            ...(typeof item === 'object' &&
+              !item.hasOwnProperty('key') && {
+                key: (item as any).header,
+              }),
+          },
+          overrideProps: this.handleItemOverrides(item, index, getItemProps),
+          render: renderItem,
+        })
       }),
     )
 

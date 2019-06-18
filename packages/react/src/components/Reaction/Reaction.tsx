@@ -67,7 +67,7 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
     }),
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     onFocus: PropTypes.func,
   }
 

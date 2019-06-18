@@ -411,6 +411,10 @@ export const itemShorthandWithKindProp = (kindPropValues: string[]) => {
     ]),
   ])
 }
+export const itemShorthandWithoutJSX = every([
+  disallow(['children']),
+  PropTypes.oneOfType([PropTypes.func, PropTypes.number, PropTypes.object, PropTypes.string]),
+])
 
 /**
  * Collection shorthand ensures a prop is an array of item shorthand.

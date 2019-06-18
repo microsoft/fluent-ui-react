@@ -1,0 +1,185 @@
+export const meta = {
+  title: 'Shorthand Props',
+}
+
+Stardust UI components can have "slots" which accept shothand props. For example, `Button` component has an `icon` slot which value defines the icon that will be rendered.
+
+```jsx
+<Button icon="camera" />
+```
+
+There are several forms of shorthand values that can be provided, but all of them share one common thing - each is eventually evaluated to React Element. Thus, you can think of shorthand values as a recipe to customize rendered React Element.
+
+## Object as value
+
+Each component's slot has associated default element type. For example, by default there is
+`<Icon />` element rendered for `Button`'s `icon` slot. It is possible to customize props of this default element by providing props object as shorthand value:
+
+```jsx
+// 💡 'name' and 'size' will be used as <Icon /> element's props
+<Button icon={{ name: 'camera', size: 'small' }} />
+```
+
+## Primitive as value
+
+There is even shorter way to define default element's props - by using a primitive value. In that case provided shorthand value will be taken as a value for "default prop" of this element.
+
+This could be much easier seen with an example. Here, again, we have a `Button`
+element with its icon being defined with shorthand - where provided `string` value
+will be used as icon's `name`:
+
+```jsx
+<>
+  <Button icon="camera" />
+  // 💡 has identical effect to the previous one
+  <Button icon={{ name: 'camera' }} />
+</>
+```
+
+This works because `name` is the default prop of shorthand's `<Icon />` element. You can also pass React Elements to slots:
+
+```jsx
+<>
+  <Popup content={<em>Awesome Popup!</em>} />
+  // 💡 has identical effect to the previous one
+  <Popup content={{ content: <em>Awesome Popup!</em> }} />
+</>
+```
+
+### Disable slot's rendering
+
+It is also possible to pass falsy values (`false`, `null` or
+`undefined`) to shorthand prop - iin that case there will be nothing rendered for the component's slot.
+
+```jsx
+<Dropdown toggleIndicator={null} />
+```
+
+## Shorthand value as Function
+
+Providing function as a shorthand value is the most involving but, at the same time, the most
+powerful option for customizing component's slot. The only requirements for this function are:
+
+- it should finish syncronously
+- it should return React Element as a result
+
+Thus, in its simplest form, it could be used the following way:
+
+```jsx
+<Button icon={() => <Icon name="chess rook" />} />
+```
+
+However, if it will be just about that, this function form wouldn't introduce any additional value. So, lets take a look on the scenarios where it is really helpful.
+
+### 'Render' callback argument
+
+When function is provided as a shorthand value, there is a `render` callback provided
+as its argument. This `render` argument is a function that 'knows' how to render all
+the previously considered shorthand types - i.e. primitive values, objects, React Elements.
+
+Here is an example that represents this:
+
+```jsx
+<>
+  {/* All three have the same effect: */}
+  <Button icon="chess rook" />
+  {/* render() transforms string to <Icon /> element */}
+  <Button icon={render => render('chess rook')} />
+  {/* render() transforms object to <Icon /> element */}
+  <Button icon={render => render({ name: 'chess rook' })} />
+</>
+```
+
+### Handle Async data loading scenarios
+
+This 'render callback' arg makes it possible for the client to tackle scenarios where slot's data may be fetched asynchronously.
+
+Consider the following scenario: suppose we need to render `Button`'s icon, but the
+problem is that icon's name is fetched from some remote source. Thus, we cannot do it as
+simply as that, as icon's name is not known at the moment `Button` is rendered:
+
+```jsx
+<Button icon={{ name: /* unknown yet */ undefined }} />
+```
+
+It is quite common case that there is some component that is responsible for data fetching
+abstraction - and it is possible to 'tell' this component what should be rendered while data
+is loading, as well as what should be rendered when data is fetched.
+
+```jsx
+<AsyncData
+  getData={fetch('https://some/url')}
+  onLoading={<div>Loading..</div>} // renders when data is loading
+  onLoaded={data => <div>Loaded Data: {data}</div>} // renders once data is fetched
+/>
+```
+
+Lets suppose that we want to render `loading` icon before data is fetched, and switch it with
+the icon which `name` will be provided by fetched `data` object. Also, note
+that we have `render` arg that knows _how_ to render `Button`'s icons.
+
+Putting it all together, we will address our async data fetch case:
+
+```jsx
+<Button
+  icon={render => (
+    <AsyncData
+      getData={fetch('https://some/url')}
+      onLoading={<Icon name="loading" />}
+      /* using 'render' arg here to render icon from loaded na */
+      onLoaded={data => render({ name: data.iconName })}
+    />
+  )}
+/>
+```
+
+Note that this example can be further simplified, as `render` can be used to render
+'loading' icon as well:
+
+```jsx
+<Button
+  icon={render => (
+    <AsyncData
+      getData={fetch('https://some/url')}
+      /* using 'render' arg here to render loading icon as well */
+      onLoading={render('loading')}
+      onLoaded={data => render({ name: data.iconName })}
+    />
+  )}
+/>
+```
+
+### Customizing rendered tree
+
+There is another use case that `render` callback arg is very useful for - this is the
+case where custom element's tree should be rendered for the slot, but, at the same time, all
+the evaluated styles and accessibility behaviors should be preserved for rendered custom
+element.
+
+As you might recall, there is a problem that might happen when React Element is provided
+directly as shorthand value - in that case Stardust props are not propagated to rendered
+element, which may result in broken styles and accessibility. In order to avoid that the
+following strategy should be considered:
+
+```jsx
+<Button
+  icon={render =>
+    render(
+      /* what to render */
+      { name: 'chess rook' },
+
+      /* how to render */
+      (ComponentType, props) => (
+        <div class="my-icon-container">
+          <i class="my-chess-rook-icon" {...props.accessibili.root} />
+        </div>
+      ),
+    )
+  }
+/>
+```
+
+Here we are passing a recipe of how evaluated `ComponentType` (`Icon` in our
+case, which is ignored by the rendered tree) and `props` should be passed to custom
+elements tree. Note that `props` object, amongst others, contains all the necessary
+evaluated accessibility attributes that should be applied to rendered element.

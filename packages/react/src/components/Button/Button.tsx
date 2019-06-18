@@ -94,7 +94,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
     fluid: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     iconOnly: PropTypes.bool,
     iconPosition: PropTypes.oneOf(['before', 'after']),
     onClick: PropTypes.func,

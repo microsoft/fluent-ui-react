@@ -443,7 +443,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     const popupContentAttributes =
       accessibility.focusTrap || accessibility.autoFocus ? {} : popupWrapperAttributes
 
-    const popupContent = Popup.Content.create(content, {
+    const popupContent = Popup.Content.create(content || {}, {
       defaultProps: {
         ...popupContentAttributes,
         placement,

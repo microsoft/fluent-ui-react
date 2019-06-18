@@ -14,7 +14,7 @@ class PopupControlledExample extends React.Component {
       <Popup
         open={this.state.open}
         onOpenChange={this.handleOpenChange}
-        content={{ content: <Input icon="search" placeholder="Search..." /> }}
+        content={<Input icon="search" placeholder="Search..." />}
       >
         <Button icon="expand" />
       </Popup>

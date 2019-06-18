@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import ExternalExampleLayout from './components/ExternalExampleLayout'
 import DocsLayout from './components/DocsLayout'
 import DocsRoot from './components/DocsRoot'
+import MarkdownPage from 'docs/src/components/MarkdownPage'
 
 import Accessibility from './views/Accessibility'
 import Colors from './views/Colors'
@@ -11,7 +12,7 @@ import ColorPalette from './views/ColorPalette'
 import ColorSchemes from './views/ColorSchemes'
 
 import FAQ from './views/FAQ'
-import ShorthandProps from './views/ShorthandProps'
+import * as ShorthandProps from './pages/ShorthandProps.mdx'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
@@ -57,7 +58,6 @@ const Router = () => (
             path="/prototype-chat-messages"
             component={ChatMessagesPrototype}
           />,
-          ,
           <DocsLayout
             exact
             key="/prototype-async-shorthand"
@@ -128,7 +128,7 @@ const Router = () => (
         <DocsLayout exact path="/theming" component={Theming} />
         <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
         <DocsLayout exact path="/layout" component={LayoutGuide} />
-        <DocsLayout exact path="/shorthand-props" component={ShorthandProps} />
+        <MarkdownPage exact path="/shorthand-props" page={ShorthandProps} />
         <DocsLayout
           exact
           path="/integrate-custom-components"
