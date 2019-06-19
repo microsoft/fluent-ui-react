@@ -124,11 +124,19 @@ const ToolbarExampleShorthand = () => {
         { key: 'font-size', icon: { name: 'font-size', outline: true } },
         { key: 'remove-format', icon: { name: 'remove-format', outline: true } },
         { key: 'divider2', kind: 'divider' },
+        {
+          key: 'radiogroup',
+          kind: 'group',
+          items: [
+            { key: 'bullets', icon: { name: 'bullets', outline: true } },
+            { key: 'number-list', icon: { name: 'number-list', outline: true } },
+            { key: 'to-do-list', icon: { name: 'to-do-list', outline: true } },
+          ],
+        },
+        { key: 'divider3', kind: 'divider' },
         { key: 'outdent', icon: { name: 'outdent', outline: true } },
         { key: 'indent', icon: { name: 'indent', outline: true } },
-        { key: 'bullets', icon: { name: 'bullets', outline: true } },
-        { key: 'number-list', icon: { name: 'number-list', outline: true } },
-        { key: 'divider3', kind: 'divider' },
+        { key: 'divider4', kind: 'divider' },
         { key: 'more', icon: { name: 'more', outline: true } },
       ]}
     />
