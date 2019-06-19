@@ -79,7 +79,7 @@ export default (siteVars): DropdownVariables => ({
   listItemColorActive: siteVars.colors.grey[750],
   listItemSelectedFontWeight: siteVars.fontWeightSemibold,
   listItemSelectedColor: siteVars.colors.grey[750],
-  selectedItemBackgroundColor: undefined,
+  selectedItemBackgroundColor: 'undefined',
   selectedItemColorFocus: siteVars.bodyColor,
   selectedItemBackgroundColorFocus: siteVars.colors.brand[200],
   selectedItemsMaxHeight: pxToRem(82),

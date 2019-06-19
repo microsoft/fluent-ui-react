@@ -1,6 +1,6 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { DropdownVariables } from './dropdownVariables'
-import { DropdownItemProps } from '../../../../components/Dropdown/DropdownItem'
+import { DropdownItemProps, DropdownItem } from '../../../../components/Dropdown/DropdownItem'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import { pxToRem } from '../../../../lib'
 
@@ -26,6 +26,12 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
         color: v.listItemColorHover,
         backgroundColor: v.listItemBackgroundColorHover,
       }),
+      ...(p.header && {
+        [`& .${DropdownItem.slotClassNames.header}`]: {
+          // I had to make DropdownItem export from DropdownItem.tsx
+          color: v.listItemColorHover,
+        },
+      }),
     }),
   }),
   image: (): ICSSInJSStyle => ({
@@ -33,14 +39,19 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
   }),
   header: ({ props: p, variables: v }): ICSSInJSStyle => ({
     fontSize: v.listItemHeaderFontSize,
-    color: v.listItemHeaderColor,
+    // if the item doesn't have content - i.e. it is header only - then it should use the content color
+    // or Should the default behavior of handling a generic list be changed, so that the "content" property
+    // is populated by default and not the header?
+    color: v.listItemContentColor,
     ...(p.content && {
       // if there is content it needs to be "tightened up" to the header
       // this could just as easily rely on the image being present.
       marginBottom: pxToRem(-1),
+      color: v.listItemHeaderColor,
     }),
     ...(p.selected && {
-      background: 'red',
+      fontWeight: v.listItemSelectedFontWeight,
+      color: v.listItemSelectedColor,
     }),
   }),
   content: ({ variables: v }): ICSSInJSStyle => ({
