@@ -157,8 +157,12 @@ export { default as ToolbarItem } from './components/Toolbar/ToolbarItem'
 export * from './components/Toolbar/ToolbarRadioGroup'
 export { default as ToolbarRadioGroup } from './components/Toolbar/ToolbarRadioGroup'
 
-export * from './components/Tree'
-export { default as Tree } from './components/Tree'
+export * from './components/Tree/Tree'
+export { default as Tree } from './components/Tree/Tree'
+export * from './components/Tree/TreeItem'
+export { default as TreeItem } from './components/Tree/TreeItem'
+export * from './components/Tree/TreeTitle'
+export { default as TreeTitle } from './components/Tree/TreeTitle'
 
 export * from './components/Reaction/Reaction'
 export { default as Reaction } from './components/Reaction/Reaction'
@@ -176,6 +180,9 @@ export { default as TooltipContent } from './components/Tooltip/TooltipContent'
 //
 // Accessibility
 //
+export {
+  default as toggleButtonBehavior,
+} from './lib/accessibility/Behaviors/Button/toggleButtonBehavior'
 export { default as menuBehavior } from './lib/accessibility/Behaviors/Menu/menuBehavior'
 export { default as menuItemBehavior } from './lib/accessibility/Behaviors/Menu/menuItemBehavior'
 export {
@@ -189,6 +196,7 @@ export {
 export {
   default as menuItemAsToolbarButtonBehavior,
 } from './lib/accessibility/Behaviors/Toolbar/menuItemAsToolbarButtonBehavior'
+export { default as toolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/toolbarBehavior'
 export {
   default as radioGroupBehavior,
 } from './lib/accessibility/Behaviors/Radio/radioGroupBehavior'

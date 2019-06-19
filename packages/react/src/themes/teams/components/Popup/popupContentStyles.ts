@@ -8,6 +8,10 @@ const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupConte
     borderRadius: v.borderRadius,
     display: 'block',
 
+    ...(p.unstable_wrapped && {
+      backgroundColor: 'inherit',
+      position: 'relative',
+    }),
     ...(p.pointing && getPointerStyles(v.pointerOffset, v.pointerMargin, rtl, p.placement).root),
   }),
   pointer: ({ props: p, variables: v, rtl }): ICSSInJSStyle => ({
