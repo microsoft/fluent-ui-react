@@ -1,3 +1,5 @@
+import { PositionProperty } from 'csstype'
+
 export { default as Accordion } from './components/Accordion/accordionStyles'
 export { default as AccordionContent } from './components/Accordion/accordionContentStyles'
 export { default as AccordionTitle } from './components/Accordion/accordionTitleStyles'
@@ -82,3 +84,25 @@ export { default as Video } from './components/Video/videoStyles'
 
 export { default as Tooltip } from './components/Tooltip/tooltipStyles'
 export { default as TooltipContent } from './components/Tooltip/tooltipContentStyles'
+
+export const MyComponent = {
+  root: {
+    position: 'relative' as PositionProperty,
+    border: '1px solid red',
+    ':before': {
+      display: 'inline-block',
+      content: `'styled'`,
+      position: 'absoute' as PositionProperty,
+      top: 0,
+      right: 0,
+      fontSize: '12px',
+      background: 'red',
+      color: 'white',
+      padding: '0 5px',
+    },
+    padding: '10px 15px',
+  },
+  content: {
+    fontSize: '16px',
+  },
+}

@@ -7,6 +7,9 @@ export { themes }
 export * from './themes/types'
 export * from './themes/colorUtils'
 
+// @ts-ignore
+export { ThemeContext as StardustContext } from 'react-fela'
+
 //
 // Teams theme
 //

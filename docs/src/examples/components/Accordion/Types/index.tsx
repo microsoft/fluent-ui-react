@@ -5,19 +5,14 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Types = () => (
   <ExampleSection title="Types">
     <ComponentExample
-      title="Default"
-      description="A default Accordion."
-      examplePath="components/Accordion/Types/AccordionExample"
+      title="Class example"
+      description="Class example."
+      examplePath="components/Accordion/Types/ClassExample"
     />
     <ComponentExample
-      title="Exclusive"
-      description="An exclusive Accordion."
-      examplePath="components/Accordion/Types/AccordionExclusiveExample"
-    />
-    <ComponentExample
-      title="Exclusive and Expanded"
-      description="An exclusive expanded Accordion."
-      examplePath="components/Accordion/Types/AccordionExclusiveExpandedExample"
+      title="Function Component example"
+      description="Function Component example."
+      examplePath="components/Accordion/Types/FunctionComponentExample"
     />
   </ExampleSection>
 )

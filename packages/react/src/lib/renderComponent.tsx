@@ -17,7 +17,7 @@ import {
   State,
   ThemePrepared,
 } from '../themes/types'
-import { Props, ProviderContextPrepared } from '../types'
+import { Props, ProviderContextPrepared, Omit } from '../types'
 import { AccessibilityDefinition, FocusZoneMode, FocusZoneDefinition } from './accessibility/types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import { defaultBehavior } from './accessibility'
@@ -124,10 +124,10 @@ const renderWithFocusZone = <P extends {}>(
   return render(config)
 }
 
-const renderComponent = <P extends {}>(
-  config: RenderConfig<P>,
+export const prepareComponentConfig = <P extends {}>(
+  config: Omit<RenderConfig<P>, 'render' | 'focusZoneRef'>,
   context: ProviderContextPrepared,
-): React.ReactElement<P> => {
+): RenderResultConfig<P> => {
   const {
     className,
     defaultProps,
@@ -136,8 +136,6 @@ const renderComponent = <P extends {}>(
     props,
     state,
     actionHandlers,
-    focusZoneRef,
-    render,
   } = config
 
   if (_.isEmpty(context)) {
@@ -216,8 +214,24 @@ const renderComponent = <P extends {}>(
     theme: context.theme,
   }
 
-  if (accessibility.focusZone) {
-    return renderWithFocusZone(render, accessibility.focusZone, resolvedConfig, focusZoneRef)
+  return resolvedConfig
+}
+
+const renderComponent = <P extends {}>(
+  config: RenderConfig<P>,
+  context: ProviderContextPrepared,
+): React.ReactElement<P> => {
+  const { focusZoneRef, render } = config
+
+  const resolvedConfig = prepareComponentConfig<P>(config, context)
+
+  if (resolvedConfig.accessibility.focusZone) {
+    return renderWithFocusZone(
+      render,
+      resolvedConfig.accessibility.focusZone,
+      resolvedConfig,
+      focusZoneRef,
+    )
   }
 
   return render(resolvedConfig)

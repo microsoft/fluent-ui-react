@@ -42,3 +42,5 @@ export * from './whatInput'
 
 export * from './commonPropInterfaces'
 export { commonPropTypes }
+
+export { withStardust, useStardust } from './createComponentUtils'
