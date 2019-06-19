@@ -2,7 +2,15 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 
-import { createShorthandFactory, commonPropTypes, UIComponent, childrenExist } from '../../lib'
+import {
+  createShorthandFactory,
+  commonPropTypes,
+  UIComponent,
+  childrenExist,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 import { ShorthandCollection, withSafeTypeForAs } from '../../types'
@@ -12,7 +20,10 @@ import ToolbarMenuItem from './ToolbarMenuItem'
 
 export type ToolbarMenuItemShorthandKinds = 'divider' | 'item'
 
-export interface ToolbarMenuProps {
+export interface ToolbarMenuProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    ContentComponentProps {
   /** Shorthand array of props for ToolbarMenu. */
   items?: ShorthandCollection<ToolbarMenuItemShorthandKinds>
 }

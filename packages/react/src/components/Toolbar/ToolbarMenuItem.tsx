@@ -9,7 +9,7 @@ import {
   childrenExist,
   isFromKeyboard,
 } from '../../lib'
-import { ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
+import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import Icon from '../Icon/Icon'
@@ -34,6 +34,28 @@ export interface ToolbarMenuItemProps
 
   /** Name or shorthand for Toolbar Item Icon */
   icon?: ShorthandValue
+
+  /**
+   * Called on click.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick?: ComponentEventHandler<ToolbarMenuItemProps>
+
+  /**
+   * Called after user's focus.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onFocus?: ComponentEventHandler<ToolbarMenuItemProps>
+
+  /**
+   * Called after item blur.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onBlur?: ComponentEventHandler<ToolbarMenuItemProps>
 }
 
 export interface ToolbarMenuItemState {
@@ -52,6 +74,9 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, Tool
     active: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
+    onClick: PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
   }
 
   static defaultProps = {
@@ -113,8 +138,8 @@ ToolbarMenuItem.create = createShorthandFactory({
 })
 
 /**
- * Toolbar item.
- * FIXME add meaningful description.
+ * Toolbar menu item.
+ * This item renders as a button inside a Toolbar menu.
  */
 export default withSafeTypeForAs<typeof ToolbarMenuItem, ToolbarMenuItemProps, 'button'>(
   ToolbarMenuItem,

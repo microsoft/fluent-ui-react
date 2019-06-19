@@ -154,7 +154,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
       <Popper align="start" position="above" targetRef={this.itemRef}>
         {ToolbarMenu.create(this.props.menu, {
           overrideProps: predefinedProps => ({
-            variables: mergeComponentVariables(variables, predefinedProps),
+            variables: mergeComponentVariables(variables, predefinedProps.variables),
           }),
         })}
       </Popper>
