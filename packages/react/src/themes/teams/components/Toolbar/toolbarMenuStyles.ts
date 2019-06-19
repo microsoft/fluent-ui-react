@@ -1,5 +1,4 @@
 import { ICSSInJSStyle } from '../../../types'
-import { pxToRem } from '@stardust-ui/react'
 import { getColorScheme } from '../../colors'
 
 const toolbarMenuStyles = {
@@ -10,14 +9,14 @@ const toolbarMenuStyles = {
       display: 'flex',
       zIndex: 1000,
       flexDirection: 'column',
-      padding: `${pxToRem(8)} 0`,
+      padding: v.menuPadding,
       backgroundColor: v.menuBackground || colors.background,
       boxShadow: v.menuBoxShadow,
       borderStyle: 'solid',
       borderColor: v.menuBorder || colors.border,
       borderWidth: v.menuBorderWidth,
       borderRadius: v.menuBorderRadius,
-      width: pxToRem(200), // FIXME
+      width: v.menuWidth,
     }
   },
 }

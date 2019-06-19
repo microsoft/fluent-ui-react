@@ -6,8 +6,6 @@ const toolbarMenuItemStyles = {
     const { disabled, isFromKeyboard } = p
     const colors = getColorScheme(v.colorScheme)
 
-    console.log(colors)
-
     return {
       color: v.menuItemForeground || colors.foreground1,
       backgroundColor: 'transparent',

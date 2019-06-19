@@ -54,6 +54,8 @@ export interface ToolbarVariables {
   borderRadius: string
   dividerMargin: string
 
+  menuWidth: string
+  menuPadding: string
   menuBackground: string
   menuBorder: string // border color
   menuBorderWidth: string
@@ -111,6 +113,8 @@ export default (siteVars: any): ToolbarVariables => ({
   borderRadius: '50%',
   dividerMargin: `${pxToRem(10)} ${pxToRem(4)}`,
 
+  menuWidth: pxToRem(200),
+  menuPadding: `${pxToRem(8)} 0`,
   menuBackground: undefined,
   menuBorder: undefined,
   menuBorderWidth: '1px',
