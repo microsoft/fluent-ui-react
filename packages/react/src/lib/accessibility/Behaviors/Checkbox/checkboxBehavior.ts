@@ -6,7 +6,7 @@ import { Accessibility } from '../../types'
  * Adds role='checkbox'. This allows screen readers to handle the component as a checkbox button.
  * Adds attribute 'aria-checked=true' based on the property 'checked'.
  * Adds attribute 'aria-disabled=true' based on the property 'disabled'.
- * Adds attribute 'tabIndex=0' to 'root' component's part.
+ * Adds attribute 'tabIndex=0' to 'root' slot.
  */
 const checkboxBehavior: Accessibility<CheckboxBehaviorProps> = props => ({
   attributes: {

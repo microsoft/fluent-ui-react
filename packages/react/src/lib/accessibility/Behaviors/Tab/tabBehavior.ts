@@ -4,16 +4,16 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 
 /**
  * @specification
- * Adds role 'presentation' to 'wrapper' component's part.
- * Adds role 'tab' to 'root' component's part.
- * Adds attribute 'tabIndex=0' to 'root' component's part.
- * Adds attribute 'data-is-focusable=false' to 'root' component's part if 'disabled' property is true. Sets the attribute to 'true' otherwise.
- * Adds attribute 'aria-selected=true' to 'root' component's part based on the property 'active'. This can be overriden by providing 'aria-selected' property directly to the component.
- * Adds attribute 'aria-label' based on the property 'aria-label' to 'root' component's part.
- * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' component's part.
- * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'root' component's part.
- * Adds attribute 'aria-controls' based on the property 'aria-controls' to 'root' component's part.
- * Adds attribute 'aria-disabled=true' to 'root' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
+ * Adds role 'presentation' to 'wrapper' slot.
+ * Adds role 'tab' to 'root' slot.
+ * Adds attribute 'tabIndex=0' to 'root' slot.
+ * Adds attribute 'data-is-focusable=false' to 'root' slot if 'disabled' property is true. Sets the attribute to 'true' otherwise.
+ * Adds attribute 'aria-selected=true' to 'root' slot based on the property 'active'. This can be overriden by providing 'aria-selected' property directly to the component.
+ * Adds attribute 'aria-label' based on the property 'aria-label' to 'root' slot.
+ * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' slot.
+ * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'root' slot.
+ * Adds attribute 'aria-controls' based on the property 'aria-controls' to 'root' slot.
+ * Adds attribute 'aria-disabled=true' to 'root' slot based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
  */
 const tabBehavior: Accessibility<TabBehaviorProps> = props => ({
