@@ -1,5 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import {
@@ -13,10 +15,10 @@ import {
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
-import { ShorthandCollection, withSafeTypeForAs } from '../../types'
+import { ComponentEventHandler, ShorthandCollection, withSafeTypeForAs } from '../../types'
 import { submenuBehavior } from '../../lib/accessibility'
 
-import ToolbarMenuItem from './ToolbarMenuItem'
+import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
 
 export type ToolbarMenuItemShorthandKinds = 'divider' | 'item'
 
@@ -26,6 +28,8 @@ export interface ToolbarMenuProps
     ContentComponentProps {
   /** Shorthand array of props for ToolbarMenu. */
   items?: ShorthandCollection<ToolbarMenuItemShorthandKinds>
+
+  onItemClick: ComponentEventHandler<ToolbarMenuItemProps>
 }
 
 class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
@@ -38,6 +42,7 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
   static propTypes = {
     ...commonPropTypes.createCommon(),
     items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
+    onItemClick: PropTypes.func,
   }
 
   static defaultProps = {
@@ -45,6 +50,10 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
   }
 
   handleItemOverrides = variables => predefinedProps => ({
+    onClick: (e, itemProps) => {
+      _.invoke(predefinedProps, 'onClick', e, itemProps)
+      _.invoke(this.props, 'onItemClick', e, itemProps)
+    },
     variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
@@ -66,7 +75,7 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
   }
 }
 
-ToolbarMenu.create = createShorthandFactory({ Component: ToolbarMenu, mappedProp: 'items' })
+ToolbarMenu.create = createShorthandFactory({ Component: ToolbarMenu, mappedArrayProp: 'items' })
 
 /**
  * Toolbar menu creates a popup menu attached to a toolbarItem.

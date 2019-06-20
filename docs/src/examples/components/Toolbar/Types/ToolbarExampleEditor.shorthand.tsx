@@ -156,8 +156,9 @@ const ToolbarExampleShorthand = () => {
             ],
           },
           menuOpen: moreMenuOpen,
-          onClick: () => {
-            setMoreMenuOpen(!moreMenuOpen)
+          onMenuOpenChange: (e, { menuOpen }) => {
+            console.log(`setting menu to ${menuOpen ? 'open' : 'close'}`)
+            setMoreMenuOpen(menuOpen)
           },
         },
       ]}

@@ -1,4 +1,9 @@
 import * as React from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+
+import * as customPropTypes from '@stardust-ui/react-proptypes'
+
 import {
   ChildrenComponentProps,
   commonPropTypes,
@@ -13,9 +18,6 @@ import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } 
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import Icon from '../Icon/Icon'
-import * as PropTypes from 'prop-types'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
-import * as _ from 'lodash'
 
 export interface ToolbarMenuItemProps
   extends UIComponentProps,

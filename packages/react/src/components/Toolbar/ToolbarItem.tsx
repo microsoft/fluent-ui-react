@@ -3,10 +3,12 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { Ref } from '@stardust-ui/react-component-ref'
+import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
 
 import {
   UIComponent,
   createShorthandFactory,
+  doesNodeContainClick,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
@@ -58,6 +60,13 @@ export interface ToolbarItemProps
   menuOpen?: boolean
 
   /**
+   * Event for request to change 'menuOpen' value.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
+  onMenuOpenChange?: ComponentEventHandler<ToolbarItemProps>
+
+  /**
    * Called on click.
    *
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
@@ -104,8 +113,9 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     active: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
-    menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.collectionShorthand]), // collides with popup
+    menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.collectionShorthand]),
     menuOpen: PropTypes.bool,
+    onMenuOpenChange: PropTypes.func,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
@@ -132,9 +142,10 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
   }
 
   itemRef = React.createRef<HTMLElement>()
+  menuRef = React.createRef<HTMLElement>()
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility, variables }) {
-    const { icon, children, disabled, popup } = this.props
+    const { icon, children, disabled, popup, menu, menuOpen } = this.props
     const renderedItem = (
       <ElementType
         {...accessibility.attributes.root}
@@ -150,14 +161,29 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
       </ElementType>
     )
 
-    const submenu = this.props.menuOpen ? (
-      <Popper align="start" position="above" targetRef={this.itemRef}>
-        {ToolbarMenu.create(this.props.menu, {
-          overrideProps: predefinedProps => ({
-            variables: mergeComponentVariables(variables, predefinedProps.variables),
-          }),
-        })}
-      </Popper>
+    const submenu = menuOpen ? (
+      <>
+        <Ref innerRef={this.menuRef}>
+          <Popper align="start" position="above" targetRef={this.itemRef}>
+            {ToolbarMenu.create(menu, {
+              overrideProps: predefinedProps => ({
+                onItemClick: (e, itemProps) => {
+                  _.invoke(predefinedProps, 'onItemClick', e, itemProps)
+                  // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
+                  this.trySetMenuOpen(false, e)
+                },
+                variables: mergeComponentVariables(variables, predefinedProps.variables),
+              }),
+            })}
+          </Popper>
+        </Ref>
+        <EventListener
+          listener={this.handleOutsideClick}
+          targetRef={documentRef}
+          type="click"
+          capture
+        />
+      </>
     ) : null
 
     if (popup) {
@@ -193,14 +219,31 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
   }
 
   handleClick = (e: React.SyntheticEvent) => {
-    const { disabled } = this.props
+    const { disabled, menu, menuOpen } = this.props
 
     if (disabled) {
       e.preventDefault()
       return
     }
 
+    if (menu) {
+      this.trySetMenuOpen(!menuOpen, e)
+    }
+
     _.invoke(this.props, 'onClick', e, this.props)
+  }
+
+  handleOutsideClick = (e: Event) => {
+    if (
+      !doesNodeContainClick(this.menuRef.current, e) &&
+      !doesNodeContainClick(this.itemRef.current, e)
+    ) {
+      this.trySetMenuOpen(false, e)
+    }
+  }
+
+  trySetMenuOpen(newValue: boolean, e: Event | React.SyntheticEvent) {
+    _.invoke(this.props, 'onMenuOpenChange', e, { ...this.props, menuOpen: newValue })
   }
 }
 
