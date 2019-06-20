@@ -70,6 +70,9 @@ export interface ToolbarVariables {
   menuItemForegroundDisabled: string
   menuItemBackgroundDisabled: string
   menuItemPadding: string
+
+  menuDividerBorder: string // border color
+  menuDividerMargin: string
 }
 
 export default (siteVars: any): ToolbarVariables => ({
@@ -129,4 +132,7 @@ export default (siteVars: any): ToolbarVariables => ({
   menuItemForegroundDisabled: undefined,
   menuItemBackgroundDisabled: 'transparent',
   menuItemPadding: `${pxToRem(9)} ${pxToRem(16)}`,
+
+  menuDividerBorder: undefined,
+  menuDividerMargin: `${pxToRem(8)} 0`,
 })

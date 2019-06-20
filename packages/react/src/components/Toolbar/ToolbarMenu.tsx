@@ -18,6 +18,7 @@ import { mergeComponentVariables } from '../../lib/mergeThemes'
 import { ComponentEventHandler, ShorthandCollection, withSafeTypeForAs } from '../../types'
 import { submenuBehavior } from '../../lib/accessibility'
 
+import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
 
 export type ToolbarMenuItemShorthandKinds = 'divider' | 'item'
@@ -29,6 +30,12 @@ export interface ToolbarMenuProps
   /** Shorthand array of props for ToolbarMenu. */
   items?: ShorthandCollection<ToolbarMenuItemShorthandKinds>
 
+  /**
+   * Called on item click.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All item props.
+   */
   onItemClick: ComponentEventHandler<ToolbarMenuItemProps>
 }
 
@@ -57,10 +64,19 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
     variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
+  handleDividerOverrides = variables => predefinedProps => ({
+    variables: mergeComponentVariables(variables, predefinedProps.variables),
+  })
+
   renderItems(items, variables) {
     const itemOverridesFn = this.handleItemOverrides(variables)
+    const dividerOverridesFn = this.handleDividerOverrides(variables)
 
     return _.map(items, item => {
+      const kind = _.get(item, 'kind', 'item')
+      if (kind === 'divider') {
+        return ToolbarMenuDivider.create(item, { overrideProps: dividerOverridesFn })
+      }
       return ToolbarMenuItem.create(item, { overrideProps: itemOverridesFn })
     })
   }

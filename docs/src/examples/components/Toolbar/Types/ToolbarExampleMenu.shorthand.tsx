@@ -15,6 +15,7 @@ const ToolbarExampleMenuShorthand = () => {
             items: [
               { key: 'play', content: 'Play', icon: 'play' },
               { key: 'pause', content: 'Pause', icon: 'pause' },
+              { key: 'divider', kind: 'divider' },
               'Without icon',
             ],
             onItemClick: (e, { content }) => {

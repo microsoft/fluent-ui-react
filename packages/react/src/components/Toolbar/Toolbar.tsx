@@ -21,6 +21,7 @@ import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 import ToolbarDivider from './ToolbarDivider'
 import ToolbarItem from './ToolbarItem'
 import ToolbarMenu from './ToolbarMenu'
+import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem from './ToolbarMenuItem'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
 
@@ -60,6 +61,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
   static Divider = ToolbarDivider
   static Item = ToolbarItem
   static Menu = ToolbarMenu
+  static MenuDivider = ToolbarMenuDivider
   static MenuItem = ToolbarMenuItem
   static RadioGroup = ToolbarRadioGroup
 
