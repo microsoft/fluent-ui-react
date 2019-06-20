@@ -17,7 +17,7 @@ type ShorthandProp = 'children' | 'src' | 'type'
 
 interface CreateShorthandOptions {
   /** Props that will be applied to whatever element passed as shorthand. */
-  slotProps?: Props
+  htmlProps?: Props
 
   /** Default props object. */
   defaultProps?: Props
@@ -178,7 +178,7 @@ function createShorthandFromValue({
   // ----------------------------------------
   // Build up props
   // ----------------------------------------
-  const { slotProps = {} } = options
+  const { htmlProps = {} } = options
 
   const { defaultProps = {} } = options
 
@@ -196,7 +196,7 @@ function createShorthandFromValue({
       : overrideProps || {}
 
   // Merge props
-  const props = { ...slotProps, ...defaultProps, ...usersProps, ...overrideProps }
+  const props = { ...htmlProps, ...defaultProps, ...usersProps, ...overrideProps }
 
   const mappedHTMLProps = mappedProps[overrideProps.as || defaultProps.as]
 
@@ -258,7 +258,7 @@ function createShorthandFromValue({
       value as React.ReactElement<Props>,
       props.styles,
       {
-        ...slotProps,
+        ...htmlProps,
         ...(props.className && { className: props.className }),
       },
       props.accessibility,
