@@ -47,7 +47,7 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   selected?: boolean
 }
 
-export class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
+class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
   static displayName = 'DropdownItem'
 
   static create: Function

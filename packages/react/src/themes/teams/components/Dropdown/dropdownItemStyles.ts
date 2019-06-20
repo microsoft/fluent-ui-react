@@ -1,6 +1,6 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { DropdownVariables } from './dropdownVariables'
-import { DropdownItemProps, DropdownItem } from '../../../../components/Dropdown/DropdownItem'
+import DropdownItem, { DropdownItemProps } from '../../../../components/Dropdown/DropdownItem'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import { pxToRem } from '../../../../lib'
 
@@ -9,7 +9,7 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
     minHeight: pxToRem(0),
     padding: `${pxToRem(4)} ${pxToRem(11)}`,
     whiteSpace: 'nowrap',
-    border: `1px solid transparent`,
+    border: `${v.listItemFocusBorderWidth} solid transparent`,
     backgroundColor: v.listItemBackgroundColor,
     ...(p.selected && {
       fontWeight: v.listItemSelectedFontWeight,
@@ -25,17 +25,24 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
       ...(!p.isFromKeyboard && {
         color: v.listItemColorHover,
         backgroundColor: v.listItemBackgroundColorHover,
-      }),
-      ...(p.header && {
-        [`& .${DropdownItem.slotClassNames.header}`]: {
-          // I had to make DropdownItem export from DropdownItem.tsx
-          color: v.listItemColorHover,
-        },
+        ...(p.header && {
+          [`& .${DropdownItem.slotClassNames.header}`]: {
+            color: v.listItemColorHover,
+          },
+        }),
+        ...(p.content && {
+          [`& .${DropdownItem.slotClassNames.content}`]: {
+            color: v.listItemColorHover,
+          },
+        }),
       }),
     }),
   }),
-  image: (): ICSSInJSStyle => ({
+  image: ({ props: p }): ICSSInJSStyle => ({
     margin: `${pxToRem(3)} ${pxToRem(12)} ${pxToRem(3)} ${pxToRem(4)}`,
+    // using !important because:
+    // a ' > :not(:last-child)' selector affecting the margin-right style
+    marginRight: `${pxToRem(12)} !important`,
   }),
   header: ({ props: p, variables: v }): ICSSInJSStyle => ({
     fontSize: v.listItemHeaderFontSize,
