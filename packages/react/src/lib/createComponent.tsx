@@ -8,7 +8,7 @@ import { AccessibilityActionHandlers } from './accessibility/reactTypes'
 import { FocusZone } from './accessibility/FocusZone'
 import { createShorthandFactory } from './factories'
 import { ObjectOf, ProviderContextPrepared } from '../types'
-import { IS_STARDUST_PROP_NAME } from './applyStyles'
+import { IS_STARDUST_PROP_NAME } from './applyStardustProps'
 
 export interface CreateComponentConfig<P> {
   displayName: string

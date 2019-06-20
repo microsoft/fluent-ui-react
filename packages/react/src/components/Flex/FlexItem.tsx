@@ -6,7 +6,7 @@ import {
   commonPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
-  applyStyles,
+  applyStardustProps,
 } from '../../lib'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
@@ -94,7 +94,7 @@ class FlexItem extends UIComponent<FlexItemProps> {
     }
 
     if (_.isNil(children)) return children
-    return applyStyles(React.Children.only(children) as React.ReactElement, styles.root)
+    return applyStardustProps(React.Children.only(children) as React.ReactElement, styles.root)
   }
 }
 

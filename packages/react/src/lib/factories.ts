@@ -10,19 +10,22 @@ import {
   ShorthandRenderer,
 } from '../types'
 import { mergeStyles } from './mergeThemes'
-import applyStyles from './applyStyles'
+import applyStardustProps from './applyStardustProps'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
 
 interface CreateShorthandOptions {
-  /** Default props object */
+  /** Props that will be applied to whatever element passed as shorthand. */
+  slotProps?: Props
+
+  /** Default props object. */
   defaultProps?: Props
 
-  /** Override props object or function (called with regular props) */
+  /** Override props object or function (called with regular props). */
   overrideProps?: Props & ((props: Props) => Props) | Props
 
-  /** Whether or not automatic key generation is allowed */
+  /** Whether or not automatic key generation is allowed. */
   generateKey?: boolean
 
   /** Override the default render implementation. */
@@ -175,6 +178,8 @@ function createShorthandFromValue({
   // ----------------------------------------
   // Build up props
   // ----------------------------------------
+  const { slotProps = {} } = options
+
   const { defaultProps = {} } = options
 
   // User's props
@@ -191,7 +196,7 @@ function createShorthandFromValue({
       : overrideProps || {}
 
   // Merge props
-  const props = { ...defaultProps, ...usersProps, ...overrideProps }
+  const props = { ...slotProps, ...defaultProps, ...usersProps, ...overrideProps }
 
   const mappedHTMLProps = mappedProps[overrideProps.as || defaultProps.as]
 
@@ -249,7 +254,12 @@ function createShorthandFromValue({
 
   // Clone ReactElements
   if (valIsReactElement) {
-    return applyStyles(React.cloneElement(value as React.ReactElement<Props>, props), props.styles)
+    return applyStardustProps(
+      value as React.ReactElement<Props>,
+      props.styles,
+      slotProps,
+      props.accessibility,
+    )
   }
 
   // Create ReactElements from built up props

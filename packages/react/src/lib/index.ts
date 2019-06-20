@@ -17,7 +17,7 @@ export { default as getElementType } from './getElementType'
 export { default as getUnhandledProps } from './getUnhandledProps'
 export { default as mergeThemes } from './mergeThemes'
 export { default as mergeProviderContexts } from './mergeProviderContexts'
-export { default as applyStyles } from './applyStyles'
+export { default as applyStardustProps } from './applyStardustProps'
 
 export * from './renderComponent'
 export { default as renderComponent } from './renderComponent'

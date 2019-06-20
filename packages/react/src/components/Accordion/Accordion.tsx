@@ -12,8 +12,12 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { accordionBehavior } from '../../lib/accessibility'
-import AccordionTitle, { AccordionTitleProps } from './AccordionTitle'
+import {
+  accordionBehavior,
+  accordionTitleBehavior,
+  accordionContentBehavior,
+} from '../../lib/accessibility'
+import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -198,22 +202,16 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
       : [...(activeIndex as number[]), index]
   }
 
-  handleTitleOverrides = (predefinedProps: AccordionTitleProps) => ({
-    onClick: (e: React.SyntheticEvent, titleProps: AccordionTitleProps) => {
-      const { index } = titleProps
-      const activeIndex = this.computeNewIndex(index)
+  onTitleClick = (e: React.SyntheticEvent, index: number) => {
+    const activeIndex = this.computeNewIndex(index)
 
-      this.trySetState({ activeIndex })
-      this.setState({ focusedIndex: index })
+    this.trySetState({ activeIndex })
+    this.setState({ focusedIndex: index })
+  }
 
-      _.invoke(predefinedProps, 'onClick', e, titleProps)
-      _.invoke(this.props, 'onTitleClick', e, titleProps)
-    },
-    onFocus: (e: React.SyntheticEvent, titleProps: AccordionTitleProps) => {
-      _.invoke(predefinedProps, 'onFocus', e, titleProps)
-      this.setState({ focusedIndex: predefinedProps.index })
-    },
-  })
+  onTitleFocus = (e: React.SyntheticEvent, index: number) => {
+    this.setState({ focusedIndex: index })
+  }
 
   isIndexActive = (index: number): boolean => {
     const { exclusive } = this.props
@@ -261,25 +259,32 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
 
       children.push(
         AccordionTitle.create(title, {
-          defaultProps: {
+          slotProps: {
             className: Accordion.slotClassNames.title,
+            id: titleId,
+            onClick: e => this.onTitleClick(e, index),
+            onFocus: e => this.onTitleFocus(e, index),
+          },
+          defaultProps: {
             active,
+            accessibility: accordionTitleBehavior,
+            accordionContentId: contentId,
             index,
             contentRef,
             canBeCollapsed,
-            id: titleId,
-            accordionContentId: contentId,
           },
-          overrideProps: this.handleTitleOverrides,
           render: renderPanelTitle,
         }),
       )
       children.push(
         AccordionContent.create(content, {
-          defaultProps: {
-            styles: active ? styles.expandedContent : styles.collapsedContent,
+          slotProps: {
             className: Accordion.slotClassNames.content,
             id: contentId,
+          },
+          defaultProps: {
+            styles: active ? styles.expandedContent : styles.collapsedContent,
+            accessibility: accordionContentBehavior,
             accordionTitleId: titleId,
           },
           render: renderPanelContent,
