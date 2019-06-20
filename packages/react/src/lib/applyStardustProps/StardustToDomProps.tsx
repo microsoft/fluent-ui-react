@@ -7,7 +7,6 @@ import { ThemeContext } from 'react-fela'
 import { ComponentSlotStyle } from '../../themes/types'
 import renderComponent from '../renderComponent'
 import { ProviderContextPrepared } from '../../types'
-import mergePropsEventHandlers from './mergePropsEventHandlers'
 
 export type StardustToDomProps = {
   styles: ComponentSlotStyle
@@ -31,17 +30,17 @@ const StardustToDomProps: React.FC<StardustToDomProps> = props => {
       focusZoneRef: undefined,
       render: config => {
         const childrenProps = (children as React.ReactElement).props
-        const mergedEventHandlers = mergePropsEventHandlers(childrenProps, props.restProps)
 
         const mergedProps = {
           ...childrenProps,
           ...props.restProps,
-          ...mergedEventHandlers,
         }
+
+        const mergedClasses = cx(mergedProps.className, config.classes.root)
 
         return React.cloneElement(children, {
           ...mergedProps,
-          className: cx(mergedProps.className, config.classes.root),
+          ...(mergedClasses && { className: mergedClasses }),
           ...config.accessibility.attributes.root,
         })
       },

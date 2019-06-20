@@ -202,11 +202,14 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
       : [...(activeIndex as number[]), index]
   }
 
-  onTitleClick = (e: React.SyntheticEvent, index: number) => {
+  onTitleClick = (e: React.SyntheticEvent<HTMLElement>, index: number) => {
     const activeIndex = this.computeNewIndex(index)
 
     this.trySetState({ activeIndex })
     this.setState({ focusedIndex: index })
+
+    // TODO: mismatch of type for handler and actual type of 'data' object
+    _.invoke(this.props, 'onTitleClick', e, this.props.panels[index].title)
   }
 
   onTitleFocus = (e: React.SyntheticEvent, index: number) => {

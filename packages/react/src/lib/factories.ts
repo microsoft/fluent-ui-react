@@ -257,7 +257,10 @@ function createShorthandFromValue({
     return applyStardustProps(
       value as React.ReactElement<Props>,
       props.styles,
-      slotProps,
+      {
+        ...slotProps,
+        ...(props.className && { className: props.className }),
+      },
       props.accessibility,
     )
   }

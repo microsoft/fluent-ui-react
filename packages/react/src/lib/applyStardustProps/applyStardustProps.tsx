@@ -26,6 +26,7 @@ const applyStardustProps = (
   }
 
   const mergedEventHandlers = mergePropsEventHandlers(element.props, props)
+  const mergedProps = { ...props, ...mergedEventHandlers }
 
   if (element.type && element.type[IS_STARDUST_PROP_NAME]) {
     return React.cloneElement(element, {
@@ -36,8 +37,12 @@ const applyStardustProps = (
     })
   }
 
+  if (!styles && !accessibility) {
+    return React.cloneElement(element, mergedProps)
+  }
+
   return (
-    <StardustToDomProps accessibility={accessibility} styles={styles} restProps={props}>
+    <StardustToDomProps accessibility={accessibility} styles={styles} restProps={mergedProps}>
       {element}
     </StardustToDomProps>
   )
