@@ -81,6 +81,11 @@ export interface PopperProps extends PositioningProps {
    * Rtl attribute for the component.
    */
   rtl?: boolean
+
+  /**
+   * Reference object
+   */
+  referenceObject?: PopperJS.ReferenceObject
 }
 
 export interface PopperChildrenProps {

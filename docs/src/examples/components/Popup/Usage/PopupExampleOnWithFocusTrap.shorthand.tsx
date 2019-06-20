@@ -30,6 +30,19 @@ const PopupExampleOnWithFocusTrap = () => (
       accessibility={popupFocusTrapBehavior}
       on="focus"
     />
+    <Popup
+      trigger={
+        <Button
+          icon="expand"
+          content="Context"
+          aria-label="Context button"
+          onClick={() => alert('Click!')}
+        />
+      }
+      content={contentWithButtons}
+      accessibility={popupFocusTrapBehavior}
+      on="context"
+    />
   </Flex>
 )
 

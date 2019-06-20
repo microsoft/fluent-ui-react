@@ -18,6 +18,20 @@ const PopupExampleOn = () => (
       content="Hello from popup on focus!"
       on="focus"
     />
+    <Popup
+      trigger={
+        <Button
+          icon="expand"
+          content="Context"
+          aria-label="Context button"
+          onClick={() =>
+            alert('Right, you can still click the button! Right click opens the popup.')
+          }
+        />
+      }
+      content="Hello from popup on context!"
+      on="context"
+    />
   </Flex>
 )
 

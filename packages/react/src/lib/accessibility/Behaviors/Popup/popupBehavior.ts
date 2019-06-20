@@ -16,7 +16,9 @@ const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
   return {
     attributes: {
       trigger: {
-        tabIndex: getAriaAttributeFromProps('tabIndex', props, 0),
+        ...(props.triggerHandlesFocus
+          ? undefined
+          : { tabIndex: getAriaAttributeFromProps('tabIndex', props, 0) }),
         'aria-disabled': props.disabled,
       },
       popup: {
@@ -99,4 +101,6 @@ export type PopupBehaviorProps = {
     /** Element type. */
     type?: string
   }
+  /** Trigger's ressponsibility to be focusable */
+  triggerHandlesFocus?: boolean
 }
