@@ -374,6 +374,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'customtoolbar',
+        content: 'Custom Styled Toolbar',
+        as: NavLink,
+        to: '/prototype-custom-toolbar',
+        styles: menuItemStyles,
+      },
+      {
         key: 'dropdowns',
         content: 'Dropdowns',
         as: NavLink,
