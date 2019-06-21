@@ -8,5 +8,10 @@ export const highContrastThemeOverrides: ThemeInput = {
       },
     },
   },
-  componentVariables: {},
+  componentVariables: {
+    ToolbarItem: {
+      dangerBackgroundColor: 'green',
+      primaryBackgroundColor: 'olive',
+    },
+  },
 }

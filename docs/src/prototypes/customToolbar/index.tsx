@@ -1,16 +1,16 @@
 import * as React from 'react'
-import { Provider, Flex, themes, mergeThemes, Grid } from '@stardust-ui/react'
-
-import { darkThemeOverrides } from './darkThemeOverrides'
-import { highContrastThemeOverrides } from './highContrastThemeOverrides'
-
-import CustomToolbar from './CustomToolbar'
 import {
   KnobProvider,
   useBooleanKnob,
   useSelectKnob,
   KnobInspector,
 } from '@stardust-ui/docs-components'
+import { Provider, Flex, themes, mergeThemes, Grid } from '@stardust-ui/react'
+
+import { darkThemeOverrides } from './darkThemeOverrides'
+import { highContrastThemeOverrides } from './highContrastThemeOverrides'
+
+import CustomToolbar, { CustomToolbarProps } from './CustomToolbar'
 import ComponentExampleKnobs from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleKnobs'
 
 const CustomToolbarPrototype: React.FunctionComponent = () => {
@@ -19,9 +19,11 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     values: ['teamsDark', 'teamsHighContrast'],
     initialValue: 'teamsDark',
   })
+
+  const availableLayouts: CustomToolbarProps['layout'][] = ['whiteboard', 'powerpoint-presenter']
   const [layout] = useSelectKnob({
     name: 'layout',
-    values: ['desktop-share', 'whiteboard', 'powerpoint-presenter'],
+    values: availableLayouts,
     initialValue: undefined,
   })
 
@@ -50,7 +52,14 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
         </ComponentExampleKnobs>
 
         <Provider theme={theme}>
-          <Flex hAlign="center" styles={{ padding: '200px 0 50px 0' }}>
+          <Flex
+            hAlign="center"
+            styles={{
+              padding: '200px 0 50px 0',
+              backgroundColor: '#8EC5FC',
+              backgroundImage: 'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)',
+            }}
+          >
             <CustomToolbar
               layout={layout}
               cameraActive={cameraActive}

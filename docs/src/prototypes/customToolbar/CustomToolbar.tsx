@@ -2,8 +2,10 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import { Omit, Toolbar, ToolbarItemProps } from '@stardust-ui/react'
 
+import CustomToolbarTimer from './CustomToolbarTimer'
+
 export interface CustomToolbarProps {
-  layout?: 'desktop-share' | 'whiteboard' | 'powerpoint-presenter'
+  layout?: 'whiteboard' | 'powerpoint-presenter'
 
   cameraActive?: boolean
   micActive?: boolean
@@ -16,7 +18,7 @@ export interface CustomToolbarProps {
   onEndCallClick?: () => void
 }
 
-type CustomToolbarItem = ToolbarItemProps & { key: string }
+type CustomToolbarItem = ToolbarItemProps & { as?: any; key: string }
 type CustomToolbarLayout = (props: CustomToolbarProps) => CustomToolbarItem[]
 
 //
@@ -95,7 +97,7 @@ const endCallItem = createDumbItem('endCall', { icon: 'call-end', danger: true }
 
 const commonLayout: CustomToolbarLayout = props => [
   // recording indic
-  // timer
+  { as: CustomToolbarTimer, children: '10:45', key: 'timer' },
 
   cameraItem(props),
   micItem(props),
@@ -142,14 +144,12 @@ const powerPointPresenterLayout: CustomToolbarLayout = props => [
 ]
 
 const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
-  'desktop-share': commonLayout,
   'powerpoint-presenter': powerPointPresenterLayout,
   whiteboard: whiteboardLayout,
 }
 
 const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
-  // SHOULD WE HANDLE STATE?
-  const { layout = 'desktop-share' } = props
+  const { layout = 'whiteboard' } = props
 
   return <Toolbar items={layouts[layout](props)} />
 }
