@@ -182,11 +182,11 @@ class Sidebar extends React.Component<any, any> {
         color: 'white',
         backgroundColor: 'none',
       },
-    }
-
-    const menuInputStyles: ICSSInJSStyle = {
-      padding: 0,
-      border: 0,
+      ':active': {
+        color: 'white',
+        backgroundColor: 'none',
+        fontWeight: fontWeightBold,
+      },
     }
 
     const dividerStyles: ICSSInJSStyle = {
@@ -454,45 +454,29 @@ class Sidebar extends React.Component<any, any> {
         ? menuItems.concat(prototypesMenuItemTitle).concat(prototypesMenuItems)
         : menuItems
 
-    const searchInput = [
+    const componentMenuItem: ShorthandValue[] = [
       {
-        key: 'search',
-        content: (
-          <Input
-            fluid
-            className="transparent inverted icon"
-            icon="search"
-            placeholder="Search components..."
-            value={query}
-            onChange={this.handleSearchChange}
-            onKeyDown={this.handleSearchKeyDown}
-            inputRef={this.handleSearchRef}
-          />
-        ),
-        styles: menuInputStyles,
+        key: 'components',
+        content: 'Components',
+        styles: menuSectionStyles,
+        disabled: true,
+      },
+    ]
+    const behaviorMenuItem: ShorthandValue[] = [
+      {
+        key: 'behaviour',
+        content: 'Behaviors',
+        styles: menuSectionStyles,
+        disabled: true,
       },
     ]
 
-    const componentMenuItem = {
-      key: 'components',
-      content: 'Components',
-      styles: menuSectionStyles,
-      disabled: true,
-    }
-    const behaviorMenuItem = {
-      key: 'behaviour',
-      content: 'Behaviors',
-      styles: menuSectionStyles,
-      disabled: true,
-    }
+    const shownMenuItems: ShorthandValue[] = query
+      ? this.renderSearchItems()
+      : menuItemsByType[0].items
 
-    const shownMenuItems = query ? this.renderSearchItems() : menuItemsByType[0].items
-
-    const withComponents = withPrototypes
-      .concat(searchInput)
-      .concat(componentMenuItem)
+    const allItems = componentMenuItem
       .concat(shownMenuItems)
-    const allItems = withComponents
       .concat({
         key: 'divider5',
         kind: 'divider',
@@ -515,6 +499,18 @@ class Sidebar extends React.Component<any, any> {
           />
           <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
         </Segment>
+        <Menu vertical fluid pills styles={navBarStyles} items={withPrototypes} />
+        <Input
+          fluid
+          className="transparent inverted icon"
+          icon="search"
+          placeholder="Search components..."
+          value={query}
+          onChange={this.handleSearchChange}
+          onKeyDown={this.handleSearchKeyDown}
+          inputRef={this.handleSearchRef}
+          styles={{ padding: '0 0 .5em 0', border: 0 }}
+        />
         <Menu vertical fluid pills styles={navBarStyles} items={allItems} />
       </Segment>
     )
