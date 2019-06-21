@@ -5,7 +5,7 @@ import { Accessibility } from '../../types'
  * Behavior for menu divider
  *
  * @specification
- * Adds role 'presentation' to 'root' component's part.
+ * Adds role 'presentation' to 'root' slot.
  */
 
 const menuDividerBehavior: Accessibility = () => ({

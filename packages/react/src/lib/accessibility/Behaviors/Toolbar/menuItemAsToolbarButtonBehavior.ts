@@ -8,15 +8,15 @@ import { MenuItemBehaviorProps } from '../Menu/menuItemBehavior'
  * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
  *
  * @specification
- * Adds role 'presentation' to 'wrapper' component's part.
- * Adds role 'button' to 'root' component's part.
- * Adds attribute 'tabIndex=0' to 'root' component's part.
- * Adds attribute 'data-is-focusable=false' to 'root' component's part if 'disabled' property is true. Sets the attribute to 'true' otherwise.
- * Adds attribute 'aria-label' based on the property 'aria-label' to 'root' component's part.
- * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' component's part.
- * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'root' component's part.
- * Adds attribute 'aria-disabled=true' to 'root' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
- * Adds attribute 'aria-haspopup=true' to 'root' component's part if 'menu' property is set.
+ * Adds role 'presentation' to 'wrapper' slot.
+ * Adds role 'button' to 'root' slot.
+ * Adds attribute 'tabIndex=0' to 'root' slot.
+ * Adds attribute 'data-is-focusable=false' to 'root' slot if 'disabled' property is true. Sets the attribute to 'true' otherwise.
+ * Adds attribute 'aria-label' based on the property 'aria-label' to 'root' slot.
+ * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' slot.
+ * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'root' slot.
+ * Adds attribute 'aria-disabled=true' to 'root' slot based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
+ * Adds attribute 'aria-haspopup=true' to 'root' slot if 'menu' property is set.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
  * Triggers 'closeMenuAndFocusTrigger' action with 'Escape' on 'wrapper'.
  * Triggers 'openMenu' action with 'ArrowDown' on 'wrapper', when orientation is horizontal.
