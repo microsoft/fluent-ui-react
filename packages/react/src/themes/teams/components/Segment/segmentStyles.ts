@@ -23,12 +23,12 @@ const segmentStyles: ComponentSlotStylesInput<SegmentProps, SegmentVariables> = 
       }),
       ...(p.disabled && {
         boxShadow: 'none',
-        borderColor: v.borderColorDisabled,
-        color: v.colorDisabled,
-        backgroundColor: v.backgroundColorDisabled,
+        borderColor: v.disabledBorderColor,
+        color: v.disabledColor,
+        backgroundColor: v.disabledBackgroundColor,
         ...(p.inverted && {
-          color: v.backgroundColorDisabled,
-          backgroundColor: v.colorDisabled,
+          color: v.disabledBackgroundColor,
+          backgroundColor: v.disabledColor,
         }),
       }),
     }

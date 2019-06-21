@@ -51,7 +51,7 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
   }
 
   renderComponent({ accessibility, ElementType, classes, unhandledProps }) {
-    const { children, content, disabled } = this.props
+    const { children, content } = this.props
 
     return (
       <ElementType
@@ -59,7 +59,6 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
         {...accessibility.attributes.root}
         {...unhandledProps}
         className={classes.root}
-        disabled={disabled}
       >
         {childrenExist(children) ? children : Box.create(content)}
       </ElementType>
