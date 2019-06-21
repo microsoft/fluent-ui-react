@@ -11,7 +11,7 @@ const rtlKeyMap = {
 }
 
 /**
- * Assigns onKeyDown handler to the Component's part element, based on Component's actions
+ * Assigns onKeyDown handler to the slot element, based on Component's actions
  * and keys mappings defined in Accessibility behavior
  * @param {AccessibilityActionHandlers} componentActionHandlers Actions handlers defined in a component.
  * @param {KeyActions} behaviorKeyActions Mappings of actions and keys defined in Accessibility behavior.

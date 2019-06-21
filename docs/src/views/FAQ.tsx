@@ -33,6 +33,12 @@ export default () => (
               '#how-can-i-set-default-value-on-form-field',
             )}
           </li>
+          <li>
+            {link(
+              'Is there an onLoad or equivalent event for Image components so I can run a function after an image loads?',
+              'is-there-an-onload-or-equivalent-event-for-image-components-so-i',
+            )}
+          </li>
         </ul>
       </li>
       <li>
@@ -84,6 +90,21 @@ export default () => (
           <CodeSnippet
             value={`
             <Form.Field control={{as: Input, defaultValue:'some value'}} />
+            `}
+          />
+        </p>
+      }
+    />
+
+    <Question content="Is there an onLoad or equivalent event for Image components so i can run a function after an image loads?" />
+    <Answer
+      content={
+        <p>
+          Just as with vanilla React, all HTML props are supported on all Stardust components. Just
+          pass onLoad or onError to the component you want to put the prop on.
+          <CodeSnippet
+            value={`
+            <Image src="//placehold.it/300" onLoad={() => alert('Loaded')} onError={() => alert('Error')} />
             `}
           />
         </p>
