@@ -53,10 +53,6 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
     accessibility: toolbarRadioGroupBehavior as Accessibility,
   }
 
-  // when click on item - focus zone will handle focus
-  // left/right handled by focus zone
-  // when press up/down - identify current focused element - with tabIndex === 0
-
   actionHandlers = {
     nextItem: event => this.setFocusedItem(event, 1),
     prevItem: event => this.setFocusedItem(event, -1),
