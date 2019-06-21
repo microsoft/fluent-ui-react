@@ -1,6 +1,13 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { Omit, Toolbar, ToolbarItemProps } from '@stardust-ui/react'
+import { Button, Omit, Toolbar, ToolbarItemProps } from '@stardust-ui/react'
+
+// TODO: NEXT STEPS
+//  - [ ] Remove CustomToolbarTimer
+//  - [ ] Simplify CustomToolbar.tsx helper funcs, use stupid code
+//  - [ ] Add more toolbar items
+//  - [ ] Continue updating styles
+//  - [ ] Update inline styles/variables below to use TMP format (bool vars, styles elsewhere)
 
 import CustomToolbarTimer from './CustomToolbarTimer'
 
@@ -22,10 +29,7 @@ type CustomToolbarItem = ToolbarItemProps & { as?: any; key: string }
 type CustomToolbarLayout = (props: CustomToolbarProps) => CustomToolbarItem[]
 
 //
-//
 // Standard
-//
-//
 //
 
 type CreateItemConfig = {
@@ -42,7 +46,10 @@ const createActionableItem = (name: string, config: CreateItemConfig) => (
   key: name,
 
   // TODO: find better way to define it, propName, callbackName???
-  icon: props[name + 'Active'] && config.iconActive ? config.iconActive : config.icon,
+  icon: {
+    name: props[name + 'Active'] && config.iconActive ? config.iconActive : config.icon,
+    size: 'large',
+  },
   onClick: () => {
     _.invoke(props, 'on' + _.startCase(name) + 'Change', !props[name + 'Active'])
   },
@@ -58,7 +65,11 @@ const createDumbItem = (name: string, config: Omit<CreateItemConfig, 'iconActive
 ): CustomToolbarItem => ({
   key: name,
 
-  icon: config.icon,
+  icon: {
+    name: config.icon,
+    size: 'large',
+  },
+
   onClick: () => {
     _.invoke(props, 'on' + _.startCase(name) + 'Click')
   },
@@ -97,7 +108,13 @@ const endCallItem = createDumbItem('endCall', { icon: 'call-end', danger: true }
 
 const commonLayout: CustomToolbarLayout = props => [
   // recording indic
-  { as: CustomToolbarTimer, children: '10:45', key: 'timer' },
+  {
+    key: 'timer',
+    as: 'span',
+    children: '10:45',
+    'data-is-focusable': true,
+    styles: { userSelect: 'none' },
+  },
 
   cameraItem(props),
   micItem(props),
@@ -139,6 +156,14 @@ const powerPointPresenterLayout: CustomToolbarLayout = props => [
   // touch item
   stopSharingItem(props),
   // slider
+
+  {
+    key: 'stop-sharing-button',
+    as: 'div',
+    children: <Button content="Stop Sharing" />,
+    // TODO: this is not allowed on the TMP side, make it like theirs
+    styles: { padding: '0 1rem' },
+  },
 
   endCallItem(props),
 ]
