@@ -16,6 +16,11 @@ const Types = () => (
       examplePath="components/Toolbar/Types/ToolbarExamplePopup"
     />
     <ComponentExample
+      title="Toolbar can contain a radio group"
+      description="Toolbar items can be grouped into radio group. Up/Down arrow keys can be used to cycle between radio items. Only one of the radio items can be selected at a time, should be implemented additionally."
+      examplePath="components/Toolbar/Types/ToolbarExampleRadioGroup"
+    />
+    <ComponentExample
       title="Text editor toolbar"
       description="A Toolbar use case for a text editor."
       examplePath="components/Toolbar/Types/ToolbarExampleEditor"

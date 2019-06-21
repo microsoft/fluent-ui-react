@@ -49,6 +49,10 @@ const ToolbarExampleShorthand = () => {
   const [highlightOpen, setHighlightOpen] = React.useState(false)
   const [fontColorActive, setFontColorActive] = React.useState(false)
 
+  const [bulletListActive, setBulletListActive] = React.useState(false)
+  const [numberListActive, setNumberListActive] = React.useState(false)
+  const [toDoListActive, setToDoListActive] = React.useState(false)
+
   return (
     <Toolbar
       items={[
@@ -128,9 +132,42 @@ const ToolbarExampleShorthand = () => {
           key: 'radiogroup',
           kind: 'group',
           items: [
-            { key: 'bullets', icon: { name: 'bullets', outline: true } },
-            { key: 'number-list', icon: { name: 'number-list', outline: true } },
-            { key: 'to-do-list', icon: { name: 'to-do-list', outline: true } },
+            {
+              key: 'bullets',
+              icon: { name: 'bullets', outline: true },
+              active: bulletListActive,
+              onClick: () => {
+                setBulletListActive(!bulletListActive)
+
+                // deselect other radio items
+                setNumberListActive(false)
+                setToDoListActive(false)
+              },
+            },
+            {
+              key: 'number-list',
+              icon: { name: 'number-list', outline: true },
+              active: numberListActive,
+              onClick: () => {
+                setNumberListActive(!numberListActive)
+
+                // deselect other radio items
+                setBulletListActive(false)
+                setToDoListActive(false)
+              },
+            },
+            {
+              key: 'to-do-list',
+              icon: { name: 'to-do-list', outline: true },
+              active: toDoListActive,
+              onClick: () => {
+                setToDoListActive(!toDoListActive)
+
+                // deselect other radio items
+                setBulletListActive(false)
+                setNumberListActive(false)
+              },
+            },
           ],
         },
         { key: 'divider3', kind: 'divider' },
