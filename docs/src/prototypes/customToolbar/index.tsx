@@ -1,13 +1,39 @@
 import * as React from 'react'
-import { Dropdown, Provider, Flex, themes, mergeThemes } from '@stardust-ui/react'
+import { Provider, Flex, themes, mergeThemes, Grid } from '@stardust-ui/react'
 
 import { darkThemeOverrides } from './darkThemeOverrides'
 import { highContrastThemeOverrides } from './highContrastThemeOverrides'
 
 import CustomToolbar from './CustomToolbar'
+import {
+  KnobProvider,
+  useBooleanKnob,
+  useSelectKnob,
+  KnobInspector,
+} from '@stardust-ui/docs-components'
+import ComponentExampleKnobs from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleKnobs'
 
-export default () => {
-  const [themeName, selectTheme] = React.useState('teamsDark')
+const CustomToolbarPrototype: React.FunctionComponent = () => {
+  const [themeName] = useSelectKnob({
+    name: 'themeName',
+    values: ['teamsDark', 'teamsHighContrast'],
+    initialValue: 'teamsDark',
+  })
+  const [layout] = useSelectKnob({
+    name: 'layout',
+    values: ['desktop-share', 'whiteboard', 'powerpoint-presenter'],
+    initialValue: undefined,
+  })
+
+  const [cameraActive, onCameraChange] = useBooleanKnob({
+    name: 'cameraActive',
+    initialValue: true,
+  })
+  const [micActive, onMicChange] = useBooleanKnob({ name: 'micActive', initialValue: true })
+  const [screenShareActive, onScreenShareChange] = useBooleanKnob({
+    name: 'screenShareActive',
+    initialValue: true,
+  })
 
   let theme = {}
   if (themeName === 'teamsDark') {
@@ -17,22 +43,32 @@ export default () => {
   }
 
   return (
-    <Provider theme={theme} styles={{ height: '100vh' }}>
-      <Flex column fill padding="padding.medium" gap="gap.medium">
-        <Dropdown
-          items={['teamsDark', 'teamsHighContrast']}
-          value={themeName}
-          onSelectedChange={(e, { value }) => {
-            selectTheme(value as string)
-          }}
-        />
+    <div style={{ height: '100vh' }}>
+      <Flex column fill>
+        <ComponentExampleKnobs>
+          <KnobInspector />
+        </ComponentExampleKnobs>
 
-        <div>calling toolbar description</div>
-
-        <Flex.Item push align="center">
-          <CustomToolbar />
-        </Flex.Item>
+        <Provider theme={theme}>
+          <Flex hAlign="center" styles={{ padding: '200px 0 50px 0' }}>
+            <CustomToolbar
+              layout={layout}
+              cameraActive={cameraActive}
+              micActive={micActive}
+              screenShareActive={screenShareActive}
+              onCameraChange={onCameraChange}
+              onMicChange={onMicChange}
+              onScreenShareChange={onScreenShareChange}
+            />
+          </Flex>
+        </Provider>
       </Flex>
-    </Provider>
+    </div>
   )
 }
+
+export default () => (
+  <KnobProvider>
+    <CustomToolbarPrototype />
+  </KnobProvider>
+)
