@@ -38,9 +38,8 @@ class DocsBehaviorRoot extends React.Component<any, any> {
           {behaviorMenuItems
             .find(behavior => behavior.displayName === _.capitalize(match.params.name))
             .variations.map((variation, keyValue) => (
-              <>
+              <React.Fragment key={keyValue}>
                 <Segment
-                  key={keyValue}
                   className="docs-example"
                   id={_.kebabCase(variation.name)}
                   styles={exampleStyle}
@@ -71,7 +70,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                   </div>
                 </Segment>
                 <br />
-              </>
+              </React.Fragment>
             ))}
         </Segment>
       </DocumentTitle>
