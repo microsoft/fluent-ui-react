@@ -5,7 +5,6 @@ import * as React from 'react'
 import {
   childrenExist,
   createShorthandFactory,
-  pxToRem,
   UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
@@ -115,10 +114,9 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
     })
 
     const startImage = imagePosition === 'start' && imageElement
+    const endImage = imagePosition === 'end' && imageElement
     const startIcon = iconPosition === 'start' && iconElement
     const endIcon = iconPosition === 'end' && iconElement
-    const endImage = imagePosition === 'end' && imageElement
-
     const hasStartElement = startImage || startIcon
     const hasEndElement = endIcon || endImage
 
@@ -142,7 +140,6 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
               </>
             )
           }
-          gap={pxToRem(3)}
         />
       </ElementType>
     )

@@ -12,27 +12,37 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
       display: 'inline-flex',
       alignItems: 'center',
       overflow: 'hidden',
+      whiteSpace: 'nowrap',
+      textOverflow: 'ellipsis',
       height: v.height,
       lineHeight: v.height,
       color: colors.background,
       backgroundColor: colors.foreground,
       fontSize: pxToRem(14),
-      borderRadius: pxToRem(3),
+      borderRadius: pxToRem(2),
       padding: v.padding,
+      ...(p.icon &&
+        (p.iconPosition === 'start'
+          ? { paddingLeft: v.zeropadding }
+          : { paddingRight: v.zeropadding })),
       ...(p.image &&
         (p.imagePosition === 'start'
-          ? { paddingLeft: v.startPaddingLeft }
-          : { paddingRight: v.endPaddingRight })),
+          ? { paddingLeft: v.zeropadding }
+          : { paddingRight: v.zeropadding })),
       ...(p.circular && {
         borderRadius: v.circularRadius,
       }),
     }
   },
 
-  image: ({ variables: v }): ICSSInJSStyle => ({
-    marginRight: '10px',
+  image: ({ props: p, variables: v }): ICSSInJSStyle => ({
     height: v.height,
     width: v.height,
+    margin: v.padding,
+    ...(p.image &&
+      (p.imagePosition === 'start'
+        ? { marginLeft: v.zeropadding }
+        : { marginRight: v.zeropadding })),
   }),
 
   icon: ({ props: p }): ICSSInJSStyle => {

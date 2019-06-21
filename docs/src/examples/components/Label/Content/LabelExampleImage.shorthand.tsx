@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Label } from '@stardust-ui/react'
 
 const LabelExampleImageShorthand = () => (
-  <Label content="John Doe" image="public/images/avatar/small/matt.jpg" />
+  <Label content="Account Team" image="public/images/avatar/small/zoe.jpg" />
 )
 
 export default LabelExampleImageShorthand

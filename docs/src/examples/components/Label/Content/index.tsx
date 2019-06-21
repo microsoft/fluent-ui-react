@@ -34,6 +34,11 @@ const Content = () => (
       description="The content props in the label can be customized."
       examplePath="components/Label/Content/LabelExampleContentCustomization"
     />
+    <ComponentExample
+      title="with a pipe"
+      description="The content props in the label can be customized."
+      examplePath="components/Label/Content/LabelExamplePipe"
+    />
   </ExampleSection>
 )
 
