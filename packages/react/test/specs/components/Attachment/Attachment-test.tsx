@@ -35,7 +35,7 @@ describe('Attachment', () => {
           onClick={onClickAttachment}
         />,
       )
-      const moreOptionButton = attachement.find('button')
+      const moreOptionButton = attachement.find(`.${Attachment.className}__action`)
 
       attachement.simulate('keydown', { keyCode: keyboardKey.Enter })
       expect(onClickAttachment).toHaveBeenCalledTimes(1)
