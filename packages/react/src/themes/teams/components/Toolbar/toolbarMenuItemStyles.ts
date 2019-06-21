@@ -10,7 +10,7 @@ const toolbarMenuItemStyles = {
       color: v.menuItemForeground || colors.foreground1,
       backgroundColor: 'transparent',
       borderColor: 'transparent',
-      textAlign: 'left',
+      display: 'flex',
       padding: v.menuItemPadding,
       cursor: 'pointer',
 
