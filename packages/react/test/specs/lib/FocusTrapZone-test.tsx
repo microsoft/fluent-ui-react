@@ -30,7 +30,10 @@ class FocusTrapZoneTestComponent extends React.Component<
   render() {
     return (
       <div>
-        <FocusTrapZone forceFocusInsideTrap={true} isClickableOutsideFocusTrap={false}>
+        <FocusTrapZone
+          forceFocusInsideTrapOnOutsideFocus={true}
+          isClickableOutsideFocusTrap={false}
+        >
           <button className={'a'} onClick={this._toggleFirst}>
             a
           </button>
@@ -40,12 +43,18 @@ class FocusTrapZoneTestComponent extends React.Component<
         </FocusTrapZone>
 
         {this.state.isShowingFirst && (
-          <FocusTrapZone forceFocusInsideTrap={false} isClickableOutsideFocusTrap={false}>
+          <FocusTrapZone
+            forceFocusInsideTrapOnOutsideFocus={false}
+            isClickableOutsideFocusTrap={false}
+          >
             <FocusZone data-is-visible={true}>First</FocusZone>
           </FocusTrapZone>
         )}
         {this.state.isShowingSecond && (
-          <FocusTrapZone forceFocusInsideTrap={false} isClickableOutsideFocusTrap={true}>
+          <FocusTrapZone
+            forceFocusInsideTrapOnOutsideFocus={false}
+            isClickableOutsideFocusTrap={true}
+          >
             <FocusZone data-is-visible={true}>First</FocusZone>
           </FocusTrapZone>
         )}
@@ -100,7 +109,7 @@ describe('FocusTrapZone', () => {
 
       const topLevelDiv = ReactTestUtils.renderIntoDocument<{}>(
         <div onFocusCapture={_onFocus}>
-          <FocusTrapZone forceFocusInsideTrap={false}>
+          <FocusTrapZone forceFocusInsideTrapOnOutsideFocus={false}>
             <FocusZone direction={FocusZoneDirection.horizontal} data-is-visible={true}>
               <div data-is-visible={true}>
                 <button className="a">a</button>
@@ -161,7 +170,7 @@ describe('FocusTrapZone', () => {
 
       const topLevelDiv = ReactTestUtils.renderIntoDocument<{}>(
         <div onFocusCapture={_onFocus}>
-          <FocusTrapZone forceFocusInsideTrap={false}>
+          <FocusTrapZone forceFocusInsideTrapOnOutsideFocus={false}>
             <div data-is-visible={true}>
               <button className="x">x</button>
             </div>
@@ -216,7 +225,7 @@ describe('FocusTrapZone', () => {
       const topLevelDiv = ReactTestUtils.renderIntoDocument<{}>(
         <div onFocusCapture={_onFocus}>
           <button className={'z1'}>z1</button>
-          <FocusTrapZone forceFocusInsideTrap={false}>
+          <FocusTrapZone forceFocusInsideTrapOnOutsideFocus={false}>
             <FocusZone direction={FocusZoneDirection.horizontal} data-is-visible={true}>
               <button className={'a'}>a</button>
               <button className={'b'}>b</button>
@@ -283,7 +292,7 @@ describe('FocusTrapZone', () => {
       const topLevelDiv = ReactTestUtils.renderIntoDocument<{}>(
         <div onFocusCapture={_onFocus}>
           <button className={'z1'}>z1</button>
-          <FocusTrapZone forceFocusInsideTrap={false}>
+          <FocusTrapZone forceFocusInsideTrapOnOutsideFocus={false}>
             <button className={'a'} tabIndex={-1}>
               a
             </button>
@@ -353,7 +362,7 @@ describe('FocusTrapZone', () => {
       const topLevelDiv = ReactTestUtils.renderIntoDocument<{}>(
         <div onFocusCapture={_onFocus}>
           <FocusTrapZone
-            forceFocusInsideTrap={false}
+            forceFocusInsideTrapOnOutsideFocus={false}
             focusPreviouslyFocusedInnerElement={focusPreviouslyFocusedInnerElement}
             data-is-focusable={true}
             ref={ftz => {
@@ -461,11 +470,11 @@ describe('FocusTrapZone', () => {
 
       expect(focusTrapZoneFocusStack.length).toBe(2)
       const baseFocusTrapZone = focusTrapZoneFocusStack[0]
-      expect(baseFocusTrapZone.props.forceFocusInsideTrap).toBe(true)
+      expect(baseFocusTrapZone.props.forceFocusInsideTrapOnOutsideFocus).toBe(true)
       expect(baseFocusTrapZone.props.isClickableOutsideFocusTrap).toBe(false)
 
       const firstFocusTrapZone = focusTrapZoneFocusStack[1]
-      expect(firstFocusTrapZone.props.forceFocusInsideTrap).toBe(false)
+      expect(firstFocusTrapZone.props.forceFocusInsideTrapOnOutsideFocus).toBe(false)
       expect(firstFocusTrapZone.props.isClickableOutsideFocusTrap).toBe(false)
 
       // There should be now 3 focus trap zones (base/first/second)
@@ -474,7 +483,7 @@ describe('FocusTrapZone', () => {
       expect(focusTrapZoneFocusStack[0]).toBe(baseFocusTrapZone)
       expect(focusTrapZoneFocusStack[1]).toBe(firstFocusTrapZone)
       const secondFocusTrapZone = focusTrapZoneFocusStack[2]
-      expect(secondFocusTrapZone.props.forceFocusInsideTrap).toBe(false)
+      expect(secondFocusTrapZone.props.forceFocusInsideTrapOnOutsideFocus).toBe(false)
       expect(secondFocusTrapZone.props.isClickableOutsideFocusTrap).toBe(true)
 
       // we remove the middle one

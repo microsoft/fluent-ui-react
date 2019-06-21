@@ -44,7 +44,8 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
     ariaLabelledBy: PropTypes.string,
     isClickableOutsideFocusTrap: PropTypes.bool,
     ignoreExternalFocusing: PropTypes.bool,
-    forceFocusInsideTrap: PropTypes.bool,
+    forceFocusInsideTrapOnOutsideFocus: PropTypes.bool,
+    forceFocusInsideTrapOnComponentUpdate: PropTypes.bool,
     firstFocusableSelector: PropTypes.string,
     disableFirstFocus: PropTypes.bool,
     focusPreviouslyFocusedInnerElement: PropTypes.bool,
@@ -63,6 +64,10 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   }
 
   componentDidUpdate(): void {
+    if (!this.props.forceFocusInsideTrapOnComponentUpdate) {
+      return
+    }
+
     const activeElement = document.activeElement as HTMLElement
     // if after componentDidUpdate focus is not inside the focus trap, bring it back
     if (!this._root.current.contains(activeElement)) {
@@ -71,7 +76,7 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   }
 
   render(): JSX.Element {
-    const { className, forceFocusInsideTrap, ariaLabelledBy } = this.props
+    const { className, forceFocusInsideTrapOnOutsideFocus, ariaLabelledBy } = this.props
     const unhandledProps = getUnhandledProps(
       { handledProps: [..._.keys(FocusTrapZone.propTypes)] },
       this.props,
@@ -91,7 +96,7 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
           {this.props.children}
         </ElementType>
 
-        {forceFocusInsideTrap && (
+        {forceFocusInsideTrapOnOutsideFocus && (
           <EventListener
             capture
             listener={this._handleOutsideFocus}
