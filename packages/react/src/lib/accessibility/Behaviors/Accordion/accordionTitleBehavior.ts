@@ -4,14 +4,14 @@ import * as keyboardKey from 'keyboard-key'
 /**
  * @description
  * Adds accessibility attributed to implement the Accordion design pattern.
- * Adds 'aria-disabled' to the 'content' component's part with a value based on active and canBeCollapsed props.
+ * Adds 'aria-disabled' to the 'content' slot with a value based on active and canBeCollapsed props.
  * Adds role='heading' and aria-level='3' if the element type is not a header.
  *
  * @specification
- * Adds attribute 'role=button' to 'content' component's part.
- * Adds attribute 'tabIndex=0' to 'content' component's part.
- * Adds attribute 'aria-expanded=true' based on the property 'active' to 'content' component's part.
- * Adds attribute 'aria-controls=content-id' based on the property 'accordionContentId' to 'content' component's part.
+ * Adds attribute 'role=button' to 'content' slot.
+ * Adds attribute 'tabIndex=0' to 'content' slot.
+ * Adds attribute 'aria-expanded=true' based on the property 'active' to 'content' slot.
+ * Adds attribute 'aria-controls=content-id' based on the property 'accordionContentId' to 'content' slot.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'content'.
  */
 const accordionTitleBehavior: Accessibility<AccordionTitleBehaviorProps> = props => {
