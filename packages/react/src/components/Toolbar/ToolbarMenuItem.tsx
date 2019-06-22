@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
+import cx from 'classnames'
 import * as PropTypes from 'prop-types'
 
 import * as customPropTypes from '@stardust-ui/react-proptypes'
@@ -17,6 +18,8 @@ import {
 import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
+
+import Box from '../Box/Box'
 import Icon from '../Icon/Icon'
 
 export interface ToolbarMenuItemProps
@@ -58,16 +61,27 @@ export interface ToolbarMenuItemProps
    * @param {object} data - All props.
    */
   onBlur?: ComponentEventHandler<ToolbarMenuItemProps>
+
+  /** Shorthand for the wrapper component. */
+  wrapper?: ShorthandValue
 }
 
 export interface ToolbarMenuItemState {
   isFromKeyboard: boolean
 }
 
+export interface ToolbarMenuItemSlotClassNames {
+  wrapper: string
+}
+
 class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, ToolbarMenuItemState> {
   static displayName = 'ToolbarMenuItem'
 
   static className = 'ui-toolbar__menuitem'
+
+  static slotClassNames: ToolbarMenuItemSlotClassNames = {
+    wrapper: `${ToolbarMenuItem.className}__wrapper`,
+  }
 
   static create: Function
 
@@ -79,16 +93,21 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, Tool
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
+    wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
   }
 
   static defaultProps = {
-    as: 'button',
+    as: 'a',
     accessibility: defaultBehavior as Accessibility,
+    wrapper: { as: 'li' },
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
-    const { children, content, disabled, icon } = this.props
-    return (
+    const { children, content, disabled, icon, wrapper } = this.props
+
+    const menuItemInner = childrenExist(children) ? (
+      children
+    ) : (
       <ElementType
         {...accessibility.attributes.root}
         {...unhandledProps}
@@ -108,6 +127,20 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, Tool
         )}
       </ElementType>
     )
+
+    if (!wrapper) {
+      return menuItemInner
+    }
+
+    return Box.create(wrapper, {
+      defaultProps: {
+        className: cx(ToolbarMenuItem.slotClassNames.wrapper, classes.wrapper),
+        ...accessibility.attributes.wrapper,
+      },
+      overrideProps: () => ({
+        children: menuItemInner,
+      }),
+    })
   }
 
   handleBlur = (e: React.SyntheticEvent) => {
@@ -143,6 +176,4 @@ ToolbarMenuItem.create = createShorthandFactory({
  * Toolbar menu item.
  * This item renders as a button inside a Toolbar menu.
  */
-export default withSafeTypeForAs<typeof ToolbarMenuItem, ToolbarMenuItemProps, 'button'>(
-  ToolbarMenuItem,
-)
+export default withSafeTypeForAs<typeof ToolbarMenuItem, ToolbarMenuItemProps, 'a'>(ToolbarMenuItem)

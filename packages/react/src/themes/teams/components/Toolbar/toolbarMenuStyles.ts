@@ -9,6 +9,7 @@ const toolbarMenuStyles = {
       display: 'flex',
       zIndex: 1000,
       flexDirection: 'column',
+      margin: 0,
       padding: v.menuPadding,
       backgroundColor: v.menuBackground || colors.background,
       boxShadow: v.menuBoxShadow,

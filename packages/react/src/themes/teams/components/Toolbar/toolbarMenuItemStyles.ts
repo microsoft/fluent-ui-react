@@ -11,6 +11,7 @@ const toolbarMenuItemStyles = {
       backgroundColor: 'transparent',
       borderColor: 'transparent',
       display: 'flex',
+      alignItems: 'center',
       padding: v.menuItemPadding,
       cursor: 'pointer',
 
@@ -37,6 +38,10 @@ const toolbarMenuItemStyles = {
         },
       }),
     }
+  },
+
+  wrapper: {
+    display: 'block',
   },
 }
 

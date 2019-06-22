@@ -36,7 +36,7 @@ export interface ToolbarMenuProps
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All item props.
    */
-  onItemClick: ComponentEventHandler<ToolbarMenuItemProps>
+  onItemClick?: ComponentEventHandler<ToolbarMenuItemProps>
 }
 
 class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
@@ -54,6 +54,7 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
 
   static defaultProps = {
     accessibility: submenuBehavior,
+    as: 'ul',
   }
 
   handleItemOverrides = variables => predefinedProps => ({
@@ -96,4 +97,4 @@ ToolbarMenu.create = createShorthandFactory({ Component: ToolbarMenu, mappedArra
 /**
  * Toolbar menu creates a popup menu attached to a toolbarItem.
  */
-export default withSafeTypeForAs<typeof ToolbarMenu, ToolbarMenuProps>(ToolbarMenu)
+export default withSafeTypeForAs<typeof ToolbarMenu, ToolbarMenuProps, 'ul'>(ToolbarMenu)
