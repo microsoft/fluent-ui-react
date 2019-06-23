@@ -1,13 +1,13 @@
 import { FocusZoneUtilities, Menu } from '@stardust-ui/react'
 
-export const focusMenuItem = (menuRef: HTMLUListElement, order: 'first' | 'last') => {
+export const focusMenuItem = (menuRef: HTMLElement, order: 'first' | 'last') => {
   const selector = `.${Menu.Item.slotClassNames.wrapper}:${order}-child .${Menu.Item.className}`
-  const element = menuRef.querySelector<HTMLUListElement>(selector)
+  const element = menuRef.querySelector<HTMLElement>(selector)
 
   element.focus()
 }
 
-export const focusNearest = (buttonNode: HTMLButtonElement, order: 'next' | 'previous') => {
+export const focusNearest = (buttonNode: HTMLElement, order: 'next' | 'previous') => {
   const getter =
     order === 'next' ? FocusZoneUtilities.getNextElement : FocusZoneUtilities.getPreviousElement
   const element = getter(document.body, buttonNode)

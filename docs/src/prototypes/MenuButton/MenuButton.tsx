@@ -1,58 +1,61 @@
 import {
   AccessibilityAttributes,
   ReactAccessibilityBehavior,
-  Button,
-  ButtonProps,
+  Popup,
   Menu,
   MenuItemProps,
   MenuProps,
   Ref,
   ShorthandValue,
-  Alignment,
-  Position,
-  UNSTABLE_Popper,
+  PopupProps,
 } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
-import * as PopperJS from 'popper.js'
 import * as React from 'react'
 
 import { focusMenuItem, focusNearest } from './focusUtils'
 import menuButtonBehavior from './menuButtonBehavior'
+import { popupBehavior } from '@stardust-ui/react/src/lib/accessibility'
 
-export interface MenuButtonProps {
-  button: ShorthandValue<ButtonProps>
-  buttonId: string
-  disabled?: boolean
+export interface MenuButtonProps extends PopupProps {
   menu: ShorthandValue<MenuProps>
-  menuId: string
-  placement?: PopperJS.Placement
 }
 
 export interface MenuButtonState {
   lastKeyCode: null | number
   lastShiftKey: boolean
   menuOpen: boolean
+  menuId: string
+  buttonId: string
 }
 
+// TODO: spread unhandled props to root
+// TODO: id generation - should we respect <Button id="" />?
+// TODO: test with aria-owns
+// TODO: rename to ContextMenu?
+// TODO: should enter move focus back to trigger? should click move focus back to trigger?
+// TODO: for contextmenu - if focus was inside of the trigger (not on trigger), should it return there?
+// TODO: allow passing onOpenChange
+// TODO: for toolbar menu, left+right arrow keys need to be handled (stopPropagation)
 class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
   static defaultProps = {
-    placement: 'bottom',
+    position: 'bottom',
+    align: 'start',
   }
 
   state: MenuButtonState = {
     lastKeyCode: null,
     lastShiftKey: false,
     menuOpen: false,
+    buttonId: _.uniqueId('menubutton'),
+    menuId: _.uniqueId('menu'),
   }
 
-  buttonRef = React.createRef<HTMLButtonElement>()
-  menuRef = React.createRef<HTMLUListElement>()
+  buttonRef = React.createRef<HTMLElement>()
+  menuRef = React.createRef<HTMLElement>()
 
   componentDidUpdate(_, prevState: MenuButtonState) {
     if (!prevState.menuOpen && this.state.menuOpen) {
-      document.addEventListener('click', this.handleDocumentClick)
-
       focusMenuItem(
         this.menuRef.current,
         this.state.lastKeyCode === keyboardKey.ArrowUp ? 'last' : 'first',
@@ -60,8 +63,6 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
     }
 
     if (prevState.menuOpen && !this.state.menuOpen) {
-      document.removeEventListener('click', this.handleDocumentClick)
-
       switch (this.state.lastKeyCode) {
         case keyboardKey.Enter:
         case keyboardKey.Escape:
@@ -75,26 +76,11 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
     }
   }
 
-  handleButtonOverrides = (predefinedProps: ButtonProps) => ({
-    onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
-      _.invoke(predefinedProps, 'onClick', e, buttonProps)
-      this.setState(prevState => ({
-        lastKeyCode: null,
-        menuOpen: !prevState.menuOpen,
-      }))
-    },
-  })
-
-  handleDocumentClick = (e: MouseEvent) => {
-    const { menuOpen } = this.state
-    const target = e.target as HTMLElement
-    const isInside =
-      _.invoke(this.buttonRef.current, 'contains', target) ||
-      _.invoke(this.menuRef.current, 'contains', target)
-
-    if (menuOpen && !isInside) {
-      this.setState({ lastKeyCode: null, menuOpen: false })
-    }
+  handleOpenChange = (e, { open }) => {
+    this.setState(prevState => ({
+      lastKeyCode: null,
+      menuOpen: open,
+    }))
   }
 
   handleKeyDown = (e: React.KeyboardEvent) => {
@@ -102,9 +88,11 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
 
     const keyCode = keyboardKey.getCode(e)
     const shouldClose =
-      menuOpen && _.includes([keyboardKey.Enter, keyboardKey.Escape, keyboardKey.Tab], keyCode)
+      menuOpen && _.includes([keyboardKey.Tab, keyboardKey.Enter, keyboardKey.Space], keyCode)
     const shouldOpen =
-      !menuOpen && _.includes([keyboardKey.ArrowDown, keyboardKey.ArrowUp], keyCode)
+      !menuOpen &&
+      _.includes(this.props.on, 'click') &&
+      _.includes([keyboardKey.ArrowDown, keyboardKey.ArrowUp], keyCode)
 
     if (shouldClose) {
       // We should prevent default there otherwise event will be bubbled to a button and will cause menu reopen
@@ -127,7 +115,9 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
     itemProps: MenuItemProps,
   ) => {
     _.invoke(predefinedProps, 'onClick', e, itemProps)
-    this.setState({ lastKeyCode: null, menuOpen: false })
+    if (!itemProps || !itemProps.menu) {
+      this.setState({ lastKeyCode: null, menuOpen: false })
+    }
   }
 
   handleMenuItemOverrides = (menuItemAccessibilityAttributes: AccessibilityAttributes) =>
@@ -147,45 +137,54 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
     )
 
   render() {
-    const { button, disabled, menu, placement } = this.props
-    const { menuOpen } = this.state
-    const [position, align] = _.split(placement, '-') as [Position, Alignment]
+    const { menu, ...rest } = this.props
     const accessibilityBehavior: ReactAccessibilityBehavior = menuButtonBehavior({
       ...this.props,
       ...this.state,
     })
 
+    const popupMenuBehavior = behaviorProps => {
+      const behavior = popupBehavior(behaviorProps)
+      behavior.attributes.trigger = {
+        ...behavior.attributes.trigger,
+        ...accessibilityBehavior.attributes.button,
+      }
+      return behavior
+    }
+
     return (
       <div
-        onKeyDown={this.handleKeyDown}
+        onKeyDown={this.handleKeyDown} // TODO: move to behavior once this becomes a real component
         style={{ boxSizing: 'border-box', display: 'inline-block' }}
       >
         <Ref innerRef={this.buttonRef}>
-          {Button.create(button, {
-            defaultProps: {
-              ...accessibilityBehavior.attributes.button,
-              disabled,
-            },
-            overrideProps: this.handleButtonOverrides,
-          })}
+          <Popup
+            accessibility={popupMenuBehavior}
+            open={this.state.menuOpen}
+            onOpenChange={this.handleOpenChange}
+            unstable_pinned
+            content={{
+              variables: { padding: '', borderSize: '0px' },
+              content: (
+                <Ref innerRef={this.menuRef}>
+                  {Menu.create(menu, {
+                    defaultProps: {
+                      ...accessibilityBehavior.attributes.menu,
+                      styles: { background: '#fff', zIndex: 1 },
+                      vertical: true,
+                    },
+                    overrideProps: {
+                      items: this.handleMenuItemOverrides(
+                        accessibilityBehavior.attributes.menuItem,
+                      ),
+                    },
+                  })}
+                </Ref>
+              ),
+            }}
+            {...rest}
+          />
         </Ref>
-        {menuOpen && (
-          <UNSTABLE_Popper align={align} position={position} targetRef={this.buttonRef}>
-            <Ref innerRef={this.menuRef}>
-              {Menu.create(menu, {
-                defaultProps: {
-                  ...accessibilityBehavior.attributes.menu,
-                  'data-placement': placement,
-                  styles: { background: '#fff', zIndex: 1 },
-                  vertical: true,
-                },
-                overrideProps: {
-                  items: this.handleMenuItemOverrides(accessibilityBehavior.attributes.menuItem),
-                },
-              })}
-            </Ref>
-          </UNSTABLE_Popper>
-        )}
       </div>
     )
   }
