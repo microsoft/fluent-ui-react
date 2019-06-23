@@ -1,4 +1,5 @@
 import { Accessibility } from '../../types'
+import buttonBehavior, { ButtonBehaviorProps } from '../Button/buttonBehavior'
 
 /**
  * @specification
@@ -14,6 +15,7 @@ const toolbarRadioGroupItemBehavior: Accessibility<ToolbarRadioGroupItemBehavior
       'aria-disabled': props.disabled,
     },
   },
+  keyActions: buttonBehavior(props).keyActions,
 })
 
 export default toolbarRadioGroupItemBehavior
@@ -23,4 +25,4 @@ type ToolbarRadioGroupItemBehaviorProps = {
   active?: boolean
   /** Indicates if radio item is disabled. */
   disabled?: boolean
-}
+} & ButtonBehaviorProps
