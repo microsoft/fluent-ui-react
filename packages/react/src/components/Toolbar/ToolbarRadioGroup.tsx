@@ -20,7 +20,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { toolbarRadioGroupBehavior, toolbarRadioGroupItemBehavior } from '../../lib/accessibility'
 
 import ToolbarDivider from './ToolbarDivider'
-import ToolbarItem from './ToolbarItem'
+import ToolbarItem, { ToolbarItemProps } from './ToolbarItem'
 
 export type ToolbarRadioGroupItemShorthandKinds = 'divider' | 'item'
 
@@ -58,14 +58,26 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
     prevItem: event => this.setFocusedItem(event, -1),
   }
 
-  setFocusedItem(event, direction) {
-    const currentIndex =
-      _.findIndex(this.itemRefs, (item: React.RefObject<HTMLElement>) => {
+  setFocusedItem = (event, direction) => {
+    const { items } = this.props
+
+    // filter items which are not disabled
+    const filteredRadioItems: React.RefObject<HTMLElement>[] = _.filter(
+      this.itemRefs,
+      (item, index) => {
+        const currentItem = items[index] as ToolbarItemProps
+        return currentItem && !currentItem.disabled
+      },
+    )
+
+    // get the index of currently focused element (w/ tabindex = 0) or the first one as default
+    const currentFocusedIndex =
+      _.findIndex(filteredRadioItems, (item: React.RefObject<HTMLElement>) => {
         return item.current.tabIndex === 0
       }) || 0
 
-    const itemsLength = this.itemRefs.length
-    let nextIndex = currentIndex + direction
+    const itemsLength = filteredRadioItems.length
+    let nextIndex = currentFocusedIndex + direction
 
     if (nextIndex >= itemsLength) {
       nextIndex = 0
@@ -75,7 +87,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
       nextIndex = itemsLength - 1
     }
 
-    const nextItemToFocus = this.itemRefs[nextIndex].current
+    const nextItemToFocus = filteredRadioItems[nextIndex].current
     nextItemToFocus.focus()
 
     if (document.activeElement === nextItemToFocus) {
