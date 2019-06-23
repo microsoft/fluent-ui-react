@@ -53,6 +53,8 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
     accessibility: toolbarRadioGroupBehavior as Accessibility,
   }
 
+  itemRefs: React.RefObject<HTMLElement>[] = []
+
   actionHandlers = {
     nextItem: event => this.setFocusedItem(event, 1),
     prevItem: event => this.setFocusedItem(event, -1),
@@ -88,7 +90,9 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
     }
 
     const nextItemToFocus = filteredRadioItems[nextIndex].current
-    nextItemToFocus.focus()
+    if (nextItemToFocus) {
+      nextItemToFocus.focus()
+    }
 
     if (document.activeElement === nextItemToFocus) {
       event.stopPropagation()
@@ -99,8 +103,6 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
   handleItemOverrides = variables => predefinedProps => ({
     variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
-
-  itemRefs: React.RefObject<HTMLElement>[] = []
 
   renderItems(items, variables) {
     const itemOverridesFn = this.handleItemOverrides(variables)
