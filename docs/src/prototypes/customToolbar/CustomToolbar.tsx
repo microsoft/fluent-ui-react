@@ -81,18 +81,6 @@ const createDumbItem = (name: string, config: Omit<CreateItemConfig, 'iconActive
   },
 })
 
-const cameraItem = createActionableItem('camera', {
-  icon: 'call-video-off',
-  iconActive: 'call-video',
-  primary: true,
-})
-
-const micItem = createActionableItem('mic', {
-  icon: 'mic-off',
-  iconActive: 'mic',
-  primary: true,
-})
-
 const screenShareItem = createActionableItem('screenShare', {
   icon: 'call-control-close-tray',
   iconActive: 'call-control-present-new',
@@ -125,8 +113,27 @@ const commonLayout: CustomToolbarLayout = props => [
 
   { key: 'timer-divider', kind: 'divider' },
 
-  cameraItem(props),
-  micItem(props),
+  {
+    active: props.cameraActive,
+    icon: {
+      name: props.cameraActive ? 'call-video' : 'call-video-off',
+      size: 'large',
+    },
+    key: 'camera',
+    onClick: () => _.invoke(props, 'onCameraChange', !props.cameraActive),
+    variables: { primary: true },
+  },
+  {
+    active: props.micActive,
+    icon: {
+      name: props.micActive ? 'mic' : 'mic-off',
+      size: 'large',
+    },
+    key: 'mic',
+    onClick: () => _.invoke(props, 'onMicChange', !props.micActive),
+    variables: { primary: true },
+  },
+
   screenShareItem(props),
   moreItem(props),
   { key: 'primary-section-divider', kind: 'divider' },

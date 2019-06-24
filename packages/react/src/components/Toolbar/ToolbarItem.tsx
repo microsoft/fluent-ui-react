@@ -275,7 +275,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
 
   handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
-    console.log(this.props.as, isFromKeyboard())
+
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
