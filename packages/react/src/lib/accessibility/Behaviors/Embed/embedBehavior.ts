@@ -4,13 +4,12 @@ import { Accessibility } from '../../types'
 /**
  * @description
  * GIFs are visual representation only so hidden unless alt or title applied.
- *
  * Enter/space keys play and pause the gif respectively
  *
  * @specification
- * Adds role 'presentation' to 'root' component's part.
+ * Adds role 'presentation' to 'root' slot.
  * Adds attribute 'aria-hidden=true', if there is no 'alt' property provided.
- * Adds attribute 'tabIndex=0' to 'root' component's part.
+ * Adds attribute 'tabIndex=0' to 'root' slot.
  */
 const embedBehavior: Accessibility<EmbedBehaviorProps> = props => ({
   attributes: {
