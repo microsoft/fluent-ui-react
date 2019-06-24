@@ -124,10 +124,14 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
       return undefined
     }
 
-    const currentIndex = _.findIndex(
-      this.props.items,
-      item => this.getItemProps(item).value === this.state.checkedValue,
-    )
+    const currentIndex =
+      // if none of the values selected, set current index to the first item
+      this.state.checkedValue !== undefined
+        ? _.findIndex(
+            this.props.items,
+            item => this.getItemProps(item).value === this.state.checkedValue,
+          )
+        : 0
 
     for (
       let newIndex = currentIndex + direction;
@@ -168,10 +172,15 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
 
   renderItems = (vertical: boolean) => {
     const { items } = this.props
+    const isNoneValueSelected = this.state.checkedValue === undefined
 
-    return _.map(items, item =>
+    return _.map(items, (item, index) =>
       RadioGroupItem.create(item, {
-        defaultProps: { className: RadioGroup.slotClassNames.item, vertical },
+        defaultProps: {
+          className: RadioGroup.slotClassNames.item,
+          vertical,
+          ...(index === 0 && isNoneValueSelected && { tabIndex: 0 }),
+        },
         overrideProps: this.handleItemOverrides,
       }),
     )
