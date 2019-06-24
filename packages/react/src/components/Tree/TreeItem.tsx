@@ -39,6 +39,8 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
    */
   accessibility?: Accessibility
 
+  computeNewOpenItemsCount?: Function
+
   /** Only allow one subtree to be open at a time. */
   exclusive?: boolean
 
@@ -89,6 +91,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
+    computeNewOpenItemsCount: PropTypes.func,
     defaultOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     index: PropTypes.number,
@@ -154,7 +157,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
   })
 
   renderContent() {
-    const { items, title, renderItemTitle, open, exclusive } = this.props
+    const { items, title, renderItemTitle, open, exclusive, computeNewOpenItemsCount } = this.props
     const hasSubtree = !!(items && items.length)
 
     return (
@@ -177,6 +180,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
                 className: TreeItem.slotClassNames.subtree,
                 exclusive,
                 renderItemTitle,
+                computeNewOpenItemsCount,
               },
             })}
           </Ref>
