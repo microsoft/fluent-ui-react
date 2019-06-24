@@ -143,6 +143,7 @@ const ToolbarExampleShorthand = () => {
                 setNumberListActive(false)
                 setToDoListActive(false)
               },
+              'aria-label': 'bullet list',
             },
             {
               key: 'number-list',
@@ -155,6 +156,7 @@ const ToolbarExampleShorthand = () => {
                 setBulletListActive(false)
                 setToDoListActive(false)
               },
+              'aria-label': 'number list',
             },
             {
               key: 'to-do-list',
@@ -167,6 +169,7 @@ const ToolbarExampleShorthand = () => {
                 setBulletListActive(false)
                 setNumberListActive(false)
               },
+              'aria-label': 'to do list',
             },
           ],
         },
