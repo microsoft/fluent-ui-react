@@ -31,7 +31,7 @@ class FocusTrapZoneTestComponent extends React.Component<
     return (
       <div>
         <FocusTrapZone
-          forceFocusInsideTrapOnOutsideFocus={true}
+          forceFocusInsideTrapOnOutsideFocus
           isClickableOutsideFocusTrap={false}
         >
           <button className={'a'} onClick={this._toggleFirst}>
