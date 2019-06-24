@@ -11,10 +11,10 @@ export type SegmentColorSchemeMapping = TeamsSchemeMappingWithAreas<
 export interface SegmentVariables {
   colorScheme: SegmentColorSchemeMapping
   color: string
-  colorDisabled: string
+  disabledColor: string
   backgroundColor: string
-  backgroundColorDisabled: string
-  borderColorDisabled: string
+  disabledBackgroundColor: string
+  disabledBorderColor: string
   borderRadius: string | number
   borderStyle: string
   borderWidth: string
@@ -26,12 +26,12 @@ export default (siteVariables): SegmentVariables => {
   return {
     colorScheme: pickValuesFromColorScheme(siteVariables.colorScheme, segmentColorAreas),
     color: siteVariables.bodyColor,
-    colorDisabled: siteVariables.colors.grey[250],
+    disabledColor: siteVariables.colors.grey[250],
 
     backgroundColor: siteVariables.bodyBackground,
-    backgroundColorDisabled: siteVariables.colors.grey[150],
+    disabledBackgroundColor: siteVariables.colors.grey[150],
 
-    borderColorDisabled: 'transparent',
+    disabledBorderColor: 'transparent',
     borderRadius: 0,
     borderStyle: 'solid',
     borderWidth: '2px 0 0 0',
