@@ -107,7 +107,14 @@ const commonLayout: CustomToolbarLayout = props => [
     as: 'span',
     children: '10:45',
     'data-is-focusable': true,
-    styles: { userSelect: 'none' },
+    role: undefined,
+    styles: {
+      userSelect: 'none',
+      cursor: 'default',
+      ':hover': {
+        /*TODO: reset styles */
+      },
+    },
     variables: { primary: true },
   },
 
@@ -183,16 +190,21 @@ const powerPointPresenterLayout: CustomToolbarLayout = props =>
 
     render =>
       render(
-        <Box
-          styles={{
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            background: 'rgba(41,40,40,.9)',
-          }}
-        >
-          <Button content="Stop Sharing" styles={{ margin: '0 1rem' }} />
-        </Box>,
+        {
+          content: 'Stop Sharing',
+        },
+        (_, props) => (
+          <Box
+            styles={{
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              background: 'rgba(41,40,40,.9)',
+            }}
+          >
+            <Button {...props} styles={{ margin: '0 1rem' }} />
+          </Box>
+        ),
       ),
 
     endCallItem(props),
