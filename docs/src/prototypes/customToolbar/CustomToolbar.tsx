@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { Button, Omit, Toolbar, ToolbarItemProps } from '@stardust-ui/react'
+import { Button, Box, Omit, Toolbar, ToolbarItemProps } from '@stardust-ui/react'
 
 // TODO: NEXT STEPS
 //  - [ ] Remove CustomToolbarTimer
@@ -9,18 +9,18 @@ import { Button, Omit, Toolbar, ToolbarItemProps } from '@stardust-ui/react'
 //  - [ ] Continue updating styles
 //  - [ ] Update inline styles/variables below to use TMP format (bool vars, styles elsewhere)
 
-import CustomToolbarTimer from './CustomToolbarTimer'
-
 export interface CustomToolbarProps {
   layout?: 'whiteboard' | 'powerpoint-presenter'
 
   cameraActive?: boolean
   micActive?: boolean
   screenShareActive?: boolean
+  chatActive?: boolean
 
   onCameraChange?: (state: boolean) => void
   onMicChange?: (state: boolean) => void
   onScreenShareChange?: (state: boolean) => void
+  onChatChange?: (state: boolean) => void
 
   onEndCallClick?: () => void
 }
@@ -53,6 +53,7 @@ const createActionableItem = (name: string, config: CreateItemConfig) => (
   onClick: () => {
     _.invoke(props, 'on' + _.startCase(name) + 'Change', !props[name + 'Active'])
   },
+  active: props[name + 'Active'],
 
   variables: {
     danger: config.danger,
@@ -100,6 +101,11 @@ const screenShareItem = createActionableItem('screenShare', {
 
 const moreItem = createDumbItem('more', { icon: 'more', primary: true })
 
+const chatItem = createActionableItem('chat', {
+  icon: 'chat',
+  iconActive: 'chat',
+})
+
 const endCallItem = createDumbItem('endCall', { icon: 'call-end', danger: true })
 
 //
@@ -114,12 +120,17 @@ const commonLayout: CustomToolbarLayout = props => [
     children: '10:45',
     'data-is-focusable': true,
     styles: { userSelect: 'none' },
+    variables: { primary: true },
   },
+
+  { key: 'timer-divider', kind: 'divider' },
 
   cameraItem(props),
   micItem(props),
   screenShareItem(props),
   moreItem(props),
+  { key: 'primary-section-divider', kind: 'divider' },
+  chatItem(props),
 
   // comments
   // add to call someone
@@ -137,8 +148,6 @@ const stopSharingItem = createDumbItem('stopSharing', { icon: 'call-control-stop
 const whiteboardLayout: CustomToolbarLayout = props => [
   ...commonLayout(props),
 
-  { key: 'divider', kind: 'divider' },
-
   // multi-window-call
 
   endCallItem(props),
@@ -148,25 +157,39 @@ const whiteboardLayout: CustomToolbarLayout = props => [
 // PP
 //
 
-const powerPointPresenterLayout: CustomToolbarLayout = props => [
-  ...commonLayout(props),
+const powerPointPresenterLayout: CustomToolbarLayout = props =>
+  [
+    ...commonLayout(props),
 
-  { key: 'divider', kind: 'divider' },
+    // touch item
+    stopSharingItem(props),
+    // slider
 
-  // touch item
-  stopSharingItem(props),
-  // slider
+    // // double focus
+    // {
+    //   key: 'stop-sharing-button',
+    //   as: 'div',
+    //   children: <Button content="Stop Sharing" />,
+    //   // TODO: this is not allowed on the TMP side, make it like theirs
+    //   styles: { padding: '0 1rem' },
+    // },
 
-  {
-    key: 'stop-sharing-button',
-    as: 'div',
-    children: <Button content="Stop Sharing" />,
-    // TODO: this is not allowed on the TMP side, make it like theirs
-    styles: { padding: '0 1rem' },
-  },
+    render =>
+      render(
+        <Box
+          styles={{
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            background: 'rgba(41,40,40,.9)',
+          }}
+        >
+          <Button content="Stop Sharing" styles={{ margin: '0 1rem' }} />
+        </Box>,
+      ),
 
-  endCallItem(props),
-]
+    endCallItem(props),
+  ] as any // FIXME
 
 const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
   'powerpoint-presenter': powerPointPresenterLayout,
@@ -176,7 +199,7 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
 const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
   const { layout = 'whiteboard' } = props
 
-  return <Toolbar items={layouts[layout](props)} />
+  return <Toolbar variables={{ uBar: true }} items={layouts[layout](props)} />
 }
 
 export default CustomToolbar

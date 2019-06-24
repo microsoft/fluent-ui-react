@@ -6,14 +6,20 @@ export const darkThemeOverrides: ThemeInput = {
       // We can't override these variables directly because TMP has usages of regular Toolbar
       dividerMargin: 0,
       borderRadius: 0,
-
-      // backgroundHover: '#343441',
     }),
 
     ToolbarItem: siteVars => ({
-      dangerBackgroundColor: '#b44',
-      primaryBackgroundColor: '#333',
-      customToolbarBackgroundHover: siteVars.colorScheme.brand.backgroundHover1,
+      ctColor: '#fff',
+      ctBackground: 'rgba(41,40,40,.9)',
+      ctPrimaryBackground: 'rgba(59,58,58,.95)',
+      ctDangerBackground: '#9d2f42',
+
+      ctColorHover: '#fff',
+      ctBackgroundHover: '#343441', // siteVars.colorScheme.brand.backgroundHover1,
+      ctPrimaryColorHover: '#fff',
+      ctPrimaryBackgroundHover: '#343441', // siteVars.colorScheme.brand.backgroundHover1,
+      ctDangerColorHover: '#fff',
+      ctDangerBackgroundHover: '#a72037',
     }),
   },
 
@@ -25,35 +31,69 @@ export const darkThemeOverrides: ThemeInput = {
     },
 
     Toolbar: {
-      root: {
-        height: '4rem',
-        overflow: 'hidden',
-        background: '#333',
-        borderRadius: '4px',
-      },
+      root: ({ variables: v }) => ({
+        ...(v.uBar && {
+          height: '4rem',
+          overflow: 'hidden',
+          borderRadius: '4px',
+        }),
+      }),
     },
 
     ToolbarItem: {
-      root: ({ variables: v }) => ({
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '4rem',
-        minWidth: '4rem',
-        color: 'white',
+      root: ({ props: p, variables: v }) => {
+        return {
+          ...(v.uBar && {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '4rem',
+            minWidth: '4rem',
+            color: v.ctColor,
 
-        ...(v.danger && {
-          backgroundColor: v.dangerBackgroundColor,
-        }),
+            background: v.ctBackground,
 
-        ...(v.primary && {
-          backgroundColor: v.primaryBackgroundColor,
-        }),
+            ...(v.danger && {
+              background: v.ctDangerBackground,
+            }),
 
-        ':hover': {
-          backgroundColor: v.customToolbarBackgroundHover,
-        },
-      }),
+            ...(v.primary && {
+              background: v.ctPrimaryBackground,
+            }),
+
+            ':hover': {
+              color: v.ctColorHover,
+              background: v.ctBackgroundHover,
+
+              ...(v.danger && {
+                color: v.ctDangerColorHover,
+                background: v.ctDangerBackgroundHover,
+              }),
+
+              ...(v.primary && {
+                color: v.ctPrimaryColorHover,
+                background: v.ctPrimaryBackgroundHover,
+              }),
+            },
+
+            ...(p.isFromKeyboard && {
+              border: '2px solid white',
+              color: v.ctColorHover,
+              background: v.ctBackgroundHover,
+
+              ...(v.danger && {
+                color: v.ctDangerColorHover,
+                background: v.ctDangerBackgroundHover,
+              }),
+
+              ...(v.primary && {
+                color: v.ctPrimaryColorHover,
+                background: v.ctPrimaryBackgroundHover,
+              }),
+            }),
+          }),
+        }
+      },
     },
   },
 }

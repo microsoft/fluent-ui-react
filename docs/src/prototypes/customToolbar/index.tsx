@@ -5,7 +5,7 @@ import {
   useSelectKnob,
   KnobInspector,
 } from '@stardust-ui/docs-components'
-import { Provider, Flex, themes, mergeThemes, Grid } from '@stardust-ui/react'
+import { Provider, Flex, themes, mergeThemes } from '@stardust-ui/react'
 
 import { darkThemeOverrides } from './darkThemeOverrides'
 import { highContrastThemeOverrides } from './highContrastThemeOverrides'
@@ -36,6 +36,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     name: 'screenShareActive',
     initialValue: true,
   })
+  const [chatActive, onChatChange] = useBooleanKnob({ name: 'chatActive', initialValue: false })
 
   let theme = {}
   if (themeName === 'teamsDark') {
@@ -65,9 +66,11 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
               cameraActive={cameraActive}
               micActive={micActive}
               screenShareActive={screenShareActive}
+              chatActive={chatActive}
               onCameraChange={onCameraChange}
               onMicChange={onMicChange}
               onScreenShareChange={onScreenShareChange}
+              onChatChange={onChatChange}
             />
           </Flex>
         </Provider>
