@@ -178,49 +178,9 @@ export * from './components/Tooltip/TooltipContent'
 export { default as TooltipContent } from './components/Tooltip/TooltipContent'
 
 //
-// Accessibility
+// Accessibility behaviors
 //
-export {
-  default as toggleButtonBehavior,
-} from './lib/accessibility/Behaviors/Button/toggleButtonBehavior'
-export { default as menuBehavior } from './lib/accessibility/Behaviors/Menu/menuBehavior'
-export { default as menuItemBehavior } from './lib/accessibility/Behaviors/Menu/menuItemBehavior'
-export {
-  default as menuDividerBehavior,
-} from './lib/accessibility/Behaviors/Menu/menuDividerBehavior'
-export { default as tabBehavior } from './lib/accessibility/Behaviors/Tab/tabBehavior'
-export { default as tabListBehavior } from './lib/accessibility/Behaviors/Tab/tabListBehavior'
-export {
-  default as menuAsToolbarBehavior,
-} from './lib/accessibility/Behaviors/Toolbar/menuAsToolbarBehavior'
-export {
-  default as menuItemAsToolbarButtonBehavior,
-} from './lib/accessibility/Behaviors/Toolbar/menuItemAsToolbarButtonBehavior'
-export { default as toolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/toolbarBehavior'
-export {
-  default as radioGroupBehavior,
-} from './lib/accessibility/Behaviors/Radio/radioGroupBehavior'
-export {
-  default as radioGroupItemBehavior,
-} from './lib/accessibility/Behaviors/Radio/radioGroupItemBehavior'
-export { default as chatBehavior } from './lib/accessibility/Behaviors/Chat/chatBehavior'
-export {
-  default as chatMessageBehavior,
-} from './lib/accessibility/Behaviors/Chat/chatMessageBehavior'
-export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/gridBehavior'
-export { default as popupBehavior } from './lib/accessibility/Behaviors/Popup/popupBehavior'
-export {
-  default as popupFocusTrapBehavior,
-} from './lib/accessibility/Behaviors/Popup/popupFocusTrapBehavior'
-export {
-  default as popupAutoFocusBehavior,
-} from './lib/accessibility/Behaviors/Popup/popupAutoFocusBehavior'
-export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
-export { default as statusBehavior } from './lib/accessibility/Behaviors/Status/statusBehavior'
-export { default as alertBehavior } from './lib/accessibility/Behaviors/Alert/alertBehavior'
-export {
-  default as alertWarningBehavior,
-} from './lib/accessibility/Behaviors/Alert/alertWarningBehavior'
+export * from './lib/accessibility'
 
 //
 // Utilities
