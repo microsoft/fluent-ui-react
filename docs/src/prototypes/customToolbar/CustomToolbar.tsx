@@ -51,7 +51,7 @@ const createActionableItem = (name: string, config: CreateItemConfig) => (
     size: 'large',
   },
   onClick: () => {
-    _.invoke(props, 'on' + _.startCase(name) + 'Change', !props[name + 'Active'])
+    _.invoke(props, 'on' + _.upperFirst(name) + 'Change', !props[name + 'Active'])
   },
   active: props[name + 'Active'],
 
