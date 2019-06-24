@@ -1,0 +1,108 @@
+body,
+html {
+    background: #fff !important; /* this shouldn't need the important if we remove the other definition */
+}
+
+.sd_flex {
+    display: flex;
+    flex-wrap: wrap;
+    flex: none;
+}
+
+.sd_iconItem {
+    border-radius: 3px;
+    width: 160px;
+    text-align: center;
+    padding: 20px;
+    transition: background-color 400ms;
+}
+
+.sd_iconItem:hover {
+    background-color: #f3f2f1;
+}
+
+.sd_iconName {
+    padding-top: 12px;
+    font-size: 12px;
+}
+
+.sd_docPageTitle {
+    color: #282324 !important;
+    font-size: 24px;
+    font-weight: 600 !important;
+    text-align: left  !important;
+    margin: 0 0 20px 0;
+}
+
+.sd_sidebar {
+    background: #FAF9F8;
+    color: #272424;
+    width: 250px;
+    position: fixed;
+    overflow-y: scroll;
+    top: 0;
+    left: 0;
+    padding: 0;
+    max-height: 100vh;
+    border-right: 1px solid rgba(37,36,36,0.1);
+}
+
+.sd_sidebarLogo {
+    color: #272424;
+    font-weight: 600;
+    padding: 18px 2.285rem 8px;
+}
+
+.sd_logo {
+    color: #272424;
+    padding-right: 5px;
+    font-size: 1.714rem;
+    font-weight: 700;
+}
+
+.sd_version {
+    color: rgba(37,36,36,0.65);
+    padding-right: 5px;
+    font-size: .714rem;
+}
+
+.sd_sidebarMenu {
+    background: #FAF9F8;
+    list-style: none;
+    padding: 0;
+    margin: 0;    
+}
+
+.sd_sidebarMenuSection {
+    color: #272424;
+    font-weight: 600;
+    margin: 8px 12px .5rem;
+    padding: 0 1.2857rem;
+}
+
+.sd_sidebarMenuItem {
+    font-size: 1rem;
+    color: #201f1f;
+    margin: 0 0 0 12px;
+}
+
+.sd_sidebarMenuItemLink {
+    color: #272424;
+    cursor: pointer;
+    display: block;
+    font-size: 1rem;
+    border-radius: 3px;
+    padding: .5rem 6px .5rem 2.285rem;
+    text-decoration: none;
+}
+
+.sd_sidebarMenuItemLink:hover,
+.sd_sidebarMenuItemLink:focus {
+    background: #f3f2f1;
+}
+
+.sd_divider {
+    background: rgba(37,36,36,0.1);
+    margin: .55rem 0;
+    padding-bottom: .075rem;
+}

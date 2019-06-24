@@ -146,6 +146,8 @@ task('build:docs:images', () =>
   src(`${paths.docsSrc()}/**/*.{png,jpg,gif}`).pipe(dest(paths.docsDist())),
 )
 
+task('build:docs:css', () => src(`${paths.docsSrc()}/**/*.css`).pipe(dest(paths.docsDist())))
+
 task('build:docs:toc', () =>
   src(markdownSrc, { since: lastRun('build:docs:toc') }).pipe(
     cache(gulpDoctoc(), {
@@ -163,7 +165,10 @@ task(
   series(
     parallel(
       'build:docs:toc',
-      series('clean:docs', parallel('build:docs:json', 'build:docs:html', 'build:docs:images')),
+      series(
+        'clean:docs',
+        parallel('build:docs:css', 'build:docs:json', 'build:docs:html', 'build:docs:images'),
+      ),
     ),
     'build:docs:webpack',
   ),
@@ -241,6 +246,13 @@ task('watch:docs', cb => {
     'change',
     handleWatchChange,
   )
+
+  // rebuild css
+  watch(`${config.paths.docsSrc()}/**/*.css`, series('build:docs:css')).on(
+    'change',
+    handleWatchChange,
+  )
+
   cb()
 })
 

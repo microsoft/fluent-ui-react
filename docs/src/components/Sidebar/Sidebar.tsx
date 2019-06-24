@@ -1,6 +1,5 @@
-import { Icon, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import { ICSSInJSStyle } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
-import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
 import keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
@@ -12,15 +11,12 @@ import { withRouter } from 'react-router'
 import { NavLink } from 'react-router-dom'
 
 import { constants } from 'src/lib'
-import { fontWeightBold } from 'src/themes/teams/siteVariables'
 
 type ComponentMenuItem = { displayName: string; type: string }
 
 const pkg = require('../../../../packages/react/package.json')
 const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
 const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
-
-const flexDislayStyle: any = { width: '100%' }
 
 class Sidebar extends React.Component<any, any> {
   static propTypes = {
@@ -29,7 +25,7 @@ class Sidebar extends React.Component<any, any> {
     history: PropTypes.object.isRequired,
     style: PropTypes.object,
   }
-  state: any = { query: '' }
+  state: any = { query: '', animation: '' }
   _searchInput: any
   selectedRoute: any
   filteredMenu = componentMenu
@@ -124,67 +120,19 @@ class Sidebar extends React.Component<any, any> {
 
   render() {
     // Should be applied by provider
-    const sidebarStyles: ICSSInJSStyle = {
-      background: '#201f1f',
-      width: '250px',
-      position: 'fixed',
-      overflowY: 'scroll',
-      top: 0,
-      left: 0,
-      padding: 0,
-      maxHeight: '100vh',
-    }
-
-    const menuSectionStyles: ICSSInJSStyle = {
-      fontWeight: fontWeightBold,
-      margin: '0 0 .5rem',
-      padding: '0 1.2857rem',
-      background: '#201f1f',
-      color: 'white',
-      ':hover': {
-        background: 'none',
-        color: 'white',
-      },
-      ':focus': {
-        background: 'none',
-        color: 'white',
-      },
-    }
-
     const menuItemStyles: ICSSInJSStyle = {
       padding: '.5em 1.33333333em',
       textDecoration: 'none',
-      fontSize: '0.85714286em',
-      fontWeight: 400,
-      color: '#ffffff80',
-      background: '#201f1f',
+      fontSize: '1em',
+      color: '#201f1f',
       ':hover': {
-        color: 'white',
-        backgroundColor: 'none',
+        background: '#f3f2f1',
       },
       ':focus': {
-        color: 'white',
-        backgroundColor: 'none',
+        background: '#f3f2f1',
       },
     }
 
-    const dividerStyles: ICSSInJSStyle = {
-      marginTop: '.5em',
-      paddingBottom: '.5em',
-      background: '#201f1f',
-    }
-
-    const navBarStyles: ICSSInJSStyle = {
-      color: '#ffffff80',
-      padding: '0px',
-      backgroundColor: '#201f1f',
-    }
-
-    const logoStyles: ICSSInJSStyle = {
-      paddingRight: '5px',
-      color: 'white',
-      fontWeight: 700,
-    }
     const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
 
     const menuItemsByType = _.map(constants.typeOrder, nextType => {
@@ -203,44 +151,7 @@ class Sidebar extends React.Component<any, any> {
       return { items }
     })
 
-    const menuItems: ShorthandValue[] = [
-      {
-        key: 'github',
-        content: (
-          <div style={flexDislayStyle}>
-            GitHub
-            <Icon name="github" styles={{ float: 'right' }} />
-          </div>
-        ),
-        href: constants.repoURL,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'change',
-        content: (
-          <div style={flexDislayStyle}>
-            CHANGELOG
-            <Icon name="file alternate outline" styles={{ float: 'right' }} />
-          </div>
-        ),
-        href: changeLogUrl,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'divider1',
-        kind: 'divider',
-        styles: dividerStyles,
-      },
-      {
-        key: 'concepts',
-        content: 'Concepts',
-        styles: menuSectionStyles,
-        disabled: true,
-      },
+    const gettingStartedItems: ShorthandValue[] = [
       {
         key: 'intro',
         content: 'Introduction',
@@ -254,17 +165,6 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/shorthand-props',
         styles: menuItemStyles,
-      },
-      {
-        key: 'divider2',
-        kind: 'divider',
-        styles: dividerStyles,
-      },
-      {
-        key: 'guides',
-        content: 'Guides',
-        styles: menuSectionStyles,
-        disabled: true,
       },
       {
         key: 'quickstart',
@@ -294,18 +194,14 @@ class Sidebar extends React.Component<any, any> {
         to: '/theming',
         styles: menuItemStyles,
       },
+    ]
+
+    const guidesItems: ShorthandValue[] = [
       {
         key: 'theming-examples',
         content: 'Theming Examples',
         as: NavLink,
         to: '/theming-examples',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'colorpalette',
-        content: 'Colors',
-        as: NavLink,
-        to: '/colors',
         styles: menuItemStyles,
       },
       {
@@ -322,11 +218,7 @@ class Sidebar extends React.Component<any, any> {
         to: '/integrate-custom-components',
         styles: menuItemStyles,
       },
-      {
-        key: 'divider3',
-        kind: 'divider',
-        styles: dividerStyles,
-      },
+
       // TODO: to re-enable the search input - will modify the list of the components depending on the search results
       // {query ? this.renderSearchItems() : this.menuItemsByType},
       // {
@@ -344,149 +236,224 @@ class Sidebar extends React.Component<any, any> {
       // },
     ]
 
-    const prototypesMenuItemTitle = {
-      key: 'prototypes',
-      content: 'Prototypes',
-      styles: menuSectionStyles,
-      disabled: true,
-    }
+    // const prototypesMenuItemTitle = {
+    //   key: 'prototypes',
+    //   content: 'Prototypes',
+    //   styles: menuSectionStyles,
+    //   disabled: true,
+    // }
 
-    const prototypesMenuItems: ShorthandValue[] = [
+    // const prototypesMenuItems: ShorthandValue[] = [
+    //   {
+    //     key: 'chatpane',
+    //     content: 'Chat Pane',
+    //     as: NavLink,
+    //     to: '/prototype-chat-pane',
+    //     styles: menuItemStyles,
+    //   },
+    //   {
+    //     key: 'chatMssages',
+    //     content: 'Chat Messages',
+    //     as: NavLink,
+    //     to: '/prototype-chat-messages',
+    //     styles: menuItemStyles,
+    //   },
+    //   {
+    //     key: 'dropdowns',
+    //     content: 'Dropdowns',
+    //     as: NavLink,
+    //     to: '/prototype-dropdowns',
+    //     styles: menuItemStyles,
+    //   },
+    //   {
+    //     key: 'alerts',
+    //     content: 'Alerts',
+    //     as: NavLink,
+    //     to: '/prototype-alerts',
+    //     styles: menuItemStyles,
+    //   },
+    //   {
+    //     key: 'asyncshorthand',
+    //     content: 'Async Shorthand',
+    //     as: NavLink,
+    //     to: '/prototype-async-shorthand',
+    //     styles: menuItemStyles,
+    //   },
+    //   {
+    //     key: 'employeecard',
+    //     content: 'Employee Card',
+    //     as: NavLink,
+    //     to: '/prototype-employee-card',
+    //     styles: menuItemStyles,
+    //   },
+    //   {
+    //     key: 'meetingoptions',
+    //     content: 'Meeting Options',
+    //     as: NavLink,
+    //     to: '/prototype-meeting-options',
+    //     styles: menuItemStyles,
+    //   },
+    //   {
+    //     key: 'mentions',
+    //     content: 'Mentions',
+    //     as: NavLink,
+    //     to: '/prototype-mentions',
+    //     styles: menuItemStyles,
+    //   },
+    //   {
+    //     key: 'searchpage',
+    //     content: 'Search Page',
+    //     as: NavLink,
+    //     to: '/prototype-search-page',
+    //     styles: menuItemStyles,
+    //   },
+    //   {
+    //     key: 'popups',
+    //     content: 'Popups',
+    //     as: NavLink,
+    //     to: '/prototype-popups',
+    //     styles: menuItemStyles,
+    //   },
+    //   {
+    //     key: 'iconviewer',
+    //     content: 'Processed Icons',
+    //     as: NavLink,
+    //     to: '/icon-viewer',
+    //     styles: menuItemStyles,
+    //   },
+    //   {
+    //     key: 'menu-button',
+    //     content: 'MenuButton',
+    //     as: NavLink,
+    //     to: '/menu-button',
+    //     styles: menuItemStyles,
+    //   },
+    //   {
+    //     key: 'divider4',
+    //     kind: 'divider',
+    //     styles: dividerStyles,
+    //   },
+    // ]
+
+    // const withPrototypes =
+    //   process.env.NODE_ENV !== 'production'
+    //     ? menuItems.concat(prototypesMenuItemTitle).concat(prototypesMenuItems)
+    //     : menuItems
+
+    // const withComponents = withPrototypes.concat(componentMenuItem).concat(menuItemsByType[0].items)
+    // const allItems = withComponents
+    //   .concat({
+    //     key: 'divider5',
+    //     kind: 'divider',
+    //     styles: dividerStyles,
+    //   })
+    //   .concat(behaviorMenuItem)
+    //   .concat(menuItemsByType[1].items)
+
+    const stylesItems: ShorthandValue[] = [
       {
-        key: 'chatpane',
-        content: 'Chat Pane',
+        key: 'colorpalette',
+        content: 'Colors',
         as: NavLink,
-        to: '/prototype-chat-pane',
+        to: '/colors',
         styles: menuItemStyles,
       },
       {
-        key: 'chatMssages',
-        content: 'Chat Messages',
+        key: 'icons',
+        content: 'Icons',
         as: NavLink,
-        to: '/prototype-chat-messages',
+        to: '/icons',
         styles: menuItemStyles,
-      },
-      {
-        key: 'dropdowns',
-        content: 'Dropdowns',
-        as: NavLink,
-        to: '/prototype-dropdowns',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'alerts',
-        content: 'Alerts',
-        as: NavLink,
-        to: '/prototype-alerts',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'asyncshorthand',
-        content: 'Async Shorthand',
-        as: NavLink,
-        to: '/prototype-async-shorthand',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'employeecard',
-        content: 'Employee Card',
-        as: NavLink,
-        to: '/prototype-employee-card',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'meetingoptions',
-        content: 'Meeting Options',
-        as: NavLink,
-        to: '/prototype-meeting-options',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'mentions',
-        content: 'Mentions',
-        as: NavLink,
-        to: '/prototype-mentions',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'searchpage',
-        content: 'Search Page',
-        as: NavLink,
-        to: '/prototype-search-page',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'popups',
-        content: 'Popups',
-        as: NavLink,
-        to: '/prototype-popups',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'iconviewer',
-        content: 'Processed Icons',
-        as: NavLink,
-        to: '/icon-viewer',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'menu-button',
-        content: 'MenuButton',
-        as: NavLink,
-        to: '/menu-button',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'divider4',
-        kind: 'divider',
-        styles: dividerStyles,
       },
     ]
 
-    const withPrototypes =
-      process.env.NODE_ENV !== 'production'
-        ? menuItems.concat(prototypesMenuItemTitle).concat(prototypesMenuItems)
-        : menuItems
+    const stylesListItems = stylesItems.map(item => (
+      <li key={item.key} role="presentation" className="sd_sidebarMenuItem">
+        <a role="menuitem" className="sd_sidebarMenuItemLink" href={item.to}>
+          {item.content}
+        </a>
+      </li>
+    ))
 
-    const componentMenuItem = {
-      key: 'components',
-      content: 'Components',
-      styles: menuSectionStyles,
-      disabled: true,
-    }
-    const behaviorMenuItem = {
-      key: 'behaviour',
-      content: 'Behaviors',
-      styles: menuSectionStyles,
-      disabled: true,
-    }
+    const gettingStartedListItems = gettingStartedItems.map(item => (
+      <li key={item.key} role="presentation" className="sd_sidebarMenuItem">
+        <a role="menuitem" className="sd_sidebarMenuItemLink" href={item.to}>
+          {item.content}
+        </a>
+      </li>
+    ))
 
-    const withComponents = withPrototypes.concat(componentMenuItem).concat(menuItemsByType[0].items)
-    const allItems = withComponents
-      .concat({
-        key: 'divider5',
-        kind: 'divider',
-        styles: dividerStyles,
-      })
-      .concat(behaviorMenuItem)
-      .concat(menuItemsByType[1].items)
+    const guidesListItems = guidesItems.map(item => (
+      <li key={item.key} role="presentation" className="sd_sidebarMenuItem">
+        <a role="menuitem" className="sd_sidebarMenuItemLink" href={item.to}>
+          {item.content}
+        </a>
+      </li>
+    ))
+
+    const componentListItems = menuItemsByType[0].items.map(item => (
+      <li key={item.key} role="presentation" className="sd_sidebarMenuItem">
+        <a role="menuitem" className="sd_sidebarMenuItemLink" href={item.onClick}>
+          {item.content}
+        </a>
+      </li>
+    ))
+
+    const behaviorListItems = menuItemsByType[1].items.map(item => (
+      <li key={item.key} role="presentation" className="sd_sidebarMenuItem">
+        <a role="menuitem" className="sd_sidebarMenuItemLink" href={item.onClick}>
+          {item.content}
+        </a>
+      </li>
+    ))
 
     // TODO: bring back the active elements indicators
     return (
-      <Segment styles={sidebarStyles}>
-        <Segment styles={menuSectionStyles}>
-          <Logo width="32px" styles={logoStyles} />
-          <Text
-            role="heading"
-            aria-level={1}
-            color="white"
-            content="Stardust UI React &nbsp;"
-            styles={logoStyles}
-          />
-          <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
-        </Segment>
-        <Menu vertical fluid pills styles={navBarStyles} items={allItems} />
-      </Segment>
+      <div className="sd_sidebar">
+        <div className="sd_sidebarLogo">
+          <div className="sd_logo">Stardust</div>
+          <div className="sd_version">React UI v. {pkg.version}</div>
+        </div>
+        <ul className="sd_sidebarMenu">
+          <li key="divider1" className="sd_divider" />
+
+          <li key="gettingstarted" className="sd_sidebarMenuSection">
+            Getting started
+          </li>
+          {gettingStartedListItems}
+
+          <li key="guides" className="sd_sidebarMenuSection">
+            Guides
+          </li>
+          {guidesListItems}
+
+          <li key="styles" className="sd_sidebarMenuSection">
+            Styles
+          </li>
+          {stylesListItems}
+
+          <li key="components" className="sd_sidebarMenuSection">
+            Components
+          </li>
+          {componentListItems}
+
+          <li key="behaviors" className="sd_sidebarMenuSection">
+            Behaviors
+          </li>
+          {behaviorListItems}
+        </ul>
+        ,
+        <div className="sd_sidebarLogo">
+          <a href={constants.repoURL} target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>
+
+          <a href={changeLogUrl} target="_blank" rel="noopener noreferrer">
+            Changelog
+          </a>
+        </div>
+        {/* <Menu vertical fluid pills styles={navBarStyles} items={allItems} /> */}
+      </div>
     )
   }
 }

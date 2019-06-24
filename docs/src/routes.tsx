@@ -6,6 +6,7 @@ import DocsLayout from './components/DocsLayout'
 import DocsRoot from './components/DocsRoot'
 
 import Accessibility from './views/Accessibility'
+import Icons from './views/Icons'
 import Colors from './views/Colors'
 import ColorPalette from './views/ColorPalette'
 import ColorSchemes from './views/ColorSchemes'
@@ -134,6 +135,7 @@ const Router = () => (
           path="/integrate-custom-components"
           component={IntegrateCustomComponents}
         />
+        <DocsLayout exact path="/icons" component={Icons} />
         <DocsLayout exact path="/colors" component={Colors} />
         <DocsLayout exact path="/color-palette" component={ColorPalette} />
         <DocsLayout exact path="/color-schemes" component={ColorSchemes} />
