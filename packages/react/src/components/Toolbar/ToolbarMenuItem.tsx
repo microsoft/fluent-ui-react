@@ -97,7 +97,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, Tool
   }
 
   static defaultProps = {
-    as: 'a',
+    as: 'button',
     accessibility: defaultBehavior as Accessibility,
     wrapper: { as: 'li' },
   }
@@ -176,4 +176,6 @@ ToolbarMenuItem.create = createShorthandFactory({
  * Toolbar menu item.
  * This item renders as a button inside a Toolbar menu.
  */
-export default withSafeTypeForAs<typeof ToolbarMenuItem, ToolbarMenuItemProps, 'a'>(ToolbarMenuItem)
+export default withSafeTypeForAs<typeof ToolbarMenuItem, ToolbarMenuItemProps, 'button'>(
+  ToolbarMenuItem,
+)
