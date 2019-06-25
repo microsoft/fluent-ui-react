@@ -24,7 +24,7 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
       [
         '@stardust-ui/react:',
         'You are running Fela in development mode and this can cause performance degrades.',
-        'To disable it please paste `window.localStorage.felaDevMode = false` to your browsers console and reload current page.',
+        'To disable it please paste `delete window.localStorage.felaDevMode` to your browsers console and reload current page.',
       ].join(' '),
     )
   } else {
