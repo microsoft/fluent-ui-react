@@ -108,21 +108,21 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       e.preventDefault()
       e.stopPropagation()
 
-      if (exclusive) {
+      if (exclusive || _.isEmpty(items)) {
         return
       }
+
       let subItemsOpened = 0
-      const newActiveIndex = items
-        ? items.reduce<number[]>((acc, item, index) => {
-            if (item['items'].length > 0) {
-              if (!_.includes(activeIndex as number[], index)) {
-                subItemsOpened += item['items'].length
-              }
-              return [...acc, index]
-            }
-            return acc
-          }, [])
-        : []
+      const newActiveIndex = items.reduce<number[]>((acc, item, index) => {
+        if (!_.isEmpty(item['items'])) {
+          if (!_.includes(activeIndex as number[], index)) {
+            subItemsOpened += item['items'].length
+          }
+          return [...acc, index]
+        }
+        return acc
+      }, [])
+
       this.trySetState({ activeIndex: newActiveIndex })
       computeNewOpenItemsCount(subItemsOpened)
     },
@@ -157,7 +157,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
       const childrenItemsCount = (activeIndex as number[]).reduce<number>((acc, index) => {
         const childrenItemsAtIndex = items[index]['items']
-        if (childrenItemsAtIndex && childrenItemsAtIndex.length > 0) {
+        if (!_.isEmpty(childrenItemsAtIndex)) {
           return acc + childrenItemsAtIndex.length
         }
         return acc
