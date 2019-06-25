@@ -17,7 +17,7 @@ import {
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+import { menuItemBehavior } from '../../lib/accessibility'
 
 import Box from '../Box/Box'
 import Icon from '../Icon/Icon'
@@ -98,7 +98,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, Tool
 
   static defaultProps = {
     as: 'button',
-    accessibility: defaultBehavior as Accessibility,
+    accessibility: menuItemBehavior as Accessibility,
     wrapper: { as: 'li' },
   }
 

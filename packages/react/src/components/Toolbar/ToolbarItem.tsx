@@ -27,7 +27,7 @@ import {
 } from '../../types'
 import { Popper } from '../../lib/positioner'
 import { Accessibility } from '../../lib/accessibility/types'
-import { buttonBehavior, popupFocusTrapBehavior } from '../../lib/accessibility'
+import { toolbarItemBehavior, popupFocusTrapBehavior } from '../../lib/accessibility'
 
 import ToolbarMenu from './ToolbarMenu'
 import Icon from '../Icon/Icon'
@@ -40,7 +40,7 @@ export interface ToolbarItemProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default buttonBehavior
+   * @default toolbarItemBehavior
    */
   accessibility?: Accessibility
 
@@ -131,7 +131,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
 
   static defaultProps = {
     as: 'button',
-    accessibility: buttonBehavior as Accessibility,
+    accessibility: toolbarItemBehavior as Accessibility,
   }
 
   actionHandlers = {

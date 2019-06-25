@@ -25,6 +25,7 @@ export {
   default as menuItemAsToolbarButtonBehavior,
 } from './Behaviors/Toolbar/menuItemAsToolbarButtonBehavior'
 export { default as toolbarBehavior } from './Behaviors/Toolbar/toolbarBehavior'
+export { default as toolbarItemBehavior } from './Behaviors/Toolbar/toolbarItemBehavior'
 export { default as radioGroupBehavior } from './Behaviors/Radio/radioGroupBehavior'
 export { default as radioGroupItemBehavior } from './Behaviors/Radio/radioGroupItemBehavior'
 export { default as popupBehavior } from './Behaviors/Popup/popupBehavior'
