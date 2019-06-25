@@ -1,11 +1,9 @@
-import { ThemeInput } from '@stardust-ui/react'
+import { ComponentStyleFunctionParam, ThemeInput, pxToRem } from '@stardust-ui/react'
 
 export const darkThemeOverrides: ThemeInput = {
   componentVariables: {
-    Toolbar: siteVars => ({
-      // We can't override these variables directly because TMP has usages of regular Toolbar
-      dividerMargin: 0,
-      borderRadius: 0,
+    Box: siteVars => ({
+      ctBackground: 'rgba(41,40,40,.9)', // HUH: must be kept in sync with ToolbarItem.ctBackground
     }),
 
     ToolbarItem: siteVars => ({
@@ -20,18 +18,35 @@ export const darkThemeOverrides: ThemeInput = {
       ctPrimaryBackgroundHover: '#343441', // siteVars.colorScheme.brand.backgroundHover1,
       ctDangerColorHover: '#fff',
       ctDangerBackgroundHover: '#a72037',
+      ctColorActive: '#fff',
+      ctBackgroundActive: '#343441',
+      ctBackgroundActiveOverlay:
+        'linear-gradient(90deg,rgba(60,62,93,.6),rgba(60,62,93,0) 33%),linear-gradient(135deg,rgba(60,62,93,.6) 33%,rgba(60,62,93,0) 70%),linear-gradient(180deg,rgba(60,62,93,.6) 70%,rgba(60,62,93,0) 94%),linear-gradient(225deg,rgba(60,62,93,.6) 33%,rgba(60,62,93,0) 73%),linear-gradient(270deg,rgba(60,62,93,.6),rgba(60,62,93,0) 33%),linear-gradient(0deg,rgba(98,100,167,.75) 6%,rgba(98,100,167,0) 70%)',
     }),
   },
 
   componentStyles: {
-    CustomToolbarTimer: {
-      root: {
-        pointerEvents: 'none',
-      },
+    Box: {
+      root: ({ variables: v }: ComponentStyleFunctionParam) => ({
+        ...(v.uBarButtonWrapper && {
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          background: v.ctBackground,
+        }),
+        ...(v.verticalPaddingSmall && {
+          paddingLeft: '.1rem',
+          paddingRight: '.1rem',
+        }),
+        ...(v.verticalPaddingMedium && {
+          paddingLeft: '1rem',
+          paddingRight: '1rem',
+        }),
+      }),
     },
 
     Toolbar: {
-      root: ({ variables: v }) => ({
+      root: ({ variables: v }: ComponentStyleFunctionParam) => ({
         ...(v.uBar && {
           height: '4rem',
           overflow: 'hidden',
@@ -41,7 +56,7 @@ export const darkThemeOverrides: ThemeInput = {
     },
 
     ToolbarItem: {
-      root: ({ props: p, variables: v }) => {
+      root: ({ props: p, variables: v }: ComponentStyleFunctionParam) => {
         return {
           ...(v.uBar && {
             display: 'flex',
@@ -52,6 +67,27 @@ export const darkThemeOverrides: ThemeInput = {
             color: v.ctColor,
 
             background: v.ctBackground,
+            position: 'relative',
+
+            ...(p.active &&
+              !v.primary && {
+                // active intentionally before primary and danger, only affects regular items
+                color: v.ctColorActive,
+                background: v.ctBackgroundActive,
+
+                '::before': {
+                  content: `''`,
+                  position: 'absolute',
+                  top: pxToRem(-2),
+                  left: pxToRem(-2),
+                  bottom: pxToRem(-2),
+                  right: pxToRem(-2),
+                  background: v.ctBackgroundActiveOverlay,
+                  ...(p.isFromKeyboard && {
+                    border: `${pxToRem(2)} solid #fff`,
+                  }),
+                },
+              }),
 
             ...(v.danger && {
               background: v.ctDangerBackground,
@@ -74,7 +110,24 @@ export const darkThemeOverrides: ThemeInput = {
                 color: v.ctPrimaryColorHover,
                 background: v.ctPrimaryBackgroundHover,
               }),
+
+              ...(v.noHoverColors && {
+                color: undefined,
+                background: 'blue',
+              }),
             },
+
+            ...(v.hasDot && {
+              '::after': {
+                content: `''`,
+                position: 'absolute',
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                background: 'red',
+                transform: 'translateX(100%) translateY(-100%)',
+              },
+            }),
 
             ...(p.isFromKeyboard && {
               border: '2px solid white',
@@ -91,6 +144,21 @@ export const darkThemeOverrides: ThemeInput = {
                 background: v.ctPrimaryBackgroundHover,
               }),
             }),
+          }),
+
+          ...(v.noFillOnHover && {
+            '& .ui-icon__filled': {
+              display: 'none',
+            },
+            '& .ui-icon__outline': {
+              display: 'block',
+            },
+            '&:hover .ui-icon__filled': {
+              display: 'none',
+            },
+            '&:hover .ui-icon__outline': {
+              display: 'block',
+            },
           }),
         }
       },

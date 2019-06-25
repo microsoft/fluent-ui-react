@@ -1,104 +1,40 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { Button, Box, Omit, Toolbar, ToolbarItemProps } from '@stardust-ui/react'
+import { Button, Box, Text, Toolbar, ToolbarItemProps } from '@stardust-ui/react'
 
 // TODO: NEXT STEPS
-//  - [ ] Remove CustomToolbarTimer
-//  - [ ] Simplify CustomToolbar.tsx helper funcs, use stupid code
+//  - [x] Remove CustomToolbarTimer
+//  - [x] Simplify CustomToolbar.tsx helper funcs, use stupid code
 //  - [ ] Add more toolbar items
 //  - [ ] Continue updating styles
 //  - [ ] Update inline styles/variables below to use TMP format (bool vars, styles elsewhere)
 
 export interface CustomToolbarProps {
-  layout?: 'whiteboard' | 'powerpoint-presenter'
+  layout?: 'standard' | 'desktop-share' | 'powerpoint-presenter'
 
   cameraActive?: boolean
-  micActive?: boolean
-  screenShareActive?: boolean
-  chatActive?: boolean
-
   onCameraChange?: (state: boolean) => void
+
+  micActive?: boolean
   onMicChange?: (state: boolean) => void
+
+  screenShareActive?: boolean
   onScreenShareChange?: (state: boolean) => void
-  onChatChange?: (state: boolean) => void
+
+  sidebarSelected: false | 'chat' | 'participant-add'
+  onSidebarChange?: (state: false | 'chat' | 'participant-add') => void
+
+  chatHasDot?: boolean
+
+  pptSlide?: string
+  onPptPrevClick?: () => void
+  onPptNextClick?: () => void
 
   onEndCallClick?: () => void
 }
 
-type CustomToolbarItem = ToolbarItemProps & { as?: any; key: string }
+type CustomToolbarItem = (ToolbarItemProps & { as?: any; key: string }) | ((render: any) => any)
 type CustomToolbarLayout = (props: CustomToolbarProps) => CustomToolbarItem[]
-
-//
-// Standard
-//
-
-type CreateItemConfig = {
-  icon: string
-  iconActive?: string
-
-  danger?: true
-  primary?: true
-}
-
-const createActionableItem = (name: string, config: CreateItemConfig) => (
-  props: CustomToolbarProps,
-): CustomToolbarItem => ({
-  key: name,
-
-  // TODO: find better way to define it, propName, callbackName???
-  icon: {
-    name: props[name + 'Active'] && config.iconActive ? config.iconActive : config.icon,
-    size: 'large',
-  },
-  onClick: () => {
-    _.invoke(props, 'on' + _.upperFirst(name) + 'Change', !props[name + 'Active'])
-  },
-  active: props[name + 'Active'],
-
-  variables: {
-    danger: config.danger,
-    primary: config.primary,
-  },
-})
-
-const createDumbItem = (name: string, config: Omit<CreateItemConfig, 'iconActive'>) => (
-  props: CustomToolbarProps,
-): CustomToolbarItem => ({
-  key: name,
-
-  icon: {
-    name: config.icon,
-    size: 'large',
-  },
-
-  onClick: () => {
-    _.invoke(props, 'on' + _.startCase(name) + 'Click')
-  },
-
-  variables: {
-    danger: config.danger,
-    primary: config.primary,
-  },
-})
-
-const screenShareItem = createActionableItem('screenShare', {
-  icon: 'call-control-close-tray',
-  iconActive: 'call-control-present-new',
-  primary: true,
-})
-
-const moreItem = createDumbItem('more', { icon: 'more', primary: true })
-
-const chatItem = createActionableItem('chat', {
-  icon: 'chat',
-  iconActive: 'chat',
-})
-
-const endCallItem = createDumbItem('endCall', { icon: 'call-end', danger: true })
-
-//
-// Common
-//
 
 const commonLayout: CustomToolbarLayout = props => [
   // recording indic
@@ -112,7 +48,7 @@ const commonLayout: CustomToolbarLayout = props => [
       userSelect: 'none',
       cursor: 'default',
       ':hover': {
-        /*TODO: reset styles */
+        /* TODO: reset styles */
       },
     },
     variables: { primary: true },
@@ -130,6 +66,7 @@ const commonLayout: CustomToolbarLayout = props => [
     onClick: () => _.invoke(props, 'onCameraChange', !props.cameraActive),
     variables: { primary: true },
   },
+
   {
     active: props.micActive,
     icon: {
@@ -141,45 +78,91 @@ const commonLayout: CustomToolbarLayout = props => [
     variables: { primary: true },
   },
 
-  screenShareItem(props),
-  moreItem(props),
-  { key: 'primary-section-divider', kind: 'divider' },
-  chatItem(props),
+  {
+    active: props.screenShareActive,
+    icon: {
+      name: props.screenShareActive ? 'call-control-close-tray' : 'call-control-present-new',
+      size: 'large',
+    },
+    key: 'screen-share',
+    onClick: () => _.invoke(props, 'onScreenShareChange', !props.screenShareActive),
+    variables: { primary: true },
+  },
 
-  // comments
-  // add to call someone
+  {
+    key: 'more',
+    icon: {
+      name: 'more',
+      size: 'large',
+    },
+
+    onClick: () => {
+      _.invoke(props, 'onMoreClick')
+    },
+
+    variables: {
+      primary: true,
+    },
+  },
 ]
 
-//
-//
-// Whiteboard
-//
-//
-//
-
-const stopSharingItem = createDumbItem('stopSharing', { icon: 'call-control-stop-presenting-new' })
-
-const whiteboardLayout: CustomToolbarLayout = props => [
-  ...commonLayout(props),
-
-  // multi-window-call
-
-  endCallItem(props),
+const sidebarButtons: CustomToolbarLayout = props => [
+  {
+    active: props.sidebarSelected === 'chat',
+    icon: {
+      name: 'chat',
+      outline: 'true',
+      size: 'large',
+    },
+    key: 'chat',
+    onClick: () =>
+      _.invoke(props, 'onSidebarChange', props.sidebarSelected === 'chat' ? false : 'chat'),
+    variables: { hasDot: props.chatHasDot, noFillOnHover: true },
+  },
+  {
+    active: props.sidebarSelected === 'participant-add',
+    icon: {
+      name: 'participant-add',
+      outline: 'true',
+      size: 'large',
+    },
+    key: 'participant-add',
+    onClick: () =>
+      _.invoke(
+        props,
+        'onSidebarChange',
+        props.sidebarSelected === 'participant-add' ? false : 'participant-add',
+      ),
+    variables: { noFillOnHover: true },
+  },
 ]
 
-//
-// PP
-//
+const layoutItems = {
+  endCall: props => ({
+    key: 'end-call',
+    icon: {
+      name: 'call-end',
+      size: 'large',
+    },
 
-const powerPointPresenterLayout: CustomToolbarLayout = props =>
-  [
+    onClick: () => {
+      _.invoke(props, 'onEndCallClick')
+    },
+
+    variables: {
+      danger: true,
+    },
+  }),
+}
+
+const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
+  standard: props => [...commonLayout(props), ...sidebarButtons(props), layoutItems.endCall(props)],
+
+  'desktop-share': props => [
     ...commonLayout(props),
-
-    // touch item
-    stopSharingItem(props),
-    // slider
-
-    // // double focus
+    ...sidebarButtons(props),
+    { key: 'divider-sidebar', kind: 'divider' },
+    // HUH: double focus
     // {
     //   key: 'stop-sharing-button',
     //   as: 'div',
@@ -188,37 +171,86 @@ const powerPointPresenterLayout: CustomToolbarLayout = props =>
     //   styles: { padding: '0 1rem' },
     // },
 
+    // HUH: ugly, styles "leak" to other components
     render =>
       render(
         {
           content: 'Stop Sharing',
+          key: 'stop-sharing',
         },
         (_, props) => (
-          <Box
-            styles={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              background: 'rgba(41,40,40,.9)',
-            }}
-          >
-            <Button {...props} styles={{ margin: '0 1rem' }} />
+          <Box variables={{ uBarButtonWrapper: true, verticalPaddingMedium: true }}>
+            <Button {...props} />
           </Box>
         ),
       ),
 
-    endCallItem(props),
-  ] as any // FIXME
+    layoutItems.endCall(props),
+  ],
+  'powerpoint-presenter': props => [
+    ...commonLayout(props),
+    ...sidebarButtons(props),
+    { key: 'divider-sidebar', kind: 'divider' },
 
-const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
-  'powerpoint-presenter': powerPointPresenterLayout,
-  whiteboard: whiteboardLayout,
+    // touch item
+    {
+      key: 'stop-sharing',
+      icon: {
+        name: 'call-control-stop-presenting-new',
+        size: 'large',
+      },
+
+      onClick: () => {
+        _.invoke(props, 'onStopSharingClick')
+      },
+    },
+
+    {
+      key: 'ppt-prev',
+      icon: {
+        name: 'chevron-down',
+        rotate: 90,
+        outline: true,
+      },
+
+      onClick: () => {
+        _.invoke(props, 'onPptPrevClick')
+      },
+    },
+
+    render =>
+      render({}, () => (
+        <Box variables={{ uBarButtonWrapper: true, verticalPaddingSmall: true }}>
+          <Text size="small">{props.pptSlide}</Text>
+        </Box>
+      )),
+
+    {
+      key: 'ppt-next',
+      icon: {
+        name: 'chevron-down',
+        rotate: -90,
+        outline: true,
+      },
+
+      onClick: () => {
+        _.invoke(props, 'onPptNextClick')
+      },
+    },
+
+    layoutItems.endCall(props),
+  ],
 }
 
 const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
-  const { layout = 'whiteboard' } = props
+  const { layout = 'standard' } = props
 
-  return <Toolbar variables={{ uBar: true }} items={layouts[layout](props)} />
+  return (
+    <Toolbar
+      variables={{ dividerMargin: 0, borderRadius: 0, uBar: true }}
+      items={layouts[layout](props)}
+    />
+  )
 }
 
 export default CustomToolbar

@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import * as React from 'react'
 import {
   KnobProvider,
@@ -14,13 +15,21 @@ import CustomToolbar, { CustomToolbarProps } from './CustomToolbar'
 import ComponentExampleKnobs from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleKnobs'
 
 const CustomToolbarPrototype: React.FunctionComponent = () => {
+  const [rtl] = useBooleanKnob({
+    name: 'RTL',
+    initialValue: false,
+  })
   const [themeName] = useSelectKnob({
     name: 'themeName',
     values: ['teamsDark', 'teamsHighContrast'],
     initialValue: 'teamsDark',
   })
 
-  const availableLayouts: CustomToolbarProps['layout'][] = ['whiteboard', 'powerpoint-presenter']
+  const availableLayouts: CustomToolbarProps['layout'][] = [
+    'standard',
+    'desktop-share',
+    'powerpoint-presenter',
+  ]
   const [layout] = useSelectKnob({
     name: 'layout',
     values: availableLayouts,
@@ -34,9 +43,16 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
   const [micActive, onMicChange] = useBooleanKnob({ name: 'micActive', initialValue: true })
   const [screenShareActive, onScreenShareChange] = useBooleanKnob({
     name: 'screenShareActive',
-    initialValue: true,
+    initialValue: false,
   })
-  const [chatActive, onChatChange] = useBooleanKnob({ name: 'chatActive', initialValue: false })
+  const [sidebarSelected, onSidebarChange] = useSelectKnob({
+    name: 'sidebarSelected',
+    values: ['false', 'chat', 'participant-add'],
+    initialValue: 'false',
+  })
+  const [chatHasDot] = useBooleanKnob({ name: 'chatHasDot', initialValue: false })
+  const [currentSlide, setCurrentSlide] = React.useState(23)
+  const totalSlides = 34
 
   let theme = {}
   if (themeName === 'teamsDark') {
@@ -52,7 +68,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
           <KnobInspector />
         </ComponentExampleKnobs>
 
-        <Provider theme={theme}>
+        <Provider theme={theme} rtl={rtl}>
           <Flex
             hAlign="center"
             styles={{
@@ -66,11 +82,15 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
               cameraActive={cameraActive}
               micActive={micActive}
               screenShareActive={screenShareActive}
-              chatActive={chatActive}
+              sidebarSelected={sidebarSelected === 'false' ? false : sidebarSelected}
+              chatHasDot={chatHasDot}
+              pptSlide={`${currentSlide} of ${totalSlides}`}
               onCameraChange={onCameraChange}
               onMicChange={onMicChange}
               onScreenShareChange={onScreenShareChange}
-              onChatChange={onChatChange}
+              onSidebarChange={state => onSidebarChange(state || 'false')}
+              onPptPrevClick={() => setCurrentSlide(_.max([1, currentSlide - 1]))}
+              onPptNextClick={() => setCurrentSlide(_.min([totalSlides, currentSlide + 1]))}
             />
           </Flex>
         </Provider>
