@@ -7,11 +7,14 @@ import { RouteProps } from 'react-router'
 import DocsLayout from 'docs/src/components/DocsLayout'
 import { link } from 'docs/src/utils/helpers'
 import DocPage from 'docs/src/components/DocPage'
+import GuidesNavigationFooter, { PageDescriptor } from 'docs/src/components/GuidesNavigationFooter'
 
 type MarkdownPageProps = {
   page: {
     default: React.ComponentType<any>
     meta: {
+      previous?: PageDescriptor
+      next?: PageDescriptor
       title: string
     }
   }
@@ -44,6 +47,7 @@ const MarkdownPage: React.FunctionComponent<MarkdownPageProps> = props => {
           <MDXProvider components={components}>
             <Component />
           </MDXProvider>
+          <GuidesNavigationFooter previous={meta.previous} next={meta.next} />
         </DocPage>
       )}
     />

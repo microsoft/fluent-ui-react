@@ -1,5 +1,6 @@
 export const meta = {
   title: 'Shorthand Props',
+  next: { url: '/quick-start', name: 'Quick Start' },
 }
 
 Stardust UI components can have "slots" which accept shothand props. For example, `Button` component has an `icon` slot which value defines the icon that will be rendered.
@@ -55,7 +56,7 @@ It is also possible to pass falsy values (`false`, `null` or
 <Dropdown toggleIndicator={null} />
 ```
 
-## Shorthand value as Function
+## Function as value
 
 Providing function as a shorthand value is the most involving but, at the same time, the most
 powerful option for customizing component's slot. The only requirements for this function are:
