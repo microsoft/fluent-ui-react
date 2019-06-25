@@ -7,6 +7,7 @@ const inputItems = ['Bruce Wayne', 'Natasha Romanoff', 'Steven Strange']
 
 const DropdownExamplePosition = () => {
   const [open] = useBooleanKnob({ name: 'open', initialValue: true })
+  const [unstable_pinned] = useBooleanKnob({ name: 'unstable_pinned', initialValue: false })
 
   const [positionAndAlign] = useSelectKnob({
     name: 'position-align',
@@ -24,6 +25,7 @@ const DropdownExamplePosition = () => {
         placeholder={`Opens ${position} trigger${align ? ` aligned to ${align}` : ''}.`}
         align={align}
         position={position}
+        unstable_pinned={unstable_pinned}
       />
     </Grid>
   )

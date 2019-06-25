@@ -39,11 +39,9 @@ import {
   FocusTrapZoneProps,
 } from '../../lib/accessibility/FocusZone'
 
-import {
-  Accessibility,
-  AccessibilityActionHandlers,
-  AccessibilityBehavior,
-} from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
+import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import { createShorthandFactory } from '../../lib/factories'
 
 export type PopupEvents = 'click' | 'hover' | 'focus'
 export type RestrictedClickEvents = 'click' | 'focus'
@@ -126,11 +124,15 @@ export interface PopupState {
  * A Popup displays additional information on top of a page.
  * @accessibility
  * Do use popupFocusTrapBehavior if the focus needs to be trapped inside of the Popup.
+ * If Popup's content is lazy loaded and focus needs to be trapped inside - make sure to use state change to trigger componentDidUpdate,
+ * so the focus can be set correctly to the first tabbable element inside Popup or manually set focus to the element inside once content is loaded.
  */
 export default class Popup extends AutoControlledComponent<PopupProps, PopupState> {
   static displayName = 'Popup'
 
   static className = 'ui-popup'
+
+  static create: Function
 
   static slotClassNames: PopupSlotClassNames = {
     content: `${Popup.className}__content`,
@@ -163,6 +165,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     renderContent: PropTypes.func,
     target: PropTypes.any,
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
+    unstable_pinned: PropTypes.bool,
     content: customPropTypes.shorthandAllowingChildren,
     contentRef: customPropTypes.ref,
   }
@@ -187,7 +190,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   closeTimeoutId
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     closeAndFocusTrigger: e => {
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
     },
@@ -387,9 +390,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   renderPopupContent(
     popupPositionClasses: string,
     rtl: boolean,
-    accessibility: AccessibilityBehavior,
+    accessibility: ReactAccessibilityBehavior,
   ): JSX.Element {
-    const { align, position, offset, target } = this.props
+    const { align, position, offset, target, unstable_pinned } = this.props
 
     return (
       <Popper
@@ -398,6 +401,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         position={position}
         offset={offset}
         rtl={rtl}
+        unstable_pinned={unstable_pinned}
         targetRef={target ? toRefObject(target) : this.triggerRef}
         children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
       />
@@ -407,7 +411,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   renderPopperChildren = (
     popupPositionClasses: string,
     rtl: boolean,
-    accessibility: AccessibilityBehavior,
+    accessibility: ReactAccessibilityBehavior,
     { placement, scheduleUpdate }: PopperChildrenProps,
   ) => {
     const { content: propsContent, renderContent, contentRef, mountDocument, pointing } = this.props
@@ -445,6 +449,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         placement,
         pointing,
         pointerRef: this.pointerTargetRef,
+        unstable_wrapped: accessibility.focusTrap || accessibility.autoFocus,
       },
       overrideProps: this.getContentProps,
     })
@@ -473,11 +478,13 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
               listener={this.handleDocumentClick(getRefs)}
               targetRef={documentRef}
               type="click"
+              capture
             />
             <EventListener
               listener={this.handleDocumentKeyDown(getRefs)}
               targetRef={documentRef}
               type="keydown"
+              capture
             />
           </>
         )}
@@ -528,3 +535,5 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       : this.triggerRef.current
   }
 }
+
+Popup.create = createShorthandFactory({ Component: Popup, mappedProp: 'content' })

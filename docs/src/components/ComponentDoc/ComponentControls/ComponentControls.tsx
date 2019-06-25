@@ -1,10 +1,5 @@
-import {
-  Menu,
-  Provider,
-  ThemeInput,
-  toolbarBehavior,
-  toolbarButtonBehavior,
-} from '@stardust-ui/react'
+import { CopyToClipboard } from '@stardust-ui/docs-components'
+import { Menu, Provider, ThemeInput, menuAsToolbarBehavior } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
@@ -12,7 +7,6 @@ import { NavLink } from 'react-router-dom'
 import ComponentButton from './ComponentButton'
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
 import ComponentControlsCodeSandbox from './ComponentControlsCodeSandbox/ComponentControlsCodeSandbox'
-import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 
 type ComponentControlsProps = {
   exampleCode: string
@@ -69,13 +63,12 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
         {...rest}
         fluid
         pills
-        accessibility={toolbarBehavior}
+        accessibility={menuAsToolbarBehavior}
         items={[
           {
             key: 'show-code',
             content: <ComponentButton iconName="code" label="Try it" />,
             onClick: onShowCode,
-            accessibility: toolbarButtonBehavior,
           },
           {
             key: 'show-codesandbox',
@@ -86,25 +79,21 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
                 exampleName={examplePath}
               />
             ),
-            accessibility: toolbarButtonBehavior,
           },
           {
             key: 'show-variables',
             content: <ComponentButton iconName="paint brush" label="Theme it" />,
             onClick: onShowVariables,
-            accessibility: toolbarButtonBehavior,
           },
           {
             key: 'show-transparent',
             content: <ComponentButton iconName="adjust" label="Transparent" />,
             onClick: onShowTransparent,
-            accessibility: toolbarButtonBehavior,
           },
           {
             key: 'show-rtl',
             content: <ComponentButton iconName="align right" label="RTL" />,
             onClick: onShowRtl,
-            accessibility: toolbarButtonBehavior,
           },
           {
             key: 'maximize',
@@ -118,24 +107,21 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
             )}/${showRtl}`,
             target: '_blank',
             rel: 'noopener noreferrer',
-            accessibility: toolbarButtonBehavior,
           },
           {
             key: 'copy-link',
             content: (
-              <CopyToClipboard
-                render={(active, onClick) => (
+              <CopyToClipboard value={anchorName}>
+                {(active, onClick) => (
                   <ComponentButton
                     iconName="linkify"
                     label={active ? 'Copied!' : 'Permalink'}
                     onClick={onClick}
                   />
                 )}
-                value={anchorName}
-              />
+              </CopyToClipboard>
             ),
             onClick: onCopyLink,
-            accessibility: toolbarButtonBehavior,
           },
         ]}
       />

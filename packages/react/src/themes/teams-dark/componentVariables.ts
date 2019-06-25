@@ -9,6 +9,7 @@ export { default as HeaderDescription } from './components/Header/headerDescript
 export { default as Input } from './components/Input/inputVariables'
 export { default as ListItem } from './components/List/listItemVariables'
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemVariables'
+export { default as Segment } from './components/Segment/segmentVariables'
 export { default as Text } from './components/Text/textVariables'
 export { default as TreeTitle } from './components/Tree/treeTitleVariables'
 export { default as Menu } from './components/Menu/menuVariables'
@@ -19,3 +20,4 @@ export { default as ProviderBox } from './components/Provider/providerBoxVariabl
 export { default as Dropdown } from './components/Dropdown/dropdownVariables'
 export { default as Label } from './components/Label/labelVariables'
 export { default as PopupContent } from './components/Popup/popupContentVariables'
+export { default as TooltipContent } from './components/Tooltip/tooltipContentVariables'

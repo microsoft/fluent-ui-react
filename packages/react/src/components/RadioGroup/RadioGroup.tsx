@@ -16,7 +16,7 @@ import {
 } from '../../lib'
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 
 export interface RadioGroupSlotClassNames {
@@ -96,16 +96,16 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     )
   }
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     nextItem: event => this.setCheckedItem(event, 1),
     prevItem: event => this.setCheckedItem(event, -1),
   }
 
-  private getItemProps = (item): RadioGroupItemProps => {
+  getItemProps = (item): RadioGroupItemProps => {
     return (item as React.ReactElement<RadioGroupItemProps>).props || item
   }
 
-  private setCheckedItem = (event, direction) => {
+  setCheckedItem = (event, direction) => {
     const nextItem = this.findNextEnabledCheckedItem(direction)
 
     if (nextItem) {
@@ -119,15 +119,19 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     event.preventDefault()
   }
 
-  private findNextEnabledCheckedItem = (direction): RadioGroupItemProps => {
+  findNextEnabledCheckedItem = (direction): RadioGroupItemProps => {
     if (!this.props.items || !this.props.items.length) {
       return undefined
     }
 
-    const currentIndex = _.findIndex(
-      this.props.items,
-      item => this.getItemProps(item).value === this.state.checkedValue,
-    )
+    const currentIndex =
+      // if none of the values selected, set current index to the first item
+      this.state.checkedValue !== undefined
+        ? _.findIndex(
+            this.props.items,
+            item => this.getItemProps(item).value === this.state.checkedValue,
+          )
+        : 0
 
     for (
       let newIndex = currentIndex + direction;
@@ -152,7 +156,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     return undefined
   }
 
-  private handleItemOverrides = predefinedProps => ({
+  handleItemOverrides = predefinedProps => ({
     checked:
       typeof this.state.checkedValue !== 'undefined' &&
       this.state.checkedValue === predefinedProps.value,
@@ -166,18 +170,23 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     shouldFocus: this.state.shouldFocus,
   })
 
-  private renderItems = (vertical: boolean) => {
+  renderItems = (vertical: boolean) => {
     const { items } = this.props
+    const isNoneValueSelected = this.state.checkedValue === undefined
 
-    return _.map(items, item =>
+    return _.map(items, (item, index) =>
       RadioGroupItem.create(item, {
-        defaultProps: { className: RadioGroup.slotClassNames.item, vertical },
+        defaultProps: {
+          className: RadioGroup.slotClassNames.item,
+          vertical,
+          ...(index === 0 && isNoneValueSelected && { tabIndex: 0 }),
+        },
         overrideProps: this.handleItemOverrides,
       }),
     )
   }
 
-  private setCheckedValue({
+  setCheckedValue({
     checkedValue,
     shouldFocus,
     event,

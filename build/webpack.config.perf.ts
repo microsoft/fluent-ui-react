@@ -42,7 +42,7 @@ const webpackConfig: any = {
     ],
   },
   plugins: [
-    new ForkTsCheckerWebpackPlugin({ tsconfig: paths.base('build/tsconfig.perf.json') }),
+    new ForkTsCheckerWebpackPlugin({ tsconfig: paths.build('tsconfig.perf.json') }),
     new CopyWebpackPlugin([
       {
         from: paths.perfSrc('index.html'),

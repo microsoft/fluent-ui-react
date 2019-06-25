@@ -13,7 +13,7 @@ import callable from '../../callable'
 
 /** AutoFocusZone is used to focus inner element on mount. */
 export class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
-  private root = React.createRef<HTMLElement>()
+  root = React.createRef<HTMLElement>()
 
   static propTypes = {
     as: customPropTypes.as,
@@ -22,11 +22,11 @@ export class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
 
   static handledProps = _.keys(AutoFocusZone.propTypes)
 
-  public componentDidMount(): void {
+  componentDidMount(): void {
     this.findElementAndFocusAsync()
   }
 
-  public render(): JSX.Element {
+  render(): JSX.Element {
     const unhandledProps = getUnhandledProps(
       { handledProps: AutoFocusZone.handledProps },
       this.props,
@@ -41,7 +41,7 @@ export class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
     )
   }
 
-  private findElementAndFocusAsync = () => {
+  findElementAndFocusAsync = () => {
     if (!this.root.current) return
     const { firstFocusableSelector } = this.props
 

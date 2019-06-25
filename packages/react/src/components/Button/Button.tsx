@@ -13,6 +13,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
@@ -82,11 +83,11 @@ export interface ButtonState {
 class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   static create: Function
 
-  public static displayName = 'Button'
+  static displayName = 'Button'
 
-  public static className = 'ui-button'
+  static className = 'ui-button'
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
     }),
@@ -103,18 +104,25 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     as: 'button',
     accessibility: buttonBehavior as Accessibility,
   }
 
   static Group = ButtonGroup
 
-  public state = {
+  state = {
     isFromKeyboard: false,
   }
 
-  public renderComponent({
+  actionHandlers = {
+    performClick: event => {
+      event.preventDefault()
+      this.handleClick(event)
+    },
+  }
+
+  renderComponent({
     ElementType,
     classes,
     accessibility,
@@ -132,6 +140,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
       >
@@ -145,7 +154,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     )
   }
 
-  public renderIcon = (variables, styles) => {
+  renderIcon = (variables, styles) => {
     const { icon, iconPosition, content } = this.props
 
     return Icon.create(icon, {
@@ -157,7 +166,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     })
   }
 
-  private handleClick = (e: React.SyntheticEvent) => {
+  handleClick = (e: React.SyntheticEvent) => {
     const { disabled } = this.props
 
     if (disabled) {
@@ -168,7 +177,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
 
     _.invoke(this.props, 'onFocus', e, this.props)

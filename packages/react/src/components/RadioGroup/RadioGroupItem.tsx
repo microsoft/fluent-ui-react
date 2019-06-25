@@ -91,7 +91,7 @@ class RadioGroupItem extends AutoControlledComponent<
   WithAsProp<RadioGroupItemProps>,
   RadioGroupItemState
 > {
-  private elementRef = React.createRef<HTMLElement>()
+  elementRef = React.createRef<HTMLElement>()
 
   static create: Function
 
@@ -125,12 +125,11 @@ class RadioGroupItem extends AutoControlledComponent<
 
   static autoControlledProps = ['checked']
 
-  componentDidUpdate(prevProps, prevState) {
-    const checked = this.state.checked
-    if (checked !== prevState.checked) {
-      checked && this.props.shouldFocus && this.elementRef.current.focus()
-      _.invoke(this.props, 'checkedChanged', undefined, { ...this.props, checked })
-    }
+  actionHandlers = {
+    performClick: e => {
+      e.preventDefault()
+      this.handleClick(e)
+    },
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
@@ -145,6 +144,14 @@ class RadioGroupItem extends AutoControlledComponent<
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const checked = this.state.checked
+    if (checked !== prevState.checked) {
+      checked && this.props.shouldFocus && this.elementRef.current.focus()
+      _.invoke(this.props, 'checkedChanged', undefined, { ...this.props, checked })
+    }
   }
 
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {

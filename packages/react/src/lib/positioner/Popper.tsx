@@ -1,11 +1,19 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import PopperJS from 'popper.js'
+import PopperJS, * as _PopperJS from 'popper.js'
 import { Ref } from '@stardust-ui/react-component-ref'
 
 import { getPlacement, applyRtlToOffset } from './positioningHelper'
 import { PopperProps, PopperChildrenFn } from './types'
 import getScrollParent from './getScrollParent'
+
+// `popper.js` has a UMD build without `.default`, it breaks CJS builds:
+// https://github.com/rollup/rollup/issues/1267#issuecomment-446681320
+const createPopper = (
+  reference: Element,
+  popper: Element,
+  options?: PopperJS.PopperOptions,
+): PopperJS => new ((_PopperJS as any).default || _PopperJS)(reference, popper, options)
 
 /**
  * Popper relies on the 3rd party library [Popper.js](https://github.com/FezVrasta/popper.js) for positioning.
@@ -14,7 +22,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
   const {
     align,
     children,
-    eventsEnabled,
+    enabled,
     modifiers: userModifiers,
     offset,
     pointerTargetRef,
@@ -23,6 +31,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     positioningDependencies = [],
     rtl,
     targetRef,
+    unstable_pinned,
   } = props
 
   const proposedPlacement = getPlacement({ align, position, rtl })
@@ -43,14 +52,33 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     [rtl, offset, position],
   )
 
-  React.useEffect(
+  const scheduleUpdate = React.useCallback(() => {
+    if (popperRef.current) {
+      popperRef.current.scheduleUpdate()
+    }
+  }, [])
+
+  const destroyInstance = React.useCallback(() => {
+    if (popperRef.current) {
+      popperRef.current.destroy()
+      popperRef.current = null
+    }
+  }, [])
+
+  const createInstance = React.useCallback(
     () => {
+      destroyInstance()
+
+      if (!enabled || !targetRef.current || !contentRef.current) {
+        return
+      }
+
       const pointerTargetRefElement = pointerTargetRef && pointerTargetRef.current
       const popperHasScrollableParent = getScrollParent(contentRef.current) !== document.body
 
       const modifiers: PopperJS.Modifiers = _.merge(
         { preventOverflow: { padding: 0 } },
-        { flip: { padding: 0 } },
+        { flip: { padding: 0, flipVariationsByContent: true } },
         /**
          * When the popper box is placed in the context of a scrollable element, we need to set
          * preventOverflow.escapeWithReference to true and flip.boundariesElement to 'scrollParent' (default is 'viewport')
@@ -60,6 +88,12 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
           preventOverflow: { escapeWithReference: true },
           flip: { boundariesElement: 'scrollParent' },
         },
+        /**
+         * unstable_pinned disables the flip modifier by setting flip.enabled to false; this disables automatic
+         * repositioning of the popper box; it will always be placed according to the values of `align` and
+         * `position` props, regardless of the size of the component, the reference element or the viewport.
+         */
+        unstable_pinned && { flip: { enabled: false } },
         computedModifiers,
         userModifiers,
         /**
@@ -84,39 +118,49 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
 
       const options: PopperJS.PopperOptions = {
         placement: proposedPlacement,
-        eventsEnabled,
         positionFixed,
         modifiers,
         onCreate: handleUpdate,
         onUpdate: handleUpdate,
       }
 
-      popperRef.current = new PopperJS(targetRef.current, contentRef.current, options)
-      return () => popperRef.current.destroy()
+      popperRef.current = createPopper(targetRef.current, contentRef.current, options)
     },
-    [computedModifiers, eventsEnabled, userModifiers, positionFixed, proposedPlacement],
+    // TODO review dependencies for popperHasScrollableParent
+    [
+      computedModifiers,
+      enabled,
+      userModifiers,
+      positionFixed,
+      proposedPlacement,
+      unstable_pinned,
+      targetRef,
+    ],
   )
 
-  React.useEffect(
+  React.useLayoutEffect(
     () => {
-      popperRef.current.scheduleUpdate()
+      createInstance()
+      return destroyInstance
     },
-    [...positioningDependencies, computedPlacement],
+    [createInstance],
   )
+
+  React.useEffect(scheduleUpdate, [...positioningDependencies, computedPlacement])
 
   const child =
     typeof children === 'function'
       ? (children as PopperChildrenFn)({
           placement: computedPlacement,
-          scheduleUpdate: () => popperRef.current && popperRef.current.scheduleUpdate(),
+          scheduleUpdate,
         })
-      : React.Children.only(children)
+      : children
 
-  return <Ref innerRef={contentRef}>{child as React.ReactElement}</Ref>
+  return <Ref innerRef={contentRef}>{React.Children.only(child) as React.ReactElement}</Ref>
 }
 
 Popper.defaultProps = {
-  eventsEnabled: true,
+  enabled: true,
   positionFixed: false,
   positioningDependencies: [],
 }
