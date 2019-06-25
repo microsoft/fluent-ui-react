@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Type `FontFaceStyle` was renamed to `FontFaceProps` @layershifter ([#1487](https://github.com/stardust-ui/react/pull/1487))
 - Type `style` was renamed to `props` on `FontFace` @layershifter ([#1487](https://github.com/stardust-ui/react/pull/1487))
 - Remove `boxShadowColor` variable for `Segment` component @Bugaa92 ([#1516](https://github.com/stardust-ui/react/pull/1516))
+- Rename prop `forceFocusInsideTrap` to `forceFocusInsideTrapOnOutsideFocus` in `FocusTrapZone` @sophieH29 ([#1505](https://github.com/stardust-ui/react/pull/1505))
 
 ### Fixes
 - Fix prop types of `Tooltip` component @kuzhelov ([#1499](https://github.com/stardust-ui/react/pull/1499))
@@ -29,6 +30,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `theme` types, remove duplication @kuzhelov ([#1508](https://github.com/stardust-ui/react/pull/1508))
 - Fix `RadioGroup` first item should be tabbable by default when none of the items selected @sophieH29 ([#1515](https://github.com/stardust-ui/react/pull/1515))
 - Export all accessibility behaviors @jurokapsiar ([#1538](https://github.com/stardust-ui/react/pull/1538))
+- Fix `FocusTrapZone` sets focus into zone correctly for lazy loaded content @sophieH29 ([#1505](https://github.com/stardust-ui/react/pull/1505))
 
 ### Features
 - Add 'poll' and 'to-do-list' icons to Teams theme @natashamayurshah ([#1498](https://github.com/stardust-ui/react/pull/1498))
