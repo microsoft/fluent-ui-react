@@ -2,6 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { VariableSizeList as List } from 'react-window'
 import { Ref } from '@stardust-ui/react-component-ref'
 
 import TreeItem, { TreeItemProps } from './TreeItem'
@@ -33,7 +34,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    */
   accessibility?: Accessibility
 
-  computeNewOpenItemsCount?: Function
+  computeNewOpenItemCount?: Function
 
   /** Initial activeIndex value. */
   defaultActiveIndex?: number[] | number
@@ -58,7 +59,7 @@ export interface TreeState {
   activeIndex: number[] | number
   containerHeight?: number
   itemHeight?: number
-  itemsCount?: number
+  itemCount?: number
 }
 
 class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
@@ -80,7 +81,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
-    computeNewOpenItemsCount: PropTypes.func,
+    computeNewOpenItemCount: PropTypes.func,
     defaultActiveIndex: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
@@ -106,7 +107,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       const {
         items,
         exclusive,
-        computeNewOpenItemsCount = this.computeNewOpenItemsCount,
+        computeNewOpenItemCount = this.computeNewOpenItemCount,
       } = this.props
       const { activeIndex } = this.state
 
@@ -129,23 +130,19 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       }, [])
 
       this.trySetState({ activeIndex: newActiveIndex })
-      computeNewOpenItemsCount(subItemsOpened)
+      computeNewOpenItemCount(subItemsOpened)
     },
   }
 
   getInitialAutoControlledState({ exclusive }): TreeState {
     return {
       activeIndex: exclusive ? -1 : [],
-      itemsCount: this.props.items.length,
+      itemCount: this.props.items.length,
     }
   }
 
   componentDidMount() {
-    const {
-      exclusive,
-      computeNewOpenItemsCount = this.computeNewOpenItemsCount,
-      items,
-    } = this.props
+    const { exclusive, computeNewOpenItemCount = this.computeNewOpenItemCount, items } = this.props
     const { activeIndex } = this.state
 
     this.setState({
@@ -158,21 +155,21 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         return
       }
 
-      const childrenItemsCount = items[activeIndex as number]['items'].length
-      computeNewOpenItemsCount(childrenItemsCount)
+      const childrenItemCount = items[activeIndex as number]['items'].length
+      computeNewOpenItemCount(childrenItemCount)
     } else {
       if (activeIndex === [-1]) {
         return
       }
 
-      const childrenItemsCount = (activeIndex as number[]).reduce<number>((acc, index) => {
+      const childrenItemCount = (activeIndex as number[]).reduce<number>((acc, index) => {
         const childrenItemsAtIndex = items[index]['items']
         if (!_.isEmpty(childrenItemsAtIndex)) {
           return acc + childrenItemsAtIndex.length
         }
         return acc
       }, 0)
-      computeNewOpenItemsCount(childrenItemsCount)
+      computeNewOpenItemCount(childrenItemCount)
     }
   }
 
@@ -184,7 +181,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   computeNewIndex = (treeItemProps: TreeItemProps) => {
     const { index, items } = treeItemProps
     const activeIndexes = this.getActiveIndexes()
-    const { exclusive, computeNewOpenItemsCount = this.computeNewOpenItemsCount } = this.props
+    const { exclusive, computeNewOpenItemCount = this.computeNewOpenItemCount } = this.props
 
     if (!items) {
       return activeIndexes
@@ -195,22 +192,22 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         this.state.activeIndex === -1
           ? 0
           : this.props.items[this.state.activeIndex as number]['items'].length
-      computeNewOpenItemsCount(items.length - previousItemsCount)
+      computeNewOpenItemCount(items.length - previousItemsCount)
       return index
     }
 
     const isIndexIncluded = _.includes(activeIndexes, index)
-    computeNewOpenItemsCount(items.length * (isIndexIncluded ? -1 : 1))
+    computeNewOpenItemCount(items.length * (isIndexIncluded ? -1 : 1))
 
     // check to see if index is in array, and remove it, if not then add it
     return isIndexIncluded ? _.without(activeIndexes, index) : [...activeIndexes, index]
   }
 
-  computeNewOpenItemsCount = (itemsCount: number): void => {
-    if (itemsCount === 0) {
+  computeNewOpenItemCount = (itemCount: number): void => {
+    if (itemCount === 0) {
       return
     }
-    this.setState(state => ({ itemsCount: state.itemsCount + itemsCount }))
+    this.setState(state => ({ itemCount: state.itemCount + itemCount }))
   }
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
@@ -233,7 +230,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           exclusive,
           renderItemTitle,
           open: exclusive ? index === activeIndex : _.includes(activeIndexes, index),
-          computeNewOpenItemsCount: this.computeNewOpenItemsCount,
+          computeNewOpenItemCount: this.computeNewOpenItemCount,
         },
         overrideProps: this.handleTreeItemOverrides,
       })
@@ -243,8 +240,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { children } = this.props
-
-    return (
+    const { containerHeight, itemHeight, itemCount } = this.state
+    const element = (
       <Ref innerRef={this.contentRef}>
         <ElementType
           className={classes.root}
@@ -257,6 +254,20 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         </ElementType>
       </Ref>
     )
+
+    if (classes.root.indexOf(TreeItem.slotClassNames.subtree) === -1) {
+      return (
+        <List
+          height={containerHeight || 40}
+          itemCount={itemCount}
+          itemSize={() => itemHeight || 20}
+        >
+          {() => element}
+        </List>
+      )
+    }
+
+    return element
   }
 }
 
