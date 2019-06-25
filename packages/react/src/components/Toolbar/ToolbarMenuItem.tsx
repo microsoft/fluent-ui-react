@@ -93,12 +93,12 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, Tool
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
-    wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
+    wrapper: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
     as: 'button',
-    accessibility: defaultBehavior as Accessibility,
+    accessibility: defaultBehavior,
     wrapper: { as: 'li' },
   }
 

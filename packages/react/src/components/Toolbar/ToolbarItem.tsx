@@ -131,7 +131,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
 
   static defaultProps = {
     as: 'button',
-    accessibility: buttonBehavior as Accessibility,
+    accessibility: buttonBehavior,
   }
 
   actionHandlers = {
@@ -143,6 +143,33 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
 
   itemRef = React.createRef<HTMLElement>()
   menuRef = React.createRef<HTMLElement>()
+
+  renderSubmenu(menu, variables) {
+    return (
+      <>
+        <Ref innerRef={this.menuRef}>
+          <Popper align="start" position="above" targetRef={this.itemRef}>
+            {ToolbarMenu.create(menu, {
+              overrideProps: (predefinedProps: ToolbarItemProps) => ({
+                onItemClick: (e, itemProps: ToolbarItemProps) => {
+                  _.invoke(predefinedProps, 'onItemClick', e, itemProps)
+                  // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
+                  this.trySetMenuOpen(false, e)
+                },
+                variables: mergeComponentVariables(variables, predefinedProps.variables),
+              }),
+            })}
+          </Popper>
+        </Ref>
+        <EventListener
+          listener={this.handleOutsideClick}
+          targetRef={documentRef}
+          type="click"
+          capture
+        />
+      </>
+    )
+  }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility, variables }) {
     const { icon, children, disabled, popup, menu, menuOpen } = this.props
@@ -161,30 +188,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
       </ElementType>
     )
 
-    const submenu = menuOpen ? (
-      <>
-        <Ref innerRef={this.menuRef}>
-          <Popper align="start" position="above" targetRef={this.itemRef}>
-            {ToolbarMenu.create(menu, {
-              overrideProps: predefinedProps => ({
-                onItemClick: (e, itemProps) => {
-                  _.invoke(predefinedProps, 'onItemClick', e, itemProps)
-                  // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
-                  this.trySetMenuOpen(false, e)
-                },
-                variables: mergeComponentVariables(variables, predefinedProps.variables),
-              }),
-            })}
-          </Popper>
-        </Ref>
-        <EventListener
-          listener={this.handleOutsideClick}
-          targetRef={documentRef}
-          type="click"
-          capture
-        />
-      </>
-    ) : null
+    const submenu = menuOpen ? this.renderSubmenu(menu, variables) : null
 
     if (popup) {
       return Popup.create(popup, {
