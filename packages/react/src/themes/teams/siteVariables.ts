@@ -16,7 +16,6 @@ export {
 //
 // BORDER STYLES
 //
-export const borderWidth = '1px'
 export const borderRadius = '2px'
 export const focusInnerBorderColor = colors.white
 export const focusOuterBorderColor = colors.black

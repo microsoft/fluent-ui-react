@@ -6,7 +6,7 @@ import { pxToRem } from '../../../../lib'
 
 const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
-    minHeight: pxToRem(0),
+    minHeight: 0,
     padding: `${pxToRem(4)} ${pxToRem(11)}`,
     whiteSpace: 'nowrap',
     border: `${v.listItemFocusBorderWidth} solid transparent`,
