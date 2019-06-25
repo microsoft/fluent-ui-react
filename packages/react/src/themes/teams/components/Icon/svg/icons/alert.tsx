@@ -9,5 +9,4 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'alert',
 } as TeamsProcessedSvgIconSpec

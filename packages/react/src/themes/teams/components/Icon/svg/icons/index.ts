@@ -3,6 +3,7 @@ import { TeamsSvgIconSpec } from '../types'
 import accept from './accept'
 import add from './add'
 import addParticipant from './addParticipant'
+import alert from './alert'
 import arrowUp from './arrowUp'
 import arrowDown from './arrowDown'
 import ban from './ban'
@@ -72,6 +73,7 @@ import giphy from './giphy'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
 import indent from './indent'
+import info from './info'
 import italic from './italic'
 import leave from './leave'
 import like from './like'
@@ -86,6 +88,7 @@ import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
+import msftStream from './msftStream'
 import userPhone from './userPhone'
 import numberList from './numberList'
 import outdent from './outdent'
@@ -108,6 +111,7 @@ import redo from './redo'
 import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
+import shareRecording from './shareRecording'
 import skypeLogo from './skypeLogo'
 import search from './search'
 import send from './send'
@@ -138,7 +142,7 @@ import yammer from './yammer'
 
 export default {
   'stardust-circle': stardustCircle,
-
+  alert,
   accept,
   add,
   'arrow-up': arrowUp,
@@ -203,6 +207,7 @@ export default {
   highlight,
   'horizontal-rule': horizontalRule,
   indent,
+  info,
   italic,
   leave,
   like,
@@ -217,6 +222,7 @@ export default {
   mic,
   'mic-off': micOff,
   more,
+  'msft-stream': msftStream,
   'user-phone': userPhone,
   'number-list': numberList,
   'open-outside': openOutside,
@@ -244,6 +250,7 @@ export default {
   search,
   send,
   settings,
+  'share-recording': shareRecording,
   star,
   sticker,
   strike,
