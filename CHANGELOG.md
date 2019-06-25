@@ -20,12 +20,18 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING CHANGES
 - Type `FontFaceStyle` was renamed to `FontFaceProps` @layershifter ([#1487](https://github.com/stardust-ui/react/pull/1487))
 - Type `style` was renamed to `props` on `FontFace` @layershifter ([#1487](https://github.com/stardust-ui/react/pull/1487))
+- Remove `boxShadowColor` variable for `Segment` component @Bugaa92 ([#1516](https://github.com/stardust-ui/react/pull/1516))
+- Rename prop `forceFocusInsideTrap` to `forceFocusInsideTrapOnOutsideFocus` in `FocusTrapZone` @sophieH29 ([#1505](https://github.com/stardust-ui/react/pull/1505))
 
 ### Fixes
 - Fix prop types of `Tooltip` component @kuzhelov ([#1499](https://github.com/stardust-ui/react/pull/1499))
 - Fix `Popup` styling with `pointer` when it is wrapped by `FocusZones` @layershifter ([#1492](https://github.com/stardust-ui/react/pull/1492))
 - Apply custom focus style on `TreeItem` and `TreeTitle` @silviuavram ([#1506](https://github.com/stardust-ui/react/pull/1506))
 - Fix `theme` types, remove duplication @kuzhelov ([#1508](https://github.com/stardust-ui/react/pull/1508))
+- Fix `RadioGroup` first item should be tabbable by default when none of the items selected @sophieH29 ([#1515](https://github.com/stardust-ui/react/pull/1515))
+- Export all accessibility behaviors @jurokapsiar ([#1538](https://github.com/stardust-ui/react/pull/1538))
+- Fix `FocusTrapZone` sets focus into zone correctly for lazy loaded content @sophieH29 ([#1505](https://github.com/stardust-ui/react/pull/1505))
+- Replace `css-shorthand-expand` with bundled version to make it work in IE11 @layershifter ([#1542](https://github.com/stardust-ui/react/pull/1542))
 - Fix `Dropdown` and `DropdownItem` styles to match [redlines] @bcalvery ([#1523](https://github.com/stardust-ui/react/pull/1523))
 
 ### Features
@@ -33,6 +39,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `toolbarBehavior` for `Toolbar` component and apply `buttonBehavior` for `ToolbarItem` component @sophieH29 ([#1468](https://github.com/stardust-ui/react/pull/1468))
 - Integrate ARIA HTML design pattern in the `Tree` component @silviuavram ([#1488](https://github.com/stardust-ui/react/pull/1488))
 - Add 'broadcast' icon to Teams theme @lawrencecushman ([#1509](https://github.com/stardust-ui/react/pull/1509))
+- Add `disabled` prop for `Segment` component @Bugaa92 ([#1516](https://github.com/stardust-ui/react/pull/1516))
 
 ### Performance
 - Use single Fela renderer for LTR & RTL @layershifter ([#1459](https://github.com/stardust-ui/react/pull/1459))
