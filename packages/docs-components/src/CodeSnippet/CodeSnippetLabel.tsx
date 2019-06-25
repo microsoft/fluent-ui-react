@@ -35,7 +35,7 @@ const CodeSnippetLabel: React.FunctionComponent<CopySnippetLabelProps> = props =
         title={copyable ? 'Copy' : undefined}
       >
         <div>{label || mode}</div>
-        {copyable && <div style={{ marginLeft: '5px' }}>{active ? '✔ ' : '⎘'}</div>}
+        {copyable && <div style={{ marginLeft: '5px' }}>{active ? '✔ ' : '📋'}</div>}
       </div>
     )
   )
