@@ -2,6 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { Ref } from '@stardust-ui/react-component-ref'
 
 import TreeItem, { TreeItemProps } from './TreeItem'
 import {
@@ -55,8 +56,9 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
 
 export interface TreeState {
   activeIndex: number[] | number
+  containerHeight?: number
+  itemHeight?: number
   itemsCount?: number
-  height?: number
 }
 
 class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
@@ -95,6 +97,9 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   }
 
   static autoControlledProps = ['activeIndex']
+
+  contentRef = React.createRef<HTMLElement>()
+  firstItemRef = React.createRef<HTMLElement>()
 
   actionHandlers = {
     expandSiblings: e => {
@@ -142,6 +147,11 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       items,
     } = this.props
     const { activeIndex } = this.state
+
+    this.setState({
+      containerHeight: this.contentRef.current.clientHeight,
+      itemHeight: this.firstItemRef.current.offsetHeight,
+    })
 
     if (exclusive) {
       if (activeIndex === -1) {
@@ -215,8 +225,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     const { activeIndex } = this.state
     const activeIndexes = this.getActiveIndexes()
 
-    return _.map(items, (item: ShorthandValue, index: number) =>
-      TreeItem.create(item, {
+    return _.map(items, (item: ShorthandValue, index: number) => {
+      const treeItem = TreeItem.create(item, {
         defaultProps: {
           className: Tree.slotClassNames.item,
           index,
@@ -226,23 +236,26 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           computeNewOpenItemsCount: this.computeNewOpenItemsCount,
         },
         overrideProps: this.handleTreeItemOverrides,
-      }),
-    )
+      })
+      return index === 0 ? <Ref innerRef={this.firstItemRef}>{treeItem}</Ref> : treeItem
+    })
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { children } = this.props
 
     return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...rtlTextContainer.getAttributes({ forElements: [children] })}
-        {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-      >
-        {childrenExist(children) ? children : this.renderContent()}
-      </ElementType>
+      <Ref innerRef={this.contentRef}>
+        <ElementType
+          className={classes.root}
+          {...accessibility.attributes.root}
+          {...rtlTextContainer.getAttributes({ forElements: [children] })}
+          {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        >
+          {childrenExist(children) ? children : this.renderContent()}
+        </ElementType>
+      </Ref>
     )
   }
 }
