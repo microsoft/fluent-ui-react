@@ -41,9 +41,14 @@ export interface FocusTrapZoneProps extends React.HTMLAttributes<HTMLDivElement>
   ignoreExternalFocusing?: boolean
 
   /**
-   * Indicates whether focus trap zone should force focus inside the focus trap zone
+   * Indicates whether focus trap zone should force focus inside the trap zone when focus event occurs outside the zone.
    */
-  forceFocusInsideTrap?: boolean
+  forceFocusInsideTrapOnOutsideFocus?: boolean
+
+  /**
+   * Indicates whether focus trap zone should force focus inside the trap zone on component update.
+   */
+  forceFocusInsideTrapOnComponentUpdate?: boolean
 
   /**
    * Indicates the selector for first focusable item.  Only applies if focusPreviouslyFocusedInnerElement == false.

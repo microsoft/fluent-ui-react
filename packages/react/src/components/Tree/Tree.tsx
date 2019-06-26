@@ -186,5 +186,7 @@ Tree.create = createShorthandFactory({ Component: Tree, mappedArrayProp: 'items'
 
 /**
  * Allows users to display data organised in tree-hierarchy.
+ * @accessibility
+ * Implements [ARIA TreeView](https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView) design pattern.
  */
 export default withSafeTypeForAs<typeof Tree, TreeProps, 'ul'>(Tree)
