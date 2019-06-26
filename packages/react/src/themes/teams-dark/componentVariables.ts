@@ -9,6 +9,7 @@ export { default as HeaderDescription } from './components/Header/headerDescript
 export { default as Input } from './components/Input/inputVariables'
 export { default as ListItem } from './components/List/listItemVariables'
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemVariables'
+export { default as Segment } from './components/Segment/segmentVariables'
 export { default as Text } from './components/Text/textVariables'
 export { default as TreeTitle } from './components/Tree/treeTitleVariables'
 export { default as Menu } from './components/Menu/menuVariables'
