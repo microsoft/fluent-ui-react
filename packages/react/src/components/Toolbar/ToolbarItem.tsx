@@ -157,6 +157,19 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
       event.preventDefault()
       this.handleClick(event)
     },
+    closeMenuAndFocusTrigger: event => {
+      if (!this.props.menuOpen) {
+        return
+      }
+
+      this.trySetMenuOpen(false, event)
+      if (this.itemRef) {
+        this.itemRef.current.focus()
+      }
+    },
+    doNotNavigateNextToolbarItem: event => {
+      event.stopPropagation()
+    },
   }
 
   itemRef = React.createRef<HTMLElement>()
@@ -227,6 +240,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
           defaultProps: {
             className: cx(ToolbarItem.slotClassNames.wrapper, classes.wrapper),
             ...accessibility.attributes.wrapper,
+            ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
           },
           overrideProps: () => ({
             children: (

@@ -1,3 +1,4 @@
+import * as keyboardKey from 'keyboard-key'
 import { Accessibility } from '../../types'
 import buttonBehavior, { ButtonBehaviorProps } from '../Button/buttonBehavior'
 
@@ -16,6 +17,18 @@ const toolbarItemBehavior: Accessibility<ToolbarItemBehaviorProps> = props => {
     ...behaviorData.attributes.root,
     'aria-haspopup': props.popup ? 'dialog' : props.menu ? 'menu' : undefined,
   }
+  behaviorData.keyActions.wrapper = {
+    ...behaviorData.keyActions.wrapper,
+    closeMenuAndFocusTrigger: {
+      keyCombinations: [{ keyCode: keyboardKey.Escape }],
+    },
+    doNotNavigateNextToolbarItem: {
+      keyCombinations:
+        props.menu && props.menuOpen
+          ? [{ keyCode: keyboardKey.ArrowLeft }, { keyCode: keyboardKey.ArrowRight }]
+          : null,
+    },
+  }
   return behaviorData
 }
 
@@ -24,6 +37,8 @@ export default toolbarItemBehavior
 export type ToolbarItemBehaviorProps = {
   /** Indicated if toolbar item has a menu. */
   menu?: boolean | object
+  /** If the menu is in open state. */
+  menuOpen?: boolean
   /** Indicated if toolbar item has a popup. */
   popup?: boolean | object
 } & ButtonBehaviorProps
