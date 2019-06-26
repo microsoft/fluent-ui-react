@@ -2,12 +2,14 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import { Button, Box, Text, Toolbar, ToolbarItemProps } from '@stardust-ui/react'
 
-// TODO: NEXT STEPS
+// TODO:
 //  - [x] Remove CustomToolbarTimer
 //  - [x] Simplify CustomToolbar.tsx helper funcs, use stupid code
-//  - [ ] Add more toolbar items
-//  - [ ] Continue updating styles
-//  - [ ] Update inline styles/variables below to use TMP format (bool vars, styles elsewhere)
+//  - [x] Add more toolbar items
+//  - [x] Update inline styles/variables below to use TMP format (bool vars, styles elsewhere)
+//  - [ ] Add kind: 'custom', non-focusable container that renders any control
+//  - [ ] Add all toolbar items (menu, etc)
+//  - [ ] Consider exporting IS_FOCUSABLE_ATTRIBUTE, it is also shown in our accessibility docs
 
 export interface CustomToolbarProps {
   layout?: 'standard' | 'desktop-share' | 'powerpoint-presenter'
@@ -133,6 +135,7 @@ const sidebarButtons: CustomToolbarLayout = props => [
         'onSidebarChange',
         props.sidebarSelected === 'participant-add' ? false : 'participant-add',
       ),
+    // TODO: odd to have icon style implementation details leaking here.  works for now, investigate other options.
     variables: { noFillOnHover: true },
   },
 ]
@@ -140,6 +143,10 @@ const sidebarButtons: CustomToolbarLayout = props => [
 const layoutItems = {
   endCall: props => ({
     key: 'end-call',
+    kind: 'content',
+
+    content: <Button />,
+
     icon: {
       name: 'call-end',
       size: 'large',
@@ -172,15 +179,16 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
     // },
 
     // HUH: ugly, styles "leak" to other components
+    // TODO: use kind: 'content'
     render =>
       render(
         {
           content: 'Stop Sharing',
           key: 'stop-sharing',
         },
-        (_, props) => (
+        (_, toolbarItemProps) => (
           <Box variables={{ uBarButtonWrapper: true, verticalPaddingMedium: true }}>
-            <Button {...props} />
+            <Button {...toolbarItemProps} />
           </Box>
         ),
       ),
@@ -218,6 +226,7 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
       },
     },
 
+    // TODO: use kind: 'content'
     render =>
       render({}, () => (
         <Box variables={{ uBarButtonWrapper: true, verticalPaddingSmall: true }}>
@@ -227,6 +236,10 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
 
     {
       key: 'ppt-next',
+      // TODO: items are padded: false by default.
+      //       kind: 'custom' should be padded: true by default.
+      //       when building timer, padded: horizontal _might_ suffice
+      // padded: false | true | 'horizontally' | 'vertically',
       icon: {
         name: 'chevron-down',
         rotate: -90,
