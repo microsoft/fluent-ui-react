@@ -1,14 +1,10 @@
 import * as _ from 'lodash'
-import * as _expand from 'css-shorthand-expand'
+import expand from './cssExpandShorthand'
 import * as _memoize from 'fast-memoize'
 
 // `fast-memoize` is a CJS library, there are known issues with them:
 // https://github.com/rollup/rollup/issues/1267#issuecomment-446681320
 const memoize = (_memoize as any).default || _memoize
-
-// `css-shorthand-expand` is a CJS library, there are known issues with them:
-// https://github.com/rollup/rollup/issues/1267#issuecomment-446681320
-const expand = memoize((_expand as any).default || _expand)
 
 // _.camelCase is quite fast, but we are running it for the same values many times
 const camelCase = memoize(_.camelCase)
