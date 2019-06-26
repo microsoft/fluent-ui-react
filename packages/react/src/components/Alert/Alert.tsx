@@ -137,8 +137,5 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
 /**
  * A Alert displays information that explains nearby content.
  * @accessibility
- * Do use warning and danger variants to announce the alert by the screen reader.
- * Do use other libraries (for example react-aria-live) if the content of default or success variant needs to be announced.
- * Do add textual representation to action slot if they only contain an icon (using title, aria-label or aria-labelledby props on the slot).
  */
 export default withSafeTypeForAs<typeof Alert, AlertProps>(Alert)

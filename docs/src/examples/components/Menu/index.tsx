@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import BestPractices from './BestPractices'
 import Rtl from './Rtl'
 import Types from './Types'
 import Slots from './Slots'
@@ -9,6 +10,7 @@ import Usages from './Usages'
 
 const MenuExamples = () => (
   <div>
+    <BestPractices />
     <Types />
     <Slots />
     <States />
