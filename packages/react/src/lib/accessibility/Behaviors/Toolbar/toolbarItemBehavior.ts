@@ -10,7 +10,7 @@ import buttonBehavior, { ButtonBehaviorProps } from '../Button/buttonBehavior'
  * Adds attribute 'aria-haspopup=menu' to 'root' slot if 'menu' property is set.
  * Adds attribute 'aria-haspopup=dialog' to 'root' slot if 'popup' property is set.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
- * Triggers 'closeMenuAndFocusTrigger' action with 'Escape' on 'wrapper'.
+ * Triggers 'closeMenuAndFocusTrigger' action with 'Escape' on 'wrapper', when toolbar button has submenu and it is opened.
  * Triggers 'doNotNavigateNextToolbarItem' action with 'ArrowLeft' or 'ArrowRight' on 'wrapper', when toolbar button has submenu and it is opened.
  */
 const toolbarItemBehavior: Accessibility<ToolbarItemBehaviorProps> = props => {
@@ -22,7 +22,7 @@ const toolbarItemBehavior: Accessibility<ToolbarItemBehaviorProps> = props => {
   behaviorData.keyActions.wrapper = {
     ...behaviorData.keyActions.wrapper,
     closeMenuAndFocusTrigger: {
-      keyCombinations: [{ keyCode: keyboardKey.Escape }],
+      keyCombinations: props.menu && props.menuOpen ? [{ keyCode: keyboardKey.Escape }] : null,
     },
     doNotNavigateNextToolbarItem: {
       keyCombinations:
