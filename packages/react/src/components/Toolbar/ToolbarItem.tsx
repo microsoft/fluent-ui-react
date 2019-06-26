@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import cx from 'classnames'
 import { Ref } from '@stardust-ui/react-component-ref'
 import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
 
@@ -31,6 +32,7 @@ import { toolbarItemBehavior, popupFocusTrapBehavior } from '../../lib/accessibi
 
 import ToolbarMenu from './ToolbarMenu'
 import Icon from '../Icon/Icon'
+import Box from '../Box/Box'
 import Popup, { PopupProps } from '../Popup/Popup'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
@@ -53,7 +55,10 @@ export interface ToolbarItemProps
   /** Name or shorthand for Toolbar Item Icon */
   icon?: ShorthandValue
 
-  /** Shorthand for the submenu. */
+  /**
+   * Shorthand for the submenu.
+   * If submenu is specified, the item is wrapped to group the item and the menu elements together.
+   */
   menu?: ShorthandValue | ShorthandCollection
 
   /** Indicates if the menu inside the item is open. */
@@ -95,16 +100,27 @@ export interface ToolbarItemProps
    * @see PopupProps
    */
   popup?: Omit<PopupProps, 'trigger' | 'children'> | string
+
+  /** Shorthand for the wrapper component. The item is wrapped only if it contains a menu! */
+  wrapper?: ShorthandValue
 }
 
 export interface ToolbarItemState {
   isFromKeyboard: boolean
 }
 
+export interface ToolbarItemSlotClassNames {
+  wrapper: string
+}
+
 class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemState> {
   static displayName = 'ToolbarItem'
 
   static className = 'ui-toolbar__item'
+
+  static slotClassNames: ToolbarItemSlotClassNames = {
+    wrapper: `${ToolbarItem.className}__wrapper`,
+  }
 
   static create: Function
 
@@ -127,11 +143,13 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
       }),
       PropTypes.string,
     ]),
+    wrapper: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
     as: 'button',
     accessibility: toolbarItemBehavior as Accessibility,
+    wrapper: {},
   }
 
   actionHandlers = {
@@ -144,30 +162,14 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
   itemRef = React.createRef<HTMLElement>()
   menuRef = React.createRef<HTMLElement>()
 
-  renderComponent({ ElementType, classes, unhandledProps, accessibility, variables }) {
-    const { icon, children, disabled, popup, menu, menuOpen } = this.props
-    const renderedItem = (
-      <ElementType
-        {...accessibility.attributes.root}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-        {...unhandledProps}
-        disabled={disabled}
-        className={classes.root}
-        onBlur={this.handleBlur}
-        onFocus={this.handleFocus}
-        onClick={this.handleClick}
-      >
-        {childrenExist(children) ? children : Icon.create(icon)}
-      </ElementType>
-    )
-
-    const submenu = menuOpen ? (
+  renderSubmenu(menu, variables) {
+    return (
       <>
         <Ref innerRef={this.menuRef}>
           <Popper align="start" position="above" targetRef={this.itemRef}>
             {ToolbarMenu.create(menu, {
-              overrideProps: predefinedProps => ({
-                onItemClick: (e, itemProps) => {
+              overrideProps: (predefinedProps: ToolbarItemProps) => ({
+                onItemClick: (e, itemProps: ToolbarItemProps) => {
                   _.invoke(predefinedProps, 'onItemClick', e, itemProps)
                   // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
                   this.trySetMenuOpen(false, e)
@@ -184,7 +186,27 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
           capture
         />
       </>
-    ) : null
+    )
+  }
+
+  renderComponent({ ElementType, classes, unhandledProps, accessibility, variables }) {
+    const { icon, children, disabled, popup, menu, menuOpen, wrapper } = this.props
+    const renderedItem = (
+      <ElementType
+        {...accessibility.attributes.root}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        {...unhandledProps}
+        disabled={disabled}
+        className={classes.root}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        onClick={this.handleClick}
+      >
+        {childrenExist(children) ? children : Icon.create(icon)}
+      </ElementType>
+    )
+
+    const submenu = menuOpen ? this.renderSubmenu(menu, variables) : null
 
     if (popup) {
       return Popup.create(popup, {
@@ -198,12 +220,34 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
       })
     }
 
-    return (
-      <>
-        <Ref innerRef={this.itemRef}>{renderedItem}</Ref>
-        {submenu}
-      </>
-    )
+    // wrap the item if it has menu (even if it is closed = not rendered)
+    if (menu) {
+      if (wrapper) {
+        return Box.create(wrapper, {
+          defaultProps: {
+            className: cx(ToolbarItem.slotClassNames.wrapper, classes.wrapper),
+            ...accessibility.attributes.wrapper,
+          },
+          overrideProps: () => ({
+            children: (
+              <>
+                <Ref innerRef={this.itemRef}>{renderedItem}</Ref>
+                {submenu}
+              </>
+            ),
+          }),
+        })
+      }
+
+      return (
+        <>
+          <Ref innerRef={this.itemRef}>{renderedItem}</Ref>
+          {submenu}
+        </>
+      )
+    }
+
+    return <Ref innerRef={this.itemRef}>{renderedItem}</Ref>
   }
 
   handleBlur = (e: React.SyntheticEvent) => {

@@ -48,7 +48,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior as Accessibility,
+    accessibility: defaultBehavior,
   }
 
   handleItemOverrides = variables => predefinedProps => ({

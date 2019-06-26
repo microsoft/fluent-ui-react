@@ -34,7 +34,8 @@ class ToolbarMenuDivider extends UIComponent<WithAsProp<ToolbarMenuDividerProps>
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior as Accessibility,
+    accessibility: defaultBehavior,
+    as: 'li',
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
@@ -57,6 +58,6 @@ ToolbarMenuDivider.create = createShorthandFactory({
  * Toolbar menu divider.
  * Adds visual non-selectable separator between items.
  */
-export default withSafeTypeForAs<typeof ToolbarMenuDivider, ToolbarMenuDividerProps>(
+export default withSafeTypeForAs<typeof ToolbarMenuDivider, ToolbarMenuDividerProps, 'li'>(
   ToolbarMenuDivider,
 )

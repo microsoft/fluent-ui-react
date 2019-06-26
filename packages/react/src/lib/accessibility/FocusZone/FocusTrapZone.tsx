@@ -44,7 +44,8 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
     ariaLabelledBy: PropTypes.string,
     isClickableOutsideFocusTrap: PropTypes.bool,
     ignoreExternalFocusing: PropTypes.bool,
-    forceFocusInsideTrap: PropTypes.bool,
+    forceFocusInsideTrapOnOutsideFocus: PropTypes.bool,
+    forceFocusInsideTrapOnComponentUpdate: PropTypes.bool,
     firstFocusableSelector: PropTypes.string,
     disableFirstFocus: PropTypes.bool,
     focusPreviouslyFocusedInnerElement: PropTypes.bool,
@@ -58,22 +59,24 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
 
   componentDidMount(): void {
     FocusTrapZone._focusStack.push(this)
-    const { disableFirstFocus = false } = this.props
-
-    this._previouslyFocusedElementOutsideTrapZone = this._getPreviouslyFocusedElementOutsideTrapZone()
-
-    if (
-      !this._root.current.contains(this._previouslyFocusedElementOutsideTrapZone) &&
-      !disableFirstFocus
-    ) {
-      this._findElementAndFocusAsync()
-    }
-
+    this._bringFocusIntoZone()
     this._hideContentFromAccessibilityTree()
   }
 
+  componentDidUpdate(): void {
+    if (!this.props.forceFocusInsideTrapOnComponentUpdate) {
+      return
+    }
+
+    const activeElement = document.activeElement as HTMLElement
+    // if after componentDidUpdate focus is not inside the focus trap, bring it back
+    if (!this._root.current.contains(activeElement)) {
+      this._bringFocusIntoZone()
+    }
+  }
+
   render(): JSX.Element {
-    const { className, forceFocusInsideTrap, ariaLabelledBy } = this.props
+    const { className, forceFocusInsideTrapOnOutsideFocus, ariaLabelledBy } = this.props
     const unhandledProps = getUnhandledProps(
       { handledProps: [..._.keys(FocusTrapZone.propTypes)] },
       this.props,
@@ -93,7 +96,7 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
           {this.props.children}
         </ElementType>
 
-        {forceFocusInsideTrap && (
+        {forceFocusInsideTrapOnOutsideFocus && (
           <EventListener
             capture
             listener={this._handleOutsideFocus}
@@ -141,6 +144,19 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
     ) {
       lastActiveFocusTrap._root.current.removeAttribute(HIDDEN_FROM_ACC_TREE)
       lastActiveFocusTrap._root.current.removeAttribute('aria-hidden')
+    }
+  }
+
+  _bringFocusIntoZone = () => {
+    const { disableFirstFocus = false } = this.props
+
+    this._previouslyFocusedElementOutsideTrapZone = this._getPreviouslyFocusedElementOutsideTrapZone()
+
+    if (
+      !this._root.current.contains(this._previouslyFocusedElementOutsideTrapZone) &&
+      !disableFirstFocus
+    ) {
+      this._findElementAndFocusAsync()
     }
   }
 

@@ -4,8 +4,8 @@ import subtreeBehavior from './subtreeBehavior'
 
 /**
  * @specification
- * Adds role 'tree' to 'root' component's part.
- * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' component's part.
+ * Adds role 'tree' to 'root' slot.
+ * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' slot.
  * Embeds component into FocusZone.
  * Provides arrow key navigation in vertical direction.
  * Triggers 'expandSiblings' action with '*' on 'root'.
