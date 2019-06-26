@@ -6,7 +6,6 @@ export * from './colors'
 //
 // BORDER STYLES
 //
-export const borderWidth = '2px'
 export const focusInnerBorderColor = colors.black
 export const focusOuterBorderColor = accessibleCyan
 

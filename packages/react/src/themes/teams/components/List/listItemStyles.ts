@@ -78,11 +78,17 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
         background: '#000',
       },
     }),
+    ...((p.header || p.content) && {
+      marginRight: pxToRem(8),
+    }),
   }),
   header: ({ props: p, variables: v }) => ({
     fontSize: v.headerFontSize,
     lineHeight: v.headerLineHeight,
     ...(p.truncateHeader && truncateStyle),
+    ...(p.content && {
+      marginBottom: pxToRem(10),
+    }),
   }),
   headerMedia: ({ variables: v }): ICSSInJSStyle => ({
     fontSize: v.headerMediaFontSize,
