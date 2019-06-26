@@ -18,6 +18,7 @@ export type KnobComponents = {
   KnobField: KnobComponent
   KnobControl: KnobComponent
   KnobLabel: KnobComponent
+  KnobReset: React.FunctionComponent<KnobResetComponentProps>
 
   KnobBoolean: KnobComponent
   KnobRange: KnobComponent
@@ -27,6 +28,10 @@ export type KnobComponents = {
 
 export type KnobComponentProps = KnobDefinition & {
   setValue: (value: any) => void
+}
+
+export type KnobResetComponentProps = {
+  onReset: () => void
 }
 
 export type UseKnobOptions<T> = {

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { KnobComponentProps, KnobComponents } from './types'
+import { KnobComponentProps, KnobResetComponentProps, KnobComponents } from './types'
 
 const KnobField: React.FunctionComponent<KnobComponentProps> = props => (
   <div
@@ -21,6 +21,10 @@ const KnobControl: React.FunctionComponent<KnobComponentProps> = props => (
 
 const KnobLabel: React.FunctionComponent<KnobComponentProps> = props => (
   <span style={{ marginRight: 5 }}>{props.content || <code>{props.name}</code>}</span>
+)
+
+const KnobReset: React.FunctionComponent<KnobResetComponentProps> = props => (
+  <button onClick={props.onReset}>Reset</button>
 )
 
 const KnobBoolean: React.FunctionComponent<KnobComponentProps> = props => (
@@ -92,6 +96,7 @@ const defaultComponents: KnobComponents = {
   KnobControl,
   KnobField,
   KnobLabel,
+  KnobReset,
 
   KnobBoolean,
   KnobRange,

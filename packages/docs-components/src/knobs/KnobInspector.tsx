@@ -1,17 +1,20 @@
 import * as React from 'react'
 
 import KnobsContext, { KnobContextValue } from './KnobContext'
-import { KnobComponent, KnobComponentProps, KnobDefinition } from './types'
+import { KnobComponent, KnobComponentProps, KnobDefinition, KnobResetComponentProps } from './types'
 import useKnobValues from './useKnobValues'
 
 const getKnobControls = (
   knobsContext: KnobContextValue,
-): Record<'Control' | 'Field' | 'Label', KnobComponent> => {
-  const { KnobControl, KnobField, KnobLabel } = knobsContext.components
+): Record<'Control' | 'Field' | 'Label', KnobComponent> & {
+  Reset: React.FunctionComponent<KnobResetComponentProps>
+} => {
+  const { KnobControl, KnobField, KnobLabel, KnobReset } = knobsContext.components
   const controls = {
     Control: KnobControl,
     Field: KnobField,
     Label: KnobLabel,
+    Reset: KnobReset,
   }
 
   if (process.env.NODE_ENV !== 'production') {
@@ -48,14 +51,18 @@ const getKnobComponents = (
 }
 
 type KnobInspectorProps = {
+  resettable?: boolean
   children?: (children: React.ReactElement) => React.ReactElement
 }
 
 const KnobInspector: React.FunctionComponent<KnobInspectorProps> = props => {
   const knobsContext = React.useContext(KnobsContext)
 
-  const { Control, Field, Label } = getKnobControls(knobsContext)
+  const { Control, Field, Label, Reset } = getKnobControls(knobsContext)
   const knobComponents = getKnobComponents(knobsContext)
+  const onReset = () => {
+    console.log('WORKS')
+  }
   const knobValues = useKnobValues()
 
   const children =
@@ -74,6 +81,7 @@ const KnobInspector: React.FunctionComponent<KnobInspectorProps> = props => {
             </Field>
           )
         })}
+        <Reset onReset={onReset} />
       </>
     ) : null
 
