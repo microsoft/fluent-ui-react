@@ -3,7 +3,7 @@ export const IS_VISIBLE_ATTRIBUTE = 'data-is-visible'
 export const FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id'
 export const FOCUSZONE_SUB_ATTRIBUTE = 'data-is-sub-focuszone'
 export const HIDDEN_FROM_ACC_TREE = 'data-is-hidden-from-acc-tree'
-export const FOCUSZONE_WRAP_ATTRIBUTE = 'data-focuszone-wrap'
+export const FOCUSZONE_ISOLATE_ATTRIBUTE = 'data-focuszone-isolate'
 
 /**
  * Gets the first focusable element.
@@ -386,6 +386,19 @@ export function isElementTabbable(element: HTMLElement, checkTabIndex?: boolean)
  */
 export function isElementFocusZone(element?: HTMLElement): boolean {
   return !!(element && element.getAttribute && !!element.getAttribute(FOCUSZONE_ID_ATTRIBUTE))
+}
+
+/**
+ * Determines if a given element has been isolated in focus zone. If yes, tabindexes won't be updated inside
+ *
+ * @public
+ */
+export function isElementIsolatedInFocusZone(element?: HTMLElement): boolean {
+  return !!(
+    element &&
+    element.getAttribute &&
+    element.getAttribute(FOCUSZONE_ISOLATE_ATTRIBUTE) === 'true'
+  )
 }
 
 /**

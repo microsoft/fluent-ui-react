@@ -1,6 +1,7 @@
-import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
+import { Accessibility } from '../../types'
+import { FOCUSZONE_ISOLATE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import { PopupEvents, PopupEventsArray } from '../../../../components/Popup/Popup'
 
 /**
@@ -21,6 +22,7 @@ const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
       },
       popup: {
         role: 'complementary',
+        [FOCUSZONE_ISOLATE_ATTRIBUTE]: true,
       },
     },
     keyActions: {

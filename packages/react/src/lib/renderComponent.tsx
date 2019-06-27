@@ -24,7 +24,6 @@ import { defaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
-import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
 
 export interface RenderResultConfig<P> {
@@ -88,7 +87,6 @@ function wrapInGenericFocusZone<
   children: React.ReactNode,
   ref: (focusZone: FocusZone) => void,
 ) {
-  props[FOCUSZONE_WRAP_ATTRIBUTE] = true
   return (
     <FocusZone ref={ref} {...props}>
       {children}

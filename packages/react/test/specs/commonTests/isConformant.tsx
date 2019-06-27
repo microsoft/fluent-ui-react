@@ -19,7 +19,6 @@ import * as stardust from 'src/index'
 
 import { Accessibility, AriaRole } from 'src/lib/accessibility/types'
 import { FocusZone, IS_FOCUSABLE_ATTRIBUTE } from 'src/lib/accessibility/FocusZone'
-import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
 export interface Conformant {
   eventTargets?: object
@@ -74,10 +73,7 @@ export default (Component, options: Conformant = {}) => {
     // passing through Focus Zone wrappers
     if (componentElement.type() === FocusZone) {
       // another HOC component is added: FocuZone
-      componentElement = componentElement.childAt(0) // skip through <FocusZone>
-      if (componentElement.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
-        componentElement = componentElement.childAt(0) // skip the additional wrap <div> of the FocusZone
-      }
+      componentElement = componentElement.childAt(0) // skip through <FocusZone
     }
 
     // in that case 'topLevelChildElement' we've found so far is a wrapper's topmost child
@@ -481,7 +477,6 @@ export default (Component, options: Conformant = {}) => {
       const classes = component
         .find('[className]')
         .hostNodes()
-        .filterWhere(c => !c.prop(FOCUSZONE_WRAP_ATTRIBUTE)) // filter out FocusZone wrap <div>
         .at(wrapperComponent ? 1 : 0)
         .prop('className')
       return classes

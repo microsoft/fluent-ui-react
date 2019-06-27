@@ -4,17 +4,13 @@ import { mountWithProviderAndGetComponent } from 'test/utils'
 import { defaultBehavior } from 'src/lib/accessibility'
 import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/types'
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
-import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
 export const getRenderedAttribute = (renderedComponent, propName, partSelector) => {
   const target = partSelector
     ? renderedComponent.render().find(partSelector)
     : renderedComponent.render()
 
-  let node = target.first()
-  if (node.attr(FOCUSZONE_WRAP_ATTRIBUTE)) {
-    node = node.children().first() // traverse through FocusZone wrap <div>
-  }
+  const node = target.first()
   return node.prop(propName)
 }
 

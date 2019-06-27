@@ -16,6 +16,7 @@ import {
   getPreviousElement,
   isElementFocusZone,
   isElementFocusSubZone,
+  isElementIsolatedInFocusZone,
   isElementTabbable,
   getWindow,
   IS_FOCUSABLE_ATTRIBUTE,
@@ -342,6 +343,11 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
       if (target && isElementTabbable(target)) {
         this.setActiveElement(target, true)
+      }
+
+      if (isElementIsolatedInFocusZone(target)) {
+        // Stop here since we don't want to process isolated elements in focus zone.
+        break
       }
 
       if (isElementFocusZone(target)) {
@@ -902,6 +908,10 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
       if (this._activeElement && !element.contains(this._activeElement)) {
         this._activeElement = null
       }
+    }
+
+    if (isElementIsolatedInFocusZone(element)) {
+      return
     }
 
     // If active element changes state to disabled, set it to null.
