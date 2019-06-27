@@ -16,19 +16,13 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { inputBehavior } from '../../lib/accessibility'
+import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
-import { HtmlInputProps } from '../../lib/htmlPropsUtils'
 
 export interface InputSlotClassNames {
   input: string
-}
-
-type SupportedIntrinsicInputProps = {
-  [K in HtmlInputProps]?: K extends keyof JSX.IntrinsicElements['input']
-    ? JSX.IntrinsicElements['input'][K]
-    : any
 }
 
 export interface InputProps
@@ -84,7 +78,7 @@ export interface InputProps
 }
 
 export interface InputState {
-  value?: React.ReactText
+  value?: InputProps['value']
 }
 
 class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> {
