@@ -118,14 +118,16 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
         return ToolbarDivider.create(item, { overrideProps: itemOverridesFn })
       }
 
+      const toolbarItem = ToolbarItem.create(item, {
+        defaultProps: {
+          accessibility: toolbarRadioGroupItemBehavior,
+        },
+        overrideProps: itemOverridesFn,
+      })
+
       return (
-        <Ref innerRef={ref}>
-          {ToolbarItem.create(item, {
-            defaultProps: {
-              accessibility: toolbarRadioGroupItemBehavior,
-            },
-            overrideProps: itemOverridesFn,
-          })}
+        <Ref innerRef={ref} key={toolbarItem.key}>
+          {toolbarItem}
         </Ref>
       )
     })
