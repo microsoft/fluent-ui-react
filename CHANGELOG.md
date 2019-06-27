@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add ARIA attributes and keyboard navigation for `Menu` in `Toolbar` @sophieH29 ([#1553](https://github.com/stardust-ui/react/pull/1553))
+
 <!--------------------------------[ v0.34.0 ]------------------------------- -->
 ## [v0.34.0](https://github.com/stardust-ui/react/tree/v0.34.0) (2019-06-26)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.33.0...v0.34.0)
@@ -45,7 +48,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `disabled` prop for `Segment` component @Bugaa92 ([#1516](https://github.com/stardust-ui/react/pull/1516))
 - Add `qna` outlined icon to the Teams theme @lawrencecushman ([#1546](https://github.com/stardust-ui/react/pull/1546))
 - Add `menu` prop to `Toolbar` @miroslavstastny ([#1518](https://github.com/stardust-ui/react/pull/1518))
-- Add ARIA attributes and keyboard navigation for `Menu` in `Toolbar` @sophieH29 ([#1553](https://github.com/stardust-ui/react/pull/1553))
 
 ### Performance
 - Use single Fela renderer for LTR & RTL @layershifter ([#1459](https://github.com/stardust-ui/react/pull/1459))
