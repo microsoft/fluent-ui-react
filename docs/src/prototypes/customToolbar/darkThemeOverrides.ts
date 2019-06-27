@@ -6,7 +6,7 @@ export const darkThemeOverrides: ThemeInput = {
       ctBackground: 'rgba(41,40,40,.9)', // HUH: must be kept in sync with ToolbarItem.ctBackground
     }),
 
-    ToolbarItem: siteVars => ({
+    Toolbar: siteVars => ({
       ctColor: '#fff',
       ctBackground: 'rgba(41,40,40,.9)',
       ctPrimaryBackground: 'rgba(59,58,58,.95)',
@@ -26,21 +26,31 @@ export const darkThemeOverrides: ThemeInput = {
   },
 
   componentStyles: {
-    Box: {
+    Status: {
       root: ({ variables: v }: ComponentStyleFunctionParam) => ({
-        ...(v.uBarButtonWrapper && {
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          background: v.ctBackground,
+        ...(v.focusable && {
+          border: '2px solid transparent',
+          ':focus': {
+            outline: 'none',
+            ...(v.isFromKeyboard && {
+              borderColor: '#fff',
+            }),
+          },
         }),
-        ...(v.verticalPaddingSmall && {
-          paddingLeft: '.1rem',
-          paddingRight: '.1rem',
-        }),
-        ...(v.verticalPaddingMedium && {
-          paddingLeft: '1rem',
-          paddingRight: '1rem',
+      }),
+    },
+
+    Flex: {
+      root: ({ variables: v }: ComponentStyleFunctionParam) => ({
+        ...(v.focusable && {
+          border: '2px solid transparent',
+          padding: '0 .5rem',
+          ':focus-within': {
+            outline: 'none',
+            ...(v.isFromKeyboard && {
+              borderColor: '#fff',
+            }),
+          },
         }),
       }),
     },
@@ -55,6 +65,17 @@ export const darkThemeOverrides: ThemeInput = {
       }),
     },
 
+    ToolbarCustomItem: {
+      root: ({ variables: v }: ComponentStyleFunctionParam) => ({
+        ...(v.uBar && {
+          background: v.ctBackground,
+          ...(v.primary && {
+            background: v.ctPrimaryBackground,
+          }),
+        }),
+      }),
+    },
+
     ToolbarItem: {
       root: ({ props: p, variables: v }: ComponentStyleFunctionParam) => {
         return {
@@ -62,8 +83,6 @@ export const darkThemeOverrides: ThemeInput = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '4rem',
-            minWidth: '4rem',
             color: v.ctColor,
 
             background: v.ctBackground,

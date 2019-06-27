@@ -3,7 +3,6 @@ import { ToolbarItemProps, ToolbarItemState } from '../../../../components/Toolb
 import { ToolbarVariables } from './toolbarVariables'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 import { getColorScheme } from '../../colors'
-import { pxToRem } from '@stardust-ui/react'
 
 type ToolbarItemPropsAndState = ToolbarItemProps & ToolbarItemState
 

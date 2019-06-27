@@ -6,7 +6,7 @@ export const highContrastThemeOverrides: ThemeInput = {
       ctBackground: '#000',
     },
 
-    ToolbarItem: {
+    Toolbar: {
       ctColor: '#fff',
       ctBackground: '#000',
       ctPrimaryBackground: '#000',

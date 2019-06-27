@@ -1,18 +1,30 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { Button, Box, Text, Toolbar, ToolbarItemProps } from '@stardust-ui/react'
+import {
+  Button,
+  Flex,
+  Text,
+  Toolbar,
+  ToolbarItemProps,
+  ToolbarCustomItemProps,
+  Status,
+  ToolbarItemShorthandKinds,
+  isFromKeyboard,
+} from '@stardust-ui/react'
 
 // TODO:
 //  - [x] Remove CustomToolbarTimer
 //  - [x] Simplify CustomToolbar.tsx helper funcs, use stupid code
 //  - [x] Add more toolbar items
 //  - [x] Update inline styles/variables below to use TMP format (bool vars, styles elsewhere)
-//  - [ ] Add kind: 'custom', non-focusable container that renders any control
+//  - [x] Add kind: 'custom', non-focusable container that renders any control
 //  - [ ] Add all toolbar items (menu, etc)
 //  - [ ] Consider exporting IS_FOCUSABLE_ATTRIBUTE, it is also shown in our accessibility docs
 
 export interface CustomToolbarProps {
   layout?: 'standard' | 'desktop-share' | 'powerpoint-presenter'
+
+  isRecording?: boolean
 
   cameraActive?: boolean
   onCameraChange?: (state: boolean) => void
@@ -35,25 +47,97 @@ export interface CustomToolbarProps {
   onEndCallClick?: () => void
 }
 
-type CustomToolbarItem = (ToolbarItemProps & { as?: any; key: string }) | ((render: any) => any)
+type CustomToolbarItem =
+  | ((ToolbarItemProps | ToolbarCustomItemProps) & {
+      as?: any
+      key: string
+      kind?: ToolbarItemShorthandKinds
+    })
+  | ((render: any) => any)
 type CustomToolbarLayout = (props: CustomToolbarProps) => CustomToolbarItem[]
 
+const FocusableFlexBox = ({ variables = undefined, ...props }) => {
+  const [fromKeyboard, setFromKeyboard] = React.useState(false)
+  return (
+    <Flex
+      data-is-focusable
+      {...props}
+      variables={{ focusable: true, isFromKeyboard: fromKeyboard, ...variables }}
+      onFocus={(...args) => {
+        setFromKeyboard(isFromKeyboard())
+        _.invoke(props, 'onFocus', args)
+      }}
+    />
+  )
+}
+
+const FocusableStatus = ({ variables = undefined, ...props }) => {
+  const [fromKeyboard, setFromKeyboard] = React.useState(false)
+
+  return (
+    <Status
+      data-is-focusable
+      {...props}
+      variables={{ focusable: true, isFromKeyboard: fromKeyboard, ...variables }}
+      onFocus={(...args) => {
+        setFromKeyboard(isFromKeyboard())
+        _.invoke(props, 'onFocus', args)
+      }}
+    />
+  )
+}
+
 const commonLayout: CustomToolbarLayout = props => [
-  // recording indic
+  ...((props.isRecording
+    ? [
+        // Status has focus
+        {
+          key: 'recording1',
+          kind: 'custom',
+          fitted: 'horizontally',
+          content: <FocusableStatus state="error" title="Recording" styles={{ margin: '0 9px' }} />,
+          variables: { primary: true },
+        },
+        // Flexbox has focus
+        {
+          key: 'recording2',
+          kind: 'custom',
+          fitted: 'horizontally',
+          content: (
+            <FocusableFlexBox fill gap="gap.medium" vAlign="center">
+              <Status state="error" title="Recording" />
+            </FocusableFlexBox>
+          ),
+          variables: { primary: true },
+        },
+        // Magic - status has focus, Flexbox draws focus ring
+        {
+          key: 'recording3',
+          kind: 'custom',
+          fitted: 'horizontally',
+          content: (
+            <FocusableFlexBox fill gap="gap.medium" vAlign="center" data-is-focusable={false}>
+              <FocusableStatus
+                state="error"
+                title="Recording"
+                variables={{ isFromKeyboard: false }}
+              />
+            </FocusableFlexBox>
+          ),
+          variables: { primary: true },
+        },
+      ]
+    : []) as any),
   {
-    key: 'timer',
-    as: 'span',
-    children: '10:45',
-    'data-is-focusable': true,
-    role: undefined,
-    styles: {
-      userSelect: 'none',
-      cursor: 'default',
-      ':hover': {
-        /* TODO: reset styles */
-      },
-    },
+    key: 'timer-custom',
+    kind: 'custom',
     variables: { primary: true },
+    fitted: 'horizontally',
+    content: (
+      <FocusableFlexBox fill gap="gap.medium" vAlign="center">
+        10:45
+      </FocusableFlexBox>
+    ),
   },
 
   { key: 'timer-divider', kind: 'divider' },
@@ -143,10 +227,6 @@ const sidebarButtons: CustomToolbarLayout = props => [
 const layoutItems = {
   endCall: props => ({
     key: 'end-call',
-    kind: 'content',
-
-    content: <Button />,
-
     icon: {
       name: 'call-end',
       size: 'large',
@@ -169,29 +249,11 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
     ...commonLayout(props),
     ...sidebarButtons(props),
     { key: 'divider-sidebar', kind: 'divider' },
-    // HUH: double focus
-    // {
-    //   key: 'stop-sharing-button',
-    //   as: 'div',
-    //   children: <Button content="Stop Sharing" />,
-    //   // TODO: this is not allowed on the TMP side, make it like theirs
-    //   styles: { padding: '0 1rem' },
-    // },
-
-    // HUH: ugly, styles "leak" to other components
-    // TODO: use kind: 'content'
-    render =>
-      render(
-        {
-          content: 'Stop Sharing',
-          key: 'stop-sharing',
-        },
-        (_, toolbarItemProps) => (
-          <Box variables={{ uBarButtonWrapper: true, verticalPaddingMedium: true }}>
-            <Button {...toolbarItemProps} />
-          </Box>
-        ),
-      ),
+    {
+      key: 'stop-sharing',
+      kind: 'custom',
+      content: <Button content="Stop Sharing" />,
+    },
 
     layoutItems.endCall(props),
   ],
@@ -226,20 +288,15 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
       },
     },
 
-    // TODO: use kind: 'content'
-    render =>
-      render({}, () => (
-        <Box variables={{ uBarButtonWrapper: true, verticalPaddingSmall: true }}>
-          <Text size="small">{props.pptSlide}</Text>
-        </Box>
-      )),
+    {
+      key: 'ppt-slide-number',
+      kind: 'custom',
+      fitted: true,
+      content: <Text size="small">{props.pptSlide}</Text>,
+    },
 
     {
       key: 'ppt-next',
-      // TODO: items are padded: false by default.
-      //       kind: 'custom' should be padded: true by default.
-      //       when building timer, padded: horizontal _might_ suffice
-      // padded: false | true | 'horizontally' | 'vertically',
       icon: {
         name: 'chevron-down',
         rotate: -90,
@@ -260,7 +317,7 @@ const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
 
   return (
     <Toolbar
-      variables={{ dividerMargin: 0, borderRadius: 0, uBar: true }}
+      variables={{ dividerMargin: 0, borderRadius: 0, itemHeight: '4rem', uBar: true }}
       items={layouts[layout](props)}
     />
   )

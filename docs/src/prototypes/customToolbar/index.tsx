@@ -36,6 +36,10 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     initialValue: undefined,
   })
 
+  const [isRecording] = useBooleanKnob({
+    name: 'isRecording',
+    initialValue: false,
+  })
   const [cameraActive, onCameraChange] = useBooleanKnob({
     name: 'cameraActive',
     initialValue: true,
@@ -79,6 +83,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
           >
             <CustomToolbar
               layout={layout}
+              isRecording={isRecording}
               cameraActive={cameraActive}
               micActive={micActive}
               screenShareActive={screenShareActive}

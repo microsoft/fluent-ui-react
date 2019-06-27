@@ -18,16 +18,16 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { toolbarBehavior, toggleButtonBehavior } from '../../lib/accessibility'
 import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 
+import ToolbarCustomItem from './ToolbarCustomItem'
 import ToolbarDivider from './ToolbarDivider'
 import ToolbarItem from './ToolbarItem'
 import ToolbarMenu from './ToolbarMenu'
 import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem from './ToolbarMenuItem'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
-import Button from '../Button/Button'
-import { Box, Text } from '@stardust-ui/react'
+import { Box } from '@stardust-ui/react'
 
-export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group' | 'toggle'
+export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group' | 'toggle' | 'custom'
 
 export interface ToolbarProps
   extends UIComponentProps,
@@ -101,6 +101,8 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
             defaultProps: { accessibility: toggleButtonBehavior },
             overrideProps: itemOverridesFn,
           })
+        case 'custom':
+          return ToolbarCustomItem.create(item, { overrideProps: itemOverridesFn })
         default:
           return ToolbarItem.create(item, { overrideProps: itemOverridesFn })
       }
