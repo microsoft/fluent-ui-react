@@ -14,10 +14,9 @@ const { __DEV__, __PROD__ } = config.compiler_globals
 const webpackConfig: any = {
   name: 'client',
   target: 'web',
-  mode: __DEV__ ? 'development' : 'production',
+  mode: config.compiler_mode,
   entry: {
     app: paths.docsSrc('index'),
-    vendor: config.compiler_vendor,
   },
   output: {
     filename: `[name].[${config.compiler_hash_type}].js`,
@@ -77,17 +76,13 @@ const webpackConfig: any = {
         to: paths.docsDist('public'),
       },
     ]),
-    new webpack.DllReferencePlugin({
-      context: paths.base('node_modules'),
-      manifest: require(paths.base('dll/vendor-manifest.json')),
-    }),
     new HtmlWebpackPlugin({
       template: paths.docsSrc('index.ejs'),
       filename: 'index.html',
       hash: false,
       inject: 'body',
       minify: {
-        collapseWhitespace: true,
+        collapseWhitespace: __PROD__,
       },
       versions: {
         babelStandalone: require('@babel/standalone/package.json').version,
@@ -104,7 +99,13 @@ const webpackConfig: any = {
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/,
     }),
-  ],
+    __DEV__ &&
+      new webpack.ProgressPlugin({
+        entries: true,
+        modules: true,
+        modulesCount: 500,
+      }),
+  ].filter(Boolean),
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
     alias: {
@@ -114,6 +115,18 @@ const webpackConfig: any = {
     },
     // Allows to avoid multiple inclusions of the same module
     modules: [paths.base('node_modules')],
+  },
+  optimization: {
+    // Automatically split vendor and commons
+    // https://twitter.com/wSokra/status/969633336732905474
+    // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
+    splitChunks: {
+      chunks: 'all',
+      name: false,
+    },
+    // Keep the runtime chunk separated to enable long term caching
+    // https://twitter.com/wSokra/status/969679223278505985
+    runtimeChunk: true,
   },
   performance: {
     hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
@@ -151,17 +164,15 @@ if (__PROD__) {
     }),
   )
 
-  webpackConfig.optimization = {
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          output: {
-            comments: false,
-          },
+  webpackConfig.optimization.minimizer = [
+    new TerserPlugin({
+      terserOptions: {
+        output: {
+          comments: false,
         },
-      }),
-    ],
-  }
+      },
+    }),
+  ]
 }
 
 export default webpackConfig

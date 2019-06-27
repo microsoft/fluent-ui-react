@@ -165,7 +165,7 @@ task(
       'build:docs:toc',
       series('clean:docs', parallel('build:docs:json', 'build:docs:html', 'build:docs:images')),
     ),
-    'build:docs:webpack',
+    // 'build:docs:webpack',
   ),
 )
 
@@ -187,20 +187,25 @@ task('serve:docs', async () => {
   const webpackConfig = require('../../webpack.config').default
   const compiler = webpack(webpackConfig)
 
-  server = await serve(paths.docsDist(), config.server_host, config.server_port, app =>
-    app
-      .use(
-        WebpackDevMiddleware(compiler, {
-          publicPath: webpackConfig.output.publicPath,
-          contentBase: paths.docsSrc(),
-          hot: true,
-          quiet: false,
-          noInfo: true, // must be quite for hot middleware to show overlay
-          lazy: false,
-          stats: config.compiler_stats,
-        }),
-      )
-      .use(WebpackHotMiddleware(compiler)),
+  server = await serve(
+    paths.docsDist(),
+    config.server_host,
+    config.server_port,
+    app =>
+      app
+        .use(
+          WebpackDevMiddleware(compiler, {
+            publicPath: webpackConfig.output.publicPath,
+            contentBase: paths.docsSrc(),
+            hot: true,
+            quiet: false,
+            noInfo: true, // must be quite for hot middleware to show overlay
+            lazy: false,
+            stats: config.compiler_stats,
+          }),
+        )
+        .use(WebpackHotMiddleware(compiler)),
+    true,
   )
 })
 
