@@ -20,6 +20,7 @@ import { getRelativePathToSourceFile } from '../plugins/util'
 import webpackPlugin from '../plugins/gulp-webpack'
 import { Server } from 'http'
 import serve, { forceClose } from '../serve'
+import OpenBrowserPlugin from '../plugins/webpack-open-browser'
 
 const { paths } = config
 const g = require('gulp-load-plugins')()
@@ -159,15 +160,14 @@ task('build:docs:webpack', cb => {
 })
 
 task(
-  'build:docs',
-  series(
-    parallel(
-      'build:docs:toc',
-      series('clean:docs', parallel('build:docs:json', 'build:docs:html', 'build:docs:images')),
-    ),
-    // 'build:docs:webpack',
+  'build:docs:assets',
+  parallel(
+    'build:docs:toc',
+    series('clean:docs', parallel('build:docs:json', 'build:docs:html', 'build:docs:images')),
   ),
 )
+
+task('build:docs', series('build:docs:assets', 'build:docs:webpack'))
 
 // ----------------------------------------
 // Deploy
@@ -185,27 +185,29 @@ task('deploy:docs', cb => {
 let server: Server
 task('serve:docs', async () => {
   const webpackConfig = require('../../webpack.config').default
+
+  webpackConfig.plugins.push(
+    new OpenBrowserPlugin({
+      host: config.server_host,
+      port: config.server_port,
+    }),
+  )
   const compiler = webpack(webpackConfig)
 
-  server = await serve(
-    paths.docsDist(),
-    config.server_host,
-    config.server_port,
-    app =>
-      app
-        .use(
-          WebpackDevMiddleware(compiler, {
-            publicPath: webpackConfig.output.publicPath,
-            contentBase: paths.docsSrc(),
-            hot: true,
-            quiet: false,
-            noInfo: true, // must be quite for hot middleware to show overlay
-            lazy: false,
-            stats: config.compiler_stats,
-          }),
-        )
-        .use(WebpackHotMiddleware(compiler)),
-    true,
+  server = await serve(paths.docsDist(), config.server_host, config.server_port, app =>
+    app
+      .use(
+        WebpackDevMiddleware(compiler, {
+          publicPath: webpackConfig.output.publicPath,
+          contentBase: paths.docsSrc(),
+          hot: true,
+          quiet: false,
+          noInfo: true, // must be quite for hot middleware to show overlay
+          lazy: false,
+          stats: config.compiler_stats,
+        }),
+      )
+      .use(WebpackHotMiddleware(compiler)),
   )
 })
 
@@ -253,4 +255,4 @@ task('watch:docs', cb => {
 // Default
 // ----------------------------------------
 
-task('docs', series('build:docs', 'serve:docs', 'watch:docs'))
+task('docs', series('build:docs:assets', 'serve:docs', 'watch:docs'))

@@ -1,5 +1,4 @@
 import express from 'express'
-import open from 'open'
 
 import historyApiFallback from 'connect-history-api-fallback'
 import { Server } from 'http'
@@ -15,7 +14,6 @@ const serve = (
   host: string,
   port: number,
   configureMiddleware: (express: Express) => Express = app => app,
-  openBrowser?: boolean,
 ): Promise<Server> => {
   return new Promise((resolve, reject) => {
     const server = configureMiddleware(
@@ -30,11 +28,7 @@ const serve = (
         if (err) {
           reject(err)
         } else {
-          const url = `http://${host}:${port}`
-
-          log(colors.yellow(`Server running at ${url}`))
-          if (openBrowser) open(url).catch(() => {})
-
+          log(colors.yellow(`Server running at http://${host}:${port}`))
           resolve(server)
         }
       })
