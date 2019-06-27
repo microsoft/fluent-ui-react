@@ -25,7 +25,6 @@ import ToolbarMenu from './ToolbarMenu'
 import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem from './ToolbarMenuItem'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
-import { Box } from '@stardust-ui/react'
 
 export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group' | 'toggle' | 'custom'
 
@@ -77,21 +76,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
       const kind = _.get(item, 'kind', 'item')
 
       switch (kind) {
-        // TODO: return the "ugly" slot code that is non-focusable and renders the content "inside" the item
-        case 'content':
-          return (
-            <Box
-              styles={{
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                background: 'grey',
-              }}
-              variables={{ uBarButtonWrapper: true, verticalPaddingSmall: true }}
-            >
-              {item.content}
-            </Box>
-          )
         case 'divider':
           return ToolbarDivider.create(item, { overrideProps: itemOverridesFn })
         case 'group':

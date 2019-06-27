@@ -58,6 +58,18 @@ type CustomToolbarLayout = (props: CustomToolbarProps) => CustomToolbarItem[]
 
 const FocusableFlexBox = ({ variables = undefined, ...props }) => {
   const [fromKeyboard, setFromKeyboard] = React.useState(false)
+
+  // TODO: this is possible with investigation see index.ejs
+  // return (
+  //   <div
+  //     tabIndex={0}
+  //     data-is-focusable
+  //     {...props}
+  //   />
+  //
+  // )
+
+  // TODO: conceal in a focusable component or wrapper
   return (
     <Flex
       data-is-focusable
@@ -91,13 +103,15 @@ const commonLayout: CustomToolbarLayout = props => [
   ...((props.isRecording
     ? [
         // Status has focus
-        {
-          key: 'recording1',
-          kind: 'custom',
-          fitted: 'horizontally',
-          content: <FocusableStatus state="error" title="Recording" styles={{ margin: '0 9px' }} />,
-          variables: { primary: true },
-        },
+        // {
+        //   key: 'recording1',
+        //   kind: 'custom',
+        //   fitted: 'horizontally',
+        //   content: <FocusableStatus state="error" title="Recording" styles={{ margin: '0 9px' }} />,
+        //   variables: { primary: true },
+        // },
+
+        // TODO: Winner. Meets visual parity with Teams and code is most sane.  Confirm acc with Juraj.
         // Flexbox has focus
         {
           key: 'recording2',
@@ -110,22 +124,23 @@ const commonLayout: CustomToolbarLayout = props => [
           ),
           variables: { primary: true },
         },
-        // Magic - status has focus, Flexbox draws focus ring
-        {
-          key: 'recording3',
-          kind: 'custom',
-          fitted: 'horizontally',
-          content: (
-            <FocusableFlexBox fill gap="gap.medium" vAlign="center" data-is-focusable={false}>
-              <FocusableStatus
-                state="error"
-                title="Recording"
-                variables={{ isFromKeyboard: false }}
-              />
-            </FocusableFlexBox>
-          ),
-          variables: { primary: true },
-        },
+
+        // // Magic - status has focus, Flexbox draws focus ring
+        // {
+        //   key: 'recording3',
+        //   kind: 'custom',
+        //   fitted: 'horizontally',
+        //   content: (
+        //     <FocusableFlexBox fill gap="gap.medium" vAlign="center" data-is-focusable={false}>
+        //       <FocusableStatus
+        //         state="error"
+        //         title="Recording"
+        //         variables={{ isFromKeyboard: false }}
+        //       />
+        //     </FocusableFlexBox>
+        //   ),
+        //   variables: { primary: true },
+        // },
       ]
     : []) as any),
   {
