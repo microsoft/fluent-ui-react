@@ -14,6 +14,7 @@ import {
   createShorthandFactory,
   childrenExist,
   isFromKeyboard,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -102,6 +103,13 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, Tool
     wrapper: { as: 'li' },
   }
 
+  actionHandlers = {
+    performClick: event => {
+      event.preventDefault()
+      this.handleClick(event)
+    },
+  }
+
   renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, content, disabled, icon, wrapper } = this.props
 
@@ -111,6 +119,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, Tool
       <ElementType
         {...accessibility.attributes.root}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         disabled={disabled}
         className={classes.root}
         onBlur={this.handleBlur}

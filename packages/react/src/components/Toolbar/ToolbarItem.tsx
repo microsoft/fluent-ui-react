@@ -186,6 +186,9 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
                   _.invoke(predefinedProps, 'onItemClick', e, itemProps)
                   // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
                   this.trySetMenuOpen(false, e)
+                  if (this.itemRef) {
+                    this.itemRef.current.focus()
+                  }
                 },
                 variables: mergeComponentVariables(variables, predefinedProps.variables),
               }),
@@ -207,8 +210,8 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     const renderedItem = (
       <ElementType
         {...accessibility.attributes.root}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         disabled={disabled}
         className={classes.root}
         onBlur={this.handleBlur}
