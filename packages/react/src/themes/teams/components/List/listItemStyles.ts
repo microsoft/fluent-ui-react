@@ -86,8 +86,8 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
     fontSize: v.headerFontSize,
     lineHeight: v.headerLineHeight,
     ...(p.truncateHeader && truncateStyle),
-    ...(p.content && {
-      marginBottom: pxToRem(10),
+    ...((!p.content || p.headerMedia) && {
+      marginRight: pxToRem(8),
     }),
   }),
   headerMedia: ({ variables: v }): ICSSInJSStyle => ({

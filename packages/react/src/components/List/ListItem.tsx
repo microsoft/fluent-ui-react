@@ -206,8 +206,8 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
 
         <Flex.Item grow>
           <Flex className={ListItem.slotClassNames.main} column={hasBothParts} styles={styles.main}>
-            {headerPart}
-            {contentPart}
+            <Flex>{headerPart}</Flex>
+            <Flex>{contentPart}</Flex>
           </Flex>
         </Flex.Item>
         {endMediaElement}
