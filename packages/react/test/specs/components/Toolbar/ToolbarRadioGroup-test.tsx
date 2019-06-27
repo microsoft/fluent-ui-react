@@ -5,24 +5,6 @@ import { ReactWrapper } from 'enzyme'
 import { mountWithProvider } from 'test/utils'
 import * as React from 'react'
 
-const getShorthandItems = (props?: { disabledItem?: number; focusedItem?: number }) => [
-  {
-    key: 'test-key1',
-    tabIndex: props && props.focusedItem === 0 ? 0 : -1,
-    disabled: props && props.disabledItem === 0,
-  },
-  {
-    key: 'test-key2',
-    tabIndex: props && props.focusedItem === 1 ? 0 : -1,
-    disabled: props && props.disabledItem === 1,
-  },
-  {
-    key: 'test-key3',
-    tabIndex: props && props.focusedItem === 2 ? 0 : -1,
-    disabled: props && props.disabledItem === 2,
-  },
-]
-
 describe('ToolbarRadioGroup', () => {
   isConformant(ToolbarRadioGroup)
 
@@ -95,6 +77,25 @@ describe('ToolbarRadioGroup', () => {
   describe('allows cycling between items using UP/DOWN arrow keys', () => {
     const arrowUp = 38
     const arrowDown = 40
+
+    const getShorthandItems = (props?: { disabledItem?: number; focusedItem?: number }) => [
+      {
+        key: 'test-key1',
+        tabIndex: props && props.focusedItem === 0 ? 0 : -1,
+        disabled: props && props.disabledItem === 0,
+      },
+      {
+        key: 'test-key2',
+        tabIndex: props && props.focusedItem === 1 ? 0 : -1,
+        disabled: props && props.disabledItem === 1,
+      },
+      {
+        key: 'test-key3',
+        tabIndex: props && props.focusedItem === 2 ? 0 : -1,
+        disabled: props && props.disabledItem === 2,
+      },
+    ]
+
     const testKeyDown = (testName, items, keyCode, expectedFocusedIndex) => {
       it(`keyDown test - ${testName}`, () => {
         const radioButtons = mountWithProvider(<ToolbarRadioGroup items={items} />).find('button')
