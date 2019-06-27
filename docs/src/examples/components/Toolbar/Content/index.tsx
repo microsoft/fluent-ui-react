@@ -25,6 +25,11 @@ const Content = () => (
       description="Toolbar items can be grouped into radio group. Up/Down arrow keys can be used to cycle between radio items. Only one of the radio items can be selected at a time, should be implemented additionally."
       examplePath="components/Toolbar/Content/ToolbarExampleRadioGroup"
     />
+    <ComponentExample
+      title="Toolbar can contain custom content"
+      description="Toolbar item can contain custom content."
+      examplePath="components/Toolbar/Content/ToolbarExampleCustomContent"
+    />
   </ExampleSection>
 )
 
