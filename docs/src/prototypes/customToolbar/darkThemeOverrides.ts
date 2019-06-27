@@ -33,7 +33,7 @@ export const darkThemeOverrides: ThemeInput = {
           ':focus': {
             outline: 'none',
             ...(v.isFromKeyboard && {
-              borderColor: '#fff',
+              borderColor: '#fff', // FIXME: variables, HC theme
             }),
           },
         }),
@@ -48,7 +48,7 @@ export const darkThemeOverrides: ThemeInput = {
           ':focus-within': {
             outline: 'none',
             ...(v.isFromKeyboard && {
-              borderColor: '#fff',
+              borderColor: '#fff', // FIXME: variables, HC theme
             }),
           },
         }),

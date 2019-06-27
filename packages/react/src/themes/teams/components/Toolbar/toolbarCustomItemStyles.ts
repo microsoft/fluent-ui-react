@@ -20,7 +20,7 @@ const toolbarCustomItemStyles: ComponentSlotStylesInput<
       justifyContent: 'center',
       ...(fitted !== true &&
         fitted !== 'horizontally' && {
-          paddingLeft: '20px',
+          paddingLeft: '20px', // FIXME: variables
           paddingRight: '20px',
         }),
       ...(fitted !== true &&
