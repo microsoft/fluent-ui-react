@@ -99,6 +99,9 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
     fontSize: v.contentFontSize,
     lineHeight: v.contentLineHeight,
     ...(p.truncateContent && truncateStyle),
+    ...((!p.header || p.contentMedia) && {
+      marginRight: pxToRem(8),
+    }),
   }),
   contentMedia: ({ props: p, variables: v }) => ({
     fontSize: v.contentMediaFontSize,
