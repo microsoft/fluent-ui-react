@@ -1,4 +1,4 @@
-import open from 'open'
+import openBrowser from 'react-dev-utils/openBrowser'
 
 type OpenBrowserPluginOptions = {
   host: string
@@ -14,11 +14,11 @@ export default class OpenBrowserPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.done.tap('Hello World Plugin', () => {
+    compiler.hooks.done.tap('Open Browser Plugin', () => {
       if (!this.opened) {
         this.opened = true
 
-        open(`http://${this.options.host}:${this.options.port}`).catch(() => {})
+        openBrowser(`http://${this.options.host}:${this.options.port}`)
       }
     })
   }

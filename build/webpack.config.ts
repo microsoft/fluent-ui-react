@@ -5,6 +5,7 @@ import _ from 'lodash'
 import webpack from 'webpack'
 import TerserPlugin from 'terser-webpack-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 import config from '../config'
 
@@ -19,7 +20,8 @@ const webpackConfig: any = {
     app: paths.docsSrc('index'),
   },
   output: {
-    filename: `[name].[${config.compiler_hash_type}].js`,
+    // https://webpack.js.org/guides/build-performance/#avoid-production-specific-tooling
+    filename: __DEV__ ? '[name].js' : `[name].[${config.compiler_hash_type}].js`,
     path: config.compiler_output_path,
     pathinfo: true,
     publicPath: config.compiler_public_path,
@@ -53,7 +55,8 @@ const webpackConfig: any = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          cacheDirectory: true,
+          cacheCompression: false,
+          cacheDirectory: __DEV__,
           plugins: [__DEV__ && 'react-hot-loader/babel'].filter(Boolean),
         },
       },
@@ -128,9 +131,7 @@ const webpackConfig: any = {
     // https://twitter.com/wSokra/status/969679223278505985
     runtimeChunk: true,
   },
-  performance: {
-    hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
-  },
+  performance: false,
 }
 
 // ------------------------------------
@@ -173,6 +174,10 @@ if (__PROD__) {
       },
     }),
   ]
+}
+
+if (process.env.ANALYZE) {
+  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
 
 export default webpackConfig
