@@ -28,7 +28,7 @@ import {
 } from '../../types'
 import { Popper } from '../../lib/positioner'
 import { Accessibility } from '../../lib/accessibility/types'
-import { buttonBehavior, popupFocusTrapBehavior } from '../../lib/accessibility'
+import { toolbarItemBehavior, popupFocusTrapBehavior } from '../../lib/accessibility'
 
 import ToolbarMenu from './ToolbarMenu'
 import Icon from '../Icon/Icon'
@@ -42,7 +42,7 @@ export interface ToolbarItemProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default buttonBehavior
+   * @default toolbarItemBehavior
    */
   accessibility?: Accessibility
 
@@ -148,7 +148,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
 
   static defaultProps = {
     as: 'button',
-    accessibility: buttonBehavior,
+    accessibility: toolbarItemBehavior as Accessibility,
     wrapper: {},
   }
 
@@ -156,6 +156,19 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     performClick: event => {
       event.preventDefault()
       this.handleClick(event)
+    },
+    closeMenuAndFocusTrigger: event => {
+      if (!this.props.menuOpen) {
+        return
+      }
+
+      this.trySetMenuOpen(false, event)
+      if (this.itemRef) {
+        this.itemRef.current.focus()
+      }
+    },
+    doNotNavigateNextToolbarItem: event => {
+      event.stopPropagation()
     },
   }
 
@@ -173,6 +186,9 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
                   _.invoke(predefinedProps, 'onItemClick', e, itemProps)
                   // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
                   this.trySetMenuOpen(false, e)
+                  if (this.itemRef) {
+                    this.itemRef.current.focus()
+                  }
                 },
                 variables: mergeComponentVariables(variables, predefinedProps.variables),
               }),
@@ -194,8 +210,8 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     const renderedItem = (
       <ElementType
         {...accessibility.attributes.root}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         disabled={disabled}
         className={classes.root}
         onBlur={this.handleBlur}
@@ -227,6 +243,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
           defaultProps: {
             className: cx(ToolbarItem.slotClassNames.wrapper, classes.wrapper),
             ...accessibility.attributes.wrapper,
+            ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
           },
           overrideProps: () => ({
             children: (
