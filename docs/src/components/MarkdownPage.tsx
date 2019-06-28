@@ -22,14 +22,17 @@ type MarkdownPageProps = {
 
 const components = {
   a: ({ children, href }) => link(children, href),
-  code: ({ className, children, fitted, label }) => (
-    <CodeSnippet
-      fitted={fitted}
-      mode={className.replace('language-', '')}
-      label={label}
-      value={children}
-    />
-  ),
+  code: ({ className, children, fitted, label }) =>
+    className ? (
+      <CodeSnippet
+        fitted={fitted}
+        mode={className.replace('language-', '')}
+        label={label}
+        value={children}
+      />
+    ) : (
+      <code>{children}</code>
+    ),
   h1: ({ children }) => <Header as="h1" content={children} />,
   h2: ({ children }) => <Header as="h2" content={children} />,
   h3: ({ children }) => <Header as="h3" content={children} />,

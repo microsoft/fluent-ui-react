@@ -1,3 +1,5 @@
+import { Alert } from '@stardust-ui/react'
+
 export const meta = {
   title: 'Composition',
   previous: { name: 'Introduction', url: '/' },
@@ -17,6 +19,14 @@ Stardust UI provides a way to compose React components through the `as` prop. It
   <Header as="h2" />
 </>
 ```
+
+<Alert warning>
+  <p>
+    Using <code>as</code> prop can change the behavior of the component. If this prop is used it is
+    the responsibility of the consumer to verify accessibility and styling aspects of the component
+    and handle them correctly.
+  </p>
+</Alert>
 
 ## Unhandled props & DOM attributes
 
