@@ -48,11 +48,16 @@
     "**/*.{js,json}": [
       "prettier --write",
       "git add"
+    ],
+    "**/*.mdx": [
+      "prettier --parser mdx --write",
+      "git add"
     ]
   },
   "devDependencies": {
     "@babel/register": "^7.4.4",
     "@babel/standalone": "^7.3.2",
+    "@mdx-js/loader": "^1.0.21",
     "@types/babel__traverse": "^7.0.4",
     "@types/color": "^3.0.0",
     "@types/enzyme": "^3.9.3",
