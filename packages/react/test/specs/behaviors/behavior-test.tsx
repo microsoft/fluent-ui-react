@@ -45,6 +45,9 @@ import {
   chatBehavior,
   chatMessageBehavior,
   toolbarBehavior,
+  toolbarItemBehavior,
+  toolbarRadioGroupBehavior,
+  toolbarRadioGroupItemBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -94,5 +97,8 @@ testHelper.addBehavior('accordionContentBehavior', accordionContentBehavior)
 testHelper.addBehavior('chatBehavior', chatBehavior)
 testHelper.addBehavior('chatMessageBehavior', chatMessageBehavior)
 testHelper.addBehavior('toolbarBehavior', toolbarBehavior)
+testHelper.addBehavior('toolbarItemBehavior', toolbarItemBehavior)
+testHelper.addBehavior('toolbarRadioGroupBehavior', toolbarRadioGroupBehavior)
+testHelper.addBehavior('toolbarRadioGroupItemBehavior', toolbarRadioGroupItemBehavior)
 
 testHelper.run(behaviorMenuItems)
