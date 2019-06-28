@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix styles for `Popup` in Teams theme [redlines] @codepretty ([#1561](https://github.com/stardust-ui/react/pull/1561))
+
 <!--------------------------------[ v0.34.0 ]------------------------------- -->
 ## [v0.34.0](https://github.com/stardust-ui/react/tree/v0.34.0) (2019-06-26)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.33.0...v0.34.0)
