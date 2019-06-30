@@ -9,7 +9,9 @@ export interface GridPickerProps {
   gridColumns?: string | number
   title?: string
   role?: string
-  asMenu?: boolean
+  orientation?: string
+  roleDescription?: string
+  image?: boolean
 }
 
 const gridStyles = {
@@ -25,7 +27,7 @@ class GridImagePicker extends React.Component<GridPickerProps> {
   }
 
   render() {
-    const { gridColumns, title, role = 'list' } = this.props
+    const { gridColumns, title, role = 'list', orientation, roleDescription } = this.props
     const titleId = title.replace(/\s/g, '')
 
     return (
@@ -41,16 +43,16 @@ class GridImagePicker extends React.Component<GridPickerProps> {
           columns={gridColumns}
           style={gridColumns === 1 ? { ...gridStyles, width: '200px' } : gridStyles}
           content={this.renderGridItems()}
-          aria-orientation="horizontal"
+          aria-orientation={orientation}
+          aria-roledescription={roleDescription}
         />
       </Box>
     )
   }
 
   renderGridItems() {
-    return _.map(this.props.items, item => (
-      <GridImagePickerItem {...item} asMenuItem={this.props.asMenu} />
-    ))
+    const { items, image } = this.props
+    return _.map(items, item => <GridImagePickerItem {...item} image={image} />)
   }
 }
 

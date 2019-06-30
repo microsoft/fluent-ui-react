@@ -15,10 +15,26 @@ export const powerPoint = [
   'CSUN 2019 - recap.pptx',
   'Meetings LT review 5-2-2019.pptx',
   'Microsoft Teams CSUN 2019.pptx',
-  'Storytelling Womens Day.pptx',
-  'People LT Review Feb 2019.pptx',
-  'Data and Analytics Team LT Review (March 2019).pptx',
-  'Customer Review Feb 2019.pptx',
+]
+
+export const picker = [
+  'ade',
+  'chris',
+  'christian',
+  'daniel',
+  'elliot',
+  'helen',
+  'jenny',
+  'joe',
+  'justen',
+  'laura',
+  'matt',
+  'nan',
+  'nom',
+  'stevie',
+  'steve',
+  'tom',
+  'veronika',
 ]
 
 export const shareText = 'Share '
@@ -29,17 +45,19 @@ export const getItemsData = (
   ariaLabelPart: string,
   icon: string,
   role?: string,
+  roleDescription?: string,
 ) => {
   return _.map(fileNames, fileName => {
     const props = {
       title: `${ariaLabelPart}${fileName}`,
       onClick: e => {
-        console.log(`Selected item is ...`)
+        alert(`Selected ${fileName}`)
       },
       fileName,
       icon,
       backgroundColor: icon === 'star' ? '#f36' : undefined,
       role,
+      roleDescription,
     } as GridPickerItemProps
 
     return props

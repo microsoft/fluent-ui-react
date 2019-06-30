@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Text } from '@stardust-ui/react'
+import { Box, Flex, Icon, Text, Image } from '@stardust-ui/react'
 import * as keyboardKey from 'keyboard-key'
 
 import * as React from 'react'
@@ -10,12 +10,18 @@ export interface GridPickerItemProps {
   fileName?: string
   backgroundColor?: string
   role?: string
-  asMenuItem?: boolean
+  roleDescription?: string
+  image?: boolean
 }
 
 const imageButtonStyles = {
   width: '145px',
   height: '100px',
+}
+
+const iconOnlyButtonStyles = {
+  width: '50px',
+  height: '50px',
 }
 
 class GridImagePickerItem extends React.Component<GridPickerItemProps> {
@@ -27,45 +33,55 @@ class GridImagePickerItem extends React.Component<GridPickerItemProps> {
       icon,
       role = 'listitem',
       backgroundColor = '#252626',
+      roleDescription,
+      image = false,
     } = this.props
 
     const itemProps = {
       role,
-      style: imageButtonStyles,
+      style: image ? iconOnlyButtonStyles : imageButtonStyles,
       onClick,
+    }
+
+    const eventHandlers = {
+      onClick: () => {
+        alert(`${title} Clicked!`)
+      },
+      onKeyDown: event => {
+        const keycode = keyboardKey.getCode(event)
+        const isEnterOrSpace = keycode === keyboardKey.Enter || keycode === keyboardKey.Spacebar
+        if (isEnterOrSpace) {
+          event.preventDefault()
+          alert(`${title} Clicked!`)
+        }
+      },
     }
 
     return (
       <li
         {...itemProps}
+        {...eventHandlers}
         data-is-focusable={true}
-        onClick={() => {
-          alert('Item Clicked!')
-        }}
-        onKeyDown={event => {
-          const keycode = keyboardKey.getCode(event)
-          const isEnterOrSpace = keycode === keyboardKey.Enter || keycode === keyboardKey.Spacebar
-          if (isEnterOrSpace) {
-            event.preventDefault()
-            alert('Item Clicked!')
-          }
-        }}
-        aria-roledescription={'grid item'}
+        aria-roledescription={roleDescription}
         aria-label={title}
       >
-        <Flex column gap="gap.small">
-          <Box
-            styles={{
-              backgroundColor,
-              textAlign: 'center',
-            }}
-            content={<Icon name={icon} styles={{ padding: '20%', color: '#fff' }} />}
-          />
+        {image ? (
+          <Image alt={title} src={`public/images/avatar/large/${fileName}.jpg`} fluid />
+        ) : (
+          <Flex column gap="gap.small">
+            <Box
+              styles={{
+                backgroundColor,
+                textAlign: 'center',
+              }}
+              content={<Icon name={icon} styles={{ padding: '20%', color: '#fff' }} />}
+            />
 
-          <Text size="small" aria-hidden="true">
-            {fileName}
-          </Text>
-        </Flex>
+            <Text size="small" aria-hidden="true">
+              {fileName}
+            </Text>
+          </Flex>
+        )}
       </li>
     )
   }
