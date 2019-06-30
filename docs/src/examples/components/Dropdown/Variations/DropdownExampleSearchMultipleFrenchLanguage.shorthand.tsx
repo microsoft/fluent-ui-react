@@ -47,7 +47,7 @@ const getA11yStatusMessage = ({
   if (resultCount !== previousResultCount) {
     return `${resultCount} résultat${
       resultCount === 1 ? ' est disponible' : 's sont disponibles'
-    }, touches fléchées ascendante et descendante pour naviguer. Appuyez sur la touche Entrée pour sélectionner.`
+    }, touches fléchées ascendante et descendante pour naviguer. Appuyez sur la touche Entrée pour sélectionner. Appuyez sur les touches fléchées gauche et droite pour parcourir les options sélectionnées.`
   }
   return ''
 }

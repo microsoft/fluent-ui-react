@@ -12,6 +12,8 @@ import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
 import callParking from './callParking'
+import callControlRelease from './callControlRelease'
+import callControlRequest from './callControlRequest'
 import callControlPresentNew from './callControlPresentNew'
 import callControlStopPresentingNew from './callControlStopPresentingNew'
 import callControlShare from './callControlShare'
@@ -52,6 +54,7 @@ import emoji from './emoji'
 import error from './error'
 import exclamationCircle from './exclamationCircle'
 import eye from './eye'
+import eyeFriendlier from './eyeFriendlier'
 import eyeSlash from './eyeSlash'
 import filesExcel from './filesExcel'
 import filesExcelBrand from './filesExcelBrand'
@@ -79,12 +82,14 @@ import markAsUnread from './markAsUnread'
 import meetingNew from './meetingNew'
 import mention from './mention'
 import menu from './menu'
+import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
 import userPhone from './userPhone'
 import numberList from './numberList'
 import outdent from './outdent'
+import openOutside from './openOutside'
 import pause from './pause'
 import pauseThick from './pauseThick'
 import paperclip from './paperclip'
@@ -92,6 +97,9 @@ import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
 import phoneArrow from './phoneArrow'
 import play from './play'
+import poll from './poll'
+import presenceAvailable from './presenceAvailable'
+import presenceStroke from './presenceStroke'
 import qna from './qna'
 import quote from './quote'
 import readAloud from './read-aloud'
@@ -114,6 +122,7 @@ import tableAdd from './tableAdd'
 import tableDelete from './tableDelete'
 import teamCreate from './teamCreate'
 import teams from './teams'
+import toDoList from './toDoList'
 import translation from './translation'
 import trashCan from './trashCan'
 import triangleDown from './triangleDown'
@@ -145,6 +154,8 @@ export default {
   'call-parking': callParking,
   'call-video': callVideo,
   'call-video-off': callVideoOff,
+  'call-control-release': callControlRelease,
+  'call-control-request': callControlRequest,
   'call-control-close-tray': callControlCloseTray,
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
@@ -182,6 +193,7 @@ export default {
   error,
   'exclamation-circle': exclamationCircle,
   eye,
+  'eye-friendlier': eyeFriendlier,
   'eye-slash': eyeSlash,
   format,
   'font-color': fontColor,
@@ -201,11 +213,13 @@ export default {
   'meeting-new': meetingNew,
   mention,
   menu,
+  'message-seen': messageSeen,
   mic,
   'mic-off': micOff,
   more,
   'user-phone': userPhone,
   'number-list': numberList,
+  'open-outside': openOutside,
   outdent,
   paperclip,
   'participant-add': addParticipant,
@@ -215,6 +229,9 @@ export default {
   'phone-clock': phoneClock,
   'phone-arrow': phoneArrow,
   play,
+  poll,
+  'presence-available': presenceAvailable,
+  'presence-stroke': presenceStroke,
   qna,
   quote,
   'read-aloud': readAloud,
@@ -234,6 +251,7 @@ export default {
   'table-add': tableAdd,
   'table-delete': tableDelete,
   teams,
+  'to-do-list': toDoList,
   translation,
   'trash-can': trashCan,
   'triangle-down': triangleDown,

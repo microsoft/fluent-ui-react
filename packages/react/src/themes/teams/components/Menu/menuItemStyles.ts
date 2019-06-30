@@ -325,11 +325,14 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       }),
 
       // active styles
-      ...(active &&
-        (primary
-          ? {
-              ...(iconOnly && { color: 'inherit' }),
+      ...(active && {
+        ...(iconOnly && {
+          color: v.iconOnlyColorActive,
+          ...getIconFillOrOutlineStyles({ outline: false }),
+        }),
 
+        ...(primary
+          ? {
               ...(underlined && {
                 color: colors.borderActive,
                 ...underlinedItem(v.borderColorActive || colors.borderActive),
@@ -338,7 +341,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           : underlined && {
               fontWeight: 700,
               ...underlinedItem(v.colorActive),
-            })),
+            }),
+      }),
 
       // focus styles
       ...(isFromKeyboard && {
@@ -398,12 +402,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  menu: ({ props: p }) => ({
-    zIndex: '1000',
-    position: 'absolute',
-    top: p.vertical ? '0' : '100%',
-    left: p.vertical ? '100%' : '0',
-  }),
+  menu: () => ({ zIndex: '1000' }),
 
   indicator: () => ({
     position: 'relative',

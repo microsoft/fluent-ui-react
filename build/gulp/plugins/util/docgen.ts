@@ -1,6 +1,6 @@
-import * as fs from 'fs'
-import * as path from 'path'
-import * as ts from 'typescript'
+import fs from 'fs'
+import path from 'path'
+import ts from 'typescript'
 
 /**
  * THIS MODULE is largely based on the parser's logic

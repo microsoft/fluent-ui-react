@@ -1,7 +1,7 @@
 module.exports = {
-  extends: ['airbnb', 'plugin:prettier/recommended'],
+  extends: ['airbnb', 'prettier'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'jest', 'import', 'prettier', 'react-hooks'],
+  plugins: ['@typescript-eslint', 'jest', 'import', 'react-hooks', '@stardust-ui'],
   env: {
     browser: true,
     'jest/globals': true,
@@ -12,7 +12,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
 
     'import/no-unresolved': 'off',
-    'prettier/prettier': 'error',
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.tsx'] }],
     'no-shadow': 'off', // https://github.com/stardust-ui/react/pull/1261#pullrequestreview-231005092
     'no-unused-vars': 'off', // we use @typescript-eslint/no-unused-vars instead
@@ -37,6 +36,7 @@ module.exports = {
     'react/button-has-type': 'off',
     'react/destructuring-assignment': 'off',
     'react/default-props-match-prop-types': 'off',
+    'react/forbid-foreign-prop-types': 'off',
     'react/jsx-curly-brace-presence': 'off',
     'react/jsx-boolean-value': 'off',
     'react/jsx-no-bind': 'off',
@@ -107,6 +107,12 @@ module.exports = {
       files: '**/test/**/*.{ts,tsx}',
       rules: {
         'import/no-extraneous-dependencies': 'off',
+      },
+    },
+    {
+      files: '**/*.tsx',
+      rules: {
+        '@stardust-ui/no-visibility-modifiers': 'error',
       },
     },
   ],

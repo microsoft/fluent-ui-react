@@ -4,12 +4,15 @@ import { ThemeProvider } from 'react-fela'
 import { felaRenderer } from 'src/lib'
 import { ThemeInput } from 'src/themes/types'
 
-export const withProvider = (node: React.ReactElement<any>, theme?: ThemeInput) => (
-  <ThemeProvider theme={theme || { renderer: felaRenderer }}>{node}</ThemeProvider>
+export const EmptyThemeProvider: React.FunctionComponent = ({ children }) => (
+  <ThemeProvider theme={{ renderer: felaRenderer }}>{children}</ThemeProvider>
 )
 
 export const mountWithProvider = (node, options?, theme?: ThemeInput) => {
-  return mount(withProvider(node, theme), options)
+  return mount(node, {
+    wrappingComponent: EmptyThemeProvider,
+    ...options,
+  })
 }
 
 export const mountWithProviderAndGetComponent = (

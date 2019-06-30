@@ -15,13 +15,33 @@ import {
 } from '../../lib'
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
 import Header from '../Header/Header'
 import Portal from '../Portal/Portal'
 import Flex from '../Flex/Flex'
+
+const getOrGenerateIdFromShorthand = (
+  slotName: string,
+  value: ShorthandValue,
+  currentValue?: string,
+): string | undefined => {
+  if (_.isNil(value)) {
+    return undefined
+  }
+
+  if (React.isValidElement(value)) {
+    return (value as React.ReactElement<{ id?: string }>).props.id
+  }
+
+  if (_.isPlainObject(value)) {
+    return (value as Record<string, any>).id
+  }
+
+  return currentValue || _.uniqueId(`dialog-${slotName}-`)
+}
 
 export interface DialogSlotClassNames {
   header: string
@@ -88,6 +108,8 @@ export interface DialogProps
 }
 
 export interface DialogState {
+  contentId?: string
+  headerId?: string
   open?: boolean
 }
 
@@ -129,7 +151,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 
   static autoControlledProps = ['open']
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     closeAndFocusTrigger: e => {
       this.handleDialogCancel(e)
       e.stopPropagation()
@@ -142,7 +164,19 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   triggerRef = React.createRef<HTMLElement>()
 
   getInitialAutoControlledState(): DialogState {
-    return { open: false }
+    return {
+      open: false,
+    }
+  }
+
+  static getAutoControlledStateFromProps(
+    props: DialogProps,
+    state: DialogState,
+  ): Partial<DialogState> {
+    return {
+      contentId: getOrGenerateIdFromShorthand('content', props.content, state.contentId),
+      headerId: getOrGenerateIdFromShorthand('header', props.header, state.headerId),
+    }
   }
 
   handleDialogCancel = (e: Event | React.SyntheticEvent) => {

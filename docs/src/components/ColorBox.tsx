@@ -1,3 +1,4 @@
+import { CopyToClipboard } from '@stardust-ui/docs-components'
 import {
   ComponentSlotStylesInput,
   ComponentSlotStyle,
@@ -9,8 +10,6 @@ import * as Color from 'color'
 import * as _ from 'lodash'
 import * as React from 'react'
 
-import CopyToClipboard from './CopyToClipboard'
-
 type ColorBoxProps = {
   children?: React.ReactNode
   name?: string
@@ -18,6 +17,7 @@ type ColorBoxProps = {
   rounded?: boolean
   size?: 'small' | 'normal' | 'big'
   value: string
+  showColorValue?: boolean
   styles?: ComponentSlotStyle
 }
 
@@ -78,13 +78,20 @@ export const colorBoxStyles: ComponentSlotStylesInput<ColorBoxProps, ColorBoxVar
 
 const ColorBox = createComponent<ColorBoxProps>({
   displayName: 'ColorBox',
-  render: ({ children, name, value, copyToClipboardIcon, stardust: { classes } }) => (
+  render: ({
+    children,
+    name,
+    value,
+    showColorValue,
+    copyToClipboardIcon,
+    stardust: { classes },
+  }) => (
     <div className={classes.root}>
       <div className={classes.name}>{children || _.startCase(name)}</div>
 
       {copyToClipboardIcon && (
-        <CopyToClipboard
-          render={(active, onClick) => (
+        <CopyToClipboard value={value}>
+          {(active, onClick) => (
             <div className={classes.value}>
               <span onClick={onClick}>
                 {value && <Icon name={active ? 'checkmark' : 'copy outline'} size="small" />}
@@ -92,8 +99,10 @@ const ColorBox = createComponent<ColorBoxProps>({
               </span>
             </div>
           )}
-          value={value}
-        />
+        </CopyToClipboard>
+      )}
+      {!copyToClipboardIcon && showColorValue && (
+        <span className={classes.value}>{value || 'Not defined'}</span>
       )}
     </div>
   ),
@@ -102,6 +111,7 @@ const ColorBox = createComponent<ColorBoxProps>({
 ColorBox.defaultProps = {
   size: 'normal',
   copyToClipboardIcon: true,
+  showColorValue: true,
 }
 
 export default ColorBox

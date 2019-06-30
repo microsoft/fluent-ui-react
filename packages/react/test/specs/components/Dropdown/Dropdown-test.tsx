@@ -6,14 +6,11 @@ import Dropdown from 'src/components/Dropdown/Dropdown'
 import DropdownSearchInput from 'src/components/Dropdown/DropdownSearchInput'
 import DropdownSelectedItem from 'src/components/Dropdown/DropdownSelectedItem'
 import { isConformant } from 'test/specs/commonTests'
-import { mountWithProvider } from 'test/utils'
+import { findIntrinsicElement, mountWithProvider } from 'test/utils'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 
 jest.dontMock('keyboard-key')
 jest.useFakeTimers()
-
-const findIntrinsicElement = (wrapper: ReactWrapper, selector: string): CommonWrapper =>
-  wrapper.find(selector).filterWhere(n => typeof n.type() === 'string')
 
 const getTriggerButtonWrapper = (wrapper: ReactWrapper): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.triggerButton}`)
@@ -1070,6 +1067,15 @@ describe('Dropdown', () => {
   })
 
   describe('searchQuery', () => {
+    it("updates component's state on props updates", () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} search searchQuery="foo" />)
+
+      expect(wrapper.find(Dropdown).state('searchQuery')).toBe('foo')
+
+      wrapper.setProps({ searchQuery: 'bar' })
+      expect(wrapper.find(Dropdown).state('searchQuery')).toBe('bar')
+    })
+
     it('closes dropdown when changed to empty string', () => {
       const dropdown = mountWithProvider(<Dropdown items={items} search />).find(Dropdown)
 

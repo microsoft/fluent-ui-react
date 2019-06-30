@@ -1,23 +1,10 @@
 import * as React from 'react'
-import { mount } from 'enzyme'
-import { domEvent, nextFrame, withProvider } from 'test/utils'
+import { domEvent, nextFrame, mountWithProvider } from 'test/utils'
 
-import Portal, { PortalProps } from 'src/components/Portal/Portal'
+import Portal from 'src/components/Portal/Portal'
 import PortalInner from 'src/components/Portal/PortalInner'
 
 describe('Portal', () => {
-  const mountPortal = (props: PortalProps = {}, options?) => {
-    const TestPortal = props => withProvider(<Portal content={<p />} {...props} />)
-
-    const wrapperWrapper = mount(<TestPortal {...props} />, options)
-    const wrapper = wrapperWrapper.find(Portal)
-
-    return {
-      wrapper: wrapperWrapper,
-      portal: wrapper,
-    }
-  }
-
   const testPortalInnerIsOpen = (rootWrapper, visible: boolean) => {
     expect(rootWrapper.find(PortalInner).length).toBe(visible ? 1 : 0)
   }
@@ -31,16 +18,18 @@ describe('Portal', () => {
 
   it('translates open prop to state', () => {
     const content = <p />
-    const { wrapper } = mountPortal({ content })
+    const wrapper = mountWithProvider(<Portal content={<p />} />)
     testPortalOpenState(wrapper, content, false)
 
-    const { wrapper: openPortalWrapper } = mountPortal({ content, open: true })
+    const openPortalWrapper = mountWithProvider(<Portal content={<p />} open />)
     testPortalOpenState(openPortalWrapper, content, true)
   })
 
   describe('click', () => {
     it('opens the portal on trigger click when true', () => {
-      const { wrapper } = mountPortal({ trigger: <button> button </button> })
+      const wrapper = mountWithProvider(
+        <Portal content={<p />} trigger={<button>button</button>} />,
+      )
       testPortalInnerIsOpen(wrapper, false)
 
       wrapper.find('button').simulate('click')
@@ -48,7 +37,9 @@ describe('Portal', () => {
     })
 
     it('closes the portal on click when set', () => {
-      const { wrapper } = mountPortal({ trigger: <button />, defaultOpen: true })
+      const wrapper = mountWithProvider(
+        <Portal content={<p />} defaultOpen trigger={<button>button</button>} />,
+      )
       testPortalInnerIsOpen(wrapper, true)
 
       wrapper.find('button').simulate('click')
@@ -58,7 +49,7 @@ describe('Portal', () => {
 
   describe('document click', () => {
     it('closes the portal', async () => {
-      const { wrapper } = mountPortal({ defaultOpen: true })
+      const wrapper = mountWithProvider(<Portal content={<p />} defaultOpen />)
       testPortalInnerIsOpen(wrapper, true)
 
       await nextFrame()
@@ -69,11 +60,7 @@ describe('Portal', () => {
     })
 
     it('does not close on click inside', () => {
-      const { wrapper } = mountPortal({
-        content: <p id="inner" />,
-        defaultOpen: true,
-      })
-
+      const wrapper = mountWithProvider(<Portal content={<p id="inner" />} defaultOpen />)
       testPortalInnerIsOpen(wrapper, true)
 
       domEvent.click('#inner')
@@ -84,18 +71,18 @@ describe('Portal', () => {
 
   describe('onMount', () => {
     it('called when portal opens', () => {
-      const props = { open: true, onMount: jest.fn() }
-      const { wrapper } = mountPortal(props)
+      const onMount = jest.fn()
+      const wrapper = mountWithProvider(<Portal content={<p />} onMount={onMount} />)
       wrapper.setProps({ open: true })
 
-      expect(props.onMount).toHaveBeenCalledTimes(1)
+      expect(onMount).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('onUnmount', () => {
     it('is called when portal closes', () => {
       const onUnmount = jest.fn()
-      const { wrapper } = mountPortal({ open: true, onUnmount })
+      const wrapper = mountWithProvider(<Portal content={<p />} onUnmount={onUnmount} open />)
       wrapper.setProps({ open: false })
 
       expect(onUnmount).toHaveBeenCalledTimes(1)
@@ -103,7 +90,7 @@ describe('Portal', () => {
 
     it('is called only once when portal closes and then is unmounted', () => {
       const onUnmount = jest.fn()
-      const { wrapper } = mountPortal({ open: true, onUnmount })
+      const wrapper = mountWithProvider(<Portal content={<p />} onUnmount={onUnmount} open />)
       wrapper.setProps({ open: false })
       wrapper.unmount()
 
@@ -112,7 +99,7 @@ describe('Portal', () => {
 
     it('is called only once when directly unmounting', () => {
       const onUnmount = jest.fn()
-      const { wrapper } = mountPortal({ open: true, onUnmount })
+      const wrapper = mountWithProvider(<Portal content={<p />} onUnmount={onUnmount} open />)
       wrapper.unmount()
 
       expect(onUnmount).toHaveBeenCalledTimes(1)
@@ -125,17 +112,16 @@ describe('Portal', () => {
       const mountNode = document.createElement('div')
       document.body.appendChild(mountNode)
 
-      mountPortal({ trigger: <button id="trigger" />, triggerRef }, { attachTo: mountNode })
+      const wrapper = mountWithProvider(
+        <Portal content={<p />} trigger={<button id="trigger" />} triggerRef={triggerRef} />,
+        { attachTo: mountNode },
+      )
 
       const triggerElem = document.querySelector('#trigger')
 
       expect(triggerRef).toHaveBeenCalledTimes(1)
       expect(triggerRef).toHaveBeenCalledWith(triggerElem)
 
-      const { wrapper } = mountPortal(
-        { trigger: <button id="trigger" />, triggerRef },
-        { attachTo: mountNode },
-      )
       wrapper.detach()
       document.body.removeChild(mountNode)
     })
@@ -143,15 +129,16 @@ describe('Portal', () => {
 
   describe('trigger', () => {
     it('renders null when not set', () => {
-      const { portal } = mountPortal()
+      const wrapper = mountWithProvider(<Portal content={<p />} />)
 
-      expect(portal.html()).toEqual(null)
+      expect(wrapper.html()).toEqual(null)
     })
 
     it('renders the trigger when set', () => {
       const text = 'open by click on me'
-      const trigger = <button>{text}</button>
-      const { wrapper } = mountPortal({ trigger })
+      const wrapper = mountWithProvider(
+        <Portal content={<p />} trigger={<button>{text}</button>} />,
+      )
 
       expect(wrapper.find('button').length).toBe(1)
       expect(wrapper.text()).toEqual(text)

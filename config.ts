@@ -19,9 +19,13 @@ const envConfig = {
   // Project Structure
   // ----------------------------------
   path_base: __dirname,
+  dir_build: 'build',
   dir_dll: 'dll',
   dir_docs_dist: 'docs/dist',
   dir_docs_src: 'docs/src',
+  dir_e2e: 'e2e',
+  dir_e2e_src: 'e2e/server',
+  dir_e2e_dist: 'e2e/dist',
   dir_packages: 'packages',
   dir_perf_dist: 'perf/dist',
   dir_perf_src: 'perf/src',
@@ -35,9 +39,13 @@ const base = (...args) => path.resolve(...[envConfig.path_base, ...args])
 
 const paths = {
   base,
+  build: base.bind(null, envConfig.dir_build),
   dll: base.bind(null, envConfig.dir_dll),
   docsDist: base.bind(null, envConfig.dir_docs_dist),
   docsSrc: base.bind(null, envConfig.dir_docs_src),
+  e2e: base.bind(null, envConfig.dir_e2e),
+  e2eSrc: base.bind(null, envConfig.dir_e2e_src),
+  e2eDist: base.bind(null, envConfig.dir_e2e_dist),
   packageDist: (packageName: string, ...paths: string[]) =>
     base(envConfig.dir_packages, packageName, 'dist', ...paths),
   packageSrc: (packageName: string, ...paths: string[]) =>
@@ -62,6 +70,7 @@ const config = {
   server_host: 'localhost',
   server_port: Number(process.env.PORT) || 8080,
   perf_port: Number(process.env.PERF_PORT) || 8081,
+  e2e_port: Number(process.env.E2E_PORT) || 8082,
 
   // ----------------------------------
   // Compiler Configuration

@@ -1,14 +1,15 @@
 {
   "name": "@stardust-ui/docs-components",
   "description": "Registers a DOM nodes within a context.",
-  "version": "0.31.0",
+  "version": "0.34.0",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "copy-to-clipboard": "^3.2.0",
     "object.values": "^1.1.0",
     "prismjs": "^1.16.0",
-    "prop-types": "^15.6.1",
-    "tslib": "^1.9.3"
+    "prop-types": "^15.6.1"
   },
   "files": [
     "dist"
@@ -27,7 +28,7 @@
   },
   "repository": "stardust-ui/react.git",
   "scripts": {
-    "build": "cross-env TS_NODE_PROJECT=../../tsconfig.json gulp bundle:package:no-umd --package docs-components"
+    "build": "gulp bundle:package:no-umd --package docs-components"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"

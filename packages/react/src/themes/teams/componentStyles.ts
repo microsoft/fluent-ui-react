@@ -15,6 +15,8 @@ export { default as Chat } from './components/Chat/chatStyles'
 export { default as ChatItem } from './components/Chat/chatItemStyles'
 export { default as ChatMessage } from './components/Chat/chatMessageStyles'
 
+export { default as Checkbox } from './components/Checkbox/checkboxStyles'
+
 export { default as Dialog } from './components/Dialog/dialogStyles'
 
 export { default as Divider } from './components/Divider/dividerStyles'
@@ -67,6 +69,12 @@ export { default as Status } from './components/Status/statusStyles'
 
 export { default as Text } from './components/Text/textStyles'
 
+export { default as ToolbarDivider } from './components/Toolbar/toolbarDividerStyles'
+export { default as ToolbarItem } from './components/Toolbar/toolbarItemStyles'
+export { default as ToolbarMenu } from './components/Toolbar/toolbarMenuStyles'
+export { default as ToolbarMenuDivider } from './components/Toolbar/toolbarMenuDividerStyles'
+export { default as ToolbarMenuItem } from './components/Toolbar/toolbarMenuItemStyles'
+
 export { default as Tree } from './components/Tree/treeStyles'
 export { default as TreeItem } from './components/Tree/treeItemStyles'
 export { default as TreeTitle } from './components/Tree/treeTitleStyles'
@@ -74,3 +82,6 @@ export { default as TreeTitle } from './components/Tree/treeTitleStyles'
 export { default as Animation } from './components/Animation/animationStyles'
 
 export { default as Video } from './components/Video/videoStyles'
+
+export { default as Tooltip } from './components/Tooltip/tooltipStyles'
+export { default as TooltipContent } from './components/Tooltip/tooltipContentStyles'

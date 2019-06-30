@@ -5,20 +5,27 @@ export interface DropdownVariables {
   backgroundColorHover: string
   borderColor: string
   borderColorFocus: string
-  borderRadius: string
-  openBorderRadius: string
   borderWidth: string
+  containerBorderRadius: string
+  openAboveContainerBorderRadius: string
+  openBelowContainerBorderRadius: string
   searchBorderBottomWidth: string
   color: string
   comboboxPaddingButton: string
   comboboxFlexBasis: string
+  aboveListBorderRadius: string
+  belowListBorderRadius: string
   listBackgroundColor: string
   listBorderColor: string
-  listBorderRadius: string
   listBorderWidth: string
   listPadding: string
   listBoxShadow: string
   listMaxHeight: string
+  listItemFocusBorderWidth: string
+  listItemHeaderFontSize: string
+  listItemHeaderColor: string
+  listItemContentFontSize: string
+  listItemContentColor: string
   listItemBackgroundColor: string
   listItemColorHover: string
   listItemBackgroundColorHover: string
@@ -36,28 +43,31 @@ export interface DropdownVariables {
   width: string
 }
 
-const [_2px_asRem, _3px_asRem, _12px_asRem] = [2, 3, 12].map(v => pxToRem(v))
+const [cornerRadius, _12px_asRem] = [3, 12].map(v => pxToRem(v))
 
 export default (siteVars): DropdownVariables => ({
   backgroundColor: siteVars.colors.grey[100],
   backgroundColorHover: siteVars.colors.grey[150],
   borderColor: 'transparent',
   borderColorFocus: siteVars.colors.brand[600],
-  borderRadius: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
-  openBorderRadius: `${_3px_asRem} ${_3px_asRem} 0 0`,
   borderWidth: '0px',
+  containerBorderRadius: `${cornerRadius}`,
+  openAboveContainerBorderRadius: `0 0 ${cornerRadius} ${cornerRadius}`,
+  openBelowContainerBorderRadius: `${cornerRadius} ${cornerRadius} 0 0`,
   searchBorderBottomWidth: pxToRem(2),
   color: siteVars.bodyColor,
   selectedItemColor: siteVars.bodyColor,
   comboboxPaddingButton: `0 ${_12px_asRem}`,
   comboboxFlexBasis: pxToRem(50),
+  aboveListBorderRadius: `${cornerRadius} ${cornerRadius} 0 0`,
+  belowListBorderRadius: `0 0 ${cornerRadius} ${cornerRadius}`,
   listBackgroundColor: siteVars.colors.white,
-  listBorderRadius: `0 0 ${_3px_asRem} ${_3px_asRem}`,
   listBorderColor: 'transparent',
   listBorderWidth: '0px',
-  listPadding: `${pxToRem(8)} 0`,
+  listPadding: `${pxToRem(8)} 0 ${pxToRem(6)}`,
   listBoxShadow: siteVars.shadowLevel3,
   listMaxHeight: pxToRem(296),
+  listItemFocusBorderWidth: pxToRem(1),
   listItemBackgroundColor: siteVars.colors.white,
   listItemColorHover: siteVars.colors.grey[750],
   listItemBackgroundColorHover: siteVars.colors.grey[100],
@@ -65,11 +75,17 @@ export default (siteVars): DropdownVariables => ({
   listItemColorActive: siteVars.colors.grey[750],
   listItemSelectedFontWeight: siteVars.fontWeightSemibold,
   listItemSelectedColor: siteVars.colors.grey[750],
-  selectedItemBackgroundColor: undefined,
+  selectedItemBackgroundColor: 'undefined',
   selectedItemColorFocus: siteVars.bodyColor,
   selectedItemBackgroundColorFocus: siteVars.colors.brand[200],
   selectedItemsMaxHeight: pxToRem(82),
   toggleIndicatorSize: pxToRem(32),
   triggerButtonColorHover: siteVars.bodyColor,
   width: pxToRem(356),
+
+  // these should only apply when there is content in the image/media slot:
+  listItemHeaderFontSize: siteVars.fontSizes.medium,
+  listItemHeaderColor: siteVars.colors.grey[1000],
+  listItemContentFontSize: siteVars.fontSizes.small,
+  listItemContentColor: siteVars.colors.grey[450],
 })

@@ -1,8 +1,9 @@
-import * as gutil from 'gulp-util'
-import * as fs from 'fs'
-import * as path from 'path'
-import * as through2 from 'through2'
-import * as Vinyl from 'vinyl'
+import gutil from 'gulp-util'
+import _ from 'lodash'
+import fs from 'fs'
+import path from 'path'
+import through2 from 'through2'
+import Vinyl from 'vinyl'
 
 import config from '../../../config'
 import getComponentInfo from './util/getComponentInfo'
@@ -64,7 +65,7 @@ export default () => {
   function endStream(cb) {
     const file = new Vinyl({
       path: './componentMenu.json',
-      contents: Buffer.from(JSON.stringify(result, null, 2)),
+      contents: Buffer.from(JSON.stringify(_.sortBy(result, 'displayName'), null, 2)),
     })
 
     this.push(file)

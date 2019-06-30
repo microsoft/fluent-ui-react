@@ -5,7 +5,7 @@ import leven from './leven'
 
 type ObjectOf<T> = Record<string, T>
 
-const typeOf = x => Object.prototype.toString.call(x)
+const typeOf = (x: any) => Object.prototype.toString.call(x)
 
 /**
  * Ensure a component can render as a give prop value.
@@ -22,11 +22,11 @@ export const as = PropTypes.oneOfType([
  */
 export const domNode = (props: ObjectOf<any>, propName: string) => {
   // skip if prop is undefined
-  if (props[propName] === undefined) return
+  if (props[propName] === undefined) return undefined
   // skip if prop is valid
-  if (props[propName] instanceof Element) return
+  if (props[propName] instanceof Element) return undefined
 
-  throw new Error(`Invalid prop "${propName}" supplied, expected a DOM node.`)
+  return new Error(`Invalid prop "${propName}" supplied, expected a DOM node.`)
 }
 
 /**
@@ -43,42 +43,43 @@ export const suggest = (suggestions: string[]) => {
   const findBestSuggestions = _.memoize((str: string) => {
     const propValueWords = str.split(' ')
 
-    return _.chain(suggestions)
-      .map((suggestion: string) => {
-        const suggestionWords = suggestion.split(' ')
+    return _.take(
+      _.sortBy(
+        _.map(suggestions, (suggestion: string) => {
+          const suggestionWords = suggestion.split(' ')
 
-        const propValueScore = _.chain(propValueWords)
-          .map(x => _.map(suggestionWords, y => leven(x, y)))
-          .map(_.min)
-          .sum()
-          .value()
+          const propValueScore = _.sum(
+            _.map(_.map(propValueWords, x => _.map(suggestionWords, y => leven(x, y))), _.min),
+          )
 
-        const suggestionScore = _.chain(suggestionWords)
-          .map(x => _.map(propValueWords, y => leven(x, y)))
-          .map(_.min)
-          .sum()
-          .value()
+          const suggestionScore = _.sum(
+            _.map(_.map(suggestionWords, x => _.map(propValueWords, y => leven(x, y))), _.min),
+          )
 
-        return { suggestion, score: propValueScore + suggestionScore }
-      })
-      .sortBy(['score', 'suggestion'])
-      .take(3)
-      .value()
+          return { suggestion, score: propValueScore + suggestionScore }
+        }),
+        ['score', 'suggestion'],
+      ),
+      3,
+    )
   })
 
   // Convert the suggestions list into a hash map for O(n) lookup times. Ensure
   // the words in each key are sorted alphabetically so that we have a consistent
   // way of looking up a value in the map, i.e. we can sort the words in the
   // incoming propValue and look that up without having to check all permutations.
-  const suggestionsLookup = suggestions.reduce((acc, key) => {
-    acc[
-      key
-        .split(' ')
-        .sort()
-        .join(' ')
-    ] = true
-    return acc
-  }, {})
+  const suggestionsLookup: Record<string, boolean> = suggestions.reduce(
+    (acc: Record<string, boolean>, key: string) => {
+      acc[
+        key
+          .split(' ')
+          .sort()
+          .join(' ')
+      ] = true
+      return acc
+    },
+    {},
+  )
 
   return (props: ObjectOf<any>, propName: string, componentName: string) => {
     const propValue = props[propName]
@@ -110,6 +111,16 @@ export const suggest = (suggestions: string[]) => {
       ].join(''),
     )
   }
+}
+
+/**
+ * The prop cannot be used.
+ * Similar to `deprecate` but with different error message.
+ */
+export const never = (props: ObjectOf<any>, propName: string, componentName: string) => {
+  if (_.isNil(props[propName]) || props[propName] === false) return undefined
+
+  return new Error(`Prop \`${propName}\` in \`${componentName}\` cannot be used.`)
 }
 
 /**
@@ -174,20 +185,18 @@ export const every = (validators: Function[]) => (
     )
   }
 
-  const error = _.chain(validators)
-    .map(validator => {
-      if (typeof validator !== 'function') {
-        throw new Error(
-          `every() argument "validators" should contain functions, found: ${typeOf(validator)}.`,
-        )
-      }
-      return validator(props, propName, componentName, ...args)
-    })
-    .compact()
-    .first() // we can only return one error at a time
-    .value()
-
-  return error
+  return _.first(
+    _.compact(
+      _.map(validators, validator => {
+        if (typeof validator !== 'function') {
+          throw new Error(
+            `every() argument "validators" should contain functions, found: ${typeOf(validator)}.`,
+          )
+        }
+        return validator(props, propName, componentName, ...args)
+      }),
+    ),
+  ) // we can only return one error at a time
 }
 
 /**
@@ -209,17 +218,16 @@ export const some = (validators: Function[]) => (
     )
   }
 
-  const errors = _.chain(validators)
-    .map(validator => {
+  const errors = _.compact(
+    _.map(validators, validator => {
       if (!_.isFunction(validator)) {
         throw new Error(
           `some() argument "validators" should contain functions, found: ${typeOf(validator)}.`,
         )
       }
       return validator(props, propName, componentName, ...args)
-    })
-    .compact()
-    .value()
+    }),
+  )
 
   // fail only if all validators failed
   if (errors.length === validators.length) {
@@ -236,7 +244,7 @@ export const some = (validators: Function[]) => (
  * @param {object} propsShape An object describing the prop shape.
  * @param {function} validator A propType function.
  */
-export const givenProps = (propsShape: object, validator: Function) => (
+export const givenProps = (propsShape: Record<string, any>, validator: Function) => (
   props: ObjectOf<any>,
   propName: string,
   componentName: string,
@@ -260,7 +268,7 @@ export const givenProps = (propsShape: object, validator: Function) => (
     )
   }
 
-  const shouldValidate = _.keys(propsShape).every(key => {
+  const shouldValidate = _.keys(propsShape).every((key: string) => {
     const val = propsShape[key]
     // require propShape validators to pass or prop values to match
     return typeof val === 'function'
@@ -378,13 +386,19 @@ export const wrapperShorthand = PropTypes.oneOfType([
 ])
 
 /**
+ * A shorthand prop which can be used together with `children`.
+ */
+export const shorthandAllowingChildren = PropTypes.oneOfType([
+  PropTypes.node,
+  PropTypes.object,
+  PropTypes.func,
+])
+
+/**
  * Item shorthand is a description of a component that can be a literal,
  * a props object, an element or a render function.
  */
-export const itemShorthand = every([
-  disallow(['children']),
-  PropTypes.oneOfType([PropTypes.node, PropTypes.object, PropTypes.func]),
-])
+export const itemShorthand = every([disallow(['children']), shorthandAllowingChildren])
 export const itemShorthandWithKindProp = (kindPropValues: string[]) => {
   return every([
     disallow(['children']),

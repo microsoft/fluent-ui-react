@@ -5,9 +5,9 @@ import { Accessibility } from '../../types'
  * Optionally, an accordion content can have the 'role=region'. It is not applied by default.
  *
  * @specification
- * Adds attribute 'aria-labelledby' based on the property 'accordionTitleId' to 'root' component's part.
+ * Adds attribute 'aria-labelledby' based on the property 'accordionTitleId' to 'root' slot.
  */
-const accordionContentBehavior: Accessibility = (props: any) => {
+const accordionContentBehavior: Accessibility<AccordionContentBehaviorProps> = props => {
   return {
     attributes: {
       root: {
@@ -18,3 +18,8 @@ const accordionContentBehavior: Accessibility = (props: any) => {
 }
 
 export default accordionContentBehavior
+
+type AccordionContentBehaviorProps = {
+  /** id of the accordion title element. */
+  accordionTitleId?: string
+}

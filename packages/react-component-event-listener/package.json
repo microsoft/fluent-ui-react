@@ -1,15 +1,15 @@
 {
   "name": "@stardust-ui/react-component-event-listener",
   "description": "React components for binding events on the global scope.",
-  "version": "0.31.0",
+  "version": "0.34.0",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
-    "prop-types": "^15.6.1",
-    "tslib": "^1.9.3"
+    "@babel/runtime": "^7.1.2",
+    "prop-types": "^15.6.1"
   },
   "devDependencies": {
-    "@stardust-ui/internal-tooling": "^0.31.0",
+    "@stardust-ui/internal-tooling": "^0.34.0",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [
@@ -29,7 +29,7 @@
   },
   "repository": "stardust-ui/react.git",
   "scripts": {
-    "build": "cross-env TS_NODE_PROJECT=../../tsconfig.json gulp bundle:package:no-umd --package react-component-event-listener"
+    "build": "gulp bundle:package:no-umd --package react-component-event-listener"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"
