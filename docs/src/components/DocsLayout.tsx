@@ -70,7 +70,6 @@ class DocsLayout extends React.Component<any, any> {
   renderChildren = props => {
     const { component: Children, render } = this.props
 
-    if (render) return render()
     return (
       <>
         <Provider
@@ -90,7 +89,7 @@ class DocsLayout extends React.Component<any, any> {
           <Sidebar />
         </Provider>
         <div role="main" style={{ marginLeft: 250 }}>
-          <Children {...props} />
+          {render ? render() : <Children {...props} />}
         </div>
       </>
     )
