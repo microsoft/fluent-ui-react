@@ -61,7 +61,7 @@ class ToolbarCustomItem extends UIComponent<
 > {
   static displayName = 'ToolbarCustomItem'
 
-  static className = 'ui-toolbar__customitem'
+  static className = 'ui-toolbar__custom-item'
 
   static create: Function
 
