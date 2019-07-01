@@ -57,16 +57,14 @@ const items = [
     key: 'message-id-5',
   },
   {
-    gutter: { content: <Avatar {...janeAvatar} /> },
+    gutter: <Avatar {...janeAvatar} />,
     message: (
       <Chat.Message
-        content={{
-          content: (
-            <div>
-              I also like <a href="#">www.goodFood2.com</a>.
-            </div>
-          ),
-        }}
+        content={
+          <div>
+            I also like <a href="#">www.goodFood2.com</a>.
+          </div>
+        }
         author="Jane Doe"
         timestamp="Yesterday, 10:15 PM"
       />
