@@ -33,8 +33,11 @@ const Content = () => (
       examplePath="components/Toolbar/Content/ToolbarExampleCustomContent"
     >
       <Alert warning>
-        When <code>custom</code> kind is used it is the responsibility of the consumer to verify
-        accessibility and styling aspects of the component and handle them correctly.
+        <p>
+          When <code>custom</code> kind is used it is the responsibility of the consumer to verify
+          accessibility and styling aspects of the component and handle them correctly. This kind of
+          items can't be actionable.
+        </p>
       </Alert>
     </ComponentExample>
   </ExampleSection>
