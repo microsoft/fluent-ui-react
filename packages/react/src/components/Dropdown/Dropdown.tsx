@@ -950,7 +950,14 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     }
     const { value } = this.state as { value: ShorthandCollection }
     if (value.length > 0) {
-      this.trySetState({ activeSelectedIndex: value.length - 1 })
+      // If last element was already active, perform a 'reset' of activeSelectedIndex.
+      if (this.state.activeSelectedIndex === value.length - 1) {
+        this.trySetState({ activeSelectedIndex: null }, () => {
+          this.trySetState({ activeSelectedIndex: value.length - 1 })
+        })
+      } else {
+        this.trySetState({ activeSelectedIndex: value.length - 1 })
+      }
     }
   }
 
