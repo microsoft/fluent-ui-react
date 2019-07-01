@@ -88,7 +88,7 @@ import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
-import msftStream from './msftStream'
+import microsoftStream from './msftStream'
 import userPhone from './userPhone'
 import numberList from './numberList'
 import outdent from './outdent'
@@ -222,7 +222,7 @@ export default {
   mic,
   'mic-off': micOff,
   more,
-  'msft-stream': msftStream,
+  'microsoft-stream': microsoftStream,
   'user-phone': userPhone,
   'number-list': numberList,
   'open-outside': openOutside,

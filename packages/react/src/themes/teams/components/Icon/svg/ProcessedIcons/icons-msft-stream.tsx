@@ -10,5 +10,5 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'msft-stream',
+  exportedAs: 'microsoft-stream',
 } as TeamsProcessedSvgIconSpec
