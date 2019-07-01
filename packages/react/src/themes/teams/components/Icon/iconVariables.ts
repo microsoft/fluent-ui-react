@@ -14,7 +14,7 @@ export interface IconVariables extends BaseIconVariables {
   secondaryColor: string
   redColor: string
 
-  sizeModifier: IconSizeModifier
+  sizeModifier?: IconSizeModifier
 }
 
 export default (siteVars): Partial<IconVariables> => ({
