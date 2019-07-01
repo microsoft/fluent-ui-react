@@ -249,6 +249,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'composition',
+        content: 'Composition',
+        as: NavLink,
+        to: '/composition',
+        styles: menuItemStyles,
+      },
+      {
         key: 'shorthand',
         content: 'Shorthand Props',
         as: NavLink,

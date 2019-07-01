@@ -36,9 +36,9 @@ definitions.push({
   },
 })
 
-// Example:  Adds role 'menuitem' to 'anchor' component's part
+// Example:  Adds role 'menuitem' to 'anchor' slot
 definitions.push({
-  regexp: /Adds role '(\w+)' to '([\w-]+)' component's part/g,
+  regexp: /Adds role '(\w+)' to '([\w-]+)' slot/g,
   testMethod: (parameters: TestMethod) => {
     const [roleToBeAdded, elementWhereToBeAdded] = parameters.props
     const property = {}
@@ -47,10 +47,10 @@ definitions.push({
   },
 })
 
-// Example: Adds attribute 'tabIndex=0' to 'anchor' component's part.
-//          Adds attribute 'data-is-focusable=true' to 'anchor' component's part.
+// Example: Adds attribute 'tabIndex=0' to 'anchor' slot.
+//          Adds attribute 'data-is-focusable=true' to 'anchor' slot.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' slot\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, attributeExpectedValue, elementWhereToBeAdded] = parameters.props
     const property = {}
@@ -63,9 +63,9 @@ definitions.push({
   },
 })
 
-// Example: Adds attribute 'aria-expanded=true' based on the property 'menuOpen' if the component has 'menu' property to 'anchor' component's part.
+// Example: Adds attribute 'aria-expanded=true' based on the property 'menuOpen' if the component has 'menu' property to 'anchor' slot.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' based on the property '([\w-]+)' if the component has '([\w-]+)' property to '([\w-]+)' component's part\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' based on the property '([\w-]+)' if the component has '([\w-]+)' property to '([\w-]+)' slot\./g,
   testMethod: (parameters: TestMethod) => {
     const [
       attributeToBeAdded,
@@ -102,10 +102,10 @@ definitions.push({
   },
 })
 
-// Example: Adds attribute 'aria-expanded=true' based on the property 'active' to 'button' component's part.
-//          Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
+// Example: Adds attribute 'aria-expanded=true' based on the property 'active' to 'button' slot.
+//          Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' slot.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=*([\w-]*)' based on the property '([\w-]+)' to '([\w-]+)' component's part\./g,
+  regexp: /Adds attribute '([\w-]+)=*([\w-]*)' based on the property '([\w-]+)' to '([\w-]+)' slot\./g,
   testMethod: (parameters: TestMethod) => {
     const [
       attributeToBeAdded,
@@ -125,9 +125,9 @@ definitions.push({
   },
 })
 
-// Example: Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
+// Example: Adds attribute 'aria-selected=true' to 'anchor' slot based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part based on the property '([\w-]+)'\. This can be overriden by providing '[\w-]+' property directly to the component\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' slot based on the property '([\w-]+)'\. This can be overriden by providing '[\w-]+' property directly to the component\./g,
   testMethod: (parameters: TestMethod) => {
     const [
       attributeToBeAdded,
@@ -187,9 +187,9 @@ function testMethodConditionallyAddAttribute(
   )
 }
 
-// Example: Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Does not set the attribute otherwise.
+// Example: Adds attribute 'aria-disabled=true' to 'trigger' slot if 'disabled' property is true. Does not set the attribute otherwise.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part if '([\w-]+)' property is true\. Does not set the attribute otherwise\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' slot if '([\w-]+)' property is true\. Does not set the attribute otherwise\./g,
   testMethod: (parameters: TestMethod) => {
     const [
       attributeToBeAdded,
@@ -210,9 +210,9 @@ definitions.push({
   },
 })
 
-// Example: Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Sets the attribute to 'false' otherwise.
+// Example: Adds attribute 'aria-disabled=true' to 'trigger' slot if 'disabled' property is true. Sets the attribute to 'false' otherwise.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part if '([\w-]+)' property is true\. Sets the attribute to '([\w\d]+)' otherwise\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' slot if '([\w-]+)' property is true\. Sets the attribute to '([\w\d]+)' otherwise\./g,
   testMethod: (parameters: TestMethod) => {
     const [
       attributeToBeAdded,
@@ -234,9 +234,9 @@ definitions.push({
   },
 })
 
-// Adds attribute 'aria-haspopup=true' to 'root' component's part if 'menu' menu property is set.
+// Adds attribute 'aria-haspopup=true' to 'root' slot if 'menu' menu property is set.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part if '([\w-]+)' property is set\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' slot if '([\w-]+)' property is set\./g,
   testMethod: (parameters: TestMethod) => {
     const [
       attributeToBeAdded,
@@ -554,6 +554,26 @@ definitions.push({
       elementToPerformAction
     ][action].keyCombinations[0].keyCode
     expect(expectedKeyNumberVertical).toBe(keyboardKey[key])
+  },
+})
+
+// Triggers 'closeMenuAndFocusTrigger' action with 'Escape' on 'wrapper', when toolbar button has submenu and it is opened.
+definitions.push({
+  regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when toolbar button has submenu and it is opened\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const propertySubmenuOpened = { menu: { items: [] }, menuOpen: true }
+    const expectedKeyNumber = parameters.behavior(propertySubmenuOpened).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    expect(expectedKeyNumber).toBe(keyboardKey[key])
+
+    // when menuOpen == "false"
+    propertySubmenuOpened.menuOpen = false
+    const expectedKeyCombinations = parameters.behavior(propertySubmenuOpened).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations
+    expect(expectedKeyCombinations).toBe(null)
   },
 })
 

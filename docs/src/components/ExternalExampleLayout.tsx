@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import { match } from 'react-router'
 import SourceRender from 'react-source-render'
+import { KnobProvider } from '@stardust-ui/docs-components'
 
 import { ExampleSource } from 'docs/src/types'
 import {
@@ -65,21 +66,23 @@ class ExternalExampleLayout extends React.Component<
         theme={theme}
         rtl={this.props.match.params.rtl === 'true'}
       >
-        <SourceRender
-          babelConfig={babelConfig}
-          source={exampleSource.js}
-          renderHtml={false}
-          resolver={importResolver}
-          unstable_hot
-        >
-          {({ element, error }) => (
-            <>
-              {element}
-              {/* This block allows to see issues with examples as visual regressions. */}
-              {error && <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>}
-            </>
-          )}
-        </SourceRender>
+        <KnobProvider>
+          <SourceRender
+            babelConfig={babelConfig}
+            source={exampleSource.js}
+            renderHtml={false}
+            resolver={importResolver}
+            unstable_hot
+          >
+            {({ element, error }) => (
+              <>
+                {element}
+                {/* This block allows to see issues with examples as visual regressions. */}
+                {error && <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>}
+              </>
+            )}
+          </SourceRender>
+        </KnobProvider>
       </Provider>
     )
   }
