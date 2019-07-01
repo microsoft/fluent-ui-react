@@ -21,7 +21,7 @@ export default () => {
     values: roleValues,
   })
 
-  const { containerRole, itemRole } = getRoles(role)
+  const { containerRole, itemRole, wrapperRole } = getRoles(role)
 
   const [roleDescription] = useSelectKnob({
     name: 'roledescription',
@@ -44,9 +44,16 @@ export default () => {
     initialValue: false,
   })
 
+  const [positions] = useBooleanKnob({
+    name: 'generate-positions',
+    initialValue: false,
+  })
+
   const componentProps = {
     containerRole,
     itemRole,
+    wrapperRole,
+    positions,
     horizontal: !!horizontal,
     ...(roleDescription === 'custom' && { containerRoleDescription, itemRoleDescription }),
     ...(roleDescription === 'empty' && { containerRoleDescription: '', itemRoleDescription: '' }),

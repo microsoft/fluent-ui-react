@@ -11,10 +11,20 @@ export const PickerGrid = ({
   containerRoleDescription,
   itemRoleDescription,
   horizontal,
+  wrapperRole,
+  positions,
 }) => (
   <Flex style={{ maxWidth: '400px', backgroundColor: 'silver' }}>
     <GridFilePicker
-      items={data.getItemsData(data.picker, '', 'star', itemRole, itemRoleDescription)}
+      items={data.getItemsData(
+        data.picker,
+        '',
+        'star',
+        itemRole,
+        itemRoleDescription,
+        wrapperRole,
+        positions,
+      )}
       title="Picker"
       role={containerRole}
       roleDescription={containerRoleDescription}

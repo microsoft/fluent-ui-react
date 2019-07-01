@@ -11,6 +11,8 @@ export const ScreenShareGrid = ({
   containerRoleDescription,
   itemRoleDescription,
   horizontal,
+  wrapperRole,
+  positions,
 }) => (
   <GridFilePicker
     gridColumns={1}
@@ -20,6 +22,8 @@ export const ScreenShareGrid = ({
       'home',
       itemRole,
       itemRoleDescription,
+      wrapperRole,
+      positions,
     )}
     title="Screenshare"
     role={containerRole}
@@ -33,6 +37,8 @@ export const PowerPointGrid = ({
   containerRoleDescription,
   itemRoleDescription,
   horizontal,
+  wrapperRole,
+  positions,
 }) => (
   <GridFilePicker
     gridColumns={3}
@@ -42,6 +48,8 @@ export const PowerPointGrid = ({
       'powerpoint-color',
       itemRole,
       itemRoleDescription,
+      wrapperRole,
+      positions,
     )}
     title="PowerPoint"
     role={containerRole}
@@ -56,6 +64,8 @@ export const WhiteBoardGrid = ({
   containerRoleDescription,
   itemRoleDescription,
   horizontal,
+  wrapperRole,
+  positions,
 }) => (
   <GridFilePicker
     items={data.getItemsData(
@@ -64,6 +74,8 @@ export const WhiteBoardGrid = ({
       'star',
       itemRole,
       itemRoleDescription,
+      wrapperRole,
+      positions,
     )}
     title="Whiteboard"
     role={containerRole}

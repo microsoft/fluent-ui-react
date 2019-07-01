@@ -46,7 +46,11 @@ export const getItemsData = (
   icon: string,
   role?: string,
   roleDescription?: string,
+  wrapperRole?: string,
+  positions?: boolean,
 ) => {
+  const count = fileNames.length
+  let index = 0
   return _.map(fileNames, fileName => {
     const props = {
       title: `${ariaLabelPart}${fileName}`,
@@ -58,8 +62,9 @@ export const getItemsData = (
       backgroundColor: icon === 'star' ? '#f36' : undefined,
       role,
       roleDescription,
+      wrapperRole,
+      ...(positions && { positionSuffix: ` ${++index} of ${count}` }),
     } as GridPickerItemProps
-
     return props
   })
 }

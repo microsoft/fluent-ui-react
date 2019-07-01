@@ -32,7 +32,15 @@ class ListPicker extends React.Component<GridPickerProps> {
   }
 
   itemProps = item => {
-    const { fileName, title, backgroundColor, roleDescription, role } = item
+    const {
+      fileName,
+      title,
+      backgroundColor,
+      roleDescription,
+      role,
+      wrapperRole,
+      positionSuffix,
+    } = item
     return {
       'data-is-focusable': true,
       onClick: () => {
@@ -40,7 +48,7 @@ class ListPicker extends React.Component<GridPickerProps> {
       },
       'aria-roledescription': roleDescription,
       role,
-      wrapper: null,
+      wrapper: wrapperRole ? { as: 'div', role: wrapperRole } : null,
       styles: { ':focus': { outline: '2px solid' } },
       content: (
         <Flex column gap="gap.small">
@@ -57,7 +65,7 @@ class ListPicker extends React.Component<GridPickerProps> {
               <Avatar
                 image={{
                   src: `public/images/avatar/large/${fileName}.jpg`,
-                  alt: 'Profile picture of John Doe',
+                  alt: title + (positionSuffix || ''),
                 }}
                 status={{
                   color: 'green',

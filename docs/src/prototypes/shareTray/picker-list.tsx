@@ -9,9 +9,19 @@ export const PickerList = ({
   containerRoleDescription,
   itemRoleDescription,
   horizontal,
+  wrapperRole,
+  positions,
 }) => (
   <ListPicker
-    items={data.getItemsData(data.picker.slice(0, 5), '', 'star', itemRole, itemRoleDescription)}
+    items={data.getItemsData(
+      data.picker.slice(0, 5),
+      '',
+      'star',
+      itemRole,
+      itemRoleDescription,
+      wrapperRole,
+      positions,
+    )}
     title="List Picker"
     role={containerRole}
     roleDescription={containerRoleDescription}

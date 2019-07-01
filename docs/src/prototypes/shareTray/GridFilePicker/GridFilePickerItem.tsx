@@ -12,6 +12,8 @@ export interface GridPickerItemProps {
   role?: string
   roleDescription?: string
   image?: boolean
+  wrapperRole?: string
+  positionSuffix?: string
 }
 
 const imageButtonStyles = {
@@ -35,6 +37,8 @@ class GridImagePickerItem extends React.Component<GridPickerItemProps> {
       backgroundColor = '#252626',
       roleDescription,
       image = false,
+      wrapperRole = '',
+      positionSuffix = '',
     } = this.props
 
     const itemProps = {
@@ -57,13 +61,13 @@ class GridImagePickerItem extends React.Component<GridPickerItemProps> {
       },
     }
 
-    return (
+    const item = (
       <li
         {...itemProps}
         {...eventHandlers}
         data-is-focusable={true}
         aria-roledescription={roleDescription}
-        aria-label={title}
+        aria-label={title + positionSuffix}
       >
         {image ? (
           <Image alt={title} src={`public/images/avatar/large/${fileName}.jpg`} fluid />
@@ -84,6 +88,8 @@ class GridImagePickerItem extends React.Component<GridPickerItemProps> {
         )}
       </li>
     )
+
+    return wrapperRole ? <div role={wrapperRole}>{item}</div> : item
   }
 }
 
