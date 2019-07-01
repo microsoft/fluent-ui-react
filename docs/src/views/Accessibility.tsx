@@ -326,10 +326,10 @@ export default () => (
 
     <Header as="h3" content="Focus Trap Zone" />
     <p>
-      FocusTrapZone is used to trap the focus in any html element. Currently can be used in{' '}
-      {code('Popup')} and {code('Dialog')} components. Pressing TAB key will circle focus within the
-      inner focusable elements of the FocusTrapZone. For example, when Popup opens, we want the
-      focus to go inside Popup and trap there.{' '}
+      FocusTrapZone is used to grab and trap the focus inside an HTML element. Currently can be used
+      only in {code('Popup')} and {code('Dialog')} components. Pressing TAB key will circle focus
+      within the inner focusable elements of the FocusTrapZone. For example, when Popup opens, we
+      want the focus to go inside Popup and trap there.{' '}
       {link('Read more about FocusTrapZone.', '/focus-trap-zone')}
     </p>
 
