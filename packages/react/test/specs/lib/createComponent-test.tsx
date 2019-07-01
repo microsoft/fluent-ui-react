@@ -14,7 +14,7 @@ describe('createComponent', () => {
       expect(TestComponent.className).toBe('ui-test-component')
     })
 
-    it('provides default className value if not defined by client', () => {
+    it('sets default className value if not provided by client', () => {
       const TestComponent = createComponent({
         displayName: 'TestComponent',
         render: () => <div>Hello</div>,
