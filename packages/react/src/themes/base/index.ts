@@ -6,11 +6,6 @@ import { icons } from './components/Icon/iconNames'
 
 export default {
   siteVariables,
-  // staticStyles: [{
-  //   '*:hover > .red-on-parent-hover': {
-  //     color: 'red',
-  //   },
-  // }],
   icons,
   componentVariables,
   componentStyles,

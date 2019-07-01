@@ -157,7 +157,6 @@ const renderComponent = <P extends {}>(
   const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
 
   const stateAndProps = { ...state, ...props }
-  const { unstyled } = props
 
   // Resolve variables for this component, allow props.variables to override
   const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
@@ -203,14 +202,8 @@ const renderComponent = <P extends {}>(
     {},
   )
 
-  let classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
+  const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
   classes.root = cx(className, classes.root, props.className)
-
-  if (unstyled) {
-    classes = {
-      root: cx(className, props.className),
-    }
-  }
 
   const resolvedConfig: RenderResultConfig<P> = {
     ElementType,
