@@ -5,7 +5,7 @@ import { Accessibility } from '../../types'
  * Loader is usually an element that displays the progress status for a task that take a long time or consists of several steps.
  *
  * @specification
- * Adds role 'progressbar' to 'root' component's part.
+ * Adds role 'progressbar' to 'root' slot.
  */
 
 const loaderBehavior: Accessibility = () => ({
