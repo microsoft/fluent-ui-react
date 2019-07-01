@@ -60,6 +60,10 @@ const webpackConfig: any = {
           plugins: [__DEV__ && 'react-hot-loader/babel'].filter(Boolean),
         },
       },
+      {
+        test: /\.mdx?$/,
+        use: ['babel-loader', '@mdx-js/loader'],
+      },
     ],
   },
   plugins: [
