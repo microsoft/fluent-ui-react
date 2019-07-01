@@ -5,12 +5,16 @@ import { themes } from '@stardust-ui/react'
 type ThemeName = keyof typeof themes
 type ThemeOption = { text: string; value: ThemeName }
 
-const themeOptions: ThemeOption[] = Object.keys(themes)
-  .filter(key => !_.includes(['base', 'fontAwesome'], key))
-  .map(key => ({
-    text: _.startCase(key),
-    value: key as ThemeName,
-  }))
+const getThemeOptions = (): ThemeOption[] => {
+  const themesKeys = Object.keys(themes)
+
+  if (process.env.NODE_ENV === 'production') {
+    // we don't show 'base' and 'fontAwesome' themes in production
+    _.pull(themesKeys, 'base', 'fontAwesome')
+  }
+
+  return themesKeys.map(key => ({ text: _.startCase(key), value: key as ThemeName }))
+}
 
 export type ThemeContextData = {
   themeName: ThemeName
@@ -20,7 +24,7 @@ export type ThemeContextData = {
 
 export const themeContextDefaults: ThemeContextData = {
   themeName: 'teams',
-  themeOptions,
+  themeOptions: getThemeOptions(),
   changeTheme: () => {},
 }
 

@@ -7,7 +7,7 @@ import menuItemAsToolbarButtonBehavior from './menuItemAsToolbarButtonBehavior'
  * Implements ARIA Toolbar design pattern.
  * Child item components need to have menuItemAsToolbarButtonBehavior assigned.
  * @specification
- * Adds role 'toolbar' to 'root' component's part.
+ * Adds role 'toolbar' to 'root' slot.
  * Embeds component into FocusZone.
  * Provides arrow key navigation in bidirectional direction.
  * When component's container element receives focus, focus will be set to the default focusable child element of the component.

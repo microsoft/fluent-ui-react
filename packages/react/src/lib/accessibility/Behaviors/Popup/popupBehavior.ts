@@ -5,11 +5,11 @@ import { PopupEvents, PopupEventsArray } from '../../../../components/Popup/Popu
 
 /**
  * @description
- * Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
+ * Adds tabIndex='0' to 'trigger' slot, if it is not tabbable element and no tabIndex attribute provided.
  *
  * @specification
- * Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Does not set the attribute otherwise.
- * Adds attribute 'role=complementary' to 'popup' component's part.
+ * Adds attribute 'aria-disabled=true' to 'trigger' slot if 'disabled' property is true. Does not set the attribute otherwise.
+ * Adds attribute 'role=complementary' to 'popup' slot.
  */
 const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
   const onAsArray = _.isArray(props.on) ? props.on : [props.on]

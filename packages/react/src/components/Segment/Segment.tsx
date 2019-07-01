@@ -24,6 +24,9 @@ export interface SegmentProps
    */
   accessibility?: Accessibility
 
+  /** An segment can show it is currently unable to be interacted with. */
+  disabled?: boolean
+
   /** A segment can have its colors inverted for contrast. */
   inverted?: boolean
 }
@@ -37,6 +40,7 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
     }),
+    disabled: PropTypes.bool,
     inverted: PropTypes.bool,
     rtlAttributes: PropTypes.func,
   }
