@@ -6,16 +6,6 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
-      title="Icon"
-      description="A slider can have an icon."
-      examplePath="components/Slider/Variations/SliderExampleIcon"
-    />
-    <ComponentExample
-      title="Icon position"
-      description="The icon inside the slider can be positioned at the end of the slider."
-      examplePath="components/Slider/Variations/SliderExampleIconPosition"
-    />
-    <ComponentExample
       title="Vertical"
       description="A slider can be displayed vertically."
       examplePath="components/Slider/Variations/SliderExampleVertical"

@@ -37,7 +37,7 @@ export interface SliderProps
   accessibility?: Accessibility
 
   /** The default value of the slider. */
-  defaultValue?: SupportedIntrinsicInputProps['defaultValue'] // TODO 'value' type is React.ReactText but it doesn't work for 'defaultValue'
+  defaultValue?: SupportedIntrinsicInputProps['defaultValue']
 
   /**
    * A slider can be read-only and unable to change states.
@@ -70,16 +70,16 @@ export interface SliderProps
   inputRef?: React.Ref<HTMLElement>
 
   /**
-   * The minimum value of the slider
-   * @default 0
-   */
-  min?: SupportedIntrinsicInputProps['min']
-
-  /**
    * The maximum value of the slider.
    * @default 100
    */
   max?: SupportedIntrinsicInputProps['max']
+
+  /**
+   * The minimum value of the slider
+   * @default 0
+   */
+  min?: SupportedIntrinsicInputProps['min']
 
   /**
    * Called after item checked state is changed.
@@ -129,26 +129,27 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
     iconPosition: PropTypes.oneOf(['start', 'end']),
     input: customPropTypes.itemShorthand,
     inputRef: customPropTypes.ref,
+    max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    min: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func,
+    step: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     vertical: PropTypes.bool,
   }
 
   static defaultProps: SliderProps = {
     accessibility: sliderBehavior,
-    defaultValue: '50',
-    iconPosition: 'start',
-    min: 0,
-    max: 100,
-    step: 1,
-    type: 'range',
     getA11yValueMessageOnChange: ({ value }) => String(value),
+    iconPosition: 'start',
+    max: 100,
+    min: 0,
+    step: 1,
   }
 
   static autoControlledProps = ['value']
 
-  getInitialAutoControlledState(): SliderState {
-    return { value: undefined, isFromKeyboard: false }
+  getInitialAutoControlledState(): Partial<SliderState> {
+    return { value: '50' }
   }
 
   handleChange = (e: React.ChangeEvent) => {
@@ -181,9 +182,10 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
     styles,
     unhandledProps,
   }: RenderResultConfig<SliderProps>) {
-    const { iconPosition, input, inputRef, type } = this.props
-    const { value } = this.state
+    const { iconPosition, input, inputRef } = this.props
+    const { value = '' } = this.state
     const [htmlInputProps, restProps] = partitionHTMLProps(unhandledProps)
+    const type = 'range'
 
     return (
       <ElementType
@@ -228,7 +230,6 @@ Slider.slotClassNames = {
 
 /**
  * A slider is an input that allows the user to choose a value from within a specific range of values.
- * Sliders typically have a slider thumb that can be moved along a bar or track to change the value of the slider.
  * @accessibility
  * Implements [ARIA Slider](https://www.w3.org/TR/wai-aria-practices-1.1/#slider) design pattern.
  */

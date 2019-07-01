@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Slider } from '@stardust-ui/react'
 
-const SliderExample = () => <Slider />
+const SliderExampleShorthand = () => <Slider />
 
-export default SliderExample
+export default SliderExampleShorthand

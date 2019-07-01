@@ -10,11 +10,6 @@ const Types = () => (
       description="A default slider."
       examplePath="components/Slider/Types/SliderExample"
     />
-    <ComponentExample
-      title="Disabled"
-      description="A slider can be read-only and unable to change states."
-      examplePath="components/Slider/Types/SliderExampleDisabled"
-    />
   </ExampleSection>
 )
 
