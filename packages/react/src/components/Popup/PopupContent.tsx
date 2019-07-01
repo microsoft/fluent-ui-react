@@ -16,6 +16,11 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
+import {
+  FocusTrapZone,
+  FocusTrapZoneProps,
+  AutoFocusZoneProps,
+} from '../../lib/accessibility/FocusZone'
 import { defaultBehavior } from '../../lib/accessibility'
 import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
@@ -53,6 +58,12 @@ export interface PopupContentProps
 
   /** A ref to a pointer element. */
   pointerRef?: React.Ref<Element>
+
+  /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value. */
+  trapFocus?: boolean | FocusTrapZoneProps
+
+  /** Controls whether or not auto focus should be applied, using boolean or AutoFocusZoneProps type value. */
+  autoFocus?: boolean | AutoFocusZoneProps
 
   /**
    * @deprecated
@@ -100,7 +111,7 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
     const { children, content, pointing, pointerRef } = this.props
 
     return (
-      <ElementType
+      <FocusTrapZone
         className={classes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
         {...accessibility.attributes.root}
@@ -123,7 +134,7 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
             },
           },
         )}
-      </ElementType>
+      </FocusTrapZone>
     )
   }
 }
