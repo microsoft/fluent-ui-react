@@ -61,7 +61,7 @@ class ToolbarCustomItem extends UIComponent<
 > {
   static displayName = 'ToolbarCustomItem'
 
-  static className = 'ui-toolbar__custom-item'
+  static className = 'ui-toolbar__customitem'
 
   static create: Function
 
@@ -96,11 +96,11 @@ class ToolbarCustomItem extends UIComponent<
     return (
       <ElementType
         {...accessibility.attributes.root}
+        {...{ [IS_FOCUSABLE_ATTRIBUTE]: focusable }}
         {...unhandledProps}
         className={classes.root}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
-        {...{ [IS_FOCUSABLE_ATTRIBUTE]: focusable }}
       >
         {childrenExist(children) ? children : content}
       </ElementType>
