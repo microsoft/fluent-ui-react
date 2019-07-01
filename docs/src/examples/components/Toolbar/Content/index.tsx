@@ -1,5 +1,7 @@
+import { Alert } from '@stardust-ui/react'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
+
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
@@ -29,7 +31,12 @@ const Content = () => (
       title="Toolbar can contain custom content"
       description="Toolbar item can contain custom content."
       examplePath="components/Toolbar/Content/ToolbarExampleCustomContent"
-    />
+    >
+      <Alert warning>
+        When <code>custom</code> kind is used it is the responsibility of the consumer to verify
+        accessibility and styling aspects of the component and handle them correctly.
+      </Alert>
+    </ComponentExample>
   </ExampleSection>
 )
 
