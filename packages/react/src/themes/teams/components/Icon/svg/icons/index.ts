@@ -3,7 +3,6 @@ import { TeamsSvgIconSpec } from '../types'
 import accept from './accept'
 import add from './add'
 import addParticipant from './addParticipant'
-import alert from './alert'
 import arrowUp from './arrowUp'
 import arrowDown from './arrowDown'
 import ban from './ban'
@@ -54,6 +53,7 @@ import email from './email'
 import emoji from './emoji'
 import error from './error'
 import exclamationCircle from './exclamationCircle'
+import exclamationTriangle from './exclamationTriangle'
 import eye from './eye'
 import eyeFriendlier from './eyeFriendlier'
 import eyeSlash from './eyeSlash'
@@ -111,7 +111,7 @@ import redo from './redo'
 import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
-import shareRecording from './shareRecording'
+import shareAlt from './shareAlt'
 import skypeLogo from './skypeLogo'
 import search from './search'
 import send from './send'
@@ -142,7 +142,6 @@ import yammer from './yammer'
 
 export default {
   'stardust-circle': stardustCircle,
-  alert,
   accept,
   add,
   'arrow-up': arrowUp,
@@ -196,6 +195,7 @@ export default {
   emoji,
   error,
   'exclamation-circle': exclamationCircle,
+  'exclamation-triangle': exclamationTriangle,
   eye,
   'eye-friendlier': eyeFriendlier,
   'eye-slash': eyeSlash,
@@ -250,7 +250,7 @@ export default {
   search,
   send,
   settings,
-  'share-recording': shareRecording,
+  'share-alt': shareAlt,
   star,
   sticker,
   strike,
