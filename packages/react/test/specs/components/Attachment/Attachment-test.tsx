@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { isConformant, implementsShorthandProp, handlesAccessibility } from 'test/specs/commonTests'
-import { mountWithProvider } from 'test/utils'
+import { mountWithProvider, findIntrinsicElement } from 'test/utils'
 import * as keyboardKey from 'keyboard-key'
 
 import Attachment from 'src/components/Attachment/Attachment'
@@ -25,7 +25,7 @@ describe('Attachment', () => {
     test('handleClick is executed when Enter is pressed for attachment, not for more option button', () => {
       const onClickAttachment = jest.fn()
       const onClickButton = jest.fn()
-      const attachement = mountWithProvider(
+      const attachment = mountWithProvider(
         <Attachment
           actionable
           action={{
@@ -35,18 +35,16 @@ describe('Attachment', () => {
           onClick={onClickAttachment}
         />,
       )
-      const moreOptionButton = attachement.find(`.${Attachment.className}__action`)
-
-      attachement.simulate('keydown', { keyCode: keyboardKey.Enter })
+      attachment
+        .find(`.${Attachment.className}`)
+        .simulate('keydown', { keyCode: keyboardKey.Enter })
       expect(onClickAttachment).toHaveBeenCalledTimes(1)
 
       onClickAttachment.mockClear()
-      moreOptionButton.simulate('keydown', { keyCode: keyboardKey.Enter })
+      findIntrinsicElement(attachment, `.${Attachment.slotClassNames.action}`).simulate('keydown', {
+        keyCode: keyboardKey.Enter,
+      })
       expect(onClickAttachment).not.toBeCalled()
-
-      // simulate the similar behavior as browser does when Enter key is pressed on button element
-      moreOptionButton.simulate('click')
-      expect(onClickButton).toHaveBeenCalledTimes(1)
     })
   })
 })
