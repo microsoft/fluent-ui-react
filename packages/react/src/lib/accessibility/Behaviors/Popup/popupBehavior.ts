@@ -9,7 +9,8 @@ import { PopupEvents, PopupEventsArray } from '../../../../components/Popup/Popu
  *
  * @specification
  * Adds attribute 'aria-disabled=true' to 'trigger' slot if 'disabled' property is true. Does not set the attribute otherwise.
- * Adds attribute 'role=complementary' to 'popup' slot.
+ * Adds attribute 'role=dialog' to 'popup' slot if 'trapFocus' property is true. Sets the attribute to 'complementary' otherwise.
+ * Adds attribute 'aria-modal=true' to 'popup' slot if 'trapFocus' property is true. Does not set the attribute otherwise.
  */
 const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
   const onAsArray = _.isArray(props.on) ? props.on : [props.on]
