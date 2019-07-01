@@ -32,12 +32,7 @@ import {
 } from '../../lib/positioner'
 import PopupContent from './PopupContent'
 import { popupBehavior } from '../../lib/accessibility'
-import {
-  AutoFocusZone,
-  AutoFocusZoneProps,
-  FocusTrapZone,
-  FocusTrapZoneProps,
-} from '../../lib/accessibility/FocusZone'
+import { AutoFocusZoneProps, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
@@ -60,7 +55,7 @@ export interface PopupProps
   /**
    * Accessibility behavior if overridden by the user.
    * @default popupBehavior
-   * @available popupFocusTrapBehavior, dialogBehavior
+   * @available dialogBehavior
    * */
   accessibility?: Accessibility
 
@@ -114,6 +109,12 @@ export interface PopupProps
 
   /** Ref for Popup content DOM node. */
   contentRef?: React.Ref<HTMLElement>
+
+  /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value. */
+  trapFocus?: boolean | FocusTrapZoneProps
+
+  /** Controls whether or not auto focus should be applied, using boolean or AutoFocusZoneProps type value. */
+  autoFocus?: boolean | AutoFocusZoneProps
 }
 
 export interface PopupState {
@@ -123,7 +124,10 @@ export interface PopupState {
 /**
  * A Popup displays additional information on top of a page.
  * @accessibility
- * Do use popupFocusTrapBehavior if the focus needs to be trapped inside of the Popup.
+ * Do set `trapFocus` if the focus needs to be trapped inside of the Popup.
+ * Don't use `trapFocus` for `inline` popup, as it leads to broken behavior for screen reader users.
+ * Beware of using `autoFocus` as it just grabs focus and do not traps it. User is able to tab out from popup,
+ * so consider to use `inline` prop to save a correct tab order.
  * If Popup's content is lazy loaded and focus needs to be trapped inside - make sure to use state change to trigger componentDidUpdate,
  * so the focus can be set correctly to the first tabbable element inside Popup or manually set focus to the element inside once content is loaded.
  */
@@ -168,6 +172,8 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     unstable_pinned: PropTypes.bool,
     content: customPropTypes.shorthandAllowingChildren,
     contentRef: customPropTypes.ref,
+    trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+    autoFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }
 
   static defaultProps: PopupProps = {
@@ -212,9 +218,22 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     rtl,
     accessibility,
   }: RenderResultConfig<PopupProps>): React.ReactNode {
-    const { inline, mountNode } = this.props
+    const { inline, mountNode, trapFocus, autoFocus } = this.props
     const { open } = this.state
     const popupContent = open && this.renderPopupContent(classes.popup, rtl, accessibility)
+
+    if (process.env.NODE_ENV !== 'production') {
+      if (inline && trapFocus) {
+        console.warn(
+          'Using "trapFocus" in inline popup leads to broken behavior for screen reader users.',
+        )
+      }
+      if (!inline && autoFocus) {
+        console.warn(
+          'Beware, "autoFocus" prop will just grab focus at the moment of mount and will not trap it. As user is able to TAB out from popup, better use "inline" prop to keep correct tab order.',
+        )
+      }
+    }
 
     return (
       <>
@@ -414,11 +433,19 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     accessibility: ReactAccessibilityBehavior,
     { placement, scheduleUpdate }: PopperChildrenProps,
   ) => {
-    const { content: propsContent, renderContent, contentRef, mountDocument, pointing } = this.props
+    const {
+      content: propsContent,
+      renderContent,
+      contentRef,
+      mountDocument,
+      pointing,
+      trapFocus,
+      autoFocus,
+    } = this.props
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
     const documentRef = toRefObject(mountDocument)
 
-    const popupWrapperAttributes = {
+    const popupContentAttributes = {
       ...(rtl && { dir: 'rtl' }),
       ...accessibility.attributes.popup,
       ...accessibility.keyHandlers.popup,
@@ -426,30 +453,14 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       ...this.getContentProps(),
     }
 
-    const focusTrapProps = {
-      ...(typeof accessibility.focusTrap === 'boolean' ? {} : accessibility.focusTrap),
-      ...popupWrapperAttributes,
-    } as FocusTrapZoneProps
-
-    const autoFocusProps = {
-      ...(typeof accessibility.autoFocus === 'boolean' ? {} : accessibility.autoFocus),
-      ...popupWrapperAttributes,
-    } as AutoFocusZoneProps
-
-    /**
-     * if there is no focus trap  or auto focus wrapper, we should apply
-     * HTML attributes and positioning to popup content directly
-     */
-    const popupContentAttributes =
-      accessibility.focusTrap || accessibility.autoFocus ? {} : popupWrapperAttributes
-
     const popupContent = Popup.Content.create(content, {
       defaultProps: {
         ...popupContentAttributes,
         placement,
         pointing,
         pointerRef: this.pointerTargetRef,
-        unstable_wrapped: accessibility.focusTrap || accessibility.autoFocus,
+        trapFocus,
+        autoFocus,
       },
       overrideProps: this.getContentProps,
     })
@@ -465,13 +476,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
                 handleRef(nestingRef, domElement)
               }}
             >
-              {accessibility.focusTrap ? (
-                <FocusTrapZone {...focusTrapProps}>{popupContent}</FocusTrapZone>
-              ) : accessibility.autoFocus ? (
-                <AutoFocusZone {...autoFocusProps}>{popupContent}</AutoFocusZone>
-              ) : (
-                popupContent
-              )}
+              {popupContent}
             </Ref>
 
             <EventListener

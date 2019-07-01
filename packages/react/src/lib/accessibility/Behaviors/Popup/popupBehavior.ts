@@ -20,7 +20,8 @@ const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
         'aria-disabled': props.disabled,
       },
       popup: {
-        role: 'complementary',
+        role: props.trapFocus ? 'dialog' : 'complementary',
+        'aria-modal': props.trapFocus ? true : undefined,
       },
     },
     keyActions: {
@@ -84,6 +85,8 @@ const getAriaAttributeFromProps = (
 export default popupBehavior
 
 export type PopupBehaviorProps = {
+  /** Indicates if focus should be trapped inside popup's container. */
+  trapFocus?: boolean | object
   /** Events triggering the popup. */
   on?: PopupEvents | PopupEventsArray
   /** Indicates if popup's trigger is disabled. */

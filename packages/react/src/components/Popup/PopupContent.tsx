@@ -20,6 +20,7 @@ import {
   FocusTrapZone,
   FocusTrapZoneProps,
   AutoFocusZoneProps,
+  AutoFocusZone,
 } from '../../lib/accessibility/FocusZone'
 import { defaultBehavior } from '../../lib/accessibility'
 import { PopperChildrenProps } from '../../lib/positioner'
@@ -64,13 +65,6 @@ export interface PopupContentProps
 
   /** Controls whether or not auto focus should be applied, using boolean or AutoFocusZoneProps type value. */
   autoFocus?: boolean | AutoFocusZoneProps
-
-  /**
-   * @deprecated
-   * Indicates that PopupContent is wrapped with FocusZone. Do not use it, it used only for internal implementation and
-   * will be removed in future releases.
-   */
-  unstable_wrapped?: boolean
 }
 
 class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
@@ -86,7 +80,8 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
     pointerRef: customPropTypes.ref,
-    unstable_wrapped: PropTypes.bool,
+    trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+    autoFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }
 
   static defaultProps = {
@@ -108,23 +103,30 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
     unhandledProps,
     styles,
   }: RenderResultConfig<PopupContentProps>): React.ReactNode {
-    const { children, content, pointing, pointerRef } = this.props
+    const { children, content, pointing, pointerRef, trapFocus, autoFocus } = this.props
+    const focusTrapZoneProps: FocusTrapZoneProps | {} =
+      (_.keys(trapFocus).length && trapFocus) || {}
+    const autoFocusZoneProps: AutoFocusZoneProps | {} =
+      (_.keys(autoFocus).length && autoFocus) || {}
 
-    return (
-      <FocusTrapZone
-        className={classes.root}
-        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-      >
+    const popupContentProps: PopupContentProps = {
+      className: classes.root,
+      ...rtlTextContainer.getAttributes({ forElements: [children, content] }),
+      ...accessibility.attributes.root,
+      ...unhandledProps,
+      onMouseEnter: this.handleMouseEnter,
+      onMouseLeave: this.handleMouseLeave,
+      ...focusTrapZoneProps,
+      ...autoFocusZoneProps,
+    }
+
+    const popupContent = (
+      <>
         {pointing && (
           <Ref innerRef={pointerRef}>
             {Box.create({}, { defaultProps: { styles: styles.pointer } })}
           </Ref>
         )}
-
         {Box.create(
           {},
           {
@@ -134,7 +136,15 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
             },
           },
         )}
-      </FocusTrapZone>
+      </>
+    )
+
+    return trapFocus ? (
+      <FocusTrapZone {...popupContentProps}>{popupContent}</FocusTrapZone>
+    ) : autoFocus ? (
+      <AutoFocusZone {...popupContentProps}>{popupContent}</AutoFocusZone>
+    ) : (
+      <ElementType {...popupContentProps}>{popupContent}</ElementType>
     )
   }
 }

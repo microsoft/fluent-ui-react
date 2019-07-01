@@ -1,6 +1,5 @@
 import { Accessibility, AccessibilityAttributes } from '../../types'
-import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
-import { PopupBehaviorProps } from '../Popup/popupBehavior'
+import popupBehavior, { PopupBehaviorProps } from '../Popup/popupBehavior'
 
 /**
  * @description
@@ -16,7 +15,7 @@ import { PopupBehaviorProps } from '../Popup/popupBehavior'
  * Traps focus inside component.
  */
 const dialogBehavior: Accessibility<DialogBehaviorProps> = props => {
-  const behaviorData = popupFocusTrapBehavior(props)
+  const behaviorData = popupBehavior(props)
 
   const defaultAriaLabelledBy = getDefaultAriaLabelledBy(props)
   const defaultAriaDescribedBy = getDefaultAriaDescribedBy(props)

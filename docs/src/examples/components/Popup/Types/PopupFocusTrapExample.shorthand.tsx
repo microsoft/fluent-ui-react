@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { Button, Flex, Input, Header, Popup, popupFocusTrapBehavior } from '@stardust-ui/react'
+import { Button, Flex, Input, Header, Popup } from '@stardust-ui/react'
 
 const PopupFocusTrapExample = () => (
   <Flex gap="gap.smaller">
     <Popup
       /** Provided behavior introduces focus trap to popup content. */
-      accessibility={popupFocusTrapBehavior}
+      trapFocus
       trigger={<Button icon="expand" content="Trap focus on appearence" />}
       content={{
         content: (
