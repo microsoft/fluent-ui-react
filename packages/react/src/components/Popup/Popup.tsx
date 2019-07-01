@@ -112,8 +112,8 @@ export interface PopupProps
   /** Element to be rendered in-place where the popup is defined. */
   trigger?: JSX.Element
 
-  /** Trigger is responsible for being focusable */
-  triggerHandlesFocus?: boolean
+  /** should trigger be made tabbable */
+  shouldTriggerBeTabbable?: boolean
 
   /** Ref for Popup content DOM node. */
   contentRef?: React.Ref<HTMLElement>
@@ -168,7 +168,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     renderContent: PropTypes.func,
     target: PropTypes.any,
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
-    triggerHandlesFocus: PropTypes.bool,
+    shouldTriggerBeTabbable: PropTypes.bool,
     unstable_pinned: PropTypes.bool,
     content: customPropTypes.shorthandAllowingChildren,
     contentRef: customPropTypes.ref,
@@ -182,6 +182,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     position: 'above',
     on: 'click',
     mouseLeaveDelay: 500,
+    shouldTriggerBeTabbable: true,
   }
 
   static autoControlledProps = ['open']

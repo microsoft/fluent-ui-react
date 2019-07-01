@@ -19,7 +19,7 @@ const PopupContextOnElement = () => (
         <Button content="Random button" onClick={() => alert('Click!')} />
       </div>
     }
-    triggerHandlesFocus={true}
+    shouldTriggerBeTabbable={false}
     content={contentWithButtons}
     accessibility={popupFocusTrapBehavior}
     on="context"
