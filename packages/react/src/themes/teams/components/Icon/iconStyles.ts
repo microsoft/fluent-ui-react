@@ -23,10 +23,8 @@ const getBorderedStyles = (boxShadowColor: string): ICSSInJSStyle => {
   }
 }
 
-const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier, v: IconVariables): string => {
-  if (!sizeModifier) {
-    return v[`${size}Size`]
-  }
+const getIconSize = (size: SizeValue, v: IconVariables): string => {
+  const sizeModifier: IconSizeModifier = v.sizeModifier
 
   const modifiedSizes = {
     large: {
@@ -35,7 +33,9 @@ const getIconSize = (size: SizeValue, sizeModifier: IconSizeModifier, v: IconVar
     },
   }
 
-  return modifiedSizes[size] && pxToRem(modifiedSizes[size][sizeModifier])
+  return sizeModifier && modifiedSizes[size] && modifiedSizes[size][sizeModifier]
+    ? pxToRem(modifiedSizes[size][sizeModifier])
+    : v[`${size}Size`]
 }
 
 const getIconColor = (variables, colors: StrictColorScheme<ItemType<typeof iconColorAreas>>) => {
@@ -80,7 +80,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
   svg: ({ props: { size, color, disabled, rotate }, variables: v }): ICSSInJSStyle => {
     const colors = v.colorScheme[color]
-    const iconSizeInRems = getIconSize(size, v.sizeModifier, v)
+    const iconSizeInRems = getIconSize(size, v)
 
     return {
       display: 'block',

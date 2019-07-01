@@ -9,12 +9,12 @@ export const iconColorAreas = stringLiteralsArray('foreground')
 export type IconColorSchemeMapping = TeamsSchemeMappingWithAreas<ItemType<typeof iconColorAreas>>
 
 export interface IconVariables extends BaseIconVariables {
-  colorScheme?: IconColorSchemeMapping
-  brandColor?: string
+  colorScheme: IconColorSchemeMapping
+  brandColor: string
   secondaryColor: string
-  redColor?: string
+  redColor: string
 
-  sizeModifier?: IconSizeModifier
+  sizeModifier: IconSizeModifier
 }
 
 export default (siteVars): Partial<IconVariables> => ({
