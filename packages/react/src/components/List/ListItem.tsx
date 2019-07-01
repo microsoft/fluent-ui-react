@@ -132,9 +132,6 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
-  wrapWithFlex = (part: React.ReactNode, shouldWrap: boolean) =>
-    shouldWrap ? <Flex gap="gap.smaller">{part}</Flex> : part
-
   renderComponent({ classes, accessibility, unhandledProps, styles }) {
     const { as, debug, endMedia, media, content, contentMedia, header, headerMedia } = this.props
 
@@ -196,7 +193,6 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
     return (
       <Flex
         vAlign="center"
-        gap="gap.smaller"
         as={as}
         debug={debug}
         className={classes.root}
@@ -209,14 +205,9 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
         {mediaElement}
 
         <Flex.Item grow>
-          <Flex
-            className={ListItem.slotClassNames.main}
-            column={hasBothParts}
-            gap={hasBothParts ? undefined : 'gap.small'}
-            styles={styles.main}
-          >
-            {this.wrapWithFlex(headerPart, hasBothParts)}
-            {this.wrapWithFlex(contentPart, hasBothParts)}
+          <Flex className={ListItem.slotClassNames.main} column={hasBothParts} styles={styles.main}>
+            {hasBothParts ? <Flex>{headerPart}</Flex> : headerPart}
+            {hasBothParts ? <Flex>{contentPart}</Flex> : contentPart}
           </Flex>
         </Flex.Item>
         {endMediaElement}
