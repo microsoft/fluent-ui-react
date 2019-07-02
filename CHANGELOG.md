@@ -16,7 +16,10 @@
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Fixes
 - Fix `Dropdown` and `DropdownItem` styles to match [redlines] - modified `ListItem` and ListItemStyles to not set gap in component definition @bcalvery ([#1523](https://github.com/stardust-ui/react/pull/1523))
+- Fix `Dropdown` ArrowLeft keydown behavior for multiple variants @silviuavram ([#1564](https://github.com/stardust-ui/react/pull/1564))
 
 ### Features
 - Add ARIA attributes and focus handling for `RadioGroup` in `Toolbar` @sophieH29 ([#1526](https://github.com/stardust-ui/react/pull/1526))
