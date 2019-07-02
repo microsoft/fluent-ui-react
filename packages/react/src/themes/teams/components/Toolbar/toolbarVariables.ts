@@ -73,6 +73,9 @@ export interface ToolbarVariables {
 
   menuDividerBorder: string // border color
   menuDividerMargin: string
+
+  customItemHorizontalPadding: string
+  customItemVerticalPadding: string
 }
 
 export default (siteVars: any): ToolbarVariables => ({
@@ -135,4 +138,7 @@ export default (siteVars: any): ToolbarVariables => ({
 
   menuDividerBorder: undefined,
   menuDividerMargin: `${pxToRem(8)} 0`,
+
+  customItemHorizontalPadding: pxToRem(16),
+  customItemVerticalPadding: pxToRem(4),
 })
