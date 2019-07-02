@@ -8,6 +8,7 @@ export { default as felaRenderer } from './felaRenderer'
 export { default as toCompactArray } from './toCompactArray'
 export { default as rtlTextContainer } from './rtlTextContainer'
 export { default as stringLiteralsArray } from './stringLiteralsArray'
+export { default as getOrGenerateIdFromShorthand } from './getOrGenerateIdFromShorthand'
 
 export * from './factories'
 export { default as callable } from './callable'

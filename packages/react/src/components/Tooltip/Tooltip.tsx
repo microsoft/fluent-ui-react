@@ -17,6 +17,7 @@ import {
   commonPropTypes,
   isFromKeyboard,
   setWhatInputSource,
+  getOrGenerateIdFromShorthand,
 } from '../../lib'
 import { ShorthandValue, Props } from '../../types'
 import {
@@ -27,6 +28,7 @@ import {
   PopperChildrenProps,
 } from '../../lib/positioner'
 import TooltipContent from './TooltipContent'
+import { tooltipBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
@@ -36,6 +38,7 @@ export interface TooltipSlotClassNames {
 
 export interface TooltipState {
   open: boolean
+  tooltipId: string
 }
 
 export interface TooltipProps
@@ -116,6 +119,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     position: 'above',
     mouseLeaveDelay: 500,
     pointing: true,
+    accessibility: tooltipBehavior,
   }
 
   static autoControlledProps = ['open']
@@ -123,8 +127,22 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   pointerTargetRef = React.createRef<HTMLElement>()
   triggerRef = React.createRef<HTMLElement>()
   contentRef = React.createRef<HTMLElement>()
-
   closeTimeoutId
+
+  actionHandlers = {
+    close: e => {
+      this.setTooltipOpen(false, e)
+    },
+  }
+
+  static getAutoControlledStateFromProps(
+    props: TooltipProps,
+    state: TooltipState,
+  ): Partial<TooltipState> {
+    return {
+      tooltipId: getOrGenerateIdFromShorthand('tooltip-content-', props.content, state.tooltipId),
+    }
+  }
 
   renderComponent({
     classes,
