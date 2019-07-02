@@ -46,7 +46,7 @@ describe('Attachment', () => {
       expect(onClickAttachment).toHaveBeenCalledTimes(1)
     })
 
-    test('handleClick is Not executed when Enter is pressed on more option button', () => {
+    test('handleClick is Not executed on attachment element, when Enter is pressed on more option button', () => {
       const onClickAttachment = jest.fn()
       const onClickButton = jest.fn()
       const attachment = getAttachment(onClickAttachment, onClickButton)
