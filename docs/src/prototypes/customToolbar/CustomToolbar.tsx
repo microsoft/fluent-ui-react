@@ -57,7 +57,7 @@ type CustomToolbarLayout = (props: CustomToolbarProps) => CustomToolbarItem[]
 const commonLayout: CustomToolbarLayout = props =>
   [
     props.isRecording && {
-      key: 'recording2',
+      key: 'recording',
       kind: 'custom' as ToolbarItemShorthandKinds,
       focusable: true,
       content: (
@@ -67,7 +67,7 @@ const commonLayout: CustomToolbarLayout = props =>
           variables={siteVars => ({ borderColor: siteVars.colors.white })}
         />
       ),
-      variables: { isCtItemPrimary: true, isCtItemRecording: true },
+      variables: { isCtItemPrimary: true, isCtItemIndicator: true },
     },
 
     {
@@ -75,7 +75,7 @@ const commonLayout: CustomToolbarLayout = props =>
       kind: 'custom' as ToolbarItemShorthandKinds,
       focusable: true,
       content: <Text>10:45</Text>,
-      variables: { isCtItemPrimary: true, isCtItemTimer: true },
+      variables: { isCtItemPrimary: true, isCtItemIndicator: true },
     },
 
     { key: 'timer-divider', kind: 'divider' as ToolbarItemShorthandKinds },

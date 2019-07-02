@@ -13,29 +13,35 @@ type CustomToolbarVariables = {
   isCtItemDanger?: boolean
   isCtItemPrimary?: boolean
   isCtItemIconNoFill?: boolean
-  isCtItemRecording?: boolean
-  isCtItemTimer?: boolean
+  isCtItemIndicator?: boolean
   isCtItemWithNotification?: boolean
 
   ctBorderRadius: string
   ctHeight: string
 
-  ctItemColor: string
   ctItemBackground: string
-  ctItemColorHover: string
   ctItemBackgroundHover: string
+  ctItemBorderColorFocus: string
+  ctItemColor: string
+  ctItemColorFocus: string
+  ctItemColorHover: string
 
   ctItemActiveColor: string
   ctItemActiveBackground: string
   ctItemActiveBackgroundOverlay: string
 
-  ctItemPrimaryBackground: string
-  ctItemPrimaryBackgroundHover: string
-  ctItemPrimaryColorHover: string
-
   ctItemDangerBackground: string
   ctItemDangerColorHover: string
   ctItemDangerBackgroundHover: string
+
+  ctItemIndicatorPadding: string
+
+  ctItemNotificationBackgroundColor: string
+  ctItemNotificationSize: string
+
+  ctItemPrimaryBackground: string
+  ctItemPrimaryBackgroundHover: string
+  ctItemPrimaryColorHover: string
 }
 
 export const darkThemeOverrides: ThemeInput = {
@@ -45,22 +51,29 @@ export const darkThemeOverrides: ThemeInput = {
       ctHeight: '4rem',
 
       ctItemBackground: 'rgba(41,40,40,.9)',
-      ctItemColor: '#fff',
-
-      ctItemDangerBackground: '#9d2f42',
-
-      ctItemPrimaryBackground: 'rgba(59,58,58,.95)',
-
-      ctItemColorHover: '#fff',
       ctItemBackgroundHover: '#343441', // siteVars.colorScheme.brand.backgroundHover1,
-      ctItemPrimaryColorHover: '#fff',
-      ctItemPrimaryBackgroundHover: '#343441', // siteVars.colorScheme.brand.backgroundHover1,
-      ctItemDangerColorHover: '#fff',
-      ctItemDangerBackgroundHover: '#a72037',
-      ctItemActiveColor: '#fff',
+      ctItemBorderColorFocus: '#fff',
+      ctItemColor: '#fff',
+      ctItemColorFocus: '#fff',
+      ctItemColorHover: '#fff',
+
       ctItemActiveBackground: '#343441',
       ctItemActiveBackgroundOverlay:
         'linear-gradient(90deg,rgba(60,62,93,.6),rgba(60,62,93,0) 33%),linear-gradient(135deg,rgba(60,62,93,.6) 33%,rgba(60,62,93,0) 70%),linear-gradient(180deg,rgba(60,62,93,.6) 70%,rgba(60,62,93,0) 94%),linear-gradient(225deg,rgba(60,62,93,.6) 33%,rgba(60,62,93,0) 73%),linear-gradient(270deg,rgba(60,62,93,.6),rgba(60,62,93,0) 33%),linear-gradient(0deg,rgba(98,100,167,.75) 6%,rgba(98,100,167,0) 70%)',
+      ctItemActiveColor: '#fff',
+
+      ctItemDangerBackground: '#9d2f42',
+      ctItemDangerBackgroundHover: '#a72037',
+      ctItemDangerColorHover: '#fff',
+
+      ctItemIndicatorPadding: '8px',
+
+      ctItemNotificationBackgroundColor: 'red',
+      ctItemNotificationSize: '8px',
+
+      ctItemPrimaryBackground: 'rgba(59,58,58,.95)',
+      ctItemPrimaryBackgroundHover: '#343441', // siteVars.colorScheme.brand.backgroundHover1,
+      ctItemPrimaryColorHover: '#fff',
     }),
   },
 
@@ -86,13 +99,12 @@ export const darkThemeOverrides: ThemeInput = {
           background: v.ctItemBackground,
 
           ...(p.isFromKeyboard && {
-            borderColor: 'white',
-            color: v.ctItemColorHover,
+            borderColor: v.ctItemBorderColorFocus,
+            color: v.ctItemColorFocus,
           }),
 
           ...(v.isCtItemPrimary && { background: v.ctItemPrimaryBackground }),
-          ...(v.isCtItemRecording && { padding: '8px' }),
-          ...(v.isCtItemTimer && { padding: '8px' }),
+          ...(v.isCtItemIndicator && { padding: v.ctItemIndicatorPadding }),
         }),
       }),
     },
@@ -128,7 +140,7 @@ export const darkThemeOverrides: ThemeInput = {
                   background: v.ctItemActiveBackgroundOverlay,
 
                   ...(p.isFromKeyboard && {
-                    border: `${pxToRem(2)} solid #fff`,
+                    border: `${pxToRem(2)} solid ${v.ctItemBorderColorFocus}`,
                   }),
                 },
               }),
@@ -160,18 +172,18 @@ export const darkThemeOverrides: ThemeInput = {
               '::after': {
                 content: `''`,
                 position: 'absolute',
-                width: '8px',
-                height: '8px',
+                width: v.ctItemNotificationSize,
+                height: v.ctItemNotificationSize,
                 borderRadius: '50%',
-                background: 'red',
+                background: v.ctItemNotificationBackgroundColor,
                 transform: 'translateX(100%) translateY(-100%)',
               },
             }),
 
             ...(p.isFromKeyboard && {
-              borderColor: 'white',
-              color: v.ctItemColorHover,
               background: v.ctItemBackgroundHover,
+              borderColor: v.ctItemBorderColorFocus,
+              color: v.ctItemColorFocus,
 
               ...(v.isCtItemDanger && {
                 color: v.ctItemDangerColorHover,
