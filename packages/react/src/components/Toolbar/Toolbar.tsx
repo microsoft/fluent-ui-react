@@ -52,13 +52,20 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
-    items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item', 'group', 'toggle']),
+    items: customPropTypes.collectionShorthandWithKindProp([
+      'divider',
+      'item',
+      'group',
+      'toggle',
+      'custom',
+    ]),
   }
 
   static defaultProps = {
     accessibility: toolbarBehavior,
   }
 
+  static CustomItem = ToolbarCustomItem
   static Divider = ToolbarDivider
   static Item = ToolbarItem
   static Menu = ToolbarMenu

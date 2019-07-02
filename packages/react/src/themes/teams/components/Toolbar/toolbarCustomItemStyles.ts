@@ -8,26 +8,38 @@ const toolbarCustomItemStyles: ComponentSlotStylesInput<
   ToolbarVariables
 > = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const { fitted } = p
     const colors = getColorScheme(v.colorScheme)
 
     return {
       backgroundColor: v.background,
+      borderColor: 'transparent',
+      borderWidth: v.borderWidth,
+      borderStyle: 'solid',
       height: v.itemHeight,
       color: v.foreground || colors.foreground1,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      ...(fitted !== true &&
-        fitted !== 'horizontally' && {
-          paddingLeft: '20px', // FIXME: variables
-          paddingRight: '20px',
+      ...(p.fitted !== true &&
+        p.fitted !== 'horizontally' && {
+          paddingLeft: v.customItemHorizontalPadding,
+          paddingRight: v.customItemHorizontalPadding,
         }),
-      ...(fitted !== true &&
-        fitted !== 'vertically' && {
-          paddingTop: '5px',
-          paddingBottom: '5px',
+      ...(p.fitted !== true &&
+        p.fitted !== 'vertically' && {
+          paddingTop: v.customItemVerticalPadding,
+          paddingBottom: v.customItemVerticalPadding,
         }),
+
+      ':focus': {
+        outline: 0,
+      },
+
+      ...(p.isFromKeyboard && {
+        color: v.foregroundFocus || colors.foregroundFocus,
+        backgroundColor: v.backgroundFocus || colors.backgroundFocus,
+        borderColor: v.borderFocus || colors.borderFocus,
+      }),
     }
   },
 }
