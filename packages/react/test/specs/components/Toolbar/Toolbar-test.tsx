@@ -19,6 +19,13 @@ describe('Toolbar', () => {
 
       expect(
         (toolbar
+          .find('ToolbarCustomItem')
+          .first()
+          .prop('variables') as Function)(),
+      ).toEqual(expect.objectContaining({ a: 'toolbar', b: 'overwritten', c: 'customItem' }))
+
+      expect(
+        (toolbar
           .find('ToolbarDivider')
           .first()
           .prop('variables') as Function)(),
@@ -38,6 +45,12 @@ describe('Toolbar', () => {
           variables={{ a: 'toolbar', b: 'toolbar' }}
           items={[
             { key: 1, content: 'toolbar item', variables: { b: 'overwritten', c: 'item' } },
+            {
+              key: 'custom',
+              kind: 'custom',
+              content: 'custom toolbar item',
+              variables: { b: 'overwritten', c: 'customItem' },
+            },
             {
               key: 'd1',
               kind: 'divider',
@@ -61,6 +74,12 @@ describe('Toolbar', () => {
           variables={() => ({ a: 'toolbar', b: 'toolbar' })}
           items={[
             { key: 1, content: 'toolbar item', variables: () => ({ b: 'overwritten', c: 'item' }) },
+            {
+              key: 'custom',
+              kind: 'custom',
+              content: 'custom toolbar item',
+              variables: () => ({ b: 'overwritten', c: 'customItem' }),
+            },
             {
               key: 'd1',
               kind: 'divider',
