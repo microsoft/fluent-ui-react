@@ -10,15 +10,6 @@ import {
   ToolbarItemShorthandKinds,
 } from '@stardust-ui/react'
 
-// TODO:
-//  - [x] Remove CustomToolbarTimer
-//  - [x] Simplify CustomToolbar.tsx helper funcs, use stupid code
-//  - [x] Add more toolbar items
-//  - [x] Update inline styles/variables below to use TMP format (bool vars, styles elsewhere)
-//  - [x] Add kind: 'custom', non-focusable container that renders any control
-//  - [ ] Add all toolbar items (menu, etc)
-//  - [ ] Consider exporting IS_FOCUSABLE_ATTRIBUTE, it is also shown in our accessibility docs
-
 export interface CustomToolbarProps {
   layout?: 'standard' | 'desktop-share' | 'powerpoint-presenter'
 
@@ -151,7 +142,6 @@ const sidebarButtons: CustomToolbarLayout = props => [
         'onSidebarChange',
         props.sidebarSelected === 'participant-add' ? false : 'participant-add',
       ),
-    // TODO: odd to have icon style implementation details leaking here.  works for now, investigate other options.
     variables: { isCtItemIconNoFill: true },
   },
 ]
