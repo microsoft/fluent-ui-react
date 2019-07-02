@@ -65,12 +65,18 @@ export interface AttachmentState {
   isFromKeyboard: boolean
 }
 
+export interface AttachmentSlotClassNames {
+  action: string
+}
+
 class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentState> {
   static create: Function
 
   static className = 'ui-attachment'
 
   static displayName = 'Attachment'
+
+  static slotClassNames: AttachmentSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -121,7 +127,12 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
         )}
         {action &&
           Button.create(action, {
-            defaultProps: { iconOnly: true, text: true, styles: styles.action },
+            defaultProps: {
+              iconOnly: true,
+              text: true,
+              styles: styles.action,
+              className: Attachment.slotClassNames.action,
+            },
           })}
         {!_.isNil(progress) &&
           Box.create('', {
@@ -161,6 +172,9 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
 }
 
 Attachment.create = createShorthandFactory({ Component: Attachment, mappedProp: 'header' })
+Attachment.slotClassNames = {
+  action: `${Attachment.className}__action`,
+}
 
 /**
  * An Attachment displays a file attachment.

@@ -133,6 +133,7 @@ class Sidebar extends React.Component<any, any> {
       left: 0,
       padding: 0,
       maxHeight: '100vh',
+      zIndex: 1000,
     }
 
     const menuSectionStyles: ICSSInJSStyle = {
@@ -246,6 +247,13 @@ class Sidebar extends React.Component<any, any> {
         content: 'Introduction',
         as: NavLink,
         to: '/',
+        styles: menuItemStyles,
+      },
+      {
+        key: 'composition',
+        content: 'Composition',
+        as: NavLink,
+        to: '/composition',
         styles: menuItemStyles,
       },
       {
