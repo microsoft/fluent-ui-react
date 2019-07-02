@@ -150,6 +150,8 @@ export { default as Animation } from './components/Animation/Animation'
 
 export * from './components/Toolbar/Toolbar'
 export { default as Toolbar } from './components/Toolbar/Toolbar'
+export * from './components/Toolbar/ToolbarCustomItem'
+export { default as ToolbarCustomItem } from './components/Toolbar/ToolbarCustomItem'
 export * from './components/Toolbar/ToolbarDivider'
 export { default as ToolbarDivider } from './components/Toolbar/ToolbarDivider'
 export * from './components/Toolbar/ToolbarItem'
