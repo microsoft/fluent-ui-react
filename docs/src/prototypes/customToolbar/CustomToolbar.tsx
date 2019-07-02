@@ -2,14 +2,12 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import {
   Button,
-  Flex,
   Text,
   Toolbar,
   ToolbarItemProps,
   ToolbarCustomItemProps,
   Status,
   ToolbarItemShorthandKinds,
-  isFromKeyboard,
 } from '@stardust-ui/react'
 
 // TODO:
@@ -56,114 +54,75 @@ type CustomToolbarItem =
   | ((render: any) => any)
 type CustomToolbarLayout = (props: CustomToolbarProps) => CustomToolbarItem[]
 
-const FocusableFlexBox = ({ variables = undefined, ...props }) => {
-  const [fromKeyboard, setFromKeyboard] = React.useState(false)
-
-  // TODO: this is possible with investigation see index.ejs
-  // return (
-  //   <div
-  //     tabIndex={0}
-  //     data-is-focusable
-  //     {...props}
-  //   />
-  //
-  // )
-
-  // TODO: conceal in a focusable component or wrapper
-  return (
-    <Flex
-      data-is-focusable
-      {...props}
-      variables={{ focusable: true, isFromKeyboard: fromKeyboard, ...variables }}
-      onFocus={(...args) => {
-        setFromKeyboard(isFromKeyboard())
-        _.invoke(props, 'onFocus', args)
-      }}
-    />
-  )
-}
-
-const commonLayout: CustomToolbarLayout = props => [
-  ...((props.isRecording
-    ? [
-        // TODO: Winner. Meets visual parity with Teams and code is most sane.  Confirm acc with Juraj.
-        // Flexbox has focus
-        {
-          key: 'recording2',
-          kind: 'custom',
-          fitted: 'horizontally',
-          content: (
-            <FocusableFlexBox fill gap="gap.medium" vAlign="center">
-              <Status state="error" title="Recording" />
-            </FocusableFlexBox>
-          ),
-          variables: { primary: true },
-        },
-      ]
-    : []) as any),
-  {
-    key: 'timer-custom',
-    kind: 'custom',
-    variables: { primary: true },
-    fitted: 'horizontally',
-    content: (
-      <FocusableFlexBox fill gap="gap.medium" vAlign="center">
-        10:45
-      </FocusableFlexBox>
-    ),
-  },
-
-  { key: 'timer-divider', kind: 'divider' },
-
-  {
-    active: props.cameraActive,
-    icon: {
-      name: props.cameraActive ? 'call-video' : 'call-video-off',
-      size: 'large',
-    },
-    key: 'camera',
-    onClick: () => _.invoke(props, 'onCameraChange', !props.cameraActive),
-    variables: { primary: true },
-  },
-
-  {
-    active: props.micActive,
-    icon: {
-      name: props.micActive ? 'mic' : 'mic-off',
-      size: 'large',
-    },
-    key: 'mic',
-    onClick: () => _.invoke(props, 'onMicChange', !props.micActive),
-    variables: { primary: true },
-  },
-
-  {
-    active: props.screenShareActive,
-    icon: {
-      name: props.screenShareActive ? 'call-control-close-tray' : 'call-control-present-new',
-      size: 'large',
-    },
-    key: 'screen-share',
-    onClick: () => _.invoke(props, 'onScreenShareChange', !props.screenShareActive),
-    variables: { primary: true },
-  },
-
-  {
-    key: 'more',
-    icon: {
-      name: 'more',
-      size: 'large',
+const commonLayout: CustomToolbarLayout = props =>
+  [
+    props.isRecording && {
+      key: 'recording2',
+      kind: 'custom' as ToolbarItemShorthandKinds,
+      focusable: true,
+      content: (
+        <Status
+          state="error"
+          title="Recording"
+          variables={siteVars => ({ borderColor: siteVars.colors.white })}
+        />
+      ),
+      variables: { isCtItemPrimary: true, isCtItemRecording: true },
     },
 
-    onClick: () => {
-      _.invoke(props, 'onMoreClick')
+    {
+      key: 'timer-custom',
+      kind: 'custom' as ToolbarItemShorthandKinds,
+      focusable: true,
+      content: <Text>10:45</Text>,
+      variables: { isCtItemPrimary: true, isCtItemTimer: true },
     },
 
-    variables: {
-      primary: true,
+    { key: 'timer-divider', kind: 'divider' as ToolbarItemShorthandKinds },
+
+    {
+      active: props.cameraActive,
+      icon: {
+        name: props.cameraActive ? 'call-video' : 'call-video-off',
+        size: 'large',
+      },
+      key: 'camera',
+      onClick: () => _.invoke(props, 'onCameraChange', !props.cameraActive),
+      variables: { isCtItemPrimary: true },
     },
-  },
-]
+
+    {
+      active: props.micActive,
+      icon: {
+        name: props.micActive ? 'mic' : 'mic-off',
+        size: 'large',
+      },
+      key: 'mic',
+      onClick: () => _.invoke(props, 'onMicChange', !props.micActive),
+      variables: { isCtItemPrimary: true },
+    },
+
+    {
+      active: props.screenShareActive,
+      icon: {
+        name: props.screenShareActive ? 'call-control-close-tray' : 'call-control-present-new',
+        size: 'large',
+      },
+      key: 'screen-share',
+      onClick: () => _.invoke(props, 'onScreenShareChange', !props.screenShareActive),
+      variables: { isCtItemPrimary: true },
+    },
+
+    {
+      key: 'more',
+      icon: {
+        name: 'more',
+        size: 'large',
+      },
+      onClick: () => _.invoke(props, 'onMoreClick'),
+      variables: { isCtItemPrimary: true },
+    },
+  ].filter(Boolean)
 
 const sidebarButtons: CustomToolbarLayout = props => [
   {
@@ -176,7 +135,7 @@ const sidebarButtons: CustomToolbarLayout = props => [
     key: 'chat',
     onClick: () =>
       _.invoke(props, 'onSidebarChange', props.sidebarSelected === 'chat' ? false : 'chat'),
-    variables: { hasDot: props.chatHasDot, noFillOnHover: true },
+    variables: { isCtItemWithNotification: props.chatHasDot, isCtItemIconNoFill: true },
   },
   {
     active: props.sidebarSelected === 'participant-add',
@@ -193,7 +152,7 @@ const sidebarButtons: CustomToolbarLayout = props => [
         props.sidebarSelected === 'participant-add' ? false : 'participant-add',
       ),
     // TODO: odd to have icon style implementation details leaking here.  works for now, investigate other options.
-    variables: { noFillOnHover: true },
+    variables: { isCtItemIconNoFill: true },
   },
 ]
 
@@ -204,14 +163,8 @@ const layoutItems = {
       name: 'call-end',
       size: 'large',
     },
-
-    onClick: () => {
-      _.invoke(props, 'onEndCallClick')
-    },
-
-    variables: {
-      danger: true,
-    },
+    onClick: () => _.invoke(props, 'onEndCallClick'),
+    variables: { isCtItemDanger: true },
   }),
 }
 
@@ -242,10 +195,7 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
         name: 'call-control-stop-presenting-new',
         size: 'large',
       },
-
-      onClick: () => {
-        _.invoke(props, 'onStopSharingClick')
-      },
+      onClick: () => _.invoke(props, 'onStopSharingClick'),
     },
 
     {
@@ -255,10 +205,7 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
         rotate: 90,
         outline: true,
       },
-
-      onClick: () => {
-        _.invoke(props, 'onPptPrevClick')
-      },
+      onClick: () => _.invoke(props, 'onPptPrevClick'),
     },
 
     {
@@ -276,9 +223,7 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
         outline: true,
       },
 
-      onClick: () => {
-        _.invoke(props, 'onPptNextClick')
-      },
+      onClick: () => _.invoke(props, 'onPptNextClick'),
     },
 
     layoutItems.endCall(props),
@@ -290,7 +235,7 @@ const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
 
   return (
     <Toolbar
-      variables={{ dividerMargin: 0, borderRadius: 0, itemHeight: '4rem', uBar: true }}
+      variables={{ dividerMargin: 0, borderRadius: 0, itemHeight: '4rem', isCt: true }}
       items={layouts[layout](props)}
     />
   )

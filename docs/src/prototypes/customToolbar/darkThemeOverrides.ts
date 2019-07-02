@@ -1,98 +1,122 @@
-import { ComponentStyleFunctionParam, ThemeInput, pxToRem } from '@stardust-ui/react'
+import {
+  ComponentStyleFunctionParam,
+  ThemeInput,
+  pxToRem,
+  ToolbarProps,
+  ToolbarItemProps,
+  ToolbarCustomItemProps,
+} from '@stardust-ui/react'
+
+type CustomToolbarVariables = {
+  isCt?: boolean
+
+  isCtItemDanger?: boolean
+  isCtItemPrimary?: boolean
+  isCtItemIconNoFill?: boolean
+  isCtItemRecording?: boolean
+  isCtItemTimer?: boolean
+  isCtItemWithNotification?: boolean
+
+  ctBorderRadius: string
+  ctHeight: string
+
+  ctItemColor: string
+  ctItemBackground: string
+  ctItemColorHover: string
+  ctItemBackgroundHover: string
+
+  ctItemActiveColor: string
+  ctItemActiveBackground: string
+  ctItemActiveBackgroundOverlay: string
+
+  ctItemPrimaryBackground: string
+  ctItemPrimaryBackgroundHover: string
+  ctItemPrimaryColorHover: string
+
+  ctItemDangerBackground: string
+  ctItemDangerColorHover: string
+  ctItemDangerBackgroundHover: string
+}
 
 export const darkThemeOverrides: ThemeInput = {
   componentVariables: {
-    Box: siteVars => ({
-      ctBackground: 'rgba(41,40,40,.9)', // HUH: must be kept in sync with ToolbarItem.ctBackground
-    }),
+    Toolbar: (siteVars): CustomToolbarVariables => ({
+      ctBorderRadius: '4px',
+      ctHeight: '4rem',
 
-    Toolbar: siteVars => ({
-      ctColor: '#fff',
-      ctBackground: 'rgba(41,40,40,.9)',
-      ctPrimaryBackground: 'rgba(59,58,58,.95)',
-      ctDangerBackground: '#9d2f42',
+      ctItemBackground: 'rgba(41,40,40,.9)',
+      ctItemColor: '#fff',
 
-      ctColorHover: '#fff',
-      ctBackgroundHover: '#343441', // siteVars.colorScheme.brand.backgroundHover1,
-      ctPrimaryColorHover: '#fff',
-      ctPrimaryBackgroundHover: '#343441', // siteVars.colorScheme.brand.backgroundHover1,
-      ctDangerColorHover: '#fff',
-      ctDangerBackgroundHover: '#a72037',
-      ctColorActive: '#fff',
-      ctBackgroundActive: '#343441',
-      ctBackgroundActiveOverlay:
+      ctItemDangerBackground: '#9d2f42',
+
+      ctItemPrimaryBackground: 'rgba(59,58,58,.95)',
+
+      ctItemColorHover: '#fff',
+      ctItemBackgroundHover: '#343441', // siteVars.colorScheme.brand.backgroundHover1,
+      ctItemPrimaryColorHover: '#fff',
+      ctItemPrimaryBackgroundHover: '#343441', // siteVars.colorScheme.brand.backgroundHover1,
+      ctItemDangerColorHover: '#fff',
+      ctItemDangerBackgroundHover: '#a72037',
+      ctItemActiveColor: '#fff',
+      ctItemActiveBackground: '#343441',
+      ctItemActiveBackgroundOverlay:
         'linear-gradient(90deg,rgba(60,62,93,.6),rgba(60,62,93,0) 33%),linear-gradient(135deg,rgba(60,62,93,.6) 33%,rgba(60,62,93,0) 70%),linear-gradient(180deg,rgba(60,62,93,.6) 70%,rgba(60,62,93,0) 94%),linear-gradient(225deg,rgba(60,62,93,.6) 33%,rgba(60,62,93,0) 73%),linear-gradient(270deg,rgba(60,62,93,.6),rgba(60,62,93,0) 33%),linear-gradient(0deg,rgba(98,100,167,.75) 6%,rgba(98,100,167,0) 70%)',
     }),
   },
 
   componentStyles: {
-    Status: {
-      root: ({ variables: v }: ComponentStyleFunctionParam) => ({
-        ...(v.focusable && {
-          border: '2px solid transparent',
-          ':focus': {
-            outline: 'none',
-            ...(v.isFromKeyboard && {
-              borderColor: '#fff', // FIXME: variables, HC theme
-            }),
-          },
-        }),
-      }),
-    },
-
-    Flex: {
-      root: ({ variables: v }: ComponentStyleFunctionParam) => ({
-        ...(v.focusable && {
-          border: '2px solid transparent',
-          padding: '0 .5rem',
-          ':focus-within': {
-            outline: 'none',
-            ...(v.isFromKeyboard && {
-              borderColor: '#fff', // FIXME: variables, HC theme
-            }),
-          },
-        }),
-      }),
-    },
-
     Toolbar: {
-      root: ({ variables: v }: ComponentStyleFunctionParam) => ({
-        ...(v.uBar && {
-          height: '4rem',
+      root: ({
+        variables: v,
+      }: ComponentStyleFunctionParam<ToolbarProps, CustomToolbarVariables>) => ({
+        ...(v.isCt && {
+          borderRadius: v.ctBorderRadius,
+          height: v.ctHeight,
           overflow: 'hidden',
-          borderRadius: '4px',
         }),
       }),
     },
 
     ToolbarCustomItem: {
-      root: ({ variables: v }: ComponentStyleFunctionParam) => ({
-        ...(v.uBar && {
-          background: v.ctBackground,
-          ...(v.primary && {
-            background: v.ctPrimaryBackground,
+      root: ({
+        props: p,
+        variables: v,
+      }: ComponentStyleFunctionParam<ToolbarCustomItemProps, CustomToolbarVariables>) => ({
+        ...(v.isCt && {
+          background: v.ctItemBackground,
+
+          ...(p.isFromKeyboard && {
+            borderColor: 'white',
+            color: v.ctItemColorHover,
           }),
+
+          ...(v.isCtItemPrimary && { background: v.ctItemPrimaryBackground }),
+          ...(v.isCtItemRecording && { padding: '8px' }),
+          ...(v.isCtItemTimer && { padding: '8px' }),
         }),
       }),
     },
 
     ToolbarItem: {
-      root: ({ props: p, variables: v }: ComponentStyleFunctionParam) => {
+      root: ({
+        props: p,
+        variables: v,
+      }: ComponentStyleFunctionParam<ToolbarItemProps, CustomToolbarVariables>) => {
         return {
-          ...(v.uBar && {
-            display: 'flex',
+          ...(v.isCt && {
             alignItems: 'center',
+            display: 'flex',
             justifyContent: 'center',
-            color: v.ctColor,
-
-            background: v.ctBackground,
             position: 'relative',
 
+            background: v.ctItemBackground,
+            color: v.ctItemColor,
+
             ...(p.active &&
-              !v.primary && {
+              !v.isCtItemPrimary && {
                 // active intentionally before primary and danger, only affects regular items
-                color: v.ctColorActive,
-                background: v.ctBackgroundActive,
+                color: v.ctItemActiveColor,
+                background: v.ctItemActiveBackground,
 
                 '::before': {
                   content: `''`,
@@ -101,42 +125,38 @@ export const darkThemeOverrides: ThemeInput = {
                   left: pxToRem(-2),
                   bottom: pxToRem(-2),
                   right: pxToRem(-2),
-                  background: v.ctBackgroundActiveOverlay,
+                  background: v.ctItemActiveBackgroundOverlay,
+
                   ...(p.isFromKeyboard && {
                     border: `${pxToRem(2)} solid #fff`,
                   }),
                 },
               }),
 
-            ...(v.danger && {
-              background: v.ctDangerBackground,
+            ...(v.isCtItemDanger && {
+              background: v.ctItemDangerBackground,
             }),
 
-            ...(v.primary && {
-              background: v.ctPrimaryBackground,
+            ...(v.isCtItemPrimary && {
+              background: v.ctItemPrimaryBackground,
             }),
 
             ':hover': {
-              color: v.ctColorHover,
-              background: v.ctBackgroundHover,
+              color: v.ctItemColorHover,
+              background: v.ctItemBackgroundHover,
 
-              ...(v.danger && {
-                color: v.ctDangerColorHover,
-                background: v.ctDangerBackgroundHover,
+              ...(v.isCtItemDanger && {
+                color: v.ctItemDangerColorHover,
+                background: v.ctItemDangerBackgroundHover,
               }),
 
-              ...(v.primary && {
-                color: v.ctPrimaryColorHover,
-                background: v.ctPrimaryBackgroundHover,
-              }),
-
-              ...(v.noHoverColors && {
-                color: undefined,
-                background: 'blue',
+              ...(v.isCtItemPrimary && {
+                color: v.ctItemPrimaryColorHover,
+                background: v.ctItemPrimaryBackgroundHover,
               }),
             },
 
-            ...(v.hasDot && {
+            ...(v.isCtItemWithNotification && {
               '::after': {
                 content: `''`,
                 position: 'absolute',
@@ -149,23 +169,23 @@ export const darkThemeOverrides: ThemeInput = {
             }),
 
             ...(p.isFromKeyboard && {
-              border: '2px solid white',
-              color: v.ctColorHover,
-              background: v.ctBackgroundHover,
+              borderColor: 'white',
+              color: v.ctItemColorHover,
+              background: v.ctItemBackgroundHover,
 
-              ...(v.danger && {
-                color: v.ctDangerColorHover,
-                background: v.ctDangerBackgroundHover,
+              ...(v.isCtItemDanger && {
+                color: v.ctItemDangerColorHover,
+                background: v.ctItemDangerBackgroundHover,
               }),
 
-              ...(v.primary && {
-                color: v.ctPrimaryColorHover,
-                background: v.ctPrimaryBackgroundHover,
+              ...(v.isCtItemPrimary && {
+                color: v.ctItemPrimaryColorHover,
+                background: v.ctItemPrimaryBackgroundHover,
               }),
             }),
           }),
 
-          ...(v.noFillOnHover && {
+          ...(v.isCtItemIconNoFill && {
             '& .ui-icon__filled': {
               display: 'none',
             },

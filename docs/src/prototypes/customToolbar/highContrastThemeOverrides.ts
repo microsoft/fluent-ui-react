@@ -2,10 +2,6 @@ import { ThemeInput } from '@stardust-ui/react'
 
 export const highContrastThemeOverrides: ThemeInput = {
   componentVariables: {
-    Box: {
-      ctBackground: '#000',
-    },
-
     Toolbar: {
       ctColor: '#fff',
       ctBackground: '#000',
