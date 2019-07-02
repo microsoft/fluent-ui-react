@@ -40,6 +40,9 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
   /** The label of the item. */
   label?: ShorthandValue
 
+  /** A label in the loader can have different positions. */
+  labelPosition?: 'start' | 'end'
+
   /**
    * Called after item checked state is changed.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
@@ -151,7 +154,11 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
             styles: toggle ? styles.toggle : styles.checkbox,
           },
         })}
-        {Text.create(label)}
+        {Text.create(label, {
+          defaultProps: {
+            styles: styles.label,
+          },
+        })}
       </ElementType>
     )
   }

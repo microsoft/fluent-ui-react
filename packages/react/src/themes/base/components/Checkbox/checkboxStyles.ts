@@ -17,6 +17,10 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
       color: v.disabledColor,
       cursor: 'default',
     }),
+
+    ...p.labelPosition === 'start' && {
+      flexDirection: 'row-reverse'
+    }
   }),
 
   checkbox: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -44,6 +48,8 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
       }),
     }),
   }),
+
+  label: (): ICSSInJSStyle => ({}),
 
   toggle: ({ props: p, variables: v }): ICSSInJSStyle => ({
     background: v.toggleBackground,
