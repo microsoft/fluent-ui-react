@@ -30,7 +30,7 @@ describe('Attachment', () => {
           actionable
           action={{
             icon: 'more',
-            onClick: () => onClickButton(),
+            onClick: onClickButton,
           }}
           onClick={onClickAttachment}
         />,
