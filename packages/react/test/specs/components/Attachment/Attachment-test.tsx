@@ -7,8 +7,22 @@ import Attachment from 'src/components/Attachment/Attachment'
 import Text from 'src/components/Text/Text'
 import Icon from 'src/components/Icon/Icon'
 import Button from 'src/components/Button/Button'
+import { ReactWrapper } from 'enzyme'
 
 const attachmentImplementsShorthandProp = implementsShorthandProp(Attachment)
+
+const getAttachment = (onClickAttachment: jest.Mock, onClickButton: jest.Mock): ReactWrapper => {
+  return mountWithProvider(
+    <Attachment
+      actionable
+      action={{
+        icon: 'more',
+        onClick: onClickButton,
+      }}
+      onClick={onClickAttachment}
+    />,
+  )
+}
 
 describe('Attachment', () => {
   isConformant(Attachment)
@@ -22,25 +36,20 @@ describe('Attachment', () => {
       defaultRootRole: undefined,
     })
 
-    test('handleClick is executed when Enter is pressed for attachment, not for more option button', () => {
+    test('handleClick is executed when Enter is pressed on attachment element', () => {
       const onClickAttachment = jest.fn()
       const onClickButton = jest.fn()
-      const attachment = mountWithProvider(
-        <Attachment
-          actionable
-          action={{
-            icon: 'more',
-            onClick: onClickButton,
-          }}
-          onClick={onClickAttachment}
-        />,
-      )
+      const attachment = getAttachment(onClickAttachment, onClickButton)
       attachment
         .find(`.${Attachment.className}`)
         .simulate('keydown', { keyCode: keyboardKey.Enter })
       expect(onClickAttachment).toHaveBeenCalledTimes(1)
+    })
 
-      onClickAttachment.mockClear()
+    test('handleClick is Not executed when Enter is pressed on more option button', () => {
+      const onClickAttachment = jest.fn()
+      const onClickButton = jest.fn()
+      const attachment = getAttachment(onClickAttachment, onClickButton)
       findIntrinsicElement(attachment, `.${Attachment.slotClassNames.action}`).simulate('keydown', {
         keyCode: keyboardKey.Enter,
       })
