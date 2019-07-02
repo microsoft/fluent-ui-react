@@ -113,21 +113,18 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
       onMouseEnter: this.handleMouseEnter,
       onMouseLeave: this.handleMouseLeave,
     }
-    const focusTrapZoneProps: FocusTrapZoneProps | {} =
-      (_.keys(trapFocus).length && {
-        ...popupContentProps,
-        ...(trapFocus as FocusTrapZoneProps),
-        as: ElementType,
-      }) ||
-      {}
 
-    const autoFocusZoneProps: AutoFocusZoneProps | {} =
-      (_.keys(autoFocus).length && {
-        ...popupContentProps,
-        ...(autoFocus as AutoFocusZoneProps),
-        as: ElementType,
-      }) ||
-      {}
+    const focusTrapZoneProps = {
+      ...popupContentProps,
+      ...((_.keys(trapFocus).length && trapFocus) as FocusTrapZoneProps),
+      as: ElementType,
+    }
+
+    const autoFocusZoneProps = {
+      ...popupContentProps,
+      ...((_.keys(autoFocus).length && autoFocus) as AutoFocusZoneProps),
+      as: ElementType,
+    }
 
     const popupContent = (
       <>
