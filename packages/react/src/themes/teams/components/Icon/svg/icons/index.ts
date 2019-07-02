@@ -53,6 +53,7 @@ import email from './email'
 import emoji from './emoji'
 import error from './error'
 import exclamationCircle from './exclamationCircle'
+import exclamationTriangle from './exclamationTriangle'
 import eye from './eye'
 import eyeFriendlier from './eyeFriendlier'
 import eyeSlash from './eyeSlash'
@@ -72,6 +73,7 @@ import giphy from './giphy'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
 import indent from './indent'
+import info from './info'
 import italic from './italic'
 import leave from './leave'
 import like from './like'
@@ -86,6 +88,7 @@ import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
+import microsoftStream from './microsoftStream'
 import userPhone from './userPhone'
 import numberList from './numberList'
 import outdent from './outdent'
@@ -108,6 +111,7 @@ import redo from './redo'
 import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
+import shareAlt from './shareAlt'
 import skypeLogo from './skypeLogo'
 import search from './search'
 import send from './send'
@@ -138,7 +142,6 @@ import yammer from './yammer'
 
 export default {
   'stardust-circle': stardustCircle,
-
   accept,
   add,
   'arrow-up': arrowUp,
@@ -192,6 +195,7 @@ export default {
   emoji,
   error,
   'exclamation-circle': exclamationCircle,
+  'exclamation-triangle': exclamationTriangle,
   eye,
   'eye-friendlier': eyeFriendlier,
   'eye-slash': eyeSlash,
@@ -203,6 +207,7 @@ export default {
   highlight,
   'horizontal-rule': horizontalRule,
   indent,
+  info,
   italic,
   leave,
   like,
@@ -217,6 +222,7 @@ export default {
   mic,
   'mic-off': micOff,
   more,
+  'microsoft-stream': microsoftStream,
   'user-phone': userPhone,
   'number-list': numberList,
   'open-outside': openOutside,
@@ -244,6 +250,7 @@ export default {
   search,
   send,
   settings,
+  'share-alt': shareAlt,
   star,
   sticker,
   strike,
