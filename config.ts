@@ -20,7 +20,6 @@ const envConfig = {
   // ----------------------------------
   path_base: __dirname,
   dir_build: 'build',
-  dir_dll: 'dll',
   dir_docs_dist: 'docs/dist',
   dir_docs_src: 'docs/src',
   dir_e2e: 'e2e',
@@ -40,7 +39,6 @@ const base = (...args) => path.resolve(...[envConfig.path_base, ...args])
 const paths = {
   base,
   build: base.bind(null, envConfig.dir_build),
-  dll: base.bind(null, envConfig.dir_dll),
   docsDist: base.bind(null, envConfig.dir_docs_dist),
   docsSrc: base.bind(null, envConfig.dir_docs_src),
   e2e: base.bind(null, envConfig.dir_e2e),
@@ -76,6 +74,7 @@ const config = {
   // Compiler Configuration
   // ----------------------------------
   compiler_devtool: __DEV__ && 'eval-source-map',
+  compiler_mode: __DEV__ ? 'development' : 'production',
   compiler_globals: {
     __DEV__,
     __PERF__,
@@ -94,7 +93,7 @@ const config = {
     hash: false, // the hash of the compilation
     version: false, // webpack version info
     timings: true, // timing info
-    assets: true, // assets info
+    assets: false, // assets info
     chunks: false, // chunk info
     colors: true, // with console colors
     chunkModules: false, // built modules info to chunk info
@@ -108,7 +107,6 @@ const config = {
     chunksSort: '', // (string) sort the chunks by that field
     assetsSort: '', // (string) sort the assets by that field
   },
-  compiler_vendor: ['classnames', 'copy-to-clipboard'],
 }
 
 export default config
