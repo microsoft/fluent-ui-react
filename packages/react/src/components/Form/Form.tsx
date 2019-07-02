@@ -103,6 +103,5 @@ class Form extends UIComponent<WithAsProp<FormProps>, any> {
 
 /**
  * A Form displays a set of related user input fields in a structured way.
- * @accessibility
  */
 export default withSafeTypeForAs<typeof Form, FormProps, 'form'>(Form)

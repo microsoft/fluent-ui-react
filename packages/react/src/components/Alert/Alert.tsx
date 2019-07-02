@@ -136,6 +136,5 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
 
 /**
  * A Alert displays information that explains nearby content.
- * @accessibility
  */
 export default withSafeTypeForAs<typeof Alert, AlertProps>(Alert)

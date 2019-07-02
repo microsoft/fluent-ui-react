@@ -81,6 +81,5 @@ class Grid extends UIComponent<WithAsProp<GridProps>, any> {
 
 /**
  * A grid is used to harmonize negative space in a layout.
- * @accessibility
  */
 export default withSafeTypeForAs<typeof Grid, GridProps>(Grid)

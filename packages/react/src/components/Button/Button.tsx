@@ -188,6 +188,5 @@ Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content
 
 /**
  * A button indicates a possible user action.
- * @accessibility
  */
 export default withSafeTypeForAs<typeof Button, ButtonProps, 'button'>(Button)

@@ -80,6 +80,5 @@ Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' 
 
 /**
  * A status graphically represents someone's or something's state.
- * @accessibility
  */
 export default withSafeTypeForAs<typeof Status, StatusProps, 'span'>(Status)

@@ -228,6 +228,5 @@ Input.slotClassNames = {
 
 /**
  * An input is a field used to elicit a response from a user.
- * @accessibility
  */
 export default withSafeTypeForAs<typeof Input, InputProps, 'div'>(Input)

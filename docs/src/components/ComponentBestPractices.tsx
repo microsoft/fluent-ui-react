@@ -9,15 +9,27 @@ export type ComponentBestPracticesProps = Extendable<{
 }>
 
 const ComponentBestPractices: React.FC<ComponentBestPracticesProps> = ({ doList, dontList }) => {
+  const updatedDoList: ShorthandValue<{}>[] = []
+  const updatedDontList: ShorthandValue<{}>[] = []
+
   if (_.size(doList) > 0) {
     _.map(doList, element => {
-      element.media = <Icon name="checkmark" styles={{ color: 'green' }} />
+      updatedDoList.push({
+        key: doList.indexOf(element),
+        content: element,
+        media: <Icon name="checkmark" styles={{ color: 'green' }} />,
+      })
     })
   }
 
   if (_.size(dontList) > 0) {
     _.map(dontList, element => {
-      element.media = <Icon name="close" styles={{ color: 'red' }} />
+      updatedDontList.push({
+        key: dontList.indexOf(element),
+        content: element,
+        media: <Icon name="close" styles={{ color: 'red' }} />,
+      })
+      // element.media = <Icon name="close" styles={{ color: 'red' }} />
     })
   }
   return (
@@ -28,13 +40,13 @@ const ComponentBestPractices: React.FC<ComponentBestPracticesProps> = ({ doList,
             <Flex.Item size="size.half">
               <Box>
                 <Header as="h3" content="Do" styles={{ paddingLeft: '20px' }} />
-                <List items={doList} />
+                <List items={updatedDoList} />
               </Box>
             </Flex.Item>
             <Flex.Item size="size.half">
               <Box>
                 <Header as="h3" content="Don't" styles={{ paddingLeft: '20px' }} />
-                <List items={dontList} />
+                <List items={updatedDontList} />
               </Box>
             </Flex.Item>
           </Flex>
@@ -43,7 +55,7 @@ const ComponentBestPractices: React.FC<ComponentBestPracticesProps> = ({ doList,
             <Flex.Item grow>
               <Box>
                 <Header as="h3" content="Do" styles={{ paddingLeft: '20px' }} />
-                <List items={doList} />
+                <List items={updatedDoList} />
               </Box>
             </Flex.Item>
           </Flex>
@@ -52,7 +64,7 @@ const ComponentBestPractices: React.FC<ComponentBestPracticesProps> = ({ doList,
             <Flex.Item grow>
               <Box>
                 <Header as="h3" content="Don't" styles={{ paddingLeft: '20px' }} />
-                <List items={dontList} />
+                <List items={updatedDontList} />
               </Box>
             </Flex.Item>
           </Flex>

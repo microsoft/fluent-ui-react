@@ -122,7 +122,6 @@ export interface PopupState {
 
 /**
  * A Popup displays additional information on top of a page.
- * @accessibility
  */
 export default class Popup extends AutoControlledComponent<PopupProps, PopupState> {
   static displayName = 'Popup'
