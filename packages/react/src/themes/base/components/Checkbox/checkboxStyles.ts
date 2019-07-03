@@ -17,10 +17,6 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
       color: v.disabledColor,
       cursor: 'default',
     }),
-
-    '> *:not(:last-child)': {
-      marginRight: v.checkboxGap,
-    },
   }),
 
   checkbox: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -47,6 +43,14 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
         background: v.disabledCheckboxBackground,
       }),
     }),
+  }),
+
+  label: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    [p.labelPosition === 'start' ? ':after' : ':before']: {
+      content: '" "',
+      display: 'inline-block',
+      width: v.checkboxGap,
+    },
   }),
 
   toggle: ({ props: p, variables: v }): ICSSInJSStyle => ({
