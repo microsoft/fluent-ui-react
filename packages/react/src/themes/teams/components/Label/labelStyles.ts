@@ -16,8 +16,8 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
       textOverflow: 'ellipsis',
       height: v.height,
       lineHeight: v.height,
-      color: colors.background,
-      backgroundColor: colors.foreground,
+      color: colors.foreground,
+      backgroundColor: colors.background,
       fontSize: pxToRem(14),
       borderRadius: pxToRem(2),
       padding: v.padding,
@@ -45,9 +45,9 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
         : { marginRight: v.imageStartSpacingRight })),
   }),
 
-  icon: ({ props: p }): ICSSInJSStyle => {
+  icon: ({ props: p, variables: v }): ICSSInJSStyle => {
     return {
-      padding: '8px',
+      padding: v.iconSpacing,
       ...(p.icon &&
         typeof p.icon === 'object' &&
         (p.icon as any).onClick && {

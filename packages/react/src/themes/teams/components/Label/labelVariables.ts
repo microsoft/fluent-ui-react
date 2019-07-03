@@ -11,6 +11,7 @@ export interface LabelVariables {
   circularRadius: string
   padding: string
   height: string
+  iconSpacing: string
   iconStartSpacingLeft: string
   iconStartSpacingRight: string
   imageStartSpacingLeft: string
@@ -20,8 +21,8 @@ export interface LabelVariables {
 export default (siteVars: SiteVariablesPrepared): LabelVariables => {
   const colorScheme = extendColorScheme(siteVars.colorScheme, {
     default: {
-      background: siteVars.colors.grey[900],
-      foreground: siteVars.colors.grey[100],
+      background: siteVars.colors.grey[100],
+      foreground: siteVars.colors.grey[750],
     },
     brand: {
       background: siteVars.colorScheme.brand.foreground4,
@@ -35,6 +36,7 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
     colorScheme: pickValuesFromColorScheme(colorScheme, labelColorAreas),
     circularRadius: pxToRem(9999),
     padding: `0 ${pxToRem(10)} 0 ${pxToRem(10)}`,
+    iconSpacing: pxToRem(8),
     iconStartSpacingLeft: '0',
     iconStartSpacingRight: '0',
     imageStartSpacingLeft: '0',
