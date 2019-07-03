@@ -57,6 +57,10 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   /** Whether or not the subtree of the item is in the open state. */
   open?: boolean
 
+  onSizeUpdate: Function
+  size: number
+  containerSize: number
+
   /**
    * A custom render iterator for rendering each Accordion panel title.
    * The default component, props, and children are available for each panel title.
@@ -98,6 +102,9 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     renderItemTitle: PropTypes.func,
     treeItemRtlAttributes: PropTypes.func,
     title: customPropTypes.itemShorthand,
+    onSizeUpdate: PropTypes.func,
+    size: PropTypes.number,
+    containerSize: PropTypes.number,
   }
 
   static defaultProps = {
@@ -154,7 +161,15 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
   })
 
   renderContent() {
-    const { items, title, renderItemTitle, open, exclusive } = this.props
+    const {
+      items,
+      title,
+      renderItemTitle,
+      open,
+      exclusive,
+      containerSize,
+      onSizeUpdate,
+    } = this.props
     const hasSubtree = !!(items && items.length)
 
     return (
@@ -177,6 +192,8 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
                 className: TreeItem.slotClassNames.subtree,
                 exclusive,
                 renderItemTitle,
+                size: containerSize,
+                onSizeUpdate,
               },
             })}
           </Ref>
