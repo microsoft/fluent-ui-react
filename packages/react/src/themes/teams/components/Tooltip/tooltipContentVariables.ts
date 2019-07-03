@@ -31,8 +31,8 @@ export default (siteVars: any): TooltipContentVariables => ({
 
   maxWidth: pxToRem(246),
 
-  pointerHorizontalOffset: pxToRem(10),
-  pointerVerticalOffset: pxToRem(5),
+  pointerVerticalOffset: pxToRem(10),
+  pointerHorizontalOffset: pxToRem(5),
   pointerMargin: pxToRem(6),
   pointerWidth: pxToRem(6),
   pointerHeight: pxToRem(16),

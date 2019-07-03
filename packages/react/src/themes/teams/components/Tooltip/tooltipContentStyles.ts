@@ -15,8 +15,8 @@ const getPointerOffset = (
   placement === 'bottom-end' ||
   placement === 'bottom' ||
   placement === 'bottom-start'
-    ? v.pointerHorizontalOffset
-    : v.pointerVerticalOffset
+    ? v.pointerVerticalOffset
+    : v.pointerHorizontalOffset
 
 const tooltipContentStyles: ComponentSlotStylesInput<
   TooltipContentProps,
