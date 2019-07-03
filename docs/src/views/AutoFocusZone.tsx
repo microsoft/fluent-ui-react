@@ -31,13 +31,7 @@ export default () => (
       object with desired values for auto focus zone props.
     </p>
     <p>By default, focus will be set to the first tabbable element in the Popup:</p>
-    <CodeSnippet
-      label="PopupExample.jsx"
-      value={`
-        const Popup = () => (
-          <Popup autoFocus />
-        )`}
-    />
+    <CodeSnippet label="PopupExample.jsx" value={`const Example = () => <Popup autoFocus />`} />
     <p>
       {code('AutoFocusZone')}'s props which can be applied to {code('autoFocus')} prop (
       {link(

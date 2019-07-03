@@ -114,18 +114,6 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
       onMouseLeave: this.handleMouseLeave,
     }
 
-    const focusTrapZoneProps = {
-      ...popupContentProps,
-      ...((_.keys(trapFocus).length && trapFocus) as FocusTrapZoneProps),
-      as: ElementType,
-    }
-
-    const autoFocusZoneProps = {
-      ...popupContentProps,
-      ...((_.keys(autoFocus).length && autoFocus) as AutoFocusZoneProps),
-      as: ElementType,
-    }
-
     const popupContent = (
       <>
         {pointing && (
@@ -145,13 +133,27 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
       </>
     )
 
-    return trapFocus ? (
-      <FocusTrapZone {...focusTrapZoneProps}>{popupContent}</FocusTrapZone>
-    ) : autoFocus ? (
-      <AutoFocusZone {...autoFocusZoneProps}>{popupContent}</AutoFocusZone>
-    ) : (
-      <ElementType {...popupContentProps}>{popupContent}</ElementType>
-    )
+    if (trapFocus) {
+      const focusTrapZoneProps = {
+        ...popupContentProps,
+        ...((_.keys(trapFocus).length && trapFocus) as FocusTrapZoneProps),
+        as: ElementType,
+      }
+
+      return <FocusTrapZone {...focusTrapZoneProps}>{popupContent}</FocusTrapZone>
+    }
+
+    if (autoFocus) {
+      const autoFocusZoneProps = {
+        ...popupContentProps,
+        ...((_.keys(autoFocus).length && autoFocus) as AutoFocusZoneProps),
+        as: ElementType,
+      }
+
+      return <AutoFocusZone {...autoFocusZoneProps}>{popupContent}</AutoFocusZone>
+    }
+
+    return <ElementType {...popupContentProps}>{popupContent}</ElementType>
   }
 }
 

@@ -37,13 +37,7 @@ export default () => (
       {code('true')} with default settings or set an object with desired values for focus trap zone
       props.
     </p>
-    <CodeSnippet
-      label="PopupExample.jsx"
-      value={`
-        const Popup = () => (
-          <Popup trapFocus />
-        )`}
-    />
+    <CodeSnippet label="PopupExample.jsx" value={`const Example = () => <Popup trapFocus />`} />
     <p>
       {code('Dialog')} component has always set {code('trapFocus')} prop to {code('true')}, but it
       is also possible to override default settings by specifying object of{' '}
