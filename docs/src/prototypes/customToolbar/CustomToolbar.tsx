@@ -36,13 +36,10 @@ export interface CustomToolbarProps {
   onEndCallClick?: () => void
 }
 
-type CustomToolbarItem =
-  | ((ToolbarItemProps | ToolbarCustomItemProps) & {
-      as?: any
-      key: string
-      kind?: ToolbarItemShorthandKinds
-    })
-  | ((render: any) => any)
+type CustomToolbarItem = (ToolbarItemProps | ToolbarCustomItemProps) & {
+  key: string
+  kind?: ToolbarItemShorthandKinds
+}
 type CustomToolbarLayout = (props: CustomToolbarProps) => CustomToolbarItem[]
 
 const commonLayout: CustomToolbarLayout = props =>
