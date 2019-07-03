@@ -1,4 +1,5 @@
 import { pxToRem } from '../../../../lib'
+import svgContent from './tooltipPointerSvgUrl'
 
 export interface TooltipContentVariables {
   boxShadowStart: string
@@ -8,12 +9,14 @@ export interface TooltipContentVariables {
   borderRadius: string
   borderSize: string
   padding: string
+  svgContent: string
 
   maxWidth: string
 
   pointerMargin: string
   pointerOffset: string
-  pointerSize: string
+  pointerWidth: string
+  pointerHeight: string
 }
 
 export default (siteVars: any): TooltipContentVariables => {
@@ -23,12 +26,14 @@ export default (siteVars: any): TooltipContentVariables => {
     boxShadowColor: siteVars.colors.grey[250],
     borderRadius: pxToRem(3),
     borderSize: '1px',
+    svgContent,
     padding: `${pxToRem(5)} ${pxToRem(12)} ${pxToRem(7)} ${pxToRem(12)}`,
 
     maxWidth: pxToRem(246),
 
     pointerOffset: pxToRem(5),
     pointerMargin: pxToRem(10),
-    pointerSize: pxToRem(10),
+    pointerWidth: pxToRem(3),
+    pointerHeight: pxToRem(8),
   }
 }

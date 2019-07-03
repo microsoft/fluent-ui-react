@@ -66,6 +66,9 @@ export interface TooltipProps
   /** A tooltip can show a pointer to trigger. */
   pointing?: boolean
 
+  /** The pointer of the tooltip can contain a custom svg element. */
+  pointerSvg?: ShorthandValue
+
   /**
    * DOM element that should be used as tooltip's target - instead of 'trigger' element that is used by default.
    */
@@ -104,6 +107,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
     pointing: PropTypes.bool,
+    pointerSvg: customPropTypes.itemShorthand,
     position: PropTypes.oneOf(POSITIONS),
     target: customPropTypes.domNode,
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.element]),
@@ -116,6 +120,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     position: 'above',
     mouseLeaveDelay: 500,
     pointing: true,
+    pointerSvg: '',
   }
 
   static autoControlledProps = ['open']
@@ -228,7 +233,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     accessibility: ReactAccessibilityBehavior,
     { placement }: PopperChildrenProps,
   ) => {
-    const { content, pointing } = this.props
+    const { content, pointing, pointerSvg } = this.props
 
     const tooltipContentAttributes = {
       ...(rtl && { dir: 'rtl' }),
@@ -243,6 +248,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
         ...tooltipContentAttributes,
         placement,
         pointing,
+        pointerSvg,
         pointerRef: this.pointerTargetRef,
       },
       overrideProps: this.getContentProps,
