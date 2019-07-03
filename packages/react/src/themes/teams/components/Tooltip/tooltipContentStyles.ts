@@ -35,18 +35,13 @@ const tooltipContentStyles: ComponentSlotStylesInput<
   pointer: ({ props: p, variables: v, rtl }): ICSSInJSStyle => ({
     display: 'block',
     position: 'absolute',
+    overflow: 'hidden',
+    width: v.pointerWidth,
+    height: v.pointerHeight,
+    backgroundImage: svgContent(v.backgroundColor),
 
     ...getPointerWithSvgStyles(getPointerOffset(p.placement, v), v.pointerMargin, rtl, p.placement)
       .pointer,
-
-    ':before': {
-      backgroundImage: svgContent(v.backgroundColor),
-      content: '" "',
-      display: 'block',
-      overflow: 'hidden',
-      width: v.pointerWidth,
-      height: v.pointerHeight,
-    },
   }),
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
