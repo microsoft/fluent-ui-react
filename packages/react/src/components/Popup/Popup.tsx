@@ -212,6 +212,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       e.preventDefault()
       this.setPopupOpen(true, e)
     },
+    preventScroll: e => {
+      e.preventDefault()
+    },
   }
 
   renderComponent({
@@ -517,6 +520,12 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
               capture
             />
             <EventListener
+              listener={this.handleDocumentClick(getRefs)}
+              targetRef={documentRef}
+              type="contextmenu"
+              capture
+            />
+            <EventListener
               listener={this.handleDocumentKeyDown(getRefs)}
               targetRef={documentRef}
               type="keydown"
@@ -526,21 +535,16 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
             {this.state.isOpenedByRightClick && (
               <>
                 <EventListener
-                  listener={this.preventScroll}
+                  listener={this.dismissOnScroll}
                   targetRef={documentRef}
                   type="wheel"
                   capture
                 />
                 <EventListener
-                  listener={this.preventScroll}
+                  listener={this.dismissOnScroll}
                   targetRef={documentRef}
                   type="touchmove"
                   capture
-                />
-                <EventListener
-                  listener={this.preventScroll}
-                  targetRef={documentRef}
-                  type="keydown"
                 />
               </>
             )}
@@ -550,22 +554,8 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     )
   }
 
-  preventScroll(e: Event) {
-    if (e.type === 'wheel' || e.type === 'touchmove') {
-      e.preventDefault()
-    } else if (e.type === 'keydown') {
-      const keyCode = keyboardKey.getCode(e)
-      const isScrollKey =
-        keyCode === keyboardKey.ArrowDown ||
-        keyCode === keyboardKey.ArrowUp ||
-        keyCode === keyboardKey.PageDown ||
-        keyCode === keyboardKey.PageUp ||
-        keyCode === keyboardKey.Home ||
-        keyCode === keyboardKey.End
-      if (isScrollKey) {
-        e.preventDefault()
-      }
-    }
+  dismissOnScroll = (e: Event) => {
+    this.trySetOpen(false, e)
   }
 
   trySetOpen(newValue: boolean, eventArgs: any) {
@@ -619,31 +609,30 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 
   updateContextPosition(nativeEvent: MouseEvent) {
-    this.rightClickReferenceObject =
-      nativeEvent && this.createReferenceFromContextClick(nativeEvent)
-  }
-
-  createReferenceFromContextClick(nativeEvent: MouseEvent) {
-    const left = nativeEvent.clientX
-    const top = nativeEvent.clientY
-    const right = left + 1
-    const bottom = top + 1
-
-    function getBoundingClientRect() {
-      return {
-        left,
-        top,
-        right,
-        bottom,
-      }
-    }
-
-    return {
-      getBoundingClientRect,
-      clientWidth: 1,
-      clientHeight: 1,
-    }
+    this.rightClickReferenceObject = nativeEvent && createReferenceFromContextClick(nativeEvent)
   }
 }
 
 Popup.create = createShorthandFactory({ Component: Popup, mappedProp: 'content' })
+
+const createReferenceFromContextClick = (nativeEvent: MouseEvent) => {
+  const left = nativeEvent.clientX
+  const top = nativeEvent.clientY
+  const right = left + 1
+  const bottom = top + 1
+
+  function getBoundingClientRect() {
+    return {
+      left,
+      top,
+      right,
+      bottom,
+    }
+  }
+
+  return {
+    getBoundingClientRect,
+    clientWidth: 1,
+    clientHeight: 1,
+  }
+}

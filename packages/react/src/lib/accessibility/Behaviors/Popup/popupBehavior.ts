@@ -30,6 +30,17 @@ const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
         closeAndFocusTrigger: {
           keyCombinations: [{ keyCode: keyboardKey.Escape }],
         },
+        preventScroll: {
+          keyCombinations: props.isOpenedByRightClick &&
+            _.includes(onAsArray, 'context') && [
+              { keyCode: keyboardKey.ArrowDown },
+              { keyCode: keyboardKey.ArrowUp },
+              { keyCode: keyboardKey.PageDown },
+              { keyCode: keyboardKey.PageUp },
+              { keyCode: keyboardKey.Home },
+              { keyCode: keyboardKey.End },
+            ],
+        },
       },
       trigger: {
         close: {
@@ -104,4 +115,6 @@ export type PopupBehaviorProps = {
   }
   /** Should trigger be made tabbable */
   shouldTriggerBeTabbable: boolean
+  /** Is popup opened by right click */
+  isOpenedByRightClick: boolean
 }
