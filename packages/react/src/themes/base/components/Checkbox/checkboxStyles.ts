@@ -49,8 +49,6 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     }),
   }),
 
-  label: (): ICSSInJSStyle => ({}),
-
   toggle: ({ props: p, variables: v }): ICSSInJSStyle => ({
     background: v.toggleBackground,
     borderColor: v.toggleBorderColor,
