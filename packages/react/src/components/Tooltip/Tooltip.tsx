@@ -132,6 +132,8 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   actionHandlers = {
     close: e => {
       this.setTooltipOpen(false, e)
+      e.stopPropagation()
+      e.preventDefault()
     },
   }
 
