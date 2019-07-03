@@ -1,7 +1,4 @@
-.awcache
-.idea
 .circleci
-.vscode
 coverage
 dll
 docs/dist
@@ -11,6 +8,7 @@ docs/src/behaviorMenu.json
 docs/src/currentBundleStats.json
 docs/src/exampleMenus
 docs/src/exampleSources
+e2e
 node_modules
 packages/**/dist
 packages/**/test
@@ -28,4 +26,3 @@ CHANGELOG.md
 LICENSE.md
 MANIFESTO.md
 README.md
-yarn-error.log
