@@ -22,7 +22,7 @@ const tooltipBehavior: Accessibility<TooltipBehaviorProps> = props => {
       tooltip: {
         role: 'tooltip',
         id: defaultAriaDescribedBy,
-        'aria-hidden': !!props.open,
+        'aria-hidden': !props.open,
       },
     },
     keyActions: {
