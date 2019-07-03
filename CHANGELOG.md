@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add ARIA attributes and keyboard navigation for `Menu` in `Toolbar` @sophieH29 ([#1553](https://github.com/stardust-ui/react/pull/1553))
 - Add `alert`, `info`, `share-alt` and `microsoft-stream` icons to Teams theme @marst89 ([#1544](https://github.com/stardust-ui/react/pull/1544))
 - Add `custom` `kind` for `items` in `Toolbar` component @miroslavstastny ([#1558](https://github.com/stardust-ui/react/pull/1558))
+- Add static `className` prop to result type of `createComponent` @kuzhelov ([#1563](https://github.com/stardust-ui/react/pull/1563))
 
 <!--------------------------------[ v0.34.0 ]------------------------------- -->
 ## [v0.34.0](https://github.com/stardust-ui/react/tree/v0.34.0) (2019-06-26)
