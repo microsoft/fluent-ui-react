@@ -19,7 +19,7 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     }),
 
     '> *:not(:last-child)': {
-      marginRight: '10px',
+      marginRight: v.checkboxGap,
     },
   }),
 
