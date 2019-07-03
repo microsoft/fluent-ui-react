@@ -1248,6 +1248,19 @@ describe('Dropdown', () => {
 
       expect(document.activeElement).toEqual(searchInput.getDOMNode())
     })
+
+    it('moves focus back to the last selected item after input focus and left arrow', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple search items={items} value={items} />)
+      const searchInput = getSearchInputWrapper(wrapper)
+      const selectedItem = getSelectedItemAtIndexWrapper(wrapper, items.length - 1)
+      const selectedItemHeader = getSelectedItemHeaderAtIndexWrapper(wrapper, items.length - 1)
+
+      selectedItemHeader.simulate('click')
+      searchInput.simulate('click')
+      searchInput.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
+
+      expect(document.activeElement).toEqual(selectedItem.getDOMNode())
+    })
   })
 
   describe('focused', () => {
