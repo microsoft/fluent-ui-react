@@ -12,6 +12,7 @@ import {
   AutoControlledComponent,
   doesNodeContainClick,
   applyAccessibilityKeyHandlers,
+  getOrGenerateIdFromShorthand,
 } from '../../lib'
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
@@ -22,26 +23,6 @@ import Box, { BoxProps } from '../Box/Box'
 import Header from '../Header/Header'
 import Portal from '../Portal/Portal'
 import Flex from '../Flex/Flex'
-
-const getOrGenerateIdFromShorthand = (
-  slotName: string,
-  value: ShorthandValue,
-  currentValue?: string,
-): string | undefined => {
-  if (_.isNil(value)) {
-    return undefined
-  }
-
-  if (React.isValidElement(value)) {
-    return (value as React.ReactElement<{ id?: string }>).props.id
-  }
-
-  if (_.isPlainObject(value)) {
-    return (value as Record<string, any>).id
-  }
-
-  return currentValue || _.uniqueId(`dialog-${slotName}-`)
-}
 
 export interface DialogSlotClassNames {
   header: string
@@ -174,8 +155,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     state: DialogState,
   ): Partial<DialogState> {
     return {
-      contentId: getOrGenerateIdFromShorthand('content', props.content, state.contentId),
-      headerId: getOrGenerateIdFromShorthand('header', props.header, state.headerId),
+      contentId: getOrGenerateIdFromShorthand('dialog-content-', props.content, state.contentId),
+      headerId: getOrGenerateIdFromShorthand('dialog-header-', props.header, state.headerId),
     }
   }
 
