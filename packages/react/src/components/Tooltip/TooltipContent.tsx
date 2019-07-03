@@ -17,7 +17,7 @@ import {
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { PopperChildrenProps } from '../../lib/positioner'
-import { WithAsProp, withSafeTypeForAs, ShorthandValue } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 
 export interface TooltipContentProps
@@ -36,9 +36,6 @@ export interface TooltipContentProps
   /** A tooltip can show a pointer to trigger. */
   pointing?: boolean
 
-  /** The pointer of the tooltip can contain a custom svg element. */
-  pointerSvg?: ShorthandValue
-
   /** A ref to a pointer element. */
   pointerRef?: React.Ref<Element>
 }
@@ -53,7 +50,6 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
     ...commonPropTypes.createCommon(),
     placement: PropTypes.string,
     pointing: PropTypes.bool,
-    pointerSvg: customPropTypes.itemShorthand,
     pointerRef: customPropTypes.ref,
   }
 
@@ -68,11 +64,7 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
     unhandledProps,
     styles,
   }: RenderResultConfig<TooltipContentProps>): React.ReactNode {
-    const { children, content, pointing, pointerRef, pointerSvg } = this.props
-
-    const svgElement = Box.create(pointerSvg, {
-      defaultProps: { styles: styles.svg },
-    })
+    const { children, content, pointing, pointerRef } = this.props
 
     return (
       <ElementType
@@ -83,9 +75,7 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
       >
         {pointing && (
           <Ref innerRef={pointerRef}>
-            {Box.create(svgElement ? { children: svgElement } : {}, {
-              defaultProps: { styles: styles.pointer },
-            })}
+            {Box.create({}, { defaultProps: { styles: styles.pointer } })}
           </Ref>
         )}
 

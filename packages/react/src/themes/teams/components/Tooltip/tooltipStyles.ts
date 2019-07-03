@@ -12,8 +12,6 @@ const tooltipStyles: ComponentSlotStylesInput<PopupProps, TooltipVariables> = {
     zIndex: v.zIndex,
     position: 'absolute',
     textAlign: 'left',
-    color: v.contentColor,
-    background: v.contentBackgroundColor,
   }),
 }
 
