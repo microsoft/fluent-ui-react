@@ -70,6 +70,7 @@ import fontSize from './fontSize'
 import format from './format'
 import gallery from './gallery'
 import giphy from './giphy'
+import hand from './hand'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
 import indent from './indent'
@@ -220,6 +221,7 @@ export default {
   menu,
   'message-seen': messageSeen,
   mic,
+  hand,
   'mic-off': micOff,
   more,
   'microsoft-stream': microsoftStream,
