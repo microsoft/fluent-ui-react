@@ -3,7 +3,7 @@ import { Button, Tooltip } from '@stardust-ui/react'
 
 const TooltipExample = () => (
   <Tooltip content="Hello from tooltip!">
-    <Button icon="expand" />
+    <Button>Click me!</Button>
   </Tooltip>
 )
 

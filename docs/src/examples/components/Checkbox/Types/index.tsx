@@ -11,11 +11,6 @@ const Types = () => (
       examplePath="components/Checkbox/Types/CheckboxExample"
     />
     <ComponentExample
-      title="Disabled"
-      description="A checkbox can be read-only and unable to change states."
-      examplePath="components/Checkbox/Types/CheckboxExampleDisabled"
-    />
-    <ComponentExample
       title="Toggle"
       description="A checkbox can be formatted to show an on or off choice."
       examplePath="components/Checkbox/Types/CheckboxExampleToggle"
