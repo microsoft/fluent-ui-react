@@ -15,8 +15,16 @@ declare module '*.json' {
   export default value
 }
 
+declare module '*.mdx' {
+  export const meta: {
+    title: string
+  }
+  const value: React.ComponentType
+
+  export default value
+}
+
 declare interface Window {
-  prettierPlugins: any
   resetExternalLayout?: () => void
   switchTheme?: (themeName: string) => void
 }

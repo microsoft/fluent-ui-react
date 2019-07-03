@@ -1,16 +1,24 @@
-import { ComponentSlotStylesInput, createComponent, Icon, ICSSInJSStyle } from '@stardust-ui/react'
+import { CopyToClipboard } from '@stardust-ui/docs-components'
+import {
+  ComponentSlotStylesInput,
+  ComponentSlotStyle,
+  createComponent,
+  Icon,
+  ICSSInJSStyle,
+} from '@stardust-ui/react'
 import * as Color from 'color'
 import * as _ from 'lodash'
 import * as React from 'react'
 
-import CopyToClipboard from './CopyToClipboard'
-
 type ColorBoxProps = {
   children?: React.ReactNode
   name?: string
+  copyToClipboardIcon?: boolean
   rounded?: boolean
   size?: 'small' | 'normal' | 'big'
   value: string
+  showColorValue?: boolean
+  styles?: ComponentSlotStyle
 }
 
 type ColorBoxVariables = {
@@ -48,7 +56,7 @@ export const colorBoxStyles: ComponentSlotStylesInput<ColorBoxProps, ColorBoxVar
     backgroundColor: p.value,
     border: '1px solid transparent',
     borderRadius: p.rounded && '.25rem',
-    color: Color(p.value).isDark() ? v.colorWhite : v.colorBlack,
+    color: p.value !== undefined && Color(p.value).isDark() ? v.colorWhite : v.colorBlack,
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',
     fontSize: v.padding[p.size],
@@ -70,27 +78,40 @@ export const colorBoxStyles: ComponentSlotStylesInput<ColorBoxProps, ColorBoxVar
 
 const ColorBox = createComponent<ColorBoxProps>({
   displayName: 'ColorBox',
-  render: ({ children, name, value, stardust: { classes } }) => (
+  render: ({
+    children,
+    name,
+    value,
+    showColorValue,
+    copyToClipboardIcon,
+    stardust: { classes },
+  }) => (
     <div className={classes.root}>
       <div className={classes.name}>{children || _.startCase(name)}</div>
 
-      <CopyToClipboard
-        render={(active, onClick) => (
-          <div className={classes.value}>
-            <span onClick={onClick}>
-              <Icon name={active ? 'checkmark' : 'copy outline'} size="small" />
-              {value}
-            </span>
-          </div>
-        )}
-        value={value}
-      />
+      {copyToClipboardIcon && (
+        <CopyToClipboard value={value}>
+          {(active, onClick) => (
+            <div className={classes.value}>
+              <span onClick={onClick}>
+                {value && <Icon name={active ? 'checkmark' : 'copy outline'} size="small" />}
+                {value || 'Not defined'}
+              </span>
+            </div>
+          )}
+        </CopyToClipboard>
+      )}
+      {!copyToClipboardIcon && showColorValue && (
+        <span className={classes.value}>{value || 'Not defined'}</span>
+      )}
     </div>
   ),
 })
 
 ColorBox.defaultProps = {
   size: 'normal',
+  copyToClipboardIcon: true,
+  showColorValue: true,
 }
 
 export default ColorBox

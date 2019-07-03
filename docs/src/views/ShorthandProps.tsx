@@ -2,7 +2,7 @@ import { Button, Header } from '@stardust-ui/react'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 import DocPage from '../components/DocPage/DocPage'
-import CodeSnippet from '../components/CodeSnippet'
+import { CodeSnippet } from '@stardust-ui/docs-components'
 
 const header = content => <Header as="h2">{content}</Header>
 const subheader = content => <Header as="h3">{content}</Header>

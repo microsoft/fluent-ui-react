@@ -16,7 +16,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
+import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 import ReactionGroup from './ReactionGroup'
@@ -53,10 +53,8 @@ export interface ReactionProps
 export interface ReactionState {
   isFromKeyboard: boolean
 }
-/**
- * A reaction is used to indicate user's reaction.
- */
-class Reaction extends UIComponent<ReactProps<ReactionProps>, ReactionState> {
+
+class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
   static create: Function
 
   static className = 'ui-reaction'
@@ -80,7 +78,7 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>, ReactionState> {
 
   static Group = ReactionGroup
 
-  public state = {
+  state = {
     isFromKeyboard: false,
   }
 
@@ -117,7 +115,7 @@ class Reaction extends UIComponent<ReactProps<ReactionProps>, ReactionState> {
     )
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
     _.invoke(this.props, 'onFocus', e, this.props)
   }
@@ -129,4 +127,10 @@ Reaction.slotClassNames = {
   content: `${Reaction.className}__content`,
 }
 
-export default Reaction
+/**
+ * A reaction is used to indicate user's reaction.
+ * @accessibility
+ * Do use actionable components (for example Button) if the reactions need to be actionable.
+ * Do add textual representation to the icon slot if it only contains an icon (using title, aria-label or aria-labelledby props on the slot).
+ */
+export default withSafeTypeForAs<typeof Reaction, ReactionProps, 'span'>(Reaction)

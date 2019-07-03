@@ -11,6 +11,8 @@ const __PERF__ = !!process.env.PERF
 const __PROD__ = env === 'production'
 const __BASENAME__ = __PROD__ && !__NOW__ ? '/react/' : '/'
 
+const __SKIP_ERRORS__ = !!process.env.SKIP_ERRORS
+
 const envConfig = {
   env,
 
@@ -18,9 +20,12 @@ const envConfig = {
   // Project Structure
   // ----------------------------------
   path_base: __dirname,
-  dir_dll: 'dll',
+  dir_build: 'build',
   dir_docs_dist: 'docs/dist',
   dir_docs_src: 'docs/src',
+  dir_e2e: 'e2e',
+  dir_e2e_src: 'e2e/server',
+  dir_e2e_dist: 'e2e/dist',
   dir_packages: 'packages',
   dir_perf_dist: 'perf/dist',
   dir_perf_src: 'perf/src',
@@ -34,9 +39,12 @@ const base = (...args) => path.resolve(...[envConfig.path_base, ...args])
 
 const paths = {
   base,
-  dll: base.bind(null, envConfig.dir_dll),
+  build: base.bind(null, envConfig.dir_build),
   docsDist: base.bind(null, envConfig.dir_docs_dist),
   docsSrc: base.bind(null, envConfig.dir_docs_src),
+  e2e: base.bind(null, envConfig.dir_e2e),
+  e2eSrc: base.bind(null, envConfig.dir_e2e_src),
+  e2eDist: base.bind(null, envConfig.dir_e2e_dist),
   packageDist: (packageName: string, ...paths: string[]) =>
     base(envConfig.dir_packages, packageName, 'dist', ...paths),
   packageSrc: (packageName: string, ...paths: string[]) =>
@@ -61,16 +69,19 @@ const config = {
   server_host: 'localhost',
   server_port: Number(process.env.PORT) || 8080,
   perf_port: Number(process.env.PERF_PORT) || 8081,
+  e2e_port: Number(process.env.E2E_PORT) || 8082,
 
   // ----------------------------------
   // Compiler Configuration
   // ----------------------------------
   compiler_devtool: __DEV__ && 'eval-source-map',
+  compiler_mode: __DEV__ ? 'development' : 'production',
   compiler_globals: {
     __DEV__,
     __PERF__,
     __PROD__,
     __BASENAME__: JSON.stringify(__BASENAME__),
+    __SKIP_ERRORS__,
     'process.env': {
       NODE_ENV: JSON.stringify(env),
     },
@@ -83,7 +94,7 @@ const config = {
     hash: false, // the hash of the compilation
     version: false, // webpack version info
     timings: true, // timing info
-    assets: true, // assets info
+    assets: false, // assets info
     chunks: false, // chunk info
     colors: true, // with console colors
     chunkModules: false, // built modules info to chunk info
@@ -97,16 +108,6 @@ const config = {
     chunksSort: '', // (string) sort the chunks by that field
     assetsSort: '', // (string) sort the assets by that field
   },
-  compiler_vendor: [
-    'brace',
-    'brace/ext/language_tools',
-    'brace/mode/jsx',
-    'brace/mode/html',
-    'brace/theme/tomorrow',
-    'classnames',
-    'copy-to-clipboard',
-    'react-ace',
-  ],
 }
 
 export default config

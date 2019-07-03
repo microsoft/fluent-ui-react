@@ -1,5 +1,5 @@
-import * as path from 'path'
-import * as fs from 'fs'
+import path from 'path'
+import fs from 'fs'
 import { task, series } from 'gulp'
 import webpackPlugin from '../../plugins/gulp-webpack'
 
@@ -37,4 +37,4 @@ task('test:circulars:run', done => {
   })
 })
 
-task('test:circulars', series('dll', 'bundle:all-packages', 'test:circulars:run'))
+task('test:circulars', series('bundle:all-packages', 'test:circulars:run'))

@@ -1,39 +1,13 @@
-import icons from './index'
-import { callable, pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
-import { ResultOf } from '../../../../types'
+import { pxToRem } from '../../../../lib'
+import {
+  ComponentSlotStylesInput,
+  ICSSInJSStyle,
+  FontIconSpec,
+  ThemeIconSpec,
+} from '../../../types'
 import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
 import { IconVariables } from './iconVariables'
-
-const getDefaultFontIcon = (iconName: string) => {
-  return callable(icons(iconName).icon)()
-}
-
-const getFontStyles = (
-  size: number,
-  iconName: string,
-  themeIcon?: ResultOf<FontIconSpec>,
-): ICSSInJSStyle => {
-  const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
-  const sizeInRems = pxToRem(size)
-
-  return {
-    fontFamily,
-    fontSize: sizeInRems,
-    lineHeight: 1,
-
-    display: 'inline-flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    width: sizeInRems,
-    height: sizeInRems,
-
-    '::before': {
-      content,
-    },
-  }
-}
+import { emptyIcon } from './iconNames'
 
 const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICSSInJSStyle => {
   switch (xSpacing) {
@@ -61,27 +35,40 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
 })
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
-  root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
-    const iconSpec = theme.icons[p.name]
-    const rtl = theme.rtl
-    const isFontBased = p.name && (!iconSpec || !iconSpec.isSvg)
+  root: ({ props: p, variables: v, theme: t, rtl }): ICSSInJSStyle => {
+    const iconSpec: ThemeIconSpec = t.icons[p.name] || emptyIcon
+    const isFontIcon = !iconSpec.isSvg
 
     return {
-      display: 'inline-block',
       speak: 'none',
       verticalAlign: 'middle',
 
-      boxSizing: 'content-box',
-
-      ...(isFontBased && getFontStyles(16, p.name)),
-
       ...getXSpacingStyles(p.xSpacing, v.horizontalSpace),
 
-      ...(p.circular && { ...getPaddedStyle(), borderRadius: '50%' }),
-
       ...(p.bordered && getBorderedStyles(v.borderColor)),
+      ...(p.circular && { ...getPaddedStyle(), borderRadius: '50%' }),
+      ...(p.disabled && {
+        color: v.disabledColor,
+      }),
 
-      transform: rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
+      ...(isFontIcon && {
+        alignItems: 'center',
+        boxSizing: 'content-box',
+        display: 'inline-flex',
+        justifyContent: 'center',
+
+        fontFamily: (iconSpec.icon as FontIconSpec).fontFamily,
+        fontSize: v[`${p.size}Size`],
+        lineHeight: 1,
+        width: v[`${p.size}Size`],
+        height: v[`${p.size}Size`],
+
+        '::before': {
+          content: (iconSpec.icon as FontIconSpec).content,
+        },
+
+        transform: rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
+      }),
     }
   },
 }

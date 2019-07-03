@@ -1,15 +1,19 @@
-import { ColorValues } from '../../../types'
-import { mapColorsToScheme } from '../../../../lib'
+import { ItemType } from '../../../types'
+import { TeamsSchemeMappingWithAreas } from '../../types'
+import { pickValuesFromColorScheme } from '../../../colorUtils'
+import { stringLiteralsArray } from '../../../../lib'
+
+export const headerDescriptionColorAreas = stringLiteralsArray('foreground')
+export type HeaderDescriptionColorSchemeMapping = TeamsSchemeMappingWithAreas<
+  ItemType<typeof headerDescriptionColorAreas>
+>
 
 export interface HeaderDescriptionVariables {
-  colors: ColorValues<string>
+  colorScheme?: HeaderDescriptionColorSchemeMapping
   color: string
 }
 
-export default (siteVariables: any): HeaderDescriptionVariables => {
-  const colorVariant = 500
-  return {
-    colors: mapColorsToScheme(siteVariables, colorVariant),
-    color: siteVariables.gray04,
-  }
-}
+export default (siteVariables: any): HeaderDescriptionVariables => ({
+  colorScheme: pickValuesFromColorScheme(siteVariables.colorScheme, headerDescriptionColorAreas),
+  color: siteVariables.colors.grey[350],
+})

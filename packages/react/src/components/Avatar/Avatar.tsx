@@ -6,7 +6,7 @@ import Label from '../Label/Label'
 import Status, { StatusProps } from '../Status/Status'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import {
   createShorthandFactory,
   UIComponent,
@@ -41,10 +41,7 @@ export interface AvatarProps extends UIComponentProps {
   getInitials?: (name: string) => string
 }
 
-/**
- * An avatar is a graphic representation of user.
- */
-class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
+class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
   static create: Function
 
   static className = 'ui-avatar'
@@ -80,7 +77,7 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
       const initials = reducedName
         .split(' ')
         .filter(item => item !== '')
-        .map(name => name.charAt(0))
+        .map(item => item.charAt(0))
         .reduce((accumulator, currentValue) => accumulator + currentValue)
 
       if (initials.length > 2) {
@@ -129,4 +126,7 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
 
 Avatar.create = createShorthandFactory({ Component: Avatar, mappedProp: 'name' })
 
-export default Avatar
+/**
+ * An avatar is a graphic representation of user.
+ */
+export default withSafeTypeForAs<typeof Avatar, AvatarProps>(Avatar)

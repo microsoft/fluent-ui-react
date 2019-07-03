@@ -31,7 +31,13 @@ const items = [
     message: {
       content: (
         <Chat.Message
-          content="Thanks for waiting!"
+          content={{
+            content: (
+              <div>
+                What do you think about <a href="#">www.goodFood.com</a>?
+              </div>
+            ),
+          }}
           author="John Doe"
           timestamp="Yesterday, 10:15 PM"
           mine
@@ -54,7 +60,7 @@ const items = [
     gutter: { content: <Avatar {...janeAvatar} /> },
     message: {
       content: (
-        <Chat.Message content="No problem!" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
+        <Chat.Message content="Looks good!" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
       ),
     },
     attached: true,
@@ -64,7 +70,17 @@ const items = [
     gutter: { content: <Avatar {...janeAvatar} /> },
     message: {
       content: (
-        <Chat.Message content="What's up?" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
+        <Chat.Message
+          content={{
+            content: (
+              <div>
+                I also like <a href="#">www.goodFood2.com</a>.
+              </div>
+            ),
+          }}
+          author="Jane Doe"
+          timestamp="Yesterday, 10:15 PM"
+        />
       ),
     },
     attached: 'bottom',
@@ -74,7 +90,7 @@ const items = [
     message: {
       content: (
         <Chat.Message
-          content="Would you like to grab a lunch?"
+          content="Would you like to grab lunch there?"
           author="John Doe"
           timestamp="Yesterday, 10:16 PM"
           mine
@@ -89,7 +105,7 @@ const items = [
     message: {
       content: (
         <Chat.Message
-          content="Sure! Let's try the new place downtown."
+          content="Sure! Let's try it."
           author="Jane Doe"
           timestamp="Yesterday, 10:15 PM"
         />
@@ -98,7 +114,7 @@ const items = [
     key: 'message-id-8',
   },
   {
-    children: <Divider content="Today" color="primary" important />,
+    children: <Divider content="Today" color="brand" important />,
     key: 'message-id-9',
   },
   {

@@ -1,4 +1,3 @@
-import * as _ from 'lodash'
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { TextVariables } from './textVariables'
 import { TextProps } from '../../../../components/Text/Text'
@@ -22,7 +21,12 @@ export default {
     },
     variables: v,
   }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
+    const colors = v.colorScheme[color]
     return {
+      ...(color &&
+        colors && {
+          color: colors.foreground,
+        }),
       // animations are not working with span, unless display is set to 'inline-block'
       ...(animation &&
         as === 'span' && {
@@ -35,7 +39,6 @@ export default {
         color: v.atMentionMeColor,
       }),
       ...(truncated && { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
-      ...(color && { color: _.get(v.colors, color) }),
       ...(disabled && { color: v.disabledColor }),
       ...(error && { color: v.errorColor }),
       ...(success && { color: v.successColor }),

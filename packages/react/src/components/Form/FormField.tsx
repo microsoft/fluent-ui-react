@@ -12,7 +12,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Text from '../Text/Text'
 import Input from '../Input/Input'
 import Box from '../Box/Box'
@@ -49,17 +49,14 @@ export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps
   type?: string
 }
 
-/**
- * A field is a form element containing a label and an input.
- */
-class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
-  public static displayName = 'FormField'
+class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
+  static displayName = 'FormField'
 
-  public static className = 'ui-form__field'
+  static className = 'ui-form__field'
 
   static create: Function
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
     }),
@@ -73,17 +70,16 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
     type: PropTypes.string,
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     accessibility: defaultBehavior,
     as: 'div',
     control: { as: Input },
   }
 
-  public renderComponent({
+  renderComponent({
     ElementType,
     classes,
     accessibility,
-    variables,
     styles,
     unhandledProps,
   }): React.ReactNode {
@@ -123,7 +119,7 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
     )
   }
 
-  private shouldControlAppearFirst = () => {
+  shouldControlAppearFirst = () => {
     const { type } = this.props
     return type && (type === 'checkbox' || type === 'radio')
   }
@@ -131,4 +127,7 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
 
 FormField.create = createShorthandFactory({ Component: FormField, mappedProp: 'label' })
 
-export default FormField
+/**
+ * A field is a form element containing a label and an input.
+ */
+export default withSafeTypeForAs<typeof FormField, FormFieldProps>(FormField)

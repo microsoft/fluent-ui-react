@@ -15,7 +15,7 @@ import {
 import { RenderResultConfig } from '../../lib/renderComponent'
 import { alertBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 import Button, { ButtonProps } from '../Button/Button'
 
@@ -62,14 +62,7 @@ export interface AlertState {
   isFromKeyboard: boolean
 }
 
-/**
- * A Alert displays information that explains nearby content.
- * @accessibility
- * Other considerations:
- *  - by default, content from warning and danger variants is announced by the screen reader. To announce the content of other variants, a mechanism similar to react-aria-live can be used
- *  - if Alert contains action slot, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
- */
-class Alert extends UIComponent<ReactProps<AlertProps>, AlertState> {
+class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
   static displayName = 'Alert'
   static className = 'ui-alert'
 
@@ -141,4 +134,11 @@ class Alert extends UIComponent<ReactProps<AlertProps>, AlertState> {
   }
 }
 
-export default Alert
+/**
+ * A Alert displays information that explains nearby content.
+ * @accessibility
+ * Do use warning and danger variants to announce the alert by the screen reader.
+ * Do use other libraries (for example react-aria-live) if the content of default or success variant needs to be announced.
+ * Do add textual representation to action slot if they only contain an icon (using title, aria-label or aria-labelledby props on the slot).
+ */
+export default withSafeTypeForAs<typeof Alert, AlertProps>(Alert)

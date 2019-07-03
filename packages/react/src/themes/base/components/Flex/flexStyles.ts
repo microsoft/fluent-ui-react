@@ -27,6 +27,7 @@ const flexStyles: ComponentSlotStylesInput<FlexProps, FlexVariables> = {
     ...(p.wrap && { flexWrap: 'wrap' }),
 
     ...(p.fill && {
+      width: '100%',
       height: '100%',
     }),
 

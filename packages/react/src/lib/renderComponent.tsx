@@ -17,21 +17,15 @@ import {
   State,
   ThemePrepared,
 } from '../themes/types'
-import { Props } from '../types'
-import {
-  AccessibilityBehavior,
-  AccessibilityDefinition,
-  AccessibilityActionHandlers,
-  FocusZoneMode,
-  FocusZoneDefinition,
-} from './accessibility/types'
+import { Props, ProviderContextPrepared } from '../types'
+import { AccessibilityDefinition, FocusZoneMode, FocusZoneDefinition } from './accessibility/types'
+import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import { defaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
-import { generateColorScheme } from './colorUtils'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -39,7 +33,7 @@ export interface RenderResultConfig<P> {
   unhandledProps: Props
   variables: ComponentVariablesObject
   styles: ComponentSlotStylesPrepared
-  accessibility: AccessibilityBehavior
+  accessibility: ReactAccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
 }
@@ -132,7 +126,7 @@ const renderWithFocusZone = <P extends {}>(
 
 const renderComponent = <P extends {}>(
   config: RenderConfig<P>,
-  theme: ThemePrepared,
+  context: ProviderContextPrepared,
 ): React.ReactElement<P> => {
   const {
     className,
@@ -146,24 +140,20 @@ const renderComponent = <P extends {}>(
     render,
   } = config
 
-  if (_.isEmpty(theme)) {
+  if (_.isEmpty(context)) {
     logProviderMissingWarning()
   }
 
+  const { rtl = false, renderer = felaRenderer, disableAnimations = false } = context || {}
+
   const {
     siteVariables = {
-      colorScheme: {},
-      colors: {},
-      contextualColors: {},
-      emphasisColors: {},
-      naturalColors: {},
       fontSizes: {},
     },
     componentVariables = {},
     componentStyles = {},
-    rtl = false,
-    renderer = felaRenderer,
-  } = theme || {}
+  } = (context.theme as ThemePrepared) || {}
+
   const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
 
   const stateAndProps = { ...state, ...props }
@@ -174,7 +164,9 @@ const renderComponent = <P extends {}>(
     props.variables,
   )(siteVariables)
 
-  const animationCSSProp = props.animation ? createAnimationStyles(props.animation, theme) : {}
+  const animationCSSProp = props.animation
+    ? createAnimationStyles(props.animation, context.theme)
+    : {}
 
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
@@ -184,17 +176,20 @@ const renderComponent = <P extends {}>(
     },
   )
 
-  const accessibility: AccessibilityBehavior = getAccessibility(stateAndProps, actionHandlers, rtl)
+  const accessibility: ReactAccessibilityBehavior = getAccessibility(
+    stateAndProps,
+    actionHandlers,
+    rtl,
+  )
 
   const unhandledProps = getUnhandledProps({ handledProps }, props)
-
-  const colors = generateColorScheme(stateAndProps.color, resolvedVariables.colorScheme)
 
   const styleParam: ComponentStyleFunctionParam = {
     props: stateAndProps,
     variables: resolvedVariables,
-    theme,
-    colors,
+    theme: context.theme,
+    rtl,
+    disableAnimations,
   }
 
   mergedStyles.root = {
@@ -218,7 +213,7 @@ const renderComponent = <P extends {}>(
     styles: resolvedStyles,
     accessibility,
     rtl,
-    theme,
+    theme: context.theme,
   }
 
   if (accessibility.focusZone) {

@@ -1,19 +1,25 @@
-import { Accessibility } from '../../types'
+import { Accessibility, AccessibilityAttributes } from '../../types'
 
 /**
  * @description
- * Image is usually only visual representation and therefore is hidden from screen readers.
+ * Image is usually only visual representation and therefore is hidden from screen readers, unless 'alt' property is provided.
  *
  * @specification
  * Adds attribute 'aria-hidden=true', if there is no 'alt' property provided.
  */
 
-const imageBehavior: Accessibility = (props: any) => ({
+const imageBehavior: Accessibility<ImageBehaviorProps> = props => ({
   attributes: {
     root: {
-      'aria-hidden': props['alt'] ? undefined : 'true',
+      'aria-hidden': props.alt || props['aria-label'] ? undefined : 'true',
     },
   },
 })
 
 export default imageBehavior
+
+type ImageBehaviorProps = {
+  /** Alternative text. */
+  alt?: string
+  'aria-label'?: string
+} & Pick<AccessibilityAttributes, 'aria-label'>

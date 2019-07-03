@@ -12,8 +12,8 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import Layout from '../Layout/Layout'
-import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
-import { ReactProps } from '../../types'
+import { ComponentSlotClasses } from '../../themes/types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ItemLayoutSlotClassNames {
   header: string
@@ -49,25 +49,22 @@ export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps
     classes: ComponentSlotClasses,
   ) => React.ReactNode
   /** Styled applied to the root element of the rendered component. */
-  rootCSS?: ICSSInJSStyle
+  rootCSS?: React.CSSProperties
   /** Styled applied to the media element of the rendered component. */
-  mediaCSS?: ICSSInJSStyle
+  mediaCSS?: React.CSSProperties
   /** Styled applied to the header element of the rendered component. */
-  headerCSS?: ICSSInJSStyle
+  headerCSS?: React.CSSProperties
   /** Styled applied to the header media element of the rendered component. */
-  headerMediaCSS?: ICSSInJSStyle
+  headerMediaCSS?: React.CSSProperties
   /** Styled applied to the content element of the rendered component. */
-  contentCSS?: ICSSInJSStyle
+  contentCSS?: React.CSSProperties
   /** Styled applied to the content element of the rendered component. */
-  contentMediaCSS?: ICSSInJSStyle
+  contentMediaCSS?: React.CSSProperties
   /** Styled applied to the end media element of the rendered component. */
-  endMediaCSS?: ICSSInJSStyle
+  endMediaCSS?: React.CSSProperties
 }
 
-/**
- * (DEPRECATED) The Item Layout handles layout styles for menu items, list items and other similar item templates.
- */
-class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
+class ItemLayout extends UIComponent<WithAsProp<ItemLayoutProps>, any> {
   static create: Function
 
   static displayName = 'ItemLayout'
@@ -174,9 +171,17 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, styles }) {
-    const { as, debug, endMedia, media, renderMainArea, rootCSS, mediaCSS, endMediaCSS } = this
-      .props as ItemLayoutPropsWithDefaults
+  renderComponent({ classes, unhandledProps, styles }) {
+    const {
+      as,
+      debug,
+      endMedia,
+      media,
+      renderMainArea,
+      rootCSS,
+      mediaCSS,
+      endMediaCSS,
+    } = this.props
 
     const startArea = media
     const mainArea = renderMainArea(this.props, this.state, classes)
@@ -227,6 +232,7 @@ ItemLayout.slotClassNames = {
   endMedia: `${ItemLayout.className}__endMedia`,
 }
 
-export default ItemLayout
-
-export type ItemLayoutPropsWithDefaults = ItemLayoutProps & typeof ItemLayout.defaultProps
+/**
+ * (DEPRECATED) The Item Layout handles layout styles for menu items, list items and other similar item templates.
+ */
+export default withSafeTypeForAs<typeof ItemLayout, ItemLayoutProps>(ItemLayout)

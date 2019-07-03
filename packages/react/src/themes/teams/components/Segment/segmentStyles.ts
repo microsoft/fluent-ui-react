@@ -1,24 +1,35 @@
-import * as _ from 'lodash'
-
 import { SegmentProps } from '../../../../components/Segment/Segment'
 import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
 import { SegmentVariables } from './segmentVariables'
+import { getColorScheme } from '../../colors'
 
 const segmentStyles: ComponentSlotStylesInput<SegmentProps, SegmentVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const segmentColor = _.get(v.colors, p.color)
+    const colors = getColorScheme(v.colorScheme, p.color)
 
     return {
-      padding: v.padding,
-      borderTop: `2px solid transparent`,
+      borderColor: 'transparent',
       borderRadius: v.borderRadius,
-      boxShadow: `0 1px 1px 1px ${v.boxShadowColor}`,
+      borderStyle: v.borderStyle,
+      borderWidth: v.borderWidth,
+      boxShadow: v.boxShadow,
+      padding: v.padding,
       color: v.color,
       backgroundColor: v.backgroundColor,
-      borderColor: segmentColor,
+      ...(p.color && { borderColor: colors.foreground }),
       ...(p.inverted && {
         color: v.backgroundColor,
-        backgroundColor: segmentColor || v.color,
+        backgroundColor: p.color ? colors.foreground : v.color,
+      }),
+      ...(p.disabled && {
+        boxShadow: 'none',
+        borderColor: v.disabledBorderColor,
+        color: v.disabledColor,
+        backgroundColor: v.disabledBackgroundColor,
+        ...(p.inverted && {
+          color: v.disabledBackgroundColor,
+          backgroundColor: v.disabledColor,
+        }),
       }),
     }
   },

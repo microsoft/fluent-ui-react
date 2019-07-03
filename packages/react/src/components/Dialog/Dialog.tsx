@@ -1,3 +1,4 @@
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -11,17 +12,22 @@ import {
   AutoControlledComponent,
   doesNodeContainClick,
   applyAccessibilityKeyHandlers,
+  getOrGenerateIdFromShorthand,
 } from '../../lib'
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { Accessibility } from '../../lib/accessibility/types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
 import Header from '../Header/Header'
 import Portal from '../Portal/Portal'
-import Ref from '../Ref/Ref'
 import Flex from '../Flex/Flex'
+
+export interface DialogSlotClassNames {
+  header: string
+  content: string
+}
 
 export interface DialogProps
   extends UIComponentProps,
@@ -83,20 +89,25 @@ export interface DialogProps
 }
 
 export interface DialogState {
+  contentId?: string
+  headerId?: string
   open?: boolean
 }
 
 /**
- * A Dialog indicates a possible user action.
+ * A Dialog informs users about specific tasks or may contain critical information, require decisions, or involve multiple interactions.
  */
-class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogState> {
+class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogState> {
   static displayName = 'Dialog'
   static className = 'ui-dialog'
+
+  static slotClassNames: DialogSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon({
       children: false,
       content: 'shorthand',
+      color: true,
     }),
     actions: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
@@ -121,7 +132,7 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
 
   static autoControlledProps = ['open']
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     closeAndFocusTrigger: e => {
       this.handleDialogCancel(e)
       e.stopPropagation()
@@ -134,7 +145,19 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
   triggerRef = React.createRef<HTMLElement>()
 
   getInitialAutoControlledState(): DialogState {
-    return { open: false }
+    return {
+      open: false,
+    }
+  }
+
+  static getAutoControlledStateFromProps(
+    props: DialogProps,
+    state: DialogState,
+  ): Partial<DialogState> {
+    return {
+      contentId: getOrGenerateIdFromShorthand('dialog-content-', props.content, state.contentId),
+      headerId: getOrGenerateIdFromShorthand('dialog-header-', props.header, state.headerId),
+    }
   }
 
   handleDialogCancel = (e: Event | React.SyntheticEvent) => {
@@ -201,12 +224,16 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
           {Header.create(header, {
             defaultProps: {
               as: 'h2',
+              className: Dialog.slotClassNames.header,
               styles: styles.header,
+              ...accessibility.attributes.header,
             },
           })}
           {Box.create(content, {
             defaultProps: {
               styles: styles.content,
+              className: Dialog.slotClassNames.content,
+              ...accessibility.attributes.content,
             },
           })}
 
@@ -256,4 +283,14 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
   }
 }
 
-export default Dialog
+Dialog.slotClassNames = {
+  header: `${Dialog.className}__header`,
+  content: `${Dialog.className}__content`,
+}
+
+/**
+ * A Dialog displays important information on top of a page which usually requires user's attention, confirmation or interaction.
+ * @accessibility
+ * Implements [ARIA Dialog (Modal)](https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal) design pattern.
+ */
+export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)

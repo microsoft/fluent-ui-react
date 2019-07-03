@@ -1,0 +1,11 @@
+{
+  "extends": "../../build/tsconfig.common",
+  "compilerOptions": {
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true
+  },
+  "include": ["src", "test"]
+}

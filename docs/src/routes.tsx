@@ -4,9 +4,15 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import ExternalExampleLayout from './components/ExternalExampleLayout'
 import DocsLayout from './components/DocsLayout'
 import DocsRoot from './components/DocsRoot'
+import MarkdownPage from 'docs/src/components/MarkdownPage'
 
+import * as Composition from './pages/Composition.mdx'
 import Accessibility from './views/Accessibility'
+import Colors from './views/Colors'
 import ColorPalette from './views/ColorPalette'
+import ColorSchemes from './views/ColorSchemes'
+
+import FAQ from './views/FAQ'
 import ShorthandProps from './views/ShorthandProps'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
@@ -19,6 +25,18 @@ import AccessibilityBehaviors from './views/AccessibilityBehaviors'
 import FocusZone from './views/FocusZone'
 import FocusTrapZone from './views/FocusTrapZone'
 import AutoFocusZone from './views/AutoFocusZone'
+import ChatPanePrototype from './prototypes/chatPane'
+import ChatMessagesPrototype from './prototypes/chatMessages'
+import AsyncShorthandPrototype from './prototypes/AsyncShorthand'
+import EmployeeCardPrototype from './prototypes/employeeCard'
+import MeetingOptionsPrototype from './prototypes/meetingOptions'
+import SearchPagePrototype from './prototypes/SearchPage'
+import MentionsPrototype from './prototypes/mentions'
+import DropdownsPrototype from './prototypes/dropdowns'
+import PopupsPrototype from './prototypes/popups'
+import IconViewerPrototype from './prototypes/IconViewer'
+import MenuButtonPrototype from './prototypes/MenuButton'
+import AlertsPrototype from './prototypes/alerts'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -33,70 +51,76 @@ const Router = () => (
             exact
             key="/prototype-chat-pane"
             path="/prototype-chat-pane"
-            component={require('./prototypes/chatPane/index').default}
+            component={ChatPanePrototype}
           />,
           <DocsLayout
             exact
             key="/prototype-chat-messages"
             path="/prototype-chat-messages"
-            component={require('./prototypes/chatMessages/index').default}
+            component={ChatMessagesPrototype}
           />,
-          ,
           <DocsLayout
             exact
             key="/prototype-async-shorthand"
             path="/prototype-async-shorthand"
-            component={require('./prototypes/AsyncShorthand/index').default}
+            component={AsyncShorthandPrototype}
           />,
           <DocsLayout
             exact
             key="/prototype-employee-card"
             path="/prototype-employee-card"
-            component={require('./prototypes/employeeCard/index').default}
+            component={EmployeeCardPrototype}
           />,
           <DocsLayout
             exact
             key="/prototype-meeting-options"
             path="/prototype-meeting-options"
-            component={require('./prototypes/meetingOptions/index').default}
+            component={MeetingOptionsPrototype}
           />,
           <DocsLayout
             exact
             key="/prototype-search-page"
             path="/prototype-search-page"
-            component={require('./prototypes/SearchPage/index').default}
+            component={SearchPagePrototype}
+          />,
+          <DocsLayout
+            exact
+            key="/prototype-mentions"
+            path="/prototype-mentions"
+            component={MentionsPrototype}
           />,
           <DocsLayout
             exact
             key="/prototype-dropdowns"
             path="/prototype-dropdowns"
-            component={require('./prototypes/dropdowns/index').default}
+            component={DropdownsPrototype}
           />,
           <DocsLayout
             exact
             key="/prototype-popups"
             path="/prototype-popups"
-            component={require('./prototypes/popups/index').default}
+            component={PopupsPrototype}
           />,
           <DocsLayout
             exact
             key="/icon-viewer"
             path="/icon-viewer"
-            component={require('./prototypes/IconViewer/index').default}
+            component={IconViewerPrototype}
           />,
           <DocsLayout
             exact
             key="/menu-button"
             path="/menu-button"
-            component={require('./prototypes/MenuButton/index').default}
+            component={MenuButtonPrototype}
           />,
           <DocsLayout
             exact
             key="/prototype-alerts"
             path="/prototype-alerts"
-            component={require('./prototypes/alerts/index').default}
+            component={AlertsPrototype}
           />,
         ]}
+        <DocsLayout exact path="/faq" component={FAQ} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/accessibility-behaviors" component={AccessibilityBehaviors} />
         <DocsLayout exact path="/focus-zone" component={FocusZone} />
@@ -111,7 +135,10 @@ const Router = () => (
           path="/integrate-custom-components"
           component={IntegrateCustomComponents}
         />
+        <MarkdownPage exact path="/composition" page={Composition} />
+        <DocsLayout exact path="/colors" component={Colors} />
         <DocsLayout exact path="/color-palette" component={ColorPalette} />
+        <DocsLayout exact path="/color-schemes" component={ColorSchemes} />
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>
     </Switch>

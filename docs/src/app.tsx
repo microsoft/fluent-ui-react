@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as _ from 'lodash'
+import { hot } from 'react-hot-loader/root'
 import { Provider, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from 'src/lib'
@@ -21,8 +21,7 @@ class App extends React.Component<any, ThemeContextData> {
       <ThemeContext.Provider value={this.state}>
         <Provider
           as={React.Fragment}
-          theme={mergeThemes(themes[themeName], {
-            // adjust Teams' theme to Semantic UI's font size scheme
+          theme={mergeThemes(themes.fontAwesome, themes[themeName], {
             staticStyles: [
               {
                 a: {
@@ -41,4 +40,4 @@ class App extends React.Component<any, ThemeContextData> {
   }
 }
 
-export default App
+export default hot(App)

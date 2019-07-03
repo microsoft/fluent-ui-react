@@ -3,8 +3,6 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Menu, tabListBehavior } from '@stardust-ui/react'
 
-import { updateForKeys } from 'docs/src/hoc'
-
 const ComponentPropsComponents: any = ({
   activeDisplayName,
   displayNames,
@@ -22,13 +20,14 @@ const ComponentPropsComponents: any = ({
         : displayName.replace(parentDisplayName, `${parentDisplayName}.`),
     name: displayName,
     onClick: onItemClick,
+    styles: { paddingTop: '0px' },
   }))
 
   return (
     <Menu
-      styles={{ color: 'green', display: 'inline-flex' }}
+      styles={{ display: 'inline-flex', borderBottomWidth: '0px' }}
       primary
-      pills
+      underlined
       accessibility={tabListBehavior}
       items={items}
     />
@@ -42,4 +41,8 @@ ComponentPropsComponents.propTypes = {
   parentDisplayName: PropTypes.string.isRequired,
 }
 
-export default updateForKeys(['activeDisplayName', 'parentDisplayName'])(ComponentPropsComponents)
+const areEqualProps = (prevProps, nextProps) =>
+  prevProps.activeDisplayName === nextProps.activeDisplayName &&
+  prevProps.parentDisplayName === nextProps.parentDisplayName
+
+export default React.memo(ComponentPropsComponents, areEqualProps)

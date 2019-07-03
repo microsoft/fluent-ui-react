@@ -1,31 +1,42 @@
 import * as Babel from '@babel/core'
-import * as gutil from 'gulp-util'
-import * as prettier from 'prettier'
-import * as through from 'through2'
-import * as Vinyl from 'vinyl'
+import { CLIEngine } from 'eslint'
+import gutil from 'gulp-util'
+import prettier from 'prettier'
+import through from 'through2'
+import Vinyl from 'vinyl'
 
 const prettierConfig = require('../../../.prettierrc.json')
+
 import { ExampleSource } from '../../../docs/src/types'
 import transformStarImportPlugin from '../../babel/transform-star-import-plugin'
 import { getRelativePathToSourceFile } from './util'
 
+const ESLint = new CLIEngine({
+  fix: true,
+})
 const pluginName = 'gulp-example-source'
 
 const createExampleSourceCode = (file: Vinyl): ExampleSource => {
   const tsSource = file.contents.toString()
 
-  const transformResult = Babel.transform(tsSource, {
+  const babelResult = Babel.transform(tsSource, {
+    // This plugin transforms TS files for docs, we want to apply exactly this config.
+    configFile: false,
     plugins: [transformStarImportPlugin],
     presets: [['@babel/preset-typescript', { allExtensions: true, isTSX: true }]],
     sourceType: 'module',
   })
-  const jsSource = prettier.format(transformResult.code, {
+  const prettierResult = prettier.format(babelResult.code, {
     ...prettierConfig,
     parser: 'babylon',
   })
+  // https://eslint.org/docs/developer-guide/nodejs-api#cliengineexecuteontext
+  // Results will contain single entry
+  const eslintResult = ESLint.executeOnText(prettierResult, file.path).results[0]
 
   return {
-    js: jsSource,
+    // result.output is omitted if no fix is available
+    js: eslintResult.output || prettierResult,
     ts: tsSource,
   }
 }

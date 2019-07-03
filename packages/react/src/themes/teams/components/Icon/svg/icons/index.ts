@@ -11,8 +11,13 @@ import bookmark from './bookmark'
 import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
+import callParking from './callParking'
+import callControlRelease from './callControlRelease'
+import callControlRequest from './callControlRequest'
 import callControlPresentNew from './callControlPresentNew'
 import callControlStopPresentingNew from './callControlStopPresentingNew'
+import callControlShare from './callControlShare'
+import callDialpad from './callDialpad'
 import callEnd from './callEnd'
 import callPstn from './callPstn'
 import callRecording from './callRecording'
@@ -20,6 +25,7 @@ import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
 import callMissedLine from './callMissedLine'
+import screencast from './screencast'
 import chat from './chat'
 import chevronDown from './chevronDown'
 import close from './close'
@@ -37,6 +43,7 @@ import filesPhotoshop from './filesPhotoshop'
 import filesSketch from './filesSketch'
 import filesSound from './filesSound'
 import filesTxt from './filesTxt'
+import filesUpload from './filesUpload'
 import filesVideo from './filesVideo'
 import filesZip from './filesZip'
 import flag from './flag'
@@ -46,7 +53,9 @@ import email from './email'
 import emoji from './emoji'
 import error from './error'
 import exclamationCircle from './exclamationCircle'
+import exclamationTriangle from './exclamationTriangle'
 import eye from './eye'
+import eyeFriendlier from './eyeFriendlier'
 import eyeSlash from './eyeSlash'
 import filesExcel from './filesExcel'
 import filesExcelBrand from './filesExcelBrand'
@@ -61,28 +70,41 @@ import fontSize from './fontSize'
 import format from './format'
 import gallery from './gallery'
 import giphy from './giphy'
+import hand from './hand'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
 import indent from './indent'
+import info from './info'
 import italic from './italic'
 import leave from './leave'
 import like from './like'
 import link from './link'
+import lightning from './lightning'
 import lock from './lock'
 import markAsUnread from './markAsUnread'
 import meetingNew from './meetingNew'
 import mention from './mention'
 import menu from './menu'
+import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
+import microsoftStream from './microsoftStream'
+import userPhone from './userPhone'
 import numberList from './numberList'
 import outdent from './outdent'
+import openOutside from './openOutside'
 import pause from './pause'
+import pauseThick from './pauseThick'
 import paperclip from './paperclip'
 import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
+import phoneArrow from './phoneArrow'
 import play from './play'
+import poll from './poll'
+import presenceAvailable from './presenceAvailable'
+import presenceStroke from './presenceStroke'
+import qna from './qna'
 import quote from './quote'
 import readAloud from './read-aloud'
 import redbang from './redbang'
@@ -90,11 +112,14 @@ import redo from './redo'
 import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
+import shareAlt from './shareAlt'
 import skypeLogo from './skypeLogo'
 import search from './search'
 import send from './send'
 import settings from './settings'
+import callControlCloseTray from './callControlCloseTray'
 import star from './star'
+import stardustCircle from './stardustCircle'
 import sticker from './sticker'
 import strike from './strike'
 import table from './table'
@@ -102,6 +127,7 @@ import tableAdd from './tableAdd'
 import tableDelete from './tableDelete'
 import teamCreate from './teamCreate'
 import teams from './teams'
+import toDoList from './toDoList'
 import translation from './translation'
 import trashCan from './trashCan'
 import triangleDown from './triangleDown'
@@ -110,9 +136,13 @@ import triangleUp from './triangleUp'
 import underline from './underline'
 import undo from './undo'
 import urgent from './urgent'
+import userBlur from './userBlur'
+import userFriends from './userFriends'
 import videoCameraEmphasis from './videoCameraEmphasis'
+import yammer from './yammer'
 
 export default {
+  'stardust-circle': stardustCircle,
   accept,
   add,
   'arrow-up': arrowUp,
@@ -123,14 +153,21 @@ export default {
   bullets,
   calendar,
   call,
+  'call-dialpad': callDialpad,
   'call-end': callEnd,
+  'call-parking': callParking,
   'call-video': callVideo,
   'call-video-off': callVideoOff,
+  'call-control-release': callControlRelease,
+  'call-control-request': callControlRequest,
+  'call-control-close-tray': callControlCloseTray,
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
+  'call-control-share': callControlShare,
   'call-missed-line': callMissedLine,
   'call-pstn': callPstn,
   'call-recording': callRecording,
+  screencast,
   'canvas-add-page': canvasAddPage,
   chat,
   'chevron-down': chevronDown,
@@ -149,6 +186,7 @@ export default {
   'files-sketch': filesSketch,
   'files-sound': filesSound,
   'files-txt': filesTxt,
+  'files-upload': filesUpload,
   'files-video': filesVideo,
   'files-zip': filesZip,
   flag,
@@ -158,7 +196,9 @@ export default {
   emoji,
   error,
   'exclamation-circle': exclamationCircle,
+  'exclamation-triangle': exclamationTriangle,
   eye,
+  'eye-friendlier': eyeFriendlier,
   'eye-slash': eyeSlash,
   format,
   'font-color': fontColor,
@@ -168,26 +208,39 @@ export default {
   highlight,
   'horizontal-rule': horizontalRule,
   indent,
+  info,
   italic,
   leave,
   like,
+  lightning,
   link,
   lock,
   'mark-as-unread': markAsUnread,
   'meeting-new': meetingNew,
   mention,
   menu,
+  'message-seen': messageSeen,
   mic,
+  hand,
   'mic-off': micOff,
   more,
+  'microsoft-stream': microsoftStream,
+  'user-phone': userPhone,
   'number-list': numberList,
+  'open-outside': openOutside,
   outdent,
   paperclip,
   'participant-add': addParticipant,
   'participant-remove': participantRemove,
   pause,
+  'pause-thick': pauseThick,
   'phone-clock': phoneClock,
+  'phone-arrow': phoneArrow,
   play,
+  poll,
+  'presence-available': presenceAvailable,
+  'presence-stroke': presenceStroke,
+  qna,
   quote,
   'read-aloud': readAloud,
   redbang,
@@ -199,6 +252,7 @@ export default {
   search,
   send,
   settings,
+  'share-alt': shareAlt,
   star,
   sticker,
   strike,
@@ -206,6 +260,7 @@ export default {
   'table-add': tableAdd,
   'table-delete': tableDelete,
   teams,
+  'to-do-list': toDoList,
   translation,
   'trash-can': trashCan,
   'triangle-down': triangleDown,
@@ -215,7 +270,10 @@ export default {
   underline,
   undo,
   urgent,
+  'user-blur': userBlur,
+  'user-friends': userFriends,
   'video-camera-emphasis': videoCameraEmphasis,
+  yammer,
 
   // Office icons
   word: filesWord,

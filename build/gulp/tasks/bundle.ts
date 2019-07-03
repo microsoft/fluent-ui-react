@@ -1,14 +1,15 @@
 import { task, series, parallel, src, dest } from 'gulp'
-import * as merge2 from 'merge2'
-import * as rimraf from 'rimraf'
-import * as webpack from 'webpack'
+import babel from 'gulp-babel'
+import rimraf from 'rimraf'
+import webpack from 'webpack'
 import { argv } from 'yargs'
 
 import config from '../../../config'
 import sh from '../sh'
 
-const { paths } = config
 const g = require('gulp-load-plugins')()
+
+const { paths } = config
 const { log, PluginError } = g.util
 
 const packageName = (argv.package as string) || 'react'
@@ -42,30 +43,29 @@ const componentsSrc = [
   `!${paths.packageSrc(packageName, '**/umd.ts')}`,
 ]
 
-task('bundle:package:commonjs', () => {
-  const tsConfig = paths.base('build/tsconfig.commonjs.json')
-  const settings = { declaration: true }
+task('bundle:package:commonjs', () =>
+  src(componentsSrc)
+    .pipe(babel())
+    .pipe(dest(paths.packageDist(packageName, 'commonjs'))),
+)
 
-  const typescript = g.typescript.createProject(tsConfig, settings)
-  const { dts, js } = src(componentsSrc).pipe(typescript())
+task('bundle:package:es', () =>
+  src(componentsSrc)
+    .pipe(babel({ caller: { useESModules: true } }))
+    .pipe(dest(paths.packageDist(packageName, 'es'))),
+)
 
-  return merge2([
-    dts.pipe(dest(paths.packageDist(packageName, 'commonjs'))),
-    js.pipe(dest(paths.packageDist(packageName, 'commonjs'))),
-  ])
-})
+task('bundle:package:types', () => {
+  const tsConfig = paths.base('build/tsconfig.json')
+  const typescript = g.typescript.createProject(tsConfig, {
+    declaration: true,
+    isolatedModules: false,
+    module: 'esnext',
+  })
 
-task('bundle:package:es', () => {
-  const tsConfig = paths.base('build/tsconfig.es.json')
-  const settings = { declaration: true }
-
-  const typescript = g.typescript.createProject(tsConfig, settings)
-  const { dts, js } = src(componentsSrc).pipe(typescript())
-
-  return merge2([
-    dts.pipe(dest(paths.packageDist(packageName, 'es'))),
-    js.pipe(dest(paths.packageDist(packageName, 'es'))),
-  ])
+  return src(componentsSrc)
+    .pipe(typescript())
+    .dts.pipe(dest(paths.packageDist(packageName, 'es')))
 })
 
 task('bundle:package:umd', cb => {
@@ -100,7 +100,10 @@ task('bundle:package:umd', cb => {
 
 task(
   'bundle:package:no-umd',
-  series('bundle:package:clean', parallel('bundle:package:commonjs', 'bundle:package:es')),
+  series(
+    'bundle:package:clean',
+    parallel('bundle:package:commonjs', 'bundle:package:es', 'bundle:package:types'),
+  ),
 )
 task('bundle:package', series('bundle:package:no-umd', 'bundle:package:umd'))
 

@@ -1,3 +1,4 @@
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -9,11 +10,10 @@ import { AutoFocusZoneProps } from './AutoFocusZone.types'
 import getUnhandledProps from '../../getUnhandledProps'
 import getElementType from '../../getElementType'
 import callable from '../../callable'
-import Ref from '../../../components/Ref/Ref'
 
 /** AutoFocusZone is used to focus inner element on mount. */
 export class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
-  private root = React.createRef<HTMLElement>()
+  root = React.createRef<HTMLElement>()
 
   static propTypes = {
     as: customPropTypes.as,
@@ -22,11 +22,11 @@ export class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
 
   static handledProps = _.keys(AutoFocusZone.propTypes)
 
-  public componentDidMount(): void {
+  componentDidMount(): void {
     this.findElementAndFocusAsync()
   }
 
-  public render(): JSX.Element {
+  render(): JSX.Element {
     const unhandledProps = getUnhandledProps(
       { handledProps: AutoFocusZone.handledProps },
       this.props,
@@ -41,7 +41,7 @@ export class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
     )
   }
 
-  private findElementAndFocusAsync = () => {
+  findElementAndFocusAsync = () => {
     if (!this.root.current) return
     const { firstFocusableSelector } = this.props
 

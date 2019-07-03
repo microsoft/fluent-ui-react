@@ -18,43 +18,13 @@ export interface AnimatedComponentProps {
 export interface UIComponentProps<P = any, V = any>
   extends StyledComponentProps<P, V>,
     AnimatedComponentProps {
-  [key: string]: any
-
-  /** An element type to render as (string or function). */
-  as?: any
-
   /** Additional CSS class name(s) to apply.  */
   className?: string
 }
 
 export type SizeValue = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
 
-export type ColorValue =
-  | 'primary'
-  | 'secondary'
-  | 'blue'
-  | 'green'
-  | 'grey'
-  | 'orange'
-  | 'pink'
-  | 'purple'
-  | 'teal'
-  | 'red'
-  | 'yellow'
-  | string
-
-export type ColorValuesWithPrimitiveColors = ColorValue | 'black' | 'white'
-
-export type ComplexColorPropType<TColorValue = ColorValue> =
-  | {
-      foreground?: TColorValue
-      background?: TColorValue
-      border?: TColorValue
-      shadow?: TColorValue
-    }
-  | TColorValue
-
-export interface ColorComponentProps<TColor = ColorValue> {
+export interface ColorComponentProps<TColor = string> {
   /** A component can have a color. */
   color?: TColor
 }

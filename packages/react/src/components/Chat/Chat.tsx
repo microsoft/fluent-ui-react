@@ -12,8 +12,8 @@ import {
 } from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
-import { ReactProps, ShorthandValue } from '../../types'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 
@@ -32,10 +32,7 @@ export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
   items?: ShorthandValue[]
 }
 
-/**
- * A Chat displays messages between users.
- */
-class Chat extends UIComponent<ReactProps<ChatProps>, any> {
+class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
   static displayName = 'Chat'
 
   static className = 'ui-chat'
@@ -59,7 +56,7 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
   static Item = ChatItem
   static Message = ChatMessage
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     focus: () => this.focusZone && this.focusZone.focus(),
   }
 
@@ -84,4 +81,7 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
   }
 }
 
-export default Chat
+/**
+ * A Chat displays messages between users.
+ */
+export default withSafeTypeForAs<typeof Chat, ChatProps, 'ul'>(Chat)

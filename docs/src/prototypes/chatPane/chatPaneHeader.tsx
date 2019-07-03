@@ -9,7 +9,7 @@ export interface ChatPaneHeaderProps {
 }
 
 class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
-  public render() {
+  render() {
     return (
       <Flex column>
         <Flex.Item>{this.renderBanner()}</Flex.Item>
@@ -19,7 +19,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
     )
   }
 
-  private renderBanner(): React.ReactElement {
+  renderBanner(): React.ReactElement {
     return (
       <Segment
         content={
@@ -36,12 +36,12 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
           height: '40px',
           padding: 0,
         })}
-        variables={siteVars => ({ backgroundColor: siteVars.colors.primary[500] })}
+        variables={siteVars => ({ backgroundColor: siteVars.colors.brand[600] })}
       />
     )
   }
 
-  private renderMainArea(): React.ReactElement {
+  renderMainArea(): React.ReactElement {
     const { chat } = this.props
 
     return (
@@ -74,7 +74,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
     )
   }
 
-  private renderHeaderButtons(): React.ReactElement {
+  renderHeaderButtons(): React.ReactElement {
     return (
       <div style={{ display: 'inline-flex' }}>
         <Button.Group
@@ -100,7 +100,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
               margin: 'auto',
               ...(!index && { margin: 'auto 1.6rem auto auto' }),
             }}
-            variables={siteVars => ({ color: siteVars.gray04 })}
+            variables={siteVars => ({ color: siteVars.colors.grey[350] })}
           />
         ))}
       </div>

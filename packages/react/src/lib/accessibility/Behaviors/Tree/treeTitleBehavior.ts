@@ -3,19 +3,23 @@ import * as keyboardKey from 'keyboard-key'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 
 /**
+ * @description
+ * Adds role 'treeitem' if the title is a leaf node inside the tree.
+ * Adds 'tabIndex' as '-1' if the title is a leaf node inside the tree.
+ *
  * @specification
- * Adds attribute 'aria-expanded=true' based on the property 'open' if the component has 'hasSubtree' property.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
  */
-const treeTitleBehavior: Accessibility = (props: any) => ({
+const treeTitleBehavior: Accessibility<TreeTitleBehavior> = props => ({
   attributes: {
     root: {
-      ...(props.hasSubtree && { 'aria-expanded': props.open ? 'true' : 'false' }),
-      tabindex: 0,
-      [IS_FOCUSABLE_ATTRIBUTE]: true,
+      ...(!props.hasSubtree && {
+        tabIndex: -1,
+        [IS_FOCUSABLE_ATTRIBUTE]: true,
+        role: 'treeitem',
+      }),
     },
   },
-
   keyActions: {
     root: {
       performClick: {
@@ -26,3 +30,10 @@ const treeTitleBehavior: Accessibility = (props: any) => ({
 })
 
 export default treeTitleBehavior
+
+type TreeTitleBehavior = {
+  /** Indicated if tree title has a subtree */
+  hasSubtree?: boolean
+  /** If subtree is opened. */
+  open?: boolean
+}

@@ -1,20 +1,21 @@
-import * as _ from 'lodash'
-
 import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { LabelProps } from '../../../../components/Label/Label'
 import { LabelVariables } from './labelVariables'
+import { getColorScheme } from '../../colors'
 
 const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
-  root: ({ props: p, variables: v, colors }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+    const colors = getColorScheme(v.colorScheme, p.color)
+
     return {
       display: 'inline-flex',
       alignItems: 'center',
       overflow: 'hidden',
       height: v.height,
       lineHeight: v.height,
-      color: colors.foreground,
-      backgroundColor: colors.background,
+      color: colors.background,
+      backgroundColor: colors.foreground,
       fontSize: pxToRem(14),
       borderRadius: pxToRem(3),
       padding: v.padding,

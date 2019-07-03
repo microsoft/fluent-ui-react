@@ -1,0 +1,4 @@
+.awcache/
+coverage/
+dist/
+node_modules/

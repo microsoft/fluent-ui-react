@@ -1,6 +1,6 @@
+import { CodeSnippet } from '@stardust-ui/docs-components'
 import * as React from 'react'
 
-import CodeSnippet from 'docs/src/components/CodeSnippet'
 import renderElementToJSX from 'docs/src/components/ExampleSnippet/renderElementToJSX'
 
 type ComponentPlaygroundSnippetProps = {

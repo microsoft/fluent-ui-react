@@ -12,8 +12,8 @@ import {
 } from '../../lib'
 import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ShorthandValue, ReactProps, ComponentEventHandler } from '../../types'
+import { Accessibility } from '../../lib/accessibility/types'
+import { ShorthandValue, WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 
 export interface ListItemSlotClassNames {
@@ -71,10 +71,7 @@ export interface ListItemState {
   isFromKeyboard: boolean
 }
 
-/**
- * A list item contains a single piece of content within a list.
- */
-class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
+class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -119,14 +116,14 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
     isFromKeyboard: false,
   }
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     performClick: event => {
       this.handleClick(event)
       event.preventDefault()
     },
   }
 
-  handleClick = e => {
+  handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
@@ -134,9 +131,6 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
     this.setState({ isFromKeyboard: isFromKeyboard() })
     _.invoke(this.props, 'onFocus', e, this.props)
   }
-
-  wrapWithFlex = (part: React.ReactNode, shouldWrap: boolean) =>
-    shouldWrap ? <Flex gap="gap.smaller">{part}</Flex> : part
 
   renderComponent({ classes, accessibility, unhandledProps, styles }) {
     const { as, debug, endMedia, media, content, contentMedia, header, headerMedia } = this.props
@@ -178,7 +172,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
       },
     })
 
-    const hasHeaderPart = headerElement || headerMediaElement
+    const hasHeaderPart = !!(headerElement || headerMediaElement)
     const headerPart = hasHeaderPart && (
       <>
         <Flex.Item grow>{headerElement}</Flex.Item>
@@ -186,7 +180,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
       </>
     )
 
-    const hasContentPart = contentElement || contentMediaElement
+    const hasContentPart = !!(contentElement || contentMediaElement)
     const contentPart = hasContentPart && (
       <>
         <Flex.Item grow>{contentElement}</Flex.Item>
@@ -199,7 +193,6 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
     return (
       <Flex
         vAlign="center"
-        gap="gap.smaller"
         as={as}
         debug={debug}
         className={classes.root}
@@ -212,14 +205,9 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
         {mediaElement}
 
         <Flex.Item grow>
-          <Flex
-            className={ListItem.slotClassNames.main}
-            column={hasBothParts}
-            gap={hasBothParts ? undefined : 'gap.small'}
-            styles={styles.main}
-          >
-            {this.wrapWithFlex(headerPart, hasBothParts)}
-            {this.wrapWithFlex(contentPart, hasBothParts)}
+          <Flex className={ListItem.slotClassNames.main} column={hasBothParts} styles={styles.main}>
+            {hasBothParts ? <Flex>{headerPart}</Flex> : headerPart}
+            {hasBothParts ? <Flex>{contentPart}</Flex> : contentPart}
           </Flex>
         </Flex.Item>
         {endMediaElement}
@@ -239,4 +227,7 @@ ListItem.slotClassNames = {
   endMedia: `${ListItem.className}__endMedia`,
 }
 
-export default ListItem
+/**
+ * A list item contains a single piece of content within a list.
+ */
+export default withSafeTypeForAs<typeof ListItem, ListItemProps, 'li'>(ListItem)

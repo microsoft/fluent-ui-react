@@ -1,9 +1,19 @@
 import * as React from 'react'
-import { commonPropTypes } from '../../lib'
-import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
-import { ReactProps } from '../../types'
+import {
+  commonPropTypes,
+  ContentComponentProps,
+  ChildrenComponentProps,
+  UIComponentProps,
+} from '../../lib'
+import createComponent from '../../lib/createComponent'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
-const ProviderBox: CreateComponentReturnType<ReactProps<{}>> = createComponent<any>({
+export interface ProviderBoxProps
+  extends UIComponentProps<ProviderBoxProps>,
+    ContentComponentProps,
+    ChildrenComponentProps {}
+
+const ProviderBox = createComponent<WithAsProp<ProviderBoxProps>>({
   displayName: 'ProviderBox',
 
   className: 'ui-provider__box',
@@ -28,4 +38,4 @@ const ProviderBox: CreateComponentReturnType<ReactProps<{}>> = createComponent<a
   },
 })
 
-export default ProviderBox
+export default withSafeTypeForAs<typeof ProviderBox, ProviderBoxProps>(ProviderBox)

@@ -1,4 +1,4 @@
-import { KnobInspector, KnobProvider } from '@stardust-ui/docs-components'
+import { KnobInspector, KnobProvider, unstable_KnobContext } from '@stardust-ui/docs-components'
 import { Flex, Header, Segment } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -12,13 +12,24 @@ type ComponentPlaygroundProps = {
   componentName: string
 }
 
+const NoopKnobProvider: React.FunctionComponent = props => {
+  const knobContext = React.useContext(unstable_KnobContext)
+  const noopContext = { ...knobContext, registerKnob: _.noop, unregisterKnob: _.noop }
+
+  return (
+    <unstable_KnobContext.Provider value={noopContext}>
+      {props.children}
+    </unstable_KnobContext.Provider>
+  )
+}
+
 const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = props => {
-  const playgroundPath = _.find(playgroundPaths, playgroundPath =>
+  const resultPath = _.find(playgroundPaths, playgroundPath =>
     _.includes(playgroundPath, `/${props.componentName}/`),
   )
 
-  if (playgroundPath) {
-    const PlaygroundComponent: React.FunctionComponent = examplePlaygroundContext(playgroundPath)
+  if (resultPath) {
+    const PlaygroundComponent: React.FunctionComponent = examplePlaygroundContext(resultPath)
       .default
 
     return (
@@ -37,12 +48,18 @@ const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = p
                   <PlaygroundComponent />
                 </Segment>
               </Flex.Item>
-              <ComponentPlaygroundSnippet component={PlaygroundComponent} />
+              {/* ComponentPlaygroundSnippet will evaluate passed component again and if it contains
+                  knobs it will execute them again and will fail because hooks with that name have
+                  been already registered.
+                */}
+              <NoopKnobProvider>
+                <ComponentPlaygroundSnippet component={PlaygroundComponent} />
+              </NoopKnobProvider>
             </Flex>
           </Flex.Item>
 
           <Flex.Item align="start" push>
-            <Segment color="primary">
+            <Segment color="brand">
               <Header as="h4" className="no-anchor" styles={{ marginTop: 0 }}>
                 Props
               </Header>

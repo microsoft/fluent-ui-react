@@ -7,20 +7,18 @@ import {
   createShorthandFactory,
   UIComponent,
   UIComponentProps,
-  ColorComponentProps,
   commonPropTypes,
   childrenExist,
   ChildrenComponentProps,
   ContentComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface MenuDividerProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps,
-    ColorComponentProps {
+    ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuDividerBehavior
@@ -33,10 +31,7 @@ export interface MenuDividerProps
   inSubmenu?: boolean
 }
 
-/**
- * A menu divider visually segments menu items inside menu.
- */
-class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>> {
+class MenuDivider extends UIComponent<WithAsProp<MenuDividerProps>> {
   static displayName = 'MenuDivider'
 
   static create: Function
@@ -49,7 +44,7 @@ class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>> {
   }
 
   static propTypes = {
-    ...commonPropTypes.createCommon({ color: true }),
+    ...commonPropTypes.createCommon(),
     primary: PropTypes.bool,
     secondary: PropTypes.bool,
     vertical: PropTypes.bool,
@@ -72,6 +67,9 @@ class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>> {
   }
 }
 
-MenuDivider.create = createShorthandFactory({ Component: MenuDivider, mappedProp: 'color' })
+MenuDivider.create = createShorthandFactory({ Component: MenuDivider, mappedProp: 'content' })
 
-export default MenuDivider
+/**
+ * A menu divider visually segments menu items inside menu.
+ */
+export default withSafeTypeForAs<typeof MenuDivider, MenuDividerProps, 'li'>(MenuDivider)

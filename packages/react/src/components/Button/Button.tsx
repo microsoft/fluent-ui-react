@@ -13,12 +13,13 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import ButtonGroup from './ButtonGroup'
 
 export interface ButtonProps
@@ -40,7 +41,9 @@ export interface ButtonProps
   /** A button can take the width of its container. */
   fluid?: boolean
 
-  /** Button can have an icon. */
+  /** Button can have an icon.
+   * @slot
+   */
   icon?: ShorthandValue
 
   /** A button may indicate that it has only icon. */
@@ -77,21 +80,14 @@ export interface ButtonState {
   isFromKeyboard: boolean
 }
 
-/**
- * A button indicates a possible user action.
- * @accessibility
- * Other considerations:
- *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
- *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label' or 'aria-labelledby' attributes
- */
-class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
+class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   static create: Function
 
-  public static displayName = 'Button'
+  static displayName = 'Button'
 
-  public static className = 'ui-button'
+  static className = 'ui-button'
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
     }),
@@ -108,18 +104,25 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     as: 'button',
     accessibility: buttonBehavior as Accessibility,
   }
 
   static Group = ButtonGroup
 
-  public state = {
+  state = {
     isFromKeyboard: false,
   }
 
-  public renderComponent({
+  actionHandlers = {
+    performClick: event => {
+      event.preventDefault()
+      this.handleClick(event)
+    },
+  }
+
+  renderComponent({
     ElementType,
     classes,
     accessibility,
@@ -137,6 +140,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
       >
@@ -150,7 +154,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
     )
   }
 
-  public renderIcon = (variables, styles) => {
+  renderIcon = (variables, styles) => {
     const { icon, iconPosition, content } = this.props
 
     return Icon.create(icon, {
@@ -162,7 +166,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
     })
   }
 
-  private handleClick = (e: React.SyntheticEvent) => {
+  handleClick = (e: React.SyntheticEvent) => {
     const { disabled } = this.props
 
     if (disabled) {
@@ -173,7 +177,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
 
     _.invoke(this.props, 'onFocus', e, this.props)
@@ -182,4 +186,9 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
 
 Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
 
-export default Button
+/**
+ * A button indicates a possible user action.
+ * @accessibility
+ * Do add textual representation if the component only contains an icon (using title, aria-label or aria-labelledby props).
+ */
+export default withSafeTypeForAs<typeof Button, ButtonProps, 'button'>(Button)

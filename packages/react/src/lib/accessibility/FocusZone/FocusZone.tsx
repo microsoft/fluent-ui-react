@@ -68,24 +68,25 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     isCircularNavigation: false,
     direction: FocusZoneDirection.bidirectional,
     as: 'div',
+    preventDefaultWhenHandled: true,
   }
 
   static displayName = 'FocusZone'
   static className = 'ms-FocusZone'
 
-  private _root: { current: HTMLElement | null } = { current: null }
-  private _id: string
+  _root: { current: HTMLElement | null } = { current: null }
+  _id: string
   /** The most recently focused child element. */
-  private _activeElement: HTMLElement | null
+  _activeElement: HTMLElement | null
   /** The child element with tabindex=0. */
-  private _defaultFocusElement: HTMLElement | null
-  private _focusAlignment: Point
-  private _isInnerZone: boolean
+  _defaultFocusElement: HTMLElement | null
+  _focusAlignment: Point
+  _isInnerZone: boolean
 
   /** Used to allow us to move to next focusable element even when we're focusing on a input element when pressing tab */
-  private _processingTabKey: boolean
+  _processingTabKey: boolean
 
-  private windowElement: Window | null
+  windowElement: Window | null
 
   constructor(props: FocusZoneProps) {
     super(props)
@@ -101,7 +102,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     this.onKeyDownCapture = this.onKeyDownCapture.bind(this)
   }
 
-  public componentDidMount(): void {
+  componentDidMount(): void {
     _allInstances[this._id] = this
 
     this.setRef(this) // called here to support functional components, we only need HTMLElement ref anyway
@@ -131,7 +132,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     }
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     delete _allInstances[this._id]
     if (this.windowElement) {
       this.windowElement.removeEventListener('keydown', this.onKeyDownCapture, true)
@@ -166,7 +167,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
    * @param {boolean} forceIntoFirstElement If true, focus will be forced into the first element, even if focus is already in the focus zone.
    * @returns True if focus could be set to an active element, false if no operation was taken.
    */
-  public focus(forceIntoFirstElement: boolean = false): boolean {
+  focus(forceIntoFirstElement: boolean = false): boolean {
     if (this._root.current) {
       if (
         !forceIntoFirstElement &&
@@ -205,7 +206,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
    * Sets focus to the last tabbable item in the zone.
    * @returns True if focus could be set to an active element, false if no operation was taken.
    */
-  public focusLast(): boolean {
+  focusLast(): boolean {
     if (this._root.current) {
       const lastChild = this._root.current && (this._root.current.lastChild as HTMLElement | null)
 
@@ -228,7 +229,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
    * @param {HTMLElement} element The child element within the zone to focus.
    * @returns True if focus could be set to an active element, false if no operation was taken.
    */
-  public focusElement(element: HTMLElement): boolean {
+  focusElement(element: HTMLElement): boolean {
     const { shouldReceiveFocus } = this.props
 
     if (shouldReceiveFocus && !shouldReceiveFocus(element)) {
@@ -247,12 +248,12 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     return false
   }
 
-  private setRef = (elem: React.ReactInstance): void => {
+  setRef = (elem: React.ReactInstance): void => {
     // findDOMNode needed to get correct DOM ref with react-hot-loader, see https://github.com/gaearon/react-hot-loader/issues/964
     this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement
   }
 
-  private _onFocus = (ev: React.FocusEvent<HTMLElement>): void => {
+  _onFocus = (ev: React.FocusEvent<HTMLElement>): void => {
     const {
       onActiveElementChanged,
       stopFocusPropagation,
@@ -315,13 +316,13 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
   /**
    * Handle global tab presses so that we can patch tabindexes on the fly.
    */
-  private onKeyDownCapture(ev: KeyboardEvent) {
+  onKeyDownCapture(ev: KeyboardEvent) {
     if (keyboardKey.getCode(ev) === keyboardKey.Tab) {
       this.updateTabIndexes()
     }
   }
 
-  private _onMouseDown = (ev: React.MouseEvent<HTMLElement>): void => {
+  _onMouseDown = (ev: React.MouseEvent<HTMLElement>): void => {
     const { disabled } = this.props
 
     if (disabled) {
@@ -350,7 +351,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     }
   }
 
-  private setActiveElement(element: HTMLElement, forceAlignemnt?: boolean): void {
+  setActiveElement(element: HTMLElement, forceAlignemnt?: boolean): void {
     const previousActiveElement = this._activeElement
 
     this._activeElement = element
@@ -372,14 +373,14 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     }
   }
 
-  private preventDefaultWhenHandled(ev: React.KeyboardEvent<HTMLElement>): void {
+  preventDefaultWhenHandled(ev: React.KeyboardEvent<HTMLElement>): void {
     this.props.preventDefaultWhenHandled && ev.preventDefault()
   }
 
   /**
    * Handle the keystrokes.
    */
-  private _onKeyDown = (ev: React.KeyboardEvent<HTMLElement>): boolean | undefined => {
+  _onKeyDown = (ev: React.KeyboardEvent<HTMLElement>): boolean | undefined => {
     const { direction, disabled, shouldEnterInnerZone } = this.props
 
     if (disabled) {
@@ -561,14 +562,14 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
    * Walk up the dom try to find a focusable element.
    * TODO
    */
-  private tryInvokeClickForFocusable(onTarget: HTMLElement): boolean {
+  tryInvokeClickForFocusable(onTarget: HTMLElement): boolean {
     return false
   }
 
   /**
    * Traverse to find first child zone.
    */
-  private getFirstInnerZone(forRootElement?: HTMLElement | null): FocusZone | null {
+  getFirstInnerZone(forRootElement?: HTMLElement | null): FocusZone | null {
     const rootElement = forRootElement || this._activeElement || this._root.current
 
     if (!rootElement) {
@@ -597,7 +598,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     return null
   }
 
-  private moveFocus(
+  moveFocus(
     isForward: boolean,
     getDistanceFromCenter: (activeRect: ClientRect, targetRect: ClientRect) => number,
     ev?: Event,
@@ -678,7 +679,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     return changedFocus
   }
 
-  private moveFocusDown(): boolean {
+  moveFocusDown(): boolean {
     let targetTop = -1
     const leftAlignment = this._focusAlignment.left
 
@@ -721,7 +722,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     return false
   }
 
-  private moveFocusUp(): boolean {
+  moveFocusUp(): boolean {
     let targetTop = -1
     const leftAlignment = this._focusAlignment.left
 
@@ -765,7 +766,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     return false
   }
 
-  private moveFocusLeft(): boolean {
+  moveFocusLeft(): boolean {
     if (
       this.moveFocus(
         this.props.isRtl,
@@ -793,7 +794,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
           return distance
         },
-        undefined /*ev*/,
+        undefined /* ev */,
         true,
       )
     ) {
@@ -804,7 +805,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     return false
   }
 
-  private moveFocusRight(): boolean {
+  moveFocusRight(): boolean {
     if (
       this.moveFocus(
         !this.props.isRtl,
@@ -832,7 +833,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
           return distance
         },
-        undefined /*ev*/,
+        undefined /* ev */,
         true,
       )
     ) {
@@ -843,7 +844,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     return false
   }
 
-  private setFocusAlignment(element: HTMLElement, isHorizontal?: boolean, isVertical?: boolean) {
+  setFocusAlignment(element: HTMLElement, isHorizontal?: boolean, isVertical?: boolean) {
     if (
       this.props.direction === FocusZoneDirection.bidirectional &&
       (!this._focusAlignment || isHorizontal || isVertical)
@@ -866,11 +867,11 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     }
   }
 
-  private isImmediateDescendantOfZone(element?: HTMLElement): boolean {
+  isImmediateDescendantOfZone(element?: HTMLElement): boolean {
     return this.getOwnerZone(element) === this._root.current
   }
 
-  private getOwnerZone(element?: HTMLElement): HTMLElement | null {
+  getOwnerZone(element?: HTMLElement): HTMLElement | null {
     let parentElement = getParent(element as HTMLElement)
 
     while (
@@ -888,7 +889,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     return this._root.current
   }
 
-  private updateTabIndexes(onElement?: HTMLElement) {
+  updateTabIndexes(onElement?: HTMLElement) {
     let element = onElement
 
     if (!this._activeElement && this.props.defaultTabbableElement) {
@@ -956,7 +957,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     }
   }
 
-  private isElementInput(element: HTMLElement): boolean {
+  isElementInput(element: HTMLElement): boolean {
     if (
       element &&
       element.tagName &&
@@ -967,7 +968,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     return false
   }
 
-  private shouldInputLoseFocus(element: HTMLInputElement, isForward?: boolean) {
+  shouldInputLoseFocus(element: HTMLInputElement, isForward?: boolean) {
     // If a tab was used, we want to focus on the next element.
     if (
       !this._processingTabKey &&

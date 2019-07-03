@@ -1,6 +1,6 @@
 import * as React from 'react'
+import { CopyToClipboard } from '@stardust-ui/docs-components'
 import { Provider, Grid, Divider, Header, Icon, Menu, Segment } from '@stardust-ui/react'
-import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 import themeWithProcessedIcons from 'src/themes/teams/withProcessedIcons'
 import { TeamsProcessedSvgIconSpec } from 'src/themes/teams/components/Icon/svg/types'
 
@@ -19,21 +19,20 @@ const renderStardustIconName = (icon, isOutline = false) => {
           => {maybeExportedAs} {isOutline && 'outline'}
         </code>
         <br />
-        <CopyToClipboard
-          render={(active, onClick) => (
+        <CopyToClipboard value={`<Icon name="${maybeExportedAs}" ${isOutline ? 'outline' : ''} />`}>
+          {(active, onClick) => (
             <button onClick={onClick} style={{ fontSize: 10 }} title="Copy usage">
               {active ? '✔' : 'Copy'}
             </button>
           )}
-          value={`<Icon name="${maybeExportedAs}" ${isOutline ? 'outline' : ''} />`}
-        />
+        </CopyToClipboard>
       </>
     )
   )
 }
 
 class IconViewerExample extends React.Component<any, {}> {
-  private readonly iconFilters = {
+  readonly iconFilters = {
     All: () => true,
     Exported: (icon: TeamsProcessedSvgIconSpec) => icon.exportedAs,
     'Not Exported': (icon: TeamsProcessedSvgIconSpec) => !icon.exportedAs,
@@ -62,7 +61,7 @@ class IconViewerExample extends React.Component<any, {}> {
         />
 
         <div style={{ marginTop: '15px' }}>
-          <Menu tabular styles={{ margin: '15px 0' }}>
+          <Menu styles={{ margin: '15px 0' }}>
             {Object.keys(this.iconFilters).map(filterName => (
               <Menu.Item
                 content={filterName}

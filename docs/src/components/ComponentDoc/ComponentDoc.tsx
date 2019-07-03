@@ -92,7 +92,7 @@ class ComponentDoc extends React.Component<any, any> {
 
     return (
       <div style={{ padding: '20px' }}>
-        <Flex column>
+        <Flex column styles={{ paddingBottom: '1rem' }}>
           <Flex.Item padding="padding.medium">
             <ThemeContext.Consumer>
               {({ changeTheme, themeOptions }) => (
@@ -113,7 +113,7 @@ class ComponentDoc extends React.Component<any, any> {
                 <Flex.Item>
                   <Header
                     as="h1"
-                    aria-level="2"
+                    aria-level={2}
                     content={info.displayName}
                     variables={{ color: 'black' }}
                   />
@@ -133,7 +133,6 @@ class ComponentDoc extends React.Component<any, any> {
               />
               <ComponentAccessibility info={info} />
               <ComponentDocSee displayName={info.displayName} />
-
               <ComponentProps displayName={info.displayName} props={info.props} />
             </>
           </Flex.Item>

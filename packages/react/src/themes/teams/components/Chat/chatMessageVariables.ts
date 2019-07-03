@@ -15,7 +15,8 @@ export interface ChatMessageVariables {
   authorFontWeight: number
   headerMarginBottom: string
   contentColor: string
-  contentFocusOutlineColor: string
+  linkColor: string
+  linkColorMine: string
   border: string
   badgeShadow: string
   isImportant: boolean
@@ -33,25 +34,26 @@ export default (siteVars): ChatMessageVariables => ({
   actionMenuPositionRight: pxToRem(5),
   actionMenuPositionTop: pxToRem(-30),
   backgroundColor: siteVars.colors.white,
-  backgroundColorMine: '#E5E5F1',
+  backgroundColorMine: siteVars.colors.brand[100],
   borderRadius: pxToRem(3),
   color: 'rgb(64, 64, 64)',
   offset: pxToRem(100),
   padding: pxToRem(16),
   authorMarginRight: pxToRem(12),
-  authorColor: siteVars.gray02, // will be gray[500] with new palette
+  authorColor: siteVars.colors.grey[500],
   authorFontWeight: siteVars.fontWeightRegular,
   headerMarginBottom: pxToRem(2),
-  contentColor: '#252423', // will be gray[750] with new palette
-  contentFocusOutlineColor: siteVars.colors.primary[500],
+  contentColor: siteVars.colors.grey[750],
+  linkColor: siteVars.colorScheme.brand.foreground1,
+  linkColorMine: siteVars.colorScheme.brand.foreground2,
   border: 'none',
   badgeShadow: siteVars.shadowLevel1Darker,
   isImportant: false,
   hasMention: false,
-  hasMentionColor: siteVars.naturalColors.orange[900], // orange[300] when the new palette pr is checked in
-  hasMentionNubbinColor: siteVars.naturalColors.darkOrange[400], // orange[400] when the new palette pr is checked in
-  isImportantColor: siteVars.colors.red[900], // red[400] when the new palette pr is checked in
+  hasMentionColor: siteVars.colors.orange[300],
+  hasMentionNubbinColor: siteVars.colors.orange[400],
+  isImportantColor: siteVars.colors.red[400],
   badgeTextColor: siteVars.colors.white,
   reactionGroupMarginLeft: pxToRem(12),
-  timestampColorMine: siteVars.gray02,
+  timestampColorMine: siteVars.colors.grey[500],
 })

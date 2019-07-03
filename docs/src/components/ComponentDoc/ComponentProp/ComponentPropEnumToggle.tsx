@@ -1,8 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { updateForKeys } from 'docs/src/hoc'
-
 const toggleStyle = {
   cursor: 'pointer',
 }
@@ -19,4 +17,6 @@ ComponentPropEnumToggle.propTypes = {
   total: PropTypes.number,
 }
 
-export default updateForKeys(['showAll'])(ComponentPropEnumToggle)
+const areEqualProps = (prevProps, nextProps) => prevProps.showAll === nextProps.showAll
+
+export default React.memo(ComponentPropEnumToggle, areEqualProps)

@@ -1,13 +1,9 @@
+import { Ref, RefFindNode } from '@stardust-ui/react-component-ref'
 import * as faker from 'faker'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
-
-import { ThemeProvider, FelaTheme } from 'react-fela'
-
-import Ref from 'src/components/Ref/Ref'
-import RefFindNode from 'src/components/Ref/RefFindNode'
 
 import isExportedAtTopLevel from './isExportedAtTopLevel'
 import {
@@ -58,7 +54,7 @@ export default (Component, options: Conformant = {}) => {
   const componentType = typeof Component
 
   const helperComponentNames = [
-    ...[ThemeProvider, FelaTheme, Ref, RefFindNode],
+    ...[Ref, RefFindNode],
     ...(wrapperComponent ? [wrapperComponent] : []),
   ].map(getDisplayName)
 
@@ -73,21 +69,20 @@ export default (Component, options: Conformant = {}) => {
   }
 
   const getComponent = (wrapper: ReactWrapper) => {
-    const componentElement = toNextNonTrivialChild(wrapper)
-    let topLevelChildElement = toNextNonTrivialChild(componentElement)
+    let componentElement = toNextNonTrivialChild(wrapper)
 
     // passing through Focus Zone wrappers
-    if (topLevelChildElement.type() === FocusZone) {
+    if (componentElement.type() === FocusZone) {
       // another HOC component is added: FocuZone
-      topLevelChildElement = topLevelChildElement.childAt(0) // skip through <FocusZone>
-      if (topLevelChildElement.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
-        topLevelChildElement = topLevelChildElement.childAt(0) // skip the additional wrap <div> of the FocusZone
+      componentElement = componentElement.childAt(0) // skip through <FocusZone>
+      if (componentElement.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
+        componentElement = componentElement.childAt(0) // skip the additional wrap <div> of the FocusZone
       }
     }
 
     // in that case 'topLevelChildElement' we've found so far is a wrapper's topmost child
     // thus, we should continue search
-    return wrapperComponent ? toNextNonTrivialChild(topLevelChildElement) : topLevelChildElement
+    return wrapperComponent ? toNextNonTrivialChild(componentElement) : componentElement
   }
 
   const getEventTargetComponent = (wrapper: ReactWrapper, listenerName: string) => {
@@ -410,7 +405,7 @@ export default (Component, options: Conformant = {}) => {
           'data-simulate-event-here': true,
         }
 
-        const component = mount(<Component {...props} />).childAt(0)
+        const component = mount(<Component {...props} />)
         const eventTarget = getEventTargetComponent(component, listenerName)
         const customHandler: Function = eventTarget.prop(listenerName)
 

@@ -1,17 +1,14 @@
-// TODO: remove after switch to Babel
-import 'mdn-polyfills/Object.assign'
-import 'mdn-polyfills/String.prototype.includes'
-
 import * as commonPropTypes from './commonPropTypes'
 
 export { default as applyAccessibilityKeyHandlers } from './applyAccessibilityKeyHandlers'
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
-export * from './colorUtils'
 export { default as UIComponent } from './UIComponent'
-export { felaRenderer, felaRtlRenderer } from './felaRenderer'
+export { default as felaRenderer } from './felaRenderer'
 export { default as toCompactArray } from './toCompactArray'
 export { default as rtlTextContainer } from './rtlTextContainer'
+export { default as stringLiteralsArray } from './stringLiteralsArray'
+export { default as getOrGenerateIdFromShorthand } from './getOrGenerateIdFromShorthand'
 
 export * from './factories'
 export { default as callable } from './callable'
@@ -20,10 +17,13 @@ export { default as getClasses } from './getClasses'
 export { default as getElementType } from './getElementType'
 export { default as getUnhandledProps } from './getUnhandledProps'
 export { default as mergeThemes } from './mergeThemes'
-export { default as renderComponent, RenderResultConfig } from './renderComponent'
+export { default as mergeProviderContexts } from './mergeProviderContexts'
+
+export * from './renderComponent'
+export { default as renderComponent } from './renderComponent'
+
 export { default as getElementProp } from './getElementProp'
 
-export { default as handleRef } from './handleRef'
 export {
   htmlImageProps,
   htmlInputAttrs,

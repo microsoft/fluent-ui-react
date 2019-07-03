@@ -1,3 +1,4 @@
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -13,9 +14,8 @@ import {
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Box from '../Box/Box'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon from '../Icon/Icon'
-import Ref from '../Ref/Ref'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
 
@@ -87,16 +87,11 @@ export interface RadioGroupItemState {
   isFromKeyboard: boolean
 }
 
-/**
- * A single radio within a radio group.
- * @accessibility
- * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
- */
 class RadioGroupItem extends AutoControlledComponent<
-  ReactProps<RadioGroupItemProps>,
+  WithAsProp<RadioGroupItemProps>,
   RadioGroupItemState
 > {
-  private elementRef = React.createRef<HTMLElement>()
+  elementRef = React.createRef<HTMLElement>()
 
   static create: Function
 
@@ -130,12 +125,11 @@ class RadioGroupItem extends AutoControlledComponent<
 
   static autoControlledProps = ['checked']
 
-  componentDidUpdate(prevProps, prevState) {
-    const checked = this.state.checked
-    if (checked !== prevState.checked) {
-      checked && this.props.shouldFocus && this.elementRef.current.focus()
-      _.invoke(this.props, 'checkedChanged', undefined, { ...this.props, checked })
-    }
+  actionHandlers = {
+    performClick: e => {
+      e.preventDefault()
+      this.handleClick(e)
+    },
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
@@ -152,6 +146,14 @@ class RadioGroupItem extends AutoControlledComponent<
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const checked = this.state.checked
+    if (checked !== prevState.checked) {
+      checked && this.props.shouldFocus && this.elementRef.current.focus()
+      _.invoke(this.props, 'checkedChanged', undefined, { ...this.props, checked })
+    }
+  }
+
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
     const { label, icon } = this.props
 
@@ -166,11 +168,9 @@ class RadioGroupItem extends AutoControlledComponent<
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
-          {Icon.create(icon || '', {
+          {Icon.create(icon || 'stardust-circle', {
             defaultProps: {
-              circular: true,
-              bordered: true,
-              size: 'smaller',
+              size: 'small',
               styles: styles.icon,
             },
           })}
@@ -187,4 +187,9 @@ class RadioGroupItem extends AutoControlledComponent<
 
 RadioGroupItem.create = createShorthandFactory({ Component: RadioGroupItem, mappedProp: 'label' })
 
-export default RadioGroupItem
+/**
+ * A single radio within a radio group.
+ * @accessibility
+ * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
+ */
+export default withSafeTypeForAs<typeof RadioGroupItem, RadioGroupItemProps>(RadioGroupItem)

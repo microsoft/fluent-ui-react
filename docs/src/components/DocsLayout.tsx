@@ -10,6 +10,7 @@ import { scrollToAnchor } from 'docs/src/utils'
 import { getUnhandledProps, mergeThemes } from 'src/lib'
 
 const anchors = new AnchorJS({
+  class: 'anchor-link',
   icon: '#',
 })
 
@@ -55,12 +56,20 @@ class DocsLayout extends React.Component<any, any> {
 
     this.scrollStartTimeout = setTimeout(scrollToAnchor, 500)
     this.pathname = location.pathname
+
+    // Anchor links has issues with <base>
+    // https://stackoverflow.com/questions/8108836/make-anchor-links-refer-to-the-current-page-when-using-base
+    document.querySelectorAll('a.anchor-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault()
+        document.location.hash = link.getAttribute('href')
+      })
+    })
   }
 
   renderChildren = props => {
     const { component: Children, render } = this.props
 
-    if (render) return render()
     return (
       <>
         <Provider
@@ -80,7 +89,7 @@ class DocsLayout extends React.Component<any, any> {
           <Sidebar />
         </Provider>
         <div role="main" style={{ marginLeft: 250 }}>
-          <Children {...props} />
+          {render ? render() : <Children {...props} />}
         </div>
       </>
     )

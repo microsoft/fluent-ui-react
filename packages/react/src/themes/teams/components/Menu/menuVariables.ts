@@ -1,32 +1,43 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem, stringLiteralsArray } from '../../../../lib'
+import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
+import { ItemType } from '../../../types'
+import { TeamsSchemeMappingWithAreas } from '../../types'
+
+export const menuColorAreas = stringLiteralsArray(
+  'border',
+  'borderActive',
+  'foregroundActive',
+  'foregroundFocus',
+  'foregroundHover',
+  'backgroundHover',
+  'backgroundActive',
+  'backgroundFocus',
+  'foregroundDisabled',
+)
+export type MenuColorSchemeMapping = TeamsSchemeMappingWithAreas<ItemType<typeof menuColorAreas>>
 
 export interface MenuVariables {
+  colorScheme: MenuColorSchemeMapping
   color: string
+
+  backgroundColor: string
+  backgroundColorFocus: string
+  backgroundColorHover: string
+  backgroundColorActive: string
+
   borderColor: string
-  verticalBorderColor: string
+  borderColorHover: string
+  borderColorActive: string
+  borderColorFocus: string
 
-  focusedBorder: string
-  focusedOutline: string
-  focusedBackgroundColor: string
+  outlineColorFocus: string
+  colorActive: string
+  iconOnlyColorActive: string
 
-  hoverBackgroundColor: string
+  colorFocus: string
+  underlinedBorderColor: string
 
-  activeColor: string
-  activeBackgroundColor: string
-  iconOnlyActiveColor: string
-
-  primaryActiveColor: string
-  primaryActiveBackgroundColor: string
-  primaryActiveBorderColor: string
-
-  primaryFocusedColor: string
-  primaryFocusedBackgroundColor: string
-
-  primaryBorderColor: string
-  primaryHoverBorderColor: string
-  primaryUnderlinedBorderColor: string
-
-  disabledColor: string
+  colorDisabled: string
   lineHeightBase: string
   horizontalPadding: string
 
@@ -34,11 +45,15 @@ export interface MenuVariables {
   verticalItemPadding: string
   verticalBoxShadow: string
   verticalDividerMargin: string
-  verticalItemBorder: string
+  verticalItemBorderWidth: string
+  verticalItemBorderColor: string
+  verticalPointingBorderColor: string
+  verticalBackgroundColorFocus: string
 
   pointingIndicatorBackgroundColor: string
 
   underlinedBottomBorderWidth: string
+  primaryBorderColor: string
 
   dividerHeight: string
   borderWidth: string
@@ -46,32 +61,48 @@ export interface MenuVariables {
 
 export default (siteVars: any): MenuVariables => {
   return {
-    color: siteVars.gray02,
-    borderColor: siteVars.gray08,
-    verticalBorderColor: siteVars.gray08,
+    colorScheme: pickValuesFromColorScheme(
+      extendColorScheme(siteVars.colorScheme, {
+        default: {
+          borderActive: siteVars.colors.grey[600],
+          backgroundActive: siteVars.colorScheme.default.backgroundActive1,
+          backgroundFocus: siteVars.colorScheme.default.backgroundFocus1,
+          foregroundDisabled: siteVars.colorScheme.default.foregroundDisabled1,
+        },
+        brand: {
+          foregroundHover: siteVars.colors.white,
+          backgroundHover: siteVars.colors.brand[300],
+          foregroundActive: siteVars.colors.white,
+          borderActive: siteVars.colors.brand[600],
+          backgroundActive: siteVars.colors.brand[500], // it's 600 in the color scheme
+          foregroundFocus: siteVars.colors.white,
+          backgroundFocus: siteVars.colors.brand[300],
+          foregroundDisabled: siteVars.colorScheme.brand.foregroundDisabled1,
+        },
+      }),
+      menuColorAreas,
+    ),
+    color: siteVars.colors.grey[500],
+    colorActive: siteVars.colors.black,
+    colorFocus: siteVars.colors.white,
+    colorDisabled: undefined,
 
-    focusedBorder: `solid ${pxToRem(1)} ${siteVars.colors.white}`,
-    focusedOutline: `solid ${pxToRem(1)} ${siteVars.colors.black}`,
-    focusedBackgroundColor: siteVars.gray09,
+    borderColor: undefined,
+    borderColorHover: undefined,
+    borderColorActive: undefined,
+    borderColorFocus: siteVars.colors.white,
 
-    hoverBackgroundColor: siteVars.gray14,
+    outlineColorFocus: siteVars.colors.black,
 
-    activeColor: siteVars.colors.black,
-    activeBackgroundColor: siteVars.gray10,
-    iconOnlyActiveColor: siteVars.colors.primary[500],
+    backgroundColor: undefined,
+    backgroundColorFocus: undefined,
+    backgroundColorHover: undefined,
+    backgroundColorActive: undefined,
 
-    primaryActiveColor: siteVars.colors.white,
-    primaryActiveBackgroundColor: siteVars.brand08,
-    primaryActiveBorderColor: siteVars.colors.primary[500],
+    iconOnlyColorActive: siteVars.colors.brand[600],
 
-    primaryFocusedColor: siteVars.colors.white,
-    primaryFocusedBackgroundColor: siteVars.colors.primary[200],
+    underlinedBorderColor: siteVars.colors.grey[200],
 
-    primaryBorderColor: siteVars.gray10,
-    primaryHoverBorderColor: siteVars.gray08,
-    primaryUnderlinedBorderColor: siteVars.gray08,
-
-    disabledColor: siteVars.gray06,
     lineHeightBase: siteVars.lineHeightMedium,
     horizontalPadding: `${pxToRem(14)} ${pxToRem(18)} ${pxToRem(14)} ${pxToRem(18)}`,
 
@@ -79,11 +110,15 @@ export default (siteVars: any): MenuVariables => {
     verticalItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
     verticalBoxShadow: siteVars.shadowLevel3,
     verticalDividerMargin: `${pxToRem(8)} 0`,
-    verticalItemBorder: `solid ${pxToRem(2)} transparent`,
+    verticalItemBorderWidth: pxToRem(2),
+    verticalItemBorderColor: 'transparent',
+    verticalPointingBorderColor: siteVars.colorScheme.brand.borderActive,
+    verticalBackgroundColorFocus: siteVars.colors.grey[150],
 
-    pointingIndicatorBackgroundColor: siteVars.colors.primary[500],
+    pointingIndicatorBackgroundColor: siteVars.colors.brand[600],
 
     underlinedBottomBorderWidth: pxToRem(2),
+    primaryBorderColor: siteVars.colors.grey[100],
 
     dividerHeight: pxToRem(1),
     borderWidth: pxToRem(1),

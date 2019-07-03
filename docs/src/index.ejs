@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/brands.css" integrity="sha384-1KLgFVb/gHrlDGLFPgMbeedi6tQBLcWvyNUN+YKXbD7ZFbjX6BLpMDf0PJ32XJfX" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://unpkg.com/react-vis@<%= htmlWebpackPlugin.options.versions.reactVis %>/dist/style.css" />
   <link rel="shortcut icon" type="image/x-icon" href='<%= __BASENAME__ + 'logo.png' %>'/>
   <title>Stardust</title>
   <script>
@@ -32,24 +31,14 @@
   </style>
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/@babel/polyfill@7/dist/polyfill.min.js"></script>
+  <script src='https://cdn.jsdelivr.net/npm/core-js-bundle/minified.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/whatwg-fetch/dist/fetch.umd.min.js'></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/3.2.1/anchor.min.js"></script>
   <script
     crossOrigin="anonymous"
-    src="https://unpkg.com/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/standalone.js"
+    src="https://cdn.jsdelivr.net/combine/npm/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/standalone.min.js,npm/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/parser-babylon.min.js,npm/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/parser-html.min.js,npm/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/parser-typescript.min.js"
   ></script>
-  <script
-    crossOrigin="anonymous"
-    src="https://unpkg.com/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/parser-babylon.js"
-  ></script>
-  <script
-    crossOrigin="anonymous"
-    src="https://unpkg.com/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/parser-html.js"
-  ></script>
-  <script
-    crossOrigin="anonymous"
-    src="https://unpkg.com/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/parser-typescript.js"
-  ></script>
+
   <!-- Use unminified React when not in production so we get errors and warnings -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/<%= htmlWebpackPlugin.options.versions.propTypes %>/prop-types<%= __PROD__ ? '.min' : '' %>.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/<%= htmlWebpackPlugin.options.versions.react %>/umd/react<%= __PROD__ ? '.production.min' : '.development' %>.js"></script>
@@ -61,6 +50,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/<%= htmlWebpackPlugin.options.versions.reactDOM %>/umd/react-dom-server.browser<%= __PROD__ ? '.production.min' : '.development' %>.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@<%= htmlWebpackPlugin.options.versions.babelStandalone %>/babel.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.16.0/themes/prism-tomorrow.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-vis@<%= htmlWebpackPlugin.options.versions.reactVis %>/dist/style.min.css" />
 
   <style>
     html, body {
@@ -111,7 +103,7 @@
       margin: 0;
     }
 
-    code:not(.hljs) {
+    code:not([class*="language-"]) {
       font-size: 87.5%;
       background-color: rgba(0, 0, 0, 0.04);
       border-radius: 3px;
@@ -119,12 +111,12 @@
       display: inline-block;
     }
 
-    code:not(.hljs)::before {
+    code:not([class*="language-"])::before {
       letter-spacing: -0.2em;
       content: "\00a0";
     }
 
-    code:not(.hljs)::after {
+    code:not([class*="language-"])::after {
       letter-spacing: -0.2em;
       content: "\00a0";
     }

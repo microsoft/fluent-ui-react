@@ -11,7 +11,7 @@ import {
   ContentComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 
@@ -33,17 +33,12 @@ export interface GridProps
   rows?: string | number
 }
 
-/**
- * A grid is used to harmonize negative space in a layout.
- * @accessibility This is example usage of the accessibility tag.
- * This should be replaced with the actual description after the PR is merged
- */
-class Grid extends UIComponent<ReactProps<GridProps>, any> {
-  public static displayName = 'Grid'
+class Grid extends UIComponent<WithAsProp<GridProps>, any> {
+  static displayName = 'Grid'
 
-  public static className = 'ui-grid'
+  static className = 'ui-grid'
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
     }),
@@ -58,12 +53,12 @@ class Grid extends UIComponent<ReactProps<GridProps>, any> {
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }
 
-  public static defaultProps: GridProps = {
+  static defaultProps: WithAsProp<GridProps> = {
     as: 'div',
     accessibility: defaultBehavior,
   }
 
-  public renderComponent({
+  renderComponent({
     accessibility,
     ElementType,
     classes,
@@ -84,4 +79,10 @@ class Grid extends UIComponent<ReactProps<GridProps>, any> {
   }
 }
 
-export default Grid
+/**
+ * A grid is used to harmonize negative space in a layout.
+ * @accessibility
+ * Do use Grid behavior for bidirectional keyboard navigation. Use appropriate ARIA role for the grid and actionable components inside of it.
+ * Don't use grid component as a replacement for table.
+ */
+export default withSafeTypeForAs<typeof Grid, GridProps>(Grid)

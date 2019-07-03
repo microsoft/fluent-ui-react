@@ -17,10 +17,10 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
-import { chatMessageBehavior, toolbarBehavior } from '../../lib/accessibility'
+import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import { chatMessageBehavior, menuAsToolbarBehavior } from '../../lib/accessibility'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 
 import Box from '../Box/Box'
 import Label from '../Label/Label'
@@ -73,7 +73,7 @@ export interface ChatMessageProps
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
-  onBlur?: (event: React.FocusEvent<HTMLElement>, data: ChatMessageProps) => void
+  onBlur?: ComponentEventHandler<ChatMessageProps>
 
   /**
    * Called after user's focus.
@@ -94,10 +94,7 @@ export interface ChatMessageState {
   isFromKeyboard: boolean
 }
 
-/**
- * A chat message represents a single statement communicated to a user.
- */
-class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageState> {
+class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageState> {
   static className = 'ui-chat__message'
 
   static create: Function
@@ -135,12 +132,12 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     reactionGroupPosition: 'start',
   }
 
-  public state = {
+  state = {
     focused: false,
     isFromKeyboard: false,
   }
 
-  protected actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys
     // as navigation (only Tab key should work)
     preventDefault: event => {
@@ -157,10 +154,10 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
-  handleBlur = (e: React.FocusEvent) => {
+  handleBlur = (e: React.SyntheticEvent) => {
     // `this.state.focused` controls is focused the whole `ChatMessage` or any of its children. When we're navigating
     // with keyboard the focused element will be changed and there is no way to use `:focus` selector
-    const shouldPreserveFocusState = _.invoke(e, 'currentTarget.contains', e.relatedTarget)
+    const shouldPreserveFocusState = _.invoke(e, 'currentTarget.contains', (e as any).relatedTarget)
 
     this.setState({ focused: shouldPreserveFocusState })
     _.invoke(this.props, 'onBlur', e, this.props)
@@ -217,7 +214,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
             {Menu.create(actionMenu, {
               defaultProps: {
                 [IS_FOCUSABLE_ATTRIBUTE]: true,
-                accessibility: toolbarBehavior,
+                accessibility: menuAsToolbarBehavior,
                 className: ChatMessage.slotClassNames.actionMenu,
                 styles: styles.actionMenu,
               },
@@ -270,4 +267,7 @@ ChatMessage.slotClassNames = {
   reactionGroup: `${ChatMessage.className}__reactions`,
 }
 
-export default ChatMessage
+/**
+ * A chat message represents a single statement communicated to a user.
+ */
+export default withSafeTypeForAs<typeof ChatMessage, ChatMessageProps>(ChatMessage)

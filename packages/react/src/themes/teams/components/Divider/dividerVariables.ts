@@ -1,11 +1,16 @@
-import * as _ from 'lodash'
 import { FontWeightProperty } from 'csstype'
+import { pxToRem, stringLiteralsArray } from '../../../../lib'
+import { ItemType } from '../../../types'
+import { TeamsSchemeMappingWithAreas } from '../../types'
+import { pickValuesFromColorScheme } from '../../../colorUtils'
 
-import { ColorValues } from '../../../types'
-import { pxToRem, mapColorsToScheme } from '../../../../lib'
+export const dividerColorAreas = stringLiteralsArray('foreground')
+export type DividerColorSchemeMapping = TeamsSchemeMappingWithAreas<
+  ItemType<typeof dividerColorAreas>
+>
 
 export interface DividerVariables {
-  colors: ColorValues<string>
+  colorScheme: DividerColorSchemeMapping
   dividerColor: string
   textColor: string
   textFontSize: string
@@ -14,16 +19,12 @@ export interface DividerVariables {
   dividerPadding: string
 }
 
-export default (siteVars: any): DividerVariables => {
-  const colorVariant = 500
-
-  return {
-    colors: mapColorsToScheme(siteVars, colorVariant),
-    dividerColor: siteVars.gray09,
-    textColor: siteVars.gray03,
-    textFontSize: siteVars.fontSizeSmall,
-    textLineHeight: siteVars.lineHeightSmall,
-    importantFontWeight: siteVars.fontWeightBold,
-    dividerPadding: pxToRem(4),
-  }
-}
+export default (siteVars: any): DividerVariables => ({
+  colorScheme: pickValuesFromColorScheme(siteVars.colorScheme, dividerColorAreas),
+  dividerColor: siteVars.colors.grey[150],
+  textColor: siteVars.colors.grey[450],
+  textFontSize: siteVars.fontSizeSmall,
+  textLineHeight: siteVars.lineHeightSmall,
+  importantFontWeight: siteVars.fontWeightBold,
+  dividerPadding: pxToRem(4),
+})

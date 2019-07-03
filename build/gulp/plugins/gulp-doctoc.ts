@@ -1,5 +1,5 @@
-import * as fs from 'fs'
-import * as through2 from 'through2'
+import fs from 'fs'
+import through2 from 'through2'
 
 import config from '../../../config'
 import sh from '../sh'

@@ -1,0 +1,14 @@
+{
+  "name": "@stardust-ui/eslint-plugin",
+  "version": "0.34.0",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/experimental-utils": "^1.9.0"
+  },
+  "files": [
+    "rules"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

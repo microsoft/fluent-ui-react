@@ -1,18 +1,35 @@
-import { pxToRem } from '../../../../lib'
-import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
+import { MenuVariables, menuColorAreas } from '../../../teams/components/Menu/menuVariables'
+import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
 
 export default (siteVars: any): Partial<MenuVariables> => ({
-  verticalBorderColor: siteVars.black,
+  colorScheme: pickValuesFromColorScheme(
+    extendColorScheme(siteVars.colorScheme, {
+      default: {
+        borderActive: siteVars.colors.grey[600],
+        backgroundFocus: siteVars.colors.grey[500],
+        backgroundActive: siteVars.colorScheme.default.backgroundActive1,
+        foregroundDisabled: siteVars.colorScheme.default.foregroundDisabled1,
+      },
+      brand: {
+        foregroundHover: siteVars.colors.white,
+        backgroundHover: siteVars.colors.brand[300],
+        borderActive: siteVars.colors.brand[400],
+        foregroundActive: siteVars.colors.white,
+        foregroundFocus: siteVars.colors.white,
+        backgroundFocus: siteVars.colors.brand[300],
+        foregroundDisabled: siteVars.colorScheme.brand.foregroundDisabled1,
+      },
+    }),
+    menuColorAreas,
+  ),
 
-  focusedBorder: `solid ${pxToRem(1)} ${siteVars.colors.white}`,
-  focusedBackgroundColor: 'transparent',
+  color: siteVars.colors.grey[250],
+  colorActive: siteVars.colors.white,
 
-  pointingIndicatorBackgroundColor: siteVars.brand06,
+  primaryBorderColor: siteVars.colors.grey[600],
+  pointingIndicatorBackgroundColor: siteVars.colors.brand[400],
 
-  hoverBackgroundColor: siteVars.gray08,
-
-  activeColor: siteVars.colors.white,
-  activeBackgroundColor: siteVars.gray08,
-
-  verticalBackgroundColor: siteVars.gray10,
+  verticalBackgroundColor: siteVars.colors.grey[600],
+  verticalBackgroundColorFocus: siteVars.colors.grey[550],
+  iconOnlyColorActive: siteVars.colors.brand[400],
 })

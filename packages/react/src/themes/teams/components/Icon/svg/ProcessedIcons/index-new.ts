@@ -166,6 +166,7 @@ import processedIcons_hive from './icons-hive'
 import processedIcons_highlight from './icons-highlight'
 import processedIcons_helparticle from './icons-helparticle'
 import processedIcons_headset from './icons-headset'
+import processedIcons_hand from './icons-hand'
 import processedIcons_groups from './icons-groups'
 import processedIcons_giphy from './icons-giphy'
 import processedIcons_gif from './icons-gif'
@@ -263,6 +264,8 @@ import processedIcons_callincomingvideo from './icons-call-incoming-video'
 import processedIcons_callhold from './icons-call-hold'
 import processedIcons_callend from './icons-call-end'
 import processedIcons_calldialpad from './icons-call-dialpad'
+import processedIcons_callcontrolrelease from './icons-call-control-release'
+import processedIcons_callcontrolrequest from './icons-call-control-request'
 import processedIcons_callcontrolstoppresentingnew from './icons-call-control-stop-presenting-new'
 import processedIcons_callcontrolpresentnew from './icons-call-control-present-new'
 import processedIcons_callblocked from './icons-call-blocked'
@@ -272,6 +275,7 @@ import processedIcons_calladmitall from './icons-call-admit-all'
 import processedIcons_call from './icons-call'
 import processedIcons_calendar from './icons-calendar'
 import processedIcons_bullets from './icons-bullets'
+import processedIcons_broadcast from './icons-broadcast'
 import processedIcons_broadcastviewright from './icons-broadcast-view-right'
 import processedIcons_broadcastviewleft from './icons-broadcast-view-left'
 import processedIcons_broadcastviewfullscreen from './icons-broadcast-view-fullscreen'
@@ -468,6 +472,7 @@ export default {
   processedIcons_highlight,
   processedIcons_helparticle,
   processedIcons_headset,
+  processedIcons_hand,
   processedIcons_groups,
   processedIcons_giphy,
   processedIcons_gif,
@@ -565,6 +570,8 @@ export default {
   processedIcons_callhold,
   processedIcons_callend,
   processedIcons_calldialpad,
+  processedIcons_callcontrolrelease,
+  processedIcons_callcontrolrequest,
   processedIcons_callcontrolstoppresentingnew,
   processedIcons_callcontrolpresentnew,
   processedIcons_callblocked,
@@ -574,6 +581,7 @@ export default {
   processedIcons_call,
   processedIcons_calendar,
   processedIcons_bullets,
+  processedIcons_broadcast,
   processedIcons_broadcastviewright,
   processedIcons_broadcastviewleft,
   processedIcons_broadcastviewfullscreen,

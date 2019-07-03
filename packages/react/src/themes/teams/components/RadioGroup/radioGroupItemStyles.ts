@@ -4,8 +4,10 @@ import {
   RadioGroupItemState,
 } from '../../../../components/RadioGroup/RadioGroupItem'
 import { RadioGroupItemVariables } from './radioGroupItemVariables'
-import Icon from '../../../../components/Icon/Icon'
 import { pxToRem } from '../../../../lib'
+import Icon from '../../../../components/Icon/Icon'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
+import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const restHoverFocusTextColor = textColor => ({
   color: textColor,
@@ -23,7 +25,8 @@ const radioStyles: ComponentSlotStylesInput<
   RadioGroupItemProps & RadioGroupItemState,
   RadioGroupItemVariables
 > = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
+    position: 'relative',
     alignItems: 'center',
     borderStyle: 'solid',
     borderWidth: `${pxToRem(1)}`,
@@ -34,7 +37,6 @@ const radioStyles: ComponentSlotStylesInput<
     display: p.vertical ? 'flex' : 'inline-flex',
     fontSize: v.textFontSize,
     padding: v.padding,
-    outline: 0,
 
     ':hover': {
       color: v.textColorDefaultHoverFocus,
@@ -56,35 +58,27 @@ const radioStyles: ComponentSlotStylesInput<
       ...restHoverFocusTextColor(v.colorDisabled),
     }),
 
-    ...(p.isFromKeyboard && {
-      borderColor: v.focusInnerBorderColor,
-      boxShadow: `0 0 0 ${pxToRem(1)} ${v.focusOuterBorderColor}`,
-    }),
+    ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard }),
   }),
 
   icon: ({ props: p, variables: v }): ICSSInJSStyle => ({
     // overrides from icon styles
-    backgroundColor: 'transparent',
     boxShadow: 'none',
-    borderStyle: 'solid',
-    borderWidth: `${pxToRem(1)}`,
-    borderColor: 'currentColor',
     margin: `0 ${pxToRem(12)} 0 0`,
-    height: `${pxToRem(12)}`,
-    width: `${pxToRem(12)}`,
+
+    ...getIconFillOrOutlineStyles({ outline: !p.checked }),
 
     ...(p.checked && {
-      backgroundColor: v.iconBackgroundColorChecked,
-      borderColor: v.iconBorderColorChecked,
+      color: v.iconBackgroundColorChecked,
     }),
 
     ...(p.disabled && {
-      borderColor: v.colorDisabled,
+      color: v.colorDisabled,
     }),
 
     ...(p.checked &&
       p.disabled && {
-        backgroundColor: v.colorDisabled,
+        color: v.colorDisabled,
       }),
   }),
 }

@@ -11,7 +11,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 
 export interface SegmentProps
@@ -24,14 +24,14 @@ export interface SegmentProps
    */
   accessibility?: Accessibility
 
+  /** An segment can show it is currently unable to be interacted with. */
+  disabled?: boolean
+
   /** A segment can have its colors inverted for contrast. */
   inverted?: boolean
 }
 
-/**
- * A segment is used to create a grouping of related content.
- */
-class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
+class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
   static className = 'ui-segment'
 
   static displayName = 'Segment'
@@ -40,6 +40,7 @@ class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
     }),
+    disabled: PropTypes.bool,
     inverted: PropTypes.bool,
     rtlAttributes: PropTypes.func,
   }
@@ -65,4 +66,7 @@ class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
   }
 }
 
-export default Segment
+/**
+ * A segment is used to create a grouping of related content.
+ */
+export default withSafeTypeForAs<typeof Segment, SegmentProps>(Segment)

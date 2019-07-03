@@ -13,6 +13,10 @@ export { default as Chat } from './components/Chat/chatVariables'
 export { default as ChatItem } from './components/Chat/chatItemVariables'
 export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 
+export { default as Checkbox } from './components/Checkbox/checkboxVariables'
+
+export { default as Dialog } from './components/Dialog/dialogVariables'
+
 export { default as Divider } from './components/Divider/dividerVariables'
 
 export { default as Dropdown } from './components/Dropdown/dropdownVariables'
@@ -61,8 +65,19 @@ export { default as Status } from './components/Status/statusVariables'
 
 export { default as Text } from './components/Text/textVariables'
 
+export { default as Toolbar } from './components/Toolbar/toolbarVariables'
+export { default as ToolbarCustomItem } from './components/Toolbar/toolbarCustomItemVariables'
+export { default as ToolbarItem } from './components/Toolbar/toolbarItemVariables'
+export { default as ToolbarDivider } from './components/Toolbar/toolbarDividerVariables'
+export { default as ToolbarMenu } from './components/Toolbar/toolbarMenuVariables'
+export { default as ToolbarMenuDivider } from './components/Toolbar/toolbarMenuDividerVariables'
+export { default as ToolbarMenuItem } from './components/Toolbar/toolbarMenuItemVariables'
+
 export { default as TreeTitle } from './components/Tree/treeTitleVariables'
 
 export { default as Animation } from './components/Animation/animationVariables'
 
 export { default as Video } from './components/Video/videoVariables'
+
+export { default as Tooltip } from './components/Tooltip/tooltipVariables'
+export { default as TooltipContent } from './components/Tooltip/tooltipContentVariables'

@@ -3,11 +3,16 @@ import * as React from 'react'
 import Menu from 'src/components/Menu/Menu'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
 import { mountWithProvider, mountWithProviderAndGetComponent } from 'test/utils'
-import { toolbarBehavior, tabListBehavior } from '../../../../src/lib/accessibility'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import MenuItem from 'src/components/Menu/MenuItem'
-import { menuBehavior } from 'src/lib/accessibility'
+import {
+  menuBehavior,
+  menuAsToolbarBehavior,
+  tabListBehavior,
+  tabBehavior,
+} from 'src/lib/accessibility'
 import { AccessibilityDefinition } from 'src/lib/accessibility/types'
+import { ReactWrapper } from 'enzyme'
 
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
 
@@ -114,6 +119,60 @@ describe('Menu', () => {
       })
     })
 
+    describe('variables', () => {
+      function checkMergedVariables(menu: ReactWrapper): void {
+        expect(
+          (menu
+            .find('MenuItem')
+            .first()
+            .prop('variables') as Function)(),
+        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwritten', c: 'item' }))
+
+        expect(
+          (menu
+            .find('MenuDivider')
+            .first()
+            .prop('variables') as Function)(),
+        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwrittenInDivider', c: 'divider' }))
+      }
+
+      it('are passed from Menu to MenuItem and MenuDivider and correctly merged', () => {
+        const menu = mountWithProvider(
+          <Menu
+            variables={{ a: 'menu', b: 'menu' }}
+            items={[
+              { key: 1, content: 'menu item', variables: { b: 'overwritten', c: 'item' } },
+              {
+                key: 'd1',
+                kind: 'divider',
+                variables: { b: 'overwrittenInDivider', c: 'divider' },
+              },
+            ]}
+          />,
+        )
+
+        checkMergedVariables(menu)
+      })
+
+      it('as functions are passed from Menu to MenuItem and MenuDivider and correctly merged', () => {
+        const menu = mountWithProvider(
+          <Menu
+            variables={() => ({ a: 'menu', b: 'menu' })}
+            items={[
+              { key: 1, content: 'menu item', variables: () => ({ b: 'overwritten', c: 'item' }) },
+              {
+                key: 'd1',
+                kind: 'divider',
+                variables: () => ({ b: 'overwrittenInDivider', c: 'divider' }),
+              },
+            ]}
+          />,
+        )
+
+        checkMergedVariables(menu)
+      })
+    })
+
     describe('accessibility', () => {
       handlesAccessibility(Menu, {
         defaultRootRole: 'menu',
@@ -122,43 +181,69 @@ describe('Menu', () => {
 
       test('aria-label should be added to the menu', () => {
         const ariaLabel = 'A Nice Toolbar'
-        const menuItemComponent = mountWithProviderAndGetComponent(
+        const menuComponent = mountWithProviderAndGetComponent(
           Menu,
           <Menu aria-label={ariaLabel} />,
         )
 
-        expect(getRenderedAttribute(menuItemComponent, 'aria-label', '')).toBe(ariaLabel)
+        expect(getRenderedAttribute(menuComponent, 'aria-label', '')).toBe(ariaLabel)
       })
 
       test('aria-labelledby should be added to the menu', () => {
         const ariaLabelledByID = 'element-that-labels'
-        const menuItemComponent = mountWithProviderAndGetComponent(
+        const menuComponent = mountWithProviderAndGetComponent(
           Menu,
           <Menu aria-labelledby={ariaLabelledByID} />,
         )
 
-        expect(getRenderedAttribute(menuItemComponent, 'aria-labelledby', '')).toBe(
-          ariaLabelledByID,
-        )
+        expect(getRenderedAttribute(menuComponent, 'aria-labelledby', '')).toBe(ariaLabelledByID)
+      })
+
+      test('attributes should override the default ones from child behavior', () => {
+        const items = getItems()
+        items[0]['accessibility'] = tabBehavior
+        const menuItemComponent = mountWithProviderAndGetComponent(
+          Menu,
+          <Menu items={items} accessibility={menuBehavior} />, // enforce behavior that has child behavior.
+        ).find('MenuItem')
+        expect(getRenderedAttribute(menuItemComponent.at(0), 'role', 'a')).toBe('tab')
       })
 
       describe('as a Toolbar', () => {
-        test('root role should be toolbar', () => {
-          const menuItemComponent = mountWithProviderAndGetComponent(
+        test('root role should be menuAsToolbar', () => {
+          const menuComponent = mountWithProviderAndGetComponent(
             Menu,
-            <Menu accessibility={toolbarBehavior} />,
+            <Menu accessibility={menuAsToolbarBehavior} />,
           )
-          expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('toolbar')
+          expect(getRenderedAttribute(menuComponent, 'role', '')).toBe('toolbar')
+        })
+
+        test('children role should be menuAsToolbarButton', () => {
+          const menuItemComponents = mountWithProviderAndGetComponent(
+            Menu,
+            <Menu accessibility={menuAsToolbarBehavior} items={getItems()} />,
+          ).find('MenuItem')
+          expect(getRenderedAttribute(menuItemComponents.at(0), 'role', 'a')).toBe('button')
+          expect(getRenderedAttribute(menuItemComponents.at(1), 'role', 'a')).toBe('button')
         })
       })
 
       describe('as a TabList', () => {
         test('root role should be tablist', () => {
-          const menuItemComponent = mountWithProviderAndGetComponent(
+          const menuComponent = mountWithProviderAndGetComponent(
             Menu,
             <Menu accessibility={tabListBehavior} />,
           )
-          expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('tablist')
+          expect(getRenderedAttribute(menuComponent, 'role', '')).toBe('tablist')
+        })
+
+        test('children role should be tab', () => {
+          const menuItemComponents = mountWithProviderAndGetComponent(
+            Menu,
+            <Menu accessibility={tabListBehavior} items={getItems()} />,
+          ).find('MenuItem')
+          expect(getRenderedAttribute(menuItemComponents.at(0), 'role', 'a')).toBe('tab')
+          expect(getRenderedAttribute(menuItemComponents.at(1), 'role', 'a')).toBe('tab')
         })
       })
     })

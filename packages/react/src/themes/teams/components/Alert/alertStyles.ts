@@ -1,12 +1,9 @@
 import * as React from 'react'
-import {
-  ComponentSlotStylesInput,
-  ICSSInJSStyle,
-  SiteVariablesPrepared,
-  NaturalColors,
-} from '../../../types'
+import { ComponentSlotStylesInput, ICSSInJSStyle, SiteVariablesPrepared } from '../../../types'
 import { AlertProps } from '../../../../components/Alert/Alert'
 import { AlertVariables } from './alertVariables'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
+import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const getIntentColorsFromProps = (
   p: AlertProps,
@@ -14,37 +11,52 @@ const getIntentColorsFromProps = (
   siteVars: SiteVariablesPrepared,
 ): React.CSSProperties => {
   const { colors } = siteVars
-  const naturalColors: NaturalColors = siteVars.naturalColors
 
   if (p.danger) {
     return {
-      color: siteVars.red,
-      backgroundColor: siteVars.red10,
-      borderColor: siteVars.red08,
+      color: v.dangerColor,
+      backgroundColor: v.dangerBackgroundColor,
+      borderColor: v.dangerBorderColor,
     }
   }
 
   if (p.info) {
     return {
-      color: siteVars.gray02,
-      backgroundColor: siteVars.gray09,
-      borderColor: siteVars.gray08,
+      color: v.infoColor,
+      backgroundColor: v.infoBackgroundColor,
+      borderColor: v.infoBorderColor,
+    }
+  }
+
+  if (v.oof) {
+    return {
+      color: v.oofColor,
+      backgroundColor: v.oofBackgroundColor,
+      borderColor: v.oofBorderColor,
+    }
+  }
+
+  if (v.urgent) {
+    return {
+      color: v.urgentColor,
+      backgroundColor: v.urgentBackgroundColor,
+      borderColor: v.urgentBorderColor,
     }
   }
 
   if (p.success) {
     return {
-      color: colors.green[900], // $app-green-04
+      color: colors.green[600], // $app-green-04
       backgroundColor: colors.grey[50], // $app-white
-      borderColor: naturalColors.lightGreen[900], // $app-green
+      borderColor: colors.green[200], // $app-green
     }
   }
 
   if (p.warning) {
     return {
-      color: siteVars.gray03,
+      color: siteVars.colors.grey[450],
       backgroundColor: colors.grey[50], // $app-white
-      borderColor: colors.yellow[900], // $app-yellow
+      borderColor: colors.yellow[400], // $app-yellow
     }
   }
 
@@ -83,13 +95,28 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     flexGrow: 1,
   }),
 
-  action: ({ variables: v }): ICSSInJSStyle => ({
-    height: v.actionSize,
-    minWidth: v.actionSize,
-    margin: `-${v.borderWidth} 0`,
-    color: v.actionColor || 'currentColor',
-    ':focus': { outline: 0 },
-  }),
+  action: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => {
+    const iconFilledStyles = getIconFillOrOutlineStyles({ outline: false })
+
+    return {
+      height: v.actionSize,
+      minWidth: v.actionSize,
+      color: v.actionColor || 'currentColor',
+      border: 0,
+      borderRadius: v.borderRadius,
+      ...getIconFillOrOutlineStyles({ outline: true }),
+
+      ':hover': {
+        color: 'currentColor',
+        ...iconFilledStyles,
+      },
+
+      ':focus': {
+        ...(p.isFromKeyboard && iconFilledStyles),
+        ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard })[':focus'],
+      },
+    }
+  },
 }
 
 export default alertStyles

@@ -2,11 +2,11 @@ import { Accessibility } from '../../types'
 
 /**
  * @specification
- * Adds role 'alert' to 'content' component's part.
- * Adds Adds attribute 'aria-live=polite' to 'content' component's part.
+ * Adds role 'alert' to 'content' slot.
+ * Adds attribute 'aria-live=polite' to 'content' slot.
  */
 
-const alertWarningBehavior: Accessibility = (props: any) => ({
+const alertWarningBehavior: Accessibility = () => ({
   attributes: {
     content: {
       role: 'alert',

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Menu, toolbarBehavior, toolbarButtonBehavior } from '@stardust-ui/react'
+import { Menu, menuAsToolbarBehavior } from '@stardust-ui/react'
 
 const items = [
   {
@@ -8,7 +8,6 @@ const items = [
       name: 'format',
       outline: true,
     },
-    accessibility: toolbarButtonBehavior,
     'aria-label': 'Format Tool',
   },
   {
@@ -17,7 +16,6 @@ const items = [
       name: 'paperclip',
       outline: true,
     },
-    accessibility: toolbarButtonBehavior,
     'aria-label': 'Paperclip Tool',
   },
   {
@@ -27,7 +25,6 @@ const items = [
       outline: true,
     },
     disabled: true,
-    accessibility: toolbarButtonBehavior,
     'aria-label': 'Emoji Tool',
   },
   {
@@ -36,7 +33,6 @@ const items = [
       name: 'giphy',
       outline: true,
     },
-    accessibility: toolbarButtonBehavior,
     'aria-label': 'Giphy tool',
   },
   {
@@ -45,7 +41,6 @@ const items = [
       name: 'sticker',
       outline: true,
     },
-    accessibility: toolbarButtonBehavior,
     'aria-label': 'Sticker Tool',
   },
   {
@@ -54,7 +49,6 @@ const items = [
       name: 'video-camera-emphasis',
       outline: true,
     },
-    accessibility: toolbarButtonBehavior,
     'aria-label': 'Meetup Tool',
   },
   {
@@ -63,7 +57,6 @@ const items = [
       name: 'book',
       outline: true,
     },
-    accessibility: toolbarButtonBehavior,
     'aria-label': 'Book Tool',
   },
   {
@@ -72,7 +65,6 @@ const items = [
       name: 'more',
       outline: true,
     },
-    accessibility: toolbarButtonBehavior,
     'aria-label': 'More options',
     indicator: false,
     menu: {
@@ -130,7 +122,7 @@ class MenuExampleToolbarShorthand extends React.Component {
         defaultActiveIndex={0}
         items={items}
         iconOnly
-        accessibility={toolbarBehavior}
+        accessibility={menuAsToolbarBehavior}
         aria-label="Compose Editor"
       />
     )

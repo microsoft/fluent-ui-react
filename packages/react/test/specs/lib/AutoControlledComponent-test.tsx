@@ -45,6 +45,35 @@ describe('extending AutoControlledComponent', () => {
     shallow(<TestClass />)
   })
 
+  test('getAutoControlledStateFromProps', () => {
+    consoleUtil.disableOnce()
+
+    TestClass = createTestClass({
+      autoControlledProps: ['open'],
+      defaultProps: ['defaultOpen'],
+      state: { open: false, value: 'initial' },
+    })
+    TestClass.getAutoControlledStateFromProps = (props, state) => {
+      return {
+        openProp: props.open,
+        openState: state.open,
+        modifiedValue: `${state.value} + auto`,
+      }
+    }
+    const wrapper = shallow(<TestClass open />)
+
+    expect(wrapper.state('open')).toBe(true)
+    expect(wrapper.state('openProp')).toBe(true)
+
+    // will be "true" because logic of ACC was executed before
+    expect(wrapper.state('openState')).toBe(true)
+
+    // "getAutoControlledStateFromProps" has access to whole state
+    expect(wrapper.state('modifiedValue')).toBe('initial + auto')
+    // original "value" will be kept
+    expect(wrapper.state('value')).toBe('initial')
+  })
+
   describe('trySetState', () => {
     test('is an instance method', () => {
       expect(typeof getAutoControlledInstance().trySetState).toBe('function')
@@ -140,7 +169,9 @@ describe('extending AutoControlledComponent', () => {
       const autoControlledProps = _.keys(props)
 
       TestClass = createTestClass({ autoControlledProps, state: {} })
-      expect(shallow(<TestClass {...props} />).state()).toEqual(props)
+      expect(shallow(<TestClass {...props} />).state()).toEqual(
+        expect.objectContaining({ autoControlledProps, ...props }),
+      )
     })
 
     test('does not include non autoControlledProps', () => {
@@ -210,7 +241,7 @@ describe('extending AutoControlledComponent', () => {
       consoleUtil.disableOnce()
       TestClass.autoControlledProps.push('value')
 
-      expect(shallow(<TestClass multiple />).state()).toEqual({ value: [] })
+      expect(shallow(<TestClass multiple />).state()).toHaveProperty('value', [])
     })
   })
 
@@ -223,7 +254,9 @@ describe('extending AutoControlledComponent', () => {
       const defaultProps = makeDefaultProps(props)
 
       TestClass = createTestClass({ autoControlledProps, state: {} })
-      expect(shallow(<TestClass {...defaultProps} />).state()).toEqual(props)
+      expect(shallow(<TestClass {...defaultProps} />).state()).toEqual(
+        expect.objectContaining(props),
+      )
     })
 
     test('are not applied to state for normal props', () => {

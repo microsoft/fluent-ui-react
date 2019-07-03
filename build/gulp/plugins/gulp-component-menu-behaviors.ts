@@ -1,9 +1,9 @@
-import * as gutil from 'gulp-util'
-import * as path from 'path'
-import * as through2 from 'through2'
-import * as Vinyl from 'vinyl'
-import * as _ from 'lodash'
-import * as fs from 'fs'
+import gutil from 'gulp-util'
+import path from 'path'
+import through2 from 'through2'
+import Vinyl from 'vinyl'
+import _ from 'lodash'
+import fs from 'fs'
 
 const pluginName = 'gulp-component-menu-behaviors'
 const extract = require('extract-comments')
@@ -20,8 +20,8 @@ type BehaviorMenuItem = {
 }
 
 const getTextFromCommentToken = (commentTokens, tokenTitle): string => {
-  const token = commentTokens.find(token => token.title === tokenTitle)
-  return token ? token.description : ''
+  const resultToken = commentTokens.find(token => token.title === tokenTitle)
+  return resultToken ? resultToken.description : ''
 }
 
 export default () => {
@@ -77,7 +77,7 @@ export default () => {
   }
 
   function getParsedResults() {
-    return _(result)
+    return _.chain(result)
       .groupBy('displayName')
       .map((behaviors, displayName) => ({
         displayName,

@@ -1,20 +1,22 @@
-import * as _ from 'lodash'
-
 export class ContainerFocusHandler {
   private focusedIndex = 0
 
-  constructor(private getItemsCount: () => number, private readonly setFocusAt: (number) => void) {}
+  constructor(
+    private getItemsCount: () => number,
+    private readonly setFocusAt: (number) => void,
+    private circular = false,
+  ) {}
 
   private noItems = (): boolean => this.getItemsCount() === 0
 
   private constrainFocusedIndex(): void {
+    const itemsCount = this.getItemsCount()
     if (this.focusedIndex < 0) {
-      this.focusedIndex = 0
+      this.focusedIndex = this.circular ? itemsCount - 1 : 0
     }
 
-    const itemsCount = this.getItemsCount()
     if (this.focusedIndex >= itemsCount) {
-      this.focusedIndex = itemsCount - 1
+      this.focusedIndex = this.circular ? 0 : itemsCount - 1
     }
   }
 
