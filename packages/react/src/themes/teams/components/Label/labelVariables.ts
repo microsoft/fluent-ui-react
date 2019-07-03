@@ -11,7 +11,10 @@ export interface LabelVariables {
   circularRadius: string
   padding: string
   height: string
-  zeropadding: string
+  iconStartSpacingLeft: string
+  iconStartSpacingRight: string
+  imageStartSpacingLeft: string
+  imageStartSpacingRight: string
 }
 
 export default (siteVars: SiteVariablesPrepared): LabelVariables => {
@@ -32,7 +35,10 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
     colorScheme: pickValuesFromColorScheme(colorScheme, labelColorAreas),
     circularRadius: pxToRem(9999),
     padding: `0 ${pxToRem(10)} 0 ${pxToRem(10)}`,
-    zeropadding: '0',
+    iconStartSpacingLeft: '0',
+    iconStartSpacingRight: '0',
+    imageStartSpacingLeft: '0',
+    imageStartSpacingRight: '0',
     height: pxToRem(32),
   }
 }

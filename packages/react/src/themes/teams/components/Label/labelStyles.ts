@@ -23,12 +23,12 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
       padding: v.padding,
       ...(p.icon &&
         (p.iconPosition === 'start'
-          ? { paddingLeft: v.zeropadding }
-          : { paddingRight: v.zeropadding })),
+          ? { paddingLeft: v.iconStartSpacingLeft }
+          : { paddingRight: v.iconStartSpacingRight })),
       ...(p.image &&
         (p.imagePosition === 'start'
-          ? { paddingLeft: v.zeropadding }
-          : { paddingRight: v.zeropadding })),
+          ? { paddingLeft: v.imageStartSpacingLeft }
+          : { paddingRight: v.imageStartSpacingRight })),
       ...(p.circular && {
         borderRadius: v.circularRadius,
       }),
@@ -41,8 +41,8 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
     margin: v.padding,
     ...(p.image &&
       (p.imagePosition === 'start'
-        ? { marginLeft: v.zeropadding }
-        : { marginRight: v.zeropadding })),
+        ? { marginLeft: v.imageStartSpacingLeft }
+        : { marginRight: v.imageStartSpacingRight })),
   }),
 
   icon: ({ props: p }): ICSSInJSStyle => {
