@@ -62,16 +62,15 @@ Each `Flex.Item` element being introduced without any props specified should be 
 ### Optimize amount of DOM elements rendered
 
 Flex component was designed being able to address all flexbox layout scenarios with minimal amount of DOM elements rendered. In addition, there are props to address most common [flexbox usage scenarios](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Typical_Use_Cases_of_Flexbox) (e.g. `push` prop) - the value of these props is that they introduce the least amount of DOM elements necessary to accomplish corresponding use-case.
-  
-Let's consider one of the most representative examples - a navigation menu. Suppose that we want a menu bar with logo on the left side and set of nav links on the right.
-  
-Quite often this is achieved by introducing a top-level flex container with two children: first is a logo, and the second one is another container (`Flex`, renders to `<div />`)}) with a group of buttons:
-  
- <ExampleSnippet
-render={() => (
-<Flex space="between">
-<Button content="Logo" icon="chess rook" />
 
+Let's consider one of the most representative examples - a navigation menu. Suppose that we want a menu bar with logo on the left side and set of nav links on the right.
+
+Quite often this is achieved by introducing a top-level flex container with two children: first is a logo, and the second one is another container (`Flex`, renders to `<div />`)}) with a group of buttons:
+
+    <ExampleSnippet
+      render={() => (
+        <Flex space="between">
+          <Button content="Logo" icon="chess rook" />
           <Flex gap="gap.small">
             <Button content="Page 1" />
             <Button content="Page 2" />
@@ -82,20 +81,20 @@ render={() => (
     />
 
 It turns out that this approach introduces unnecessary nesting level - it is possible to achieve the same goal by using just top-level container, with no buttons container:
-  
- <ExampleSnippet
-render={() => (
-<Flex gap="gap.small">
-<Button content="Logo" icon="chess rook" />
-<Flex.Item push>
-<Button content="Page 1" />
-</Flex.Item>
-<Button content="Page 2" />
-<Button content="Page 3" />
-</Flex>
-)}
-/>
-  
+
+    <ExampleSnippet
+      render={() => (
+        <Flex gap="gap.small">
+          <Button content="Logo" icon="chess rook" />
+          <Flex.Item push>
+            <Button content="Page 1" />
+          </Flex.Item>
+          <Button content="Page 2" />
+          <Button content="Page 3" />
+        </Flex>
+      )}
+    />
+
 Note that `Flex.Item` doesn't result in any additional DOM element rendered - its sole purpose is just to pass style props to its child.
 
 <blockquote>
