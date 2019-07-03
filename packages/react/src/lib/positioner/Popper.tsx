@@ -29,7 +29,6 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     position,
     positionFixed,
     positioningDependencies = [],
-    referenceObject,
     rtl,
     targetRef,
     unstable_pinned,
@@ -70,7 +69,10 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     () => {
       destroyInstance()
 
-      if (!enabled || !targetRef.current || !contentRef.current) {
+      const targetRefCurrent = targetRef && (targetRef as React.RefObject<Element>).current
+      const reference = targetRefCurrent || (targetRef as _PopperJS.ReferenceObject)
+
+      if (!enabled || !reference || !contentRef.current) {
         return
       }
 
@@ -125,11 +127,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
         onUpdate: handleUpdate,
       }
 
-      popperRef.current = createPopper(
-        referenceObject || targetRef.current,
-        contentRef.current,
-        options,
-      )
+      popperRef.current = createPopper(reference, contentRef.current, options)
     },
     // TODO review dependencies for popperHasScrollableParent
     [

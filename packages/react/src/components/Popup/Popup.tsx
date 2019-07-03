@@ -112,7 +112,7 @@ export interface PopupProps
   /** Element to be rendered in-place where the popup is defined. */
   trigger?: JSX.Element
 
-  /** should trigger be made tabbable */
+  /** Should trigger be made tabbable */
   shouldTriggerBeTabbable?: boolean
 
   /** Ref for Popup content DOM node. */
@@ -121,6 +121,7 @@ export interface PopupProps
 
 export interface PopupState {
   open: boolean
+  isOpenedByRightClick: boolean
 }
 
 /**
@@ -232,7 +233,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 
   handleDocumentClick = (getRefs: Function) => e => {
-    if (this.rightClickReferenceObject && this.isOutsidePopupElement(getRefs(), e)) {
+    if (this.state.isOpenedByRightClick && this.isOutsidePopupElement(getRefs(), e)) {
       this.trySetOpen(false, e)
       return
     }
@@ -314,7 +315,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
      */
     if (_.includes(normalizedOn, 'context')) {
       triggerProps.onContextMenu = (e, ...args) => {
-        this.setPopupOpen(true, e)
+        this.setPopupOpen(!this.state.open, e)
         _.invoke(triggerElement, 'props.onContextMenu', e, ...args)
         e.preventDefault()
       }
@@ -435,8 +436,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         offset={offset}
         rtl={rtl}
         unstable_pinned={unstable_pinned}
-        targetRef={target ? toRefObject(target) : this.triggerRef}
-        referenceObject={this.rightClickReferenceObject}
+        targetRef={
+          this.rightClickReferenceObject || (target ? toRefObject(target) : this.triggerRef)
+        }
         children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
       />
     )
@@ -520,20 +522,66 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
               type="keydown"
               capture
             />
+
+            {this.state.isOpenedByRightClick && (
+              <>
+                <EventListener
+                  listener={this.preventScroll}
+                  targetRef={documentRef}
+                  type="wheel"
+                  capture
+                />
+                <EventListener
+                  listener={this.preventScroll}
+                  targetRef={documentRef}
+                  type="touchmove"
+                  capture
+                />
+                <EventListener
+                  listener={this.preventScroll}
+                  targetRef={documentRef}
+                  type="keydown"
+                />
+              </>
+            )}
           </>
         )}
       </Unstable_NestingAuto>
     )
   }
 
+  preventScroll(e: Event) {
+    if (e.type === 'wheel' || e.type === 'touchmove') {
+      e.preventDefault()
+    } else if (e.type === 'keydown') {
+      const keyCode = keyboardKey.getCode(e)
+      const isScrollKey =
+        keyCode === keyboardKey.ArrowDown ||
+        keyCode === keyboardKey.ArrowUp ||
+        keyCode === keyboardKey.PageDown ||
+        keyCode === keyboardKey.PageUp ||
+        keyCode === keyboardKey.Home ||
+        keyCode === keyboardKey.End
+      if (isScrollKey) {
+        e.preventDefault()
+      }
+    }
+  }
+
   trySetOpen(newValue: boolean, eventArgs: any) {
+    const isOpenedByRightClick = newValue && this.isRightClick(eventArgs)
+
     // when new state 'open' === 'true', save the last focused element
     if (newValue) {
       this.updateTriggerFocusableDomElement()
-      this.updateContextPosition(eventArgs.nativeEvent)
+      this.updateContextPosition(isOpenedByRightClick && eventArgs.nativeEvent)
     }
-    this.trySetState({ open: newValue })
+    this.trySetState({ open: newValue, isOpenedByRightClick })
     _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
+  }
+
+  isRightClick(eventArgs: any) {
+    return eventArgs.nativeEvent && eventArgs.nativeEvent.which === 3
   }
 
   setPopupOpen(newOpen, e) {
@@ -571,11 +619,11 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 
   updateContextPosition(nativeEvent: MouseEvent) {
-    if (!nativeEvent || nativeEvent.which !== 3) {
-      this.rightClickReferenceObject = null
-      return
-    }
+    this.rightClickReferenceObject =
+      nativeEvent && this.createReferenceFromContextClick(nativeEvent)
+  }
 
+  createReferenceFromContextClick(nativeEvent: MouseEvent) {
     const left = nativeEvent.clientX
     const top = nativeEvent.clientY
     const right = left + 1
@@ -590,7 +638,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       }
     }
 
-    this.rightClickReferenceObject = {
+    return {
       getBoundingClientRect,
       clientWidth: 1,
       clientHeight: 1,

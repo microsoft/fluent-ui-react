@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Flex, Popup, popupFocusTrapBehavior } from '@stardust-ui/react'
+import { Alert, Button, Flex, Popup, popupFocusTrapBehavior } from '@stardust-ui/react'
 
 const contentWithButtons = {
   content: (
@@ -10,20 +10,34 @@ const contentWithButtons = {
   ),
 }
 
-const PopupContextOnElement = () => (
-  <Popup
-    position="after"
-    align="top"
-    trigger={
-      <div style={{ padding: '4rem', border: 'red dashed' }}>
-        <Button content="Random button" onClick={() => alert('Click!')} />
-      </div>
-    }
-    shouldTriggerBeTabbable={false}
-    content={contentWithButtons}
-    accessibility={popupFocusTrapBehavior}
-    on="context"
-  />
-)
+class PopupContextOnElement extends React.Component {
+  state = { alert: false }
+
+  showAlert = () => {
+    this.setState({ alert: true })
+    setTimeout(() => this.setState({ alert: false }), 2000)
+  }
+
+  render() {
+    return (
+      <>
+        <Popup
+          position="after"
+          align="top"
+          trigger={
+            <div style={{ padding: '4rem', border: 'red dashed' }}>
+              <Button content="Random button" onClick={this.showAlert} />
+            </div>
+          }
+          shouldTriggerBeTabbable={false}
+          content={contentWithButtons}
+          accessibility={popupFocusTrapBehavior}
+          on="context"
+        />
+        {this.state.alert && <Alert warning content="Click!" />}
+      </>
+    )
+  }
+}
 
 export default PopupContextOnElement
