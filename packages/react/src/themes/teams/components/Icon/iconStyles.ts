@@ -9,7 +9,7 @@ import {
 } from '../../../types'
 import { IconProps } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
-import { IconVariables, IconSizeModifier, iconColorAreas } from './iconVariables'
+import { IconVariables, iconColorAreas } from './iconVariables'
 
 const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),
@@ -24,8 +24,6 @@ const getBorderedStyles = (boxShadowColor: string): ICSSInJSStyle => {
 }
 
 const getIconSize = (size: SizeValue, v: IconVariables): string => {
-  const sizeModifier: IconSizeModifier = v.sizeModifier
-
   const modifiedSizes = {
     large: {
       x: 24,
@@ -33,8 +31,8 @@ const getIconSize = (size: SizeValue, v: IconVariables): string => {
     },
   }
 
-  return sizeModifier && modifiedSizes[size] && modifiedSizes[size][sizeModifier]
-    ? pxToRem(modifiedSizes[size][sizeModifier])
+  return v.sizeModifier && modifiedSizes[size] && modifiedSizes[size][v.sizeModifier]
+    ? pxToRem(modifiedSizes[size][v.sizeModifier])
     : v[`${size}Size`]
 }
 
