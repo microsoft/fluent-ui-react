@@ -3,6 +3,20 @@ import { TooltipContentProps } from '../../../../components/Tooltip/TooltipConte
 import { TooltipContentVariables } from './tooltipContentVariables'
 import getPointerWithSvgStyles from '../../getPointerWithSvgStyles'
 import svgContent from './tooltipPointerSvgUrl'
+import { PopperChildrenProps } from '../../../../lib/positioner'
+
+const getPointerOffset = (
+  placement: PopperChildrenProps['placement'],
+  v: TooltipContentVariables,
+) =>
+  placement === 'top-start' ||
+  placement === 'top' ||
+  placement === 'top-end' ||
+  placement === 'bottom-end' ||
+  placement === 'bottom' ||
+  placement === 'bottom-start'
+    ? v.pointerHorizontalOffset
+    : v.pointerVerticalOffset
 
 const tooltipContentStyles: ComponentSlotStylesInput<
   TooltipContentProps,
@@ -15,35 +29,25 @@ const tooltipContentStyles: ComponentSlotStylesInput<
     color: v.color,
     background: v.backgroundColor,
     ...(p.pointing &&
-      getPointerWithSvgStyles(v.pointerOffset, v.pointerMargin, rtl, p.placement).root),
+      getPointerWithSvgStyles(getPointerOffset(p.placement, v), v.pointerMargin, rtl, p.placement)
+        .root),
   }),
-  pointer: ({ props: p, variables: v, rtl }): ICSSInJSStyle => {
-    // TODO: aaah fix me
-    const pointerOffset =
-      p.placement === 'top-start' ||
-      p.placement === 'top' ||
-      p.placement === 'top-end' ||
-      p.placement === 'bottom-end' ||
-      p.placement === 'bottom' ||
-      p.placement === 'bottom-start'
-        ? '10px'
-        : '5px'
-    return {
+  pointer: ({ props: p, variables: v, rtl }): ICSSInJSStyle => ({
+    display: 'block',
+    position: 'absolute',
+
+    ...getPointerWithSvgStyles(getPointerOffset(p.placement, v), v.pointerMargin, rtl, p.placement)
+      .pointer,
+
+    ':before': {
+      backgroundImage: svgContent(v.backgroundColor),
+      content: '" "',
       display: 'block',
-      position: 'absolute',
-
-      ...getPointerWithSvgStyles(pointerOffset, v.pointerMargin, rtl, p.placement).pointer,
-
-      ':before': {
-        backgroundImage: svgContent(v.backgroundColor),
-        content: '" "',
-        display: 'block',
-        overflow: 'hidden',
-        width: v.pointerWidth,
-        height: v.pointerHeight,
-      },
-    }
-  },
+      overflow: 'hidden',
+      width: v.pointerWidth,
+      height: v.pointerHeight,
+    },
+  }),
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
     padding: v.padding,
