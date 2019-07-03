@@ -82,6 +82,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     label: customPropTypes.itemShorthand,
+    labelPosition: PropTypes.oneOf(['start', 'end']),
     onChange: PropTypes.func,
     onClick: PropTypes.func,
     toggle: PropTypes.bool,
@@ -90,6 +91,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
   static defaultProps = {
     accessibility: checkboxBehavior,
     icon: {},
+    labelPosition: 'end',
   }
 
   static autoControlledProps = ['checked']
@@ -136,7 +138,13 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
   }
 
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
-    const { label, icon, toggle } = this.props
+    const { label, labelPosition, icon, toggle } = this.props
+
+    const labelElement = Text.create(label, {
+      defaultProps: {
+        styles: styles.label,
+      },
+    })
 
     return (
       <ElementType
@@ -148,17 +156,14 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
+        {labelPosition === 'start' && labelElement}
         {Icon.create(icon, {
           defaultProps: {
             name: toggle ? 'stardust-circle' : 'stardust-checkmark',
             styles: toggle ? styles.toggle : styles.checkbox,
           },
         })}
-        {Text.create(label, {
-          defaultProps: {
-            styles: styles.label,
-          },
-        })}
+        {labelPosition === 'end' && labelElement}
       </ElementType>
     )
   }

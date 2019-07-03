@@ -18,9 +18,9 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
       cursor: 'default',
     }),
 
-    ...p.labelPosition === 'start' && {
-      flexDirection: 'row-reverse'
-    }
+    '> *:not(:last-child)': {
+      marginRight: '10px',
+    },
   }),
 
   checkbox: ({ props: p, variables: v }): ICSSInJSStyle => ({
