@@ -175,7 +175,6 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
     ...sidebarButtons(props),
     { key: 'divider-sidebar', kind: 'divider' },
 
-    // touch item
     {
       key: 'stop-sharing',
       icon: {
