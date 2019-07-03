@@ -5,7 +5,6 @@
 
 coverage/
 dist/
-dll/
 stats/
 
 package.json
