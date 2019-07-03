@@ -24,7 +24,8 @@
     "popper.js": "^1.15.0",
     "prop-types": "^15.6.1",
     "react-fela": "^10.5.0",
-    "react-is": "^16.6.3"
+    "react-is": "^16.6.3",
+    "react-window": "^1.8.4"
   },
   "devDependencies": {
     "@stardust-ui/internal-tooling": "^0.34.0",
