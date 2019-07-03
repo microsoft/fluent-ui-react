@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import { ShorthandValue } from '../types'
 
 const getOrGenerateIdFromShorthand = (
-  idPrefix: string,
+  prefix: string,
   value: ShorthandValue,
   currentValue?: string,
 ): string | undefined => {
@@ -19,7 +19,7 @@ const getOrGenerateIdFromShorthand = (
     return (value as Record<string, any>).id
   }
 
-  return currentValue || _.uniqueId(idPrefix)
+  return currentValue || _.uniqueId(prefix)
 }
 
 export default getOrGenerateIdFromShorthand

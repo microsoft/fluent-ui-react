@@ -7,7 +7,7 @@ import * as keyboardKey from 'keyboard-key'
  *
  * @specification
  * Adds attribute 'role=tooltip' to 'tooltip' slot.
- * Adds attribute 'aria-hidden=true' to 'tooltip' slot if 'open' property is true. Sets the attribute to 'false' otherwise.
+ * Adds attribute 'aria-hidden=false' to 'tooltip' slot if 'open' property is true. Sets the attribute to 'true' otherwise.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'trigger' slot.
  * Triggers 'close' action with 'Escape' on 'trigger'.
  */
@@ -44,12 +44,12 @@ const getDefaultAriaDescribedBy = (props: TooltipBehaviorProps) => {
   if (props['aria-describedby']) {
     return undefined
   }
-  return props.tooltipId
+  return props.contentId
 }
 
 export type TooltipBehaviorProps = {
   /** If tooltip is visible. */
   open: boolean
-  /** Tooltip id. */
-  tooltipId: string
+  /** Tooltip's container id. */
+  contentId: string
 }

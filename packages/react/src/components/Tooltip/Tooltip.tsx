@@ -38,7 +38,7 @@ export interface TooltipSlotClassNames {
 
 export interface TooltipState {
   open: boolean
-  tooltipId: string
+  contentId: string
 }
 
 export interface TooltipProps
@@ -142,7 +142,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     state: TooltipState,
   ): Partial<TooltipState> {
     return {
-      tooltipId: getOrGenerateIdFromShorthand('tooltip-content-', props.content, state.tooltipId),
+      contentId: getOrGenerateIdFromShorthand('tooltip-content-', props.content, state.contentId),
     }
   }
 
