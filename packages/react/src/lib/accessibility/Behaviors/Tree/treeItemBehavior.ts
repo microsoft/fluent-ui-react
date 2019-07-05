@@ -30,15 +30,28 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
-      collapseOrReceiveFocus: {
+      receiveFocus: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+        condition: doesEventComesFromChildItem,
       },
-      expandOrPassFocus: {
+      collapse: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+        condition: (event, props: TreeItemBehaviorProps) =>
+          !doesEventComesFromChildItem(event, props) && props.open,
+      },
+      expand: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+        condition: (event, props: TreeItemBehaviorProps) => !isSubtreeOpen(event, props),
+      },
+      passFocus: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+        condition: isSubtreeOpen,
       },
     },
   },
 })
+
+export default treeItemBehavior
 
 export type TreeItemBehaviorProps = {
   /** If item is a subtree, it contains items. */
@@ -47,4 +60,10 @@ export type TreeItemBehaviorProps = {
   open?: boolean
 }
 
-export default treeItemBehavior
+/** Checks if the event comes from a child item */
+const doesEventComesFromChildItem = (event, props: TreeItemBehaviorProps): boolean => {
+  const { items } = props
+  return !!(event.currentTarget !== event.target && items && items.length)
+}
+
+const isSubtreeOpen = (event, props: TreeItemBehaviorProps): boolean => !!props.open

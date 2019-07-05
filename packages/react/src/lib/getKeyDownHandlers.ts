@@ -4,6 +4,7 @@ import * as React from 'react'
 import shouldHandleOnKeys from './shouldHandleOnKeys'
 import { KeyActions } from './accessibility/types'
 import { AccessibilityActionHandlers, AccessibilityKeyHandlers } from './accessibility/reactTypes'
+import { PropsWithVarsAndStyles, State } from '../themes/types'
 
 const rtlKeyMap = {
   [keyboardKey.ArrowRight]: keyboardKey.ArrowLeft,
@@ -20,6 +21,7 @@ const rtlKeyMap = {
 const getKeyDownHandlers = (
   componentActionHandlers: AccessibilityActionHandlers,
   behaviorKeyActions: KeyActions,
+  props: PropsWithVarsAndStyles & State,
   isRtlEnabled?: boolean,
 ): AccessibilityKeyHandlers => {
   const keyHandlers = {}
@@ -38,6 +40,8 @@ const getKeyDownHandlers = (
       onKeyDown: (event: React.KeyboardEvent) => {
         handledActions.forEach(actionName => {
           let keyCombinations = componentPartKeyAction[actionName].keyCombinations
+          const condition = componentPartKeyAction[actionName].condition
+          const behaviorConditionPassed = condition && condition(event, props)
 
           if (isRtlEnabled) {
             keyCombinations = keyCombinations.map(keyCombination => {
@@ -49,7 +53,7 @@ const getKeyDownHandlers = (
             })
           }
 
-          if (shouldHandleOnKeys(event, keyCombinations)) {
+          if (behaviorConditionPassed && shouldHandleOnKeys(event, keyCombinations)) {
             componentActionHandlers[actionName](event)
           }
         })

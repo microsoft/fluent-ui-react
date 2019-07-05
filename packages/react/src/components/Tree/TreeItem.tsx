@@ -115,33 +115,31 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
       _.invoke(this.props, 'onTitleClick', e, this.props)
     },
-    collapseOrReceiveFocus: e => {
-      const { items, open } = this.props
-
-      e.preventDefault()
-
-      // Focuses the title if the event comes from a child item.
-      if (e.currentTarget !== e.target && items && items.length) {
-        e.stopPropagation()
-        this.itemRef.current.focus()
-      } else if (open) {
-        e.stopPropagation()
-        _.invoke(this.props, 'onTitleClick', e, this.props)
-      }
-    },
-    expandOrPassFocus: e => {
-      const { open } = this.props
-
+    receiveFocus: e => {
       e.preventDefault()
       e.stopPropagation()
 
-      if (!open) {
-        _.invoke(this.props, 'onTitleClick', e, this.props)
-      } else {
-        const element = getFirstFocusable(this.treeRef.current, this.treeRef.current, true)
-        if (element) {
-          element.focus()
-        }
+      this.itemRef.current.focus()
+    },
+    collapse: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      _.invoke(this.props, 'onTitleClick', e, this.props)
+    },
+    expand: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      _.invoke(this.props, 'onTitleClick', e, this.props)
+    },
+    passFocus: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      const element = getFirstFocusable(this.treeRef.current, this.treeRef.current, true)
+      if (element) {
+        element.focus()
       }
     },
   }

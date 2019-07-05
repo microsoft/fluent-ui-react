@@ -62,7 +62,12 @@ const getAccessibility = (
     defaultAccessibility ||
     defaultBehavior)(props)
 
-  const keyHandlers = getKeyDownHandlers(actionHandlers, accessibility.keyActions, isRtlEnabled)
+  const keyHandlers = getKeyDownHandlers(
+    actionHandlers,
+    accessibility.keyActions,
+    props,
+    isRtlEnabled,
+  )
   return {
     ...accessibility,
     keyHandlers,
