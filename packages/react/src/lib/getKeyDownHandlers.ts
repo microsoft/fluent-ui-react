@@ -41,7 +41,10 @@ const getKeyDownHandlers = (
         handledActions.forEach(actionName => {
           let keyCombinations = componentPartKeyAction[actionName].keyCombinations
           const condition = componentPartKeyAction[actionName].condition
-          const behaviorConditionPassed = condition && condition(event, props)
+          let behaviorConditionPassed: boolean = true
+          if (condition) {
+            behaviorConditionPassed = condition(event, props)
+          }
 
           if (isRtlEnabled) {
             keyCombinations = keyCombinations.map(keyCombination => {
