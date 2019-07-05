@@ -25,7 +25,10 @@ const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
     },
     keyActions: {
       popup: {
-        closeAndFocusTrigger: {
+        close: {
+          keyCombinations: [{ keyCode: keyboardKey.Escape }],
+        },
+        focusTrigger: {
           keyCombinations: [{ keyCode: keyboardKey.Escape }],
         },
       },
