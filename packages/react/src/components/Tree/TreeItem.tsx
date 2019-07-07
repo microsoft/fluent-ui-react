@@ -25,7 +25,7 @@ import {
   ShorthandValue,
   withSafeTypeForAs,
 } from '../../types'
-import { getFirstFocusable } from '../../lib/accessibility/FocusZone/focusUtilities'
+// import { getFirstFocusable } from '../../lib/accessibility/FocusZone/focusUtilities'
 
 export interface TreeItemSlotClassNames {
   title: string
@@ -132,16 +132,15 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     expandOrPassFocus: e => {
       const { open } = this.props
 
-      e.preventDefault()
-      e.stopPropagation()
-
       if (!open) {
         _.invoke(this.props, 'onTitleClick', e, this.props)
-      } else {
-        const element = getFirstFocusable(this.treeRef.current, this.treeRef.current, true)
-        if (element) {
-          element.focus()
-        }
+        e.preventDefault()
+        e.stopPropagation()
+        // } else {
+        //   const element = getFirstFocusable(this.treeRef.current, this.treeRef.current, true)
+        //   if (element) {
+        //     element.focus()
+        //   }
       }
     },
   }
@@ -194,8 +193,8 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
           className={classes.root}
           {...accessibility.attributes.root}
           {...rtlTextContainer.getAttributes({ forElements: [children] })}
-          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
           {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           {childrenExist(children) ? children : this.renderContent()}
         </ElementType>

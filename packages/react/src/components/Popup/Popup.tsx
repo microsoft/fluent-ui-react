@@ -380,7 +380,10 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
           {React.cloneElement(triggerElement, {
             ...accessibility.attributes.trigger,
             ...triggerProps,
-            ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.trigger, triggerProps),
+            ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.trigger, {
+              ...triggerElement.props,
+              ...triggerProps,
+            }),
           })}
         </Ref>
       )

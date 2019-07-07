@@ -1,6 +1,7 @@
 import { ICSSInJSStyle } from '../../../types'
 import { pxToRem } from '../../../../lib'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
+import ItemLayout from 'src/components/ItemLayout/ItemLayout'
 
 const treeTitleStyles = {
   root: ({ variables, theme: { siteVariables } }): ICSSInJSStyle => ({
@@ -8,10 +9,15 @@ const treeTitleStyles = {
     cursor: 'pointer',
     color: variables.defaultColor,
     position: 'relative',
-    ...getBorderFocusStyles({
-      siteVariables,
-      isFromKeyboard: true,
-    }),
+    ':focus': {
+      ...getBorderFocusStyles({
+        siteVariables,
+        isFromKeyboard: true,
+      })[':focus'],
+      [`> .${ItemLayout.className}`]: {
+        background: siteVariables.colorScheme.brand.backgroundFocus1,
+      },
+    },
   }),
 }
 

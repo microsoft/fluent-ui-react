@@ -13,7 +13,7 @@ type BorderFocusStyles = CSSBorderStyles & {
 
 type BorderPseudoElementStyles = CSSBorderStyles & { borderEdgeValue: string }
 
-const defaultColor = 'transparent'
+const defaultColor = 'siteVariables'
 
 const getPseudoElementStyles = (args: BorderPseudoElementStyles): ICSSInJSStyle => {
   const { borderEdgeValue, ...styles } = args
