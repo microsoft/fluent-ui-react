@@ -4,17 +4,26 @@ import * as React from 'react'
 
 describe('PopupFocusTrapBehavior.ts', () => {
   test('adds tabIndex=0 to trigger if element is not tabbable and tabIndex attribute is not provided', () => {
-    const expectedResult = popupFocusTrapBehavior({ trigger: <div /> })
+    const expectedResult = popupFocusTrapBehavior({
+      trigger: <div />,
+      shouldTriggerBeTabbable: true,
+    })
     expect(expectedResult.attributes.trigger.tabIndex).toEqual(0)
   })
 
   test('adds tabIndex attribute with value passed as prop', () => {
-    const expectedResult = popupFocusTrapBehavior({ trigger: <div tabIndex={-1} /> })
+    const expectedResult = popupFocusTrapBehavior({
+      trigger: <div tabIndex={-1} />,
+      shouldTriggerBeTabbable: true,
+    })
     expect(expectedResult.attributes.trigger.tabIndex).toEqual(-1)
   })
 
   test('does not add tabIndex if element is already tabbable', () => {
-    const expectedResult = popupFocusTrapBehavior({ trigger: <Button /> })
+    const expectedResult = popupFocusTrapBehavior({
+      trigger: <Button />,
+      shouldTriggerBeTabbable: true,
+    })
     expect(expectedResult.attributes.trigger.tabIndex).toBeUndefined()
   })
 })
