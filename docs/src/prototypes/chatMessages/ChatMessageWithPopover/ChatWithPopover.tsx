@@ -66,7 +66,7 @@ const ChatWithPopover = () => {
                   actionMenu={
                     <Popover shouldCloseMenuHandler={val => setShouldCloseActionMenu(val)} />
                   }
-                  shouldCloseActionMenu={shouldCloseActionMenu}
+                  variables={{ shouldCloseActionMenu }}
                   author="Jane Doe"
                   content={{
                     content: (
@@ -86,7 +86,10 @@ const ChatWithPopover = () => {
             message: {
               content: (
                 <Chat.Message
-                  actionMenu={<Popover />}
+                  actionMenu={
+                    <Popover shouldCloseMenuHandler={val => setShouldCloseActionMenu(val)} />
+                  }
+                  variables={{ shouldCloseActionMenu }}
                   author="Jane Doe"
                   content={{
                     content: (
@@ -106,7 +109,10 @@ const ChatWithPopover = () => {
             message: {
               content: (
                 <Chat.Message
-                  actionMenu={<Popover />}
+                  actionMenu={
+                    <Popover shouldCloseMenuHandler={val => setShouldCloseActionMenu(val)} />
+                  }
+                  variables={{ shouldCloseActionMenu }}
                   author="Jane Doe"
                   content={{
                     content: (

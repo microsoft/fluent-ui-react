@@ -11,7 +11,7 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const chatMessageStyles: ComponentSlotStylesInput<
   ChatMessageProps & ChatMessageState,
-  ChatMessageVariables
+  ChatMessageVariables & { shouldCloseActionMenu: boolean }
 > = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     display: 'inline-block',
@@ -76,7 +76,6 @@ const chatMessageStyles: ComponentSlotStylesInput<
   }),
 
   actionMenu: ({ props: p, variables: v }): ICSSInJSStyle => {
-    console.log(p.shouldCloseActionMenu)
     return {
       backgroundColor: v.backgroundColor,
       borderRadius: v.borderRadius,
@@ -88,8 +87,8 @@ const chatMessageStyles: ComponentSlotStylesInput<
 
       // hide and squash actions menu to prevent accidental hovers over its invisible area
       opacity:
-        p.shouldCloseActionMenu !== undefined
-          ? !p.shouldCloseActionMenu
+        v.shouldCloseActionMenu !== undefined
+          ? !v.shouldCloseActionMenu
             ? 1
             : 0
           : p.focused
