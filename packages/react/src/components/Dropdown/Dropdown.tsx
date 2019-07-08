@@ -786,7 +786,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           this.listRef.current.focus()
         }
       } else {
-        newState.highlightedIndex = this.getHighlightedIndexOnClose()
+        newState.highlightedIndex = null
       }
 
       this.trySetStateAndInvokeHandler('onOpenChange', null, newState)
@@ -950,7 +950,14 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     }
     const { value } = this.state as { value: ShorthandCollection }
     if (value.length > 0) {
-      this.trySetState({ activeSelectedIndex: value.length - 1 })
+      // If last element was already active, perform a 'reset' of activeSelectedIndex.
+      if (this.state.activeSelectedIndex === value.length - 1) {
+        this.trySetState({ activeSelectedIndex: null }, () => {
+          this.trySetState({ activeSelectedIndex: value.length - 1 })
+        })
+      } else {
+        this.trySetState({ activeSelectedIndex: value.length - 1 })
+      }
     }
   }
 
@@ -1242,34 +1249,14 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   }
 
   getHighlightedIndexOnArrowKeyOpen = (changes: StateChangeOptions<ShorthandValue>): number => {
-    const itemsLength = this.state.filteredItems.length
-    switch (changes.type) {
-      // if open by ArrowUp, index should change by -1.
-      case Downshift.stateChangeTypes.keyDownArrowUp:
-        if (_.isNumber(this.state.highlightedIndex)) {
-          const newIndex = this.state.highlightedIndex - 1
-          return newIndex < 0 ? itemsLength - 1 : newIndex
-        }
-        return itemsLength - 1
-      // if open by ArrowDown, index should change by +1.
-      case Downshift.stateChangeTypes.keyDownArrowDown:
-        if (_.isNumber(this.state.highlightedIndex)) {
-          const newIndex = this.state.highlightedIndex + 1
-          return newIndex >= itemsLength ? 0 : newIndex
-        }
-        return 0
-      default:
-        return undefined
-    }
-  }
-
-  getHighlightedIndexOnClose = (): number => {
+    const { filteredItems, highlightedIndex, value } = this.state
     const { highlightFirstItemOnOpen, items, multiple, search } = this.props
-    const { value } = this.state
+    const isArrowUp = changes.type === Downshift.stateChangeTypes.keyDownArrowUp
+    const isArrowDown = changes.type === Downshift.stateChangeTypes.keyDownArrowDown
+    const itemsLength = filteredItems.length
 
-    if (!multiple && !search && value) {
-      // in single selection, if there is a selected item, highlight it.
-      return items.indexOf(value)
+    if (highlightedIndex) {
+      return highlightedIndex
     }
 
     if (highlightFirstItemOnOpen) {
@@ -1277,7 +1264,26 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       return 0
     }
 
-    // otherwise, highlight no item.
+    if (!multiple && !search && value) {
+      // in single selection, if there is a selected item, highlight it.
+      const offset = isArrowUp ? -1 : isArrowDown ? 1 : 0
+      const newHighlightedIndex = items.indexOf(value) + offset
+      if (newHighlightedIndex >= itemsLength) {
+        return 0
+      }
+      if (newHighlightedIndex < 0) {
+        return itemsLength - 1
+      }
+      return newHighlightedIndex
+    }
+
+    if (isArrowDown) {
+      return 0
+    }
+    if (isArrowUp) {
+      return itemsLength - 1
+    }
+
     return null
   }
 
