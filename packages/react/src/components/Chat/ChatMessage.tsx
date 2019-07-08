@@ -87,6 +87,8 @@ export interface ChatMessageProps
 
   /** A message can format the reactions group to appear at the start or the end of the message. */
   reactionGroupPosition?: 'start' | 'end'
+
+  shouldCloseActionMenu?: boolean
 }
 
 export interface ChatMessageState {
@@ -123,6 +125,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
       customPropTypes.itemShorthand,
     ]),
     reactionGroupPosition: PropTypes.oneOf(['start', 'end']),
+    shouldCloseActionMenu: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -217,6 +220,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
                 accessibility: menuAsToolbarBehavior,
                 className: ChatMessage.slotClassNames.actionMenu,
                 styles: styles.actionMenu,
+                onClick: () => this.setState({ focused: false }),
               },
             })}
 

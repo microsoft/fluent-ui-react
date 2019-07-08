@@ -75,19 +75,29 @@ const chatMessageStyles: ComponentSlotStylesInput<
     }),
   }),
 
-  actionMenu: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    backgroundColor: v.backgroundColor,
-    borderRadius: v.borderRadius,
-    boxShadow: v.actionMenuBoxShadow,
-    position: 'absolute',
-    right: v.actionMenuPositionRight,
-    top: v.actionMenuPositionTop,
-    overflow: p.focused ? 'visible' : 'hidden',
+  actionMenu: ({ props: p, variables: v }): ICSSInJSStyle => {
+    console.log(p.shouldCloseActionMenu)
+    return {
+      backgroundColor: v.backgroundColor,
+      borderRadius: v.borderRadius,
+      boxShadow: v.actionMenuBoxShadow,
+      position: 'absolute',
+      right: v.actionMenuPositionRight,
+      top: v.actionMenuPositionTop,
+      overflow: p.focused ? 'visible' : 'hidden',
 
-    // hide and squash actions menu to prevent accidental hovers over its invisible area
-    opacity: p.focused ? 1 : 0,
-    width: p.focused ? 'auto' : 0,
-  }),
+      // hide and squash actions menu to prevent accidental hovers over its invisible area
+      opacity:
+        p.shouldCloseActionMenu !== undefined
+          ? !p.shouldCloseActionMenu
+            ? 1
+            : 0
+          : p.focused
+          ? 1
+          : 0,
+      width: p.focused ? 'auto' : 0,
+    }
+  },
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
     ...((p.mine || p.attached === 'bottom' || p.attached === true) && screenReaderContainerStyles),

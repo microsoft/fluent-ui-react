@@ -4,6 +4,7 @@ import cx from 'classnames'
 
 export interface PopoverProps {
   className?: string
+  shouldCloseMenuHandler?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface PopoverState {
@@ -32,9 +33,10 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   }
 
   render() {
+    const { shouldCloseMenuHandler, ...rest } = this.props
     return (
       <Menu
-        {...this.props}
+        {...rest}
         accessibility={popoverBehavior}
         iconOnly
         className={cx(this.props.className, this.state.focused ? 'focused' : '')}
@@ -50,29 +52,62 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile two',
+            onClick: () => shouldCloseMenuHandler(true),
           },
           {
             key: 'smile3',
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile three',
+            onClick: () => shouldCloseMenuHandler(true),
           },
           {
             key: 'a',
             icon: 'thumbs up',
             'aria-label': 'thumbs up',
+            onClick: () => shouldCloseMenuHandler(true),
           },
           {
             key: 'c',
-            icon: 'ellipsis horizontal',
+            icon: {
+              name: 'ellipsis horizontal',
+              onClick: e => {
+                // this cannot be moved to the li element, because then it will be invoked on clicking on the child element as well...
+                shouldCloseMenuHandler(false)
+              },
+            },
             'aria-label': 'more options',
             indicator: false,
             menu: {
               pills: true,
               items: [
-                { key: 'bookmark', icon: 'folder', content: 'Save this message' },
-                { key: 'linkify', icon: 'linkify', content: 'Copy link' },
-                { key: 'translate', icon: 'translate', content: 'Translate' },
+                {
+                  key: 'bookmark',
+                  onClick: () => {
+                    console.log("Ellipses's child invoked")
+                    shouldCloseMenuHandler(true)
+                  },
+                  icon: 'folder',
+                  content: 'Save this message',
+                },
+                {
+                  key: 'linkify',
+                  onClick: () => {
+                    console.log("Ellipses's child invoked")
+                    shouldCloseMenuHandler(true)
+                  },
+                  icon: 'linkify',
+                  content: 'Copy link',
+                },
+                {
+                  key: 'translate',
+                  onClick: () => {
+                    console.log("Ellipses's child invoked")
+                    shouldCloseMenuHandler(true)
+                  },
+                  icon: 'translate',
+                  content: 'Translate',
+                },
               ],
             },
           },
