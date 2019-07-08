@@ -133,6 +133,7 @@ class Sidebar extends React.Component<any, any> {
       left: 0,
       padding: 0,
       maxHeight: '100vh',
+      zIndex: 1000,
     }
 
     const menuSectionStyles: ICSSInJSStyle = {
