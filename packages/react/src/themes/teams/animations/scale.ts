@@ -3,47 +3,50 @@ import { easeOut, easeIn, easeEasy } from './timingFunctions'
 const scaleAnimations = {
   // Scale in w/ Fade -- Useful for opening modal dialogs
   scaleEnterFast: {
-    keyframe: {
+    keyframe: ({ delta }) => ({
       '0%': {
-        transform: 'scale(.88)',
+        transform: `scale(${delta})`,
         opacity: 0,
       },
       '100%': {
         transform: 'scale(1)',
         opacity: 1,
       },
-    },
+    }),
     duration: '500ms',
     timingFunction: easeOut,
+    keyframeParams: { distance: '.9' },
     fillMode: 'forwards',
   },
   scaleEnterMedium: {
-    keyframe: {
+    keyframe: ({ delta }) => ({
       '0%': {
-        transform: 'scale(.88)',
+        transform: `scale(${delta})`,
         opacity: 0,
       },
       '100%': {
         transform: 'scale(1)',
         opacity: 1,
       },
-    },
+    }),
     duration: '600ms',
+    keyframeParams: { distance: '.9' },
     timingFunction: easeOut,
     fillMode: 'forwards',
   },
   scaleEnterSlow: {
-    keyframe: {
+    keyframe: ({ delta }) => ({
       '0%': {
-        transform: 'scale(.88)',
+        transform: `scale(${delta})`,
         opacity: 0,
       },
       '100%': {
         transform: 'scale(1)',
         opacity: 1,
       },
-    },
+    }),
     duration: '700ms',
+    keyframeParams: { distance: '.9' },
     timingFunction: easeOut,
     fillMode: 'forwards',
   },

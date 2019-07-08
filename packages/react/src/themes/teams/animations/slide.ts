@@ -188,7 +188,7 @@ const slideAnimations = {
     fillMode: 'forwards',
   },
   // Slides object in from left to right
-  SlideRightEnterMedium: {
+  slideRightEnterMedium: {
     keyframe: ({ distance }) => ({
       '0%': {
         transform: `translateX(-${distance})`,
