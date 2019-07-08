@@ -1,7 +1,7 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { TooltipContentProps } from '../../../../components/Tooltip/TooltipContent'
 import { TooltipContentVariables } from './tooltipContentVariables'
-import getPointerWithSvgStyles from '../../getPointerWithSvgStyles'
+import getPointerStyles from '../../getPointerStyles'
 import svgContent from './tooltipPointerSvgUrl'
 import { PopperChildrenProps } from '../../../../lib/positioner'
 
@@ -29,7 +29,7 @@ const tooltipContentStyles: ComponentSlotStylesInput<
     color: v.color,
     background: v.backgroundColor,
     ...(p.pointing &&
-      getPointerWithSvgStyles(getPointerOffset(p.placement, v), v.pointerMargin, rtl, p.placement)
+      getPointerStyles(getPointerOffset(p.placement, v), v.pointerMargin, rtl, p.placement, true)
         .root),
   }),
   pointer: ({ props: p, variables: v, rtl }): ICSSInJSStyle => ({
@@ -40,7 +40,7 @@ const tooltipContentStyles: ComponentSlotStylesInput<
     height: v.pointerHeight,
     backgroundImage: svgContent(v.backgroundColor),
 
-    ...getPointerWithSvgStyles(getPointerOffset(p.placement, v), v.pointerMargin, rtl, p.placement)
+    ...getPointerStyles(getPointerOffset(p.placement, v), v.pointerMargin, rtl, p.placement, true)
       .pointer,
   }),
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({

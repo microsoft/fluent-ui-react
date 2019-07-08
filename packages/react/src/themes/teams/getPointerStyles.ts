@@ -10,6 +10,7 @@ const getPointerStyles = (
   pointerMargin: string,
   rtl: boolean,
   popperPlacement?: PopperChildrenProps['placement'],
+  isSvg?: boolean,
 ) => {
   const placementValue = (popperPlacement || '').split('-', 1).pop()
   const placement = (rtl && rtlMapping[placementValue]) || placementValue
@@ -31,19 +32,19 @@ const getPointerStyles = (
   const pointerStyles = {
     top: {
       bottom: `-${pointerOffset}`,
-      transform: 'rotate(45deg)',
+      transform: `rotate(${isSvg ? (rtl ? 90 : -90) : 45}deg)`,
     },
     right: {
       left: `-${pointerOffset}`,
-      transform: 'rotate(135deg)',
+      transform: `rotate(${isSvg ? (rtl ? 180 : 0) : 135}deg)`,
     },
     bottom: {
       top: `-${pointerOffset}`,
-      transform: 'rotate(-135deg)',
+      transform: `rotate(${isSvg ? (rtl ? -90 : 90) : -135}deg)`,
     },
     left: {
       right: `-${pointerOffset}`,
-      transform: 'rotate(-45deg)',
+      transform: `rotate(${isSvg ? (rtl ? 0 : 180) : -45}deg)`,
     },
   }
 
