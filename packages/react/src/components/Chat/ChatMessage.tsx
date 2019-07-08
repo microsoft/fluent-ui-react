@@ -220,7 +220,6 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
                 accessibility: menuAsToolbarBehavior,
                 className: ChatMessage.slotClassNames.actionMenu,
                 styles: styles.actionMenu,
-                onClick: () => this.setState({ focused: false }),
               },
             })}
 
