@@ -71,10 +71,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             key: 'c',
             icon: {
               name: 'ellipsis horizontal',
-              onClick: e => {
-                // this cannot be moved to the li element, because then it will be invoked on clicking on the child element as well...
-                shouldCloseMenuHandler(false)
-              },
+              onClick: () => shouldCloseMenuHandler(false),
             },
             'aria-label': 'more options',
             indicator: false,
@@ -83,28 +80,19 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
               items: [
                 {
                   key: 'bookmark',
-                  onClick: () => {
-                    console.log("Ellipses's child invoked")
-                    shouldCloseMenuHandler(true)
-                  },
+                  onClick: () => shouldCloseMenuHandler(true),
                   icon: 'folder',
                   content: 'Save this message',
                 },
                 {
                   key: 'linkify',
-                  onClick: () => {
-                    console.log("Ellipses's child invoked")
-                    shouldCloseMenuHandler(true)
-                  },
+                  onClick: () => shouldCloseMenuHandler(true),
                   icon: 'linkify',
                   content: 'Copy link',
                 },
                 {
                   key: 'translate',
-                  onClick: () => {
-                    console.log("Ellipses's child invoked")
-                    shouldCloseMenuHandler(true)
-                  },
+                  onClick: () => shouldCloseMenuHandler(true),
                   icon: 'translate',
                   content: 'Translate',
                 },
