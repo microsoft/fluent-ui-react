@@ -4,8 +4,8 @@ import * as React from 'react'
 import renderElementToJSX from './renderElementToJSX'
 
 export type ExampleSnippetProps = {
-  value?: string
   render?: () => React.ReactNode
+  value?: string
 }
 
 const rootStyle = {
@@ -18,9 +18,14 @@ const renderedStyle = {
   padding: '1rem',
 }
 
-const ExampleSnippet = ({ render = () => null, value }: ExampleSnippetProps) => {
-  const element = render()
-  const string = value || renderElementToJSX(element, !value)
+const ExampleSnippet: React.FunctionComponent<ExampleSnippetProps> = ({
+  children,
+  render = () => null,
+  value,
+}) => {
+  const element = children || render()
+  const triggerFnError = render && !value
+  const string = value || renderElementToJSX(element, !triggerFnError)
 
   return (
     <div style={rootStyle}>
