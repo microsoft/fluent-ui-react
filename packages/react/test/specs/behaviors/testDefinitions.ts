@@ -557,6 +557,26 @@ definitions.push({
   },
 })
 
+// Triggers 'closeMenuAndFocusTrigger' action with 'Escape' on 'wrapper', when toolbar button has submenu and it is opened.
+definitions.push({
+  regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when toolbar button has submenu and it is opened\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const propertySubmenuOpened = { menu: { items: [] }, menuOpen: true }
+    const expectedKeyNumber = parameters.behavior(propertySubmenuOpened).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    expect(expectedKeyNumber).toBe(keyboardKey[key])
+
+    // when menuOpen == "false"
+    propertySubmenuOpened.menuOpen = false
+    const expectedKeyCombinations = parameters.behavior(propertySubmenuOpened).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations
+    expect(expectedKeyCombinations).toBe(null)
+  },
+})
+
 // Triggers 'doNotNavigateNextParentItem' action with 'ArrowLeft' or 'ArrowRight' on 'wrapper', when toolbar button has submenu and it is opened.
 definitions.push({
   regexp: /Triggers '(\w+)' action with '(\w+)' or '(\w+)' on '([\w-]+)', when toolbar button has submenu and it is opened\./g,

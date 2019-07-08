@@ -234,7 +234,6 @@ task('test:projects:typings', async () => {
 task(
   'test:projects',
   series(
-    'dll',
     'bundle:all-packages',
     'test:projects:cra-ts',
     'test:projects:rollup',

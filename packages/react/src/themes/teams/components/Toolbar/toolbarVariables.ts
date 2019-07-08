@@ -5,6 +5,7 @@ import { TeamsSchemeMappingWithAreas } from '../../types'
 
 export const toolbarColorAreas = stringLiteralsArray(
   'foreground1',
+  'background',
   'border',
 
   'foregroundActive',
@@ -17,6 +18,12 @@ export const toolbarColorAreas = stringLiteralsArray(
   'borderFocus',
 
   'foregroundDisabled1',
+
+  // custom
+  'menuItemForegroundHover',
+  'menuItemBackgroundHover',
+  'menuItemForegroundFocus',
+  'menuItemBackgroundFocus',
 )
 
 export type ToolbarColorSchemeMapping = TeamsSchemeMappingWithAreas<
@@ -46,6 +53,29 @@ export interface ToolbarVariables {
   borderWidth: string
   borderRadius: string
   dividerMargin: string
+
+  menuWidth: string
+  menuPadding: string
+  menuBackground: string
+  menuBorder: string // border color
+  menuBorderWidth: string
+  menuBorderRadius: string
+  menuBoxShadow: string
+
+  menuItemForeground: string
+  menuItemForegroundHover: string
+  menuItemBackgroundHover: string
+  menuItemBackgroundFocus: string
+  menuItemForegroundFocus: string
+  menuItemForegroundDisabled: string
+  menuItemBackgroundDisabled: string
+  menuItemPadding: string
+
+  menuDividerBorder: string // border color
+  menuDividerMargin: string
+
+  customItemHorizontalPadding: string
+  customItemVerticalPadding: string
 }
 
 export default (siteVars: any): ToolbarVariables => ({
@@ -58,6 +88,11 @@ export default (siteVars: any): ToolbarVariables => ({
         foregroundFocus: siteVars.colorScheme.brand.foregroundFocus,
         backgroundFocus: 'transparent',
         foregroundActive: siteVars.colorScheme.brand.foregroundActive,
+
+        menuItemForegroundHover: siteVars.colorScheme.default.foregroundHover,
+        menuItemBackgroundHover: siteVars.colorScheme.default.backgroundHover,
+        menuItemForegroundFocus: siteVars.colorScheme.default.foregroundHover,
+        menuItemBackgroundFocus: siteVars.colorScheme.default.backgroundHover,
       },
     }),
     toolbarColorAreas,
@@ -83,4 +118,27 @@ export default (siteVars: any): ToolbarVariables => ({
   borderWidth: '2px',
   borderRadius: '50%',
   dividerMargin: `${pxToRem(10)} ${pxToRem(4)}`,
+
+  menuWidth: pxToRem(200),
+  menuPadding: `${pxToRem(8)} 0`,
+  menuBackground: undefined,
+  menuBorder: undefined,
+  menuBorderWidth: '1px',
+  menuBorderRadius: pxToRem(4),
+  menuBoxShadow: siteVars.shadowLevel3,
+
+  menuItemForeground: undefined,
+  menuItemForegroundHover: undefined,
+  menuItemBackgroundHover: undefined,
+  menuItemForegroundFocus: undefined,
+  menuItemBackgroundFocus: undefined,
+  menuItemForegroundDisabled: undefined,
+  menuItemBackgroundDisabled: 'transparent',
+  menuItemPadding: `${pxToRem(9)} ${pxToRem(16)}`,
+
+  menuDividerBorder: undefined,
+  menuDividerMargin: `${pxToRem(8)} 0`,
+
+  customItemHorizontalPadding: pxToRem(16),
+  customItemVerticalPadding: pxToRem(4),
 })

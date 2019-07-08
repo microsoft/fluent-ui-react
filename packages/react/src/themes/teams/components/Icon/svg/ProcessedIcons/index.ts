@@ -170,6 +170,7 @@ import processedIcons_hive from './icons-hive'
 import processedIcons_highlight from './icons-highlight'
 import processedIcons_helparticle from './icons-helparticle'
 import processedIcons_headset from './icons-headset'
+import processedIcons_hand from './icons-hand'
 import processedIcons_groups from './icons-groups'
 import processedIcons_giphy from './icons-giphy'
 import processedIcons_gif from './icons-gif'
@@ -478,6 +479,7 @@ export default {
   processedIcons_highlight,
   processedIcons_helparticle,
   processedIcons_headset,
+  processedIcons_hand,
   processedIcons_groups,
   processedIcons_giphy,
   processedIcons_gif,

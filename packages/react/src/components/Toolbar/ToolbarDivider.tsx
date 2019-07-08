@@ -34,7 +34,7 @@ class ToolbarDivider extends UIComponent<WithAsProp<ToolbarDividerProps>> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior as Accessibility,
+    accessibility: defaultBehavior,
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
