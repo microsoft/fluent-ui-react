@@ -213,14 +213,8 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     },
   }
 
-  renderComponent({
-    classes,
-    rtl,
-    accessibility,
-  }: RenderResultConfig<PopupProps>): React.ReactNode {
-    const { inline, mountNode, trapFocus, autoFocus } = this.props
-    const { open } = this.state
-    const popupContent = open && this.renderPopupContent(classes.popup, rtl, accessibility)
+  componentDidMount() {
+    const { inline, trapFocus, autoFocus } = this.props
 
     if (process.env.NODE_ENV !== 'production') {
       if (inline && trapFocus) {
@@ -234,6 +228,16 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         )
       }
     }
+  }
+
+  renderComponent({
+    classes,
+    rtl,
+    accessibility,
+  }: RenderResultConfig<PopupProps>): React.ReactNode {
+    const { inline, mountNode } = this.props
+    const { open } = this.state
+    const popupContent = open && this.renderPopupContent(classes.popup, rtl, accessibility)
 
     return (
       <>
