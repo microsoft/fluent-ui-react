@@ -18,14 +18,12 @@ const renderedStyle = {
   padding: '1rem',
 }
 
-const ExampleSnippet: React.FunctionComponent<ExampleSnippetProps> = ({
-  children,
-  render = () => null,
-  value,
-}) => {
-  const element = children || render()
-  const triggerFnError = render && !value
-  const string = value || renderElementToJSX(element, !triggerFnError)
+const ExampleSnippet: React.FunctionComponent<ExampleSnippetProps> = props => {
+  const { children, render = () => null, value } = props
+
+  const element: React.ReactNode = render() || React.Children.only(children)
+  const isFunctionWithoutValue = render && !value
+  const string = value || renderElementToJSX(element, !isFunctionWithoutValue)
 
   return (
     <div style={rootStyle}>
