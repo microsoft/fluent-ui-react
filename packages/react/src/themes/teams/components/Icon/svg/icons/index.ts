@@ -91,6 +91,7 @@ import micOff from './micOff'
 import more from './more'
 import microsoftStream from './microsoftStream'
 import userPhone from './userPhone'
+import noAudio from './noAudio'
 import numberList from './numberList'
 import outdent from './outdent'
 import openOutside from './openOutside'
@@ -221,6 +222,7 @@ export default {
   menu,
   'message-seen': messageSeen,
   mic,
+  'no-audio': noAudio,
   hand,
   'mic-off': micOff,
   more,

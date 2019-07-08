@@ -32,6 +32,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add accessibility attributes and keyboard handlers for `Tooltip` @sophieH29 ([#1575](https://github.com/stardust-ui/react/pull/1575))
 - Add `labelPosition` prop to `Checkbox` component @layershifter ([#1578](https://github.com/stardust-ui/react/pull/1578))
 - Pass `props` of `Icon` component to SVG spec @kuzhelov ([#1562](https://github.com/stardust-ui/react/pull/1562))
+- Add `no-audio` icon to Teams theme @amramornov-ms ([#1598](https://github.com/stardust-ui/react/pull/1598))
 
 ### Documentation
 - Ensure docs content doesn't overlap with sidebar @kuzhelov ([#1568](https://github.com/stardust-ui/react/pull/1568))

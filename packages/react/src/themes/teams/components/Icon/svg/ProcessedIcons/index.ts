@@ -97,6 +97,7 @@ import processedIcons_numberlist from './icons-number-list'
 import processedIcons_notificationoff from './icons-notification-off'
 import processedIcons_notes from './icons-notes'
 import processedIcons_nochat from './icons-no-chat'
+import processedIcons_noaudio from './icons-no-audio'
 import processedIcons_newtab from './icons-newtab'
 import processedIcons_newcontactgroup from './icons-new-contactgroup'
 import processedIcons_myactivity from './icons-my-activity'
@@ -406,6 +407,7 @@ export default {
   processedIcons_notificationoff,
   processedIcons_notes,
   processedIcons_nochat,
+  processedIcons_noaudio,
   processedIcons_newtab,
   processedIcons_newcontactgroup,
   processedIcons_myactivity,
