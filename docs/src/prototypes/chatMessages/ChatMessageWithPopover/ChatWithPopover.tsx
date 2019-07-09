@@ -132,7 +132,7 @@ const ChatWithPopover = () => {
                   actionMenu={
                     <Popover shouldCloseMenuHandler={val => setShouldCloseActionMenuCM1(val)} />
                   }
-                  variables={{ shouldCloseActionMenuCM1 }}
+                  variables={{ shouldCloseActionMenu: shouldCloseActionMenuCM1 }}
                   author="Jane Doe"
                   content={{
                     content: (
@@ -158,7 +158,7 @@ const ChatWithPopover = () => {
                   actionMenu={
                     <Popover shouldCloseMenuHandler={val => setShouldCloseActionMenuCM2(val)} />
                   }
-                  variables={{ shouldCloseActionMenuCM2 }}
+                  variables={{ shouldCloseActionMenu: shouldCloseActionMenuCM2 }}
                   author="Jane Doe"
                   content={{
                     content: (
@@ -184,7 +184,7 @@ const ChatWithPopover = () => {
                   actionMenu={
                     <Popover shouldCloseMenuHandler={val => setShouldCloseActionMenuCM3(val)} />
                   }
-                  variables={{ shouldCloseActionMenuCM3 }}
+                  variables={{ shouldCloseActionMenu: shouldCloseActionMenuCM3 }}
                   author="Jane Doe"
                   content={{
                     content: (
