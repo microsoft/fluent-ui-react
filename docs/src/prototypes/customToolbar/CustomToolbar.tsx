@@ -113,7 +113,7 @@ const sidebarButtons: CustomToolbarLayout = props => [
     active: props.sidebarSelected === 'chat',
     icon: {
       name: 'chat',
-      outline: 'true',
+      outline: true,
       size: 'large',
     },
     key: 'chat',
@@ -125,7 +125,7 @@ const sidebarButtons: CustomToolbarLayout = props => [
     active: props.sidebarSelected === 'participant-add',
     icon: {
       name: 'participant-add',
-      outline: 'true',
+      outline: true,
       size: 'large',
     },
     key: 'participant-add',
