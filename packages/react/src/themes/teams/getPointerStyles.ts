@@ -32,19 +32,19 @@ const getPointerStyles = (
   const pointerStyles = {
     top: {
       bottom: `-${pointerOffset}`,
-      transform: `rotate(${isSvg ? (rtl ? 90 : -90) : 45}deg)`,
+      transform: isSvg ? `rotate(${rtl ? 90 : -90}deg)` : 'rotate(45deg)',
     },
     right: {
       left: `-${pointerOffset}`,
-      transform: `rotate(${isSvg ? (rtl ? 180 : 0) : 135}deg)`,
+      transform: isSvg ? `rotate(${rtl ? 180 : 0}deg)` : 'rotate(135deg)',
     },
     bottom: {
       top: `-${pointerOffset}`,
-      transform: `rotate(${isSvg ? (rtl ? -90 : 90) : -135}deg)`,
+      transform: isSvg ? `rotate(${rtl ? -90 : 90}deg)` : 'rotate(-135deg)',
     },
     left: {
       right: `-${pointerOffset}`,
-      transform: `rotate(${isSvg ? (rtl ? 0 : 180) : -45}deg)`,
+      transform: isSvg ? `rotate(${rtl ? 0 : 180}deg)` : 'rotate(-45deg)',
     },
   }
 

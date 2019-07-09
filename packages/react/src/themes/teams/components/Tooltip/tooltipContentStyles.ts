@@ -2,7 +2,7 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { TooltipContentProps } from '../../../../components/Tooltip/TooltipContent'
 import { TooltipContentVariables } from './tooltipContentVariables'
 import getPointerStyles from '../../getPointerStyles'
-import tooltipPointerSvg from './tooltipPointerSvgUrl'
+import pointerSvg from '../../pointerSvgUrl'
 import { PopperChildrenProps } from '../../../../lib/positioner'
 
 const getPointerOffset = (
@@ -55,7 +55,7 @@ const tooltipContentStyles: ComponentSlotStylesInput<
       overflow: 'hidden',
       width: v.pointerWidth,
       height: v.pointerHeight,
-      backgroundImage: tooltipPointerSvg(v.backgroundColor),
+      backgroundImage: pointerSvg(v.backgroundColor),
       ...svgPointerStyles.pointer,
     }
   },
