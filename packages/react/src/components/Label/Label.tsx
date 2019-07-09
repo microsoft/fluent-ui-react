@@ -19,7 +19,7 @@ import Icon from '../Icon/Icon'
 import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface LabelProps
@@ -29,7 +29,6 @@ export interface LabelProps
     ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -70,7 +69,6 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'span',
     imagePosition: 'start',
     iconPosition: 'end',

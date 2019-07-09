@@ -18,9 +18,13 @@ import {
   ThemePrepared,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import { AccessibilityDefinition, FocusZoneMode, FocusZoneDefinition } from './accessibility/types'
+import {
+  AccessibilityDefinition,
+  FocusZoneMode,
+  FocusZoneDefinition,
+  Accessibility,
+} from './accessibility/types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
-import { defaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
@@ -53,18 +57,25 @@ export interface RenderConfig<P> {
 }
 
 const getAccessibility = (
-  props: State & PropsWithVarsAndStyles,
+  props: State & PropsWithVarsAndStyles & { accessibility?: Accessibility },
   actionHandlers: AccessibilityActionHandlers,
   isRtlEnabled: boolean,
-) => {
-  const { accessibility: customAccessibility, defaultAccessibility } = props
-  const accessibility: AccessibilityDefinition = (customAccessibility ||
-    defaultAccessibility ||
-    defaultBehavior)(props)
+): ReactAccessibilityBehavior => {
+  const { accessibility } = props
 
-  const keyHandlers = getKeyDownHandlers(actionHandlers, accessibility.keyActions, isRtlEnabled)
+  if (_.isNil(accessibility)) {
+    return {
+      attributes: {},
+      keyHandlers: {},
+    }
+  }
+
+  const definition: AccessibilityDefinition = accessibility(props)
+  const keyHandlers = getKeyDownHandlers(actionHandlers, definition.keyActions, isRtlEnabled)
+
   return {
-    ...accessibility,
+    attributes: {},
+    ...definition,
     keyHandlers,
   }
 }

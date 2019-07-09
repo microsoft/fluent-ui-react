@@ -37,7 +37,6 @@ export interface InputProps
     SupportedIntrinsicInputProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
