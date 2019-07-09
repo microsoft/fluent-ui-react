@@ -60,8 +60,11 @@ export default (
     expect(role).toBe(defaultRootRole)
   })
 
-  test('does not get role when overrides to default', () => {
-    const rendered = mountWithProviderAndGetComponent(Component, <Component {...requiredProps} />)
+  test('does not get role when overrides to undefined', () => {
+    const rendered = mountWithProviderAndGetComponent(
+      Component,
+      <Component {...requiredProps} accessibility={undefined} />,
+    )
     const role = getRenderedAttribute(rendered, 'role', partSelector)
     expect(role).toBeFalsy()
   })
