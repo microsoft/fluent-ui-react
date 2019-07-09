@@ -16,7 +16,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import Button from './Button'
+import Button, { ButtonProps } from './Button'
 
 export interface ButtonGroupProps
   extends UIComponentProps,
@@ -29,7 +29,7 @@ export interface ButtonGroupProps
   accessibility?: Accessibility
 
   /** The buttons contained inside the ButtonGroup. */
-  buttons?: ShorthandValue[]
+  buttons?: ShorthandValue<ButtonProps>[]
 
   /** The buttons inside group can appear circular. */
   circular?: boolean

@@ -1,4 +1,4 @@
-import { Icon, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import { Icon, Menu, Segment, Text, ICSSInJSStyle, MenuItemProps } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
@@ -204,7 +204,7 @@ class Sidebar extends React.Component<any, any> {
       return { items }
     })
 
-    const menuItems: ShorthandValue[] = [
+    const menuItems: ShorthandValue<MenuItemProps>[] = [
       {
         key: 'github',
         content: (
@@ -359,7 +359,7 @@ class Sidebar extends React.Component<any, any> {
       disabled: true,
     }
 
-    const prototypesMenuItems: ShorthandValue[] = [
+    const prototypesMenuItems: ShorthandValue<MenuItemProps>[] = [
       {
         key: 'chatpane',
         content: 'Chat Pane',

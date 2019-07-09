@@ -16,7 +16,7 @@ import { RenderResultConfig } from '../../lib/renderComponent'
 import { alertBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 import Button, { ButtonProps } from '../Button/Button'
 
 export interface AlertSlotClassNames {
@@ -24,7 +24,9 @@ export interface AlertSlotClassNames {
   action: string
 }
 
-export interface AlertProps extends UIComponentProps, ContentComponentProps<ShorthandValue> {
+export interface AlertProps
+  extends UIComponentProps,
+    ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default alertBehavior

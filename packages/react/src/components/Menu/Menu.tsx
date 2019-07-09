@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
-import MenuItem from './MenuItem'
+import MenuItem, { MenuItemProps } from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
@@ -23,6 +23,7 @@ import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import { WithAsProp, ShorthandCollection, ShorthandValue, withSafeTypeForAs } from '../../types'
 import MenuDivider from './MenuDivider'
+import { IconProps } from '@stardust-ui/react'
 
 export type MenuShorthandKinds = 'divider' | 'item'
 
@@ -52,7 +53,7 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   iconOnly?: boolean
 
   /** Shorthand array of props for Menu. */
-  items?: ShorthandCollection<MenuShorthandKinds>
+  items?: ShorthandCollection<MenuItemProps, MenuShorthandKinds>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
@@ -79,7 +80,7 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   submenu?: boolean
 
   /** Shorthand for the submenu indicator. */
-  indicator?: ShorthandValue
+  indicator?: ShorthandValue<IconProps>
 }
 
 export interface MenuState {

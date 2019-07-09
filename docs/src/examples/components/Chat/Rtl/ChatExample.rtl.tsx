@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Avatar, Chat } from '@stardust-ui/react'
+import { Avatar, Chat, ChatItemProps, ShorthandCollection } from '@stardust-ui/react'
 
-const items = [
+const items: ShorthandCollection<ChatItemProps> = [
   {
     message: {
       content: (

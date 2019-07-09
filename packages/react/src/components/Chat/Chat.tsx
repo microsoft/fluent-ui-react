@@ -10,7 +10,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import ChatItem from './ChatItem'
+import ChatItem, { ChatItemProps } from './ChatItem'
 import ChatMessage from './ChatMessage'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -29,7 +29,7 @@ export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
   accessibility?: Accessibility
 
   /** Shorthand array of the items inside the chat. */
-  items?: ShorthandValue[]
+  items?: ShorthandValue<ChatItemProps>[]
 }
 
 class Chat extends UIComponent<WithAsProp<ChatProps>, any> {

@@ -7,8 +7,8 @@ import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropType
 import { ShorthandValue, ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
-import Image from '../Image/Image'
-import Box from '../Box/Box'
+import Image, { ImageProps } from '../Image/Image'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface DropdownItemSlotClassNames {
   content: string
@@ -24,13 +24,13 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   accessibilityItemProps?: any
 
   /** Item's content. */
-  content?: ShorthandValue
+  content?: ShorthandValue<BoxProps>
 
   /** Item's header. */
-  header?: ShorthandValue
+  header?: ShorthandValue<ImageProps>
 
   /** Item's image. */
-  image?: ShorthandValue
+  image?: ShorthandValue<BoxProps>
 
   /** Indicated whether the item has been set active by keyboard. */
   isFromKeyboard?: boolean

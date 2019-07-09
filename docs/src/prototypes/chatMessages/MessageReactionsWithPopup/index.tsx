@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Avatar, Chat } from '@stardust-ui/react'
+import { Avatar, Chat, ChatItemProps, ShorthandCollection } from '@stardust-ui/react'
 import ReactionPopup from './ReactionPopup'
 
 const reactions = [
@@ -20,7 +20,7 @@ const actionMenu = {
   ],
 }
 
-const items = [
+const items: ShorthandCollection<ChatItemProps> = [
   {
     attached: 'top',
     contentPosition: 'end',

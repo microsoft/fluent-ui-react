@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, Chat } from '@stardust-ui/react'
+import { Avatar, Chat, ChatItemProps, ShorthandCollection } from '@stardust-ui/react'
 
 const [janeAvatar, johnAvatar] = [
   'public/images/avatar/small/ade.jpg',
@@ -9,7 +9,7 @@ const [janeAvatar, johnAvatar] = [
   status: { color: 'green', icon: 'check' },
 }))
 
-const items = [
+const items: ShorthandCollection<ChatItemProps> = [
   {
     contentPosition: 'start',
     gutter: { content: <Avatar {...johnAvatar} /> },

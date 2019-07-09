@@ -56,7 +56,7 @@ export function createShorthand({
   Component: React.ReactType
   mappedProp?: string
   mappedArrayProp?: string
-  valueOrRenderCallback?: ShorthandValue | ShorthandRenderCallback
+  valueOrRenderCallback?: ShorthandValue<Props> | ShorthandRenderCallback
   options?: CreateShorthandOptions
 }): React.ReactElement<Props> | null | undefined {
   const valIsRenderFunction =
@@ -75,7 +75,7 @@ export function createShorthand({
     Component,
     mappedProp,
     mappedArrayProp,
-    value: valueOrRenderCallback as ShorthandValue,
+    value: valueOrRenderCallback as ShorthandValue<Props>,
     options,
   })
 }
@@ -137,7 +137,7 @@ function createShorthandFromValue({
   Component: React.ReactType
   mappedProp?: string
   mappedArrayProp?: string
-  value?: ShorthandValue
+  value?: ShorthandValue<Props>
   options?: CreateShorthandOptions
 }) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
@@ -270,7 +270,7 @@ function createShorthandFromRenderCallback({
   mappedArrayProp?: string
   options?: CreateShorthandOptions
 }) {
-  const render: ShorthandRenderer = (shorthandValue, renderTree) => {
+  const render: ShorthandRenderer<Props> = (shorthandValue, renderTree) => {
     return createShorthandFromValue({
       Component,
       mappedProp,

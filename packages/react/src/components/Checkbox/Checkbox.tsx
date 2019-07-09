@@ -13,8 +13,8 @@ import {
   UIComponentProps,
 } from '../../lib'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
-import Text from '../Text/Text'
+import Icon, { IconProps } from '../Icon/Icon'
+import Text, { TextProps } from '../Text/Text'
 import { Accessibility } from '../../lib/accessibility/types'
 import { checkboxBehavior } from '../../lib/accessibility'
 
@@ -35,10 +35,10 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
   disabled?: boolean
 
   /** The item indicator can be user-defined icon. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** The label of the item. */
-  label?: ShorthandValue
+  label?: ShorthandValue<TextProps>
 
   /** A label in the loader can have different positions. */
   labelPosition?: 'start' | 'end'

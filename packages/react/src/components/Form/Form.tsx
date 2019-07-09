@@ -13,8 +13,13 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import FormField from './FormField'
+import {
+  ComponentEventHandler,
+  WithAsProp,
+  withSafeTypeForAs,
+  ShorthandCollection,
+} from '../../types'
+import FormField, { FormFieldProps } from './FormField'
 
 export interface FormSlotClassNames {
   field: string
@@ -31,7 +36,7 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
   action?: string
 
   /** Shorthand array of props for the Form.Fields inside the Form. */
-  fields?: ShorthandValue[]
+  fields?: ShorthandCollection<FormFieldProps>
 
   /**
    * The HTML form submit handler.

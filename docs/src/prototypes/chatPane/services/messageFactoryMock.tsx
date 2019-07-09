@@ -76,7 +76,7 @@ function generateChatMsgProps(message: MessageData, fromUser: UserData): ChatIte
   }
 }
 
-function createMessageContent(message: MessageData): ShorthandValue {
+function createMessageContent(message: MessageData): ShorthandValue<ChatMessageProps> {
   const messageId = `content-${message.id}`
   return {
     id: message.withAttachment ? undefined : messageId,

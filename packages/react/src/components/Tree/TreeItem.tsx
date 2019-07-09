@@ -46,10 +46,10 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   defaultOpen?: boolean
 
   /** The index of the item among its sibbling */
-  index: number
+  index?: number
 
   /** Array of props for sub tree. */
-  items?: ShorthandValue[]
+  items?: ShorthandValue<TreeItemProps>[]
 
   /** Called when a tree title is clicked. */
   onTitleClick?: ComponentEventHandler<TreeItemProps>
@@ -68,7 +68,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   renderItemTitle?: ShorthandRenderFunction
 
   /** Properties for TreeTitle. */
-  title?: ShorthandValue
+  title?: ShorthandValue<TreeTitleProps>
 }
 
 class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {

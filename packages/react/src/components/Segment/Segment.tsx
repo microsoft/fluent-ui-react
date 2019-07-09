@@ -12,12 +12,12 @@ import {
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface SegmentProps
   extends UIComponentProps<SegmentProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue> {
+    ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior

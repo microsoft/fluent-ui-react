@@ -10,9 +10,9 @@ import {
   isFromKeyboard,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import Icon from '../Icon/Icon'
-import Button from '../Button/Button'
-import Text from '../Text/Text'
+import Icon, { IconProps } from '../Icon/Icon'
+import Button, { ButtonProps } from '../Button/Button'
+import Text, { TextProps } from '../Text/Text'
 import Box from '../Box/Box'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -26,22 +26,22 @@ export interface AttachmentProps extends UIComponentProps, ChildrenComponentProp
   accessibility?: Accessibility
 
   /** Button shorthand for the action slot. */
-  action?: ShorthandValue
+  action?: ShorthandValue<ButtonProps>
 
   /** An Attachment can be styled to indicate possible user interaction. */
   actionable?: boolean
 
   /** A string describing the attachment. */
-  description?: ShorthandValue
+  description?: ShorthandValue<TextProps>
 
   /** An attachment can show it is currently unable to be interacted with. */
   disabled?: boolean
 
   /** The name of the attachment. */
-  header?: ShorthandValue
+  header?: ShorthandValue<TextProps>
 
   /** Shorthand for the icon. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** Value indicating percent complete. */
   progress?: string | number

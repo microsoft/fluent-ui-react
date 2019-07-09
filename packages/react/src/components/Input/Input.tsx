@@ -17,8 +17,8 @@ import {
 import { Accessibility } from '../../lib/accessibility/types'
 import { inputBehavior } from '../../lib/accessibility'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
-import Box from '../Box/Box'
+import Icon, { IconProps } from '../Icon/Icon'
+import Box, { BoxProps } from '../Box/Box'
 import { HtmlInputProps } from '../../lib/htmlPropsUtils'
 
 export interface InputSlotClassNames {
@@ -51,7 +51,7 @@ export interface InputProps
   fluid?: boolean
 
   /** Optional Icon to display inside the Input. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** An Input with icon can format the icon to appear at the start or at the end of the input field. */
   iconPosition?: 'start' | 'end'
@@ -60,7 +60,7 @@ export interface InputProps
   inline?: boolean
 
   /** Shorthand for the input component. */
-  input?: ShorthandValue
+  input?: ShorthandValue<BoxProps>
 
   /**
    * Called on change.
@@ -80,7 +80,7 @@ export interface InputProps
   value?: React.ReactText
 
   /** Shorthand for the wrapper component. */
-  wrapper?: ShorthandValue
+  wrapper?: ShorthandValue<BoxProps>
 }
 
 export interface InputState {
@@ -210,7 +210,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     }
   }
 
-  computeIcon = (): ShorthandValue => {
+  computeIcon = (): ShorthandValue<IconProps> => {
     const { clearable, icon } = this.props
     const { value } = this.state
 
