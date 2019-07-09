@@ -113,7 +113,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
       e.preventDefault()
       e.stopPropagation()
 
-      _.invoke(this.props, 'onTitleClick', e, this.props)
+      this.handleTitleClick(e)
     },
     receiveFocus: e => {
       e.preventDefault()
@@ -125,13 +125,13 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
       e.preventDefault()
       e.stopPropagation()
 
-      _.invoke(this.props, 'onTitleClick', e, this.props)
+      this.handleTitleClick(e)
     },
     expand: e => {
       e.preventDefault()
       e.stopPropagation()
 
-      _.invoke(this.props, 'onTitleClick', e, this.props)
+      this.handleTitleClick(e)
     },
     passFocus: e => {
       e.preventDefault()
@@ -144,9 +144,13 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     },
   }
 
+  handleTitleClick = e => {
+    _.invoke(this.props, 'onTitleClick', e, this.props)
+  }
+
   handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
     onClick: (e, titleProps) => {
-      _.invoke(this.props, 'onTitleClick', e, this.props)
+      this.handleTitleClick(e)
       _.invoke(predefinedProps, 'onClick', e, titleProps)
     },
   })

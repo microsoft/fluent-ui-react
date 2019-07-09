@@ -40,11 +40,6 @@ const getKeyDownHandlers = (
       onKeyDown: (event: React.KeyboardEvent) => {
         handledActions.forEach(actionName => {
           let keyCombinations = componentPartKeyAction[actionName].keyCombinations
-          const condition = componentPartKeyAction[actionName].condition
-          let behaviorConditionPassed: boolean = true
-          if (condition) {
-            behaviorConditionPassed = condition(event, props)
-          }
 
           if (isRtlEnabled) {
             keyCombinations = keyCombinations.map(keyCombination => {
@@ -56,8 +51,11 @@ const getKeyDownHandlers = (
             })
           }
 
-          if (behaviorConditionPassed && shouldHandleOnKeys(event, keyCombinations)) {
-            componentActionHandlers[actionName](event)
+          if (shouldHandleOnKeys(event, keyCombinations)) {
+            const shouldHandleKeyBasedOnEvent = componentPartKeyAction[actionName].shouldHandle
+            if (!shouldHandleKeyBasedOnEvent || shouldHandleKeyBasedOnEvent(event)) {
+              componentActionHandlers[actionName](event)
+            }
           }
         })
       },

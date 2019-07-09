@@ -168,7 +168,7 @@ export interface AccessibilityDefinition {
 
 export interface KeyAction {
   keyCombinations: KeyCombinations[]
-  condition?: (event, props) => boolean
+  shouldHandle?: (event) => boolean
 }
 
 export interface KeyCombinations {

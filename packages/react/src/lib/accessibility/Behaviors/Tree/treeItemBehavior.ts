@@ -9,8 +9,10 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  * Adds 'tabIndex' as '-1' if the item is not a leaf.
  *
  * @specification
- * Triggers 'collapseOrReceiveFocus' action with 'ArrowLeft' on 'root'.
- * Triggers 'expandOrPassFocus' action with 'ArrowRight' on 'root'.
+ * Triggers 'receiveFocus' action with 'ArrowLeft' on 'root'.
+ * Triggers 'collapse' action with 'ArrowLeft' on 'root'.
+ * Triggers 'expand' action with 'ArrowRight' on 'root'.
+ * Triggers 'passFocus' action with 'ArrowRight' on 'root'.
  */
 const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
   attributes: {
@@ -30,23 +32,26 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
-      receiveFocus: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
-        condition: doesEventComesFromChildItem,
-      },
-      collapse: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
-        condition: (event, props: TreeItemBehaviorProps) =>
-          !doesEventComesFromChildItem(event, props) && props.open,
-      },
-      expand: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
-        condition: (event, props: TreeItemBehaviorProps) => !isSubtreeOpen(event, props),
-      },
-      passFocus: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
-        condition: isSubtreeOpen,
-      },
+      ...(isSubtreeOpen(props) && {
+        receiveFocus: {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+          shouldHandle: doesEventComesFromChildItem,
+        },
+        collapse: {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+          shouldHandle: event => !doesEventComesFromChildItem(event),
+        },
+      }),
+      ...(!isSubtreeOpen(props) && {
+        expand: {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+        },
+      }),
+      ...(isSubtreeOpen(props) && {
+        passFocus: {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+        },
+      }),
     },
   },
 })
@@ -61,9 +66,12 @@ export type TreeItemBehaviorProps = {
 }
 
 /** Checks if the event comes from a child item */
-const doesEventComesFromChildItem = (event, props: TreeItemBehaviorProps): boolean => {
-  const { items } = props
-  return !!(event.currentTarget !== event.target && items && items.length)
+const doesEventComesFromChildItem = (event): boolean => {
+  return event.currentTarget !== event.target
 }
 
-const isSubtreeOpen = (event, props: TreeItemBehaviorProps): boolean => !!props.open
+/** Checks if current tree item has a subtree and it is opened */
+const isSubtreeOpen = (props: TreeItemBehaviorProps): boolean => {
+  const { items, open } = props
+  return !!(items && items.length && open)
+}
