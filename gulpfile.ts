@@ -1,4 +1,4 @@
-import { task, series, parallel } from 'gulp'
+import { task, parallel } from 'gulp'
 import * as path from 'path'
 import * as tsPaths from 'tsconfig-paths'
 
@@ -16,7 +16,6 @@ tsPaths.register({
 })
 
 // load tasks in order of dependency usage
-require('./build/gulp/tasks/dll')
 require('./build/gulp/tasks/bundle')
 require('./build/gulp/tasks/docs')
 require('./build/gulp/tasks/screener')
@@ -30,4 +29,4 @@ require('./build/gulp/tasks/test-vulns')
 require('./build/gulp/tasks/test-circulars')
 
 // global tasks
-task('build', series('dll', parallel('bundle:all-packages', 'build:docs')))
+task('build', parallel('bundle:all-packages', 'build:docs'))
