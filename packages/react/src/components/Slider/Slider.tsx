@@ -1,8 +1,9 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-import { handleRef, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { handleRef, Ref } from '@stardust-ui/react-component-ref'
+import cx from 'classnames'
 
 import {
   applyAccessibilityKeyHandlers,
@@ -22,8 +23,35 @@ import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 import Box from '../Box/Box'
 import Icon from '../Icon/Icon'
 
+const defaultPropValues = {
+  max: 100,
+  min: 0,
+  step: 1,
+  value: 50,
+}
+
+const processInputValues = (
+  p: Pick<SliderProps, 'min' | 'max'> & Pick<SliderState, 'value'>,
+): { min: number; max: number; value: number; valueAsPercentage: string } => {
+  let min = _.toNumber(p.min)
+  let max = _.toNumber(p.max)
+  let value = _.toNumber(p.value)
+
+  if (isNaN(min)) min = defaultPropValues.min
+  if (isNaN(max)) max = defaultPropValues.max
+  value = isNaN(value) ? defaultPropValues.value : Math.min(max, Math.max(min, value))
+  const valueAsPercentage = `${(100 * (value - min)) / (max - min)}%`
+
+  return { min, max, value, valueAsPercentage }
+}
+
 export interface SliderSlotClassNames {
   input: string
+  rail: string
+  slider: string
+  sliderWrapper: string
+  thumb: string
+  track: string
 }
 
 export interface SliderProps
@@ -141,21 +169,26 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
     accessibility: sliderBehavior,
     getA11yValueMessageOnChange: ({ value }) => String(value),
     iconPosition: 'start',
-    max: 100,
-    min: 0,
-    step: 1,
+    max: defaultPropValues.max,
+    min: defaultPropValues.min,
+    step: defaultPropValues.step,
   }
 
   static autoControlledProps = ['value']
 
   getInitialAutoControlledState(): Partial<SliderState> {
-    return { value: '50' }
+    return { value: defaultPropValues.value }
   }
 
   handleChange = (e: React.ChangeEvent) => {
     const value = _.get(e, 'target.value')
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
     this.trySetState({ value })
+  }
+
+  handleBlur = (e: React.FocusEvent) => {
+    this.setState({ isFromKeyboard: false })
+    _.invoke(this.props, 'onBlur', e, this.props)
   }
 
   handleFocus = (e: React.FocusEvent) => {
@@ -182,10 +215,15 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
     styles,
     unhandledProps,
   }: RenderResultConfig<SliderProps>) {
-    const { iconPosition, input, inputRef } = this.props
-    const { value = '' } = this.state
+    const { iconPosition, input, inputRef, step } = this.props
     const [htmlInputProps, restProps] = partitionHTMLProps(unhandledProps)
     const type = 'range'
+
+    const { min, max, value, valueAsPercentage } = processInputValues({
+      min: this.props.min,
+      max: this.props.max,
+      value: this.state.value || '',
+    })
 
     return (
       <ElementType
@@ -195,28 +233,43 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {iconPosition === 'start' && this.renderIcon(variables, styles)}
-        <div className={classes.inputWrapper}>
-          <Ref
-            innerRef={(inputElement: HTMLElement) => {
-              handleRef(this.inputRef, inputElement)
-              handleRef(inputRef, inputElement)
-            }}
-          >
-            {Box.create(input || type, {
-              defaultProps: {
-                ...htmlInputProps,
-                ...accessibility.attributes.input,
-                className: Slider.slotClassNames.input,
-                as: 'input',
-                type,
-                value,
-                onChange: this.handleChange,
-                onFocus: this.handleFocus,
-                styles: styles.input,
-                ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
-              },
-            })}
-          </Ref>
+        <div className={cx(Slider.slotClassNames.sliderWrapper, classes.sliderWrapper)}>
+          <div className={cx(Slider.slotClassNames.slider, classes.slider)}>
+            <span className={cx(Slider.slotClassNames.rail, classes.rail)} />
+            <span
+              className={cx(Slider.slotClassNames.track, classes.track)}
+              style={{ width: valueAsPercentage }}
+            />
+            <Ref
+              innerRef={(inputElement: HTMLElement) => {
+                handleRef(this.inputRef, inputElement)
+                handleRef(inputRef, inputElement)
+              }}
+            >
+              {Box.create(input || type, {
+                defaultProps: {
+                  ...htmlInputProps,
+                  ...accessibility.attributes.input,
+                  className: Slider.slotClassNames.input,
+                  as: 'input',
+                  min,
+                  max,
+                  step,
+                  type,
+                  value,
+                  onChange: this.handleChange,
+                  onBlur: this.handleBlur,
+                  onFocus: this.handleFocus,
+                  styles: styles.input,
+                  ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
+                },
+              })}
+            </Ref>
+            <span
+              className={cx(Slider.slotClassNames.thumb, classes.thumb)}
+              style={{ left: valueAsPercentage }}
+            />
+          </div>
         </div>
         {iconPosition !== 'start' && this.renderIcon(variables, styles)}
       </ElementType>
@@ -226,6 +279,11 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
 
 Slider.slotClassNames = {
   input: `${Slider.className}__input`,
+  rail: `${Slider.className}__rail`,
+  slider: `${Slider.className}__slider`,
+  sliderWrapper: `${Slider.className}__slider-wrapper`,
+  thumb: `${Slider.className}__thumb`,
+  track: `${Slider.className}__track`,
 }
 
 /**
