@@ -1,8 +1,8 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { PopupProps } from '../../../../components/Popup/Popup'
+import { TooltipProps } from '../../../../components/Tooltip/Tooltip'
 import { TooltipVariables } from './tooltipVariables'
 
-const tooltipStyles: ComponentSlotStylesInput<PopupProps, TooltipVariables> = {
+const tooltipStyles: ComponentSlotStylesInput<TooltipProps, TooltipVariables> = {
   root: (): ICSSInJSStyle => ({}),
 
   content: ({ variables: v, props: p }): ICSSInJSStyle => ({
@@ -12,8 +12,6 @@ const tooltipStyles: ComponentSlotStylesInput<PopupProps, TooltipVariables> = {
     zIndex: v.zIndex,
     position: 'absolute',
     textAlign: 'left',
-    color: v.contentColor,
-    background: v.contentBackgroundColor,
   }),
 }
 
