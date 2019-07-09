@@ -69,7 +69,6 @@ import processedIcons_presenceAvailable from './icons-presence-available'
 import processedIcons_presenceStroke from './icons-presence-stroke'
 import processedIcons_promoted from './icons-promoted'
 import processedIcons_pluscircled from './icons-plus-circled'
-import processedIcons_playsoundmute from './icons-play-sound-mute'
 import processedIcons_playpause from './icons-play-pause'
 import processedIcons_playforward from './icons-play-forward'
 import processedIcons_play from './icons-play'
@@ -379,7 +378,6 @@ export default {
   processedIcons_presenceStroke,
   processedIcons_promoted,
   processedIcons_pluscircled,
-  processedIcons_playsoundmute,
   processedIcons_playpause,
   processedIcons_playforward,
   processedIcons_play,
