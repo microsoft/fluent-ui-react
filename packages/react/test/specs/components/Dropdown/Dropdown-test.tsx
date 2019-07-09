@@ -262,7 +262,7 @@ describe('Dropdown', () => {
       )
     })
 
-    it('has the (provided prop value + 1) when opened by arrow down key', () => {
+    it('has the provided prop value when opened by arrow down key', () => {
       const highlightedIndex = 1
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
@@ -277,13 +277,13 @@ describe('Dropdown', () => {
       expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
-          highlightedIndex: highlightedIndex + 1,
+          highlightedIndex,
           open: true,
         }),
       )
     })
 
-    it('has the provided (prop value - 1) when opened by arrow up key', () => {
+    it('has the provided prop value when opened by arrow up key', () => {
       const highlightedIndex = 1
       const wrapper = mountWithProvider(
         <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
@@ -298,49 +298,7 @@ describe('Dropdown', () => {
       expect(onOpenChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
-          highlightedIndex: highlightedIndex - 1,
-          open: true,
-        }),
-      )
-    })
-
-    it('is 0 when the provided prop value is last item index and opened by arrow down key', () => {
-      const highlightedIndex = items.length - 1
-      const wrapper = mountWithProvider(
-        <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
-      )
-      const triggerButton = getTriggerButtonWrapper(wrapper)
-
-      triggerButton
-        .simulate('focus')
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: 0,
-          open: true,
-        }),
-      )
-    })
-
-    it('is last item index when the provided prop value is 0 and opened by arrow up key', () => {
-      const highlightedIndex = 0
-      const wrapper = mountWithProvider(
-        <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
-      )
-      const triggerButton = getTriggerButtonWrapper(wrapper)
-
-      triggerButton
-        .simulate('focus')
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
-
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: items.length - 1,
+          highlightedIndex,
           open: true,
         }),
       )
@@ -574,50 +532,40 @@ describe('Dropdown', () => {
     })
 
     it('is the index of the (value previously selected + 1) when opened by arrow down', () => {
-      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const wrapper = mountWithProvider(
+        <Dropdown onOpenChange={onOpenChange} items={items} value={items[2]} />,
+      )
 
-      triggerButton.simulate('click')
-      const itemsList = getItemsListWrapper(wrapper)
-      itemsList
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
       getTriggerButtonWrapper(wrapper).simulate('keydown', {
         keyCode: keyboardKey.ArrowDown,
         key: 'ArrowDown',
       })
 
-      expect(onOpenChange).toBeCalledTimes(3)
+      expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenLastCalledWith(
         null,
         expect.objectContaining({
-          highlightedIndex: 2,
+          highlightedIndex: 3,
           open: true,
         }),
       )
     })
 
     it('is the index of the (value previously selected - 1) when opened by arrow up', () => {
-      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const wrapper = mountWithProvider(
+        <Dropdown onOpenChange={onOpenChange} items={items} value={items[2]} />,
+      )
 
-      triggerButton.simulate('click')
-      const itemsList = getItemsListWrapper(wrapper)
-      itemsList
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
       getTriggerButtonWrapper(wrapper).simulate('keydown', {
         keyCode: keyboardKey.ArrowUp,
         key: 'ArrowUp',
       })
 
-      expect(onOpenChange).toBeCalledTimes(3)
+      expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenLastCalledWith(
         null,
         expect.objectContaining({
-          highlightedIndex: 0,
+          highlightedIndex: 1,
           open: true,
         }),
       )
