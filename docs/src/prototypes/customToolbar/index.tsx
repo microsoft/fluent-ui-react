@@ -54,7 +54,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     values: ['false', 'chat', 'participant-add'],
     initialValue: 'false',
   })
-  const [chatHasDot] = useBooleanKnob({ name: 'chatHasDot', initialValue: false })
+  const [chatHasNotification] = useBooleanKnob({ name: 'chatHasNotification', initialValue: false })
   const [currentSlide, setCurrentSlide] = React.useState(23)
   const totalSlides = 34
 
@@ -88,7 +88,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
               micActive={micActive}
               screenShareActive={screenShareActive}
               sidebarSelected={sidebarSelected === 'false' ? false : sidebarSelected}
-              chatHasDot={chatHasDot}
+              chatHasNotification={chatHasNotification}
               pptSlide={`${currentSlide} of ${totalSlides}`}
               onCameraChange={onCameraChange}
               onMicChange={onMicChange}

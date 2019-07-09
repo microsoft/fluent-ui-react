@@ -1,11 +1,21 @@
 import {
   ComponentStyleFunctionParam,
   ThemeInput,
-  pxToRem,
   ToolbarProps,
   ToolbarItemProps,
   ToolbarCustomItemProps,
+  ToolbarDividerProps,
+  StatusProps,
+  pxToRem,
 } from '@stardust-ui/react'
+
+export type CustomStatusVariables = {
+  isRecordingIndicator?: boolean
+
+  recordingIndicatorBorderColor?: string
+  recordingIndicatorBorderStyle?: string
+  recordingIndicatorBorderWidth?: string
+}
 
 export type CustomToolbarVariables = {
   isCt?: boolean
@@ -48,6 +58,12 @@ export type CustomToolbarVariables = {
 
 export const darkThemeOverrides: ThemeInput = {
   componentVariables: {
+    Status: (siteVars): CustomStatusVariables => ({
+      recordingIndicatorBorderColor: siteVars.colors.white,
+      recordingIndicatorBorderStyle: 'solid',
+      recordingIndicatorBorderWidth: '2px',
+    }),
+
     Toolbar: (siteVars): CustomToolbarVariables => ({
       ctBorderRadius: '4px',
       ctBorderStyle: 'solid',
@@ -61,19 +77,20 @@ export const darkThemeOverrides: ThemeInput = {
       ctItemColorFocus: siteVars.colorScheme.default.foregroundFocus,
       ctItemColorHover: siteVars.colorScheme.default.foregroundHover,
 
-      ctItemActiveBackground: siteVars.colorScheme.brand.backgroundHover1,
+      ctItemActiveBackground: siteVars.colorScheme.default.backgroundActive1,
+      // FIXME: use variables for colors!
       ctItemActiveBackgroundOverlay:
         'linear-gradient(90deg,rgba(60,62,93,.6),rgba(60,62,93,0) 33%),linear-gradient(135deg,rgba(60,62,93,.6) 33%,rgba(60,62,93,0) 70%),linear-gradient(180deg,rgba(60,62,93,.6) 70%,rgba(60,62,93,0) 94%),linear-gradient(225deg,rgba(60,62,93,.6) 33%,rgba(60,62,93,0) 73%),linear-gradient(270deg,rgba(60,62,93,.6),rgba(60,62,93,0) 33%),linear-gradient(0deg,rgba(98,100,167,.75) 6%,rgba(98,100,167,0) 70%)',
-      ctItemActiveColor: siteVars.colorScheme.default.foreground3,
+      ctItemActiveColor: siteVars.colorScheme.default.foregroundActive1,
 
       ctItemDangerBackground: siteVars.colorScheme.red.background2,
       ctItemDangerBackgroundHover: siteVars.colorScheme.red.backgroundHover,
       ctItemDangerColorHover: siteVars.colorScheme.red.foregroundHover,
 
-      ctItemIndicatorPadding: '8px',
+      ctItemIndicatorPadding: pxToRem(8),
 
-      ctItemNotificationBackgroundColor: 'red',
-      ctItemNotificationSize: '8px',
+      ctItemNotificationBackgroundColor: siteVars.colors.red[400],
+      ctItemNotificationSize: pxToRem(8),
 
       ctItemPrimaryBackground: siteVars.colorScheme.default.background3,
       ctItemPrimaryBackgroundHover: siteVars.colorScheme.brand.backgroundHover1,
@@ -82,6 +99,18 @@ export const darkThemeOverrides: ThemeInput = {
   },
 
   componentStyles: {
+    Status: {
+      root: ({
+        variables: v,
+      }: ComponentStyleFunctionParam<StatusProps, CustomStatusVariables>) => ({
+        ...(v.isRecordingIndicator && {
+          boxSizing: 'content-box',
+          borderColor: v.recordingIndicatorBorderColor,
+          borderStyle: v.recordingIndicatorBorderStyle,
+          borderWidth: v.recordingIndicatorBorderWidth,
+        }),
+      }),
+    },
     Toolbar: {
       root: ({
         variables: v,
@@ -103,6 +132,7 @@ export const darkThemeOverrides: ThemeInput = {
           background: v.ctItemBackground,
           borderStyle: v.ctBorderStyle,
           borderWidth: v.ctBorderWidth,
+          height: v.ctHeight,
 
           ...(v.isCtItemPrimary && { background: v.ctItemPrimaryBackground }),
           ...(v.isCtItemIndicator && { padding: v.ctItemIndicatorPadding }),
@@ -131,6 +161,9 @@ export const darkThemeOverrides: ThemeInput = {
             background: v.ctItemBackground,
             borderStyle: v.ctBorderStyle,
             borderWidth: v.ctBorderWidth,
+            borderRadius: 0,
+            height: v.ctHeight,
+            minWidth: v.ctHeight,
             color: v.ctItemColor,
 
             ...(p.active &&
@@ -142,13 +175,15 @@ export const darkThemeOverrides: ThemeInput = {
                 '::before': {
                   content: `''`,
                   position: 'absolute',
-                  top: pxToRem(-2),
-                  left: pxToRem(-2),
-                  bottom: pxToRem(-2),
-                  right: pxToRem(-2),
+                  top: `-${v.ctBorderWidth}`,
+                  left: `-${v.ctBorderWidth}`,
+                  bottom: `-${v.ctBorderWidth}`,
+                  right: `-${v.ctBorderWidth}`,
                   background: v.ctItemActiveBackgroundOverlay,
 
                   ...(p.isFromKeyboard && {
+                    borderStyle: v.ctBorderStyle,
+                    borderWidth: v.ctBorderWidth,
                     borderColor: v.ctItemBorderColorFocus,
                   }),
                 },
@@ -222,6 +257,17 @@ export const darkThemeOverrides: ThemeInput = {
           }),
         }
       },
+    },
+
+    ToolbarDivider: {
+      root: ({
+        props: p,
+        variables: v,
+      }: ComponentStyleFunctionParam<ToolbarDividerProps, CustomToolbarVariables>) => ({
+        ...(v.isCt && {
+          margin: 0,
+        }),
+      }),
     },
   },
 }

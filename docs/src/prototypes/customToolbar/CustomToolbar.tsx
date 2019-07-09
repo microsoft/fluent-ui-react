@@ -27,7 +27,7 @@ export interface CustomToolbarProps {
   sidebarSelected: false | 'chat' | 'participant-add'
   onSidebarChange?: (state: false | 'chat' | 'participant-add') => void
 
-  chatHasDot?: boolean
+  chatHasNotification?: boolean
 
   pptSlide?: string
   onPptPrevClick?: () => void
@@ -49,11 +49,7 @@ const commonLayout: CustomToolbarLayout = props =>
       kind: 'custom' as ToolbarItemShorthandKinds,
       focusable: true,
       content: (
-        <Status
-          state="error"
-          title="Recording"
-          variables={siteVars => ({ borderColor: siteVars.colors.white })}
-        />
+        <Status state="error" title="Recording" variables={{ isRecordingIndicator: true }} />
       ),
       variables: { isCtItemPrimary: true, isCtItemIndicator: true },
     },
@@ -123,7 +119,7 @@ const sidebarButtons: CustomToolbarLayout = props => [
     key: 'chat',
     onClick: () =>
       _.invoke(props, 'onSidebarChange', props.sidebarSelected === 'chat' ? false : 'chat'),
-    variables: { isCtItemWithNotification: props.chatHasDot, isCtItemIconNoFill: true },
+    variables: { isCtItemWithNotification: props.chatHasNotification, isCtItemIconNoFill: true },
   },
   {
     active: props.sidebarSelected === 'participant-add',
@@ -170,6 +166,7 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
 
     layoutItems.endCall(props),
   ],
+
   'powerpoint-presenter': props => [
     ...commonLayout(props),
     ...sidebarButtons(props),
@@ -219,12 +216,7 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
 const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
   const { layout = 'standard' } = props
 
-  return (
-    <Toolbar
-      variables={{ dividerMargin: 0, borderRadius: 0, itemHeight: '4rem', isCt: true }}
-      items={layouts[layout](props)}
-    />
-  )
+  return <Toolbar variables={{ isCt: true }} items={layouts[layout](props)} />
 }
 
 export default CustomToolbar
