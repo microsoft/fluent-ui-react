@@ -1,6 +1,8 @@
 import { Chat, Provider, Avatar } from '@stardust-ui/react'
 import * as React from 'react'
 import Popover from './Popover'
+import * as _ from 'lodash'
+import ReactionPopup from './ReactionPopup'
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
@@ -9,6 +11,27 @@ const janeAvatar = {
 
 const ChatWithPopover = () => {
   const [shouldCloseActionMenu, setShouldCloseActionMenu] = React.useState(undefined)
+
+  const reactions = [
+    {
+      icon: 'thumbs up',
+      content: '1K',
+      key: 'likes',
+      variables: { meReacting: true },
+      shouldCloseMenuHandler: val => setShouldCloseActionMenu(val),
+    },
+    {
+      icon: 'thumbs down',
+      content: 2,
+      key: 'dislikes',
+      shouldCloseMenuHandler: val => setShouldCloseActionMenu(val),
+    },
+  ]
+
+  const reactionsWithPopup = _.map(reactions, reaction => render =>
+    render(reaction, (Component, props) => <ReactionPopup {...props} />),
+  )
+
   return (
     <Provider
       theme={{
@@ -75,6 +98,9 @@ const ChatWithPopover = () => {
                       </div>
                     ),
                   }}
+                  reactionGroup={{
+                    items: reactionsWithPopup,
+                  }}
                   timestamp="Yesterday, 10:15 PM"
                 />
               ),
@@ -98,6 +124,9 @@ const ChatWithPopover = () => {
                       </div>
                     ),
                   }}
+                  reactionGroup={{
+                    items: reactionsWithPopup,
+                  }}
                   timestamp="Yesterday, 10:15 PM"
                 />
               ),
@@ -120,6 +149,9 @@ const ChatWithPopover = () => {
                         <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
                       </div>
                     ),
+                  }}
+                  reactionGroup={{
+                    items: reactionsWithPopup,
                   }}
                   timestamp="Yesterday, 10:15 PM"
                 />
