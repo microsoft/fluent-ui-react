@@ -9,6 +9,7 @@ export interface PopoverProps {
 
 interface PopoverState {
   focused: boolean
+  submenuOpened: boolean
 }
 
 const popoverBehavior: Accessibility = (props: any) => {
@@ -24,6 +25,7 @@ const popoverBehavior: Accessibility = (props: any) => {
 class Popover extends React.Component<PopoverProps, PopoverState> {
   state = {
     focused: false,
+    submenuOpened: false,
   }
 
   handleFocus = () => this.setState({ focused: true })
@@ -71,7 +73,12 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             key: 'c',
             icon: {
               name: 'ellipsis horizontal',
-              onClick: () => shouldCloseMenuHandler(false),
+              onClick: () => {
+                this.setState(prevState => {
+                  shouldCloseMenuHandler(prevState.submenuOpened)
+                  return { submenuOpened: !prevState.submenuOpened }
+                })
+              },
             },
             'aria-label': 'more options',
             indicator: false,
@@ -80,19 +87,28 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
               items: [
                 {
                   key: 'bookmark',
-                  onClick: () => shouldCloseMenuHandler(true),
+                  onClick: () => {
+                    this.setState({ submenuOpened: false })
+                    shouldCloseMenuHandler(true)
+                  },
                   icon: 'folder',
                   content: 'Save this message',
                 },
                 {
                   key: 'linkify',
-                  onClick: () => shouldCloseMenuHandler(true),
+                  onClick: () => {
+                    this.setState({ submenuOpened: false })
+                    shouldCloseMenuHandler(true)
+                  },
                   icon: 'linkify',
                   content: 'Copy link',
                 },
                 {
                   key: 'translate',
-                  onClick: () => shouldCloseMenuHandler(true),
+                  onClick: () => {
+                    this.setState({ submenuOpened: false })
+                    shouldCloseMenuHandler(true)
+                  },
                   icon: 'translate',
                   content: 'Translate',
                 },
