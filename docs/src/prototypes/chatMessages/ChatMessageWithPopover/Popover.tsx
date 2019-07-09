@@ -9,7 +9,6 @@ export interface PopoverProps {
 
 interface PopoverState {
   focused: boolean
-  submenuOpened: boolean
 }
 
 const popoverBehavior: Accessibility = (props: any) => {
@@ -25,7 +24,6 @@ const popoverBehavior: Accessibility = (props: any) => {
 class Popover extends React.Component<PopoverProps, PopoverState> {
   state = {
     focused: false,
-    submenuOpened: false,
   }
 
   handleFocus = () => this.setState({ focused: true })
@@ -73,12 +71,9 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             key: 'c',
             icon: {
               name: 'ellipsis horizontal',
-              onClick: () => {
-                this.setState(prevState => {
-                  shouldCloseMenuHandler(prevState.submenuOpened)
-                  return { submenuOpened: !prevState.submenuOpened }
-                })
-              },
+            },
+            onMenuOpenChange: (e, { menuOpen }) => {
+              shouldCloseMenuHandler(!menuOpen)
             },
             'aria-label': 'more options',
             indicator: false,
@@ -87,28 +82,16 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
               items: [
                 {
                   key: 'bookmark',
-                  onClick: () => {
-                    this.setState({ submenuOpened: false })
-                    shouldCloseMenuHandler(true)
-                  },
                   icon: 'folder',
                   content: 'Save this message',
                 },
                 {
                   key: 'linkify',
-                  onClick: () => {
-                    this.setState({ submenuOpened: false })
-                    shouldCloseMenuHandler(true)
-                  },
                   icon: 'linkify',
                   content: 'Copy link',
                 },
                 {
                   key: 'translate',
-                  onClick: () => {
-                    this.setState({ submenuOpened: false })
-                    shouldCloseMenuHandler(true)
-                  },
                   icon: 'translate',
                   content: 'Translate',
                 },
