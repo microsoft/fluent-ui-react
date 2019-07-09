@@ -1,4 +1,4 @@
-import { Icon, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import { Icon, Menu, Tree, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
@@ -122,6 +122,123 @@ class Sidebar extends React.Component<any, any> {
     })
 */
 
+  getActiveCategoryIndex(at: String, menuItems: ShorthandValue[]) {
+    let i
+    for (i = 0; i < menuItems.length; i++) {
+      const category = menuItems[i]
+      if (!('items' in category)) {
+        continue
+      }
+      if (category.items.filter(c => 'title' in c).some(e => e.title.to === at)) {
+        return i
+      }
+    }
+    return -1
+  }
+
+  getTreeItems(menuSectionStyles, menuItemStyles, dividerStyles): ShorthandValue[] {
+    return [
+      {
+        key: 'concepts',
+        title: 'Concepts',
+        styles: menuSectionStyles,
+        items: [
+          {
+            key: 'intro',
+            title: { content: 'Introduction', as: NavLink, to: '/' },
+            styles: menuItemStyles,
+          },
+          {
+            key: 'composition',
+            title: { as: NavLink, content: 'Composition', to: '/composition' },
+            styles: menuItemStyles,
+          },
+          {
+            key: 'shorthand',
+            title: { as: NavLink, content: 'Shorthand Props', to: '/shorthand-props' },
+            styles: menuItemStyles,
+          },
+        ],
+      },
+      {
+        key: 'divider2',
+        kind: 'divider',
+        styles: dividerStyles,
+      },
+      {
+        key: 'guides',
+        title: 'Guides',
+        styles: menuSectionStyles,
+        items: [
+          {
+            key: 'quickstart',
+            title: { content: 'QuickStart', as: NavLink, to: 'quick-start' },
+            styles: menuItemStyles,
+          },
+          {
+            key: 'faq',
+            title: { content: 'FAQ', as: NavLink, to: '/faq' },
+            styles: menuItemStyles,
+          },
+          {
+            key: 'accessiblity',
+            title: { content: 'Accessibility', as: NavLink, to: '/accessibility' },
+            styles: menuItemStyles,
+          },
+          {
+            key: 'theming',
+            title: { content: 'Theming', as: NavLink, to: '/theming' },
+            styles: menuItemStyles,
+          },
+          {
+            key: 'theming-examples',
+            title: { content: 'Theming Examples', as: NavLink, to: '/theming-examples' },
+            styles: menuItemStyles,
+          },
+          {
+            key: 'colorpalette',
+            title: { content: 'Colors', as: NavLink, to: '/colors' },
+            styles: menuItemStyles,
+          },
+          {
+            key: 'layout',
+            title: { content: 'Layout', as: NavLink, to: '/layout' },
+            styles: menuItemStyles,
+          },
+          {
+            key: 'integrate-custom',
+            title: {
+              content: 'Integrate Custom Components',
+              as: NavLink,
+              to: '/integrate-custom-components',
+            },
+            styles: menuItemStyles,
+          },
+        ],
+      },
+      {
+        key: 'divider3',
+        kind: 'divider',
+        styles: dividerStyles,
+      },
+      // TODO: to re-enable the search input - will modify the list of the components depending on the search results
+      // {query ? this.renderSearchItems() : this.menuItemsByType},
+      // {
+      //   key: 'search',
+      //   content: (
+      //     <Input
+      //       className="transparent inverted icon"
+      //       icon="search"
+      //       placeholder="Search components..."
+      //       value={query}
+      //       onChange={this.handleSearchChange}
+      //       onKeyDown={this.handleSearchKeyDown}
+      //     />
+      //   ),
+      // },
+    ]
+  }
+
   render() {
     // Should be applied by provider
     const sidebarStyles: ICSSInJSStyle = {
@@ -132,10 +249,10 @@ class Sidebar extends React.Component<any, any> {
       top: 0,
       left: 0,
       padding: 0,
-      maxHeight: '100vh',
+      height: '100%',
     }
 
-    const menuSectionStyles: ICSSInJSStyle = {
+    const treeSectionStyles: ICSSInJSStyle = {
       fontWeight: fontWeightBold,
       margin: '0 0 .5rem',
       padding: '0 1.2857rem',
@@ -151,7 +268,7 @@ class Sidebar extends React.Component<any, any> {
       },
     }
 
-    const menuItemStyles: ICSSInJSStyle = {
+    const treeItemStyles: ICSSInJSStyle = {
       padding: '.5em 1.33333333em',
       textDecoration: 'none',
       fontSize: '0.85714286em',
@@ -187,23 +304,21 @@ class Sidebar extends React.Component<any, any> {
     }
     const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
 
-    const menuItemsByType = _.map(constants.typeOrder, nextType => {
+    const treeItemsByType = _.map(constants.typeOrder, nextType => {
       const items = _.chain([...componentMenu, ...behaviorMenu])
         .filter(({ type }) => type === nextType)
         .map(info => ({
           key: info.displayName.concat(nextType),
-          content: info.displayName,
+          title: { content: info.displayName, as: NavLink, to: getComponentPathname(info) },
           onClick: this.handleItemClick,
-          as: NavLink,
-          to: getComponentPathname(info),
-          styles: menuItemStyles,
+          styles: treeItemStyles,
         }))
         .value()
 
       return { items }
     })
 
-    const menuItems: ShorthandValue[] = [
+    const topMenuItems: ShorthandValue[] = [
       {
         key: 'github',
         content: (
@@ -215,7 +330,7 @@ class Sidebar extends React.Component<any, any> {
         href: constants.repoURL,
         target: '_blank',
         rel: 'noopener noreferrer',
-        styles: menuItemStyles,
+        styles: treeItemStyles,
       },
       {
         key: 'change',
@@ -228,220 +343,77 @@ class Sidebar extends React.Component<any, any> {
         href: changeLogUrl,
         target: '_blank',
         rel: 'noopener noreferrer',
-        styles: menuItemStyles,
+        styles: treeItemStyles,
       },
       {
         key: 'divider1',
         kind: 'divider',
         styles: dividerStyles,
       },
-      {
-        key: 'concepts',
-        content: 'Concepts',
-        styles: menuSectionStyles,
-        disabled: true,
-      },
-      {
-        key: 'intro',
-        content: 'Introduction',
-        as: NavLink,
-        to: '/',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'composition',
-        content: 'Composition',
-        as: NavLink,
-        to: '/composition',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'shorthand',
-        content: 'Shorthand Props',
-        as: NavLink,
-        to: '/shorthand-props',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'divider2',
-        kind: 'divider',
-        styles: dividerStyles,
-      },
-      {
-        key: 'guides',
-        content: 'Guides',
-        styles: menuSectionStyles,
-        disabled: true,
-      },
-      {
-        key: 'quickstart',
-        content: 'QuickStart',
-        as: NavLink,
-        to: '/quick-start',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'faq',
-        content: 'FAQ',
-        as: NavLink,
-        to: '/faq',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'accessiblity',
-        content: 'Accessibility',
-        as: NavLink,
-        to: '/accessibility',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'theming',
-        content: 'Theming',
-        as: NavLink,
-        to: '/theming',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'theming-examples',
-        content: 'Theming Examples',
-        as: NavLink,
-        to: '/theming-examples',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'colorpalette',
-        content: 'Colors',
-        as: NavLink,
-        to: '/colors',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'layout',
-        content: 'Layout',
-        as: NavLink,
-        to: '/layout',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'integrate-custom',
-        content: 'Integrate Custom Components',
-        as: NavLink,
-        to: '/integrate-custom-components',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'divider3',
-        kind: 'divider',
-        styles: dividerStyles,
-      },
-      // TODO: to re-enable the search input - will modify the list of the components depending on the search results
-      // {query ? this.renderSearchItems() : this.menuItemsByType},
-      // {
-      //   key: 'search',
-      //   content: (
-      //     <Input
-      //       className="transparent inverted icon"
-      //       icon="search"
-      //       placeholder="Search components..."
-      //       value={query}
-      //       onChange={this.handleSearchChange}
-      //       onKeyDown={this.handleSearchKeyDown}
-      //     />
-      //   ),
-      // },
     ]
 
-    const prototypesMenuItemTitle = {
-      key: 'prototypes',
-      content: 'Prototypes',
-      styles: menuSectionStyles,
-      disabled: true,
-    }
+    const treeItems = this.getTreeItems(treeSectionStyles, treeItemStyles, dividerStyles)
 
-    const prototypesMenuItems: ShorthandValue[] = [
+    const prototypesTreeItems: ShorthandValue[] = [
       {
         key: 'chatpane',
-        content: 'Chat Pane',
-        as: NavLink,
-        to: '/prototype-chat-pane',
-        styles: menuItemStyles,
+        title: { content: 'Chat Pane', as: NavLink, to: '/prototype-chat-pane' },
+        styles: treeItemStyles,
       },
       {
         key: 'chatMssages',
-        content: 'Chat Messages',
-        as: NavLink,
-        to: '/prototype-chat-messages',
-        styles: menuItemStyles,
+        title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
+        styles: treeItemStyles,
       },
       {
         key: 'dropdowns',
-        content: 'Dropdowns',
-        as: NavLink,
-        to: '/prototype-dropdowns',
-        styles: menuItemStyles,
+        title: { content: 'Dropdowns', as: NavLink, to: '/prototype-dropdowns' },
+        styles: treeItemStyles,
       },
       {
         key: 'alerts',
-        content: 'Alerts',
-        as: NavLink,
-        to: '/prototype-alerts',
-        styles: menuItemStyles,
+        title: { content: 'Alerts', as: NavLink, to: '/prototype-alerts' },
+        styles: treeItemStyles,
       },
       {
         key: 'asyncshorthand',
-        content: 'Async Shorthand',
-        as: NavLink,
-        to: '/prototype-async-shorthand',
-        styles: menuItemStyles,
+        title: { content: 'Async Shorthand', as: NavLink, to: '/prototype-async-shorthand' },
+        styles: treeItemStyles,
       },
       {
         key: 'employeecard',
-        content: 'Employee Card',
-        as: NavLink,
-        to: '/prototype-employee-card',
-        styles: menuItemStyles,
+        title: { content: 'Employee Card', as: NavLink, to: '/prototype-employee-card' },
+        styles: treeItemStyles,
       },
       {
         key: 'meetingoptions',
-        content: 'Meeting Options',
-        as: NavLink,
-        to: '/prototype-meeting-options',
-        styles: menuItemStyles,
+        title: { content: 'Meeting Options', as: NavLink, to: '/prototype-meeting-options' },
+        styles: treeItemStyles,
       },
       {
         key: 'mentions',
-        content: 'Mentions',
-        as: NavLink,
-        to: '/prototype-mentions',
-        styles: menuItemStyles,
+        title: { content: 'Mentions', as: NavLink, to: '/prototype-mentions' },
+        styles: treeItemStyles,
       },
       {
         key: 'searchpage',
-        content: 'Search Page',
-        as: NavLink,
-        to: '/prototype-search-page',
-        styles: menuItemStyles,
+        title: { content: 'Search Page', as: NavLink, to: '/prototype-search-page' },
+        styles: treeItemStyles,
       },
       {
         key: 'popups',
-        content: 'Popups',
-        as: NavLink,
-        to: '/prototype-popups',
-        styles: menuItemStyles,
+        title: { content: 'Popups', as: NavLink, to: '/prototype-popups' },
+        styles: treeItemStyles,
       },
       {
         key: 'iconviewer',
-        content: 'Processed Icons',
-        as: NavLink,
-        to: '/icon-viewer',
-        styles: menuItemStyles,
+        title: { content: 'Processed Icons', as: NavLink, to: '/icon-viewer' },
+        styles: treeItemStyles,
       },
       {
         key: 'menu-button',
-        content: 'MenuButton',
-        as: NavLink,
-        to: '/menu-button',
-        styles: menuItemStyles,
+        title: { content: 'MenuButton', as: NavLink, to: '/menu-button' },
+        styles: treeItemStyles,
       },
       {
         key: 'divider4',
@@ -450,38 +422,45 @@ class Sidebar extends React.Component<any, any> {
       },
     ]
 
+    const prototypeTreeSection = {
+      key: 'prototypes',
+      title: 'Prototypes',
+      styles: treeSectionStyles,
+      items: prototypesTreeItems,
+    }
+
     const withPrototypes =
-      process.env.NODE_ENV !== 'production'
-        ? menuItems.concat(prototypesMenuItemTitle).concat(prototypesMenuItems)
-        : menuItems
+      process.env.NODE_ENV !== 'production' ? treeItems.concat(prototypeTreeSection) : treeItems
 
-    const componentMenuItem = {
+    const componentTreeSection = {
       key: 'components',
-      content: 'Components',
-      styles: menuSectionStyles,
-      disabled: true,
+      title: 'Components',
+      styles: treeSectionStyles,
+      items: treeItemsByType[0].items,
     }
-    const behaviorMenuItem = {
+    const behaviorTreeSection = {
       key: 'behaviour',
-      content: 'Behaviors',
-      styles: menuSectionStyles,
-      disabled: true,
+      title: 'Behaviors',
+      styles: treeSectionStyles,
+      items: treeItemsByType[1].items,
     }
 
-    const withComponents = withPrototypes.concat(componentMenuItem).concat(menuItemsByType[0].items)
-    const allItems = withComponents
+    const withComponents = withPrototypes.concat(componentTreeSection)
+    const allSections = withComponents
       .concat({
         key: 'divider5',
         kind: 'divider',
         styles: dividerStyles,
       })
-      .concat(behaviorMenuItem)
-      .concat(menuItemsByType[1].items)
+      .concat(behaviorTreeSection)
+
+    const at = this.props.location.pathname
+    const activeCategoryIndex = this.getActiveCategoryIndex(at, allSections)
 
     // TODO: bring back the active elements indicators
     return (
       <Segment styles={sidebarStyles}>
-        <Segment styles={menuSectionStyles}>
+        <Segment styles={treeSectionStyles}>
           <Logo width="32px" styles={logoStyles} />
           <Text
             role="heading"
@@ -492,7 +471,8 @@ class Sidebar extends React.Component<any, any> {
           />
           <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
         </Segment>
-        <Menu vertical fluid pills styles={navBarStyles} items={allItems} />
+        {<Menu vertical fluid pills styles={navBarStyles} items={topMenuItems} />}
+        <Tree defaultActiveIndex={activeCategoryIndex} items={allSections} />
       </Segment>
     )
   }

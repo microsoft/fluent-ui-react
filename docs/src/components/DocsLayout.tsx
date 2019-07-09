@@ -4,10 +4,9 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router'
 
-import { Route } from 'react-router-dom'
 import Sidebar from 'docs/src/components/Sidebar/Sidebar'
 import { scrollToAnchor } from 'docs/src/utils'
-import { getUnhandledProps, mergeThemes } from 'src/lib'
+import { mergeThemes } from 'src/lib'
 
 const anchors = new AnchorJS({
   class: 'anchor-link',
@@ -68,7 +67,7 @@ class DocsLayout extends React.Component<any, any> {
   }
 
   renderChildren = props => {
-    const { component: Children, render } = this.props
+    const { children, render } = this.props
 
     return (
       <>
@@ -89,16 +88,14 @@ class DocsLayout extends React.Component<any, any> {
           <Sidebar />
         </Provider>
         <div role="main" style={{ marginLeft: 250 }}>
-          {render ? render() : <Children {...props} />}
+          {render ? render() : children}
         </div>
       </>
     )
   }
 
   render() {
-    const unhandledProps = getUnhandledProps(DocsLayout, this.props)
-
-    return <Route {...unhandledProps} render={this.renderChildren} />
+    return this.renderChildren()
   }
 }
 

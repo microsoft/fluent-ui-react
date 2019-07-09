@@ -42,9 +42,6 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   /** Only allow one subtree to be open at a time. */
   exclusive?: boolean
 
-  /** Initial open value. */
-  defaultOpen?: boolean
-
   /** The index of the item among its sibbling */
   index: number
 
@@ -83,13 +80,10 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     subtree: `${TreeItem.className}__subtree`,
   }
 
-  static autoControlledProps = ['open']
-
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    defaultOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     index: PropTypes.number,
     exclusive: PropTypes.bool,
