@@ -87,7 +87,7 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl })}
+        {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl, props: this.props })}
       </ElementType>
     )
   }
