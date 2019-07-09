@@ -133,8 +133,10 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   static autoControlledProps = ['open']
 
   actionHandlers = {
-    focusTrigger: e => {
+    closeAndFocusTrigger: e => {
+      this.handleDialogCancel(e)
       e.stopPropagation()
+
       _.invoke(this.triggerRef, 'current.focus')
     },
     close: e => this.handleDialogCancel(e),
