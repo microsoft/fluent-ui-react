@@ -26,8 +26,7 @@ const ButtonPlayground: React.FunctionComponent = () => {
     <Button
       content={content}
       icon={icon}
-      /* TODO: better typings */
-      iconPosition={iconPosition as any}
+      iconPosition={iconPosition}
       primary={primary}
       text={text}
     />
