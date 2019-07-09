@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES 
+- `defaultBehavior` was removed @layershifter ([#1600](https://github.com/stardust-ui/react/pull/1600))
+
 ### Fixes
 - Fix `Dropdown` and `DropdownItem` styles to match [redlines] - modified `ListItem` and ListItemStyles to not set gap in component definition @bcalvery ([#1523](https://github.com/stardust-ui/react/pull/1523))
 - Fix `Dropdown` highlightedIndex on arrow keydown open @silviuavram ([#1570](https://github.com/stardust-ui/react/pull/1570))
