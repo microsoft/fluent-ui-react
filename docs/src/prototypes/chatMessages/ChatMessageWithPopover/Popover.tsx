@@ -47,49 +47,34 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile one',
-            onClick: () => {
-              setOpen(false)
-            },
+            onClick: () => setOpen(false),
           },
           {
             key: 'smile2',
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile two',
-            onClick: () => {
-              setOpen(false)
-            },
+            onClick: () => setOpen(false),
           },
           {
             key: 'smile3',
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile three',
-            onClick: () => {
-              setOpen(false)
-            },
+            onClick: () => setOpen(false),
           },
           {
             key: 'a',
             icon: 'thumbs up',
             'aria-label': 'thumbs up',
-            onClick: () => {
-              setOpen(false)
-            },
+            onClick: () => setOpen(false),
           },
           {
             key: 'c',
-            icon: {
-              name: 'ellipsis horizontal',
-            },
+            icon: 'ellipsis horizontal',
             onMenuOpenChange: (e, { menuOpen }) => {
-              if (menuOpen) {
-                setOpen(true)
-                setFixedMode(true)
-              } else {
-                setFixedMode(false)
-                setOpen(false)
-              }
+              setOpen(menuOpen)
+              setFixedMode(menuOpen)
             },
             'aria-label': 'more options',
             indicator: false,
