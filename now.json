@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "name": "stardust-react",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build",
+      "config": { "distDir": "docs/dist" }
+    }
+  ],
+  "github": {
+    "autoJobCancelation": true
+  },
+  "public": true,
+  "routes": [
+    {
+      "src": "/public/(.*)",
+      "headers": {
+        "cache-control": "s-maxage=31536000,immutable"
+      },
+      "dest": "/public/$1"
+    },
+    {
+      "src": "/(.*).js",
+      "headers": {
+        "cache-control": "s-maxage=31536000,immutable"
+      },
+      "dest": "/$1.js"
+    },
+    {
+      "src": "/logo.png",
+      "dest": "/logo.png"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html",
+      "headers": { "cache-control": "s-maxage=0" }
+    }
+  ]
+}

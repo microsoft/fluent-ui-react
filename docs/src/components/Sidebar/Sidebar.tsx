@@ -267,6 +267,7 @@ class Sidebar extends React.Component<any, any> {
       left: 0,
       padding: 0,
       height: '100%',
+      zIndex: 1000,
     }
 
     const treeSectionStyles: ICSSInJSStyle = {
@@ -363,6 +364,11 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'chatMssages',
         title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
+        styles: treeItemStyles,
+      },
+      {
+        key: 'customtoolbar',
+        title: { content: 'Custom Styled Toolbar', as: NavLink, to: '/prototype-custom-toolbar' },
         styles: treeItemStyles,
       },
       {

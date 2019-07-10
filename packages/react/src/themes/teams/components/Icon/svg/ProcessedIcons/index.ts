@@ -69,7 +69,6 @@ import processedIcons_presenceAvailable from './icons-presence-available'
 import processedIcons_presenceStroke from './icons-presence-stroke'
 import processedIcons_promoted from './icons-promoted'
 import processedIcons_pluscircled from './icons-plus-circled'
-import processedIcons_playsoundmute from './icons-play-sound-mute'
 import processedIcons_playpause from './icons-play-pause'
 import processedIcons_playforward from './icons-play-forward'
 import processedIcons_play from './icons-play'
@@ -97,6 +96,7 @@ import processedIcons_numberlist from './icons-number-list'
 import processedIcons_notificationoff from './icons-notification-off'
 import processedIcons_notes from './icons-notes'
 import processedIcons_nochat from './icons-no-chat'
+import processedIcons_speakermute from './icons-speaker-mute'
 import processedIcons_newtab from './icons-newtab'
 import processedIcons_newcontactgroup from './icons-new-contactgroup'
 import processedIcons_myactivity from './icons-my-activity'
@@ -170,6 +170,7 @@ import processedIcons_hive from './icons-hive'
 import processedIcons_highlight from './icons-highlight'
 import processedIcons_helparticle from './icons-helparticle'
 import processedIcons_headset from './icons-headset'
+import processedIcons_hand from './icons-hand'
 import processedIcons_groups from './icons-groups'
 import processedIcons_giphy from './icons-giphy'
 import processedIcons_gif from './icons-gif'
@@ -349,6 +350,7 @@ export default {
   processedIcons_star,
   processedIcons_speakerslashed,
   processedIcons_speakeroff,
+  processedIcons_speakermute,
   processedIcons_sketch,
   processedIcons_shareobject,
   processedIcons_share,
@@ -377,7 +379,6 @@ export default {
   processedIcons_presenceStroke,
   processedIcons_promoted,
   processedIcons_pluscircled,
-  processedIcons_playsoundmute,
   processedIcons_playpause,
   processedIcons_playforward,
   processedIcons_play,
@@ -478,6 +479,7 @@ export default {
   processedIcons_highlight,
   processedIcons_helparticle,
   processedIcons_headset,
+  processedIcons_hand,
   processedIcons_groups,
   processedIcons_giphy,
   processedIcons_gif,
