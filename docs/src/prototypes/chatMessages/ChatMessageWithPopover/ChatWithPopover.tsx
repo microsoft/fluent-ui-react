@@ -4,6 +4,24 @@ import Popover from './Popover'
 import * as _ from 'lodash'
 import ReactionPopup from './ReactionPopup'
 
+const reactions = [
+  {
+    icon: 'thumbs up',
+    content: '1K',
+    key: 'likes',
+    variables: { meReacting: true },
+  },
+  {
+    icon: 'thumbs down',
+    content: 2,
+    key: 'dislikes',
+  },
+]
+
+const reactionsWithPopup = _.map(reactions, reaction => render =>
+  render(reaction, (Component, props) => <ReactionPopup {...props} />),
+)
+
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
   status: { color: 'green', icon: 'check' },
@@ -16,24 +34,6 @@ const ChatWithPopover = () => {
 
   const [openCM2, setOpenCM2] = React.useState(false)
   const [fixedModeCM2, setFixedModeCM2] = React.useState(false)
-
-  const reactions = [
-    {
-      icon: 'thumbs up',
-      content: '1K',
-      key: 'likes',
-      variables: { meReacting: true },
-    },
-    {
-      icon: 'thumbs down',
-      content: 2,
-      key: 'dislikes',
-    },
-  ]
-
-  const reactionsWithPopup = _.map(reactions, reaction => render =>
-    render(reaction, (Component, props) => <ReactionPopup {...props} />),
-  )
 
   return (
     <Provider
