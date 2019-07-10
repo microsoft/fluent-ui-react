@@ -25,6 +25,7 @@ import AccessibilityBehaviors from './views/AccessibilityBehaviors'
 import FocusZone from './views/FocusZone'
 import FocusTrapZone from './views/FocusTrapZone'
 import AutoFocusZone from './views/AutoFocusZone'
+import CustomToolbarPrototype from './prototypes/customToolbar'
 import ChatPanePrototype from './prototypes/chatPane'
 import ChatMessagesPrototype from './prototypes/chatMessages'
 import AsyncShorthandPrototype from './prototypes/AsyncShorthand'
@@ -58,6 +59,12 @@ const Router = () => (
             key="/prototype-chat-messages"
             path="/prototype-chat-messages"
             component={ChatMessagesPrototype}
+          />,
+          <DocsLayout
+            exact
+            key="/prototype-custom-toolbar"
+            path="/prototype-custom-toolbar"
+            component={CustomToolbarPrototype}
           />,
           <DocsLayout
             exact
