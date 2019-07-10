@@ -275,14 +275,6 @@ class Sidebar extends React.Component<any, any> {
       padding: '0 1.2857rem',
       background: '#201f1f',
       color: 'white',
-      ':hover': {
-        background: 'none',
-        color: 'white',
-      },
-      ':focus': {
-        background: 'none',
-        color: 'white',
-      },
     }
 
     const treeItemStyles: ICSSInJSStyle = {
@@ -291,16 +283,6 @@ class Sidebar extends React.Component<any, any> {
       fontSize: '0.85714286em',
       fontWeight: 400,
       color: '#ffffff80',
-
-      background: '#201f1f',
-      ':hover': {
-        color: 'white',
-        backgroundColor: 'none',
-      },
-      ':focus': {
-        color: 'white',
-        backgroundColor: 'none',
-      },
     }
 
     const dividerStyles: ICSSInJSStyle = {
