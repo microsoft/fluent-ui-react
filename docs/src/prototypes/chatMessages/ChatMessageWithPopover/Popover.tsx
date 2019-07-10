@@ -37,6 +37,8 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   handleActionableItemClick = e => {
     const { onShowActionMenuChange, chatMessageRef } = this.props
     onShowActionMenuChange(false)
+    // Currently when the action menu is closed because of some actionable item is clicked, we focus the ChatMessage
+    // this was not in the spec, so it may be changed if the requirement is different
     e.type === 'keydown' && chatMessageRef && chatMessageRef.focus()
   }
 
