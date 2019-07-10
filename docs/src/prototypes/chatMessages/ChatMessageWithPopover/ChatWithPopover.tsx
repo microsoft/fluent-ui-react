@@ -139,7 +139,7 @@ const TeamsChatMessage: React.FC<ChatMessageProps> = (props: ChatMessageProps) =
       onMouseLeave={() => !fixedMode && setOpen(false)}
       onFocus={() => setOpen(true)}
       onBlur={() => setOpen(false)}
-      variables={{ actionMenuOpened: open }}
+      variables={{ showActionMenu: open }}
     />
   )
 }

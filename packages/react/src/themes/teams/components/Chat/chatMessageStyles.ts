@@ -7,9 +7,7 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const chatMessageStyles: ComponentSlotStylesInput<
   ChatMessageProps & ChatMessageState,
-  ChatMessageVariables & {
-    actionMenuOpened: boolean
-  }
+  ChatMessageVariables
 > = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     display: 'inline-block',
@@ -74,14 +72,9 @@ const chatMessageStyles: ComponentSlotStylesInput<
     right: v.actionMenuPositionRight,
     top: v.actionMenuPositionTop,
 
-    // TODO check if visibility css prop can be used
-    overflow: 'hidden',
-    opacity: 0,
-    width: 0,
-    ...(v.actionMenuOpened && {
-      opacity: 1,
-      width: 'auto',
-      overflow: 'visible',
+    visibility: 'hidden',
+    ...(v.showActionMenu && {
+      visibility: 'visible',
     }),
   }),
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
