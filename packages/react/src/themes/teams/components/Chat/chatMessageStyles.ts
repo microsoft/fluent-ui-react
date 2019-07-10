@@ -8,8 +8,6 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 const chatMessageStyles: ComponentSlotStylesInput<
   ChatMessageProps & ChatMessageState,
   ChatMessageVariables & {
-    shouldCloseActionMenu: boolean
-    mode: 'hover' | 'fixed' | 'closing'
     open: boolean
   }
 > = {
