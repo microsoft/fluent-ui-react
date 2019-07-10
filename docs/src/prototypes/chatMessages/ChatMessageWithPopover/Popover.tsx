@@ -4,7 +4,8 @@ import cx from 'classnames'
 
 export interface PopoverProps {
   className?: string
-  shouldCloseMenuHandler?: React.Dispatch<React.SetStateAction<boolean>>
+  setFixedMode?: React.Dispatch<React.SetStateAction<boolean>>
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface PopoverState {
@@ -33,7 +34,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   }
 
   render() {
-    const { shouldCloseMenuHandler, ...rest } = this.props
+    const { setOpen, setFixedMode, ...rest } = this.props
     return (
       <Menu
         {...rest}
@@ -46,26 +47,35 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile one',
+            onClick: () => {
+              setOpen(false)
+            },
           },
           {
             key: 'smile2',
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile two',
-            onClick: () => shouldCloseMenuHandler(true),
+            onClick: () => {
+              setOpen(false)
+            },
           },
           {
             key: 'smile3',
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile three',
-            onClick: () => shouldCloseMenuHandler(true),
+            onClick: () => {
+              setOpen(false)
+            },
           },
           {
             key: 'a',
             icon: 'thumbs up',
             'aria-label': 'thumbs up',
-            onClick: () => shouldCloseMenuHandler(true),
+            onClick: () => {
+              setOpen(false)
+            },
           },
           {
             key: 'c',
@@ -73,7 +83,19 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
               name: 'ellipsis horizontal',
             },
             onMenuOpenChange: (e, { menuOpen }) => {
-              shouldCloseMenuHandler(!menuOpen)
+              if (!menuOpen) {
+                // When Popup is open, it is getting the focus, and the menu is closed...
+                console.log(e.type)
+                console.log(e.currentTarget)
+                console.log(e.target)
+              }
+              if (menuOpen) {
+                setOpen(true)
+                setFixedMode(true)
+              } else {
+                setFixedMode(false)
+                setOpen(false)
+              }
             },
             'aria-label': 'more options',
             indicator: false,

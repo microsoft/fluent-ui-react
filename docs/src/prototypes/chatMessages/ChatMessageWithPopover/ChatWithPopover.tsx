@@ -11,9 +11,11 @@ const janeAvatar = {
 
 const ChatWithPopover = () => {
   // TODO improve this: each chat message needs different state for it's action menu close variable
-  const [shouldCloseActionMenuCM1, setShouldCloseActionMenuCM1] = React.useState(undefined)
-  const [shouldCloseActionMenuCM2, setShouldCloseActionMenuCM2] = React.useState(undefined)
-  const [shouldCloseActionMenuCM3, setShouldCloseActionMenuCM3] = React.useState(undefined)
+  const [openCM1, setOpenCM1] = React.useState(false)
+  const [fixedModeCM1, setFixedModeCM1] = React.useState(false)
+
+  const [openCM2, setOpenCM2] = React.useState(false)
+  const [fixedModeCM2, setFixedModeCM2] = React.useState(false)
 
   const reactionsCM1 = [
     {
@@ -21,13 +23,13 @@ const ChatWithPopover = () => {
       content: '1K',
       key: 'likes',
       variables: { meReacting: true },
-      shouldCloseMenuHandler: val => setShouldCloseActionMenuCM1(val),
+      setOpen: val => setOpenCM1(val),
     },
     {
       icon: 'thumbs down',
       content: 2,
       key: 'dislikes',
-      shouldCloseMenuHandler: val => setShouldCloseActionMenuCM1(val),
+      setOpen: val => setOpenCM1(val),
     },
   ]
 
@@ -41,37 +43,17 @@ const ChatWithPopover = () => {
       content: '1K',
       key: 'likes',
       variables: { meReacting: true },
-      shouldCloseMenuHandler: val => setShouldCloseActionMenuCM2(val),
+      setOpen: val => setOpenCM2(val),
     },
     {
       icon: 'thumbs down',
       content: 2,
       key: 'dislikes',
-      shouldCloseMenuHandler: val => setShouldCloseActionMenuCM2(val),
+      setOpen: val => setOpenCM2(val),
     },
   ]
 
   const reactionsWithPopupCM2 = _.map(reactionsCM2, reaction => render =>
-    render(reaction, (Component, props) => <ReactionPopup {...props} />),
-  )
-
-  const reactionsCM3 = [
-    {
-      icon: 'thumbs up',
-      content: '1K',
-      key: 'likes',
-      variables: { meReacting: true },
-      shouldCloseMenuHandler: val => setShouldCloseActionMenuCM3(val),
-    },
-    {
-      icon: 'thumbs down',
-      content: 2,
-      key: 'dislikes',
-      shouldCloseMenuHandler: val => setShouldCloseActionMenuCM3(val),
-    },
-  ]
-
-  const reactionsWithPopupCM3 = _.map(reactionsCM3, reaction => render =>
     render(reaction, (Component, props) => <ReactionPopup {...props} />),
   )
 
@@ -130,9 +112,15 @@ const ChatWithPopover = () => {
               content: (
                 <Chat.Message
                   actionMenu={
-                    <Popover shouldCloseMenuHandler={val => setShouldCloseActionMenuCM1(val)} />
+                    <Popover setFixedMode={setFixedModeCM1} setOpen={val => setOpenCM1(val)} />
                   }
-                  variables={{ shouldCloseActionMenu: shouldCloseActionMenuCM1 }}
+                  onMouseEnter={() => setOpenCM1(true)}
+                  onMouseLeave={() => !fixedModeCM1 && setOpenCM1(false)}
+                  onFocus={() => setOpenCM1(true)}
+                  onBlur={() => setOpenCM1(false)}
+                  variables={{
+                    open: openCM1,
+                  }}
                   author="Jane Doe"
                   content={{
                     content: (
@@ -156,9 +144,13 @@ const ChatWithPopover = () => {
               content: (
                 <Chat.Message
                   actionMenu={
-                    <Popover shouldCloseMenuHandler={val => setShouldCloseActionMenuCM2(val)} />
+                    <Popover setFixedMode={setFixedModeCM2} setOpen={val => setOpenCM2(val)} />
                   }
-                  variables={{ shouldCloseActionMenu: shouldCloseActionMenuCM2 }}
+                  onMouseEnter={() => setOpenCM2(true)}
+                  onMouseLeave={() => !fixedModeCM2 && setOpenCM2(false)}
+                  onFocus={() => setOpenCM2(true)}
+                  onBlur={() => setOpenCM2(false)}
+                  variables={{ open: openCM2 }}
                   author="Jane Doe"
                   content={{
                     content: (
@@ -169,32 +161,6 @@ const ChatWithPopover = () => {
                   }}
                   reactionGroup={{
                     items: reactionsWithPopupCM2,
-                  }}
-                  timestamp="Yesterday, 10:15 PM"
-                />
-              ),
-            },
-            gutter: { content: <Avatar {...janeAvatar} /> },
-          },
-          {
-            key: 'c',
-            message: {
-              content: (
-                <Chat.Message
-                  actionMenu={
-                    <Popover shouldCloseMenuHandler={val => setShouldCloseActionMenuCM3(val)} />
-                  }
-                  variables={{ shouldCloseActionMenu: shouldCloseActionMenuCM3 }}
-                  author="Jane Doe"
-                  content={{
-                    content: (
-                      <div>
-                        <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
-                      </div>
-                    ),
-                  }}
-                  reactionGroup={{
-                    items: reactionsWithPopupCM3,
                   }}
                   timestamp="Yesterday, 10:15 PM"
                 />

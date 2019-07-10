@@ -10,7 +10,7 @@ const getAriaLabel = ({ content: numberOfPersons, icon: emojiType }: ReactionPro
 }
 
 class ReactionPopup extends React.Component<
-  ReactionProps & { shouldCloseMenuHandler?: React.Dispatch<React.SetStateAction<boolean>> },
+  ReactionProps & { setOpen?: React.Dispatch<React.SetStateAction<boolean>> },
   any
 > {
   state = {
@@ -25,7 +25,6 @@ class ReactionPopup extends React.Component<
 
   handleOpenChange = (e, { open }) => {
     this.setState({ open })
-    if (!open) this.props.shouldCloseMenuHandler(true)
   }
 
   render() {

@@ -1,9 +1,5 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import {
-  default as ChatMessage,
-  ChatMessageProps,
-  ChatMessageState,
-} from '../../../../components/Chat/ChatMessage'
+import { ChatMessageProps, ChatMessageState } from '../../../../components/Chat/ChatMessage'
 import { ChatMessageVariables } from './chatMessageVariables'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../lib'
@@ -11,7 +7,11 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const chatMessageStyles: ComponentSlotStylesInput<
   ChatMessageProps & ChatMessageState,
-  ChatMessageVariables & { shouldCloseActionMenu: boolean }
+  ChatMessageVariables & {
+    shouldCloseActionMenu: boolean
+    mode: 'hover' | 'fixed' | 'closing'
+    open: boolean
+  }
 > = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     display: 'inline-block',
@@ -52,13 +52,6 @@ const chatMessageStyles: ComponentSlotStylesInput<
     }),
 
     ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard }),
-
-    ':hover': {
-      [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
-        opacity: 1,
-        width: 'auto',
-      },
-    },
     ...(p.attached === true && {
       [p.mine ? 'borderTopRightRadius' : 'borderTopLeftRadius']: 0,
       [p.mine ? 'borderBottomRightRadius' : 'borderBottomLeftRadius']: 0,
@@ -83,19 +76,13 @@ const chatMessageStyles: ComponentSlotStylesInput<
     right: v.actionMenuPositionRight,
     top: v.actionMenuPositionTop,
     overflow: p.focused ? 'visible' : 'hidden',
-
-    // hide and squash actions menu to prevent accidental hovers over its invisible area
-    opacity:
-      v.shouldCloseActionMenu !== undefined
-        ? !v.shouldCloseActionMenu
-          ? 1
-          : 0
-        : p.focused
-        ? 1
-        : 0,
-    width: p.focused ? 'auto' : 0,
+    opacity: 0,
+    width: 0,
+    ...(v.open && {
+      opacity: 1,
+      width: 'auto',
+    }),
   }),
-
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
     ...((p.mine || p.attached === 'bottom' || p.attached === true) && screenReaderContainerStyles),
     color: v.authorColor,
