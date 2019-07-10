@@ -15,7 +15,7 @@ class ReactionPopup extends React.Component<ReactionProps, { open: boolean }> {
   }
 
   handleKeyDownOnMenu = e => {
-    if ((e.shiftKey && e.keyCode === keyboardKey.Tab) || e.keyCode === keyboardKey.Tab) {
+    if (e.keyCode === keyboardKey.Tab) {
       this.setState({ open: false })
     }
   }

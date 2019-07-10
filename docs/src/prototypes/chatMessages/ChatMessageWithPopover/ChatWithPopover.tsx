@@ -1,7 +1,6 @@
 import { Chat, Provider, Avatar, ChatMessageProps } from '@stardust-ui/react'
 import * as React from 'react'
 import Popover from './Popover'
-import * as _ from 'lodash'
 import ReactionPopup from './ReactionPopup'
 
 const reactions = [
@@ -18,7 +17,7 @@ const reactions = [
   },
 ]
 
-const reactionsWithPopup = _.map(reactions, reaction => render =>
+const reactionsWithPopup = reactions.map(reaction => render =>
   render(reaction, (Component, props) => <ReactionPopup {...props} />),
 )
 
@@ -128,18 +127,18 @@ const ChatWithPopover = () => {
 }
 
 const TeamsChatMessage: React.FC<ChatMessageProps> = (props: ChatMessageProps) => {
-  const [open, setOpen] = React.useState(false)
-  const [fixedMode, setFixedMode] = React.useState(false)
+  const [showActionMenu, setShowActionMenu] = React.useState(false)
+  const [forceShowActionMenu, setForceShowActionMenu] = React.useState(false)
 
   return (
     <Chat.Message
       {...props}
-      actionMenu={<Popover setFixedMode={setFixedMode} setOpen={setOpen} />}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => !fixedMode && setOpen(false)}
-      onFocus={() => setOpen(true)}
-      onBlur={() => setOpen(false)}
-      variables={{ showActionMenu: open }}
+      actionMenu={<Popover setFixedMode={setForceShowActionMenu} setOpen={setShowActionMenu} />}
+      onMouseEnter={() => setShowActionMenu(true)}
+      onMouseLeave={() => !forceShowActionMenu && setShowActionMenu(false)}
+      onFocus={() => setShowActionMenu(true)}
+      onBlur={() => setShowActionMenu(false)}
+      variables={{ showActionMenu }}
     />
   )
 }
