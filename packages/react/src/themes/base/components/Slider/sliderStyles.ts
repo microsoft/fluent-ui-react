@@ -56,15 +56,9 @@ const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVa
       padding: 0,
       opacity: 0,
 
-      [selectors.WEBKIT_THUMB]: {
-        ...thumbStyles,
-        '-webkit-appearance': 'none',
-      },
+      [selectors.WEBKIT_THUMB]: { ...thumbStyles, '-webkit-appearance': 'none' },
       [selectors.MOZ_THUMB]: thumbStyles,
-      [selectors.MS_THUMB]: {
-        ...thumbStyles,
-        marginTop: `calc(-${v.thumbHeight} / 2)`,
-      },
+      [selectors.MS_THUMB]: { ...thumbStyles, marginTop: `calc(-${v.thumbHeight} / 2)` },
 
       [selectors.MS_FILL_LOWER]: { display: 'none' },
       [selectors.MS_FILL_UPPER]: { display: 'none' },
@@ -93,10 +87,7 @@ const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVa
 
   sliderWrapper: ({ props: p, variables: v }) => ({
     height: v.height,
-    ...(p.vertical && {
-      height: v.length,
-      width: v.height,
-    }),
+    ...(p.vertical && { height: v.length, width: v.height }),
     ...getFluidStyles(p),
   }),
 

@@ -23,9 +23,7 @@ const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVa
     }
 
     return {
-      ':active': {
-        [thumbFromPreviousSiblingSelector]: activeThumbStyles,
-      },
+      ':active': { [thumbFromPreviousSiblingSelector]: activeThumbStyles },
 
       ':focus': {
         [thumbFromPreviousSiblingSelector]: {
