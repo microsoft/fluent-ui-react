@@ -47,6 +47,7 @@ export const colorScheme: ColorSchemeMapping = {
     background1: colors.grey[700],
     background2: colors.grey[800],
     background3: colors.grey[550],
+    background4: colors.grey[600],
 
     border: colors.grey[450], // buttons
     border1: colors.grey[850],
@@ -117,6 +118,7 @@ export const colorScheme: ColorSchemeMapping = {
     background1: colors.brand[900],
     background2: colors.brand[900],
     background3: colors.brand[1000],
+    background4: colors.grey[650],
 
     border: colors.grey[450],
     border1: colors.brand[800],

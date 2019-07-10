@@ -53,6 +53,7 @@ export const colorScheme: ColorSchemeMapping = {
     background1: colors.black,
     background2: colors.black,
     background3: colors.black,
+    background4: colors.black,
 
     border: colors.white,
     border1: colors.white,
@@ -123,6 +124,7 @@ export const colorScheme: ColorSchemeMapping = {
     background1: colors.black,
     background2: colors.black,
     background3: colors.black,
+    background4: colors.black,
 
     border: colors.white, // buttons
     border1: colors.white,
