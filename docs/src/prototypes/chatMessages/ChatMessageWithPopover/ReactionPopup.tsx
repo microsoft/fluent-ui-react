@@ -9,10 +9,7 @@ const getAriaLabel = ({ content: numberOfPersons, icon: emojiType }: ReactionPro
   return `${numberOfPersons} people reacted this message with a ${emojiType} emoji. Open menu to see people who reacted.`
 }
 
-class ReactionPopup extends React.Component<
-  ReactionProps & { setOpen?: React.Dispatch<React.SetStateAction<boolean>> },
-  any
-> {
+class ReactionPopup extends React.Component<ReactionProps, { open: boolean }> {
   state = {
     open: false,
   }

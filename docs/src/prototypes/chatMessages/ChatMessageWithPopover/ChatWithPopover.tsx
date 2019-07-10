@@ -17,43 +17,21 @@ const ChatWithPopover = () => {
   const [openCM2, setOpenCM2] = React.useState(false)
   const [fixedModeCM2, setFixedModeCM2] = React.useState(false)
 
-  const reactionsCM1 = [
+  const reactions = [
     {
       icon: 'thumbs up',
       content: '1K',
       key: 'likes',
       variables: { meReacting: true },
-      setOpen: val => setOpenCM1(val),
     },
     {
       icon: 'thumbs down',
       content: 2,
       key: 'dislikes',
-      setOpen: val => setOpenCM1(val),
     },
   ]
 
-  const reactionsWithPopupCM1 = _.map(reactionsCM1, reaction => render =>
-    render(reaction, (Component, props) => <ReactionPopup {...props} />),
-  )
-
-  const reactionsCM2 = [
-    {
-      icon: 'thumbs up',
-      content: '1K',
-      key: 'likes',
-      variables: { meReacting: true },
-      setOpen: val => setOpenCM2(val),
-    },
-    {
-      icon: 'thumbs down',
-      content: 2,
-      key: 'dislikes',
-      setOpen: val => setOpenCM2(val),
-    },
-  ]
-
-  const reactionsWithPopupCM2 = _.map(reactionsCM2, reaction => render =>
+  const reactionsWithPopup = _.map(reactions, reaction => render =>
     render(reaction, (Component, props) => <ReactionPopup {...props} />),
   )
 
@@ -130,7 +108,7 @@ const ChatWithPopover = () => {
                     ),
                   }}
                   reactionGroup={{
-                    items: reactionsWithPopupCM1,
+                    items: reactionsWithPopup,
                   }}
                   timestamp="Yesterday, 10:15 PM"
                 />
@@ -160,7 +138,7 @@ const ChatWithPopover = () => {
                     ),
                   }}
                   reactionGroup={{
-                    items: reactionsWithPopupCM2,
+                    items: reactionsWithPopup,
                   }}
                   timestamp="Yesterday, 10:15 PM"
                 />
