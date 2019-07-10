@@ -122,10 +122,10 @@ class Sidebar extends React.Component<any, any> {
     })
 */
 
-  getActiveCategoryIndex(at: String, menuItems: ShorthandValue[]) {
+  getActiveCategoryIndex(at: String, sections: ShorthandValue[]) {
     let i
-    for (i = 0; i < menuItems.length; i++) {
-      const category = menuItems[i]
+    for (i = 0; i < sections.length; i++) {
+      const category = sections[i]
       if (!('items' in category)) {
         continue
       }
@@ -163,27 +163,27 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  getTreeItems(menuSectionStyles, menuItemStyles, dividerStyles): ShorthandValue[] {
+  getTreeItems(treeSectionStyles, treeItemStyles, dividerStyles): ShorthandValue[] {
     return [
       {
         key: 'concepts',
         title: 'Concepts',
-        styles: menuSectionStyles,
+        styles: treeSectionStyles,
         items: [
           {
             key: 'intro',
             title: { content: 'Introduction', as: NavLink, to: '/' },
-            styles: menuItemStyles,
+            styles: treeItemStyles,
           },
           {
             key: 'composition',
             title: { as: NavLink, content: 'Composition', to: '/composition' },
-            styles: menuItemStyles,
+            styles: treeItemStyles,
           },
           {
             key: 'shorthand',
             title: { as: NavLink, content: 'Shorthand Props', to: '/shorthand-props' },
-            styles: menuItemStyles,
+            styles: treeItemStyles,
           },
         ],
       },
@@ -195,42 +195,42 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'guides',
         title: 'Guides',
-        styles: menuSectionStyles,
+        styles: treeSectionStyles,
         items: [
           {
             key: 'quickstart',
             title: { content: 'QuickStart', as: NavLink, to: 'quick-start' },
-            styles: menuItemStyles,
+            styles: treeItemStyles,
           },
           {
             key: 'faq',
             title: { content: 'FAQ', as: NavLink, to: '/faq' },
-            styles: menuItemStyles,
+            styles: treeItemStyles,
           },
           {
             key: 'accessiblity',
             title: { content: 'Accessibility', as: NavLink, to: '/accessibility' },
-            styles: menuItemStyles,
+            styles: treeItemStyles,
           },
           {
             key: 'theming',
             title: { content: 'Theming', as: NavLink, to: '/theming' },
-            styles: menuItemStyles,
+            styles: treeItemStyles,
           },
           {
             key: 'theming-examples',
             title: { content: 'Theming Examples', as: NavLink, to: '/theming-examples' },
-            styles: menuItemStyles,
+            styles: treeItemStyles,
           },
           {
             key: 'colorpalette',
             title: { content: 'Colors', as: NavLink, to: '/colors' },
-            styles: menuItemStyles,
+            styles: treeItemStyles,
           },
           {
             key: 'layout',
             title: { content: 'Layout', as: NavLink, to: '/layout' },
-            styles: menuItemStyles,
+            styles: treeItemStyles,
           },
           {
             key: 'integrate-custom',
@@ -239,7 +239,7 @@ class Sidebar extends React.Component<any, any> {
               as: NavLink,
               to: '/integrate-custom-components',
             },
-            styles: menuItemStyles,
+            styles: treeItemStyles,
           },
         ],
       },
