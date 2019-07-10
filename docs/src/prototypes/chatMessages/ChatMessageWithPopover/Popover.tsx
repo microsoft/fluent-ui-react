@@ -4,8 +4,8 @@ import cx from 'classnames'
 
 export interface PopoverProps {
   className?: string
-  setFixedMode?: (val: boolean) => void
-  setOpen?: (val: boolean) => void
+  onForceShowActionMenuChange?: (val: boolean) => void
+  onShowActionMenuChange?: (val: boolean) => void
   chatMessageRef?: HTMLElement
 }
 
@@ -35,13 +35,13 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   }
 
   handleActionableItemClick = e => {
-    const { setOpen, chatMessageRef } = this.props
-    setOpen(false)
+    const { onShowActionMenuChange, chatMessageRef } = this.props
+    onShowActionMenuChange(false)
     e.type === 'keydown' && chatMessageRef && chatMessageRef.focus()
   }
 
   render() {
-    const { setOpen, setFixedMode, ...rest } = this.props
+    const { onShowActionMenuChange, onForceShowActionMenuChange, ...rest } = this.props
     delete rest.chatMessageRef
     return (
       <Menu
@@ -81,8 +81,8 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             key: 'c',
             icon: 'ellipsis horizontal',
             onMenuOpenChange: (e, { menuOpen }) => {
-              setOpen(true)
-              setFixedMode(menuOpen)
+              onShowActionMenuChange(true)
+              onForceShowActionMenuChange(menuOpen)
             },
             'aria-label': 'more options',
             indicator: false,

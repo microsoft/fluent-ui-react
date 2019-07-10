@@ -139,8 +139,8 @@ const TeamsChatMessage: React.FC<ChatMessageProps> = (props: ChatMessageProps) =
         actionMenu={
           <Popover
             chatMessageRef={chatMessageRef}
-            setFixedMode={setForceShowActionMenu}
-            setOpen={setShowActionMenu}
+            onForceShowActionMenuChange={setForceShowActionMenu}
+            onShowActionMenuChange={setShowActionMenu}
           />
         }
         onMouseEnter={() => setShowActionMenu(true)}
