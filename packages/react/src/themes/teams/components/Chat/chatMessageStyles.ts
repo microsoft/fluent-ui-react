@@ -8,7 +8,7 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 const chatMessageStyles: ComponentSlotStylesInput<
   ChatMessageProps & ChatMessageState,
   ChatMessageVariables & {
-    open: boolean
+    actionMenuOpened: boolean
   }
 > = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
@@ -76,7 +76,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
     overflow: p.focused ? 'visible' : 'hidden',
     opacity: 0,
     width: 0,
-    ...(v.open && {
+    ...(v.actionMenuOpened && {
       opacity: 1,
       width: 'auto',
     }),
