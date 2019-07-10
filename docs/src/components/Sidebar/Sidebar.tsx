@@ -122,7 +122,7 @@ class Sidebar extends React.Component<any, any> {
     })
 */
 
-  getActiveCategoryIndex(at: String, sections: ShorthandValue[]) {
+  getActiveCategoryIndex(at: String, sections: ShorthandValue<any>[]) {
     let i
     for (i = 0; i < sections.length; i++) {
       const category = sections[i]

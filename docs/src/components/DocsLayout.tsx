@@ -66,7 +66,7 @@ class DocsLayout extends React.Component<any, any> {
     })
   }
 
-  renderChildren = props => {
+  renderChildren() {
     const { children, render } = this.props
 
     return (
