@@ -83,12 +83,6 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
               name: 'ellipsis horizontal',
             },
             onMenuOpenChange: (e, { menuOpen }) => {
-              if (!menuOpen) {
-                // When Popup is open, it is getting the focus, and the menu is closed...
-                console.log(e.type)
-                console.log(e.currentTarget)
-                console.log(e.target)
-              }
               if (menuOpen) {
                 setOpen(true)
                 setFixedMode(true)
@@ -102,21 +96,9 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             menu: {
               pills: true,
               items: [
-                {
-                  key: 'bookmark',
-                  icon: 'folder',
-                  content: 'Save this message',
-                },
-                {
-                  key: 'linkify',
-                  icon: 'linkify',
-                  content: 'Copy link',
-                },
-                {
-                  key: 'translate',
-                  icon: 'translate',
-                  content: 'Translate',
-                },
+                { key: 'bookmark', icon: 'folder', content: 'Save this message' },
+                { key: 'linkify', icon: 'linkify', content: 'Copy link' },
+                { key: 'translate', icon: 'translate', content: 'Translate' },
               ],
             },
           },
