@@ -1,4 +1,4 @@
-import { Icon, Menu, Tree, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import { Icon, Menu, Tree, Segment, Text, ICSSInJSStyle, Provider } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
@@ -291,6 +291,7 @@ class Sidebar extends React.Component<any, any> {
       fontSize: '0.85714286em',
       fontWeight: 400,
       color: '#ffffff80',
+
       background: '#201f1f',
       ':hover': {
         color: 'white',
@@ -466,21 +467,34 @@ class Sidebar extends React.Component<any, any> {
 
     // TODO: bring back the active elements indicators
     return (
-      <Segment styles={sidebarStyles}>
-        <Segment styles={treeSectionStyles}>
-          <Logo width="32px" styles={logoStyles} />
-          <Text
-            role="heading"
-            aria-level={1}
-            color="white"
-            content="Stardust UI React &nbsp;"
-            styles={logoStyles}
-          />
-          <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
+      <Provider
+        theme={{
+          componentStyles: {
+            TreeTitle: {
+              root: {
+                display: 'block',
+                width: '100%',
+              },
+            },
+          },
+        }}
+      >
+        <Segment styles={sidebarStyles}>
+          <Segment styles={treeSectionStyles}>
+            <Logo width="32px" styles={logoStyles} />
+            <Text
+              role="heading"
+              aria-level={1}
+              color="white"
+              content="Stardust UI React &nbsp;"
+              styles={logoStyles}
+            />
+            <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
+          </Segment>
+          {<Menu vertical fluid pills styles={navBarStyles} items={topMenuItems} />}
+          <Tree defaultActiveIndex={activeCategoryIndex} items={allSections} />
         </Segment>
-        {<Menu vertical fluid pills styles={navBarStyles} items={topMenuItems} />}
-        <Tree defaultActiveIndex={activeCategoryIndex} items={allSections} />
-      </Segment>
+      </Provider>
     )
   }
 }
