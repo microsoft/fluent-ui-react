@@ -1,4 +1,4 @@
-import { Chat, Provider, Avatar } from '@stardust-ui/react'
+import { Chat, Provider, Avatar, ChatMessageProps } from '@stardust-ui/react'
 import * as React from 'react'
 import Popover from './Popover'
 import * as _ from 'lodash'
@@ -28,13 +28,6 @@ const janeAvatar = {
 }
 
 const ChatWithPopover = () => {
-  // TODO improve this: each chat message needs different state for it's action menu close variable
-  const [openCM1, setOpenCM1] = React.useState(false)
-  const [fixedModeCM1, setFixedModeCM1] = React.useState(false)
-
-  const [openCM2, setOpenCM2] = React.useState(false)
-  const [fixedModeCM2, setFixedModeCM2] = React.useState(false)
-
   return (
     <Provider
       theme={{
@@ -88,17 +81,7 @@ const ChatWithPopover = () => {
             key: 'a',
             message: {
               content: (
-                <Chat.Message
-                  actionMenu={
-                    <Popover setFixedMode={setFixedModeCM1} setOpen={val => setOpenCM1(val)} />
-                  }
-                  onMouseEnter={() => setOpenCM1(true)}
-                  onMouseLeave={() => !fixedModeCM1 && setOpenCM1(false)}
-                  onFocus={() => setOpenCM1(true)}
-                  onBlur={() => setOpenCM1(false)}
-                  variables={{
-                    open: openCM1,
-                  }}
+                <TeamsChatMessage
                   author="Jane Doe"
                   content={{
                     content: (
@@ -120,15 +103,7 @@ const ChatWithPopover = () => {
             key: 'b',
             message: {
               content: (
-                <Chat.Message
-                  actionMenu={
-                    <Popover setFixedMode={setFixedModeCM2} setOpen={val => setOpenCM2(val)} />
-                  }
-                  onMouseEnter={() => setOpenCM2(true)}
-                  onMouseLeave={() => !fixedModeCM2 && setOpenCM2(false)}
-                  onFocus={() => setOpenCM2(true)}
-                  onBlur={() => setOpenCM2(false)}
-                  variables={{ open: openCM2 }}
+                <TeamsChatMessage
                   author="Jane Doe"
                   content={{
                     content: (
@@ -149,6 +124,23 @@ const ChatWithPopover = () => {
         ]}
       />
     </Provider>
+  )
+}
+
+const TeamsChatMessage: React.FC<ChatMessageProps> = (props: ChatMessageProps) => {
+  const [open, setOpen] = React.useState(false)
+  const [fixedMode, setFixedMode] = React.useState(false)
+
+  return (
+    <Chat.Message
+      {...props}
+      actionMenu={<Popover setFixedMode={setFixedMode} setOpen={setOpen} />}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => !fixedMode && setOpen(false)}
+      onFocus={() => setOpen(true)}
+      onBlur={() => setOpen(false)}
+      variables={{ open }}
+    />
   )
 }
 
