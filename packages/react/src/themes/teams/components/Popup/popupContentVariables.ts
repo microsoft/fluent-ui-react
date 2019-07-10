@@ -4,6 +4,9 @@ export interface PopupContentVariables {
   borderColor: string
   borderRadius: string
   borderSize: string
+
+  boxShadow: string
+
   padding: string
 
   pointerMargin: string
@@ -13,9 +16,12 @@ export interface PopupContentVariables {
 
 export default (siteVars: any): PopupContentVariables => {
   return {
-    borderColor: siteVars.colors.grey[250],
+    borderColor: siteVars.colorScheme.default.border2,
     borderRadius: pxToRem(3),
     borderSize: '1px',
+
+    boxShadow: siteVars.shadowLevel3,
+
     padding: `${pxToRem(10)} ${pxToRem(14)}`,
 
     pointerOffset: pxToRem(5),
