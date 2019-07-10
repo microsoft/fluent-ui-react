@@ -4,6 +4,7 @@ import Types from './Types'
 import Slots from './Slots'
 import States from './States'
 import Variations from './Variations'
+import Usage from './Usage'
 
 const SliderExamples = () => (
   <>
@@ -11,6 +12,7 @@ const SliderExamples = () => (
     <Slots />
     <States />
     <Variations />
+    <Usage />
   </>
 )
 
