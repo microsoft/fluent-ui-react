@@ -136,6 +136,33 @@ class Sidebar extends React.Component<any, any> {
     return -1
   }
 
+  keyUpCallback(e) {
+    if (e.key !== 'Enter') {
+      return
+    }
+    e.target.click()
+  }
+
+  addItemKeyCallbacks(sections: ShorthandValue<any>[]) {
+    let i
+    for (i = 0; i < sections.length; i++) {
+      const category = sections[i]
+      if (!('items' in category)) {
+        continue
+      }
+      let j
+      for (j = 0; j < category.items.length; j++) {
+        const item = category.items[j]
+        if (!('title' in item)) {
+          continue
+        }
+        item['onKeyUp'] = e => {
+          this.keyUpCallback(e)
+        }
+      }
+    }
+  }
+
   getTreeItems(menuSectionStyles, menuItemStyles, dividerStyles): ShorthandValue[] {
     return [
       {
@@ -456,6 +483,7 @@ class Sidebar extends React.Component<any, any> {
 
     const at = this.props.location.pathname
     const activeCategoryIndex = this.getActiveCategoryIndex(at, allSections)
+    this.addItemKeyCallbacks(allSections)
 
     // TODO: bring back the active elements indicators
     return (
