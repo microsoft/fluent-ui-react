@@ -132,6 +132,8 @@ const TeamsChatMessage: React.FC<ChatMessageProps> = (props: ChatMessageProps) =
   const [forceShowActionMenu, setForceShowActionMenu] = React.useState(false)
   const [chatMessageRef, setChatMessageRef] = React.useState<HTMLElement>(null)
 
+  const handleBlur = e => !e.currentTarget.contains(e.relatedTarget) && setShowActionMenu(false)
+
   return (
     <Ref innerRef={setChatMessageRef}>
       <Chat.Message
@@ -146,7 +148,7 @@ const TeamsChatMessage: React.FC<ChatMessageProps> = (props: ChatMessageProps) =
         onMouseEnter={() => setShowActionMenu(true)}
         onMouseLeave={() => !forceShowActionMenu && setShowActionMenu(false)}
         onFocus={() => setShowActionMenu(true)}
-        onBlur={() => setShowActionMenu(false)}
+        onBlur={handleBlur}
         variables={{ showActionMenu }}
       />
     </Ref>
