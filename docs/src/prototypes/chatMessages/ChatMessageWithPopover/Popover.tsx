@@ -6,7 +6,7 @@ export interface PopoverProps {
   className?: string
   setFixedMode?: (val: boolean) => void
   setOpen?: (val: boolean) => void
-  chatMessageRef?: React.RefObject<HTMLElement>
+  chatMessageRef?: HTMLElement
 }
 
 interface PopoverState {
@@ -50,7 +50,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             'aria-label': 'smile one',
             onClick: () => {
               setOpen(false)
-              chatMessageRef.current.focus()
+              chatMessageRef.focus()
             },
           },
           {
@@ -60,7 +60,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             'aria-label': 'smile two',
             onClick: () => {
               setOpen(false)
-              chatMessageRef.current.focus()
+              chatMessageRef.focus()
             },
           },
           {
@@ -70,7 +70,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             'aria-label': 'smile three',
             onClick: () => {
               setOpen(false)
-              chatMessageRef.current.focus()
+              chatMessageRef.focus()
             },
           },
           {
@@ -79,7 +79,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             'aria-label': 'thumbs up',
             onClick: () => {
               setOpen(false)
-              chatMessageRef.current.focus()
+              chatMessageRef.focus()
             },
           },
           {
