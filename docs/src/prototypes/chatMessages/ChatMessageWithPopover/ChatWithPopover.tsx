@@ -2,6 +2,7 @@ import { Chat, Provider, Avatar, ChatMessageProps } from '@stardust-ui/react'
 import * as React from 'react'
 import Popover from './Popover'
 import ReactionPopup from './ReactionPopup'
+import { Ref } from '@stardust-ui/react-component-ref'
 
 const reactions = [
   {
@@ -126,21 +127,41 @@ const ChatWithPopover = () => {
   )
 }
 
-const TeamsChatMessage: React.FC<ChatMessageProps> = (props: ChatMessageProps) => {
-  const [showActionMenu, setShowActionMenu] = React.useState(false)
-  const [forceShowActionMenu, setForceShowActionMenu] = React.useState(false)
+interface TeamsChatMessageState {
+  showActionMenu: boolean
+  forceShowActionMenu: boolean
+}
 
-  return (
-    <Chat.Message
-      {...props}
-      actionMenu={<Popover setFixedMode={setForceShowActionMenu} setOpen={setShowActionMenu} />}
-      onMouseEnter={() => setShowActionMenu(true)}
-      onMouseLeave={() => !forceShowActionMenu && setShowActionMenu(false)}
-      onFocus={() => setShowActionMenu(true)}
-      onBlur={() => setShowActionMenu(false)}
-      variables={{ showActionMenu }}
-    />
-  )
+class TeamsChatMessage extends React.Component<ChatMessageProps, TeamsChatMessageState> {
+  state = {
+    showActionMenu: false,
+    forceShowActionMenu: false,
+  }
+  chatMessageRef = React.createRef<HTMLElement>()
+
+  render() {
+    return (
+      <Ref innerRef={this.chatMessageRef}>
+        <Chat.Message
+          {...this.props}
+          actionMenu={
+            <Popover
+              chatMessageRef={this.chatMessageRef}
+              setFixedMode={val => this.setState({ forceShowActionMenu: val })}
+              setOpen={val => this.setState({ showActionMenu: val })}
+            />
+          }
+          onMouseEnter={() => this.setState({ showActionMenu: true })}
+          onMouseLeave={() =>
+            !this.state.forceShowActionMenu && this.setState({ showActionMenu: false })
+          }
+          onFocus={() => this.setState({ showActionMenu: true })}
+          onBlur={() => this.setState({ showActionMenu: false })}
+          variables={{ showActionMenu: this.state.showActionMenu }}
+        />
+      </Ref>
+    )
+  }
 }
 
 export default ChatWithPopover

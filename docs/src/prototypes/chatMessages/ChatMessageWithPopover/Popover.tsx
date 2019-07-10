@@ -4,8 +4,9 @@ import cx from 'classnames'
 
 export interface PopoverProps {
   className?: string
-  setFixedMode?: React.Dispatch<React.SetStateAction<boolean>>
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>
+  setFixedMode?: (val: boolean) => void
+  setOpen?: (val: boolean) => void
+  chatMessageRef?: React.RefObject<HTMLElement>
 }
 
 interface PopoverState {
@@ -34,7 +35,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   }
 
   render() {
-    const { setOpen, setFixedMode, ...rest } = this.props
+    const { setOpen, chatMessageRef, setFixedMode, ...rest } = this.props
     return (
       <Menu
         {...rest}
@@ -47,27 +48,39 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile one',
-            onClick: () => setOpen(false),
+            onClick: () => {
+              setOpen(false)
+              chatMessageRef.current.focus()
+            },
           },
           {
             key: 'smile2',
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile two',
-            onClick: () => setOpen(false),
+            onClick: () => {
+              setOpen(false)
+              chatMessageRef.current.focus()
+            },
           },
           {
             key: 'smile3',
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile three',
-            onClick: () => setOpen(false),
+            onClick: () => {
+              setOpen(false)
+              chatMessageRef.current.focus()
+            },
           },
           {
             key: 'a',
             icon: 'thumbs up',
             'aria-label': 'thumbs up',
-            onClick: () => setOpen(false),
+            onClick: () => {
+              setOpen(false)
+              chatMessageRef.current.focus()
+            },
           },
           {
             key: 'c',
