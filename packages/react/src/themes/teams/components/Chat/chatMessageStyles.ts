@@ -73,12 +73,15 @@ const chatMessageStyles: ComponentSlotStylesInput<
     position: 'absolute',
     right: v.actionMenuPositionRight,
     top: v.actionMenuPositionTop,
-    overflow: p.focused ? 'visible' : 'hidden',
+
+    // TODO check if visibility css prop can be used
+    overflow: 'hidden',
     opacity: 0,
     width: 0,
     ...(v.actionMenuOpened && {
       opacity: 1,
       width: 'auto',
+      overflow: 'visible',
     }),
   }),
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({

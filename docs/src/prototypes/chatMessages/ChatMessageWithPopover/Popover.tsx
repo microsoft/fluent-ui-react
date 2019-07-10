@@ -73,7 +73,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             key: 'c',
             icon: 'ellipsis horizontal',
             onMenuOpenChange: (e, { menuOpen }) => {
-              setOpen(menuOpen)
+              setOpen(true)
               setFixedMode(menuOpen)
             },
             'aria-label': 'more options',
