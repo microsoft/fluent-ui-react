@@ -8,8 +8,14 @@ export default (siteVars: SiteVariablesPrepared): SliderVariables => {
   const { colorScheme } = siteVars
 
   return {
-    height: pxToRem(16),
+    heightDEP: pxToRem(16),
+    height: pxToRem(2),
     length: pxToRem(130),
+
+    color: colorScheme.brand.foregroundActive,
+    colorRight: colorScheme.default.border,
+    disabledColor: colorScheme.default.foregroundDisabled1,
+    disabledColorRight: colorScheme.default.backgroundDisabled1,
 
     iconColor: colorScheme.default.foreground1,
     disabledIconColor: colorScheme.default.foregroundDisabled1,
@@ -24,11 +30,5 @@ export default (siteVars: SiteVariablesPrepared): SliderVariables => {
     thumbBorderPadding: pxToRem(4),
     thumbWidth: pxToRem(10),
     activeThumbWidth: pxToRem(14),
-
-    trackColor: colorScheme.brand.foregroundActive,
-    trackColorRight: colorScheme.default.border,
-    disabledTrackColor: colorScheme.default.foregroundDisabled1,
-    disabledTrackColorRight: colorScheme.default.backgroundDisabled1,
-    trackWidth: pxToRem(2),
   }
 }

@@ -8,11 +8,11 @@ const getTrackStyles = (p: SliderProps, v: SliderVariables, type: 'rail' | 'trac
   pointerEvents: 'none',
   position: 'absolute',
   border: 0,
-  height: v.trackWidth,
-  ...(type === 'rail' && { width: '100%', background: v.trackColorRight }),
-  ...(type === 'track' && { background: v.trackColor }),
-  ...(p.disabled && type === 'rail' && { background: v.disabledTrackColorRight }),
-  ...(p.disabled && type === 'track' && { background: v.disabledTrackColor }),
+  height: v.height,
+  ...(type === 'rail' && { width: '100%', background: v.colorRight }),
+  ...(type === 'track' && { background: v.color }),
+  ...(p.disabled && type === 'rail' && { background: v.disabledColorRight }),
+  ...(p.disabled && type === 'track' && { background: v.disabledColor }),
 })
 
 const getFluidStyles = (p: SliderProps) => p.fluid && !p.vertical && { width: '100%' }
@@ -81,7 +81,7 @@ const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVa
       position: 'relative',
       display: 'flex',
       alignItems: 'center',
-      height: v.height,
+      height: v.heightDEP,
       width: v.length,
       ...(p.vertical && {
         transform: 'rotate(-90deg)',
@@ -92,10 +92,10 @@ const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVa
   },
 
   sliderWrapper: ({ props: p, variables: v }) => ({
-    height: v.height,
+    height: v.heightDEP,
     ...(p.vertical && {
       height: v.length,
-      width: v.height,
+      width: v.heightDEP,
     }),
     ...getFluidStyles(p),
   }),
