@@ -97,7 +97,5 @@ Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name' })
 
 /**
  * An icon is a glyph used to represent something else.
- * @accessibility
- * Don't use as a replacement for actionable component - use Button text variant with an icon instead.
  */
 export default withSafeTypeForAs<typeof Icon, IconProps, 'span'>(Icon)
