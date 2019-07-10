@@ -34,8 +34,15 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     this.setState({ focused: e.currentTarget.contains(e.relatedTarget) })
   }
 
+  handleActionableItemClick = e => {
+    const { setOpen, chatMessageRef } = this.props
+    setOpen(false)
+    e.type === 'keydown' && chatMessageRef && chatMessageRef.focus()
+  }
+
   render() {
-    const { setOpen, chatMessageRef, setFixedMode, ...rest } = this.props
+    const { setOpen, setFixedMode, ...rest } = this.props
+    delete rest.chatMessageRef
     return (
       <Menu
         {...rest}
@@ -48,39 +55,27 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile one',
-            onClick: () => {
-              setOpen(false)
-              chatMessageRef.focus()
-            },
+            onClick: this.handleActionableItemClick,
           },
           {
             key: 'smile2',
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile two',
-            onClick: () => {
-              setOpen(false)
-              chatMessageRef.focus()
-            },
+            onClick: this.handleActionableItemClick,
           },
           {
             key: 'smile3',
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile three',
-            onClick: () => {
-              setOpen(false)
-              chatMessageRef.focus()
-            },
+            onClick: this.handleActionableItemClick,
           },
           {
             key: 'a',
             icon: 'thumbs up',
             'aria-label': 'thumbs up',
-            onClick: () => {
-              setOpen(false)
-              chatMessageRef.focus()
-            },
+            onClick: this.handleActionableItemClick,
           },
           {
             key: 'c',
