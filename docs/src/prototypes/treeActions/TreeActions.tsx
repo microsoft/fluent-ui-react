@@ -1,14 +1,6 @@
 import * as React from 'react'
 import keyboardKey from 'keyboard-key'
-import {
-  Tree,
-  ItemLayout,
-  Image,
-  ContextMenu,
-  Menu,
-  TreeTitle,
-  menuAsToolbarBehavior,
-} from '@stardust-ui/react'
+import { Tree, ItemLayout, Image, ContextMenu, TreeTitle, Toolbar } from '@stardust-ui/react'
 
 const itemMenu = { items: ['Add', 'Remove'] }
 const titleMenu = { items: ['All'] }
@@ -28,14 +20,7 @@ const title = name => ({
   content: (
     <ItemLayout
       header={name}
-      headerMedia={
-        <Menu
-          iconOnly
-          accessibility={menuAsToolbarBehavior}
-          items={['All']}
-          onKeyDown={handleToolbarKeyDown}
-        />
-      }
+      headerMedia={<Toolbar items={['All']} onKeyDown={handleToolbarKeyDown} />}
     />
   ),
 })
@@ -47,12 +32,7 @@ const item = (name, img) => ({
       media={<Image src={`public/images/avatar/small/${images[img]}`} avatar />}
       header={name}
       headerMedia={
-        <Menu
-          iconOnly
-          accessibility={menuAsToolbarBehavior}
-          onKeyDown={handleToolbarKeyDown}
-          items={[{ icon: 'plus' }, { icon: 'delete' }]}
-        />
+        <Toolbar onKeyDown={handleToolbarKeyDown} items={[{ icon: 'plus' }, { icon: 'delete' }]} />
       }
     />
   ),
@@ -61,7 +41,7 @@ const item = (name, img) => ({
 const handleItemKeyDown = e => {
   const code = keyboardKey.getCode(e)
   if (code === keyboardKey.ArrowRight) {
-    e.currentTarget.querySelector(`.${Menu.Item.className}`).focus()
+    e.currentTarget.querySelector(`.${Toolbar.Item.className}`).focus()
   }
 }
 
