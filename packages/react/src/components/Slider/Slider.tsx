@@ -14,6 +14,7 @@ import {
   partitionHTMLProps,
   UIComponentProps,
   RenderResultConfig,
+  setWhatInputSource,
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
@@ -186,14 +187,15 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
     this.trySetState({ value })
   }
 
-  handleBlur = (e: React.FocusEvent) => {
-    this.setState({ isFromKeyboard: false })
-    _.invoke(this.props, 'onBlur', e, this.props)
-  }
-
   handleFocus = (e: React.FocusEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
     _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
+  handleMouseDown = (e: React.FocusEvent) => {
+    setWhatInputSource('mouse')
+    this.setState({ isFromKeyboard: false })
+    _.invoke(this.props, 'onMouseDown', e, this.props)
   }
 
   renderIcon = (variables: ComponentVariablesObject, styles: ComponentSlotStylesPrepared) => {
@@ -233,6 +235,7 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {iconPosition === 'start' && this.renderIcon(variables, styles)}
+        {/* we need 2 wrappers around the slider rail, track, input and thumb slots to achieve correct component sizes */}
         <div className={cx(Slider.slotClassNames.sliderWrapper, classes.sliderWrapper)}>
           <div className={cx(Slider.slotClassNames.slider, classes.slider)}>
             <span className={cx(Slider.slotClassNames.rail, classes.rail)} />
@@ -258,13 +261,14 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
                   type,
                   value,
                   onChange: this.handleChange,
-                  onBlur: this.handleBlur,
                   onFocus: this.handleFocus,
+                  onMouseDown: this.handleMouseDown,
                   styles: styles.input,
                   ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
                 },
               })}
             </Ref>
+            {/* the thumb slot needs to appear after the input slot */}
             <span
               className={cx(Slider.slotClassNames.thumb, classes.thumb)}
               style={{ left: valueAsPercentage }}

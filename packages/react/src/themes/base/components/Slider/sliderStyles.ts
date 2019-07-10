@@ -3,16 +3,18 @@ import { SliderProps, SliderState } from '../../../../components/Slider/Slider'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { selectors } from '../../../../styles/selectors'
 
-const getTrackStyles = (p: SliderProps, v: SliderVariables, type: 'rail' | 'track') => ({
+const getSliderSlotStyles = (p: SliderProps, v: SliderVariables, slot: 'rail' | 'track') => ({
   cursor: 'pointer',
   pointerEvents: 'none',
   position: 'absolute',
   border: 0,
-  height: v.trackWidth,
-  ...(type === 'rail' && { width: '100%', background: v.trackColorRight }),
-  ...(type === 'track' && { background: v.trackColor }),
-  ...(p.disabled && type === 'rail' && { background: v.disabledTrackColorRight }),
-  ...(p.disabled && type === 'track' && { background: v.disabledTrackColor }),
+  height: v.railHeight,
+  marginTop: `calc(${v.height} / 2 - ${v.railHeight} / 2)`,
+
+  ...(slot === 'rail' && { width: '100%', background: v.railColor }),
+  ...(slot === 'track' && { background: v.trackColor }),
+  ...(p.disabled && slot === 'rail' && { background: v.disabledRailColor }),
+  ...(p.disabled && slot === 'track' && { background: v.disabledTrackColor }),
 })
 
 const getFluidStyles = (p: SliderProps) => p.fluid && !p.vertical && { width: '100%' }
@@ -47,7 +49,6 @@ const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVa
 
     return {
       '-webkit-appearance': 'none',
-      backgroundColor: 'transparent',
       cursor: 'pointer',
       height: '100%',
       width: '100%',
@@ -73,14 +74,13 @@ const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVa
     }
   },
 
-  rail: ({ props, variables }) => getTrackStyles(props, variables, 'rail'),
+  rail: ({ props, variables }) => getSliderSlotStyles(props, variables, 'rail'),
 
   slider: ({ props: p, variables: v }) => {
     const transformOriginValue = `calc(${v.length} / 2)`
     return {
       position: 'relative',
-      display: 'flex',
-      alignItems: 'center',
+      display: 'inline-block',
       height: v.height,
       width: v.length,
       ...(p.vertical && {
@@ -100,7 +100,7 @@ const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVa
     ...getFluidStyles(p),
   }),
 
-  track: ({ props, variables }) => getTrackStyles(props, variables, 'track'),
+  track: ({ props, variables }) => getSliderSlotStyles(props, variables, 'track'),
 
   thumb: ({ props: p, variables: v }) => ({
     border: 0,
@@ -112,6 +112,7 @@ const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVa
     background: v.thumbColor,
     height: v.thumbHeight,
     width: v.thumbWidth,
+    marginTop: `calc(${v.height} / 2  - ${v.thumbHeight} / 2)`,
     marginLeft: `calc(-${v.thumbWidth} / 2)`,
 
     ...(p.disabled && { background: v.disabledThumbColor }),

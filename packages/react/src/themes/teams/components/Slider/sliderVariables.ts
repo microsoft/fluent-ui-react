@@ -9,12 +9,16 @@ export default (siteVars: SiteVariablesPrepared): SliderVariables => {
 
   return {
     height: pxToRem(16),
-    length: pxToRem(130),
+    length: pxToRem(320),
 
     iconColor: colorScheme.default.foreground1,
     disabledIconColor: colorScheme.default.foregroundDisabled1,
     iconSize: pxToRem(16),
     iconSpace: pxToRem(12),
+
+    railColor: colorScheme.default.border,
+    disabledRailColor: colorScheme.default.backgroundDisabled1,
+    railHeight: pxToRem(2),
 
     thumbColor: colorScheme.default.foreground2,
     activeThumbColor: colorScheme.default.foreground1,
@@ -26,9 +30,6 @@ export default (siteVars: SiteVariablesPrepared): SliderVariables => {
     activeThumbWidth: pxToRem(14),
 
     trackColor: colorScheme.brand.foregroundActive,
-    trackColorRight: colorScheme.default.border,
     disabledTrackColor: colorScheme.default.foregroundDisabled1,
-    disabledTrackColorRight: colorScheme.default.backgroundDisabled1,
-    trackWidth: pxToRem(2),
   }
 }
