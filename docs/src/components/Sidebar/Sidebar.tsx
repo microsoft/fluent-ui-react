@@ -255,6 +255,34 @@ class Sidebar extends React.Component<any, any> {
       // },
     ]
   }
+  getPrototypesGivenEnvironment(allPrototypes) {
+    if (process.env.NODE_ENV !== 'production') {
+      return allPrototypes
+    }
+    return allPrototypes.filter(p => p.public)
+  }
+
+  getSectionsWithPrototypeSectionIfApplicable(currentSections, allPrototypes, treeSectionStyles) {
+    let prototypes = this.getPrototypesGivenEnvironment(allPrototypes)
+    if (prototypes.length === 0) {
+      return currentSections
+    }
+    prototypes = this.removePublicTags(prototypes)
+    const prototypeTreeSection = {
+      key: 'prototypes',
+      title: 'Prototypes',
+      styles: treeSectionStyles,
+      items: prototypes,
+    }
+    return currentSections.concat(prototypeTreeSection)
+  }
+
+  removePublicTags(prototyptesTreeItems) {
+    return prototyptesTreeItems.map(p => {
+      delete p.public
+      return p
+    })
+  }
 
   render() {
     // Should be applied by provider
@@ -360,78 +388,81 @@ class Sidebar extends React.Component<any, any> {
         key: 'chatpane',
         title: { content: 'Chat Pane', as: NavLink, to: '/prototype-chat-pane' },
         styles: treeItemStyles,
+        public: false,
       },
       {
         key: 'chatMssages',
         title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
         styles: treeItemStyles,
+        public: false,
       },
       {
         key: 'customtoolbar',
         title: { content: 'Custom Styled Toolbar', as: NavLink, to: '/prototype-custom-toolbar' },
         styles: treeItemStyles,
+        public: true,
       },
       {
         key: 'dropdowns',
         title: { content: 'Dropdowns', as: NavLink, to: '/prototype-dropdowns' },
         styles: treeItemStyles,
+        public: false,
       },
       {
         key: 'alerts',
         title: { content: 'Alerts', as: NavLink, to: '/prototype-alerts' },
         styles: treeItemStyles,
+        public: false,
       },
       {
         key: 'asyncshorthand',
         title: { content: 'Async Shorthand', as: NavLink, to: '/prototype-async-shorthand' },
         styles: treeItemStyles,
+        public: false,
       },
       {
         key: 'employeecard',
         title: { content: 'Employee Card', as: NavLink, to: '/prototype-employee-card' },
         styles: treeItemStyles,
+        public: false,
       },
       {
         key: 'meetingoptions',
         title: { content: 'Meeting Options', as: NavLink, to: '/prototype-meeting-options' },
         styles: treeItemStyles,
+        public: false,
       },
       {
         key: 'mentions',
         title: { content: 'Mentions', as: NavLink, to: '/prototype-mentions' },
         styles: treeItemStyles,
+        public: false,
       },
       {
         key: 'searchpage',
         title: { content: 'Search Page', as: NavLink, to: '/prototype-search-page' },
         styles: treeItemStyles,
+        public: false,
       },
       {
         key: 'popups',
         title: { content: 'Popups', as: NavLink, to: '/prototype-popups' },
         styles: treeItemStyles,
+        public: false,
       },
       {
         key: 'iconviewer',
         title: { content: 'Processed Icons', as: NavLink, to: '/icon-viewer' },
         styles: treeItemStyles,
+        public: false,
       },
       {
         key: 'menu-button',
         title: { content: 'MenuButton', as: NavLink, to: '/menu-button' },
         styles: treeItemStyles,
+        public: false,
       },
     ]
-
-    const prototypeTreeSection = {
-      key: 'prototypes',
-      title: 'Prototypes',
-      styles: treeSectionStyles,
-      items: prototypesTreeItems,
-    }
-
-    const withPrototypes =
-      process.env.NODE_ENV !== 'production' ? treeItems.concat(prototypeTreeSection) : treeItems
 
     const componentTreeSection = {
       key: 'components',
@@ -446,8 +477,13 @@ class Sidebar extends React.Component<any, any> {
       items: treeItemsByType[1].items,
     }
 
-    const withComponents = withPrototypes.concat(componentTreeSection)
-    const allSections = withComponents.concat(behaviorTreeSection)
+    const withComponents = treeItems.concat(componentTreeSection)
+    const withBehaviors = withComponents.concat(behaviorTreeSection)
+    const allSections = this.getSectionsWithPrototypeSectionIfApplicable(
+      withBehaviors,
+      prototypesTreeItems,
+      treeSectionStyles,
+    )
 
     const at = this.props.location.pathname
     const activeCategoryIndex = this.getActiveCategoryIndex(at, allSections)
