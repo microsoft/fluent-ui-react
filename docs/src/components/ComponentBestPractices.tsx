@@ -29,7 +29,6 @@ const ComponentBestPractices: React.FC<ComponentBestPracticesProps> = ({ doList,
         content: element,
         media: <Icon name="close" styles={{ color: 'red' }} />,
       })
-      // element.media = <Icon name="close" styles={{ color: 'red' }} />
     })
   }
   return (
