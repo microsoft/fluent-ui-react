@@ -163,7 +163,7 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  getTreeItems(treeSectionStyles, treeItemStyles, dividerStyles): ShorthandValue[] {
+  getTreeItems(treeSectionStyles, treeItemStyles): ShorthandValue[] {
     return [
       {
         key: 'concepts',
@@ -186,11 +186,6 @@ class Sidebar extends React.Component<any, any> {
             styles: treeItemStyles,
           },
         ],
-      },
-      {
-        key: 'divider2',
-        kind: 'divider',
-        styles: dividerStyles,
       },
       {
         key: 'guides',
@@ -242,11 +237,6 @@ class Sidebar extends React.Component<any, any> {
             styles: treeItemStyles,
           },
         ],
-      },
-      {
-        key: 'divider3',
-        kind: 'divider',
-        styles: dividerStyles,
       },
       // TODO: to re-enable the search input - will modify the list of the components depending on the search results
       // {query ? this.renderSearchItems() : this.menuItemsByType},
@@ -379,7 +369,7 @@ class Sidebar extends React.Component<any, any> {
       },
     ]
 
-    const treeItems = this.getTreeItems(treeSectionStyles, treeItemStyles, dividerStyles)
+    const treeItems = this.getTreeItems(treeSectionStyles, treeItemStyles)
 
     const prototypesTreeItems: ShorthandValue[] = [
       {
@@ -442,11 +432,6 @@ class Sidebar extends React.Component<any, any> {
         title: { content: 'MenuButton', as: NavLink, to: '/menu-button' },
         styles: treeItemStyles,
       },
-      {
-        key: 'divider4',
-        kind: 'divider',
-        styles: dividerStyles,
-      },
     ]
 
     const prototypeTreeSection = {
@@ -473,13 +458,7 @@ class Sidebar extends React.Component<any, any> {
     }
 
     const withComponents = withPrototypes.concat(componentTreeSection)
-    const allSections = withComponents
-      .concat({
-        key: 'divider5',
-        kind: 'divider',
-        styles: dividerStyles,
-      })
-      .concat(behaviorTreeSection)
+    const allSections = withComponents.concat(behaviorTreeSection)
 
     const at = this.props.location.pathname
     const activeCategoryIndex = this.getActiveCategoryIndex(at, allSections)
