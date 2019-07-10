@@ -7,6 +7,7 @@ import DocsRoot from './components/DocsRoot'
 import MarkdownPage from 'docs/src/components/MarkdownPage'
 
 import * as Composition from './pages/Composition.mdx'
+import * as Layout from './pages/Layout.mdx'
 import Accessibility from './views/Accessibility'
 import Colors from './views/Colors'
 import ColorPalette from './views/ColorPalette'
@@ -19,7 +20,6 @@ import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
 import Theming from './views/Theming'
 import ThemingExamples from './views/ThemingExamples'
-import LayoutGuide from './views/Layout'
 import IntegrateCustomComponents from './views/IntegrateCustomComponents'
 import AccessibilityBehaviors from './views/AccessibilityBehaviors'
 import FocusZone from './views/FocusZone'
@@ -126,7 +126,9 @@ const Router = () => (
           <Route exact path="/auto-focus-zone" component={AutoFocusZone} />
           <Route exact path="/theming" component={Theming} />
           <Route exact path="/theming-examples" component={ThemingExamples} />
-          <Route exact path="/layout" component={LayoutGuide} />
+          <Route exact path="/layout">
+            <MarkdownPage page={Layout} />
+          </Route>
           <Route exact path="/shorthand-props" component={ShorthandProps} />
           <Route exact path="/integrate-custom-components" component={IntegrateCustomComponents} />
           <Route exact path="/composition">
