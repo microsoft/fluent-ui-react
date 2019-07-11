@@ -14,7 +14,7 @@ import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
 
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
-type NestingThemesVariables = {
+type ThemingExamplesVariables = {
   primaryBackgroundColor: string
 }
 
@@ -369,7 +369,7 @@ export default () => (
                   root: ({
                     variables: v,
                     props: p,
-                  }: ComponentStyleFunctionParam<any, NestingThemesVariables>) => ({
+                  }: ComponentStyleFunctionParam<any, ThemingExamplesVariables>) => ({
                     ...(p.primary && {
                       background: v.primaryBackgroundColor,
                     }),
