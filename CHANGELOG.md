@@ -38,6 +38,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Removed obsolete `play-sound-mute` icon from Teams theme @amramornov-ms ([#1598](https://github.com/stardust-ui/react/pull/1598))
 - Add svg pointing beak to the `Tooltip` component in Teams theme @mnajdova ([#1580](https://github.com/stardust-ui/react/pull/1580))
 - Add new values to the `brand`, `onyx` colors and `background4` token for default and brand color schemes in Teams theme @mnajdova ([#1581](https://github.com/stardust-ui/react/pull/1581))
+- Add additional logic for showing/hiding the `actionMenu` inside the `ChatMessage` in Teams theme, based on a variable @mnajdova ([#1590](https://github.com/stardust-ui/react/pull/1590))
 
 ### Documentation
 - Ensure docs content doesn't overlap with sidebar @kuzhelov ([#1568](https://github.com/stardust-ui/react/pull/1568))
@@ -45,9 +46,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add prototype for Custom Styled Toolbar @miroslavstastny ([#1541](https://github.com/stardust-ui/react/pull/1541))
 - Add Best Practices section for each component @alinais ([#1550](https://github.com/stardust-ui/react/pull/1550))
 - Update `Layout` guide @layershifter ([#1595](https://github.com/stardust-ui/react/pull/1595))
-
-### BREAKING CHANGES
-- Changed condition for showing the `actionMenu` inside the `ChatMessage` in Teams theme @mnajdova ([#1590](https://github.com/stardust-ui/react/pull/1590))
 
 <!--------------------------------[ v0.34.0 ]------------------------------- -->
 ## [v0.34.0](https://github.com/stardust-ui/react/tree/v0.34.0) (2019-06-26)

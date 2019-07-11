@@ -1,5 +1,9 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { ChatMessageProps, ChatMessageState } from '../../../../components/Chat/ChatMessage'
+import {
+  default as ChatMessage,
+  ChatMessageProps,
+  ChatMessageState,
+} from '../../../../components/Chat/ChatMessage'
 import { ChatMessageVariables } from './chatMessageVariables'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../lib'
@@ -48,6 +52,16 @@ const chatMessageStyles: ComponentSlotStylesInput<
     }),
 
     ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard }),
+
+    ...(v.showActionMenu === undefined && {
+      ':hover': {
+        [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
+          opacity: 1,
+          width: 'auto',
+        },
+      },
+    }),
+
     ...(p.attached === true && {
       [p.mine ? 'borderTopRightRadius' : 'borderTopLeftRadius']: 0,
       [p.mine ? 'borderBottomRightRadius' : 'borderBottomLeftRadius']: 0,
@@ -72,9 +86,18 @@ const chatMessageStyles: ComponentSlotStylesInput<
     right: v.actionMenuPositionRight,
     top: v.actionMenuPositionTop,
 
-    visibility: 'hidden',
-    ...(v.showActionMenu && {
-      visibility: 'visible',
+    ...(v.showActionMenu === undefined && {
+      overflow: p.focused ? 'visible' : 'hidden',
+      // hide and squash actions menu to prevent accidental hovers over its invisible area
+      opacity: p.focused ? 1 : 0,
+      width: p.focused ? 'auto' : 0,
+    }),
+
+    ...(v.showActionMenu !== undefined && {
+      visibility: 'hidden',
+      ...(v.showActionMenu && {
+        visibility: 'visible',
+      }),
     }),
   }),
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
