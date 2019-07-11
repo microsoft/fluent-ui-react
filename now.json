@@ -9,7 +9,8 @@
     }
   ],
   "github": {
-    "autoJobCancelation": true
+    "autoJobCancelation": true,
+    "silent": true
   },
   "public": true,
   "routes": [
