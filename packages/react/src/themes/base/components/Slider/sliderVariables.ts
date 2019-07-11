@@ -5,11 +5,6 @@ export interface SliderVariables {
   height: React.CSSProperties['height']
   length: React.CSSProperties['width']
 
-  iconColor: React.CSSProperties['color']
-  disabledIconColor: React.CSSProperties['color']
-  iconSize: string
-  iconSpace: string
-
   railColor: React.CSSProperties['color']
   railHeight: React.CSSProperties['width']
   disabledRailColor: React.CSSProperties['color']
@@ -33,11 +28,6 @@ export default (siteVars: SiteVariablesPrepared): SliderVariables => {
   return {
     height: pxToRem(16),
     length: pxToRem(130),
-
-    iconColor: colors.grey[700],
-    disabledIconColor: colors.grey[200],
-    iconSize: pxToRem(16),
-    iconSpace: pxToRem(12),
 
     railColor: colors.grey[300],
     disabledRailColor: colors.grey[200],

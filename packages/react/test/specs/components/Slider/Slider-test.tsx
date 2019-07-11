@@ -2,9 +2,8 @@ import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 
 import { mountWithProvider as mount } from 'test/utils'
-import { isConformant, implementsShorthandProp, handlesAccessibility } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import Slider from 'src/components/Slider/Slider'
-import Icon from 'src/components/Icon/Icon'
 
 const testValue = '30'
 const getInputDomNode = (sliderComp: ReactWrapper): HTMLInputElement =>
@@ -13,8 +12,6 @@ const getInputDomNode = (sliderComp: ReactWrapper): HTMLInputElement =>
 const setUserInputValue = (sliderComp: ReactWrapper, value: string) => {
   sliderComp.find('input').simulate('change', { target: { value } })
 }
-
-const sliderImplementsShorthandProp = implementsShorthandProp(Slider)
 
 describe('Slider', () => {
   describe('conformance', () => {
@@ -27,8 +24,6 @@ describe('Slider', () => {
       },
     })
   })
-
-  sliderImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })
 
   describe('auto-controlled', () => {
     it('sets slider value from user when the value prop is not set (non-controlled mode)', () => {

@@ -21,27 +21,11 @@ const getFluidStyles = (p: SliderProps) => p.fluid && !p.vertical && { width: '1
 
 const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    position: 'relative',
-    display: 'inline-flex',
-    alignItems: 'center',
+    height: v.height,
 
-    ...(p.vertical && { flexDirection: 'column' }),
     ...(p.disabled && { pointerEvents: 'none' }),
+    ...(p.vertical && { height: v.length, width: v.height }),
     ...getFluidStyles(p),
-  }),
-
-  icon: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    cursor: 'pointer',
-
-    color: v.iconColor,
-    width: v.iconSize,
-    height: v.iconSize,
-
-    ...(p.vertical && p.iconPosition === 'start' && { marginBottom: v.iconSpace }),
-    ...(p.vertical && p.iconPosition !== 'start' && { marginTop: v.iconSpace }),
-    ...(!p.vertical && p.iconPosition === 'start' && { marginRight: v.iconSpace }),
-    ...(!p.vertical && p.iconPosition !== 'start' && { marginLeft: v.iconSpace }),
-    ...(p.disabled && { background: v.disabledIconColor }),
   }),
 
   input: ({ props: p, variables: v }) => {
@@ -68,10 +52,9 @@ const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVa
     }
   },
 
-  rail: ({ props, variables }) => getSliderSlotStyles(props, variables, 'rail'),
-
-  slider: ({ props: p, variables: v }) => {
+  inputWrapper: ({ props: p, variables: v }) => {
     const transformOriginValue = `calc(${v.length} / 2)`
+
     return {
       position: 'relative',
       display: 'inline-block',
@@ -85,11 +68,7 @@ const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVa
     }
   },
 
-  sliderWrapper: ({ props: p, variables: v }) => ({
-    height: v.height,
-    ...(p.vertical && { height: v.length, width: v.height }),
-    ...getFluidStyles(p),
-  }),
+  rail: ({ props, variables }) => getSliderSlotStyles(props, variables, 'rail'),
 
   track: ({ props, variables }) => getSliderSlotStyles(props, variables, 'track'),
 

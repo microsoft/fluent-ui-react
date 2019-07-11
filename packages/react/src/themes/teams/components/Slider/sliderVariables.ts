@@ -11,11 +11,6 @@ export default (siteVars: SiteVariablesPrepared): SliderVariables => {
     height: pxToRem(16),
     length: pxToRem(320),
 
-    iconColor: colorScheme.default.foreground1,
-    disabledIconColor: colorScheme.default.foregroundDisabled1,
-    iconSize: pxToRem(16),
-    iconSpace: pxToRem(12),
-
     railColor: colorScheme.default.border,
     disabledRailColor: colorScheme.default.backgroundDisabled1,
     railHeight: pxToRem(2),

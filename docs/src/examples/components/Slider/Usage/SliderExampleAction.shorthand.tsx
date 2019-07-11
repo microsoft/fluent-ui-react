@@ -1,41 +1,46 @@
 import * as React from 'react'
-import { Button, Input, Slider, Flex } from '@stardust-ui/react'
+import { Button, Input, Slider, Flex, SliderProps } from '@stardust-ui/react'
+import { useBooleanKnob } from '@stardust-ui/docs-components'
 
 interface SliderAction {
   type: 'toggle_mute' | 'change_value'
-  value?: number
+  value?: React.ReactText
 }
 
 interface SliderState {
   mute: boolean
-  value: number
-  currentValue: number
+  value: React.ReactText
+  currentValue: React.ReactText
+  minValue: React.ReactText
 }
-
-const volumeValues = { min: 0, max: 100, default: 50 }
 
 const stateReducer = (state: SliderState, action: SliderAction) => {
   switch (action.type) {
     case 'toggle_mute':
       const mute = !state.mute
-      const value = mute ? volumeValues.min : state.currentValue
+      const value = mute ? state.minValue : state.currentValue
 
-      if (!mute && value <= volumeValues.min) return { ...state }
+      if (!mute && value <= state.minValue) return { ...state }
       return { ...state, mute, value, currentValue: state.value }
+
     case 'change_value':
-      return { ...state, mute: action.value <= volumeValues.min, value: action.value }
+      return { ...state, mute: action.value <= state.minValue, value: action.value }
+
     default:
       throw new Error(`Action ${action.type} is not supported`)
   }
 }
 
-const SliderExampleActionShorthand = () => {
-  const { min, max, default: defaultVolume } = volumeValues
+const SliderWithAction: React.FunctionComponent<
+  Pick<SliderProps, 'min' | 'max' | 'defaultValue' | 'vertical'>
+> = props => {
+  const { min, max, defaultValue, vertical } = props
 
   const [state, dispatch] = React.useReducer(stateReducer, {
     mute: false,
-    value: defaultVolume,
+    value: defaultValue,
     currentValue: min,
+    minValue: min,
   })
 
   const handeChange = React.useCallback(
@@ -43,18 +48,25 @@ const SliderExampleActionShorthand = () => {
     [],
   )
 
+  const commonProps = { vertical, min, max, value: state.value, onChange: handeChange }
+
   return (
-    <Flex gap="gap.smaller">
+    <Flex inline hAlign="center" vAlign="center" gap="gap.smaller" column={vertical}>
       <Button
         text
         iconOnly
         icon={state.mute ? 'mic-off' : 'mic'}
         onClick={() => dispatch({ type: 'toggle_mute' })}
       />
-      <Slider min={min} max={max} value={state.value} onChange={handeChange} />
-      <Input type="number" min={min} max={max} value={state.value} onChange={handeChange} />
+      <Slider {...commonProps} />
+      <Input type="number" input={{ styles: { width: '64px' } }} {...commonProps} />
     </Flex>
   )
+}
+
+const SliderExampleActionShorthand = () => {
+  const [vertical] = useBooleanKnob({ name: 'vertical', initialValue: false })
+  return <SliderWithAction min="0" max="100" defaultValue="50" vertical={vertical} />
 }
 
 export default SliderExampleActionShorthand

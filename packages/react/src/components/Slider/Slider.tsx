@@ -23,12 +23,10 @@ import {
   withSafeTypeForAs,
   Omit,
 } from '../../types'
-import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { sliderBehavior } from '../../lib/accessibility'
 import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 import Box from '../Box/Box'
-import Icon from '../Icon/Icon'
 
 const defaultPropValues = {
   max: 100,
@@ -54,9 +52,8 @@ const processInputValues = (
 
 export interface SliderSlotClassNames {
   input: string
+  inputWrapper: string
   rail: string
-  slider: string
-  sliderWrapper: string
   thumb: string
   track: string
 }
@@ -91,12 +88,6 @@ export interface SliderProps
    * @param {SliderProps} props - Slider props.
    */
   getA11yValueMessageOnChange?: (props: SliderProps) => string
-
-  /** Optional Icon to display inside the slider. */
-  icon?: ShorthandValue
-
-  /** A slider with icon can format the icon to appear at the start or at the end. */
-  iconPosition?: 'start' | 'end'
 
   /** Shorthand for the input component. */
   input?: ShorthandValue
@@ -160,8 +151,6 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fluid: PropTypes.bool,
     getA11yValueMessageOnChange: PropTypes.func,
-    icon: customPropTypes.itemShorthand,
-    iconPosition: PropTypes.oneOf(['start', 'end']),
     input: customPropTypes.itemShorthand,
     inputRef: customPropTypes.ref,
     max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -175,7 +164,6 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
   static defaultProps: SliderProps = {
     accessibility: sliderBehavior,
     getA11yValueMessageOnChange: ({ value }) => String(value),
-    iconPosition: 'start',
     max: defaultPropValues.max,
     min: defaultPropValues.min,
     step: defaultPropValues.step,
@@ -204,17 +192,6 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
     _.invoke(this.props, 'onMouseDown', e, this.props)
   }
 
-  renderIcon = (variables: ComponentVariablesObject, styles: ComponentSlotStylesPrepared) => {
-    const { icon } = this.props
-
-    return Icon.create(icon, {
-      defaultProps: {
-        styles: styles.icon,
-        variables: variables.icon,
-      },
-    })
-  }
-
   renderComponent({
     ElementType,
     classes,
@@ -223,7 +200,7 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
     styles,
     unhandledProps,
   }: RenderResultConfig<SliderProps>) {
-    const { iconPosition, input, inputRef, step } = this.props
+    const { input, inputRef, step } = this.props
     const [htmlInputProps, restProps] = partitionHTMLProps(unhandledProps)
     const type = 'range'
 
@@ -233,6 +210,7 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
       value: this.state.value || '',
     })
 
+    // we need 2 wrappers around the slider rail, track, input and thumb slots to achieve correct component sizes
     return (
       <ElementType
         className={classes.root}
@@ -240,48 +218,43 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
         {...restProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        {iconPosition === 'start' && this.renderIcon(variables, styles)}
-        {/* we need 2 wrappers around the slider rail, track, input and thumb slots to achieve correct component sizes */}
-        <div className={cx(Slider.slotClassNames.sliderWrapper, classes.sliderWrapper)}>
-          <div className={cx(Slider.slotClassNames.slider, classes.slider)}>
-            <span className={cx(Slider.slotClassNames.rail, classes.rail)} />
-            <span
-              className={cx(Slider.slotClassNames.track, classes.track)}
-              style={{ width: valueAsPercentage }}
-            />
-            <Ref
-              innerRef={(inputElement: HTMLElement) => {
-                handleRef(this.inputRef, inputElement)
-                handleRef(inputRef, inputElement)
-              }}
-            >
-              {Box.create(input || type, {
-                defaultProps: {
-                  ...htmlInputProps,
-                  ...accessibility.attributes.input,
-                  className: Slider.slotClassNames.input,
-                  as: 'input',
-                  min,
-                  max,
-                  step,
-                  type,
-                  value,
-                  onChange: this.handleChange,
-                  onFocus: this.handleFocus,
-                  onMouseDown: this.handleMouseDown,
-                  styles: styles.input,
-                  ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
-                },
-              })}
-            </Ref>
-            {/* the thumb slot needs to appear after the input slot */}
-            <span
-              className={cx(Slider.slotClassNames.thumb, classes.thumb)}
-              style={{ left: valueAsPercentage }}
-            />
-          </div>
+        <div className={cx(Slider.slotClassNames.inputWrapper, classes.inputWrapper)}>
+          <span className={cx(Slider.slotClassNames.rail, classes.rail)} />
+          <span
+            className={cx(Slider.slotClassNames.track, classes.track)}
+            style={{ width: valueAsPercentage }}
+          />
+          <Ref
+            innerRef={(inputElement: HTMLElement) => {
+              handleRef(this.inputRef, inputElement)
+              handleRef(inputRef, inputElement)
+            }}
+          >
+            {Box.create(input || type, {
+              defaultProps: {
+                ...htmlInputProps,
+                ...accessibility.attributes.input,
+                className: Slider.slotClassNames.input,
+                as: 'input',
+                min,
+                max,
+                step,
+                type,
+                value,
+                onChange: this.handleChange,
+                onFocus: this.handleFocus,
+                onMouseDown: this.handleMouseDown,
+                styles: styles.input,
+                ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
+              },
+            })}
+          </Ref>
+          {/* the thumb slot needs to appear after the input slot */}
+          <span
+            className={cx(Slider.slotClassNames.thumb, classes.thumb)}
+            style={{ left: valueAsPercentage }}
+          />
         </div>
-        {iconPosition !== 'start' && this.renderIcon(variables, styles)}
       </ElementType>
     )
   }
@@ -289,9 +262,8 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
 
 Slider.slotClassNames = {
   input: `${Slider.className}__input`,
+  inputWrapper: `${Slider.className}__input-wrapper`,
   rail: `${Slider.className}__rail`,
-  slider: `${Slider.className}__slider`,
-  sliderWrapper: `${Slider.className}__slider-wrapper`,
   thumb: `${Slider.className}__thumb`,
   track: `${Slider.className}__track`,
 }
