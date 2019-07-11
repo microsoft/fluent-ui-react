@@ -9,13 +9,13 @@ const getAriaLabel = ({ content: numberOfPersons, icon: emojiType }: ReactionPro
   return `${numberOfPersons} people reacted this message with a ${emojiType} emoji. Open menu to see people who reacted.`
 }
 
-class ReactionPopup extends React.Component<ReactionProps, any> {
+class ReactionPopup extends React.Component<ReactionProps, { open: boolean }> {
   state = {
     open: false,
   }
 
   handleKeyDownOnMenu = e => {
-    if ((e.shiftKey && e.keyCode === keyboardKey.Tab) || e.keyCode === keyboardKey.Tab) {
+    if (e.keyCode === keyboardKey.Tab) {
       this.setState({ open: false })
     }
   }
@@ -35,16 +35,14 @@ class ReactionPopup extends React.Component<ReactionProps, any> {
             aria-label={getAriaLabel(this.props)}
           />
         }
-        content={{
-          content: (
-            <Menu
-              items={['Jane Doe', 'John Doe']}
-              vertical
-              variables={{ borderColor: 'transparent' }}
-              onKeyDown={this.handleKeyDownOnMenu}
-            />
-          ),
-        }}
+        content={
+          <Menu
+            items={['Jane Doe', 'John Doe']}
+            vertical
+            variables={{ borderColor: 'transparent' }}
+            onKeyDown={this.handleKeyDownOnMenu}
+          />
+        }
         inline
         on="hover"
         open={this.state.open}
