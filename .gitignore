@@ -15,5 +15,6 @@ docs/src/exampleMenus
 docs/src/exampleSources
 docs/dist/
 node_modules/
+report.*.json
 stats/
 .vscode/
