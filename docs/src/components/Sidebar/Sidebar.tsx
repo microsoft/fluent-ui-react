@@ -261,7 +261,7 @@ class Sidebar extends React.Component<any, any> {
     // Should be applied by provider
     const sidebarStyles: ICSSInJSStyle = {
       background: '#201f1f',
-      width: '270',
+      width: this.props.width,
       position: 'fixed',
       overflowY: 'scroll',
       top: 0,
