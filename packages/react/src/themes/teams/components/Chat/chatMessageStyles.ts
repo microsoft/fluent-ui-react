@@ -95,7 +95,9 @@ const chatMessageStyles: ComponentSlotStylesInput<
     }),
 
     ...(!_.isNil(v.showActionMenu) && {
-      visibility: v.showActionMenu ? 'visible' : 'hidden',
+      overflow: v.showActionMenu ? 'visible' : 'hidden',
+      opacity: v.showActionMenu ? 1 : 0,
+      width: v.showActionMenu ? 'auto' : 0,
     }),
   }),
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
