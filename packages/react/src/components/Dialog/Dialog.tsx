@@ -26,6 +26,7 @@ import Flex from '../Flex/Flex'
 
 export interface DialogSlotClassNames {
   header: string
+  headerAction: string
   content: string
 }
 
@@ -53,6 +54,9 @@ export interface DialogProps
 
   /** A dialog can contain a header. */
   header?: ShorthandValue
+
+  /** A dialog can contain an button next to the header. */
+  headerAction?: ShorthandValue
 
   /**
    * Called after user's click a cancel button.
@@ -110,6 +114,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       color: true,
     }),
     actions: customPropTypes.itemShorthand,
+    headerAction: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
     confirmButton: customPropTypes.itemShorthand,
     defaultOpen: PropTypes.bool,
@@ -207,6 +212,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       cancelButton,
       content,
       header,
+      headerAction,
       overlay,
       trapFocus,
       trigger,
@@ -227,6 +233,15 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               className: Dialog.slotClassNames.header,
               styles: styles.header,
               ...accessibility.attributes.header,
+            },
+          })}
+          {Button.create(headerAction, {
+            defaultProps: {
+              className: Dialog.slotClassNames.headerAction,
+              styles: styles.headerAction,
+              text: true,
+              iconOnly: true,
+              ...accessibility.attributes.headerAction,
             },
           })}
           {Box.create(content, {
@@ -285,6 +300,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 
 Dialog.slotClassNames = {
   header: `${Dialog.className}__header`,
+  headerAction: `${Dialog.className}__headerAction`,
   content: `${Dialog.className}__content`,
 }
 
