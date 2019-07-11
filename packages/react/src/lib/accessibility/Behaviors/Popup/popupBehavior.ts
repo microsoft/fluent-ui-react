@@ -5,11 +5,12 @@ import { PopupEvents, PopupEventsArray } from '../../../../components/Popup/Popu
 
 /**
  * @description
- * Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
+ * Adds tabIndex='0' to 'trigger' slot, if it is not tabbable element and no tabIndex attribute provided.
  *
  * @specification
- * Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Does not set the attribute otherwise.
- * Adds attribute 'role=complementary' to 'popup' component's part.
+ * Adds attribute 'aria-disabled=true' to 'trigger' slot if 'disabled' property is true. Does not set the attribute otherwise.
+ * Adds attribute 'role=dialog' to 'popup' slot if 'trapFocus' property is true. Sets the attribute to 'complementary' otherwise.
+ * Adds attribute 'aria-modal=true' to 'popup' slot if 'trapFocus' property is true. Does not set the attribute otherwise.
  */
 const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
   const onAsArray = _.isArray(props.on) ? props.on : [props.on]
@@ -20,7 +21,8 @@ const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
         'aria-disabled': props.disabled,
       },
       popup: {
-        role: 'complementary',
+        role: props.trapFocus ? 'dialog' : 'complementary',
+        'aria-modal': props.trapFocus ? true : undefined,
       },
     },
     keyActions: {
@@ -84,6 +86,8 @@ const getAriaAttributeFromProps = (
 export default popupBehavior
 
 export type PopupBehaviorProps = {
+  /** Indicates if focus should be trapped inside popup's container. */
+  trapFocus?: boolean | object
   /** Events triggering the popup. */
   on?: PopupEvents | PopupEventsArray
   /** Indicates if popup's trigger is disabled. */

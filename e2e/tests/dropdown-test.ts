@@ -1,8 +1,8 @@
-import { Dropdown } from '@stardust-ui/react'
+import { selectors } from './dropdown-example'
+
+const triggerButton = `.${selectors.triggerButtonClass}`
 
 describe('Dropdown', () => {
-  const triggerButton = `.${Dropdown.slotClassNames.triggerButton}`
-
   describe('Focus behavior', () => {
     beforeEach(async () => {
       await e2e.gotoTestCase(__filename, triggerButton)

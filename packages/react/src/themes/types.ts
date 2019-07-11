@@ -2,6 +2,60 @@ import * as CSSType from 'csstype'
 import { IRenderer as FelaRenderer } from 'fela'
 import * as React from 'react'
 import { Extendable, ObjectOf, ObjectOrFunc, Omit } from '../types'
+import { AccordionContentProps } from '../components/Accordion/AccordionContent'
+import { AccordionProps } from '../components/Accordion/Accordion'
+import { AccordionTitleProps } from '../components/Accordion/AccordionTitle'
+import { AlertProps } from '../components/Alert/Alert'
+import { AnimationProps } from '../components/Animation/Animation'
+import { AttachmentProps } from '../components/Attachment/Attachment'
+import { AvatarProps } from '../components/Avatar/Avatar'
+import { ButtonGroupProps } from '../components/Button/ButtonGroup'
+import { ButtonProps } from '../components/Button/Button'
+import { ChatItemProps } from '../components/Chat/ChatItem'
+import { ChatMessageProps } from '../components/Chat/ChatMessage'
+import { ChatProps } from '../components/Chat/Chat'
+import { CheckboxProps } from '../components/Checkbox/Checkbox'
+import { DividerProps } from '../components/Divider/Divider'
+import { DropdownProps } from '../components/Dropdown/Dropdown'
+import { EmbedProps } from '../components/Embed/Embed'
+import { FlexItemProps } from '../components/Flex/FlexItem'
+import { FlexProps } from '../components/Flex/Flex'
+import { FormFieldProps } from '../components/Form/FormField'
+import { FormProps } from '../components/Form/Form'
+import { GridProps } from '../components/Grid/Grid'
+import { HeaderDescriptionProps } from '../components/Header/HeaderDescription'
+import { HeaderProps } from '../components/Header/Header'
+import { IconProps } from '../components/Icon/Icon'
+import { ImageProps } from '../components/Image/Image'
+import { InputProps } from '../components/Input/Input'
+import { ItemLayoutProps } from '../components/ItemLayout/ItemLayout'
+import { LabelProps } from '../components/Label/Label'
+import { LayoutProps } from '../components/Layout/Layout'
+import { ListItemProps } from '../components/List/ListItem'
+import { ListProps } from '../components/List/List'
+import { LoaderProps } from '../components/Loader/Loader'
+import { MenuItemProps } from '../components/Menu/MenuItem'
+import { MenuProps } from '../components/Menu/Menu'
+import { PopupContentProps } from '../components/Popup/PopupContent'
+import { PopupProps } from '../components/Popup/Popup'
+import { PortalProps } from '../components/Portal/Portal'
+import { RadioGroupItemProps } from '../components/RadioGroup/RadioGroupItem'
+import { RadioGroupProps } from '../components/RadioGroup/RadioGroup'
+import { ReactionGroupProps } from '../components/Reaction/ReactionGroup'
+import { ReactionProps } from '../components/Reaction/Reaction'
+import { SegmentProps } from '../components/Segment/Segment'
+import { StatusProps } from '../components/Status/Status'
+import { TextProps } from '../components/Text/Text'
+import { ToolbarDividerProps } from '../components/Toolbar/ToolbarDivider'
+import { ToolbarItemProps } from '../components/Toolbar/ToolbarItem'
+import { ToolbarProps } from '../components/Toolbar/Toolbar'
+import { ToolbarRadioGroupProps } from '../components/Toolbar/ToolbarRadioGroup'
+import { TooltipContentProps } from '../components/Tooltip/TooltipContent'
+import { TooltipProps } from '../components/Tooltip/Tooltip'
+import { TreeItemProps } from '../components/Tree/TreeItem'
+import { TreeProps } from '../components/Tree/Tree'
+import { TreeTitleProps } from '../components/Tree/TreeTitle'
+import { VideoProps } from '../components/Video/Video'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -209,13 +263,15 @@ export interface ICSSPseudoElementStyle extends ICSSInJSStyle {
   content?: string
 }
 
-export interface StardustAnimationName {
-  keyframe?: any
-  params?: object
+type AnimationKeyFrame = Record<'from' | 'to' | string, ICSSInJSStyle>
+
+export interface StardustAnimationName<P = Record<string, any>> {
+  keyframe?: AnimationKeyFrame | ((params: P) => AnimationKeyFrame)
+  params?: P
 }
 
 export type CSSProperties = Omit<React.CSSProperties, 'animationName'> & {
-  animationName?: StardustAnimationName | string | 'none'
+  animationName?: StardustAnimationName | AnimationKeyFrame | string | 'none'
 }
 
 export interface ICSSInJSStyle extends CSSProperties {
@@ -351,197 +407,82 @@ export interface ThemePrepared {
   animations: { [key: string]: ThemeAnimation }
 }
 
-export interface ThemeComponentStylesInput {
-  [key: string]: ComponentSlotStylesInput | undefined
-
-  Accordion?: ComponentSlotStylesInput
-  Alert?: ComponentSlotStylesInput
-  Animation?: ComponentSlotStylesInput
-  Attachment?: ComponentSlotStylesInput
-  Avatar?: ComponentSlotStylesInput
-  Button?: ComponentSlotStylesInput
-  ButtonGroup?: ComponentSlotStylesInput
-  Chat?: ComponentSlotStylesInput
-  ChatItem?: ComponentSlotStylesInput
-  ChatMessage?: ComponentSlotStylesInput
-  Divider?: ComponentSlotStylesInput
-  Dropdown?: ComponentSlotStylesInput
-  DropdownItem?: ComponentSlotStylesInput
-  DropdownSearchInput?: ComponentSlotStylesInput
-  Embed?: ComponentSlotStylesInput
-  Form?: ComponentSlotStylesInput
-  FormField?: ComponentSlotStylesInput
-  Grid?: ComponentSlotStylesInput
-  Header?: ComponentSlotStylesInput
-  HeaderDescription?: ComponentSlotStylesInput
-  Icon?: ComponentSlotStylesInput
-  Image?: ComponentSlotStylesInput
-  Input?: ComponentSlotStylesInput
-  ItemLayout?: ComponentSlotStylesInput
-  Label?: ComponentSlotStylesInput
-  Layout?: ComponentSlotStylesInput
-  List?: ComponentSlotStylesInput
-  ListItem?: ComponentSlotStylesInput
-  Menu?: ComponentSlotStylesInput
-  MenuItem?: ComponentSlotStylesInput
-  Portal?: ComponentSlotStylesInput
-  Popup?: ComponentSlotStylesInput
-  PopupContent?: ComponentSlotStylesInput
-  RadioGroup?: ComponentSlotStylesInput
-  RadioGroupItem?: ComponentSlotStylesInput
-  Reaction?: ComponentSlotStylesInput
-  ReactionGroup?: ComponentSlotStylesInput
-  Segment?: ComponentSlotStylesInput
-  Status?: ComponentSlotStylesInput
-  Text?: ComponentSlotStylesInput
-  Tree?: ComponentSlotStylesInput
-  TreeItem?: ComponentSlotStylesInput
-  TreeTitle?: ComponentSlotStylesInput
-  Video?: ComponentSlotStylesInput
+type ThemeStylesProps = {
+  Accordion?: AccordionProps
+  AccordionTitle?: AccordionTitleProps
+  AccordionContent?: AccordionContentProps
+  Alert?: AlertProps
+  Animation?: AnimationProps
+  Attachment?: AttachmentProps
+  Avatar?: AvatarProps
+  Button?: ButtonProps
+  ButtonGroup?: ButtonGroupProps
+  Chat?: ChatProps
+  ChatItem?: ChatItemProps
+  ChatMessage?: ChatMessageProps
+  Checkbox?: CheckboxProps
+  Divider?: DividerProps
+  Dropdown?: DropdownProps
+  Embed?: EmbedProps
+  Flex?: FlexProps
+  FlexItem?: FlexItemProps
+  Form?: FormProps
+  FormField?: FormFieldProps
+  Grid?: GridProps
+  Header?: HeaderProps
+  HeaderDescription?: HeaderDescriptionProps
+  Icon?: IconProps
+  Image?: ImageProps
+  Input?: InputProps
+  ItemLayout?: ItemLayoutProps
+  Label?: LabelProps
+  Layout?: LayoutProps
+  List?: ListProps
+  ListItem?: ListItemProps
+  Loader?: LoaderProps
+  Menu?: MenuProps
+  MenuItem?: MenuItemProps
+  Portal?: PortalProps
+  Popup?: PopupProps
+  PopupContent?: PopupContentProps
+  RadioGroup?: RadioGroupProps
+  RadioGroupItem?: RadioGroupItemProps
+  Reaction?: ReactionProps
+  ReactionGroup?: ReactionGroupProps
+  Segment?: SegmentProps
+  Status?: StatusProps
+  Toolbar?: ToolbarProps
+  ToolbarItem?: ToolbarItemProps
+  ToolbarDivider?: ToolbarDividerProps
+  ToolbarRadioGroup?: ToolbarRadioGroupProps
+  Tooltip?: TooltipProps
+  TooltipContent?: TooltipContentProps
+  Text?: TextProps
+  Tree?: TreeProps
+  TreeItem?: TreeItemProps
+  TreeTitle?: TreeTitleProps
+  Video?: VideoProps
 }
 
-export interface ThemeComponentStylesPrepared {
-  [key: string]: ComponentSlotStylesPrepared | undefined
+export type ThemeComponentVariablesInput = {
+  [K in keyof ThemeStylesProps]?: ComponentVariablesInput
+} &
+  Record<string, any>
 
-  Accordion?: ComponentSlotStylesPrepared
-  Alert?: ComponentSlotStylesPrepared
-  Animation?: ComponentSlotStylesPrepared
-  Attachment?: ComponentSlotStylesPrepared
-  Avatar?: ComponentSlotStylesPrepared
-  Button?: ComponentSlotStylesPrepared
-  ButtonGroup?: ComponentSlotStylesPrepared
-  Chat?: ComponentSlotStylesPrepared
-  ChatItem?: ComponentSlotStylesPrepared
-  ChatMessage?: ComponentSlotStylesPrepared
-  Divider?: ComponentSlotStylesPrepared
-  Dropdown?: ComponentSlotStylesPrepared
-  DropdownItem?: ComponentSlotStylesPrepared
-  DropdownSearchInput?: ComponentSlotStylesPrepared
-  Embed?: ComponentSlotStylesPrepared
-  Form?: ComponentSlotStylesPrepared
-  FormField?: ComponentSlotStylesPrepared
-  Grid?: ComponentSlotStylesPrepared
-  Header?: ComponentSlotStylesPrepared
-  HeaderDescription?: ComponentSlotStylesPrepared
-  Icon?: ComponentSlotStylesPrepared
-  Image?: ComponentSlotStylesPrepared
-  Input?: ComponentSlotStylesPrepared
-  ItemLayout?: ComponentSlotStylesPrepared
-  Label?: ComponentSlotStylesPrepared
-  Layout?: ComponentSlotStylesPrepared
-  List?: ComponentSlotStylesPrepared
-  ListItem?: ComponentSlotStylesPrepared
-  Menu?: ComponentSlotStylesPrepared
-  MenuItem?: ComponentSlotStylesPrepared
-  Portal?: ComponentSlotStylesPrepared
-  Popup?: ComponentSlotStylesPrepared
-  PopupContent?: ComponentSlotStylesPrepared
-  RadioGroup?: ComponentSlotStylesPrepared
-  RadioGroupItem?: ComponentSlotStylesPrepared
-  Reaction?: ComponentSlotStylesPrepared
-  ReactionGroup?: ComponentSlotStylesPrepared
-  Segment?: ComponentSlotStylesPrepared
-  Status?: ComponentSlotStylesPrepared
-  Text?: ComponentSlotStylesPrepared
-  Tree?: ComponentSlotStylesPrepared
-  TreeItem?: ComponentSlotStylesPrepared
-  TreeTitle?: ComponentSlotStylesPrepared
-  Video?: ComponentSlotStylesPrepared
-}
+export type ThemeComponentVariablesPrepared = {
+  [K in keyof ThemeStylesProps]?: ComponentVariablesPrepared
+} &
+  Record<string, any>
 
-export interface ThemeComponentVariablesInput {
-  [key: string]: any
+export type ThemeComponentStylesInput = {
+  [K in keyof ThemeStylesProps]?: ComponentSlotStylesInput<ThemeStylesProps[K]>
+} &
+  Record<string, ComponentSlotStylesInput | undefined>
 
-  Accordion?: ComponentVariablesInput
-  Alert?: ComponentVariablesInput
-  Animation?: ComponentVariablesInput
-  Attachment?: ComponentVariablesInput
-  Avatar?: ComponentVariablesInput
-  Button?: ComponentVariablesInput
-  ButtonGroup?: ComponentVariablesInput
-  Chat?: ComponentVariablesInput
-  ChatItem?: ComponentVariablesInput
-  ChatMessage?: ComponentVariablesInput
-  Divider?: ComponentVariablesInput
-  Dropdown?: ComponentVariablesInput
-  Embed?: ComponentVariablesInput
-  Form?: ComponentVariablesInput
-  FormField?: ComponentVariablesInput
-  Grid?: ComponentVariablesInput
-  Header?: ComponentVariablesInput
-  HeaderDescription?: ComponentVariablesInput
-  Icon?: ComponentVariablesInput
-  Image?: ComponentVariablesInput
-  Input?: ComponentVariablesInput
-  ItemLayout?: ComponentVariablesInput
-  Label?: ComponentVariablesInput
-  Layout?: ComponentVariablesInput
-  List?: ComponentVariablesInput
-  ListItem?: ComponentVariablesInput
-  Menu?: ComponentVariablesInput
-  MenuItem?: ComponentVariablesInput
-  Portal?: ComponentVariablesInput
-  Popup?: ComponentVariablesInput
-  PopupContent?: ComponentVariablesInput
-  RadioGroup?: ComponentVariablesInput
-  RadioGroupItem?: ComponentVariablesInput
-  Reaction?: ComponentVariablesInput
-  ReactionGroup?: ComponentVariablesInput
-  Segment?: ComponentVariablesInput
-  Status?: ComponentVariablesInput
-  Text?: ComponentVariablesInput
-  Tree?: ComponentVariablesInput
-  TreeItem?: ComponentVariablesInput
-  TreeTitle?: ComponentVariablesInput
-  Video?: ComponentVariablesInput
-}
-
-export interface ThemeComponentVariablesPrepared {
-  [key: string]: any
-
-  Accordion?: ComponentVariablesPrepared
-  Alert?: ComponentVariablesPrepared
-  Animation?: ComponentVariablesPrepared
-  Attachment?: ComponentVariablesPrepared
-  Avatar?: ComponentVariablesPrepared
-  Button?: ComponentVariablesPrepared
-  ButtonGroup?: ComponentVariablesPrepared
-  Chat?: ComponentVariablesPrepared
-  ChatItem?: ComponentVariablesPrepared
-  ChatMessage?: ComponentVariablesPrepared
-  Divider?: ComponentVariablesPrepared
-  Dropdown?: ComponentVariablesPrepared
-  Embed?: ComponentVariablesPrepared
-  Form?: ComponentVariablesPrepared
-  FormField?: ComponentVariablesPrepared
-  Grid?: ComponentVariablesPrepared
-  Header?: ComponentVariablesPrepared
-  HeaderDescription?: ComponentVariablesPrepared
-  Icon?: ComponentVariablesPrepared
-  Image?: ComponentVariablesPrepared
-  Input?: ComponentVariablesPrepared
-  ItemLayout?: ComponentVariablesPrepared
-  Label?: ComponentVariablesPrepared
-  Layout?: ComponentVariablesPrepared
-  List?: ComponentVariablesPrepared
-  ListItem?: ComponentVariablesPrepared
-  Menu?: ComponentVariablesPrepared
-  MenuItem?: ComponentVariablesPrepared
-  Portal?: ComponentVariablesPrepared
-  Popup?: ComponentVariablesPrepared
-  PopupContent?: ComponentVariablesPrepared
-  RadioGroup?: ComponentVariablesPrepared
-  RadioGroupItem?: ComponentVariablesPrepared
-  Reaction?: ComponentVariablesPrepared
-  ReactionGroup?: ComponentVariablesPrepared
-  Segment?: ComponentVariablesPrepared
-  Status?: ComponentVariablesPrepared
-  Text?: ComponentVariablesPrepared
-  Tree?: ComponentVariablesPrepared
-  TreeItem?: ComponentVariablesPrepared
-  TreeTitle?: ComponentVariablesPrepared
-  Video?: ComponentVariablesPrepared
-}
+export type ThemeComponentStylesPrepared = {
+  [K in keyof ThemeStylesProps]?: ComponentSlotStylesPrepared<ThemeStylesProps[K]>
+} &
+  Record<string, ComponentSlotStylesPrepared | undefined>
 
 export interface Renderer extends FelaRenderer {}
 
@@ -549,19 +490,19 @@ export interface Renderer extends FelaRenderer {}
 // Fonts
 // ========================================================
 
-export interface FontFaceStyle {
+export interface FontFaceProps {
   fontStretch?: string
   fontStyle?: string
   fontVariant?: string
   fontWeight?: number
-  localAlias?: string
+  localAlias?: string | string[]
   unicodeRange?: string
 }
 
 export interface FontFace {
   name: string
   paths: string[]
-  style: FontFaceStyle
+  props: FontFaceProps
 }
 
 export type FontFaces = FontFace[]
@@ -573,6 +514,7 @@ export type FontFaces = FontFace[]
 type SvgIconFuncArg = {
   classes: { [iconSlot: string]: string }
   rtl: boolean
+  props: IconProps
 }
 
 export type SvgIconSpec = ObjectOrFunc<React.ReactNode, SvgIconFuncArg>

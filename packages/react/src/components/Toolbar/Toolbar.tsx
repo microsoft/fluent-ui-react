@@ -15,14 +15,18 @@ import {
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+import { toolbarBehavior, toggleButtonBehavior } from '../../lib/accessibility'
 import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 
-import ToolbarItem from './ToolbarItem'
+import ToolbarCustomItem from './ToolbarCustomItem'
 import ToolbarDivider from './ToolbarDivider'
+import ToolbarItem from './ToolbarItem'
+import ToolbarMenu from './ToolbarMenu'
+import ToolbarMenuDivider from './ToolbarMenuDivider'
+import ToolbarMenuItem from './ToolbarMenuItem'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
 
-export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group'
+export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group' | 'toggle' | 'custom'
 
 export interface ToolbarProps
   extends UIComponentProps,
@@ -31,7 +35,7 @@ export interface ToolbarProps
     ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
+   * @default toolbarBehavior
    */
   accessibility?: Accessibility
 
@@ -48,15 +52,25 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
-    items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item', 'group']),
+    items: customPropTypes.collectionShorthandWithKindProp([
+      'divider',
+      'item',
+      'group',
+      'toggle',
+      'custom',
+    ]),
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
+    accessibility: toolbarBehavior,
   }
 
-  static Item = ToolbarItem
+  static CustomItem = ToolbarCustomItem
   static Divider = ToolbarDivider
+  static Item = ToolbarItem
+  static Menu = ToolbarMenu
+  static MenuDivider = ToolbarMenuDivider
+  static MenuItem = ToolbarMenuItem
   static RadioGroup = ToolbarRadioGroup
 
   handleItemOverrides = variables => predefinedProps => ({
@@ -73,6 +87,13 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
           return ToolbarDivider.create(item, { overrideProps: itemOverridesFn })
         case 'group':
           return ToolbarRadioGroup.create(item, { overrideProps: itemOverridesFn })
+        case 'toggle':
+          return ToolbarItem.create(item, {
+            defaultProps: { accessibility: toggleButtonBehavior },
+            overrideProps: itemOverridesFn,
+          })
+        case 'custom':
+          return ToolbarCustomItem.create(item, { overrideProps: itemOverridesFn })
         default:
           return ToolbarItem.create(item, { overrideProps: itemOverridesFn })
       }

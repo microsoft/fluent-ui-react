@@ -150,15 +150,27 @@ export { default as Animation } from './components/Animation/Animation'
 
 export * from './components/Toolbar/Toolbar'
 export { default as Toolbar } from './components/Toolbar/Toolbar'
+export * from './components/Toolbar/ToolbarCustomItem'
+export { default as ToolbarCustomItem } from './components/Toolbar/ToolbarCustomItem'
 export * from './components/Toolbar/ToolbarDivider'
 export { default as ToolbarDivider } from './components/Toolbar/ToolbarDivider'
 export * from './components/Toolbar/ToolbarItem'
 export { default as ToolbarItem } from './components/Toolbar/ToolbarItem'
+export * from './components/Toolbar/ToolbarMenu'
+export { default as ToolbarMenu } from './components/Toolbar/ToolbarMenu'
+export * from './components/Toolbar/ToolbarMenuDivider'
+export { default as ToolbarMenuDivider } from './components/Toolbar/ToolbarMenuDivider'
+export * from './components/Toolbar/ToolbarMenuItem'
+export { default as ToolbarMenuItem } from './components/Toolbar/ToolbarMenuItem'
 export * from './components/Toolbar/ToolbarRadioGroup'
 export { default as ToolbarRadioGroup } from './components/Toolbar/ToolbarRadioGroup'
 
-export * from './components/Tree'
-export { default as Tree } from './components/Tree'
+export * from './components/Tree/Tree'
+export { default as Tree } from './components/Tree/Tree'
+export * from './components/Tree/TreeItem'
+export { default as TreeItem } from './components/Tree/TreeItem'
+export * from './components/Tree/TreeTitle'
+export { default as TreeTitle } from './components/Tree/TreeTitle'
 
 export * from './components/Reaction/Reaction'
 export { default as Reaction } from './components/Reaction/Reaction'
@@ -174,44 +186,9 @@ export * from './components/Tooltip/TooltipContent'
 export { default as TooltipContent } from './components/Tooltip/TooltipContent'
 
 //
-// Accessibility
+// Accessibility behaviors
 //
-export { default as menuBehavior } from './lib/accessibility/Behaviors/Menu/menuBehavior'
-export { default as menuItemBehavior } from './lib/accessibility/Behaviors/Menu/menuItemBehavior'
-export {
-  default as menuDividerBehavior,
-} from './lib/accessibility/Behaviors/Menu/menuDividerBehavior'
-export { default as tabBehavior } from './lib/accessibility/Behaviors/Tab/tabBehavior'
-export { default as tabListBehavior } from './lib/accessibility/Behaviors/Tab/tabListBehavior'
-export {
-  default as menuAsToolbarBehavior,
-} from './lib/accessibility/Behaviors/Toolbar/menuAsToolbarBehavior'
-export {
-  default as menuItemAsToolbarButtonBehavior,
-} from './lib/accessibility/Behaviors/Toolbar/menuItemAsToolbarButtonBehavior'
-export {
-  default as radioGroupBehavior,
-} from './lib/accessibility/Behaviors/Radio/radioGroupBehavior'
-export {
-  default as radioGroupItemBehavior,
-} from './lib/accessibility/Behaviors/Radio/radioGroupItemBehavior'
-export { default as chatBehavior } from './lib/accessibility/Behaviors/Chat/chatBehavior'
-export {
-  default as chatMessageBehavior,
-} from './lib/accessibility/Behaviors/Chat/chatMessageBehavior'
-export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/gridBehavior'
-export {
-  default as popupFocusTrapBehavior,
-} from './lib/accessibility/Behaviors/Popup/popupFocusTrapBehavior'
-export {
-  default as popupAutoFocusBehavior,
-} from './lib/accessibility/Behaviors/Popup/popupAutoFocusBehavior'
-export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
-export { default as statusBehavior } from './lib/accessibility/Behaviors/Status/statusBehavior'
-export { default as alertBehavior } from './lib/accessibility/Behaviors/Alert/alertBehavior'
-export {
-  default as alertWarningBehavior,
-} from './lib/accessibility/Behaviors/Alert/alertWarningBehavior'
+export * from './lib/accessibility'
 
 //
 // Utilities

@@ -1,4 +1,4 @@
-import { felaRenderer, felaRtlRenderer } from './felaRenderer'
+import felaRenderer from './felaRenderer'
 import { ProviderContextPrepared, ProviderContextInput } from '../types'
 import mergeThemes from './mergeThemes'
 
@@ -19,7 +19,7 @@ const mergeProviderContexts = (...contexts: ProviderContextInput[]): ProviderCon
       icons: {},
       animations: {},
     },
-    renderer: {},
+    renderer: felaRenderer,
     rtl: false,
     disableAnimations: false,
   } as ProviderContextPrepared
@@ -36,8 +36,8 @@ const mergeProviderContexts = (...contexts: ProviderContextInput[]): ProviderCon
         acc.rtl = mergedRTL
       }
 
-      // Use the correct renderer for RTL
-      acc.renderer = acc.rtl ? felaRtlRenderer : felaRenderer
+      // Use provided renderer if it is defined
+      acc.renderer = next.renderer || acc.renderer
 
       // Latest disableAnimations value wins
       const mergedDisableAnimations = mergeBooleanValues(

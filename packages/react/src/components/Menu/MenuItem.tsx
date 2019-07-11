@@ -227,6 +227,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
           {...accessibility.attributes.root}
+          {...accessibility.keyHandlers.root}
           {...unhandledProps}
           {...!wrapper && { onClick: this.handleClick }}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
@@ -394,7 +395,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
       }
     })
 
-    if (shouldStopPropagation) {
+    if (forceTriggerFocus || shouldStopPropagation) {
       e.stopPropagation()
     }
   }
