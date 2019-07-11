@@ -16,7 +16,13 @@ import {
   RenderResultConfig,
   setWhatInputSource,
 } from '../../lib'
-import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
+import {
+  ComponentEventHandler,
+  ShorthandValue,
+  WithAsProp,
+  withSafeTypeForAs,
+  Omit,
+} from '../../types'
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { sliderBehavior } from '../../lib/accessibility'
@@ -58,7 +64,7 @@ export interface SliderSlotClassNames {
 export interface SliderProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    SupportedIntrinsicInputProps {
+    Omit<SupportedIntrinsicInputProps, 'defaultValue'> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default sliderBehavior
@@ -66,7 +72,7 @@ export interface SliderProps
   accessibility?: Accessibility
 
   /** The default value of the slider. */
-  defaultValue?: SupportedIntrinsicInputProps['defaultValue']
+  defaultValue?: React.ReactText
 
   /**
    * A slider can be read-only and unable to change states.
