@@ -17,11 +17,12 @@ export default () => (
     </ul>
     <Header as="h2">Overview</Header>
     <p>
-      {code('FocusTrapZone')} grabs the focus and traps it within an HTML element, usually a dialog
-      or popup. Pressing {code('TAB')} key will circle focus within the inner focusable elements of
-      the {code('FocusTrapZone')}. The main purpose is to block user interaction outside{' '}
-      {code('FocusTrapZone')}
-      in any way. Therefore, keyboard events are not propagated outside {code('FocusTrapZone')}.
+      {code('FocusTrapZone')} grabs the focus and traps it within an HTML element. Currently can be
+      used only in {code('Popup')}
+      and {code('Dialog')} components. Pressing {code('TAB')} key will circle focus within the inner
+      focusable elements of the {code('FocusTrapZone')}. The main purpose is to block user
+      interaction outside {code('FocusTrapZone')} in any way. Therefore, keyboard events are not
+      propagated outside {code('FocusTrapZone')}, hence {code('Popup')} or {code('Dialog')}.
     </p>
     <p>
       Stardust leverages Focus Trap Zone component which is based on the{' '}
@@ -32,16 +33,18 @@ export default () => (
     </p>
     <Header as="h2">Usage</Header>
     <p>
-      Stardust applies focus trap via accessibility behavior, the same way as it's done for{' '}
-      <Link to="focus-zone">FocusZone</Link>. To enable focus trap for component, it is needed, in
-      behavior, to set prop {code('trapFocus')} to
+      To apply {code('FocusTrapZone')} to {code('Popup')} set prop {code('trapFocus')} to
       {code('true')} with default settings or set an object with desired values for focus trap zone
-      props. <Link to="accessibility-behaviors">Read more about Accessibility Behaviors.</Link>{' '}
-      Currently, it is used for Popup via {code('popupFocusTrapBehavior')} and Dialog via{' '}
-      {code('dialogBehavior')}.
+      props.
+    </p>
+    <CodeSnippet label="PopupExample.jsx" value={`const Example = () => <Popup trapFocus />`} />
+    <p>
+      {code('Dialog')} component has always set {code('trapFocus')} prop to {code('true')}, but it
+      is also possible to override default settings by specifying object of{' '}
+      {code('FocusTrapZoneProps')}.
     </p>
     <p>
-      {code('FocusTrapZone')}'s props which can be applied in accessibility behavior (
+      {code('FocusTrapZone')}'s props which can be applied to {code('trapFocus')} prop (
       {link(
         'lookup for API on GitHub',
         'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusTrapZone/FocusTrapZone.types.tsx',
@@ -51,30 +54,22 @@ export default () => (
     <ComponentPropsTable componentName="FocusTrapZone" />
     <Header as="h2">Override {code('FocusTrapZone')} settings</Header>
     <p>
-      To be able to add/override {code('FocusTrapZone')} props already set for a component, it is
-      needed to override or create a new accessibility behavior.
-    </p>
-    <p>
       For example, we want to disable first focus on Popup mount, so we can control the initial
-      focus by ourselves.
+      focus by ourselves:
     </p>
-    <CodeSnippet
-      value={`
-      const overridenFocusTrapBehavior: Accessibility = (props: any) => {
-        const behavior = popupFocusTrapBehavior(props)
-      
-        behavior.trapFocus.disableFirstFocus = true;
-      
-        return behavior
-      }
-      `}
-    />
-    And then use this new behavior by Popup component:
     <CodeSnippet
       label="PopupExample.jsx"
       value={`
         const Popup = () => (
-          <Popup accessibility={overridenFocusTrapBehavior} />
+          <Popup trapFocus={{ disableFirstFocus: true }} />
+        )`}
+    />
+    <p>Same usage applies to {code('Dialog')} component:</p>
+    <CodeSnippet
+      label="DialogExample.jsx"
+      value={`
+        const Dialog = () => (
+          <Dialog trapFocus={{ focusTriggerOnOutsideClick: true }} />
         )`}
     />
     <p>Read more about:</p>

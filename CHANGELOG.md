@@ -17,6 +17,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+-  Add `trapFocus` and `autoFocus` props to `Popup` and remove `popupFocusTrapBehavior` and `popupAutoFocusBehavior` @sophieH29 ([#1565](https://github.com/stardust-ui/react/pull/1565))
+
+<!--------------------------------[ v0.34.1 ]------------------------------- -->
+## [v0.34.1](https://github.com/stardust-ui/react/tree/v0.34.1) (2019-07-11)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.34.0...v0.34.1)
+
 ### Fixes
 - Fix `Dropdown` and `DropdownItem` styles to match [redlines] - modified `ListItem` and ListItemStyles to not set gap in component definition @bcalvery ([#1523](https://github.com/stardust-ui/react/pull/1523))
 - Fix `Dropdown` highlightedIndex on arrow keydown open @silviuavram ([#1570](https://github.com/stardust-ui/react/pull/1570))
@@ -38,6 +45,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Removed obsolete `play-sound-mute` icon from Teams theme @amramornov-ms ([#1598](https://github.com/stardust-ui/react/pull/1598))
 - Add svg pointing beak to the `Tooltip` component in Teams theme @mnajdova ([#1580](https://github.com/stardust-ui/react/pull/1580))
 - Add new values to the `brand`, `onyx` colors and `background4` token for default and brand color schemes in Teams theme @mnajdova ([#1581](https://github.com/stardust-ui/react/pull/1581))
+- Add additional logic for showing/hiding the `actionMenu` inside the `ChatMessage` in Teams theme, based on a variable @mnajdova ([#1590](https://github.com/stardust-ui/react/pull/1590))
 
 ### Documentation
 - Ensure docs content doesn't overlap with sidebar @kuzhelov ([#1568](https://github.com/stardust-ui/react/pull/1568))
@@ -45,6 +53,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add prototype for Custom Styled Toolbar @miroslavstastny ([#1541](https://github.com/stardust-ui/react/pull/1541))
 - Add Best Practices section for each component @alinais ([#1550](https://github.com/stardust-ui/react/pull/1550))
 - Update `Layout` guide @layershifter ([#1595](https://github.com/stardust-ui/react/pull/1595))
+- Fix error when children are missing in `ExampleSnippet` @layershifter ([#1619](https://github.com/stardust-ui/react/pull/1619))
 
 <!--------------------------------[ v0.34.0 ]------------------------------- -->
 ## [v0.34.0](https://github.com/stardust-ui/react/tree/v0.34.0) (2019-06-26)
