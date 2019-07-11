@@ -99,6 +99,8 @@ const chatMessageStyles: ComponentSlotStylesInput<
 
     ...(!_.isNil(v.showActionMenu) && {
       overflow: v.showActionMenu ? 'visible' : 'hidden',
+      // opacity should always be preferred over visibility in order to avoid accessibility bugs in
+      // JAWS behavior on Windows
       opacity: v.showActionMenu ? 1 : 0,
       width: v.showActionMenu ? 'auto' : 0,
     }),
