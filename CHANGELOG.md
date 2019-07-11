@@ -34,6 +34,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add accessibility attributes and keyboard handlers for `Tooltip` @sophieH29 ([#1575](https://github.com/stardust-ui/react/pull/1575))
 - Add `labelPosition` prop to `Checkbox` component @layershifter ([#1578](https://github.com/stardust-ui/react/pull/1578))
 - Pass `props` of `Icon` component to SVG spec @kuzhelov ([#1562](https://github.com/stardust-ui/react/pull/1562))
+- Add `speaker-mute` icon to Teams theme @amramornov-ms ([#1598](https://github.com/stardust-ui/react/pull/1598))
+- Removed obsolete `play-sound-mute` icon from Teams theme @amramornov-ms ([#1598](https://github.com/stardust-ui/react/pull/1598))
 - Add svg pointing beak to the `Tooltip` component in Teams theme @mnajdova ([#1580](https://github.com/stardust-ui/react/pull/1580))
 - Add new values to the `brand`, `onyx` colors and `background4` token for default and brand color schemes in Teams theme @mnajdova ([#1581](https://github.com/stardust-ui/react/pull/1581))
 
@@ -41,6 +43,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Ensure docs content doesn't overlap with sidebar @kuzhelov ([#1568](https://github.com/stardust-ui/react/pull/1568))
 - Fixing issue with copy icon taking up entire page in Firefox @notandrew ([#1576](https://github.com/stardust-ui/react/pull/1576))
 - Add prototype for Custom Styled Toolbar @miroslavstastny ([#1541](https://github.com/stardust-ui/react/pull/1541))
+- Add Best Practices section for each component @alinais ([#1550](https://github.com/stardust-ui/react/pull/1550))
+- Update `Layout` guide @layershifter ([#1595](https://github.com/stardust-ui/react/pull/1595))
 
 ### BREAKING CHANGES
 - Changed condition for showing the `actionMenu` inside the `ChatMessage` in Teams theme @mnajdova ([#1590](https://github.com/stardust-ui/react/pull/1590))
