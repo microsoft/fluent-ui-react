@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.34.1 ]------------------------------- -->
+## [v0.34.1](https://github.com/stardust-ui/react/tree/v0.34.1) (2019-07-11)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.34.0...v0.34.1)
+
 ### Fixes
 - Fix `Dropdown` and `DropdownItem` styles to match [redlines] - modified `ListItem` and ListItemStyles to not set gap in component definition @bcalvery ([#1523](https://github.com/stardust-ui/react/pull/1523))
 - Fix `Dropdown` highlightedIndex on arrow keydown open @silviuavram ([#1570](https://github.com/stardust-ui/react/pull/1570))
