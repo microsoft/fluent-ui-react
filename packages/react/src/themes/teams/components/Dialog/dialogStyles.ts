@@ -14,4 +14,8 @@ export default {
     fontSize: v.headerFontSize,
     fontWeight: v.headerFontWeight,
   }),
+
+  headerAction: ({ variables: v }: DialogStyleParams) => ({
+    color: v.foregroundColor,
+  }),
 }
