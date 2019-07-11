@@ -1,6 +1,6 @@
 import * as React from 'react'
 import keyboardKey from 'keyboard-key'
-import { Popup, Menu, Reaction, ReactionProps, popupAutoFocusBehavior } from '@stardust-ui/react'
+import { Popup, Menu, Reaction, ReactionProps } from '@stardust-ui/react'
 
 const getAriaLabel = ({ content: numberOfPersons, icon: emojiType }: ReactionProps) => {
   if (numberOfPersons === 1) {
@@ -27,6 +27,7 @@ class ReactionPopup extends React.Component<ReactionProps, { open: boolean }> {
   render() {
     return (
       <Popup
+        autoFocus
         trigger={
           <Reaction
             as="button"
@@ -47,7 +48,6 @@ class ReactionPopup extends React.Component<ReactionProps, { open: boolean }> {
         on="hover"
         open={this.state.open}
         onOpenChange={this.handleOpenChange}
-        accessibility={popupAutoFocusBehavior}
       />
     )
   }
