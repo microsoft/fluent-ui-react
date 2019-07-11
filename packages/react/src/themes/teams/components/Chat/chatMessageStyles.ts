@@ -1,4 +1,5 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import * as _ from 'lodash'
 import {
   default as ChatMessage,
   ChatMessageProps,
@@ -53,7 +54,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
 
     ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard }),
 
-    ...(v.showActionMenu === undefined && {
+    ...(_.isNil(v.showActionMenu) && {
       ':hover': {
         [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
           opacity: 1,
@@ -86,7 +87,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
     right: v.actionMenuPositionRight,
     top: v.actionMenuPositionTop,
 
-    ...(v.showActionMenu === undefined && {
+    ...(_.isNil(v.showActionMenu) && {
       overflow: p.focused ? 'visible' : 'hidden',
       // hide and squash actions menu to prevent accidental hovers over its invisible area
       opacity: p.focused ? 1 : 0,
