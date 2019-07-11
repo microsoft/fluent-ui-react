@@ -136,10 +136,11 @@ class Sidebar extends React.Component<any, any> {
     return -1
   }
 
-  keyUpCallback(e) {
+  keyDownCallback(e) {
     if (e.key !== 'Enter') {
       return
     }
+    e.stopPropagation()
     e.target.click()
   }
 
@@ -156,8 +157,8 @@ class Sidebar extends React.Component<any, any> {
         if (!('title' in item)) {
           continue
         }
-        item['onKeyUp'] = e => {
-          this.keyUpCallback(e)
+        item['onKeyDown'] = e => {
+          this.keyDownCallback(e)
         }
       }
     }
