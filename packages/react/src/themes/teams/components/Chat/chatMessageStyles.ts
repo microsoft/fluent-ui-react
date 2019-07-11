@@ -94,11 +94,8 @@ const chatMessageStyles: ComponentSlotStylesInput<
       width: p.focused ? 'auto' : 0,
     }),
 
-    ...(v.showActionMenu !== undefined && {
-      visibility: 'hidden',
-      ...(v.showActionMenu && {
-        visibility: 'visible',
-      }),
+    ...(!_.isNil(v.showActionMenu) && {
+      visibility: v.showActionMenu ? 'visible' : 'hidden',
     }),
   }),
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
