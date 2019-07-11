@@ -46,6 +46,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add prototype for Custom Styled Toolbar @miroslavstastny ([#1541](https://github.com/stardust-ui/react/pull/1541))
 - Add Best Practices section for each component @alinais ([#1550](https://github.com/stardust-ui/react/pull/1550))
 - Update `Layout` guide @layershifter ([#1595](https://github.com/stardust-ui/react/pull/1595))
+- Fix error when children are missing in `ExampleSnippet` @layershifter ([#1619](https://github.com/stardust-ui/react/pull/1619))
 
 <!--------------------------------[ v0.34.0 ]------------------------------- -->
 ## [v0.34.0](https://github.com/stardust-ui/react/tree/v0.34.0) (2019-06-26)
