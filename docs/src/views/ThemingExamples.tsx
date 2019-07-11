@@ -1,11 +1,22 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Button, Icon, Label, Provider, Header } from '@stardust-ui/react'
+import {
+  Button,
+  Icon,
+  Label,
+  Provider,
+  Header,
+  ComponentStyleFunctionParam,
+} from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
 
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
+
+type NestingThemesVariables = {
+  primaryBackgroundColor: string
+}
 
 export default () => (
   <DocPage title="Theming Examples">
@@ -355,7 +366,10 @@ export default () => (
               },
               componentStyles: {
                 Button: {
-                  root: ({ variables: v, props: p }) => ({
+                  root: ({
+                    variables: v,
+                    props: p,
+                  }: ComponentStyleFunctionParam<any, NestingThemesVariables>) => ({
                     ...(p.primary && {
                       background: v.primaryBackgroundColor,
                     }),
