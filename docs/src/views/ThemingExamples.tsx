@@ -342,11 +342,16 @@ export default () => (
 
           <Provider
             theme={{
+              componentVariables: {
+                Button: {
+                  primaryBackgroundColor: 'darkred',
+                },
+              },
               componentStyles: {
                 Button: {
-                  root: ({ variables, props }) => ({
-                    ...(props.primary && {
-                      background: 'darkred',
+                  root: ({ variables: v, props: p }) => ({
+                    ...(p.primary && {
+                      background: v.primaryBackgroundColor,
                     }),
                   }),
                 },
