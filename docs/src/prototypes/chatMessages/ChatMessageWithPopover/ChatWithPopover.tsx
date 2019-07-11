@@ -130,17 +130,17 @@ const ChatWithPopover = () => {
 const TeamsChatMessage: React.FC<ChatMessageProps> = (props: ChatMessageProps) => {
   const [showActionMenu, setShowActionMenu] = React.useState(false)
   const [forceShowActionMenu, setForceShowActionMenu] = React.useState(false)
-  const [chatMessageRef, setChatMessageRef] = React.useState<HTMLElement>(null)
+  const [chatMessageElement, setChatMessageElement] = React.useState<HTMLElement>(null)
 
   const handleBlur = e => !e.currentTarget.contains(e.relatedTarget) && setShowActionMenu(false)
 
   return (
-    <Ref innerRef={setChatMessageRef}>
+    <Ref innerRef={setChatMessageElement}>
       <Chat.Message
         {...props}
         actionMenu={
           <Popover
-            chatMessageRef={chatMessageRef}
+            chatMessageElement={chatMessageElement}
             onForceShowActionMenuChange={setForceShowActionMenu}
             onShowActionMenuChange={setShowActionMenu}
           />
