@@ -21,6 +21,7 @@ export const contextualColors: TeamsContextualColors = {
     200: '#E2E2F6', // 100, light brand14, dark theme brand02
     300: '#BDBDE6', // 200, light brand12, dark theme brand04
     400: '#A6A7DC', // dark theme brand06 (dark06)
+    450: '#9EA2FF',
     500: '#8B8CC7', // light08, dark08
     600: '#6264A7', // 500, siteVariables.brand, siteVariables.brand06, dark theme brand, brand12
     700: '#585A96', // light05
@@ -158,7 +159,7 @@ export const transparentColors: TeamsTransparentColors = {
     600: undefined,
     700: undefined,
     800: 'rgba(27,26,26,0.9)',
-    900: undefined,
+    900: 'rgba(0,0,0,0.8)',
   },
 }
 
@@ -214,6 +215,7 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     background1: colors.grey[50],
     background2: colors.grey[100],
     background3: colors.grey[150],
+    background4: colors.grey[100],
 
     border: colors.grey[200], // buttons
     border1: colors.grey[150],
@@ -284,6 +286,7 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     background1: colors.brand[100],
     background2: colors.brand[900],
     background3: colors.brand[1000],
+    background4: colors.brand[800],
 
     border: colors.grey[200],
     border1: colors.brand[200],

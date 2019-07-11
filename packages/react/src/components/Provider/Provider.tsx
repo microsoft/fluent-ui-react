@@ -21,15 +21,20 @@ import {
 
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
-import ProviderBox from './ProviderBox'
-import { WithAsProp, ProviderContextInput, ProviderContextPrepared } from '../../types'
+import ProviderBox, { ProviderBoxProps } from './ProviderBox'
+import {
+  WithAsProp,
+  ProviderContextInput,
+  ProviderContextPrepared,
+  withSafeTypeForAs,
+} from '../../types'
 import mergeContexts from '../../lib/mergeProviderContexts'
 
 export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
   rtl?: boolean
   disableAnimations?: boolean
-  theme: ThemeInput
+  theme?: ThemeInput
   variables?: ComponentVariablesInput
 }
 
@@ -183,4 +188,4 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   }
 }
 
-export default Provider
+export default withSafeTypeForAs<typeof Provider, ProviderProps & ProviderBoxProps>(Provider)
