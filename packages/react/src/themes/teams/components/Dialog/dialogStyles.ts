@@ -17,5 +17,6 @@ export default {
 
   headerAction: ({ variables: v }: DialogStyleParams) => ({
     color: v.foregroundColor,
+    margin: v.headerActionMargin,
   }),
 }
