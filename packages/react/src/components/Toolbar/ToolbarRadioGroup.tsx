@@ -154,8 +154,8 @@ ToolbarRadioGroup.create = createShorthandFactory({
 })
 
 /**
- * A ToolbarRadiouGroup renders Toolbar item as a group of options where only one can be chosen.
- * Component itself doesn't guarantee mutual exclusiveness of these options, it just serves accessibility purposes.
+ * A ToolbarRadiouGroup renders Toolbar item as a group of mutually exclusive options.
+ * Component doesn't implement mutual exclusiveness, it just serves accessibility purposes.
  *
  * @accessibility
  * Implements [ARIA RadioGroup](https://www.w3.org/TR/wai-aria-practices/#radiobutton) design pattern.
