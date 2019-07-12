@@ -135,6 +135,30 @@ class Sidebar extends React.Component<any, any> {
     return -1
   }
 
+  getActiveTreeItem(at: String, sections: ShorthandValue<any>[]) {
+    for (let i = 0; i < sections.length; i++) {
+      const category = sections[i]
+      if (!('items' in category)) {
+        continue
+      }
+      for (let j = 0; j < category.items.length; j++) {
+        const item = category.items[j]
+        if (!('title' in item)) {
+          continue
+        }
+        if (item.title.to === at) {
+          return item
+        }
+      }
+    }
+    return -1
+  }
+
+  highlighCurrentTreeItem(at: String, sections: ShorthandValue<any>[]) {
+    const item = this.getActiveTreeItem(at, sections)
+    item.title.content = <u>{item.title.content}</u>
+  }
+
   keyDownCallback(e) {
     if (keyboardKey.getCode(e) !== keyboardKey.Enter) {
       return
@@ -144,8 +168,7 @@ class Sidebar extends React.Component<any, any> {
   }
 
   addItemKeyCallbacks(sections: ShorthandValue<any>[]) {
-    let i
-    for (i = 0; i < sections.length; i++) {
+    for (let i = 0; i < sections.length; i++) {
       const category = sections[i]
       if ('items' in category) {
         this.addItemKeyCallbacks(category.items)
@@ -436,6 +459,7 @@ class Sidebar extends React.Component<any, any> {
     const at = this.props.location.pathname
     const activeCategoryIndex = this.getActiveCategoryIndex(at, allSections)
     this.addItemKeyCallbacks(allSections)
+    this.highlighCurrentTreeItem(at, allSections)
 
     const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
       <Component open={open} hasSubtree={hasSubtree} {...restProps}>
