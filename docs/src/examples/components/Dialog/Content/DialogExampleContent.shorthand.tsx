@@ -7,7 +7,6 @@ const DialogExampleContent: React.FC = () => (
     confirmButton="Confirm"
     content="Are you sure you want to confirm this action?"
     header="Action confirmation"
-    headerAction={{ icon: 'more', title: 'See more options' }}
     trigger={<Button content="Open a dialog" />}
   />
 )
