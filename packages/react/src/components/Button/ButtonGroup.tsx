@@ -27,7 +27,7 @@ export interface ButtonGroupProps
   accessibility?: Accessibility
 
   /** The buttons contained inside the ButtonGroup. */
-  buttons?: ShorthandCollection<ButtonProps>[]
+  buttons?: ShorthandCollection<ButtonProps>
 
   /** The buttons inside group can appear circular. */
   circular?: boolean
