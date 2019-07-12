@@ -438,6 +438,13 @@ class Sidebar extends React.Component<any, any> {
     const activeCategoryIndex = this.getActiveCategoryIndex(at, allSections)
     this.addItemKeyCallbacks(allSections)
 
+    const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
+      <Component open={open} hasSubtree={hasSubtree} {...restProps}>
+        <span>{content}</span>
+        {hasSubtree && <Icon name={open ? 'stardust-arrow-up' : 'stardust-arrow-down'} />}
+      </Component>
+    )
+
     // TODO: bring back the active elements indicators
     return (
       <Provider
@@ -464,7 +471,11 @@ class Sidebar extends React.Component<any, any> {
             />
             <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
           </Segment>
-          <Tree defaultActiveIndex={activeCategoryIndex} items={allSections} />
+          <Tree
+            defaultActiveIndex={activeCategoryIndex}
+            items={allSections}
+            renderItemTitle={titleRenderer}
+          />
         </Segment>
       </Provider>
     )
