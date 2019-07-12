@@ -185,7 +185,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 Tree.create = createShorthandFactory({ Component: Tree, mappedArrayProp: 'items' })
 
 /**
- * Allows users to display data organised in tree-hierarchy.
+ * A Tree displays data organised in tree hierarchy.
+ *
  * @accessibility
  * Implements [ARIA TreeView](https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView) design pattern.
  */

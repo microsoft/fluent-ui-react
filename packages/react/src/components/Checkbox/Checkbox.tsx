@@ -175,7 +175,9 @@ Checkbox.create = createShorthandFactory({
 })
 
 /**
- * A single checkbox within a checkbox group.
+ * A Checkbox allows a user to make choice from a small set of options.
+ * Currently Stardust supports only dual-state checkbox, with two options available to select from.
+ *
  * @accessibility
  * Implements [ARIA Checkbox](https://www.w3.org/TR/wai-aria-practices-1.1/#checkbox) design pattern.
  */

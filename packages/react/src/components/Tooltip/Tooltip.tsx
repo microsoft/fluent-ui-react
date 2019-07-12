@@ -79,8 +79,11 @@ export interface TooltipProps
 }
 
 /**
- * A tooltip that displays information related to an element when the element receives keyboard focus
- * or the mouse hovers over it.
+ * A Tooltip is non-modal element that floats around its target and displays its label.
+ * Tooltip doesn't receive focus and cannot contain focusable elements.
+ *
+ * @accessibility
+ * Implements [ARIA Tooltip](https://www.w3.org/TR/wai-aria-practices-1.1/#tooltip) design pattern.
  */
 export default class Tooltip extends AutoControlledComponent<TooltipProps, TooltipState> {
   static displayName = 'Tooltip'

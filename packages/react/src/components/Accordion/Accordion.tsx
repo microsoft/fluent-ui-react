@@ -308,7 +308,8 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
 }
 
 /**
- * An accordion allows users to toggle the display of sections of content.
+ * An Accordion represents stacked set of content sections, with action elements to toggle the display of these sections.
+ *
  * @accessibility
  * Implements [ARIA Accordion](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion) design pattern (keyboard navigation not yet supported).
  */

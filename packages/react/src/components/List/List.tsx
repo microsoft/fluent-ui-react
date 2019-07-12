@@ -218,6 +218,12 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
 }
 
 /**
- * A list displays a group of related content.
+ * A List displays a group of related sequential items.
+ *
+ * @accessibility
+ * List may follow one of the following accessibility semantics:
+ * - Static non-navigable list. Implements [ARIA list](https://www.w3.org/TR/wai-aria-1.1/#list) role.
+ * - Selectable list: allows the user to select item from a list of choices. Implements [ARIA Listbox](https://www.w3.org/TR/wai-aria-practices-1.1/#Listbox) design pattern.
+ * - Navigable list: contains items with actionable content. Implements [ARIA list](https://www.w3.org/TR/wai-aria-1.1/#list) role.
  */
 export default withSafeTypeForAs<typeof List, ListProps, 'ul'>(List)

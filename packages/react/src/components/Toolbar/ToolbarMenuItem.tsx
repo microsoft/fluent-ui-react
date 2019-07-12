@@ -182,8 +182,7 @@ ToolbarMenuItem.create = createShorthandFactory({
 })
 
 /**
- * Toolbar menu item.
- * This item renders as a button inside a Toolbar menu.
+ * A ToolbarMenuItem renders ToolbarMenu item as button.
  */
 export default withSafeTypeForAs<typeof ToolbarMenuItem, ToolbarMenuItemProps, 'button'>(
   ToolbarMenuItem,

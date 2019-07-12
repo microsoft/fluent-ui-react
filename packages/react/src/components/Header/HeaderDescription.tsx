@@ -64,7 +64,7 @@ HeaderDescription.create = createShorthandFactory({
 })
 
 /**
- * A header's description provides more detailed information.
+ * A HeaderDescription provides more detailed information about the Header.
  */
 export default withSafeTypeForAs<typeof HeaderDescription, HeaderDescriptionProps, 'p'>(
   HeaderDescription,

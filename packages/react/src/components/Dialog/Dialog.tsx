@@ -290,6 +290,8 @@ Dialog.slotClassNames = {
 
 /**
  * A Dialog displays important information on top of a page which usually requires user's attention, confirmation or interaction.
+ * Dialogs are purposefully interruptive, so they should be used sparingly.
+ *
  * @accessibility
  * Implements [ARIA Dialog (Modal)](https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal) design pattern.
  */

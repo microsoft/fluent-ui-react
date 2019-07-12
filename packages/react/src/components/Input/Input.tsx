@@ -227,6 +227,9 @@ Input.slotClassNames = {
 }
 
 /**
- * An input is a field used to elicit a response from a user.
+ * An Input is a field used to elicit an input from a user.
+ *
+ * @accessibility
+ * For good screen reader experience set `aria-label` or `aria-labelledby` attribute for input.
  */
 export default withSafeTypeForAs<typeof Input, InputProps, 'div'>(Input)

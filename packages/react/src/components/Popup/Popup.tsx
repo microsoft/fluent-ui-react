@@ -121,7 +121,11 @@ export interface PopupState {
 }
 
 /**
- * A Popup displays additional information on top of a page.
+ * A Popup is a non-modal element that floats around its target on top of a page.
+ * Often it is used for displaying additional rich content related to its target.
+ *
+ * @accessibility
+ * Popup can contain focusable elements as its children - in this case it needs to [trap focus](https://stardust-ui.github.io/react/components/popup#types-popup-focus-trap-example).
  */
 export default class Popup extends AutoControlledComponent<PopupProps, PopupState> {
   static displayName = 'Popup'
