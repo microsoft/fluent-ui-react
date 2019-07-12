@@ -52,7 +52,7 @@ ToolbarMenuDivider.create = createShorthandFactory({
 })
 
 /**
- * A ToolbarMenuDivider adds non-focusable separator between items of ToolbarMenu.
+ * A ToolbarMenuDivider adds non-actionable separator between items of ToolbarMenu.
  */
 export default withSafeTypeForAs<typeof ToolbarMenuDivider, ToolbarMenuDividerProps, 'li'>(
   ToolbarMenuDivider,
