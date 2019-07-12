@@ -73,6 +73,12 @@ export type HtmlInputAttrs =
   | 'type'
   | 'value'
 
+export type SupportedIntrinsicInputProps = {
+  [K in HtmlInputProps]?: K extends keyof JSX.IntrinsicElements['input']
+    ? JSX.IntrinsicElements['input'][K]
+    : any
+}
+
 export const htmlInputAttrs: HtmlInputAttrs[] = [
   // REACT
   'selected',

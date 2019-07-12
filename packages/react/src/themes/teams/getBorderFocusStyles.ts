@@ -9,6 +9,7 @@ type BorderFocusStyles = CSSBorderStyles & {
   focusInnerBorderColor?: string
   focusOuterBorderColor?: string
   isFromKeyboard?: boolean
+  borderPadding?: React.CSSProperties['padding']
 }
 
 type BorderPseudoElementStyles = CSSBorderStyles & { borderEdgeValue: string }
@@ -44,6 +45,7 @@ const getBorderFocusStyles = (args: BorderFocusStyles): ICSSInJSStyle => {
     focusInnerBorderColor = sv.focusInnerBorderColor || defaultColor,
     focusOuterBorderColor = sv.focusOuterBorderColor || defaultColor,
     isFromKeyboard,
+    borderPadding,
   } = args
 
   const defaultBorderStyles: React.CSSProperties = { borderWidth, borderRadius }
@@ -57,13 +59,16 @@ const getBorderFocusStyles = (args: BorderFocusStyles): ICSSInJSStyle => {
             borderColor: 'transparent',
 
             ':before': getPseudoElementStyles({
-              borderEdgeValue: '0',
+              borderEdgeValue: borderPadding == null ? '0' : `-${borderPadding}`,
               borderColor: focusInnerBorderColor,
               ...defaultBorderStyles,
             }),
 
             ':after': getPseudoElementStyles({
-              borderEdgeValue: `-${borderWidth}`,
+              borderEdgeValue:
+                borderPadding == null
+                  ? `-${borderWidth}`
+                  : `calc(0px - ${borderPadding} - ${borderWidth})`,
               borderColor: focusOuterBorderColor,
               ...defaultBorderStyles,
             }),
