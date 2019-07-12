@@ -449,7 +449,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
     const documentRef = toRefObject(mountDocument)
 
-    const popupContent = Popup.Content.create(content, {
+    const popupContent = Popup.Content.create(content || {}, {
       defaultProps: {
         ...(rtl && { dir: 'rtl' }),
         ...accessibility.attributes.popup,

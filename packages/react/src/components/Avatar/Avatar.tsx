@@ -52,7 +52,7 @@ class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
       content: false,
     }),
     name: PropTypes.string,
-    image: customPropTypes.itemShorthand,
+    image: customPropTypes.itemShorthandWithoutJSX,
     label: customPropTypes.itemShorthand,
     size: customPropTypes.size,
     status: customPropTypes.itemShorthand,

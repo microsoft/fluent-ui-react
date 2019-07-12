@@ -128,7 +128,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     disabled: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.collectionShorthand]),
     menuOpen: PropTypes.bool,
     onMenuOpenChange: PropTypes.func,
