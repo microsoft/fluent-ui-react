@@ -1,5 +1,6 @@
 import {
   AccessibilityAttributes,
+  AccessibilityDefinition,
   ReactAccessibilityBehavior,
   Button,
   ButtonProps,
@@ -151,8 +152,9 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
     const { menuOpen } = this.state
     const [position, align] = _.split(placement, '-') as [Position, Alignment]
     const accessibilityBehavior: ReactAccessibilityBehavior = {
-      attributes: {},
-      ...menuButtonBehavior({ ...this.props, ...this.state }),
+      ...(menuButtonBehavior({ ...this.props, ...this.state }) as Required<
+        AccessibilityDefinition
+      >),
       keyHandlers: {},
     }
 
