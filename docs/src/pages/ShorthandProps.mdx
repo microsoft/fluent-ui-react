@@ -157,11 +157,6 @@ case where custom element's tree should be rendered for the slot, but, at the sa
 the evaluated styles and accessibility behaviors should be preserved for rendered custom
 element.
 
-As you might recall, there is a problem that might happen when React Element is provided
-directly as shorthand value - in that case Stardust props are not propagated to rendered
-element, which may result in broken styles and accessibility. In order to avoid that the
-following strategy should be considered:
-
 ```jsx
 <Button
   icon={render =>
