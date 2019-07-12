@@ -93,7 +93,7 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
   }
 }
 
-Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name' })
+Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name', allowsJSX: false })
 
 /**
  * An icon is a glyph used to represent something else.

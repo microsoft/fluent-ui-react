@@ -61,9 +61,9 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),
     circular: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     iconPosition: PropTypes.oneOf(['start', 'end']),
-    image: customPropTypes.itemShorthand,
+    image: customPropTypes.itemShorthandWithoutJSX,
     imagePosition: PropTypes.oneOf(['start', 'end']),
     fluid: PropTypes.bool,
   }

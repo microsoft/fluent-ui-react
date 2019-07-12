@@ -112,18 +112,16 @@ const ChatMessageExampleStyled = () => (
         },
         {
           key: 'message-id-2',
-          gutter: { content: <Avatar {...janeAvatar} /> },
-          message: {
-            content: (
-              <Chat.Message
-                content={{ content }}
-                author="Jane Doe"
-                timestamp="Yesterday, 10:15 PM"
-                badge={{ icon: 'exclamation' }}
-                reactionGroup={reactions}
-              />
-            ),
-          },
+          gutter: <Avatar {...janeAvatar} />,
+          message: (
+            <Chat.Message
+              content={{ content }}
+              author="Jane Doe"
+              timestamp="Yesterday, 10:15 PM"
+              badge={{ icon: 'exclamation' }}
+              reactionGroup={reactions}
+            />
+          ),
         },
       ]}
     />

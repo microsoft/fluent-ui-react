@@ -65,15 +65,13 @@ const getCustomItem = (args: {
 
   return (
     <Item
-      header={{
-        content: (
-          <span>
-            {header.substring(0, queryStartIndex)}
-            <span style={{ fontWeight }}>{header.substring(queryStartIndex, queryEndIndex)}</span>
-            {header.substring(queryEndIndex)}
-          </span>
-        ),
-      }}
+      header={
+        <span>
+          {header.substring(0, queryStartIndex)}
+          <span style={{ fontWeight }}>{header.substring(queryStartIndex, queryEndIndex)}</span>
+          {header.substring(queryEndIndex)}
+        </span>
+      }
       {...rest}
     />
   )

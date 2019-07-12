@@ -96,7 +96,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     clearable: PropTypes.bool,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fluid: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     iconPosition: PropTypes.oneOf(['start', 'end']),
     input: customPropTypes.itemShorthand,
     inputRef: customPropTypes.ref,

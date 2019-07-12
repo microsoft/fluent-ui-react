@@ -14,7 +14,7 @@ import ColorPalette from './views/ColorPalette'
 import ColorSchemes from './views/ColorSchemes'
 
 import FAQ from './views/FAQ'
-import ShorthandProps from './views/ShorthandProps'
+import * as ShorthandProps from './pages/ShorthandProps.mdx'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
@@ -136,7 +136,7 @@ const Router = () => (
         <DocsLayout exact path="/theming" component={Theming} />
         <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
         <MarkdownPage exact path="/layout" page={Layout} />
-        <DocsLayout exact path="/shorthand-props" component={ShorthandProps} />
+        <MarkdownPage exact path="/shorthand-props" page={ShorthandProps} />
         <DocsLayout
           exact
           path="/integrate-custom-components"

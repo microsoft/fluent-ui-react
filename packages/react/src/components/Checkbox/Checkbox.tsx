@@ -81,7 +81,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     label: customPropTypes.itemShorthand,
     labelPosition: PropTypes.oneOf(['start', 'end']),
     onChange: PropTypes.func,
