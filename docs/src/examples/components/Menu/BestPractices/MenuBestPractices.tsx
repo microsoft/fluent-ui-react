@@ -13,6 +13,13 @@ const doList = [
   </Text>,
   'Provide label to the Menu component using `aria-label` or `aria-labelledby` prop.',
   'Use Shorthand API with items prop instead of using Children API (`<MenuItem>` component directly).',
+  <Text>
+    For render tree customization, use{' '}
+    <Text as="a" href="/shorthand-props#render-callback-argument" color="brand">
+      render callback argument
+    </Text>
+    .
+  </Text>,
 ]
 
 const dontList = ['Do not render focusable or clickable elements inside of the menu item.']
