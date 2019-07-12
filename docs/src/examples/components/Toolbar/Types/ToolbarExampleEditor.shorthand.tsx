@@ -117,15 +117,13 @@ const ToolbarExampleShorthand = () => {
             icon: { name: 'highlight', outline: true },
             active: highlightOpen,
             popup: {
-              content: {
-                content: (
-                  <HighlightPopup
-                    onConfirm={() => {
-                      setHighlightOpen(false)
-                    }}
-                  />
-                ),
-              },
+              content: (
+                <HighlightPopup
+                  onConfirm={() => {
+                    setHighlightOpen(false)
+                  }}
+                />
+              ),
               onOpenChange: (e, { open }) => {
                 setHighlightOpen(open)
               },
