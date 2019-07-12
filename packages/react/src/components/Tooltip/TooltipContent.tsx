@@ -15,7 +15,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
@@ -26,7 +26,6 @@ export interface TooltipContentProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -51,10 +50,6 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
     placement: PropTypes.string,
     pointing: PropTypes.bool,
     pointerRef: customPropTypes.ref,
-  }
-
-  static defaultProps = {
-    accessibility: defaultBehavior,
   }
 
   renderComponent({

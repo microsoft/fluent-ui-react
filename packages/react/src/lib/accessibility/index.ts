@@ -1,4 +1,3 @@
-export { default as defaultBehavior } from './Behaviors/defaultBehavior'
 export { default as alertBehavior } from './Behaviors/Alert/alertBehavior'
 export { default as alertWarningBehavior } from './Behaviors/Alert/alertWarningBehavior'
 export { default as attachmentBehavior } from './Behaviors/Attachment/attachmentBehavior'
@@ -33,8 +32,6 @@ export {
 export { default as radioGroupBehavior } from './Behaviors/Radio/radioGroupBehavior'
 export { default as radioGroupItemBehavior } from './Behaviors/Radio/radioGroupItemBehavior'
 export { default as popupBehavior } from './Behaviors/Popup/popupBehavior'
-export { default as popupFocusTrapBehavior } from './Behaviors/Popup/popupFocusTrapBehavior'
-export { default as popupAutoFocusBehavior } from './Behaviors/Popup/popupAutoFocusBehavior'
 export { default as chatBehavior } from './Behaviors/Chat/chatBehavior'
 export { default as chatMessageBehavior } from './Behaviors/Chat/chatMessageBehavior'
 export { default as gridBehavior } from './Behaviors/Grid/gridBehavior'

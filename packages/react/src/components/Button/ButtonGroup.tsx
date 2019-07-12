@@ -15,7 +15,6 @@ import {
   createShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
 import Button from './Button'
 
 export interface ButtonGroupProps
@@ -24,7 +23,6 @@ export interface ButtonGroupProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -49,7 +47,6 @@ class ButtonGroup extends UIComponent<WithAsProp<ButtonGroupProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'div',
   }
 

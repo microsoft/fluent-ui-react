@@ -9,7 +9,6 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
-import { defaultBehavior } from '../../lib/accessibility'
 
 export interface ToolbarDividerProps
   extends UIComponentProps,
@@ -17,7 +16,6 @@ export interface ToolbarDividerProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 }
@@ -31,10 +29,6 @@ class ToolbarDivider extends UIComponent<WithAsProp<ToolbarDividerProps>> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
-  }
-
-  static defaultProps = {
-    accessibility: defaultBehavior,
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {

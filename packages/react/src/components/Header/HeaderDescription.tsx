@@ -12,7 +12,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface HeaderDescriptionProps
@@ -22,7 +22,6 @@ export interface HeaderDescriptionProps
     ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 }
@@ -39,7 +38,6 @@ class HeaderDescription extends UIComponent<WithAsProp<HeaderDescriptionProps>, 
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'p',
   }
 

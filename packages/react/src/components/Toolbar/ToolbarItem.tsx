@@ -28,7 +28,7 @@ import {
 } from '../../types'
 import { Popper } from '../../lib/positioner'
 import { Accessibility } from '../../lib/accessibility/types'
-import { toolbarItemBehavior, popupFocusTrapBehavior } from '../../lib/accessibility'
+import { toolbarItemBehavior } from '../../lib/accessibility'
 
 import ToolbarMenu from './ToolbarMenu'
 import Icon from '../Icon/Icon'
@@ -96,7 +96,7 @@ export interface ToolbarItemProps
   /**
    * Attaches a `Popup` component to the ToolbarItem.
    * Accepts all props as a `Popup`, except `trigger` and `children`.
-   * Sets `accessibility` to `popupFocusTrapBehavior` by default.
+   * Traps focus by default.
    * @see PopupProps
    */
   popup?: Omit<PopupProps, 'trigger' | 'children'> | string
@@ -227,7 +227,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     if (popup) {
       return Popup.create(popup, {
         defaultProps: {
-          accessibility: popupFocusTrapBehavior,
+          trapFocus: true,
         },
         overrideProps: {
           trigger: renderedItem,
