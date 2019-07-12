@@ -1,7 +1,14 @@
 import { SliderVariables } from './sliderVariables'
 import { SliderProps, SliderState } from '../../../../components/Slider/Slider'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { selectors } from '../../../../styles/selectors'
+
+const selectors = {
+  WEBKIT_THUMB: '::-webkit-slider-thumb',
+  MOZ_THUMB: '::-moz-range-thumb',
+  MS_FILL_LOWER: '::-ms-fill-lower',
+  MS_FILL_UPPER: '::-ms-fill-upper',
+  MS_THUMB: '::-ms-thumb',
+}
 
 const getCommonSlotStyles = (p: SliderProps, v: SliderVariables) => ({
   cursor: 'pointer',
