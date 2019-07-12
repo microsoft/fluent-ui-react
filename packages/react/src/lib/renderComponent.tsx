@@ -56,6 +56,11 @@ export interface RenderConfig<P> {
   render: RenderComponentCallback<P>
 }
 
+const emptyBehavior: ReactAccessibilityBehavior = {
+  attributes: {},
+  keyHandlers: {},
+}
+
 const getAccessibility = (
   props: State & PropsWithVarsAndStyles & { accessibility?: Accessibility },
   actionHandlers: AccessibilityActionHandlers,
@@ -64,17 +69,14 @@ const getAccessibility = (
   const { accessibility } = props
 
   if (_.isNil(accessibility)) {
-    return {
-      attributes: {},
-      keyHandlers: {},
-    }
+    return emptyBehavior
   }
 
   const definition: AccessibilityDefinition = accessibility(props)
   const keyHandlers = getKeyDownHandlers(actionHandlers, definition.keyActions, isRtlEnabled)
 
   return {
-    attributes: {},
+    ...emptyBehavior,
     ...definition,
     keyHandlers,
   }
