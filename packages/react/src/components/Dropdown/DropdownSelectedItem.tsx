@@ -136,7 +136,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
     const renderIcon = _.isNil(icon)
       ? icon
       : render =>
-          render(image, (ComponentType, props) =>
+          render(icon, (ComponentType, props) =>
             Icon.create(icon, {
               defaultProps: {
                 'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
