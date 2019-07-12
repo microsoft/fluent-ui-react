@@ -2,24 +2,24 @@ import { pxToRem } from '../../../../lib'
 import { SiteVariablesPrepared } from '../../../types'
 
 export interface SliderVariables {
-  height: React.CSSProperties['height']
-  length: React.CSSProperties['width']
+  height: string
+  length: string
 
-  railColor: React.CSSProperties['color']
-  railHeight: React.CSSProperties['width']
-  disabledRailColor: React.CSSProperties['color']
+  railColor: string
+  railHeight: string
+  disabledRailColor: string
 
-  thumbColor: React.CSSProperties['color']
-  activeThumbColor: React.CSSProperties['color']
-  disabledThumbColor: React.CSSProperties['color']
-  thumbHeight: React.CSSProperties['height']
-  activeThumbHeight: React.CSSProperties['height']
-  thumbBorderPadding: React.CSSProperties['padding']
-  thumbWidth: React.CSSProperties['width']
-  activeThumbWidth: React.CSSProperties['width']
+  thumbColor: string
+  activeThumbColor: string
+  disabledThumbColor: string
+  thumbHeight: string
+  activeThumbHeight: string
+  thumbBorderPadding: string
+  thumbWidth: string
+  activeThumbWidth: string
 
-  trackColor: React.CSSProperties['color']
-  disabledTrackColor: React.CSSProperties['color']
+  trackColor: string
+  disabledTrackColor: string
 }
 
 export default (siteVars: SiteVariablesPrepared): SliderVariables => {
@@ -38,7 +38,7 @@ export default (siteVars: SiteVariablesPrepared): SliderVariables => {
     disabledThumbColor: colors.grey[200],
     thumbHeight: pxToRem(10),
     activeThumbHeight: pxToRem(10),
-    thumbBorderPadding: 0,
+    thumbBorderPadding: '0',
     thumbWidth: pxToRem(10),
     activeThumbWidth: pxToRem(10),
 

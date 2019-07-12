@@ -28,13 +28,6 @@ import { sliderBehavior } from '../../lib/accessibility'
 import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 import Box from '../Box/Box'
 
-const defaultPropValues = {
-  max: 100,
-  min: 0,
-  step: 1,
-  value: 50,
-}
-
 const processInputValues = (
   p: Pick<SliderProps, 'min' | 'max'> & Pick<SliderState, 'value'>,
 ): { min: number; max: number; value: number; valueAsPercentage: string } => {
@@ -42,9 +35,9 @@ const processInputValues = (
   let max = _.toNumber(p.max)
   let value = _.toNumber(p.value)
 
-  if (isNaN(min)) min = defaultPropValues.min
-  if (isNaN(max)) max = defaultPropValues.max
-  value = isNaN(value) ? defaultPropValues.value : Math.min(max, Math.max(min, value))
+  if (isNaN(min)) min = Number(Slider.defaultProps.min)
+  if (isNaN(max)) max = Number(Slider.defaultProps.max)
+  value = isNaN(value) ? min + (max - min) / 2 : Math.min(max, Math.max(min, value))
   const valueAsPercentage = `${(100 * (value - min)) / (max - min)}%`
 
   return { min, max, value, valueAsPercentage }
@@ -69,7 +62,7 @@ export interface SliderProps
   accessibility?: Accessibility
 
   /** The default value of the slider. */
-  defaultValue?: React.ReactText
+  defaultValue?: string | number
 
   /**
    * A slider can be read-only and unable to change states.
@@ -123,7 +116,7 @@ export interface SliderProps
   step?: SupportedIntrinsicInputProps['step']
 
   /** The value of the slider. */
-  value?: React.ReactText
+  value?: string | number
 
   /**
    * A slider can be displayed vertically.
@@ -164,39 +157,39 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
   static defaultProps: SliderProps = {
     accessibility: sliderBehavior,
     getA11yValueMessageOnChange: ({ value }) => String(value),
-    max: defaultPropValues.max,
-    min: defaultPropValues.min,
-    step: defaultPropValues.step,
+    max: 100,
+    min: 0,
+    step: 1,
   }
 
   static autoControlledProps = ['value']
 
   getInitialAutoControlledState(): Partial<SliderState> {
-    return { value: defaultPropValues.value }
+    return { value: 50 }
   }
 
-  handleChange = (e: React.ChangeEvent) => {
-    const value = _.get(e, 'target.value')
-    _.invoke(this.props, 'onChange', e, { ...this.props, value })
-    this.trySetState({ value })
-  }
-
-  handleFocus = (e: React.FocusEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-    _.invoke(this.props, 'onFocus', e, this.props)
-  }
-
-  handleMouseDown = (e: React.FocusEvent) => {
-    setWhatInputSource('mouse')
-    this.setState({ isFromKeyboard: false })
-    _.invoke(this.props, 'onMouseDown', e, this.props)
-  }
+  handleInputOverrides = () => ({
+    onChange: (e: React.ChangeEvent) => {
+      const value = _.get(e, 'target.value')
+      _.invoke(this.props, 'onChange', e, { ...this.props, value })
+      this.trySetState({ value })
+    },
+    onFocus: (e: React.FocusEvent) => {
+      this.setState({ isFromKeyboard: isFromKeyboard() })
+      _.invoke(this.props, 'onFocus', e, this.props)
+    },
+    onMouseDown: (e: React.FocusEvent) => {
+      setWhatInputSource('mouse')
+      this.setState({ isFromKeyboard: false })
+      _.invoke(this.props, 'onMouseDown', e, this.props)
+    },
+  })
 
   renderComponent({
     ElementType,
     classes,
     accessibility,
-    variables,
+    rtl,
     styles,
     unhandledProps,
   }: RenderResultConfig<SliderProps>) {
@@ -241,18 +234,16 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
                 step,
                 type,
                 value,
-                onChange: this.handleChange,
-                onFocus: this.handleFocus,
-                onMouseDown: this.handleMouseDown,
                 styles: styles.input,
                 ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
               },
+              overrideProps: this.handleInputOverrides,
             })}
           </Ref>
           {/* the thumb slot needs to appear after the input slot */}
           <span
             className={cx(Slider.slotClassNames.thumb, classes.thumb)}
-            style={{ left: valueAsPercentage }}
+            style={{ [rtl ? 'right' : 'left']: valueAsPercentage }}
           />
         </div>
       </ElementType>

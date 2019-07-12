@@ -18,7 +18,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { inputBehavior } from '../../lib/accessibility'
 import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
+import Icon, { IconProps } from '../Icon/Icon'
 import Box from '../Box/Box'
 
 export interface InputSlotClassNames {
@@ -70,7 +70,7 @@ export interface InputProps
   inputRef?: React.Ref<HTMLElement>
 
   /** The value of the input. */
-  value?: React.ReactText
+  value?: string | number
 
   /** Shorthand for the wrapper component. */
   wrapper?: ShorthandValue
@@ -157,9 +157,9 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
                   value,
                   className: Input.slotClassNames.input,
                   styles: styles.input,
-                  onChange: this.handleChange,
                   ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
                 },
+                overrideProps: this.handleInputOverrides,
               })}
             </Ref>
             {Icon.create(this.computeIcon(), {
@@ -180,21 +180,21 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     })
   }
 
-  handleIconOverrides = predefinedProps => ({
-    onClick: (e: React.SyntheticEvent) => {
-      this.handleOnClear(e)
-      this.inputRef.current.focus()
-      _.invoke(predefinedProps, 'onClick', e, this.props)
+  handleInputOverrides = () => ({
+    onChange: (e: React.BaseSyntheticEvent) => {
+      const value = _.get(e, 'target.value')
+      _.invoke(this.props, 'onChange', e, { ...this.props, value })
+      this.trySetState({ value })
     },
   })
 
-  handleChange = (e: React.SyntheticEvent) => {
-    const value = _.get(e, 'target.value')
-
-    _.invoke(this.props, 'onChange', e, { ...this.props, value })
-
-    this.trySetState({ value })
-  }
+  handleIconOverrides = (predefinedProps: IconProps) => ({
+    onClick: (e: React.SyntheticEvent, iconProps: IconProps) => {
+      this.handleOnClear(e)
+      this.inputRef.current.focus()
+      _.invoke(predefinedProps, 'onClick', e, iconProps)
+    },
+  })
 
   handleOnClear = (e: React.SyntheticEvent) => {
     if (this.props.clearable) {

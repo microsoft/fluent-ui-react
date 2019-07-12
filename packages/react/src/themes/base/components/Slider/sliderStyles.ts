@@ -3,18 +3,13 @@ import { SliderProps, SliderState } from '../../../../components/Slider/Slider'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { selectors } from '../../../../styles/selectors'
 
-const getSliderSlotStyles = (p: SliderProps, v: SliderVariables, slot: 'rail' | 'track') => ({
+const getCommonSlotStyles = (p: SliderProps, v: SliderVariables) => ({
   cursor: 'pointer',
   pointerEvents: 'none',
   position: 'absolute',
   border: 0,
   height: v.railHeight,
   marginTop: `calc(${v.height} / 2 - ${v.railHeight} / 2)`,
-
-  ...(slot === 'rail' && { width: '100%', background: v.railColor }),
-  ...(slot === 'track' && { background: v.trackColor }),
-  ...(p.disabled && slot === 'rail' && { background: v.disabledRailColor }),
-  ...(p.disabled && slot === 'track' && { background: v.disabledTrackColor }),
 })
 
 const getFluidStyles = (p: SliderProps) => p.fluid && !p.vertical && { width: '100%' }
@@ -68,9 +63,20 @@ const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVa
     }
   },
 
-  rail: ({ props, variables }) => getSliderSlotStyles(props, variables, 'rail'),
+  rail: ({ props: p, variables: v }) => ({
+    width: '100%',
+    background: v.railColor,
 
-  track: ({ props, variables }) => getSliderSlotStyles(props, variables, 'track'),
+    ...getCommonSlotStyles(p, v),
+    ...(p.disabled && { background: v.disabledRailColor }),
+  }),
+
+  track: ({ props: p, variables: v }) => ({
+    background: v.trackColor,
+
+    ...getCommonSlotStyles(p, v),
+    ...(p.disabled && { background: v.disabledTrackColor }),
+  }),
 
   thumb: ({ props: p, variables: v }) => ({
     border: 0,
