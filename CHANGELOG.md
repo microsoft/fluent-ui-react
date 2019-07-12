@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Split action handlers with "OR" condition in accessibility behaviors @sophieH29 ([#1622](https://github.com/stardust-ui/react/pull/1622))
+- Add `headerAction` slot to the `Dialog` component @mnajdova ([#1617](https://github.com/stardust-ui/react/pull/1617))
 
 <!--------------------------------[ v0.34.1 ]------------------------------- -->
 ## [v0.34.1](https://github.com/stardust-ui/react/tree/v0.34.1) (2019-07-11)
@@ -49,7 +50,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add svg pointing beak to the `Tooltip` component in Teams theme @mnajdova ([#1580](https://github.com/stardust-ui/react/pull/1580))
 - Add new values to the `brand`, `onyx` colors and `background4` token for default and brand color schemes in Teams theme @mnajdova ([#1581](https://github.com/stardust-ui/react/pull/1581))
 - Add additional logic for showing/hiding the `actionMenu` inside the `ChatMessage` in Teams theme, based on a variable @mnajdova ([#1590](https://github.com/stardust-ui/react/pull/1590))
-- Add `headerAction` slot to the `Dialog` component @mnajdova ([#1617](https://github.com/stardust-ui/react/pull/1617))
 
 ### Documentation
 - Ensure docs content doesn't overlap with sidebar @kuzhelov ([#1568](https://github.com/stardust-ui/react/pull/1568))
