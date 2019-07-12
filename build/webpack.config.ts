@@ -107,6 +107,7 @@ const webpackConfig: any = {
       contextRegExp: /moment$/,
     }),
     __DEV__ &&
+      !process.env.CI &&
       new webpack.ProgressPlugin({
         entries: true,
         modules: true,
