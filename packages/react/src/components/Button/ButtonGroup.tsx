@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs, ShorthandCollection } from '../../types'
 import {
   UIComponent,
   childrenExist,
@@ -15,7 +15,7 @@ import {
   createShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import Button from './Button'
+import Button, { ButtonProps } from './Button'
 
 export interface ButtonGroupProps
   extends UIComponentProps,
@@ -27,7 +27,7 @@ export interface ButtonGroupProps
   accessibility?: Accessibility
 
   /** The buttons contained inside the ButtonGroup. */
-  buttons?: ShorthandValue<ButtonProps>[]
+  buttons?: ShorthandCollection<ButtonProps>[]
 
   /** The buttons inside group can appear circular. */
   circular?: boolean

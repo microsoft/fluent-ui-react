@@ -14,7 +14,7 @@ import {
   createShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import Reaction from './Reaction'
+import Reaction, { ReactionProps } from './Reaction'
 
 export interface ReactionGroupProps
   extends UIComponentProps,
