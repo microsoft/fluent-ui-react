@@ -121,18 +121,23 @@ export default () => (
         import { Button } from '@stardust-ui/react'
 
         const btnExample = () => (
-          <Button
-            icon={{
-              name: "at",
-              variables: { color: "brown" }
-            }}
-            content="Send email"
-            variables={{
-              secondaryColor: "coral",
-              secondaryBackgroundColor: "charcoal",
-              paddingLeftRightValue: 20,
-            }}
-          />
+        <Button
+          content="Send email"
+          icon={{ name: 'at', variables: { color: 'brown' }, styles: ({variables: v}) => ({ color: v.color}) }}
+          secondary
+          variables={{
+            secondaryColor: 'coral',
+            secondaryBackgroundColor: 'charcoal',
+            paddingLeftRightValue: 20,
+          }}
+          styles={
+            ({variables: v}) => ({
+                backgroundColor: v.secondaryBackgroundColor,
+                color: v.secondaryColor,
+                padding: v.paddingLeftRightValue
+            })
+          }
+        />
         )
 
         export default btnExample
@@ -140,13 +145,22 @@ export default () => (
       render={() => (
         <Button
           content="Send email"
-          icon={{ name: 'at', variables: { color: 'brown' } }}
+          icon={{
+            name: 'at',
+            variables: { color: 'brown' },
+            styles: ({ variables: v }) => ({ color: v.color }),
+          }}
           secondary
           variables={{
             secondaryColor: 'coral',
             secondaryBackgroundColor: 'charcoal',
             paddingLeftRightValue: 20,
           }}
+          styles={({ variables: v }) => ({
+            backgroundColor: v.secondaryBackgroundColor,
+            color: v.secondaryColor,
+            padding: v.paddingLeftRightValue,
+          })}
         />
       )}
     />
