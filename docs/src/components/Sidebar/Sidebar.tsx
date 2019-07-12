@@ -123,8 +123,7 @@ class Sidebar extends React.Component<any, any> {
 */
 
   getActiveCategoryIndex(at: String, sections: ShorthandValue<any>[]) {
-    let i
-    for (i = 0; i < sections.length; i++) {
+    for (let i = 0; i < sections.length; i++) {
       const category = sections[i]
       if (!('items' in category)) {
         continue
@@ -137,7 +136,7 @@ class Sidebar extends React.Component<any, any> {
   }
 
   keyDownCallback(e) {
-    if (e.key !== 'Enter') {
+    if (keyboardKey.getCode(e) !== keyboardKey.Enter) {
       return
     }
     e.stopPropagation()
