@@ -1,10 +1,22 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Button, Icon, Provider, Text, Animation, Header } from '@stardust-ui/react'
+import {
+  Button,
+  Icon,
+  Provider,
+  Text,
+  Animation,
+  Header,
+  ComponentStyleFunctionParam,
+} from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
+
+type ThemingVariables = {
+  iconColor: string
+}
 
 export default () => (
   <DocPage title="Theming">
@@ -87,7 +99,7 @@ export default () => (
       render={() => (
         <>
           <Icon name="user" circular />
-          <Icon name="user" circular variables={{ color: 'cornflowerblue' }} />
+          <Icon name="user" circular styles={{ color: 'cornflowerblue' }} />
         </>
       )}
     />
@@ -97,12 +109,57 @@ export default () => (
       the <NavLink to="components/provider">Provider</NavLink>.
     </p>
     <ExampleSnippet
+      value={`
+        <>
+          <Icon name="user" circular />
+          <Icon name="user" circular />
+
+          <Provider
+            theme={{
+              componentVariables: {
+                Icon: {
+                  iconColor: 'cornflowerblue'
+                  }
+              },
+              componentStyles: {
+                Icon: {
+                  root: ({variables: v, props: p }) => ({
+                    ...({color: v.iconColor})
+                  })
+                }
+              }
+            }}>
+            <span>
+              <Icon name="user" circular />
+              <Icon name="user" circular />
+            </span>
+          </Provider>
+        </>
+      `}
       render={() => (
         <>
           <Icon name="user" circular />
           <Icon name="user" circular />
 
-          <Provider theme={{ componentVariables: { Icon: { color: 'cornflowerblue' } } }}>
+          <Provider
+            theme={{
+              componentVariables: {
+                Icon: {
+                  iconColor: 'cornflowerblue',
+                },
+              },
+              componentStyles: {
+                Icon: {
+                  root: ({
+                    variables: v,
+                    props: p,
+                  }: ComponentStyleFunctionParam<any, ThemingVariables>) => ({
+                    ...{ color: v.iconColor },
+                  }),
+                },
+              },
+            }}
+          >
             <span>
               <Icon name="user" circular />
               <Icon name="user" circular />
