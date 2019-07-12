@@ -12,7 +12,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import FormField from './FormField'
 
@@ -23,7 +23,6 @@ export interface FormSlotClassNames {
 export interface FormProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -62,7 +61,6 @@ class Form extends UIComponent<WithAsProp<FormProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'form',
   }
 
@@ -103,7 +101,5 @@ class Form extends UIComponent<WithAsProp<FormProps>, any> {
 
 /**
  * A Form displays a set of related user input fields in a structured way.
- * @accessibility
- * Do provide label by using 'aria-label', or 'aria-labelledby' prop.
  */
 export default withSafeTypeForAs<typeof Form, FormProps, 'form'>(Form)

@@ -37,7 +37,6 @@ export interface InputProps
     SupportedIntrinsicInputProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -228,10 +227,5 @@ Input.slotClassNames = {
 
 /**
  * An input is a field used to elicit a response from a user.
- * @accessibility
- * For good screen reader experience set aria-label or aria-labelledby attribute for input.
- *
- * Other considerations:
- *  - if input is search, then use "role='search'"
  */
 export default withSafeTypeForAs<typeof Input, InputProps, 'div'>(Input)
