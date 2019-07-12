@@ -54,7 +54,7 @@ export function createShorthand({
   valueOrRenderCallback,
   options = CREATE_SHORTHAND_DEFAULT_OPTIONS,
 }: {
-  Component: React.ReactType
+  Component: React.ElementType
   allowsJSX?: boolean
   mappedProp?: string
   mappedArrayProp?: string
@@ -86,7 +86,7 @@ export function createShorthand({
 
 type CreateShorthandFactoryConfigInner<TPropName = string> = {
   allowsJSX?: boolean
-  Component: React.ReactType
+  Component: React.ElementType
   mappedProp?: TPropName
   mappedArrayProp?: TPropName
 }
@@ -96,7 +96,7 @@ export type CreateShorthandFactoryConfig = CreateShorthandFactoryConfigInner
 // ============================================================
 /**
  * @param {Object} config Options passed to factory
- * @param {React.ReactType} config.Component A ReactClass or string
+ * @param {React.ElementType} config.Component A ReactClass or string
  * @param {string} config.mappedProp A function that maps a primitive value to the Component props
  * @param {string} config.mappedArrayProp A function that maps an array value to the Component props
  * @param {string} config.allowsJSX Indicates if factory supports React Elements
@@ -153,7 +153,7 @@ function createShorthandFromValue({
   options,
   allowsJSX = true,
 }: {
-  Component: React.ReactType
+  Component: React.ElementType
   mappedProp?: string
   mappedArrayProp?: string
   allowsJSX?: boolean
@@ -174,11 +174,13 @@ function createShorthandFromValue({
 
   // unhandled type warning
   if (process.env.NODE_ENV !== 'production') {
+    const displayName = typeof Component === 'string' ? Component : Component.displayName
+
     if (!valIsPrimitive && !valIsPropsObject && !valIsArray && !valIsReactElement && !valIsNoop) {
       /* eslint-disable-next-line no-console */
       console.error(
         [
-          'Shorthand value must be a string|number|object|array|ReactElements.',
+          `The shorthand prop for "${displayName}" component was passed a JSX element but this slot only supports string|number|object|array|ReactElements.`,
           ' Use null|undefined|boolean for none.',
           ` Received: ${value}`,
         ].join(''),
@@ -189,7 +191,7 @@ function createShorthandFromValue({
       /* eslint-disable-next-line no-console */
       console.error(
         [
-          'Shorthand value must be a string|number|object|array when it is a `allowsJSX={false}`.',
+          `The shorthand prop for "${displayName}" component was passed a JSX element but this slot only supports string|number|object|array.`,
           ' Use null|undefined|boolean for none.',
           ` Received: ${value}`,
         ].join(''),
