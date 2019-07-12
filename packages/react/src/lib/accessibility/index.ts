@@ -1,4 +1,3 @@
-export { default as defaultBehavior } from './Behaviors/defaultBehavior'
 export { default as alertBehavior } from './Behaviors/Alert/alertBehavior'
 export { default as alertWarningBehavior } from './Behaviors/Alert/alertWarningBehavior'
 export { default as attachmentBehavior } from './Behaviors/Attachment/attachmentBehavior'

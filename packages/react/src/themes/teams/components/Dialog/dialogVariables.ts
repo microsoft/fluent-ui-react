@@ -7,6 +7,8 @@ export interface DialogVariables extends BaseDialogVariables {
 
   headerFontSize: string
   headerFontWeight: number
+
+  headerActionMargin: string
 }
 
 export default (siteVariables): DialogVariables => ({
@@ -26,4 +28,6 @@ export default (siteVariables): DialogVariables => ({
 
   overlayBackground: 'rgba(37, 36, 36, .75)', // todo: update to a palette value when daisy has mapped one
   overlayZIndex: 1000,
+
+  headerActionMargin: `${pxToRem(-3)} ${pxToRem(-8)} 0 0`,
 })

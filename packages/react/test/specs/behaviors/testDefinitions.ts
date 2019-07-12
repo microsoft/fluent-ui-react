@@ -463,44 +463,6 @@ definitions.push({
   },
 })
 
-/*
- * ********************** FOCUS TRAP ZONE **********************
- */
-definitions.push({
-  regexp: /Traps focus inside component/,
-  testMethod: (parameters: TestMethod) => {
-    const focusTrapZoneProps = parameters.behavior({}).focusTrap
-
-    expect(focusTrapZoneProps).toBeDefined()
-
-    if (typeof focusTrapZoneProps === 'boolean') {
-      expect(focusTrapZoneProps).toBe(true)
-    } else {
-      expect(focusTrapZoneProps).not.toBeNull()
-      expect(typeof focusTrapZoneProps).toBe('object')
-    }
-  },
-})
-
-/*
- * ********************** AUTO FOCUS ZONE **********************
- */
-definitions.push({
-  regexp: /Automatically focus the first focusable element inside component/,
-  testMethod: (parameters: TestMethod) => {
-    const autofocusZoneProps = parameters.behavior({}).autoFocus
-
-    expect(autofocusZoneProps).toBeDefined()
-
-    if (typeof autofocusZoneProps === 'boolean') {
-      expect(autofocusZoneProps).toBe(true)
-    } else {
-      expect(autofocusZoneProps).not.toBeNull()
-      expect(typeof autofocusZoneProps).toBe('object')
-    }
-  },
-})
-
 // Triggers 'click' action with 'Enter' or 'Spacebar' on 'root'.
 definitions.push({
   regexp: /Triggers '(\w+)' action with '(\S+)' or '(\S+)' on '(\w+)'\./g,
@@ -551,6 +513,32 @@ definitions.push({
     const [action, key, elementToPerformAction] = [...parameters.props]
     const propertyVertical = { vertical: true }
     const expectedKeyNumberVertical = parameters.behavior(propertyVertical).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    expect(expectedKeyNumberVertical).toBe(keyboardKey[key])
+  },
+})
+
+// Triggers 'receiveFocus' action with 'ArrowLeft' on 'root', when has an opened subtree.
+definitions.push({
+  regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when has an opened subtree\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const propertyOpenedSubtree = { open: true, items: [{ a: 1 }] }
+    const expectedKeyNumberVertical = parameters.behavior(propertyOpenedSubtree).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    expect(expectedKeyNumberVertical).toBe(keyboardKey[key])
+  },
+})
+
+// Triggers 'expand' action with 'ArrowRight' on 'root', when has a closed subtree.
+definitions.push({
+  regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when has a closed subtree\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const propertyClosedSubtree = { open: false }
+    const expectedKeyNumberVertical = parameters.behavior(propertyClosedSubtree).keyActions[
       elementToPerformAction
     ][action].keyCombinations[0].keyCode
     expect(expectedKeyNumberVertical).toBe(keyboardKey[key])

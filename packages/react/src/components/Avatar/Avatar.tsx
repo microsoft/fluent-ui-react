@@ -5,7 +5,6 @@ import Image from '../Image/Image'
 import Label from '../Label/Label'
 import Status, { StatusProps } from '../Status/Status'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import {
   createShorthandFactory,
@@ -18,7 +17,6 @@ import {
 export interface AvatarProps extends UIComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -62,7 +60,6 @@ class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     size: 'medium',
     getInitials(name: string) {
       if (!name) {
