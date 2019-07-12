@@ -120,7 +120,7 @@ DropdownItem.slotClassNames = {
 DropdownItem.create = createShorthandFactory({ Component: DropdownItem, mappedProp: 'header' })
 
 /**
- * A DropdownItem represents item of Dropdown.
- * Used to display item with optional rich media metadata.
+ * A DropdownItem represents an option of Dropdown list.
+ * Displays an item with optional rich media metadata.
  */
 export default withSafeTypeForAs<typeof DropdownItem, DropdownItemProps>(DropdownItem)
