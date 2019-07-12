@@ -61,7 +61,7 @@ export interface InputProps
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onChange?: ComponentEventHandler<InputProps>
+  onChange?: ComponentEventHandler<InputProps & { value: string }>
 
   /** The HTML input type. */
   type?: string
@@ -188,7 +188,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     },
   })
 
-  handleChange = (e: React.SyntheticEvent) => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = _.get(e, 'target.value')
 
     _.invoke(this.props, 'onChange', e, { ...this.props, value })

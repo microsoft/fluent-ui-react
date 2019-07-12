@@ -105,7 +105,7 @@ export interface SliderProps
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
-  onChange?: ComponentEventHandler<SliderProps>
+  onChange?: ComponentEventHandler<SliderProps & { value: string }>
 
   /**
    * A number that specifies the granularity that the value must adhere to, or the special value 'any'.
@@ -169,16 +169,16 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
   }
 
   handleInputOverrides = () => ({
-    onChange: (e: React.ChangeEvent) => {
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = _.get(e, 'target.value')
       _.invoke(this.props, 'onChange', e, { ...this.props, value })
       this.trySetState({ value })
     },
-    onFocus: (e: React.FocusEvent) => {
+    onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
       this.setState({ isFromKeyboard: isFromKeyboard() })
       _.invoke(this.props, 'onFocus', e, this.props)
     },
-    onMouseDown: (e: React.FocusEvent) => {
+    onMouseDown: (e: React.MouseEvent<HTMLInputElement>) => {
       setWhatInputSource('mouse')
       this.setState({ isFromKeyboard: false })
       _.invoke(this.props, 'onMouseDown', e, this.props)

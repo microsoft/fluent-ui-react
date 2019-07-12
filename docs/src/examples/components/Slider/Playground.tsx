@@ -21,7 +21,7 @@ const SliderPlayground: React.FunctionComponent = () => {
       step={step}
       value={value}
       vertical={vertical}
-      onChange={(e, data) => setValue(String(data.value))}
+      onChange={(e, data) => setValue(data.value)}
     />
   )
 }
