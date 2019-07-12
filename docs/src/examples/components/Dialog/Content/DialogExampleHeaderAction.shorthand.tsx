@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Button, Dialog } from '@stardust-ui/react'
 import { useBooleanKnob } from '@stardust-ui/docs-components'
 
-const DialogExampleContent: React.FC = () => {
+const DialogExampleHeaderAction: React.FC = () => {
   const [open, setOpen] = useBooleanKnob({ name: 'open' })
   return (
     <Dialog
@@ -18,4 +18,4 @@ const DialogExampleContent: React.FC = () => {
   )
 }
 
-export default DialogExampleContent
+export default DialogExampleHeaderAction
