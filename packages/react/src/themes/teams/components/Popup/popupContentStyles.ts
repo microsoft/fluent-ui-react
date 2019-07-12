@@ -10,12 +10,6 @@ const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupConte
     boxShadow: v.boxShadow,
 
     display: 'block',
-
-    ...(p.unstable_wrapped && {
-      backgroundColor: 'inherit',
-      position: 'relative',
-    }),
-
     ...(p.pointing && getPointerStyles(v.pointerOffset, v.pointerMargin, rtl, p.placement).root),
   }),
 

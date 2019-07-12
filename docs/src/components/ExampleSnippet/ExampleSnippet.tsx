@@ -4,7 +4,8 @@ import * as React from 'react'
 import renderElementToJSX from './renderElementToJSX'
 
 export type ExampleSnippetProps = {
-  render?: () => React.ReactNode
+  children?: React.ReactElement
+  render?: () => React.ReactElement
   value?: string
 }
 
@@ -21,7 +22,9 @@ const renderedStyle = {
 const ExampleSnippet: React.FunctionComponent<ExampleSnippetProps> = props => {
   const { children, render = () => null, value } = props
 
-  const element: React.ReactNode = render() || React.Children.only(children)
+  const child: React.ReactElement | null = render() || children
+  const element: React.ReactElement = child ? React.Children.only(child) : null
+
   const isFunctionWithoutValue = render && !value
   const string = value || renderElementToJSX(element, !isFunctionWithoutValue)
 
