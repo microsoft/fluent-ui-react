@@ -13,7 +13,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface DividerProps
@@ -23,7 +23,6 @@ export interface DividerProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -52,7 +51,6 @@ class Divider extends UIComponent<WithAsProp<DividerProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     size: 0,
   }
 

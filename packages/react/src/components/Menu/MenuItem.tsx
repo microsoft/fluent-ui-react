@@ -395,7 +395,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
       }
     })
 
-    if (shouldStopPropagation) {
+    if (forceTriggerFocus || shouldStopPropagation) {
       e.stopPropagation()
     }
   }

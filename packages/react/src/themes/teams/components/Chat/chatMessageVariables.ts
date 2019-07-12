@@ -26,6 +26,7 @@ export interface ChatMessageVariables {
   isImportantColor: string
   badgeTextColor: string
   reactionGroupMarginLeft: string
+  showActionMenu?: boolean
   timestampColorMine: string
 }
 
@@ -55,5 +56,6 @@ export default (siteVars): ChatMessageVariables => ({
   isImportantColor: siteVars.colors.red[400],
   badgeTextColor: siteVars.colors.white,
   reactionGroupMarginLeft: pxToRem(12),
+  showActionMenu: undefined,
   timestampColorMine: siteVars.colors.grey[500],
 })

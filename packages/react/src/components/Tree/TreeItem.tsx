@@ -115,40 +115,52 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
       _.invoke(this.props, 'onTitleClick', e, this.props)
     },
-    collapseOrReceiveFocus: e => {
-      const { items, open } = this.props
-
-      e.preventDefault()
-
-      // Focuses the title if the event comes from a child item.
-      if (e.currentTarget !== e.target && items && items.length) {
-        e.stopPropagation()
-        this.itemRef.current.focus()
-      } else if (open) {
-        e.stopPropagation()
-        _.invoke(this.props, 'onTitleClick', e, this.props)
-      }
-    },
-    expandOrPassFocus: e => {
-      const { open } = this.props
-
+    receiveFocus: e => {
       e.preventDefault()
       e.stopPropagation()
 
-      if (!open) {
-        _.invoke(this.props, 'onTitleClick', e, this.props)
-      } else {
-        const element = getFirstFocusable(this.treeRef.current, this.treeRef.current, true)
-        if (element) {
-          element.focus()
-        }
+      // Focuses the title if the event comes from a child item.
+      if (this.eventComesFromChildItem(e)) {
+        this.itemRef.current.focus()
+      }
+    },
+    collapse: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      // Handle click on title if the keyboard event was dispatched on that title
+      if (!this.eventComesFromChildItem(e)) {
+        this.handleTitleClick(e)
+      }
+    },
+    expand: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      this.handleTitleClick(e)
+    },
+    focusSubtree: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      const element = getFirstFocusable(this.treeRef.current, this.treeRef.current, true)
+      if (element) {
+        element.focus()
       }
     },
   }
 
+  eventComesFromChildItem = e => {
+    return e.currentTarget !== e.target
+  }
+
+  handleTitleClick = e => {
+    _.invoke(this.props, 'onTitleClick', e, this.props)
+  }
+
   handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
     onClick: (e, titleProps) => {
-      _.invoke(this.props, 'onTitleClick', e, this.props)
+      this.handleTitleClick(e)
       _.invoke(predefinedProps, 'onClick', e, titleProps)
     },
   })
