@@ -13,15 +13,13 @@ const setUserInputValue = (sliderComp: ReactWrapper, value: string) => {
 }
 
 describe('Slider', () => {
-  describe('conformance', () => {
-    isConformant(Slider, {
-      eventTargets: {
-        onChange: 'input',
-        onKeyDown: 'input',
-        onKeyPress: 'input',
-        onKeyUp: 'input',
-      },
-    })
+  isConformant(Slider, {
+    eventTargets: {
+      onChange: 'input',
+      onKeyDown: 'input',
+      onKeyPress: 'input',
+      onKeyUp: 'input',
+    },
   })
 
   describe('auto-controlled', () => {
