@@ -4,13 +4,14 @@ const selectors = {
   input: `.${Slider.slotClassNames.input}`,
 }
 
+const focusSliderStep: ScreenerStep = (builder, keys) => builder.keys('body', keys.tab)
+
 const config: ScreenerTestsConfig = {
-  themes: ['base', 'teams', 'teamsDark', 'teamsHighContrast'],
+  themes: ['teams', 'teamsDark', 'teamsHighContrast'],
   steps: [
-    (builder, keys) => builder.keys(selectors.input, keys.tab).snapshot('Focuses the slider'),
+    (builder, keys) => focusSliderStep(builder, keys).snapshot('Focuses the slider'),
     (builder, keys) =>
-      builder
-        .keys(selectors.input, keys.tab)
+      focusSliderStep(builder, keys)
         .keys(selectors.input, keys.rightArrow)
         .keys(selectors.input, keys.rightArrow)
         .keys(selectors.input, keys.rightArrow)
@@ -18,14 +19,13 @@ const config: ScreenerTestsConfig = {
         .keys(selectors.input, keys.rightArrow)
         .snapshot('Navigates to the right with the right arrow key'),
     (builder, keys) =>
-      builder
-        .keys(selectors.input, keys.tab)
-        .keys(selectors.input, keys.downArrow)
-        .keys(selectors.input, keys.downArrow)
-        .keys(selectors.input, keys.downArrow)
-        .keys(selectors.input, keys.downArrow)
-        .keys(selectors.input, keys.downArrow)
-        .snapshot('Navigates to the right with the dow arrow key'),
+      focusSliderStep(builder, keys)
+        .keys(selectors.input, keys.upArrow)
+        .keys(selectors.input, keys.upArrow)
+        .keys(selectors.input, keys.upArrow)
+        .keys(selectors.input, keys.upArrow)
+        .keys(selectors.input, keys.upArrow)
+        .snapshot('Navigates to the right with the up arrow key'),
   ],
 }
 
