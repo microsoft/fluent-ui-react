@@ -1,6 +1,6 @@
 import * as React from 'react'
 import keyboardKey from 'keyboard-key'
-import { Popup, Menu, Reaction, ReactionProps, popupAutoFocusBehavior } from '@stardust-ui/react'
+import { Popup, Menu, Reaction, ReactionProps } from '@stardust-ui/react'
 
 const getAriaLabel = ({ content: numberOfPersons, icon: emojiType }: ReactionProps) => {
   if (numberOfPersons === 1) {
@@ -9,13 +9,13 @@ const getAriaLabel = ({ content: numberOfPersons, icon: emojiType }: ReactionPro
   return `${numberOfPersons} people reacted this message with a ${emojiType} emoji. Open menu to see people who reacted.`
 }
 
-class ReactionPopup extends React.Component<ReactionProps, any> {
+class ReactionPopup extends React.Component<ReactionProps, { open: boolean }> {
   state = {
     open: false,
   }
 
   handleKeyDownOnMenu = e => {
-    if ((e.shiftKey && e.keyCode === keyboardKey.Tab) || e.keyCode === keyboardKey.Tab) {
+    if (e.keyCode === keyboardKey.Tab) {
       this.setState({ open: false })
     }
   }
@@ -27,6 +27,7 @@ class ReactionPopup extends React.Component<ReactionProps, any> {
   render() {
     return (
       <Popup
+        autoFocus
         trigger={
           <Reaction
             as="button"
@@ -35,21 +36,18 @@ class ReactionPopup extends React.Component<ReactionProps, any> {
             aria-label={getAriaLabel(this.props)}
           />
         }
-        content={{
-          content: (
-            <Menu
-              items={['Jane Doe', 'John Doe']}
-              vertical
-              variables={{ borderColor: 'transparent' }}
-              onKeyDown={this.handleKeyDownOnMenu}
-            />
-          ),
-        }}
+        content={
+          <Menu
+            items={['Jane Doe', 'John Doe']}
+            vertical
+            variables={{ borderColor: 'transparent' }}
+            onKeyDown={this.handleKeyDownOnMenu}
+          />
+        }
         inline
         on="hover"
         open={this.state.open}
         onOpenChange={this.handleOpenChange}
-        accessibility={popupAutoFocusBehavior}
       />
     )
   }

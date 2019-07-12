@@ -4,6 +4,9 @@ import cx from 'classnames'
 
 export interface PopoverProps {
   className?: string
+  onForceShowActionMenuChange?: (val: boolean) => void
+  onShowActionMenuChange?: (val: boolean) => void
+  chatMessageElement?: HTMLElement
 }
 
 interface PopoverState {
@@ -31,10 +34,20 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     this.setState({ focused: e.currentTarget.contains(e.relatedTarget) })
   }
 
+  handleActionableItemClick = e => {
+    const { onShowActionMenuChange, chatMessageElement } = this.props
+    onShowActionMenuChange(false)
+    // Currently when the action menu is closed because of some actionable item is clicked, we focus the ChatMessage
+    // this was not in the spec, so it may be changed if the requirement is different
+    e.type === 'keydown' && chatMessageElement && chatMessageElement.focus()
+  }
+
   render() {
+    const { onShowActionMenuChange, onForceShowActionMenuChange, ...rest } = this.props
+    delete rest.chatMessageElement
     return (
       <Menu
-        {...this.props}
+        {...rest}
         accessibility={popoverBehavior}
         iconOnly
         className={cx(this.props.className, this.state.focused ? 'focused' : '')}
@@ -44,27 +57,35 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile one',
+            onClick: this.handleActionableItemClick,
           },
           {
             key: 'smile2',
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile two',
+            onClick: this.handleActionableItemClick,
           },
           {
             key: 'smile3',
             icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile three',
+            onClick: this.handleActionableItemClick,
           },
           {
             key: 'a',
             icon: 'thumbs up',
             'aria-label': 'thumbs up',
+            onClick: this.handleActionableItemClick,
           },
           {
             key: 'c',
             icon: 'ellipsis horizontal',
+            onMenuOpenChange: (e, { menuOpen }) => {
+              onShowActionMenuChange(true)
+              onForceShowActionMenuChange(menuOpen)
+            },
             'aria-label': 'more options',
             indicator: false,
             menu: {
