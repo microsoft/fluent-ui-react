@@ -3,7 +3,6 @@ import {
   Popup,
   Button,
   Menu,
-  popupFocusTrapBehavior,
   AvatarProps,
   ChatMessageProps,
   DividerProps,
@@ -127,7 +126,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
 
   const actionPopup = (
     <Popup
-      accessibility={popupFocusTrapBehavior}
+      trapFocus
       trigger={
         <Button
           aria-label="More attachment options"

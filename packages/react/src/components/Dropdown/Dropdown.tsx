@@ -696,21 +696,24 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   ) {
     const { loading, loadingMessage, noResultsMessage, renderItem } = this.props
     const { filteredItems } = this.state
-    const items = _.map(filteredItems, (item: DropdownItemProps, index: number) =>
-      DropdownItem.create(item, {
-        defaultProps: {
-          className: Dropdown.slotClassNames.item,
-          active: highlightedIndex === index,
-          selected: !this.props.multiple && value === item,
-          isFromKeyboard: this.state.itemIsFromKeyboard,
-          variables,
-          ...(typeof item === 'object' &&
-            !item.hasOwnProperty('key') && {
-              key: (item as any).header,
-            }),
-        },
-        overrideProps: this.handleItemOverrides(item, index, getItemProps),
-        render: renderItem,
+
+    const items = _.map(filteredItems, (item, index) => render =>
+      render(item, () => {
+        return DropdownItem.create(item, {
+          defaultProps: {
+            className: Dropdown.slotClassNames.item,
+            active: highlightedIndex === index,
+            selected: !this.props.multiple && value === item,
+            isFromKeyboard: this.state.itemIsFromKeyboard,
+            variables,
+            ...(typeof item === 'object' &&
+              !item.hasOwnProperty('key') && {
+                key: (item as any).header,
+              }),
+          },
+          overrideProps: this.handleItemOverrides(item, index, getItemProps),
+          render: renderItem,
+        })
       }),
     )
 
@@ -1339,8 +1342,5 @@ Dropdown.slotClassNames = {
  * Can also be created with search capability.
  * @accessibility
  * Implements [ARIA Combo Box](https://www.w3.org/TR/wai-aria-practices-1.1/#combobox) design pattern, uses aria-live to announce state changes.
- * Do provide getA11ySelectionMessage, getA11yStatusMessage, noResultsMessage and loadingMessage props to announce state changes correctly.
- * Do provide aria-label to triggerButton slot for non-searchable variants if the placeholder prop is not used.
- *
  */
 export default withSafeTypeForAs<typeof Dropdown, DropdownProps>(Dropdown)

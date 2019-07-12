@@ -20,13 +20,12 @@ import {
   menuDividerBehavior,
   submenuBehavior,
   popupBehavior,
-  popupFocusTrapBehavior,
-  popupAutoFocusBehavior,
   dialogBehavior,
   radioGroupBehavior,
   radioGroupItemBehavior,
   selectableListBehavior,
   selectableListItemBehavior,
+  sliderBehavior,
   tabBehavior,
   tabListBehavior,
   toggleButtonBehavior,
@@ -73,12 +72,11 @@ testHelper.addBehavior('menuItemBehavior', menuItemBehavior)
 testHelper.addBehavior('menuDividerBehavior', menuDividerBehavior)
 testHelper.addBehavior('submenuBehavior', submenuBehavior)
 testHelper.addBehavior('popupBehavior', popupBehavior)
-testHelper.addBehavior('popupFocusTrapBehavior', popupFocusTrapBehavior)
-testHelper.addBehavior('popupAutoFocusBehavior', popupAutoFocusBehavior)
 testHelper.addBehavior('radioGroupBehavior', radioGroupBehavior)
 testHelper.addBehavior('radioGroupItemBehavior', radioGroupItemBehavior)
 testHelper.addBehavior('selectableListBehavior', selectableListBehavior)
 testHelper.addBehavior('selectableListItemBehavior', selectableListItemBehavior)
+testHelper.addBehavior('sliderBehavior', sliderBehavior)
 testHelper.addBehavior('tabBehavior', tabBehavior)
 testHelper.addBehavior('tabListBehavior', tabListBehavior)
 testHelper.addBehavior('menuAsToolbarBehavior', menuAsToolbarBehavior)

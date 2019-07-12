@@ -16,19 +16,13 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { inputBehavior } from '../../lib/accessibility'
+import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
-import { HtmlInputProps } from '../../lib/htmlPropsUtils'
 
 export interface InputSlotClassNames {
   input: string
-}
-
-type SupportedIntrinsicInputProps = {
-  [K in HtmlInputProps]?: K extends keyof JSX.IntrinsicElements['input']
-    ? JSX.IntrinsicElements['input'][K]
-    : any
 }
 
 export interface InputProps
@@ -37,7 +31,6 @@ export interface InputProps
     SupportedIntrinsicInputProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -68,7 +61,7 @@ export interface InputProps
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onChange?: ComponentEventHandler<InputProps>
+  onChange?: ComponentEventHandler<InputProps & { value: string }>
 
   /** The HTML input type. */
   type?: string
@@ -77,14 +70,14 @@ export interface InputProps
   inputRef?: React.Ref<HTMLElement>
 
   /** The value of the input. */
-  value?: React.ReactText
+  value?: string | number
 
   /** Shorthand for the wrapper component. */
   wrapper?: ShorthandValue<BoxProps>
 }
 
 export interface InputState {
-  value?: React.ReactText
+  value?: InputProps['value']
 }
 
 class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> {
@@ -103,7 +96,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     clearable: PropTypes.bool,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fluid: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     iconPosition: PropTypes.oneOf(['start', 'end']),
     input: customPropTypes.itemShorthand,
     inputRef: customPropTypes.ref,
@@ -195,7 +188,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     },
   })
 
-  handleChange = (e: React.SyntheticEvent) => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = _.get(e, 'target.value')
 
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
@@ -228,10 +221,5 @@ Input.slotClassNames = {
 
 /**
  * An input is a field used to elicit a response from a user.
- * @accessibility
- * For good screen reader experience set aria-label or aria-labelledby attribute for input.
- *
- * Other considerations:
- *  - if input is search, then use "role='search'"
  */
 export default withSafeTypeForAs<typeof Input, InputProps, 'div'>(Input)

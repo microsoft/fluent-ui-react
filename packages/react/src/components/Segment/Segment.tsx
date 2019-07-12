@@ -10,7 +10,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
 
@@ -20,7 +20,6 @@ export interface SegmentProps
     ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -46,7 +45,6 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'div',
   }
 

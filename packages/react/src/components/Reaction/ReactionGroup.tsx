@@ -14,8 +14,7 @@ import {
   createShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
-import Reaction, { ReactionProps } from './Reaction'
+import Reaction from './Reaction'
 
 export interface ReactionGroupProps
   extends UIComponentProps,
@@ -23,7 +22,6 @@ export interface ReactionGroupProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -41,10 +39,6 @@ class ReactionGroup extends UIComponent<WithAsProp<ReactionGroupProps>> {
   static propTypes = {
     ...commonPropTypes.createCommon(),
     items: customPropTypes.collectionShorthand,
-  }
-
-  static defaultProps = {
-    accessibility: defaultBehavior,
   }
 
   renderComponent({

@@ -15,7 +15,7 @@ import {
   isFromKeyboard,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
@@ -32,7 +32,6 @@ export interface ReactionProps
     ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -67,12 +66,11 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
     }),
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     onFocus: PropTypes.func,
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'span',
   }
 
@@ -129,8 +127,5 @@ Reaction.slotClassNames = {
 
 /**
  * A reaction is used to indicate user's reaction.
- * @accessibility
- * Do use actionable components (for example Button) if the reactions need to be actionable.
- * Do add textual representation to the icon slot if it only contains an icon (using title, aria-label or aria-labelledby props on the slot).
  */
 export default withSafeTypeForAs<typeof Reaction, ReactionProps, 'span'>(Reaction)

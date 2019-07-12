@@ -10,52 +10,44 @@ const items: ShorthandCollection<ChatItemProps> = [
   {
     attached: 'top',
     contentPosition: 'end',
-    message: {
-      content: (
-        <Chat.Message
-          reactionGroup={{
-            items: reactions,
-          }}
-          content="Hello"
-          author="John Doe"
-          timestamp="Yesterday, 10:15 PM"
-          mine
-        />
-      ),
-    },
+    message: (
+      <Chat.Message
+        reactionGroup={{
+          items: reactions,
+        }}
+        content="Hello"
+        author="John Doe"
+        timestamp="Yesterday, 10:15 PM"
+        mine
+      />
+    ),
     key: 'message-1',
   },
   {
     attached: 'bottom',
     contentPosition: 'end',
     key: 'message-2',
-    message: {
-      content: (
-        <Chat.Message
-          reactionGroup={reactions}
-          reactionGroupPosition="end"
-          content="I'm back!"
-          author="John Doe"
-          timestamp="Yesterday, 10:15 PM"
-          mine
-        />
-      ),
-    },
+    message: (
+      <Chat.Message
+        reactionGroup={reactions}
+        reactionGroupPosition="end"
+        content="I'm back!"
+        author="John Doe"
+        timestamp="Yesterday, 10:15 PM"
+        mine
+      />
+    ),
   },
   {
-    gutter: {
-      content: <Avatar image="public/images/avatar/small/ade.jpg" />,
-    },
-    message: {
-      content: (
-        <Chat.Message
-          reactionGroup={reactions}
-          content="Hi"
-          author="Jane Doe"
-          timestamp="Yesterday, 10:15 PM"
-        />
-      ),
-    },
+    gutter: <Avatar image="public/images/avatar/small/ade.jpg" />,
+    message: (
+      <Chat.Message
+        reactionGroup={reactions}
+        content="Hi"
+        author="Jane Doe"
+        timestamp="Yesterday, 10:15 PM"
+      />
+    ),
     key: 'message-3',
   },
 ]

@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import HeaderDescription, { HeaderDescriptionProps } from './HeaderDescription'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface HeaderSlotClassNames {
@@ -29,7 +29,6 @@ export interface HeaderProps
     ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -59,7 +58,6 @@ class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'h1',
   }
 
