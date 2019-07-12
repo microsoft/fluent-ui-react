@@ -76,13 +76,21 @@ export type ColorVariants = Extendable<
   Partial<{
     50: string
     100: string
+    150: string
     200: string
+    250: string
     300: string
+    350: string
     400: string
+    450: string
     500: string
+    550: string
     600: string
+    650: string
     700: string
+    750: string
     800: string
+    850: string
     900: string
   }>,
   string
@@ -130,6 +138,39 @@ type EmphasisColorsStrict = Partial<{
 export type EmphasisColors = Extendable<EmphasisColorsStrict, ColorVariants>
 
 /**
+ * A type for a predefined category colors.
+ */
+type CategoryColorsStrict = Partial<{
+  redDark: ColorVariants
+  red: ColorVariants
+  orangeDark: ColorVariants
+  orange: ColorVariants
+  orangeLight: ColorVariants
+  yellowDark: ColorVariants
+  yellow: ColorVariants
+  brown: ColorVariants
+  oliveDark: ColorVariants
+  olive: ColorVariants
+  greenDark: ColorVariants
+  green: ColorVariants
+  tealDark: ColorVariants
+  teal: ColorVariants
+  tealLight: ColorVariants
+  blueDark: ColorVariants
+  blue: ColorVariants
+  purpleDark: ColorVariants
+  purple: ColorVariants
+  maroon: ColorVariants
+  pink: ColorVariants
+  smokeDark: ColorVariants
+  smokeLight: ColorVariants
+  steelDark: ColorVariants
+  steelLight: ColorVariants
+}>
+
+type CategoryColorNames = keyof CategoryColorsStrict
+
+/**
  * A type for extracting the color names.
  */
 export type ColorNames = keyof (EmphasisColorsStrict & NaturalColorsStrict)
@@ -141,6 +182,14 @@ export type ColorValues<T, Colors extends string | number | symbol = ColorNames>
   Partial<Record<Colors, T>>,
   T
 >
+
+/**
+ * A type for an extendable set of CategoryColorNames properties of type T
+ */
+type CategoryColorValues<
+  T,
+  Colors extends string | number | symbol = CategoryColorNames
+> = Extendable<Partial<Record<Colors, T>>, T>
 
 /**
  * A type for a base colors.
@@ -210,6 +259,17 @@ export type StrictColorSchemeMapping<
   Scheme = StrictColorScheme,
   Colors extends string | number | symbol = ColorNames
 > = ColorValues<Scheme, Colors> & {
+  default?: Scheme
+}
+
+export type CategoryColorScheme<T extends string | number | symbol = ComponentAreaName> = Partial<
+  Record<T, string>
+>
+
+export type CategoryColorSchemeMapping<
+  Scheme = CategoryColorScheme,
+  Colors extends string | number | symbol = CategoryColorNames
+> = CategoryColorValues<Scheme, Colors> & {
   default?: Scheme
 }
 

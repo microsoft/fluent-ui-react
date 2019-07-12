@@ -1,5 +1,5 @@
 import { colors } from '../teams/siteVariables'
-import { ColorSchemeMapping } from '../../themes/types'
+import { CategoryColorSchemeMapping, ColorSchemeMapping } from '../../themes/types'
 
 export const accessibleYellow = '#ffff01'
 export const accessibleGreen = '#3ff23f' // always disabled color in high contrast
@@ -231,4 +231,41 @@ export const colorScheme: ColorSchemeMapping = {
     shadowDisabled: undefined,
   },
   yellow: createColorScheme(),
+}
+
+const createCategoryColorScheme = (customValues = {}) => {
+  return {
+    foreground1: colors.black,
+    foreground2: accessibleYellow,
+    background: accessibleYellow,
+    ...customValues,
+  }
+}
+
+export const categoryColorSchemes: CategoryColorSchemeMapping = {
+  redDark: createCategoryColorScheme(),
+  red: createCategoryColorScheme(),
+  orangeDark: createCategoryColorScheme(),
+  orange: createCategoryColorScheme(),
+  orangeLight: createCategoryColorScheme(),
+  yellowDark: createCategoryColorScheme(),
+  yellow: createCategoryColorScheme(),
+  brown: createCategoryColorScheme(),
+  oliveDark: createCategoryColorScheme(),
+  olive: createCategoryColorScheme(),
+  greenDark: createCategoryColorScheme(),
+  green: createCategoryColorScheme(),
+  tealDark: createCategoryColorScheme(),
+  teal: createCategoryColorScheme(),
+  tealLight: createCategoryColorScheme(),
+  blueDark: createCategoryColorScheme(),
+  blue: createCategoryColorScheme(),
+  purpleDark: createCategoryColorScheme(),
+  purple: createCategoryColorScheme(),
+  maroon: createCategoryColorScheme(),
+  pink: createCategoryColorScheme(),
+  smokeDark: createCategoryColorScheme(),
+  smokeLight: createCategoryColorScheme(),
+  steelDark: createCategoryColorScheme(),
+  steelLight: createCategoryColorScheme(),
 }

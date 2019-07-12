@@ -1,5 +1,5 @@
-import { colors } from '../teams/siteVariables'
-import { ColorSchemeMapping } from '../../themes/types'
+import { categoryColors, colors } from '../teams/siteVariables'
+import { ColorSchemeMapping, CategoryColorSchemeMapping } from '../../themes/types'
 
 const createColorScheme = (color: string, customValues = {}) => {
   return {
@@ -290,4 +290,41 @@ export const colorScheme: ColorSchemeMapping = {
   yellow: createColorScheme('yellow', {
     background: colors.yellow[100],
   }),
+}
+
+const createCategoryColorScheme = (color: string, customValues = {}) => {
+  return {
+    foreground1: categoryColors[color][250],
+    foreground2: categoryColors[color][550],
+    background: categoryColors[color][800],
+    ...customValues,
+  }
+}
+
+export const categoryColorSchemes: CategoryColorSchemeMapping = {
+  redDark: createCategoryColorScheme('redDark'),
+  red: createCategoryColorScheme('red'),
+  orangeDark: createCategoryColorScheme('orangeDark'),
+  orange: createCategoryColorScheme('orange'),
+  orangeLight: createCategoryColorScheme('orangeLight'),
+  yellowDark: createCategoryColorScheme('yellowDark'),
+  yellow: createCategoryColorScheme('yellow'),
+  brown: createCategoryColorScheme('brown'),
+  oliveDark: createCategoryColorScheme('oliveDark'),
+  olive: createCategoryColorScheme('olive'),
+  greenDark: createCategoryColorScheme('greenDark'),
+  green: createCategoryColorScheme('green'),
+  tealDark: createCategoryColorScheme('tealDark'),
+  teal: createCategoryColorScheme('teal'),
+  tealLight: createCategoryColorScheme('tealLight'),
+  blueDark: createCategoryColorScheme('blueDark'),
+  blue: createCategoryColorScheme('blue'),
+  purpleDark: createCategoryColorScheme('purpleDark'),
+  purple: createCategoryColorScheme('purple'),
+  maroon: createCategoryColorScheme('maroon'),
+  pink: createCategoryColorScheme('pink'),
+  smokeDark: createCategoryColorScheme('smokeDark'),
+  smokeLight: createCategoryColorScheme('smokeLight'),
+  steelDark: createCategoryColorScheme('steelDark'),
+  steelLight: createCategoryColorScheme('steelLight'),
 }

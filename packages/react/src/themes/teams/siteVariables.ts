@@ -4,6 +4,7 @@ import { colors } from './colors'
 //
 // COLORS
 //
+export { categoryColors, categoryColorSchemes } from './categoryColors'
 export {
   colors,
   contextualColors,
