@@ -55,7 +55,7 @@ export interface DialogProps
   /** A dialog can contain a header. */
   header?: ShorthandValue
 
-  /** A dialog can contain an button next to the header. */
+  /** A dialog can contain a button next to the header. */
   headerAction?: ShorthandValue
 
   /**
