@@ -103,6 +103,6 @@ class Text extends UIComponent<WithAsProp<TextProps>, any> {
 Text.create = createShorthandFactory({ Component: Text, mappedProp: 'content' })
 
 /**
- * A Text component is used to consistently style and format occurrences of text.
+ * A Text consistently styles and formats occurrences of text.
  */
 export default withSafeTypeForAs<typeof Text, TextProps, 'span'>(Text)

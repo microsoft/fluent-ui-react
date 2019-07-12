@@ -97,7 +97,7 @@ class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
 Header.create = createShorthandFactory({ Component: Header, mappedProp: 'content' })
 
 /**
- * A Header is used to organise the content by declaring a content's topic.
+ * A Header organises the content by declaring a content's topic.
  *
  * @accessibility
  * Headings communicate the organization of the content on the page. Web browsers, plug-ins, and assistive technologies can use them to provide in-page navigation.

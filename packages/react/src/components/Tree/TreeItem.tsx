@@ -219,7 +219,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 TreeItem.create = createShorthandFactory({ Component: TreeItem, mappedProp: 'title' })
 
 /**
- * A TreeItem is used to render an item of a Tree.
+ * A TreeItem renders an item of a Tree.
  *
  * @accessibility
  * Implements [ARIA TreeView](https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView) design pattern.

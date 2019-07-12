@@ -126,6 +126,6 @@ Reaction.slotClassNames = {
 }
 
 /**
- * A Reaction is used to indicate user's perception.
+ * A Reaction indicates user's perception.
  */
 export default withSafeTypeForAs<typeof Reaction, ReactionProps, 'span'>(Reaction)

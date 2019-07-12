@@ -150,6 +150,6 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
 Label.create = createShorthandFactory({ Component: Label, mappedProp: 'content' })
 
 /**
- * A Label is used to classify content.
+ * A Label classifies a content.
  */
 export default withSafeTypeForAs<typeof Label, LabelProps, 'span'>(Label)

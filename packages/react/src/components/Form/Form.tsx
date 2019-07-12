@@ -100,6 +100,6 @@ class Form extends UIComponent<WithAsProp<FormProps>, any> {
 }
 
 /**
- * A Form is used to collect, validate, and submit the user input, in a structured way.
+ * A Form collects, validates, and submits the user input, in a structured way.
  */
 export default withSafeTypeForAs<typeof Form, FormProps, 'form'>(Form)
