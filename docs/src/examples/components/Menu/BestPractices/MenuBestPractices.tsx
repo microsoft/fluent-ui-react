@@ -6,7 +6,6 @@ import { link } from '../../../../utils/helpers'
 
 const doList = [
   <Text>
-    {link('render callback argument', '/shorthand-props#render-callback-argument')}
     Choose desired accessibility behavior depending on the use case. (Check the{' '}
     {link('Behaviors', '/behaviors/menu')} section).
   </Text>,
