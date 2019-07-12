@@ -66,8 +66,9 @@ class DocsLayout extends React.Component<any, any> {
     })
   }
 
-  renderChildren = props => {
+  renderChildren() {
     const { children, render } = this.props
+    const sidebarWidth = 270
 
     return (
       <>
@@ -85,9 +86,9 @@ class DocsLayout extends React.Component<any, any> {
             },
           })}
         >
-          <Sidebar />
+          <Sidebar width={sidebarWidth} />
         </Provider>
-        <div role="main" style={{ marginLeft: 250 }}>
+        <div role="main" style={{ marginLeft: sidebarWidth }}>
           {render ? render() : children}
         </div>
       </>

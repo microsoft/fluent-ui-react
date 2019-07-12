@@ -1,4 +1,4 @@
-import { Icon, Menu, Tree, Segment, Text, ICSSInJSStyle, Provider } from '@stardust-ui/react'
+import { Icon, Tree, Segment, Text, ICSSInJSStyle, Provider } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
@@ -122,7 +122,7 @@ class Sidebar extends React.Component<any, any> {
     })
 */
 
-  getActiveCategoryIndex(at: String, sections: ShorthandValue[]) {
+  getActiveCategoryIndex(at: String, sections: ShorthandValue<any>[]) {
     let i
     for (i = 0; i < sections.length; i++) {
       const category = sections[i]
@@ -136,10 +136,11 @@ class Sidebar extends React.Component<any, any> {
     return -1
   }
 
-  keyUpCallback(e) {
+  keyDownCallback(e) {
     if (e.key !== 'Enter') {
       return
     }
+    e.stopPropagation()
     e.target.click()
   }
 
@@ -147,17 +148,14 @@ class Sidebar extends React.Component<any, any> {
     let i
     for (i = 0; i < sections.length; i++) {
       const category = sections[i]
-      if (!('items' in category)) {
-        continue
-      }
-      let j
-      for (j = 0; j < category.items.length; j++) {
-        const item = category.items[j]
-        if (!('title' in item)) {
+      if ('items' in category) {
+        this.addItemKeyCallbacks(category.items)
+      } else {
+        if (!('title' in category)) {
           continue
         }
-        item['onKeyUp'] = e => {
-          this.keyUpCallback(e)
+        category['onKeyDown'] = e => {
+          this.keyDownCallback(e)
         }
       }
     }
@@ -288,7 +286,7 @@ class Sidebar extends React.Component<any, any> {
     // Should be applied by provider
     const sidebarStyles: ICSSInJSStyle = {
       background: '#201f1f',
-      width: '255px',
+      width: this.props.width,
       position: 'fixed',
       overflowY: 'scroll',
       top: 0,
@@ -314,18 +312,6 @@ class Sidebar extends React.Component<any, any> {
       color: '#ffffff80',
     }
 
-    const dividerStyles: ICSSInJSStyle = {
-      marginTop: '.5em',
-      paddingBottom: '.5em',
-      background: '#201f1f',
-    }
-
-    const navBarStyles: ICSSInJSStyle = {
-      color: '#ffffff80',
-      padding: '0px',
-      backgroundColor: '#201f1f',
-    }
-
     const logoStyles: ICSSInJSStyle = {
       paddingRight: '5px',
       color: 'white',
@@ -347,41 +333,40 @@ class Sidebar extends React.Component<any, any> {
       return { items }
     })
 
-    const topMenuItems: ShorthandValue[] = [
+    const topTreeItems: ShorthandValue[] = [
       {
         key: 'github',
-        content: (
-          <div style={flexDislayStyle}>
-            GitHub
-            <Icon name="github" styles={{ float: 'right' }} />
-          </div>
-        ),
-        href: constants.repoURL,
-        target: '_blank',
-        rel: 'noopener noreferrer',
+        title: {
+          content: (
+            <div style={flexDislayStyle}>
+              GitHub
+              <Icon name="github" styles={{ float: 'right' }} />
+            </div>
+          ),
+          href: constants.repoURL,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+        },
         styles: treeItemStyles,
       },
       {
         key: 'change',
-        content: (
-          <div style={flexDislayStyle}>
-            CHANGELOG
-            <Icon name="file alternate outline" styles={{ float: 'right' }} />
-          </div>
-        ),
-        href: changeLogUrl,
-        target: '_blank',
-        rel: 'noopener noreferrer',
+        title: {
+          content: (
+            <div style={flexDislayStyle}>
+              CHANGELOG
+              <Icon name="file alternate outline" styles={{ float: 'right' }} />
+            </div>
+          ),
+          href: changeLogUrl,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+        },
         styles: treeItemStyles,
-      },
-      {
-        key: 'divider1',
-        kind: 'divider',
-        styles: dividerStyles,
       },
     ]
 
-    const treeItems = this.getTreeItems(treeSectionStyles, treeItemStyles)
+    const treeItems = topTreeItems.concat(this.getTreeItems(treeSectionStyles, treeItemStyles))
 
     const prototypesTreeItems: ShorthandValue[] = [
       {
@@ -515,7 +500,6 @@ class Sidebar extends React.Component<any, any> {
             />
             <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
           </Segment>
-          {<Menu vertical fluid pills styles={navBarStyles} items={topMenuItems} />}
           <Tree defaultActiveIndex={activeCategoryIndex} items={allSections} />
         </Segment>
       </Provider>

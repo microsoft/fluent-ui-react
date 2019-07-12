@@ -108,10 +108,5 @@ Text.create = createShorthandFactory({ Component: Text, mappedProp: 'content' })
  * A Text component formats occurrences of text consistently.
  * @accessibility
  * Text is how people read the content on your website.
- * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
- *
- * To ensure that RTL mode will be properly handled for provided 'content' value, ensure that either:
- * - 'content' is provided as plain string (then dir="auto" attribute will be applied automatically)
- * - for other 'content' value types (i.e. that use elements inside) ensure that dir="auto" attribute is applied for all places in content where necessary
  */
 export default withSafeTypeForAs<typeof Text, TextProps, 'span'>(Text)
