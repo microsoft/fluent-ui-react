@@ -42,6 +42,7 @@ import AlertsPrototype from './prototypes/alerts'
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
     <Switch>
+      <Route exact path="/maximize/prototype-custom-toolbar" component={CustomToolbarPrototype} />
       <Route exact path="/maximize/:exampleName/:rtl?" component={ExternalExampleLayout} />
       <Switch>
         <DocsLayout exact path="/" component={Introduction} />

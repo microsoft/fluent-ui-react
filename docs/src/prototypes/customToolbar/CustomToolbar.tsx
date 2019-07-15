@@ -34,6 +34,10 @@ export interface CustomToolbarProps {
   onPptNextClick?: () => void
 
   onEndCallClick?: () => void
+
+  moreOptionsPopupContent?: React.ReactNode
+
+  label?: string
 }
 
 type CustomToolbarItem = (ToolbarItemProps | ToolbarCustomItemProps) & {
@@ -76,6 +80,7 @@ const commonLayout: CustomToolbarLayout = props =>
     },
 
     {
+      id: 'toolbar-mic-button',
       active: props.micActive,
       icon: {
         name: props.micActive ? 'mic' : 'mic-off',
@@ -103,7 +108,9 @@ const commonLayout: CustomToolbarLayout = props =>
         name: 'more',
         size: 'large',
       },
-      onClick: () => _.invoke(props, 'onMoreClick'),
+      //       onClick: () => _.invoke(props, 'onMoreClick'),
+      popup: { content: props.moreOptionsPopupContent },
+
       variables: { isCtItemPrimary: true },
     },
   ].filter(Boolean)
@@ -214,9 +221,9 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
 }
 
 const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
-  const { layout = 'standard' } = props
+  const { layout = 'standard', label } = props
 
-  return <Toolbar variables={{ isCt: true }} items={layouts[layout](props)} />
+  return <Toolbar variables={{ isCt: true }} items={layouts[layout](props)} aria-label={label} />
 }
 
 export default CustomToolbar
