@@ -148,6 +148,6 @@ AccordionTitle.slotClassNames = {
 }
 
 /**
- * An AccordionTitle represents the title of Accordion's item that client could interact with to expand or collapse the item's content.
+ * An AccordionTitle represents the title of Accordion's item that can be interacted with to expand or collapse the item's content.
  */
 export default withSafeTypeForAs<typeof AccordionTitle, AccordionTitleProps>(AccordionTitle)

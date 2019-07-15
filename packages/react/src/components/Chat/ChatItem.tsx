@@ -147,6 +147,6 @@ ChatItem.slotClassNames = {
 }
 
 /**
- * A ChatItem is container for single event in Chat (e.g. message, notification, etc).
+ * A ChatItem is container for single entity in Chat (e.g. message, notification, etc).
  */
 export default withSafeTypeForAs<typeof ChatItem, ChatItemProps, 'li'>(ChatItem)
