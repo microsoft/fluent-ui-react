@@ -54,29 +54,29 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
   }),
 
   toggle: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    background: v.toggleBackground,
+    background: v.checkboxToggleBackground,
     borderColor: v.toggleBorderColor,
     borderStyle: v.toggleBorderStyle,
     borderRadius: v.toggleBorderRadius,
     borderWidth: v.toggleBorderWidth,
     boxShadow: 'unset',
-    color: v.toggleColor,
+    color: v.toggleIndicatorColor,
     margin: v.toggleMargin,
 
     padding: v.togglePadding,
     transition: 'padding .3s ease',
 
     ...(p.checked && {
-      background: v.checkedToggleBackground,
-      borderColor: v.checkedToggleBorderColor,
-      color: v.checkedToggleColor,
-      padding: v.checkedTogglePadding,
+      background: v.checkboxToggleCheckedBackground,
+      borderColor: v.checkboxToggleCheckedBorderColor,
+      color: v.checkboxToggleCheckedColor,
+      padding: v.toggleCheckedPadding,
     }),
 
     ...(p.disabled && {
-      background: v.disabledToggleBackground,
+      background: v.disabledcheckboxToggleBackground,
       borderColor: v.disabledToggleBorderColor,
-      color: v.disabledToggleColor,
+      color: v.disabledtoggleIndicatorColor,
     }),
   }),
 }
