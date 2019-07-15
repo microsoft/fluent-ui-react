@@ -30,7 +30,7 @@ const Usages = () => (
       description={
         <>
           {'The items inside the Menu as actionable element should be rendered with '}
-          <Link to="tooltip">tooltip</Link>
+          <Link to="/components/tooltip">tooltip</Link>
         </>
       }
       examplePath="components/Menu/Usages/MenuExampleWithTooltip"

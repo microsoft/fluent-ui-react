@@ -15,7 +15,7 @@ const Usage = () => (
       description={
         <>
           {'The button as actionable element should be rendered with '}
-          <Link to="tooltip">tooltip</Link>
+          <Link to="/components/tooltip">tooltip</Link>
         </>
       }
       examplePath="components/Button/Usage/ButtonExampleWithTooltip"

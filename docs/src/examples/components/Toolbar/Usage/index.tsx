@@ -10,7 +10,7 @@ const Usage = () => (
       description={
         <>
           {'The items inside the Toolbar as actionable element should be rendered with '}
-          <Link to="tooltip">tooltip</Link>
+          <Link to="/components/tooltip">tooltip</Link>
         </>
       }
       examplePath="components/Toolbar/Usage/ToolbarExampleWithTooltip"
