@@ -90,7 +90,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
     right: v.actionMenuPositionRight,
     top: v.actionMenuPositionTop,
     // we need higher zIndex for the action menu in order to be displayed above the focus border of the chat message
-    zIndex: 1,
+    zIndex: 1000,
 
     ...(_.isNil(v.showActionMenu) && {
       overflow: p.focused ? 'visible' : 'hidden',
