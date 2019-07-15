@@ -148,6 +148,12 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
             color: textPrimaryColorHover,
           },
         }),
+
+        ':focus': {
+          boxShadow: 'none',
+          outline: 'none',
+          ...(isFromKeyboard && borderFocusStyles),
+        },
       }),
 
       // Overrides for "primary" buttons

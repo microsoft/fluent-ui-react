@@ -17,6 +17,7 @@ import Icon from '../Icon/Icon'
 import Text from '../Text/Text'
 import { Accessibility } from '../../lib/accessibility/types'
 import { checkboxBehavior } from '../../lib/accessibility'
+import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 
 export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -26,13 +27,13 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
   accessibility?: Accessibility
 
   /** Initial checked value. */
-  defaultChecked?: boolean
+  defaultChecked?: SupportedIntrinsicInputProps['defaultChecked']
 
   /** Whether or not item is checked. */
-  checked?: boolean
+  checked?: SupportedIntrinsicInputProps['checked']
 
   /** An item can appear disabled and be unable to change states. */
-  disabled?: boolean
+  disabled?: SupportedIntrinsicInputProps['disabled']
 
   /** The item indicator can be user-defined icon. */
   icon?: ShorthandValue
@@ -62,7 +63,7 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
 }
 
 export interface CheckboxState {
-  checked: boolean
+  checked: CheckboxProps['checked']
   isFromKeyboard: boolean
 }
 
@@ -80,7 +81,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     label: customPropTypes.itemShorthand,
     labelPosition: PropTypes.oneOf(['start', 'end']),
     onChange: PropTypes.func,
