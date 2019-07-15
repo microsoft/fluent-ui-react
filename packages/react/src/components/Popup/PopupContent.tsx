@@ -22,7 +22,6 @@ import {
   AutoFocusZoneProps,
   AutoFocusZone,
 } from '../../lib/accessibility/FocusZone'
-import { defaultBehavior } from '../../lib/accessibility'
 import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
@@ -31,10 +30,7 @@ export interface PopupContentProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /**
@@ -82,10 +78,6 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
     pointerRef: customPropTypes.ref,
     trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     autoFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  }
-
-  static defaultProps = {
-    accessibility: defaultBehavior,
   }
 
   handleMouseEnter = e => {

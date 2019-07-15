@@ -61,6 +61,8 @@ export { default as ReactionGroup } from './components/Reaction/reactionGroupVar
 
 export { default as Segment } from './components/Segment/segmentVariables'
 
+export { default as Slider } from './components/Slider/sliderVariables'
+
 export { default as Status } from './components/Status/statusVariables'
 
 export { default as Text } from './components/Text/textVariables'

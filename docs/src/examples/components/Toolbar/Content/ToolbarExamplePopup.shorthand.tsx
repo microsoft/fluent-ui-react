@@ -37,15 +37,13 @@ const ToolbarExamplePopupShorthand = () => {
           icon: { name: 'highlight', outline: true },
           active: highlightOpen,
           popup: {
-            content: {
-              content: (
-                <HighlightPopup
-                  onConfirm={() => {
-                    setHighlightOpen(false)
-                  }}
-                />
-              ),
-            },
+            content: (
+              <HighlightPopup
+                onConfirm={() => {
+                  setHighlightOpen(false)
+                }}
+              />
+            ),
             onOpenChange: (e, { open }) => {
               setHighlightOpen(open)
             },
@@ -57,7 +55,7 @@ const ToolbarExamplePopupShorthand = () => {
           icon: { name: 'font-color', outline: true },
           active: fontColorActive,
           popup: {
-            content: { content: <Input icon="search" placeholder="Search..." /> },
+            content: <Input icon="search" placeholder="Search..." />,
             onOpenChange: () => {
               setFontColorActive(!fontColorActive)
             },

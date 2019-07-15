@@ -66,7 +66,7 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
     active: PropTypes.bool,
     content: customPropTypes.itemShorthand,
     header: customPropTypes.itemShorthand,
-    image: customPropTypes.itemShorthand,
+    image: customPropTypes.itemShorthandWithoutJSX,
     onClick: PropTypes.func,
     isFromKeyboard: PropTypes.bool,
     selected: PropTypes.bool,
