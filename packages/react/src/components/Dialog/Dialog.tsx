@@ -98,9 +98,6 @@ export interface DialogState {
   open?: boolean
 }
 
-/**
- * A Dialog informs users about specific tasks or may contain critical information, require decisions, or involve multiple interactions.
- */
 class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogState> {
   static displayName = 'Dialog'
   static className = 'ui-dialog'
@@ -310,5 +307,6 @@ Dialog.slotClassNames = {
  *
  * @accessibility
  * Implements [ARIA Dialog (Modal)](https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal) design pattern.
+ * Do use `trapFocus` prop to control focus trapping behavior.
  */
 export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)
