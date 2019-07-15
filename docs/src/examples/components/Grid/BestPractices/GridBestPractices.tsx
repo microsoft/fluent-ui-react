@@ -3,7 +3,9 @@ import * as React from 'react'
 import ComponentBestPractices from 'docs/src/components/ComponentBestPractices'
 
 const doList = [
-  'Use Grid behavior for bidirectional keyboard navigation. Use appropriate ARIA role for the grid and actionable components inside of it.',
+  'Use `gridBehavior` for bidirectional keyboard navigation with 4 arrow keys.',
+  'Use `gridHorizontalBehavior` for horizontal keyboard navigation with 4 arrow keys.',
+  'Use appropriate ARIA role for the grid and actionable components inside of it when keyboard navigation provided.',
 ]
 
 const dontList = ["Don't use grid component as a replacement for table."]

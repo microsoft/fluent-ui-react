@@ -44,7 +44,7 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
 
   /**
    * Defines which arrows to react to.
-   * It has next options: horizontal, vertical, bidirectional.
+   * It has next options: horizontal, vertical, bidirectional, bidirectionalDomOrder.
    * @default FocusZoneDirection.bidirectional
    */
   direction?: FocusZoneDirection
@@ -173,4 +173,7 @@ export enum FocusZoneDirection {
 
   /** React to all arrows. */
   bidirectional = 2,
+
+  /** React to all arrows. Navigate next item on right/down arrow keys and previous - left/up arrow keys. Vice versa in RTL mode. */
+  bidirectionalDomOrder = 3,
 }

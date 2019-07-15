@@ -20,7 +20,7 @@ export interface GridProps
     ContentComponentProps<React.ReactNode | React.ReactNode[]> {
   /**
    * Accessibility behavior if overridden by the user.
-   * @available gridBehavior
+   * @available gridBehavior, gridHorizontalBehavior
    * */
   accessibility?: Accessibility
 
