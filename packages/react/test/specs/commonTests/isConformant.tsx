@@ -159,7 +159,7 @@ export default (Component, options: Conformant = {}) => {
   })
 
   if (hasDocblockDescription) {
-    const minWords = 4
+    const minWords = 5
     const maxWords = 25
     test(`docblock description is long enough to be meaningful (>${minWords} words)`, () => {
       expect(_.words(info.docblock.description).length).toBeGreaterThan(minWords)
