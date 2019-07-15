@@ -2,9 +2,6 @@ import { Accessibility } from '../../types'
 import tooltipBehavior, { TooltipBehaviorProps } from './tooltipBehavior'
 
 /**
- * @description
- * Implements ARIA Tooltip design pattern.
- *
  * @specification
  * Adds attribute 'role=tooltip' to 'tooltip' slot.
  * Adds attribute 'aria-hidden=false' to 'tooltip' slot if 'open' property is true. Sets the attribute to 'true' otherwise.
