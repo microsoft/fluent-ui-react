@@ -130,12 +130,15 @@ const TeamsChatMessage: React.FC<ChatMessageProps> = (props: ChatMessageProps) =
     <Ref innerRef={setChatMessageElement}>
       <Chat.Message
         {...props}
-        actionMenu={
-          <Popover
-            chatMessageElement={chatMessageElement}
-            onForceShowActionMenuChange={setForceShowActionMenu}
-            onShowActionMenuChange={setShowActionMenu}
-          />
+        actionMenu={render =>
+          render({}, (ComponentType, props) => (
+            <Popover
+              chatMessageElement={chatMessageElement}
+              onForceShowActionMenuChange={setForceShowActionMenu}
+              onShowActionMenuChange={setShowActionMenu}
+              {...props}
+            />
+          ))
         }
         onMouseEnter={() => setShowActionMenu(true)}
         onMouseLeave={() => !forceShowActionMenu && setShowActionMenu(false)}
