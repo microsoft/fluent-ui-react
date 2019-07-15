@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 import { Flex, Header, Icon, Dropdown, Text, Grid } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
