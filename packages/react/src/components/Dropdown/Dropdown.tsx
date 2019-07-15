@@ -743,7 +743,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       return null
     }
 
-    return value.map((item, index) =>
+    return value.map((item: DropdownItemProps, index) =>
+      // (!) an item matches DropdownItemProps
       DropdownSelectedItem.create(item, {
         defaultProps: {
           className: Dropdown.slotClassNames.selectedItem,
