@@ -1,8 +1,8 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import Image from '../Image/Image'
-import Label from '../Label/Label'
+import Image, { ImageProps } from '../Image/Image'
+import Label, { LabelProps } from '../Label/Label'
 import Status, { StatusProps } from '../Status/Status'
 import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
@@ -21,10 +21,10 @@ export interface AvatarProps extends UIComponentProps {
   accessibility?: Accessibility
 
   /** Shorthand for the image. */
-  image?: ShorthandValue
+  image?: ShorthandValue<ImageProps>
 
   /** Shorthand for the label. */
-  label?: ShorthandValue
+  label?: ShorthandValue<LabelProps>
 
   /** The name used for displaying the initials of the avatar if the image is not provided. */
   name?: string

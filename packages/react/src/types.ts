@@ -55,12 +55,12 @@ export type ShorthandRenderFunction = (
   props: Props,
 ) => React.ReactElement<any>
 
-export type ShorthandRenderer = (
-  value: ShorthandValue,
+export type ShorthandRenderer<P> = (
+  value: ShorthandValue<P>,
   renderTree?: ShorthandRenderFunction,
 ) => React.ReactElement<any>
 
-export type ShorthandRenderCallback = (render: ShorthandRenderer) => React.ReactElement<any>
+export type ShorthandRenderCallback = <P>(render: ShorthandRenderer<P>) => React.ReactElement<any>
 
 // The ReactFragment here is replaced from the original typings with ReactNodeArray because of incorrect inheriting of the type when it is defined as {}
 type ReactNode =
@@ -71,8 +71,8 @@ type ReactNode =
   | null
   | undefined
 
-export type ShorthandValue<P = {}> = ReactNode | Props<P>
-export type ShorthandCollection<K = []> = ShorthandValue<{ kind?: K }>[]
+export type ShorthandValue<P> = ReactNode | Props<P>
+export type ShorthandCollection<P, K = []> = ShorthandValue<P & { kind?: K }>[]
 
 // ========================================================
 // Types for As prop support
