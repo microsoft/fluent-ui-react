@@ -6,7 +6,7 @@ import {
 } from '@stardust-ui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
 

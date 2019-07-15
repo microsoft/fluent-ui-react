@@ -164,7 +164,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     disabled: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     iconOnly: PropTypes.bool,
     index: PropTypes.number,
     itemPosition: PropTypes.number,

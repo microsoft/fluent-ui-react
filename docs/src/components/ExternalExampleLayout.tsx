@@ -1,7 +1,7 @@
 import { Provider, themes } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
-import { match } from 'react-router'
+import { match } from 'react-router-dom'
 import SourceRender from 'react-source-render'
 import { KnobProvider } from '@stardust-ui/docs-components'
 
