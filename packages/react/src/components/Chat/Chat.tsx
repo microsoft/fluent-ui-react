@@ -12,7 +12,7 @@ import {
 } from '../../lib'
 import ChatItem, { ChatItemProps } from './ChatItem'
 import ChatMessage from './ChatMessage'
-import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs, ShorthandCollection } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
@@ -29,7 +29,7 @@ export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
   accessibility?: Accessibility
 
   /** Shorthand array of the items inside the chat. */
-  items?: ShorthandValue<ChatItemProps>[]
+  items?: ShorthandCollection<ChatItemProps>
 }
 
 class Chat extends UIComponent<WithAsProp<ChatProps>, any> {

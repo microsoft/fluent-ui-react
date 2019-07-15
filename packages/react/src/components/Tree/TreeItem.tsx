@@ -24,6 +24,7 @@ import {
   ShorthandRenderFunction,
   ShorthandValue,
   withSafeTypeForAs,
+  ShorthandCollection,
 } from '../../types'
 import { getFirstFocusable } from '../../lib/accessibility/FocusZone/focusUtilities'
 
@@ -49,7 +50,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   index?: number
 
   /** Array of props for sub tree. */
-  items?: ShorthandValue<TreeItemProps>[]
+  items?: ShorthandCollection<TreeItemProps>
 
   /** Called when a tree title is clicked. */
   onTitleClick?: ComponentEventHandler<TreeItemProps>
