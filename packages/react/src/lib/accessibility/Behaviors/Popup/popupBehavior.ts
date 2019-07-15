@@ -106,6 +106,6 @@ export type PopupBehaviorProps = {
     /** Element type. */
     type?: string
   }
-  /** Should trigger be made tabbable */
+  /** Whether the trigger should be tabbable */
   shouldTriggerBeTabbable?: boolean
 }

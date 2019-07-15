@@ -37,6 +37,9 @@ import { AutoFocusZoneProps, FocusTrapZoneProps } from '../../lib/accessibility/
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import { createShorthandFactory } from '../../lib/factories'
+import createReferenceFromContextClick from './createReferenceFromContextClick'
+import preventScroll from '../../lib/preventScroll'
+import isRightClick from '../../lib/isRightClick'
 
 export type PopupEvents = 'click' | 'hover' | 'focus' | 'context'
 export type RestrictedClickEvents = 'click' | 'focus'
@@ -107,7 +110,7 @@ export interface PopupProps
   /** Element to be rendered in-place where the popup is defined. */
   trigger?: JSX.Element
 
-  /** Should trigger be made tabbable */
+  /** Whether the trigger should be tabbable */
   shouldTriggerBeTabbable?: boolean
 
   /** Ref for Popup content DOM node. */
@@ -528,25 +531,28 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
               capture
             />
 
+            <EventListener
+              listener={this.handleDocumentClick(getRefs)}
+              targetRef={documentRef}
+              type="contextmenu"
+              capture
+            />
+
             {this.state.isOpenedByRightClick && (
               <>
                 <EventListener
-                  listener={this.preventScroll}
+                  listener={preventScroll}
                   targetRef={documentRef}
                   type="wheel"
                   capture
                 />
                 <EventListener
-                  listener={this.preventScroll}
+                  listener={preventScroll}
                   targetRef={documentRef}
                   type="touchmove"
                   capture
                 />
-                <EventListener
-                  listener={this.preventScroll}
-                  targetRef={documentRef}
-                  type="keydown"
-                />
+                <EventListener listener={preventScroll} targetRef={documentRef} type="keydown" />
               </>
             )}
           </>
@@ -555,26 +561,8 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     )
   }
 
-  preventScroll(e: Event) {
-    if (e.type === 'wheel' || e.type === 'touchmove') {
-      e.preventDefault()
-    } else if (e.type === 'keydown') {
-      const keyCode = keyboardKey.getCode(e)
-      const isScrollKey =
-        keyCode === keyboardKey.ArrowDown ||
-        keyCode === keyboardKey.ArrowUp ||
-        keyCode === keyboardKey.PageDown ||
-        keyCode === keyboardKey.PageUp ||
-        keyCode === keyboardKey.Home ||
-        keyCode === keyboardKey.End
-      if (isScrollKey) {
-        e.preventDefault()
-      }
-    }
-  }
-
   trySetOpen(newValue: boolean, eventArgs: any) {
-    const isOpenedByRightClick = newValue && this.isRightClick(eventArgs)
+    const isOpenedByRightClick = newValue && isRightClick(eventArgs)
 
     // when new state 'open' === 'true', save the last focused element
     if (newValue) {
@@ -583,10 +571,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     }
     this.trySetState({ open: newValue, isOpenedByRightClick })
     _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
-  }
-
-  isRightClick(eventArgs: any) {
-    return eventArgs.nativeEvent && eventArgs.nativeEvent.which === 3
   }
 
   setPopupOpen(newOpen, e) {
@@ -624,30 +608,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 
   updateContextPosition(nativeEvent: MouseEvent) {
-    this.rightClickReferenceObject =
-      nativeEvent && this.createReferenceFromContextClick(nativeEvent)
-  }
-
-  createReferenceFromContextClick(nativeEvent: MouseEvent) {
-    const left = nativeEvent.clientX
-    const top = nativeEvent.clientY
-    const right = left + 1
-    const bottom = top + 1
-
-    function getBoundingClientRect() {
-      return {
-        left,
-        top,
-        right,
-        bottom,
-      }
-    }
-
-    return {
-      getBoundingClientRect,
-      clientWidth: 1,
-      clientHeight: 1,
-    }
+    this.rightClickReferenceObject = nativeEvent && createReferenceFromContextClick(nativeEvent)
   }
 }
 
