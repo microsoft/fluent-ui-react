@@ -1,16 +1,16 @@
 import * as React from 'react'
-import _ from 'lodash'
-import { Box, Flex, Header, Icon, List, Segment, ShorthandValue } from '@stardust-ui/react'
+import * as _ from 'lodash'
+import { Box, Flex, Header, Icon, List, Segment, ShorthandCollection } from '@stardust-ui/react'
 import { Extendable } from 'src/types'
 
 export type ComponentBestPracticesProps = Extendable<{
-  doList?: ShorthandValue<{}>[]
-  dontList?: ShorthandValue<{}>[]
+  doList?: ShorthandCollection<{}>
+  dontList?: ShorthandCollection<{}>
 }>
 
 const ComponentBestPractices: React.FC<ComponentBestPracticesProps> = ({ doList, dontList }) => {
-  const updatedDoList: ShorthandValue<{}>[] = []
-  const updatedDontList: ShorthandValue<{}>[] = []
+  const updatedDoList: ShorthandCollection<{}> = []
+  const updatedDontList: ShorthandCollection<{}> = []
 
   if (_.size(doList) > 0) {
     _.map(doList, element => {
