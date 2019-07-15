@@ -38,9 +38,6 @@ export interface ReactionProps
   /** A reaction can have icon for the indicator of the reaction. */
   icon?: ShorthandValue<IconProps>
 
-  /** A reaction can have content shown next to the icon. */
-  content?: ShorthandValue<BoxProps>
-
   /**
    * Called after user's focus.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
