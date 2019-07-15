@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { Flex, Header, Icon, Dropdown, Text, Grid } from '@stardust-ui/react'
 
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
