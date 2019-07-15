@@ -262,15 +262,13 @@ class Sidebar extends React.Component<any, any> {
       // },
     ]
   }
-  getPrototypesGivenEnvironment(allPrototypes) {
-    if (process.env.NODE_ENV !== 'production') {
-      return allPrototypes
-    }
-    return allPrototypes.filter(p => p.public)
-  }
 
   getSectionsWithPrototypeSectionIfApplicable(currentSections, allPrototypes) {
-    let prototypes = this.getPrototypesGivenEnvironment(allPrototypes)
+    let prototypes =
+      process.env.NODE_ENV === 'production'
+        ? _.filter(allPrototypes, { public: true })
+        : allPrototypes
+
     if (prototypes.length === 0) {
       return currentSections
     }
