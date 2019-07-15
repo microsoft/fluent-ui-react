@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
@@ -23,6 +24,16 @@ const Usages = () => (
       title="Menu with submenus controlled"
       description="When Submenu in MenuItem is controlled, then its 'menuOpen' prop value could be changed either by parent component, or by user actions (e.g. key press) - thus it is necessary to handle 'onMenuOpenChange' event."
       examplePath="components/Menu/Usages/MenuExampleWithSubmenuControlled"
+    />
+    <ComponentExample
+      title="Menu with items containing tooltip"
+      description={
+        <>
+          {'The items inside the Menu as actionable element should be rendered with '}
+          <Link to="tooltip">tooltip</Link>
+        </>
+      }
+      examplePath="components/Menu/Usages/MenuExampleWithTooltip"
     />
   </ExampleSection>
 )
