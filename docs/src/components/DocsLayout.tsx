@@ -1,4 +1,4 @@
-import { Provider, themes } from '@stardust-ui/react'
+import { Provider, themes, pxToRem } from '@stardust-ui/react'
 import AnchorJS from 'anchor-js'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -7,7 +7,6 @@ import { withRouter } from 'react-router-dom'
 import Sidebar from 'docs/src/components/Sidebar/Sidebar'
 import { scrollToAnchor } from 'docs/src/utils'
 import { mergeThemes } from 'src/lib'
-import { fontWeightBold } from 'src/themes/teams/siteVariables'
 
 const anchors = new AnchorJS({
   class: 'anchor-link',
@@ -72,7 +71,7 @@ class DocsLayout extends React.Component<any, any> {
     const sidebarWidth = '270px'
 
     const treeSectionStyle = {
-      fontWeight: fontWeightBold,
+      fontWeight: 700,
       margin: '0 0 .5rem',
       padding: '0 1.2857rem',
       background: '#201f1f',
@@ -98,9 +97,9 @@ class DocsLayout extends React.Component<any, any> {
             // adjust Teams' theme to Semantic UI's font size scheme
             componentVariables: {
               TreeItem: {
-                padding: '.5em 1.33333333em',
+                padding: `${pxToRem(7)} ${pxToRem(16)}`,
                 textDecoration: 'none',
-                fontSize: '0.85714286em',
+                fontSize: pxToRem(12),
                 fontWeight: 400,
                 color: '#ffffff80',
 
@@ -112,8 +111,8 @@ class DocsLayout extends React.Component<any, any> {
             componentStyles: {
               TreeItem: {
                 root: ({ variables: v, props: p }) => ({
-                  ...(!('items' in p) && treeItemStyle),
-                  ...('items' in p && treeSectionStyle),
+                  ...(!p.items && treeItemStyle),
+                  ...(p.items && treeSectionStyle),
                 }),
               },
               TreeTitle: {
@@ -125,7 +124,7 @@ class DocsLayout extends React.Component<any, any> {
             },
           })}
         >
-          <Sidebar width={sidebarWidth} treeSelectionStyle={treeSectionStyle} />
+          <Sidebar width={sidebarWidth} />
         </Provider>
         <div role="main" style={{ marginLeft: sidebarWidth }}>
           {render ? render() : children}

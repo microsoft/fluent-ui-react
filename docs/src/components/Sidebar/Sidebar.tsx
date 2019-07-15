@@ -428,7 +428,7 @@ class Sidebar extends React.Component<any, any> {
     // TODO: bring back the active elements indicators
     return (
       <Segment styles={sidebarStyles}>
-        <Segment styles={this.props.treeSectionStyle}>
+        <Segment>
           <Logo width="32px" styles={logoStyles} />
           <Text
             role="heading"
