@@ -151,7 +151,7 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  getTreeItems(): ShorthandValue[] {
+  getTreeItems(): TreeProps['items'] {
     return [
       {
         key: 'concepts',
