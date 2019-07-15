@@ -122,8 +122,7 @@ export interface PopupState {
 }
 
 /**
- * A Popup is a non-modal element that floats around its target on top of a page.
- * Often it is used for displaying additional rich content related to its target.
+ * A Popup displays a non-modal, often rich content, on top of its target element.
  *
  * @accessibility
  * Do set `trapFocus` if the focus needs to be trapped inside of the Popup.

@@ -177,7 +177,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
 Embed.create = createShorthandFactory({ Component: Embed })
 
 /**
- * An Embed displays content from external websites, like Instagram post or Youtube video.
+ * An Embed displays content from external websites, like a post from external social network.
  *
  * @accessibility
  * A `placeholder` slot represents an [`Image`](/components/image) component, please follow recommendations from its

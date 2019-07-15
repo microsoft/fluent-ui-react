@@ -127,5 +127,6 @@ Reaction.slotClassNames = {
 
 /**
  * A Reaction indicates user's emotion or perception.
+ * Used to display user's reaction for entity in Chat (e.g. message).
  */
 export default withSafeTypeForAs<typeof Reaction, ReactionProps, 'span'>(Reaction)
