@@ -354,7 +354,7 @@ class Sidebar extends React.Component<any, any> {
 
     const treeItems = topTreeItems.concat(this.getTreeItems())
 
-    const prototypesTreeItems: (ShorthandValue & { key: string; public: boolean })[] = [
+    const prototypesTreeItems: (ShorthandValue<{}> & { key: string; public: boolean })[] = [
       {
         key: 'chatpane',
         title: { content: 'Chat Pane', as: NavLink, to: '/prototype-chat-pane' },
