@@ -26,7 +26,7 @@ import {
 import { Accessibility } from '../../lib/accessibility/types'
 import { sliderBehavior } from '../../lib/accessibility'
 import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 
 const processInputValues = (
   p: Pick<SliderProps, 'min' | 'max'> & Pick<SliderState, 'value'>,
@@ -83,7 +83,7 @@ export interface SliderProps
   getA11yValueMessageOnChange?: (props: SliderProps) => string
 
   /** Shorthand for the input component. */
-  input?: ShorthandValue
+  input?: ShorthandValue<BoxProps>
 
   /** Ref for input DOM node. */
   inputRef?: React.Ref<HTMLElement>

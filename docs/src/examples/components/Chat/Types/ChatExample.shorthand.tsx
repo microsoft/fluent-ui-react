@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { Avatar, Chat, Divider } from '@stardust-ui/react'
+import { Avatar, Chat, ChatItemProps, Divider, ShorthandCollection } from '@stardust-ui/react'
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
   status: { color: 'green', icon: 'check' },
 }
 
-const items = [
+const items: ShorthandCollection<ChatItemProps> = [
   {
     message: (
       <Chat.Message content="Hello" author="John Doe" timestamp="Yesterday, 10:15 PM" mine />
