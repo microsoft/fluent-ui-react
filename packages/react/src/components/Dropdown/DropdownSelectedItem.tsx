@@ -179,8 +179,7 @@ DropdownSelectedItem.create = createShorthandFactory({
 })
 
 /**
- * A DropdownSelectedItem represents item of 'multiple-selection' Dropdown.
- * Used to display the search input field.
+ * A DropdownSelectedItem represents a selected item of 'multiple-selection' Dropdown.
  */
 export default withSafeTypeForAs<typeof DropdownSelectedItem, DropdownSelectedItemProps>(
   DropdownSelectedItem,
