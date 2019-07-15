@@ -1,7 +1,7 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import Icon from '../Icon/Icon'
+import Icon, { IconProps } from '../Icon/Icon'
 import { statusBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -25,7 +25,7 @@ export interface StatusProps extends UIComponentProps {
   color?: string
 
   /** Shorthand for the icon, to provide customizing status */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** Size multiplier */
   size?: SizeValue
