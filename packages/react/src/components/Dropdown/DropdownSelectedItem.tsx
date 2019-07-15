@@ -17,8 +17,7 @@ import { createShorthandFactory, UIComponent, RenderResultConfig, commonPropType
 import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Label from '../Label/Label'
-import Box from '../Box/Box'
-import { HeaderProps } from '../Header/Header'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface DropdownSelectedItemSlotClassNames {
   header: string
@@ -31,7 +30,7 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
   active?: boolean
 
   /** Header of the selected item. */
-  header?: ShorthandValue<HeaderProps>
+  header?: ShorthandValue<BoxProps>
 
   /** Icon of the selected item. */
   icon?: ShorthandValue<IconProps>
