@@ -1,4 +1,13 @@
-import { Icon, Tree, Segment, Text, ICSSInJSStyle, Provider } from '@stardust-ui/react'
+import {
+  Icon,
+  Tree,
+  Segment,
+  Text,
+  ICSSInJSStyle,
+  Provider,
+  TreeItemProps,
+  TreeProps,
+} from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
@@ -119,19 +128,6 @@ class Sidebar extends React.Component<any, any> {
       )
     })
 */
-
-  getActiveCategoryIndex(at: String, sections: ShorthandValue<any>[]) {
-    for (let i = 0; i < sections.length; i++) {
-      const category = sections[i]
-      if (!('items' in category)) {
-        continue
-      }
-      if (category.items.filter(c => 'title' in c).some(e => e.title.to === at)) {
-        return i
-      }
-    }
-    return -1
-  }
 
   keyDownCallback(e) {
     if (keyboardKey.getCode(e) !== keyboardKey.Enter) {
@@ -337,7 +333,7 @@ class Sidebar extends React.Component<any, any> {
       return { items }
     })
 
-    const topTreeItems: ShorthandValue[] = [
+    const topTreeItems: TreeProps['items'] = [
       {
         key: 'github',
         title: {
@@ -372,7 +368,7 @@ class Sidebar extends React.Component<any, any> {
 
     const treeItems = topTreeItems.concat(this.getTreeItems(treeSectionStyles, treeItemStyles))
 
-    const prototypesTreeItems: ShorthandValue[] = [
+    const prototypesTreeItems: TreeProps['items'] = [
       {
         key: 'chatpane',
         title: { content: 'Chat Pane', as: NavLink, to: '/prototype-chat-pane' },
@@ -467,7 +463,12 @@ class Sidebar extends React.Component<any, any> {
     const allSections = withComponents.concat(behaviorTreeSection)
 
     const at = this.props.location.pathname
-    const activeCategoryIndex = this.getActiveCategoryIndex(at, allSections)
+    const activeCategoryIndex = _.findIndex(
+      allSections,
+      (section: ShorthandValue<TreeItemProps>) => {
+        return _.find((section as any).items, item => item.title.to === at)
+      },
+    )
     // TODO: remove after the issue with TreeItem will be fixed
     // https://github.com/stardust-ui/react/issues/1613
     this.addItemKeyCallbacks(allSections)
