@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert, Button, Flex, Popup, popupFocusTrapBehavior } from '@stardust-ui/react'
+import { Alert, Button, Flex, Popup } from '@stardust-ui/react'
 
 const contentWithButtons = {
   content: (
@@ -31,7 +31,7 @@ class PopupContextOnElement extends React.Component {
           }
           shouldTriggerBeTabbable={false}
           content={contentWithButtons}
-          accessibility={popupFocusTrapBehavior}
+          trapFocus
           on="context"
         />
         {this.state.alert && <Alert warning content="Click!" />}
