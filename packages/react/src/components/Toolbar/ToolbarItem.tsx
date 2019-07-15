@@ -35,7 +35,7 @@ import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
 import Popup, { PopupProps } from '../Popup/Popup'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
-import { ToolbarMenuItemProps } from '@stardust-ui/react'
+import { ToolbarMenuItemProps } from '../Toolbar/ToolbarMenuItem'
 
 export interface ToolbarItemProps
   extends UIComponentProps,

@@ -18,7 +18,7 @@ import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Label from '../Label/Label'
 import Box from '../Box/Box'
-import { HeaderProps } from '@stardust-ui/react'
+import { HeaderProps } from '../Header/Header'
 
 export interface DropdownSelectedItemSlotClassNames {
   header: string

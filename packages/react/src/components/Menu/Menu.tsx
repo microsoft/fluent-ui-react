@@ -19,11 +19,10 @@ import MenuItem, { MenuItemProps } from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
-
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import { WithAsProp, ShorthandCollection, ShorthandValue, withSafeTypeForAs } from '../../types'
 import MenuDivider from './MenuDivider'
-import { IconProps } from '@stardust-ui/react'
+import { IconProps } from '../Icon/Icon'
 
 export type MenuShorthandKinds = 'divider' | 'item'
 

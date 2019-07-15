@@ -27,7 +27,7 @@ import Label, { LabelProps } from '../Label/Label'
 import Menu, { MenuProps } from '../Menu/Menu'
 import Text, { TextProps } from '../Text/Text'
 import Reaction from '../Reaction/Reaction'
-import { ReactionGroupProps } from '@stardust-ui/react'
+import { ReactionGroupProps } from '../Reaction/ReactionGroup'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string
