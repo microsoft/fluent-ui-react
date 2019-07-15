@@ -7,9 +7,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { findDOMNode } from 'react-dom'
-import { withRouter } from 'react-router'
-
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 
 import { constants } from 'src/lib'
 import { fontWeightBold } from 'src/themes/teams/siteVariables'
@@ -135,30 +133,6 @@ class Sidebar extends React.Component<any, any> {
     return -1
   }
 
-  getActiveTreeItem(at: String, sections: ShorthandValue<any>[]) {
-    for (let i = 0; i < sections.length; i++) {
-      const category = sections[i]
-      if (!('items' in category)) {
-        continue
-      }
-      for (let j = 0; j < category.items.length; j++) {
-        const item = category.items[j]
-        if (!('title' in item)) {
-          continue
-        }
-        if (item.title.to === at) {
-          return item
-        }
-      }
-    }
-    return -1
-  }
-
-  highlighCurrentTreeItem(at: String, sections: ShorthandValue<any>[]) {
-    const item = this.getActiveTreeItem(at, sections)
-    item.title.content = <u>{item.title.content}</u>
-  }
-
   keyDownCallback(e) {
     if (keyboardKey.getCode(e) !== keyboardKey.Enter) {
       return
@@ -192,17 +166,33 @@ class Sidebar extends React.Component<any, any> {
         items: [
           {
             key: 'intro',
-            title: { content: 'Introduction', as: NavLink, to: '/' },
+            title: {
+              content: 'Introduction',
+              exact: true,
+              activeClassName: 'active',
+              as: NavLink,
+              to: '/',
+            },
             styles: treeItemStyles,
           },
           {
             key: 'composition',
-            title: { as: NavLink, content: 'Composition', to: '/composition' },
+            title: {
+              as: NavLink,
+              content: 'Composition',
+              activeClassName: 'active',
+              to: '/composition',
+            },
             styles: treeItemStyles,
           },
           {
             key: 'shorthand',
-            title: { as: NavLink, content: 'Shorthand Props', to: '/shorthand-props' },
+            title: {
+              as: NavLink,
+              content: 'Shorthand Props',
+              activeClassName: 'active',
+              to: '/shorthand-props',
+            },
             styles: treeItemStyles,
           },
         ],
@@ -214,37 +204,52 @@ class Sidebar extends React.Component<any, any> {
         items: [
           {
             key: 'quickstart',
-            title: { content: 'QuickStart', as: NavLink, to: 'quick-start' },
+            title: {
+              content: 'QuickStart',
+              as: NavLink,
+              activeClassName: 'active',
+              to: 'quick-start',
+            },
             styles: treeItemStyles,
           },
           {
             key: 'faq',
-            title: { content: 'FAQ', as: NavLink, to: '/faq' },
+            title: { content: 'FAQ', as: NavLink, activeClassName: 'active', to: '/faq' },
             styles: treeItemStyles,
           },
           {
             key: 'accessiblity',
-            title: { content: 'Accessibility', as: NavLink, to: '/accessibility' },
+            title: {
+              content: 'Accessibility',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/accessibility',
+            },
             styles: treeItemStyles,
           },
           {
             key: 'theming',
-            title: { content: 'Theming', as: NavLink, to: '/theming' },
+            title: { content: 'Theming', as: NavLink, activeClassName: 'active', to: '/theming' },
             styles: treeItemStyles,
           },
           {
             key: 'theming-examples',
-            title: { content: 'Theming Examples', as: NavLink, to: '/theming-examples' },
+            title: {
+              content: 'Theming Examples',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/theming-examples',
+            },
             styles: treeItemStyles,
           },
           {
             key: 'colorpalette',
-            title: { content: 'Colors', as: NavLink, to: '/colors' },
+            title: { content: 'Colors', as: NavLink, activeClassName: 'active', to: '/colors' },
             styles: treeItemStyles,
           },
           {
             key: 'layout',
-            title: { content: 'Layout', as: NavLink, to: '/layout' },
+            title: { content: 'Layout', as: NavLink, activeClassName: 'active', to: '/layout' },
             styles: treeItemStyles,
           },
           {
@@ -252,6 +257,7 @@ class Sidebar extends React.Component<any, any> {
             title: {
               content: 'Integrate Custom Components',
               as: NavLink,
+              activeClassName: 'active',
               to: '/integrate-custom-components',
             },
             styles: treeItemStyles,
@@ -304,6 +310,10 @@ class Sidebar extends React.Component<any, any> {
       fontSize: '0.85714286em',
       fontWeight: 400,
       color: '#ffffff80',
+
+      '& .active': {
+        fontWeight: 'bold',
+      },
     }
 
     const logoStyles: ICSSInJSStyle = {
@@ -459,7 +469,6 @@ class Sidebar extends React.Component<any, any> {
     const at = this.props.location.pathname
     const activeCategoryIndex = this.getActiveCategoryIndex(at, allSections)
     this.addItemKeyCallbacks(allSections)
-    this.highlighCurrentTreeItem(at, allSections)
 
     const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
       <Component open={open} hasSubtree={hasSubtree} {...restProps}>

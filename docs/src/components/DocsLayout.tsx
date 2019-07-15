@@ -2,7 +2,7 @@ import { Provider, themes } from '@stardust-ui/react'
 import AnchorJS from 'anchor-js'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 
 import Sidebar from 'docs/src/components/Sidebar/Sidebar'
 import { scrollToAnchor } from 'docs/src/utils'

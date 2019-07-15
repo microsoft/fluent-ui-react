@@ -39,7 +39,7 @@ import IconViewerPrototype from './prototypes/IconViewer'
 import MenuButtonPrototype from './prototypes/MenuButton'
 import AlertsPrototype from './prototypes/alerts'
 
-const Router = () => (
+const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
     <Switch>
       <Route exact path="/maximize/:exampleName/:rtl?" component={ExternalExampleLayout} />
@@ -146,4 +146,4 @@ const Router = () => (
   </BrowserRouter>
 )
 
-export default Router
+export default Routes
