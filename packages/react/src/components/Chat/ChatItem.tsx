@@ -18,7 +18,7 @@ import Box, { BoxProps } from '../Box/Box'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentSlotStylesPrepared } from '../../themes/types'
-import ChatMessage, { ChatMessageProps } from './ChatMessage'
+import ChatMessage from './ChatMessage'
 
 export interface ChatItemSlotClassNames {
   message: string
@@ -41,7 +41,7 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
   contentPosition?: 'start' | 'end'
 
   /** Chat items can have a message. */
-  message?: ShorthandValue<ChatMessageProps>
+  message?: ShorthandValue<BoxProps>
 }
 
 class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
