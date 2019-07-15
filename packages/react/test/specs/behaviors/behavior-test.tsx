@@ -25,6 +25,7 @@ import {
   radioGroupItemBehavior,
   selectableListBehavior,
   selectableListItemBehavior,
+  sliderBehavior,
   tabBehavior,
   tabListBehavior,
   toggleButtonBehavior,
@@ -75,6 +76,7 @@ testHelper.addBehavior('radioGroupBehavior', radioGroupBehavior)
 testHelper.addBehavior('radioGroupItemBehavior', radioGroupItemBehavior)
 testHelper.addBehavior('selectableListBehavior', selectableListBehavior)
 testHelper.addBehavior('selectableListItemBehavior', selectableListItemBehavior)
+testHelper.addBehavior('sliderBehavior', sliderBehavior)
 testHelper.addBehavior('tabBehavior', tabBehavior)
 testHelper.addBehavior('tabListBehavior', tabListBehavior)
 testHelper.addBehavior('menuAsToolbarBehavior', menuAsToolbarBehavior)
