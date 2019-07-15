@@ -124,6 +124,6 @@ class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
 Avatar.create = createShorthandFactory({ Component: Avatar, mappedProp: 'name' })
 
 /**
- * An Avatar is a graphic representation of user.
+ * An Avatar is a graphic representation of a user.
  */
 export default withSafeTypeForAs<typeof Avatar, AvatarProps>(Avatar)
