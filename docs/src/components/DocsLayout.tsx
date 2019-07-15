@@ -1,8 +1,8 @@
-import { Provider, themes } from '@stardust-ui/react'
+import { Provider, themes, pxToRem } from '@stardust-ui/react'
 import AnchorJS from 'anchor-js'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 
 import Sidebar from 'docs/src/components/Sidebar/Sidebar'
 import { scrollToAnchor } from 'docs/src/utils'
@@ -68,7 +68,27 @@ class DocsLayout extends React.Component<any, any> {
 
   renderChildren() {
     const { children, render } = this.props
-    const sidebarWidth = 270
+    const sidebarWidth = '270px'
+
+    const treeSectionStyle = {
+      fontWeight: 700,
+      margin: '0 0 .5rem',
+      padding: '0 1.2857rem',
+      background: '#201f1f',
+      color: 'white',
+    }
+
+    const treeItemStyle = {
+      padding: '.5em 1.33333333em',
+      textDecoration: 'none',
+      fontSize: '0.85714286em',
+      fontWeight: 400,
+      color: '#ffffff80',
+
+      '& .active': {
+        fontWeight: 'bold',
+      },
+    }
 
     return (
       <>
@@ -76,12 +96,30 @@ class DocsLayout extends React.Component<any, any> {
           theme={mergeThemes(themes.teamsDark, {
             // adjust Teams' theme to Semantic UI's font size scheme
             componentVariables: {
-              MenuDivider: {
-                borderColor: '#ffffff80',
+              TreeItem: {
+                padding: `${pxToRem(7)} ${pxToRem(16)}`,
+                textDecoration: 'none',
+                fontSize: pxToRem(12),
+                fontWeight: 400,
+                color: '#ffffff80',
+
+                '& .active': {
+                  fontWeight: 'bold',
+                },
               },
-              MenuItem: {
-                activeBackgroundColor: 'none',
-                focusedBackgroundColor: 'none',
+            },
+            componentStyles: {
+              TreeItem: {
+                root: ({ variables: v, props: p }) => ({
+                  ...(!p.items && treeItemStyle),
+                  ...(p.items && treeSectionStyle),
+                }),
+              },
+              TreeTitle: {
+                root: {
+                  display: 'block',
+                  width: '100%',
+                },
               },
             },
           })}

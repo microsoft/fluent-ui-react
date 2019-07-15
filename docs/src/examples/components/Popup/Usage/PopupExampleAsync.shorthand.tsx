@@ -23,7 +23,7 @@ class AsyncDataLoader extends React.Component<any, any> {
 const PopupExampleAsync = () => (
   <Popup
     trigger={<Button icon="expand" content="Click me!" />}
-    renderContent={updatePosition => ({ content: <AsyncDataLoader onLoaded={updatePosition} /> })}
+    renderContent={updatePosition => <AsyncDataLoader onLoaded={updatePosition} />}
   />
 )
 

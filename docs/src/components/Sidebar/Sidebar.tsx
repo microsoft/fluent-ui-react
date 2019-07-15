@@ -1,4 +1,12 @@
-import { Icon, Tree, Segment, Text, ICSSInJSStyle, Provider } from '@stardust-ui/react'
+import {
+  Icon,
+  Tree,
+  Segment,
+  Text,
+  ICSSInJSStyle,
+  TreeItemProps,
+  TreeProps,
+} from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
@@ -7,12 +15,9 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { findDOMNode } from 'react-dom'
-import { withRouter } from 'react-router'
-
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 
 import { constants } from 'src/lib'
-import { fontWeightBold } from 'src/themes/teams/siteVariables'
 
 type ComponentMenuItem = { displayName: string; type: string }
 
@@ -122,22 +127,8 @@ class Sidebar extends React.Component<any, any> {
     })
 */
 
-  getActiveCategoryIndex(at: String, sections: ShorthandValue<any>[]) {
-    let i
-    for (i = 0; i < sections.length; i++) {
-      const category = sections[i]
-      if (!('items' in category)) {
-        continue
-      }
-      if (category.items.filter(c => 'title' in c).some(e => e.title.to === at)) {
-        return i
-      }
-    }
-    return -1
-  }
-
   keyDownCallback(e) {
-    if (e.key !== 'Enter') {
+    if (keyboardKey.getCode(e) !== keyboardKey.Enter) {
       return
     }
     e.stopPropagation()
@@ -145,8 +136,7 @@ class Sidebar extends React.Component<any, any> {
   }
 
   addItemKeyCallbacks(sections: ShorthandValue<any>[]) {
-    let i
-    for (i = 0; i < sections.length; i++) {
+    for (let i = 0; i < sections.length; i++) {
       const category = sections[i]
       if ('items' in category) {
         this.addItemKeyCallbacks(category.items)
@@ -161,78 +151,97 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  getTreeItems(treeSectionStyles, treeItemStyles): ShorthandValue[] {
+  getTreeItems(): ShorthandValue[] {
     return [
       {
         key: 'concepts',
         title: 'Concepts',
-        styles: treeSectionStyles,
         items: [
           {
             key: 'intro',
-            title: { content: 'Introduction', as: NavLink, to: '/' },
-            styles: treeItemStyles,
+            title: {
+              content: 'Introduction',
+              exact: true,
+              activeClassName: 'active',
+              as: NavLink,
+              to: '/',
+            },
           },
           {
             key: 'composition',
-            title: { as: NavLink, content: 'Composition', to: '/composition' },
-            styles: treeItemStyles,
+            title: {
+              as: NavLink,
+              content: 'Composition',
+              activeClassName: 'active',
+              to: '/composition',
+            },
           },
           {
             key: 'shorthand',
-            title: { as: NavLink, content: 'Shorthand Props', to: '/shorthand-props' },
-            styles: treeItemStyles,
+            title: {
+              as: NavLink,
+              content: 'Shorthand Props',
+              activeClassName: 'active',
+              to: '/shorthand-props',
+            },
           },
         ],
       },
       {
         key: 'guides',
         title: 'Guides',
-        styles: treeSectionStyles,
         items: [
           {
             key: 'quickstart',
-            title: { content: 'QuickStart', as: NavLink, to: 'quick-start' },
-            styles: treeItemStyles,
+            title: {
+              content: 'QuickStart',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/quick-start',
+            },
           },
           {
             key: 'faq',
-            title: { content: 'FAQ', as: NavLink, to: '/faq' },
-            styles: treeItemStyles,
+            title: { content: 'FAQ', as: NavLink, activeClassName: 'active', to: '/faq' },
           },
           {
             key: 'accessiblity',
-            title: { content: 'Accessibility', as: NavLink, to: '/accessibility' },
-            styles: treeItemStyles,
+            title: {
+              content: 'Accessibility',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/accessibility',
+            },
           },
           {
             key: 'theming',
-            title: { content: 'Theming', as: NavLink, to: '/theming' },
-            styles: treeItemStyles,
+            title: { content: 'Theming', as: NavLink, activeClassName: 'active', to: '/theming' },
           },
           {
             key: 'theming-examples',
-            title: { content: 'Theming Examples', as: NavLink, to: '/theming-examples' },
-            styles: treeItemStyles,
+            title: {
+              content: 'Theming Examples',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/theming-examples',
+            },
           },
           {
             key: 'colorpalette',
-            title: { content: 'Colors', as: NavLink, to: '/colors' },
-            styles: treeItemStyles,
+            title: { content: 'Colors', as: NavLink, activeClassName: 'active', to: '/colors' },
           },
           {
             key: 'layout',
-            title: { content: 'Layout', as: NavLink, to: '/layout' },
-            styles: treeItemStyles,
+            title: { content: 'Layout', as: NavLink, activeClassName: 'active', to: '/layout' },
           },
           {
             key: 'integrate-custom',
             title: {
               content: 'Integrate Custom Components',
               as: NavLink,
+              activeClassName: 'active',
               to: '/integrate-custom-components',
             },
-            styles: treeItemStyles,
           },
         ],
       },
@@ -260,7 +269,7 @@ class Sidebar extends React.Component<any, any> {
     return allPrototypes.filter(p => p.public)
   }
 
-  getSectionsWithPrototypeSectionIfApplicable(currentSections, allPrototypes, treeSectionStyles) {
+  getSectionsWithPrototypeSectionIfApplicable(currentSections, allPrototypes) {
     let prototypes = this.getPrototypesGivenEnvironment(allPrototypes)
     if (prototypes.length === 0) {
       return currentSections
@@ -269,7 +278,6 @@ class Sidebar extends React.Component<any, any> {
     const prototypeTreeSection = {
       key: 'prototypes',
       title: 'Prototypes',
-      styles: treeSectionStyles,
       items: prototypes,
     }
     return currentSections.concat(prototypeTreeSection)
@@ -283,7 +291,6 @@ class Sidebar extends React.Component<any, any> {
   }
 
   render() {
-    // Should be applied by provider
     const sidebarStyles: ICSSInJSStyle = {
       background: '#201f1f',
       width: this.props.width,
@@ -294,22 +301,6 @@ class Sidebar extends React.Component<any, any> {
       padding: 0,
       height: '100%',
       zIndex: 1000,
-    }
-
-    const treeSectionStyles: ICSSInJSStyle = {
-      fontWeight: fontWeightBold,
-      margin: '0 0 .5rem',
-      padding: '0 1.2857rem',
-      background: '#201f1f',
-      color: 'white',
-    }
-
-    const treeItemStyles: ICSSInJSStyle = {
-      padding: '.5em 1.33333333em',
-      textDecoration: 'none',
-      fontSize: '0.85714286em',
-      fontWeight: 400,
-      color: '#ffffff80',
     }
 
     const logoStyles: ICSSInJSStyle = {
@@ -326,14 +317,13 @@ class Sidebar extends React.Component<any, any> {
           key: info.displayName.concat(nextType),
           title: { content: info.displayName, as: NavLink, to: getComponentPathname(info) },
           onClick: this.handleItemClick,
-          styles: treeItemStyles,
         }))
         .value()
 
       return { items }
     })
 
-    const topTreeItems: ShorthandValue[] = [
+    const topTreeItems: TreeProps['items'] = [
       {
         key: 'github',
         title: {
@@ -347,7 +337,6 @@ class Sidebar extends React.Component<any, any> {
           target: '_blank',
           rel: 'noopener noreferrer',
         },
-        styles: treeItemStyles,
       },
       {
         key: 'change',
@@ -362,103 +351,85 @@ class Sidebar extends React.Component<any, any> {
           target: '_blank',
           rel: 'noopener noreferrer',
         },
-        styles: treeItemStyles,
       },
     ]
 
-    const treeItems = topTreeItems.concat(this.getTreeItems(treeSectionStyles, treeItemStyles))
+    const treeItems = topTreeItems.concat(this.getTreeItems())
 
-    const prototypesTreeItems: ShorthandValue[] = [
+    const prototypesTreeItems: TreeProps['items'] = [
       {
         key: 'chatpane',
         title: { content: 'Chat Pane', as: NavLink, to: '/prototype-chat-pane' },
-        styles: treeItemStyles,
-        public: false,
       },
       {
         key: 'chatMssages',
         title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
-        styles: treeItemStyles,
         public: false,
       },
       {
         key: 'customtoolbar',
         title: { content: 'Custom Styled Toolbar', as: NavLink, to: '/prototype-custom-toolbar' },
-        styles: treeItemStyles,
         public: true,
       },
       {
         key: 'dropdowns',
         title: { content: 'Dropdowns', as: NavLink, to: '/prototype-dropdowns' },
-        styles: treeItemStyles,
         public: false,
       },
       {
         key: 'alerts',
         title: { content: 'Alerts', as: NavLink, to: '/prototype-alerts' },
-        styles: treeItemStyles,
         public: false,
       },
       {
         key: 'asyncshorthand',
         title: { content: 'Async Shorthand', as: NavLink, to: '/prototype-async-shorthand' },
-        styles: treeItemStyles,
         public: false,
       },
       {
         key: 'employeecard',
         title: { content: 'Employee Card', as: NavLink, to: '/prototype-employee-card' },
-        styles: treeItemStyles,
         public: false,
       },
       {
         key: 'meetingoptions',
         title: { content: 'Meeting Options', as: NavLink, to: '/prototype-meeting-options' },
-        styles: treeItemStyles,
         public: false,
       },
       {
         key: 'mentions',
         title: { content: 'Mentions', as: NavLink, to: '/prototype-mentions' },
-        styles: treeItemStyles,
         public: false,
       },
       {
         key: 'searchpage',
         title: { content: 'Search Page', as: NavLink, to: '/prototype-search-page' },
-        styles: treeItemStyles,
         public: false,
       },
       {
         key: 'popups',
         title: { content: 'Popups', as: NavLink, to: '/prototype-popups' },
-        styles: treeItemStyles,
         public: false,
       },
       {
         key: 'iconviewer',
         title: { content: 'Processed Icons', as: NavLink, to: '/icon-viewer' },
-        styles: treeItemStyles,
         public: false,
       },
       {
         key: 'menu-button',
         title: { content: 'MenuButton', as: NavLink, to: '/menu-button' },
-        styles: treeItemStyles,
-        public: false,
       },
     ]
 
     const componentTreeSection = {
       key: 'components',
       title: 'Components',
-      styles: treeSectionStyles,
       items: treeItemsByType[0].items,
     }
     const behaviorTreeSection = {
       key: 'behaviour',
       title: 'Behaviors',
-      styles: treeSectionStyles,
       items: treeItemsByType[1].items,
     }
 
@@ -467,42 +438,46 @@ class Sidebar extends React.Component<any, any> {
     const allSections = this.getSectionsWithPrototypeSectionIfApplicable(
       withBehaviors,
       prototypesTreeItems,
-      treeSectionStyles,
     )
 
     const at = this.props.location.pathname
-    const activeCategoryIndex = this.getActiveCategoryIndex(at, allSections)
+    const activeCategoryIndex = _.findIndex(
+      allSections,
+      (section: ShorthandValue<TreeItemProps>) => {
+        return _.find((section as any).items, item => item.title.to === at)
+      },
+    )
+    // TODO: remove after the issue with TreeItem will be fixed
+    // https://github.com/stardust-ui/react/issues/1613
     this.addItemKeyCallbacks(allSections)
+
+    const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
+      <Component open={open} hasSubtree={hasSubtree} {...restProps}>
+        <span>{content}</span>
+        {hasSubtree && <Icon name={open ? 'stardust-arrow-up' : 'stardust-arrow-down'} />}
+      </Component>
+    )
 
     // TODO: bring back the active elements indicators
     return (
-      <Provider
-        theme={{
-          componentStyles: {
-            TreeTitle: {
-              root: {
-                display: 'block',
-                width: '100%',
-              },
-            },
-          },
-        }}
-      >
-        <Segment styles={sidebarStyles}>
-          <Segment styles={treeSectionStyles}>
-            <Logo width="32px" styles={logoStyles} />
-            <Text
-              role="heading"
-              aria-level={1}
-              color="white"
-              content="Stardust UI React &nbsp;"
-              styles={logoStyles}
-            />
-            <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
-          </Segment>
-          <Tree defaultActiveIndex={activeCategoryIndex} items={allSections} />
+      <Segment styles={sidebarStyles}>
+        <Segment>
+          <Logo width="32px" styles={logoStyles} />
+          <Text
+            role="heading"
+            aria-level={1}
+            color="white"
+            content="Stardust UI React &nbsp;"
+            styles={logoStyles}
+          />
+          <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
         </Segment>
-      </Provider>
+        <Tree
+          defaultActiveIndex={activeCategoryIndex}
+          items={allSections}
+          renderItemTitle={titleRenderer}
+        />
+      </Segment>
     )
   }
 }

@@ -14,7 +14,7 @@ import {
 
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
 import * as _ from 'lodash'
 
@@ -71,10 +71,6 @@ class ToolbarCustomItem extends UIComponent<
     focusable: PropTypes.bool,
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
-  }
-
-  static defaultProps = {
-    accessibility: defaultBehavior,
   }
 
   handleBlur = (e: React.SyntheticEvent) => {

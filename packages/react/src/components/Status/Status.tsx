@@ -47,7 +47,7 @@ class Status extends UIComponent<WithAsProp<StatusProps>, any> {
       content: false,
     }),
     color: PropTypes.string,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     size: customPropTypes.size,
     state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
   }

@@ -1,14 +1,12 @@
 import * as React from 'react'
 import { Button, Flex, Popup } from '@stardust-ui/react'
 
-const contentWithButtons = {
-  content: (
-    <Flex gap="gap.smaller">
-      <Button>First</Button>
-      <Button primary>Second</Button>
-    </Flex>
-  ),
-}
+const contentWithButtons = (
+  <Flex gap="gap.smaller">
+    <Button>First</Button>
+    <Button primary>Second</Button>
+  </Flex>
+)
 
 const PopupExampleOnWithFocusTrap = () => (
   <Flex gap="gap.smaller">

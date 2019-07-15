@@ -14,7 +14,7 @@ import ColorPalette from './views/ColorPalette'
 import ColorSchemes from './views/ColorSchemes'
 
 import FAQ from './views/FAQ'
-import ShorthandProps from './views/ShorthandProps'
+import * as ShorthandProps from './pages/ShorthandProps.mdx'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
@@ -39,7 +39,7 @@ import IconViewerPrototype from './prototypes/IconViewer'
 import MenuButtonPrototype from './prototypes/MenuButton'
 import AlertsPrototype from './prototypes/alerts'
 
-const Router = () => (
+const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
     <Switch>
       <Route exact path="/maximize/:exampleName/:rtl?" component={ExternalExampleLayout} />
@@ -129,7 +129,9 @@ const Router = () => (
           <Route exact path="/layout">
             <MarkdownPage page={Layout} />
           </Route>
-          <Route exact path="/shorthand-props" component={ShorthandProps} />
+          <Route exact path="/shorthand-props">
+            <MarkdownPage page={ShorthandProps} />
+          </Route>
           <Route exact path="/integrate-custom-components" component={IntegrateCustomComponents} />
           <Route exact path="/composition">
             <MarkdownPage page={Composition} />
@@ -144,4 +146,4 @@ const Router = () => (
   </BrowserRouter>
 )
 
-export default Router
+export default Routes

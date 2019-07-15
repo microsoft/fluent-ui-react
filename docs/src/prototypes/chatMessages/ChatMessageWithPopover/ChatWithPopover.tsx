@@ -79,47 +79,39 @@ const ChatWithPopover = () => {
         items={[
           {
             key: 'a',
-            message: {
-              content: (
-                <TeamsChatMessage
-                  author="Jane Doe"
-                  content={{
-                    content: (
-                      <div>
-                        <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
-                      </div>
-                    ),
-                  }}
-                  reactionGroup={{
-                    items: reactionsWithPopup,
-                  }}
-                  timestamp="Yesterday, 10:15 PM"
-                />
-              ),
-            },
-            gutter: { content: <Avatar {...janeAvatar} /> },
+            message: (
+              <TeamsChatMessage
+                author="Jane Doe"
+                content={
+                  <div>
+                    <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
+                  </div>
+                }
+                reactionGroup={{
+                  items: reactionsWithPopup,
+                }}
+                timestamp="Yesterday, 10:15 PM"
+              />
+            ),
+            gutter: <Avatar {...janeAvatar} />,
           },
           {
             key: 'b',
-            message: {
-              content: (
-                <TeamsChatMessage
-                  author="Jane Doe"
-                  content={{
-                    content: (
-                      <div>
-                        <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
-                      </div>
-                    ),
-                  }}
-                  reactionGroup={{
-                    items: reactionsWithPopup,
-                  }}
-                  timestamp="Yesterday, 10:15 PM"
-                />
-              ),
-            },
-            gutter: { content: <Avatar {...janeAvatar} /> },
+            message: (
+              <TeamsChatMessage
+                author="Jane Doe"
+                content={
+                  <div>
+                    <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
+                  </div>
+                }
+                reactionGroup={{
+                  items: reactionsWithPopup,
+                }}
+                timestamp="Yesterday, 10:15 PM"
+              />
+            ),
+            gutter: <Avatar {...janeAvatar} />,
           },
         ]}
       />
