@@ -337,10 +337,6 @@ export default (Component, options: Conformant = {}) => {
       },
     })
 
-    test('defines an "accessibility" prop in Component.defaultProps', () => {
-      expect(Component.defaultProps).toHaveProperty('accessibility')
-    })
-
     test('defines an "accessibility" prop in Component.handledProps', () => {
       expect(Component.handledProps).toContain('accessibility')
     })

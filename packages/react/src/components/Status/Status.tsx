@@ -47,7 +47,7 @@ class Status extends UIComponent<WithAsProp<StatusProps>, any> {
       content: false,
     }),
     color: PropTypes.string,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     size: customPropTypes.size,
     state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
   }
@@ -80,7 +80,5 @@ Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' 
 
 /**
  * A status graphically represents someone's or something's state.
- * @accessibility
- * The 'img' role is used to identify an element as image. 'Title' attribute have to be provided on status component. Then reader narrate content of 'title' attribute.
  */
 export default withSafeTypeForAs<typeof Status, StatusProps, 'span'>(Status)

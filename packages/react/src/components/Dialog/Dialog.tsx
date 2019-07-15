@@ -12,6 +12,7 @@ import {
   AutoControlledComponent,
   doesNodeContainClick,
   applyAccessibilityKeyHandlers,
+  getOrGenerateIdFromShorthand,
 } from '../../lib'
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
@@ -19,32 +20,13 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
-import Header from '../Header/Header'
+import Header, { HeaderProps } from '../Header/Header'
 import Portal from '../Portal/Portal'
 import Flex from '../Flex/Flex'
 
-const getOrGenerateIdFromShorthand = (
-  slotName: string,
-  value: ShorthandValue,
-  currentValue?: string,
-): string | undefined => {
-  if (_.isNil(value)) {
-    return undefined
-  }
-
-  if (React.isValidElement(value)) {
-    return (value as React.ReactElement<{ id?: string }>).props.id
-  }
-
-  if (_.isPlainObject(value)) {
-    return (value as Record<string, any>).id
-  }
-
-  return currentValue || _.uniqueId(`dialog-${slotName}-`)
-}
-
 export interface DialogSlotClassNames {
   header: string
+  headerAction: string
   content: string
 }
 
@@ -59,19 +41,22 @@ export interface DialogProps
   accessibility?: Accessibility
 
   /** A dialog can contain actions. */
-  actions?: ShorthandValue
+  actions?: ShorthandValue<BoxProps>
 
   /** A dialog can contain a cancel button. */
-  cancelButton?: ShorthandValue
+  cancelButton?: ShorthandValue<ButtonProps>
 
   /** A dialog can contain a confirm button. */
-  confirmButton?: ShorthandValue
+  confirmButton?: ShorthandValue<ButtonProps>
 
   /** Initial value for 'open'. */
   defaultOpen?: boolean
 
   /** A dialog can contain a header. */
-  header?: ShorthandValue
+  header?: ShorthandValue<HeaderProps>
+
+  /** A dialog can contain a button next to the header. */
+  headerAction?: ShorthandValue<ButtonProps>
 
   /**
    * Called after user's click a cancel button.
@@ -98,7 +83,7 @@ export interface DialogProps
   open?: boolean
 
   /** A dialog can contain a overlay. */
-  overlay?: ShorthandValue
+  overlay?: ShorthandValue<BoxProps>
 
   /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value. */
   trapFocus?: true | FocusTrapZoneProps
@@ -129,6 +114,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       color: true,
     }),
     actions: customPropTypes.itemShorthand,
+    headerAction: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
     confirmButton: customPropTypes.itemShorthand,
     defaultOpen: PropTypes.bool,
@@ -174,8 +160,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     state: DialogState,
   ): Partial<DialogState> {
     return {
-      contentId: getOrGenerateIdFromShorthand('content', props.content, state.contentId),
-      headerId: getOrGenerateIdFromShorthand('header', props.header, state.headerId),
+      contentId: getOrGenerateIdFromShorthand('dialog-content-', props.content, state.contentId),
+      headerId: getOrGenerateIdFromShorthand('dialog-header-', props.header, state.headerId),
     }
   }
 
@@ -226,6 +212,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       cancelButton,
       content,
       header,
+      headerAction,
       overlay,
       trapFocus,
       trigger,
@@ -246,6 +233,15 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               className: Dialog.slotClassNames.header,
               styles: styles.header,
               ...accessibility.attributes.header,
+            },
+          })}
+          {Button.create(headerAction, {
+            defaultProps: {
+              className: Dialog.slotClassNames.headerAction,
+              styles: styles.headerAction,
+              text: true,
+              iconOnly: true,
+              ...accessibility.attributes.headerAction,
             },
           })}
           {Box.create(content, {
@@ -304,6 +300,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 
 Dialog.slotClassNames = {
   header: `${Dialog.className}__header`,
+  headerAction: `${Dialog.className}__headerAction`,
   content: `${Dialog.className}__content`,
 }
 

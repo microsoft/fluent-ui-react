@@ -17,6 +17,7 @@ import Icon from '../Icon/Icon'
 import Text from '../Text/Text'
 import { Accessibility } from '../../lib/accessibility/types'
 import { checkboxBehavior } from '../../lib/accessibility'
+import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 
 export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -26,19 +27,22 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
   accessibility?: Accessibility
 
   /** Initial checked value. */
-  defaultChecked?: boolean
+  defaultChecked?: SupportedIntrinsicInputProps['defaultChecked']
 
   /** Whether or not item is checked. */
-  checked?: boolean
+  checked?: SupportedIntrinsicInputProps['checked']
 
   /** An item can appear disabled and be unable to change states. */
-  disabled?: boolean
+  disabled?: SupportedIntrinsicInputProps['disabled']
 
   /** The item indicator can be user-defined icon. */
   icon?: ShorthandValue
 
   /** The label of the item. */
   label?: ShorthandValue
+
+  /** A label in the loader can have different positions. */
+  labelPosition?: 'start' | 'end'
 
   /**
    * Called after item checked state is changed.
@@ -59,7 +63,7 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
 }
 
 export interface CheckboxState {
-  checked: boolean
+  checked: CheckboxProps['checked']
   isFromKeyboard: boolean
 }
 
@@ -77,8 +81,9 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     label: customPropTypes.itemShorthand,
+    labelPosition: PropTypes.oneOf(['start', 'end']),
     onChange: PropTypes.func,
     onClick: PropTypes.func,
     toggle: PropTypes.bool,
@@ -87,6 +92,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
   static defaultProps = {
     accessibility: checkboxBehavior,
     icon: {},
+    labelPosition: 'end',
   }
 
   static autoControlledProps = ['checked']
@@ -133,7 +139,13 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
   }
 
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
-    const { label, icon, toggle } = this.props
+    const { label, labelPosition, icon, toggle } = this.props
+
+    const labelElement = Text.create(label, {
+      defaultProps: {
+        styles: styles.label,
+      },
+    })
 
     return (
       <ElementType
@@ -145,13 +157,14 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
+        {labelPosition === 'start' && labelElement}
         {Icon.create(icon, {
           defaultProps: {
             name: toggle ? 'stardust-circle' : 'stardust-checkmark',
             styles: toggle ? styles.toggle : styles.checkbox,
           },
         })}
-        {Text.create(label)}
+        {labelPosition === 'end' && labelElement}
       </ElementType>
     )
   }
