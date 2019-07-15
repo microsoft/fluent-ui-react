@@ -197,7 +197,7 @@ class Sidebar extends React.Component<any, any> {
               content: 'QuickStart',
               as: NavLink,
               activeClassName: 'active',
-              to: 'quick-start',
+              to: '/quick-start',
             },
           },
           {
