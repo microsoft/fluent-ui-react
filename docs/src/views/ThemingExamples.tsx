@@ -276,7 +276,7 @@ export default () => (
     <ExampleSnippet
       value={`
         <div>
-          /* Default theming */
+          {/* Default theming */}
           <Header as="h3" content="Default theming" />
           <Button content="Button" />
           <Button icon="plus" iconOnly primary />
@@ -284,7 +284,7 @@ export default () => (
           <Icon name="chess rook" size="larger" />
           <Label content="Label with icon" icon="close" />
 
-          /* First nested theming */
+          {/* First nested theming */}
           <Provider
             theme={{
               componentVariables: {
@@ -304,7 +304,7 @@ export default () => (
               <Icon name="chess rook" size="larger" />
               <Label content="Label with icon" icon="close" />
 
-              /* Second nested theming */
+              {/* Second nested theming */}
               <Provider
                 theme={{
                   componentStyles: {
