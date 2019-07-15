@@ -38,6 +38,7 @@ import PopupsPrototype from './prototypes/popups'
 import IconViewerPrototype from './prototypes/IconViewer'
 import MenuButtonPrototype from './prototypes/MenuButton'
 import AlertsPrototype from './prototypes/alerts'
+import BadgesPrototype from './prototypes/badges'
 
 const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -116,6 +117,12 @@ const Routes = () => (
               key="/prototype-alerts"
               path="/prototype-alerts"
               component={AlertsPrototype}
+            />,
+            <Route
+              exact
+              key="/prototype-badges"
+              path="/prototype-badges"
+              component={BadgesPrototype}
             />,
           ]}
           <Route exact path="/faq" component={FAQ} />

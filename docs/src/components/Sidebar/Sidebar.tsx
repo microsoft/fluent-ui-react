@@ -381,6 +381,10 @@ class Sidebar extends React.Component<any, any> {
         public: false,
       },
       {
+        key: 'badges',
+        title: { content: 'Badges', as: NavLink, to: '/prototype-badges' },
+      },
+      {
         key: 'asyncshorthand',
         title: { content: 'Async Shorthand', as: NavLink, to: '/prototype-async-shorthand' },
         public: false,
