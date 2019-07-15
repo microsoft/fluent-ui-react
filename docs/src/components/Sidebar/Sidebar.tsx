@@ -4,7 +4,6 @@ import {
   Segment,
   Text,
   ICSSInJSStyle,
-  Provider,
   TreeItemProps,
   TreeProps,
 } from '@stardust-ui/react'
@@ -19,7 +18,6 @@ import { findDOMNode } from 'react-dom'
 import { NavLink, withRouter } from 'react-router-dom'
 
 import { constants } from 'src/lib'
-import { fontWeightBold } from 'src/themes/teams/siteVariables'
 
 type ComponentMenuItem = { displayName: string; type: string }
 
@@ -153,12 +151,11 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  getTreeItems(treeSectionStyles, treeItemStyles): ShorthandValue[] {
+  getTreeItems(): ShorthandValue[] {
     return [
       {
         key: 'concepts',
         title: 'Concepts',
-        styles: treeSectionStyles,
         items: [
           {
             key: 'intro',
@@ -169,7 +166,6 @@ class Sidebar extends React.Component<any, any> {
               as: NavLink,
               to: '/',
             },
-            styles: treeItemStyles,
           },
           {
             key: 'composition',
@@ -179,7 +175,6 @@ class Sidebar extends React.Component<any, any> {
               activeClassName: 'active',
               to: '/composition',
             },
-            styles: treeItemStyles,
           },
           {
             key: 'shorthand',
@@ -189,14 +184,12 @@ class Sidebar extends React.Component<any, any> {
               activeClassName: 'active',
               to: '/shorthand-props',
             },
-            styles: treeItemStyles,
           },
         ],
       },
       {
         key: 'guides',
         title: 'Guides',
-        styles: treeSectionStyles,
         items: [
           {
             key: 'quickstart',
@@ -206,12 +199,10 @@ class Sidebar extends React.Component<any, any> {
               activeClassName: 'active',
               to: 'quick-start',
             },
-            styles: treeItemStyles,
           },
           {
             key: 'faq',
             title: { content: 'FAQ', as: NavLink, activeClassName: 'active', to: '/faq' },
-            styles: treeItemStyles,
           },
           {
             key: 'accessiblity',
@@ -221,12 +212,10 @@ class Sidebar extends React.Component<any, any> {
               activeClassName: 'active',
               to: '/accessibility',
             },
-            styles: treeItemStyles,
           },
           {
             key: 'theming',
             title: { content: 'Theming', as: NavLink, activeClassName: 'active', to: '/theming' },
-            styles: treeItemStyles,
           },
           {
             key: 'theming-examples',
@@ -236,17 +225,14 @@ class Sidebar extends React.Component<any, any> {
               activeClassName: 'active',
               to: '/theming-examples',
             },
-            styles: treeItemStyles,
           },
           {
             key: 'colorpalette',
             title: { content: 'Colors', as: NavLink, activeClassName: 'active', to: '/colors' },
-            styles: treeItemStyles,
           },
           {
             key: 'layout',
             title: { content: 'Layout', as: NavLink, activeClassName: 'active', to: '/layout' },
-            styles: treeItemStyles,
           },
           {
             key: 'integrate-custom',
@@ -256,7 +242,6 @@ class Sidebar extends React.Component<any, any> {
               activeClassName: 'active',
               to: '/integrate-custom-components',
             },
-            styles: treeItemStyles,
           },
         ],
       },
@@ -279,7 +264,6 @@ class Sidebar extends React.Component<any, any> {
   }
 
   render() {
-    // Should be applied by provider
     const sidebarStyles: ICSSInJSStyle = {
       background: '#201f1f',
       width: this.props.width,
@@ -290,26 +274,6 @@ class Sidebar extends React.Component<any, any> {
       padding: 0,
       height: '100%',
       zIndex: 1000,
-    }
-
-    const treeSectionStyles: ICSSInJSStyle = {
-      fontWeight: fontWeightBold,
-      margin: '0 0 .5rem',
-      padding: '0 1.2857rem',
-      background: '#201f1f',
-      color: 'white',
-    }
-
-    const treeItemStyles: ICSSInJSStyle = {
-      padding: '.5em 1.33333333em',
-      textDecoration: 'none',
-      fontSize: '0.85714286em',
-      fontWeight: 400,
-      color: '#ffffff80',
-
-      '& .active': {
-        fontWeight: 'bold',
-      },
     }
 
     const logoStyles: ICSSInJSStyle = {
@@ -326,7 +290,6 @@ class Sidebar extends React.Component<any, any> {
           key: info.displayName.concat(nextType),
           title: { content: info.displayName, as: NavLink, to: getComponentPathname(info) },
           onClick: this.handleItemClick,
-          styles: treeItemStyles,
         }))
         .value()
 
@@ -347,7 +310,6 @@ class Sidebar extends React.Component<any, any> {
           target: '_blank',
           rel: 'noopener noreferrer',
         },
-        styles: treeItemStyles,
       },
       {
         key: 'change',
@@ -362,84 +324,69 @@ class Sidebar extends React.Component<any, any> {
           target: '_blank',
           rel: 'noopener noreferrer',
         },
-        styles: treeItemStyles,
       },
     ]
 
-    const treeItems = topTreeItems.concat(this.getTreeItems(treeSectionStyles, treeItemStyles))
+    const treeItems = topTreeItems.concat(this.getTreeItems())
 
     const prototypesTreeItems: TreeProps['items'] = [
       {
         key: 'chatpane',
         title: { content: 'Chat Pane', as: NavLink, to: '/prototype-chat-pane' },
-        styles: treeItemStyles,
       },
       {
         key: 'chatMssages',
         title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
-        styles: treeItemStyles,
       },
       {
         key: 'customtoolbar',
         title: { content: 'Custom Styled Toolbar', as: NavLink, to: '/prototype-custom-toolbar' },
-        styles: treeItemStyles,
       },
       {
         key: 'dropdowns',
         title: { content: 'Dropdowns', as: NavLink, to: '/prototype-dropdowns' },
-        styles: treeItemStyles,
       },
       {
         key: 'alerts',
         title: { content: 'Alerts', as: NavLink, to: '/prototype-alerts' },
-        styles: treeItemStyles,
       },
       {
         key: 'asyncshorthand',
         title: { content: 'Async Shorthand', as: NavLink, to: '/prototype-async-shorthand' },
-        styles: treeItemStyles,
       },
       {
         key: 'employeecard',
         title: { content: 'Employee Card', as: NavLink, to: '/prototype-employee-card' },
-        styles: treeItemStyles,
       },
       {
         key: 'meetingoptions',
         title: { content: 'Meeting Options', as: NavLink, to: '/prototype-meeting-options' },
-        styles: treeItemStyles,
       },
       {
         key: 'mentions',
         title: { content: 'Mentions', as: NavLink, to: '/prototype-mentions' },
-        styles: treeItemStyles,
       },
       {
         key: 'searchpage',
         title: { content: 'Search Page', as: NavLink, to: '/prototype-search-page' },
-        styles: treeItemStyles,
       },
       {
         key: 'popups',
         title: { content: 'Popups', as: NavLink, to: '/prototype-popups' },
-        styles: treeItemStyles,
       },
       {
         key: 'iconviewer',
         title: { content: 'Processed Icons', as: NavLink, to: '/icon-viewer' },
-        styles: treeItemStyles,
       },
       {
         key: 'menu-button',
         title: { content: 'MenuButton', as: NavLink, to: '/menu-button' },
-        styles: treeItemStyles,
       },
     ]
 
     const prototypeTreeSection = {
       key: 'prototypes',
       title: 'Prototypes',
-      styles: treeSectionStyles,
       items: prototypesTreeItems,
     }
 
@@ -449,13 +396,11 @@ class Sidebar extends React.Component<any, any> {
     const componentTreeSection = {
       key: 'components',
       title: 'Components',
-      styles: treeSectionStyles,
       items: treeItemsByType[0].items,
     }
     const behaviorTreeSection = {
       key: 'behaviour',
       title: 'Behaviors',
-      styles: treeSectionStyles,
       items: treeItemsByType[1].items,
     }
 
@@ -482,37 +427,24 @@ class Sidebar extends React.Component<any, any> {
 
     // TODO: bring back the active elements indicators
     return (
-      <Provider
-        theme={{
-          componentStyles: {
-            TreeTitle: {
-              root: {
-                display: 'block',
-                width: '100%',
-              },
-            },
-          },
-        }}
-      >
-        <Segment styles={sidebarStyles}>
-          <Segment styles={treeSectionStyles}>
-            <Logo width="32px" styles={logoStyles} />
-            <Text
-              role="heading"
-              aria-level={1}
-              color="white"
-              content="Stardust UI React &nbsp;"
-              styles={logoStyles}
-            />
-            <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
-          </Segment>
-          <Tree
-            defaultActiveIndex={activeCategoryIndex}
-            items={allSections}
-            renderItemTitle={titleRenderer}
+      <Segment styles={sidebarStyles}>
+        <Segment styles={this.props.treeSectionStyle}>
+          <Logo width="32px" styles={logoStyles} />
+          <Text
+            role="heading"
+            aria-level={1}
+            color="white"
+            content="Stardust UI React &nbsp;"
+            styles={logoStyles}
           />
+          <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
         </Segment>
-      </Provider>
+        <Tree
+          defaultActiveIndex={activeCategoryIndex}
+          items={allSections}
+          renderItemTitle={titleRenderer}
+        />
+      </Segment>
     )
   }
 }
