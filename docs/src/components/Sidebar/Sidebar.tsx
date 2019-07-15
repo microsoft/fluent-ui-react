@@ -468,6 +468,8 @@ class Sidebar extends React.Component<any, any> {
 
     const at = this.props.location.pathname
     const activeCategoryIndex = this.getActiveCategoryIndex(at, allSections)
+    // TODO: remove after the issue with TreeItem will be fixed
+    // https://github.com/stardust-ui/react/issues/1613
     this.addItemKeyCallbacks(allSections)
 
     const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
