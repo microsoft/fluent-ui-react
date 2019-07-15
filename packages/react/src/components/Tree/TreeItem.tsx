@@ -39,6 +39,8 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
    */
   accessibility?: Accessibility
 
+  containerSize?: number
+
   /** Only allow one subtree to be open at a time. */
   exclusive?: boolean
 
@@ -50,6 +52,8 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
 
   /** Array of props for sub tree. */
   items?: ShorthandValue[]
+
+  itemSize?: number
 
   /** Called when a tree title is clicked. */
   onTitleClick?: ComponentEventHandler<TreeItemProps>
@@ -67,8 +71,12 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
    */
   renderItemTitle?: ShorthandRenderFunction
 
+  size?: number
+
   /** Properties for TreeTitle. */
   title?: ShorthandValue
+
+  updateSize?: Function
 }
 
 class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
@@ -98,6 +106,10 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     renderItemTitle: PropTypes.func,
     treeItemRtlAttributes: PropTypes.func,
     title: customPropTypes.itemShorthand,
+    updateSize: PropTypes.func,
+    containerSize: PropTypes.number,
+    size: PropTypes.number,
+    itemSize: PropTypes.number,
   }
 
   static defaultProps = {
@@ -166,7 +178,16 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
   })
 
   renderContent() {
-    const { items, title, renderItemTitle, open, exclusive } = this.props
+    const {
+      items,
+      title,
+      renderItemTitle,
+      open,
+      exclusive,
+      updateSize,
+      itemSize,
+      containerSize,
+    } = this.props
     const hasSubtree = !!(items && items.length)
 
     return (
@@ -189,6 +210,9 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
                 className: TreeItem.slotClassNames.subtree,
                 exclusive,
                 renderItemTitle,
+                updateSize,
+                itemSize,
+                containerSize,
               },
             })}
           </Ref>
@@ -197,7 +221,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     )
   }
 
-  renderComponent({ ElementType, accessibility, classes, unhandledProps, styles, variables }) {
+  renderComponent({ ElementType, accessibility, classes, unhandledProps }) {
     const { children } = this.props
 
     return (

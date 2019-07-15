@@ -2,6 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { VariableSizeList as List } from 'react-window'
 
 import TreeItem, { TreeItemProps } from './TreeItem'
 import {
@@ -32,6 +33,8 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    */
   accessibility?: Accessibility
 
+  containerSize?: number
+
   /** Initial activeIndex value. */
   defaultActiveIndex?: number[] | number
 
@@ -41,6 +44,8 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /** Shorthand array of props for Tree. */
   items: ShorthandValue[]
 
+  itemSize?: number
+
   /**
    * A custom render function for the title slot.
    *
@@ -49,6 +54,10 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
   renderItemTitle?: ShorthandRenderFunction
+
+  updateSize?: Function
+
+  virtualized?: boolean
 }
 
 export interface TreeState {
@@ -74,22 +83,55 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
+    containerSize: PropTypes.number,
     defaultActiveIndex: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
+    itemSize: PropTypes.number,
     renderItemTitle: PropTypes.func,
     rtlAttributes: PropTypes.func,
+    updateSize: PropTypes.func,
+    virtualized: PropTypes.bool,
   }
 
   static defaultProps = {
     as: 'ul',
     accessibility: treeBehavior,
+    itemSize: 20,
+    containerSize: 100,
   }
 
   static autoControlledProps = ['activeIndex']
+
+  itemSizes: number[] = []
+
+  constructor(props: TreeProps, context) {
+    super(props, context)
+
+    const { items, itemSize } = props
+
+    const totalSize = items.reduce((acc, item) => {
+      const size = _.isUndefined(item['size']) ? itemSize : item['size']
+
+      this.itemSizes.push(size)
+
+      return acc + size
+    }, 0)
+
+    _.invoke(props, 'updateSize', totalSize)
+  }
+
+  componentWillUnmount() {
+    const { items, itemSize } = this.props
+    const totalSize = items.reduce((acc: number, item: ShorthandValue) => {
+      const size = _.isUndefined(item['size']) ? itemSize : item['size']
+      return acc - size
+    }, 0)
+    _.invoke(this.props, 'updateSize', totalSize)
+  }
 
   actionHandlers = {
     expandSiblings: e => {
@@ -146,26 +188,53 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     },
   })
 
-  renderContent() {
-    const { items, renderItemTitle, exclusive } = this.props
-    const { activeIndex } = this.state
-    const activeIndexes = this.getActiveIndexes()
+  renderContent(style) {
+    const { items, virtualized, containerSize } = this.props
 
-    return _.map(items, (item: ShorthandValue, index: number) =>
-      TreeItem.create(item, {
-        defaultProps: {
-          className: Tree.slotClassNames.item,
-          index,
-          exclusive,
-          renderItemTitle,
-          open: exclusive ? index === activeIndex : _.includes(activeIndexes, index),
-        },
-        overrideProps: this.handleTreeItemOverrides,
-      }),
-    )
+    if (virtualized) {
+      return (
+        <List
+          height={containerSize}
+          itemCount={items.length}
+          itemSize={index => this.itemSizes[index]}
+        >
+          {this.renderItem}
+        </List>
+      )
+    }
+
+    return _.map(items, (item: ShorthandValue, index: number) => this.renderItem({ index, style }))
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
+  renderItem = ({ index, style }) => {
+    const { items, renderItemTitle, exclusive, containerSize, itemSize } = this.props
+    const { activeIndex } = this.state
+    const updateSize = (update: number) => {
+      this.itemSizes[index] += update
+
+      _.invoke(this.props, 'updateSize', update)
+    }
+
+    const activeIndexes = this.getActiveIndexes()
+
+    return TreeItem.create(items[index], {
+      defaultProps: {
+        className: Tree.slotClassNames.item,
+        index,
+        exclusive,
+        renderItemTitle,
+        open: exclusive ? index === activeIndex : _.includes(activeIndexes, index),
+        style,
+        updateSize,
+        containerSize,
+        size: itemSize,
+        itemSize,
+      },
+      overrideProps: this.handleTreeItemOverrides,
+    })
+  }
+
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
     const { children } = this.props
 
     return (
@@ -176,7 +245,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        {childrenExist(children) ? children : this.renderContent()}
+        {childrenExist(children) ? children : this.renderContent(styles)}
       </ElementType>
     )
   }
