@@ -26,7 +26,7 @@ const Usages = () => (
       examplePath="components/Menu/Usages/MenuExampleWithSubmenuControlled"
     />
     <ComponentExample
-      title="Menu with items containing tooltip"
+      title="With tooltips"
       description={
         <>
           {'The items inside the Menu as actionable element should be rendered with '}

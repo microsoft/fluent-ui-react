@@ -6,7 +6,7 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Usage = () => (
   <ExampleSection title="Usage">
     <ComponentExample
-      title="Toolbar with items containing tooltip"
+      title="With tooltips"
       description={
         <>
           {'The items inside the Toolbar as actionable element should be rendered with '}
