@@ -111,6 +111,26 @@ export default () => (
       }
     />
 
+    <Question content="What's the difference between Flex, Grid, Layout, Box and Segment components?" />
+    <Answer
+      content={
+        <p>
+          Flex, Grid and Layout components handle layout aspects. The Flex component is for laying
+          out items in one direction, while the Grid component is made for two dimensional layouts.
+          Visit the {link('Layout guide', '/layout')} page for a detailed comparison between Flex
+          and Grid. The Layout component is now deprecated. Its purpose was arrangement of the
+          content of a component. Flex or Grid component should be used instead of the Layout
+          component.
+          <br />
+          Box is an abstract component that by default renders a `div` without any styles. Box
+          should be used carefully, in most cases {link("you don't need it ", '/components/box')}.
+          <br />
+          {link('Segment', '/components/segment')} groups related content together. It shouldn't be
+          used to handle layout aspects.
+        </p>
+      }
+    />
+
     <Category content="Teams Specific" />
     <Question content="How to add Icons to Stardust" />
     <Answer
