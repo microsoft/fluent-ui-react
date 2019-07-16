@@ -12,8 +12,7 @@ type ComponentPropsRowProps = ComponentProp
 const ComponentPropValue: React.FunctionComponent<ComponentPropType> = props => {
   const { name, parameters } = props
 
-  if (!name) return <span>enum</span>
-
+  if (name === 'literal') return <span>enum</span>
   if (name === 'ShorthandValue' || name === 'ShorthandCollection') {
     const componentName = parameters[0].name.replace('Props', '')
 
@@ -38,7 +37,7 @@ const ComponentPropsRow: React.FunctionComponent<ComponentPropsRowProps> = props
   )
 
   const typeValues = _.uniqBy(types, type => type.name)
-  const enumValues = _.filter(types, type => !type.name)
+  const enumValues = _.filter(types, type => type.name === 'literal')
 
   return (
     <tr style={{ borderTop: '1px solid grey' }}>
@@ -58,14 +57,12 @@ const ComponentPropsRow: React.FunctionComponent<ComponentPropsRowProps> = props
       </td>
       <td>
         <InlineMarkdown value={description} />
-        {enumValues.length > 0 && (
-          <>
-            <b>Values:</b>
-            {enumValues.map(type => (
-              <code style={{ marginRight: 3 }}>{type.value}</code>
-            ))}
-          </>
-        )}
+        {enumValues.length > 0 && <b>Values:</b>}
+        {enumValues.map(type => (
+          <code key={type.value} style={{ marginRight: 3 }}>
+            {type.value}
+          </code>
+        ))}
         {/* TODO change these according to the react-docgen-typescript generated json */}
         {/* <ComponentPropFunctionSignature name={name} tags={tags} /> */}
       </td>

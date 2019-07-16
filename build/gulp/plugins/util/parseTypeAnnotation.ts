@@ -52,7 +52,7 @@ const parseTypeAnnotation = (
   }
 
   if (t.isTSLiteralType(tsType)) {
-    return [{ value: tsType.literal.value.toString() }]
+    return [{ name: 'literal', value: tsType.literal.value.toString() }]
   }
 
   // Naming is weird, but it's a different type than LiteralType
