@@ -83,6 +83,6 @@ ReactionGroup.create = createShorthandFactory({
 })
 
 /**
- * A reaction group presents multiple reactions as a group.
+ * A ReactionGroup groups multiple Reaction elements.
  */
 export default withSafeTypeForAs<typeof ReactionGroup, ReactionGroupProps>(ReactionGroup)
