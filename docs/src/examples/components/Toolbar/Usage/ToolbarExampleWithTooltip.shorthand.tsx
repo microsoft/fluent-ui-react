@@ -1,6 +1,11 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Toolbar, Tooltip, ToolbarItemShorthandKinds } from '@stardust-ui/react'
+import {
+  Toolbar,
+  Tooltip,
+  ToolbarItemShorthandKinds,
+  tooltipAsLabelBehavior,
+} from '@stardust-ui/react'
 import { useBooleanKnob } from '@stardust-ui/docs-components'
 
 const ToolbarExampleShorthand = () => {
@@ -59,7 +64,14 @@ const ToolbarExampleShorthand = () => {
                 // rendering Tooltip for the Toolbar Item
                 (ToolbarItem, props) => {
                   const { tooltip, ...rest } = props
-                  return <Tooltip trigger={<ToolbarItem {...rest} />} content={tooltip} />
+                  // Adding tooltipAsLabelBehavior as the ToolbarItems contains only icon
+                  return (
+                    <Tooltip
+                      trigger={<ToolbarItem {...rest} />}
+                      accessibility={tooltipAsLabelBehavior}
+                      content={tooltip}
+                    />
+                  )
                 },
               ),
       )}
