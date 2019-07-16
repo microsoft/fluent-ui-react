@@ -36,6 +36,7 @@ import Box, { BoxProps } from '../Box/Box'
 import Popup, { PopupProps } from '../Popup/Popup'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 import { ToolbarMenuItemProps } from '../Toolbar/ToolbarMenuItem'
+import { ToolbarItemShorthandKinds } from '@stardust-ui/react'
 
 export interface ToolbarItemProps
   extends UIComponentProps,
@@ -57,7 +58,9 @@ export interface ToolbarItemProps
    * Shorthand for the submenu.
    * If submenu is specified, the item is wrapped to group the item and the menu elements together.
    */
-  menu?: ShorthandValue<ToolbarMenuProps> | ShorthandCollection<ToolbarMenuItemProps>
+  menu?:
+    | ShorthandValue<ToolbarMenuProps>
+    | ShorthandCollection<ToolbarMenuItemProps, ToolbarItemShorthandKinds>
 
   /** Indicates if the menu inside the item is open. */
   menuOpen?: boolean

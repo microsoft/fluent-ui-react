@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 import { Link } from 'react-router-dom'
 
 import { ComponentProp, ComponentPropType } from 'docs/src/types'
+import componentInfoContext from 'docs/src/utils/componentInfoContext'
 import ComponentPropName from '../ComponentProp/ComponentPropName'
 
 const InlineMarkdown = React.lazy(() => import('../InlineMarkdown'))
@@ -15,14 +16,19 @@ const ComponentPropValue: React.FunctionComponent<ComponentPropType> = props => 
   if (name === 'literal') return <span>enum</span>
   if (name === 'ShorthandValue' || name === 'ShorthandCollection') {
     const componentName = parameters[0].name.replace('Props', '')
-    const kindIsDefined = name === 'ShorthandCollection' && parameters[1].name !== 'never'
+
+    const parentInfo = componentInfoContext.byDisplayName[componentName]
+    const linkName = _.kebabCase(parentInfo.parentDisplayName || componentName)
+
+    const kindParam = parameters[1] && parameters[1].name !== 'never'
+    const kindIsVisible = name === 'ShorthandCollection' && kindParam
 
     return (
       <span>
         {name}
         {`<`}
-        <Link to={`/components/${componentName}`}>{parameters[0].name}</Link>
-        {kindIsDefined && <span>, {parameters[1].name}</span>}
+        <Link to={`/components/${linkName}`}>{parameters[0].name}</Link>
+        {kindIsVisible && <span>, {parameters[1].name}</span>}
         {`>`}
       </span>
     )
