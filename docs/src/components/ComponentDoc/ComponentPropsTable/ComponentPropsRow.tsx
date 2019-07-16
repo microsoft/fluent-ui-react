@@ -33,7 +33,7 @@ const ComponentPropValue: React.FunctionComponent<ComponentPropType> = props => 
 const ComponentPropsRow: React.FunctionComponent<ComponentPropsRowProps> = props => {
   const { defaultValue, description, name, required, types } = props
 
-  const shorthand = types.find(
+  const shorthand = types.some(
     type => type.name === 'ShorthandValue' || type.name === 'ShorthandCollection',
   )
 
@@ -43,7 +43,7 @@ const ComponentPropsRow: React.FunctionComponent<ComponentPropsRowProps> = props
   return (
     <tr style={{ borderTop: '1px solid grey' }}>
       <td>
-        <ComponentPropName name={name} required={required} slot={!!shorthand} />
+        <ComponentPropName name={name} required={required} slot={shorthand} />
       </td>
       <td>{_.isNil(defaultValue) ? null : <code>{JSON.stringify(defaultValue)}</code>}</td>
       <td>
