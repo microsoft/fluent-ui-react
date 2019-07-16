@@ -49,7 +49,7 @@ export default (siteVars: any): CheckboxVariables => ({
   checkboxGap: pxToRem(12),
   checkboxMargin: `${pxToRem(20)}, 0`,
   checkboxPadding,
-  rootPadding: '4px 5px',
+  rootPadding: '3px 5px',
 
   checkboxTextColorHover: siteVars.colorScheme.default.foreground,
   checkboxBorderColorHover: siteVars.colorScheme.default.foreground,
