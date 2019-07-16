@@ -244,6 +244,5 @@ Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items'
  * A menu displays grouped navigation actions.
  * @accessibility
  * Implements ARIA [Menu](https://www.w3.org/TR/wai-aria-practices-1.1/#menu), [Toolbar](https://www.w3.org/TR/wai-aria-practices-1.1/#toolbar) or [Tabs](https://www.w3.org/TR/wai-aria-practices-1.1/#tabpanel) design pattern, depending on the behavior used.
- * For render tree customization, use [render callback argument](https://stardust-ui.github.io/react/shorthand-props#render-callback-argument).
  */
 export default withSafeTypeForAs<typeof Menu, MenuProps, 'ul'>(Menu)

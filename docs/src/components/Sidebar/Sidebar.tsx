@@ -263,6 +263,31 @@ class Sidebar extends React.Component<any, any> {
     ]
   }
 
+  getSectionsWithPrototypeSectionIfApplicable(currentSections, allPrototypes) {
+    let prototypes =
+      process.env.NODE_ENV === 'production'
+        ? _.filter(allPrototypes, { public: true })
+        : allPrototypes
+
+    if (prototypes.length === 0) {
+      return currentSections
+    }
+    prototypes = this.removePublicTags(prototypes)
+    const prototypeTreeSection = {
+      key: 'prototypes',
+      title: 'Prototypes',
+      items: prototypes,
+    }
+    return currentSections.concat(prototypeTreeSection)
+  }
+
+  removePublicTags(prototyptesTreeItems) {
+    return prototyptesTreeItems.map(p => {
+      delete p.public
+      return p
+    })
+  }
+
   render() {
     const sidebarStyles: ICSSInJSStyle = {
       background: '#201f1f',
@@ -329,69 +354,73 @@ class Sidebar extends React.Component<any, any> {
 
     const treeItems = topTreeItems.concat(this.getTreeItems())
 
-    const prototypesTreeItems: TreeProps['items'] = [
+    const prototypesTreeItems: (ShorthandValue<{}> & { key: string; public: boolean })[] = [
       {
         key: 'chatpane',
         title: { content: 'Chat Pane', as: NavLink, to: '/prototype-chat-pane' },
+        public: false,
       },
       {
         key: 'chatMssages',
         title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
+        public: false,
       },
       {
         key: 'customtoolbar',
         title: { content: 'Custom Styled Toolbar', as: NavLink, to: '/prototype-custom-toolbar' },
+        public: true,
       },
       {
         key: 'dropdowns',
         title: { content: 'Dropdowns', as: NavLink, to: '/prototype-dropdowns' },
+        public: false,
       },
       {
         key: 'alerts',
         title: { content: 'Alerts', as: NavLink, to: '/prototype-alerts' },
+        public: false,
       },
       {
         key: 'asyncshorthand',
         title: { content: 'Async Shorthand', as: NavLink, to: '/prototype-async-shorthand' },
+        public: false,
       },
       {
         key: 'employeecard',
         title: { content: 'Employee Card', as: NavLink, to: '/prototype-employee-card' },
+        public: false,
       },
       {
         key: 'meetingoptions',
         title: { content: 'Meeting Options', as: NavLink, to: '/prototype-meeting-options' },
+        public: false,
       },
       {
         key: 'mentions',
         title: { content: 'Mentions', as: NavLink, to: '/prototype-mentions' },
+        public: false,
       },
       {
         key: 'searchpage',
         title: { content: 'Search Page', as: NavLink, to: '/prototype-search-page' },
+        public: false,
       },
       {
         key: 'popups',
         title: { content: 'Popups', as: NavLink, to: '/prototype-popups' },
+        public: false,
       },
       {
         key: 'iconviewer',
         title: { content: 'Processed Icons', as: NavLink, to: '/icon-viewer' },
+        public: false,
       },
       {
         key: 'menu-button',
         title: { content: 'MenuButton', as: NavLink, to: '/menu-button' },
+        public: false,
       },
     ]
-
-    const prototypeTreeSection = {
-      key: 'prototypes',
-      title: 'Prototypes',
-      items: prototypesTreeItems,
-    }
-
-    const withPrototypes =
-      process.env.NODE_ENV !== 'production' ? treeItems.concat(prototypeTreeSection) : treeItems
 
     const componentTreeSection = {
       key: 'components',
@@ -404,8 +433,12 @@ class Sidebar extends React.Component<any, any> {
       items: treeItemsByType[1].items,
     }
 
-    const withComponents = withPrototypes.concat(componentTreeSection)
-    const allSections = withComponents.concat(behaviorTreeSection)
+    const withComponents = treeItems.concat(componentTreeSection)
+    const withBehaviors = withComponents.concat(behaviorTreeSection)
+    const allSections = this.getSectionsWithPrototypeSectionIfApplicable(
+      withBehaviors,
+      prototypesTreeItems,
+    )
 
     const at = this.props.location.pathname
     const activeCategoryIndex = _.findIndex(
