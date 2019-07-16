@@ -66,24 +66,24 @@ class ResponsiveToolbar extends React.Component<ResponsiveToolbarProps, Responsi
 
   afterComponentRendered() {
     console.log('rendered')
-    window.requestAnimationFrame(() => {
-      if (this.containerRef.current) {
-        const { fits, measurements } = this.measureOverflow(this.containerRef.current)
-        this.setState(({ items }) => {
-          if (fits) {
-            return { stable: true, stableItems: items }
-          }
-
-          const reducedItems = this.props.reduceItems(items, measurements)
-
-          if (reducedItems === null) {
-            // consumer refused to reduce further
-            return { stable: true, stableItems: items }
-          }
-          return { items: reducedItems }
-        })
-      }
-    })
+    //   window.requestAnimationFrame(() => {
+    //     if (this.containerRef.current) {
+    //       const { fits } = this.measureOverflow(this.containerRef.current)
+    //       this.setState(({ items }) => {
+    //         if (fits) {
+    //           return { stable: true, stableItems: items }
+    //         }
+    //
+    //         const reducedItems = this.props.reduceItems(items)
+    //
+    //         if (reducedItems === null) {
+    //           // consumer refused to reduce further
+    //           return { stable: true, stableItems: items }
+    //         }
+    //         return { items: reducedItems }
+    //       })
+    //     }
+    //   })
   }
 
   measureOverflow(container: HTMLElement) {
@@ -115,6 +115,7 @@ class ResponsiveToolbar extends React.Component<ResponsiveToolbarProps, Responsi
   }
 
   render() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { reduceItems, ...toolbarProps } = this.props
 
     return (

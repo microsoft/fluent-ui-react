@@ -15,7 +15,6 @@ const ToolbarExampleOverflow = () => (
       },
       ..._.times(20, i => ({ key: `b${i}`, icon: icons[i % icons.length] })),
     ]}
-
     onReduceItems={items => {
       return items.slice(0, -1)
     }}
