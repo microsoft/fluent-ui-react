@@ -1,5 +1,4 @@
 import { CheckboxVariables } from '../../../teams/components/Checkbox/checkboxVariables'
-// import { transparentColors } from '../../../teams/colors';
 
 export default (siteVars: any): Partial<CheckboxVariables> => {
   return {
