@@ -14,7 +14,7 @@ const Usage = () => (
       title="With tooltip"
       description={
         <>
-          {'The button as actionable element should be rendered with '}
+          {'The button, as actionable element, should be rendered with '}
           <Link to="/components/tooltip">tooltip</Link>
         </>
       }

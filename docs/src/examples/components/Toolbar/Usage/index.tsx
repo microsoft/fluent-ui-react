@@ -9,7 +9,7 @@ const Usage = () => (
       title="With tooltips"
       description={
         <>
-          {'The items inside the Toolbar as actionable element should be rendered with '}
+          {'The items inside the Toolbar, as actionable elements, should be rendered with '}
           <Link to="/components/tooltip">tooltip</Link>
         </>
       }
