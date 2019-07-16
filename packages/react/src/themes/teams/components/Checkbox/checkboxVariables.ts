@@ -53,23 +53,23 @@ export default (siteVars: any): CheckboxVariables => ({
 
   checkboxTextColorHover: siteVars.colorScheme.default.foreground,
   checkboxBorderColorHover: siteVars.colorScheme.default.foreground,
-  checkboxCheckedBackgroundHover: siteVars.colors.brand[600],
+  checkboxCheckedBackgroundHover: siteVars.colorScheme.brand.backgroundHover,
 
   toggleBorderRadius: pxToRem(999),
-  toggleIndicatorColor: siteVars.colors.brand[600],
+  toggleIndicatorColor: siteVars.colorScheme.brand.backgroundActive1,
   toggleMargin: `${pxToRem(20)}, 0`,
   togglePadding: `${checkboxPadding} ${toggleMovementDistance} ${checkboxPadding} ${checkboxPadding}`,
 
   checkboxCheckedTextColor: siteVars.colorScheme.default.foreground,
-  checkboxCheckedBackground: siteVars.colors.brand[600],
+  checkboxCheckedBackground: siteVars.colorScheme.brand.backgroundActive1,
   checkboxCheckedBorderColor: 'transparent',
-  checkboxCheckedIndicatorColor: siteVars.colors.white,
+  checkboxCheckedIndicatorColor: siteVars.colorScheme.brand.foreground4,
   toggleCheckedPadding: `${checkboxPadding} ${checkboxPadding} ${checkboxPadding} ${toggleMovementDistance}`,
 
   disabledColor: siteVars.colorScheme.default.foregroundDisabled1,
   disabledCheckboxBackground: siteVars.colorScheme.default.background,
   disabledCheckboxBackgroundChecked: siteVars.colorScheme.default.backgroundDisabled,
   disabledCheckboxBorderColor: siteVars.colorScheme.default.foregroundDisabled1,
-  disabledCheckboxCheckedIndicatorColor: siteVars.colorScheme.default.foregroundDisabled1,
+  disabledCheckboxCheckedIndicatorColor: siteVars.colorScheme.default.foregroundDisabled,
   disabledToggleIndicatorColor: siteVars.colorScheme.default.foregroundDisabled1,
 })

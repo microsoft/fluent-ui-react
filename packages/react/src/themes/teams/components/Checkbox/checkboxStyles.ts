@@ -26,6 +26,9 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
           }),
           ...(!p.checked && {
             borderColor: v.checkboxBorderColorHover,
+            ...(p.toggle && {
+              color: v.checkboxCheckedBackgroundHover,
+            }),
           }),
         },
       },
