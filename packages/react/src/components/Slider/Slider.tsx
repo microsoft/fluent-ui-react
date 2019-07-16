@@ -241,7 +241,8 @@ Slider.slotClassNames = {
 }
 
 /**
- * A slider is an input that allows the user to choose a value from within a specific range of values.
+ * A Slider represents an input that allows user to choose a value from within a specific range.
+ *
  * @accessibility
  * Implements [ARIA Slider](https://www.w3.org/TR/wai-aria-practices-1.1/#slider) design pattern.
  */

@@ -185,8 +185,9 @@ class RadioGroupItem extends AutoControlledComponent<
 RadioGroupItem.create = createShorthandFactory({ Component: RadioGroupItem, mappedProp: 'label' })
 
 /**
- * A single radio within a radio group.
+ * A RadioGroupItem represents single input element within a RadioGroup.
+ *
  * @accessibility
- * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
+ * Radio items need to be grouped to correctly handle accessibility.
  */
 export default withSafeTypeForAs<typeof RadioGroupItem, RadioGroupItemProps>(RadioGroupItem)

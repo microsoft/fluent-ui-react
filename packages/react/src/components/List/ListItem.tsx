@@ -227,6 +227,6 @@ ListItem.slotClassNames = {
 }
 
 /**
- * A list item contains a single piece of content within a list.
+ * A ListItem contains a single piece of content within a List.
  */
 export default withSafeTypeForAs<typeof ListItem, ListItemProps, 'li'>(ListItem)

@@ -427,6 +427,6 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
 MenuItem.create = createShorthandFactory({ Component: MenuItem, mappedProp: 'content' })
 
 /**
- * A menu item is an actionable navigation item within a menu.
+ * A MenuItem is an actionable item within a Menu.
  */
 export default withSafeTypeForAs<typeof MenuItem, MenuItemProps, 'a'>(MenuItem)

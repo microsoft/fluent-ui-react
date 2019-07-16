@@ -95,6 +95,9 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
 ToolbarMenu.create = createShorthandFactory({ Component: ToolbarMenu, mappedArrayProp: 'items' })
 
 /**
- * Toolbar menu creates a popup menu attached to a toolbarItem.
+ * A ToolbarMenu creates a pop-up menu attached to a ToolbarItem.
+ *
+ * @accessibility
+ * Implements pop-up menu (submenu) behavior of [ARIA Menu](https://www.w3.org/TR/wai-aria-practices-1.1/#menu) design pattern.
  */
 export default withSafeTypeForAs<typeof ToolbarMenu, ToolbarMenuProps, 'ul'>(ToolbarMenu)

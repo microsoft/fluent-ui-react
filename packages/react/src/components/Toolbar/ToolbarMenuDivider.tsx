@@ -52,8 +52,7 @@ ToolbarMenuDivider.create = createShorthandFactory({
 })
 
 /**
- * Toolbar menu divider.
- * Adds visual non-selectable separator between items.
+ * A ToolbarMenuDivider adds non-actionable separator between items of ToolbarMenu.
  */
 export default withSafeTypeForAs<typeof ToolbarMenuDivider, ToolbarMenuDividerProps, 'li'>(
   ToolbarMenuDivider,

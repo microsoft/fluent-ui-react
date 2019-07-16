@@ -95,9 +95,6 @@ export interface DialogState {
   open?: boolean
 }
 
-/**
- * A Dialog informs users about specific tasks or may contain critical information, require decisions, or involve multiple interactions.
- */
 class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogState> {
   static displayName = 'Dialog'
   static className = 'ui-dialog'
@@ -303,6 +300,8 @@ Dialog.slotClassNames = {
 
 /**
  * A Dialog displays important information on top of a page which usually requires user's attention, confirmation or interaction.
+ * Dialogs are purposefully interruptive, so they should be used sparingly.
+ *
  * @accessibility
  * Implements [ARIA Dialog (Modal)](https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal) design pattern.
  */

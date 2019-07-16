@@ -123,6 +123,6 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
 }
 
 /**
- * An animation allows the user to animate their own components.
+ * An Animation provides animation effects to rendered elements.
  */
 export default withSafeTypeForAs<typeof Animation, AnimationProps>(Animation)

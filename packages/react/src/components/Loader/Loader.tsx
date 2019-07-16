@@ -146,6 +146,9 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
 Loader.create = createShorthandFactory({ Component: Loader })
 
 /**
- * A Loader indicates a possible user action.
+ * A Loader alerts a user to wait for an activity to complete.
+ *
+ * @accessibility
+ * Implements [ARIA progressbar](https://www.w3.org/TR/wai-aria-1.1/#progressbar) role.
  */
 export default withSafeTypeForAs<typeof Loader, LoaderProps>(Loader)

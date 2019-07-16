@@ -38,4 +38,8 @@ const ProviderBox = createComponent<WithAsProp<ProviderBoxProps>>({
   },
 })
 
+/**
+ * The ProviderBox passes the CSS-in-JS renderer, theme styles and other settings to Stardust components.
+ * Also, being comapred to Provider, it additionally renders an element to the DOM (`div` by default).
+ */
 export default withSafeTypeForAs<typeof ProviderBox, ProviderBoxProps>(ProviderBox)
