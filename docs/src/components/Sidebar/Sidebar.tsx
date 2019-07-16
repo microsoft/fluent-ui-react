@@ -452,6 +452,13 @@ class Sidebar extends React.Component<any, any> {
         styles: menuItemStyles,
       },
       {
+        key: 'trees',
+        content: 'Trees',
+        as: NavLink,
+        to: '/trees',
+        styles: menuItemStyles,
+      },
+      {
         key: 'divider4',
         kind: 'divider',
         styles: dividerStyles,

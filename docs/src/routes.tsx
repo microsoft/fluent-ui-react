@@ -38,6 +38,7 @@ import PopupsPrototype from './prototypes/popups'
 import IconViewerPrototype from './prototypes/IconViewer'
 import MenuButtonPrototype from './prototypes/MenuButton'
 import AlertsPrototype from './prototypes/alerts'
+import TreesPrototype from './prototypes/trees'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -126,6 +127,7 @@ const Router = () => (
             path="/prototype-alerts"
             component={AlertsPrototype}
           />,
+          <DocsLayout exact key="/trees" path="/trees" component={TreesPrototype} />,
         ]}
         <DocsLayout exact path="/faq" component={FAQ} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
