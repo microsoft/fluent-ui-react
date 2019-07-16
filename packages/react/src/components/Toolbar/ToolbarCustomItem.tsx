@@ -34,7 +34,7 @@ export interface ToolbarCustomItemProps
   focusable?: boolean
 
   /** A custom item can't be actionable. */
-  onClick: never
+  onClick?: never
 
   /**
    * Called after user's focus. Will be called only if the item is focusable.

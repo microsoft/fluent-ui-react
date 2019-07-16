@@ -17,16 +17,24 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import {
+  WithAsProp,
+  ShorthandValue,
+  ComponentEventHandler,
+  withSafeTypeForAs,
+  ShorthandCollection,
+} from '../../types'
 import { chatMessageBehavior, menuAsToolbarBehavior } from '../../lib/accessibility'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import Box from '../Box/Box'
-import Label from '../Label/Label'
-import Menu from '../Menu/Menu'
-import Text from '../Text/Text'
-import Reaction from '../Reaction/Reaction'
+import Box, { BoxProps } from '../Box/Box'
+import Label, { LabelProps } from '../Label/Label'
+import Menu, { MenuProps } from '../Menu/Menu'
+import Text, { TextProps } from '../Text/Text'
+import Reaction, { ReactionProps } from '../Reaction/Reaction'
+import { ReactionGroupProps } from '../Reaction/ReactionGroup'
+import { MenuItemProps } from '@stardust-ui/react'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string
@@ -40,7 +48,7 @@ export interface ChatMessageSlotClassNames {
 export interface ChatMessageProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue> {
+    ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default chatMessageBehavior
@@ -48,22 +56,22 @@ export interface ChatMessageProps
   accessibility?: Accessibility
 
   /** Menu with actions of the message. */
-  actionMenu?: ShorthandValue
+  actionMenu?: ShorthandValue<MenuProps> | ShorthandCollection<MenuItemProps>
 
   /** Controls messages's relation to other chat messages. Is automatically set by the ChatItem. */
   attached?: boolean | 'top' | 'bottom'
 
   /** Author of the message. */
-  author?: ShorthandValue
+  author?: ShorthandValue<TextProps>
 
   /** Indicates whether message belongs to the current user. */
   mine?: boolean
 
   /** Timestamp of the message. */
-  timestamp?: ShorthandValue
+  timestamp?: ShorthandValue<TextProps>
 
   /** Badge attached to the message. */
-  badge?: ShorthandValue
+  badge?: ShorthandValue<LabelProps>
 
   /** A message can format the badge to appear at the start or the end of the message. */
   badgePosition?: 'start' | 'end'
@@ -83,7 +91,7 @@ export interface ChatMessageProps
   onFocus?: ComponentEventHandler<ChatMessageProps>
 
   /** Reaction group applied to the message. */
-  reactionGroup?: ShorthandValue
+  reactionGroup?: ShorthandValue<ReactionGroupProps> | ShorthandCollection<ReactionProps>
 
   /** A message can format the reactions group to appear at the start or the end of the message. */
   reactionGroupPosition?: 'start' | 'end'

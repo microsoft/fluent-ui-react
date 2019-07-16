@@ -3,28 +3,21 @@ import { Button, Popup } from '@stardust-ui/react'
 
 const PopupExampleNested = () => (
   <Popup
-    content={{
-      content: (
-        <>
-          <div>Hello from first popup!</div>
-          <Popup
-            content={{
-              content: (
-                <>
-                  <div>Hello from second popup!</div>
+    content={
+      <>
+        <div>Hello from first popup!</div>
+        <Popup
+          content={
+            <>
+              <div>Hello from second popup!</div>
 
-                  <Popup
-                    content="Hello from third popup!"
-                    trigger={<Button content="Open third" />}
-                  />
-                </>
-              ),
-            }}
-            trigger={<Button content="Open second" />}
-          />
-        </>
-      ),
-    }}
+              <Popup content="Hello from third popup!" trigger={<Button content="Open third" />} />
+            </>
+          }
+          trigger={<Button content="Open second" />}
+        />
+      </>
+    }
     trigger={<Button content="Open first" />}
   />
 )

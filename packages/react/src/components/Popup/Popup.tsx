@@ -30,7 +30,7 @@ import {
   PositioningProps,
   PopperChildrenProps,
 } from '../../lib/positioner'
-import PopupContent from './PopupContent'
+import PopupContent, { PopupContentProps } from './PopupContent'
 import { popupBehavior } from '../../lib/accessibility'
 import { AutoFocusZoneProps, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 
@@ -50,7 +50,7 @@ export interface PopupSlotClassNames {
 export interface PopupProps
   extends StyledComponentProps<PopupProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue>,
+    ContentComponentProps<ShorthandValue<PopupContentProps>>,
     PositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -97,7 +97,7 @@ export interface PopupProps
    * Function to render popup content.
    * @param {Function} updatePosition - function to request popup position update.
    */
-  renderContent?: (updatePosition: Function) => ShorthandValue
+  renderContent?: (updatePosition: Function) => ShorthandValue<PopupContentProps>
 
   /**
    * DOM element that should be used as popup's target - instead of 'trigger' element that is used by default.
@@ -450,7 +450,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
     const documentRef = toRefObject(mountDocument)
 
-    const popupContent = Popup.Content.create(content, {
+    const popupContent = Popup.Content.create(content || {}, {
       defaultProps: {
         ...(rtl && { dir: 'rtl' }),
         ...accessibility.attributes.popup,

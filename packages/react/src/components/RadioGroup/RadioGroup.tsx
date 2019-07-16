@@ -17,7 +17,12 @@ import {
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import {
+  WithAsProp,
+  ComponentEventHandler,
+  withSafeTypeForAs,
+  ShorthandCollection,
+} from '../../types'
 
 export interface RadioGroupSlotClassNames {
   item: string
@@ -44,7 +49,7 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
   defaultCheckedValue?: number | string
 
   /** Shorthand array of props for RadioGroup. */
-  items?: ShorthandValue[]
+  items?: ShorthandCollection<RadioGroupItemProps>
 
   /** A vertical radio group displays elements vertically. */
   vertical?: boolean

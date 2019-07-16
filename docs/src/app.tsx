@@ -4,7 +4,7 @@ import { Provider, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from 'src/lib'
 import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
-import Router from './routes'
+import Routes from './routes'
 import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
 
 class App extends React.Component<any, ThemeContextData> {
@@ -32,7 +32,7 @@ class App extends React.Component<any, ThemeContextData> {
           })}
         >
           <PerfDataProvider>
-            <Router />
+            <Routes />
           </PerfDataProvider>
         </Provider>
       </ThemeContext.Provider>

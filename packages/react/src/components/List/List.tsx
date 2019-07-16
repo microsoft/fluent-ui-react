@@ -17,7 +17,12 @@ import ListItem, { ListItemProps } from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
-import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import {
+  WithAsProp,
+  ComponentEventHandler,
+  withSafeTypeForAs,
+  ShorthandCollection,
+} from '../../types'
 
 export interface ListSlotClassNames {
   item: string
@@ -34,7 +39,7 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   debug?: boolean
 
   /** Shorthand array of props for ListItem. */
-  items?: ShorthandValue[]
+  items?: ShorthandCollection<ListItemProps>
 
   /** A selectable list formats list items as possible choices. */
   selectable?: boolean

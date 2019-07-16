@@ -16,7 +16,7 @@ import {
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { WithAsProp, ComponentEventHandler, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
+import Icon, { IconProps } from '../Icon/Icon'
 import Layout from '../Layout/Layout'
 import { accordionTitleBehavior } from '../../lib/accessibility'
 
@@ -59,7 +59,7 @@ export interface AccordionTitleProps
   onFocus?: ComponentEventHandler<AccordionTitleProps>
 
   /** Shorthand for the active indicator. */
-  indicator?: ShorthandValue
+  indicator?: ShorthandValue<IconProps>
 }
 
 class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {

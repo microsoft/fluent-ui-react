@@ -15,8 +15,8 @@ import {
   rtlTextContainer,
 } from '../../lib'
 
-import Icon from '../Icon/Icon'
-import Image from '../Image/Image'
+import Icon, { IconProps } from '../Icon/Icon'
+import Image, { ImageProps } from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -39,13 +39,13 @@ export interface LabelProps
   fluid?: boolean
 
   /** A Label can have an icon. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** A Label can position its Icon at the start or end of the layout. */
   iconPosition?: 'start' | 'end'
 
   /** A Label can contain an image. */
-  image?: ShorthandValue
+  image?: ShorthandValue<ImageProps>
 
   /** A Label can position its image at the start or end of the layout. */
   imagePosition?: 'start' | 'end'
@@ -61,9 +61,9 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),
     circular: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     iconPosition: PropTypes.oneOf(['start', 'end']),
-    image: customPropTypes.itemShorthand,
+    image: customPropTypes.itemShorthandWithoutJSX,
     imagePosition: PropTypes.oneOf(['start', 'end']),
     fluid: PropTypes.bool,
   }

@@ -13,9 +13,9 @@ import {
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Text from '../Text/Text'
+import Text, { TextProps } from '../Text/Text'
 import Input from '../Input/Input'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -24,7 +24,7 @@ export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps
   accessibility?: Accessibility
 
   /** A control for the form field. */
-  control?: ShorthandValue
+  control?: ShorthandValue<BoxProps>
 
   /** The HTML input id. This will be set on the control element and will be use for linking it with the label for correct accessibility. */
   id?: string
@@ -33,10 +33,10 @@ export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps
   inline?: boolean
 
   /** A label for the form field. */
-  label?: ShorthandValue
+  label?: ShorthandValue<TextProps>
 
   /** Text message that will be displayed below the control (can be used for error, warning, success messages). */
-  message?: ShorthandValue
+  message?: ShorthandValue<TextProps>
 
   /** The HTML input name. */
   name?: string

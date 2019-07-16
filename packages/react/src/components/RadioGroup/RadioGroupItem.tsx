@@ -13,9 +13,9 @@ import {
   commonPropTypes,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
+import Icon, { IconProps } from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
 
@@ -37,7 +37,7 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
   checkedChanged?: ComponentEventHandler<RadioGroupItemProps>
 
   /** The label of the radio item. */
-  label?: ShorthandValue
+  label?: ShorthandValue<BoxProps>
 
   /** Initial checked value. */
   defaultChecked?: boolean
@@ -46,7 +46,7 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
   disabled?: boolean
 
   /** The radio item indicator can be user-defined icon */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** The HTML input name. */
   name?: string
@@ -106,7 +106,7 @@ class RadioGroupItem extends AutoControlledComponent<
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     label: customPropTypes.itemShorthand,
     name: PropTypes.string,
     onBlur: PropTypes.func,

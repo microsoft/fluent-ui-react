@@ -2,7 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs, ShorthandCollection } from '../../types'
 import {
   UIComponent,
   childrenExist,
@@ -14,8 +14,7 @@ import {
   createShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-
-import Reaction from './Reaction'
+import Reaction, { ReactionProps } from './Reaction'
 
 export interface ReactionGroupProps
   extends UIComponentProps,
@@ -27,7 +26,7 @@ export interface ReactionGroupProps
   accessibility?: Accessibility
 
   /** The reactions contained inside the reaction group. */
-  items?: ShorthandValue[]
+  items?: ShorthandCollection<ReactionProps>
 }
 
 class ReactionGroup extends UIComponent<WithAsProp<ReactionGroupProps>> {
