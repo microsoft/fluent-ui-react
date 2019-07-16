@@ -10,7 +10,7 @@ export interface MentionsContainerProps {
   items?: AtMentionItem[]
   searchQuery?: string
   open?: boolean
-  onInputKeyDown?: (e: React.KeyboardEvent) => void
+  onInputKeyDown?: (e: React.SyntheticEvent) => void
   onOpenChange?: (e: React.SyntheticEvent, data: { open?: boolean }) => void
   onSearchQueryChange?: (e: React.SyntheticEvent, data: { searchQuery: string }) => void
   onSelectedChange?: (e: React.SyntheticEvent, data: { searchQuery: string }) => void

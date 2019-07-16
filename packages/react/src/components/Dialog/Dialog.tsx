@@ -32,7 +32,7 @@ export interface DialogSlotClassNames {
 
 export interface DialogProps
   extends UIComponentProps,
-    ContentComponentProps<ShorthandValue>,
+    ContentComponentProps<ShorthandValue<BoxProps>>,
     ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.

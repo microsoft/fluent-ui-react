@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Extendable, ShorthandValue } from 'src/types'
-import { Avatar, Divider, Grid } from '@stardust-ui/react'
+import { Avatar, AvatarProps, Divider, Grid } from '@stardust-ui/react'
 import Text from './Text'
 
 export interface EmployeeCardProps {
@@ -12,7 +12,7 @@ export interface EmployeeCardProps {
   location?: string
   email?: string
   phone?: string
-  avatar?: ShorthandValue
+  avatar?: ShorthandValue<AvatarProps>
 }
 
 class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {

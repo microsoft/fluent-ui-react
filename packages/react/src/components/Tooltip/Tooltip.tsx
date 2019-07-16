@@ -27,7 +27,7 @@ import {
   BasicPositioningProps,
   PopperChildrenProps,
 } from '../../lib/positioner'
-import TooltipContent from './TooltipContent'
+import TooltipContent, { TooltipContentProps } from './TooltipContent'
 import { tooltipBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
@@ -44,10 +44,12 @@ export interface TooltipState {
 export interface TooltipProps
   extends StyledComponentProps<TooltipProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue>,
+    ContentComponentProps<ShorthandValue<TooltipContentProps>>,
     BasicPositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
+   * @default tooltipBehavior
+   * @available tooltipAsLabelBehavior
    * */
   accessibility?: Accessibility
 
