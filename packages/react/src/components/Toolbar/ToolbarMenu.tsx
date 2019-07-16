@@ -28,7 +28,7 @@ export interface ToolbarMenuProps
     ChildrenComponentProps,
     ContentComponentProps {
   /** Shorthand array of props for ToolbarMenu. */
-  items?: ShorthandCollection<ToolbarMenuItemShorthandKinds>
+  items?: ShorthandCollection<ToolbarMenuItemProps, ToolbarMenuItemShorthandKinds>
 
   /**
    * Called on item click.
