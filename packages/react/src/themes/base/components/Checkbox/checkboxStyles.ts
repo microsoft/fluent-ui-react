@@ -30,9 +30,9 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     padding: v.checkboxPadding,
 
     ...(p.checked && {
-      background: v.checkedCheckboxBackground,
-      borderColor: v.checkedCheckboxBorderColor,
-      color: v.checkedCheckboxColor,
+      background: v.checkboxCheckedBackground,
+      borderColor: v.checkboxCheckedBorderColor,
+      color: v.checkboxCheckedColor,
     }),
 
     ...(p.disabled && {
@@ -76,7 +76,7 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     ...(p.disabled && {
       background: v.disabledcheckboxToggleBackground,
       borderColor: v.disabledToggleBorderColor,
-      color: v.disabledtoggleIndicatorColor,
+      color: v.disabledToggleIndicatorColor,
     }),
   }),
 }

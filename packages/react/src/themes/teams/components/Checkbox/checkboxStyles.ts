@@ -22,7 +22,7 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
         color: v.checkboxTextColorHover,
         [`& .${Checkbox.slotClassNames.indicator}`]: {
           ...(p.checked && {
-            background: v.checkedCheckboxBackgroundHover,
+            background: v.checkboxCheckedBackgroundHover,
           }),
           ...(!p.checked && {
             borderColor: v.checkboxBorderColorHover,
@@ -47,8 +47,8 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     padding: v.checkboxPadding,
 
     ...(p.checked && {
-      background: v.checkedCheckboxBackground,
-      borderColor: v.checkedCheckboxBorderColor,
+      background: v.checkboxCheckedBackground,
+      borderColor: v.checkboxCheckedBorderColor,
       color: v.checkboxCheckedIndicatorColor,
     }),
 
@@ -57,7 +57,7 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
       borderColor: v.disabledCheckboxBorderColor,
 
       ...(p.checked && {
-        color: v.disabledcheckboxCheckedIndicatorColor,
+        color: v.disabledCheckboxCheckedIndicatorColor,
         background: v.disabledCheckboxBackgroundChecked,
       }),
     }),
@@ -84,8 +84,8 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     transition: 'padding .3s ease',
 
     ...(p.checked && {
-      background: v.checkedCheckboxBackground,
-      borderColor: v.checkedCheckboxBorderColor,
+      background: v.checkboxCheckedBackground,
+      borderColor: v.checkboxCheckedBorderColor,
       color: v.checkboxCheckedIndicatorColor,
       padding: v.toggleCheckedPadding,
     }),
@@ -93,10 +93,10 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     ...(p.disabled && {
       background: v.disabledCheckboxBackground,
       borderColor: v.disabledCheckboxBorderColor,
-      color: v.disabledtoggleIndicatorColor,
+      color: v.disabledToggleIndicatorColor,
 
       ...(p.checked && {
-        color: v.disabledcheckboxCheckedIndicatorColor,
+        color: v.disabledCheckboxCheckedIndicatorColor,
         background: v.disabledCheckboxBackgroundChecked,
       }),
     }),

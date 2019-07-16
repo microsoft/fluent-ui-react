@@ -20,9 +20,9 @@ export type CheckboxVariables = {
   toggleMargin: string
   togglePadding: string
 
-  checkedCheckboxBackground: string
-  checkedCheckboxBorderColor: string
-  checkedCheckboxColor: string
+  checkboxCheckedBackground: string
+  checkboxCheckedBorderColor: string
+  checkboxCheckedColor: string
   checkboxToggleCheckedColor: string
   checkboxToggleCheckedBackground: string
   checkboxToggleCheckedBorderColor: string
@@ -32,7 +32,7 @@ export type CheckboxVariables = {
   disabledCheckboxBackground: string
   disabledCheckboxBorderColor: string
   disabledCheckboxColor: string
-  disabledtoggleIndicatorColor: string
+  disabledToggleIndicatorColor: string
   disabledcheckboxToggleBackground: string
   disabledToggleBorderColor: string
 
@@ -59,9 +59,9 @@ export default (siteVars: any): CheckboxVariables => ({
   toggleMargin: '0',
   togglePadding: `0 ${pxToRem(20)} 0 0`,
 
-  checkedCheckboxBackground: 'transparent',
-  checkedCheckboxBorderColor: siteVars.colors.grey[500],
-  checkedCheckboxColor: siteVars.colors.grey[500],
+  checkboxCheckedBackground: 'transparent',
+  checkboxCheckedBorderColor: siteVars.colors.grey[500],
+  checkboxCheckedColor: siteVars.colors.grey[500],
   checkboxToggleCheckedBackground: 'transparent',
   checkboxToggleCheckedBorderColor: siteVars.colors.grey[500],
   checkboxToggleCheckedColor: 'inherit',
@@ -73,7 +73,7 @@ export default (siteVars: any): CheckboxVariables => ({
   disabledCheckboxColor: siteVars.colors.grey[300],
   disabledcheckboxToggleBackground: 'transparent',
   disabledToggleBorderColor: siteVars.colors.grey[200],
-  disabledtoggleIndicatorColor: siteVars.colors.grey[300],
+  disabledToggleIndicatorColor: siteVars.colors.grey[300],
 
   padding: `0 ${pxToRem(4)}`,
 })
