@@ -176,7 +176,8 @@ Checkbox.create = createShorthandFactory({
 })
 
 /**
- * A single checkbox within a checkbox group.
+ * A Checkbox allows to toggle between two choices -- checked and not checked.
+ *
  * @accessibility
  * Implements [ARIA Checkbox](https://www.w3.org/TR/wai-aria-practices-1.1/#checkbox) design pattern.
  */

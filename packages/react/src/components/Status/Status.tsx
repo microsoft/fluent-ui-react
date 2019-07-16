@@ -79,6 +79,9 @@ class Status extends UIComponent<WithAsProp<StatusProps>, any> {
 Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' })
 
 /**
- * A status graphically represents someone's or something's state.
+ * A Status represents someone's or something's state.
+ *
+ * @accessibility
+ * Implements [ARIA img](https://www.w3.org/TR/wai-aria-1.1/#img) role.
  */
 export default withSafeTypeForAs<typeof Status, StatusProps, 'span'>(Status)

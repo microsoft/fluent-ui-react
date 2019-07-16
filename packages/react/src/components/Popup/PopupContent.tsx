@@ -152,8 +152,6 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
 PopupContent.create = createShorthandFactory({ Component: PopupContent, mappedProp: 'content' })
 
 /**
- * A PopupContent displays the content of a Popup component
- * @accessibility This is example usage of the accessibility tag.
- * This should be replaced with the actual description after the PR is merged
+ * A PopupContent displays the content of a Popup component.
  */
 export default withSafeTypeForAs<typeof PopupContent, PopupContentProps>(PopupContent)
