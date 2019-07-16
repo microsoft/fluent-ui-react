@@ -6,19 +6,14 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Usage = () => (
   <ExampleSection title="Usage">
     <ComponentExample
-      title="Tinted Example"
-      description='A button used in cards is a "tinted" version of a default button.'
-      examplePath="components/Button/Usage/ButtonUsageExample"
-    />
-    <ComponentExample
-      title="With tooltip"
+      title="With tooltips"
       description={
         <>
-          {'The button, as actionable element, should be rendered with '}
+          {'The items inside the Toolbar, as actionable elements, should be rendered with '}
           <Link to="/components/tooltip">tooltip</Link>
         </>
       }
-      examplePath="components/Button/Usage/ButtonExampleWithTooltip"
+      examplePath="components/Toolbar/Usage/ToolbarExampleWithTooltip"
     />
   </ExampleSection>
 )
