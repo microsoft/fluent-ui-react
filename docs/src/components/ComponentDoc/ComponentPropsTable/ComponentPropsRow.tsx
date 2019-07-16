@@ -15,12 +15,14 @@ const ComponentPropValue: React.FunctionComponent<ComponentPropType> = props => 
   if (name === 'literal') return <span>enum</span>
   if (name === 'ShorthandValue' || name === 'ShorthandCollection') {
     const componentName = parameters[0].name.replace('Props', '')
+    const kindIsDefined = name === 'ShorthandCollection' && parameters[1].name !== 'never'
 
     return (
       <span>
         {name}
         {`<`}
         <Link to={`/components/${componentName}`}>{parameters[0].name}</Link>
+        {kindIsDefined && <span>, {parameters[1].name}</span>}
         {`>`}
       </span>
     )

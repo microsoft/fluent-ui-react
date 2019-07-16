@@ -7,13 +7,13 @@ import { ComponentPropType } from 'docs/src/types'
 import { PropItem } from './docgen'
 import parseTypeAnnotation from './parseTypeAnnotation'
 
-/** Performs transform: `ShorthandValue<T & { kind?: N }>` to `ShorthandCollection<T>[]`. */
+/** Performs transform: `ShorthandValue<T & { kind?: N }>` to `ShorthandCollection<T, N>[]`. */
 const normalizeShorthandCollection = (propType: string): string => {
-  const regex = /ShorthandValue<(.+) & { kind\?: .+; }>\[]$/
+  const regex = /ShorthandValue<(.+) & { kind\?: (.+); }>\[]$/
   const result = regex.exec(propType)
 
   if (result) {
-    return `ShorthandCollection<${result[1]}>`
+    return `ShorthandCollection<${result[1]}, ${result[2]}>`
   }
 
   return propType
