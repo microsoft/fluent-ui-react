@@ -77,6 +77,8 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   title?: ShorthandValue
 
   updateSize?: Function
+
+  virtualized?: boolean
 }
 
 class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
@@ -110,6 +112,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     containerSize: PropTypes.number,
     size: PropTypes.number,
     itemSize: PropTypes.number,
+    virtualized: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -187,6 +190,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
       updateSize,
       itemSize,
       containerSize,
+      virtualized,
     } = this.props
     const hasSubtree = !!(items && items.length)
 
@@ -213,6 +217,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
                 updateSize,
                 itemSize,
                 containerSize,
+                virtualized,
               },
             })}
           </Ref>

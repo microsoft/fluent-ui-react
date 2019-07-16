@@ -62,6 +62,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
 
 export interface TreeState {
   activeIndex: number[] | number
+  itemSizes: number[]
 }
 
 class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
@@ -106,23 +107,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   static autoControlledProps = ['activeIndex']
 
-  itemSizes: number[] = []
-
-  constructor(props: TreeProps, context) {
-    super(props, context)
-
-    const { items, itemSize } = props
-
-    const totalSize = items.reduce((acc, item) => {
-      const size = _.isUndefined(item['size']) ? itemSize : item['size']
-
-      this.itemSizes.push(size)
-
-      return acc + size
-    }, 0)
-
-    _.invoke(props, 'updateSize', totalSize)
-  }
+  virtualizedListRef = React.createRef()
 
   componentWillUnmount() {
     const { items, itemSize } = this.props
@@ -130,6 +115,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       const size = _.isUndefined(item['size']) ? itemSize : item['size']
       return acc - size
     }, 0)
+
     _.invoke(this.props, 'updateSize', totalSize)
   }
 
@@ -154,9 +140,22 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     },
   }
 
-  getInitialAutoControlledState({ exclusive }): TreeState {
+  getInitialAutoControlledState(props: TreeProps): TreeState {
+    const { exclusive, items, itemSize } = props
+    const itemSizes = []
+    const totalSize = items.reduce((acc, item) => {
+      const size = _.isUndefined(item['size']) ? itemSize : item['size']
+
+      itemSizes.push(size)
+
+      return acc + size
+    }, 0)
+
+    _.invoke(props, 'updateSize', totalSize)
+
     return {
       activeIndex: exclusive ? -1 : [],
+      itemSizes,
     }
   }
 
@@ -194,9 +193,10 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     if (virtualized) {
       return (
         <List
+          ref={this.virtualizedListRef}
           height={containerSize}
           itemCount={items.length}
-          itemSize={index => this.itemSizes[index]}
+          itemSize={index => this.state.itemSizes[index]}
         >
           {this.renderItem}
         </List>
@@ -207,14 +207,21 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   }
 
   renderItem = ({ index, style }) => {
-    const { items, renderItemTitle, exclusive, containerSize, itemSize } = this.props
+    const { items, renderItemTitle, exclusive, containerSize, itemSize, virtualized } = this.props
     const { activeIndex } = this.state
     const updateSize = (update: number) => {
-      this.itemSizes[index] += update
+      this.setState(state => {
+        const { itemSizes } = state
+        itemSizes[index] += update
+        _.invoke(this.virtualizedListRef.current, 'resetAfterIndex', index)
+
+        return {
+          itemSizes,
+        }
+      })
 
       _.invoke(this.props, 'updateSize', update)
     }
-
     const activeIndexes = this.getActiveIndexes()
 
     return TreeItem.create(items[index], {
@@ -229,6 +236,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         containerSize,
         size: itemSize,
         itemSize,
+        virtualized,
       },
       overrideProps: this.handleTreeItemOverrides,
     })
