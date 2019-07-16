@@ -86,7 +86,6 @@ import markAsUnread from './markAsUnread'
 import meetingNew from './meetingNew'
 import mention from './mention'
 import menu from './menu'
-import menuLight from './menuLight'
 import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
@@ -223,7 +222,6 @@ export default {
   'meeting-new': meetingNew,
   mention,
   menu,
-  menuLight,
   'message-seen': messageSeen,
   mic,
   'speaker-mute': speakerMute,
