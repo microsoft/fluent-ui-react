@@ -16,8 +16,13 @@ const Types = () => (
     />
     <ComponentExample
       title="Dropdown"
-      description="The form that has a Dropdown as a field."
+      description="A form can have a Dropdown as a field."
       examplePath="components/Form/Types/FormExampleDropdown"
+    />
+    <ComponentExample
+      title="Slider"
+      description="A form can have a Slider as a field."
+      examplePath="components/Form/Types/FormExampleSlider"
     />
   </ExampleSection>
 )
