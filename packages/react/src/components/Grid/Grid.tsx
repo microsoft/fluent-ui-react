@@ -13,7 +13,6 @@ import {
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
 
 export interface GridProps
   extends UIComponentProps,
@@ -21,7 +20,6 @@ export interface GridProps
     ContentComponentProps<React.ReactNode | React.ReactNode[]> {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    * @available gridBehavior
    * */
   accessibility?: Accessibility
@@ -55,7 +53,6 @@ class Grid extends UIComponent<WithAsProp<GridProps>, any> {
 
   static defaultProps: WithAsProp<GridProps> = {
     as: 'div',
-    accessibility: defaultBehavior,
   }
 
   renderComponent({
@@ -81,8 +78,5 @@ class Grid extends UIComponent<WithAsProp<GridProps>, any> {
 
 /**
  * A grid is used to harmonize negative space in a layout.
- * @accessibility
- * Do use Grid behavior for bidirectional keyboard navigation. Use appropriate ARIA role for the grid and actionable components inside of it.
- * Don't use grid component as a replacement for table.
  */
 export default withSafeTypeForAs<typeof Grid, GridProps>(Grid)

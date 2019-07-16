@@ -20,13 +20,12 @@ import {
   menuDividerBehavior,
   submenuBehavior,
   popupBehavior,
-  popupFocusTrapBehavior,
-  popupAutoFocusBehavior,
   dialogBehavior,
   radioGroupBehavior,
   radioGroupItemBehavior,
   selectableListBehavior,
   selectableListItemBehavior,
+  sliderBehavior,
   tabBehavior,
   tabListBehavior,
   toggleButtonBehavior,
@@ -49,6 +48,7 @@ import {
   toolbarRadioGroupBehavior,
   toolbarRadioGroupItemBehavior,
   tooltipBehavior,
+  tooltipAsLabelBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -73,12 +73,11 @@ testHelper.addBehavior('menuItemBehavior', menuItemBehavior)
 testHelper.addBehavior('menuDividerBehavior', menuDividerBehavior)
 testHelper.addBehavior('submenuBehavior', submenuBehavior)
 testHelper.addBehavior('popupBehavior', popupBehavior)
-testHelper.addBehavior('popupFocusTrapBehavior', popupFocusTrapBehavior)
-testHelper.addBehavior('popupAutoFocusBehavior', popupAutoFocusBehavior)
 testHelper.addBehavior('radioGroupBehavior', radioGroupBehavior)
 testHelper.addBehavior('radioGroupItemBehavior', radioGroupItemBehavior)
 testHelper.addBehavior('selectableListBehavior', selectableListBehavior)
 testHelper.addBehavior('selectableListItemBehavior', selectableListItemBehavior)
+testHelper.addBehavior('sliderBehavior', sliderBehavior)
 testHelper.addBehavior('tabBehavior', tabBehavior)
 testHelper.addBehavior('tabListBehavior', tabListBehavior)
 testHelper.addBehavior('menuAsToolbarBehavior', menuAsToolbarBehavior)
@@ -102,5 +101,6 @@ testHelper.addBehavior('toolbarItemBehavior', toolbarItemBehavior)
 testHelper.addBehavior('toolbarRadioGroupBehavior', toolbarRadioGroupBehavior)
 testHelper.addBehavior('toolbarRadioGroupItemBehavior', toolbarRadioGroupItemBehavior)
 testHelper.addBehavior('tooltipBehavior', tooltipBehavior)
+testHelper.addBehavior('tooltipAsLabelBehavior', tooltipAsLabelBehavior)
 
 testHelper.run(behaviorMenuItems)
