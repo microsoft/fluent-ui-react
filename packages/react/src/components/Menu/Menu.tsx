@@ -15,14 +15,14 @@ import {
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
-import MenuItem from './MenuItem'
+import MenuItem, { MenuItemProps } from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
-
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import { WithAsProp, ShorthandCollection, ShorthandValue, withSafeTypeForAs } from '../../types'
 import MenuDivider from './MenuDivider'
+import { IconProps } from '../Icon/Icon'
 
 export type MenuShorthandKinds = 'divider' | 'item'
 
@@ -52,7 +52,7 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   iconOnly?: boolean
 
   /** Shorthand array of props for Menu. */
-  items?: ShorthandCollection<MenuShorthandKinds>
+  items?: ShorthandCollection<MenuItemProps, MenuShorthandKinds>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
@@ -79,7 +79,7 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   submenu?: boolean
 
   /** Shorthand for the submenu indicator. */
-  indicator?: ShorthandValue
+  indicator?: ShorthandValue<IconProps>
 }
 
 export interface MenuState {
@@ -242,9 +242,9 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
 Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items' })
 
 /**
- * A menu displays grouped navigation actions.
+ * A Menu is a component that offers a grouped list of choices to the user.
+ *
  * @accessibility
  * Implements ARIA [Menu](https://www.w3.org/TR/wai-aria-practices-1.1/#menu), [Toolbar](https://www.w3.org/TR/wai-aria-practices-1.1/#toolbar) or [Tabs](https://www.w3.org/TR/wai-aria-practices-1.1/#tabpanel) design pattern, depending on the behavior used.
- * For render tree customization, use [render callback argument](https://stardust-ui.github.io/react/shorthand-props#render-callback-argument).
  */
 export default withSafeTypeForAs<typeof Menu, MenuProps, 'ul'>(Menu)

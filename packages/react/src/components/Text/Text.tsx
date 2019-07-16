@@ -15,7 +15,7 @@ import {
   SizeValue,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface TextProps
@@ -25,7 +25,6 @@ export interface TextProps
     ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -82,7 +81,6 @@ class Text extends UIComponent<WithAsProp<TextProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'span',
   }
 
@@ -105,8 +103,6 @@ class Text extends UIComponent<WithAsProp<TextProps>, any> {
 Text.create = createShorthandFactory({ Component: Text, mappedProp: 'content' })
 
 /**
- * A Text component formats occurrences of text consistently.
- * @accessibility
- * Text is how people read the content on your website.
+ * A Text consistently styles and formats occurrences of text.
  */
 export default withSafeTypeForAs<typeof Text, TextProps, 'span'>(Text)

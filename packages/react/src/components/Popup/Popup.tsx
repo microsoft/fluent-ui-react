@@ -30,7 +30,7 @@ import {
   PositioningProps,
   PopperChildrenProps,
 } from '../../lib/positioner'
-import PopupContent from './PopupContent'
+import PopupContent, { PopupContentProps } from './PopupContent'
 import { popupBehavior } from '../../lib/accessibility'
 import { AutoFocusZoneProps, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 
@@ -50,7 +50,7 @@ export interface PopupSlotClassNames {
 export interface PopupProps
   extends StyledComponentProps<PopupProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue>,
+    ContentComponentProps<ShorthandValue<PopupContentProps>>,
     PositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -97,7 +97,7 @@ export interface PopupProps
    * Function to render popup content.
    * @param {Function} updatePosition - function to request popup position update.
    */
-  renderContent?: (updatePosition: Function) => ShorthandValue
+  renderContent?: (updatePosition: Function) => ShorthandValue<PopupContentProps>
 
   /**
    * DOM element that should be used as popup's target - instead of 'trigger' element that is used by default.
@@ -122,14 +122,7 @@ export interface PopupState {
 }
 
 /**
- * A Popup displays additional information on top of a page.
- * @accessibility
- * Do set `trapFocus` if the focus needs to be trapped inside of the Popup.
- * Don't use `trapFocus` for `inline` popup, as it leads to broken behavior for screen reader users.
- * Beware of using `autoFocus` as it just grabs focus and do not traps it. User is able to tab out from popup,
- * so consider to use `inline` prop to save a correct tab order.
- * If Popup's content is lazy loaded and focus needs to be trapped inside - make sure to use state change to trigger componentDidUpdate,
- * so the focus can be set correctly to the first tabbable element inside Popup or manually set focus to the element inside once content is loaded.
+ * A Popup displays a non-modal, often rich content, on top of its target element.
  */
 export default class Popup extends AutoControlledComponent<PopupProps, PopupState> {
   static displayName = 'Popup'
@@ -449,7 +442,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
     const documentRef = toRefObject(mountDocument)
 
-    const popupContent = Popup.Content.create(content, {
+    const popupContent = Popup.Content.create(content || {}, {
       defaultProps: {
         ...(rtl && { dir: 'rtl' }),
         ...accessibility.attributes.popup,

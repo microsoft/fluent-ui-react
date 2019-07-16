@@ -13,7 +13,7 @@ import {
 import { loaderBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 
 export type LoaderPosition = 'above' | 'below' | 'start' | 'end'
 
@@ -34,13 +34,13 @@ export interface LoaderProps extends UIComponentProps, ColorComponentProps {
   delay?: number
 
   /** A loader can contain an indicator. */
-  indicator?: ShorthandValue
+  indicator?: ShorthandValue<BoxProps>
 
   /** Loaders can appear inline with content. */
   inline?: boolean
 
   /** A loader can contain a label. */
-  label?: ShorthandValue
+  label?: ShorthandValue<BoxProps>
 
   /** A label in the loader can have different positions. */
   labelPosition?: LoaderPosition
@@ -49,7 +49,7 @@ export interface LoaderProps extends UIComponentProps, ColorComponentProps {
   size?: SizeValue
 
   /** A loader can contain a custom svg element. */
-  svg?: ShorthandValue
+  svg?: ShorthandValue<BoxProps>
 }
 
 export interface LoaderState {
@@ -151,6 +151,9 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
 Loader.create = createShorthandFactory({ Component: Loader })
 
 /**
- * A Loader indicates a possible user action.
+ * A Loader alerts a user to wait for an activity to complete.
+ *
+ * @accessibility
+ * Implements [ARIA progressbar](https://www.w3.org/TR/wai-aria-1.1/#progressbar) role.
  */
 export default withSafeTypeForAs<typeof Loader, LoaderProps>(Loader)

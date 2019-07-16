@@ -107,6 +107,7 @@ const webpackConfig: any = {
       contextRegExp: /moment$/,
     }),
     __DEV__ &&
+      !process.env.CI &&
       new webpack.ProgressPlugin({
         entries: true,
         modules: true,
@@ -120,8 +121,6 @@ const webpackConfig: any = {
       src: paths.packageSrc('react'),
       docs: paths.base('docs'),
     },
-    // Allows to avoid multiple inclusions of the same module
-    modules: [paths.base('node_modules')],
   },
   optimization: {
     // Automatically split vendor and commons

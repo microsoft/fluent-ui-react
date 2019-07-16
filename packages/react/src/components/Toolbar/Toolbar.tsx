@@ -20,7 +20,7 @@ import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 
 import ToolbarCustomItem from './ToolbarCustomItem'
 import ToolbarDivider from './ToolbarDivider'
-import ToolbarItem from './ToolbarItem'
+import ToolbarItem, { ToolbarItemProps } from './ToolbarItem'
 import ToolbarMenu from './ToolbarMenu'
 import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem from './ToolbarMenuItem'
@@ -40,7 +40,7 @@ export interface ToolbarProps
   accessibility?: Accessibility
 
   /** Shorthand array of props for Toolbar. */
-  items?: ShorthandCollection<ToolbarItemShorthandKinds>
+  items?: ShorthandCollection<ToolbarItemProps, ToolbarItemShorthandKinds>
 }
 
 class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
@@ -120,6 +120,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {
 Toolbar.create = createShorthandFactory({ Component: Toolbar, mappedProp: 'content' })
 
 /**
- * A Toolbar component displays grouped actions.
+ * A Toolbar is a container for grouping a set of controls, often action controls (e.g. buttons) or input controls (e.g. checkboxes).
+ *
+ * @accessibility
+ *  * Implements [ARIA Toolbar](https://www.w3.org/TR/wai-aria-practices-1.1/#toolbar) design pattern.
  */
 export default withSafeTypeForAs<typeof Toolbar, ToolbarProps>(Toolbar)

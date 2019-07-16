@@ -49,7 +49,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     name: 'screenShareActive',
     initialValue: false,
   })
-  const [sidebarSelected, onSidebarChange] = useSelectKnob({
+  const [sidebarSelected, onSidebarChange] = useSelectKnob<'false' | 'chat' | 'participant-add'>({
     name: 'sidebarSelected',
     values: ['false', 'chat', 'participant-add'],
     initialValue: 'false',

@@ -30,22 +30,18 @@ const ChatExample = () => {
       <Chat
         items={_.times(30, i => ({
           key: `a${i}`,
-          message: {
-            content: (
-              <Chat.Message
-                author="Jane Doe"
-                content={{
-                  content: (
-                    <div>
-                      <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
-                    </div>
-                  ),
-                }}
-                timestamp="Yesterday, 10:15 PM"
-              />
-            ),
-          },
-          gutter: { content: <Avatar {...janeAvatar} /> },
+          message: (
+            <Chat.Message
+              author="Jane Doe"
+              content={
+                <div>
+                  <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
+                </div>
+              }
+              timestamp="Yesterday, 10:15 PM"
+            />
+          ),
+          gutter: <Avatar {...janeAvatar} />,
         }))}
       />
     </Provider>

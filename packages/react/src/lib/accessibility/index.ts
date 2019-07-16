@@ -1,4 +1,3 @@
-export { default as defaultBehavior } from './Behaviors/defaultBehavior'
 export { default as alertBehavior } from './Behaviors/Alert/alertBehavior'
 export { default as alertWarningBehavior } from './Behaviors/Alert/alertWarningBehavior'
 export { default as attachmentBehavior } from './Behaviors/Attachment/attachmentBehavior'
@@ -48,3 +47,5 @@ export { default as accordionTitleBehavior } from './Behaviors/Accordion/accordi
 export { default as accordionContentBehavior } from './Behaviors/Accordion/accordionContentBehavior'
 export { default as checkboxBehavior } from './Behaviors/Checkbox/checkboxBehavior'
 export { default as tooltipBehavior } from './Behaviors/Tooltip/tooltipBehavior'
+export { default as tooltipAsLabelBehavior } from './Behaviors/Tooltip/tooltipAsLabelBehavior'
+export { default as sliderBehavior } from './Behaviors/Slider/sliderBehavior'

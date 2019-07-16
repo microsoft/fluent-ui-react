@@ -15,7 +15,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface EmbedSlotClassNames {
@@ -39,7 +39,7 @@ export interface EmbedProps extends UIComponentProps {
   control?: ShorthandValue<IconProps>
 
   /** Shorthand for an embedded iframe. */
-  iframe?: ShorthandValue
+  iframe?: ShorthandValue<BoxProps>
 
   /**
    * Event for request to change 'active' value.
@@ -177,7 +177,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
 Embed.create = createShorthandFactory({ Component: Embed })
 
 /**
- * An embed component displays a placeholder and matching content based on user's interaction.
+ * An Embed displays content from external websites, like a post from external social network.
  *
  * @accessibility
  * A `placeholder` slot represents an [`Image`](/components/image) component, please follow recommendations from its
