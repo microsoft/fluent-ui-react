@@ -83,8 +83,6 @@ export interface TooltipProps
 /**
  * A tooltip that displays information related to an element when the element receives keyboard focus
  * or the mouse hovers over it.
- * @accessibility
- * If adding tooltip to icon-only button or to another visual-only element without any text, title or label, apply `tooltipAsLabelBehavior` to `accessibility` prop to correctly label the element for all screen readers.
  */
 export default class Tooltip extends AutoControlledComponent<TooltipProps, TooltipState> {
   static displayName = 'Tooltip'
