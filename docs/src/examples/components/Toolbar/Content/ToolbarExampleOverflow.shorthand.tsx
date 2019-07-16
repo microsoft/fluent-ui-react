@@ -1,11 +1,11 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { ResponsiveToolbar } from '@stardust-ui/react'
+import { Toolbar } from '@stardust-ui/react'
 
 const icons = ['bold', 'italic', 'underline']
 
 const ToolbarExampleOverflow = () => (
-  <ResponsiveToolbar
+  <Toolbar
     items={[
       ..._.times(10, i => ({ key: `a${i}`, icon: icons[i % icons.length] })),
       {
@@ -15,7 +15,8 @@ const ToolbarExampleOverflow = () => (
       },
       ..._.times(20, i => ({ key: `b${i}`, icon: icons[i % icons.length] })),
     ]}
-    reduceItems={(items, measurements) => {
+
+    onReduceItems={items => {
       return items.slice(0, -1)
     }}
   />
