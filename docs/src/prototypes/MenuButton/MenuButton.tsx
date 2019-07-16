@@ -132,7 +132,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
   }
 
   handleMenuItemOverrides = (menuItemAccessibilityAttributes: AccessibilityAttributes) =>
-    _.map(_.get(this.props.menu, 'items'), (item: ShorthandValue) =>
+    _.map(_.get(this.props.menu, 'items'), (item: ShorthandValue<MenuItemProps>) =>
       typeof item === 'object'
         ? {
             ...item,

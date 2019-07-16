@@ -13,7 +13,7 @@ import {
   ColorComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import HeaderDescription from './HeaderDescription'
+import HeaderDescription, { HeaderDescriptionProps } from './HeaderDescription'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
@@ -33,7 +33,7 @@ export interface HeaderProps
   accessibility?: Accessibility
 
   /** Shorthand for Header.Description. */
-  description?: ShorthandValue
+  description?: ShorthandValue<HeaderDescriptionProps>
 
   /** Align header content. */
   textAlign?: 'left' | 'center' | 'right' | 'justified'
