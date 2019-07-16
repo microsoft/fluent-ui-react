@@ -48,6 +48,8 @@ export interface TooltipProps
     BasicPositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
+   * @default tooltipBehavior
+   * @available tooltipAsLabelBehavior
    * */
   accessibility?: Accessibility
 
