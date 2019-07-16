@@ -14,7 +14,13 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { ShorthandValue, ShorthandRenderFunction, WithAsProp, withSafeTypeForAs } from '../../types'
+import {
+  ShorthandValue,
+  ShorthandRenderFunction,
+  WithAsProp,
+  withSafeTypeForAs,
+  ShorthandCollection,
+} from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { treeBehavior } from '../../lib/accessibility'
 
@@ -39,7 +45,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   exclusive?: boolean
 
   /** Shorthand array of props for Tree. */
-  items: ShorthandValue[]
+  items?: ShorthandCollection<TreeItemProps>
 
   /**
    * A custom render function for the title slot.
@@ -151,7 +157,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     const { activeIndex } = this.state
     const activeIndexes = this.getActiveIndexes()
 
-    return _.map(items, (item: ShorthandValue, index: number) =>
+    return _.map(items, (item: ShorthandValue<TreeItemProps>, index: number) =>
       TreeItem.create(item, {
         defaultProps: {
           className: Tree.slotClassNames.item,

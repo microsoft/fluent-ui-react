@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import Tree from './Tree'
+import Tree, { TreeProps } from './Tree'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
 import { treeItemBehavior, subtreeBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -24,6 +24,7 @@ import {
   ShorthandRenderFunction,
   ShorthandValue,
   withSafeTypeForAs,
+  ShorthandCollection,
 } from '../../types'
 import { getFirstFocusable } from '../../lib/accessibility/FocusZone/focusUtilities'
 
@@ -42,14 +43,11 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   /** Only allow one subtree to be open at a time. */
   exclusive?: boolean
 
-  /** Initial open value. */
-  defaultOpen?: boolean
-
   /** The index of the item among its sibbling */
-  index: number
+  index?: number
 
   /** Array of props for sub tree. */
-  items?: ShorthandValue[]
+  items?: ShorthandValue<TreeProps> | ShorthandCollection<TreeItemProps>
 
   /** Called when a tree title is clicked. */
   onTitleClick?: ComponentEventHandler<TreeItemProps>
@@ -68,7 +66,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   renderItemTitle?: ShorthandRenderFunction
 
   /** Properties for TreeTitle. */
-  title?: ShorthandValue
+  title?: ShorthandValue<TreeTitleProps>
 }
 
 class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
@@ -83,13 +81,10 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     subtree: `${TreeItem.className}__subtree`,
   }
 
-  static autoControlledProps = ['open']
-
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    defaultOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     index: PropTypes.number,
     exclusive: PropTypes.bool,
@@ -167,7 +162,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
   renderContent() {
     const { items, title, renderItemTitle, open, exclusive } = this.props
-    const hasSubtree = !!(items && items.length)
+    const hasSubtree = !_.isNil(items)
 
     return (
       <>

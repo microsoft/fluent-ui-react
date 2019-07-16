@@ -39,117 +39,111 @@ import IconViewerPrototype from './prototypes/IconViewer'
 import MenuButtonPrototype from './prototypes/MenuButton'
 import AlertsPrototype from './prototypes/alerts'
 
-const Router = () => (
+const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
     <Switch>
       <Route exact path="/maximize/:exampleName/:rtl?" component={ExternalExampleLayout} />
-      <Switch>
-        <DocsLayout exact path="/" component={Introduction} />
-        <DocsLayout exact path="/:type/:name" component={DocsRoot} sidebar />
-        <DocsLayout exact path="/quick-start" component={QuickStart} />
-        {process.env.NODE_ENV !== 'production' && [
-          <DocsLayout
-            exact
-            key="/prototype-chat-pane"
-            path="/prototype-chat-pane"
-            component={ChatPanePrototype}
-          />,
-          <DocsLayout
-            exact
-            key="/prototype-chat-messages"
-            path="/prototype-chat-messages"
-            component={ChatMessagesPrototype}
-          />,
-          <DocsLayout
-            exact
-            key="/prototype-custom-toolbar"
-            path="/prototype-custom-toolbar"
-            component={CustomToolbarPrototype}
-          />,
-          <DocsLayout
-            exact
-            key="/prototype-async-shorthand"
-            path="/prototype-async-shorthand"
-            component={AsyncShorthandPrototype}
-          />,
-          <DocsLayout
-            exact
-            key="/prototype-employee-card"
-            path="/prototype-employee-card"
-            component={EmployeeCardPrototype}
-          />,
-          <DocsLayout
-            exact
-            key="/prototype-meeting-options"
-            path="/prototype-meeting-options"
-            component={MeetingOptionsPrototype}
-          />,
-          <DocsLayout
-            exact
-            key="/prototype-search-page"
-            path="/prototype-search-page"
-            component={SearchPagePrototype}
-          />,
-          <DocsLayout
-            exact
-            key="/prototype-mentions"
-            path="/prototype-mentions"
-            component={MentionsPrototype}
-          />,
-          <DocsLayout
-            exact
-            key="/prototype-dropdowns"
-            path="/prototype-dropdowns"
-            component={DropdownsPrototype}
-          />,
-          <DocsLayout
-            exact
-            key="/prototype-popups"
-            path="/prototype-popups"
-            component={PopupsPrototype}
-          />,
-          <DocsLayout
-            exact
-            key="/icon-viewer"
-            path="/icon-viewer"
-            component={IconViewerPrototype}
-          />,
-          <DocsLayout
-            exact
-            key="/menu-button"
-            path="/menu-button"
-            component={MenuButtonPrototype}
-          />,
-          <DocsLayout
-            exact
-            key="/prototype-alerts"
-            path="/prototype-alerts"
-            component={AlertsPrototype}
-          />,
-        ]}
-        <DocsLayout exact path="/faq" component={FAQ} />
-        <DocsLayout exact path="/accessibility" component={Accessibility} />
-        <DocsLayout exact path="/accessibility-behaviors" component={AccessibilityBehaviors} />
-        <DocsLayout exact path="/focus-zone" component={FocusZone} />
-        <DocsLayout exact path="/focus-trap-zone" component={FocusTrapZone} />
-        <DocsLayout exact path="/auto-focus-zone" component={AutoFocusZone} />
-        <DocsLayout exact path="/theming" component={Theming} />
-        <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
-        <MarkdownPage exact path="/layout" page={Layout} />
-        <MarkdownPage exact path="/shorthand-props" page={ShorthandProps} />
-        <DocsLayout
-          exact
-          path="/integrate-custom-components"
-          component={IntegrateCustomComponents}
-        />
-        <MarkdownPage exact path="/composition" page={Composition} />
-        <DocsLayout exact path="/colors" component={Colors} />
-        <DocsLayout exact path="/color-palette" component={ColorPalette} />
-        <DocsLayout exact path="/color-schemes" component={ColorSchemes} />
-        <DocsLayout exact path="/*" component={PageNotFound} />
-      </Switch>
+      <DocsLayout>
+        <Switch>
+          <Route exact path="/" component={Introduction} />
+          <Route exact path="/:type/:name" component={DocsRoot} sidebar />
+          <Route exact path="/quick-start" component={QuickStart} />
+          {process.env.NODE_ENV !== 'production' && [
+            <Route
+              exact
+              key="/prototype-chat-pane"
+              path="/prototype-chat-pane"
+              component={ChatPanePrototype}
+            />,
+            <Route
+              exact
+              key="/prototype-chat-messages"
+              path="/prototype-chat-messages"
+              component={ChatMessagesPrototype}
+            />,
+            <Route
+              exact
+              key="/prototype-custom-toolbar"
+              path="/prototype-custom-toolbar"
+              component={CustomToolbarPrototype}
+            />,
+            <Route
+              exact
+              key="/prototype-async-shorthand"
+              path="/prototype-async-shorthand"
+              component={AsyncShorthandPrototype}
+            />,
+            <Route
+              exact
+              key="/prototype-employee-card"
+              path="/prototype-employee-card"
+              component={EmployeeCardPrototype}
+            />,
+            <Route
+              exact
+              key="/prototype-meeting-options"
+              path="/prototype-meeting-options"
+              component={MeetingOptionsPrototype}
+            />,
+            <Route
+              exact
+              key="/prototype-search-page"
+              path="/prototype-search-page"
+              component={SearchPagePrototype}
+            />,
+            <Route
+              exact
+              key="/prototype-mentions"
+              path="/prototype-mentions"
+              component={MentionsPrototype}
+            />,
+            <Route
+              exact
+              key="/prototype-dropdowns"
+              path="/prototype-dropdowns"
+              component={DropdownsPrototype}
+            />,
+            <Route
+              exact
+              key="/prototype-popups"
+              path="/prototype-popups"
+              component={PopupsPrototype}
+            />,
+            <Route exact key="/icon-viewer" path="/icon-viewer" component={IconViewerPrototype} />,
+            <Route exact key="/menu-button" path="/menu-button" component={MenuButtonPrototype} />,
+            <Route
+              exact
+              key="/prototype-alerts"
+              path="/prototype-alerts"
+              component={AlertsPrototype}
+            />,
+          ]}
+          <Route exact path="/faq" component={FAQ} />
+          <Route exact path="/accessibility" component={Accessibility} />
+          <Route exact path="/accessibility-behaviors" component={AccessibilityBehaviors} />
+          <Route exact path="/focus-zone" component={FocusZone} />
+          <Route exact path="/focus-trap-zone" component={FocusTrapZone} />
+          <Route exact path="/auto-focus-zone" component={AutoFocusZone} />
+          <Route exact path="/theming" component={Theming} />
+          <Route exact path="/theming-examples" component={ThemingExamples} />
+          <Route exact path="/layout">
+            <MarkdownPage page={Layout} />
+          </Route>
+          <Route exact path="/shorthand-props">
+            <MarkdownPage page={ShorthandProps} />
+          </Route>
+          <Route exact path="/integrate-custom-components" component={IntegrateCustomComponents} />
+          <Route exact path="/composition">
+            <MarkdownPage page={Composition} />
+          </Route>
+          <Route exact path="/colors" component={Colors} />
+          <Route exact path="/color-palette" component={ColorPalette} />
+          <Route exact path="/color-schemes" component={ColorSchemes} />
+          <Route exact path="/*" component={PageNotFound} />
+        </Switch>
+      </DocsLayout>
     </Switch>
   </BrowserRouter>
 )
 
-export default Router
+export default Routes
