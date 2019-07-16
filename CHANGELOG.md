@@ -20,11 +20,21 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING CHANGES
 -  Add `trapFocus` and `autoFocus` props to `Popup` and remove `popupFocusTrapBehavior` and `popupAutoFocusBehavior` @sophieH29 ([#1565](https://github.com/stardust-ui/react/pull/1565))
 - `defaultBehavior` was removed @layershifter ([#1600](https://github.com/stardust-ui/react/pull/1600))
+- `ReactElement`s are now handled in the same way as string in all shorthands @layershifter ([#1600](https://github.com/stardust-ui/react/pull/1600))
+- `Props` param is required in `ShorthandValue` and `ShorthandCollection` @layershifter ([#1605](https://github.com/stardust-ui/react/pull/1605))
 
 ### Features
 - Split action handlers with "OR" condition in accessibility behaviors @sophieH29 ([#1622](https://github.com/stardust-ui/react/pull/1622))
 - Add `headerAction` slot to the `Dialog` component @mnajdova ([#1617](https://github.com/stardust-ui/react/pull/1617))
 - Add `Slider` component @Bugaa92 ([#1559](https://github.com/stardust-ui/react/pull/1559))
+
+### Fixes
+- Fix `ChatMessage`'s focus border overlays `actionMenu` in Teams theme @mnajdova ([#1637](https://github.com/stardust-ui/react/pull/1637))
+
+### Documentation
+- Make sidebar categories collapsible @lucivpav ([#1611](https://github.com/stardust-ui/react/pull/1611))
+- Fix code in nesting themes section of theming examples @lucivpav ([#1616](https://github.com/stardust-ui/react/pull/1616))
+- Make prototypes conditionally public and move them below Behaviors @lucivpav ([#1627](https://github.com/stardust-ui/react/pull/1627))
 
 <!--------------------------------[ v0.34.1 ]------------------------------- -->
 ## [v0.34.1](https://github.com/stardust-ui/react/tree/v0.34.1) (2019-07-11)

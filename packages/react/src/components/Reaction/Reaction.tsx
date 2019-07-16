@@ -17,8 +17,8 @@ import {
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
-import Box from '../Box/Box'
+import Icon, { IconProps } from '../Icon/Icon'
+import Box, { BoxProps } from '../Box/Box'
 import ReactionGroup from './ReactionGroup'
 
 export interface ReactionSlotClassNames {
@@ -29,17 +29,14 @@ export interface ReactionSlotClassNames {
 export interface ReactionProps
   extends UIComponentProps<ReactionProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue> {
+    ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
    */
   accessibility?: Accessibility
 
   /** A reaction can have icon for the indicator of the reaction. */
-  icon?: ShorthandValue
-
-  /** A reaction can have content shown next to the icon. */
-  content?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /**
    * Called after user's focus.
@@ -66,7 +63,7 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
     }),
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     onFocus: PropTypes.func,
   }
 

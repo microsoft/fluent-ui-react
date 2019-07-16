@@ -20,7 +20,7 @@ import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 
 import ToolbarCustomItem from './ToolbarCustomItem'
 import ToolbarDivider from './ToolbarDivider'
-import ToolbarItem from './ToolbarItem'
+import ToolbarItem, { ToolbarItemProps } from './ToolbarItem'
 import ToolbarMenu from './ToolbarMenu'
 import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem from './ToolbarMenuItem'
@@ -40,7 +40,7 @@ export interface ToolbarProps
   accessibility?: Accessibility
 
   /** Shorthand array of props for Toolbar. */
-  items?: ShorthandCollection<ToolbarItemShorthandKinds>
+  items?: ShorthandCollection<ToolbarItemProps, ToolbarItemShorthandKinds>
 }
 
 class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, any> {

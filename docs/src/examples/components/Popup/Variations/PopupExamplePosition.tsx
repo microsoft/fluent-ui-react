@@ -23,15 +23,13 @@ const PopupExamplePosition = () => {
         align={align}
         position={position}
         unstable_pinned={unstable_pinned}
-        content={{
-          content: (
-            <p>
-              The popup is rendered {position} the trigger
-              <br />
-              aligned to the {align}.
-            </p>
-          ),
-        }}
+        content={
+          <p>
+            The popup is rendered {position} the trigger
+            <br />
+            aligned to the {align}.
+          </p>
+        }
       >
         <Button icon={icons[position]} styles={buttonStyles} />
       </Popup>
