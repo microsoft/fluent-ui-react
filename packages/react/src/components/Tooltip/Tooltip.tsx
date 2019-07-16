@@ -48,6 +48,8 @@ export interface TooltipProps
     BasicPositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
+   * @default tooltipBehavior
+   * @available tooltipAsLabelBehavior
    * */
   accessibility?: Accessibility
 
@@ -117,7 +119,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     align: 'center',
     mountNode: isBrowser() ? document.body : null,
     position: 'above',
-    mouseLeaveDelay: 500,
+    mouseLeaveDelay: 10,
     pointing: true,
     accessibility: tooltipBehavior,
   }
