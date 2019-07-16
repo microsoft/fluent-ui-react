@@ -1,7 +1,8 @@
 import { Toolbar } from '@stardust-ui/react'
 
 const selectors = {
-  item: (itemIndex: number) => `.${Toolbar.Item.className}:nth-child(${itemIndex})`,
+  item: (itemIndex: number) =>
+    `.${Toolbar.className} .${Toolbar.Item.className}:nth-child(${itemIndex})`,
 }
 
 const config: ScreenerTestsConfig = {
