@@ -29,10 +29,7 @@ export interface ListSlotClassNames {
 }
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default listBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Toggle debug mode */
