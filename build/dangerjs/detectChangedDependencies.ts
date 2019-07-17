@@ -1,6 +1,12 @@
 import * as _ from 'lodash'
 import { DangerDSLType } from 'danger'
 
+type DangerJS = {
+  danger: DangerDSLType
+  markdown: (markdown: string) => void
+  warn: (message: string) => void
+}
+
 const checkDependencyChanges = async dangerJS => {
   const { danger } = dangerJS
   const modifiedFiles = danger.git.modified_files
@@ -9,7 +15,11 @@ const checkDependencyChanges = async dangerJS => {
     .filter(filepath => filepath.match(/\bpackage\.json$/))
     .reduce(async (hasWarning, filepath) => {
       const changedDependencies = await getChangedDependencies(dangerJS, filepath)
-      const changedPeerDependencies = await getChangedDependencies(filepath, 'peerDependencies')
+      const changedPeerDependencies = await getChangedDependencies(
+        dangerJS,
+        filepath,
+        'peerDependencies',
+      )
 
       let shouldLogWarning = hasWarning
       if (!_.isEmpty(changedDependencies)) {
@@ -17,14 +27,18 @@ const checkDependencyChanges = async dangerJS => {
         shouldLogWarning = true
       }
       if (!_.isEmpty(changedPeerDependencies)) {
-        markdownChangedDependencies(filepath, changedPeerDependencies, 'peerDependencies')
+        markdownChangedDependencies(dangerJS, filepath, changedPeerDependencies, 'peerDependencies')
         shouldLogWarning = true
       }
       return shouldLogWarning
     }, false)
 }
 
-const getChangedDependencies = async (dangerJS, filepath, dependenciesKey = 'dependencies') => {
+const getChangedDependencies = async (
+  dangerJS: DangerJS,
+  filepath,
+  dependenciesKey = 'dependencies',
+) => {
   const { danger } = dangerJS
 
   const diff = await danger.git.JSONDiffForFile(filepath)
@@ -46,7 +60,7 @@ const getChangedDependencies = async (dangerJS, filepath, dependenciesKey = 'dep
 }
 
 const markdownChangedDependencies = (
-  dangerJS,
+  dangerJS: DangerJS,
   filepath,
   changedDependencies,
   dependenciesKey = 'dependencies',
@@ -65,12 +79,6 @@ const markdownChangedDependencies = (
       ),
     ].join('\n'),
   )
-}
-
-type DangerJS = {
-  danger: DangerDSLType
-  markdown: (markdown: string) => void
-  warn: (message: string) => void
 }
 
 export default async (dangerJS: DangerJS) => {
