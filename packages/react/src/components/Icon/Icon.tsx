@@ -87,17 +87,15 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl })}
+        {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl, props: this.props })}
       </ElementType>
     )
   }
 }
 
-Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name' })
+Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name', allowsJSX: false })
 
 /**
  * An icon is a glyph used to represent something else.
- * @accessibility
- * Don't use as a replacement for actionable component - use Button text variant with an icon instead.
  */
 export default withSafeTypeForAs<typeof Icon, IconProps, 'span'>(Icon)

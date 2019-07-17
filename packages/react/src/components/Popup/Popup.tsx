@@ -32,16 +32,13 @@ import {
 } from '../../lib/positioner'
 import PopupContent from './PopupContent'
 import { popupBehavior } from '../../lib/accessibility'
-import {
-  AutoFocusZone,
-  AutoFocusZoneProps,
-  FocusTrapZone,
-  FocusTrapZoneProps,
-} from '../../lib/accessibility/FocusZone'
+import { AutoFocusZoneProps, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import { createShorthandFactory } from '../../lib/factories'
+import createReferenceFromContextClick from './createReferenceFromContextClick'
+import isRightClick from '../../lib/isRightClick'
 
 export type PopupEvents = 'click' | 'hover' | 'focus' | 'context'
 export type RestrictedClickEvents = 'click' | 'focus'
@@ -60,7 +57,7 @@ export interface PopupProps
   /**
    * Accessibility behavior if overridden by the user.
    * @default popupBehavior
-   * @available popupFocusTrapBehavior, dialogBehavior
+   * @available dialogBehavior
    * */
   accessibility?: Accessibility
 
@@ -112,11 +109,17 @@ export interface PopupProps
   /** Element to be rendered in-place where the popup is defined. */
   trigger?: JSX.Element
 
-  /** Should trigger be made tabbable */
+  /** Whether the trigger should be tabbable */
   shouldTriggerBeTabbable?: boolean
 
   /** Ref for Popup content DOM node. */
   contentRef?: React.Ref<HTMLElement>
+
+  /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value. */
+  trapFocus?: boolean | FocusTrapZoneProps
+
+  /** Controls whether or not auto focus should be applied, using boolean or AutoFocusZoneProps type value. */
+  autoFocus?: boolean | AutoFocusZoneProps
 }
 
 export interface PopupState {
@@ -127,7 +130,10 @@ export interface PopupState {
 /**
  * A Popup displays additional information on top of a page.
  * @accessibility
- * Do use popupFocusTrapBehavior if the focus needs to be trapped inside of the Popup.
+ * Do set `trapFocus` if the focus needs to be trapped inside of the Popup.
+ * Don't use `trapFocus` for `inline` popup, as it leads to broken behavior for screen reader users.
+ * Beware of using `autoFocus` as it just grabs focus and do not traps it. User is able to tab out from popup,
+ * so consider to use `inline` prop to save a correct tab order.
  * If Popup's content is lazy loaded and focus needs to be trapped inside - make sure to use state change to trigger componentDidUpdate,
  * so the focus can be set correctly to the first tabbable element inside Popup or manually set focus to the element inside once content is loaded.
  */
@@ -173,6 +179,8 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     unstable_pinned: PropTypes.bool,
     content: customPropTypes.shorthandAllowingChildren,
     contentRef: customPropTypes.ref,
+    trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+    autoFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }
 
   static defaultProps: PopupProps = {
@@ -215,6 +223,23 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     preventScroll: e => {
       e.preventDefault()
     },
+  }
+
+  componentDidMount() {
+    const { inline, trapFocus, autoFocus } = this.props
+
+    if (process.env.NODE_ENV !== 'production') {
+      if (inline && trapFocus) {
+        console.warn(
+          'Using "trapFocus" in inline popup leads to broken behavior for screen reader users.',
+        )
+      }
+      if (!inline && autoFocus) {
+        console.warn(
+          'Beware, "autoFocus" prop will just grab focus at the moment of mount and will not trap it. As user is able to TAB out from popup, better use "inline" prop to keep correct tab order.',
+        )
+      }
+    }
   }
 
   renderComponent({
@@ -453,42 +478,30 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     accessibility: ReactAccessibilityBehavior,
     { placement, scheduleUpdate }: PopperChildrenProps,
   ) => {
-    const { content: propsContent, renderContent, contentRef, mountDocument, pointing } = this.props
+    const {
+      content: propsContent,
+      renderContent,
+      contentRef,
+      mountDocument,
+      pointing,
+      trapFocus,
+      autoFocus,
+    } = this.props
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
     const documentRef = toRefObject(mountDocument)
 
-    const popupWrapperAttributes = {
-      ...(rtl && { dir: 'rtl' }),
-      ...accessibility.attributes.popup,
-      ...accessibility.keyHandlers.popup,
-      className: popupPositionClasses,
-      ...this.getContentProps(),
-    }
-
-    const focusTrapProps = {
-      ...(typeof accessibility.focusTrap === 'boolean' ? {} : accessibility.focusTrap),
-      ...popupWrapperAttributes,
-    } as FocusTrapZoneProps
-
-    const autoFocusProps = {
-      ...(typeof accessibility.autoFocus === 'boolean' ? {} : accessibility.autoFocus),
-      ...popupWrapperAttributes,
-    } as AutoFocusZoneProps
-
-    /**
-     * if there is no focus trap  or auto focus wrapper, we should apply
-     * HTML attributes and positioning to popup content directly
-     */
-    const popupContentAttributes =
-      accessibility.focusTrap || accessibility.autoFocus ? {} : popupWrapperAttributes
-
-    const popupContent = Popup.Content.create(content, {
+    const popupContent = Popup.Content.create(content || {}, {
       defaultProps: {
-        ...popupContentAttributes,
+        ...(rtl && { dir: 'rtl' }),
+        ...accessibility.attributes.popup,
+        ...accessibility.keyHandlers.popup,
+        className: popupPositionClasses,
+        ...this.getContentProps(),
         placement,
         pointing,
         pointerRef: this.pointerTargetRef,
-        unstable_wrapped: accessibility.focusTrap || accessibility.autoFocus,
+        trapFocus,
+        autoFocus,
       },
       overrideProps: this.getContentProps,
     })
@@ -504,13 +517,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
                 handleRef(nestingRef, domElement)
               }}
             >
-              {accessibility.focusTrap ? (
-                <FocusTrapZone {...focusTrapProps}>{popupContent}</FocusTrapZone>
-              ) : accessibility.autoFocus ? (
-                <AutoFocusZone {...autoFocusProps}>{popupContent}</AutoFocusZone>
-              ) : (
-                popupContent
-              )}
+              {popupContent}
             </Ref>
 
             <EventListener
@@ -559,7 +566,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 
   trySetOpen(newValue: boolean, eventArgs: any) {
-    const isOpenedByRightClick = newValue && this.isRightClick(eventArgs)
+    const isOpenedByRightClick = newValue && isRightClick(eventArgs)
 
     // when new state 'open' === 'true', save the last focused element
     if (newValue) {
@@ -568,10 +575,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     }
     this.trySetState({ open: newValue, isOpenedByRightClick })
     _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
-  }
-
-  isRightClick(eventArgs: any) {
-    return eventArgs.nativeEvent && eventArgs.nativeEvent.which === 3
   }
 
   setPopupOpen(newOpen, e) {
@@ -614,25 +617,3 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 }
 
 Popup.create = createShorthandFactory({ Component: Popup, mappedProp: 'content' })
-
-const createReferenceFromContextClick = (nativeEvent: MouseEvent) => {
-  const left = nativeEvent.clientX
-  const top = nativeEvent.clientY
-  const right = left + 1
-  const bottom = top + 1
-
-  function getBoundingClientRect() {
-    return {
-      left,
-      top,
-      right,
-      bottom,
-    }
-  }
-
-  return {
-    getBoundingClientRect,
-    clientWidth: 1,
-    clientHeight: 1,
-  }
-}

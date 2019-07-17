@@ -60,20 +60,6 @@ export default () => (
           <p>Type: {code('{ mode: FocusZoneMode, props?: FocusZoneProps }')}.</p>
         </li>
         <li>
-          <b>focusTrap</b> - {code('FocusTrapZone')} grabs the focus and traps it within an HTML
-          element, usually a dialog or popup.{' '}
-          <Link to="focus-trap-zone">Read more about FocusTrapZone.</Link>
-          <p>Type: {code('FocusTrapZoneProps | boolean')}.</p>
-        </li>
-        <li>
-          <b>autoFocus</b> - {code('AutoFocusZone')} is used to grab focus and put it to inner
-          element when component mounts. For example, when it is needed to focus an inner element in
-          the Popup when it mounts. If true, it is enabled with default properties or can be
-          modified by setting object.{' '}
-          <Link to="auto-focus-zone">Read more about AutoFocusZone.</Link>
-          <p>Type: {code('AutoFocusZoneProps | boolean')}.</p>
-        </li>
-        <li>
           <b>childBehaviors</b> - {code('{ [childBehaviorSlot: string]: Accessibility }')} are used
           for components such as {code('Menu')} that contain children which, in turn, require their
           own behaviors. For instance, for a {code('Toolbar')} to work properly, the {code('Menu')}{' '}
@@ -214,8 +200,6 @@ export default () => (
           },
         },
         focusZone: {},
-        focusTrap: {},
-        autoFocus: {},
       })
       `}
     />

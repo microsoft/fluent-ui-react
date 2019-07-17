@@ -1,14 +1,12 @@
 import { Accessibility } from '../../types'
 import alertWarningBehavior from './alertWarningBehavior'
-import defaultBehavior from '../defaultBehavior'
 
 /**
  * @description
- * Uses 'alertWarningBehavior` for 'danger' and 'warning' variants.
- * Uses 'defaultBehavior` for 'success' and 'info' variants.
+ * Uses `alertWarningBehavior` for 'danger' and 'warning' variants.
  */
 const alertBehavior: Accessibility<AlertBehaviorProps> = props =>
-  props.warning || props.danger ? alertWarningBehavior(props) : defaultBehavior(props)
+  props.warning || props.danger ? alertWarningBehavior(props) : {}
 
 export default alertBehavior
 

@@ -22,6 +22,7 @@ export interface CreateComponentConfig<P> {
 }
 
 export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
+  className: string
   create: Function
 }
 
@@ -59,6 +60,8 @@ const createComponent = <P extends ObjectOf<any> = any>({
       context,
     )
   }
+
+  StardustComponent.className = className
 
   StardustComponent.create = createShorthandFactory({
     Component: mergedDefaultProps.as,

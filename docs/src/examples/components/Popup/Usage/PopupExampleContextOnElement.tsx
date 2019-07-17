@@ -1,14 +1,12 @@
 import * as React from 'react'
-import { Alert, Button, Flex, Popup, popupFocusTrapBehavior } from '@stardust-ui/react'
+import { Alert, Button, Flex, Popup } from '@stardust-ui/react'
 
-const contentWithButtons = {
-  content: (
-    <Flex gap="gap.smaller">
-      <Button>First</Button>
-      <Button primary>Second</Button>
-    </Flex>
-  ),
-}
+const contentWithButtons = (
+  <Flex gap="gap.smaller">
+    <Button>First</Button>
+    <Button primary>Second</Button>
+  </Flex>
+)
 
 class PopupContextOnElement extends React.Component {
   state = { alert: false }
@@ -31,7 +29,7 @@ class PopupContextOnElement extends React.Component {
           }
           shouldTriggerBeTabbable={false}
           content={contentWithButtons}
-          accessibility={popupFocusTrapBehavior}
+          trapFocus
           on="context"
         />
         {this.state.alert && <Alert warning content="Click!" />}

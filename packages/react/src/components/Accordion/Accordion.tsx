@@ -76,8 +76,7 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
 
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
-   * */
+   */
   accessibility?: Accessibility
 }
 
@@ -311,7 +310,5 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
  * An accordion allows users to toggle the display of sections of content.
  * @accessibility
  * Implements [ARIA Accordion](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion) design pattern (keyboard navigation not yet supported).
- * Do use Accordion for grouping parts of the UI (multipart forms, articales...).
- * Do use Tree component to display a hierarchical structure that allows user to select one item.
  */
 export default withSafeTypeForAs<typeof Accordion, AccordionProps>(Accordion)

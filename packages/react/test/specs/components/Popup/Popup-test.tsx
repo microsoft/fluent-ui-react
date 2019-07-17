@@ -1,9 +1,6 @@
 import * as React from 'react'
 
 import Popup, { PopupEvents } from 'src/components/Popup/Popup'
-import { Accessibility } from 'src/lib/accessibility/types'
-import { popupFocusTrapBehavior, popupBehavior, dialogBehavior } from 'src/lib/accessibility/index'
-
 import { domEvent, mountWithProvider } from '../../../utils'
 import * as keyboardKey from 'keyboard-key'
 import { ReactWrapper } from 'enzyme'
@@ -238,14 +235,14 @@ describe('Popup', () => {
 
   describe('keyboard event propagation', () => {
     const expectPopupToHandleStopPropagation = (
-      behavior: Accessibility,
+      trapFocus: boolean,
       shouldStopPropagation: boolean,
     ) => {
       const popup = mountWithProvider(
         <Popup
           trigger={<span id={triggerId}> text to trigger popup </span>}
           content={{ id: contentId }}
-          accessibility={behavior}
+          trapFocus={trapFocus}
         />,
       )
 
@@ -259,14 +256,11 @@ describe('Popup', () => {
       popupContentElement.simulate('keyDown', { stopPropagation })
       expect(stopPropagation).toHaveBeenCalledTimes(shouldStopPropagation ? 1 : 0)
     }
-    test('stops when focus trap behavior is used', () => {
-      expectPopupToHandleStopPropagation(popupFocusTrapBehavior, true)
+    test('stops when focus is trapped', () => {
+      expectPopupToHandleStopPropagation(true, true)
     })
-    test('stops when dialog behavior is used', () => {
-      expectPopupToHandleStopPropagation(dialogBehavior, true)
-    })
-    test('does not stop when default behavior is used', () => {
-      expectPopupToHandleStopPropagation(popupBehavior, false)
+    test('does not stop when focus is not trapped', () => {
+      expectPopupToHandleStopPropagation(false, false)
     })
   })
 })
