@@ -1,4 +1,5 @@
 import * as Stardust from '@stardust-ui/react'
+import * as _ from 'lodash'
 import * as React from 'react'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
@@ -7,7 +8,6 @@ import { ComponentInfo } from 'docs/src/types'
 import componentInfoContext from 'docs/src/utils/componentInfoContext'
 
 import createHookGenerator from './createHookGenerator'
-import * as _ from 'lodash'
 
 const usePlaygroundComponent = (componentName: string): [React.ReactElement, string[]] => {
   const context: Stardust.ProviderContextPrepared = React.useContext(ThemeContext)
