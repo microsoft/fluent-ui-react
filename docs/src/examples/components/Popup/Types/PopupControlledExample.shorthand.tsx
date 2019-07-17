@@ -8,7 +8,7 @@ const PopupControlledExample = () => {
   const popupContent = (
     <Flex column>
       <Flex.Item align="end">
-        <Button text iconOnly icon="close" onClick={() => setOpen(false)} />
+        <Button text iconOnly icon="close" onClick={() => setOpen(false)} title="Close" />
       </Flex.Item>
       <Input icon="search" placeholder="Search..." />
     </Flex>
