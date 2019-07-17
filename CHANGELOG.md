@@ -29,6 +29,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `headerAction` slot to the `Dialog` component @mnajdova ([#1617](https://github.com/stardust-ui/react/pull/1617))
 - Add `Slider` component @Bugaa92 ([#1559](https://github.com/stardust-ui/react/pull/1559))
 - Add `tooltipAsLabelBehavior` accessibility behavior for `Tooltip` @sophieH29 ([#1635](https://github.com/stardust-ui/react/pull/1635))
+- Add `amethyst` color to the Teams theme color palette @mnajdova ([#1650](https://github.com/stardust-ui/react/pull/1650))
 
 ### Fixes
 - Fix `ChatMessage`'s focus border overlays `actionMenu` in Teams theme @mnajdova ([#1637](https://github.com/stardust-ui/react/pull/1637))
@@ -42,6 +43,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add examples with `Tooltip` for the actionable components @mnajdova ([#1636](https://github.com/stardust-ui/react/pull/1636))
 - Fix broken fragments on CodeSandbox @lucivpav ([#1655](https://github.com/stardust-ui/react/pull/1655))
 - Improve a table with component props in docs @layershifter ([#1634](https://github.com/stardust-ui/react/pull/1634))
+- Improve rendering performance for docs examples @Bugaa92 ([#1654](https://github.com/stardust-ui/react/pull/1654))
 
 <!--------------------------------[ v0.34.1 ]------------------------------- -->
 ## [v0.34.1](https://github.com/stardust-ui/react/tree/v0.34.1) (2019-07-11)
