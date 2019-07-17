@@ -24,8 +24,6 @@ export default {
   }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
     const colors = v.colorScheme[color]
     return {
-      textAlign,
-
       ...(color && colors && { color: colors.foreground }),
       // animations are not working with span, unless display is set to 'inline-block'
       ...(animation && as === 'span' && { display: 'inline-block' }),
@@ -37,6 +35,7 @@ export default {
       ...(success && { color: v.successColor }),
       ...(important && { color: v.importantColor }),
       ...(temporary && { fontStyle: 'italic' }),
+      ...(textAlign && { display: 'block', textAlign }), // textAlign makes sense only for block elements
       ...(timestamp && { color: v.timestampColor }),
 
       ...(weight === 'light' && { fontWeight: v.fontWeightLight }),

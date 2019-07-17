@@ -6,14 +6,7 @@ const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
       title="TextAlign"
-      description={
-        <>
-          Text may be aligned to the left, right, center or be justified.
-          <br />
-          You need to use Text as a block element (<code>as='div'</code>) so that textAlign prop can
-          work correctly.
-        </>
-      }
+      description="Text may be aligned to the left, right, center or be justified."
       examplePath="components/Text/Variations/TextExampleTextAlign"
     />
     <ComponentExample
