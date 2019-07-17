@@ -23,7 +23,7 @@ export interface CheckboxVariables {
   checkboxCheckedIndicatorColor: string
 
   toggleBorderRadius: string
-  toggleIndicatorColor: string
+  toggleIndicatorSize: string
   toggleMargin: string
   togglePadding: string
   toggleCheckedPadding: string
@@ -56,14 +56,14 @@ export default (siteVars: any): CheckboxVariables => ({
   checkboxCheckedBackgroundHover: siteVars.colorScheme.brand.backgroundHover,
 
   toggleBorderRadius: pxToRem(999),
-  toggleIndicatorColor: siteVars.colorScheme.brand.backgroundActive1,
+  toggleIndicatorSize: pxToRem(14),
   toggleMargin: `${pxToRem(20)}, 0`,
   togglePadding: `${checkboxPadding} ${toggleMovementDistance} ${checkboxPadding} ${checkboxPadding}`,
 
   checkboxCheckedTextColor: siteVars.colorScheme.default.foreground,
   checkboxCheckedBackground: siteVars.colorScheme.brand.backgroundActive1,
   checkboxCheckedBorderColor: 'transparent',
-  checkboxCheckedIndicatorColor: siteVars.colorScheme.brand.foreground4,
+  checkboxCheckedIndicatorColor: siteVars.colorScheme.default.background,
   toggleCheckedPadding: `${checkboxPadding} ${checkboxPadding} ${checkboxPadding} ${toggleMovementDistance}`,
 
   disabledColor: siteVars.colorScheme.default.foregroundDisabled1,
@@ -71,5 +71,5 @@ export default (siteVars: any): CheckboxVariables => ({
   disabledCheckboxBackgroundChecked: siteVars.colorScheme.default.backgroundDisabled,
   disabledCheckboxBorderColor: siteVars.colorScheme.default.foregroundDisabled1,
   disabledCheckboxCheckedIndicatorColor: siteVars.colorScheme.default.foregroundDisabled,
-  disabledToggleIndicatorColor: siteVars.colorScheme.default.foregroundDisabled1,
+  disabledToggleIndicatorColor: siteVars.colorScheme.default.foregroundDisabled,
 })

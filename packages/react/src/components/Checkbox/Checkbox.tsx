@@ -168,7 +168,8 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
         {labelPosition === 'start' && labelElement}
         {Icon.create(icon, {
           defaultProps: {
-            size: 'smaller',
+            outline: toggle && !this.state.checked,
+            size: toggle ? 'medium' : 'smaller',
             className: Checkbox.slotClassNames.indicator,
             name: toggle ? 'stardust-circle' : 'stardust-checkmark',
             styles: toggle ? styles.toggle : styles.checkbox,
