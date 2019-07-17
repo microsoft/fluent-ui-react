@@ -133,4 +133,6 @@ export default async () => {
   if (dependenciesChanged) {
     warn('Package (or peer) dependencies changed. Make sure you have approval before merging!')
   }
+
+  warn('This is something that we would like to warn you about')
 }
