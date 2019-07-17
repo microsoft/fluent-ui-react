@@ -7,12 +7,6 @@ import * as React from 'react'
 import { KnobGenerator } from 'docs/src/types'
 import { number } from 'docs/src/components/ComponentPlayground/typeGenerators'
 
-export const as: KnobGenerator<string> = ({ propName, propDef }) => ({
-  hook: useStringKnob,
-  name: propName,
-  initialValue: propDef.defaultValue,
-})
-
 export const content: KnobGenerator<string> = ({ propName }) => ({
   hook: useStringKnob,
   name: propName,
