@@ -1,10 +1,7 @@
 import * as React from 'react'
 
 export interface FocusTrapZoneProps extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * Element type the root element will use.
-   * @default div
-   */
+  /** Element type the root element will use. */
   as?: React.ReactType
 
   /**
@@ -22,10 +19,7 @@ export interface FocusTrapZoneProps extends React.HTMLAttributes<HTMLDivElement>
    */
   ariaLabelledBy?: string
 
-  /**
-   * Indicates if this Trap Zone will allow clicks outside the FocusTrapZone
-   * @default true
-   */
+  /** Indicates if this Trap Zone will allow clicks outside the FocusTrapZone. */
   isClickableOutsideFocusTrap?: boolean
 
   /**

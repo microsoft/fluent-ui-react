@@ -1,8 +1,8 @@
-import * as _ from 'lodash'
+import { Loader } from '@stardust-ui/react'
 import * as React from 'react'
 
-import ComponentPropsRow from './ComponentPropsRow'
 import useComponentProps from 'docs/src/components/ComponentDoc/useComponentProps'
+import ComponentPropsRow from './ComponentPropsRow'
 
 const tableStyles: React.CSSProperties = {
   textAlign: 'left',
@@ -21,22 +21,24 @@ const ComponentPropsTable: React.FunctionComponent<ComponentPropsTable> = props 
   const componentProps = useComponentProps(props.componentName)
 
   return (
-    <table style={tableStyles}>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Default</th>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
+    <React.Suspense fallback={<Loader />}>
+      <table style={tableStyles}>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Default</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        {_.map(componentProps, propDef => (
-          <ComponentPropsRow {...propDef} key={propDef.name} />
-        ))}
-      </tbody>
-    </table>
+        <tbody>
+          {componentProps.map(propDef => (
+            <ComponentPropsRow {...propDef} key={propDef.name} />
+          ))}
+        </tbody>
+      </table>
+    </React.Suspense>
   )
 }
 
