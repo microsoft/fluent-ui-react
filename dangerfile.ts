@@ -10,5 +10,5 @@ export default async () => {
   /* === Package dependencies ========================================================================================= */
   await detectChangedDependencies()
 
-  fail('This is something that we would like to warn you about.')
+  fail('This is why the build is failed.')
 }
