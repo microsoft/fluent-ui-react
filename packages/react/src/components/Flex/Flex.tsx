@@ -97,6 +97,6 @@ class Flex extends UIComponent<WithAsProp<FlexProps>> {
 }
 
 /**
- * Arranges group of items aligned towards common direction.
+ * A Flex is a layout component that arranges group of items aligned towards common direction (either row or column).
  */
 export default withSafeTypeForAs<typeof Flex, FlexProps>(Flex)

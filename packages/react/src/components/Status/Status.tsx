@@ -15,10 +15,7 @@ import {
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface StatusProps extends UIComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default statusBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** A custom color. */
@@ -79,6 +76,9 @@ class Status extends UIComponent<WithAsProp<StatusProps>, any> {
 Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' })
 
 /**
- * A status graphically represents someone's or something's state.
+ * A Status represents someone's or something's state.
+ *
+ * @accessibility
+ * Implements [ARIA img](https://www.w3.org/TR/wai-aria-1.1/#img) role.
  */
 export default withSafeTypeForAs<typeof Status, StatusProps, 'span'>(Status)

@@ -14,14 +14,11 @@ import {
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 
-export interface GridProps
-  extends UIComponentProps,
-    ChildrenComponentProps,
-    ContentComponentProps<React.ReactNode | React.ReactNode[]> {
+export interface GridProps extends UIComponentProps, ChildrenComponentProps, ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @available gridBehavior
-   * */
+   */
   accessibility?: Accessibility
 
   /** The columns of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
@@ -77,6 +74,6 @@ class Grid extends UIComponent<WithAsProp<GridProps>, any> {
 }
 
 /**
- * A grid is used to harmonize negative space in a layout.
+ * A Grid is a layout component that harmonizes negative space, by controlling both the row and column alignment.
  */
 export default withSafeTypeForAs<typeof Grid, GridProps>(Grid)

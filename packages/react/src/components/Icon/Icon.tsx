@@ -17,10 +17,7 @@ import { WithAsProp, withSafeTypeForAs } from '../../types'
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
 export interface IconProps extends UIComponentProps, ColorComponentProps {
-  /**
-   * Accessibility behavior if overriden by the user.
-   * @default iconBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Icon can appear with rectangular border. */
@@ -96,6 +93,9 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
 Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name', allowsJSX: false })
 
 /**
- * An icon is a glyph used to represent something else.
+ * An Icon displays a pictogram with semantic meaning.
+ *
+ * @accessibility
+ * Icon is usually only a visual representation and therefore is hidden from screen readers, unless 'alt' or 'aria-label' property is provided.
  */
 export default withSafeTypeForAs<typeof Icon, IconProps, 'span'>(Icon)

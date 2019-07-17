@@ -29,7 +29,6 @@ export interface AlertProps
     ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default alertBehavior
    * @available alertWarningBehavior
    */
   accessibility?: Accessibility
@@ -137,6 +136,9 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
 }
 
 /**
- * A Alert displays information that explains nearby content.
+ * An Alert displays a brief, important message to attract the user's attention without interrupting the user's task.
+ *
+ * @accessibility
+ * Implements [ARIA Alert](https://www.w3.org/TR/wai-aria-practices-1.1/#alert) design pattern.
  */
 export default withSafeTypeForAs<typeof Alert, AlertProps>(Alert)

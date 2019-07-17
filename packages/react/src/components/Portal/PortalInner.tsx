@@ -24,7 +24,7 @@ export interface PortalInnerProps extends ChildrenComponentProps {
 }
 
 /**
- * An inner component that allows you to render children outside their parent.
+ * A PortalInner is a container for Portal's content.
  */
 class PortalInner extends React.Component<PortalInnerProps> {
   static propTypes = {
