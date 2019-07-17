@@ -11,11 +11,11 @@ jobs:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
       - run:
-        name: Danger JS
-        command: |
-          if [ ! -z $CIRCLE_PULL_REQUEST ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
-            yarn danger ci
-          fi
+          name: Danger JS
+          command: |
+            if [ ! -z $CIRCLE_PULL_REQUEST ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
+              yarn danger ci
+            fi
   visual:
     docker:
       - image: circleci/node:8
