@@ -83,7 +83,7 @@ class DocsLayout extends React.Component<any, any> {
       textDecoration: 'none',
       fontSize: '0.85714286em',
       fontWeight: 400,
-      color: '#ffffff80',
+      color: 'white',
 
       '& .active': {
         fontWeight: 'bold',
@@ -124,7 +124,7 @@ class DocsLayout extends React.Component<any, any> {
             },
           })}
         >
-          <Sidebar width={sidebarWidth} />
+          <Sidebar width={sidebarWidth} treeItemStyle={treeItemStyle} />
         </Provider>
         <div role="main" style={{ marginLeft: sidebarWidth }}>
           {render ? render() : children}

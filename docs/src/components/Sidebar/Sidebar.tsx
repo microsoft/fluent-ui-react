@@ -6,6 +6,9 @@ import {
   ICSSInJSStyle,
   TreeItemProps,
   TreeProps,
+  Input,
+  Flex,
+  Box,
 } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
@@ -25,8 +28,6 @@ const pkg = require('../../../../packages/react/package.json')
 const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
 const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
 
-const flexDislayStyle: any = { width: '100%' }
-
 class Sidebar extends React.Component<any, any> {
   static propTypes = {
     match: PropTypes.object.isRequired,
@@ -39,17 +40,22 @@ class Sidebar extends React.Component<any, any> {
   selectedRoute: any
   filteredMenu = componentMenu
 
+  constructor(props) {
+    super(props)
+    this.handleSearchKeyDown = this.handleSearchKeyDown.bind(this)
+  }
+
   componentDidMount() {
-    document.addEventListener('keydown', this.handleDocumentKeyDown)
-    this.setSearchInput()
+    // document.addEventListener('keydown', this.handleDocumentKeyDown)
+    // this.setSearchInput()
   }
 
   componentDidUpdate() {
-    this.setSearchInput()
+    // this.setSearchInput()
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleDocumentKeyDown)
+    // document.removeEventListener('keydown', this.handleDocumentKeyDown)
   }
 
   setSearchInput() {
@@ -66,6 +72,7 @@ class Sidebar extends React.Component<any, any> {
     if (!hasModifier && isAZ && bodyHasFocus) this._searchInput.focus()
   }
 
+  // TODO: this should be part of all the tree items?
   handleItemClick = () => {
     const { query } = this.state
 
@@ -288,6 +295,10 @@ class Sidebar extends React.Component<any, any> {
     })
   }
 
+  handleSearchKeyDown(e) {
+    this.setState({ query: e.target.value })
+  }
+
   render() {
     const sidebarStyles: ICSSInJSStyle = {
       background: '#201f1f',
@@ -321,38 +332,7 @@ class Sidebar extends React.Component<any, any> {
       return { items }
     })
 
-    const topTreeItems: TreeProps['items'] = [
-      {
-        key: 'github',
-        title: {
-          content: (
-            <div style={flexDislayStyle}>
-              GitHub
-              <Icon name="github" styles={{ float: 'right' }} />
-            </div>
-          ),
-          href: constants.repoURL,
-          target: '_blank',
-          rel: 'noopener noreferrer',
-        },
-      },
-      {
-        key: 'change',
-        title: {
-          content: (
-            <div style={flexDislayStyle}>
-              CHANGELOG
-              <Icon name="file alternate outline" styles={{ float: 'right' }} />
-            </div>
-          ),
-          href: changeLogUrl,
-          target: '_blank',
-          rel: 'noopener noreferrer',
-        },
-      },
-    ]
-
-    const treeItems = topTreeItems.concat(this.getTreeItems())
+    const treeItems = this.getTreeItems()
 
     const prototypesTreeItems: (ShorthandValue<{}> & { key: string; public: boolean })[] = [
       {
@@ -435,9 +415,21 @@ class Sidebar extends React.Component<any, any> {
 
     const withComponents = treeItems.concat(componentTreeSection)
     const withBehaviors = withComponents.concat(behaviorTreeSection)
-    const allSections = this.getSectionsWithPrototypeSectionIfApplicable(
+    const allSectionsWithoutSearchFilter = this.getSectionsWithPrototypeSectionIfApplicable(
       withBehaviors,
       prototypesTreeItems,
+    )
+
+    const allSections = _.map(
+      allSectionsWithoutSearchFilter,
+      (section: ShorthandValue<TreeItemProps>) => {
+        if ((section as any).items) {
+          ;(section as any).items = _.filter((section as any).items, item =>
+            item.title.content.toLowerCase().includes(this.state.query.toLowerCase()),
+          )
+        }
+        return section
+      },
     )
 
     const at = this.props.location.pathname
@@ -458,6 +450,9 @@ class Sidebar extends React.Component<any, any> {
       </Component>
     )
 
+    const topItemTheme = Object.assign({}, this.props.treeItemStyle)
+    topItemTheme.padding = '6px 20px 6px 20px'
+
     // TODO: bring back the active elements indicators
     return (
       <Segment styles={sidebarStyles}>
@@ -472,6 +467,34 @@ class Sidebar extends React.Component<any, any> {
           />
           <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
         </Segment>
+        <Flex column>
+          <a
+            href={constants.repoURL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={topItemTheme}
+          >
+            <Box>
+              GitHub
+              <Icon name="github" styles={{ float: 'right' }} />
+            </Box>
+          </a>
+          <a href={changeLogUrl} target="_blank" rel="noopener noreferrer" style={topItemTheme}>
+            <Box>
+              CHANGELOG
+              <Icon name="file alternate outline" styles={{ float: 'right' }} />
+            </Box>
+          </a>
+          <Input
+            style={{ padding: topItemTheme.padding }}
+            fluid
+            icon="search"
+            placeholder="Search"
+            iconPosition="start"
+            role="search"
+            onKeyDown={this.handleSearchKeyDown}
+          />
+        </Flex>
         <Tree
           defaultActiveIndex={activeCategoryIndex}
           items={allSections}
