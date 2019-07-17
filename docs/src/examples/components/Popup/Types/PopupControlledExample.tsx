@@ -16,7 +16,7 @@ const PopupControlledExample = () => {
 
   return (
     <Popup open={open} onOpenChange={(e, { open }) => setOpen(open)} content={popupContent}>
-      <Button icon="expand" />
+      <Button icon="expand" title="Open popup" />
     </Popup>
   )
 }
