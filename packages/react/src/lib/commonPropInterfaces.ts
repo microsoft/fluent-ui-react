@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { TextAlignProperty } from 'csstype'
 import { ComponentVariablesInput, ComponentSlotStyle, AnimationProp } from '../themes/types'
 import { ReactChildren } from '../types'
 
@@ -23,6 +24,8 @@ export interface UIComponentProps<P = any, V = any>
 }
 
 export type SizeValue = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
+
+export type TextAlignValue = TextAlignProperty
 
 export interface ColorComponentProps<TColor = string> {
   /** A component can have a color. */

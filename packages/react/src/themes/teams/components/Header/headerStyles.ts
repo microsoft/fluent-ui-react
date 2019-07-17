@@ -1,5 +1,4 @@
 import * as _ from 'lodash'
-import { TextAlignProperty } from 'csstype'
 
 import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
 import { HeaderProps } from '../../../../components/Header/Header'
@@ -11,7 +10,7 @@ const headerStyles: ComponentSlotStylesInput<HeaderProps, HeaderVariables> = {
     return {
       display: 'block',
       color: _.get(colors, 'foreground', v.color),
-      textAlign: p.textAlign as TextAlignProperty,
+      textAlign: p.textAlign,
       ...(p.description && { marginBottom: 0 }),
     }
   },

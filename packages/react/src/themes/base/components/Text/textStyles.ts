@@ -15,6 +15,7 @@ export default {
       size,
       success,
       temporary,
+      textAlign,
       timestamp,
       truncated,
       weight,
@@ -23,21 +24,13 @@ export default {
   }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
     const colors = v.colorScheme[color]
     return {
-      ...(color &&
-        colors && {
-          color: colors.foreground,
-        }),
+      textAlign,
+
+      ...(color && colors && { color: colors.foreground }),
       // animations are not working with span, unless display is set to 'inline-block'
-      ...(animation &&
-        as === 'span' && {
-          display: 'inline-block',
-        }),
-      ...(atMention === true && {
-        color: v.atMentionOtherColor,
-      }),
-      ...(atMention === 'me' && {
-        color: v.atMentionMeColor,
-      }),
+      ...(animation && as === 'span' && { display: 'inline-block' }),
+      ...(atMention === true && { color: v.atMentionOtherColor }),
+      ...(atMention === 'me' && { color: v.atMentionMeColor }),
       ...(truncated && { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
       ...(disabled && { color: v.disabledColor }),
       ...(error && { color: v.errorColor }),
@@ -46,21 +39,11 @@ export default {
       ...(temporary && { fontStyle: 'italic' }),
       ...(timestamp && { color: v.timestampColor }),
 
-      ...(weight === 'light' && {
-        fontWeight: v.fontWeightLight,
-      }),
-      ...(weight === 'semilight' && {
-        fontWeight: v.fontWeightSemilight,
-      }),
-      ...(weight === 'regular' && {
-        fontWeight: v.fontWeightRegular,
-      }),
-      ...(weight === 'semibold' && {
-        fontWeight: v.fontWeightSemibold,
-      }),
-      ...(weight === 'bold' && {
-        fontWeight: v.fontWeightBold,
-      }),
+      ...(weight === 'light' && { fontWeight: v.fontWeightLight }),
+      ...(weight === 'semilight' && { fontWeight: v.fontWeightSemilight }),
+      ...(weight === 'regular' && { fontWeight: v.fontWeightRegular }),
+      ...(weight === 'semibold' && { fontWeight: v.fontWeightSemibold }),
+      ...(weight === 'bold' && { fontWeight: v.fontWeightBold }),
 
       ...(size === 'smallest' && {
         fontSize: v.fontSizeSmallest,

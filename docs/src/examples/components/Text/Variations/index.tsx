@@ -5,6 +5,18 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
+      title="TextAlign"
+      description={
+        <>
+          Text may be aligned to the left, right, center or be justified.
+          <br />
+          You need to use Text as a block element (<code>as='div'</code>) so that textAlign prop can
+          work correctly.
+        </>
+      }
+      examplePath="components/Text/Variations/TextExampleTextAlign"
+    />
+    <ComponentExample
       title="Color"
       description="A Text component can have different colors."
       examplePath="components/Text/Variations/TextExampleColor"
