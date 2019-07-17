@@ -143,7 +143,7 @@ DropdownSearchInput.slotClassNames = {
 DropdownSearchInput.create = createShorthandFactory({ Component: DropdownSearchInput })
 
 /**
- * A sub-component of a search Dropdown.
+ * A DropdownSearchInput represents item of 'search' Dropdown.
  * Used to display the search input field.
  */
 export default withSafeTypeForAs<typeof DropdownSearchInput, DropdownSearchInputProps>(

@@ -177,6 +177,6 @@ Attachment.slotClassNames = {
 }
 
 /**
- * An Attachment displays a file attachment.
+ * An Attachment represents a file or media attachment, which may contain some metadata or actions.
  */
 export default withSafeTypeForAs<typeof Attachment, AttachmentProps>(Attachment)

@@ -185,6 +185,9 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
 Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
 
 /**
- * A button indicates a possible user action.
+ * A Button enables users to trigger an event or take an action, such as submitting a form, opening a dialog, etc.
+ *
+ * @accessibility
+ * Implements [ARIA Button](https://www.w3.org/TR/wai-aria-practices-1.1/#button) design pattern.
  */
 export default withSafeTypeForAs<typeof Button, ButtonProps, 'button'>(Button)
