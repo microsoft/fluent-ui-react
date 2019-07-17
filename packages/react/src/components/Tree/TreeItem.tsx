@@ -34,10 +34,7 @@ export interface TreeItemSlotClassNames {
 }
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default treeItemBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Only allow one subtree to be open at a time. */
