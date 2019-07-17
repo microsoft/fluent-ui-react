@@ -22,10 +22,7 @@ export interface ChatSlotClassNames {
 }
 
 export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default chatBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Shorthand array of the items inside the chat. */

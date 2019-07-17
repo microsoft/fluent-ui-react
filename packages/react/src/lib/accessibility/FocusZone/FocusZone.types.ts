@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { FocusZone } from './FocusZone'
+import FocusZone from './FocusZone'
 
 /**
  * FocusZone component class interface.
@@ -32,10 +32,7 @@ export interface IFocusZone {
  * FocusZone component props.
  */
 export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | FocusZone> {
-  /**
-   * Element type the root element will use.
-   * @default div
-   */
+  /** Element type the root element will use. */
   as?: React.ReactType
   /**
    * Additional class name to provide on the root element, in addition to the ms-FocusZone class.
@@ -45,7 +42,6 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
   /**
    * Defines which arrows to react to.
    * It has next options: horizontal, vertical, bidirectional.
-   * @default FocusZoneDirection.bidirectional
    */
   direction?: FocusZoneDirection
 

@@ -22,6 +22,7 @@ export type TeamsTransparentColors = {
   silver: ColorVariants
   ruby: ColorVariants
   onyx: ColorVariants
+  amethyst: ColorVariants
 }
 
 export type TeamsColorNames = keyof (TeamsContextualColors &

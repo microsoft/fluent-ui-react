@@ -12,7 +12,7 @@ import getElementType from '../../getElementType'
 import callable from '../../callable'
 
 /** AutoFocusZone is used to focus inner element on mount. */
-export class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
+export default class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
   root = React.createRef<HTMLElement>()
 
   static propTypes = {
