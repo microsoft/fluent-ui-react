@@ -1,4 +1,3 @@
-// danger, fail, markdown
 import { fail } from 'danger'
 import checkChangelog from './build/dangerjs/checkChangelog'
 import detectChangedDependencies from './build/dangerjs/detectChangedDependencies'
