@@ -1,8 +1,8 @@
 import { Button } from '@stardust-ui/react'
 
 const selectors = {
-  triggerButton: `${Button.className}[title*="Open popup"]`,
-  closeButton: `${Button.className}[title*="Close"]`,
+  triggerButton: `.${Button.className}[title*="Open popup"]`,
+  closeButton: `.${Button.className}[title*="Close"]`,
 }
 
 const config: ScreenerTestsConfig = {
