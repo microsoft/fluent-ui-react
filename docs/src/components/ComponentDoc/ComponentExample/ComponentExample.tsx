@@ -38,7 +38,7 @@ import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
 import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ComponentExampleKnobs from './ComponentExampleKnobs'
-import DelayedRenderer from '../../DelayedRenderer'
+import ExamplePlaceholder from '../../ExamplePlaceholder'
 
 export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
@@ -491,7 +491,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               {/* Ensure anchor links don't occlude card shadow effect */}
               <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
-              <DelayedRenderer visible={wasEverVisible}>
+              <ExamplePlaceholder visible={wasEverVisible}>
                 <Segment styles={{ borderBottom: '1px solid #ddd' }}>
                   <Flex>
                     <ComponentExampleTitle description={description} title={title} />
@@ -516,11 +516,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                     {knobs => knobs && <ComponentExampleKnobs>{knobs}</ComponentExampleKnobs>}
                   </KnobInspector>
                 </Segment>
-              </DelayedRenderer>
+              </ExamplePlaceholder>
 
               {children && <Segment styles={childrenStyle}>{children}</Segment>}
 
-              <DelayedRenderer visible={wasEverVisible} placeholder="larger">
+              <ExamplePlaceholder visible={wasEverVisible} size="larger">
                 <SourceRender
                   babelConfig={babelConfig}
                   source={currentCode}
@@ -572,7 +572,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                     </>
                   )}
                 </SourceRender>
-              </DelayedRenderer>
+              </ExamplePlaceholder>
             </KnobProvider>
           </Flex.Item>
         </Flex>
