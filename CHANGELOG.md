@@ -40,6 +40,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Refine component descriptions @kuzhelov ([#1629](https://github.com/stardust-ui/react/pull/1629))
 - Add best practices and form usage example for `Slider` component @Bugaa92 ([#1641](https://github.com/stardust-ui/react/pull/1641))
 - Add examples with `Tooltip` for the actionable components @mnajdova ([#1636](https://github.com/stardust-ui/react/pull/1636))
+- Fix broken fragments on CodeSandbox @lucivpav ([#1655](https://github.com/stardust-ui/react/pull/1655))
 
 <!--------------------------------[ v0.34.1 ]------------------------------- -->
 ## [v0.34.1](https://github.com/stardust-ui/react/tree/v0.34.1) (2019-07-11)
