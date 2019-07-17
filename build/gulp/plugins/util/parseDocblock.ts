@@ -1,11 +1,13 @@
 import * as doctrine from 'doctrine'
 
-export default docblock => {
+const parseDocblock = (docblock: string) => {
   const { description = '', tags = [], ...rest } = doctrine.parse(docblock || '', { unwrap: true })
 
   return {
     ...rest,
+    description,
     tags,
-    description: description.split('\n'),
   }
 }
+
+export default parseDocblock

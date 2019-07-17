@@ -29,10 +29,7 @@ export interface ListItemSlotClassNames {
 export interface ListItemProps
   extends UIComponentProps,
     ContentComponentProps<ShorthandValue<BoxProps>> {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default listItemBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
   contentMedia?: ShorthandValue<BoxProps>
   /** Toggle debug mode. */

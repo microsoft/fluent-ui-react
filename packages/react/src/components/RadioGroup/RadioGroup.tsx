@@ -29,10 +29,7 @@ export interface RadioGroupSlotClassNames {
 }
 
 export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default radioGroupBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Value of the currently checked radio item. */
