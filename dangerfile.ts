@@ -7,6 +7,4 @@ export default async () => {
   await checkChangelog({ danger, fail, warn })
   await detectChangedDependencies({ danger, markdown, warn })
   await detectNonApprovedDependencies({ fail })
-
-  fail('This is why the build is failed.')
 }

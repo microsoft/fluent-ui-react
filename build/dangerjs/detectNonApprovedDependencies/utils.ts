@@ -1,10 +1,11 @@
 import * as fs from 'fs'
+import { spawnSync } from 'child_process'
 import * as semver from 'semver'
 import * as lockfile from '@yarnpkg/lockfile'
 
-import approvedDependencies from '../approvedDependencies'
+import approvedDependencies from './approvedDependencies'
 
-import config from '../../../../config'
+import config from '../../../config'
 
 const { paths } = config
 
@@ -22,7 +23,11 @@ const getVersionConstraints = (packageName: string, packageVersion: string): str
     .map(getPackageVersion)
 }
 
-const getPackageVersion = (packageId: string) => {
+const getPackageName = (packageId: string): string => {
+  return packageId.match(/^(.+)@[^@]+$/)[1]
+}
+
+const getPackageVersion = (packageId: string): string => {
   return packageId.match(/@([^@]+)$/)[1]
 }
 
@@ -32,6 +37,29 @@ const getFailedConstraints = (packageVersion: string, versionConstraints: string
   )
 
   return failedConstraints
+}
+
+export const getDependencyPackageIds = () => {
+  const dependencyRegex = /^dependency:\s+(.*)$/
+  const result = spawnSync("yarn gulp test:dependencies:list --prefix='dependency: '", {
+    shell: true,
+    cwd: paths.base(),
+    stdio: 'pipe',
+    encoding: 'utf-8',
+  })
+
+  const output = `${result.stdout}`
+  const error = `${result.stderr}`
+
+  if (error) {
+    throw new Error(error)
+  }
+
+  return output
+    .split('\n')
+    .map(line => line.match(dependencyRegex))
+    .filter(match => !!match)
+    .map(match => match[1])
 }
 
 // type PackageFailedApproveExplanation = {
@@ -51,7 +79,10 @@ const getFailedConstraints = (packageVersion: string, versionConstraints: string
  *      - unmet constraints
  *      - tried packages
  */
-export default (packageName: string, packageVersion: string): boolean => {
+export const isApproved = (packageId: string): boolean => {
+  const packageName = getPackageName(packageId)
+  const packageVersion = getPackageVersion(packageId)
+
   if (packageName.startsWith('@stardust-ui/')) {
     return true
   }

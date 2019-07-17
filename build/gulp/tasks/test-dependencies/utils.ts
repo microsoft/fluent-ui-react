@@ -1,11 +1,9 @@
 import * as path from 'path'
 import { webpack as lernaAliases } from 'lerna-alias'
 import { LicenseWebpackPlugin } from 'license-webpack-plugin'
-import * as webpack from 'webpack'
+import webpack from 'webpack'
 
 import config from '../../../../config'
-
-export { default as isApproved } from './isApproved'
 
 const { paths } = config
 
@@ -43,8 +41,8 @@ export const prepareWebpackConfig = (options: WebpackOptions) => {
     plugins: [
       new LicenseWebpackPlugin({
         stats: {
-          warnings: false,
-          errors: false,
+          warnings: true,
+          errors: true,
         },
         renderLicenses: modules => {
           modules.forEach(module => {
