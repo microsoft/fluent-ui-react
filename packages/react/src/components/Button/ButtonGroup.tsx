@@ -107,6 +107,6 @@ ButtonGroup.create = createShorthandFactory({
 })
 
 /**
- * A button group presents multiple related actions.
+ * A ButtonGroup represents multiple related actions as a group.
  */
 export default withSafeTypeForAs<typeof ButtonGroup, ButtonGroupProps>(ButtonGroup)
