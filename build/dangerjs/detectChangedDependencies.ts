@@ -1,30 +1,19 @@
-import { danger, markdown, warn } from 'danger'
-
 import * as _ from 'lodash'
+import { DangerDSLType } from 'danger'
 
-const detectChangedDependencies = async () => {
-  danger.git.created_files
-    .filter(filepath => filepath.match(/\bpackage\.json$/))
-    .forEach(filepath => {
-      warn(`New package.json added: ${filepath}. Make sure you have approval before merging!`)
-    })
+const checkDependencyChanges = async dangerJS => {
+  const { danger } = dangerJS
+  const modifiedFiles = danger.git.modified_files
 
-  const dependenciesChanged = await checkDependencyChanges(danger.git.modified_files)
-  if (dependenciesChanged) {
-    warn('Package (or peer) dependencies changed. Make sure you have approval before merging!')
-  }
-}
-
-const checkDependencyChanges = async modifiedFiles => {
   return modifiedFiles
     .filter(filepath => filepath.match(/\bpackage\.json$/))
     .reduce(async (hasWarning, filepath) => {
-      const changedDependencies = await getChangedDependencies(filepath)
+      const changedDependencies = await getChangedDependencies(dangerJS, filepath)
       const changedPeerDependencies = await getChangedDependencies(filepath, 'peerDependencies')
 
       let shouldLogWarning = hasWarning
       if (!_.isEmpty(changedDependencies)) {
-        markdownChangedDependencies(filepath, changedDependencies)
+        markdownChangedDependencies(dangerJS, filepath, changedDependencies)
         shouldLogWarning = true
       }
       if (!_.isEmpty(changedPeerDependencies)) {
@@ -35,7 +24,9 @@ const checkDependencyChanges = async modifiedFiles => {
     }, false)
 }
 
-const getChangedDependencies = async (filepath, dependenciesKey = 'dependencies') => {
+const getChangedDependencies = async (dangerJS, filepath, dependenciesKey = 'dependencies') => {
+  const { danger } = dangerJS
+
   const diff = await danger.git.JSONDiffForFile(filepath)
   if (!diff[dependenciesKey]) {
     return {}
@@ -55,10 +46,13 @@ const getChangedDependencies = async (filepath, dependenciesKey = 'dependencies'
 }
 
 const markdownChangedDependencies = (
+  dangerJS,
   filepath,
   changedDependencies,
   dependenciesKey = 'dependencies',
 ) => {
+  const { markdown } = dangerJS
+
   markdown(
     [
       `Changed ${dependenciesKey} in \`${filepath}\``,
@@ -73,4 +67,23 @@ const markdownChangedDependencies = (
   )
 }
 
-export default detectChangedDependencies
+type DangerJS = {
+  danger: DangerDSLType
+  markdown: (markdown: string) => void
+  warn: (message: string) => void
+}
+
+export default async (dangerJS: DangerJS) => {
+  const { danger, warn } = dangerJS
+
+  danger.git.created_files
+    .filter(filepath => filepath.match(/\bpackage\.json$/))
+    .forEach(filepath => {
+      warn(`New package.json added: ${filepath}. Make sure you have approval before merging!`)
+    })
+
+  const dependenciesChanged = await checkDependencyChanges(dangerJS)
+  if (dependenciesChanged) {
+    warn('Package (or peer) dependencies changed. Make sure you have approval before merging!')
+  }
+}
