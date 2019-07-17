@@ -11,32 +11,32 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     ...getBorderFocusStyles({
       siteVariables: t.siteVariables,
       isFromKeyboard: p.isFromKeyboard,
-      borderRadius: '3px', // shouldn't default be correct?
+      borderRadius: '3px',
     }),
-    ...(p.disabled && {
-      color: v.disabledColor,
-      cursor: 'default',
-    }),
-    ...(!p.disabled && {
-      ':hover': {
-        color: v.checkboxTextColorHover,
-        [`& .${Checkbox.slotClassNames.indicator}`]: {
-          ...(p.checked && {
-            background: v.checkboxCheckedBackgroundHover,
+
+    ':hover': {
+      color: v.checkboxTextColorHover,
+      [`& .${Checkbox.slotClassNames.indicator}`]: {
+        ...(p.checked && {
+          background: v.checkboxCheckedBackgroundHover,
+        }),
+        ...(!p.checked && {
+          borderColor: v.checkboxBorderColorHover,
+          ...(p.toggle && {
+            color: v.checkboxCheckedBackgroundHover,
           }),
-          ...(!p.checked && {
-            borderColor: v.checkboxBorderColorHover,
-            ...(p.toggle && {
-              color: v.checkboxCheckedBackgroundHover,
-            }),
-          }),
-        },
+        }),
       },
+    },
+
+    ...(p.checked && {
+      color: v.checkboxCheckedTextColor,
     }),
-    ...(p.checked &&
-      !p.disabled && {
-        color: v.checkboxCheckedTextColor,
-      }),
+
+    ...(p.disabled && {
+      pointerEvents: 'none',
+      color: v.disabledColor,
+    }),
   }),
 
   checkbox: ({ props: p, variables: v }): ICSSInJSStyle => ({
