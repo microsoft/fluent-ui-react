@@ -20,18 +20,18 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
   }),
 
   checkbox: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    borderColor: v.checkboxBorderColor,
-    borderStyle: v.checkboxBorderStyle,
-    borderRadius: v.checkboxBorderRadius,
-    borderWidth: v.checkboxBorderWidth,
+    borderColor: v.borderColor,
+    borderStyle: v.borderStyle,
+    borderRadius: v.borderRadius,
+    borderWidth: v.borderWidth,
     boxShadow: 'unset',
     color: v.checkboxColor,
-    margin: v.checkboxMargin,
-    padding: v.checkboxPadding,
+    margin: v.margin,
+    padding: v.padding,
 
     ...(p.checked && {
-      background: v.checkboxCheckedBackground,
-      borderColor: v.checkboxCheckedBorderColor,
+      background: v.checkedBackground,
+      borderColor: v.checkedBorderColor,
       color: v.checkboxCheckedColor,
     }),
 
@@ -40,7 +40,7 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
 
       ...(p.checked && {
         color: v.disabledCheckboxColor,
-        background: v.disabledCheckboxBackground,
+        background: v.disabledBackground,
       }),
     }),
   }),
@@ -49,7 +49,7 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     [p.labelPosition === 'start' ? ':after' : ':before']: {
       content: '" "',
       display: 'inline-block',
-      width: v.checkboxGap,
+      width: v.gap,
     },
   }),
 

@@ -5,8 +5,9 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, CheckboxVariables> = {
   root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => ({
-    color: v.checkboxTextColor,
+    color: v.textColor,
     padding: v.rootPadding,
+    verticalAlign: 'middle',
 
     ...getBorderFocusStyles({
       siteVariables: t.siteVariables,
@@ -15,22 +16,25 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     }),
 
     ':hover': {
-      color: v.checkboxTextColorHover,
+      color: v.textColorHover,
+
       [`& .${Checkbox.slotClassNames.indicator}`]: {
         ...(p.checked && {
-          background: v.checkboxCheckedBackgroundHover,
+          background: v.checkedBackgroundHover,
         }),
+
         ...(!p.checked && {
-          borderColor: v.checkboxBorderColorHover,
+          borderColor: v.borderColorHover,
+
           ...(p.toggle && {
-            color: v.checkboxBorderColorHover,
+            color: v.borderColorHover,
           }),
         }),
       },
     },
 
     ...(p.checked && {
-      color: v.checkboxCheckedTextColor,
+      color: v.checkedTextColor,
     }),
 
     ...(p.disabled && {
@@ -40,48 +44,49 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
   }),
 
   checkbox: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    background: v.checkboxBackground,
-    borderColor: v.checkboxBorderColor,
-    borderStyle: v.checkboxBorderStyle,
-    borderRadius: v.checkboxBorderRadius,
-    borderWidth: v.checkboxBorderWidth,
-    color: v.checkboxIndicatorColor,
-    margin: v.checkboxMargin,
-    padding: v.checkboxPadding,
+    background: v.background,
+    borderColor: v.borderColor,
+    borderStyle: v.borderStyle,
+    borderRadius: v.borderRadius,
+    borderWidth: v.borderWidth,
+    color: v.indicatorColor,
+    margin: v.margin,
+    padding: v.padding,
 
     ...(p.checked && {
-      background: v.checkboxCheckedBackground,
-      borderColor: v.checkboxCheckedBorderColor,
-      color: v.checkboxCheckedIndicatorColor,
+      background: v.checkedBackground,
+      borderColor: v.checkedBorderColor,
+      color: v.checkedIndicatorColor,
     }),
 
     ...(p.disabled && {
-      background: v.disabledCheckboxBackground,
-      borderColor: v.disabledCheckboxBorderColor,
+      background: v.disabledBackground,
+      borderColor: v.disabledBorderColor,
+    }),
 
-      ...(p.checked && {
-        color: v.disabledCheckboxCheckedIndicatorColor,
-        background: v.disabledCheckboxBackgroundChecked,
+    ...(p.disabled &&
+      p.checked && {
+        color: v.disabledCheckedIndicatorColor,
+        background: v.disabledBackgroundChecked,
         borderColor: 'transparent',
       }),
-    }),
   }),
 
   label: ({ props: p, variables: v }): ICSSInJSStyle => ({
     [p.labelPosition === 'start' ? ':after' : ':before']: {
       content: '" "',
       display: 'inline-block',
-      width: v.checkboxGap,
+      width: v.gap,
     },
   }),
 
   toggle: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    background: v.checkboxBackground,
-    borderColor: v.checkboxBorderColor,
-    borderStyle: v.checkboxBorderStyle,
+    background: v.background,
+    borderColor: v.borderColor,
+    borderStyle: v.borderStyle,
     borderRadius: v.toggleBorderRadius,
-    borderWidth: v.checkboxBorderWidth,
-    color: v.checkboxBorderColor,
+    borderWidth: v.borderWidth,
+    color: v.borderColor,
     margin: v.toggleMargin,
     padding: v.togglePadding,
     transition: 'padding .3s ease',
@@ -92,23 +97,24 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     },
 
     ...(p.checked && {
-      background: v.checkboxCheckedBackground,
-      borderColor: v.checkboxCheckedBorderColor,
-      color: v.checkboxCheckedIndicatorColor,
+      background: v.checkedBackground,
+      borderColor: v.checkedBorderColor,
+      color: v.checkedIndicatorColor,
       padding: v.toggleCheckedPadding,
     }),
 
     ...(p.disabled && {
       color: v.disabledToggleIndicatorColor,
-      background: v.disabledCheckboxBackground,
-      borderColor: v.disabledCheckboxBorderColor,
+      background: v.disabledBackground,
+      borderColor: v.disabledBorderColor,
+    }),
 
-      ...(p.checked && {
-        color: v.disabledCheckboxCheckedIndicatorColor,
-        background: v.disabledCheckboxBackgroundChecked,
+    ...(p.disabled &&
+      p.checked && {
+        color: v.disabledCheckedIndicatorColor,
+        background: v.disabledBackgroundChecked,
         borderColor: 'transparent',
       }),
-    }),
   }),
 }
 
