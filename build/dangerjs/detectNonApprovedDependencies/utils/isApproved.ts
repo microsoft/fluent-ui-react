@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import semver from 'semver'
+import * as semver from 'semver'
 import * as lockfile from '@yarnpkg/lockfile'
 
 import approvedDependencies from '../approvedDependencies'
@@ -26,15 +26,32 @@ const getPackageVersion = (packageId: string) => {
   return packageId.match(/@([^@]+)$/)[1]
 }
 
-const satisfiesConstraints = (packageVersion: string, versionConstraints: string[]) => {
-  const nonSatisfiedConstraints = versionConstraints.filter(constraint =>
+const getFailedConstraints = (packageVersion: string, versionConstraints: string[]): string[] => {
+  const failedConstraints = versionConstraints.filter(constraint =>
     semver.satisfies(packageVersion, constraint),
   )
 
-  return nonSatisfiedConstraints.length === 0
+  return failedConstraints
 }
 
-export default (packageName: string, packageVersion: string) => {
+// type PackageFailedApproveExplanation = {
+//     approvedPackageId: string,
+//     failedConstraints: string[]
+// }
+
+// type Result = {
+//     isApproved: boolean,
+//     explanations?: PackageFailedApproveExplanation[]
+// }
+
+/**
+ * Returns:
+ * - isApproved: true / false
+ * - explain
+ *      - unmet constraints
+ *      - tried packages
+ */
+export default (packageName: string, packageVersion: string): boolean => {
   if (packageName.startsWith('@stardust-ui/')) {
     return true
   }
@@ -43,9 +60,7 @@ export default (packageName: string, packageVersion: string) => {
 
   const approvedPackageIds = approvedDependencies.filter(item => item.startsWith(packageName))
 
-  return approvedPackageIds
-    .filter(getPackageVersion)
-    .some(approvedPackageVersion =>
-      satisfiesConstraints(approvedPackageVersion, packageVersionConstraints),
-    )
+  return approvedPackageIds.filter(getPackageVersion).some(approvedPackageVersion => {
+    return getFailedConstraints(approvedPackageVersion, packageVersionConstraints).length === 0
+  })
 }
