@@ -6,6 +6,7 @@ const selectors = {
   popupTrigger: `.${Popup.slotClassNames.trigger}`,
 }
 
+// https://domoreexp.visualstudio.com/MSTeams/_workitems/edit/534558
 const config: ScreenerTestsConfig = {
   themes: ['teams', 'teamsDark', 'teamsHighContrast'],
   steps: [
