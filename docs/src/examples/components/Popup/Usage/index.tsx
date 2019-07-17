@@ -30,6 +30,11 @@ const Usage = () => (
       description="Popups can be nested."
       examplePath="components/Popup/Usage/PopupExampleNested"
     />
+    <ComponentExample
+      title="With close button"
+      description="Popups can have close button."
+      examplePath="components/Popup/Usage/PopupExampleCloseButton"
+    />
   </ExampleSection>
 )
 
