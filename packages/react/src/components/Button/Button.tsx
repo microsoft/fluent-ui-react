@@ -17,6 +17,7 @@ import {
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
+import Loader from '../Loader/Loader'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
@@ -49,6 +50,9 @@ export interface ButtonProps
 
   /** An icon button can format an Icon to appear before or after the button */
   iconPosition?: 'before' | 'after'
+
+  /** A button can show a loading indicator. */
+  loading?: boolean
 
   /**
    * Called after user's click.
@@ -95,6 +99,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     icon: customPropTypes.itemShorthandWithoutJSX,
     iconOnly: PropTypes.bool,
     iconPosition: PropTypes.oneOf(['before', 'after']),
+    loading: PropTypes.bool,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
@@ -128,7 +133,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     styles,
     unhandledProps,
   }): React.ReactNode {
-    const { children, content, disabled, iconPosition } = this.props
+    const { children, content, disabled, iconPosition, loading } = this.props
     const hasChildren = childrenExist(children)
 
     return (
@@ -147,21 +152,31 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
         {Box.create(!hasChildren && content, {
           defaultProps: { as: 'span', styles: styles.content },
         })}
-        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
+        {!hasChildren && iconPosition === 'after' && !loading && this.renderIcon(variables, styles)}
       </ElementType>
     )
   }
 
   renderIcon = (variables, styles) => {
-    const { icon, iconPosition, content } = this.props
+    const { icon, iconPosition, content, loading } = this.props
 
-    return Icon.create(icon, {
-      defaultProps: {
-        styles: styles.icon,
-        xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
-        variables: variables.icon,
-      },
-    })
+    return loading
+      ? Loader.create(
+          {},
+          {
+            defaultProps: {
+              size: 'smallest',
+              styles: styles.loader,
+            },
+          },
+        )
+      : Icon.create(icon, {
+          defaultProps: {
+            styles: styles.icon,
+            xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
+            variables: variables.icon,
+          },
+        })
   }
 
   handleClick = (e: React.SyntheticEvent) => {

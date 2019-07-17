@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
@@ -6,12 +7,13 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVariables> = {
   root: ({ props, variables, theme: { siteVariables } }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, primary, text, iconOnly, isFromKeyboard } = props
+    const { circular, disabled, fluid, primary, text, iconOnly, isFromKeyboard, loading } = props
     const { borderWidth } = siteVariables
 
     const {
       height,
       minWidth,
+      loadingMinWidth,
       maxWidth,
       borderRadius,
       circularBorderRadius,
@@ -67,7 +69,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
 
     return {
       height,
-      minWidth,
+      minWidth: _.isNil(loading) ? minWidth : loadingMinWidth,
       maxWidth,
       color,
       backgroundColor,
@@ -210,6 +212,10 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     fontWeight: variables.contentFontWeight,
+  }),
+
+  loader: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    marginRight: pxToRem(4),
   }),
 }
 

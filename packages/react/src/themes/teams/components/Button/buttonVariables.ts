@@ -5,6 +5,7 @@ import { pxToRem } from '../../../../lib'
 export interface ButtonVariables {
   height: string
   minWidth: string
+  loadingMinWidth: string
   maxWidth: string
   borderRadius: string
   paddingLeftRightValue: number
@@ -56,6 +57,7 @@ export interface ButtonVariables {
 export default (siteVars: any): ButtonVariables => ({
   height: pxToRem(32),
   minWidth: pxToRem(96),
+  loadingMinWidth: pxToRem(118),
   maxWidth: pxToRem(280),
   borderRadius: siteVars.borderRadius,
   contentFontWeight: siteVars.fontWeightSemibold,
