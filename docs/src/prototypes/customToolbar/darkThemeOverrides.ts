@@ -78,9 +78,7 @@ export const darkThemeOverrides: ThemeInput = {
       ctItemColorHover: siteVars.colorScheme.default.foregroundHover,
 
       ctItemActiveBackground: siteVars.colorScheme.default.backgroundActive1,
-      // FIXME: use variables for colors!
-      ctItemActiveBackgroundOverlay:
-        'linear-gradient(90deg,rgba(60,62,93,.6),rgba(60,62,93,0) 33%),linear-gradient(135deg,rgba(60,62,93,.6) 33%,rgba(60,62,93,0) 70%),linear-gradient(180deg,rgba(60,62,93,.6) 70%,rgba(60,62,93,0) 94%),linear-gradient(225deg,rgba(60,62,93,.6) 33%,rgba(60,62,93,0) 73%),linear-gradient(270deg,rgba(60,62,93,.6),rgba(60,62,93,0) 33%),linear-gradient(0deg,rgba(98,100,167,.75) 6%,rgba(98,100,167,0) 70%)',
+      ctItemActiveBackgroundOverlay: siteVars.glowGradientBottom,
       ctItemActiveColor: siteVars.colorScheme.default.foregroundActive1,
 
       ctItemDangerBackground: siteVars.colorScheme.red.background2,
