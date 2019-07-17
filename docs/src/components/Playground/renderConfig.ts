@@ -24,7 +24,6 @@ export const imports = {
   react: React,
   'react-dom': ReactDOM,
   'react-fela': ReactFela,
-  'react-scripts': 'latest',
 }
 
 export const importResolver = importName => imports[importName]
