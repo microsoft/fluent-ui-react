@@ -89,6 +89,7 @@ import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
+import msftOneDrive from './msftOnedrive'
 import microsoftStream from './microsoftStream'
 import userPhone from './userPhone'
 import speakerMute from './speakerMute'
@@ -226,6 +227,7 @@ export default {
   hand,
   'mic-off': micOff,
   more,
+  'msft-onedrive': msftOneDrive,
   'microsoft-stream': microsoftStream,
   'user-phone': userPhone,
   'number-list': numberList,
