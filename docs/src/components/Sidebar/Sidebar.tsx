@@ -6,6 +6,8 @@ import {
   ICSSInJSStyle,
   TreeItemProps,
   TreeProps,
+  Flex,
+  FlexItem,
 } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
@@ -24,8 +26,6 @@ type ComponentMenuItem = { displayName: string; type: string }
 const pkg = require('../../../../packages/react/package.json')
 const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
 const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
-
-const flexDislayStyle: any = { width: '100%' }
 
 class Sidebar extends React.Component<any, any> {
   static propTypes = {
@@ -306,6 +306,9 @@ class Sidebar extends React.Component<any, any> {
       color: 'white',
       fontWeight: 700,
     }
+
+    const flexDisplayStyle: any = { width: `${parseInt(this.props.width, 10) - 50}px` }
+
     const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
 
     const treeItemsByType = _.map(constants.typeOrder, nextType => {
@@ -326,10 +329,12 @@ class Sidebar extends React.Component<any, any> {
         key: 'github',
         title: {
           content: (
-            <div style={flexDislayStyle}>
+            <Flex style={flexDisplayStyle}>
               GitHub
-              <Icon name="github" styles={{ float: 'right' }} />
-            </div>
+              <FlexItem push>
+                <Icon name="github" />
+              </FlexItem>
+            </Flex>
           ),
           href: constants.repoURL,
           target: '_blank',
@@ -340,10 +345,12 @@ class Sidebar extends React.Component<any, any> {
         key: 'change',
         title: {
           content: (
-            <div style={flexDislayStyle}>
+            <Flex style={flexDisplayStyle}>
               CHANGELOG
-              <Icon name="file alternate outline" styles={{ float: 'right' }} />
-            </div>
+              <FlexItem push>
+                <Icon name="file alternate outline" />
+              </FlexItem>
+            </Flex>
           ),
           href: changeLogUrl,
           target: '_blank',
