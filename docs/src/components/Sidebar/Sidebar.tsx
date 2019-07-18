@@ -72,8 +72,7 @@ class Sidebar extends React.Component<any, any> {
     if (!hasModifier && isAZ && bodyHasFocus) this._searchInput.focus()
   }
 
-  // TODO: this should be part of all the tree items?
-  handleItemClick = () => {
+  handleItemClick = e => {
     const { query } = this.state
 
     if (query) this.setState({ query: '' })
@@ -153,6 +152,22 @@ class Sidebar extends React.Component<any, any> {
         }
         category['onKeyDown'] = e => {
           this.keyDownCallback(e)
+        }
+      }
+    }
+  }
+
+  addItemOnClickCallbacks(sections: ShorthandValue<any>[]) {
+    for (let i = 0; i < sections.length; i++) {
+      const category = sections[i]
+      if ('items' in category) {
+        this.addItemOnClickCallbacks(category.items)
+      } else {
+        if (!('title' in category)) {
+          continue
+        }
+        category['onClick'] = e => {
+          this.handleItemClick(e)
         }
       }
     }
@@ -325,7 +340,6 @@ class Sidebar extends React.Component<any, any> {
         .map(info => ({
           key: info.displayName.concat(nextType),
           title: { content: info.displayName, as: NavLink, to: getComponentPathname(info) },
-          onClick: this.handleItemClick,
         }))
         .value()
 
@@ -450,6 +464,8 @@ class Sidebar extends React.Component<any, any> {
     // https://github.com/stardust-ui/react/issues/1613
     this.addItemKeyCallbacks(allSections)
 
+    this.addItemOnClickCallbacks(allSections)
+
     const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
       <Component open={open} hasSubtree={hasSubtree} {...restProps}>
         <span>{content}</span>
@@ -502,6 +518,7 @@ class Sidebar extends React.Component<any, any> {
             iconPosition="start"
             role="search"
             onChange={this.handleQueryChange}
+            value={this.state.query}
           />
         </Flex>
         <Tree
