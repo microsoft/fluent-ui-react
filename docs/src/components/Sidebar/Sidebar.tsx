@@ -460,6 +460,10 @@ class Sidebar extends React.Component<any, any> {
         return _.find((section as any).items, item => item.title.to === at)
       },
     )
+    if (this.state.query === '') {
+      ;(allSections[activeCategoryIndex] as any).open = true
+    }
+
     // TODO: remove after the issue with TreeItem will be fixed
     // https://github.com/stardust-ui/react/issues/1613
     this.addItemKeyCallbacks(allSections)
@@ -521,11 +525,7 @@ class Sidebar extends React.Component<any, any> {
             value={this.state.query}
           />
         </Flex>
-        <Tree
-          defaultActiveIndex={activeCategoryIndex}
-          items={allSections}
-          renderItemTitle={titleRenderer}
-        />
+        <Tree items={allSections} renderItemTitle={titleRenderer} />
       </Segment>
     )
   }
