@@ -29,10 +29,7 @@ export interface ListItemSlotClassNames {
 export interface ListItemProps
   extends UIComponentProps,
     ContentComponentProps<ShorthandValue<BoxProps>> {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default listItemBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
   contentMedia?: ShorthandValue<BoxProps>
   /** Toggle debug mode. */
@@ -230,6 +227,6 @@ ListItem.slotClassNames = {
 }
 
 /**
- * A list item contains a single piece of content within a list.
+ * A ListItem contains a single piece of content within a List.
  */
 export default withSafeTypeForAs<typeof ListItem, ListItemProps, 'li'>(ListItem)

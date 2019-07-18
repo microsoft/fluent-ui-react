@@ -32,10 +32,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active subtree. */
   activeIndex?: number[] | number
 
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default treeBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Initial activeIndex value. */
@@ -191,7 +188,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 Tree.create = createShorthandFactory({ Component: Tree, mappedArrayProp: 'items' })
 
 /**
- * Allows users to display data organised in tree-hierarchy.
+ * A Tree displays data organised in tree hierarchy.
+ *
  * @accessibility
  * Implements [ARIA TreeView](https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView) design pattern.
  */

@@ -20,10 +20,7 @@ import { checkboxBehavior } from '../../lib/accessibility'
 import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 
 export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default checkboxBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Initial checked value. */
@@ -176,7 +173,8 @@ Checkbox.create = createShorthandFactory({
 })
 
 /**
- * A single checkbox within a checkbox group.
+ * A Checkbox allows to toggle between two choices -- checked and not checked.
+ *
  * @accessibility
  * Implements [ARIA Checkbox](https://www.w3.org/TR/wai-aria-practices-1.1/#checkbox) design pattern.
  */

@@ -29,10 +29,7 @@ export interface RadioGroupSlotClassNames {
 }
 
 export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default radioGroupBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Value of the currently checked radio item. */
@@ -210,7 +207,8 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
 }
 
 /**
- * A radio group allows a user to select a value from a small set of options.
+ * A RadioGroup allows user to select a value from a small set of mutually exclusive options.
+ *
  * @accessibility
  * Implements [ARIA Radio Group](https://www.w3.org/TR/wai-aria-practices-1.1/#radiobutton) design pattern.
  */

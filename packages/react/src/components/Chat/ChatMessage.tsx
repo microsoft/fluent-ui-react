@@ -49,10 +49,7 @@ export interface ChatMessageProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps<ShorthandValue<BoxProps>> {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default chatMessageBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Menu with actions of the message. */
@@ -276,6 +273,6 @@ ChatMessage.slotClassNames = {
 }
 
 /**
- * A chat message represents a single statement communicated to a user.
+ * A ChatMessage represents a single message in chat.
  */
 export default withSafeTypeForAs<typeof ChatMessage, ChatMessageProps>(ChatMessage)
