@@ -10,7 +10,7 @@ import config from '../../../config'
 const { paths } = config
 
 const detectNonApprovedDependencies = async dangerJS => {
-  const { fail } = dangerJS
+  const { fail, markdown } = dangerJS
   const nonApproved: FailedConstraintsExplanation[] = []
 
   const versionConstraints = await getVersionConstrains(paths.packages('react', 'package.json'))
@@ -29,20 +29,27 @@ const detectNonApprovedDependencies = async dangerJS => {
   })
 
   if (nonApproved.length) {
-    // TODO refactor formatting
-    fail(
-      `The following package version constraints missing approved candidate:\n${nonApproved
-        .map(
+    markdown(
+      [
+        '## Non-approved dependencies are detected.',
+        'The following package version constraints missing approved candidate:',
+        '',
+        'failed constrains | approved candidates',
+        '--- | --- ',
+
+        nonApproved.map(
           explanation =>
-            `--------------\n - ${explanation.failedConstraints.join(
-              ', ',
-            )}\n - Approved candidates: ${
+            `${explanation.failedConstraints.join(', ')} | ${
               explanation.approvedPackages.length
                 ? explanation.approvedPackages.join(', ')
-                : 'there are no approved packages'
+                : '_there are no any approved packages_'
             }`,
-        )
-        .join('\n')}`,
+        ),
+      ].join('\n'),
+    )
+
+    fail(
+      'Non-approved dependencies were detected. It is necessary to obtain approvals and register them in `approvedPackages` file before merge.',
     )
   }
 }

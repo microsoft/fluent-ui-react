@@ -69,6 +69,7 @@ const markdownChangedDependencies = (
 
   markdown(
     [
+      '## Changed dependencies are detected.',
       `Changed ${dependenciesKey} in \`${filepath}\``,
       '',
       'package | before | after',

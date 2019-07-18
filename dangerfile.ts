@@ -6,5 +6,5 @@ import detectNonApprovedDependencies from './build/dangerjs/detectNonApprovedDep
 export default async () => {
   await checkChangelog({ danger, fail, warn })
   await detectChangedDependencies({ danger, markdown, warn })
-  await detectNonApprovedDependencies({ fail })
+  await detectNonApprovedDependencies({ fail, markdown })
 }
