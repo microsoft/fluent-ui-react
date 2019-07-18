@@ -75,7 +75,12 @@ class Tree extends React.Component<TreeProps, TreeState> {
         {open &&
           items &&
           items.map((item, index) => (
-            <Tree {...item} level={level + 1} aria-posinset={index} id={`item-${level}-${index}`} />
+            <Tree
+              {...item}
+              level={level + 1}
+              aria-posinset={index + 1}
+              id={`item-${level}-${index}`}
+            />
           ))}
       </>
     )
