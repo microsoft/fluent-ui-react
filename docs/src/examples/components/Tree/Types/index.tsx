@@ -7,7 +7,7 @@ const Types = () => (
     <ComponentExample
       title="Default"
       description="A default Tree."
-      examplePath="components/Tree/Types/TreeExample"
+      examplePath="components/Tree/Types/TreeExampleExperiment"
     />
     <ComponentExample
       title="Custom Title"
