@@ -9,6 +9,7 @@ import {
   Input,
   Flex,
   Box,
+  Ref,
 } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
@@ -39,10 +40,13 @@ class Sidebar extends React.Component<any, any> {
   _searchInput: any
   selectedRoute: any
   filteredMenu = componentMenu
+  treeRef: Ref
 
   constructor(props) {
     super(props)
     this.handleQueryChange = this.handleQueryChange.bind(this)
+    this.findActiveCategoryIndex = this.findActiveCategoryIndex.bind(this)
+    this.treeRef = React.createRef()
   }
 
   componentDidMount() {
@@ -63,6 +67,12 @@ class Sidebar extends React.Component<any, any> {
     this._searchInput = (findDOMNode(this) as any).querySelector('.ui.input input')
   }
 
+  findActiveCategoryIndex(at, sections): number {
+    return _.findIndex(sections, (section: ShorthandValue<TreeItemProps>) => {
+      return _.find((section as any).items, item => item.title.to === at)
+    })
+  }
+
   handleDocumentKeyDown = e => {
     const code = keyboardKey.getCode(e)
     const isAZ = code >= 65 && code <= 90
@@ -75,7 +85,12 @@ class Sidebar extends React.Component<any, any> {
   handleItemClick = e => {
     const { query } = this.state
 
-    if (query) this.setState({ query: '' })
+    if (query) {
+      const at = e.target.href.replace(e.target.baseURI, '/')
+      this.setState({ query: '' })
+      const categoryIndex = this.findActiveCategoryIndex(at, this.treeRef.current.props.items)
+      this.treeRef.current.setState({ activeIndex: categoryIndex })
+    }
     // TODO: as part of search input re-enabling
     // if (document.activeElement === this._searchInput) this._searchInput.blur()
   }
@@ -454,15 +469,7 @@ class Sidebar extends React.Component<any, any> {
     }
 
     const at = this.props.location.pathname
-    const activeCategoryIndex = _.findIndex(
-      allSections,
-      (section: ShorthandValue<TreeItemProps>) => {
-        return _.find((section as any).items, item => item.title.to === at)
-      },
-    )
-    if (this.state.query === '') {
-      ;(allSections[activeCategoryIndex] as any).open = true
-    }
+    const activeCategoryIndex = this.findActiveCategoryIndex(at, allSections)
 
     // TODO: remove after the issue with TreeItem will be fixed
     // https://github.com/stardust-ui/react/issues/1613
@@ -525,7 +532,12 @@ class Sidebar extends React.Component<any, any> {
             value={this.state.query}
           />
         </Flex>
-        <Tree items={allSections} renderItemTitle={titleRenderer} />
+        <Tree
+          items={allSections}
+          renderItemTitle={titleRenderer}
+          ref={this.treeRef}
+          defaultActiveIndex={activeCategoryIndex}
+        />
       </Segment>
     )
   }
