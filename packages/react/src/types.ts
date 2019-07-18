@@ -72,7 +72,7 @@ type ReactNode =
   | undefined
 
 export type ShorthandValue<P> = ReactNode | Props<P>
-export type ShorthandCollection<P, K = []> = ShorthandValue<P & { kind?: K }>[]
+export type ShorthandCollection<P, K = never> = ShorthandValue<P & { kind?: K }>[]
 
 // ========================================================
 // Types for As prop support

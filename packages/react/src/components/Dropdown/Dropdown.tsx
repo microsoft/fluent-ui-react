@@ -1339,8 +1339,9 @@ Dropdown.slotClassNames = {
 }
 
 /**
- * Dropdown allows user to select one or more values from a list of items.
- * Can also be created with search capability.
+ * A Dropdown allows user to select one or more values from a list of options.
+ * Can be created with search and multi-selection capabilities.
+ *
  * @accessibility
  * Implements [ARIA Combo Box](https://www.w3.org/TR/wai-aria-practices-1.1/#combobox) design pattern, uses aria-live to announce state changes.
  */

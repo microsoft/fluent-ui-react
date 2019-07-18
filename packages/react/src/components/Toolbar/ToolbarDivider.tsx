@@ -45,7 +45,6 @@ class ToolbarDivider extends UIComponent<WithAsProp<ToolbarDividerProps>> {
 ToolbarDivider.create = createShorthandFactory({ Component: ToolbarDivider, mappedProp: 'content' })
 
 /**
- * Toolbar divider.
- * Adds visual non-selectable separator between items.
+ * A ToolbarDivider is a non-actionable element that visually segments Toolbar items.
  */
 export default withSafeTypeForAs<typeof ToolbarDivider, ToolbarDividerProps>(ToolbarDivider)

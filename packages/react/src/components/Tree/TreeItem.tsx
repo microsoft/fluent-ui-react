@@ -34,10 +34,7 @@ export interface TreeItemSlotClassNames {
 }
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default treeItemBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Only allow one subtree to be open at a time. */
@@ -213,4 +210,10 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
 TreeItem.create = createShorthandFactory({ Component: TreeItem, mappedProp: 'title' })
 
+/**
+ * A TreeItem renders an item of a Tree.
+ *
+ * @accessibility
+ * Implements [ARIA TreeView](https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView) design pattern.
+ */
 export default withSafeTypeForAs<typeof TreeItem, TreeItemProps, 'li'>(TreeItem)

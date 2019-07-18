@@ -10,8 +10,8 @@ const listStyle = { display: 'block' }
 
 const ComponentDocSee: any = ({ displayName }) => {
   const items = getInfoForSeeTags(displayName)
-  if (items.length === 0) return null
 
+  if (_.isEmpty(items)) return null
   return (
     <List styles={listStyle}>
       {/* Heads up! Still render empty lists to reserve the whitespace */}

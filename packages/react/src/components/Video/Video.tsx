@@ -98,6 +98,6 @@ class Video extends UIComponent<WithAsProp<VideoProps>> {
 Video.create = createShorthandFactory({ Component: Video, mappedProp: 'src' })
 
 /**
- * An video is a graphicical and audio representation of something.
+ * A Video provides ability to embed video content.
  */
 export default withSafeTypeForAs<typeof Video, VideoProps, 'video'>(Video)

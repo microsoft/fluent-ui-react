@@ -65,6 +65,7 @@ import filesPowerPoint from './filesPowerPoint'
 import filesPowerPointBrand from './filesPowerPointBrand'
 import filesWord from './filesWord'
 import filesWordBrand from './filesWordBrand'
+import filesVisio from './filesVisio'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
 import format from './format'
@@ -189,6 +190,7 @@ export default {
   'files-txt': filesTxt,
   'files-upload': filesUpload,
   'files-video': filesVideo,
+  'files-visio': filesVisio,
   'files-zip': filesZip,
   flag,
   download,

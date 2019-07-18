@@ -42,6 +42,9 @@ export interface FlexItemProps extends UIComponentProps, ChildrenComponentProps<
   flexDirection?: 'row' | 'column'
 }
 
+/**
+ * A FlexItem is a layout component that customizes alignment of Flex child.
+ */
 class FlexItem extends UIComponent<FlexItemProps> {
   static className = 'ui-flex__item'
 
