@@ -9,6 +9,14 @@ import config from '../../../config'
 
 const { paths } = config
 
+/**
+ * This check uses the following logic:
+ * - request runtime dependencies of @stardust-ui/react package (by crawling the code, starting from index file),
+ * - for each of the runtime dependencies:
+ *    - get corresponding set of version restrictions (by analyzing related package.json files),
+ *    - get list of approved dependency's versions,
+ *    - check if list of approved versions covers the set of version restrictions.
+ */
 const detectNonApprovedDependencies = async dangerJS => {
   const { fail, markdown } = dangerJS
   const failedVersionConstraints: FailedConstraintsExplanation[] = []
