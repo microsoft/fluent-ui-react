@@ -1,42 +1,27 @@
+import { CheckboxVariables as BaseCheckboxVariables } from '../../../base/components/Checkbox/checkboxVariables'
 import { pxToRem } from '../../../../lib'
 
-export interface CheckboxVariables {
+export type CheckboxVariables = Partial<BaseCheckboxVariables> & {
   rootPadding: string
 
   textColor: string
-  background: string
-  borderColor: string
-  borderStyle: string
-  borderRadius: string
-  borderWidth: string
   indicatorColor: string
-  gap: string
-  margin: string
-  padding: string
 
   textColorHover: string
   borderColorHover: string
   checkedBackgroundHover: string
   checkedTextColor: string
-  checkedBackground: string
-  checkedBorderColor: string
   checkedIndicatorColor: string
 
-  toggleBorderRadius: string
   toggleIndicatorSize: string
-  toggleMargin: string
-  togglePadding: string
   toggleCheckedPadding: string
 
-  disabledColor: string
-  disabledBackground: string
   disabledBackgroundChecked: string
-  disabledBorderColor: string
   disabledCheckedIndicatorColor: string
-  disabledToggleIndicatorColor: string
 }
 
-const [toggleMovementDistance, padding] = [20, 2].map(v => pxToRem(v))
+const toggleMovementDistance = pxToRem(20)
+const padding = pxToRem(2)
 
 export default (siteVars: any): CheckboxVariables => ({
   textColor: siteVars.colorScheme.default.foreground1,

@@ -72,14 +72,6 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
       }),
   }),
 
-  label: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    [p.labelPosition === 'start' ? ':after' : ':before']: {
-      content: '" "',
-      display: 'inline-block',
-      width: v.gap,
-    },
-  }),
-
   toggle: ({ props: p, variables: v }): ICSSInJSStyle => ({
     background: v.background,
     borderColor: v.borderColor,
