@@ -32,9 +32,9 @@ const getPackageVersion = (packageId: string): string => {
 }
 
 const getFailedConstraints = (packageVersion: string, versionConstraints: string[]): string[] => {
-  const failedConstraints = versionConstraints.filter(constraint =>
-    semver.satisfies(packageVersion, constraint),
-  )
+  const failedConstraints = versionConstraints.filter(constraint => {
+    return !semver.satisfies(packageVersion, constraint)
+  })
 
   return failedConstraints
 }
@@ -62,15 +62,15 @@ export const getDependencyPackageIds = () => {
     .map(match => match[1])
 }
 
-// type PackageFailedApproveExplanation = {
-//     approvedPackageId: string,
-//     failedConstraints: string[]
-// }
+export type FailedApprovalExplanation = {
+  approvedPackages: string[]
+  failedConstraints: string[]
+}
 
-// type Result = {
-//     isApproved: boolean,
-//     explanations?: PackageFailedApproveExplanation[]
-// }
+export type ApprovalCheckResult = {
+  isApproved: boolean
+  explain?: FailedApprovalExplanation
+}
 
 /**
  * Returns:
@@ -79,19 +79,39 @@ export const getDependencyPackageIds = () => {
  *      - unmet constraints
  *      - tried packages
  */
-export const isApproved = (packageId: string): boolean => {
+
+/**
+ * The following package version constraints are not met by any of the approved dependencies (both contraints should be satisfied by any of the approved package):
+ * - unmet constraints
+ * - related approved dependencies (if any)
+ *
+ * Failed candidates (from the approval list):
+ */
+export const isApproved = (packageId: string): ApprovalCheckResult => {
   const packageName = getPackageName(packageId)
   const packageVersion = getPackageVersion(packageId)
 
   if (packageName.startsWith('@stardust-ui/')) {
-    return true
+    return { isApproved: true }
   }
 
   const packageVersionConstraints = getVersionConstraints(packageName, packageVersion)
 
-  const approvedPackageIds = approvedDependencies.filter(item => item.startsWith(packageName))
+  const approvedPackageIds = approvedDependencies.filter(item => item.startsWith(`${packageName}@`))
 
-  return approvedPackageIds.filter(getPackageVersion).some(approvedPackageVersion => {
+  const isApproved = approvedPackageIds.map(getPackageVersion).some(approvedPackageVersion => {
     return getFailedConstraints(approvedPackageVersion, packageVersionConstraints).length === 0
   })
+
+  return isApproved
+    ? { isApproved }
+    : {
+        isApproved: false,
+        explain: {
+          failedConstraints: packageVersionConstraints.map(
+            versionConstraint => `${packageName}@${versionConstraint}`,
+          ),
+          approvedPackages: approvedPackageIds,
+        },
+      }
 }
