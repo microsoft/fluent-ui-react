@@ -7,22 +7,21 @@ import config from '../../../../config'
 
 const { paths } = config
 
-const STARDUST_INDEX_PATH = paths.packageSrc('react', 'index')
-
 type WebpackOptions = {
+  packageName: string
   outputFilePath: string
   onDependencyPackage: (packageName: string, packageVersion) => void
 }
 
 export const prepareWebpackConfig = (options: WebpackOptions) => {
-  const { outputFilePath, onDependencyPackage } = options
+  const { packageName, outputFilePath, onDependencyPackage } = options
 
   return {
     name: 'client',
     target: 'web',
     mode: 'development',
     entry: {
-      app: STARDUST_INDEX_PATH,
+      app: paths.packageSrc(packageName, 'index'),
     },
     output: {
       path: path.dirname(outputFilePath),

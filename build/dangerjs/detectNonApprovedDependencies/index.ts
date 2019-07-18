@@ -1,13 +1,27 @@
-import { isApproved, getDependencyPackageIds, FailedApprovalExplanation } from './utils'
+import {
+  checkPackageVersionConstraints,
+  getVersionConstrains,
+  getRuntimeDependencies,
+  getPackageName,
+  FailedConstraintsExplanation,
+} from './utils'
+import config from '../../../config'
 
-const detectNonApprovedDependencies = dangerJS => {
+const { paths } = config
+
+const detectNonApprovedDependencies = async dangerJS => {
   const { fail } = dangerJS
-  const nonApproved: FailedApprovalExplanation[] = []
+  const nonApproved: FailedConstraintsExplanation[] = []
 
-  const dependencyPackageIds = getDependencyPackageIds()
+  const versionConstraints = await getVersionConstrains(paths.packages('react', 'package.json'))
+
+  const dependencyPackageIds = getRuntimeDependencies()
 
   dependencyPackageIds.forEach(packageId => {
-    const verdict = isApproved(packageId)
+    const verdict = checkPackageVersionConstraints(
+      packageId,
+      versionConstraints[getPackageName(packageId)] || [],
+    )
 
     if (!verdict.isApproved) {
       nonApproved.push(verdict.explain)
@@ -15,11 +29,14 @@ const detectNonApprovedDependencies = dangerJS => {
   })
 
   if (nonApproved.length) {
+    // TODO refactor formatting
     fail(
-      `The following packages lack approval:\n${nonApproved
+      `The following package version constraints missing approved candidate:\n${nonApproved
         .map(
           explanation =>
-            `--------------\n - ${explanation.failedConstraints.join(', ')}\n - ${
+            `--------------\n - ${explanation.failedConstraints.join(
+              ', ',
+            )}\n - Approved candidates: ${
               explanation.approvedPackages.length
                 ? explanation.approvedPackages.join(', ')
                 : 'there are no approved packages'

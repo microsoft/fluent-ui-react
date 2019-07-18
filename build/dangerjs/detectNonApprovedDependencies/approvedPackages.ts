@@ -3,6 +3,7 @@ export default [
   '@babel/runtime@7.4.5',
   'classnames@2.2.6',
   'compute-scroll-into-view@1.0.11',
+  'css-in-js-utils@2.0.1',
   'css-in-js-utils@3.0.0',
   'downshift@3.2.6',
   'downshift@3.2.10',
@@ -45,6 +46,7 @@ export default [
   'isobject@3.0.1',
   'keyboard-key@1.0.1',
   'lodash@4.17.5',
+  'lodash@4.17.11',
   'object-assign@4.1.1',
   'popper.js@1.15.0',
   'prop-types@15.6.2',
@@ -61,3 +63,7 @@ export default [
   'scheduler@0.13.6',
   'webpack@4.25.1',
 ]
+
+export const isIgnored = (packageId): boolean => {
+  return packageId.startsWith('@stardust-ui/')
+}
