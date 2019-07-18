@@ -180,9 +180,6 @@ export { default as Reaction } from './components/Reaction/Reaction'
 export * from './components/Reaction/ReactionGroup'
 export { default as ReactionGroup } from './components/Reaction/ReactionGroup'
 
-export * from './components/ResponsiveToolbar/ResponsiveToolbar'
-export { default as ResponsiveToolbar } from './components/ResponsiveToolbar/ResponsiveToolbar'
-
 export * from './components/Video/Video'
 export { default as Video } from './components/Video/Video'
 

@@ -4,7 +4,6 @@ const toolbarStyles: ComponentSlotStylesInput = {
   root: (): ICSSInJSStyle => ({
     display: 'flex',
     alignItems: 'center',
-    outline: '1px solid blue',
   }),
 
   wrapper: (): ICSSInJSStyle => ({
@@ -12,9 +11,8 @@ const toolbarStyles: ComponentSlotStylesInput = {
   }),
 
   measurement: (): ICSSInJSStyle => ({
-    // position: 'fixed',
-    // visibility: 'hidden',
-    background: '#ff000044',
+    position: 'fixed',
+    visibility: 'hidden',
   }),
 }
 

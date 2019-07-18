@@ -34,6 +34,13 @@ import * as PropTypes from 'prop-types'
 
 export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group' | 'toggle' | 'custom'
 
+export interface OverflowMeasures {
+  left: number
+  leftFits: boolean
+  right: number
+  rightFits: boolean
+}
+
 export interface ToolbarProps
   extends UIComponentProps,
     ContentComponentProps,
@@ -50,6 +57,7 @@ export interface ToolbarProps
 
   onReduceItems?: (
     currentItems: ShorthandCollection<ToolbarItemProps, ToolbarItemShorthandKinds>,
+    measures: OverflowMeasures[],
   ) => ShorthandCollection<ToolbarItemProps, ToolbarItemShorthandKinds> | null // FIXME: does not work with children
 
   /** Shorthand for the hidden measurement container. Only used if onReduceItems is defined. */
@@ -117,7 +125,8 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     stable: false,
   }
 
-  measurementRef = React.createRef<HTMLElement>()
+  wrapperRef = React.createRef<HTMLElement>()
+  hiddenToolbarRef = React.createRef<HTMLElement>()
 
   handleItemOverrides = variables => predefinedProps => ({
     variables: mergeComponentVariables(variables, predefinedProps.variables),
@@ -168,19 +177,18 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   }
 
   afterComponentRendered() {
-    const { onReduceItems } = this.props
-    if (_.isNil(onReduceItems) || !this.measurementRef.current) {
-      return
-    }
-
     window.requestAnimationFrame(() => {
-      const { fits } = this.measureOverflow(this.measurementRef.current)
+      const { onReduceItems } = this.props
+      if (_.isNil(onReduceItems) || !this.hiddenToolbarRef.current || this.state.stable) {
+        return
+      }
+      const { fits, measures } = this.measureOverflow()
       this.setState(({ stable, currentItems }) => {
         if (fits) {
-          return { stable: true, stableItems: currentItems, currentItems } // FIXME: why I need to add currentItems???
+          return { stable: true, stableItems: currentItems, currentItems }
         }
 
-        const reducedItems = onReduceItems(currentItems)
+        const reducedItems = onReduceItems(currentItems, measures)
         if (reducedItems === null) {
           return { stable: true, stableItems: currentItems, currentItems }
         }
@@ -189,28 +197,29 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     })
   }
 
-  measureOverflow(container: HTMLElement) {
-    const containerRect = container.getBoundingClientRect()
+  measureOverflow(): { fits: boolean; measures: OverflowMeasures[] } {
+    const wrapperRect = this.wrapperRef.current.getBoundingClientRect()
+    const hiddenToolbarElement = this.hiddenToolbarRef.current
 
-    console.log('measureOverflow', containerRect.left, containerRect.right)
-
-    const children = _.map(container.children, child => {
+    const measures: OverflowMeasures[] = _.map(hiddenToolbarElement.children, child => {
       const rect = child.getBoundingClientRect()
       return {
         left: rect.left,
-        leftFits: rect.left >= containerRect.left,
+        leftFits: rect.left >= wrapperRect.left,
         right: rect.right,
-        rightFits: rect.right <= containerRect.right,
+        rightFits: rect.right <= wrapperRect.right,
       }
     })
 
-    console.table(children)
-    const fits = !_.some(children, c => !c.leftFits || !c.rightFits)
-    return { fits, children }
+    const fits = !_.some(measures, c => !c.leftFits || !c.rightFits)
+    return { fits, measures }
   }
 
   onResize = (newWidth, newHeight) => {
-    console.log(`onResize -> ${newWidth} x ${newHeight}`)
+    this.setState(({ initialItems }) => ({
+      currentItems: initialItems,
+      stable: false,
+    }))
   }
 
   renderComponent({
@@ -222,63 +231,65 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   }): React.ReactNode {
     const { children, items, onReduceItems, measurement, wrapper } = this.props
 
-    const renderedToolbar = (
+    if (!_.isNil(onReduceItems)) {
+      return (
+        <Ref innerRef={this.wrapperRef}>
+          {Box.create(wrapper, {
+            defaultProps: {
+              className: cx(Toolbar.slotClassNames.wrapper, classes.wrapper),
+              ...accessibility.attributes.wrapper,
+              ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
+            },
+            overrideProps: () => ({
+              children: (
+                <>
+                  {!this.state.stable &&
+                    Box.create(measurement, {
+                      defaultProps: {
+                        className: cx(Toolbar.slotClassNames.measurement, classes.measurement),
+                        ...accessibility.attributes.measurement,
+                        ...applyAccessibilityKeyHandlers(
+                          accessibility.keyHandlers.measurement,
+                          wrapper,
+                        ),
+                      },
+                      overrideProps: () => ({
+                        children: (
+                          <Ref innerRef={this.hiddenToolbarRef}>
+                            <ElementType
+                              className={classes.root}
+                              {...accessibility.attributes.root}
+                              {...unhandledProps}
+                            >
+                              {this.renderItems(this.state.currentItems, variables)}
+                            </ElementType>
+                          </Ref>
+                        ),
+                      }),
+                    })}
+                  {this.state.stableItems && (
+                    <ElementType
+                      className={classes.root}
+                      {...accessibility.attributes.root}
+                      {...unhandledProps}
+                    >
+                      {this.renderItems(this.state.stableItems, variables)}
+                    </ElementType>
+                  )}
+                  <ReactResizeDetector xskipOnMount handleWidth onResize={this.onResize} />
+                </>
+              ),
+            }),
+          })}
+        </Ref>
+      )
+    }
+
+    return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
         {childrenExist(children) ? children : this.renderItems(items, variables)}
       </ElementType>
     )
-
-    if (!_.isNil(onReduceItems)) {
-      return Box.create(wrapper, {
-        defaultProps: {
-          className: cx(Toolbar.slotClassNames.wrapper, classes.wrapper),
-          ...accessibility.attributes.wrapper,
-          ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
-        },
-        overrideProps: () => ({
-          children: (
-            <>
-              {!this.state.stable &&
-                Box.create(measurement, {
-                  defaultProps: {
-                    className: cx(Toolbar.slotClassNames.measurement, classes.measurement),
-                    ...accessibility.attributes.measurement,
-                    ...applyAccessibilityKeyHandlers(
-                      accessibility.keyHandlers.measurement,
-                      wrapper,
-                    ),
-                  },
-                  overrideProps: () => ({
-                    children: (
-                      <Ref innerRef={this.measurementRef}>
-                        <ElementType
-                          className={classes.root}
-                          {...accessibility.attributes.root}
-                          {...unhandledProps}
-                        >
-                          {this.renderItems(this.state.currentItems, variables)}
-                        </ElementType>
-                      </Ref>
-                    ),
-                  }),
-                })}
-              {this.state.stableItems && (
-                <ElementType
-                  className={classes.root}
-                  {...accessibility.attributes.root}
-                  {...unhandledProps}
-                >
-                  {this.renderItems(this.state.stableItems, variables)}
-                </ElementType>
-              )}
-              <ReactResizeDetector xskipOnMount handleWidth onResize={this.onResize} />
-            </>
-          ),
-        }),
-      })
-    }
-
-    return renderedToolbar
   }
 }
 
