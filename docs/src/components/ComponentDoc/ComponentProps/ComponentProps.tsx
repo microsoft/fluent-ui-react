@@ -67,7 +67,7 @@ export default class ComponentProps extends React.Component<any, any> {
         {activeDisplayName && (
           <Flex.Item style={propsContainerStyle}>
             <>
-              <ComponentPropsDescription description={_.join(description, ' ')} />
+              <ComponentPropsDescription description={description} />
               <ComponentTableProps componentName={activeDisplayName} />
             </>
           </Flex.Item>

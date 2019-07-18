@@ -34,10 +34,7 @@ export interface DialogProps
   extends UIComponentProps,
     ContentComponentProps<ShorthandValue<BoxProps>>,
     ColorComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default dialogBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** A dialog can contain actions. */
