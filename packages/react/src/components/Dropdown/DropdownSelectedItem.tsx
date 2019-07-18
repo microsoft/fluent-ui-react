@@ -15,9 +15,9 @@ import {
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import { createShorthandFactory, UIComponent, RenderResultConfig, commonPropTypes } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
-import Image from '../Image/Image'
+import Image, { ImageProps } from '../Image/Image'
 import Label from '../Label/Label'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface DropdownSelectedItemSlotClassNames {
   header: string
@@ -30,13 +30,13 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
   active?: boolean
 
   /** Header of the selected item. */
-  header?: ShorthandValue
+  header?: ShorthandValue<BoxProps>
 
   /** Icon of the selected item. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** Image of the selected item. */
-  image?: ShorthandValue
+  image?: ShorthandValue<ImageProps>
 
   /**
    * Called on selected item click.
@@ -191,8 +191,7 @@ DropdownSelectedItem.create = createShorthandFactory({
 })
 
 /**
- * A a sub-component of multiple-selection Dropdown.
- * Used to display selected item.
+ * A DropdownSelectedItem represents a selected item of 'multiple-selection' Dropdown.
  */
 export default withSafeTypeForAs<typeof DropdownSelectedItem, DropdownSelectedItemProps>(
   DropdownSelectedItem,

@@ -8,10 +8,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ImageProps extends UIComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default imageBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** An image may be formatted to appear inline with text as an avatar. */
@@ -63,7 +60,8 @@ class Image extends UIComponent<WithAsProp<ImageProps>, any> {
 Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src', allowsJSX: false })
 
 /**
- * An image is a graphic representation of something.
+ * An Image is a graphic representation of something.
+ *
  * @accessibility
  * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
  *

@@ -12,12 +12,12 @@ import {
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface SegmentProps
   extends UIComponentProps<SegmentProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue> {
+    ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
    */
@@ -65,6 +65,6 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
 }
 
 /**
- * A segment is used to create a grouping of related content.
+ * A Segment visually groups related content.
  */
 export default withSafeTypeForAs<typeof Segment, SegmentProps>(Segment)

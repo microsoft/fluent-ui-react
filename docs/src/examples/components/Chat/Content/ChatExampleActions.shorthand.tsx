@@ -1,4 +1,4 @@
-import { Avatar, Chat } from '@stardust-ui/react'
+import { Avatar, Chat, ChatItemProps, ShorthandCollection } from '@stardust-ui/react'
 import * as React from 'react'
 
 const actionMenu = {
@@ -9,7 +9,7 @@ const actionMenu = {
   ],
 }
 
-const items = [
+const items: ShorthandCollection<ChatItemProps> = [
   {
     attached: 'top',
     contentPosition: 'end',

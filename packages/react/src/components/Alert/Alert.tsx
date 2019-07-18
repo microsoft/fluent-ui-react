@@ -16,7 +16,7 @@ import { RenderResultConfig } from '../../lib/renderComponent'
 import { alertBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 import Button, { ButtonProps } from '../Button/Button'
 
 export interface AlertSlotClassNames {
@@ -24,10 +24,11 @@ export interface AlertSlotClassNames {
   action: string
 }
 
-export interface AlertProps extends UIComponentProps, ContentComponentProps<ShorthandValue> {
+export interface AlertProps
+  extends UIComponentProps,
+    ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default alertBehavior
    * @available alertWarningBehavior
    */
   accessibility?: Accessibility
@@ -135,6 +136,9 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
 }
 
 /**
- * A Alert displays information that explains nearby content.
+ * An Alert displays a brief, important message to attract the user's attention without interrupting the user's task.
+ *
+ * @accessibility
+ * Implements [ARIA Alert](https://www.w3.org/TR/wai-aria-practices-1.1/#alert) design pattern.
  */
 export default withSafeTypeForAs<typeof Alert, AlertProps>(Alert)

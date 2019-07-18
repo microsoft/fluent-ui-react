@@ -14,7 +14,7 @@ import {
   rtlTextContainer,
   getElementProp,
 } from '../../lib'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentSlotStylesPrepared } from '../../themes/types'
@@ -35,13 +35,13 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
   attached?: boolean | 'top' | 'bottom'
 
   /** Chat items can have a gutter. */
-  gutter?: ShorthandValue
+  gutter?: ShorthandValue<BoxProps>
 
   /** Indicates whether the content is positioned at the start or the end. */
   contentPosition?: 'start' | 'end'
 
   /** Chat items can have a message. */
-  message?: ShorthandValue
+  message?: ShorthandValue<BoxProps>
 }
 
 class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
@@ -147,6 +147,6 @@ ChatItem.slotClassNames = {
 }
 
 /**
- * A chat item represents a single event in a chat.
+ * A ChatItem is container for single entity in Chat (e.g. message, notification, etc).
  */
 export default withSafeTypeForAs<typeof ChatItem, ChatItemProps, 'li'>(ChatItem)

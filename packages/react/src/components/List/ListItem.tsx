@@ -14,7 +14,7 @@ import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ShorthandValue, WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface ListItemSlotClassNames {
   header: string
@@ -26,22 +26,21 @@ export interface ListItemSlotClassNames {
   endMedia: string
 }
 
-export interface ListItemProps extends UIComponentProps, ContentComponentProps<ShorthandValue> {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default listItemBehavior
-   * */
+export interface ListItemProps
+  extends UIComponentProps,
+    ContentComponentProps<ShorthandValue<BoxProps>> {
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
-  contentMedia?: ShorthandValue
+  contentMedia?: ShorthandValue<BoxProps>
   /** Toggle debug mode. */
   debug?: boolean
-  header?: ShorthandValue
-  endMedia?: ShorthandValue
-  headerMedia?: ShorthandValue
+  header?: ShorthandValue<BoxProps>
+  endMedia?: ShorthandValue<BoxProps>
+  headerMedia?: ShorthandValue<BoxProps>
 
   /** A list item can appear more important and draw the user's attention. */
   important?: boolean
-  media?: ShorthandValue
+  media?: ShorthandValue<BoxProps>
 
   index?: number
   /** A list item can indicate that it can be selected. */
@@ -228,6 +227,6 @@ ListItem.slotClassNames = {
 }
 
 /**
- * A list item contains a single piece of content within a list.
+ * A ListItem contains a single piece of content within a List.
  */
 export default withSafeTypeForAs<typeof ListItem, ListItemProps, 'li'>(ListItem)
