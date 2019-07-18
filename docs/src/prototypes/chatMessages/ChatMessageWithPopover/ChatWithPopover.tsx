@@ -1,10 +1,17 @@
-import { Chat, Provider, Avatar, ChatMessageProps } from '@stardust-ui/react'
+import {
+  Chat,
+  Provider,
+  Avatar,
+  ChatMessageProps,
+  ShorthandCollection,
+  ReactionProps,
+} from '@stardust-ui/react'
 import * as React from 'react'
 import Popover from './Popover'
 import ReactionPopup from './ReactionPopup'
 import { Ref } from '@stardust-ui/react-component-ref'
 
-const reactions = [
+const reactions: ShorthandCollection<ReactionProps> = [
   {
     icon: 'thumbs up',
     content: '1K',
@@ -130,12 +137,15 @@ const TeamsChatMessage: React.FC<ChatMessageProps> = (props: ChatMessageProps) =
     <Ref innerRef={setChatMessageElement}>
       <Chat.Message
         {...props}
-        actionMenu={
-          <Popover
-            chatMessageElement={chatMessageElement}
-            onForceShowActionMenuChange={setForceShowActionMenu}
-            onShowActionMenuChange={setShowActionMenu}
-          />
+        actionMenu={render =>
+          render({}, (ComponentType, props) => (
+            <Popover
+              chatMessageElement={chatMessageElement}
+              onForceShowActionMenuChange={setForceShowActionMenu}
+              onShowActionMenuChange={setShowActionMenu}
+              {...props}
+            />
+          ))
         }
         onMouseEnter={() => setShowActionMenu(true)}
         onMouseLeave={() => !forceShowActionMenu && setShowActionMenu(false)}

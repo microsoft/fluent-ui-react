@@ -13,17 +13,14 @@ import {
   UIComponentProps,
 } from '../../lib'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
-import Text from '../Text/Text'
+import Icon, { IconProps } from '../Icon/Icon'
+import Text, { TextProps } from '../Text/Text'
 import { Accessibility } from '../../lib/accessibility/types'
 import { checkboxBehavior } from '../../lib/accessibility'
 import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 
 export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default checkboxBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Initial checked value. */
@@ -36,10 +33,10 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
   disabled?: SupportedIntrinsicInputProps['disabled']
 
   /** The item indicator can be user-defined icon. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** The label of the item. */
-  label?: ShorthandValue
+  label?: ShorthandValue<TextProps>
 
   /** A label in the loader can have different positions. */
   labelPosition?: 'start' | 'end'
@@ -176,7 +173,8 @@ Checkbox.create = createShorthandFactory({
 })
 
 /**
- * A single checkbox within a checkbox group.
+ * A Checkbox allows to toggle between two choices -- checked and not checked.
+ *
  * @accessibility
  * Implements [ARIA Checkbox](https://www.w3.org/TR/wai-aria-practices-1.1/#checkbox) design pattern.
  */

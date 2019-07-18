@@ -6,9 +6,10 @@ import {
 } from '@stardust-ui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
+import VisibilitySensor from 'react-visibility-sensor'
 
 import {
   Divider,
@@ -37,6 +38,7 @@ import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
 import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ComponentExampleKnobs from './ComponentExampleKnobs'
+import ExamplePlaceholder from '../../ExamplePlaceholder'
 
 export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
@@ -55,6 +57,7 @@ interface ComponentExampleState {
   showRtl: boolean
   showTransparent: boolean
   showVariables: boolean
+  wasEverVisible: boolean
 }
 
 const childrenStyle: React.CSSProperties = {
@@ -83,6 +86,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showRtl: examplePath && examplePath.endsWith('rtl'),
       showTransparent: false,
       showVariables: false,
+      wasEverVisible: false,
     }
   }
 
@@ -460,6 +464,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }))
   }
 
+  handleVisibility = (willBeVisible: boolean) => {
+    if (willBeVisible && !this.state.wasEverVisible) this.setState({ wasEverVisible: true })
+  }
+
   render() {
     const {
       children,
@@ -469,96 +477,106 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       description,
       title,
     } = this.props
-    const { showCode, showRtl, showTransparent, themeName } = this.state
+    const { showCode, showRtl, showTransparent, themeName, wasEverVisible } = this.state
 
     return (
-      <Flex column>
-        <Flex.Item>
-          <KnobProvider>
-            {/* Ensure anchor links don't occlude card shadow effect */}
-            <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
+      <VisibilitySensor
+        delayedCall={!wasEverVisible}
+        partialVisibility
+        onChange={this.handleVisibility}
+      >
+        <Flex column>
+          <Flex.Item>
+            <KnobProvider>
+              {/* Ensure anchor links don't occlude card shadow effect */}
+              <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
-            <Segment styles={{ borderBottom: '1px solid #ddd' }}>
-              <Flex>
-                <ComponentExampleTitle description={description} title={title} />
+              <ExamplePlaceholder visible={wasEverVisible}>
+                <Segment styles={{ borderBottom: '1px solid #ddd' }}>
+                  <Flex>
+                    <ComponentExampleTitle description={description} title={title} />
 
-                <Flex.Item push>
-                  <ComponentControls
-                    anchorName={this.anchorName}
-                    exampleCode={currentCode}
-                    exampleLanguage={currentCodeLanguage}
-                    examplePath={currentCodePath}
-                    onShowCode={this.handleShowCodeClick}
-                    onCopyLink={this.handleDirectLinkClick}
-                    onShowRtl={this.handleShowRtlClick}
-                    onShowVariables={this.handleShowVariablesClick}
-                    onShowTransparent={this.handleShowTransparentClick}
-                    showRtl={showRtl}
-                  />
-                </Flex.Item>
-              </Flex>
+                    <Flex.Item push>
+                      <ComponentControls
+                        anchorName={this.anchorName}
+                        exampleCode={currentCode}
+                        exampleLanguage={currentCodeLanguage}
+                        examplePath={currentCodePath}
+                        onShowCode={this.handleShowCodeClick}
+                        onCopyLink={this.handleDirectLinkClick}
+                        onShowRtl={this.handleShowRtlClick}
+                        onShowVariables={this.handleShowVariablesClick}
+                        onShowTransparent={this.handleShowTransparentClick}
+                        showRtl={showRtl}
+                      />
+                    </Flex.Item>
+                  </Flex>
 
-              <KnobInspector>
-                {knobs => knobs && <ComponentExampleKnobs>{knobs}</ComponentExampleKnobs>}
-              </KnobInspector>
-            </Segment>
+                  <KnobInspector>
+                    {knobs => knobs && <ComponentExampleKnobs>{knobs}</ComponentExampleKnobs>}
+                  </KnobInspector>
+                </Segment>
+              </ExamplePlaceholder>
 
-            {children && <Segment styles={childrenStyle}>{children}</Segment>}
+              {children && <Segment styles={childrenStyle}>{children}</Segment>}
 
-            <SourceRender
-              babelConfig={babelConfig}
-              source={currentCode}
-              renderHtml={showCode}
-              resolver={importResolver}
-              themeName={themeName}
-              wrap={this.renderElement}
-              unstable_hot
-            >
-              {({ element, error, markup }) => (
-                <>
-                  <Provider.Consumer
-                    render={({ siteVariables }) => {
-                      return (
-                        <Segment
-                          className={`rendered-example ${this.getKebabExamplePath()}`}
-                          styles={{
-                            padding: '2rem',
-                            color: siteVariables.bodyColor,
-                            backgroundColor: siteVariables.bodyBackground,
-                            ...(showTransparent && {
-                              backgroundImage:
-                                'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                              backgroundRepeat: 'repeat',
-                            }),
-                          }}
-                        >
-                          {element}
-                        </Segment>
-                      )
-                    }}
-                  />
-                  <Segment styles={{ padding: 0 }}>
-                    {this.renderSourceCode()}
-                    {error && (
-                      <Segment inverted color="red">
-                        <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
+              <ExamplePlaceholder visible={wasEverVisible} size="larger">
+                <SourceRender
+                  babelConfig={babelConfig}
+                  source={currentCode}
+                  renderHtml={showCode}
+                  resolver={importResolver}
+                  themeName={themeName}
+                  wrap={this.renderElement}
+                  unstable_hot
+                >
+                  {({ element, error, markup }) => (
+                    <>
+                      <Provider.Consumer
+                        render={({ siteVariables }) => {
+                          return (
+                            <Segment
+                              className={`rendered-example ${this.getKebabExamplePath()}`}
+                              styles={{
+                                padding: '2rem',
+                                color: siteVariables.bodyColor,
+                                backgroundColor: siteVariables.bodyBackground,
+                                ...(showTransparent && {
+                                  backgroundImage:
+                                    'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                                  backgroundRepeat: 'repeat',
+                                }),
+                              }}
+                            >
+                              {element}
+                            </Segment>
+                          )
+                        }}
+                      />
+                      <Segment styles={{ padding: 0 }}>
+                        {this.renderSourceCode()}
+                        {error && (
+                          <Segment inverted color="red">
+                            <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
+                          </Segment>
+                        )}
+                        {showCode && (
+                          <div>
+                            <Divider fitted />
+                            <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup} />
+                          </div>
+                        )}
+                        {this.renderVariables()}
                       </Segment>
-                    )}
-                    {showCode && (
-                      <div>
-                        <Divider fitted />
-                        <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup} />
-                      </div>
-                    )}
-                    {this.renderVariables()}
-                  </Segment>
-                  <div style={{ paddingBottom: '10px' }} />
-                </>
-              )}
-            </SourceRender>
-          </KnobProvider>
-        </Flex.Item>
-      </Flex>
+                      <div style={{ paddingBottom: '10px' }} />
+                    </>
+                  )}
+                </SourceRender>
+              </ExamplePlaceholder>
+            </KnobProvider>
+          </Flex.Item>
+        </Flex>
+      </VisibilitySensor>
     )
   }
 }

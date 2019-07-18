@@ -1,4 +1,14 @@
-import { Icon, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import {
+  Icon,
+  Tree,
+  Segment,
+  Text,
+  ICSSInJSStyle,
+  TreeItemProps,
+  TreeProps,
+  Flex,
+  FlexItem,
+} from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
@@ -7,20 +17,15 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { findDOMNode } from 'react-dom'
-import { withRouter } from 'react-router'
-
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 
 import { constants } from 'src/lib'
-import { fontWeightBold } from 'src/themes/teams/siteVariables'
 
 type ComponentMenuItem = { displayName: string; type: string }
 
 const pkg = require('../../../../packages/react/package.json')
 const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
 const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
-
-const flexDislayStyle: any = { width: '100%' }
 
 class Sidebar extends React.Component<any, any> {
   static propTypes = {
@@ -122,218 +127,123 @@ class Sidebar extends React.Component<any, any> {
     })
 */
 
-  render() {
-    // Should be applied by provider
-    const sidebarStyles: ICSSInJSStyle = {
-      background: '#201f1f',
-      width: '250px',
-      position: 'fixed',
-      overflowY: 'scroll',
-      top: 0,
-      left: 0,
-      padding: 0,
-      maxHeight: '100vh',
-      zIndex: 1000,
+  keyDownCallback(e) {
+    if (keyboardKey.getCode(e) !== keyboardKey.Enter) {
+      return
     }
+    e.stopPropagation()
+    e.target.click()
+  }
 
-    const menuSectionStyles: ICSSInJSStyle = {
-      fontWeight: fontWeightBold,
-      margin: '0 0 .5rem',
-      padding: '0 1.2857rem',
-      background: '#201f1f',
-      color: 'white',
-      ':hover': {
-        background: 'none',
-        color: 'white',
-      },
-      ':focus': {
-        background: 'none',
-        color: 'white',
-      },
+  addItemKeyCallbacks(sections: ShorthandValue<any>[]) {
+    for (let i = 0; i < sections.length; i++) {
+      const category = sections[i]
+      if ('items' in category) {
+        this.addItemKeyCallbacks(category.items)
+      } else {
+        if (!('title' in category)) {
+          continue
+        }
+        category['onKeyDown'] = e => {
+          this.keyDownCallback(e)
+        }
+      }
     }
+  }
 
-    const menuItemStyles: ICSSInJSStyle = {
-      padding: '.5em 1.33333333em',
-      textDecoration: 'none',
-      fontSize: '0.85714286em',
-      fontWeight: 400,
-      color: '#ffffff80',
-      background: '#201f1f',
-      ':hover': {
-        color: 'white',
-        backgroundColor: 'none',
-      },
-      ':focus': {
-        color: 'white',
-        backgroundColor: 'none',
-      },
-    }
-
-    const dividerStyles: ICSSInJSStyle = {
-      marginTop: '.5em',
-      paddingBottom: '.5em',
-      background: '#201f1f',
-    }
-
-    const navBarStyles: ICSSInJSStyle = {
-      color: '#ffffff80',
-      padding: '0px',
-      backgroundColor: '#201f1f',
-    }
-
-    const logoStyles: ICSSInJSStyle = {
-      paddingRight: '5px',
-      color: 'white',
-      fontWeight: 700,
-    }
-    const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
-
-    const menuItemsByType = _.map(constants.typeOrder, nextType => {
-      const items = _.chain([...componentMenu, ...behaviorMenu])
-        .filter(({ type }) => type === nextType)
-        .map(info => ({
-          key: info.displayName.concat(nextType),
-          content: info.displayName,
-          onClick: this.handleItemClick,
-          as: NavLink,
-          to: getComponentPathname(info),
-          styles: menuItemStyles,
-        }))
-        .value()
-
-      return { items }
-    })
-
-    const menuItems: ShorthandValue[] = [
-      {
-        key: 'github',
-        content: (
-          <div style={flexDislayStyle}>
-            GitHub
-            <Icon name="github" styles={{ float: 'right' }} />
-          </div>
-        ),
-        href: constants.repoURL,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'change',
-        content: (
-          <div style={flexDislayStyle}>
-            CHANGELOG
-            <Icon name="file alternate outline" styles={{ float: 'right' }} />
-          </div>
-        ),
-        href: changeLogUrl,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'divider1',
-        kind: 'divider',
-        styles: dividerStyles,
-      },
+  getTreeItems(): TreeProps['items'] {
+    return [
       {
         key: 'concepts',
-        content: 'Concepts',
-        styles: menuSectionStyles,
-        disabled: true,
-      },
-      {
-        key: 'intro',
-        content: 'Introduction',
-        as: NavLink,
-        to: '/',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'composition',
-        content: 'Composition',
-        as: NavLink,
-        to: '/composition',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'shorthand',
-        content: 'Shorthand Props',
-        as: NavLink,
-        to: '/shorthand-props',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'divider2',
-        kind: 'divider',
-        styles: dividerStyles,
+        title: 'Concepts',
+        items: [
+          {
+            key: 'intro',
+            title: {
+              content: 'Introduction',
+              exact: true,
+              activeClassName: 'active',
+              as: NavLink,
+              to: '/',
+            },
+          },
+          {
+            key: 'composition',
+            title: {
+              as: NavLink,
+              content: 'Composition',
+              activeClassName: 'active',
+              to: '/composition',
+            },
+          },
+          {
+            key: 'shorthand',
+            title: {
+              as: NavLink,
+              content: 'Shorthand Props',
+              activeClassName: 'active',
+              to: '/shorthand-props',
+            },
+          },
+        ],
       },
       {
         key: 'guides',
-        content: 'Guides',
-        styles: menuSectionStyles,
-        disabled: true,
-      },
-      {
-        key: 'quickstart',
-        content: 'QuickStart',
-        as: NavLink,
-        to: '/quick-start',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'faq',
-        content: 'FAQ',
-        as: NavLink,
-        to: '/faq',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'accessiblity',
-        content: 'Accessibility',
-        as: NavLink,
-        to: '/accessibility',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'theming',
-        content: 'Theming',
-        as: NavLink,
-        to: '/theming',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'theming-examples',
-        content: 'Theming Examples',
-        as: NavLink,
-        to: '/theming-examples',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'colorpalette',
-        content: 'Colors',
-        as: NavLink,
-        to: '/colors',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'layout',
-        content: 'Layout',
-        as: NavLink,
-        to: '/layout',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'integrate-custom',
-        content: 'Integrate Custom Components',
-        as: NavLink,
-        to: '/integrate-custom-components',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'divider3',
-        kind: 'divider',
-        styles: dividerStyles,
+        title: 'Guides',
+        items: [
+          {
+            key: 'quickstart',
+            title: {
+              content: 'QuickStart',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/quick-start',
+            },
+          },
+          {
+            key: 'faq',
+            title: { content: 'FAQ', as: NavLink, activeClassName: 'active', to: '/faq' },
+          },
+          {
+            key: 'accessiblity',
+            title: {
+              content: 'Accessibility',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/accessibility',
+            },
+          },
+          {
+            key: 'theming',
+            title: { content: 'Theming', as: NavLink, activeClassName: 'active', to: '/theming' },
+          },
+          {
+            key: 'theming-examples',
+            title: {
+              content: 'Theming Examples',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/theming-examples',
+            },
+          },
+          {
+            key: 'colorpalette',
+            title: { content: 'Colors', as: NavLink, activeClassName: 'active', to: '/colors' },
+          },
+          {
+            key: 'layout',
+            title: { content: 'Layout', as: NavLink, activeClassName: 'active', to: '/layout' },
+          },
+          {
+            key: 'integrate-custom',
+            title: {
+              content: 'Integrate Custom Components',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/integrate-custom-components',
+            },
+          },
+        ],
       },
       // TODO: to re-enable the search input - will modify the list of the components depending on the search results
       // {query ? this.renderSearchItems() : this.menuItemsByType},
@@ -351,145 +261,214 @@ class Sidebar extends React.Component<any, any> {
       //   ),
       // },
     ]
+  }
 
-    const prototypesMenuItemTitle = {
+  getSectionsWithPrototypeSectionIfApplicable(currentSections, allPrototypes) {
+    let prototypes =
+      process.env.NODE_ENV === 'production'
+        ? _.filter(allPrototypes, { public: true })
+        : allPrototypes
+
+    if (prototypes.length === 0) {
+      return currentSections
+    }
+    prototypes = this.removePublicTags(prototypes)
+    const prototypeTreeSection = {
       key: 'prototypes',
-      content: 'Prototypes',
-      styles: menuSectionStyles,
-      disabled: true,
+      title: 'Prototypes',
+      items: prototypes,
+    }
+    return currentSections.concat(prototypeTreeSection)
+  }
+
+  removePublicTags(prototyptesTreeItems) {
+    return prototyptesTreeItems.map(p => {
+      delete p.public
+      return p
+    })
+  }
+
+  render() {
+    const sidebarStyles: ICSSInJSStyle = {
+      background: '#201f1f',
+      width: this.props.width,
+      position: 'fixed',
+      overflowY: 'scroll',
+      top: 0,
+      left: 0,
+      padding: 0,
+      height: '100%',
+      zIndex: 1000,
     }
 
-    const prototypesMenuItems: ShorthandValue[] = [
+    const logoStyles: ICSSInJSStyle = {
+      paddingRight: '5px',
+      color: 'white',
+      fontWeight: 700,
+    }
+
+    const flexDisplayStyle: any = { width: `${parseInt(this.props.width, 10) - 50}px` }
+
+    const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
+
+    const treeItemsByType = _.map(constants.typeOrder, nextType => {
+      const items = _.chain([...componentMenu, ...behaviorMenu])
+        .filter(({ type }) => type === nextType)
+        .map(info => ({
+          key: info.displayName.concat(nextType),
+          title: { content: info.displayName, as: NavLink, to: getComponentPathname(info) },
+          onClick: this.handleItemClick,
+        }))
+        .value()
+
+      return { items }
+    })
+
+    const topTreeItems: TreeProps['items'] = [
       {
-        key: 'chatpane',
-        content: 'Chat Pane',
-        as: NavLink,
-        to: '/prototype-chat-pane',
-        styles: menuItemStyles,
+        key: 'github',
+        title: {
+          content: (
+            <Flex style={flexDisplayStyle}>
+              GitHub
+              <FlexItem push>
+                <Icon name="github" />
+              </FlexItem>
+            </Flex>
+          ),
+          href: constants.repoURL,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+        },
       },
       {
-        key: 'chatMssages',
-        content: 'Chat Messages',
-        as: NavLink,
-        to: '/prototype-chat-messages',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'customtoolbar',
-        content: 'Custom Styled Toolbar',
-        as: NavLink,
-        to: '/prototype-custom-toolbar',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'dropdowns',
-        content: 'Dropdowns',
-        as: NavLink,
-        to: '/prototype-dropdowns',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'alerts',
-        content: 'Alerts',
-        as: NavLink,
-        to: '/prototype-alerts',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'asyncshorthand',
-        content: 'Async Shorthand',
-        as: NavLink,
-        to: '/prototype-async-shorthand',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'employeecard',
-        content: 'Employee Card',
-        as: NavLink,
-        to: '/prototype-employee-card',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'meetingoptions',
-        content: 'Meeting Options',
-        as: NavLink,
-        to: '/prototype-meeting-options',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'mentions',
-        content: 'Mentions',
-        as: NavLink,
-        to: '/prototype-mentions',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'searchpage',
-        content: 'Search Page',
-        as: NavLink,
-        to: '/prototype-search-page',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'popups',
-        content: 'Popups',
-        as: NavLink,
-        to: '/prototype-popups',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'iconviewer',
-        content: 'Processed Icons',
-        as: NavLink,
-        to: '/icon-viewer',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'menu-button',
-        content: 'MenuButton',
-        as: NavLink,
-        to: '/menu-button',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'divider4',
-        kind: 'divider',
-        styles: dividerStyles,
+        key: 'change',
+        title: {
+          content: (
+            <Flex style={flexDisplayStyle}>
+              CHANGELOG
+              <FlexItem push>
+                <Icon name="file alternate outline" />
+              </FlexItem>
+            </Flex>
+          ),
+          href: changeLogUrl,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+        },
       },
     ]
 
-    const withPrototypes =
-      process.env.NODE_ENV !== 'production'
-        ? menuItems.concat(prototypesMenuItemTitle).concat(prototypesMenuItems)
-        : menuItems
+    const treeItems = topTreeItems.concat(this.getTreeItems())
 
-    const componentMenuItem = {
+    const prototypesTreeItems: (ShorthandValue<{}> & { key: string; public: boolean })[] = [
+      {
+        key: 'chatpane',
+        title: { content: 'Chat Pane', as: NavLink, to: '/prototype-chat-pane' },
+        public: false,
+      },
+      {
+        key: 'chatMssages',
+        title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
+        public: false,
+      },
+      {
+        key: 'customtoolbar',
+        title: { content: 'Custom Styled Toolbar', as: NavLink, to: '/prototype-custom-toolbar' },
+        public: true,
+      },
+      {
+        key: 'dropdowns',
+        title: { content: 'Dropdowns', as: NavLink, to: '/prototype-dropdowns' },
+        public: false,
+      },
+      {
+        key: 'alerts',
+        title: { content: 'Alerts', as: NavLink, to: '/prototype-alerts' },
+        public: false,
+      },
+      {
+        key: 'asyncshorthand',
+        title: { content: 'Async Shorthand', as: NavLink, to: '/prototype-async-shorthand' },
+        public: false,
+      },
+      {
+        key: 'employeecard',
+        title: { content: 'Employee Card', as: NavLink, to: '/prototype-employee-card' },
+        public: false,
+      },
+      {
+        key: 'meetingoptions',
+        title: { content: 'Meeting Options', as: NavLink, to: '/prototype-meeting-options' },
+        public: false,
+      },
+      {
+        key: 'mentions',
+        title: { content: 'Mentions', as: NavLink, to: '/prototype-mentions' },
+        public: false,
+      },
+      {
+        key: 'searchpage',
+        title: { content: 'Search Page', as: NavLink, to: '/prototype-search-page' },
+        public: false,
+      },
+      {
+        key: 'popups',
+        title: { content: 'Popups', as: NavLink, to: '/prototype-popups' },
+        public: false,
+      },
+      {
+        key: 'iconviewer',
+        title: { content: 'Processed Icons', as: NavLink, to: '/icon-viewer' },
+        public: false,
+      },
+      {
+        key: 'menu-button',
+        title: { content: 'MenuButton', as: NavLink, to: '/menu-button' },
+        public: false,
+      },
+    ]
+
+    const componentTreeSection = {
       key: 'components',
-      content: 'Components',
-      styles: menuSectionStyles,
-      disabled: true,
+      title: 'Components',
+      items: treeItemsByType[0].items,
     }
-    const behaviorMenuItem = {
+    const behaviorTreeSection = {
       key: 'behaviour',
-      content: 'Behaviors',
-      styles: menuSectionStyles,
-      disabled: true,
+      title: 'Behaviors',
+      items: treeItemsByType[1].items,
     }
 
-    const withComponents = withPrototypes.concat(componentMenuItem).concat(menuItemsByType[0].items)
-    const allItems = withComponents
-      .concat({
-        key: 'divider5',
-        kind: 'divider',
-        styles: dividerStyles,
-      })
-      .concat(behaviorMenuItem)
-      .concat(menuItemsByType[1].items)
+    const withComponents = treeItems.concat(componentTreeSection)
+    const withBehaviors = withComponents.concat(behaviorTreeSection)
+    const allSections = this.getSectionsWithPrototypeSectionIfApplicable(
+      withBehaviors,
+      prototypesTreeItems,
+    )
+
+    const at = this.props.location.pathname
+    const activeCategoryIndex = _.findIndex(
+      allSections,
+      (section: ShorthandValue<TreeItemProps>) => {
+        return _.find((section as any).items, item => item.title.to === at)
+      },
+    )
+    // TODO: remove after the issue with TreeItem will be fixed
+    // https://github.com/stardust-ui/react/issues/1613
+    this.addItemKeyCallbacks(allSections)
+
+    const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
+      <Component open={open} hasSubtree={hasSubtree} {...restProps}>
+        <span>{content}</span>
+        {hasSubtree && <Icon name={open ? 'stardust-arrow-up' : 'stardust-arrow-down'} />}
+      </Component>
+    )
 
     // TODO: bring back the active elements indicators
     return (
       <Segment styles={sidebarStyles}>
-        <Segment styles={menuSectionStyles}>
+        <Segment>
           <Logo width="32px" styles={logoStyles} />
           <Text
             role="heading"
@@ -500,7 +479,11 @@ class Sidebar extends React.Component<any, any> {
           />
           <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
         </Segment>
-        <Menu vertical fluid pills styles={navBarStyles} items={allItems} />
+        <Tree
+          defaultActiveIndex={activeCategoryIndex}
+          items={allSections}
+          renderItemTitle={titleRenderer}
+        />
       </Segment>
     )
   }

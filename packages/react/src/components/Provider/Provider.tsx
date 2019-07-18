@@ -39,7 +39,7 @@ export interface ProviderProps extends ChildrenComponentProps {
 }
 
 /**
- * The Provider passes the CSS in JS renderer and theme to your components.
+ * The Provider passes the CSS-in-JS renderer, theme styles and other settings to Stardust components.
  */
 class Provider extends React.Component<WithAsProp<ProviderProps>> {
   static displayName = 'Provider'
