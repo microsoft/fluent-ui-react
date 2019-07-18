@@ -1,6 +1,7 @@
 import componentInfoContext from 'docs/src/utils/componentInfoContext'
+import { ComponentInfo } from 'docs/src/types'
 
-const useComponentProps = (componentName: string): any[] => {
+const useComponentProps = (componentName: string): ComponentInfo['props'] => {
   const info = componentInfoContext.byDisplayName[componentName]
 
   if (!info) {

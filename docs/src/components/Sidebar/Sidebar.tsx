@@ -332,6 +332,7 @@ class Sidebar extends React.Component<any, any> {
       color: 'white',
       fontWeight: 700,
     }
+
     const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
 
     const treeItemsByType = _.map(constants.typeOrder, nextType => {
@@ -345,8 +346,6 @@ class Sidebar extends React.Component<any, any> {
 
       return { items }
     })
-
-    const treeItems = this.getTreeItems()
 
     const prototypesTreeItems: (ShorthandValue<{}> & { key: string; public: boolean })[] = [
       {
@@ -427,6 +426,7 @@ class Sidebar extends React.Component<any, any> {
       items: treeItemsByType[1].items,
     }
 
+    const treeItems = this.getTreeItems()
     const withComponents = treeItems.concat(componentTreeSection)
     const withBehaviors = withComponents.concat(behaviorTreeSection)
     const allSectionsWithoutSearchFilter = this.getSectionsWithPrototypeSectionIfApplicable(
@@ -480,7 +480,7 @@ class Sidebar extends React.Component<any, any> {
     )
 
     const topItemTheme = Object.assign({}, this.props.treeItemStyle)
-    topItemTheme.padding = '6px 20px 6px 20px'
+    topItemTheme.width = this.props.width
 
     // TODO: bring back the active elements indicators
     return (
@@ -515,7 +515,7 @@ class Sidebar extends React.Component<any, any> {
             </Box>
           </a>
           <Input
-            style={{ padding: topItemTheme.padding }}
+            style={topItemTheme}
             fluid
             icon="search"
             placeholder="Search"

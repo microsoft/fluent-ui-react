@@ -1,5 +1,4 @@
 export { default as componentInfoContext } from './componentInfoContext'
-export { default as componentInfoShape } from './componentInfoShape'
 export {
   exampleIndexContext,
   examplePlaygroundContext,

@@ -26,10 +26,7 @@ export interface ButtonProps
   extends UIComponentProps,
     ContentComponentProps<ShorthandValue<BoxProps>>,
     ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default buttonBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** A button can appear circular. */

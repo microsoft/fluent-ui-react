@@ -55,25 +55,16 @@ export interface SliderProps
   extends UIComponentProps,
     ChildrenComponentProps,
     Omit<SupportedIntrinsicInputProps, 'defaultValue'> {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default sliderBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** The default value of the slider. */
   defaultValue?: string | number
 
-  /**
-   * A slider can be read-only and unable to change states.
-   * @default false
-   */
+  /** A slider can be read-only and unable to change states. */
   disabled?: SupportedIntrinsicInputProps['disabled']
 
-  /**
-   * A slider can take the width of its container.
-   * @default false
-   */
+  /** A slider can take the width of its container. */
   fluid?: boolean
 
   /**
@@ -88,16 +79,10 @@ export interface SliderProps
   /** Ref for input DOM node. */
   inputRef?: React.Ref<HTMLElement>
 
-  /**
-   * The maximum value of the slider.
-   * @default 100
-   */
+  /** The maximum value of the slider. */
   max?: SupportedIntrinsicInputProps['max']
 
-  /**
-   * The minimum value of the slider
-   * @default 0
-   */
+  /** The minimum value of the slider. */
   min?: SupportedIntrinsicInputProps['min']
 
   /**
@@ -111,17 +96,13 @@ export interface SliderProps
    * A number that specifies the granularity that the value must adhere to, or the special value 'any'.
    * A string value of any means that no stepping is implied, and any value is allowed
    * (barring other constraints, such as min and max).
-   * @default 1
    */
   step?: SupportedIntrinsicInputProps['step']
 
   /** The value of the slider. */
   value?: string | number
 
-  /**
-   * A slider can be displayed vertically.
-   * @default false
-   */
+  /** A slider can be displayed vertically. */
   vertical?: boolean
 }
 
