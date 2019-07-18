@@ -4,14 +4,17 @@ import config from '../../../../config'
 
 const { paths } = config
 
-const getRuntimeDependencies = () => {
+const getRuntimeDependencies = (stardustPackageName: string) => {
   const dependencyRegex = /^dependency:\s+(.*)$/
-  const result = spawnSync("yarn gulp test:dependencies:list --prefix='dependency: '", {
-    shell: true,
-    cwd: paths.base(),
-    stdio: 'pipe',
-    encoding: 'utf-8',
-  })
+  const result = spawnSync(
+    `yarn gulp test:dependencies:list --prefix='dependency: ' --package=${stardustPackageName}`,
+    {
+      shell: true,
+      cwd: paths.base(),
+      stdio: 'pipe',
+      encoding: 'utf-8',
+    },
+  )
 
   const output = `${result.stdout}`
   const error = `${result.stderr}`
