@@ -42,7 +42,7 @@ class Sidebar extends React.Component<any, any> {
 
   constructor(props) {
     super(props)
-    this.handleSearchKeyDown = this.handleSearchKeyDown.bind(this)
+    this.handleQueryChange = this.handleQueryChange.bind(this)
   }
 
   componentDidMount() {
@@ -295,7 +295,7 @@ class Sidebar extends React.Component<any, any> {
     })
   }
 
-  handleSearchKeyDown(e) {
+  handleQueryChange(e) {
     this.setState({ query: e.target.value })
   }
 
@@ -432,6 +432,13 @@ class Sidebar extends React.Component<any, any> {
       },
     )
 
+    if (this.state.query !== '') {
+      // open all sections
+      _.forEach(allSections, (section: ShorthandValue<TreeItemProps>) => {
+        ;(section as any).open = true
+      })
+    }
+
     const at = this.props.location.pathname
     const activeCategoryIndex = _.findIndex(
       allSections,
@@ -446,7 +453,9 @@ class Sidebar extends React.Component<any, any> {
     const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
       <Component open={open} hasSubtree={hasSubtree} {...restProps}>
         <span>{content}</span>
-        {hasSubtree && <Icon name={open ? 'stardust-arrow-up' : 'stardust-arrow-down'} />}
+        {hasSubtree && this.state.query === '' && (
+          <Icon name={open ? 'stardust-arrow-up' : 'stardust-arrow-down'} />
+        )}
       </Component>
     )
 
@@ -492,7 +501,7 @@ class Sidebar extends React.Component<any, any> {
             placeholder="Search"
             iconPosition="start"
             role="search"
-            onKeyDown={this.handleSearchKeyDown}
+            onChange={this.handleQueryChange}
           />
         </Flex>
         <Tree
