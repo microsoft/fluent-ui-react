@@ -11,6 +11,9 @@ const { paths } = config
 const prefix = (argv.prefix as string) || ''
 const packageName = (argv.package as string) || 'react'
 
+/**
+ * Lists runtime dependencies (by crawling the actual code) of the requested Stardust package.
+ */
 task('test:dependencies:list', cb => {
   const tempOutputFilePath = paths.base('test.js')
 
