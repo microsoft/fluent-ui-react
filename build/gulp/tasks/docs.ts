@@ -93,11 +93,7 @@ const markdownSrc = [
 
 task('build:docs:component-info', () =>
   src(componentsSrc, { since: lastRun('build:docs:component-info') })
-    .pipe(
-      cache(gulpReactDocgen(['DOMAttributes', 'HTMLAttributes']), {
-        name: 'componentInfo',
-      }),
-    )
+    .pipe(cache(gulpReactDocgen(['DOMAttributes', 'HTMLAttributes']), { name: 'componentInfo-1' }))
     .pipe(dest(paths.docsSrc('componentInfo'))),
 )
 

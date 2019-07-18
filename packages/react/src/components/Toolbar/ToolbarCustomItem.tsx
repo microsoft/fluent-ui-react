@@ -110,8 +110,7 @@ ToolbarCustomItem.create = createShorthandFactory({
 })
 
 /**
- * Custom toolbar item.
- * The item renders as a non-focusable div with custom content inside.
+ * A ToolbarCustomItem renders Toolbar item as a non-actionable `div` with custom content inside.
  */
 export default withSafeTypeForAs<typeof ToolbarCustomItem, ToolbarCustomItemProps>(
   ToolbarCustomItem,

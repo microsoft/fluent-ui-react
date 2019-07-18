@@ -41,7 +41,7 @@ function getParent(child: HTMLElement): HTMLElement | null {
   return child && child.parentElement
 }
 
-export class FocusZone extends React.Component<FocusZoneProps> implements IFocusZone {
+export default class FocusZone extends React.Component<FocusZoneProps> implements IFocusZone {
   static propTypes = {
     className: PropTypes.string,
     direction: PropTypes.number,
