@@ -3,8 +3,10 @@ import checkChangelog from './build/dangerjs/checkChangelog'
 import detectChangedDependencies from './build/dangerjs/detectChangedDependencies'
 import detectNonApprovedDependencies from './build/dangerjs/detectNonApprovedDependencies'
 
+const dangerJS = { danger, fail, warn, markdown }
+
 export default async () => {
-  await checkChangelog({ danger, fail, warn })
-  await detectChangedDependencies({ danger, markdown, warn })
-  await detectNonApprovedDependencies({ fail, markdown })
+  await checkChangelog(dangerJS)
+  await detectChangedDependencies(dangerJS)
+  await detectNonApprovedDependencies(dangerJS)
 }
