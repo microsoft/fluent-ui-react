@@ -29,7 +29,6 @@ export interface AlertProps
     ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default alertBehavior
    * @available alertWarningBehavior
    */
   accessibility?: Accessibility

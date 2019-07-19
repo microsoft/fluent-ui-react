@@ -14,13 +14,10 @@ import {
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 
-export interface GridProps
-  extends UIComponentProps,
-    ChildrenComponentProps,
-    ContentComponentProps<React.ReactNode | React.ReactNode[]> {
+export interface GridProps extends UIComponentProps, ChildrenComponentProps, ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @available gridBehavior
+   * @available gridBehavior, gridHorizontalBehavior
    * */
   accessibility?: Accessibility
 

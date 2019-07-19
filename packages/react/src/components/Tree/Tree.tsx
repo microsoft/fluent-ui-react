@@ -32,10 +32,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active subtree. */
   activeIndex?: number[] | number
 
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default treeBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Initial activeIndex value. */

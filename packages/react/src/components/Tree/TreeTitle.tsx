@@ -21,10 +21,7 @@ export interface TreeTitleProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default treeTitleBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /**
