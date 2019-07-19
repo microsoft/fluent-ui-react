@@ -111,7 +111,10 @@ export default () => (
       }
     />
 
-    <Question content="What's the difference between Flex, Grid, Layout, Box and Segment components?" />
+    <Question>
+      What's the difference between {code('Flex')}, {code('Grid')}, {code('Layout')}, {code('Box')}{' '}
+      and {code('Segment')} components?
+    </Question>
     <Answer
       content={
         <div>
