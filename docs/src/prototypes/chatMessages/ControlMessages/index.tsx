@@ -2,20 +2,16 @@ import * as React from 'react'
 import {
   Avatar,
   Tree,
-  TreeTitle,
-  TreeItem,
-  FocusZoneMode,
-  FocusZoneDirection,
-  FocusZoneTabbableElements,
+  ChatItemProps,
+  ShorthandCollection,
   Chat,
   Divider,
-  treeBehavior,
-  treeTitleBehavior,
+  Ref,
 } from '@stardust-ui/react'
 import * as keyboardKey from 'keyboard-key'
-import { Accessibility } from 'src/lib/accessibility/types'
-import { ChatItemProps } from 'src/components/Chat/ChatItem'
-import { ShorthandCollection } from 'src/types'
+import overridenTreeItemBehavior from './overridenTreeItemBehavior'
+import overridenTreeBehavior from './overridenTreeBehavior'
+import overridenTreeTitleBehavior from 'docs/src/prototypes/chatMessages/ControlMessages/overridenTreeTitleBehavior'
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
@@ -25,32 +21,78 @@ const janeAvatar = {
   },
 }
 
-const overridenTreeBehavior: Accessibility<any> = props => {
-  return {
-    ...treeBehavior(props),
-    focusZone: {
-      mode: FocusZoneMode.Embed,
-      props: {
-        shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.Enter,
-        direction: FocusZoneDirection.vertical,
-      },
-    },
-  }
-}
-
-const overridenTreeTitleBehavior: Accessibility<any> = props => {
-  return {
-    ...treeTitleBehavior(props),
-    focusZone: {
-      mode: FocusZoneMode.Embed,
-      props: {
-        handleTabKey: FocusZoneTabbableElements.all,
-        isCircularNavigation: true,
-        direction: FocusZoneDirection.vertical,
-      },
-    },
-  }
-}
+const treeItems = [
+  render =>
+    render({}, (Component, props) => {
+      const createdRef = React.createRef<HTMLButtonElement>()
+      return (
+        <Component
+          {...props}
+          key="11"
+          accessibility={overridenTreeItemBehavior}
+          title={render =>
+            render(
+              {
+                onKeyDown: e => {
+                  if (keyboardKey.getCode(e) === keyboardKey.Escape) {
+                    e.stopPropagation()
+                    createdRef.current.focus()
+                  }
+                },
+                as: 'div',
+                accessibility: overridenTreeTitleBehavior,
+                content: (
+                  <div>
+                    <a href="/">John Doe1</a> added <a href="/">Jane Doe1</a> to the conversation
+                  </div>
+                ),
+              },
+              (Component, props) => (
+                <Ref innerRef={createdRef}>
+                  <Component {...props} />
+                </Ref>
+              ),
+            )
+          }
+        />
+      )
+    }),
+  render =>
+    render({}, (Component, props) => {
+      const createdRef = React.createRef<HTMLButtonElement>()
+      return (
+        <Component
+          {...props}
+          accessibility={overridenTreeItemBehavior}
+          key="21"
+          title={render =>
+            render(
+              {
+                onKeyDown: e => {
+                  if (keyboardKey.getCode(e) === keyboardKey.Escape) {
+                    e.stopPropagation()
+                    createdRef.current.focus()
+                  }
+                },
+                as: 'div',
+                accessibility: overridenTreeTitleBehavior,
+                content: (
+                  <div>
+                    <a href="/">John Doe2</a> added <a href="/">Jane Doe2</a> to the conversation
+                  </div>
+                ),
+              },
+              (Component, props) => (
+                <Ref innerRef={createdRef}>
+                  <Component {...props} />
+                </Ref>
+              ),
+            )
+          }
+        />
+      )
+    }),
+]
 
 const ChatExample = () => {
   const [open, setOpen] = React.useState(false)
@@ -64,14 +106,7 @@ const ChatExample = () => {
             setOpen(true)
           }
           if (eventCode === keyboardKey.Escape) {
-            // TODO very ugly check...
-            // if it comes from some tree title close the tree
-            if (
-              e.target.className.indexOf(TreeTitle.className) !== -1 ||
-              e.target.className.indexOf(TreeItem.className) !== -1
-            ) {
-              setOpen(false)
-            }
+            setOpen(false)
           }
         },
         content: (
@@ -79,60 +114,45 @@ const ChatExample = () => {
             data-is-focusable="true"
             accessibility={overridenTreeBehavior}
             items={[
-              {
-                onKeyDown: e => {
-                  // Without this override, the focus zone for the tree title is not working..
-                  console.log('Tree item 1 key down')
-                },
-                key: '1',
-                title: {
-                  as: 'div',
-                  accessibility: overridenTreeTitleBehavior,
-                  content: (
-                    <div>
-                      <a href="/">John Doe</a> added <a href="/">Jane Doe</a> to the conversation
-                    </div>
-                  ),
-                  onClick: () => setOpen(!open),
-                },
-                open,
-                items: [
-                  {
-                    onKeyDown: e => {
-                      // Without this override, the focus zone for the tree title is not working..
-                      console.log('Tree item 2 key down')
-                    },
-                    key: '11',
-                    title: {
-                      accessibility: overridenTreeTitleBehavior,
-                      as: 'div',
-                      content: (
-                        <div>
-                          <a href="/">John Doe</a> added <a href="/">Jane Doe</a> to the
-                          conversation
-                        </div>
-                      ),
-                    },
-                  },
-                  {
-                    onKeyDown: e => {
-                      // Without this override, the focus zone for the tree title is not working..
-                      console.log('Tree item 3 key down')
-                    },
-                    key: '21',
-                    title: {
-                      as: 'div',
-                      accessibility: overridenTreeTitleBehavior,
-                      content: (
-                        <div>
-                          <a href="/">John Doe</a> added <a href="/">Jane Doe</a> to the
-                          conversation
-                        </div>
-                      ),
-                    },
-                  },
-                ],
-              },
+              render =>
+                render({}, (TreeItem, treeItemProps) => {
+                  const createdRef = React.createRef<HTMLButtonElement>()
+                  return (
+                    <TreeItem
+                      {...treeItemProps}
+                      accessibility={overridenTreeItemBehavior}
+                      items={treeItems}
+                      open={open}
+                      key="1"
+                      title={render =>
+                        render(
+                          {
+                            onKeyDown: e => {
+                              if (keyboardKey.getCode(e) === keyboardKey.Escape) {
+                                createdRef.current.focus()
+                                e.stopPropagation()
+                              }
+                            },
+                            onClick: () => setOpen(!open),
+                            as: 'div',
+                            accessibility: overridenTreeTitleBehavior,
+                            content: (
+                              <div>
+                                <a href="/">John Doe</a> added <a href="/">Jane Doe</a> to the
+                                conversation
+                              </div>
+                            ),
+                          },
+                          (TreeTitle, treeTitleProps) => (
+                            <Ref innerRef={createdRef}>
+                              <TreeTitle {...treeTitleProps} />
+                            </Ref>
+                          ),
+                        )
+                      }
+                    />
+                  )
+                }),
             ]}
           />
         ),

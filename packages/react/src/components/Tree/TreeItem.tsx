@@ -107,6 +107,9 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
       _.invoke(this.props, 'onTitleClick', e, this.props)
     },
+    performClickWithoutStoppingPropagation: e => {
+      _.invoke(this.props, 'onTitleClick', e, this.props)
+    },
     receiveFocus: e => {
       e.preventDefault()
       e.stopPropagation()
