@@ -48,6 +48,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix broken fragments on CodeSandbox @lucivpav ([#1655](https://github.com/stardust-ui/react/pull/1655))
 - Improve a table with component props in docs @layershifter ([#1634](https://github.com/stardust-ui/react/pull/1634))
 - Improve rendering performance for docs examples @Bugaa92 ([#1654](https://github.com/stardust-ui/react/pull/1654))
+- Add FAQ entry for `Flex`, `Grid`, `Layout`, `Box`, `Segment` @lucivpav ([#1646](https://github.com/stardust-ui/react/pull/1646))
+
+<!--------------------------------[ v0.34.2 ]------------------------------- -->
+## [v0.34.2](https://github.com/stardust-ui/react/tree/v0.34.2) (2019-07-19)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.34.1...v0.34.2)
+
+ ### Fixes
+- Fix a gap in `Checkbox` in RTL mode @layershifter ([#1683](https://github.com/stardust-ui/react/pull/1683))
+- Fix broken background in `Popup` with `pointing` and `FocusTrap` @layershifter ([#1689](https://github.com/stardust-ui/react/pull/1689))
 
 <!--------------------------------[ v0.34.1 ]------------------------------- -->
 ## [v0.34.1](https://github.com/stardust-ui/react/tree/v0.34.1) (2019-07-11)
