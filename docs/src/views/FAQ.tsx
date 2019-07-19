@@ -30,13 +30,19 @@ export default () => (
           <li>
             {link(
               'How can I set default value of Form.Field?',
-              '#how-can-i-set-default-value-on-form-field',
+              '#how-can-i-set-default-value-of-form-field',
             )}
           </li>
           <li>
             {link(
               'Is there an onLoad or equivalent event for Image components so I can run a function after an image loads?',
-              'is-there-an-onload-or-equivalent-event-for-image-components-so-i',
+              '#is-there-an-onload-or-equivalent-event-for-image-components-so-i',
+            )}
+          </li>
+          <li>
+            {link(
+              "What's the difference between Flex, Grid, Layout, Box and Segment components?",
+              '#whats-the-difference-between-flex-grid-layout-box-and-segment-co',
             )}
           </li>
         </ul>
