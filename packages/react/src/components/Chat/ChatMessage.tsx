@@ -1,4 +1,5 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -142,11 +143,20 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     isFromKeyboard: false,
   }
 
+  messageRef = React.createRef<HTMLElement>()
+
   actionHandlers = {
     // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys
     // as navigation (only Tab key should work)
     preventDefault: event => {
       event.preventDefault()
+    },
+
+    focus: event => {
+      if (this.messageRef) {
+        this.messageRef.current.focus()
+        event.stopPropagation()
+      }
     },
   }
 
@@ -202,62 +212,66 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
       },
     })
 
+    const actionMenuElement = Menu.create(actionMenu, {
+      defaultProps: {
+        [IS_FOCUSABLE_ATTRIBUTE]: true,
+        accessibility: menuAsToolbarBehavior,
+        className: ChatMessage.slotClassNames.actionMenu,
+        styles: styles.actionMenu,
+      },
+    })
+
+    const authorElement = Text.create(author, {
+      defaultProps: {
+        size: 'small',
+        styles: styles.author,
+        className: ChatMessage.slotClassNames.author,
+      },
+    })
+
+    const timestampElement = Text.create(timestamp, {
+      defaultProps: {
+        size: 'small',
+        styles: styles.timestamp,
+        timestamp: true,
+        className: ChatMessage.slotClassNames.timestamp,
+      },
+    })
+
+    const messageContent = Box.create(content, {
+      defaultProps: {
+        className: ChatMessage.slotClassNames.content,
+        styles: styles.content,
+      },
+    })
+
     return (
-      <ElementType
-        onBlur={this.handleBlur}
-        onFocus={this.handleFocus}
-        className={className}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-        {...rtlTextContainer.getAttributes({ forElements: [children] })}
-      >
-        {childrenPropExists ? (
-          children
-        ) : (
-          <>
-            {Menu.create(actionMenu, {
-              defaultProps: {
-                [IS_FOCUSABLE_ATTRIBUTE]: true,
-                accessibility: menuAsToolbarBehavior,
-                className: ChatMessage.slotClassNames.actionMenu,
-                styles: styles.actionMenu,
-              },
-            })}
-
-            {badgePosition === 'start' && badgeElement}
-
-            {Text.create(author, {
-              defaultProps: {
-                size: 'small',
-                styles: styles.author,
-                className: ChatMessage.slotClassNames.author,
-              },
-            })}
-            {Text.create(timestamp, {
-              defaultProps: {
-                size: 'small',
-                styles: styles.timestamp,
-                timestamp: true,
-                className: ChatMessage.slotClassNames.timestamp,
-              },
-            })}
-
-            {reactionGroupPosition === 'start' && reactionGroupElement}
-
-            {Box.create(content, {
-              defaultProps: {
-                className: ChatMessage.slotClassNames.content,
-                styles: styles.content,
-              },
-            })}
-
-            {reactionGroupPosition === 'end' && reactionGroupElement}
-
-            {badgePosition === 'end' && badgeElement}
-          </>
-        )}
-      </ElementType>
+      <Ref innerRef={this.messageRef}>
+        <ElementType
+          onBlur={this.handleBlur}
+          onFocus={this.handleFocus}
+          className={className}
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+          {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        >
+          {childrenPropExists ? (
+            children
+          ) : (
+            <>
+              {actionMenuElement}
+              {badgePosition === 'start' && badgeElement}
+              {authorElement}
+              {timestampElement}
+              {reactionGroupPosition === 'start' && reactionGroupElement}
+              {messageContent}
+              {reactionGroupPosition === 'end' && reactionGroupElement}
+              {badgePosition === 'end' && badgeElement}
+            </>
+          )}
+        </ElementType>
+      </Ref>
     )
   }
 }
