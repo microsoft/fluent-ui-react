@@ -1,30 +1,5 @@
 import * as React from 'react'
-import { Toolbar, Input, Button, Form } from '@stardust-ui/react'
-
-const HighlightPopup = ({ onConfirm }) => {
-  return (
-    <Form
-      onSubmit={onConfirm}
-      fields={[
-        {
-          label: 'First name',
-          name: 'firstName',
-          id: 'first-name-inline-shorthand',
-          key: 'first-name',
-          required: true,
-          inline: true,
-        },
-        {
-          control: {
-            as: Button,
-            content: 'Submit',
-          },
-          key: 'submit',
-        },
-      ]}
-    />
-  )
-}
+import { Toolbar } from '@stardust-ui/react'
 
 const ToolbarExamplePopupShorthand = () => {
   const [highlightOpen, setHighlightOpen] = React.useState(false)
@@ -37,13 +12,7 @@ const ToolbarExamplePopupShorthand = () => {
           icon: { name: 'highlight', outline: true },
           active: highlightOpen,
           popup: {
-            content: (
-              <HighlightPopup
-                onConfirm={() => {
-                  setHighlightOpen(false)
-                }}
-              />
-            ),
+            content: <p>This is a popup</p>,
             onOpenChange: (e, { open }) => {
               setHighlightOpen(open)
             },
@@ -55,7 +24,7 @@ const ToolbarExamplePopupShorthand = () => {
           icon: { name: 'font-color', outline: true },
           active: fontColorActive,
           popup: {
-            content: <Input icon="search" placeholder="Search..." />,
+            content: <p>This is another popup</p>,
             onOpenChange: () => {
               setFontColorActive(!fontColorActive)
             },
