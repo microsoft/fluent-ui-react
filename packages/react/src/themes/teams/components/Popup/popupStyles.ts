@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import * as React from 'react'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { PopupProps } from '../../../../components/Popup/Popup'
@@ -14,7 +15,7 @@ const popupStyles: ComponentSlotStylesInput<PopupProps, PopupVariables> = {
     /*
      * This fix handles all cases with wrapped focus trap.
      */
-    ...(React.isValidElement(p.content) && {
+    ...((React.isValidElement(p.content) || _.isFunction(p.content)) && {
       // when FocusTrap exists and `context` is JSX element
       color: v.contentColor,
       background: v.contentBackgroundColor,
