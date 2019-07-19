@@ -398,6 +398,14 @@ definitions.push({
 })
 
 definitions.push({
+  regexp: /arrow key navigation in bidirectionalDomOrder direction/g,
+  testMethod: (parameters: TestMethod) => {
+    const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
+    expect(actualFocusZoneHorizontal.props.direction).toBe(FocusZoneDirection.bidirectionalDomOrder)
+  },
+})
+
+definitions.push({
   regexp: /Keyboard navigation is circular/g,
   testMethod: (parameters: TestMethod) => {
     const actualFocusZone = parameters.behavior({}).focusZone
