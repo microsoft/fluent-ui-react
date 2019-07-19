@@ -57,7 +57,7 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
 
   label: ({ props: p }): ICSSInJSStyle => ({
     '-ms-grid-column': p.labelPosition === 'start' ? 1 : 3,
-    display: 'block', // IE11: should be forced `block`, `inline-block` will be broken
+    display: 'block', // IE11: should be forced to be block, as inline-block is not supported
   }),
 
   toggle: ({ props: p, variables: v }): ICSSInJSStyle => ({
