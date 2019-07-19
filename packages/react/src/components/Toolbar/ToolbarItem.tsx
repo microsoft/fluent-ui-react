@@ -270,12 +270,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
   }
 
   handleWrapperBlur = e => {
-    // closes menu when focus goes out from wrapper with menu container
-    // or if focus goes to the trigger button inside wrapper
-    if (
-      this.props.menu &&
-      (!e.currentTarget.contains(e.relatedTarget) || e.relatedTarget === this.itemRef.current)
-    ) {
+    if (this.props.menu && !e.currentTarget.contains(e.relatedTarget)) {
       this.trySetMenuOpen(false, e)
     }
   }
