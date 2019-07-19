@@ -70,8 +70,9 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       destroyInstance()
 
       const reference =
-        (targetRef && (targetRef as React.RefObject<Element>).current) ||
-        (targetRef as _PopperJS.ReferenceObject)
+        targetRef && targetRef.hasOwnProperty('current')
+          ? (targetRef as React.RefObject<Element>).current
+          : (targetRef as _PopperJS.ReferenceObject)
 
       if (!enabled || !reference || !contentRef.current) {
         return
