@@ -5,7 +5,7 @@ const activate = setter => () => {
   setter(true)
   setTimeout(() => {
     setter(false)
-  }, 20 * 1000)
+  }, 180 * 1000)
 }
 
 // this is intentionally not accessible as we are going to use mouse event

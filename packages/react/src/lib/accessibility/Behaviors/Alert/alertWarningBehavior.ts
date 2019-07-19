@@ -10,7 +10,7 @@ const alertWarningBehavior: Accessibility = () => ({
   attributes: {
     content: {
       role: 'alert',
-      'aria-live': 'polite',
+      // 'aria-atomic': 'true',
     },
   },
 })

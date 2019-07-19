@@ -1,17 +1,17 @@
-import * as _ from 'lodash'
 import * as React from 'react'
-import { Alert, Popup } from '@stardust-ui/react'
+import { Alert, Popup, Flex } from '@stardust-ui/react'
 
 interface UfdProps {
   content: string
   position: 'top' | 'center' | 'popup'
   attachedTo?: string
   label: string
-
+  buttons: any[]
+  contentId: string
   /**
    * make sure to focus the right element after you call onDismiss!
    */
-  onDismiss: () => void
+  // onDismiss: () => void
 }
 
 // UFDs should never grab or trap focus
@@ -20,45 +20,45 @@ interface UfdProps {
 // TODO: figure out label, labelledby
 // TODO: figure out narration, currently aria-live on the alert, but we might need to use aria-live
 const Ufd = (props: UfdProps) => {
-  const { content, position, label, attachedTo, onDismiss } = props
-  const contentId = React.useRef(_.uniqueId('ufd-content-'))
+  const { content, position, label, attachedTo, buttons, contentId } = props
+  // const contentId = React.useRef(_.uniqueId('ufd-content-'))
 
   return position === 'popup'
-    ? renderPopup({ contentId: contentId.current, attachedTo, label, content, onDismiss })
-    : renderAlert({ contentId: contentId.current, position, label, content, onDismiss })
+    ? renderPopup({ contentId, attachedTo, label, content, buttons })
+    : renderAlert({ contentId, position, label, content, buttons })
 }
 
 const renderAlert = props => {
-  const { contentId, position, label, content, hideBorder, onDismiss } = props
+  const { contentId, position, content, hideBorder, buttons } = props
 
-  let role: string = undefined
-  let describedBy: string = undefined
-  if (position === 'center') {
-    role = 'region'
-    describedBy = contentId
-  } else if (position === 'top') {
-    role = 'region'
-    describedBy = contentId
-  }
+  // let describedBy: string = undefined
+  // if (position === 'center') {
+  //   describedBy = contentId
+  // } else if (position === 'top') {
+  //   describedBy = contentId
+  // }
   return (
-    <div role={role} aria-label={label} aria-describedby={describedBy}>
-      <Alert
-        danger
-        content={{ id: contentId, content }}
-        action={{
-          icon: 'close',
-          'aria-label': 'Dismiss',
-          'aria-describedby': contentId,
-          onClick: onDismiss,
-        }}
-        variables={{
-          dangerBackgroundColor: '#585A96', // TODO: use theme color
-          dangerColor: 'white',
-          ...(hideBorder && { borderStyle: 'transparent' }),
-        }}
-        {...position === 'center' && { styles: { height: '80px' } }}
-      />
-    </div>
+    // <div aria-label={label} aria-describedby={describedBy}>
+    <Alert
+      danger
+      content={{ id: contentId, content }}
+      action={
+        buttons &&
+        (render =>
+          render({}, (Component, props) => {
+            return (
+              <Flex gap="gap.small">{buttons.length > 0 && buttons.map(button => button)}</Flex>
+            )
+          }))
+      }
+      variables={{
+        dangerBackgroundColor: '#585A96', // TODO: use theme color
+        dangerColor: 'white',
+        ...(hideBorder && { borderStyle: 'transparent' }),
+      }}
+      {...position === 'center' && { styles: { height: '80px' } }}
+    />
+    // </div>
   )
 }
 

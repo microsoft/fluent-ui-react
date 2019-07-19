@@ -3,7 +3,16 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { KnobProvider, KnobInspector } from '@stardust-ui/docs-components'
-import { Provider, Flex, themes, mergeThemes, Header, List } from '@stardust-ui/react'
+import {
+  Provider,
+  Flex,
+  themes,
+  mergeThemes,
+  Header,
+  List,
+  Button,
+  Divider,
+} from '@stardust-ui/react'
 
 import { darkThemeOverrides } from './darkThemeOverrides'
 import { highContrastThemeOverrides } from './highContrastThemeOverrides'
@@ -13,6 +22,7 @@ import ComponentExampleKnobs from 'docs/src/components/ComponentDoc/ComponentExa
 import Ufd from './Ufd'
 import useToolbarKnobs from './useToolbarKnobs'
 import MouseTrigger from './MouseTrigger'
+import { UfdRegion } from './UfdRegion'
 
 const CustomToolbarPrototype: React.FunctionComponent = () => {
   const knobs = useToolbarKnobs()
@@ -21,6 +31,11 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
   const totalSlides = 34
 
   const [showTopUfd, setShowTopUfd] = React.useState(false)
+  const [showSecondTopUfd, setSecondShowTopUfd] = React.useState(false)
+
+  const [showTopUfdSingleRegion, setShowTopUfdUniqueRegion] = React.useState(false)
+  const [showSecondTopUfdSingleRegion, setSecondShowTopUfdUniqueRegion] = React.useState(false)
+
   const [showCenteredUfd, setShowCenteredUfd] = React.useState(false)
   const [showAttachedUfd, setShowAttachedUfd] = React.useState(false)
 
@@ -46,13 +61,89 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
   return (
     <div style={{ height: '100vh' }}>
       <Provider theme={theme} rtl={rtl}>
-        {showTopUfd && (
-          <Ufd
-            content="Random top UFD"
-            position="top"
-            label="Alert"
-            onDismiss={() => setShowTopUfd(false)}
-          />
+        {(showTopUfd || showSecondTopUfd) && (
+          <UfdRegion aria-label="top warning">
+            {showTopUfd && (
+              <Ufd
+                content="Others may have trouble hearing you clearly. Try moving a bit away from your mic."
+                position="top"
+                label="Alert"
+                buttons={[
+                  <Button
+                    aria-describedby="topUfd-1"
+                    content="Dismiss"
+                    onClick={() => setShowTopUfd(false)}
+                    primary
+                  />,
+                ]}
+                contentId="topUfd-1"
+              />
+            )}
+            {showSecondTopUfd && (
+              <Ufd
+                content="Echo in your room! Turn off your audio or ask others to turn off theirs."
+                position="top"
+                label="Alert"
+                buttons={[
+                  <Button
+                    aria-describedby="topUfd-2"
+                    content="Turn off my audio"
+                    onClick={() => setSecondShowTopUfd(false)}
+                    primary
+                  />,
+                  <Button
+                    aria-describedby="topUfd-2"
+                    content="Dismiss"
+                    onClick={() => setSecondShowTopUfd(false)}
+                    primary
+                  />,
+                ]}
+                contentId="topUfd-2"
+              />
+            )}
+          </UfdRegion>
+        )}
+        {showTopUfdSingleRegion && (
+          <div role="region" aria-label="warning">
+            <Ufd
+              content="Others may have trouble hearing you clearly. Try moving a bit away from your mic."
+              position="top"
+              label="Alert"
+              buttons={[
+                <Button
+                  aria-describedby="topUfd-1"
+                  content="Dismiss"
+                  onClick={() => setShowTopUfdUniqueRegion(false)}
+                  primary
+                />,
+              ]}
+              contentId="topUfd-1"
+            />
+          </div>
+        )}
+        {showSecondTopUfdSingleRegion && (
+          <div role="region" aria-label="warning">
+            <Ufd
+              content="Echo in your room! Turn off your audio or ask others to turn off theirs."
+              position="top"
+              label="Alert"
+              buttons={[
+                <Button
+                  aria-describedby="topUfd-2"
+                  content="Turn off my audio"
+                  onClick={() => setSecondShowTopUfdUniqueRegion(false)}
+                  primary
+                />,
+                <Button
+                  aria-describedby="topUfd-2"
+                  content="Dismiss"
+                  onClick={() => setSecondShowTopUfdUniqueRegion(false)}
+                  primary
+                />,
+              ]}
+              contentId="topUfd-2"
+            />
+          </div>
         )}
         <Flex column fill>
           <div role="main" aria-labelledby="meeting-header">
@@ -68,11 +159,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                 right: '40px',
                 top: '40px',
               }}
-            >
-              <MouseTrigger content="Show top UFD" setter={setShowTopUfd} />
-              <MouseTrigger content="Show centered UFD" setter={setShowCenteredUfd} />
-              <MouseTrigger content="Show attached UFD" setter={setShowAttachedUfd} />
-            </Flex>
+            />
             <Flex // this is the stage part
               hAlign="center"
               styles={{
@@ -98,7 +185,16 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                   content="Random Centered UFD"
                   position="center"
                   label="Alert"
-                  onDismiss={() => setShowCenteredUfd(false)}
+                  buttons={[
+                    <Button
+                      icon="close"
+                      aria-label="Dismiss"
+                      aria-describedby="contentId"
+                      iconOnly={true}
+                      onClick={() => setShowTopUfd(false)}
+                    />,
+                  ]}
+                  contentId="showCenteredUfd-1"
                 />
               )}
             </div>
@@ -109,7 +205,10 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                 content="Random attached alert"
                 position="popup"
                 label="Alert"
-                onDismiss={() => setShowAttachedUfd(false)}
+                buttons={[
+                  <Button content="Dismiss" onClick={() => setShowTopUfd(false)} primary />,
+                ]}
+                contentId="showAttachedUfd-1"
               />
             )}
 
@@ -145,6 +244,21 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                   'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,0,0,1) 100%)',
               }}
             >
+              <Flex column style={{ width: '300px' }}>
+                <Divider />
+                <Divider content="Alerts join under one region" />
+                <MouseTrigger content="TOP UFD Join Region" setter={setSecondShowTopUfd} />
+                <MouseTrigger content="TOP UFD second Join Region" setter={setShowTopUfd} />
+                <Divider content="Each alert has own region" />
+                <MouseTrigger content="TOP UFD Unique Region" setter={setShowTopUfdUniqueRegion} />
+                <MouseTrigger
+                  content="TOP UFD second Unique Region"
+                  setter={setSecondShowTopUfdUniqueRegion}
+                />
+                <Divider content="Centered UFD" />
+                <MouseTrigger content="Show centered UFD" setter={setShowCenteredUfd} />
+                <MouseTrigger content="Show attached UFD" setter={setShowAttachedUfd} />
+              </Flex>
               <List selectable items={['Dummy passive participant']} />
             </Flex>
           </div>
