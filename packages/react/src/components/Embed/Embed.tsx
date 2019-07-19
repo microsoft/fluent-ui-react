@@ -23,10 +23,7 @@ export interface EmbedSlotClassNames {
 }
 
 export interface EmbedProps extends UIComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default embedBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Whether the embedded object should be active. */
@@ -177,7 +174,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
 Embed.create = createShorthandFactory({ Component: Embed })
 
 /**
- * An embed component displays a placeholder and matching content based on user's interaction.
+ * An Embed displays content from external websites, like a post from external social network.
  *
  * @accessibility
  * A `placeholder` slot represents an [`Image`](/components/image) component, please follow recommendations from its

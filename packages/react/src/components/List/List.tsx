@@ -29,10 +29,7 @@ export interface ListSlotClassNames {
 }
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default listBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Toggle debug mode */
@@ -223,6 +220,11 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
 }
 
 /**
- * A list displays a group of related content.
+ * A List displays a group of related sequential items.
+ *
+ * @accessibility
+ * List may follow one of the following accessibility semantics:
+ * - Static non-navigable list. Implements [ARIA list](https://www.w3.org/TR/wai-aria-1.1/#list) role.
+ * - Selectable list: allows the user to select item from a list of choices. Implements [ARIA Listbox](https://www.w3.org/TR/wai-aria-practices-1.1/#Listbox) design pattern.
  */
 export default withSafeTypeForAs<typeof List, ListProps, 'ul'>(List)
