@@ -36,6 +36,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Fix `ChatMessage`'s focus border overlays `actionMenu` in Teams theme @mnajdova ([#1637](https://github.com/stardust-ui/react/pull/1637))
+- Fix a gap in `Checkbox` in RTL mode @layershifter ([#1683](https://github.com/stardust-ui/react/pull/1683))
 
 ### Documentation
 - Make sidebar categories collapsible @lucivpav ([#1611](https://github.com/stardust-ui/react/pull/1611))
