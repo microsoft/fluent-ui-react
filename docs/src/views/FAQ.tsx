@@ -123,9 +123,12 @@ export default () => (
             The {code('Flex')} component is for laying out items in one direction, while the{' '}
             {code('Grid')} component is made for two dimensional layouts. Visit the{' '}
             {link('Layout guide', '/layout')} page for a detailed comparison between {code('Flex')}
-            and {code('Grid')}. The {code('Layout')} component is now deprecated. Its purpose was
-            arrangement of the content of a component. {code('Flex')} or {code('Grid')} component
-            should be used instead of the {code('Layout')}
+            and {code('Grid')}.
+          </p>
+          <p>
+            The {code('Layout')} component is now deprecated. Its purpose was arrangement of the
+            content of a component. {code('Flex')} or {code('Grid')} component should be used
+            instead of the {code('Layout')}
             component.
           </p>
           <p>
