@@ -263,7 +263,14 @@ function createShorthandFromValue({
 
     if (valIsReactElement) {
       // use the key from React Element
-      props.key = (value as React.ReactElement).key
+      const elementKey = (value as React.ReactElement).key
+      // <div /> - key is not passed as will be `null`
+      // <div key={null} /> - key is passed as `null` and will be stringified
+      const isNullKey = elementKey === 'null' || elementKey === null
+
+      if (!isNullKey) {
+        props.key = elementKey
+      }
     }
   }
 
