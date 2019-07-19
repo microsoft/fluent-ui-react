@@ -16,7 +16,7 @@ const popupStyles: ComponentSlotStylesInput<PopupProps, PopupVariables> = {
      * This fix handles all cases with wrapped focus trap.
      */
     ...((React.isValidElement(p.content) || _.isFunction(p.content)) && {
-      // when FocusTrap exists and `context` is JSX element
+      // when FocusTrap exists and `context` is JSX element or render() callback
       color: v.contentColor,
       background: v.contentBackgroundColor,
     }),
