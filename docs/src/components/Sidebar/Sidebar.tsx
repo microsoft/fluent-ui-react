@@ -18,7 +18,6 @@ import keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { findDOMNode } from 'react-dom'
 import { NavLink, withRouter } from 'react-router-dom'
 
 import { constants } from 'src/lib'
@@ -41,30 +40,32 @@ class Sidebar extends React.Component<any, any> {
   selectedRoute: any
   filteredMenu = componentMenu
   treeRef: Ref
+  searchInputRef: Ref
 
   constructor(props) {
     super(props)
     this.handleQueryChange = this.handleQueryChange.bind(this)
     this.findActiveCategoryIndex = this.findActiveCategoryIndex.bind(this)
+    this.setSearchInput = this.setSearchInput.bind(this)
     this.treeRef = React.createRef()
+    this.searchInputRef = React.createRef()
   }
 
   componentDidMount() {
-    // document.addEventListener('keydown', this.handleDocumentKeyDown)
-    // this.setSearchInput()
+    document.addEventListener('keydown', this.handleDocumentKeyDown)
+    this.setSearchInput()
   }
 
   componentDidUpdate() {
-    // this.setSearchInput()
+    this.setSearchInput()
   }
 
   componentWillUnmount() {
-    // document.removeEventListener('keydown', this.handleDocumentKeyDown)
+    document.removeEventListener('keydown', this.handleDocumentKeyDown)
   }
 
   setSearchInput() {
-    // TODO: Replace findDOMNode with Ref component when it will be merged
-    this._searchInput = (findDOMNode(this) as any).querySelector('.ui.input input')
+    this._searchInput = this.searchInputRef.current.inputRef.current
   }
 
   findActiveCategoryIndex(at, sections): number {
@@ -91,62 +92,7 @@ class Sidebar extends React.Component<any, any> {
       const categoryIndex = this.findActiveCategoryIndex(at, this.treeRef.current.props.items)
       this.treeRef.current.setState({ activeIndex: categoryIndex })
     }
-    // TODO: as part of search input re-enabling
-    // if (document.activeElement === this._searchInput) this._searchInput.blur()
   }
-
-  /* TODO: as part of search input re-enabling
-    private renderSearchItems = () => {
-      const { selectedItemIndex, query } = this.state
-      if (!query) return undefined
-
-      let itemIndex = -1
-      const startsWithMatches: ComponentMenuItem[] = []
-      const containsMatches: ComponentMenuItem[] = []
-      const escapedQuery = _.escapeRegExp(query)
-
-      _.each(componentMenu, info => {
-        if (new RegExp(`^${escapedQuery}`, 'i').test(info.displayName)) {
-          startsWithMatches.push(info)
-        } else if (new RegExp(escapedQuery, 'i').test(info.displayName)) {
-          containsMatches.push(info)
-        }
-      })
-
-      this.filteredMenu = [...startsWithMatches, ...containsMatches]
-      const menuItems = _.map(this.filteredMenu, info => {
-        itemIndex += 1
-        const isSelected = itemIndex === selectedItemIndex
-
-        if (isSelected) this.selectedRoute = getComponentPathname(info)
-
-        return (
-          <Menu.Item
-            key={info.displayName}
-            content={info.displayName}
-            onClick={this.handleItemClick}
-            active={isSelected}
-            as={NavLink}
-            to={getComponentPathname(info)}
-          />
-        )
-      }, this.filteredMenu)
-
-      return (
-        <Menu.Item
-          key={info.displayName}
-          name={info.displayName}
-          onClick={this.handleItemClick}
-          active={isSelected}
-          as={NavLink}
-          to={getComponentPathname(info)}
-        >
-          {info.displayName}
-          {isSelected && selectedItemLabel}
-        </Menu.Item>
-      )
-    })
-*/
 
   keyDownCallback(e) {
     if (keyboardKey.getCode(e) !== keyboardKey.Enter) {
@@ -282,21 +228,6 @@ class Sidebar extends React.Component<any, any> {
           },
         ],
       },
-      // TODO: to re-enable the search input - will modify the list of the components depending on the search results
-      // {query ? this.renderSearchItems() : this.menuItemsByType},
-      // {
-      //   key: 'search',
-      //   content: (
-      //     <Input
-      //       className="transparent inverted icon"
-      //       icon="search"
-      //       placeholder="Search components..."
-      //       value={query}
-      //       onChange={this.handleSearchChange}
-      //       onKeyDown={this.handleSearchKeyDown}
-      //     />
-      //   ),
-      // },
     ]
   }
 
@@ -530,6 +461,7 @@ class Sidebar extends React.Component<any, any> {
             role="search"
             onChange={this.handleQueryChange}
             value={this.state.query}
+            ref={this.searchInputRef}
           />
         </Flex>
         <Tree
