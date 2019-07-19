@@ -455,7 +455,7 @@ class Sidebar extends React.Component<any, any> {
           <Input
             style={topItemTheme}
             fluid
-            icon="search"
+            icon={{ name: 'search', style: { padding: topItemTheme.padding } }}
             placeholder="Search"
             iconPosition="start"
             role="search"
