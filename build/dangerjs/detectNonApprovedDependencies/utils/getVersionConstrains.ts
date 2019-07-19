@@ -49,7 +49,11 @@ const parsePackageJson = (packageJsonPath: string): Promise<PackageJson> => {
         reject(new Error(`There was an error reading the ${packageJsonPath} file.`))
       }
 
-      const dependencies = data.dependencies || {}
+      if (!data) {
+        reject(new Error(`There is no package.json file found at ${packageJsonPath}.`))
+      }
+
+      const dependencies = { ...data.peerDependencies, ...data.dependencies }
 
       const normalizedDependencies = Object.keys(dependencies).map(packageName => {
         const versionConstraint = dependencies[packageName]
