@@ -74,6 +74,7 @@ import giphy from './giphy'
 import hand from './hand'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
+import imageUnavailable from './image-unavailable'
 import indent from './indent'
 import info from './info'
 import italic from './italic'
@@ -210,6 +211,7 @@ export default {
   giphy,
   highlight,
   'horizontal-rule': horizontalRule,
+  'image-unavailable': imageUnavailable,
   indent,
   info,
   italic,
