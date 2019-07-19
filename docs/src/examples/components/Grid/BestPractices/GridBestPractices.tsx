@@ -3,8 +3,8 @@ import * as React from 'react'
 import ComponentBestPractices from 'docs/src/components/ComponentBestPractices'
 
 const doList = [
-  'Use `gridBehavior` for bidirectional keyboard navigation with 4 arrow keys.',
-  'Use `gridHorizontalBehavior` for horizontal keyboard navigation with 4 arrow keys.',
+  'Use `gridBehavior` for bidirectional keyboard navigation with arrow keys.',
+  'Use `gridHorizontalBehavior` for horizontal keyboard navigation with arrow keys.',
   'Use appropriate ARIA role for the grid and actionable components inside of it when keyboard navigation provided.',
 ]
 
