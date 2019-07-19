@@ -29,7 +29,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `headerAction` slot to the `Dialog` component @mnajdova ([#1617](https://github.com/stardust-ui/react/pull/1617))
 - Add `Slider` component @Bugaa92 ([#1559](https://github.com/stardust-ui/react/pull/1559))
 - Add `tooltipAsLabelBehavior` accessibility behavior for `Tooltip` @sophieH29 ([#1635](https://github.com/stardust-ui/react/pull/1635))
+- Add outline version of `menu` icon and `files-visio` icon to Teams theme @notandrew ([#1623](https://github.com/stardust-ui/react/pull/1623))
 - Add `amethyst` color to the Teams theme color palette @mnajdova ([#1650](https://github.com/stardust-ui/react/pull/1650))
+- Add `image-unavailable` icon to Teams Theme @joheredi ([#1633](https://github.com/stardust-ui/react/pull/1633))
 - Open `Popup` on `contextmenu` @jurokapsiar ([#1524](https://github.com/stardust-ui/react/pull/1524))
 
 ### Fixes
