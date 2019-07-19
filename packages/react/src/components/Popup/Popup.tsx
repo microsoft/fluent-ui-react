@@ -45,7 +45,6 @@ export type PopupEventsArray = RestrictedClickEvents[] | RestrictedHoverEvents[]
 
 export interface PopupSlotClassNames {
   content: string
-  trigger: string
 }
 
 export interface PopupProps
@@ -133,7 +132,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   static slotClassNames: PopupSlotClassNames = {
     content: `${Popup.className}__content`,
-    trigger: `${Popup.className}__trigger`,
   }
 
   static Content = PopupContent
@@ -270,9 +268,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 
   getTriggerProps(triggerElement) {
-    const triggerProps: any = {
-      className: Popup.slotClassNames.trigger,
-    }
+    const triggerProps: any = {}
 
     const { on } = this.props
     const normalizedOn = _.isArray(on) ? on : [on]

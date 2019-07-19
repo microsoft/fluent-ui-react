@@ -1,9 +1,9 @@
-import { Dropdown, Popup } from '@stardust-ui/react'
+import { Dropdown, Button } from '@stardust-ui/react'
 
 const selectors = {
   toggleIndicator: `.${Dropdown.slotClassNames.toggleIndicator}`,
   item: (itemIndex: number) => `.${Dropdown.slotClassNames.itemsList} li:nth-child(${itemIndex})`,
-  popupTrigger: `.${Popup.slotClassNames.trigger}`,
+  popupTrigger: `.${Button.className}`,
 }
 
 const config: ScreenerTestsConfig = {

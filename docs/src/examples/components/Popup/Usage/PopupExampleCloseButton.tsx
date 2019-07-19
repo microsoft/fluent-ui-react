@@ -55,7 +55,7 @@ const getA11ySelectionMessage = {
   onRemove: item => `${item} has been removed.`,
 }
 
-const PopupControlledExample = () => {
+const PopupCloseButtonExample = () => {
   const [open, setOpen] = useBooleanKnob({ name: 'open' })
 
   const closePopup = () => {
@@ -86,11 +86,12 @@ const PopupControlledExample = () => {
     <Popup
       open={open}
       onOpenChange={(e, { open }) => setOpen(open)}
-      trigger={<Button icon="user" content="People Picker" aria-label="Choose a person." />}
       content={popupContent}
       trapFocus
-    />
+    >
+      <Button icon="user" content="People Picker" aria-label="Choose a person." />
+    </Popup>
   )
 }
 
-export default PopupControlledExample
+export default PopupCloseButtonExample
