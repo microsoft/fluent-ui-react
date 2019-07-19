@@ -175,6 +175,11 @@ export { default as TreeItem } from './components/Tree/TreeItem'
 export * from './components/Tree/TreeTitle'
 export { default as TreeTitle } from './components/Tree/TreeTitle'
 
+export * from './components/TreeFlat/TreeFlat'
+export { default as TreeFlat } from './components/TreeFlat/TreeFlat'
+export * from './components/TreeFlat/TreeItemFlat'
+export { default as TreeItemFlat } from './components/TreeFlat/TreeItemFlat'
+
 export * from './components/Reaction/Reaction'
 export { default as Reaction } from './components/Reaction/Reaction'
 export * from './components/Reaction/ReactionGroup'
