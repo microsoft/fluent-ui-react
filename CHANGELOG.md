@@ -17,6 +17,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.34.2 ]------------------------------- -->
+## [v0.34.2](https://github.com/stardust-ui/react/tree/v0.34.2) (2019-07-19)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.34.1...v0.34.2)
+
+### Fixes
+- Fix a gap in `Checkbox` in RTL mode @layershifter ([#1683](https://github.com/stardust-ui/react/pull/1683))
+
 <!--------------------------------[ v0.34.1 ]------------------------------- -->
 ## [v0.34.1](https://github.com/stardust-ui/react/tree/v0.34.1) (2019-07-11)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.34.0...v0.34.1)
