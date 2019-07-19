@@ -1,7 +1,7 @@
 import * as React from 'react'
 import DocPage from '../components/DocPage/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
-import { link } from '../utils/helpers'
+import { link, code } from '../utils/helpers'
 
 import { CodeSnippet } from '@stardust-ui/docs-components'
 import { Header } from '@stardust-ui/react'
@@ -114,20 +114,33 @@ export default () => (
     <Question content="What's the difference between Flex, Grid, Layout, Box and Segment components?" />
     <Answer
       content={
-        <p>
-          Flex, Grid and Layout components handle layout aspects. The Flex component is for laying
-          out items in one direction, while the Grid component is made for two dimensional layouts.
-          Visit the {link('Layout guide', '/layout')} page for a detailed comparison between Flex
-          and Grid. The Layout component is now deprecated. Its purpose was arrangement of the
-          content of a component. Flex or Grid component should be used instead of the Layout
-          component.
-          <br />
-          Box is an abstract component that by default renders a `div` without any styles. Box
-          should be used carefully, in most cases {link("you don't need it ", '/components/box')}.
-          <br />
-          {link('Segment', '/components/segment')} groups related content together. It shouldn't be
-          used to handle layout aspects.
-        </p>
+        <div>
+          <p>
+            {code('Flex')}, {code('Grid')} and {code('Layout')} components handle layout aspects.
+            The {code('Flex')} component is for laying out items in one direction, while the{' '}
+            {code('Grid')} component is made for two dimensional layouts. Visit the{' '}
+            {link('Layout guide', '/layout')} page for a detailed comparison between {code('Flex')}
+            and {code('Grid')}. The {code('Layout')} component is now deprecated. Its purpose was
+            arrangement of the content of a component. {code('Flex')} or {code('Grid')} component
+            should be used instead of the {code('Layout')}
+            component.
+          </p>
+          <p>
+            {code('Box')} is a utility component that is often used by Stardust to implement
+            higher-level components. By default, it renders styled {code('div')} element.
+          </p>
+          <p>
+            The cases when client might want to use it are very exceptional, and all are about
+            applying custom styles to rendered {code('div')} element. However, more robust approach
+            that won't break theming consistency is to instead create a custom component and define
+            related styles as part of theme{' '}
+            {link('Integrate Custom Components', '/integrate-custom-components')}.
+          </p>
+          <p>
+            {link('Segment', '/components/segment')} groups related content together. It shouldn't
+            be used to handle layout aspects.
+          </p>
+        </div>
       }
     />
 
