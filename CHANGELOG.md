@@ -31,9 +31,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `tooltipAsLabelBehavior` accessibility behavior for `Tooltip` @sophieH29 ([#1635](https://github.com/stardust-ui/react/pull/1635))
 - Add outline version of `menu` icon and `files-visio` icon to Teams theme @notandrew ([#1623](https://github.com/stardust-ui/react/pull/1623))
 - Add `amethyst` color to the Teams theme color palette @mnajdova ([#1650](https://github.com/stardust-ui/react/pull/1650))
+- Add `image-unavailable` icon to Teams Theme @joheredi ([#1633](https://github.com/stardust-ui/react/pull/1633))
+- Add bidirectional navigation following DOM in `FocusZone` @sophieH29 ([#1637](https://github.com/stardust-ui/react/pull/1647))
+- Open `Popup` on `contextmenu` @jurokapsiar ([#1524](https://github.com/stardust-ui/react/pull/1524))
 
 ### Fixes
 - Fix `ChatMessage`'s focus border overlays `actionMenu` in Teams theme @mnajdova ([#1637](https://github.com/stardust-ui/react/pull/1637))
+- Update `Checkbox` files for Teams Theme to match [redlines] @bcalvery ([#1656](https://github.com/stardust-ui/react/pull/1656))
 
 ### Documentation
 - Make sidebar categories collapsible @lucivpav ([#1611](https://github.com/stardust-ui/react/pull/1611))
@@ -45,7 +49,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix broken fragments on CodeSandbox @lucivpav ([#1655](https://github.com/stardust-ui/react/pull/1655))
 - Improve a table with component props in docs @layershifter ([#1634](https://github.com/stardust-ui/react/pull/1634))
 - Improve rendering performance for docs examples @Bugaa92 ([#1654](https://github.com/stardust-ui/react/pull/1654))
-- Update `Checkbox` files for Teams Theme to match [redlines] @bcalvery ([#1656](https://github.com/stardust-ui/react/pull/1656))
+- Add FAQ entry for `Flex`, `Grid`, `Layout`, `Box`, `Segment` @lucivpav ([#1646](https://github.com/stardust-ui/react/pull/1646))
+
+<!--------------------------------[ v0.34.2 ]------------------------------- -->
+## [v0.34.2](https://github.com/stardust-ui/react/tree/v0.34.2) (2019-07-19)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.34.1...v0.34.2)
+
+ ### Fixes
+- Fix a gap in `Checkbox` in RTL mode @layershifter ([#1683](https://github.com/stardust-ui/react/pull/1683))
+- Fix broken background in `Popup` with `pointing` and `FocusTrap` @layershifter ([#1689](https://github.com/stardust-ui/react/pull/1689))
 
 <!--------------------------------[ v0.34.1 ]------------------------------- -->
 ## [v0.34.1](https://github.com/stardust-ui/react/tree/v0.34.1) (2019-07-11)

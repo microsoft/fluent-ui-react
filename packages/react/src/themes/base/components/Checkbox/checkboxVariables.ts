@@ -11,7 +11,7 @@ export type CheckboxVariables = {
   margin: string
   padding: string
 
-  checkboxToggleBackground: string
+  toggleBackground: string
   toggleBorderColor: string
   toggleBorderStyle: string
   toggleBorderRadius: string
@@ -33,7 +33,7 @@ export type CheckboxVariables = {
   disabledBorderColor: string
   disabledCheckboxColor: string
   disabledToggleIndicatorColor: string
-  disabledcheckboxToggleBackground: string
+  disabledToggleBackground: string
   disabledToggleBorderColor: string
 }
 
@@ -48,7 +48,7 @@ export default (siteVars: any): CheckboxVariables => ({
   margin: '0',
   padding: '0',
 
-  checkboxToggleBackground: 'transparent',
+  toggleBackground: 'transparent',
   toggleBorderColor: siteVars.colors.grey[300],
   toggleBorderStyle: `solid`,
   toggleBorderRadius: pxToRem(999),
@@ -69,7 +69,7 @@ export default (siteVars: any): CheckboxVariables => ({
   disabledBackground: siteVars.colors.grey[200],
   disabledBorderColor: siteVars.colors.grey[100],
   disabledCheckboxColor: siteVars.colors.grey[300],
-  disabledcheckboxToggleBackground: 'transparent',
+  disabledToggleBackground: 'transparent',
   disabledToggleBorderColor: siteVars.colors.grey[200],
   disabledToggleIndicatorColor: siteVars.colors.grey[300],
 })
