@@ -49,10 +49,7 @@ export interface ChatMessageProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps<ShorthandValue<BoxProps>> {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default chatMessageBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Menu with actions of the message. */

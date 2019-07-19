@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Loader } from '@stardust-ui/react/src'
 
-const AccessibilityDescription = React.lazy(() => import('./AccessibilityDescription'))
+const AccessibilityDescription = React.lazy(() => import('./InlineMarkdown'))
 
 const item = '- '
 

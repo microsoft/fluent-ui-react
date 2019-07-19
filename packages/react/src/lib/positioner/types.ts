@@ -75,7 +75,7 @@ export interface PopperProps extends PositioningProps {
   /**
    * Ref object containing the target node (the element that we're using as reference for Popper box).
    */
-  targetRef: React.RefObject<Element>
+  targetRef: React.RefObject<Element> | PopperJS.ReferenceObject
 
   /**
    * Rtl attribute for the component.

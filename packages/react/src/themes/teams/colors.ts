@@ -161,6 +161,17 @@ export const transparentColors: TeamsTransparentColors = {
     800: 'rgba(27,26,26,0.9)',
     900: 'rgba(0,0,0,0.8)',
   },
+  amethyst: {
+    100: undefined,
+    200: undefined,
+    300: undefined,
+    400: 'rgba(98,100,167,0.75)',
+    500: undefined,
+    600: undefined,
+    700: 'rgba(98,100,167,0.15)',
+    800: undefined,
+    900: undefined,
+  },
 }
 
 export const colors: ColorPalette<TeamsTransparentColors> = {

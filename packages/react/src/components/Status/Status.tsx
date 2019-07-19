@@ -15,10 +15,7 @@ import {
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface StatusProps extends UIComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default statusBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** A custom color. */
