@@ -155,10 +155,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     focus: event => {
       if (this.messageRef) {
         this.messageRef.current.focus()
-
-        if (document.activeElement === this.messageRef.current) {
-          event.stopPropagation()
-        }
+        event.stopPropagation()
       }
     },
   }
