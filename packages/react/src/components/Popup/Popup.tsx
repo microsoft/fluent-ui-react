@@ -37,10 +37,12 @@ import { AutoFocusZoneProps, FocusTrapZoneProps } from '../../lib/accessibility/
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import { createShorthandFactory } from '../../lib/factories'
+import createReferenceFromContextClick from './createReferenceFromContextClick'
+import isRightClick from '../../lib/isRightClick'
 
-export type PopupEvents = 'click' | 'hover' | 'focus'
+export type PopupEvents = 'click' | 'hover' | 'focus' | 'context'
 export type RestrictedClickEvents = 'click' | 'focus'
-export type RestrictedHoverEvents = 'hover' | 'focus'
+export type RestrictedHoverEvents = 'hover' | 'focus' | 'context'
 export type PopupEventsArray = RestrictedClickEvents[] | RestrictedHoverEvents[]
 
 export interface PopupSlotClassNames {
@@ -106,6 +108,9 @@ export interface PopupProps
   /** Element to be rendered in-place where the popup is defined. */
   trigger?: JSX.Element
 
+  /** Whether the trigger should be tabbable */
+  shouldTriggerBeTabbable?: boolean
+
   /** Ref for Popup content DOM node. */
   contentRef?: React.Ref<HTMLElement>
 
@@ -118,6 +123,7 @@ export interface PopupProps
 
 export interface PopupState {
   open: boolean
+  isOpenedByRightClick: boolean
 }
 
 /**
@@ -150,9 +156,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     mouseLeaveDelay: PropTypes.number,
     offset: PropTypes.string,
     on: PropTypes.oneOfType([
-      PropTypes.oneOf(['hover', 'click', 'focus']),
-      PropTypes.arrayOf(PropTypes.oneOf(['click', 'focus'])),
-      PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus'])),
+      PropTypes.oneOf(['hover', 'click', 'focus', 'context']),
+      PropTypes.arrayOf(PropTypes.oneOf(['click', 'focus', 'context'])),
+      PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus', 'context'])),
     ]),
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
@@ -161,6 +167,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     renderContent: PropTypes.func,
     target: PropTypes.any,
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
+    shouldTriggerBeTabbable: PropTypes.bool,
     unstable_pinned: PropTypes.bool,
     content: customPropTypes.shorthandAllowingChildren,
     contentRef: customPropTypes.ref,
@@ -176,6 +183,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     position: 'above',
     on: 'click',
     mouseLeaveDelay: 500,
+    shouldTriggerBeTabbable: true,
   }
 
   static autoControlledProps = ['open']
@@ -185,6 +193,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   // focusable element which has triggered Popup, can be either triggerDomElement or the element inside it
   triggerFocusableDomElement = null
   popupDomElement = null
+  rightClickReferenceObject = null
 
   closeTimeoutId
 
@@ -202,6 +211,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     open: e => {
       e.preventDefault()
       this.setPopupOpen(true, e)
+    },
+    preventScroll: e => {
+      e.preventDefault()
     },
   }
 
@@ -241,6 +253,11 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 
   handleDocumentClick = (getRefs: Function) => e => {
+    if (this.state.isOpenedByRightClick && this.isOutsidePopupElement(getRefs(), e)) {
+      this.trySetOpen(false, e)
+      return
+    }
+
     if (this.isOutsidePopupElementAndOutsideTriggerElement(getRefs(), e)) {
       this.trySetOpen(false, e)
     }
@@ -256,15 +273,20 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 
   isOutsidePopupElementAndOutsideTriggerElement(refs: NodeRef[], e) {
+    const isOutsidePopupElement = this.isOutsidePopupElement(refs, e)
+    const isOutsideTriggerElement =
+      this.triggerRef.current && !doesNodeContainClick(this.triggerRef.current, e)
+
+    return isOutsidePopupElement && isOutsideTriggerElement
+  }
+
+  isOutsidePopupElement(refs: NodeRef[], e) {
     const isInsideNested = _.some(refs, (childRef: NodeRef) => {
       return doesNodeContainClick(childRef.current, e)
     })
 
     const isOutsidePopupElement = this.popupDomElement && !isInsideNested
-    const isOutsideTriggerElement =
-      this.triggerRef.current && !doesNodeContainClick(this.triggerRef.current, e)
-
-    return isOutsidePopupElement && isOutsideTriggerElement
+    return isOutsidePopupElement
   }
 
   getTriggerProps(triggerElement) {
@@ -275,6 +297,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
     /**
      * The focus is adding the focus, blur and click event (always opening on click)
+     * If focus and context are provided, there is no need to add onClick
      */
     if (_.includes(normalizedOn, 'focus')) {
       triggerProps.onFocus = (e, ...args) => {
@@ -289,9 +312,11 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         }
         _.invoke(triggerElement, 'props.onBlur', e, ...args)
       }
-      triggerProps.onClick = (e, ...args) => {
-        this.setPopupOpen(true, e)
-        _.invoke(triggerElement, 'props.onClick', e, ...args)
+      if (!_.includes(normalizedOn, 'context')) {
+        triggerProps.onClick = (e, ...args) => {
+          this.setPopupOpen(true, e)
+          _.invoke(triggerElement, 'props.onClick', e, ...args)
+        }
       }
     }
 
@@ -306,7 +331,19 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     }
 
     /**
+     * The context is opening the popup
+     */
+    if (_.includes(normalizedOn, 'context')) {
+      triggerProps.onContextMenu = (e, ...args) => {
+        this.setPopupOpen(!this.state.open, e)
+        _.invoke(triggerElement, 'props.onContextMenu', e, ...args)
+        e.preventDefault()
+      }
+    }
+
+    /**
      * The hover is adding the mouseEnter, mouseLeave, blur and click event (always opening on click)
+     * If hover and context are provided, there is no need to add onClick
      */
     if (_.includes(normalizedOn, 'hover')) {
       triggerProps.onMouseEnter = (e, ...args) => {
@@ -318,9 +355,11 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         this.setPopupOpen(false, e)
         _.invoke(triggerElement, 'props.onMouseLeave', e, ...args)
       }
-      triggerProps.onClick = (e, ...args) => {
-        this.setPopupOpen(true, e)
-        _.invoke(triggerElement, 'props.onClick', e, ...args)
+      if (!_.includes(normalizedOn, 'context')) {
+        triggerProps.onClick = (e, ...args) => {
+          this.setPopupOpen(true, e)
+          _.invoke(triggerElement, 'props.onClick', e, ...args)
+        }
       }
       triggerProps.onBlur = (e, ...args) => {
         if (this.shouldBlurClose(e)) {
@@ -417,7 +456,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         offset={offset}
         rtl={rtl}
         unstable_pinned={unstable_pinned}
-        targetRef={target ? toRefObject(target) : this.triggerRef}
+        targetRef={
+          this.rightClickReferenceObject || (target ? toRefObject(target) : this.triggerRef)
+        }
         children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
       />
     )
@@ -478,23 +519,53 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
               capture
             />
             <EventListener
+              listener={this.handleDocumentClick(getRefs)}
+              targetRef={documentRef}
+              type="contextmenu"
+              capture
+            />
+            <EventListener
               listener={this.handleDocumentKeyDown(getRefs)}
               targetRef={documentRef}
               type="keydown"
               capture
             />
+
+            {this.state.isOpenedByRightClick && (
+              <>
+                <EventListener
+                  listener={this.dismissOnScroll}
+                  targetRef={documentRef}
+                  type="wheel"
+                  capture
+                />
+                <EventListener
+                  listener={this.dismissOnScroll}
+                  targetRef={documentRef}
+                  type="touchmove"
+                  capture
+                />
+              </>
+            )}
           </>
         )}
       </Unstable_NestingAuto>
     )
   }
 
+  dismissOnScroll = (e: Event) => {
+    this.trySetOpen(false, e)
+  }
+
   trySetOpen(newValue: boolean, eventArgs: any) {
+    const isOpenedByRightClick = newValue && isRightClick(eventArgs)
+
     // when new state 'open' === 'true', save the last focused element
     if (newValue) {
       this.updateTriggerFocusableDomElement()
+      this.updateContextPosition(isOpenedByRightClick && eventArgs.nativeEvent)
     }
-    this.trySetState({ open: newValue })
+    this.trySetState({ open: newValue, isOpenedByRightClick })
     _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
   }
 
@@ -530,6 +601,10 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     this.triggerFocusableDomElement = this.triggerRef.current.contains(activeElement)
       ? activeElement
       : this.triggerRef.current
+  }
+
+  updateContextPosition(nativeEvent: MouseEvent) {
+    this.rightClickReferenceObject = nativeEvent && createReferenceFromContextClick(nativeEvent)
   }
 }
 
