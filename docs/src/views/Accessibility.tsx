@@ -356,10 +356,8 @@ export default () => (
 
     <Header as="h3" content="Right Click Support" />
     <p>
-      For cases when right click is used to execute a secondary action (for example, a context
-      menu), a keyboar shortcut needs to be provided to allow the keyboard / screen reader users to
-      execute the secondary action. Also, screen reader has to make the user aware about the
-      presence of the secondary action.
+      Screen reader has to make the user aware about the presence of the secondary action by a short
+      meaningful label or description on the trigger element.
     </p>
 
     <Header as="h3" content="Elements that appear on hover over another element" />
