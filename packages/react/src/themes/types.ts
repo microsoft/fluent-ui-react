@@ -44,6 +44,7 @@ import { RadioGroupProps } from '../components/RadioGroup/RadioGroup'
 import { ReactionGroupProps } from '../components/Reaction/ReactionGroup'
 import { ReactionProps } from '../components/Reaction/Reaction'
 import { SegmentProps } from '../components/Segment/Segment'
+import { SliderProps } from '../components/Slider/Slider'
 import { StatusProps } from '../components/Status/Status'
 import { TextProps } from '../components/Text/Text'
 import { ToolbarDividerProps } from '../components/Toolbar/ToolbarDivider'
@@ -446,6 +447,7 @@ type ThemeStylesProps = {
   Reaction?: ReactionProps
   ReactionGroup?: ReactionGroupProps
   Segment?: SegmentProps
+  Slider?: SliderProps
   Status?: StatusProps
   Toolbar?: ToolbarProps
   ToolbarItem?: ToolbarItemProps
@@ -510,6 +512,7 @@ export type FontFaces = FontFace[]
 type SvgIconFuncArg = {
   classes: { [iconSlot: string]: string }
   rtl: boolean
+  props: IconProps
 }
 
 export type SvgIconSpec = ObjectOrFunc<React.ReactNode, SvgIconFuncArg>

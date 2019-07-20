@@ -19,8 +19,8 @@ const PopupClickHandlingExample = () => {
           onClick={() => setShow(true)}
         />
       }
-      content={{
-        content: !!show && (
+      content={
+        !!show && (
           <Button
             id={selectors.popupContentButtonId}
             content="click me"
@@ -29,8 +29,8 @@ const PopupClickHandlingExample = () => {
               setShow(!show)
             }}
           />
-        ),
-      }}
+        )
+      }
     />
   )
 }

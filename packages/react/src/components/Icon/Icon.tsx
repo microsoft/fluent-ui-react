@@ -17,10 +17,7 @@ import { WithAsProp, withSafeTypeForAs } from '../../types'
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
 export interface IconProps extends UIComponentProps, ColorComponentProps {
-  /**
-   * Accessibility behavior if overriden by the user.
-   * @default iconBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Icon can appear with rectangular border. */
@@ -87,17 +84,18 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl })}
+        {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl, props: this.props })}
       </ElementType>
     )
   }
 }
 
-Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name' })
+Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name', allowsJSX: false })
 
 /**
- * An icon is a glyph used to represent something else.
+ * An Icon displays a pictogram with semantic meaning.
+ *
  * @accessibility
- * Don't use as a replacement for actionable component - use Button text variant with an icon instead.
+ * Icon is usually only a visual representation and therefore is hidden from screen readers, unless 'alt' or 'aria-label' property is provided.
  */
 export default withSafeTypeForAs<typeof Icon, IconProps, 'span'>(Icon)

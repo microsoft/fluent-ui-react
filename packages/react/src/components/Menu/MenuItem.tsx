@@ -19,9 +19,9 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import Icon from '../Icon/Icon'
-import Menu from './Menu'
-import Box from '../Box/Box'
+import Icon, { IconProps } from '../Icon/Icon'
+import Menu, { MenuProps, MenuShorthandKinds } from './Menu'
+import Box, { BoxProps } from '../Box/Box'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import {
@@ -45,9 +45,8 @@ export interface MenuItemProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default menuItemBehavior
    * @available menuItemAsToolbarButtonBehavior, tabBehavior
-   * */
+   */
   accessibility?: Accessibility
 
   /** A menu item can be active. */
@@ -57,7 +56,7 @@ export interface MenuItemProps
   disabled?: boolean
 
   /** Name or shorthand for Menu Item Icon */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** A menu may have just icons. */
   iconOnly?: boolean
@@ -115,10 +114,10 @@ export interface MenuItemProps
   vertical?: boolean
 
   /** Shorthand for the wrapper component. */
-  wrapper?: ShorthandValue
+  wrapper?: ShorthandValue<BoxProps>
 
   /** Shorthand for the submenu. */
-  menu?: ShorthandValue | ShorthandCollection
+  menu?: ShorthandValue<MenuProps> | ShorthandCollection<MenuItemProps, MenuShorthandKinds>
 
   /** Indicates if the menu inside the item is open. */
   menuOpen?: boolean
@@ -133,7 +132,7 @@ export interface MenuItemProps
   inSubmenu?: boolean
 
   /** Shorthand for the submenu indicator. */
-  indicator?: ShorthandValue
+  indicator?: ShorthandValue<IconProps>
 
   /**
    * Event for request to change 'open' value.
@@ -164,7 +163,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     disabled: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     iconOnly: PropTypes.bool,
     index: PropTypes.number,
     itemPosition: PropTypes.number,
@@ -395,7 +394,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
       }
     })
 
-    if (shouldStopPropagation) {
+    if (forceTriggerFocus || shouldStopPropagation) {
       e.stopPropagation()
     }
   }
@@ -428,6 +427,6 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
 MenuItem.create = createShorthandFactory({ Component: MenuItem, mappedProp: 'content' })
 
 /**
- * A menu item is an actionable navigation item within a menu.
+ * A MenuItem is an actionable item within a Menu.
  */
 export default withSafeTypeForAs<typeof MenuItem, MenuItemProps, 'a'>(MenuItem)

@@ -1,12 +1,19 @@
 import * as React from 'react'
-import { Avatar, Chat, Provider } from '@stardust-ui/react'
+import {
+  Avatar,
+  AvatarProps,
+  Chat,
+  Provider,
+  ReactionProps,
+  ShorthandCollection,
+} from '@stardust-ui/react'
 
-const reactions = [
+const reactions: ShorthandCollection<ReactionProps> = [
   { key: 'up', icon: 'thumbs up', content: '1K' },
   { key: 'down', icon: 'thumbs down', content: 5 },
 ]
 
-const janeAvatar = {
+const janeAvatar: AvatarProps = {
   image: 'public/images/avatar/small/ade.jpg',
   status: { color: 'green', icon: 'check' },
 }
@@ -112,18 +119,16 @@ const ChatMessageExampleStyled = () => (
         },
         {
           key: 'message-id-2',
-          gutter: { content: <Avatar {...janeAvatar} /> },
-          message: {
-            content: (
-              <Chat.Message
-                content={{ content }}
-                author="Jane Doe"
-                timestamp="Yesterday, 10:15 PM"
-                badge={{ icon: 'exclamation' }}
-                reactionGroup={reactions}
-              />
-            ),
-          },
+          gutter: <Avatar {...janeAvatar} />,
+          message: (
+            <Chat.Message
+              content={{ content }}
+              author="Jane Doe"
+              timestamp="Yesterday, 10:15 PM"
+              badge={{ icon: 'exclamation' }}
+              reactionGroup={reactions}
+            />
+          ),
         },
       ]}
     />

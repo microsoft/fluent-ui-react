@@ -80,6 +80,6 @@ AccordionContent.create = createShorthandFactory({
 })
 
 /**
- * A standard AccordionContent that is used to display content hosted in an accordion.
+ * An AccordionContent displays content hosted in an Accordion.
  */
 export default withSafeTypeForAs<typeof AccordionContent, AccordionContentProps>(AccordionContent)

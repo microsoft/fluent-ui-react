@@ -2,9 +2,9 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import { ShorthandValue } from '../types'
 
-const getOrGenerateIdFromShorthand = (
+const getOrGenerateIdFromShorthand = <P extends Record<string, any>>(
   prefix: string,
-  value: ShorthandValue,
+  value: ShorthandValue<P>,
   currentValue?: string,
   fallbackToUnique?: boolean,
 ): string | undefined => {

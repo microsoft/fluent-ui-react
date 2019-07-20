@@ -3,7 +3,6 @@ import {
   Popup,
   Button,
   Menu,
-  popupFocusTrapBehavior,
   AvatarProps,
   ChatMessageProps,
   DividerProps,
@@ -76,7 +75,7 @@ function generateChatMsgProps(message: MessageData, fromUser: UserData): ChatIte
   }
 }
 
-function createMessageContent(message: MessageData): ShorthandValue {
+function createMessageContent(message: MessageData): ShorthandValue<ChatMessageProps> {
   const messageId = `content-${message.id}`
   return {
     id: message.withAttachment ? undefined : messageId,
@@ -127,7 +126,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
 
   const actionPopup = (
     <Popup
-      accessibility={popupFocusTrapBehavior}
+      trapFocus
       trigger={
         <Button
           aria-label="More attachment options"

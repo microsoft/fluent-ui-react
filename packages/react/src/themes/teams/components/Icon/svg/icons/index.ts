@@ -65,6 +65,7 @@ import filesPowerPoint from './filesPowerPoint'
 import filesPowerPointBrand from './filesPowerPointBrand'
 import filesWord from './filesWord'
 import filesWordBrand from './filesWordBrand'
+import filesVisio from './filesVisio'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
 import format from './format'
@@ -73,6 +74,7 @@ import giphy from './giphy'
 import hand from './hand'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
+import imageUnavailable from './image-unavailable'
 import indent from './indent'
 import info from './info'
 import italic from './italic'
@@ -91,6 +93,7 @@ import micOff from './micOff'
 import more from './more'
 import microsoftStream from './microsoftStream'
 import userPhone from './userPhone'
+import speakerMute from './speakerMute'
 import numberList from './numberList'
 import outdent from './outdent'
 import openOutside from './openOutside'
@@ -188,6 +191,7 @@ export default {
   'files-txt': filesTxt,
   'files-upload': filesUpload,
   'files-video': filesVideo,
+  'files-visio': filesVisio,
   'files-zip': filesZip,
   flag,
   download,
@@ -207,6 +211,7 @@ export default {
   giphy,
   highlight,
   'horizontal-rule': horizontalRule,
+  'image-unavailable': imageUnavailable,
   indent,
   info,
   italic,
@@ -221,6 +226,7 @@ export default {
   menu,
   'message-seen': messageSeen,
   mic,
+  'speaker-mute': speakerMute,
   hand,
   'mic-off': micOff,
   more,

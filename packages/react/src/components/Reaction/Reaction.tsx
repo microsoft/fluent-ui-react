@@ -15,10 +15,10 @@ import {
   isFromKeyboard,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
-import Box from '../Box/Box'
+import Icon, { IconProps } from '../Icon/Icon'
+import Box, { BoxProps } from '../Box/Box'
 import ReactionGroup from './ReactionGroup'
 
 export interface ReactionSlotClassNames {
@@ -29,18 +29,14 @@ export interface ReactionSlotClassNames {
 export interface ReactionProps
   extends UIComponentProps<ReactionProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue> {
+    ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
   /** A reaction can have icon for the indicator of the reaction. */
-  icon?: ShorthandValue
-
-  /** A reaction can have content shown next to the icon. */
-  content?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /**
    * Called after user's focus.
@@ -67,12 +63,11 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
     }),
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     onFocus: PropTypes.func,
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'span',
   }
 
@@ -128,9 +123,7 @@ Reaction.slotClassNames = {
 }
 
 /**
- * A reaction is used to indicate user's reaction.
- * @accessibility
- * Do use actionable components (for example Button) if the reactions need to be actionable.
- * Do add textual representation to the icon slot if it only contains an icon (using title, aria-label or aria-labelledby props on the slot).
+ * A Reaction indicates user's emotion or perception.
+ * Used to display user's reaction for entity in Chat (e.g. message).
  */
 export default withSafeTypeForAs<typeof Reaction, ReactionProps, 'span'>(Reaction)
