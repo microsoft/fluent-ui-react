@@ -1,23 +1,21 @@
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
 import { Accessibility } from '../../types'
-import { PopupBehaviorProps } from '../Popup/popupBehavior'
-import popupAutoFocusBehavior from '../Popup/popupAutoFocusBehavior'
+import popupBehavior, { PopupBehaviorProps } from '../Popup/popupBehavior'
 
 const contextMenuBehavior: Accessibility<ContextMenuBehaviorProps> = props => {
-  const behavior = popupAutoFocusBehavior(props)
+  const behavior = popupBehavior(props)
   return _.merge(behavior, {
-    autoFocus: props.autoFocus,
     attributes: {
       root: {
         role: 'none',
       },
       trigger: {
         'aria-controls': props.menuId,
-        'aria-expanded': props.menuOpen || undefined,
+        'aria-expanded': props.open || undefined,
         'aria-haspopup': 'true',
         id: props.triggerId,
-        tabIndex: props.menuOpen ? -1 : undefined,
+        tabIndex: props.open ? -1 : undefined,
       },
 
       menu: {
@@ -31,7 +29,7 @@ const contextMenuBehavior: Accessibility<ContextMenuBehaviorProps> = props => {
     },
     keyActions: {
       root: {
-        ...(props.menuOpen
+        ...(props.open
           ? {
               closeAndFocusNext: {
                 keyCombinations: [{ keyCode: keyboardKey.Tab, shiftKey: false }],
@@ -62,10 +60,8 @@ export interface ContextMenuBehaviorProps extends PopupBehaviorProps {
   menuId?: string
   /** button id */
   triggerId?: string
-  /** menuOpen */
-  menuOpen?: boolean
-  /** auto focus */
-  autoFocus: boolean
+  /** open */
+  open?: boolean
 }
 
 export default contextMenuBehavior

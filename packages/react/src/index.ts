@@ -212,6 +212,8 @@ export * from './lib/positioner/types'
 import {
   getFirstTabbable,
   getLastTabbable,
+  getFirstFocusable,
+  getLastFocusable,
   getNextElement,
   getPreviousElement,
   focusAsync,
@@ -220,6 +222,8 @@ import {
 export const FocusZoneUtilities = {
   getFirstTabbable,
   getLastTabbable,
+  getFirstFocusable,
+  getLastFocusable,
   getNextElement,
   getPreviousElement,
   focusAsync,

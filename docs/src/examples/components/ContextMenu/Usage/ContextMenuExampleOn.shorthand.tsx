@@ -40,7 +40,7 @@ class ContextMenuExampleOn extends React.Component {
               />
             }
             menu={{ items }}
-            // on="context"
+            on="context"
           />
         </Flex>
         {this.state.alert && (

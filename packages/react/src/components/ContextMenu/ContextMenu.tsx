@@ -25,7 +25,7 @@ export interface ContextMenuSlotClassNames {
 }
 
 export interface ContextMenuProps
-  extends Omit<PopupProps, 'content' | 'renderContent' | 'children'> {
+  extends Omit<PopupProps, 'content' | 'renderContent' | 'children' | 'trapFocus'> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default contextMenuBehavior
@@ -36,7 +36,7 @@ export interface ContextMenuProps
 }
 
 export interface ContextMenuState {
-  menuOpen: boolean
+  open: boolean
   menuId: string
   triggerId: string
   autoFocus: boolean
@@ -74,9 +74,9 @@ export default class ContextMenu extends AutoControlledComponent<
     mouseLeaveDelay: PropTypes.number,
     offset: PropTypes.string,
     on: PropTypes.oneOfType([
-      PropTypes.oneOf(['hover', 'click', 'focus']),
-      PropTypes.arrayOf(PropTypes.oneOf(['click', 'focus'])),
-      PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus'])),
+      PropTypes.oneOf(['hover', 'click', 'focus', 'context']),
+      PropTypes.arrayOf(PropTypes.oneOf(['click', 'focus', 'context'])),
+      PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus', 'context'])),
     ]),
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
@@ -85,6 +85,7 @@ export default class ContextMenu extends AutoControlledComponent<
     renderContent: PropTypes.func,
     target: PropTypes.any,
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
+    shouldTriggerBeTabbable: PropTypes.bool,
     unstable_pinned: PropTypes.bool,
     contentRef: customPropTypes.ref,
     menu: customPropTypes.itemShorthand,
@@ -128,7 +129,7 @@ export default class ContextMenu extends AutoControlledComponent<
     const renderCallback = () => focusNearest(this.triggerRef.current, which)
     this.setState(
       {
-        menuOpen: false,
+        open: false,
         autoFocus: false,
       },
       renderCallback,
@@ -140,7 +141,7 @@ export default class ContextMenu extends AutoControlledComponent<
     const renderCallback = () => focusMenuItem(this.menuRef.current, which)
     this.setState(
       {
-        menuOpen: true,
+        open: true,
         autoFocus: false, // focused by renderCallback
       },
       renderCallback,
@@ -151,7 +152,7 @@ export default class ContextMenu extends AutoControlledComponent<
   handleOpenChange = (e, { open }) => {
     _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open } })
     this.setState(() => ({
-      menuOpen: open,
+      open,
       autoFocus: true,
     }))
   }
@@ -163,12 +164,12 @@ export default class ContextMenu extends AutoControlledComponent<
     _.invoke(predefinedProps, 'onClick', e, itemProps)
     if (!predefinedProps || !predefinedProps.menu) {
       // do not close if clicked on item with submenu
-      this.setState({ menuOpen: false, autoFocus: false })
+      this.setState({ open: false, autoFocus: false })
     }
   }
 
   handleMenuItemOverrides = (menuItemAccessibilityAttributes: AccessibilityAttributes) =>
-    _.map(_.get(this.props.menu, 'items'), (item: ShorthandValue) =>
+    _.map(_.get(this.props.menu, 'items'), (item: ShorthandValue<MenuItemProps>) =>
       typeof item === 'object'
         ? {
             ...item,
@@ -214,11 +215,12 @@ export default class ContextMenu extends AutoControlledComponent<
           <Popup
             {...popupProps}
             accessibility={() => accessibility}
-            open={this.state.menuOpen}
+            open={this.state.open}
             onOpenChange={this.handleOpenChange}
             inline
+            autoFocus
             content={{
-              variables: { padding: '', borderSize: '0px' },
+              variables: { padding: '', borderSize: '0px' }, // TODO: this should probably be in the context menu variables?
               content: content && <Ref innerRef={this.menuRef}>{content}</Ref>,
             }}
             unstable_pinned
