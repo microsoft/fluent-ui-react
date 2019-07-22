@@ -1,4 +1,4 @@
-import { useSelectKnob, useStringKnob } from '@stardust-ui/docs-components'
+import { useBooleanKnob, useSelectKnob, useStringKnob } from '@stardust-ui/docs-components'
 import { Button } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as faker from 'faker'
@@ -96,6 +96,12 @@ export const size: KnobGenerator<string> = ({ propName, propDef, componentInfo, 
 export const trigger: KnobGenerator<React.ReactElement> = ({ propName }) => ({
   hook: () => [<Button content="A trigger" />],
   name: propName,
+})
+
+export const trapFocus: KnobGenerator<boolean> = ({ componentInfo, propName }) => ({
+  hook: useBooleanKnob,
+  name: propName,
+  initialValue: false,
 })
 
 export const src: KnobGenerator<string> = ({ componentInfo, propName }) => {
