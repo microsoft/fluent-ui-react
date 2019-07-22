@@ -4,41 +4,41 @@ import { TreeFlat } from '@stardust-ui/react'
 const items = [
   {
     key: '1',
-    content: 'House Lannister',
+    title: 'House Lannister',
     items: [
       {
         key: '11',
-        content: 'Tywin',
+        title: 'Tywin',
         items: [
           {
             key: '111',
-            content: 'Jaime',
+            title: 'Jaime',
           },
           {
             key: '112',
-            content: 'Cersei',
+            title: 'Cersei',
           },
           {
             key: '113',
-            content: 'Tyrion',
+            title: 'Tyrion',
           },
         ],
       },
       {
         key: '21',
-        content: 'Kevan',
+        title: 'Kevan',
         items: [
           {
             key: '211',
-            content: 'Lancel',
+            title: 'Lancel',
           },
           {
             key: '212',
-            content: 'Willem',
+            title: 'Willem',
           },
           {
             key: '213',
-            content: 'Martyn',
+            title: 'Martyn',
           },
         ],
       },
@@ -46,23 +46,23 @@ const items = [
   },
   {
     key: '2',
-    content: 'House Targaryen',
+    title: 'House Targaryen',
     items: [
       {
         key: '21',
-        content: 'Aerys',
+        title: 'Aerys',
         items: [
           {
             key: '211',
-            content: 'Rhaegar',
+            title: 'Rhaegar',
           },
           {
             key: '212',
-            content: 'Viserys',
+            title: 'Viserys',
           },
           {
             key: '213',
-            content: 'Daenerys',
+            title: 'Daenerys',
           },
         ],
       },

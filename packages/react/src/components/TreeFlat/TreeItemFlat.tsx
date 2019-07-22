@@ -9,7 +9,6 @@ import {
   createShorthandFactory,
   commonPropTypes,
   UIComponentProps,
-  ContentComponentProps,
   ChildrenComponentProps,
 } from '../../lib'
 import {
@@ -17,17 +16,16 @@ import {
   WithAsProp,
   withSafeTypeForAs,
   ShorthandCollection,
+  ShorthandValue,
 } from '../../types'
+import TreeTitleFlat, { TreeTitleFlatProps } from './TreeTitleFlat'
 
 export interface TreeItemFlatSlotClassNames {
   title: string
   subtree: string
 }
 
-export interface TreeItemFlatProps
-  extends UIComponentProps,
-    ContentComponentProps,
-    ChildrenComponentProps {
+export interface TreeItemFlatProps extends UIComponentProps, ChildrenComponentProps {
   /** The index of the item among its sibbling */
   index?: number
 
@@ -39,6 +37,9 @@ export interface TreeItemFlatProps
 
   /** Whether or not the subtree of the item is in the open state. */
   open?: boolean
+
+  /** Properties for TreeTitle. */
+  title?: ShorthandValue<TreeTitleFlatProps>
 }
 
 class TreeItemFlat extends UIComponent<WithAsProp<TreeItemFlatProps>> {
@@ -54,7 +55,9 @@ class TreeItemFlat extends UIComponent<WithAsProp<TreeItemFlatProps>> {
   }
 
   static propTypes = {
-    ...commonPropTypes.createCommon(),
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     items: customPropTypes.collectionShorthand,
     index: PropTypes.number,
     onClick: PropTypes.func,
@@ -66,27 +69,40 @@ class TreeItemFlat extends UIComponent<WithAsProp<TreeItemFlatProps>> {
     as: 'div',
   }
 
+  handleTitleOverrides = (predefinedProps: TreeTitleFlatProps) => ({
+    onClick: (e, titleProps) => {
+      this.handleClick(e)
+      _.invoke(predefinedProps, 'onClick', e, titleProps)
+    },
+  })
+
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
+  renderContent() {
+    const { title } = this.props
+
+    return TreeTitleFlat.create(title, {
+      defaultProps: {
+        className: TreeItemFlat.slotClassNames.title,
+      },
+      overrideProps: this.handleTitleOverrides,
+    })
+  }
+
   renderComponent({ ElementType, accessibility, classes, unhandledProps, styles, variables }) {
-    const { children, content } = this.props
+    const { children } = this.props
 
     return (
-      <ElementType
-        className={classes.root}
-        onClick={this.handleClick}
-        tabIndex={0}
-        {...unhandledProps}
-      >
-        {childrenExist(children) ? children : content}
+      <ElementType className={classes.root} onClick={this.handleClick} {...unhandledProps}>
+        {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
     )
   }
 }
 
-TreeItemFlat.create = createShorthandFactory({ Component: TreeItemFlat, mappedProp: 'content' })
+TreeItemFlat.create = createShorthandFactory({ Component: TreeItemFlat, mappedProp: 'title' })
 
 /**
  * A TreeItem renders an item of a Tree.
