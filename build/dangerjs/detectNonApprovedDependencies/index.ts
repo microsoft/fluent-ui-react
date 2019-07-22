@@ -6,6 +6,7 @@ import {
   FailedConstraintsExplanation,
 } from './utils'
 import config from '../../../config'
+import { DangerJS } from '../types'
 
 const { paths } = config
 
@@ -17,7 +18,7 @@ const { paths } = config
  *    - get list of approved dependency's versions,
  *    - check if list of approved versions covers the set of version restrictions.
  */
-const detectNonApprovedDependencies = async dangerJS => {
+const detectNonApprovedDependencies = async (dangerJS: DangerJS) => {
   const { fail, markdown } = dangerJS
   const allFailedVersionConstraints: FailedConstraintsExplanation[] = []
 

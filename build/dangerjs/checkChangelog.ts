@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import { DangerDSLType } from 'danger'
+import { DangerJS } from './types'
 
 const CHANGELOG_FILE = 'CHANGELOG.md'
 
@@ -38,15 +38,7 @@ const getAddedLinesFromChangelog = async (danger): Promise<{ content: string; ln
   })
 }
 
-export default async ({
-  danger,
-  fail,
-  warn,
-}: {
-  danger: DangerDSLType
-  fail: (message: string) => void
-  warn: (message: string) => void
-}) => {
+export default async ({ danger, fail, warn }: DangerJS) => {
   // Check for a CHANGELOG entry
   const hasChangelog = danger.git.modified_files.some(f => f === CHANGELOG_FILE)
 

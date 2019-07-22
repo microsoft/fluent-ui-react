@@ -1,11 +1,5 @@
 import * as _ from 'lodash'
-import { DangerDSLType } from 'danger'
-
-type DangerJS = {
-  danger: DangerDSLType
-  markdown: (markdown: string) => void
-  warn: (message: string) => void
-}
+import { DangerJS } from './types'
 
 const checkDependencyChanges = async dangerJS => {
   const { danger } = dangerJS
