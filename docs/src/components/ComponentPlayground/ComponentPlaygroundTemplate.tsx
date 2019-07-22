@@ -1,5 +1,5 @@
 import { KnobInspector, unstable_KnobContext } from '@stardust-ui/docs-components'
-import { Flex, Header, Segment } from '@stardust-ui/react'
+import { Grid, Header, Segment } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 
@@ -24,41 +24,31 @@ const NoopKnobProvider: React.FunctionComponent = props => {
 const ComponentPlaygroundTemplate: React.FunctionComponent<
   ComponentPlaygroundTemplateProps
 > = props => (
-  <Flex gap="gap.medium">
-    <Flex.Item grow>
-      <Flex column>
-        <Flex.Item grow>
-          <Segment
-            styles={{
-              alignItems: 'center',
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            {props.element || React.createElement(props.component)}
-          </Segment>
-        </Flex.Item>
+  <Grid columns="75% 25%" rows="1fr auto" styles={{ gridColumnGap: '1rem' }}>
+    <Segment styles={{ gridRow: 1 }}>
+      {props.element || React.createElement(props.component)}
+    </Segment>
 
-        {/* ComponentPlaygroundSnippet will evaluate passed component again and if it contains
-            knobs it will execute them again and will fail because hooks with that name have
-            been already registered.
-          */}
-        <NoopKnobProvider>
-          <ComponentPlaygroundSnippet element={props.element} component={props.component} />
-        </NoopKnobProvider>
-      </Flex>
-    </Flex.Item>
+    <Segment color="brand" styles={{ gridRow: '1 / 3' }}>
+      <Header as="h4" className="no-anchor" styles={{ marginTop: 0 }}>
+        Props
+      </Header>
+      <KnobInspector />
+      {props.children}
+    </Segment>
 
-    <Flex.Item align="start" push>
-      <Segment color="brand">
-        <Header as="h4" className="no-anchor" styles={{ marginTop: 0 }}>
-          Props
-        </Header>
-        <KnobInspector />
-        {props.children}
-      </Segment>
-    </Flex.Item>
-  </Flex>
+    {/* ComponentPlaygroundSnippet will evaluate passed component again and if it contains
+        knobs it will execute them again and will fail because hooks with that name have
+        been already registered.
+      */}
+    <NoopKnobProvider>
+      <ComponentPlaygroundSnippet
+        element={props.element}
+        component={props.component}
+        style={{ gridRow: 2 }}
+      />
+    </NoopKnobProvider>
+  </Grid>
 )
 
 export default ComponentPlaygroundTemplate

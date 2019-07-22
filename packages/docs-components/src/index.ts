@@ -13,5 +13,6 @@ export { default as useStringKnob } from './knobs/useStringKnob'
 
 export { formatCode, prettifyCode } from './CodeSnippet/formatCode'
 export { default as CodeSnippet } from './CodeSnippet/CodeSnippet'
+export * from './CodeSnippet/types'
 
 export { default as CopyToClipboard, useCopyToClipboard } from './CopyToClipboard'
