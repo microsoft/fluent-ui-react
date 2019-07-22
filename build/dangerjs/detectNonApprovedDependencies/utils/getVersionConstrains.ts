@@ -72,7 +72,7 @@ export const getDependenciesVersionConstraints = async (
   dependencyChain: string[],
 ): Promise<Constraints> => {
   let detectedConstraints: Constraints = {}
-  const dependenciesWithConstraints = (await parsePackageJson(packageJsonPath)).dependencies // and peer dependencies?
+  const dependenciesWithConstraints = (await parsePackageJson(packageJsonPath)).dependencies
 
   const pendingTasks = dependenciesWithConstraints.map(async dependency => {
     detectedConstraints[dependency] = dependencyChain
