@@ -69,6 +69,7 @@ const parsePackageJson = (packageJsonPath: string): Promise<PackageJson> => {
 
 export const getDependenciesVersionConstraints = async (
   packageJsonPath: string,
+  basePath: string,
   dependencyChain: string[],
 ): Promise<Constraints> => {
   let detectedConstraints: Constraints = {}
@@ -76,7 +77,7 @@ export const getDependenciesVersionConstraints = async (
 
   const pendingTasks = dependenciesWithConstraints.map(async dependency => {
     detectedConstraints[dependency] = dependencyChain
-    const dependencyPackageJson = findPackageJsonOf(dependency, path.dirname(packageJsonPath))
+    const dependencyPackageJson = findPackageJsonOf(dependency, path.dirname(basePath))
 
     if (!dependencyPackageJson) {
       throw new Error(
@@ -89,6 +90,7 @@ export const getDependenciesVersionConstraints = async (
 
     const newConstraints = await getDependenciesVersionConstraints(
       dependencyPackageJson,
+      basePath,
       newDepChain,
     )
     detectedConstraints = { ...detectedConstraints, ...newConstraints }
@@ -118,6 +120,10 @@ export const normalizedVersionConstraints = (
 }
 
 export default async (packageJsonPath: string) => {
-  const detectedConstraints = await getDependenciesVersionConstraints(packageJsonPath, [])
+  const detectedConstraints = await getDependenciesVersionConstraints(
+    packageJsonPath,
+    path.dirname(packageJsonPath),
+    [],
+  )
   return normalizedVersionConstraints(detectedConstraints)
 }
