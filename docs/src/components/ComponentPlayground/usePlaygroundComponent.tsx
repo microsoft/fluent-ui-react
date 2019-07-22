@@ -46,11 +46,6 @@ const usePlaygroundComponent = (componentName: string): [React.ReactElement, str
         return
       }
 
-      // to avoid issues with auto controlled components like a popup
-      if (propDef.defaultValue === false && propValue === false) {
-        return
-      }
-
       propValues[propDef.name] = propValue
 
       return
