@@ -7,7 +7,7 @@ const { paths } = config
 const getRuntimeDependencies = (stardustPackageName: string) => {
   const dependencyRegex = /^dependency:\s+(.*)$/
   const result = spawnSync(
-    `yarn gulp test:dependencies:list --prefix='dependency: ' --package=${stardustPackageName}`,
+    `yarn gulp test:dependencies:list --prefix="dependency: " --package=${stardustPackageName}`,
     {
       shell: true,
       cwd: paths.base(),

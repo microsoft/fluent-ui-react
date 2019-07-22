@@ -1,5 +1,5 @@
 import {
-  checkPackageVersionConstraints,
+  getFailedPackageVersionConstraints,
   getVersionConstrains,
   getRuntimeDependencies,
   getPackageName,
@@ -19,23 +19,23 @@ const { paths } = config
  */
 const detectNonApprovedDependencies = async dangerJS => {
   const { fail, markdown } = dangerJS
-  const failedVersionConstraints: FailedConstraintsExplanation[] = []
+  const allFailedVersionConstraints: FailedConstraintsExplanation[] = []
 
   const dependencyPackageIds = getRuntimeDependencies('react')
   const versionConstraints = await getVersionConstrains(paths.packages('react', 'package.json'))
 
   dependencyPackageIds.forEach(packageId => {
-    const verdict = checkPackageVersionConstraints(
+    const failedPackageVersionConstraints = getFailedPackageVersionConstraints(
       packageId,
       versionConstraints[getPackageName(packageId)] || [],
     )
 
-    if (!verdict.isApproved) {
-      failedVersionConstraints.push(verdict.explain)
+    if (failedPackageVersionConstraints) {
+      allFailedVersionConstraints.push(failedPackageVersionConstraints)
     }
   })
 
-  if (failedVersionConstraints.length) {
+  if (allFailedVersionConstraints.length) {
     markdown(
       [
         '## Non-approved dependencies are detected.',
@@ -44,7 +44,7 @@ const detectNonApprovedDependencies = async dangerJS => {
         'failed constrains | approved candidates',
         '--- | --- ',
 
-        failedVersionConstraints.map(
+        allFailedVersionConstraints.map(
           explanation =>
             `${explanation.failedConstraints.join(', ')} | ${
               explanation.approvedPackages.length
