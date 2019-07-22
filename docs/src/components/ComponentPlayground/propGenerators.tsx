@@ -98,10 +98,10 @@ export const trigger: KnobGenerator<React.ReactElement> = ({ propName }) => ({
   name: propName,
 })
 
-export const trapFocus: KnobGenerator<boolean> = ({ componentInfo, propName }) => ({
+export const trapFocus: KnobGenerator<boolean> = ({ componentInfo, propDef, propName }) => ({
   hook: useBooleanKnob,
   name: propName,
-  initialValue: false,
+  initialValue: propDef.defaultValue,
 })
 
 export const src: KnobGenerator<string> = ({ componentInfo, propName }) => {
