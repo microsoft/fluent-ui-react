@@ -98,7 +98,7 @@ export const mergeSiteVariables = (
     ...target,
     fontSizes: (target && target.fontSizes) || {},
   }
-  return sources.reduce<SiteVariablesPrepared>((acc, next) => _.merge(acc, next), initial)
+  return sources.reduce<SiteVariablesPrepared>((acc, next) => ({ ...acc, ...next }), initial)
 }
 
 /**
