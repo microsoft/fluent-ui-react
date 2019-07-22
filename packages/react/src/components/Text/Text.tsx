@@ -13,7 +13,7 @@ import {
   ColorComponentProps,
   rtlTextContainer,
   SizeValue,
-  TextAlignValue,
+  AlignValue,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -54,7 +54,7 @@ export interface TextProps
   temporary?: boolean
 
   /** Align text content. */
-  textAlign?: TextAlignValue
+  align?: AlignValue
 
   /** Set as timestamp Text component */
   timestamp?: boolean
@@ -80,7 +80,7 @@ class Text extends UIComponent<WithAsProp<TextProps>, any> {
     weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
     success: PropTypes.bool,
     temporary: PropTypes.bool,
-    textAlign: customPropTypes.textAlign,
+    align: customPropTypes.align,
     timestamp: PropTypes.bool,
     truncated: PropTypes.bool,
   }

@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { Header } from '@stardust-ui/react'
 
-const HeaderExampleTextAlign = () => (
-  <Header as="h1" textAlign="end">
+const HeaderExampleAlign = () => (
+  <Header as="h1" align="end">
     Header aligned to end
   </Header>
 )
 
-export default HeaderExampleTextAlign
+export default HeaderExampleAlign

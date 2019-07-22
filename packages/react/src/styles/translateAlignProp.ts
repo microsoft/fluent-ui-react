@@ -1,7 +1,7 @@
 import { TextAlignProperty } from 'csstype'
-import { TextAlignValue } from '../lib'
+import { AlignValue } from '../lib'
 
-const translateTextAlignProp = (textAlignProp: TextAlignValue): TextAlignProperty => {
+const translateAlignProp = (textAlignProp: AlignValue): TextAlignProperty => {
   switch (textAlignProp) {
     case 'start':
       return 'left'
@@ -12,4 +12,4 @@ const translateTextAlignProp = (textAlignProp: TextAlignValue): TextAlignPropert
   }
 }
 
-export default translateTextAlignProp
+export default translateAlignProp

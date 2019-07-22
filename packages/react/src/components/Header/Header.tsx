@@ -12,7 +12,7 @@ import {
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
-  TextAlignValue,
+  AlignValue,
 } from '../../lib'
 import HeaderDescription, { HeaderDescriptionProps } from './HeaderDescription'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -37,7 +37,7 @@ export interface HeaderProps
   description?: ShorthandValue<HeaderDescriptionProps>
 
   /** Align header content. */
-  textAlign?: TextAlignValue
+  align?: AlignValue
 }
 
 class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
@@ -54,7 +54,7 @@ class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),
     description: customPropTypes.itemShorthand,
-    textAlign: customPropTypes.textAlign,
+    align: customPropTypes.align,
     rtlAttributes: PropTypes.func,
   }
 

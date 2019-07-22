@@ -5,9 +5,9 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
-      title="TextAlign"
-      description="Text may be aligned to the left, right, center or be justified."
-      examplePath="components/Text/Variations/TextExampleTextAlign"
+      title="Align"
+      description="Text may be aligned to the start, end, center or be justified."
+      examplePath="components/Text/Variations/TextExampleAlign"
     />
     <ComponentExample
       title="Color"

@@ -1,7 +1,7 @@
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { TextVariables } from './textVariables'
 import { TextProps } from '../../../../components/Text/Text'
-import translateTextAlignProp from '../../../../styles/translateTextAlignProp'
+import translateAlignProp from '../../../../styles/translateAlignProp'
 
 export default {
   root: ({
@@ -16,7 +16,7 @@ export default {
       size,
       success,
       temporary,
-      textAlign,
+      align,
       timestamp,
       truncated,
       weight,
@@ -36,7 +36,7 @@ export default {
       ...(success && { color: v.successColor }),
       ...(important && { color: v.importantColor }),
       ...(temporary && { fontStyle: 'italic' }),
-      ...(textAlign && { display: 'block', textAlign: translateTextAlignProp(textAlign) }), // textAlign makes sense only for block elements
+      ...(align && { display: 'block', textAlign: translateAlignProp(align) }), // textAlign makes sense only for block elements
       ...(timestamp && { color: v.timestampColor }),
 
       ...(weight === 'light' && { fontWeight: v.fontWeightLight }),
