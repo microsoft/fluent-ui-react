@@ -62,30 +62,38 @@ class TreeFlat extends UIComponent<WithAsProp<TreeFlatProps>, TreeFlatState> {
     onClick: (e: React.SyntheticEvent, treeItemProps: TreeItemFlatProps) => {
       const { index, open, items } = treeItemProps
       const { visibleItems } = this.state
-      const start = index
       if (open) {
         const end = visibleItems.indexOf(_.last(items))
-        const count = end - start
-
-        visibleItems.splice(start, count)
+        this.setState({
+          visibleItems: [...visibleItems.slice(0, index + 1), ...visibleItems.slice(end + 1)],
+        })
       } else {
-        visibleItems.splice(start + 1, 0, ...items)
+        const subItems = visibleItems[index]['items']
+        if (!subItems) {
+          return
+        }
+        this.setState({
+          visibleItems: [
+            ...visibleItems.slice(0, index + 1),
+            ...subItems,
+            ...visibleItems.slice(index + 1),
+          ],
+        })
       }
-      this.setState({
-        visibleItems,
-      })
       _.invoke(predefinedProps, 'onClick', e, treeItemProps)
     },
   })
 
   renderItem = ({ index, style }) => {
     const { visibleItems } = this.state
+    const isSubtree = !!visibleItems[index]['items']
+    const open = isSubtree && visibleItems[index + 1] === visibleItems[index]['items'][0]
     return TreeItemFlat.create(visibleItems[index], {
       defaultProps: {
         className: TreeFlat.slotClassNames.item,
         index,
         style,
-        open: visibleItems[index + 1] === visibleItems[index]['items'][0],
+        open,
       },
       overrideProps: this.handleTreeItemOverrides,
     })
