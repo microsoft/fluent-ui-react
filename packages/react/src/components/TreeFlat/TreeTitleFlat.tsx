@@ -42,7 +42,7 @@ export interface TreeTitleFlatProps
 class TreeTitleFlat extends UIComponent<WithAsProp<TreeTitleFlatProps>> {
   static create: Function
 
-  static className = 'ui-tree__title'
+  static className = 'ui-treeflat__title'
 
   static displayName = 'FlatTreeTitle'
 

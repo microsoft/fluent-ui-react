@@ -22,7 +22,6 @@ import TreeTitleFlat, { TreeTitleFlatProps } from './TreeTitleFlat'
 
 export interface TreeItemFlatSlotClassNames {
   title: string
-  subtree: string
 }
 
 export interface TreeItemFlatProps extends UIComponentProps, ChildrenComponentProps {
@@ -47,11 +46,10 @@ class TreeItemFlat extends UIComponent<WithAsProp<TreeItemFlatProps>> {
 
   static displayName = 'TreeItemFlat'
 
-  static className = 'ui-tree__itemflat'
+  static className = 'ui-treeflat__item'
 
   static slotClassNames: TreeItemFlatSlotClassNames = {
     title: `${TreeItemFlat.className}__title`,
-    subtree: `${TreeItemFlat.className}__subtree`,
   }
 
   static propTypes = {

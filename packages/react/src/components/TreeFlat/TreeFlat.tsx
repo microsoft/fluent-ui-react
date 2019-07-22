@@ -88,6 +88,7 @@ class TreeFlat extends UIComponent<WithAsProp<TreeFlatProps>, TreeFlatState> {
     const { visibleItems } = this.state
     const isSubtree = !!visibleItems[index]['items']
     const open = isSubtree && visibleItems[index + 1] === visibleItems[index]['items'][0]
+
     return TreeItemFlat.create(visibleItems[index], {
       defaultProps: {
         className: TreeFlat.slotClassNames.item,
