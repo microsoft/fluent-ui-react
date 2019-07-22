@@ -1,24 +1,28 @@
+import { useBooleanKnob } from '@stardust-ui/docs-components'
 import * as React from 'react'
-import { Button, Input, Popup } from '@stardust-ui/react'
+import { Button, Input, Popup, Flex } from '@stardust-ui/react'
 
-class PopupControlledExample extends React.Component {
-  state = { open: false }
+const PopupControlledExample = () => {
+  const [open, setOpen] = useBooleanKnob({ name: 'open' })
 
-  handleOpenChange = (e, { open }) => {
-    alert(`Popup requested to change its open state to "${open}".`)
-    this.setState({ open })
-  }
+  const popupContent = (
+    <Flex column>
+      <Flex.Item align="end">
+        <Button text iconOnly icon="close" onClick={() => setOpen(false)} title="Close" />
+      </Flex.Item>
+      <Input icon="search" placeholder="Search..." />
+    </Flex>
+  )
 
-  render() {
-    return (
-      <Popup
-        open={this.state.open}
-        onOpenChange={this.handleOpenChange}
-        trigger={<Button icon="expand" />}
-        content={{ content: <Input icon="search" placeholder="Search..." /> }}
-      />
-    )
-  }
+  return (
+    <Popup
+      open={open}
+      onOpenChange={(e, { open }) => setOpen(open)}
+      trigger={<Button icon="expand" title="Open popup" />}
+      content={popupContent}
+      trapFocus
+    />
+  )
 }
 
 export default PopupControlledExample

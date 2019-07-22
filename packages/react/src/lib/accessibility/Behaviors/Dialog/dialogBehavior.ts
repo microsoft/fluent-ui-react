@@ -1,6 +1,5 @@
 import { Accessibility, AccessibilityAttributes } from '../../types'
-import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
-import { PopupBehaviorProps } from '../Popup/popupBehavior'
+import popupBehavior, { PopupBehaviorProps } from '../Popup/popupBehavior'
 
 /**
  * @description
@@ -13,10 +12,9 @@ import { PopupBehaviorProps } from '../Popup/popupBehavior'
  * Adds attribute 'role=dialog' to 'popup' slot.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'popup' slot.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'popup' slot.
- * Traps focus inside component.
  */
 const dialogBehavior: Accessibility<DialogBehaviorProps> = props => {
-  const behaviorData = popupFocusTrapBehavior(props)
+  const behaviorData = popupBehavior(props)
 
   const defaultAriaLabelledBy = getDefaultAriaLabelledBy(props)
   const defaultAriaDescribedBy = getDefaultAriaDescribedBy(props)
@@ -24,6 +22,7 @@ const dialogBehavior: Accessibility<DialogBehaviorProps> = props => {
   behaviorData.attributes.popup = {
     ...behaviorData.attributes.popup,
     role: 'dialog',
+    'aria-modal': true,
     'aria-labelledby': defaultAriaLabelledBy || props['aria-labelledby'],
     'aria-describedby': defaultAriaDescribedBy || props['aria-describedby'],
   }

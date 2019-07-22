@@ -17,17 +17,19 @@ import {
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import {
+  WithAsProp,
+  ComponentEventHandler,
+  withSafeTypeForAs,
+  ShorthandCollection,
+} from '../../types'
 
 export interface RadioGroupSlotClassNames {
   item: string
 }
 
 export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default radioGroupBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Value of the currently checked radio item. */
@@ -44,7 +46,7 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
   defaultCheckedValue?: number | string
 
   /** Shorthand array of props for RadioGroup. */
-  items?: ShorthandValue[]
+  items?: ShorthandCollection<RadioGroupItemProps>
 
   /** A vertical radio group displays elements vertically. */
   vertical?: boolean
@@ -205,7 +207,8 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
 }
 
 /**
- * A radio group allows a user to select a value from a small set of options.
+ * A RadioGroup allows user to select a value from a small set of mutually exclusive options.
+ *
  * @accessibility
  * Implements [ARIA Radio Group](https://www.w3.org/TR/wai-aria-practices-1.1/#radiobutton) design pattern.
  */

@@ -276,16 +276,25 @@ export default () => (
     <ExampleSnippet
       value={`
         <div>
-          /* Default theming */
-          <Header as="h3" content="Default" />
-          <Button primary>Branding</Button>
+          {/* Default theming */}
+          <Header as="h3" content="Default theming" />
+          <Button content="Button" />
+          <Button icon="plus" iconOnly primary />
+          <Button icon="at" content="Send email" secondary />
+          <Icon name="chess rook" size="larger" />
+          <Label content="Label with icon" icon="close" />
 
-          /* First nested theming */
+          {/* First nested theming */}
           <Provider
             theme={{
-              siteVariables: { brand: 'darkred' },
+              componentVariables: {
+                Button: {
+                  primaryBackgroundColor: 'darkred',
+                },
+              },
             }}
           >
+
             <div>
               <Header as="h3" content="First nested theming" />
 
@@ -295,7 +304,7 @@ export default () => (
               <Icon name="chess rook" size="larger" />
               <Label content="Label with icon" icon="close" />
 
-              /* Second nested theming */
+              {/* Second nested theming */}
               <Provider
                 theme={{
                   componentStyles: {
@@ -330,7 +339,11 @@ export default () => (
 
           <Provider
             theme={{
-              siteVariables: { brand: 'darkred' },
+              componentVariables: {
+                Button: {
+                  primaryBackgroundColor: 'darkred',
+                },
+              },
             }}
           >
             <>

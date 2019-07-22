@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 
 import { MenuButtonProps, MenuButtonState } from './MenuButton'
 
-const menuButtonBehavior: Accessibility = (props: MenuButtonProps & MenuButtonState) => ({
+const menuButtonBehavior: Accessibility<MenuButtonProps & MenuButtonState> = props => ({
   attributes: {
     button: {
       'aria-disabled': !_.isNil(props['aria-disabled']) ? props['aria-disabled'] : !!props.disabled,

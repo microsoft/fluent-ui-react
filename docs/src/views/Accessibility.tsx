@@ -326,17 +326,18 @@ export default () => (
 
     <Header as="h3" content="Focus Trap Zone" />
     <p>
-      FocusTrapZone is used to trap the focus in any html element. Pressing TAB key will circle
-      focus within the inner focusable elements of the FocusTrapZone. For example, when Popup opens,
-      we want the focus go inside Popup and trap there.{' '}
+      FocusTrapZone is used to grab and trap the focus inside an HTML element. Currently can be used
+      only in {code('Popup')} and {code('Dialog')} components. Pressing TAB key will circle focus
+      within the inner focusable elements of the FocusTrapZone. For example, when Popup opens, we
+      want the focus to go inside Popup and trap there.{' '}
       {link('Read more about FocusTrapZone.', '/focus-trap-zone')}
     </p>
 
     <Header as="h3" content="Auto Focus Zone" />
     <p>
-      AutoFocusZone is used to focus inner element on mount. For example, when we want to focus
-      inner element in Popup when it mounts, but still without focus trap.{' '}
-      {link('Read more about AutoFocusZone.', '/auto-focus-zone')}
+      AutoFocusZone is used to focus inner element on mount. Currently can be used in{' '}
+      {code('Popup')}. For example, when we want to focus inner element in Popup when it mounts, but
+      still without focus trap. {link('Read more about AutoFocusZone.', '/auto-focus-zone')}
     </p>
 
     <Header as="h3" content="Focus indicator" />
@@ -355,10 +356,8 @@ export default () => (
 
     <Header as="h3" content="Right Click Support" />
     <p>
-      For cases when right click is used to execute a secondary action (for example, a context
-      menu), a keyboar shortcut needs to be provided to allow the keyboard / screen reader users to
-      execute the secondary action. Also, screen reader has to make the user aware about the
-      presence of the secondary action.
+      Screen reader has to make the user aware about the presence of the secondary action by a short
+      meaningful label or description on the trigger element.
     </p>
 
     <Header as="h3" content="Elements that appear on hover over another element" />

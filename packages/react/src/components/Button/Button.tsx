@@ -15,8 +15,8 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import Icon from '../Icon/Icon'
-import Box from '../Box/Box'
+import Icon, { IconProps } from '../Icon/Icon'
+import Box, { BoxProps } from '../Box/Box'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
@@ -24,12 +24,9 @@ import ButtonGroup from './ButtonGroup'
 
 export interface ButtonProps
   extends UIComponentProps,
-    ContentComponentProps<ShorthandValue>,
+    ContentComponentProps<ShorthandValue<BoxProps>>,
     ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default buttonBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** A button can appear circular. */
@@ -41,10 +38,8 @@ export interface ButtonProps
   /** A button can take the width of its container. */
   fluid?: boolean
 
-  /** Button can have an icon.
-   * @slot
-   */
-  icon?: ShorthandValue
+  /** Button can have an icon. */
+  icon?: ShorthandValue<IconProps>
 
   /** A button may indicate that it has only icon. */
   iconOnly?: boolean
@@ -94,7 +89,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
     fluid: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     iconOnly: PropTypes.bool,
     iconPosition: PropTypes.oneOf(['before', 'after']),
     onClick: PropTypes.func,
@@ -187,8 +182,9 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
 Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
 
 /**
- * A button indicates a possible user action.
+ * A Button enables users to trigger an event or take an action, such as submitting a form, opening a dialog, etc.
+ *
  * @accessibility
- * Do add textual representation if the component only contains an icon (using title, aria-label or aria-labelledby props).
+ * Implements [ARIA Button](https://www.w3.org/TR/wai-aria-practices-1.1/#button) design pattern.
  */
 export default withSafeTypeForAs<typeof Button, ButtonProps, 'button'>(Button)

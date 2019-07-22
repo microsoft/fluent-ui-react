@@ -9,7 +9,6 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
-import { defaultBehavior } from '../../lib/accessibility'
 
 export interface ToolbarMenuDividerProps
   extends UIComponentProps,
@@ -17,7 +16,6 @@ export interface ToolbarMenuDividerProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 }
@@ -34,7 +32,6 @@ class ToolbarMenuDivider extends UIComponent<WithAsProp<ToolbarMenuDividerProps>
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'li',
   }
 
@@ -55,8 +52,7 @@ ToolbarMenuDivider.create = createShorthandFactory({
 })
 
 /**
- * Toolbar menu divider.
- * Adds visual non-selectable separator between items.
+ * A ToolbarMenuDivider adds non-actionable separator between items of ToolbarMenu.
  */
 export default withSafeTypeForAs<typeof ToolbarMenuDivider, ToolbarMenuDividerProps, 'li'>(
   ToolbarMenuDivider,

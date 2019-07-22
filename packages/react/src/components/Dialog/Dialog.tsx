@@ -20,39 +20,40 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
-import Header from '../Header/Header'
+import Header, { HeaderProps } from '../Header/Header'
 import Portal from '../Portal/Portal'
 import Flex from '../Flex/Flex'
 
 export interface DialogSlotClassNames {
   header: string
+  headerAction: string
   content: string
 }
 
 export interface DialogProps
   extends UIComponentProps,
-    ContentComponentProps<ShorthandValue>,
+    ContentComponentProps<ShorthandValue<BoxProps>>,
     ColorComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default dialogBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** A dialog can contain actions. */
-  actions?: ShorthandValue
+  actions?: ShorthandValue<BoxProps>
 
   /** A dialog can contain a cancel button. */
-  cancelButton?: ShorthandValue
+  cancelButton?: ShorthandValue<ButtonProps>
 
   /** A dialog can contain a confirm button. */
-  confirmButton?: ShorthandValue
+  confirmButton?: ShorthandValue<ButtonProps>
 
   /** Initial value for 'open'. */
   defaultOpen?: boolean
 
   /** A dialog can contain a header. */
-  header?: ShorthandValue
+  header?: ShorthandValue<HeaderProps>
+
+  /** A dialog can contain a button next to the header. */
+  headerAction?: ShorthandValue<ButtonProps>
 
   /**
    * Called after user's click a cancel button.
@@ -79,7 +80,7 @@ export interface DialogProps
   open?: boolean
 
   /** A dialog can contain a overlay. */
-  overlay?: ShorthandValue
+  overlay?: ShorthandValue<BoxProps>
 
   /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value. */
   trapFocus?: true | FocusTrapZoneProps
@@ -94,9 +95,6 @@ export interface DialogState {
   open?: boolean
 }
 
-/**
- * A Dialog informs users about specific tasks or may contain critical information, require decisions, or involve multiple interactions.
- */
 class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogState> {
   static displayName = 'Dialog'
   static className = 'ui-dialog'
@@ -110,6 +108,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       color: true,
     }),
     actions: customPropTypes.itemShorthand,
+    headerAction: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
     confirmButton: customPropTypes.itemShorthand,
     defaultOpen: PropTypes.bool,
@@ -207,6 +206,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       cancelButton,
       content,
       header,
+      headerAction,
       overlay,
       trapFocus,
       trigger,
@@ -227,6 +227,15 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               className: Dialog.slotClassNames.header,
               styles: styles.header,
               ...accessibility.attributes.header,
+            },
+          })}
+          {Button.create(headerAction, {
+            defaultProps: {
+              className: Dialog.slotClassNames.headerAction,
+              styles: styles.headerAction,
+              text: true,
+              iconOnly: true,
+              ...accessibility.attributes.headerAction,
             },
           })}
           {Box.create(content, {
@@ -285,11 +294,14 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 
 Dialog.slotClassNames = {
   header: `${Dialog.className}__header`,
+  headerAction: `${Dialog.className}__headerAction`,
   content: `${Dialog.className}__content`,
 }
 
 /**
  * A Dialog displays important information on top of a page which usually requires user's attention, confirmation or interaction.
+ * Dialogs are purposefully interruptive, so they should be used sparingly.
+ *
  * @accessibility
  * Implements [ARIA Dialog (Modal)](https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal) design pattern.
  */

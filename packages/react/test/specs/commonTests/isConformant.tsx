@@ -152,7 +152,7 @@ export default (Component, options: Conformant = {}) => {
   // ----------------------------------------
   // Docblock description
   // ----------------------------------------
-  const hasDocblockDescription = info.docblock.description.join('').trim().length > 0
+  const hasDocblockDescription = info.docblock.description.trim().length > 0
 
   test('has a docblock description', () => {
     expect(hasDocblockDescription).toEqual(true)
@@ -335,10 +335,6 @@ export default (Component, options: Conformant = {}) => {
           role,
         },
       },
-    })
-
-    test('defines an "accessibility" prop in Component.defaultProps', () => {
-      expect(Component.defaultProps).toHaveProperty('accessibility')
     })
 
     test('defines an "accessibility" prop in Component.handledProps', () => {
