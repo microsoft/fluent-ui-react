@@ -1,5 +1,5 @@
 import { KnobProvider } from '@stardust-ui/docs-components'
-import _ from 'lodash'
+import * as _ from 'lodash'
 import * as React from 'react'
 
 import { examplePlaygroundContext } from 'docs/src/utils'

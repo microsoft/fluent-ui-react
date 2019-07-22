@@ -16,6 +16,7 @@ export const content: KnobGenerator<string> = ({ propName }) => ({
 export const color: KnobGenerator<string> = ({ propName, propDef, componentInfo, theme }) => ({
   hook: useSelectKnob,
   name: propName,
+  allowsNone: true,
   initialValue: propDef.defaultValue,
   values: Object.keys({
     ...theme.siteVariables.contextualColors,
@@ -23,14 +24,15 @@ export const color: KnobGenerator<string> = ({ propName, propDef, componentInfo,
   }),
 })
 
-export const name: KnobGenerator<string> = ({ componentInfo, propName, theme }) => {
+export const name: KnobGenerator<string> = ({ componentInfo, propDef, propName, theme }) => {
   if (componentInfo.displayName === 'Icon') {
     const values = Object.keys(theme.icons).slice(0, 10)
 
     return {
       hook: useSelectKnob,
       name: propName,
-      initialValue: values[0],
+      allowsNone: _.isNil(propDef.defaultValue),
+      initialValue: propDef.defaultValue,
       values,
     }
   }

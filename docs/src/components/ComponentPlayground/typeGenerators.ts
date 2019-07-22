@@ -20,6 +20,7 @@ export const boolean: KnobGenerator<boolean> = ({ propName, propDef }) => ({
 export const literal: KnobGenerator<string[]> = ({ propName, propDef }) => ({
   hook: useSelectKnob,
   name: propName,
+  allowsNone: _.isNil(propDef.defaultValue),
   initialValue: propDef.defaultValue,
   values: propDef.types.map(type => type.value).filter(Boolean),
 })
