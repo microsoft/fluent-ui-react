@@ -44,14 +44,16 @@ const detectNonApprovedDependencies = async dangerJS => {
         'failed constrains | approved candidates',
         '--- | --- ',
 
-        allFailedVersionConstraints.map(
-          explanation =>
-            `${explanation.failedConstraints.join(', ')} | ${
-              explanation.approvedPackages.length
-                ? explanation.approvedPackages.join(', ')
-                : '_there are no any approved packages_'
-            }`,
-        ),
+        allFailedVersionConstraints
+          .map(
+            explanation =>
+              `${explanation.failedConstraints.join(', ')} | ${
+                explanation.approvedPackages.length
+                  ? explanation.approvedPackages.join(', ')
+                  : '_there are no any approved packages_'
+              }`,
+          )
+          .join('\n'),
       ].join('\n'),
     )
 

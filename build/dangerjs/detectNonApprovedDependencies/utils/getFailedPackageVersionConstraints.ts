@@ -10,7 +10,7 @@ export type FailedConstraintsExplanation = {
 
 const getFailedPackageVersionConstraints = (
   packageId: string,
-  versionConstraints: string[],
+  versionConstraintsToSatisfy: string[],
 ): FailedConstraintsExplanation | null => {
   const packageName = getPackageName(packageId)
 
@@ -18,23 +18,27 @@ const getFailedPackageVersionConstraints = (
     return null
   }
 
-  const failedConstraints = []
+  const satisfiedVersionConstraints: { [VersionConstraint: string]: true } = {}
   const approvedPackageIds = approvedPackages.filter(item => item.startsWith(`${packageName}@`))
 
   approvedPackageIds.map(getPackageVersion).forEach(approvedPackageVersion => {
-    versionConstraints.forEach(versionConstraint => {
-      if (!semver.satisfies(approvedPackageVersion, versionConstraint)) {
-        failedConstraints.push(versionConstraint)
+    versionConstraintsToSatisfy.forEach(versionConstraint => {
+      if (semver.satisfies(approvedPackageVersion, versionConstraint)) {
+        satisfiedVersionConstraints[versionConstraint] = true
       }
     })
   })
 
-  const isApproved = failedConstraints.length === 0
+  const failedVersionConstraints = versionConstraintsToSatisfy.filter(
+    constraint => !satisfiedVersionConstraints[constraint],
+  )
+
+  const isApproved = failedVersionConstraints.length === 0
 
   return isApproved
     ? null
     : {
-        failedConstraints: failedConstraints.map(
+        failedConstraints: failedVersionConstraints.map(
           versionConstraint => `${packageName}@${versionConstraint}`,
         ),
         approvedPackages: approvedPackageIds,
