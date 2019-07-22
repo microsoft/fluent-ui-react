@@ -1,6 +1,5 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-import { TextAlignProperty } from 'csstype'
 
 import leven from './leven'
 
@@ -493,22 +492,7 @@ export const size = PropTypes.oneOf([
   'largest',
 ])
 
-const textAlignValues: TextAlignProperty[] = [
-  '-moz-initial',
-  'inherit',
-  'initial',
-  'revert',
-  'unset',
-  'center',
-  'end',
-  'justify',
-  'left',
-  'match-parent',
-  'right',
-  'start',
-]
-
-export const textAlign = PropTypes.oneOf(textAlignValues)
+export const textAlign = PropTypes.oneOf(['start', 'end', 'center', 'justified'])
 
 export const animation = PropTypes.oneOfType([
   // Validator is broken in the latest @react/types
