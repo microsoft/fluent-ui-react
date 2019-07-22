@@ -17,8 +17,8 @@ import { Accessibility } from '../../lib/accessibility/types'
 export interface GridProps extends UIComponentProps, ChildrenComponentProps, ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @available gridBehavior
-   */
+   * @available gridBehavior, gridHorizontalBehavior
+   * */
   accessibility?: Accessibility
 
   /** The columns of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */

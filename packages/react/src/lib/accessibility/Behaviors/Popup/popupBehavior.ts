@@ -17,7 +17,9 @@ const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
   return {
     attributes: {
       trigger: {
-        tabIndex: getAriaAttributeFromProps('tabIndex', props, 0),
+        ...(props.shouldTriggerBeTabbable
+          ? { tabIndex: getAriaAttributeFromProps('tabIndex', props, 0) }
+          : undefined),
         'aria-disabled': props.disabled,
       },
       popup: {
@@ -29,6 +31,17 @@ const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
       popup: {
         closeAndFocusTrigger: {
           keyCombinations: [{ keyCode: keyboardKey.Escape }],
+        },
+        preventScroll: {
+          keyCombinations: props.isOpenedByRightClick &&
+            _.includes(onAsArray, 'context') && [
+              { keyCode: keyboardKey.ArrowDown },
+              { keyCode: keyboardKey.ArrowUp },
+              { keyCode: keyboardKey.PageDown },
+              { keyCode: keyboardKey.PageUp },
+              { keyCode: keyboardKey.Home },
+              { keyCode: keyboardKey.End },
+            ],
         },
       },
       trigger: {
@@ -42,10 +55,11 @@ const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
           ],
         },
         open: {
-          keyCombinations: _.includes(onAsArray, 'hover') && [
-            { keyCode: keyboardKey.Enter },
-            { keyCode: keyboardKey.Spacebar },
-          ],
+          keyCombinations: _.includes(onAsArray, 'hover') &&
+            !_.includes(onAsArray, 'context') && [
+              { keyCode: keyboardKey.Enter },
+              { keyCode: keyboardKey.Spacebar },
+            ],
         },
       },
     },
@@ -103,4 +117,8 @@ export type PopupBehaviorProps = {
     /** Element type. */
     type?: string
   }
+  /** Whether the trigger should be tabbable */
+  shouldTriggerBeTabbable?: boolean
+  /** Whether the popup was opened by right click */
+  isOpenedByRightClick?: boolean
 }
