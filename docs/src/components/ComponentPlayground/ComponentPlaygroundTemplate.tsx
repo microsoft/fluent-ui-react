@@ -23,32 +23,45 @@ const NoopKnobProvider: React.FunctionComponent = props => {
 
 const ComponentPlaygroundTemplate: React.FunctionComponent<
   ComponentPlaygroundTemplateProps
-> = props => (
-  <Grid columns="75% 25%" rows="1fr auto" styles={{ gridColumnGap: '1rem' }}>
-    <Segment styles={{ gridRow: 1 }}>
-      {props.element || React.createElement(props.component)}
-    </Segment>
+> = props => {
+  // @ts-ignore
+  const shouldStretch = props.element && props.element.type.displayName === 'Divider'
 
-    <Segment color="brand" styles={{ gridRow: '1 / 3' }}>
-      <Header as="h4" className="no-anchor" styles={{ marginTop: 0 }}>
-        Props
-      </Header>
-      <KnobInspector />
-      {props.children}
-    </Segment>
+  return (
+    <Grid columns="75% 25%" rows="1fr auto" styles={{ gridColumnGap: '1rem' }}>
+      <Segment
+        styles={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: shouldStretch ? 'stretch' : 'center',
+          justifyContent: 'center',
+          gridRow: 1,
+        }}
+      >
+        {props.element || React.createElement(props.component)}
+      </Segment>
 
-    {/* ComponentPlaygroundSnippet will evaluate passed component again and if it contains
+      <Segment color="brand" styles={{ gridRow: '1 / 3' }}>
+        <Header as="h4" className="no-anchor" styles={{ marginTop: 0 }}>
+          Props
+        </Header>
+        <KnobInspector />
+        {props.children}
+      </Segment>
+
+      {/* ComponentPlaygroundSnippet will evaluate passed component again and if it contains
         knobs it will execute them again and will fail because hooks with that name have
         been already registered.
       */}
-    <NoopKnobProvider>
-      <ComponentPlaygroundSnippet
-        element={props.element}
-        component={props.component}
-        style={{ gridRow: 2 }}
-      />
-    </NoopKnobProvider>
-  </Grid>
-)
+      <NoopKnobProvider>
+        <ComponentPlaygroundSnippet
+          element={props.element}
+          component={props.component}
+          style={{ gridRow: 2 }}
+        />
+      </NoopKnobProvider>
+    </Grid>
+  )
+}
 
 export default ComponentPlaygroundTemplate
