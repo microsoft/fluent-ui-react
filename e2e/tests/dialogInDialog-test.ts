@@ -24,7 +24,7 @@ describe('Dialog in Dialog', () => {
     expect(await e2e.exists(innerHeader)).toBe(true)
   })
 
-  it('A click inside inner "Dialog" should do nothing', async () => {
+  it('A click inside inner "Dialog" should not close dialogs', async () => {
     await e2e.clickOn(outerTrigger)
     await e2e.clickOn(innerTrigger)
     await e2e.clickOn(innerHeader)
