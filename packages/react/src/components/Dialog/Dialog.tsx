@@ -29,6 +29,7 @@ export interface DialogSlotClassNames {
   header: string
   headerAction: string
   content: string
+  overlay: string
 }
 
 export interface DialogProps
@@ -297,6 +298,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               >
                 {Box.create(overlay, {
                   defaultProps: {
+                    className: Dialog.slotClassNames.overlay,
                     styles: styles.overlay,
                   },
                   overrideProps: { content: dialogContent },
@@ -320,6 +322,7 @@ Dialog.slotClassNames = {
   header: `${Dialog.className}__header`,
   headerAction: `${Dialog.className}__headerAction`,
   content: `${Dialog.className}__content`,
+  overlay: `${Dialog.className}__overlay`,
 }
 
 /**
