@@ -39,14 +39,10 @@ export class E2EApi {
     return (await this.count(selector)) > 0
   }
 
-  public clickOn = async (selector: string, x?: number, y?: number) => {
+  public clickOn = async (selector: string) => await (await this.getElement(selector)).click()
+
+  public clickOnPosition = async (selector: string, x: number, y: number) => {
     const elementHandle = await this.getElement(selector)
-
-    if (x === undefined && y === undefined) {
-      await elementHandle.click()
-      return
-    }
-
     const boundingBox = await elementHandle.boundingBox()
 
     await this.page.mouse.click(Math.round(boundingBox.x) + x, Math.round(boundingBox.y) + y)

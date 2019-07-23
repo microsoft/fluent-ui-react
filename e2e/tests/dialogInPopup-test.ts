@@ -43,7 +43,7 @@ describe('Dialog in Popup', () => {
   it('"Popup" will be kept open on a click inside "Dialog" overlay', async () => {
     await e2e.clickOn(popupTrigger)
     await e2e.clickOn(dialogTrigger)
-    await e2e.clickOn(dialogOverlay, 0, 0)
+    await e2e.clickOnPosition(dialogOverlay, 0, 0)
 
     expect(await e2e.exists(popupContent)).toBe(true)
     expect(await e2e.exists(dialogHeader)).toBe(false)

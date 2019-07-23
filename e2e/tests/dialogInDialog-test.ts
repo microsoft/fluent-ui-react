@@ -37,12 +37,12 @@ describe('Dialog in Dialog', () => {
     await e2e.clickOn(outerTrigger)
     await e2e.clickOn(innerTrigger)
 
-    await e2e.clickOn(innerOverlay, 0, 0)
+    await e2e.clickOnPosition(innerOverlay, 0, 0)
 
     expect(await e2e.exists(outerHeader)).toBe(true)
     expect(await e2e.exists(innerHeader)).toBe(false)
 
-    await e2e.clickOn(outerOverlay, 0, 0)
+    await e2e.clickOnPosition(outerOverlay, 0, 0)
     expect(await e2e.exists(outerHeader)).toBe(false)
     expect(await e2e.exists(innerHeader)).toBe(false)
   })
