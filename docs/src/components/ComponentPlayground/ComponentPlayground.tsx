@@ -41,7 +41,7 @@ const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = p
             maxWidth: '200px',
           }}
         >
-          <b>Props not supported by generators:</b> {unsupportedProps.join(' | ')}
+          <b>Props not supported in playground</b> {unsupportedProps.join(' | ')}
         </div>
       )}
     </ComponentPlaygroundTemplate>
