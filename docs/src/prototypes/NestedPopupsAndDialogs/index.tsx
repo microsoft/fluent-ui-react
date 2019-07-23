@@ -5,18 +5,20 @@ import { ComponentPrototype, PrototypeSection } from 'docs/src/prototypes/Protot
 
 const PopupAndDialog: React.FC = () => (
   <Popup
-    content={
-      <>
-        <p>
-          This <code>Popup</code> will be kept open after <code>Dialog</code> will be opened.
-        </p>
-        <Dialog
-          cancelButton="Close"
-          header="A dialog"
-          trigger={<Button content="Open a dialog" />}
-        />
-      </>
-    }
+    content={{
+      content: (
+        <>
+          <p>
+            This <code>Popup</code> will be kept open after <code>Dialog</code> will be opened.
+          </p>
+          <Dialog
+            cancelButton="Close"
+            header="A dialog"
+            trigger={<Button content="Open a dialog" />}
+          />
+        </>
+      ),
+    }}
     trigger={<Button content="Open a popup" />}
   />
 )
@@ -28,20 +30,22 @@ const ControlledPopupAndDialog: React.FC = () => {
   return (
     <>
       <Popup
-        content={
-          <>
-            <p>
-              This <code>Popup</code> will be close after <code>Dialog</code> will be opened.
-            </p>
-            <Button
-              content="Open a dialog & close popup"
-              onClick={() => {
-                setPopupOpen(false)
-                setDialogOpen(true)
-              }}
-            />
-          </>
-        }
+        content={{
+          content: (
+            <>
+              <p>
+                This <code>Popup</code> will be close after <code>Dialog</code> will be opened.
+              </p>
+              <Button
+                content="Open a dialog & close popup"
+                onClick={() => {
+                  setPopupOpen(false)
+                  setDialogOpen(true)
+                }}
+              />
+            </>
+          ),
+        }}
         onOpenChange={(e, data) => setPopupOpen(data.open)}
         open={popupOpen}
         trigger={<Button content="Open a popup" />}
@@ -60,40 +64,42 @@ const NestedDialogs: React.FC = () => (
   <Dialog
     cancelButton="Close"
     header="An outer dialog"
-    content={
-      <>
-        <p>
-          This <code>Dialog</code> contains another <code>Dialog</code> inside.
-        </p>
-        <blockquote>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum.
-        </blockquote>
+    content={{
+      content: (
+        <>
+          <p>
+            This <code>Dialog</code> contains another <code>Dialog</code> inside.
+          </p>
+          <blockquote>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum.
+          </blockquote>
 
-        <Dialog
-          cancelButton="Close"
-          header="An inner dialog"
-          content={
-            <>
-              <p>
-                This <code>Dialog</code> is nested ヽ(^o^)ノ, if you will on an overlay only this{' '}
-                <code>Dialog</code> will be closed.
-              </p>
+          <Dialog
+            cancelButton="Close"
+            header="An inner dialog"
+            content={
+              <>
+                <p>
+                  This <code>Dialog</code> is nested ヽ(^o^)ノ, if you will on an overlay only this{' '}
+                  <code>Dialog</code> will be closed.
+                </p>
 
-              <Popup
-                content="You can have also Popups inside dialogs!"
-                trigger={<Button content="Open a popup" />}
-              />
-            </>
-          }
-          trigger={<Button content="Open a dialog" />}
-        />
-      </>
-    }
+                <Popup
+                  content="You can have also Popups inside dialogs!"
+                  trigger={<Button content="Open a popup" />}
+                />
+              </>
+            }
+            trigger={<Button content="Open a dialog" />}
+          />
+        </>
+      ),
+    }}
     trigger={<Button content="Open a dialog" />}
   />
 )

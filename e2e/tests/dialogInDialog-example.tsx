@@ -16,14 +16,16 @@ export const selectors = {
 const DialogInPopupExample = () => (
   <Dialog
     cancelButton={{ content: 'Close', id: selectors.outerClose }}
-    content={
-      <Dialog
-        cancelButton={{ content: 'Close', id: selectors.innerClose }}
-        header={{ content: 'An inner', id: selectors.innerHeader }}
-        overlay={{ id: selectors.innerOverlay }}
-        trigger={<Button id={selectors.innerTrigger} content="Open a dialog" />}
-      />
-    }
+    content={{
+      content: (
+        <Dialog
+          cancelButton={{ content: 'Close', id: selectors.innerClose }}
+          header={{ content: 'An inner', id: selectors.innerHeader }}
+          overlay={{ id: selectors.innerOverlay }}
+          trigger={<Button id={selectors.innerTrigger} content="Open a dialog" />}
+        />
+      ),
+    }}
     header={{ content: 'An outer', id: selectors.outerHeader }}
     overlay={{ id: selectors.outerOverlay }}
     trigger={<Button id={selectors.outerTrigger} content="Open a dialog" />}

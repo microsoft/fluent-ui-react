@@ -12,13 +12,15 @@ export const selectors = {
 
 const DialogInPopupExample = () => (
   <Popup
-    content={
-      <Dialog
-        cancelButton={{ content: 'Close', id: selectors.dialogCancel }}
-        header="A dialog"
-        trigger={<Button id={selectors.dialogTrigger} content="Open a dialog" />}
-      />
-    }
+    content={{
+      content: (
+        <Dialog
+          cancelButton={{ content: 'Close', id: selectors.dialogCancel }}
+          header="A dialog"
+          trigger={<Button id={selectors.dialogTrigger} content="Open a dialog" />}
+        />
+      ),
+    }}
     trigger={<Button id={selectors.popupTrigger} content="Open a popup" />}
   />
 )

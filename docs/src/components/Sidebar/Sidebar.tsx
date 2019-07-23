@@ -439,12 +439,9 @@ class Sidebar extends React.Component<any, any> {
       },
       {
         key: 'nested-popups-and-dialogs',
-        title: {
-          content: 'Nested Popups & Dialogs',
-          as: NavLink,
-          to: '/prototype-nested-popups-and-dialogs',
-        },
-        public: true,
+        content: 'Nested Popups & Dialogs',
+        as: NavLink,
+        to: '/prototype-nested-popups-and-dialogs',
       },
       {
         key: 'iconviewer',
