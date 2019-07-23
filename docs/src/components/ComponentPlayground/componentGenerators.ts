@@ -3,6 +3,7 @@ import {
   AvatarProps,
   BoxProps,
   DividerProps,
+  EmbedProps,
   IconProps,
   ImageProps,
   VideoProps,
@@ -29,6 +30,15 @@ export const Box: KnobComponentGenerators<BoxProps> = {
 export const Divider: KnobComponentGenerators<DividerProps> = {
   // Workaround for `Divider` component that supports size in different way
   size: number,
+}
+
+export const Embed: KnobComponentGenerators<EmbedProps> = {
+  placeholder: ({ componentInfo, propName }) => ({
+    hook: useStringKnob,
+    name: propName,
+    initialValue:
+      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/TearsOfSteel.jpg',
+  }),
 }
 
 export const Icon: KnobComponentGenerators<IconProps> = {

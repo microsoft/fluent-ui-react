@@ -49,7 +49,7 @@ const createHookGenerator = (options: KnobGeneratorOptions): null | KnobDefiniti
 
   const propGenerator: KnobGenerator<any> = _.get(
     componentGenerators,
-    componentInfo.displayName,
+    [componentInfo.displayName, propDef.name],
     propGenerators[propDef.name],
   )
 
