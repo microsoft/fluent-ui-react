@@ -11,10 +11,9 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     // @ts-ignore is supported by fallback values plugin
     display: ['inline-grid', '-ms-inline-grid'],
     // IE11: Gap is done via virtual column as in autoprefixer
-    '-ms-grid-columns':
-      p.labelPosition === 'start' ? `1fr ${v.checkboxGap} auto` : `auto ${v.checkboxGap} 1fr`,
+    '-ms-grid-columns': p.labelPosition === 'start' ? `1fr ${v.gap} auto` : `auto ${v.gap} 1fr`,
     gridTemplateColumns: p.labelPosition === 'start' ? '1fr auto' : 'auto 1fr',
-    gridGap: v.checkboxGap,
+    gridGap: v.gap,
     cursor: 'pointer',
     outline: 0,
 
@@ -30,19 +29,19 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     '-ms-grid-column': p.labelPosition === 'start' ? 3 : 1,
     '-ms-grid-row-align': 'center',
 
-    borderColor: v.checkboxBorderColor,
-    borderStyle: v.checkboxBorderStyle,
-    borderRadius: v.checkboxBorderRadius,
-    borderWidth: v.checkboxBorderWidth,
+    borderColor: v.borderColor,
+    borderStyle: v.borderStyle,
+    borderRadius: v.borderRadius,
+    borderWidth: v.borderWidth,
     boxShadow: 'unset',
     color: v.checkboxColor,
-    margin: v.checkboxMargin,
-    padding: v.checkboxPadding,
+    margin: v.margin,
+    padding: v.padding,
 
     ...(p.checked && {
-      background: v.checkedCheckboxBackground,
-      borderColor: v.checkedCheckboxBorderColor,
-      color: v.checkedCheckboxColor,
+      background: v.checkedBackground,
+      borderColor: v.checkedBorderColor,
+      color: v.checkboxCheckedColor,
     }),
 
     ...(p.disabled && {
@@ -50,7 +49,7 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
 
       ...(p.checked && {
         color: v.disabledCheckboxColor,
-        background: v.disabledCheckboxBackground,
+        background: v.disabledBackground,
       }),
     }),
   }),
@@ -70,23 +69,23 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     borderRadius: v.toggleBorderRadius,
     borderWidth: v.toggleBorderWidth,
     boxShadow: 'unset',
-    color: v.toggleColor,
+    color: v.toggleIndicatorColor,
     margin: v.toggleMargin,
 
     padding: v.togglePadding,
     transition: 'padding .3s ease',
 
     ...(p.checked && {
-      background: v.checkedToggleBackground,
-      borderColor: v.checkedToggleBorderColor,
-      color: v.checkedToggleColor,
-      padding: v.checkedTogglePadding,
+      background: v.checkboxToggleCheckedBackground,
+      borderColor: v.checkboxToggleCheckedBorderColor,
+      color: v.checkboxToggleCheckedColor,
+      padding: v.toggleCheckedPadding,
     }),
 
     ...(p.disabled && {
       background: v.disabledToggleBackground,
       borderColor: v.disabledToggleBorderColor,
-      color: v.disabledToggleColor,
+      color: v.disabledToggleIndicatorColor,
     }),
   }),
 }
