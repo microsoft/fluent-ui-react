@@ -17,7 +17,7 @@ import {
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
-import Loader from '../Loader/Loader'
+import Loader, { LoaderProps } from '../Loader/Loader'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
@@ -47,6 +47,9 @@ export interface ButtonProps
 
   /** An icon button can format an Icon to appear before or after the button */
   iconPosition?: 'before' | 'after'
+
+  /** A button in loading state, can show a loader. */
+  loader?: ShorthandValue<LoaderProps>
 
   /** A button can show a loading indicator. */
   loading?: boolean
@@ -96,6 +99,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     icon: customPropTypes.itemShorthandWithoutJSX,
     iconOnly: PropTypes.bool,
     iconPosition: PropTypes.oneOf(['before', 'after']),
+    loader: customPropTypes.itemShorthand,
     loading: PropTypes.bool,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
@@ -107,6 +111,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   static defaultProps = {
     as: 'button',
     accessibility: buttonBehavior as Accessibility,
+    loader: {},
   }
 
   static Group = ButtonGroup
@@ -155,18 +160,15 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   }
 
   renderIcon = (variables, styles) => {
-    const { icon, iconPosition, content, loading } = this.props
+    const { icon, iconPosition, content, loading, loader } = this.props
 
     return loading
-      ? Loader.create(
-          {},
-          {
-            defaultProps: {
-              size: 'smallest',
-              styles: styles.loader,
-            },
+      ? Loader.create(loader, {
+          defaultProps: {
+            size: 'smallest',
+            styles: styles.loader,
           },
-        )
+        })
       : Icon.create(icon, {
           defaultProps: {
             styles: styles.icon,
