@@ -2,7 +2,7 @@ import * as React from 'react'
 
 export type GetContextRefs = (needleRef: NodeRef) => NodeRef[]
 export type GetRefs = () => NodeRef[]
-export type NodeRef<T extends Node = Node> = React.RefObject<T>
+export type NodeRef<T extends Node = Node> = React.MutableRefObject<T>
 
 export type NestingContextValue = {
   getContextRefs: GetContextRefs

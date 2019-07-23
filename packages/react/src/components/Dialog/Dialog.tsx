@@ -1,5 +1,6 @@
 import { Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
-import { handleRef, Ref } from '@stardust-ui/react-component-ref'
+import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -21,7 +22,7 @@ import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } 
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
 import Header, { HeaderProps } from '../Header/Header'
-import Portal from '../Portal/Portal'
+import Portal, { TriggerAccessibility } from '../Portal/Portal'
 import Flex from '../Flex/Flex'
 
 export interface DialogSlotClassNames {
@@ -134,11 +135,13 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       this.handleDialogCancel(e)
       e.stopPropagation()
 
+      console.log('RR')
       _.invoke(this.triggerRef, 'current.focus')
     },
     close: e => this.handleDialogCancel(e),
   }
   contentRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
+  overlayRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
   triggerRef = React.createRef<HTMLElement>()
 
   getInitialAutoControlledState(): DialogState {
@@ -186,16 +189,16 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     },
   })
 
-  handleOverlayOverrides = (content: JSX.Element) => (predefinedProps: BoxProps) => ({
-    content,
-    onClick: (e: React.SyntheticEvent, overlayProps: BoxProps) => {
-      _.invoke(predefinedProps, 'onClick', e, overlayProps)
+  handleOverlayClick = (e: MouseEvent) => {
+    const isInsideContentClick = doesNodeContainClick(this.contentRef.current, e)
+    const isInsideOverlayClick = doesNodeContainClick(this.overlayRef.current, e)
 
-      if (!doesNodeContainClick(this.contentRef.current, e)) {
-        this.handleDialogCancel(e)
-      }
-    },
-  })
+    const shouldClose = !isInsideContentClick && isInsideOverlayClick
+
+    if (shouldClose) {
+      this.handleDialogCancel(e)
+    }
+  }
 
   renderComponent({ accessibility, classes, ElementType, styles, unhandledProps }) {
     const {
@@ -212,71 +215,62 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     const { open } = this.state
 
     const dialogContent = (
-      <Unstable_NestingAuto>
-        {(getRefs, nestingRef) => (
-          <Ref
-            innerRef={(contentNode: HTMLElement) => {
-              this.contentRef.current = contentNode
-              handleRef(nestingRef, contentNode)
-            }}
-          >
-            <ElementType
-              className={classes.root}
-              {...accessibility.attributes.popup}
-              {...unhandledProps}
-              {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
-            >
-              {Header.create(header, {
-                defaultProps: {
-                  as: 'h2',
-                  className: Dialog.slotClassNames.header,
-                  styles: styles.header,
-                  ...accessibility.attributes.header,
-                },
-              })}
-              {Button.create(headerAction, {
-                defaultProps: {
-                  className: Dialog.slotClassNames.headerAction,
-                  styles: styles.headerAction,
-                  text: true,
-                  iconOnly: true,
-                  ...accessibility.attributes.headerAction,
-                },
-              })}
-              {Box.create(content, {
-                defaultProps: {
-                  styles: styles.content,
-                  className: Dialog.slotClassNames.content,
-                  ...accessibility.attributes.content,
-                },
-              })}
+      <Ref innerRef={this.contentRef}>
+        <ElementType
+          className={classes.root}
+          {...accessibility.attributes.popup}
+          {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
+        >
+          {Header.create(header, {
+            defaultProps: {
+              as: 'h2',
+              className: Dialog.slotClassNames.header,
+              styles: styles.header,
+              ...accessibility.attributes.header,
+            },
+          })}
+          {Button.create(headerAction, {
+            defaultProps: {
+              className: Dialog.slotClassNames.headerAction,
+              styles: styles.headerAction,
+              text: true,
+              iconOnly: true,
+              ...accessibility.attributes.headerAction,
+            },
+          })}
+          {Box.create(content, {
+            defaultProps: {
+              styles: styles.content,
+              className: Dialog.slotClassNames.content,
+              ...accessibility.attributes.content,
+            },
+          })}
 
-              {Box.create(actions, {
-                defaultProps: {
-                  styles: styles.actions,
-                },
-                overrideProps: {
-                  content: (
-                    <Flex gap="gap.smaller" hAlign="end">
-                      {Button.create(cancelButton, {
-                        overrideProps: this.handleCancelButtonOverrides,
-                      })}
-                      {Button.create(confirmButton, {
-                        defaultProps: {
-                          primary: true,
-                        },
-                        overrideProps: this.handleConfirmButtonOverrides,
-                      })}
-                    </Flex>
-                  ),
-                },
-              })}
-            </ElementType>
-          </Ref>
-        )}
-      </Unstable_NestingAuto>
+          {Box.create(actions, {
+            defaultProps: {
+              styles: styles.actions,
+            },
+            overrideProps: {
+              content: (
+                <Flex gap="gap.smaller" hAlign="end">
+                  {Button.create(cancelButton, {
+                    overrideProps: this.handleCancelButtonOverrides,
+                  })}
+                  {Button.create(confirmButton, {
+                    defaultProps: {
+                      primary: true,
+                    },
+                    overrideProps: this.handleConfirmButtonOverrides,
+                  })}
+                </Flex>
+              ),
+            },
+          })}
+        </ElementType>
+      </Ref>
     )
-    const triggerAccessibility = {
+    const triggerAccessibility: TriggerAccessibility = {
       attributes: accessibility.attributes.trigger,
       keyHandlers: accessibility.keyHandlers.trigger,
     }
@@ -290,12 +284,31 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
         triggerAccessibility={triggerAccessibility}
         triggerRef={this.triggerRef}
       >
-        {Box.create(overlay, {
-          defaultProps: {
-            styles: styles.overlay,
-          },
-          overrideProps: this.handleOverlayOverrides(dialogContent),
-        })}
+        <Unstable_NestingAuto>
+          {(getRefs, nestingRef) => (
+            <>
+              <Ref
+                innerRef={(contentNode: HTMLElement) => {
+                  this.overlayRef.current = contentNode
+                  nestingRef.current = contentNode
+                }}
+              >
+                {Box.create(overlay, {
+                  defaultProps: {
+                    styles: styles.overlay,
+                  },
+                  overrideProps: { content: dialogContent },
+                })}
+              </Ref>
+              <EventListener
+                listener={this.handleOverlayClick}
+                targetRef={documentRef}
+                type="click"
+                capture
+              />
+            </>
+          )}
+        </Unstable_NestingAuto>
       </Portal>
     )
   }
