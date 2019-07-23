@@ -17,6 +17,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.34.3 ]------------------------------- -->
+## [v0.34.3](https://github.com/stardust-ui/react/tree/v0.34.3) (2019-07-23)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.34.2...v0.34.3)
+
+### Fixes
+- Fix nesting issues with `Dialog` component inside `Popup` @layershifter ([#1706](https://github.com/stardust-ui/react/pull/1706))
+
 <!--------------------------------[ v0.34.2 ]------------------------------- -->
 ## [v0.34.2](https://github.com/stardust-ui/react/tree/v0.34.2) (2019-07-19)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.34.1...v0.34.2)
