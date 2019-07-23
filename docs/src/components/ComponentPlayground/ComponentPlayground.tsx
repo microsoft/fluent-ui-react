@@ -30,7 +30,8 @@ const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = p
   const [element, unsupportedProps] = usePlaygroundComponent(props.componentName)
 
   return (
-    <ComponentPlaygroundTemplate element={element}>
+    /* TODO: remove "fluid" prop after Divider's refactor */
+    <ComponentPlaygroundTemplate element={element} fluid={props.componentName === 'Divider'}>
       {process.env.NODE_ENV === 'production' ? null : (
         <div
           style={{
