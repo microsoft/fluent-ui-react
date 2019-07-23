@@ -16,13 +16,13 @@ const usePlaygroundComponent = (componentName: string): [React.ReactElement, str
   if (process.env.NODE_ENV !== 'production') {
     if (!componentInfo) {
       throw new Error(
-        `Cannot find a definition for ${componentName}, please check that "docs/src/componentInfo/${componentName}.info.json" file exists`,
+        `Cannot find a definition for "${componentName}", please check that "docs/src/componentInfo/${componentName}.info.json" file exists`,
       )
     }
 
     if (!Stardust[componentName]) {
       throw new Error(
-        `Cannot find an for ${componentName}, please check that it is exported from "@stardust-ui/react"`,
+        `Cannot find an export for "${componentName}", please check that it is exported from "@stardust-ui/react"`,
       )
     }
   }
