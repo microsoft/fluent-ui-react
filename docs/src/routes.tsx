@@ -38,6 +38,7 @@ import PopupsPrototype from './prototypes/popups'
 import IconViewerPrototype from './prototypes/IconViewer'
 import MenuButtonPrototype from './prototypes/MenuButton'
 import AlertsPrototype from './prototypes/alerts'
+import NestedPopupsAndDialogsPrototype from './prototypes/NestedPopupsAndDialogs'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -125,6 +126,12 @@ const Router = () => (
             key="/prototype-alerts"
             path="/prototype-alerts"
             component={AlertsPrototype}
+          />,
+          <DocsLayout
+            exact
+            key="/prototype-nested-popups-and-dialogs"
+            path="/prototype-nested-popups-and-dialogs"
+            component={NestedPopupsAndDialogsPrototype}
           />,
         ]}
         <DocsLayout exact path="/faq" component={FAQ} />

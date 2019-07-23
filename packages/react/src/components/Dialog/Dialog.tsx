@@ -1,3 +1,5 @@
+import { Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
+import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
@@ -19,14 +21,15 @@ import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
-import Box, { BoxProps } from '../Box/Box'
+import Box from '../Box/Box'
 import Header from '../Header/Header'
-import Portal from '../Portal/Portal'
+import Portal, { TriggerAccessibility } from '../Portal/Portal'
 import Flex from '../Flex/Flex'
 
 export interface DialogSlotClassNames {
   header: string
   content: string
+  overlay: string
 }
 
 export interface DialogProps
@@ -141,7 +144,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     },
     close: e => this.handleDialogCancel(e),
   }
-  contentRef = React.createRef<HTMLElement>()
+  contentRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
+  overlayRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
   triggerRef = React.createRef<HTMLElement>()
 
   getInitialAutoControlledState(): DialogState {
@@ -189,16 +193,18 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     },
   })
 
-  handleOverlayOverrides = (content: JSX.Element) => (predefinedProps: BoxProps) => ({
-    content,
-    onClick: (e: React.SyntheticEvent, overlayProps: BoxProps) => {
-      _.invoke(predefinedProps, 'onClick', e, overlayProps)
+  handleOverlayClick = (e: MouseEvent) => {
+    // Dialog has different conditions to close than Popup, so we don't need to iterate across all
+    // refs
+    const isInsideContentClick = doesNodeContainClick(this.contentRef.current, e)
+    const isInsideOverlayClick = doesNodeContainClick(this.overlayRef.current, e)
 
-      if (!doesNodeContainClick(this.contentRef.current, e)) {
-        this.handleDialogCancel(e)
-      }
-    },
-  })
+    const shouldClose = !isInsideContentClick && isInsideOverlayClick
+
+    if (shouldClose) {
+      this.handleDialogCancel(e)
+    }
+  }
 
   renderComponent({ accessibility, classes, ElementType, styles, unhandledProps }) {
     const {
@@ -244,7 +250,9 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             overrideProps: {
               content: (
                 <Flex gap="gap.smaller" hAlign="end">
-                  {Button.create(cancelButton, { overrideProps: this.handleCancelButtonOverrides })}
+                  {Button.create(cancelButton, {
+                    overrideProps: this.handleCancelButtonOverrides,
+                  })}
                   {Button.create(confirmButton, {
                     defaultProps: {
                       primary: true,
@@ -258,7 +266,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
         </ElementType>
       </Ref>
     )
-    const triggerAccessibility = {
+    const triggerAccessibility: TriggerAccessibility = {
       attributes: accessibility.attributes.trigger,
       keyHandlers: accessibility.keyHandlers.trigger,
     }
@@ -272,12 +280,32 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
         triggerAccessibility={triggerAccessibility}
         triggerRef={this.triggerRef}
       >
-        {Box.create(overlay, {
-          defaultProps: {
-            styles: styles.overlay,
-          },
-          overrideProps: this.handleOverlayOverrides(dialogContent),
-        })}
+        <Unstable_NestingAuto>
+          {(getRefs, nestingRef) => (
+            <>
+              <Ref
+                innerRef={(contentNode: HTMLElement) => {
+                  this.overlayRef.current = contentNode
+                  nestingRef.current = contentNode
+                }}
+              >
+                {Box.create(overlay, {
+                  defaultProps: {
+                    className: Dialog.slotClassNames.overlay,
+                    styles: styles.overlay,
+                  },
+                  overrideProps: { content: dialogContent },
+                })}
+              </Ref>
+              <EventListener
+                listener={this.handleOverlayClick}
+                targetRef={documentRef}
+                type="click"
+                capture
+              />
+            </>
+          )}
+        </Unstable_NestingAuto>
       </Portal>
     )
   }
@@ -286,6 +314,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 Dialog.slotClassNames = {
   header: `${Dialog.className}__header`,
   content: `${Dialog.className}__content`,
+  overlay: `${Dialog.className}__overlay`,
 }
 
 /**
