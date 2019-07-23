@@ -66,3 +66,5 @@ export type KnobGeneratorOptions = {
 export type KnobDefinition = UseKnobOptions<any> & { hook: Function }
 
 export type KnobGenerator<T> = (options: KnobGeneratorOptions) => KnobDefinition
+
+export type KnobComponentGenerators<P> = Partial<Record<keyof P, KnobGenerator<any>>>

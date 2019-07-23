@@ -1,8 +1,10 @@
 import * as Stardust from '@stardust-ui/react'
 
 import { KnobDefinition, KnobGeneratorOptions, KnobGenerator } from 'docs/src/types'
+import * as componentGenerators from './componentGenerators'
 import * as propGenerators from './propGenerators'
 import * as typeGenerators from './typeGenerators'
+import * as _ from 'lodash'
 
 const propsBlacklist: (string | RegExp)[] = [
   'accessibility', // TODO: generate accessibility
@@ -45,7 +47,11 @@ const createHookGenerator = (options: KnobGeneratorOptions): null | KnobDefiniti
     return null
   }
 
-  const propGenerator: KnobGenerator<any> = propGenerators[propDef.name]
+  const propGenerator: KnobGenerator<any> = _.get(
+    componentGenerators,
+    componentInfo.displayName,
+    propGenerators[propDef.name],
+  )
 
   if (propGenerator) {
     return propGenerator(options)

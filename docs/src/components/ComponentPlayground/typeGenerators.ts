@@ -6,10 +6,10 @@ import {
 } from '@stardust-ui/docs-components'
 import * as _ from 'lodash'
 
-import { ComponentInfo, KnobGenerator } from 'docs/src/types'
+import { ComponentInfo, KnobComponentGenerators, KnobGenerator } from 'docs/src/types'
 import componentInfoContext from 'docs/src/utils/componentInfoContext'
+import * as componentGenerators from './componentGenerators'
 import createHookGenerator from './createHookGenerator'
-import { name } from './propGenerators'
 
 export const boolean: KnobGenerator<boolean> = ({ propName, propDef }) => ({
   hook: useBooleanKnob,
@@ -51,13 +51,13 @@ export const ShorthandValue: KnobGenerator<string> = ({ propDef, componentInfo, 
   const mappedShorthandProp = shorthandComponentInfo.mappedShorthandProp
   const shorthandPropDef = _.find(shorthandComponentInfo.props, { name: mappedShorthandProp })
 
-  // TODO: fix support for boxes
-  if (shorthandComponentName === 'Box') {
-    return null
-  }
+  const componentGenerator: KnobComponentGenerators<any> | null =
+    componentGenerators[shorthandComponentName]
+  const knobGenerator: KnobGenerator<any> | null =
+    componentGenerator && componentGenerator[mappedShorthandProp]
 
-  if (shorthandComponentName === 'Icon') {
-    return name({
+  if (knobGenerator) {
+    return knobGenerator({
       propDef: shorthandPropDef,
       componentInfo: shorthandComponentInfo,
       theme,
