@@ -33,7 +33,7 @@ describe('Dialog in Dialog', () => {
     expect(await e2e.exists(innerHeader)).toBe(true)
   })
 
-  it('A click on overlay should close only matching "Dialog"', async () => {
+  it('A click on overlay should close only the last opened "Dialog"', async () => {
     await e2e.clickOn(outerTrigger)
     await e2e.clickOn(innerTrigger)
 
