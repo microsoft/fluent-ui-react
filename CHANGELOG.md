@@ -42,6 +42,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `color` prop to `Segment` typings @layershifter ([#1702](https://github.com/stardust-ui/react/pull/1702))
 - Remove `color` prop from `Dialog` typings @layershifter ([#1702](https://github.com/stardust-ui/react/pull/1702))
 - `Loader` uses `Text` component for `label` slot instead of `Box` @layershifter ([#1701](https://github.com/stardust-ui/react/pull/1701))
+- Fix nesting issues with `Dialog` component inside `Popup` @layershifter ([#1706](https://github.com/stardust-ui/react/pull/1706))
 
 ### Documentation
 - Make sidebar categories collapsible @lucivpav ([#1611](https://github.com/stardust-ui/react/pull/1611))
