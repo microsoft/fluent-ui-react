@@ -22,7 +22,7 @@ describe('Dialog in Popup', () => {
     expect(await e2e.exists(dialogHeader)).toBe(true)
   })
 
-  it('"Popup" should be open after "Dialog" will closed', async () => {
+  it('"Popup" should be open after "Dialog" will be closed', async () => {
     await e2e.clickOn(popupTrigger)
     await e2e.clickOn(dialogTrigger)
     await e2e.clickOn(dialogCancel)
