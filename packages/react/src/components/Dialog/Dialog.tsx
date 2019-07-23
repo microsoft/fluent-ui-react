@@ -1,4 +1,5 @@
-import { Ref } from '@stardust-ui/react-component-ref'
+import { Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
+import { handleRef, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -137,7 +138,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     },
     close: e => this.handleDialogCancel(e),
   }
-  contentRef = React.createRef<HTMLElement>()
+  contentRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
   triggerRef = React.createRef<HTMLElement>()
 
   getInitialAutoControlledState(): DialogState {
@@ -211,58 +212,69 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     const { open } = this.state
 
     const dialogContent = (
-      <Ref innerRef={this.contentRef}>
-        <ElementType
-          className={classes.root}
-          {...accessibility.attributes.popup}
-          {...unhandledProps}
-          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
-        >
-          {Header.create(header, {
-            defaultProps: {
-              as: 'h2',
-              className: Dialog.slotClassNames.header,
-              styles: styles.header,
-              ...accessibility.attributes.header,
-            },
-          })}
-          {Button.create(headerAction, {
-            defaultProps: {
-              className: Dialog.slotClassNames.headerAction,
-              styles: styles.headerAction,
-              text: true,
-              iconOnly: true,
-              ...accessibility.attributes.headerAction,
-            },
-          })}
-          {Box.create(content, {
-            defaultProps: {
-              styles: styles.content,
-              className: Dialog.slotClassNames.content,
-              ...accessibility.attributes.content,
-            },
-          })}
+      <Unstable_NestingAuto>
+        {(getRefs, nestingRef) => (
+          <Ref
+            innerRef={(contentNode: HTMLElement) => {
+              this.contentRef.current = contentNode
+              handleRef(nestingRef, contentNode)
+            }}
+          >
+            <ElementType
+              className={classes.root}
+              {...accessibility.attributes.popup}
+              {...unhandledProps}
+              {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
+            >
+              {Header.create(header, {
+                defaultProps: {
+                  as: 'h2',
+                  className: Dialog.slotClassNames.header,
+                  styles: styles.header,
+                  ...accessibility.attributes.header,
+                },
+              })}
+              {Button.create(headerAction, {
+                defaultProps: {
+                  className: Dialog.slotClassNames.headerAction,
+                  styles: styles.headerAction,
+                  text: true,
+                  iconOnly: true,
+                  ...accessibility.attributes.headerAction,
+                },
+              })}
+              {Box.create(content, {
+                defaultProps: {
+                  styles: styles.content,
+                  className: Dialog.slotClassNames.content,
+                  ...accessibility.attributes.content,
+                },
+              })}
 
-          {Box.create(actions, {
-            defaultProps: {
-              styles: styles.actions,
-            },
-            overrideProps: {
-              content: (
-                <Flex gap="gap.smaller" hAlign="end">
-                  {Button.create(cancelButton, { overrideProps: this.handleCancelButtonOverrides })}
-                  {Button.create(confirmButton, {
-                    defaultProps: {
-                      primary: true,
-                    },
-                    overrideProps: this.handleConfirmButtonOverrides,
-                  })}
-                </Flex>
-              ),
-            },
-          })}
-        </ElementType>
-      </Ref>
+              {Box.create(actions, {
+                defaultProps: {
+                  styles: styles.actions,
+                },
+                overrideProps: {
+                  content: (
+                    <Flex gap="gap.smaller" hAlign="end">
+                      {Button.create(cancelButton, {
+                        overrideProps: this.handleCancelButtonOverrides,
+                      })}
+                      {Button.create(confirmButton, {
+                        defaultProps: {
+                          primary: true,
+                        },
+                        overrideProps: this.handleConfirmButtonOverrides,
+                      })}
+                    </Flex>
+                  ),
+                },
+              })}
+            </ElementType>
+          </Ref>
+        )}
+      </Unstable_NestingAuto>
     )
     const triggerAccessibility = {
       attributes: accessibility.attributes.trigger,
