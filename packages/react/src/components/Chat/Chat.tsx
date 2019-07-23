@@ -22,10 +22,7 @@ export interface ChatSlotClassNames {
 }
 
 export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default chatBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Shorthand array of the items inside the chat. */
@@ -55,10 +52,6 @@ class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
 
   static Item = ChatItem
   static Message = ChatMessage
-
-  actionHandlers = {
-    focus: () => this.focusZone && this.focusZone.focus(),
-  }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, items } = this.props

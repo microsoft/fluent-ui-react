@@ -7,7 +7,6 @@ import * as React from 'react'
 import {
   UIComponentProps,
   commonPropTypes,
-  ColorComponentProps,
   ContentComponentProps,
   AutoControlledComponent,
   doesNodeContainClick,
@@ -32,12 +31,8 @@ export interface DialogSlotClassNames {
 
 export interface DialogProps
   extends UIComponentProps,
-    ContentComponentProps<ShorthandValue<BoxProps>>,
-    ColorComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default dialogBehavior
-   */
+    ContentComponentProps<ShorthandValue<BoxProps>> {
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** A dialog can contain actions. */
@@ -108,7 +103,6 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     ...commonPropTypes.createCommon({
       children: false,
       content: 'shorthand',
-      color: true,
     }),
     actions: customPropTypes.itemShorthand,
     headerAction: customPropTypes.itemShorthand,

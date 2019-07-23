@@ -22,9 +22,9 @@ import Theming from './views/Theming'
 import ThemingExamples from './views/ThemingExamples'
 import IntegrateCustomComponents from './views/IntegrateCustomComponents'
 import AccessibilityBehaviors from './views/AccessibilityBehaviors'
-import FocusZone from './views/FocusZone'
-import FocusTrapZone from './views/FocusTrapZone'
-import AutoFocusZone from './views/AutoFocusZone'
+import FocusZone from './views/FocusZoneDoc'
+import FocusTrapZone from './views/FocusTrapZoneDoc'
+import AutoFocusZone from './views/AutoFocusZoneDoc'
 import CustomToolbarPrototype from './prototypes/customToolbar'
 import ChatPanePrototype from './prototypes/chatPane'
 import ChatMessagesPrototype from './prototypes/chatMessages'
@@ -48,76 +48,19 @@ const Routes = () => (
           <Route exact path="/" component={Introduction} />
           <Route exact path="/:type/:name" component={DocsRoot} sidebar />
           <Route exact path="/quick-start" component={QuickStart} />
-          {process.env.NODE_ENV !== 'production' && [
-            <Route
-              exact
-              key="/prototype-chat-pane"
-              path="/prototype-chat-pane"
-              component={ChatPanePrototype}
-            />,
-            <Route
-              exact
-              key="/prototype-chat-messages"
-              path="/prototype-chat-messages"
-              component={ChatMessagesPrototype}
-            />,
-            <Route
-              exact
-              key="/prototype-custom-toolbar"
-              path="/prototype-custom-toolbar"
-              component={CustomToolbarPrototype}
-            />,
-            <Route
-              exact
-              key="/prototype-async-shorthand"
-              path="/prototype-async-shorthand"
-              component={AsyncShorthandPrototype}
-            />,
-            <Route
-              exact
-              key="/prototype-employee-card"
-              path="/prototype-employee-card"
-              component={EmployeeCardPrototype}
-            />,
-            <Route
-              exact
-              key="/prototype-meeting-options"
-              path="/prototype-meeting-options"
-              component={MeetingOptionsPrototype}
-            />,
-            <Route
-              exact
-              key="/prototype-search-page"
-              path="/prototype-search-page"
-              component={SearchPagePrototype}
-            />,
-            <Route
-              exact
-              key="/prototype-mentions"
-              path="/prototype-mentions"
-              component={MentionsPrototype}
-            />,
-            <Route
-              exact
-              key="/prototype-dropdowns"
-              path="/prototype-dropdowns"
-              component={DropdownsPrototype}
-            />,
-            <Route
-              exact
-              key="/prototype-popups"
-              path="/prototype-popups"
-              component={PopupsPrototype}
-            />,
-            <Route exact key="/icon-viewer" path="/icon-viewer" component={IconViewerPrototype} />,
-            <Route exact key="/menu-button" path="/menu-button" component={MenuButtonPrototype} />,
-            <Route
-              exact
-              key="/prototype-alerts"
-              path="/prototype-alerts"
-              component={AlertsPrototype}
-            />,
-          ]}
+          <Route exact path="/prototype-chat-pane" component={ChatPanePrototype} />
+          <Route exact path="/prototype-chat-messages" component={ChatMessagesPrototype} />
+          <Route exact path="/prototype-custom-toolbar" component={CustomToolbarPrototype} />
+          <Route exact path="/prototype-async-shorthand" component={AsyncShorthandPrototype} />
+          <Route exact path="/prototype-employee-card" component={EmployeeCardPrototype} />
+          <Route exact path="/prototype-meeting-options" component={MeetingOptionsPrototype} />
+          <Route exact path="/prototype-search-page" component={SearchPagePrototype} />
+          <Route exact path="/prototype-mentions" component={MentionsPrototype} />
+          <Route exact path="/prototype-dropdowns" component={DropdownsPrototype} />
+          <Route exact path="/prototype-popups" component={PopupsPrototype} />
+          <Route exact path="/icon-viewer" component={IconViewerPrototype} />
+          <Route exact path="/menu-button" component={MenuButtonPrototype} />
+          <Route exact path="/prototype-alerts" component={AlertsPrototype} />
           <Route exact path="/faq" component={FAQ} />
           <Route exact path="/accessibility" component={Accessibility} />
           <Route exact path="/accessibility-behaviors" component={AccessibilityBehaviors} />

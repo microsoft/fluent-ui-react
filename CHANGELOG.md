@@ -22,15 +22,25 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - `defaultBehavior` was removed @layershifter ([#1600](https://github.com/stardust-ui/react/pull/1600))
 - `ReactElement`s are now handled in the same way as string in all shorthands @layershifter ([#1600](https://github.com/stardust-ui/react/pull/1600))
 - `Props` param is required in `ShorthandValue` and `ShorthandCollection` @layershifter ([#1605](https://github.com/stardust-ui/react/pull/1605))
+- `LoaderPosition` type is no longer exported @layershifter ([#1634](https://github.com/stardust-ui/react/pull/1634))
 
 ### Features
 - Split action handlers with "OR" condition in accessibility behaviors @sophieH29 ([#1622](https://github.com/stardust-ui/react/pull/1622))
 - Add `headerAction` slot to the `Dialog` component @mnajdova ([#1617](https://github.com/stardust-ui/react/pull/1617))
 - Add `Slider` component @Bugaa92 ([#1559](https://github.com/stardust-ui/react/pull/1559))
 - Add `tooltipAsLabelBehavior` accessibility behavior for `Tooltip` @sophieH29 ([#1635](https://github.com/stardust-ui/react/pull/1635))
+- Add outline version of `menu` icon and `files-visio` icon to Teams theme @notandrew ([#1623](https://github.com/stardust-ui/react/pull/1623))
+- Add `amethyst` color to the Teams theme color palette @mnajdova ([#1650](https://github.com/stardust-ui/react/pull/1650))
+- Export `onedrive` icon to `Teams` theme @chughkartikey ([#1680](https://github.com/stardust-ui/react/pull/1680))
+- Add `image-unavailable` icon to Teams Theme @joheredi ([#1633](https://github.com/stardust-ui/react/pull/1633))
+- Add bidirectional navigation following DOM in `FocusZone` @sophieH29 ([#1637](https://github.com/stardust-ui/react/pull/1647))
+- Open `Popup` on `contextmenu` @jurokapsiar ([#1524](https://github.com/stardust-ui/react/pull/1524))
 
 ### Fixes
 - Fix `ChatMessage`'s focus border overlays `actionMenu` in Teams theme @mnajdova ([#1637](https://github.com/stardust-ui/react/pull/1637))
+- Add `color` prop to `Segment` typings @layershifter ([#1702](https://github.com/stardust-ui/react/pull/1702))
+- Remove `color` prop from `Dialog` typings @layershifter ([#1702](https://github.com/stardust-ui/react/pull/1702))
+- `Loader` uses `Text` component for `label` slot instead of `Box` @layershifter ([#1701](https://github.com/stardust-ui/react/pull/1701))
 
 ### Documentation
 - Make sidebar categories collapsible @lucivpav ([#1611](https://github.com/stardust-ui/react/pull/1611))
@@ -39,6 +49,18 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Refine component descriptions @kuzhelov ([#1629](https://github.com/stardust-ui/react/pull/1629))
 - Add best practices and form usage example for `Slider` component @Bugaa92 ([#1641](https://github.com/stardust-ui/react/pull/1641))
 - Add examples with `Tooltip` for the actionable components @mnajdova ([#1636](https://github.com/stardust-ui/react/pull/1636))
+- Fix broken fragments on CodeSandbox @lucivpav ([#1655](https://github.com/stardust-ui/react/pull/1655))
+- Improve a table with component props in docs @layershifter ([#1634](https://github.com/stardust-ui/react/pull/1634))
+- Improve rendering performance for docs examples @Bugaa92 ([#1654](https://github.com/stardust-ui/react/pull/1654))
+- Add FAQ entry for `Flex`, `Grid`, `Layout`, `Box`, `Segment` @lucivpav ([#1646](https://github.com/stardust-ui/react/pull/1646))
+
+<!--------------------------------[ v0.34.2 ]------------------------------- -->
+## [v0.34.2](https://github.com/stardust-ui/react/tree/v0.34.2) (2019-07-19)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.34.1...v0.34.2)
+
+ ### Fixes
+- Fix a gap in `Checkbox` in RTL mode @layershifter ([#1683](https://github.com/stardust-ui/react/pull/1683))
+- Fix broken background in `Popup` with `pointing` and `FocusTrap` @layershifter ([#1689](https://github.com/stardust-ui/react/pull/1689))
 
 <!--------------------------------[ v0.34.1 ]------------------------------- -->
 ## [v0.34.1](https://github.com/stardust-ui/react/tree/v0.34.1) (2019-07-11)
