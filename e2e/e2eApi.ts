@@ -40,20 +40,16 @@ export class E2EApi {
   }
 
   public clickOn = async (selector: string, x?: number, y?: number) => {
-    if (x === undefined && y === undefined) {
-      const elementHandle = await this.getElement(selector)
-      await elementHandle.click()
+    const elementHandle = await this.getElement(selector)
 
+    if (x === undefined && y === undefined) {
+      await elementHandle.click()
       return
     }
 
-    const dimensions: { x: number; y: number } = await this.page.evaluate(s => {
-      const rect = document.querySelector(s).getBoundingClientRect()
+    const boundingBox = await elementHandle.boundingBox()
 
-      return { x: Math.round(rect.left), y: Math.round(rect.top) }
-    }, selector)
-
-    await this.page.mouse.click(dimensions.x + x, dimensions.y + y)
+    await this.page.mouse.click(Math.round(boundingBox.x) + x, Math.round(boundingBox.y) + y)
   }
 
   public textOf = async (selector: string) => {
