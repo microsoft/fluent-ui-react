@@ -10,7 +10,30 @@ type ComponentPlaygroundProps = {
   componentName: string
 }
 
+const unsupportedComponents = [
+  'Accordion',
+  'Animation',
+  'Box',
+  'Chat',
+  'Dropdown',
+  'Flex',
+  'Form',
+  'Grid',
+  'ItemLayout',
+  'Layout',
+  'List',
+  'Portal',
+  'Provider',
+  'RadioGroup',
+  'Toolbar',
+  'Tree',
+]
+
 const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = props => {
+  if (unsupportedComponents.indexOf(props.componentName) !== -1) {
+    return null
+  }
+
   const playgroundPaths = examplePlaygroundContext.keys()
   const playgroundPath = _.find(playgroundPaths, playgroundPath =>
     _.includes(playgroundPath, `/${props.componentName}/`),
@@ -18,11 +41,6 @@ const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = p
 
   if (playgroundPath) {
     const component: React.FC = examplePlaygroundContext(playgroundPath).default
-
-    // Playground can be disabled
-    if (component === null) {
-      return null
-    }
 
     return <ComponentPlaygroundTemplate component={component} />
   }
