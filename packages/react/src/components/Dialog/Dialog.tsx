@@ -136,7 +136,6 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       this.handleDialogCancel(e)
       e.stopPropagation()
 
-      console.log('RR')
       _.invoke(this.triggerRef, 'current.focus')
     },
     close: e => this.handleDialogCancel(e),
