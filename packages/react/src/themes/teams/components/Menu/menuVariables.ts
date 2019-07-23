@@ -64,7 +64,7 @@ export default (siteVars: any): MenuVariables => {
     colorScheme: pickValuesFromColorScheme(
       extendColorScheme(siteVars.colorScheme, {
         default: {
-          borderActive: siteVars.colors.grey[600],
+          borderActive: siteVars.colorScheme.default.border2,
           backgroundActive: siteVars.colorScheme.default.backgroundActive1,
           backgroundFocus: siteVars.colorScheme.default.backgroundFocus1,
           foregroundDisabled: siteVars.colorScheme.default.foregroundDisabled1,
@@ -118,7 +118,7 @@ export default (siteVars: any): MenuVariables => {
     pointingIndicatorBackgroundColor: siteVars.colors.brand[600],
 
     underlinedBottomBorderWidth: pxToRem(2),
-    primaryBorderColor: siteVars.colors.grey[100],
+    primaryBorderColor: siteVars.colorScheme.default.border2, // is this a good change?
 
     dividerHeight: pxToRem(1),
     borderWidth: pxToRem(1),
