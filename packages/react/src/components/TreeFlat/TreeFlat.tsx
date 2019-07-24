@@ -1,6 +1,7 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
-import { VariableSizeList as List } from 'react-window'
+// import { VariableSizeList as ReactWindowList } from 'react-window'
+import { CellMeasurer, CellMeasurerCache, List as ReactVirtualizedList } from 'react-virtualized'
 import * as React from 'react'
 
 import TreeItemFlat, { TreeItemFlatProps } from './TreeItemFlat'
@@ -50,12 +51,19 @@ class TreeFlat extends UIComponent<WithAsProp<TreeFlatProps>, TreeFlatState> {
     as: 'div',
   }
 
+  cache = null
+
   constructor(props, context) {
     super(props, context)
 
     this.state = {
       visibleItems: props.items,
     }
+
+    this.cache = new CellMeasurerCache({
+      defaultHeight: 20,
+      fixedWidth: true,
+    })
   }
 
   handleTreeItemOverrides = (predefinedProps: TreeItemFlatProps) => ({
@@ -84,28 +92,57 @@ class TreeFlat extends UIComponent<WithAsProp<TreeFlatProps>, TreeFlatState> {
     },
   })
 
-  renderItem = ({ index, style }) => {
+  // renderItem = ({ index, style }) => {
+  //   const { visibleItems } = this.state
+  //   const isSubtree = !!visibleItems[index]['items']
+  //   const open = isSubtree && visibleItems[index + 1] === visibleItems[index]['items'][0]
+
+  //   return TreeItemFlat.create(visibleItems[index], {
+  //     defaultProps: {
+  //       className: TreeFlat.slotClassNames.item,
+  //       index,
+  //       style,
+  //       open,
+  //     },
+  //     overrideProps: this.handleTreeItemOverrides,
+  //   })
+  // }
+
+  rowRenderer = ({ index, isScrolling, key, parent, style }) => {
     const { visibleItems } = this.state
     const isSubtree = !!visibleItems[index]['items']
     const open = isSubtree && visibleItems[index + 1] === visibleItems[index]['items'][0]
-
-    return TreeItemFlat.create(visibleItems[index], {
-      defaultProps: {
-        className: TreeFlat.slotClassNames.item,
-        index,
-        style,
-        open,
-      },
-      overrideProps: this.handleTreeItemOverrides,
-    })
+    return (
+      <CellMeasurer cache={this.cache} columnIndex={0} key={key} parent={parent} rowIndex={index}>
+        {TreeItemFlat.create(visibleItems[index], {
+          defaultProps: {
+            className: TreeFlat.slotClassNames.item,
+            index,
+            style,
+            open,
+          },
+          overrideProps: this.handleTreeItemOverrides,
+        })}
+      </CellMeasurer>
+    )
   }
 
   renderContent() {
     const { visibleItems } = this.state
+    // return (
+    //   <ReactWindowList height={100} itemCount={visibleItems.length} itemSize={index => 20}>
+    //     {this.renderItem}
+    //   </ReactWindowList>
+    // )
     return (
-      <List height={100} itemCount={visibleItems.length} itemSize={index => 20}>
-        {this.renderItem}
-      </List>
+      <ReactVirtualizedList
+        deferredMeasurementCache={this.cache}
+        rowHeight={this.cache.rowHeight}
+        rowRenderer={this.rowRenderer}
+        height={100}
+        rowCount={visibleItems.length}
+        width={600}
+      />
     )
   }
 

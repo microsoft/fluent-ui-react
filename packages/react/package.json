@@ -25,6 +25,7 @@
     "prop-types": "^15.6.1",
     "react-fela": "^10.5.0",
     "react-is": "^16.6.3",
+    "react-virtualized": "^9.21.1",
     "react-window": "^1.8.5"
   },
   "devDependencies": {
