@@ -21,8 +21,13 @@ import {
 
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
-import ProviderBox from './ProviderBox'
-import { WithAsProp, ProviderContextInput, ProviderContextPrepared } from '../../types'
+import ProviderBox, { ProviderBoxProps } from './ProviderBox'
+import {
+  WithAsProp,
+  ProviderContextInput,
+  ProviderContextPrepared,
+  withSafeTypeForAs,
+} from '../../types'
 import mergeContexts from '../../lib/mergeProviderContexts'
 
 export interface ProviderProps extends ChildrenComponentProps {
@@ -30,12 +35,12 @@ export interface ProviderProps extends ChildrenComponentProps {
   rtl?: boolean
   disableAnimations?: boolean
   target?: Document
-  theme: ThemeInput
+  theme?: ThemeInput
   variables?: ComponentVariablesInput
 }
 
 /**
- * The Provider passes the CSS in JS renderer and theme to your components.
+ * The Provider passes the CSS-in-JS renderer, theme styles and other settings to Stardust components.
  */
 class Provider extends React.Component<WithAsProp<ProviderProps>> {
   static displayName = 'Provider'
@@ -190,4 +195,4 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   }
 }
 
-export default Provider
+export default withSafeTypeForAs<typeof Provider, ProviderProps & ProviderBoxProps>(Provider)

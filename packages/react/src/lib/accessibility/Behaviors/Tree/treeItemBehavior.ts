@@ -9,8 +9,11 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  * Adds 'tabIndex' as '-1' if the item is not a leaf.
  *
  * @specification
- * Triggers 'collapseOrReceiveFocus' action with 'ArrowLeft' on 'root'.
- * Triggers 'expandOrPassFocus' action with 'ArrowRight' on 'root'.
+ * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
+ * Triggers 'receiveFocus' action with 'ArrowLeft' on 'root', when has an opened subtree.
+ * Triggers 'collapse' action with 'ArrowLeft' on 'root', when has an opened subtree.
+ * Triggers 'expand' action with 'ArrowRight' on 'root', when has a closed subtree.
+ * Triggers 'focusSubtree' action with 'ArrowRight' on 'root', when has an opened subtree.
  */
 const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
   attributes: {
@@ -30,12 +33,22 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
-      collapseOrReceiveFocus: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
-      },
-      expandOrPassFocus: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
-      },
+      ...(isSubtreeOpen(props) && {
+        receiveFocus: {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+        },
+        collapse: {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+        },
+        focusSubtree: {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+        },
+      }),
+      ...(!isSubtreeOpen(props) && {
+        expand: {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+        },
+      }),
     },
   },
 })
@@ -45,6 +58,12 @@ export type TreeItemBehaviorProps = {
   items?: object[]
   /** If item is a subtree, it indicates if it's open. */
   open?: boolean
+}
+
+/** Checks if current tree item has a subtree and it is opened */
+const isSubtreeOpen = (props: TreeItemBehaviorProps): boolean => {
+  const { items, open } = props
+  return !!(items && items.length && open)
 }
 
 export default treeItemBehavior

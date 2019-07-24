@@ -28,22 +28,21 @@ import {
 } from '../../types'
 import { Popper } from '../../lib/positioner'
 import { Accessibility } from '../../lib/accessibility/types'
-import { toolbarItemBehavior, popupFocusTrapBehavior } from '../../lib/accessibility'
+import { toolbarItemBehavior } from '../../lib/accessibility'
 
-import ToolbarMenu from './ToolbarMenu'
-import Icon from '../Icon/Icon'
-import Box from '../Box/Box'
+import ToolbarMenu, { ToolbarMenuProps } from './ToolbarMenu'
+import Icon, { IconProps } from '../Icon/Icon'
+import Box, { BoxProps } from '../Box/Box'
 import Popup, { PopupProps } from '../Popup/Popup'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
+import { ToolbarMenuItemProps } from '../Toolbar/ToolbarMenuItem'
+import { ToolbarItemShorthandKinds } from '@stardust-ui/react'
 
 export interface ToolbarItemProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default toolbarItemBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** A toolbar item can be active. */
@@ -53,13 +52,15 @@ export interface ToolbarItemProps
   disabled?: boolean
 
   /** Name or shorthand for Toolbar Item Icon */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /**
    * Shorthand for the submenu.
    * If submenu is specified, the item is wrapped to group the item and the menu elements together.
    */
-  menu?: ShorthandValue | ShorthandCollection
+  menu?:
+    | ShorthandValue<ToolbarMenuProps>
+    | ShorthandCollection<ToolbarMenuItemProps, ToolbarItemShorthandKinds>
 
   /** Indicates if the menu inside the item is open. */
   menuOpen?: boolean
@@ -96,13 +97,13 @@ export interface ToolbarItemProps
   /**
    * Attaches a `Popup` component to the ToolbarItem.
    * Accepts all props as a `Popup`, except `trigger` and `children`.
-   * Sets `accessibility` to `popupFocusTrapBehavior` by default.
+   * Traps focus by default.
    * @see PopupProps
    */
   popup?: Omit<PopupProps, 'trigger' | 'children'> | string
 
   /** Shorthand for the wrapper component. The item is wrapped only if it contains a menu! */
-  wrapper?: ShorthandValue
+  wrapper?: ShorthandValue<BoxProps>
 }
 
 export interface ToolbarItemState {
@@ -128,7 +129,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     disabled: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.collectionShorthand]),
     menuOpen: PropTypes.bool,
     onMenuOpenChange: PropTypes.func,
@@ -227,7 +228,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     if (popup) {
       return Popup.create(popup, {
         defaultProps: {
-          accessibility: popupFocusTrapBehavior,
+          trapFocus: true,
         },
         overrideProps: {
           trigger: renderedItem,
@@ -311,7 +312,6 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
 ToolbarItem.create = createShorthandFactory({ Component: ToolbarItem, mappedProp: 'content' })
 
 /**
- * Toolbar item.
- * The item renders as a button with an icon.
+ * A ToolbarItem renders Toolbar item as a button with an icon.
  */
 export default withSafeTypeForAs<typeof ToolbarItem, ToolbarItemProps, 'button'>(ToolbarItem)

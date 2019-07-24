@@ -12,15 +12,21 @@ export default {
     padding: v.rootPadding,
     position: 'relative',
     width: v.rootWidth,
+    display: 'flex',
+    flexWrap: 'wrap',
   }),
   actions: (): ICSSInJSStyle => ({
     textAlign: 'right',
+    flexBasis: '100%',
+    marginLeft: 'auto',
   }),
   content: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
     margin: v.contentMargin,
+    flexBasis: '100%',
   }),
   header: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
     margin: v.headerMargin,
+    flexGrow: 1,
   }),
   overlay: ({ props: p, variables: v }: DialogStyleParams): ICSSInJSStyle => ({
     alignItems: 'center',

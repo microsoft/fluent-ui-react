@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Menu, menuAsToolbarBehavior } from '@stardust-ui/react'
+import { Menu, menuAsToolbarBehavior, MenuItemProps, ShorthandCollection } from '@stardust-ui/react'
 
-const items = [
+const items: ShorthandCollection<MenuItemProps> = [
   {
     key: 'format',
     icon: {
@@ -115,18 +115,14 @@ const items = [
   },
 ]
 
-class MenuExampleToolbarShorthand extends React.Component {
-  render() {
-    return (
-      <Menu
-        defaultActiveIndex={0}
-        items={items}
-        iconOnly
-        accessibility={menuAsToolbarBehavior}
-        aria-label="Compose Editor"
-      />
-    )
-  }
-}
+const MenuExampleToolbarShorthand = () => (
+  <Menu
+    defaultActiveIndex={0}
+    items={items}
+    iconOnly
+    accessibility={menuAsToolbarBehavior}
+    aria-label="Compose Editor"
+  />
+)
 
 export default MenuExampleToolbarShorthand

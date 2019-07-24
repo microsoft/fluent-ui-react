@@ -16,7 +16,12 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+import {
+  FocusTrapZone,
+  FocusTrapZoneProps,
+  AutoFocusZoneProps,
+  AutoFocusZone,
+} from '../../lib/accessibility/FocusZone'
 import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
@@ -25,10 +30,7 @@ export interface PopupContentProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /**
@@ -54,12 +56,11 @@ export interface PopupContentProps
   /** A ref to a pointer element. */
   pointerRef?: React.Ref<Element>
 
-  /**
-   * @deprecated
-   * Indicates that PopupContent is wrapped with FocusZone. Do not use it, it used only for internal implementation and
-   * will be removed in future releases.
-   */
-  unstable_wrapped?: boolean
+  /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value. */
+  trapFocus?: boolean | FocusTrapZoneProps
+
+  /** Controls whether or not auto focus should be applied, using boolean or AutoFocusZoneProps type value. */
+  autoFocus?: boolean | AutoFocusZoneProps
 }
 
 class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
@@ -75,11 +76,8 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
     pointerRef: customPropTypes.ref,
-    unstable_wrapped: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    accessibility: defaultBehavior,
+    trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+    autoFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }
 
   handleMouseEnter = e => {
@@ -97,23 +95,24 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
     unhandledProps,
     styles,
   }: RenderResultConfig<PopupContentProps>): React.ReactNode {
-    const { children, content, pointing, pointerRef } = this.props
+    const { children, content, pointing, pointerRef, trapFocus, autoFocus } = this.props
 
-    return (
-      <ElementType
-        className={classes.root}
-        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-      >
+    const popupContentProps: PopupContentProps = {
+      className: classes.root,
+      ...rtlTextContainer.getAttributes({ forElements: [children, content] }),
+      ...accessibility.attributes.root,
+      ...unhandledProps,
+      onMouseEnter: this.handleMouseEnter,
+      onMouseLeave: this.handleMouseLeave,
+    }
+
+    const popupContent = (
+      <>
         {pointing && (
           <Ref innerRef={pointerRef}>
             {Box.create({}, { defaultProps: { styles: styles.pointer } })}
           </Ref>
         )}
-
         {Box.create(
           {},
           {
@@ -123,16 +122,36 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
             },
           },
         )}
-      </ElementType>
+      </>
     )
+
+    if (trapFocus) {
+      const focusTrapZoneProps = {
+        ...popupContentProps,
+        ...((_.keys(trapFocus).length && trapFocus) as FocusTrapZoneProps),
+        as: ElementType,
+      }
+
+      return <FocusTrapZone {...focusTrapZoneProps}>{popupContent}</FocusTrapZone>
+    }
+
+    if (autoFocus) {
+      const autoFocusZoneProps = {
+        ...popupContentProps,
+        ...((_.keys(autoFocus).length && autoFocus) as AutoFocusZoneProps),
+        as: ElementType,
+      }
+
+      return <AutoFocusZone {...autoFocusZoneProps}>{popupContent}</AutoFocusZone>
+    }
+
+    return <ElementType {...popupContentProps}>{popupContent}</ElementType>
   }
 }
 
 PopupContent.create = createShorthandFactory({ Component: PopupContent, mappedProp: 'content' })
 
 /**
- * A PopupContent displays the content of a Popup component
- * @accessibility This is example usage of the accessibility tag.
- * This should be replaced with the actual description after the PR is merged
+ * A PopupContent displays the content of a Popup component.
  */
 export default withSafeTypeForAs<typeof PopupContent, PopupContentProps>(PopupContent)

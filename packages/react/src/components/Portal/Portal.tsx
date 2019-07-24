@@ -17,11 +17,11 @@ import {
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { AccessibilityAttributes } from '../../lib/accessibility/types'
-import { AccessibilityKeyHandlers } from '../../lib/accessibility/reactTypes'
+import { AccessibilityHandlerProps } from '../../lib/accessibility/reactTypes'
 
 export type TriggerAccessibility = {
   attributes?: AccessibilityAttributes
-  keyHandlers?: AccessibilityKeyHandlers
+  keyHandlers?: AccessibilityHandlerProps
 }
 
 export interface PortalProps extends ChildrenComponentProps, ContentComponentProps {
@@ -77,7 +77,7 @@ export interface PortalState {
 }
 
 /**
- * A component that allows you to render children outside their parent.
+ * A Portal allows to render children outside of their parent.
  */
 class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   portalNode: HTMLElement

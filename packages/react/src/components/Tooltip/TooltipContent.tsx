@@ -15,7 +15,7 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
@@ -26,7 +26,6 @@ export interface TooltipContentProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -51,10 +50,6 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
     placement: PropTypes.string,
     pointing: PropTypes.bool,
     pointerRef: customPropTypes.ref,
-  }
-
-  static defaultProps = {
-    accessibility: defaultBehavior,
   }
 
   renderComponent({
@@ -96,8 +91,6 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
 TooltipContent.create = createShorthandFactory({ Component: TooltipContent, mappedProp: 'content' })
 
 /**
- * A TooltipContent displays the content of a Tooltip component
- * @accessibility This is example usage of the accessibility tag.
- * This should be replaced with the actual description after the PR is merged
+ * A TooltipContent contains the content of a Tooltip component.
  */
 export default withSafeTypeForAs<typeof TooltipContent, TooltipContentProps>(TooltipContent)

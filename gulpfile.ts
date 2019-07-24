@@ -27,6 +27,7 @@ require('./build/gulp/tasks/perf')
 require('./build/gulp/tasks/test-e2e')
 require('./build/gulp/tasks/test-vulns')
 require('./build/gulp/tasks/test-circulars')
+require('./build/gulp/tasks/test-dependencies')
 
 // global tasks
 task('build', parallel('bundle:all-packages', 'build:docs'))

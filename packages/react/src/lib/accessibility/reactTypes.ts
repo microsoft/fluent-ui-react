@@ -1,12 +1,13 @@
 import * as React from 'react'
-import { AccessibilityDefinition } from './types'
+import { AccessibilityAttributesBySlot, AccessibilityDefinition } from './types'
 
 /*
  * Accessibility types for React implementation.
  */
 
 export interface ReactAccessibilityBehavior extends AccessibilityDefinition {
-  keyHandlers?: AccessibilityKeyHandlers
+  attributes: AccessibilityAttributesBySlot
+  keyHandlers: AccessibilityKeyHandlers
 }
 
 export type AccessibilityKeyHandlers = {

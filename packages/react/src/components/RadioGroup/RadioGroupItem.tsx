@@ -13,17 +13,14 @@ import {
   commonPropTypes,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
+import Icon, { IconProps } from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
 
 export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default radioGroupItemBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Whether or not radio item is checked. */
@@ -37,7 +34,7 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
   checkedChanged?: ComponentEventHandler<RadioGroupItemProps>
 
   /** The label of the radio item. */
-  label?: ShorthandValue
+  label?: ShorthandValue<BoxProps>
 
   /** Initial checked value. */
   defaultChecked?: boolean
@@ -46,7 +43,7 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
   disabled?: boolean
 
   /** The radio item indicator can be user-defined icon */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** The HTML input name. */
   name?: string
@@ -106,7 +103,7 @@ class RadioGroupItem extends AutoControlledComponent<
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     label: customPropTypes.itemShorthand,
     name: PropTypes.string,
     onBlur: PropTypes.func,
@@ -188,8 +185,9 @@ class RadioGroupItem extends AutoControlledComponent<
 RadioGroupItem.create = createShorthandFactory({ Component: RadioGroupItem, mappedProp: 'label' })
 
 /**
- * A single radio within a radio group.
+ * A RadioGroupItem represents single input element within a RadioGroup.
+ *
  * @accessibility
- * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
+ * Radio items need to be grouped to correctly handle accessibility.
  */
 export default withSafeTypeForAs<typeof RadioGroupItem, RadioGroupItemProps>(RadioGroupItem)

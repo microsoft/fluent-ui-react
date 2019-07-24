@@ -5,7 +5,6 @@ import { ThemeContext } from '@stardust-ui/react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/reactTypes'
-import { FocusZone } from './accessibility/FocusZone'
 import { createShorthandFactory } from './factories'
 import { ObjectOf, ProviderContextPrepared } from '../types'
 
@@ -17,7 +16,6 @@ export interface CreateComponentConfig<P> {
   handledProps?: string[]
   propTypes?: React.WeakValidationMap<P>
   actionHandlers?: AccessibilityActionHandlers
-  focusZoneRef?: (focusZone: FocusZone) => void
   render: (config: RenderResultConfig<P>, props: P) => React.ReactNode
 }
 
@@ -34,7 +32,6 @@ const createComponent = <P extends ObjectOf<any> = any>({
   handledProps = [],
   propTypes,
   actionHandlers,
-  focusZoneRef, // TODO: setFocusZoneRef
   render,
 }: CreateComponentConfig<P>): CreateComponentReturnType<P> => {
   const mergedDefaultProps = {
@@ -54,7 +51,6 @@ const createComponent = <P extends ObjectOf<any> = any>({
         props,
         state: {},
         actionHandlers,
-        focusZoneRef,
         render: config => render(config, props),
       },
       context,

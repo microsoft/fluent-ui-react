@@ -13,32 +13,35 @@ import {
   UIComponentProps,
 } from '../../lib'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
-import Text from '../Text/Text'
+import Icon, { IconProps } from '../Icon/Icon'
+import Text, { TextProps } from '../Text/Text'
 import { Accessibility } from '../../lib/accessibility/types'
 import { checkboxBehavior } from '../../lib/accessibility'
+import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
+
+export interface CheckboxSlotClassNames {
+  label: string
+  indicator: string
+}
 
 export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default checkboxBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Initial checked value. */
-  defaultChecked?: boolean
+  defaultChecked?: SupportedIntrinsicInputProps['defaultChecked']
 
   /** Whether or not item is checked. */
-  checked?: boolean
+  checked?: SupportedIntrinsicInputProps['checked']
 
   /** An item can appear disabled and be unable to change states. */
-  disabled?: boolean
+  disabled?: SupportedIntrinsicInputProps['disabled']
 
   /** The item indicator can be user-defined icon. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** The label of the item. */
-  label?: ShorthandValue
+  label?: ShorthandValue<TextProps>
 
   /** A label in the loader can have different positions. */
   labelPosition?: 'start' | 'end'
@@ -62,11 +65,13 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
 }
 
 export interface CheckboxState {
-  checked: boolean
+  checked: CheckboxProps['checked']
   isFromKeyboard: boolean
 }
 
 class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, CheckboxState> {
+  static slotClassNames: CheckboxSlotClassNames
+
   static create: Function
 
   static displayName = 'Checkbox'
@@ -80,7 +85,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     label: customPropTypes.itemShorthand,
     labelPosition: PropTypes.oneOf(['start', 'end']),
     onChange: PropTypes.func,
@@ -143,6 +148,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     const labelElement = Text.create(label, {
       defaultProps: {
         styles: styles.label,
+        className: Checkbox.slotClassNames.label,
       },
     })
 
@@ -159,6 +165,9 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
         {labelPosition === 'start' && labelElement}
         {Icon.create(icon, {
           defaultProps: {
+            outline: toggle && !this.state.checked,
+            size: toggle ? 'medium' : 'smaller',
+            className: Checkbox.slotClassNames.indicator,
             name: toggle ? 'stardust-circle' : 'stardust-checkmark',
             styles: toggle ? styles.toggle : styles.checkbox,
           },
@@ -169,13 +178,19 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
   }
 }
 
+Checkbox.slotClassNames = {
+  label: `${Checkbox.className}__label`,
+  indicator: `${Checkbox.className}__indicator`,
+}
+
 Checkbox.create = createShorthandFactory({
   Component: Checkbox,
   mappedProp: 'label',
 })
 
 /**
- * A single checkbox within a checkbox group.
+ * A Checkbox allows to toggle between two choices -- checked and not checked.
+ *
  * @accessibility
  * Implements [ARIA Checkbox](https://www.w3.org/TR/wai-aria-practices-1.1/#checkbox) design pattern.
  */
