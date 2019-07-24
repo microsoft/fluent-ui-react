@@ -6,7 +6,7 @@ const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
       title="Align"
-      description="Text may be aligned to the start, end, center or be justified."
+      description="Text may be aligned to the start, end, center or justify."
       examplePath="components/Text/Variations/TextExampleAlign"
     />
     <ComponentExample

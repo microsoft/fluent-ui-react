@@ -16,7 +16,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Align"
-      description="Headers may be aligned to the start, end, center or be justified."
+      description="Headers may be aligned to the start, end, center or justify."
       examplePath="components/Header/Variations/HeaderExampleAlign"
     />
     <ComponentExample
