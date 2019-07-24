@@ -25,7 +25,7 @@ const NoopKnobProvider: React.FunctionComponent = props => {
 const ComponentPlaygroundTemplate: React.FunctionComponent<
   ComponentPlaygroundTemplateProps
 > = props => (
-  <Grid columns="75% 25%" rows="1fr auto" styles={{ gridColumnGap: '1rem' }}>
+  <Grid columns="1fr 300px" rows="1fr auto" styles={{ gridColumnGap: '1rem' }}>
     <Segment
       styles={{
         display: 'flex',
