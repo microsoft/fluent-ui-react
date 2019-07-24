@@ -8,22 +8,25 @@ const dropdownSelectedItemStyles: ComponentSlotStylesInput<
   DropdownVariables
 > = {
   root: ({ variables: v }): ICSSInJSStyle => ({
-    margin: '.4rem 0 0 .4rem',
     color: v.selectedItemColor,
+    background: 'white',
+    maxWidth: '280px',
+    height: '24px',
+    cursor: 'default',
+    alignSelf: 'center',
     ...(v.selectedItemBackgroundColor && {
       backgroundColor: v.selectedItemBackgroundColor,
     }),
     ':focus': {
-      color: v.selectedItemColorFocus,
-      backgroundColor: v.selectedItemBackgroundColorFocus,
       outline: '0',
     },
-    ':hover': {
-      color: v.selectedItemColorFocus,
-      backgroundColor: v.selectedItemBackgroundColorFocus,
-    },
+  }),
+  header: ({ variables: v }) => ({
+    marginLeft: '8px',
   }),
   icon: ({ variables: v }) => ({
+    cursor: 'pointer',
+    padding: '3px',
     ...getIconFillOrOutlineStyles({ outline: true }),
     ':hover': {
       color: v.selectedItemColorFocus,

@@ -67,13 +67,11 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
     display: 'flex',
     flexWrap: 'wrap',
     position: 'relative',
-    borderStyle: 'solid',
-    borderColor: v.borderColor,
     outline: 0,
     width: getWidth(p, v),
-    borderWidth: p.search ? `0 0 ${v.searchBorderBottomWidth} 0` : v.borderWidth,
     color: v.color,
     backgroundColor: v.backgroundColor,
+    border: 0,
     borderRadius: v.containerBorderRadius,
     ...(p.open && p.position === 'above' && { borderRadius: v.openAboveContainerBorderRadius }),
     ...(p.open && p.position === 'below' && { borderRadius: v.openBelowContainerBorderRadius }),
@@ -84,7 +82,19 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
       },
     },
     ...(p.focused && {
-      ...(p.search && { borderBottomColor: v.borderColorFocus }),
+      ...(p.search && {
+        ':after': {
+          content: '""',
+          position: 'absolute',
+          bottom: '0',
+          left: '0',
+          right: '100px',
+          borderBottomColor: v.borderColorFocus,
+          borderColor: v.borderColor,
+          borderStyle: 'solid',
+          borderWidth: p.search ? `0 0 ${v.searchBorderBottomWidth} 0` : v.borderWidth,
+        },
+      }),
       ...(!p.search &&
         !p.open &&
         getBorderFocusStyles({
