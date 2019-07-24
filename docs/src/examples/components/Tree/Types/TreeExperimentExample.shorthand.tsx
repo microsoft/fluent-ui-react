@@ -1,74 +1,24 @@
 import * as React from 'react'
 import { TreeFlat } from '@stardust-ui/react'
+import * as _ from 'lodash'
 
-const items = [
-  {
-    key: '1',
-    title: 'House Lannister',
-    items: [
-      {
-        key: '11',
-        title: 'Tywin',
-        items: [
-          {
-            key: '111',
-            title: 'Jaime',
-          },
-          {
-            key: '112',
-            title: 'Cersei',
-          },
-          {
-            key: '113',
-            title: 'Tyrion',
-          },
-        ],
-      },
-      {
-        key: '21',
-        title: 'Kevan',
-        items: [
-          {
-            key: '211',
-            title: 'Lancel',
-          },
-          {
-            key: '212',
-            title: 'Willem',
-          },
-          {
-            key: '213',
-            title: 'Martyn',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    key: '2',
-    title: 'House Targaryen',
-    items: [
-      {
-        key: '21',
-        title: 'Aerys',
-        items: [
-          {
-            key: '211',
-            title: 'Rhaegar',
-          },
-          {
-            key: '212',
-            title: 'Viserys',
-          },
-          {
-            key: '213',
-            title: 'Daenerys',
-          },
-        ],
-      },
-    ],
-  },
-]
+const minItems = 3
+const maxItems = 6
+const maxLevel = 3
+
+function generateItems(parent = '', currentLevel = 0) {
+  if (currentLevel === maxLevel) {
+    return
+  }
+
+  return _.times(_.random(minItems, maxItems), index => ({
+    key: `${parent}-${currentLevel}-${index}`,
+    title: `Item-${parent}-${currentLevel}-${index}`,
+    items: generateItems(`${currentLevel}-${index}`, currentLevel + 1),
+  }))
+}
+
+const items = generateItems()
 
 const TreeExampleShorthand = () => <TreeFlat items={items} />
 
