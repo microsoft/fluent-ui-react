@@ -5,211 +5,163 @@ import { ButtonVariables } from './buttonVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVariables> = {
-  root: ({ props, variables, theme: { siteVariables } }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, primary, text, iconOnly, isFromKeyboard } = props
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
     const { borderWidth } = siteVariables
-
-    const {
-      height,
-      minWidth,
-      maxWidth,
-      borderRadius,
-      circularBorderRadius,
-      paddingLeftRightValue,
-
-      color,
-      colorHover,
-      colorFocus,
-      colorDisabled,
-      backgroundColor,
-      backgroundColorActive,
-      backgroundColorHover,
-      backgroundColorFocus,
-      backgroundColorDisabled,
-      borderColor,
-      borderColorHover,
-      borderColorDisabled,
-
-      primaryColor,
-      primaryColorHover,
-      primaryColorFocus,
-      primaryBackgroundColor,
-      primaryBackgroundColorActive,
-      primaryBackgroundColorHover,
-      primaryBackgroundColorFocus,
-      primaryBorderColor,
-
-      circularColor,
-      circularColorActive,
-      circularBackgroundColor,
-      circularBackgroundColorActive,
-      circularBackgroundColorHover,
-      circularBackgroundColorFocus,
-      circularBorderColor,
-      circularBorderColorHover,
-      circularBorderColorFocus,
-
-      textColor,
-      textColorHover,
-      textPrimaryColor,
-      textPrimaryColorHover,
-      boxShadow,
-    } = variables
 
     const { ':focus': borderFocusStyles } = getBorderFocusStyles({
       siteVariables,
-      isFromKeyboard,
-      ...(circular && {
-        borderRadius: circularBorderRadius,
-        focusOuterBorderColor: circularBorderColorFocus,
+      isFromKeyboard: p.isFromKeyboard,
+      ...(p.circular && {
+        borderRadius: v.circularBorderRadius,
+        focusOuterBorderColor: v.circularBorderColorFocus,
       }),
     })
 
     return {
-      height,
-      minWidth,
-      maxWidth,
-      color,
-      backgroundColor,
-      borderRadius,
+      height: v.height,
+      minWidth: v.minWidth,
+      maxWidth: v.maxWidth,
+      color: v.color,
+      backgroundColor: v.backgroundColor,
+      borderRadius: v.borderRadius,
       display: 'inline-flex',
       justifyContent: 'center',
       alignItems: 'center',
       position: 'relative',
-      padding: `0 ${pxToRem(paddingLeftRightValue)}`,
+      padding: `0 ${pxToRem(v.paddingLeftRightValue)}`,
       verticalAlign: 'middle',
       cursor: 'pointer',
 
       // rectangular button defaults
-      ...(!text && {
+      ...(!p.text && {
         outline: 0,
         borderWidth,
         borderStyle: 'solid',
-        borderColor,
-        boxShadow,
+        borderColor: v.borderColor,
+        boxShadow: v.boxShadow,
 
         ':hover': {
-          color: colorHover,
-          backgroundColor: backgroundColorHover,
-          borderColor: borderColorHover,
+          color: v.colorHover,
+          backgroundColor: v.backgroundColorHover,
+          borderColor: v.borderColorHover,
         },
 
         ':focus': {
           boxShadow: 'none',
-          ...(isFromKeyboard
+          ...(p.isFromKeyboard
             ? {
-                color: colorFocus,
-                backgroundColor: backgroundColorFocus,
+                color: v.colorFocus,
+                backgroundColor: v.backgroundColorFocus,
                 ...borderFocusStyles,
               }
-            : { ':active': { backgroundColor: backgroundColorActive } }),
+            : { ':active': { backgroundColor: v.backgroundColorActive } }),
         },
       }),
 
       // circular button defaults
-      ...(circular &&
-        !text && {
-          minWidth: height,
+      ...(p.circular &&
+        !p.text && {
+          minWidth: v.height,
           padding: 0,
-          color: circularColor,
-          backgroundColor: circularBackgroundColor,
-          borderColor: circularBorderColor,
-          borderRadius: circularBorderRadius,
+          color: v.circularColor,
+          backgroundColor: v.circularBackgroundColor,
+          borderColor: v.circularBorderColor,
+          borderRadius: v.circularBorderRadius,
 
           ':hover': {
-            color: circularColorActive,
-            backgroundColor: circularBackgroundColorHover,
-            borderColor: circularBorderColorHover,
+            color: v.circularColorActive,
+            backgroundColor: v.circularBackgroundColorHover,
+            borderColor: v.circularBorderColorHover,
           },
 
           ':focus': {
             boxShadow: 'none',
-            ...(isFromKeyboard
+            ...(p.isFromKeyboard
               ? {
-                  color: circularColorActive,
-                  backgroundColor: circularBackgroundColorFocus,
+                  color: v.circularColorActive,
+                  backgroundColor: v.circularBackgroundColorFocus,
                   ...borderFocusStyles,
                 }
-              : { ':active': { backgroundColor: circularBackgroundColorActive } }),
+              : { ':active': { backgroundColor: v.circularBackgroundColorActive } }),
           },
         }),
 
       // text button defaults
-      ...(text && {
-        color: textColor,
+      ...(p.text && {
+        color: v.textColor,
         backgroundColor: 'transparent',
         borderColor: 'transparent',
         ':hover': {
-          color: textColorHover,
+          color: v.textColorHover,
         },
-        ...(primary && {
-          color: textPrimaryColor,
+        ...(p.primary && {
+          color: v.textPrimaryColor,
           ':hover': {
-            color: textPrimaryColorHover,
+            color: v.textPrimaryColorHover,
           },
         }),
 
         ':focus': {
           boxShadow: 'none',
           outline: 'none',
-          ...(isFromKeyboard && borderFocusStyles),
+          ...(p.isFromKeyboard && borderFocusStyles),
         },
       }),
 
       // Overrides for "primary" buttons
-      ...(primary &&
-        !text && {
-          color: primaryColor,
-          backgroundColor: primaryBackgroundColor,
-          borderColor: primaryBorderColor,
+      ...(p.primary &&
+        !p.text && {
+          color: v.primaryColor,
+          backgroundColor: v.primaryBackgroundColor,
+          borderColor: v.primaryBorderColor,
 
           ':hover': {
-            color: primaryColorHover,
-            backgroundColor: primaryBackgroundColorHover,
+            color: v.primaryColorHover,
+            backgroundColor: v.primaryBackgroundColorHover,
           },
 
           ':focus': {
             boxShadow: 'none',
-            ...(isFromKeyboard
+            ...(p.isFromKeyboard
               ? {
-                  color: primaryColorFocus,
-                  backgroundColor: primaryBackgroundColorFocus,
+                  color: v.primaryColorFocus,
+                  backgroundColor: v.primaryBackgroundColorFocus,
                   ...borderFocusStyles,
                 }
-              : { ':active': { backgroundColor: primaryBackgroundColorActive } }),
+              : { ':active': { backgroundColor: v.primaryBackgroundColorActive } }),
           },
         }),
 
       // Overrides for "disabled" buttons
-      ...(disabled && {
+      ...(p.disabled && {
         cursor: 'default',
-        color: colorDisabled,
-        backgroundColor: backgroundColorDisabled,
-        borderColor: borderColorDisabled,
+        color: v.colorDisabled,
+        backgroundColor: v.backgroundColorDisabled,
+        borderColor: v.borderColorDisabled,
         boxShadow: 'none',
         ':hover': {
-          backgroundColor: backgroundColorDisabled,
+          backgroundColor: v.backgroundColorDisabled,
         },
       }),
 
-      ...(fluid && {
+      ...(p.fluid && {
         width: '100%',
         maxWidth: '100%',
       }),
 
-      ...(iconOnly && {
-        minWidth: height,
+      ...(p.iconOnly && {
+        minWidth: v.height,
         padding: 0,
       }),
     }
   },
 
   // modifies the text of the button
-  content: ({ variables }): ICSSInJSStyle => ({
+  content: ({ variables: v }): ICSSInJSStyle => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    fontWeight: variables.contentFontWeight,
+    fontWeight: v.contentFontWeight,
   }),
 }
 
