@@ -4,14 +4,14 @@ import { Alert, Popup, Flex } from '@stardust-ui/react'
 interface UfdProps {
   content: string
   position: 'top' | 'center' | 'popup'
-  attachedTo?: string
   label: string
-  buttons: any[]
-  contentId: string
+  attachedTo?: string
+  buttons?: any[]
+  contentId?: string
   /**
    * make sure to focus the right element after you call onDismiss!
    */
-  // onDismiss: () => void
+  onDismiss?: () => void
 }
 
 // UFDs should never grab or trap focus
@@ -20,25 +20,29 @@ interface UfdProps {
 // TODO: figure out label, labelledby
 // TODO: figure out narration, currently aria-live on the alert, but we might need to use aria-live
 const Ufd = (props: UfdProps) => {
-  const { content, position, label, attachedTo, buttons, contentId } = props
-  // const contentId = React.useRef(_.uniqueId('ufd-content-'))
+  const { content, position, label, attachedTo, buttons, contentId, onDismiss } = props
 
-  return position === 'popup'
-    ? renderPopup({ contentId, attachedTo, label, content, buttons })
-    : renderAlert({ contentId, position, label, content, buttons })
+  switch (position) {
+    case 'popup': {
+      return renderPopup({ contentId, attachedTo, label, content, onDismiss })
+    }
+    case 'center': {
+      return renderAlertWithCloseIcon({ contentId, content, hideBorder: true, onDismiss })
+    }
+    default: {
+      return renderAlertWithCustomButtons({ contentId, position, label, content, buttons })
+    }
+  }
 }
 
-const renderAlert = props => {
-  const { contentId, position, content, hideBorder, buttons } = props
+// return position === 'popup'
+//   ? renderPopup({ contentId, attachedTo, label, content, onDismiss })
+//   : renderAlert({ contentId, position, label, content, buttons })
+// }
 
-  // let describedBy: string = undefined
-  // if (position === 'center') {
-  //   describedBy = contentId
-  // } else if (position === 'top') {
-  //   describedBy = contentId
-  // }
+const renderAlertWithCustomButtons = props => {
+  const { contentId, position, content, hideBorder, buttons } = props
   return (
-    // <div aria-label={label} aria-describedby={describedBy}>
     <Alert
       danger
       content={{ id: contentId, content }}
@@ -58,7 +62,40 @@ const renderAlert = props => {
       }}
       {...position === 'center' && { styles: { height: '80px' } }}
     />
-    // </div>
+  )
+}
+
+const renderAlertWithCloseIcon = props => {
+  const { contentId, position, label, content, hideBorder, onDismiss } = props
+
+  let role: string = undefined
+  let describedBy: string = undefined
+  if (position === 'center') {
+    role = 'region'
+    describedBy = contentId
+  } else if (position === 'top') {
+    role = 'region'
+    describedBy = contentId
+  }
+  return (
+    <div role={role} aria-label={label} aria-describedby={describedBy}>
+      <Alert
+        danger
+        content={{ id: contentId, content }}
+        action={{
+          icon: 'close',
+          'aria-label': 'Dismiss',
+          'aria-describedby': contentId,
+          onClick: onDismiss,
+        }}
+        variables={{
+          dangerBackgroundColor: '#585A96', // TODO: use theme color
+          dangerColor: 'white',
+          ...(hideBorder && { borderStyle: 'transparent' }),
+        }}
+        {...position === 'center' && { styles: { height: '80px' } }}
+      />
+    </div>
   )
 }
 
@@ -73,7 +110,7 @@ const renderPopup = props => {
       open={true}
       target={target}
       content={{
-        content: renderAlert({ contentId, content, hideBorder: true, onDismiss }),
+        content: renderAlertWithCloseIcon({ contentId, content, hideBorder: true, onDismiss }),
         'aria-label': label,
         'aria-describedby': contentId,
         role: 'region',

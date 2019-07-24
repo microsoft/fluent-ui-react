@@ -104,7 +104,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
           </UfdRegion>
         )}
         {showTopUfdSingleRegion && (
-          <div role="region" aria-label="warning">
+          <div role="region" aria-label="warning mic">
             <Ufd
               content="Others may have trouble hearing you clearly. Try moving a bit away from your mic."
               position="top"
@@ -122,7 +122,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
           </div>
         )}
         {showSecondTopUfdSingleRegion && (
-          <div role="region" aria-label="warning">
+          <div role="region" aria-label="warning audio">
             <Ufd
               content="Echo in your room! Turn off your audio or ask others to turn off theirs."
               position="top"
@@ -185,16 +185,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                   content="Random Centered UFD"
                   position="center"
                   label="Alert"
-                  buttons={[
-                    <Button
-                      icon="close"
-                      aria-label="Dismiss"
-                      aria-describedby="contentId"
-                      iconOnly={true}
-                      onClick={() => setShowTopUfd(false)}
-                    />,
-                  ]}
-                  contentId="showCenteredUfd-1"
+                  onDismiss={() => setShowCenteredUfd(false)}
                 />
               )}
             </div>
@@ -205,10 +196,8 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                 content="Random attached alert"
                 position="popup"
                 label="Alert"
-                buttons={[
-                  <Button content="Dismiss" onClick={() => setShowTopUfd(false)} primary />,
-                ]}
-                contentId="showAttachedUfd-1"
+                onDismiss={() => setShowAttachedUfd(false)}
+                contentId="attachedUfd-1"
               />
             )}
 
