@@ -3,6 +3,7 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
 import { ButtonVariables } from './buttonVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
+import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVariables> = {
   root: ({ props, variables, theme: { siteVariables } }): ICSSInJSStyle => {
@@ -52,7 +53,6 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
       textColor,
       textColorHover,
       textPrimaryColor,
-      textPrimaryColorHover,
       boxShadow,
     } = variables
 
@@ -139,21 +139,30 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
         color: textColor,
         backgroundColor: 'transparent',
         borderColor: 'transparent',
+        padding: `0 ${pxToRem(8)}`,
+
+        // by default icons should always be outline on rest and filled on hover/focus
+        ...getIconFillOrOutlineStyles({ outline: true }),
+
         ':hover': {
           color: textColorHover,
+          ...getIconFillOrOutlineStyles({ outline: false }),
         },
-        ...(primary && {
-          color: textPrimaryColor,
-          ':hover': {
-            color: textPrimaryColorHover,
-          },
-        }),
 
         ':focus': {
           boxShadow: 'none',
           outline: 'none',
-          ...(isFromKeyboard && borderFocusStyles),
+
+          ...(isFromKeyboard && {
+            color: textColorHover,
+            ...borderFocusStyles,
+            ...getIconFillOrOutlineStyles({ outline: false }),
+          }),
         },
+
+        ...(primary && {
+          color: textPrimaryColor,
+        }),
       }),
 
       // Overrides for "primary" buttons
