@@ -32,7 +32,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
   }
 
   render() {
-    const { title, items, level = 0, ...rest } = this.props
+    const { title, items, level = 0, id, ...rest } = this.props
     const { open } = this.state
 
     if (!level) {
@@ -40,12 +40,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         <div style={{ paddingLeft: '10px' }} role="tree">
           {open &&
             items.map((item, index) => (
-              <Tree
-                {...item}
-                level={level + 1}
-                aria-posinset={index}
-                id={`item-${level}-${index}`}
-              />
+              <Tree {...item} level={level + 1} aria-posinset={index} id={`item-${index}`} />
             ))}
         </div>
       )
@@ -60,28 +55,27 @@ class Tree extends React.Component<TreeProps, TreeState> {
           onClick={this.handleClick}
           aria-expanded={open}
           role="treeitem"
-          aria-owns={
-            open && items && items.length
-              ? _.times(items.length, index => `item-${level}-${index}`).reduce(
-                  (acc, item) => `${acc} ${item}`,
-                  '',
-                )
-              : undefined
-          }
+          id={id}
+          aria-owns={open && items ? `${id}-group` : undefined}
           {...rest}
         >
           {title}
         </div>
-        {open &&
-          items &&
-          items.map((item, index) => (
-            <Tree
-              {...item}
-              level={level + 1}
-              aria-posinset={index + 1}
-              id={`item-${level}-${index}`}
+        {open && items && (
+          <>
+            <div
+              role="group"
+              id={`${id}-group`}
+              aria-owns={_.times(items.length, index => `${id}-${index}`).reduce(
+                (acc, item) => `${acc}${item} `,
+                '',
+              )}
             />
-          ))}
+            {items.map((item, index) => (
+              <Tree {...item} level={level + 1} aria-posinset={index + 1} id={`${id}-${index}`} />
+            ))}
+          </>
+        )}
       </>
     )
   }
