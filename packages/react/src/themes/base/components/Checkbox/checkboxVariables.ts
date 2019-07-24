@@ -1,79 +1,75 @@
 import { pxToRem } from '../../../../lib'
 
 export type CheckboxVariables = {
-  checkboxBackground: string
-  checkboxBorderColor: string
-  checkboxBorderStyle: string
-  checkboxBorderRadius: string
-  checkboxBorderWidth: string
+  background: string
+  borderColor: string
+  borderStyle: string
+  borderRadius: string
+  borderWidth: string
   checkboxColor: string
-  checkboxGap: string
-  checkboxMargin: string
-  checkboxPadding: string
+  gap: string
+  margin: string
+  padding: string
 
   toggleBackground: string
   toggleBorderColor: string
   toggleBorderStyle: string
   toggleBorderRadius: string
   toggleBorderWidth: string
-  toggleColor: string
+  toggleIndicatorColor: string
   toggleMargin: string
   togglePadding: string
 
-  checkedCheckboxBackground: string
-  checkedCheckboxBorderColor: string
-  checkedCheckboxColor: string
-  checkedToggleColor: string
-  checkedToggleBackground: string
-  checkedToggleBorderColor: string
-  checkedTogglePadding: string
+  checkedBackground: string
+  checkedBorderColor: string
+  checkboxCheckedColor: string
+  checkboxToggleCheckedColor: string
+  checkboxToggleCheckedBackground: string
+  checkboxToggleCheckedBorderColor: string
+  toggleCheckedPadding: string
 
   disabledColor: string
-  disabledCheckboxBackground: string
-  disabledCheckboxBorderColor: string
+  disabledBackground: string
+  disabledBorderColor: string
   disabledCheckboxColor: string
-  disabledToggleColor: string
+  disabledToggleIndicatorColor: string
   disabledToggleBackground: string
   disabledToggleBorderColor: string
-
-  padding: string
 }
 
 export default (siteVars: any): CheckboxVariables => ({
-  checkboxBackground: 'transparent',
-  checkboxBorderColor: siteVars.colors.grey[300],
-  checkboxBorderStyle: `solid`,
-  checkboxBorderRadius: pxToRem(4),
-  checkboxBorderWidth: pxToRem(1),
+  background: 'transparent',
+  borderColor: siteVars.colors.grey[300],
+  borderStyle: `solid`,
+  borderRadius: pxToRem(4),
+  borderWidth: pxToRem(1),
   checkboxColor: 'transparent',
-  checkboxGap: pxToRem(12),
-  checkboxMargin: '0',
-  checkboxPadding: '0',
+  gap: pxToRem(12),
+  margin: '0',
+  padding: '0',
 
   toggleBackground: 'transparent',
   toggleBorderColor: siteVars.colors.grey[300],
   toggleBorderStyle: `solid`,
   toggleBorderRadius: pxToRem(999),
   toggleBorderWidth: pxToRem(1),
-  toggleColor: 'inherit',
+  toggleIndicatorColor: 'inherit',
   toggleMargin: '0',
   togglePadding: `0 ${pxToRem(20)} 0 0`,
 
-  checkedCheckboxBackground: 'transparent',
-  checkedCheckboxBorderColor: siteVars.colors.grey[500],
-  checkedCheckboxColor: siteVars.colors.grey[500],
-  checkedToggleBackground: 'transparent',
-  checkedToggleBorderColor: siteVars.colors.grey[500],
-  checkedToggleColor: 'inherit',
-  checkedTogglePadding: `0 0 0 ${pxToRem(20)}`,
+  checkedBackground: 'transparent',
+  checkedBorderColor: siteVars.colors.grey[500],
+  checkboxCheckedColor: siteVars.colors.grey[500],
+  checkboxToggleCheckedBackground: 'transparent',
+  checkboxToggleCheckedBorderColor: siteVars.colors.grey[500],
+  checkboxToggleCheckedColor: 'inherit',
+  toggleCheckedPadding: `0 0 0 ${pxToRem(20)}`,
 
   disabledColor: siteVars.colors.grey[300],
-  disabledCheckboxBackground: siteVars.colors.grey[200],
-  disabledCheckboxBorderColor: siteVars.colors.grey[100],
+  disabledBackground: siteVars.colors.grey[200],
+  disabledBorderColor: siteVars.colors.grey[100],
   disabledCheckboxColor: siteVars.colors.grey[300],
   disabledToggleBackground: 'transparent',
   disabledToggleBorderColor: siteVars.colors.grey[200],
-  disabledToggleColor: siteVars.colors.grey[300],
-
-  padding: `0 ${pxToRem(4)}`,
+  disabledToggleIndicatorColor: siteVars.colors.grey[300],
 })

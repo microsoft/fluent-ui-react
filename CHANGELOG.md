@@ -38,6 +38,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Fix `ChatMessage`'s focus border overlays `actionMenu` in Teams theme @mnajdova ([#1637](https://github.com/stardust-ui/react/pull/1637))
+- Update `Checkbox` files for Teams Theme to match [redlines] @bcalvery ([#1656](https://github.com/stardust-ui/react/pull/1656))
 - Add `color` prop to `Segment` typings @layershifter ([#1702](https://github.com/stardust-ui/react/pull/1702))
 - Remove `color` prop from `Dialog` typings @layershifter ([#1702](https://github.com/stardust-ui/react/pull/1702))
 - `Loader` uses `Text` component for `label` slot instead of `Box` @layershifter ([#1701](https://github.com/stardust-ui/react/pull/1701))
@@ -53,6 +54,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Improve a table with component props in docs @layershifter ([#1634](https://github.com/stardust-ui/react/pull/1634))
 - Improve rendering performance for docs examples @Bugaa92 ([#1654](https://github.com/stardust-ui/react/pull/1654))
 - Add FAQ entry for `Flex`, `Grid`, `Layout`, `Box`, `Segment` @lucivpav ([#1646](https://github.com/stardust-ui/react/pull/1646))
+
+<!--------------------------------[ v0.34.3 ]------------------------------- -->
+## [v0.34.3](https://github.com/stardust-ui/react/tree/v0.34.3) (2019-07-23)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.34.2...v0.34.3)
+
+### Fixes
+- Fix nesting issues with `Dialog` component inside `Popup` @layershifter ([#1706](https://github.com/stardust-ui/react/pull/1706))
 
 <!--------------------------------[ v0.34.2 ]------------------------------- -->
 ## [v0.34.2](https://github.com/stardust-ui/react/tree/v0.34.2) (2019-07-19)
