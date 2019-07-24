@@ -22,8 +22,8 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ShorthandValue } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
-import Header from '../Header/Header'
-import Portal from '../Portal/Portal'
+import Header, { HeaderProps } from '../Header/Header'
+import Portal, { TriggerAccessibility } from '../Portal/Portal'
 import Flex from '../Flex/Flex'
 import createComponent from 'src/lib/createComponent'
 import useStardust from '@stardust-ui/react-bindings/src/useStardust'
@@ -35,30 +35,27 @@ export interface DialogSlotClassNames {
 
 export interface DialogProps
   extends UIComponentProps,
-    ContentComponentProps<ShorthandValue>,
-    ColorComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default dialogBehavior
-   */
+    ContentComponentProps<ShorthandValue<BoxProps>> {
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** A dialog can contain actions. */
-  actions?: ShorthandValue
+  actions?: ShorthandValue<BoxProps>
 
   /** A dialog can contain a cancel button. */
-  cancelButton?: ShorthandValue
+  cancelButton?: ShorthandValue<ButtonProps>
 
   /** A dialog can contain a confirm button. */
-  confirmButton?: ShorthandValue
+  confirmButton?: ShorthandValue<ButtonProps>
 
   /** Initial value for 'open'. */
   defaultOpen?: boolean
 
   /** A dialog can contain a header. */
-  header?: ShorthandValue
+  header?: ShorthandValue<HeaderProps>
 
-  stateManager: DialogManagerFactory
+  /** A dialog can contain a button next to the header. */
+  headerAction?: ShorthandValue<ButtonProps>
 
   /**
    * Called after user's click a cancel button.
@@ -85,7 +82,7 @@ export interface DialogProps
   open?: boolean
 
   /** A dialog can contain a overlay. */
-  overlay?: ShorthandValue
+  overlay?: ShorthandValue<BoxProps>
 
   /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value. */
   trapFocus?: true | FocusTrapZoneProps
@@ -208,21 +205,21 @@ const Dialog: React.FC<DialogProps> = props => {
     },
   })
 
-  const accessibility = useAccessibility(
-    dialogBehavior,
-    { ...props, ...state },
-    {
-      actionHandlers: {
-        closeAndFocusTrigger: e => {
-          handleDialogCancel(e)
-          e.stopPropagation()
-
-          _.invoke(triggerRef, 'current.focus')
-        },
-        close: e => handleDialogCancel(e), // What we can do?
-      },
-    },
-  )
+  // const accessibility = useAccessibility(
+  //   dialogBehavior,
+  //   { ...props, ...state },
+  //   {
+  //     actionHandlers: {
+  //       closeAndFocusTrigger: e => {
+  //         handleDialogCancel(e)
+  //         e.stopPropagation()
+  //
+  //         _.invoke(triggerRef, 'current.focus')
+  //       },
+  //       close: e => handleDialogCancel(e), // What we can do?
+  //     },
+  //   },
+  // )
 
   const dialogContent = (
     <Ref innerRef={contentRef}>
@@ -349,7 +346,7 @@ const Dropdown = createComponent({
   render: () => {},
 })
 
-const d = <Dropdown middleware={[truncateSelectedItems(5)]} styles={} accessibility={} />
+const d = <Dropdown middleware={[truncateSelectedItems(5)]} styles={{}} accessibility={{}} />
 
 const dia = (
   <Button

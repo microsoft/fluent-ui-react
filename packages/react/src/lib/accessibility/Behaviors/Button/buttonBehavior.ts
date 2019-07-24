@@ -18,30 +18,7 @@ const buttonBehavior: Accessibility<ButtonBehaviorProps> = props => ({
   },
 
   keyActions: {
-    content: {},
-    icon: {
-      onKeyDown(e, ...args) {
-        const iconRef = findDOMNode(props.icon.???)
-      },
-    },
-
-    contentIcon: {},
-
     root: {
-      ...(props.as !== 'button' &&
-        props.as !== 'a' && {
-          onKeyDown(e, ...args) {
-            props.root.onKeyDown(e, ...args)
-
-            if (e.defaultPrevented) return
-
-            const code = keyboardKey(e)
-            if (code === keyboardKey.Enter || keyboardKey.Spacebar) {
-              this.onClick(e, ...args)
-            }
-          },
-        }),
-
       ...(props.as !== 'button' &&
         props.as !== 'a' && {
           performClick: {

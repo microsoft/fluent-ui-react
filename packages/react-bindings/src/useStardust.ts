@@ -4,6 +4,7 @@ import renderComponent, {
   RenderConfig,
   RenderResultConfig,
 } from '@stardust-ui/react/src/lib/renderComponent'
+// @ts-ignore
 import { ThemeContext } from 'react-fela'
 import { Manager } from '@stardust-ui/state'
 import { Omit } from '@stardust-ui/react'
@@ -12,7 +13,7 @@ export type UseStardustConfig = {
 
 }
 
-const useStardust = <P = {}>(
+const useStardust = <P = any>(
   config: Omit<RenderConfig<P>, 'state' | 'context'> & { autoControlledProps?: string[] },
 ): RenderResultConfig<P> & {
   manager: Manager<any, any>
@@ -21,10 +22,10 @@ const useStardust = <P = {}>(
   // const className = config.className || `ui-${_.kebabCase(displayName)}`
   const handledProps = config.handledProps
 
+  const { className, actionHandlers, props } = config
+
   const context = React.useContext(ThemeContext)
   const manager = useStateManager(props.stateManager, props, config.autoControlledProps)
-
-  const { className, displayName, handledProps, actionHandlers, focusZoneRef } = config
 
   const result = renderComponent<P>({
     className,
