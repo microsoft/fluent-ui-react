@@ -35,10 +35,6 @@ const isBlacklistedProp = (propName: string): boolean =>
 const createHookGenerator = (options: KnobGeneratorOptions): null | KnobDefinition => {
   const { componentInfo, propDef } = options
 
-  if (isBlacklistedProp(propDef.name)) {
-    return null
-  }
-
   // TODO: add support for AutoControlled props
   const Component = Stardust[componentInfo.displayName]
   const { autoControlledProps = [] } = Component
@@ -55,6 +51,10 @@ const createHookGenerator = (options: KnobGeneratorOptions): null | KnobDefiniti
 
   if (propGenerator) {
     return propGenerator(options)
+  }
+
+  if (isBlacklistedProp(propDef.name)) {
+    return null
   }
 
   if (propDef.types.length === 1) {

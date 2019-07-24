@@ -37,7 +37,11 @@ export const Embed: KnobComponentGenerators<EmbedProps> = {
     hook: useStringKnob,
     name: propName,
     initialValue:
-      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/TearsOfSteel.jpg',
+      'https://raw.githubusercontent.com/bower-media-samples/big-buck-bunny-480p-5s/master/poster.jpg',
+  }),
+  variables: () => ({
+    hook: () => [{ width: '480px' }],
+    name: 'variables',
   }),
 }
 
@@ -68,12 +72,16 @@ export const Video: KnobComponentGenerators<VideoProps> = {
     hook: useStringKnob,
     name: propName,
     initialValue:
-      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/TearsOfSteel.jpg',
+      'https://raw.githubusercontent.com/bower-media-samples/big-buck-bunny-480p-5s/master/poster.jpg',
   }),
   src: ({ propName }) => ({
     hook: useStringKnob,
     name: propName,
     initialValue:
-      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+      'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+  }),
+  variables: () => ({
+    hook: () => [{ width: '480px' }],
+    name: 'variables',
   }),
 }
