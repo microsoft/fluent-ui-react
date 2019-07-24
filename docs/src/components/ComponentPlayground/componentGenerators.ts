@@ -39,6 +39,7 @@ export const Embed: KnobComponentGenerators<EmbedProps> = {
     initialValue:
       'https://raw.githubusercontent.com/bower-media-samples/big-buck-bunny-480p-5s/master/poster.jpg',
   }),
+  // Hack until `size` prop will not supported
   variables: () => ({
     hook: () => [{ width: '480px' }],
     name: 'variables',
@@ -80,6 +81,7 @@ export const Video: KnobComponentGenerators<VideoProps> = {
     initialValue:
       'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
   }),
+  // Hack until `size` prop will not supported
   variables: () => ({
     hook: () => [{ width: '480px' }],
     name: 'variables',
