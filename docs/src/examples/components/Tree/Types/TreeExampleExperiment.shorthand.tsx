@@ -40,7 +40,13 @@ class Tree extends React.Component<TreeProps, TreeState> {
         <div style={{ paddingLeft: '10px' }} role="tree">
           {open &&
             items.map((item, index) => (
-              <Tree {...item} level={level + 1} aria-posinset={index} id={`item-${index}`} />
+              <Tree
+                {...item}
+                level={level + 1}
+                aria-posinset={index + 1}
+                aria-setsize={items.length}
+                id={`item-${index}`}
+              />
             ))}
         </div>
       )
@@ -72,7 +78,13 @@ class Tree extends React.Component<TreeProps, TreeState> {
               )}
             />
             {items.map((item, index) => (
-              <Tree {...item} level={level + 1} aria-posinset={index + 1} id={`${id}-${index}`} />
+              <Tree
+                {...item}
+                level={level + 1}
+                aria-posinset={index + 1}
+                aria-setsize={items.length}
+                id={`${id}-${index}`}
+              />
             ))}
           </>
         )}
