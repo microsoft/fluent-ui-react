@@ -1,4 +1,3 @@
-import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
 import { ButtonVariables } from './buttonVariables'
@@ -28,7 +27,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
       justifyContent: 'center',
       alignItems: 'center',
       position: 'relative',
-      padding: `0 ${pxToRem(v.paddingLeftRightValue)}`,
+      padding: v.padding,
       verticalAlign: 'middle',
       cursor: 'pointer',
 
@@ -149,6 +148,12 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
         maxWidth: '100%',
       }),
 
+      ...(p.size === 'small' && {
+        padding: v.sizeSmallPadding,
+        height: v.sizeSmallHeight,
+        minWidth: v.sizeSmallMinWidth,
+      }),
+
       ...(p.iconOnly && {
         minWidth: v.height,
         padding: 0,
@@ -157,11 +162,16 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
   },
 
   // modifies the text of the button
-  content: ({ variables: v }): ICSSInJSStyle => ({
+  content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
+    fontSize: v.fontSize,
     fontWeight: v.contentFontWeight,
+
+    ...(p.size === 'small' && {
+      fontSize: v.sizeSmallFontSize,
+    }),
   }),
 }
 

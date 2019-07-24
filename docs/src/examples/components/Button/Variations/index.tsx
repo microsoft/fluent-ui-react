@@ -24,6 +24,11 @@ const Variations = () => (
       description="A button can be shown in form of a text to indicate some less-pronounced actions."
       examplePath="components/Button/Variations/ButtonExampleText"
     />
+    <ComponentExample
+      title="Size"
+      description="A button can be shown in form of a text to indicate some less-pronounced actions."
+      examplePath="components/Button/Variations/ButtonExampleSize"
+    />
   </ExampleSection>
 )
 
