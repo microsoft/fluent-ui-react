@@ -14,16 +14,6 @@ const Variations = () => (
       description="A button can be circular."
       examplePath="components/Button/Variations/ButtonExampleCircular"
     />
-    <ComponentExample
-      title="Circular Emphasis"
-      description="A button can be circular and formatted to show different levels of emphasis."
-      examplePath="components/Button/Variations/ButtonExampleEmphasisCircular"
-    />
-    <ComponentExample
-      title="Text"
-      description="A button can be shown in form of a text to indicate some less-pronounced actions."
-      examplePath="components/Button/Variations/ButtonExampleText"
-    />
   </ExampleSection>
 )
 
