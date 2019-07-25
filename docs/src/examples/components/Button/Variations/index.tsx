@@ -14,6 +14,11 @@ const Variations = () => (
       description="A button can be circular."
       examplePath="components/Button/Variations/ButtonExampleCircular"
     />
+    <ComponentExample
+      title="Size"
+      description="A button can have assorted sizes."
+      examplePath="components/Button/Variations/ButtonExampleSize"
+    />
   </ExampleSection>
 )
 

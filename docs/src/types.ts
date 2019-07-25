@@ -1,3 +1,6 @@
+import { UseKnobOptions } from '@stardust-ui/docs-components'
+import { ThemePrepared } from '@stardust-ui/react'
+
 export type ExampleSource = {
   js: string
   ts: string
@@ -53,3 +56,15 @@ export type ComponentPropType = {
   parameters?: ComponentPropType[]
   value?: string
 }
+
+export type KnobGeneratorOptions = {
+  propName?: string
+  propDef: ComponentProp
+  componentInfo: ComponentInfo
+  theme: ThemePrepared
+}
+export type KnobDefinition = UseKnobOptions<any> & { hook: Function }
+
+export type KnobGenerator<T> = (options: KnobGeneratorOptions) => KnobDefinition
+
+export type KnobComponentGenerators<P> = Partial<Record<keyof P, KnobGenerator<any>>>
