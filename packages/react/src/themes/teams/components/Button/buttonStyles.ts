@@ -166,11 +166,13 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    fontSize: v.fontSize,
+    fontSize: v.contentFontSize,
     fontWeight: v.contentFontWeight,
+    lineHeight: v.contentLineHeight,
 
     ...(p.size === 'small' && {
-      fontSize: v.sizeSmallFontSize,
+      fontSize: v.sizeSmallContentFontSize,
+      lineHeight: v.sizeSmallContentLineHeight,
     }),
   }),
 }
