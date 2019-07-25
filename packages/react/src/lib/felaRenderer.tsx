@@ -11,11 +11,16 @@ import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
 import felaInvokeKeyframesPlugin from './felaInvokeKeyframesPlugin'
 import felaSanitizeCss from './felaSanitizeCssPlugin'
 
+import * as _ from 'lodash'
+import { processStyleWithPlugins } from 'fela-utils'
+
+
 let felaDevMode = false
 
 try {
   felaDevMode = !!window.localStorage.felaDevMode
-} catch {}
+} catch {
+}
 
 if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
   if (felaDevMode) {
@@ -65,7 +70,7 @@ const rendererConfig = {
     // This is required after fela-plugin-prefixer to resolve the array of fallback values prefixer produces.
     felaPluginFallbackValue(),
 
-    felaExpandCssShorthandsPlugin(),
+    // felaExpandCssShorthandsPlugin(),
     felaDisableAnimationsPlugin(),
     felaInvokeKeyframesPlugin(),
     felaPluginEmbedded(),
@@ -75,5 +80,51 @@ const rendererConfig = {
 }
 
 const felaRenderer: Renderer = createRenderer(rendererConfig)
+
+window.debugDefinitions = {}
+window.debugEl = (el: HTMLElement) => {
+  const result = {}
+
+  el.classList.forEach(className => {
+    if (window.debugDefinitions[className]) {
+      result[window.debugDefinitions[className].name] = {
+        variable: window.debugDefinitions[className].variable,
+        value: window.debugDefinitions[className].value,
+        file: window.debugDefinitions[className].file,
+      }
+    }
+  })
+
+  return JSON.stringify(result, null, 2)
+}
+
+const _renderStyleToClassNames = (style, classes) => {
+  return felaRenderer._renderStyleToClassNames(style) + ' ' +classes
+}
+
+felaRenderer._renderStyle = (style, props) => {
+  const debugClasses = []
+
+  Object.keys(style).forEach(key => {
+    if (style[key].__STARDUST_DEBUG) {
+      console.warn(style[key])
+      const id = _.uniqueId('sd-')
+
+      window.debugDefinitions[id] = style[key]
+      debugClasses.push(id)
+
+      style[key] = style[key].value
+    }
+  })
+
+  const processedStyle = processStyleWithPlugins(
+    felaRenderer,
+    style,
+    'RULE',
+    props
+  )
+console.log(debugClasses.join(' '))
+  return _renderStyleToClassNames(processedStyle, debugClasses.join(' ')).slice(1)
+}
 
 export default felaRenderer

@@ -55,10 +55,10 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
           boxShadow: 'none',
           ...(p.isFromKeyboard
             ? {
-                color: v.colorFocus,
-                backgroundColor: v.backgroundColorFocus,
-                ...borderFocusStyles,
-              }
+              color: v.colorFocus,
+              backgroundColor: v.backgroundColorFocus,
+              ...borderFocusStyles,
+            }
             : { ':active': { backgroundColor: v.backgroundColorActive } }),
         },
       }),
@@ -87,10 +87,10 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
             boxShadow: 'none',
             ...(p.isFromKeyboard
               ? {
-                  color: v.circularColorActive,
-                  backgroundColor: v.circularBackgroundColorFocus,
-                  ...borderFocusStyles,
-                }
+                color: v.circularColorActive,
+                backgroundColor: v.circularBackgroundColorFocus,
+                ...borderFocusStyles,
+              }
               : { ':active': { backgroundColor: v.circularBackgroundColorActive } }),
           },
         }),
@@ -133,10 +133,10 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
             boxShadow: 'none',
             ...(p.isFromKeyboard
               ? {
-                  color: v.primaryColorFocus,
-                  backgroundColor: v.primaryBackgroundColorFocus,
-                  ...borderFocusStyles,
-                }
+                color: v.primaryColorFocus,
+                backgroundColor: v.primaryBackgroundColorFocus,
+                ...borderFocusStyles,
+              }
               : { ':active': { backgroundColor: v.primaryBackgroundColorActive } }),
           },
         }),

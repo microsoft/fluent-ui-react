@@ -61,14 +61,14 @@ export interface ButtonVariables {
   sizeSmallPadding: string
 }
 
-export default (siteVars: any): ButtonVariables => ({
+const buttonVariables = (siteVars: any): ButtonVariables => ({
   padding: `0 ${pxToRem(20)}`,
-  height: pxToRem(32),
+  height: { __STARDUST_DEBUG: true, name: "height", value: pxToRem(32), file: "buttonVariables.ts", variable: "pxToRem(32)" },
   minWidth: pxToRem(96),
   maxWidth: pxToRem(280),
-  borderRadius: siteVars.borderRadius,
+  borderRadius: process.env.NODE_ENV === 'production' ? siteVars.borderRadius :  { __STARDUST_DEBUG: true, name: "borderRadius", value: siteVars.borderRadius, file: "packages/react/src/themes/teams/components/Button/buttonVariables.ts", variable: "siteVars.colors.grey[200]" },
 
-  contentFontSize: siteVars.fontSizes.medium,
+  contentFontSize: { __STARDUST_DEBUG: true, name: "contentFontSize", value: siteVars.fontSizes.medium, file: "buttonVariables.ts", variable: "siteVars.fontSizes.medium" },
   contentFontWeight: siteVars.fontWeightSemibold,
   contentLineHeight: siteVars.lineHeightMedium,
 
@@ -120,3 +120,5 @@ export default (siteVars: any): ButtonVariables => ({
   sizeSmallMinWidth: pxToRem(72),
   sizeSmallPadding: `0 ${pxToRem(8)}`,
 })
+
+export default buttonVariables
