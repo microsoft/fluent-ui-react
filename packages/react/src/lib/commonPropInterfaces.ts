@@ -24,6 +24,8 @@ export interface UIComponentProps<P = any, V = any>
 
 export type SizeValue = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
 
+export type AlignValue = 'start' | 'end' | 'center' | 'justify'
+
 export interface ColorComponentProps<TColor = string> {
   /** A component can have a color. */
   color?: TColor
