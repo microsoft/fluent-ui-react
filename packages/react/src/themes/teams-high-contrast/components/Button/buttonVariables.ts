@@ -31,13 +31,6 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     circularBorderColorHover: siteVars.colors.white,
     circularBorderColorFocus: siteVars.colors.white,
 
-    textColor: siteVars.accessibleYellow,
-    textColorHover: siteVars.accessibleYellow,
-    textPrimaryColor: siteVars.accessibleYellow,
-    textPrimaryColorHover: siteVars.accessibleYellow,
-    textSecondaryColor: siteVars.accessibleYellow,
-    textSecondaryColorHover: siteVars.accessibleYellow,
-
     boxShadow: 'none',
   }
 }
