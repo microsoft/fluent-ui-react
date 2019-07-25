@@ -31,6 +31,12 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
       verticalAlign: 'middle',
       cursor: 'pointer',
 
+      ...(p.size === 'small' && {
+        padding: v.sizeSmallPadding,
+        height: v.sizeSmallHeight,
+        minWidth: v.sizeSmallMinWidth,
+      }),
+
       // rectangular button defaults
       ...(!p.text && {
         outline: 0,
@@ -66,6 +72,10 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
           backgroundColor: v.circularBackgroundColor,
           borderColor: v.circularBorderColor,
           borderRadius: v.circularBorderRadius,
+
+          ...(p.size === 'small' && {
+            minWidth: v.sizeSmallHeight,
+          }),
 
           ':hover': {
             color: v.circularColorActive,
@@ -148,15 +158,13 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
         maxWidth: '100%',
       }),
 
-      ...(p.size === 'small' && {
-        padding: v.sizeSmallPadding,
-        height: v.sizeSmallHeight,
-        minWidth: v.sizeSmallMinWidth,
-      }),
-
       ...(p.iconOnly && {
         minWidth: v.height,
         padding: 0,
+
+        ...(p.size === 'small' && {
+          minWidth: v.sizeSmallHeight,
+        }),
       }),
     }
   },
