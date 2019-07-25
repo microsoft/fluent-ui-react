@@ -78,18 +78,17 @@ export const Video: KnobComponentGenerators<VideoProps> = {
   poster: ({ componentInfo, propName }) => ({
     hook: useStringKnob,
     name: propName,
-    initialValue:
-      'https://raw.githubusercontent.com/bower-media-samples/big-buck-bunny-480p-5s/master/poster.jpg',
+    initialValue: 'public/images/tears-of-steel.jpg',
   }),
   src: ({ propName }) => ({
     hook: useStringKnob,
     name: propName,
     initialValue:
-      'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+      'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
   }),
   // Hack until `size` prop will not supported
   variables: () => ({
-    hook: () => [{ width: '480px' }],
+    hook: () => [{ height: '300px', width: '720px' }],
     name: 'variables',
   }),
 }
