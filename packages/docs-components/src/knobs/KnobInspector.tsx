@@ -28,9 +28,10 @@ const getKnobControls = (
 const getKnobComponents = (
   knobsContext: KnobContextValue,
 ): Record<KnobDefinition['type'], KnobComponent> => {
-  const { KnobBoolean, KnobRange, KnobSelect, KnobString } = knobsContext.components
+  const { KnobBoolean, KnobNumber, KnobRange, KnobSelect, KnobString } = knobsContext.components
   const components = {
     boolean: KnobBoolean,
+    number: KnobNumber,
     range: KnobRange,
     select: KnobSelect,
     string: KnobString,

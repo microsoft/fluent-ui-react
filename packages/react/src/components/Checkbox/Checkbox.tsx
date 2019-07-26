@@ -19,6 +19,11 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { checkboxBehavior } from '../../lib/accessibility'
 import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 
+export interface CheckboxSlotClassNames {
+  label: string
+  indicator: string
+}
+
 export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
@@ -65,6 +70,8 @@ export interface CheckboxState {
 }
 
 class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, CheckboxState> {
+  static slotClassNames: CheckboxSlotClassNames
+
   static create: Function
 
   static displayName = 'Checkbox'
@@ -141,6 +148,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     const labelElement = Text.create(label, {
       defaultProps: {
         styles: styles.label,
+        className: Checkbox.slotClassNames.label,
       },
     })
 
@@ -157,6 +165,9 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
         {labelPosition === 'start' && labelElement}
         {Icon.create(icon, {
           defaultProps: {
+            outline: toggle && !this.state.checked,
+            size: toggle ? 'medium' : 'smaller',
+            className: Checkbox.slotClassNames.indicator,
             name: toggle ? 'stardust-circle' : 'stardust-checkmark',
             styles: toggle ? styles.toggle : styles.checkbox,
           },
@@ -165,6 +176,11 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
       </ElementType>
     )
   }
+}
+
+Checkbox.slotClassNames = {
+  label: `${Checkbox.className}__label`,
+  indicator: `${Checkbox.className}__indicator`,
 }
 
 Checkbox.create = createShorthandFactory({

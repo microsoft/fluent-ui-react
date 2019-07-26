@@ -17,11 +17,11 @@ import {
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { AccessibilityAttributes } from '../../lib/accessibility/types'
-import { AccessibilityKeyHandlers } from '../../lib/accessibility/reactTypes'
+import { AccessibilityHandlerProps } from '../../lib/accessibility/reactTypes'
 
 export type TriggerAccessibility = {
   attributes?: AccessibilityAttributes
-  keyHandlers?: AccessibilityKeyHandlers
+  keyHandlers?: AccessibilityHandlerProps
 }
 
 export interface PortalProps extends ChildrenComponentProps, ContentComponentProps {
