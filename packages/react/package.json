@@ -6,14 +6,15 @@
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
     "@babel/runtime": "^7.1.2",
+    "@stardust-ui/fela": "^10.6.1",
     "@stardust-ui/react-component-event-listener": "^0.34.0",
     "@stardust-ui/react-component-nesting-registry": "^0.34.3",
     "@stardust-ui/react-component-ref": "^0.34.0",
+    "@stardust-ui/react-fela": "^10.6.2",
     "@stardust-ui/react-proptypes": "^0.34.0",
     "classnames": "^2.2.5",
     "downshift": "^3.2.10",
     "fast-memoize": "^2.5.1",
-    "fela": "^10.5.0",
     "fela-plugin-embedded": "^10.5.0",
     "fela-plugin-fallback-value": "^10.5.0",
     "fela-plugin-placeholder-prefixer": "^10.5.0",
@@ -23,7 +24,6 @@
     "lodash": "^4.17.11",
     "popper.js": "^1.15.0",
     "prop-types": "^15.6.1",
-    "react-fela": "^10.5.0",
     "react-is": "^16.6.3"
   },
   "devDependencies": {

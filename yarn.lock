@@ -1677,6 +1677,56 @@
   resolved "https://registry.yarnpkg.com/@snyk/gemfile/-/gemfile-1.1.0.tgz#8c254dfc7739b2e8513c44c976fc41872d5f6af0"
   integrity sha512-mLwF+ccuvRZMS0SxUAxA3dAp8mB3m2FxIsBIUWFTYvzxl+E4XTZb8uFrUqXHbcxhZH1Z8taHohNTbzXZn3M8ag==
 
+"@stardust-ui/fela-bindings@^10.6.2":
+  version "10.6.2"
+  resolved "https://registry.yarnpkg.com/@stardust-ui/fela-bindings/-/fela-bindings-10.6.2.tgz#eb16bcf4492bbe8cf84e54819f10f231ed79e260"
+  integrity sha512-DlctTgTG3F0K/djugvvr/7o2g4q9laI1Ks8DA+x/SgyObYzlNJHfEHZeOc2ARNgZE1ulVc6oJSYXrPjkiLWpew==
+  dependencies:
+    "@stardust-ui/fela-dom" "^10.6.2"
+    "@stardust-ui/fela-tools" "^10.6.2"
+    fast-loops "^1.0.0"
+    react-addons-shallow-compare "^15.6.2"
+    shallow-equal "^1.0.0"
+
+"@stardust-ui/fela-dom@^10.6.2":
+  version "10.6.2"
+  resolved "https://registry.yarnpkg.com/@stardust-ui/fela-dom/-/fela-dom-10.6.2.tgz#6aa9a98aac518b604a7e2a697256d817f1e68a76"
+  integrity sha512-JruOJTlfEB5SjVEiPv1YMQyGf3O2lYk02mHQBsAAd4S7q9PottDdVT1tZXWIXuq2kIYOWOuwT8eFTDb08pwhtw==
+  dependencies:
+    css-in-js-utils "^3.0.0"
+    fast-loops "^1.0.1"
+    fela-utils "^10.5.0"
+
+"@stardust-ui/fela-tools@^10.6.2":
+  version "10.6.2"
+  resolved "https://registry.yarnpkg.com/@stardust-ui/fela-tools/-/fela-tools-10.6.2.tgz#ef91b44b4ba36c6b0c5022141eef85f836c87825"
+  integrity sha512-TyZxcqirytt4QFSKND+lflw+VLFHiZQdawPfzkrraZcnofa72sQ2JGu5oTO5kw0/TnDEDgcQHfYhpq3QjxWgqA==
+  dependencies:
+    "@stardust-ui/fela" "^10.6.1"
+    css-in-js-utils "^3.0.0"
+    fast-loops "^1.0.0"
+    fela-utils "^10.5.0"
+
+"@stardust-ui/fela@^10.6.1":
+  version "10.6.1"
+  resolved "https://registry.yarnpkg.com/@stardust-ui/fela/-/fela-10.6.1.tgz#bb96a30a25d14c7f797b8a5db13811464de09a9a"
+  integrity sha512-RMI8Z/pDzXKp7W02Fc/V3fF6f7bc0RSELAZS16Qu0/HLPImvAVdMKkTpLsWAGTOPcH2bHDFvweML6Y9Y//zeqw==
+  dependencies:
+    css-in-js-utils "^3.0.0"
+    csstype "^2.5.5"
+    fast-loops "^1.0.0"
+    fela-utils "^10.5.0"
+    isobject "^3.0.1"
+
+"@stardust-ui/react-fela@^10.6.2":
+  version "10.6.2"
+  resolved "https://registry.yarnpkg.com/@stardust-ui/react-fela/-/react-fela-10.6.2.tgz#e282f632c9a16eaceb244d1bb144f6b733db665f"
+  integrity sha512-cD6qjfV+Y66P+8yRt7fiXjE2l+h1L9VtXTaYzxfWq8mVdmXhcu6lBlQt4amOliARvAA5k4N2jMNeXnAWS9qKGw==
+  dependencies:
+    "@stardust-ui/fela-bindings" "^10.6.2"
+    "@stardust-ui/fela-dom" "^10.6.2"
+    prop-types "^15.5.8"
+
 "@types/babel__core@^7.1.0":
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.0.tgz#710f2487dda4dcfd010ca6abb2b4dc7394365c51"
@@ -5870,26 +5920,6 @@ fd-slicer@~1.0.1:
   dependencies:
     pend "~1.2.0"
 
-fela-bindings@^10.5.0:
-  version "10.5.0"
-  resolved "https://registry.yarnpkg.com/fela-bindings/-/fela-bindings-10.5.0.tgz#b9c18c236333303827aa107db4a6954a1b5044d5"
-  integrity sha512-Shfea8Cp5uIOGaxOcYKMXkQi3t4vjTuMkrQHAesIb57kH8kQjHo17PMinWFd1HrlNIbF1CN/V40htdVHniha+A==
-  dependencies:
-    fast-loops "^1.0.0"
-    fela-dom "^10.5.0"
-    fela-tools "^10.5.0"
-    react-addons-shallow-compare "^15.6.2"
-    shallow-equal "^1.0.0"
-
-fela-dom@^10.5.0:
-  version "10.5.0"
-  resolved "https://registry.yarnpkg.com/fela-dom/-/fela-dom-10.5.0.tgz#2f42c962ea1f6123f9a7ae4ec240728506f158ea"
-  integrity sha512-UrECLCy6lnOWxqbO3Z8SdsXd6blu4frKcDujtc9cVUNpvNs89qtxrlj5iyt6qBFDrPCD+R0Ff4m+744Nu52RDQ==
-  dependencies:
-    css-in-js-utils "^3.0.0"
-    fast-loops "^1.0.1"
-    fela-utils "^10.5.0"
-
 fela-plugin-custom-property@^10.5.0:
   version "10.5.0"
   resolved "https://registry.yarnpkg.com/fela-plugin-custom-property/-/fela-plugin-custom-property-10.5.0.tgz#cda6c247c1c8cbe0602a1334ff0259a16e8c8f39"
@@ -5940,16 +5970,6 @@ fela-plugin-rtl@^10.5.0:
   dependencies:
     rtl-css-js "^1.1.3"
 
-fela-tools@^10.5.0:
-  version "10.5.0"
-  resolved "https://registry.yarnpkg.com/fela-tools/-/fela-tools-10.5.0.tgz#cb1cfc27e2e1f8142be4768af45730e9532c4e39"
-  integrity sha512-O7YJVZlvK1r3WcrMAll7X43sVuYK/tXnpXrgSPscjce5I4DS/y2MI8HNFp+Ib7dKm3LDFfXN8TOUiO3ZTXKlIQ==
-  dependencies:
-    css-in-js-utils "^3.0.0"
-    fast-loops "^1.0.0"
-    fela "^10.5.0"
-    fela-utils "^10.5.0"
-
 fela-utils@^10.5.0:
   version "10.5.0"
   resolved "https://registry.yarnpkg.com/fela-utils/-/fela-utils-10.5.0.tgz#29ddce082c52639b6e3789741b187cab0da8d886"
@@ -5957,17 +5977,6 @@ fela-utils@^10.5.0:
   dependencies:
     css-in-js-utils "^3.0.0"
     fast-loops "^1.0.0"
-
-fela@^10.5.0:
-  version "10.5.0"
-  resolved "https://registry.yarnpkg.com/fela/-/fela-10.5.0.tgz#32f49e7d680be9d7a20b71f7be900c2122d3c3e2"
-  integrity sha512-lSWkHOEkN5LIbLst/2PT0QK+g5QRsvNey6H89hcmiahaNDkRUxDmjIStfpVL94GfSZYHKyVlicH3DFT9Efne9A==
-  dependencies:
-    css-in-js-utils "^3.0.0"
-    csstype "^2.5.5"
-    fast-loops "^1.0.0"
-    fela-utils "^10.5.0"
-    isobject "^3.0.1"
 
 figgy-pudding@^3.4.1, figgy-pudding@^3.5.1:
   version "3.5.1"
@@ -11906,15 +11915,6 @@ react-fast-compare@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
-
-react-fela@^10.5.0:
-  version "10.5.0"
-  resolved "https://registry.yarnpkg.com/react-fela/-/react-fela-10.5.0.tgz#0196f138bc1f5478767fa1e5b6f1d2bbd136f38c"
-  integrity sha512-/7AMhuglq5bH7VKNRPGLvG4dV3syoHrBmB7Cp1X0rNnZRhNi1r+iQW8OyN/9pQrkgIetP3RzBKFk9PgxUxO73g==
-  dependencies:
-    fela-bindings "^10.5.0"
-    fela-dom "^10.5.0"
-    prop-types "^15.5.8"
 
 react-hot-loader@^4.8.2:
   version "4.8.7"
