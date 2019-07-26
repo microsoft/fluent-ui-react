@@ -86,7 +86,7 @@ class Sidebar extends React.Component<any, any> {
     if (query) {
       const at = e.target.href.replace(e.target.baseURI, '/')
       this.setState({ query: '' })
-      const categoryIndex = this.findActiveCategoryIndex(at, this.treeRef.current.props.items)
+      const categoryIndex = this.findActiveCategoryIndex(at, this.getSectionsWithoutSearchFilter())
       this.treeRef.current.setState({ activeIndex: categoryIndex })
     }
   }
@@ -257,27 +257,7 @@ class Sidebar extends React.Component<any, any> {
     this.setState({ query: e.target.value })
   }
 
-  render() {
-    const sidebarStyles: ICSSInJSStyle = {
-      background: '#201f1f',
-      width: this.props.width,
-      position: 'fixed',
-      overflowY: 'scroll',
-      top: 0,
-      left: 0,
-      padding: 0,
-      height: '100%',
-      zIndex: 1000,
-    }
-
-    const logoStyles: ICSSInJSStyle = {
-      paddingRight: '5px',
-      color: 'white',
-      fontWeight: 700,
-    }
-
-    const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
-
+  getSectionsWithoutSearchFilter = () => {
     const treeItemsByType = _.map(constants.typeOrder, nextType => {
       const items = _.chain([...componentMenu, ...behaviorMenu])
         .filter(({ type }) => type === nextType)
@@ -381,12 +361,32 @@ class Sidebar extends React.Component<any, any> {
     const treeItems = this.getTreeItems()
     const withComponents = treeItems.concat(componentTreeSection)
     const withBehaviors = withComponents.concat(behaviorTreeSection)
-    const allSectionsWithoutSearchFilter = this.getSectionsWithPrototypeSectionIfApplicable(
-      withBehaviors,
-      prototypesTreeItems,
-    )
+    return this.getSectionsWithPrototypeSectionIfApplicable(withBehaviors, prototypesTreeItems)
+  }
 
-    const allSections = _.map(
+  render() {
+    const sidebarStyles: ICSSInJSStyle = {
+      background: '#201f1f',
+      width: this.props.width,
+      position: 'fixed',
+      overflowY: 'scroll',
+      top: 0,
+      left: 0,
+      padding: 0,
+      height: '100%',
+      zIndex: 1000,
+    }
+
+    const logoStyles: ICSSInJSStyle = {
+      paddingRight: '5px',
+      color: 'white',
+      fontWeight: 700,
+    }
+
+    const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
+    const allSectionsWithoutSearchFilter = this.getSectionsWithoutSearchFilter()
+
+    const allSectionsWithPossibleEmptySections = _.map(
       allSectionsWithoutSearchFilter,
       (section: ShorthandValue<TreeItemProps>) => {
         if ((section as any).items) {
@@ -396,6 +396,11 @@ class Sidebar extends React.Component<any, any> {
         }
         return section
       },
+    )
+
+    const allSections = _.filter(
+      allSectionsWithPossibleEmptySections,
+      (section: ShorthandValue<TreeItemProps>) => (section as any).items.length > 0,
     )
 
     if (this.state.query !== '') {
