@@ -8,8 +8,10 @@ import { ListBehaviorProps } from './listBehavior'
  *
  * @specification
  * Adds role='listbox'.
- * Triggers 'moveNext' action with 'ArrowDown' if 'vertical' prop is provided, otherwise with 'ArrowRight' on 'root'.
- * Triggers 'movePrevious' action with 'ArrowUp' if 'vertical' prop is proviede, otherwise with 'ArrowLeft' on 'root'.
+ * Triggers 'moveNext' action with 'ArrowDown' on 'root', when orientation is vertical.
+ * Triggers 'moveNext' action with 'ArrowRight' on 'root', when orientation is horizontal.
+ * Triggers 'movePrevious' action with 'ArrowUp' on 'root', when orientation is vertical.
+ * Triggers 'movePrevious' action with 'ArrowLeft' on 'root', when orientation is horizontal.
  * Triggers 'moveFirst' action with 'Home' on 'root'.
  * Triggers 'moveLast' action with 'End' on 'root'.
  */
