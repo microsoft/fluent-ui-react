@@ -59,6 +59,9 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 
   /** Truncates header */
   truncateHeader?: boolean
+
+  /** A vertical list displays elements vertically. */
+  vertical?: boolean
 }
 
 export interface ListState {
@@ -87,11 +90,13 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
     selectedIndex: PropTypes.number,
     defaultSelectedIndex: PropTypes.number,
     onSelectedIndexChange: PropTypes.func,
+    vertical: PropTypes.bool,
   }
 
   static defaultProps = {
     as: 'ul',
     accessibility: listBehavior as Accessibility,
+    vertical: true,
   }
 
   static autoControlledProps = ['selectedIndex']

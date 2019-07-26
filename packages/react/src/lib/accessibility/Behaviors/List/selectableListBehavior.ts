@@ -8,8 +8,8 @@ import { ListBehaviorProps } from './listBehavior'
  *
  * @specification
  * Adds role='listbox'.
- * Triggers 'moveNext' action with 'ArrowDown' on 'root'.
- * Triggers 'movePrevious' action with 'ArrowUp' on 'root'.
+ * Triggers 'moveNext' action with 'ArrowDown' if 'vertical' prop is provided, otherwise with 'ArrowRight' on 'root'.
+ * Triggers 'movePrevious' action with 'ArrowUp' if 'vertical' prop is proviede, otherwise with 'ArrowLeft' on 'root'.
  * Triggers 'moveFirst' action with 'Home' on 'root'.
  * Triggers 'moveLast' action with 'End' on 'root'.
  */
@@ -22,10 +22,14 @@ const selectableListBehavior: Accessibility<ListBehaviorProps> = props => ({
   keyActions: {
     root: {
       moveNext: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowDown }],
+        keyCombinations: [
+          { keyCode: props.vertical ? keyboardKey.ArrowDown : keyboardKey.ArrowRight },
+        ],
       },
       movePrevious: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowUp }],
+        keyCombinations: [
+          { keyCode: props.vertical ? keyboardKey.ArrowUp : keyboardKey.ArrowLeft },
+        ],
       },
       moveFirst: {
         keyCombinations: [{ keyCode: keyboardKey.Home }],

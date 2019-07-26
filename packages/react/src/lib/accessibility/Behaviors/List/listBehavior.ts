@@ -14,4 +14,7 @@ export default ListBehavior
 export type ListBehaviorProps = {
   /** Indicates if a list is a selectable list. */
   selectable?: boolean
+
+  /** Indicates if the list is vertical. */
+  vertical?: boolean
 }
