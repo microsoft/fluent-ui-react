@@ -506,7 +506,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
               innerRef={domElement => {
                 this.popupDomElement = domElement
                 handleRef(contentRef, domElement)
-                handleRef(nestingRef, domElement)
+                nestingRef.current = domElement
               }}
             >
               {popupContent}
