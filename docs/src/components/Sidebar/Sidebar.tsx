@@ -9,7 +9,6 @@ import {
   Input,
   Flex,
   Box,
-  Ref,
 } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
@@ -39,30 +38,15 @@ class Sidebar extends React.Component<any, any> {
   _searchInput: any
   selectedRoute: any
   filteredMenu = componentMenu
-  treeRef: Ref
-  searchInputRef: Ref
-
-  constructor(props) {
-    super(props)
-    this.treeRef = React.createRef()
-    this.searchInputRef = React.createRef()
-  }
+  treeRef: React.RefObject<HTMLUListElement> = React.createRef()
+  searchInputRef: React.RefObject<HTMLInputElement> = React.createRef()
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleDocumentKeyDown)
-    this.setSearchInput()
-  }
-
-  componentDidUpdate() {
-    this.setSearchInput()
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleDocumentKeyDown)
-  }
-
-  setSearchInput = () => {
-    this._searchInput = this.searchInputRef.current.inputRef.current
   }
 
   findActiveCategoryIndex = (at, sections): number => {
@@ -77,7 +61,7 @@ class Sidebar extends React.Component<any, any> {
     const hasModifier = e.altKey || e.ctrlKey || e.metaKey
     const bodyHasFocus = document.activeElement === document.body
 
-    if (!hasModifier && isAZ && bodyHasFocus) this._searchInput.focus()
+    if (!hasModifier && isAZ && bodyHasFocus) this._searchInput.current.focus()
   }
 
   handleItemClick = e => {
@@ -87,7 +71,7 @@ class Sidebar extends React.Component<any, any> {
       const at = e.target.href.replace(e.target.baseURI, '/')
       this.setState({ query: '' })
       const categoryIndex = this.findActiveCategoryIndex(at, this.getSectionsWithoutSearchFilter())
-      this.treeRef.current.setState({ activeIndex: categoryIndex })
+      this.treeRef.current.setAttribute('activeIndex', categoryIndex.toString())
     }
   }
 
@@ -466,13 +450,14 @@ class Sidebar extends React.Component<any, any> {
           <Input
             styles={topItemTheme}
             fluid
+            clearable
             icon={{ name: 'search', style: { padding: topItemTheme.padding } }}
             placeholder="Search"
             iconPosition="start"
             role="search"
             onChange={this.handleQueryChange}
             value={this.state.query}
-            ref={this.searchInputRef}
+            inputRef={this.searchInputRef}
           />
         </Flex>
         <Tree
