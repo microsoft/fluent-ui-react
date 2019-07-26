@@ -214,8 +214,19 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
     fontWeight: variables.contentFontWeight,
   }),
 
+  icon: ({ props: p, variables: v }) => ({
+    // when loading, hide the icon
+    ...(p.loading && {
+      margin: 0,
+      opacity: 0,
+      width: 0,
+    }),
+  }),
+
   loader: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    marginRight: pxToRem(4),
+    ...(p.content && {
+      marginRight: pxToRem(4),
+    }),
   }),
 }
 

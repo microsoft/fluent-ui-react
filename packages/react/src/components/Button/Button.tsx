@@ -150,32 +150,37 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
         {...unhandledProps}
       >
         {hasChildren && children}
+        {!hasChildren && loading && this.renderLoader(variables, styles)}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
         {Box.create(!hasChildren && content, {
           defaultProps: { as: 'span', styles: styles.content },
         })}
-        {!hasChildren && iconPosition === 'after' && !loading && this.renderIcon(variables, styles)}
+        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
       </ElementType>
     )
   }
 
   renderIcon = (variables, styles) => {
-    const { icon, iconPosition, content, loading, loader } = this.props
+    const { icon, iconPosition, content } = this.props
 
-    return loading
-      ? Loader.create(loader, {
-          defaultProps: {
-            size: 'smallest',
-            styles: styles.loader,
-          },
-        })
-      : Icon.create(icon, {
-          defaultProps: {
-            styles: styles.icon,
-            xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
-            variables: variables.icon,
-          },
-        })
+    return Icon.create(icon, {
+      defaultProps: {
+        styles: styles.icon,
+        xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
+        variables: variables.icon,
+      },
+    })
+  }
+
+  renderLoader = (variables, styles) => {
+    const { loader } = this.props
+
+    return Loader.create(loader, {
+      defaultProps: {
+        size: 'smallest',
+        styles: styles.loader,
+      },
+    })
   }
 
   handleClick = (e: React.SyntheticEvent) => {
