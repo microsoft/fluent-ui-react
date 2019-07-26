@@ -61,7 +61,7 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
     bordered: PropTypes.bool,
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
     outline: PropTypes.bool,
     rotate: PropTypes.number,
     size: customPropTypes.size,
