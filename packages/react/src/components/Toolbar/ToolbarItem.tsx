@@ -164,9 +164,6 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
         this.itemRef.current.focus()
       }
     },
-    closeMenu: () => {
-      this.trySetMenuOpen(false, event)
-    },
     doNotNavigateNextToolbarItem: event => {
       event.stopPropagation()
     },
