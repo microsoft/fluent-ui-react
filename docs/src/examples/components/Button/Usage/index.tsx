@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
@@ -8,6 +9,16 @@ const Usage = () => (
       title="Tinted Example"
       description='A button used in cards is a "tinted" version of a default button.'
       examplePath="components/Button/Usage/ButtonUsageExample"
+    />
+    <ComponentExample
+      title="With tooltip"
+      description={
+        <>
+          {'The button, as actionable element, should be rendered with '}
+          <Link to="/components/tooltip">tooltip</Link>
+        </>
+      }
+      examplePath="components/Button/Usage/ButtonExampleWithTooltip"
     />
   </ExampleSection>
 )
