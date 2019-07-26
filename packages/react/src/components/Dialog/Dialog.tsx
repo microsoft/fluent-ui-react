@@ -1,20 +1,17 @@
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { useStateManager } from '@stardust-ui/react-bindings'
-import { createDialogManager, DialogManagerFactory } from '@stardust-ui/state'
+import { createDialogManager } from '@stardust-ui/state'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
-  UIComponentProps,
+  applyAccessibilityKeyHandlers,
   commonPropTypes,
-  ColorComponentProps,
   ContentComponentProps,
   doesNodeContainClick,
-  applyAccessibilityKeyHandlers,
-  getUnhandledProps,
-  getElementType,
+  UIComponentProps,
 } from '../../lib'
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
@@ -23,10 +20,10 @@ import { ComponentEventHandler, ShorthandValue } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
 import Header, { HeaderProps } from '../Header/Header'
-import Portal, { TriggerAccessibility } from '../Portal/Portal'
+import Portal from '../Portal/Portal'
 import Flex from '../Flex/Flex'
-import createComponent from 'src/lib/createComponent'
-import useStardust from '@stardust-ui/react-bindings/src/useStardust'
+import { ThemeContext } from 'react-fela'
+import renderComponent from '../../lib/renderComponent'
 
 export interface DialogSlotClassNames {
   header: string
@@ -106,104 +103,112 @@ const Dialog: React.FC<DialogProps> = props => {
     overlay,
     trapFocus,
     trigger,
-    ...rest
   } = props
 
-  // TODO?: 1st Phase: Enable state, style and accessibility ONLY
-  // TODO?: 2nd Phase: Enable best practices
-
-  const unhandledProps = getUnhandledProps([], props)
-  const ElementType = getElementType(props)
-
-  // const manager = useStateManager(createDialogManager, {}) // optional second param config
-  // const { classes, styles } = useStyles('Dialog', { ...props, ...state })
+  const handledProps = [
+    'accessibility',
+    'actions',
+    'cancelButton',
+    'confirmButton',
+    'defaultOpen',
+    'header',
+    'headerAction',
+    'onCancel',
+    'onConfirm',
+    'onOpen',
+    'open',
+    'overlay',
+    'trapFocus',
+    'trigger',
+  ]
 
   const contentRef = React.useRef<HTMLElement>()
   const triggerRef = React.useRef<HTMLElement>()
 
-  // ---------------------------------------------------------
-  // TODO: Solve useStardust() and the smaller use*() hooks
-  //       Accessibility has a circular dep on manager due to actionHandlers
-  // TODO: Solve useStardust() and the smaller use*() hooks
-  //       Accessibility has a circular dep on manager due to actionHandlers
-  // TODO: Solve useStardust() and the smaller use*() hooks
-  //       Accessibility has a circular dep on manager due to actionHandlers
-  // TODO: Solve useStardust() and the smaller use*() hooks
-  //       Accessibility has a circular dep on manager due to actionHandlers
-  // TODO: Solve useStardust() and the smaller use*() hooks
-  //       Accessibility has a circular dep on manager due to actionHandlers
-  // TODO: Solve useStardust() and the smaller use*() hooks
-  //       Accessibility has a circular dep on manager due to actionHandlers
+  // const unhandledProps = getUnhandledProps(handledProps, props)
+  // const ElementType = getElementType(props)
 
-  const { manager, accessibility, classes, styles } = useStardust<DialogProps>({
-    displayName: '',
+  const context = React.useContext(ThemeContext)
+  const manager = useStateManager(createDialogManager, props, ['open'])
+
+  // TODO Refactor renderComponent to composable pieces.
+  // TODO Refactor renderComponent to composable pieces.
+  // TODO Refactor renderComponent to composable pieces.
+  // TODO Refactor renderComponent to composable pieces.
+  const { accessibility, classes, styles, ElementType, unhandledProps } = renderComponent<
+    DialogProps
+  >({
+    className: 'ui-dialog',
+    displayName: 'Dialog',
+    handledProps,
     props,
-    accessibilityBehavior: dialogBehavior,
-    autoControlledProps: ['open'],
-
-    stateManager: createDialogManager,
-
+    state: manager.state,
     actionHandlers: {
       closeAndFocusTrigger: e => {
-        handleDialogCancel2(e)
+        handleDialogCancel(e)
         e.stopPropagation()
 
         _.invoke(triggerRef, 'current.focus')
       },
-      close: e => handleDialogCancel(e), // What we can do?
+      close: e => handleDialogCancel(e),
     },
+    context: context as any,
   })
-
-  const handleDialogCancel2 = (e: Event | React.SyntheticEvent) => {
-    _.invoke(props, 'onCancel', e, { ...props, open: false })
-    manager.actions.close()
-  }
 
   // ---------------------------------------------------------
 
   console.log('Dialog render props:', props.open)
-  // const manager = useStateManager(Dialog, createDialogManager, ['open'], props)
   console.log('Dialog manager.state:', manager.state.open)
 
   const handleDialogCancel = (e: Event | React.SyntheticEvent) => {
     _.invoke(props, 'onCancel', e, { ...props, open: false })
+    // TODO
+    // @ts-ignore
     manager.actions.close()
   }
-
-  const handleDialogConfirm = (e: React.SyntheticEvent) => {
+  const handleDialogConfirm = React.useCallback((e: React.SyntheticEvent) => {
     _.invoke(props, 'onConfirm', e, { ...props, open: false })
+    // TODO
+    // @ts-ignore
     manager.actions.close()
-  }
-
-  const handleDialogOpen = (e: React.SyntheticEvent) => {
+  }, [])
+  const handleDialogOpen = React.useCallback((e: React.SyntheticEvent) => {
     _.invoke(props, 'onOpen', e, { ...props, open: true })
+    // TODO
+    // @ts-ignore
     manager.actions.open()
-  }
-
-  const handleCancelButtonOverrides = (predefinedProps: ButtonProps) => ({
-    onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
-      _.invoke(predefinedProps, 'onClick', e, buttonProps)
-      handleDialogCancel(e)
-    },
-  })
-
-  const handleConfirmButtonOverrides = (predefinedProps: ButtonProps) => ({
-    onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
-      _.invoke(predefinedProps, 'onClick', e, buttonProps)
-      handleDialogConfirm(e)
-    },
-  })
-
-  const handleOverlayOverrides = (content: JSX.Element) => (predefinedProps: BoxProps) => ({
-    content,
-    onClick: (e: React.SyntheticEvent, overlayProps: BoxProps) => {
-      _.invoke(predefinedProps, 'onClick', e, overlayProps)
-
-      if (!doesNodeContainClick(contentRef.current, e)) {
+  }, [])
+  const handleCancelButtonOverrides = React.useCallback(
+    (predefinedProps: ButtonProps) => ({
+      onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+        _.invoke(predefinedProps, 'onClick', e, buttonProps)
         handleDialogCancel(e)
-      }
-    },
-  })
+      },
+    }),
+    [],
+  )
+  const handleConfirmButtonOverrides = React.useCallback(
+    (predefinedProps: ButtonProps) => ({
+      onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+        _.invoke(predefinedProps, 'onClick', e, buttonProps)
+        handleDialogConfirm(e)
+      },
+    }),
+    [],
+  )
+  const handleOverlayOverrides = React.useCallback(
+    (content: JSX.Element) => (predefinedProps: BoxProps) => ({
+      content,
+      onClick: (e: React.SyntheticEvent, overlayProps: BoxProps) => {
+        _.invoke(predefinedProps, 'onClick', e, overlayProps)
+
+        if (!doesNodeContainClick(contentRef.current, e)) {
+          handleDialogCancel(e)
+        }
+      },
+    }),
+    [],
+  )
 
   // const accessibility = useAccessibility(
   //   dialogBehavior,
@@ -221,31 +226,34 @@ const Dialog: React.FC<DialogProps> = props => {
   //   },
   // )
 
+  // TODO const useStyles = ...
+
   const dialogContent = (
     <Ref innerRef={contentRef}>
       <ElementType
         className={classes.root}
-        {...sd.root.props}
-        // {...accessibility.attributes.popup}
-        // {...unhandledProps}
-        // {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
+        // TODO {...sd.root.props}
+        {...accessibility.attributes.popup}
+        {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
       >
         {Header.create(header, {
           defaultProps: {
             as: 'h2',
-            ...sd.header.props,
-            className: cx(slotClassNames.header, sd.header.props.className),
+            // TODO ...sd.header.props,
+            // TODO className: cx(slotClassNames.header, sd.header.props.className),
+            className: slotClassNames.header,
             styles: styles.header,
-            // ...accessibility.attributes.header,
+            ...accessibility.attributes.header,
           },
         })}
         {Box.create(content, {
-          defaultProps: sd.content.props,
-          // defaultProps: {
-          //   styles: styles.content,
-          //   className: slotClassNames.content,
-          //   ...accessibility.attributes.content,
-          // },
+          // TODO defaultProps: sd.content.props,
+          defaultProps: {
+            styles: styles.content,
+            className: slotClassNames.content,
+            ...accessibility.attributes.content,
+          },
         })}
 
         {Box.create(actions, {
@@ -296,6 +304,7 @@ const Dialog: React.FC<DialogProps> = props => {
 // TODO: what to do with this?
 // TODO:  - not needed but useful, _meta :/
 // TODO:  - could be done wth some kind of generateClassName() somewhere higher up
+// @ts-ignore
 Dialog.className = 'ui-dialog'
 
 Dialog.displayName = 'Dialog'
@@ -322,7 +331,6 @@ Dialog.propTypes = {
 
 Dialog.defaultProps = {
   accessibility: dialogBehavior,
-  stateManager: createDialogManager,
   actions: {},
   overlay: {},
   trapFocus: true,
@@ -332,27 +340,3 @@ Dialog.defaultProps = {
  * A Dialog indicates a possible user action.
  */
 export default Dialog
-
-// export default class Dialog extends React.Component<DialogProps> {}
-
-const truncateSelectedItems = count => (prev, next, actions) => {
-  ///
-}
-
-const Dropdown = createComponent({
-  accessibility: () => {},
-  state: () => {},
-  style: () => {},
-  render: () => {},
-})
-
-const d = <Dropdown middleware={[truncateSelectedItems(5)]} styles={{}} accessibility={{}} />
-
-const dia = (
-  <Button
-    as="div"
-    onClick={() => {
-      console.log('hi')
-    }}
-  />
-)

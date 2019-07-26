@@ -10,11 +10,11 @@ export type DialogActions = {
   close: Action<DialogState, DialogActions>
 }
 
-export type DialogManagerFactory = Manager<DialogState, DialogActions>
+export type DialogManager = Manager<DialogState, DialogActions>
 
 export const createDialogManager = (
   config: Partial<ManagerConfig<DialogState, DialogActions>> = {},
-) =>
+): DialogManager =>
   createManager<DialogState, DialogActions>({
     ...config,
     state: {
