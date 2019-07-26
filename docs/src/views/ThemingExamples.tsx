@@ -122,21 +122,19 @@ export default () => (
 
         const btnExample = () => (
         <Button
-          content="Send email"
-          icon={{ name: 'at', variables: { color: 'brown' }, styles: ({variables: v}) => ({ color: v.color}) }}
+          content="Secure payment"
+          icon={{
+            name: 'lock',
+            variables: {
+              color: 'blue'
+            }
+          }}
           secondary
           variables={{
-            secondaryColor: 'coral',
-            secondaryBackgroundColor: 'charcoal',
-            paddingLeftRightValue: 20,
+            color: 'coral',
+            backgroundColor: 'charcoal',
+            paddingLeftRightValue: 30
           }}
-          styles={
-            ({variables: v}) => ({
-                backgroundColor: v.secondaryBackgroundColor,
-                color: v.secondaryColor,
-                padding: v.paddingLeftRightValue
-            })
-          }
         />
         )
 
@@ -144,23 +142,19 @@ export default () => (
       `}
       render={() => (
         <Button
-          content="Send email"
+          content="Secure payment"
           icon={{
-            name: 'at',
-            variables: { color: 'brown' },
-            styles: ({ variables: v }) => ({ color: v.color }),
+            name: 'lock',
+            variables: {
+              color: 'blue',
+            },
           }}
           secondary
           variables={{
-            secondaryColor: 'coral',
-            secondaryBackgroundColor: 'charcoal',
-            paddingLeftRightValue: 20,
+            color: 'coral',
+            backgroundColor: 'charcoal',
+            paddingLeftRightValue: 30,
           }}
-          styles={({ variables: v }) => ({
-            backgroundColor: v.secondaryBackgroundColor,
-            color: v.secondaryColor,
-            padding: v.paddingLeftRightValue,
-          })}
         />
       )}
     />
