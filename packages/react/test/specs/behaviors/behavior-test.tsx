@@ -36,6 +36,7 @@ import {
   treeItemBehavior,
   subtreeBehavior,
   gridBehavior,
+  gridHorizontalBehavior,
   statusBehavior,
   alertWarningBehavior,
   accordionBehavior,
@@ -88,6 +89,7 @@ testHelper.addBehavior('treeBehavior', treeBehavior)
 testHelper.addBehavior('treeItemBehavior', treeItemBehavior)
 testHelper.addBehavior('subtreeBehavior', subtreeBehavior)
 testHelper.addBehavior('gridBehavior', gridBehavior)
+testHelper.addBehavior('gridHorizontalBehavior', gridHorizontalBehavior)
 testHelper.addBehavior('dialogBehavior', dialogBehavior)
 testHelper.addBehavior('statusBehavior', statusBehavior)
 testHelper.addBehavior('alertWarningBehavior', alertWarningBehavior)

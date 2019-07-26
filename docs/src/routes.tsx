@@ -22,9 +22,9 @@ import Theming from './views/Theming'
 import ThemingExamples from './views/ThemingExamples'
 import IntegrateCustomComponents from './views/IntegrateCustomComponents'
 import AccessibilityBehaviors from './views/AccessibilityBehaviors'
-import FocusZone from './views/FocusZone'
-import FocusTrapZone from './views/FocusTrapZone'
-import AutoFocusZone from './views/AutoFocusZone'
+import FocusZone from './views/FocusZoneDoc'
+import FocusTrapZone from './views/FocusTrapZoneDoc'
+import AutoFocusZone from './views/AutoFocusZoneDoc'
 import CustomToolbarPrototype from './prototypes/customToolbar'
 import ChatPanePrototype from './prototypes/chatPane'
 import ChatMessagesPrototype from './prototypes/chatMessages'
@@ -38,6 +38,7 @@ import PopupsPrototype from './prototypes/popups'
 import IconViewerPrototype from './prototypes/IconViewer'
 import MenuButtonPrototype from './prototypes/MenuButton'
 import AlertsPrototype from './prototypes/alerts'
+import NestedPopupsAndDialogsPrototype from './prototypes/NestedPopupsAndDialogs'
 
 const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -61,6 +62,11 @@ const Routes = () => (
           <Route exact path="/icon-viewer" component={IconViewerPrototype} />
           <Route exact path="/menu-button" component={MenuButtonPrototype} />
           <Route exact path="/prototype-alerts" component={AlertsPrototype} />
+          <Route
+            exact
+            path="/prototype-nested-popups-and-dialogs"
+            component={NestedPopupsAndDialogsPrototype}
+          />
           <Route exact path="/faq" component={FAQ} />
           <Route exact path="/accessibility" component={Accessibility} />
           <Route exact path="/accessibility-behaviors" component={AccessibilityBehaviors} />

@@ -10,20 +10,10 @@ export default {
   }: ComponentStyleFunctionParam<TextProps, TeamsTextVariables>): ICSSInJSStyle => {
     const colors = v.colorScheme[getColorSchemeKey(color)]
     return {
-      ...(color && {
-        color: colors.foreground,
-      }),
-      ...(atMention === 'me' && {
-        fontWeight: v.atMentionMeFontWeight,
-      }),
-      ...(timestamp && {
-        ':hover': {
-          color: v.timestampHoverColor,
-        },
-      }),
-      ...(important && {
-        fontWeight: v.importantWeight,
-      }),
+      ...(color && { color: colors.foreground }),
+      ...(atMention === 'me' && { fontWeight: v.atMentionMeFontWeight }),
+      ...(timestamp && { ':hover': { color: v.timestampHoverColor } }),
+      ...(important && { fontWeight: v.importantWeight }),
     }
   },
 }
