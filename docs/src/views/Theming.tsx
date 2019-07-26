@@ -6,10 +6,6 @@ import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
-type ThemingVariables = {
-  iconColor: string
-}
-
 export default () => (
   <DocPage title="Theming">
     <Header as="h2" content="Overview" />
