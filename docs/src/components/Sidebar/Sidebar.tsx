@@ -44,9 +44,6 @@ class Sidebar extends React.Component<any, any> {
 
   constructor(props) {
     super(props)
-    this.handleQueryChange = this.handleQueryChange.bind(this)
-    this.findActiveCategoryIndex = this.findActiveCategoryIndex.bind(this)
-    this.setSearchInput = this.setSearchInput.bind(this)
     this.treeRef = React.createRef()
     this.searchInputRef = React.createRef()
   }
@@ -64,11 +61,11 @@ class Sidebar extends React.Component<any, any> {
     document.removeEventListener('keydown', this.handleDocumentKeyDown)
   }
 
-  setSearchInput() {
+  setSearchInput = () => {
     this._searchInput = this.searchInputRef.current.inputRef.current
   }
 
-  findActiveCategoryIndex(at, sections): number {
+  findActiveCategoryIndex = (at, sections): number => {
     return _.findIndex(sections, (section: ShorthandValue<TreeItemProps>) => {
       return _.find((section as any).items, item => item.title.to === at)
     })
@@ -256,7 +253,7 @@ class Sidebar extends React.Component<any, any> {
     })
   }
 
-  handleQueryChange(e) {
+  handleQueryChange = e => {
     this.setState({ query: e.target.value })
   }
 
@@ -453,7 +450,7 @@ class Sidebar extends React.Component<any, any> {
             </Box>
           </a>
           <Input
-            style={topItemTheme}
+            styles={topItemTheme}
             fluid
             icon={{ name: 'search', style: { padding: topItemTheme.padding } }}
             placeholder="Search"
