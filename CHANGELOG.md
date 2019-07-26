@@ -39,6 +39,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Open `Popup` on `contextmenu` @jurokapsiar ([#1524](https://github.com/stardust-ui/react/pull/1524))
 - Add `align` prop for `Text` component @Bugaa92 ([#1668](https://github.com/stardust-ui/react/pull/1668))
 - Add `size` prop for `Button` component @layershifter ([#1716](https://github.com/stardust-ui/react/pull/1716))
+- Add `vertical` prop for `List` component @mnajdova ([#1721](https://github.com/stardust-ui/react/pull/1721))
 
 ### Fixes
 - Fix `ChatMessage`'s focus border overlays `actionMenu` in Teams theme @mnajdova ([#1637](https://github.com/stardust-ui/react/pull/1637))
