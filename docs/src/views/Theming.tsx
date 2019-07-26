@@ -1,14 +1,6 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import {
-  Button,
-  Icon,
-  Provider,
-  Text,
-  Animation,
-  Header,
-  ComponentStyleFunctionParam,
-} from '@stardust-ui/react'
+import { Button, Icon, Provider, Text, Animation, Header } from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
@@ -98,8 +90,8 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <>
-          <Icon name="user" circular />
-          <Icon name="user" circular styles={{ color: 'cornflowerblue' }} />
+          <Icon name="calendar" circular />
+          <Icon name="calendar" circular variables={{ color: 'cornflowerblue' }} />
         </>
       )}
     />
@@ -111,58 +103,42 @@ export default () => (
     <ExampleSnippet
       value={`
         <>
-          <Icon name="user" circular />
-          <Icon name="user" circular />
+          <Icon name="calendar" circular />
+          <Icon name="calendar" circular />
 
           <Provider
             theme={{
               componentVariables: {
                 Icon: {
-                  iconColor: 'cornflowerblue'
-                  }
+                  color: 'cornflowerblue',
+                },
               },
-              componentStyles: {
-                Icon: {
-                  root: ({variables: v, props: p }) => ({
-                    ...({color: v.iconColor})
-                  })
-                }
-              }
-            }}>
+            }}
+          >
             <span>
-              <Icon name="user" circular />
-              <Icon name="user" circular />
+              <Icon name="calendar" circular />
+              <Icon name="calendar" circular />
             </span>
           </Provider>
         </>
       `}
       render={() => (
         <>
-          <Icon name="user" circular />
-          <Icon name="user" circular />
+          <Icon name="calendar" circular />
+          <Icon name="calendar" circular />
 
           <Provider
             theme={{
               componentVariables: {
                 Icon: {
-                  iconColor: 'cornflowerblue',
-                },
-              },
-              componentStyles: {
-                Icon: {
-                  root: ({
-                    variables: v,
-                    props: p,
-                  }: ComponentStyleFunctionParam<any, ThemingVariables>) => ({
-                    ...{ color: v.iconColor },
-                  }),
+                  color: 'cornflowerblue',
                 },
               },
             }}
           >
             <span>
-              <Icon name="user" circular />
-              <Icon name="user" circular />
+              <Icon name="calendar" circular />
+              <Icon name="calendar" circular />
             </span>
           </Provider>
         </>
