@@ -104,10 +104,10 @@ export default (siteVars: any): MenuVariables => {
     underlinedBorderColor: siteVars.colors.grey[200],
 
     lineHeightBase: siteVars.lineHeightMedium,
-    horizontalPadding: `${pxToRem(14)} ${pxToRem(18)} ${pxToRem(14)} ${pxToRem(18)}`,
+    horizontalPadding: `${pxToRem(14)} ${pxToRem(18)}`,
 
     verticalBackgroundColor: siteVars.colors.white,
-    verticalItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
+    verticalItemPadding: `${pxToRem(7)} ${pxToRem(16)}`,
     verticalBoxShadow: siteVars.shadowLevel3,
     verticalDividerMargin: `${pxToRem(8)} 0`,
     verticalItemBorderWidth: pxToRem(2),
