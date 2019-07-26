@@ -159,13 +159,14 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
       this.handleClick(event)
     },
     closeMenuAndFocusTrigger: event => {
+      if (!this.props.menuOpen) {
+        return
+      }
+
       this.trySetMenuOpen(false, event)
       if (this.itemRef) {
         this.itemRef.current.focus()
       }
-    },
-    closeMenu: () => {
-      this.trySetMenuOpen(false, event)
     },
     doNotNavigateNextToolbarItem: event => {
       event.stopPropagation()
@@ -252,7 +253,6 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
                 {submenu}
               </>
             ),
-            onBlur: this.handleWrapperBlur,
           }),
         })
       }
@@ -266,12 +266,6 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     }
 
     return <Ref innerRef={this.itemRef}>{renderedItem}</Ref>
-  }
-
-  handleWrapperBlur = e => {
-    if (this.props.menu && !e.currentTarget.contains(e.relatedTarget)) {
-      this.trySetMenuOpen(false, e)
-    }
   }
 
   handleBlur = (e: React.SyntheticEvent) => {
