@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Alert, Popup, Flex } from '@stardust-ui/react'
+import { Alert, Popup, Flex, Button } from '@stardust-ui/react'
 
 interface UfdProps {
   content: string
-  position: 'top' | 'center' | 'popup'
+  position: 'top' | 'center' | 'popup' | 'popupButtons'
   label: string
   attachedTo?: string
   buttons?: any[]
@@ -26,6 +26,9 @@ const Ufd = (props: UfdProps) => {
     case 'popup': {
       return renderPopup({ contentId, attachedTo, label, content, onDismiss })
     }
+    case 'popupButtons': {
+      return renderPopupWithButtons({ contentId, attachedTo, label, content, onDismiss })
+    }
     case 'center': {
       return renderAlertWithCloseIcon({ contentId, content, hideBorder: true, onDismiss })
     }
@@ -34,11 +37,6 @@ const Ufd = (props: UfdProps) => {
     }
   }
 }
-
-// return position === 'popup'
-//   ? renderPopup({ contentId, attachedTo, label, content, onDismiss })
-//   : renderAlert({ contentId, position, label, content, buttons })
-// }
 
 const renderAlertWithCustomButtons = props => {
   const { contentId, position, content, hideBorder, buttons } = props
@@ -66,41 +64,42 @@ const renderAlertWithCustomButtons = props => {
 }
 
 const renderAlertWithCloseIcon = props => {
-  const { contentId, position, label, content, hideBorder, onDismiss } = props
-
-  let role: string = undefined
-  let describedBy: string = undefined
-  if (position === 'center') {
-    role = 'region'
-    describedBy = contentId
-  } else if (position === 'top') {
-    role = 'region'
-    describedBy = contentId
-  }
+  const { contentId, position, content, hideBorder, onDismiss } = props
   return (
-    <div role={role} aria-label={label} aria-describedby={describedBy}>
-      <Alert
-        danger
-        content={{ id: contentId, content }}
-        action={{
-          icon: 'close',
-          'aria-label': 'Dismiss',
-          'aria-describedby': contentId,
-          onClick: onDismiss,
-        }}
-        variables={{
-          dangerBackgroundColor: '#585A96', // TODO: use theme color
-          dangerColor: 'white',
-          ...(hideBorder && { borderStyle: 'transparent' }),
-        }}
-        {...position === 'center' && { styles: { height: '80px' } }}
-      />
-    </div>
+    <Alert
+      danger
+      content={{ id: contentId, content }}
+      action={{
+        icon: 'close',
+        'aria-label': 'Dismiss',
+        'aria-describedby': contentId,
+        onClick: onDismiss,
+      }}
+      variables={{
+        dangerBackgroundColor: '#585A96', // TODO: use theme color
+        dangerColor: 'white',
+        ...(hideBorder && { borderStyle: 'transparent' }),
+      }}
+      {...position === 'center' && { styles: { height: '80px' } }}
+    />
+  )
+}
+
+const contentWithButtons = props => {
+  const { contentId, content, onDismiss } = props
+  return (
+    <Flex gap="gap.smaller">
+      {renderAlertWithCloseIcon({ contentId, content, hideBorder: true, onDismiss })}
+      <Button aria-describedby={contentId}>Device settings</Button>
+      <Button aria-describedby={contentId} primary>
+        Call me back
+      </Button>
+    </Flex>
   )
 }
 
 const renderPopup = props => {
-  const { contentId, attachedTo, label, content, onDismiss } = props
+  const { contentId, attachedTo, content, onDismiss } = props
   const target = document.querySelector(`#${attachedTo}`) as HTMLElement // TODO: use refs
   return (
     <Popup
@@ -111,8 +110,32 @@ const renderPopup = props => {
       target={target}
       content={{
         content: renderAlertWithCloseIcon({ contentId, content, hideBorder: true, onDismiss }),
-        'aria-label': label,
         'aria-describedby': contentId,
+        // aria-label and region in case that each ufd would have region
+        // 'aria-label': label,
+        // role: 'region',
+      }}
+      position="above"
+    />
+  )
+}
+
+const renderPopupWithButtons = props => {
+  const { contentId, attachedTo, content, onDismiss } = props
+  const target = document.querySelector(`#${attachedTo}`) as HTMLElement // TODO: use refs
+  return (
+    <Popup
+      inline
+      variables={{ contentBackgroundColor: '#585A96' }} // TODO: use theme color
+      offset="20px"
+      open={true}
+      target={target}
+      content={{
+        content: contentWithButtons({ contentId, content, hideBorder: true, onDismiss }),
+        'aria-describedby': contentId,
+        // region will be done when there will be clear if it should go under one common region or each alert will have own one
+        // aria-label and region in case that each ufd would have region
+        // 'aria-label': label,
         role: 'region',
       }}
       position="above"

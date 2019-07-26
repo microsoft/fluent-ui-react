@@ -38,6 +38,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
 
   const [showCenteredUfd, setShowCenteredUfd] = React.useState(false)
   const [showAttachedUfd, setShowAttachedUfd] = React.useState(false)
+  const [showAttachedUfdWithButtons, setShowAttachedUfdWithButtons] = React.useState(false)
 
   let theme = {}
   if (themeName === 'teamsDark') {
@@ -184,8 +185,9 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                 <Ufd
                   content="Random Centered UFD"
                   position="center"
-                  label="Alert"
+                  label="Warning"
                   onDismiss={() => setShowCenteredUfd(false)}
+                  contentId="centeredUfd-1"
                 />
               )}
             </div>
@@ -195,9 +197,20 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                 attachedTo="toolbar-mic-button"
                 content="Random attached alert"
                 position="popup"
-                label="Alert"
+                label="Warning"
                 onDismiss={() => setShowAttachedUfd(false)}
                 contentId="attachedUfd-1"
+              />
+            )}
+
+            {showAttachedUfdWithButtons && (
+              <Ufd
+                attachedTo="toolbar-mic-button"
+                content="Your microphone isn't working"
+                position="popupButtons"
+                label="Warning"
+                onDismiss={() => setShowAttachedUfdWithButtons(false)}
+                contentId="attachedUfdWithButton-1"
               />
             )}
 
@@ -247,6 +260,10 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                 <Divider content="Centered UFD" />
                 <MouseTrigger content="Show centered UFD" setter={setShowCenteredUfd} />
                 <MouseTrigger content="Show attached UFD" setter={setShowAttachedUfd} />
+                <MouseTrigger
+                  content="Show UFD mic not working "
+                  setter={setShowAttachedUfdWithButtons}
+                />
               </Flex>
               <List selectable items={['Dummy passive participant']} />
             </Flex>
