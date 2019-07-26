@@ -91,6 +91,7 @@ import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
+import oneDrive from './oneDrive'
 import microsoftStream from './microsoftStream'
 import userPhone from './userPhone'
 import speakerMute from './speakerMute'
@@ -233,6 +234,7 @@ export default {
   'microsoft-stream': microsoftStream,
   'user-phone': userPhone,
   'number-list': numberList,
+  onedrive: oneDrive,
   'open-outside': openOutside,
   outdent,
   paperclip,
