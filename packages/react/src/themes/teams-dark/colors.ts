@@ -301,7 +301,7 @@ const createCategoryColorScheme = (color: string, customValues = {}) => {
   }
 }
 
-export const categoryColorSchemes: CategoryColorSchemeMapping = {
+export const categoryColorScheme: CategoryColorSchemeMapping = {
   redDark: createCategoryColorScheme('redDark'),
   red: createCategoryColorScheme('red'),
   orangeDark: createCategoryColorScheme('orangeDark'),

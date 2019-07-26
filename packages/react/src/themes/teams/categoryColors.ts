@@ -488,7 +488,7 @@ const createCategoryColorScheme = (color: string, customValues = {}) => {
   }
 }
 
-export const categoryColorSchemes: ColorSchemeMapping<
+export const categoryColorScheme: ColorSchemeMapping<
   Partial<ColorScheme>,
   TeamsCategoryColorNames
 > = {
