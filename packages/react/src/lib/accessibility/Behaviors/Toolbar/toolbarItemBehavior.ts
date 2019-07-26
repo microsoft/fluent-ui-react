@@ -27,6 +27,10 @@ const toolbarItemBehavior: Accessibility<ToolbarItemBehaviorProps> = props => {
           ? [{ keyCode: keyboardKey.Escape }, { keyCode: keyboardKey.Tab, shiftKey: true }]
           : null,
     },
+    closeMenu: {
+      keyCombinations:
+        props.menu && props.menuOpen ? [{ keyCode: keyboardKey.Tab, shiftKey: true }] : null,
+    },
     doNotNavigateNextToolbarItem: {
       keyCombinations:
         props.menu && props.menuOpen
