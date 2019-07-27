@@ -1,0 +1,30 @@
+{
+  "name": "@stardust-ui/style",
+  "description": "Tools and utilities for creating Stardust UI compliant styles.",
+  "version": "0.1.0",
+  "author": "Levi Thomason <me@levithomason.com>",
+  "bugs": "https://github.com/stardust-ui/react/issues",
+  "devDependencies": {
+    "@stardust-ui/internal-tooling": "^0.35.0",
+    "lerna-alias": "^3.0.3-0",
+    "style-dictionary": "^2.8.1"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/stardust-ui/react#readme",
+  "jsnext:main": "dist/es/index.js",
+  "license": "MIT",
+  "main": "dist/commonjs/index.js",
+  "module": "dist/es/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "stardust-ui/react.git",
+  "scripts": {
+    "build": "style-dictionary build"
+  },
+  "sideEffects": false,
+  "types": "dist/es/index.d.ts",
+  "dependencies": {}
+}
