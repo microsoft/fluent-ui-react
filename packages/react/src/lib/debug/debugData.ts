@@ -35,6 +35,10 @@ export default class DebugData implements IDebugData {
     return traverse(
       this,
       data =>
+        // This loose comparison (with two equal signs) is necessary
+        // so that provided prop value of, say, number 400 for font weight
+        // would trigger match for the values defined as string '400'.
+
         // tslint:disable:triple-equals
         deepPickBy(
           data,
