@@ -62,9 +62,51 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
   return (
     <div style={{ height: '100vh' }}>
       <Provider theme={theme} rtl={rtl}>
-        {(showTopUfd || showSecondTopUfd) && (
-          <UfdRegion aria-label="top warning">
-            {showTopUfd && (
+        <div role="main" aria-labelledby="meeting-header">
+          {(showTopUfd || showSecondTopUfd) && (
+            <UfdRegion aria-label="top warning">
+              {showTopUfd && (
+                <Ufd
+                  content="Others may have trouble hearing you clearly. Try moving a bit away from your mic."
+                  position="top"
+                  label="Alert"
+                  buttons={[
+                    <Button
+                      aria-describedby="topUfd-1"
+                      content="Dismiss"
+                      onClick={() => setShowTopUfd(false)}
+                      primary
+                    />,
+                  ]}
+                  contentId="topUfd-1"
+                />
+              )}
+              {showSecondTopUfd && (
+                <Ufd
+                  content="Echo in your room! Turn off your audio or ask others to turn off theirs."
+                  position="top"
+                  label="Alert"
+                  buttons={[
+                    <Button
+                      aria-describedby="topUfd-2"
+                      content="Turn off my audio"
+                      onClick={() => setSecondShowTopUfd(false)}
+                      primary
+                    />,
+                    <Button
+                      aria-describedby="topUfd-2"
+                      content="Dismiss"
+                      onClick={() => setSecondShowTopUfd(false)}
+                      primary
+                    />,
+                  ]}
+                  contentId="topUfd-2"
+                />
+              )}
+            </UfdRegion>
+          )}
+          {showTopUfdSingleRegion && (
+            <UfdRegion aria-label="warning mic">
               <Ufd
                 content="Others may have trouble hearing you clearly. Try moving a bit away from your mic."
                 position="top"
@@ -73,14 +115,16 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                   <Button
                     aria-describedby="topUfd-1"
                     content="Dismiss"
-                    onClick={() => setShowTopUfd(false)}
+                    onClick={() => setShowTopUfdUniqueRegion(false)}
                     primary
                   />,
                 ]}
                 contentId="topUfd-1"
               />
-            )}
-            {showSecondTopUfd && (
+            </UfdRegion>
+          )}
+          {showSecondTopUfdSingleRegion && (
+            <UfdRegion aria-label="warning audio">
               <Ufd
                 content="Echo in your room! Turn off your audio or ask others to turn off theirs."
                 position="top"
@@ -89,66 +133,21 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                   <Button
                     aria-describedby="topUfd-2"
                     content="Turn off my audio"
-                    onClick={() => setSecondShowTopUfd(false)}
+                    onClick={() => setSecondShowTopUfdUniqueRegion(false)}
                     primary
                   />,
                   <Button
                     aria-describedby="topUfd-2"
                     content="Dismiss"
-                    onClick={() => setSecondShowTopUfd(false)}
+                    onClick={() => setSecondShowTopUfdUniqueRegion(false)}
                     primary
                   />,
                 ]}
                 contentId="topUfd-2"
               />
-            )}
-          </UfdRegion>
-        )}
-        {showTopUfdSingleRegion && (
-          <UfdRegion aria-label="warning mic">
-            <Ufd
-              content="Others may have trouble hearing you clearly. Try moving a bit away from your mic."
-              position="top"
-              label="Alert"
-              buttons={[
-                <Button
-                  aria-describedby="topUfd-1"
-                  content="Dismiss"
-                  onClick={() => setShowTopUfdUniqueRegion(false)}
-                  primary
-                />,
-              ]}
-              contentId="topUfd-1"
-            />
-          </UfdRegion>
-        )}
-        {showSecondTopUfdSingleRegion && (
-          <UfdRegion aria-label="warning audio">
-            <Ufd
-              content="Echo in your room! Turn off your audio or ask others to turn off theirs."
-              position="top"
-              label="Alert"
-              buttons={[
-                <Button
-                  aria-describedby="topUfd-2"
-                  content="Turn off my audio"
-                  onClick={() => setSecondShowTopUfdUniqueRegion(false)}
-                  primary
-                />,
-                <Button
-                  aria-describedby="topUfd-2"
-                  content="Dismiss"
-                  onClick={() => setSecondShowTopUfdUniqueRegion(false)}
-                  primary
-                />,
-              ]}
-              contentId="topUfd-2"
-            />
-          </UfdRegion>
-        )}
-        <Flex column fill>
-          {/* TODO: should top ufds be part of main as they are regions? */}
-          <div role="main" aria-labelledby="meeting-header">
+            </UfdRegion>
+          )}
+          <Flex column fill>
             <Header as="h2" id="meeting-header" content="Random meeting title" />
             <Flex
               styles={{
@@ -287,8 +286,8 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
             >
               <List selectable items={['Dummy passive participant']} />
             </Flex>
-          </div>
-        </Flex>
+          </Flex>
+        </div>
       </Provider>
     </div>
   )
