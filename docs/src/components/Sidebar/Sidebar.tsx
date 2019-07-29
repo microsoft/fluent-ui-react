@@ -78,8 +78,8 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  treeActiveIndexChanged = data => {
-    this.setState({ activeCategoryIndex: data })
+  treeActiveIndexChanged = (e, props) => {
+    this.setState({ activeCategoryIndex: props.activeIndex })
   }
 
   keyDownCallback(e) {
