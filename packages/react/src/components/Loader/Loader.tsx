@@ -7,13 +7,13 @@ import {
   createShorthandFactory,
   UIComponentProps,
   commonPropTypes,
-  ColorComponentProps,
   SizeValue,
 } from '../../lib'
 import { loaderBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
+import Text, { TextProps } from '../Text/Text'
 
 export interface LoaderSlotClassNames {
   indicator: string
@@ -21,7 +21,7 @@ export interface LoaderSlotClassNames {
   svg: string
 }
 
-export interface LoaderProps extends UIComponentProps, ColorComponentProps {
+export interface LoaderProps extends UIComponentProps {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
@@ -35,7 +35,7 @@ export interface LoaderProps extends UIComponentProps, ColorComponentProps {
   inline?: boolean
 
   /** A loader can contain a label. */
-  label?: ShorthandValue<BoxProps>
+  label?: ShorthandValue<TextProps>
 
   /** A label in the loader can have different positions. */
   labelPosition?: 'above' | 'below' | 'start' | 'end'
@@ -68,7 +68,6 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
     ...commonPropTypes.createCommon({
       children: false,
       content: false,
-      color: true,
     }),
     delay: PropTypes.number,
     indicator: customPropTypes.itemShorthand,
@@ -134,7 +133,7 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
               styles: styles.indicator,
             },
           })}
-          {Box.create(label, {
+          {Text.create(label, {
             defaultProps: { className: Loader.slotClassNames.label, styles: styles.label },
           })}
         </ElementType>
