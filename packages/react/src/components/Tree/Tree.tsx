@@ -54,7 +54,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    */
   renderItemTitle?: ShorthandRenderFunction
 
-  /** called when activeIndex changes. */
+  /** Called when activeIndex changes. */
   onActiveIndexChange?: ComponentEventHandler<TreeProps & (number[] | number)>
 }
 
