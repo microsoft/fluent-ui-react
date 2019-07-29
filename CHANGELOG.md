@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.35.0 ]------------------------------- -->
+## [v0.35.0](https://github.com/stardust-ui/react/tree/v0.35.0) (2019-07-26)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.34.3...v0.35.0)
+
 ### BREAKING CHANGES
 -  Add `trapFocus` and `autoFocus` props to `Popup` and remove `popupFocusTrapBehavior` and `popupAutoFocusBehavior` @sophieH29 ([#1565](https://github.com/stardust-ui/react/pull/1565))
 - `defaultBehavior` was removed @layershifter ([#1600](https://github.com/stardust-ui/react/pull/1600))
@@ -39,6 +43,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Open `Popup` on `contextmenu` @jurokapsiar ([#1524](https://github.com/stardust-ui/react/pull/1524))
 - Add `align` prop for `Text` component @Bugaa92 ([#1668](https://github.com/stardust-ui/react/pull/1668))
 - Add `size` prop for `Button` component @layershifter ([#1716](https://github.com/stardust-ui/react/pull/1716))
+- Add `target` prop on `Provider`, allows to specify a `document` where styles should be renderer @layershifter ([#1252](https://github.com/stardust-ui/react/pull/1252))
 
 ### Fixes
 - Fix `ChatMessage`'s focus border overlays `actionMenu` in Teams theme @mnajdova ([#1637](https://github.com/stardust-ui/react/pull/1637))
