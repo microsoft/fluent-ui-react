@@ -61,7 +61,7 @@ class Sidebar extends React.Component<any, any> {
     const hasModifier = e.altKey || e.ctrlKey || e.metaKey
     const bodyHasFocus = document.activeElement === document.body
 
-    if (!hasModifier && isAZ && bodyHasFocus) this._searchInput.current.focus()
+    if (!hasModifier && isAZ && bodyHasFocus) this.searchInputRef.current.focus()
   }
 
   handleItemClick = e => {
