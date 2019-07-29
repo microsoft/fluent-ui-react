@@ -5,8 +5,8 @@ export * from './types'
 import { default as debugApi } from './debugApi'
 
 // expose debug API as $stardust object
-;
-
-(window as any).$stardust = debugApi
+if (typeof window !== 'undefined') {
+  ;(window as any).$stardust = debugApi
+}
 
 export default DebugDataProvider
