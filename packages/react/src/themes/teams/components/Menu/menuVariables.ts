@@ -118,7 +118,7 @@ export default (siteVars: any): MenuVariables => {
     pointingIndicatorBackgroundColor: siteVars.colors.brand[600],
 
     underlinedBottomBorderWidth: pxToRem(2),
-    primaryBorderColor: siteVars.colorScheme.default.border2, // is this a good change?
+    primaryBorderColor: siteVars.colorScheme.default.border2,
 
     dividerHeight: pxToRem(1),
     borderWidth: pxToRem(1),
