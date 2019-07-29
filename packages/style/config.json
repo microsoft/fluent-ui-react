@@ -1,6 +1,19 @@
 {
   "source": ["properties/**/*.json"],
   "platforms": {
+    "sketch": {
+      "buildPath": "dist/sketch/",
+      "files": [
+        {
+          "format": "sketch/palette",
+          "destination": "stardust.sketchpalette"
+        },
+        {
+          "format": "sketch/palette/v2",
+          "destination": "stardust-v2.sketchpalette"
+        }
+      ]
+    },
     "scss": {
       "transformGroup": "scss",
       "buildPath": "dist/scss/",
