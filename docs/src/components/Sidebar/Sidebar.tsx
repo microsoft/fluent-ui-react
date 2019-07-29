@@ -245,7 +245,8 @@ class Sidebar extends React.Component<any, any> {
   }
 
   handleQueryChange = e => {
-    this.setState({ query: e.target.value })
+    const query = e.target.value ? e.target.value : ''
+    this.setState({ query })
   }
 
   getSectionsWithoutSearchFilter = () => {
@@ -358,7 +359,7 @@ class Sidebar extends React.Component<any, any> {
   render() {
     const sidebarStyles: ICSSInJSStyle = {
       background: '#201f1f',
-      width: this.props.width,
+      width: `${this.props.width}px`,
       position: 'fixed',
       overflowY: 'scroll',
       top: 0,
@@ -417,7 +418,9 @@ class Sidebar extends React.Component<any, any> {
     )
 
     const topItemTheme = Object.assign({}, this.props.treeItemStyle)
-    topItemTheme.width = this.props.width
+    topItemTheme.width = `${0.9 * this.props.width}px`
+    delete topItemTheme.padding
+    topItemTheme.margin = '0.5em 0em 0.5em 1em'
 
     // TODO: bring back the active elements indicators
     return (
@@ -455,9 +458,9 @@ class Sidebar extends React.Component<any, any> {
             styles={topItemTheme}
             fluid
             clearable
-            icon={{ name: 'search', style: { padding: topItemTheme.padding } }}
+            icon="search"
             placeholder="Search"
-            iconPosition="start"
+            iconPosition="end"
             role="search"
             onChange={this.handleQueryChange}
             value={this.state.query}
