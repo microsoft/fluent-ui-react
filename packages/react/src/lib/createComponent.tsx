@@ -40,6 +40,10 @@ const createComponent = <P extends ObjectOf<any> = any>({
   }
 
   const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
+    // Stores debug information for component.
+    // Note this ref should be the first one, to be discoverable by debug utils.
+    const stardustDebug = React.useRef(null)
+
     const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
     return renderComponent(
@@ -52,6 +56,7 @@ const createComponent = <P extends ObjectOf<any> = any>({
         state: {},
         actionHandlers,
         render: config => render(config, props),
+        saveDebug: updatedDebug => (stardustDebug.current = updatedDebug),
       },
       context,
     )

@@ -22,6 +22,7 @@ const mergeProviderContexts = (...contexts: ProviderContextInput[]): ProviderCon
     renderer: felaRenderer,
     rtl: false,
     disableAnimations: false,
+    originalThemes: contexts.filter(Boolean).map(it => it.theme),
   } as ProviderContextPrepared
 
   return contexts.reduce<ProviderContextPrepared>(

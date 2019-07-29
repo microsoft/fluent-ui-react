@@ -16,6 +16,7 @@ import {
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
+  ComponentSlotStylesInput,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
 import {
@@ -30,6 +31,7 @@ import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
+import Debug from './debug'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -53,6 +55,7 @@ export interface RenderConfig<P> {
   state: State
   actionHandlers: AccessibilityActionHandlers
   render: RenderComponentCallback<P>
+  saveDebug: (debug: Debug | null) => void
 }
 
 const emptyBehavior: ReactAccessibilityBehavior = {
@@ -128,6 +131,16 @@ const renderWithFocusZone = <P extends {}>(
   return render(config)
 }
 
+const resolveStyles = (
+  styles: ComponentSlotStylesInput,
+  styleParam: ComponentStyleFunctionParam,
+): ComponentSlotStylesPrepared => {
+  return Object.keys(styles).reduce(
+    (acc, next) => ({ ...acc, [next]: callable(styles[next])(styleParam) }),
+    {},
+  )
+}
+
 const renderComponent = <P extends {}>(
   config: RenderConfig<P>,
   context: ProviderContextPrepared,
@@ -141,6 +154,7 @@ const renderComponent = <P extends {}>(
     state,
     actionHandlers,
     render,
+    saveDebug = () => {},
   } = config
 
   if (_.isEmpty(context)) {
@@ -200,10 +214,7 @@ const renderComponent = <P extends {}>(
     ...animationCSSProp,
   }
 
-  const resolvedStyles: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(
-    (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
-    {},
-  )
+  const resolvedStyles: ComponentSlotStylesPrepared = resolveStyles(mergedStyles, styleParam)
 
   const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
   classes.root = cx(className, classes.root, props.className)
@@ -221,6 +232,20 @@ const renderComponent = <P extends {}>(
 
   if (accessibility.focusZone) {
     return renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
+  }
+
+  // conditionally add sources for evaluating debug information to component
+  if (process.env.NODE_ENV !== 'production') {
+    saveDebug(
+      new Debug({
+        componentName: displayName,
+        themes: context.originalThemes,
+        instanceStylesOverrides: props.styles,
+        instanceVariablesOverrides: props.variables,
+        resolveStyles: styles => resolveStyles(styles, styleParam),
+        resolveVariables: variables => callable(variables)(siteVariables),
+      }),
+    )
   }
 
   return render(resolvedConfig)
