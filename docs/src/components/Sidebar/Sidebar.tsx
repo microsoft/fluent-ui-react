@@ -34,15 +34,18 @@ class Sidebar extends React.Component<any, any> {
     history: PropTypes.object.isRequired,
     style: PropTypes.object,
   }
-  state: any = { query: '' }
+  state: any = { query: '', activeCategoryIndex: 0 }
   _searchInput: any
   selectedRoute: any
   filteredMenu = componentMenu
-  treeRef: React.RefObject<HTMLUListElement> = React.createRef()
   searchInputRef: React.RefObject<HTMLInputElement> = React.createRef()
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleDocumentKeyDown)
+
+    const at = window.location.href.replace(window.location.origin, '')
+    const categoryIndex = this.findActiveCategoryIndex(at, this.getSectionsWithoutSearchFilter())
+    this.setState({ activeCategoryIndex: categoryIndex })
   }
 
   componentWillUnmount() {
@@ -68,11 +71,15 @@ class Sidebar extends React.Component<any, any> {
     const { query } = this.state
 
     if (query) {
-      const at = e.target.href.replace(e.target.baseURI, '/')
       this.setState({ query: '' })
+      const at = e.target.href.replace(e.target.baseURI, '/')
       const categoryIndex = this.findActiveCategoryIndex(at, this.getSectionsWithoutSearchFilter())
-      this.treeRef.current.setAttribute('activeIndex', categoryIndex.toString())
+      this.setState({ activeCategoryIndex: categoryIndex })
     }
+  }
+
+  treeActiveIndexChanged = data => {
+    this.setState({ activeCategoryIndex: data })
   }
 
   keyDownCallback(e) {
@@ -394,9 +401,6 @@ class Sidebar extends React.Component<any, any> {
       })
     }
 
-    const at = this.props.location.pathname
-    const activeCategoryIndex = this.findActiveCategoryIndex(at, allSections)
-
     // TODO: remove after the issue with TreeItem will be fixed
     // https://github.com/stardust-ui/react/issues/1613
     this.addItemKeyCallbacks(allSections)
@@ -463,8 +467,8 @@ class Sidebar extends React.Component<any, any> {
         <Tree
           items={allSections}
           renderItemTitle={titleRenderer}
-          ref={this.treeRef}
-          defaultActiveIndex={activeCategoryIndex}
+          activeIndex={this.state.activeCategoryIndex}
+          onActiveIndexChange={this.treeActiveIndexChanged}
         />
       </Segment>
     )
