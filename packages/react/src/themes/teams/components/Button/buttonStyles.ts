@@ -30,6 +30,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
       padding: v.padding,
       verticalAlign: 'middle',
       cursor: 'pointer',
+      outline: 0,
 
       ...(p.size === 'small' && {
         padding: v.sizeSmallPadding,
@@ -39,7 +40,6 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
 
       // rectangular button defaults
       ...(!p.text && {
-        outline: 0,
         borderWidth,
         borderStyle: 'solid',
         borderColor: v.borderColor,
@@ -122,7 +122,9 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
         !p.text && {
           color: v.primaryColor,
           backgroundColor: v.primaryBackgroundColor,
-          borderColor: v.primaryBorderColor,
+          borderWidth: '0',
+          borderStyle: 'none',
+          boxShadow: siteVariables.shadowLevel1Darker,
 
           ':hover': {
             color: v.primaryColorHover,
