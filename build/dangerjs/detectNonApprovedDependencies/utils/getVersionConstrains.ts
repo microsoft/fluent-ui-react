@@ -3,6 +3,7 @@ import * as fs from 'fs'
 
 import * as readPackageJson from 'read-package-json'
 import { getPackageName, getPackageVersion } from './packageNameUtils'
+import { isIgnored } from '../approvedPackages'
 
 type PackageJson = {
   dependencies?: string[]
@@ -75,18 +76,22 @@ export const getDependenciesVersionConstraints = async (
   let detectedConstraints: Constraints = {}
   const dependenciesWithConstraints = (await parsePackageJson(packageJsonPath)).dependencies
 
-  const pendingTasks = dependenciesWithConstraints.map(async dependency => {
-    detectedConstraints[dependency] = dependencyChain
-    const dependencyPackageJson = findPackageJsonOf(dependency, path.dirname(basePath))
+  const pendingTasks = dependenciesWithConstraints.map(async dependencyPackageId => {
+    if (isIgnored(dependencyPackageId)) {
+      return
+    }
+
+    detectedConstraints[dependencyPackageId] = dependencyChain
+    const dependencyPackageJson = findPackageJsonOf(dependencyPackageId, basePath)
 
     if (!dependencyPackageJson) {
       throw new Error(
-        `Package.json wasn't found for the following dependency: ${dependency} in ${packageJsonPath}`,
+        `Package.json wasn't found for the following dependency: ${dependencyPackageId} in ${packageJsonPath}`,
       )
     }
 
     const newDepChain = [...dependencyChain]
-    newDepChain.push(dependency)
+    newDepChain.push(dependencyPackageId)
 
     const newConstraints = await getDependenciesVersionConstraints(
       dependencyPackageJson,
