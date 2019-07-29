@@ -19,6 +19,9 @@ const selectableListBehavior: Accessibility<ListBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'listbox',
+      ...(!props.vertical && {
+        'aria-orientation': 'horizontal',
+      }),
     },
   },
   keyActions: {
