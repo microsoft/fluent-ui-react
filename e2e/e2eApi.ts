@@ -41,6 +41,13 @@ export class E2EApi {
 
   public clickOn = async (selector: string) => await (await this.getElement(selector)).click()
 
+  public clickOnPosition = async (selector: string, x: number, y: number) => {
+    const elementHandle = await this.getElement(selector)
+    const boundingBox = await elementHandle.boundingBox()
+
+    await this.page.mouse.click(Math.round(boundingBox.x) + x, Math.round(boundingBox.y) + y)
+  }
+
   public textOf = async (selector: string) => {
     const element = await this.getElement(selector)
     return await (await element.getProperty('textContent')).jsonValue()

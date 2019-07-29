@@ -445,10 +445,13 @@ describe('factories', () => {
         })
 
         test('works with falsy values', () => {
-          expect(getShorthand({ valueOrRenderCallback: <div key={null} /> })).toHaveProperty(
-            'key',
-            'null',
-          )
+          const elementWithoutKey = getShorthand({ valueOrRenderCallback: <p /> })
+          expect(elementWithoutKey).toHaveProperty('key', null)
+          expect(elementWithoutKey.props.children.key).toBe(null)
+
+          const elementWithNullKey = getShorthand({ valueOrRenderCallback: <p key={null} /> })
+          expect(elementWithNullKey).toHaveProperty('key', 'null')
+          expect(elementWithoutKey.props.children.key).toBe(null)
 
           expect(getShorthand({ valueOrRenderCallback: <div key={0} /> })).toHaveProperty(
             'key',

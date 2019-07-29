@@ -17,12 +17,18 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.35.0 ]------------------------------- -->
+## [v0.35.0](https://github.com/stardust-ui/react/tree/v0.35.0) (2019-07-26)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.34.3...v0.35.0)
+
 ### BREAKING CHANGES
 -  Add `trapFocus` and `autoFocus` props to `Popup` and remove `popupFocusTrapBehavior` and `popupAutoFocusBehavior` @sophieH29 ([#1565](https://github.com/stardust-ui/react/pull/1565))
 - `defaultBehavior` was removed @layershifter ([#1600](https://github.com/stardust-ui/react/pull/1600))
 - `ReactElement`s are now handled in the same way as string in all shorthands @layershifter ([#1600](https://github.com/stardust-ui/react/pull/1600))
 - `Props` param is required in `ShorthandValue` and `ShorthandCollection` @layershifter ([#1605](https://github.com/stardust-ui/react/pull/1605))
 - `LoaderPosition` type is no longer exported @layershifter ([#1634](https://github.com/stardust-ui/react/pull/1634))
+- Changed values for `textAlign` prop and renamed it to `align` for `Header` component @Bugaa92 ([#1668](https://github.com/stardust-ui/react/pull/1668))
+- `paddingLeftRightValue` variable in `buttonVariables` was renamed to `padding` in Teams theme @layershifter ([#1716](https://github.com/stardust-ui/react/pull/1716))
 
 ### Features
 - Split action handlers with "OR" condition in accessibility behaviors @sophieH29 ([#1622](https://github.com/stardust-ui/react/pull/1622))
@@ -31,12 +37,22 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `tooltipAsLabelBehavior` accessibility behavior for `Tooltip` @sophieH29 ([#1635](https://github.com/stardust-ui/react/pull/1635))
 - Add outline version of `menu` icon and `files-visio` icon to Teams theme @notandrew ([#1623](https://github.com/stardust-ui/react/pull/1623))
 - Add `amethyst` color to the Teams theme color palette @mnajdova ([#1650](https://github.com/stardust-ui/react/pull/1650))
+- Export `onedrive` icon to `Teams` theme @chughkartikey ([#1680](https://github.com/stardust-ui/react/pull/1680))
 - Add `image-unavailable` icon to Teams Theme @joheredi ([#1633](https://github.com/stardust-ui/react/pull/1633))
 - Add bidirectional navigation following DOM in `FocusZone` @sophieH29 ([#1637](https://github.com/stardust-ui/react/pull/1647))
 - Open `Popup` on `contextmenu` @jurokapsiar ([#1524](https://github.com/stardust-ui/react/pull/1524))
+- Add `align` prop for `Text` component @Bugaa92 ([#1668](https://github.com/stardust-ui/react/pull/1668))
+- Add `size` prop for `Button` component @layershifter ([#1716](https://github.com/stardust-ui/react/pull/1716))
+- Add `target` prop on `Provider`, allows to specify a `document` where styles should be renderer @layershifter ([#1252](https://github.com/stardust-ui/react/pull/1252))
 
 ### Fixes
 - Fix `ChatMessage`'s focus border overlays `actionMenu` in Teams theme @mnajdova ([#1637](https://github.com/stardust-ui/react/pull/1637))
+- Update `Checkbox` files for Teams Theme to match [redlines] @bcalvery ([#1656](https://github.com/stardust-ui/react/pull/1656))
+- Add `color` prop to `Segment` typings @layershifter ([#1702](https://github.com/stardust-ui/react/pull/1702))
+- Remove `color` prop from `Dialog` typings @layershifter ([#1702](https://github.com/stardust-ui/react/pull/1702))
+- `Loader` uses `Text` component for `label` slot instead of `Box` @layershifter ([#1701](https://github.com/stardust-ui/react/pull/1701))
+- Fix test cut off in `Button` component @layershifter ([#1716](https://github.com/stardust-ui/react/pull/1716))
+- Close `Toolbar`'s menu when it looses focus @sophieH29 ([#1688](https://github.com/stardust-ui/react/pull/1688))
 
 ### Documentation
 - Make sidebar categories collapsible @lucivpav ([#1611](https://github.com/stardust-ui/react/pull/1611))
@@ -49,6 +65,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Improve a table with component props in docs @layershifter ([#1634](https://github.com/stardust-ui/react/pull/1634))
 - Improve rendering performance for docs examples @Bugaa92 ([#1654](https://github.com/stardust-ui/react/pull/1654))
 - Add FAQ entry for `Flex`, `Grid`, `Layout`, `Box`, `Segment` @lucivpav ([#1646](https://github.com/stardust-ui/react/pull/1646))
+
+<!--------------------------------[ v0.34.3 ]------------------------------- -->
+## [v0.34.3](https://github.com/stardust-ui/react/tree/v0.34.3) (2019-07-23)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.34.2...v0.34.3)
+
+### Fixes
+- Fix nesting issues with `Dialog` component inside `Popup` @layershifter ([#1706](https://github.com/stardust-ui/react/pull/1706))
 
 <!--------------------------------[ v0.34.2 ]------------------------------- -->
 ## [v0.34.2](https://github.com/stardust-ui/react/tree/v0.34.2) (2019-07-19)
