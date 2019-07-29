@@ -59,7 +59,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onActiveIndexChange?: ComponentEventHandler<TreeProps & { activeIndex: number[] | number }>
+  onActiveIndexChange?: ComponentEventHandler<TreeProps>
 }
 
 export interface TreeState {
