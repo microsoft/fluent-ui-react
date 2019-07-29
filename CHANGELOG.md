@@ -20,6 +20,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Expose `isFromKeyboard` in `Grid` component @sophieH29 ([#1729](https://github.com/stardust-ui/react/pull/1729))
 
+### Fixes
+- Fix `firstFocusableSelector` in `FocusTrapZone` and `AutoFocusZone` @sophieH29 ([#1732](https://github.com/stardust-ui/react/pull/1732))
+
 
 <!--------------------------------[ v0.35.0 ]------------------------------- -->
 ## [v0.35.0](https://github.com/stardust-ui/react/tree/v0.35.0) (2019-07-26)
