@@ -105,7 +105,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
           </UfdRegion>
         )}
         {showTopUfdSingleRegion && (
-          <div role="region" aria-label="warning mic">
+          <UfdRegion aria-label="warning mic">
             <Ufd
               content="Others may have trouble hearing you clearly. Try moving a bit away from your mic."
               position="top"
@@ -120,10 +120,10 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
               ]}
               contentId="topUfd-1"
             />
-          </div>
+          </UfdRegion>
         )}
         {showSecondTopUfdSingleRegion && (
-          <div role="region" aria-label="warning audio">
+          <UfdRegion aria-label="warning audio">
             <Ufd
               content="Echo in your room! Turn off your audio or ask others to turn off theirs."
               position="top"
@@ -144,23 +144,48 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
               ]}
               contentId="topUfd-2"
             />
-          </div>
+          </UfdRegion>
         )}
         <Flex column fill>
+          {/* TODO: should top ufds be part of main as they are regions? */}
           <div role="main" aria-labelledby="meeting-header">
-            <Header
-              as="h2"
-              id="meeting-header"
-              content="Random meeting title"
-              styles={{ position: 'fixed', top: '20px', paddingLeft: '20px' }}
-            />
+            <Header as="h2" id="meeting-header" content="Random meeting title" />
             <Flex
               styles={{
                 position: 'absolute',
                 right: '40px',
-                top: '40px',
+                top: '150px',
               }}
-            />
+            >
+              <Flex gap="gap.small">
+                <Divider />
+                <Flex column style={{ width: '300px' }}>
+                  <Divider content="Alerts join under one region" color="pink" />
+                  <MouseTrigger content="TOP UFD Join Region" setter={setSecondShowTopUfd} />
+                  <MouseTrigger content="TOP UFD second Join Region" setter={setShowTopUfd} />
+                </Flex>
+                <Flex column style={{ width: '300px' }}>
+                  <Divider content="Each alert has own region" color="pink" />
+                  <MouseTrigger
+                    content="TOP UFD Unique Region"
+                    setter={setShowTopUfdUniqueRegion}
+                  />
+                  <MouseTrigger
+                    content="TOP UFD second Unique Region"
+                    setter={setSecondShowTopUfdUniqueRegion}
+                  />
+                </Flex>
+                <Flex column style={{ width: '300px' }}>
+                  <Divider content="Centered UFD" color="pink" />
+                  <MouseTrigger content="Show centered UFD" setter={setShowCenteredUfd} />
+                  <MouseTrigger content="Show attached UFD" setter={setShowAttachedUfd} />
+                  <MouseTrigger
+                    content="Show UFD mic not working "
+                    setter={setShowAttachedUfdWithButtons}
+                  />
+                </Flex>
+              </Flex>
+            </Flex>
             <Flex // this is the stage part
               hAlign="center"
               styles={{
@@ -207,9 +232,23 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
               <Ufd
                 attachedTo="toolbar-mic-button"
                 content="Your microphone isn't working"
-                position="popupButtons"
+                position="popup"
+                buttons={[
+                  <Button
+                    aria-describedby="attachedUfdWithButton-1"
+                    icon="close"
+                    iconOnly
+                    text
+                    title="Dismiss"
+                    onClick={() => setShowAttachedUfdWithButtons(false)}
+                    primary
+                  />,
+                  <Button aria-describedby="attachedUfdWithButton-1">Device settings</Button>,
+                  <Button aria-describedby="attachedUfdWithButton-1" primary>
+                    Call me back
+                  </Button>,
+                ]}
                 label="Warning"
-                onDismiss={() => setShowAttachedUfdWithButtons(false)}
                 contentId="attachedUfdWithButton-1"
               />
             )}
@@ -246,25 +285,6 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                   'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,0,0,1) 100%)',
               }}
             >
-              <Flex column style={{ width: '300px' }}>
-                <Divider />
-                <Divider content="Alerts join under one region" />
-                <MouseTrigger content="TOP UFD Join Region" setter={setSecondShowTopUfd} />
-                <MouseTrigger content="TOP UFD second Join Region" setter={setShowTopUfd} />
-                <Divider content="Each alert has own region" />
-                <MouseTrigger content="TOP UFD Unique Region" setter={setShowTopUfdUniqueRegion} />
-                <MouseTrigger
-                  content="TOP UFD second Unique Region"
-                  setter={setSecondShowTopUfdUniqueRegion}
-                />
-                <Divider content="Centered UFD" />
-                <MouseTrigger content="Show centered UFD" setter={setShowCenteredUfd} />
-                <MouseTrigger content="Show attached UFD" setter={setShowAttachedUfd} />
-                <MouseTrigger
-                  content="Show UFD mic not working "
-                  setter={setShowAttachedUfdWithButtons}
-                />
-              </Flex>
               <List selectable items={['Dummy passive participant']} />
             </Flex>
           </div>

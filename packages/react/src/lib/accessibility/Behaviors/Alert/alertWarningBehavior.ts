@@ -10,6 +10,7 @@ const alertWarningBehavior: Accessibility = () => ({
   attributes: {
     content: {
       role: 'alert',
+      // TODO: this was aria-live polite, do we want to remove it?
       // 'aria-atomic': 'true',
     },
   },
