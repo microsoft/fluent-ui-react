@@ -54,8 +54,12 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    */
   renderItemTitle?: ShorthandRenderFunction
 
-  /** Called when activeIndex changes. */
-  onActiveIndexChange?: ComponentEventHandler<TreeProps & (number[] | number)>
+  /** Called when activeIndex changes.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
+  onActiveIndexChange?: ComponentEventHandler<TreeProps & { activeIndex: number[] | number }>
 }
 
 export interface TreeState {
@@ -116,13 +120,13 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
             return acc
           }, [])
         : []
-      this.setActiveIndexAndTriggerEvent(activeIndex)
+      this.setActiveIndexAndTriggerEvent(e, activeIndex)
     },
   }
 
-  setActiveIndexAndTriggerEvent = activeIndex => {
+  setActiveIndexAndTriggerEvent = (e, activeIndex) => {
     this.trySetState({ activeIndex })
-    _.invoke(this.props, 'onActiveIndexChange', activeIndex)
+    _.invoke(this.props, 'onActiveIndexChange', e, { ...this.props, activeIndex })
   }
 
   getInitialAutoControlledState({ exclusive }): TreeState {
@@ -154,7 +158,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
     onTitleClick: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      this.setActiveIndexAndTriggerEvent(this.computeNewIndex(treeItemProps))
+      this.setActiveIndexAndTriggerEvent(e, this.computeNewIndex(treeItemProps))
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
   })
