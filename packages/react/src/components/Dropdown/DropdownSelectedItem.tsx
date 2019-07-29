@@ -165,6 +165,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
         <Label
           className={classes.root}
           tabIndex={active ? 0 : -1}
+          role="button"
           styles={styles.root}
           circular
           onClick={this.handleClick}
