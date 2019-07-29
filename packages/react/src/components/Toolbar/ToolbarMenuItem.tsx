@@ -20,8 +20,8 @@ import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } 
 import { Accessibility } from '../../lib/accessibility/types'
 import { menuItemBehavior } from '../../lib/accessibility'
 
-import Box from '../Box/Box'
-import Icon from '../Icon/Icon'
+import Box, { BoxProps } from '../Box/Box'
+import Icon, { IconProps } from '../Icon/Icon'
 
 export interface ToolbarMenuItemProps
   extends UIComponentProps,
@@ -39,7 +39,7 @@ export interface ToolbarMenuItemProps
   disabled?: boolean
 
   /** Name or shorthand for Toolbar Item Icon */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /**
    * Called on click.
@@ -64,7 +64,7 @@ export interface ToolbarMenuItemProps
   onBlur?: ComponentEventHandler<ToolbarMenuItemProps>
 
   /** Shorthand for the wrapper component. */
-  wrapper?: ShorthandValue
+  wrapper?: ShorthandValue<BoxProps>
 }
 
 export interface ToolbarMenuItemState {
@@ -182,8 +182,7 @@ ToolbarMenuItem.create = createShorthandFactory({
 })
 
 /**
- * Toolbar menu item.
- * This item renders as a button inside a Toolbar menu.
+ * A ToolbarMenuItem renders ToolbarMenu item as button.
  */
 export default withSafeTypeForAs<typeof ToolbarMenuItem, ToolbarMenuItemProps, 'button'>(
   ToolbarMenuItem,

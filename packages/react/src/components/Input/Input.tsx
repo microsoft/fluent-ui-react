@@ -18,8 +18,8 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { inputBehavior } from '../../lib/accessibility'
 import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
-import Box from '../Box/Box'
+import Icon, { IconProps } from '../Icon/Icon'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface InputSlotClassNames {
   input: string
@@ -44,7 +44,7 @@ export interface InputProps
   fluid?: boolean
 
   /** Optional Icon to display inside the Input. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** An Input with icon can format the icon to appear at the start or at the end of the input field. */
   iconPosition?: 'start' | 'end'
@@ -53,7 +53,7 @@ export interface InputProps
   inline?: boolean
 
   /** Shorthand for the input component. */
-  input?: ShorthandValue
+  input?: ShorthandValue<BoxProps>
 
   /**
    * Called on change.
@@ -73,7 +73,7 @@ export interface InputProps
   value?: string | number
 
   /** Shorthand for the wrapper component. */
-  wrapper?: ShorthandValue
+  wrapper?: ShorthandValue<BoxProps>
 }
 
 export interface InputState {
@@ -203,7 +203,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     }
   }
 
-  computeIcon = (): ShorthandValue => {
+  computeIcon = (): ShorthandValue<IconProps> => {
     const { clearable, icon } = this.props
     const { value } = this.state
 
@@ -220,6 +220,9 @@ Input.slotClassNames = {
 }
 
 /**
- * An input is a field used to elicit a response from a user.
+ * An Input is a field used to elicit an input from a user.
+ *
+ * @accessibility
+ * For good screen reader experience set `aria-label` or `aria-labelledby` attribute for input.
  */
 export default withSafeTypeForAs<typeof Input, InputProps, 'div'>(Input)

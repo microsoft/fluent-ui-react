@@ -21,10 +21,7 @@ export interface TreeTitleProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default treeTitleBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /**
@@ -92,4 +89,7 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
 
 TreeTitle.create = createShorthandFactory({ Component: TreeTitle, mappedProp: 'content' })
 
+/**
+ * A TreeTitle renders a title of TreeItem.
+ */
 export default withSafeTypeForAs<typeof TreeTitle, TreeTitleProps, 'a'>(TreeTitle)

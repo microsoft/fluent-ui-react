@@ -6,8 +6,11 @@ import {
   Toolbar,
   ToolbarItemProps,
   ToolbarCustomItemProps,
+  ShorthandCollection,
   Status,
   ToolbarItemShorthandKinds,
+  SizeValue,
+  ShorthandValue,
 } from '@stardust-ui/react'
 
 export interface CustomToolbarProps {
@@ -40,11 +43,9 @@ export interface CustomToolbarProps {
   label?: string
 }
 
-type CustomToolbarItem = (ToolbarItemProps | ToolbarCustomItemProps) & {
-  key: string
-  kind?: ToolbarItemShorthandKinds
-}
-type CustomToolbarLayout = (props: CustomToolbarProps) => CustomToolbarItem[]
+type CustomToolbarLayout = (
+  props: CustomToolbarProps,
+) => ShorthandCollection<ToolbarItemProps | ToolbarCustomItemProps, ToolbarItemShorthandKinds>
 
 const commonLayout: CustomToolbarLayout = props =>
   [
@@ -72,7 +73,7 @@ const commonLayout: CustomToolbarLayout = props =>
       active: props.cameraActive,
       icon: {
         name: props.cameraActive ? 'call-video' : 'call-video-off',
-        size: 'large',
+        size: 'large' as SizeValue,
       },
       key: 'camera',
       onClick: () => _.invoke(props, 'onCameraChange', !props.cameraActive),
@@ -84,7 +85,7 @@ const commonLayout: CustomToolbarLayout = props =>
       active: props.micActive,
       icon: {
         name: props.micActive ? 'mic' : 'mic-off',
-        size: 'large',
+        size: 'large' as SizeValue,
       },
       key: 'mic',
       onClick: () => _.invoke(props, 'onMicChange', !props.micActive),
@@ -95,7 +96,7 @@ const commonLayout: CustomToolbarLayout = props =>
       active: props.screenShareActive,
       icon: {
         name: props.screenShareActive ? 'call-control-close-tray' : 'call-control-present-new',
-        size: 'large',
+        size: 'large' as SizeValue,
       },
       key: 'screen-share',
       onClick: () => _.invoke(props, 'onScreenShareChange', !props.screenShareActive),
@@ -106,7 +107,7 @@ const commonLayout: CustomToolbarLayout = props =>
       key: 'more',
       icon: {
         name: 'more',
-        size: 'large',
+        size: 'large' as SizeValue,
       },
       //       onClick: () => _.invoke(props, 'onMoreClick'),
       popup: { content: props.moreOptionsPopupContent },
@@ -121,7 +122,7 @@ const sidebarButtons: CustomToolbarLayout = props => [
     icon: {
       name: 'chat',
       outline: true,
-      size: 'large',
+      size: 'large' as SizeValue,
     },
     key: 'chat',
     onClick: () =>
@@ -133,7 +134,7 @@ const sidebarButtons: CustomToolbarLayout = props => [
     icon: {
       name: 'participant-add',
       outline: true,
-      size: 'large',
+      size: 'large' as SizeValue,
     },
     key: 'participant-add',
     onClick: () =>
@@ -146,7 +147,7 @@ const sidebarButtons: CustomToolbarLayout = props => [
   },
 ]
 
-const layoutItems = {
+const layoutItems: ShorthandValue<ToolbarItemProps> = {
   endCall: props => ({
     key: 'end-call',
     icon: {
@@ -212,7 +213,6 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
         rotate: -90,
         outline: true,
       },
-
       onClick: () => _.invoke(props, 'onPptNextClick'),
     },
 

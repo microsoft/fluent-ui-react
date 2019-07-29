@@ -13,6 +13,7 @@ import {
   ColorComponentProps,
   rtlTextContainer,
   SizeValue,
+  AlignValue,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -52,6 +53,9 @@ export interface TextProps
   /** The text can signify a temporary state */
   temporary?: boolean
 
+  /** Align text content. */
+  align?: AlignValue
+
   /** Set as timestamp Text component */
   timestamp?: boolean
 
@@ -76,6 +80,7 @@ class Text extends UIComponent<WithAsProp<TextProps>, any> {
     weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
     success: PropTypes.bool,
     temporary: PropTypes.bool,
+    align: customPropTypes.align,
     timestamp: PropTypes.bool,
     truncated: PropTypes.bool,
   }
@@ -103,8 +108,6 @@ class Text extends UIComponent<WithAsProp<TextProps>, any> {
 Text.create = createShorthandFactory({ Component: Text, mappedProp: 'content' })
 
 /**
- * A Text component formats occurrences of text consistently.
- * @accessibility
- * Text is how people read the content on your website.
+ * A Text consistently styles and formats occurrences of text.
  */
 export default withSafeTypeForAs<typeof Text, TextProps, 'span'>(Text)

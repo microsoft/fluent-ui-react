@@ -12,9 +12,13 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-
-import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import FormField from './FormField'
+import {
+  ComponentEventHandler,
+  WithAsProp,
+  ShorthandCollection,
+  withSafeTypeForAs,
+} from '../../types'
+import FormField, { FormFieldProps } from './FormField'
 
 export interface FormSlotClassNames {
   field: string
@@ -30,7 +34,7 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
   action?: string
 
   /** Shorthand array of props for the Form.Fields inside the Form. */
-  fields?: ShorthandValue[]
+  fields?: ShorthandCollection<FormFieldProps>
 
   /**
    * The HTML form submit handler.
@@ -100,6 +104,6 @@ class Form extends UIComponent<WithAsProp<FormProps>, any> {
 }
 
 /**
- * A Form displays a set of related user input fields in a structured way.
+ * A Form is used to collect, oprionally validate, and submit the user input, in a structured way.
  */
 export default withSafeTypeForAs<typeof Form, FormProps, 'form'>(Form)

@@ -8,16 +8,18 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  ColorComponentProps,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface SegmentProps
   extends UIComponentProps<SegmentProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue> {
+    ColorComponentProps,
+    ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
    */
@@ -38,6 +40,7 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
+      color: true,
     }),
     disabled: PropTypes.bool,
     inverted: PropTypes.bool,
@@ -65,6 +68,6 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
 }
 
 /**
- * A segment is used to create a grouping of related content.
+ * A Segment visually groups related content.
  */
 export default withSafeTypeForAs<typeof Segment, SegmentProps>(Segment)

@@ -58,7 +58,7 @@ export function createShorthand({
   allowsJSX?: boolean
   mappedProp?: string
   mappedArrayProp?: string
-  valueOrRenderCallback?: ShorthandValue | ShorthandRenderCallback
+  valueOrRenderCallback?: ShorthandValue<Props> | ShorthandRenderCallback
   options?: CreateShorthandOptions
 }): React.ReactElement<Props> | null | undefined {
   const valIsRenderFunction =
@@ -79,7 +79,7 @@ export function createShorthand({
     Component,
     mappedProp,
     mappedArrayProp,
-    value: valueOrRenderCallback as ShorthandValue,
+    value: valueOrRenderCallback as ShorthandValue<Props>,
     options,
   })
 }
@@ -157,7 +157,7 @@ function createShorthandFromValue({
   mappedProp?: string
   mappedArrayProp?: string
   allowsJSX?: boolean
-  value?: ShorthandValue
+  value?: ShorthandValue<Props>
   options?: CreateShorthandOptions
 }) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
@@ -263,7 +263,14 @@ function createShorthandFromValue({
 
     if (valIsReactElement) {
       // use the key from React Element
-      props.key = (value as React.ReactElement).key
+      const elementKey = (value as React.ReactElement).key
+      // <div /> - key is not passed as will be `null`
+      // <div key={null} /> - key is passed as `null` and will be stringified
+      const isNullKey = elementKey === null
+
+      if (!isNullKey) {
+        props.key = elementKey
+      }
     }
   }
 
@@ -305,7 +312,7 @@ function createShorthandFromRenderCallback({
   allowsJSX?: boolean
   options?: CreateShorthandOptions
 }) {
-  const render: ShorthandRenderer = (shorthandValue, renderTree) => {
+  const render: ShorthandRenderer<Props> = (shorthandValue, renderTree) => {
     return createShorthandFromValue({
       Component,
       mappedProp,

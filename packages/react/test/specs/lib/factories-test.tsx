@@ -17,7 +17,7 @@ type ShorthandConfig = {
   mappedArrayProp?: string
   overrideProps?: Props & ((props: Props) => Props) | Props
   generateKey?: boolean
-  valueOrRenderCallback?: ShorthandValue
+  valueOrRenderCallback?: ShorthandValue<Props>
   render?: ShorthandRenderFunction
 }
 
@@ -47,7 +47,7 @@ const getShorthand = ({
     },
   })
 
-const isValuePrimitive = (value: ShorthandValue) =>
+const isValuePrimitive = (value: ShorthandValue<Props>) =>
   typeof value === 'string' || typeof value === 'number' || React.isValidElement(value)
 
 const testCreateShorthand = (shorthandArgs: ShorthandConfig, expectedResult: ObjectOf<any>) =>
@@ -77,7 +77,7 @@ const itReturnsAValidElement = valueOrRenderCallback => {
   })
 }
 
-const itAppliesDefaultProps = (valueOrRenderCallback: ShorthandValue) => {
+const itAppliesDefaultProps = (valueOrRenderCallback: ShorthandValue<Props>) => {
   test('applies defaultProps', () => {
     const defaultProps = { some: 'defaults' }
     const expectedResult = isValuePrimitive(valueOrRenderCallback)
@@ -100,7 +100,7 @@ const itDoesNotIncludePropsFromMappedProp = valueOrRenderCallback => {
 const itMergesClassNames = (
   classNameSource: string,
   extraClassName: string,
-  shorthandConfig: { valueOrRenderCallback?: ShorthandValue; mappedProp?: string },
+  shorthandConfig: { valueOrRenderCallback?: ShorthandValue<Props>; mappedProp?: string },
 ) => {
   test(`merges defaultProps className and ${classNameSource} className`, () => {
     const defaultProps = { className: 'default' }
@@ -445,10 +445,13 @@ describe('factories', () => {
         })
 
         test('works with falsy values', () => {
-          expect(getShorthand({ valueOrRenderCallback: <div key={null} /> })).toHaveProperty(
-            'key',
-            'null',
-          )
+          const elementWithoutKey = getShorthand({ valueOrRenderCallback: <p /> })
+          expect(elementWithoutKey).toHaveProperty('key', null)
+          expect(elementWithoutKey.props.children.key).toBe(null)
+
+          const elementWithNullKey = getShorthand({ valueOrRenderCallback: <p key={null} /> })
+          expect(elementWithNullKey).toHaveProperty('key', 'null')
+          expect(elementWithoutKey.props.children.key).toBe(null)
 
           expect(getShorthand({ valueOrRenderCallback: <div key={0} /> })).toHaveProperty(
             'key',
