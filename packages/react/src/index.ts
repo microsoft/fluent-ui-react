@@ -139,6 +139,9 @@ export { default as RadioGroupItem } from './components/RadioGroup/RadioGroupIte
 export * from './components/Segment/Segment'
 export { default as Segment } from './components/Segment/Segment'
 
+export * from './components/Slider/Slider'
+export { default as Slider } from './components/Slider/Slider'
+
 export * from './components/Status/Status'
 export { default as Status } from './components/Status/Status'
 

@@ -1,6 +1,7 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as _ from 'lodash'
 import {
   UIComponent,
   childrenExist,
@@ -10,19 +11,15 @@ import {
   commonPropTypes,
   ContentComponentProps,
   rtlTextContainer,
+  isFromKeyboard,
 } from '../../lib'
-import { WithAsProp, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs, ComponentEventHandler } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
 
-export interface GridProps
-  extends UIComponentProps,
-    ChildrenComponentProps,
-    ContentComponentProps<React.ReactNode | React.ReactNode[]> {
+export interface GridProps extends UIComponentProps, ChildrenComponentProps, ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
-   * @available gridBehavior
+   * @available gridBehavior, gridHorizontalBehavior
    * */
   accessibility?: Accessibility
 
@@ -31,9 +28,27 @@ export interface GridProps
 
   /** The rows of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
   rows?: string | number
+
+  /**
+   * Called after user's focus.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onFocus?: ComponentEventHandler<GridProps>
+
+  /**
+   * Called after item blur.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onBlur?: ComponentEventHandler<GridProps>
 }
 
-class Grid extends UIComponent<WithAsProp<GridProps>, any> {
+interface GridState {
+  isFromKeyboard: boolean
+}
+
+class Grid extends UIComponent<WithAsProp<GridProps>, GridState> {
   static displayName = 'Grid'
 
   static className = 'ui-grid'
@@ -51,11 +66,24 @@ class Grid extends UIComponent<WithAsProp<GridProps>, any> {
       ]),
     ]),
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
   }
 
   static defaultProps: WithAsProp<GridProps> = {
     as: 'div',
-    accessibility: defaultBehavior,
+  }
+
+  handleBlur = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: false })
+
+    _.invoke(this.props, 'onBlur', e, this.props)
+  }
+
+  handleFocus = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: isFromKeyboard() })
+
+    _.invoke(this.props, 'onFocus', e, this.props)
   }
 
   renderComponent({
@@ -69,6 +97,8 @@ class Grid extends UIComponent<WithAsProp<GridProps>, any> {
     return (
       <ElementType
         className={classes.root}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
         {...accessibility.attributes.root}
         {...unhandledProps}
@@ -80,9 +110,6 @@ class Grid extends UIComponent<WithAsProp<GridProps>, any> {
 }
 
 /**
- * A grid is used to harmonize negative space in a layout.
- * @accessibility
- * Do use Grid behavior for bidirectional keyboard navigation. Use appropriate ARIA role for the grid and actionable components inside of it.
- * Don't use grid component as a replacement for table.
+ * A Grid is a layout component that harmonizes negative space, by controlling both the row and column alignment.
  */
 export default withSafeTypeForAs<typeof Grid, GridProps>(Grid)

@@ -1,6 +1,7 @@
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { TextVariables } from './textVariables'
 import { TextProps } from '../../../../components/Text/Text'
+import translateAlignProp from '../../../../styles/translateAlignProp'
 
 export default {
   root: ({
@@ -15,6 +16,7 @@ export default {
       size,
       success,
       temporary,
+      align,
       timestamp,
       truncated,
       weight,
@@ -23,44 +25,25 @@ export default {
   }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
     const colors = v.colorScheme[color]
     return {
-      ...(color &&
-        colors && {
-          color: colors.foreground,
-        }),
+      ...(color && colors && { color: colors.foreground }),
       // animations are not working with span, unless display is set to 'inline-block'
-      ...(animation &&
-        as === 'span' && {
-          display: 'inline-block',
-        }),
-      ...(atMention === true && {
-        color: v.atMentionOtherColor,
-      }),
-      ...(atMention === 'me' && {
-        color: v.atMentionMeColor,
-      }),
+      ...(animation && as === 'span' && { display: 'inline-block' }),
+      ...(atMention === true && { color: v.atMentionOtherColor }),
+      ...(atMention === 'me' && { color: v.atMentionMeColor }),
       ...(truncated && { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
       ...(disabled && { color: v.disabledColor }),
       ...(error && { color: v.errorColor }),
       ...(success && { color: v.successColor }),
       ...(important && { color: v.importantColor }),
       ...(temporary && { fontStyle: 'italic' }),
+      ...(align && { display: 'block', textAlign: translateAlignProp(align) }), // textAlign makes sense only for block elements
       ...(timestamp && { color: v.timestampColor }),
 
-      ...(weight === 'light' && {
-        fontWeight: v.fontWeightLight,
-      }),
-      ...(weight === 'semilight' && {
-        fontWeight: v.fontWeightSemilight,
-      }),
-      ...(weight === 'regular' && {
-        fontWeight: v.fontWeightRegular,
-      }),
-      ...(weight === 'semibold' && {
-        fontWeight: v.fontWeightSemibold,
-      }),
-      ...(weight === 'bold' && {
-        fontWeight: v.fontWeightBold,
-      }),
+      ...(weight === 'light' && { fontWeight: v.fontWeightLight }),
+      ...(weight === 'semilight' && { fontWeight: v.fontWeightSemilight }),
+      ...(weight === 'regular' && { fontWeight: v.fontWeightRegular }),
+      ...(weight === 'semibold' && { fontWeight: v.fontWeightSemibold }),
+      ...(weight === 'bold' && { fontWeight: v.fontWeightBold }),
 
       ...(size === 'smallest' && {
         fontSize: v.fontSizeSmallest,

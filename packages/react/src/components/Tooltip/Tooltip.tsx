@@ -27,7 +27,7 @@ import {
   BasicPositioningProps,
   PopperChildrenProps,
 } from '../../lib/positioner'
-import TooltipContent from './TooltipContent'
+import TooltipContent, { TooltipContentProps } from './TooltipContent'
 import { tooltipBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
@@ -44,10 +44,12 @@ export interface TooltipState {
 export interface TooltipProps
   extends StyledComponentProps<TooltipProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue>,
+    ContentComponentProps<ShorthandValue<TooltipContentProps>>,
     BasicPositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
+   * @default tooltipBehavior
+   * @available tooltipAsLabelBehavior
    * */
   accessibility?: Accessibility
 
@@ -79,8 +81,11 @@ export interface TooltipProps
 }
 
 /**
- * A tooltip that displays information related to an element when the element receives keyboard focus
- * or the mouse hovers over it.
+ * A Tooltip displays additional non-modal information on top of its target element.
+ * Tooltip doesn't receive focus and cannot contain focusable elements.
+ *
+ * @accessibility
+ * Implements [ARIA Tooltip](https://www.w3.org/TR/wai-aria-practices-1.1/#tooltip) design pattern.
  */
 export default class Tooltip extends AutoControlledComponent<TooltipProps, TooltipState> {
   static displayName = 'Tooltip'
@@ -117,7 +122,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     align: 'center',
     mountNode: isBrowser() ? document.body : null,
     position: 'above',
-    mouseLeaveDelay: 500,
+    mouseLeaveDelay: 10,
     pointing: true,
     accessibility: tooltipBehavior,
   }

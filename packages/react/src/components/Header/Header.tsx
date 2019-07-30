@@ -12,10 +12,11 @@ import {
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
+  AlignValue,
 } from '../../lib'
-import HeaderDescription from './HeaderDescription'
+import HeaderDescription, { HeaderDescriptionProps } from './HeaderDescription'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface HeaderSlotClassNames {
@@ -29,15 +30,14 @@ export interface HeaderProps
     ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
   /** Shorthand for Header.Description. */
-  description?: ShorthandValue
+  description?: ShorthandValue<HeaderDescriptionProps>
 
   /** Align header content. */
-  textAlign?: 'left' | 'center' | 'right' | 'justified'
+  align?: AlignValue
 }
 
 class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
@@ -54,12 +54,11 @@ class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),
     description: customPropTypes.itemShorthand,
-    textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
+    align: customPropTypes.align,
     rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'h1',
   }
 
@@ -99,7 +98,8 @@ class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
 Header.create = createShorthandFactory({ Component: Header, mappedProp: 'content' })
 
 /**
- * A header provides a short summary of content.
+ * A Header organises the content by declaring a content's topic.
+ *
  * @accessibility
  * Headings communicate the organization of the content on the page. Web browsers, plug-ins, and assistive technologies can use them to provide in-page navigation.
  * Nest headings by their rank (or level). The most important heading has the rank 1 (<h1>), the least important heading rank 6 (<h6>). Headings with an equal or higher rank start a new section, headings with a lower rank start new subsections that are part of the higher ranked section.

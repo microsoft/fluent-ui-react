@@ -14,7 +14,14 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { ShorthandValue, ShorthandRenderFunction, WithAsProp, withSafeTypeForAs } from '../../types'
+import {
+  ShorthandValue,
+  ShorthandRenderFunction,
+  WithAsProp,
+  withSafeTypeForAs,
+  ShorthandCollection,
+  ComponentEventHandler,
+} from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { treeBehavior } from '../../lib/accessibility'
 
@@ -26,10 +33,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active subtree. */
   activeIndex?: number[] | number
 
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default treeBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Initial activeIndex value. */
@@ -39,7 +43,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   exclusive?: boolean
 
   /** Shorthand array of props for Tree. */
-  items: ShorthandValue[]
+  items?: ShorthandCollection<TreeItemProps>
 
   /**
    * A custom render function for the title slot.
@@ -49,6 +53,13 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
   renderItemTitle?: ShorthandRenderFunction
+
+  /** Called when activeIndex changes.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
+  onActiveIndexChange?: ComponentEventHandler<TreeProps>
 }
 
 export interface TreeState {
@@ -82,6 +93,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
     rtlAttributes: PropTypes.func,
+    onActiveIndexChange: PropTypes.func,
   }
 
   static defaultProps = {
@@ -108,8 +120,13 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
             return acc
           }, [])
         : []
-      this.trySetState({ activeIndex })
+      this.trySetActiveIndexAndTriggerEvent(e, activeIndex)
     },
+  }
+
+  trySetActiveIndexAndTriggerEvent = (e, activeIndex) => {
+    this.trySetState({ activeIndex })
+    _.invoke(this.props, 'onActiveIndexChange', e, { ...this.props, activeIndex })
   }
 
   getInitialAutoControlledState({ exclusive }): TreeState {
@@ -141,7 +158,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
     onTitleClick: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      this.trySetState({ activeIndex: this.computeNewIndex(treeItemProps) })
+      this.trySetActiveIndexAndTriggerEvent(e, this.computeNewIndex(treeItemProps))
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
   })
@@ -151,7 +168,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     const { activeIndex } = this.state
     const activeIndexes = this.getActiveIndexes()
 
-    return _.map(items, (item: ShorthandValue, index: number) =>
+    return _.map(items, (item: ShorthandValue<TreeItemProps>, index: number) =>
       TreeItem.create(item, {
         defaultProps: {
           className: Tree.slotClassNames.item,
@@ -185,7 +202,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 Tree.create = createShorthandFactory({ Component: Tree, mappedArrayProp: 'items' })
 
 /**
- * Allows users to display data organised in tree-hierarchy.
+ * A Tree displays data organised in tree hierarchy.
+ *
  * @accessibility
  * Implements [ARIA TreeView](https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView) design pattern.
  */

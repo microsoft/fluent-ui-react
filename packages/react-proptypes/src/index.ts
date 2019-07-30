@@ -411,6 +411,16 @@ export const itemShorthandWithKindProp = (kindPropValues: string[]) => {
     ]),
   ])
 }
+export const itemShorthandWithoutJSX = every([
+  disallow(['children']),
+  PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.number,
+    PropTypes.object,
+    PropTypes.string,
+    PropTypes.oneOf([false]),
+  ]),
+])
 
 /**
  * Collection shorthand ensures a prop is an array of item shorthand.
@@ -481,6 +491,8 @@ export const size = PropTypes.oneOf([
   'larger',
   'largest',
 ])
+
+export const align = PropTypes.oneOf(['start', 'end', 'center', 'justify'])
 
 export const animation = PropTypes.oneOfType([
   // Validator is broken in the latest @react/types

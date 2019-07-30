@@ -1,5 +1,6 @@
 import {
   AccessibilityAttributes,
+  AccessibilityDefinition,
   ReactAccessibilityBehavior,
   Button,
   ButtonProps,
@@ -131,7 +132,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
   }
 
   handleMenuItemOverrides = (menuItemAccessibilityAttributes: AccessibilityAttributes) =>
-    _.map(_.get(this.props.menu, 'items'), (item: ShorthandValue) =>
+    _.map(_.get(this.props.menu, 'items'), (item: ShorthandValue<MenuItemProps>) =>
       typeof item === 'object'
         ? {
             ...item,
@@ -150,10 +151,12 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
     const { button, disabled, menu, placement } = this.props
     const { menuOpen } = this.state
     const [position, align] = _.split(placement, '-') as [Position, Alignment]
-    const accessibilityBehavior: ReactAccessibilityBehavior = menuButtonBehavior({
-      ...this.props,
-      ...this.state,
-    })
+    const accessibilityBehavior: ReactAccessibilityBehavior = {
+      ...(menuButtonBehavior({ ...this.props, ...this.state }) as Required<
+        AccessibilityDefinition
+      >),
+      keyHandlers: {},
+    }
 
     return (
       <div

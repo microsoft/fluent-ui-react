@@ -1,5 +1,5 @@
 import * as CSSType from 'csstype'
-import { IRenderer as FelaRenderer } from 'fela'
+import { IRenderer as FelaRenderer } from '@stardust-ui/fela'
 import * as React from 'react'
 import { Extendable, ObjectOf, ObjectOrFunc, Omit } from '../types'
 import { AccordionContentProps } from '../components/Accordion/AccordionContent'
@@ -44,6 +44,7 @@ import { RadioGroupProps } from '../components/RadioGroup/RadioGroup'
 import { ReactionGroupProps } from '../components/Reaction/ReactionGroup'
 import { ReactionProps } from '../components/Reaction/Reaction'
 import { SegmentProps } from '../components/Segment/Segment'
+import { SliderProps } from '../components/Slider/Slider'
 import { StatusProps } from '../components/Status/Status'
 import { TextProps } from '../components/Text/Text'
 import { ToolbarDividerProps } from '../components/Toolbar/ToolbarDivider'
@@ -446,6 +447,7 @@ type ThemeStylesProps = {
   Reaction?: ReactionProps
   ReactionGroup?: ReactionGroupProps
   Segment?: SegmentProps
+  Slider?: SliderProps
   Status?: StatusProps
   Toolbar?: ToolbarProps
   ToolbarItem?: ToolbarItemProps

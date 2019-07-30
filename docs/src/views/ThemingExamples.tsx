@@ -121,31 +121,39 @@ export default () => (
         import { Button } from '@stardust-ui/react'
 
         const btnExample = () => (
-          <Button
-            icon={{
-              name: "at",
-              variables: { color: "brown" }
-            }}
-            content="Send email"
-            variables={{
-              secondaryColor: "coral",
-              secondaryBackgroundColor: "charcoal",
-              paddingLeftRightValue: 20,
-            }}
-          />
+        <Button
+          content="Secure payment"
+          icon={{
+            name: 'lock',
+            variables: {
+              color: 'blue'
+            }
+          }}
+          secondary
+          variables={{
+            color: 'coral',
+            backgroundColor: 'charcoal',
+            paddingLeftRightValue: 30
+          }}
+        />
         )
 
         export default btnExample
       `}
       render={() => (
         <Button
-          content="Send email"
-          icon={{ name: 'at', variables: { color: 'brown' } }}
+          content="Secure payment"
+          icon={{
+            name: 'lock',
+            variables: {
+              color: 'blue',
+            },
+          }}
           secondary
           variables={{
-            secondaryColor: 'coral',
-            secondaryBackgroundColor: 'charcoal',
-            paddingLeftRightValue: 20,
+            color: 'coral',
+            backgroundColor: 'charcoal',
+            paddingLeftRightValue: 30,
           }}
         />
       )}
@@ -276,16 +284,25 @@ export default () => (
     <ExampleSnippet
       value={`
         <div>
-          /* Default theming */
-          <Header as="h3" content="Default" />
-          <Button primary>Branding</Button>
+          {/* Default theming */}
+          <Header as="h3" content="Default theming" />
+          <Button content="Button" />
+          <Button icon="plus" iconOnly primary />
+          <Button icon="at" content="Send email" secondary />
+          <Icon name="chess rook" size="larger" />
+          <Label content="Label with icon" icon="close" />
 
-          /* First nested theming */
+          {/* First nested theming */}
           <Provider
             theme={{
-              siteVariables: { brand: 'darkred' },
+              componentVariables: {
+                Button: {
+                  primaryBackgroundColor: 'darkred',
+                },
+              },
             }}
           >
+
             <div>
               <Header as="h3" content="First nested theming" />
 
@@ -295,7 +312,7 @@ export default () => (
               <Icon name="chess rook" size="larger" />
               <Label content="Label with icon" icon="close" />
 
-              /* Second nested theming */
+              {/* Second nested theming */}
               <Provider
                 theme={{
                   componentStyles: {
@@ -330,7 +347,11 @@ export default () => (
 
           <Provider
             theme={{
-              siteVariables: { brand: 'darkred' },
+              componentVariables: {
+                Button: {
+                  primaryBackgroundColor: 'darkred',
+                },
+              },
             }}
           >
             <>

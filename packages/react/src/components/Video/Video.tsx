@@ -5,7 +5,6 @@ import * as React from 'react'
 import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 
 import { WithAsProp, withSafeTypeForAs } from '../../types'
-import { defaultBehavior } from '../../lib/accessibility'
 
 export interface VideoProps extends UIComponentProps {
   /** Whether the video should start playing when rendered. Autoplay videos must be muted or they will not play immediately in certain browers like Chrome. */
@@ -49,7 +48,6 @@ class Video extends UIComponent<WithAsProp<VideoProps>> {
 
   static defaultProps = {
     as: 'video',
-    accessibility: defaultBehavior,
     controls: true,
     autoPlay: false,
     muted: false,
@@ -100,6 +98,6 @@ class Video extends UIComponent<WithAsProp<VideoProps>> {
 Video.create = createShorthandFactory({ Component: Video, mappedProp: 'src' })
 
 /**
- * An video is a graphicical and audio representation of something.
+ * A Video provides ability to embed video content.
  */
 export default withSafeTypeForAs<typeof Video, VideoProps, 'video'>(Video)

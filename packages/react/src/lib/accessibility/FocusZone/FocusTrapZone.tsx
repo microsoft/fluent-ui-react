@@ -22,7 +22,7 @@ import getElementType from '../../getElementType'
 /** FocusTrapZone is used to trap the focus in any html element placed in body
  *  and hide other elements outside of Focus Trap Zone from accessibility tree.
  *  Pressing tab will circle focus within the inner focusable elements of the FocusTrapZone. */
-export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
+export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   static _focusStack: FocusTrapZone[] = []
   _root: { current: HTMLElement | null } = { current: null }
   _previouslyFocusedElementOutsideTrapZone: HTMLElement
@@ -181,7 +181,7 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
         : firstFocusableSelector())
 
     const firstFocusableChild = focusSelector
-      ? (this._root.current.querySelector(`.${focusSelector}`) as HTMLElement)
+      ? (this._root.current.querySelector(focusSelector) as HTMLElement)
       : getNextElement(
           this._root.current,
           this._root.current.firstChild as HTMLElement,

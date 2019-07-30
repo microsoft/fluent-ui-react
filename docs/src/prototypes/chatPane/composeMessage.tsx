@@ -6,6 +6,8 @@ import {
   Provider,
   menuAsToolbarBehavior,
   MenuItemProps,
+  ShorthandCollection,
+  IconXSpacing,
 } from '@stardust-ui/react'
 
 import { Props } from 'src/types'
@@ -72,8 +74,8 @@ const getInputWrapperStyles = ({ attached }: ComposeMessageProps): React.CSSProp
   }
 }
 
-const getMenuItems = (): MenuItemProps[] => {
-  const items: MenuItemProps[] = [
+const getMenuItems = (): ShorthandCollection<MenuItemProps> => {
+  const items: ShorthandCollection<MenuItemProps> = [
     'compose',
     'attach',
     'smile',
@@ -86,7 +88,7 @@ const getMenuItems = (): MenuItemProps[] => {
     key: `${index}-${name}`,
     icon: {
       name,
-      xSpacing: 'both',
+      xSpacing: 'both' as IconXSpacing,
       variables: siteVars => ({ color: siteVars.colors.grey[500] }),
     },
     'aria-label': `${name} tool`,
