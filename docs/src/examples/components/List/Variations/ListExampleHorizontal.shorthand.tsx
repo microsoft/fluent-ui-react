@@ -1,27 +1,21 @@
 import * as React from 'react'
-import { List, Image } from '@stardust-ui/react'
+import { List, Status } from '@stardust-ui/react'
 
 const items = [
   {
     key: 'irving',
-    media: <Image src="public/images/avatar/small/matt.jpg" avatar />,
+    media: <Status state="error" icon="minus" />,
     header: 'Irving Kuhic',
-    headerMedia: '7:26:56 AM',
-    content: 'Program the sensor to the SAS alarm through the haptic SQL card!',
   },
   {
     key: 'skyler',
-    media: <Image src="public/images/avatar/small/steve.jpg" avatar />,
+    media: <Status state="success" icon="check" />,
     header: 'Skyler Parks',
-    headerMedia: '11:30:17 PM',
-    content: 'Use the online FTP application to input the multi-byte application!',
   },
   {
     key: 'dante',
-    media: <Image src="public/images/avatar/small/nom.jpg" avatar />,
+    media: <Status />,
     header: 'Dante Schneider',
-    headerMedia: '5:22:40 PM',
-    content: 'The GB pixel is down, navigate the virtual interface!',
   },
 ]
 
