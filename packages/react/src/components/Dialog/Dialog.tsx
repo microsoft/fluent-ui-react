@@ -8,6 +8,8 @@ import * as React from 'react'
 
 import {
   applyAccessibilityKeyHandlers,
+  getElementType,
+  getUnhandledProps,
   commonPropTypes,
   ContentComponentProps,
   doesNodeContainClick,
@@ -16,7 +18,7 @@ import {
 import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ShorthandValue } from '../../types'
+import { ComponentEventHandler, ProviderContextPrepared, ShorthandValue } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
 import Header, { HeaderProps } from '../Header/Header'
@@ -24,6 +26,7 @@ import Portal from '../Portal/Portal'
 import Flex from '../Flex/Flex'
 import { ThemeContext } from 'react-fela'
 import renderComponent from '../../lib/renderComponent'
+import getAccessibility from '../../lib/accessibility/getAccessibility'
 
 export interface DialogSlotClassNames {
   header: string
@@ -125,33 +128,38 @@ const Dialog: React.FC<DialogProps> = props => {
   const contentRef = React.useRef<HTMLElement>()
   const triggerRef = React.useRef<HTMLElement>()
 
-  // const unhandledProps = getUnhandledProps(handledProps, props)
-  // const ElementType = getElementType(props)
+  const unhandledProps = getUnhandledProps(handledProps, props)
+  const ElementType = getElementType(props)
 
-  const context = React.useContext(ThemeContext)
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
   const manager = useStateManager(createDialogManager, props, ['open'])
+  const stateAndProps = { ...manager.state, ...props }
 
-  // TODO Refactor renderComponent to composable pieces.
-  // TODO Refactor renderComponent to composable pieces.
-  // TODO Refactor renderComponent to composable pieces.
-  // TODO Refactor renderComponent to composable pieces.
-  const { accessibility, classes, styles, ElementType, unhandledProps } = renderComponent<
+  const actionHandlers = {
+    closeAndFocusTrigger: e => {
+      handleDialogCancel(e)
+      e.stopPropagation()
+
+      _.invoke(triggerRef, 'current.focus')
+    },
+    close: e => handleDialogCancel(e),
+  }
+
+  // const classes = useStyle(props) // getClasses(props, context)
+
+  const accessibility = getAccessibility(dialogBehavior, stateAndProps, actionHandlers, context.rtl)
+
+  // TODO Refactor renderComponent to composable pieces, see renderComponent style/variable todos.
+  // TODO Refactor renderComponent to composable pieces, see renderComponent style/variable todos.
+  // TODO Refactor renderComponent to composable pieces, see renderComponent style/variable todos.
+  // TODO Refactor renderComponent to composable pieces, see renderComponent style/variable todos.
+  const { classes, styles } = renderComponent<
     DialogProps
   >({
     className: 'ui-dialog',
     displayName: 'Dialog',
-    handledProps,
     props,
     state: manager.state,
-    actionHandlers: {
-      closeAndFocusTrigger: e => {
-        handleDialogCancel(e)
-        e.stopPropagation()
-
-        _.invoke(triggerRef, 'current.focus')
-      },
-      close: e => handleDialogCancel(e),
-    },
     context: context as any,
   })
 

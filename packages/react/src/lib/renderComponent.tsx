@@ -18,13 +18,13 @@ import {
   ThemePrepared,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import { Accessibility, AccessibilityDefinition, FocusZoneMode } from './accessibility/types'
+import { FocusZoneMode } from './accessibility/types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
-import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
-import { FocusZoneProps, FocusZone } from './accessibility/FocusZone'
+import { FocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
+import getAccessibility from './accessibility/getAccessibility'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -49,45 +49,12 @@ export interface RenderConfig<P> {
   handledProps?: string[]
   props: PropsWithVarsAndStyles
   state: State
-  actionHandlers: AccessibilityActionHandlers
+  actionHandlers?: AccessibilityActionHandlers
   context: ProviderContextPrepared
 }
 
-const emptyBehavior: ReactAccessibilityBehavior = {
-  attributes: {},
-  keyHandlers: {},
-}
-
-const getAccessibility = (
-  behavior: Accessibility,
-  props: State & PropsWithVarsAndStyles,
-  actionHandlers: AccessibilityActionHandlers,
-  isRtlEnabled: boolean,
-): ReactAccessibilityBehavior => {
-  if (!behavior) {
-    return emptyBehavior
-  }
-
-  const definition: AccessibilityDefinition = behavior(props)
-  const keyHandlers = getKeyDownHandlers(actionHandlers, definition.keyActions, isRtlEnabled)
-
-  return {
-    ...emptyBehavior,
-    ...definition,
-    keyHandlers,
-  }
-}
-
 const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultConfig<P> => {
-  const {
-    className,
-    displayName,
-    handledProps,
-    props,
-    state,
-    actionHandlers,
-    context,
-  } = config
+  const { className, displayName, handledProps, props, state, actionHandlers, context } = config
 
   if (_.isEmpty(context)) {
     logProviderMissingWarning()
@@ -107,6 +74,12 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultCon
 
   const stateAndProps = { ...state, ...props }
 
+  // TODO: fix bug with merging theme A on top of theme B when theme B's variables function references values missing in theme A's site variables.
+  // CONCLUSION: use flat variables in site vars and component vars
+  //   - bugs are from shallow merging deeply nested vars
+  //   - it is confusing and inconsistent to sometimes deep merge and sometimes not
+  //   - flat structure will align properly with style-dictionary format
+  //   - this doesn't solve all problems, we need to know how to replace all "red" colors for instance in a merge operation
   // Resolve variables for this component, allow props.variables to override
   const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
     componentVariables[displayName],
@@ -120,9 +93,8 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultCon
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
     componentStyles[displayName],
-    {
-      root: props.styles,
-    },
+    { root: props.styles },
+    { root: animationCSSProp },
   )
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
@@ -142,16 +114,16 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultCon
     disableAnimations,
   }
 
-  mergedStyles.root = {
-    ...callable(mergedStyles.root)(styleParam),
-    ...animationCSSProp,
-  }
-
+  // TODO: This operation should be pulled into a "resolveStyles" function
+  // doing this work can be brittle and duplicated unnecessarily.
   const resolvedStyles: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(
-    (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
+    (slots, slot) => ({ ...slots, [slot]: callable(mergedStyles[slot])(styleParam) }),
     {},
   )
 
+  // TODO: this should probably take in resolved styles and not know about style functions and style param.
+  // currently, it is using implementation knowledge of style functions and param to resolve styles.
+  // it is also duplicating this work with "resolvedStyles" above. we are executing all styles 2x for all components on all renders :/ ...
   const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
   classes.root = cx(className, classes.root, props.className)
 
