@@ -335,6 +335,8 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
         e.stopPropagation()
         e.preventDefault()
       }
+    } else {
+      e.preventDefault()
     }
   }
 
