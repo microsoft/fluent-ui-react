@@ -233,7 +233,10 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
         >
           {icon &&
             Icon.create(this.props.icon, {
-              defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+              defaultProps: {
+                xSpacing: !!content ? 'after' : 'none',
+                styles: styles.icon,
+              },
             })}
           {rtlTextContainer.createFor({ element: content })}
           {menu &&
