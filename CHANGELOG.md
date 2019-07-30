@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Fix `firstFocusableSelector` in `FocusTrapZone` and `AutoFocusZone` @sophieH29 ([#1732](https://github.com/stardust-ui/react/pull/1732))
+
 ### Features
 - Expose `isFromKeyboard` in `Grid` component @sophieH29 ([#1729](https://github.com/stardust-ui/react/pull/1729))
 - Add `onActiveIndexChange` prop to `Tree` component @lucivpav ([#1728](https://github.com/stardust-ui/react/pull/1728))
