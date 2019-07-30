@@ -120,11 +120,11 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
             return acc
           }, [])
         : []
-      this.setActiveIndexAndTriggerEvent(e, activeIndex)
+      this.trySetActiveIndexAndTriggerEvent(e, activeIndex)
     },
   }
 
-  setActiveIndexAndTriggerEvent = (e, activeIndex) => {
+  trySetActiveIndexAndTriggerEvent = (e, activeIndex) => {
     this.trySetState({ activeIndex })
     _.invoke(this.props, 'onActiveIndexChange', e, { ...this.props, activeIndex })
   }
@@ -158,7 +158,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
     onTitleClick: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      this.setActiveIndexAndTriggerEvent(e, this.computeNewIndex(treeItemProps))
+      this.trySetActiveIndexAndTriggerEvent(e, this.computeNewIndex(treeItemProps))
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
   })
