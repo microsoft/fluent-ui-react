@@ -9,27 +9,28 @@ import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
 import logProviderMissingWarning from './providerMissingHandler'
 import {
-  ComponentStyleFunctionParam,
-  ComponentVariablesObject,
   ComponentSlotClasses,
   ComponentSlotStylesPrepared,
+  ComponentStyleFunctionParam,
+  ComponentVariablesObject,
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
 import {
-  AccessibilityDefinition,
-  FocusZoneMode,
-  FocusZoneDefinition,
   Accessibility,
+  AccessibilityDefinition,
+  FocusZoneDefinition,
+  FocusZoneMode,
 } from './accessibility/types'
-import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
+import { AccessibilityActionHandlers, ReactAccessibilityBehavior } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
-import { FocusZoneProps, FocusZone } from './accessibility/FocusZone'
+import { FocusZone, FocusZoneProps } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
+import { childOfKind } from 'tslint'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -174,9 +175,8 @@ const renderComponent = <P extends {}>(
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
     componentStyles[displayName],
-    {
-      root: props.styles,
-    },
+    { root: props.styles },
+    { root: animationCSSProp },
   )
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
@@ -195,11 +195,6 @@ const renderComponent = <P extends {}>(
     disableAnimations,
   }
 
-  mergedStyles.root = {
-    ...callable(mergedStyles.root)(styleParam),
-    ...animationCSSProp,
-  }
-
   const resolvedStyles: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(
     (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
     {},
@@ -207,6 +202,42 @@ const renderComponent = <P extends {}>(
 
   const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
   classes.root = cx(className, classes.root, props.className)
+
+  if (displayName === 'Button') {
+    const param = _.cloneDeep(styleParam)
+
+    const keysToVals = o => _.mapValues(o, (v, k) => `variables.${k}`)
+
+    param.variables = keysToVals(param.variables)
+    param.theme.siteVariables = keysToVals(param.theme.siteVariables)
+
+    const styleWithVariableNames: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(
+      (parts, part) => ({ ...parts, [part]: callable(mergedStyles[part])(param) }),
+      {},
+    )
+
+    const varPrefixRegExp = /^variables\./
+    const usedVariables = []
+    const recordUsedVariables = obj => {
+      _.forEach(obj, val => {
+        if (_.isPlainObject(val)) {
+          recordUsedVariables(val)
+        } else if (varPrefixRegExp.test(val)) {
+          const variableName = val.replace(varPrefixRegExp, '')
+          if (!_.includes(usedVariables, variableName)) {
+            usedVariables.push(variableName)
+          }
+        }
+      })
+    }
+
+    Object.keys(styleWithVariableNames).forEach(part => {
+      recordUsedVariables(styleWithVariableNames[part])
+    })
+
+    console.log(styleWithVariableNames)
+    console.log(usedVariables)
+  }
 
   const resolvedConfig: RenderResultConfig<P> = {
     ElementType,
