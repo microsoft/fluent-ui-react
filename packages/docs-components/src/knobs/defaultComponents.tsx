@@ -34,6 +34,16 @@ const KnobBoolean: React.FunctionComponent<KnobComponentProps> = props => (
   />
 )
 
+const KnobNumber: React.FunctionComponent<KnobComponentProps> = props => (
+  <input
+    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+      props.setValue(parseInt(e.target.value, 10))
+    }}
+    type="number"
+    value={props.value}
+  />
+)
+
 const KnobSelect: React.FunctionComponent<KnobComponentProps> = props => (
   <select
     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -94,6 +104,7 @@ const defaultComponents: KnobComponents = {
   KnobLabel,
 
   KnobBoolean,
+  KnobNumber,
   KnobRange,
   KnobSelect,
   KnobString,
