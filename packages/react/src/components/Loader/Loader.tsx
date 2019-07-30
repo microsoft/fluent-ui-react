@@ -7,7 +7,6 @@ import {
   createShorthandFactory,
   UIComponentProps,
   commonPropTypes,
-  ColorComponentProps,
   SizeValue,
 } from '../../lib'
 import { loaderBehavior } from '../../lib/accessibility'
@@ -22,7 +21,7 @@ export interface LoaderSlotClassNames {
   svg: string
 }
 
-export interface LoaderProps extends UIComponentProps, ColorComponentProps {
+export interface LoaderProps extends UIComponentProps {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
@@ -69,7 +68,6 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
     ...commonPropTypes.createCommon({
       children: false,
       content: false,
-      color: true,
     }),
     delay: PropTypes.number,
     indicator: customPropTypes.itemShorthand,

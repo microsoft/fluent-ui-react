@@ -1,4 +1,4 @@
-import { createRenderer } from 'fela'
+import { createRenderer } from '@stardust-ui/fela'
 import felaPluginEmbedded from 'fela-plugin-embedded'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
 import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
