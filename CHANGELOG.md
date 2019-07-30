@@ -19,9 +19,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Expose `isFromKeyboard` in `Grid` component @sophieH29 ([#1729](https://github.com/stardust-ui/react/pull/1729))
+- Add `onActiveIndexChange` prop to `Tree` component @lucivpav ([#1728](https://github.com/stardust-ui/react/pull/1728))
 
 ### Fixes
 - Require `name` prop in `Icon` component @lucivpav ([#1723](https://github.com/stardust-ui/react/pull/1723))
+
+### Documentation
+- Fix code in changing component variables section of theming examples @lucivpav ([#1626](https://github.com/stardust-ui/react/pull/1626))
 
 <!--------------------------------[ v0.35.0 ]------------------------------- -->
 ## [v0.35.0](https://github.com/stardust-ui/react/tree/v0.35.0) (2019-07-26)
