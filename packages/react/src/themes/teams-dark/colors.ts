@@ -294,8 +294,8 @@ export const colorScheme: ColorSchemeMapping = {
 
 const createCategoryColorScheme = (color: string, customValues = {}) => {
   return {
-    foreground1: categoryColors[color][250],
-    foreground2: categoryColors[color][550],
+    foreground: categoryColors[color][250],
+    foreground1: categoryColors[color][550],
     background: categoryColors[color][800],
     ...customValues,
   }

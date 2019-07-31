@@ -235,8 +235,8 @@ export const colorScheme: ColorSchemeMapping = {
 
 const createCategoryColorScheme = (customValues = {}) => {
   return {
-    foreground1: colors.black,
-    foreground2: accessibleYellow,
+    foreground: colors.black,
+    foreground1: accessibleYellow,
     background: accessibleYellow,
     ...customValues,
   }

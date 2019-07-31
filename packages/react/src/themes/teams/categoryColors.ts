@@ -481,8 +481,8 @@ export const categoryColors: TeamsCategoryColors = {
 
 const createCategoryColorScheme = (color: string, customValues = {}) => {
   return {
-    foreground1: categoryColors[color][750],
-    foreground2: categoryColors[color][400],
+    foreground: categoryColors[color][750],
+    foreground1: categoryColors[color][400],
     background: categoryColors[color][200],
     ...customValues,
   }
