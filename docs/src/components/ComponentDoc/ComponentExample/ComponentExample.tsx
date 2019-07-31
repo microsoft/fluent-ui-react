@@ -176,12 +176,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.setState({ showTransparent: !showTransparent })
   }
 
-  handlePass = () => {
-    const { title } = this.props
-
-    if (title) this.props.onExamplePassed(this.anchorName)
-  }
-
   resetSourceCode = () => {
     if (confirm('Lose your changes?')) {
       this.props.handleCodeReset()
