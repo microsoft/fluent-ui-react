@@ -1,4 +1,6 @@
 import {
+  ColorScheme,
+  ColorSchemeMapping,
   ColorVariants,
   StrictColorScheme,
   StrictColorSchemeMapping,
@@ -54,6 +56,11 @@ export type TeamsCategoryColors = {
 }
 
 export type TeamsCategoryColorNames = keyof TeamsCategoryColors
+
+export type TeamsCategoryColorSchemeMapping = ColorSchemeMapping<
+  Partial<ColorScheme>,
+  TeamsCategoryColorNames
+>
 
 export type TeamsColorNames = keyof (TeamsContextualColors &
   TeamsNaturalColors &

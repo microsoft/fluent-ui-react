@@ -1,5 +1,6 @@
 import { categoryColors, colors } from '../teams/siteVariables'
-import { ColorSchemeMapping, CategoryColorSchemeMapping } from '../../themes/types'
+import { TeamsCategoryColorSchemeMapping } from '../teams/types'
+import { ColorSchemeMapping } from '../../themes/types'
 
 const createColorScheme = (color: string, customValues = {}) => {
   return {
@@ -301,7 +302,7 @@ const createCategoryColorScheme = (color: string, customValues = {}) => {
   }
 }
 
-export const categoryColorScheme: CategoryColorSchemeMapping = {
+export const categoryColorScheme: TeamsCategoryColorSchemeMapping = {
   redDark: createCategoryColorScheme('redDark'),
   red: createCategoryColorScheme('red'),
   orangeDark: createCategoryColorScheme('orangeDark'),
