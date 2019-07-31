@@ -86,9 +86,6 @@ const chatMessageStyles: ComponentSlotStylesInput<
     backgroundColor: v.backgroundColor,
     borderRadius: v.borderRadius,
     boxShadow: v.actionMenuBoxShadow,
-    position: 'absolute',
-    right: v.actionMenuPositionRight,
-    top: v.actionMenuPositionTop,
     // we need higher zIndex for the action menu in order to be displayed above the focus border of the chat message
     zIndex: 1000,
 
