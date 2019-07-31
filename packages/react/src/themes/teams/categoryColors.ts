@@ -1,5 +1,4 @@
-import { ColorSchemeMapping, ColorScheme } from '../types'
-import { TeamsCategoryColorNames, TeamsCategoryColors } from './types'
+import { TeamsCategoryColors, TeamsCategoryColorSchemeMapping } from './types'
 
 export const categoryColors: TeamsCategoryColors = {
   redDark: {
@@ -488,10 +487,7 @@ const createCategoryColorScheme = (color: string, customValues = {}) => {
   }
 }
 
-export const categoryColorScheme: ColorSchemeMapping<
-  Partial<ColorScheme>,
-  TeamsCategoryColorNames
-> = {
+export const categoryColorScheme: TeamsCategoryColorSchemeMapping = {
   redDark: createCategoryColorScheme('redDark'),
   red: createCategoryColorScheme('red'),
   orangeDark: createCategoryColorScheme('orangeDark'),
