@@ -8,6 +8,9 @@ const labelImplementsShorthandProp = implementsShorthandProp(Label)
 
 describe('Label', () => {
   isConformant(Label)
-  labelImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })
+  labelImplementsShorthandProp('icon', Icon, {
+    mapsValueToProp: 'name',
+    requiredProps: { name: 'at' },
+  })
   labelImplementsShorthandProp('image', Image, { mapsValueToProp: 'src' })
 })
