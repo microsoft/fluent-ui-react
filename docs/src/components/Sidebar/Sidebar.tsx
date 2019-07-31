@@ -10,14 +10,14 @@ import {
   Flex,
   Box,
 } from '@stardust-ui/react'
-import { ShorthandValue } from '../../../../packages/react/src/types'
+import { ShorthandValue, ShorthandCollection } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
 import keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { NavLink, withRouter } from 'react-router-dom'
+import { NavLink, NavLinkProps, withRouter } from 'react-router-dom'
 
 import { constants } from 'src/lib'
 
@@ -38,12 +38,12 @@ class Sidebar extends React.Component<any, any> {
   _searchInput: any
   selectedRoute: any
   filteredMenu = componentMenu
-  searchInputRef: React.RefObject<HTMLInputElement> = React.createRef()
+  searchInputRef = React.createRef<HTMLInputElement>()
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleDocumentKeyDown)
 
-    const at = window.location.href.replace(window.location.origin, '')
+    const at = this.props.location.pathname
     const categoryIndex = this.findActiveCategoryIndex(at, this.getSectionsWithoutSearchFilter())
     this.setState({ activeCategoryIndex: categoryIndex })
   }
@@ -52,7 +52,7 @@ class Sidebar extends React.Component<any, any> {
     document.removeEventListener('keydown', this.handleDocumentKeyDown)
   }
 
-  findActiveCategoryIndex = (at, sections): number => {
+  findActiveCategoryIndex = (at: string, sections: ShorthandValue<any>[]): number => {
     return _.findIndex(sections, (section: ShorthandValue<TreeItemProps>) => {
       return _.find((section as any).items, item => item.title.to === at)
     })
@@ -67,27 +67,27 @@ class Sidebar extends React.Component<any, any> {
     if (!hasModifier && isAZ && bodyHasFocus) this.searchInputRef.current.focus()
   }
 
-  handleItemClick = e => {
+  handleItemClick = (e: React.SyntheticEvent, data: TreeItemProps) => {
     const { query } = this.state
 
     if (query) {
       this.setState({ query: '' })
-      const at = e.target.href.replace(e.target.baseURI, '/')
+      const at = (data.title as NavLinkProps).to as string
       const categoryIndex = this.findActiveCategoryIndex(at, this.getSectionsWithoutSearchFilter())
       this.setState({ activeCategoryIndex: categoryIndex })
     }
   }
 
-  treeActiveIndexChanged = (e, props) => {
+  treeActiveIndexChanged = (e: React.SyntheticEvent, props: TreeProps) => {
     this.setState({ activeCategoryIndex: props.activeIndex })
   }
 
-  keyDownCallback(e) {
+  keyDownCallback(e: React.SyntheticEvent) {
     if (keyboardKey.getCode(e) !== keyboardKey.Enter) {
       return
     }
     e.stopPropagation()
-    e.target.click()
+    ;(e.target as any).click()
   }
 
   addItemKeyCallbacks(sections: ShorthandValue<any>[]) {
@@ -115,8 +115,8 @@ class Sidebar extends React.Component<any, any> {
         if (!('title' in category)) {
           continue
         }
-        category['onClick'] = e => {
-          this.handleItemClick(e)
+        category['onTitleClick'] = (e, data) => {
+          this.handleItemClick(e, data)
         }
       }
     }
@@ -244,12 +244,11 @@ class Sidebar extends React.Component<any, any> {
     })
   }
 
-  handleQueryChange = e => {
-    const query = e.target.value ? e.target.value : ''
-    this.setState({ query })
+  handleQueryChange = (e, data) => {
+    this.setState({ query: data.value })
   }
 
-  getSectionsWithoutSearchFilter = () => {
+  getSectionsWithoutSearchFilter = (): ShorthandCollection<TreeItemProps> => {
     const treeItemsByType = _.map(constants.typeOrder, nextType => {
       const items = _.chain([...componentMenu, ...behaviorMenu])
         .filter(({ type }) => type === nextType)
@@ -378,27 +377,23 @@ class Sidebar extends React.Component<any, any> {
     const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
     const allSectionsWithoutSearchFilter = this.getSectionsWithoutSearchFilter()
 
-    const allSectionsWithPossibleEmptySections = _.map(
-      allSectionsWithoutSearchFilter,
-      (section: ShorthandValue<TreeItemProps>) => {
-        if ((section as any).items) {
-          ;(section as any).items = _.filter((section as any).items, item =>
-            item.title.content.toLowerCase().includes(this.state.query.toLowerCase()),
-          )
-        }
-        return section
-      },
-    )
+    const escapedQuery = _.escapeRegExp(this.state.query)
+    const regexQuery = new RegExp(`^${escapedQuery}`, 'i')
+    const allSectionsWithPossibleEmptySections = _.map(allSectionsWithoutSearchFilter, section => {
+      return {
+        ...(section as TreeItemProps),
+        items: _.filter((section as any).items, item => regexQuery.test(item.title.content)), // _.filter works with undefined
+      }
+    })
 
-    const allSections = _.filter(
+    let allSections = _.filter(
       allSectionsWithPossibleEmptySections,
       (section: ShorthandValue<TreeItemProps>) => (section as any).items.length > 0,
-    )
+    ) as ShorthandCollection<TreeItemProps>
 
     if (this.state.query !== '') {
-      // open all sections
-      _.forEach(allSections, (section: ShorthandValue<TreeItemProps>) => {
-        ;(section as any).open = true
+      allSections = _.map(allSections, (section: ShorthandValue<TreeItemProps>) => {
+        return { ...(section as TreeItemProps), open: true }
       })
     }
 
