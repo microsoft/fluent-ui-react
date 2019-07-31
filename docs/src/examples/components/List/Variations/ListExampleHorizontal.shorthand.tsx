@@ -20,7 +20,7 @@ const items = [
 ]
 
 const ListExampleSelectable = () => (
-  <List selectable defaultSelectedIndex={0} items={items} vertical={false} />
+  <List selectable defaultSelectedIndex={0} items={items} horizontal />
 )
 
 export default ListExampleSelectable

@@ -8,10 +8,11 @@ import { ListBehaviorProps } from './listBehavior'
  *
  * @specification
  * Adds role='listbox'.
- * Triggers 'moveNext' action with 'ArrowDown' on 'root', when orientation is vertical.
- * Triggers 'moveNext' action with 'ArrowRight' on 'root', when orientation is horizontal.
- * Triggers 'movePrevious' action with 'ArrowUp' on 'root', when orientation is vertical.
- * Triggers 'movePrevious' action with 'ArrowLeft' on 'root', when orientation is horizontal.
+ * Adds attribute 'aria-orientation=horizontal' to 'root' slot if 'horizontal' property is true. Does not set the attribute otherwise.
+ * Triggers the 'moveNext' action with 'ArrowDown' on 'root', when orientation is vertical.
+ * Triggers the 'moveNext' action with 'ArrowRight' on 'root', when orientation is horizontal.
+ * Triggers the 'movePrevious' action with 'ArrowUp' on 'root', when orientation is vertical.
+ * Triggers the 'movePrevious' action with 'ArrowLeft' on 'root', when orientation is horizontal.
  * Triggers 'moveFirst' action with 'Home' on 'root'.
  * Triggers 'moveLast' action with 'End' on 'root'.
  */
@@ -19,7 +20,7 @@ const selectableListBehavior: Accessibility<ListBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'listbox',
-      ...(!props.vertical && {
+      ...(props.horizontal && {
         'aria-orientation': 'horizontal',
       }),
     },
@@ -28,12 +29,12 @@ const selectableListBehavior: Accessibility<ListBehaviorProps> = props => ({
     root: {
       moveNext: {
         keyCombinations: [
-          { keyCode: props.vertical ? keyboardKey.ArrowDown : keyboardKey.ArrowRight },
+          { keyCode: props.horizontal ? keyboardKey.ArrowRight : keyboardKey.ArrowDown },
         ],
       },
       movePrevious: {
         keyCombinations: [
-          { keyCode: props.vertical ? keyboardKey.ArrowUp : keyboardKey.ArrowLeft },
+          { keyCode: props.horizontal ? keyboardKey.ArrowLeft : keyboardKey.ArrowUp },
         ],
       },
       moveFirst: {

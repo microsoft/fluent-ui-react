@@ -15,6 +15,6 @@ export type ListBehaviorProps = {
   /** Indicates if a list is a selectable list. */
   selectable?: boolean
 
-  /** Indicates if the list is vertical. */
-  vertical?: boolean
+  /** Indicates if the list is horizontal. */
+  horizontal?: boolean
 }
