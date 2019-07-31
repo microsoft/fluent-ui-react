@@ -59,6 +59,9 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 
   /** Truncates header */
   truncateHeader?: boolean
+
+  /** A horizontal list displays elements horizontally. */
+  horizontal?: boolean
 }
 
 export interface ListState {
@@ -87,6 +90,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
     selectedIndex: PropTypes.number,
     defaultSelectedIndex: PropTypes.number,
     onSelectedIndexChange: PropTypes.func,
+    horizontal: PropTypes.bool,
   }
 
   static defaultProps = {
