@@ -527,6 +527,32 @@ definitions.push({
   },
 })
 
+// Triggers the 'openMenu' action with 'ArrowDown' on 'root', when orientaton is horizontal.
+definitions.push({
+  regexp: /Triggers the '(\w+)' action with '(\w+)' on '([\w-]+)', when orientation is horizontal\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const propertyHorizontal = { horizontal: true }
+    const expectedKeyNumber = parameters.behavior(propertyHorizontal).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    expect(expectedKeyNumber).toBe(keyboardKey[key])
+  },
+})
+
+// Triggers the 'openMenu' action with 'ArrowRight' on 'root', when orientation is vertical.
+definitions.push({
+  regexp: /Triggers the '(\w+)' action with '(\w+)' on '([\w-]+)', when orientation is vertical\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const propertyHorizontal = { horizontal: false }
+    const expectedKeyNumberVertical = parameters.behavior(propertyHorizontal).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    expect(expectedKeyNumberVertical).toBe(keyboardKey[key])
+  },
+})
+
 // Triggers 'receiveFocus' action with 'ArrowLeft' on 'root', when has an opened subtree.
 definitions.push({
   regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when has an opened subtree\./g,

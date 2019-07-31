@@ -1,9 +1,8 @@
 import * as _ from 'lodash'
-import { TextAlignProperty } from 'csstype'
-
 import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
 import { HeaderProps } from '../../../../components/Header/Header'
 import { HeaderVariables } from './headerVariables'
+import translateAlignProp from '../../../../styles/translateAlignProp'
 
 const headerStyles: ComponentSlotStylesInput<HeaderProps, HeaderVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
@@ -11,7 +10,7 @@ const headerStyles: ComponentSlotStylesInput<HeaderProps, HeaderVariables> = {
     return {
       display: 'block',
       color: _.get(colors, 'foreground', v.color),
-      textAlign: p.textAlign as TextAlignProperty,
+      textAlign: translateAlignProp(p.align),
       ...(p.description && { marginBottom: 0 }),
     }
   },

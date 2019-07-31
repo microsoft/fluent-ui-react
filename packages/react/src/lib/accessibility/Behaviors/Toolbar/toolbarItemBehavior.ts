@@ -22,7 +22,10 @@ const toolbarItemBehavior: Accessibility<ToolbarItemBehaviorProps> = props => {
   behaviorData.keyActions.wrapper = {
     ...behaviorData.keyActions.wrapper,
     closeMenuAndFocusTrigger: {
-      keyCombinations: props.menu && props.menuOpen ? [{ keyCode: keyboardKey.Escape }] : null,
+      keyCombinations:
+        props.menu && props.menuOpen
+          ? [{ keyCode: keyboardKey.Escape }, { keyCode: keyboardKey.Tab, shiftKey: true }]
+          : null,
     },
     doNotNavigateNextToolbarItem: {
       keyCombinations:
