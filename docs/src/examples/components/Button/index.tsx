@@ -11,14 +11,14 @@ import Performance from './Performance'
 
 const ButtonExamples = () => (
   <>
-    <BestPractices />
-    <Types />
-    <States />
+    {/*<BestPractices />*/}
+    {/*<Types />*/}
+    {/*<States />*/}
     <Variations />
-    <Groups />
-    <Usage />
-    <Rtl />
-    <Performance />
+    {/*<Groups />*/}
+    {/*<Usage />*/}
+    {/*<Rtl />*/}
+    {/*<Performance />*/}
   </>
 )
 

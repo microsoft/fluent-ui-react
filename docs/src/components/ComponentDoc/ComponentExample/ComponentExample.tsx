@@ -21,11 +21,11 @@ import {
   Provider,
   themes,
   Grid,
-  ICSSInJSStyle,
+  ICSSInJSStyle, Renderer, callable, Header,
 } from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, scrollToAnchor } from 'docs/src/utils'
-import { callable, constants } from 'src/lib'
+import { constants } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
 import ExampleContext, { ExampleContextValue } from 'docs/src/context/ExampleContext'
@@ -34,11 +34,12 @@ import ComponentExampleTitle from './ComponentExampleTitle'
 import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager'
-import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
+import { ThemeInput } from 'packages/react/src/themes/types'
 import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ComponentExampleKnobs from './ComponentExampleKnobs'
 import ExamplePlaceholder from '../../ExamplePlaceholder'
+import VariableResolver from 'docs/src/components/VariableResolver'
 
 export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
@@ -83,9 +84,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       themeName,
       showCode: this.isActiveHash(),
       componentVariables: {},
+      resolvedVariables: null,
       showRtl: examplePath && examplePath.endsWith('rtl'),
       showTransparent: false,
-      showVariables: false,
+      showVariables: true,
       wasEverVisible: false,
     }
   }
@@ -194,9 +196,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const theme = themes[themeName]
     const newTheme: ThemeInput = {
       siteVariables: theme.siteVariables,
-      componentVariables: mergeThemeVariables(theme.componentVariables, {
-        [this.getDisplayName()]: componentVariables,
-      }),
+      componentVariables: mergeThemeVariables(theme.componentVariables, componentVariables),
     }
 
     const providerVariables = showTransparent ? { background: 'initial' } : undefined
@@ -394,15 +394,14 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           {this.renderCodeEditorMenu()}
         </div>
 
-        <Editor value={currentCode} onChange={handleCodeChange} />
+        <Editor value={currentCode} onChange={handleCodeChange}/>
       </div>
     ) : null
   }
 
   renderVariables = () => {
-    const { showVariables } = this.state
+    const { showVariables, resolvedVariables } = this.state
     if (!showVariables) return undefined
-
     const displayName = this.getDisplayName()
 
     return (
@@ -410,53 +409,42 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         <Divider>
           <span style={{ opacity: 0.5 }}>Theme</span>
         </Divider>
-        <Provider.Consumer
-          render={({ siteVariables, componentVariables }: ThemePrepared) => {
-            const mergedVariables = mergeThemeVariables(componentVariables, {
-              [displayName]: this.state.componentVariables,
-            })
-            const variables = mergedVariables[displayName]
 
-            if (!variables) {
-              return <Segment inverted>{displayName} has no variables to edit.</Segment>
-            }
-
-            const variablesObject = callable(variables)(siteVariables)
-
-            const items: any[] = []
-
-            return (
-              <Form styles={{ padding: '1rem' }}>
-                {_.toPairs(variablesObject).forEach((pair, key) => {
-                  items.push(
+        {resolvedVariables ? (
+          _.map(resolvedVariables, (variables, componentName) => (
+            <React.Fragment key={componentName}>
+              <Header as='h3'>{componentName}</Header>
+              <Grid columns="4">
+                  {_.map(variables, (variableValue, variableName) => (
                     <Form.Field
-                      key={pair[0]}
-                      label={pair[0]}
+                      key={variableName}
+                      label={variableName}
                       control={{
                         as: Input,
-                        defaultValue: pair[1],
-                        onChange: this.handleVariableChange(displayName, pair[0]),
+                        defaultValue: variableValue,
+                        onChange: this.handleVariableChange(displayName, variableName),
                       }}
-                    />,
-                  )
-                })}
-                <Grid columns="4" content={items} />
-              </Form>
-            )
-          }}
-        />
+                    />
+                  ))}
+              </Grid>
+            </React.Fragment>
+          ))
+        ) : (<Segment inverted>{displayName} has no variables to edit.</Segment>)}
       </div>
     )
   }
 
-  handleVariableChange = (component, variable) => (e, { value }) => {
+  handleVariableChange = (component, variable) => _.debounce((e, { value }) => {
     this.setState(state => ({
       componentVariables: {
         ...state.componentVariables,
-        [variable]: value,
+        [component] : {
+          ...state.componentVariables[component],
+          [variable]: value,
+        }
       },
     }))
-  }
+  }, 50)
 
   handleVisibility = (willBeVisible: boolean) => {
     if (willBeVisible && !this.state.wasEverVisible) this.setState({ wasEverVisible: true })
@@ -483,12 +471,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           <Flex.Item>
             <KnobProvider>
               {/* Ensure anchor links don't occlude card shadow effect */}
-              <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
+              <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }}/>
 
               <ExamplePlaceholder visible={wasEverVisible}>
                 <Segment styles={{ borderBottom: '1px solid #ddd' }}>
                   <Flex>
-                    <ComponentExampleTitle description={description} title={title} />
+                    <ComponentExampleTitle description={description} title={title}/>
 
                     <Flex.Item push>
                       <ComponentControls
@@ -542,7 +530,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                                 }),
                               }}
                             >
-                              {element}
+                              <VariableResolver active={this.state.showVariables} onResolve={variables => {
+                                this.setState({ resolvedVariables: variables })
+                              }}>
+                                {element}
+                              </VariableResolver>
                             </Segment>
                           )
                         }}
@@ -556,13 +548,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                         )}
                         {showCode && (
                           <div>
-                            <Divider fitted />
-                            <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup} />
+                            <Divider fitted/>
+                            <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup}/>
                           </div>
                         )}
-                        {this.renderVariables()}
+                        {this.renderVariables(element)}
                       </Segment>
-                      <div style={{ paddingBottom: '10px' }} />
+                      <div style={{ paddingBottom: '10px' }}/>
                     </>
                   )}
                 </SourceRender>
@@ -582,7 +574,7 @@ const ComponentExampleWithTheme = props => (
         {exampleProps => (
           <ComponentSourceManager examplePath={props.examplePath}>
             {codeProps => (
-              <ComponentExample {...props} {...exampleProps} {...codeProps} themeName={themeName} />
+              <ComponentExample {...props} {...exampleProps} {...codeProps} themeName={themeName}/>
             )}
           </ComponentSourceManager>
         )}

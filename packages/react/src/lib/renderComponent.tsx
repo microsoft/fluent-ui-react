@@ -177,6 +177,7 @@ const renderComponent = <P extends {}>(
     {
       root: props.styles,
     },
+    { root: animationCSSProp }
   )
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
@@ -193,11 +194,6 @@ const renderComponent = <P extends {}>(
     theme: context.theme,
     rtl,
     disableAnimations,
-  }
-
-  mergedStyles.root = {
-    ...callable(mergedStyles.root)(styleParam),
-    ...animationCSSProp,
   }
 
   const resolvedStyles: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(
