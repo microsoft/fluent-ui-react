@@ -221,10 +221,6 @@ export type StrictColorSchemeMapping<
   default?: Scheme
 }
 
-export type CategoryColorScheme<T extends string | number | symbol = ComponentAreaName> = Partial<
-  Record<T, string>
->
-
 export type ColorSchemeMappingOverrides<
   Scheme = ColorScheme,
   Colors extends string | number | symbol = ColorNames
