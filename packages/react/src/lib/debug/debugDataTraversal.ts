@@ -32,7 +32,7 @@ const traverseComponentStyles = (
 
   return {
     ...(isNotEmptyObjectsArray(filteredThemes) && { themes: filteredThemes }),
-    ...(isNotNullOrEmpty(filteredInstance) && { instance: filteredInstance }),
+    ...(isNotNullOrEmpty(filteredInstance) && { instanceOverrides: filteredInstance }),
     ...(isNotNullOrEmpty(filteredResult) && { result: filteredResult }),
   }
 }
@@ -51,7 +51,7 @@ const traverseComponentVariables = (
 
   return {
     ...(isNotEmptyObjectsArray(filteredThemes) && { themes: filteredThemes }),
-    ...(isNotNullOrEmpty(filteredInstance) && { instance: filteredInstance }),
+    ...(isNotNullOrEmpty(filteredInstance) && { instanceOverrides: filteredInstance }),
     ...(isNotNullOrEmpty(filteredResult) && { result: filteredResult }),
   }
 }
