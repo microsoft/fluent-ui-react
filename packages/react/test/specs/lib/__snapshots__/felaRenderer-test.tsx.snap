@@ -431,3 +431,14 @@ body {
 </div>;
 "
 `;
+
+exports[`rtl 1`] = `
+"
+
+<div className=ui-provider__box dir=rtl>
+  <span className=ui-text dir=auto>
+    Hello
+  </span>
+</div>;
+"
+`;
