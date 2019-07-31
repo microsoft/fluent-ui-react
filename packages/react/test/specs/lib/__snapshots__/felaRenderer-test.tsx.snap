@@ -1,8 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`snapshot 1`] = `
-"
+exports[`css fallback value 1`] = `
+".a {
+  color: red;
+}
+
 
 <div className=ui-box a />;
+"
+`;
+
+exports[`keyframe returning css fallback value 1`] = `
+"
+
+<div className=ui-provider__box dir=ltr>
+  <div className=ui-animation>
+    <span className=ui-icon role=img aria-hidden=true />
+  </div>
+</div>;
 "
 `;
