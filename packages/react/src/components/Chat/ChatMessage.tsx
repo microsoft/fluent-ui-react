@@ -202,7 +202,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     }
 
     return (
-      <Popper targetRef={this.state.messageDomNode} position="above" align="end">
+      <Popper unstable_pinned targetRef={this.state.messageDomNode} position="above" align="end">
         {({ scheduleUpdate }) => {
           this.updateActionsMenuPosition = scheduleUpdate
           return actionMenuElement
