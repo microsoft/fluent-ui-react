@@ -12,6 +12,7 @@ import broadcast from './broadcast'
 import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
+import callBlocked from './callBlocked'
 import callParking from './callParking'
 import callControlRelease from './callControlRelease'
 import callControlRequest from './callControlRequest'
@@ -159,6 +160,7 @@ export default {
   bullets,
   calendar,
   call,
+  'call-blocked': callBlocked,
   'call-dialpad': callDialpad,
   'call-end': callEnd,
   'call-parking': callParking,
