@@ -35,9 +35,6 @@ class Sidebar extends React.Component<any, any> {
     style: PropTypes.object,
   }
   state: any = { query: '', activeCategoryIndex: 0 }
-  _searchInput: any
-  selectedRoute: any
-  filteredMenu = componentMenu
   searchInputRef = React.createRef<HTMLInputElement>()
 
   componentDidMount() {
