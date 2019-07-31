@@ -63,6 +63,9 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
     position: 'relative',
     left: pxToRem(3),
   }),
+  endMedia: () => ({
+    lineHeight: pxToRem(16),
+  }),
 }
 
 export default dropdownItemStyles

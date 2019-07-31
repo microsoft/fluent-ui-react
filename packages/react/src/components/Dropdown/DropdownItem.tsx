@@ -116,13 +116,15 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
           },
         })}
         endMedia={
-          selected &&
-          Icon.create(selectedIndicator, {
-            defaultProps: {
-              className: DropdownItem.slotClassNames.selectedIndicator,
-              styles: styles.selectedIndicator,
-            },
-          })
+          selected && {
+            content: Icon.create(selectedIndicator, {
+              defaultProps: {
+                className: DropdownItem.slotClassNames.selectedIndicator,
+                styles: styles.selectedIndicator,
+              },
+            }),
+            styles: styles.endMedia,
+          }
         }
         truncateContent
         truncateHeader
