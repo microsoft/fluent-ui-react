@@ -415,10 +415,12 @@ class Sidebar extends React.Component<any, any> {
       </Component>
     )
 
-    const topItemTheme = Object.assign({}, this.props.treeItemStyle)
-    topItemTheme.width = `${0.9 * this.props.width}px`
-    delete topItemTheme.padding
-    topItemTheme.margin = '0.5em 0em 0.5em 1em'
+    const topItemTheme = {
+      ...this.props.treeItemStyle,
+      padding: undefined,
+      margin: '0.5em 0em 0.5em 1em',
+      width: `${0.9 * this.props.width}px`,
+    }
 
     // TODO: bring back the active elements indicators
     return (
