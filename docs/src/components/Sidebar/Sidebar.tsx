@@ -9,8 +9,9 @@ import {
   Input,
   Flex,
   Box,
+  TreeTitleProps,
 } from '@stardust-ui/react'
-import { ShorthandValue, ShorthandCollection } from '../../../../packages/react/src/types'
+import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
 import keyboardKey from 'keyboard-key'
@@ -245,7 +246,7 @@ class Sidebar extends React.Component<any, any> {
     this.setState({ query: data.value })
   }
 
-  getSectionsWithoutSearchFilter = (): ShorthandCollection<TreeItemProps> => {
+  getSectionsWithoutSearchFilter = (): TreeItemProps[] => {
     const treeItemsByType = _.map(constants.typeOrder, nextType => {
       const items = _.chain([...componentMenu, ...behaviorMenu])
         .filter(({ type }) => type === nextType)
@@ -376,17 +377,22 @@ class Sidebar extends React.Component<any, any> {
 
     const escapedQuery = _.escapeRegExp(this.state.query)
     const regexQuery = new RegExp(`^${escapedQuery}`, 'i')
-    const allSectionsWithPossibleEmptySections = _.map(allSectionsWithoutSearchFilter, section => {
-      return {
-        ...(section as TreeItemProps),
-        items: _.filter((section as any).items, item => regexQuery.test(item.title.content)), // _.filter works with undefined
-      }
-    })
+    const allSectionsWithPossibleEmptySections = _.map(
+      allSectionsWithoutSearchFilter,
+      (section: TreeItemProps) => {
+        return {
+          ...section,
+          items: _.filter(section.items as TreeItemProps[], item =>
+            regexQuery.test((item.title as TreeTitleProps).content as string),
+          ),
+        }
+      },
+    )
 
     let allSections = _.filter(
       allSectionsWithPossibleEmptySections,
-      (section: ShorthandValue<TreeItemProps>) => (section as any).items.length > 0,
-    ) as ShorthandCollection<TreeItemProps>
+      (section: TreeItemProps) => Array.isArray(section.items) && section.items.length > 0,
+    )
 
     if (this.state.query !== '') {
       allSections = _.map(allSections, (section: ShorthandValue<TreeItemProps>) => {
