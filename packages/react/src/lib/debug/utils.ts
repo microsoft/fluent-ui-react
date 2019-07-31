@@ -25,9 +25,14 @@ export const isNotEmptyObjectsArray = array => {
 export const deepPickBy = (
   object: any,
   predicate: (propName: string, propValue: any) => boolean,
+  seenObjects = [],
 ) => {
   if (!object) {
     return {}
+  }
+
+  if (seenObjects.some(seenObject => seenObject === object)) {
+    throw new Error(`Circular dependency detected.`)
   }
 
   return Object.keys(object).reduce((acc, currentPropName) => {
@@ -36,7 +41,10 @@ export const deepPickBy = (
     }
 
     if (typeof object[currentPropName] === 'object') {
-      const deepPickResult = deepPickBy(object[currentPropName], predicate)
+      const deepPickResult = deepPickBy(object[currentPropName], predicate, [
+        ...seenObjects,
+        object,
+      ])
 
       if (isNotNullOrEmpty(deepPickResult)) {
         return { ...acc, [currentPropName]: deepPickResult }
