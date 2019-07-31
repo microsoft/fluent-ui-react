@@ -7,6 +7,7 @@ import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropType
 import { ShorthandValue, ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
+import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Box, { BoxProps } from '../Box/Box'
 
@@ -14,6 +15,7 @@ export interface DropdownItemSlotClassNames {
   content: string
   header: string
   image: string
+  selectedIndicator: string
 }
 
 export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
@@ -43,8 +45,11 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
    */
   onClick?: ComponentEventHandler<DropdownItemProps>
 
-  /** A dropdown item can be selected if single selection Dropdown is used. */
+  /** A dropdown item can be selected. */
   selected?: boolean
+
+  /** A slot for a selected indicator. */
+  selectedIndicator?: ShorthandValue<IconProps>
 }
 
 class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
@@ -70,6 +75,7 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
     onClick: PropTypes.func,
     isFromKeyboard: PropTypes.bool,
     selected: PropTypes.bool,
+    selectedIndicator: customPropTypes.itemShorthandWithoutJSX,
   }
 
   handleClick = e => {
@@ -77,7 +83,14 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
   }
 
   renderComponent({ classes, styles, unhandledProps }: RenderResultConfig<DropdownItemProps>) {
-    const { content, header, image, accessibilityItemProps } = this.props
+    const {
+      content,
+      header,
+      image,
+      accessibilityItemProps,
+      selected,
+      selectedIndicator,
+    } = this.props
     return (
       <ListItem
         className={DropdownItem.className}
@@ -102,6 +115,15 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
             styles: styles.content,
           },
         })}
+        endMedia={
+          selected &&
+          Icon.create(selectedIndicator, {
+            defaultProps: {
+              className: DropdownItem.slotClassNames.selectedIndicator,
+              styles: styles.selectedIndicator,
+            },
+          })
+        }
         truncateContent
         truncateHeader
         {...accessibilityItemProps}
@@ -115,6 +137,7 @@ DropdownItem.slotClassNames = {
   content: `${DropdownItem.className}__content`,
   header: `${DropdownItem.className}__header`,
   image: `${DropdownItem.className}__image`,
+  selectedIndicator: `${DropdownItem.className}__selected-indicator`,
 }
 
 DropdownItem.create = createShorthandFactory({ Component: DropdownItem, mappedProp: 'header' })

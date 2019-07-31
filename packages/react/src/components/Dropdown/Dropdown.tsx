@@ -201,6 +201,9 @@ export interface DropdownProps
   /** Sets search query value (controlled mode). */
   searchQuery?: string
 
+  /** A slot for a selected indicator in the dropdown list. */
+  selectedIndicator?: ShorthandValue<IconProps>
+
   /** Controls appearance of toggle indicator that shows/hides items list. */
   toggleIndicator?: ShorthandValue<IconProps>
 
@@ -285,7 +288,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
-    toggleIndicator: customPropTypes.itemShorthand,
+    selectedIndicator: customPropTypes.itemShorthandWithoutJSX,
+    toggleIndicator: customPropTypes.itemShorthandWithoutJSX,
     triggerButton: customPropTypes.itemShorthand,
     unstable_pinned: PropTypes.bool,
     value: PropTypes.oneOfType([
@@ -694,7 +698,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     highlightedIndex: number,
     value: ShorthandValue<DropdownItemProps> | ShorthandCollection<DropdownItemProps>,
   ) {
-    const { loading, loadingMessage, noResultsMessage, renderItem } = this.props
+    const { loading, loadingMessage, noResultsMessage, renderItem, selectedIndicator } = this.props
     const { filteredItems } = this.state
 
     const items = _.map(filteredItems, (item, index) => render =>
@@ -704,6 +708,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             className: Dropdown.slotClassNames.item,
             active: highlightedIndex === index,
             selected: !this.props.multiple && value === item,
+            selectedIndicator,
             isFromKeyboard: this.state.itemIsFromKeyboard,
             variables,
             ...(typeof item === 'object' &&

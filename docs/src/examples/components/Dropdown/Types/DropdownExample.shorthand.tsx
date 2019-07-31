@@ -17,6 +17,7 @@ const DropdownExample = () => (
   <Dropdown
     items={inputItems}
     placeholder="Select your hero"
+    selectedIndicator="stardust-checkmark"
     getA11ySelectionMessage={{ onAdd: item => `${item} has been selected.` }}
   />
 )
