@@ -59,7 +59,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           aria-level={level}
           style={{ paddingLeft: `${(level - 1) * 10}px` }}
           onClick={this.handleClick}
-          aria-expanded={open}
+          aria-expanded={items && items.length > 0 ? open : undefined}
           role="treeitem"
           id={id}
           aria-owns={open && items ? `${id}-group` : undefined}
