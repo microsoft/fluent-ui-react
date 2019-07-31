@@ -1,8 +1,12 @@
 import { isNotNullOrEmpty, isNotEmptyObjectsArray } from './utils'
 
-import { IDebugData } from './types'
+import { IDebugData, DebugCategory } from './types'
+import { ComponentSlotStylesPrepared } from 'src/themes/types'
 
-const traverseComponentThemeStyles = (componentStyles, filterData: (data: any) => any) => {
+const traverseComponentThemeStyles = (
+  componentStyles: ComponentSlotStylesPrepared,
+  filterData: (data: any) => any,
+) => {
   if (!componentStyles) return {}
 
   return Object.keys(componentStyles).reduce((acc, slotName) => {
@@ -13,13 +17,16 @@ const traverseComponentThemeStyles = (componentStyles, filterData: (data: any) =
   }, {})
 }
 
-const traverseComponentStyles = (stylesDebugOutput, filterData: (data: any) => any) => {
+const traverseComponentStyles = (
+  stylesDebugOutput: IDebugData['styles'],
+  filterData: (data: any) => any,
+) => {
   const filteredThemes = stylesDebugOutput.themes.map(theme =>
     traverseComponentThemeStyles(theme.resolved, filterData),
   )
 
   const filteredInstance = filterData(
-    (stylesDebugOutput.instance && stylesDebugOutput.instance.resolved) || {},
+    (stylesDebugOutput.instanceOverrides && stylesDebugOutput.instanceOverrides.resolved) || {},
   )
   const filteredResult = traverseComponentThemeStyles(stylesDebugOutput.result, filterData)
 
@@ -30,11 +37,15 @@ const traverseComponentStyles = (stylesDebugOutput, filterData: (data: any) => a
   }
 }
 
-const traverseComponentVariables = (variablesDebugOutput, filterData: (data: any) => any) => {
+const traverseComponentVariables = (
+  variablesDebugOutput: DebugCategory,
+  filterData: (data: any) => any,
+) => {
   const filteredThemes = variablesDebugOutput.themes.map(theme => filterData(theme.resolved))
 
   const filteredInstance = filterData(
-    (variablesDebugOutput.instance && variablesDebugOutput.instance.resolved) || {},
+    (variablesDebugOutput.instanceOverrides && variablesDebugOutput.instanceOverrides.resolved) ||
+      {},
   )
   const filteredResult = filterData(variablesDebugOutput.result)
 

@@ -18,7 +18,7 @@ export type DebugDataProviderArgs = {
   resolveVariables: (componentVariables: ComponentVariablesInput) => ComponentVariablesPrepared
 }
 
-export type DebugCategory<Result, Input, InstanceInput = Input> = {
+export type DebugCategory<Result = any, Input = any, InstanceInput = Input> = {
   instanceOverrides: DebugEntry<Result, InstanceInput>
   themes: DebugEntry<Result, Input>[]
   result: Result
