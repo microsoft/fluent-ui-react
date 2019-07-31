@@ -35,8 +35,8 @@ test('keyframe returning css fallback value', () => {
   const spinner = {
     keyframe: ({ steps }) => {
       const obj = {}
-      steps.map((step: string, index) => {
-        return ((obj as any)[step] = { opacity: 0.28 })
+      steps.forEach((step: string, index) => {
+        ;(obj as any)[step] = { opacity: 0.28 }
       })
       return obj
     },
