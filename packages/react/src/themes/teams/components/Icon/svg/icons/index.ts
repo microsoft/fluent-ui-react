@@ -8,6 +8,7 @@ import arrowDown from './arrowDown'
 import ban from './ban'
 import bold from './bold'
 import bookmark from './bookmark'
+import broadcast from './broadcast'
 import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
@@ -154,6 +155,7 @@ export default {
   ban,
   bold,
   bookmark,
+  broadcast,
   bullets,
   calendar,
   call,
