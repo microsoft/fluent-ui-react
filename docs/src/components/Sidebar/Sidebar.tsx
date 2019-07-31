@@ -395,8 +395,8 @@ class Sidebar extends React.Component<any, any> {
     )
 
     if (this.state.query !== '') {
-      allSections = _.map(allSections, (section: ShorthandValue<TreeItemProps>) => {
-        return { ...(section as TreeItemProps), open: true }
+      allSections = _.map(allSections, (section: TreeItemProps) => {
+        return { ...section, open: true }
       })
     }
 
