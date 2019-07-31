@@ -45,7 +45,7 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
    */
   onClick?: ComponentEventHandler<DropdownItemProps>
 
-  /** A dropdown item can be selected. */
+  /** A dropdown item can be selected if single selection Dropdown is used. */
   selected?: boolean
 
   /** A slot for a selected indicator. */
