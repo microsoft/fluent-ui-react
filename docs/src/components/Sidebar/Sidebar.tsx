@@ -79,12 +79,12 @@ class Sidebar extends React.Component<any, any> {
     this.setState({ activeCategoryIndex: props.activeIndex })
   }
 
-  keyDownCallback(e: React.SyntheticEvent) {
+  keyDownCallback(e) {
     if (keyboardKey.getCode(e) !== keyboardKey.Enter) {
       return
     }
     e.stopPropagation()
-    ;(e.target as any).click()
+    e.target.click()
   }
 
   addItemKeyCallbacks(sections: ShorthandValue<any>[]) {
