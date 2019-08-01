@@ -130,9 +130,7 @@ export function withCustomConfig(tsconfigPath: string, parserOpts: ParserOptions
   )
 
   if (error !== undefined) {
-    const errorText = `Cannot load custom tsconfig.json from provided path: ${tsconfigPath}, with error code: ${
-      error.code
-    }, message: ${error.messageText}`
+    const errorText = `Cannot load custom tsconfig.json from provided path: ${tsconfigPath}, with error code: ${error.code}, message: ${error.messageText}`
     throw new Error(errorText)
   }
 
