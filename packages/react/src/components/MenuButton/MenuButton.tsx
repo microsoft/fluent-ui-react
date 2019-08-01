@@ -9,28 +9,80 @@ import {
   applyAccessibilityKeyHandlers,
   getOrGenerateIdFromShorthand,
   commonPropTypes,
+  StyledComponentProps,
 } from '../../lib'
-import { ShorthandValue, Omit } from '../../types'
+import { ShorthandValue, ComponentEventHandler } from '../../types'
 
-import { Accessibility, AccessibilityAttributes } from '../../lib/accessibility/types'
+import { Accessibility } from '../../lib/accessibility/types'
 import { createShorthandFactory } from '../../lib/factories'
-import Popup, { PopupProps } from '../Popup/Popup'
+import Popup, { PopupProps, PopupEvents, PopupEventsArray } from '../Popup/Popup'
 import { Menu, MenuItemProps, MenuProps, Ref } from '../..'
 import { contextMenuBehavior } from '../../lib/accessibility'
 import { focusMenuItem, focusNearest } from './focusUtils'
-import { ALIGNMENTS, POSITIONS } from '../../lib/positioner'
+import { ALIGNMENTS, POSITIONS, PositioningProps } from '../../lib/positioner'
+import { AutoFocusZoneProps } from '../../lib/accessibility/FocusZone'
 
 export interface ContextMenuSlotClassNames {
   menu: string
 }
 
-export interface ContextMenuProps
-  extends Omit<PopupProps, 'content' | 'renderContent' | 'children' | 'trapFocus'> {
+export interface ContextMenuProps extends StyledComponentProps<ContextMenuProps>, PositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default contextMenuBehavior
    */
   accessibility?: Accessibility
+
+  /** Additional CSS class name(s) to apply.  */
+  className?: string
+
+  /** Initial value for 'open'. */
+  defaultOpen?: boolean
+
+  /** Whether the Popup should be rendered inline with the trigger or in the body. */
+  inline?: boolean
+
+  /** Existing document the popup should add listeners. */
+  mountDocument?: Document
+
+  /** Existing element the popup should be bound to. */
+  mountNode?: HTMLElement
+
+  /** Delay in ms for the mouse leave event, before the popup will be closed. */
+  mouseLeaveDelay?: number
+
+  /** Events triggering the popup. */
+  on?: PopupEvents | PopupEventsArray
+
+  /** Defines whether popup is displayed. */
+  open?: boolean
+
+  /**
+   * Event for request to change 'open' value.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
+  onOpenChange?: ComponentEventHandler<PopupProps>
+
+  /** A popup can show a pointer to trigger. */
+  pointing?: boolean
+
+  /**
+   * DOM element that should be used as popup's target - instead of 'trigger' element that is used by default.
+   */
+  target?: HTMLElement
+
+  /** Element to be rendered in-place where the popup is defined. */
+  trigger?: JSX.Element
+
+  /** Whether the trigger should be tabbable */
+  shouldTriggerBeTabbable?: boolean
+
+  /** Ref for Popup content DOM node. */
+  contentRef?: React.Ref<HTMLElement>
+
+  /** Controls whether or not auto focus should be applied, using boolean or AutoFocusZoneProps type value. */
+  autoFocus?: boolean | AutoFocusZoneProps
 
   menu?: ShorthandValue<MenuProps>
 }
@@ -52,7 +104,7 @@ export default class MenuButton extends AutoControlledComponent<
 > {
   static displayName = 'MenuButton'
 
-  static className = 'ui-menuButton'
+  static className = 'ui-menubutton'
 
   static create: Function
 
@@ -80,9 +132,7 @@ export default class MenuButton extends AutoControlledComponent<
     ]),
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
-    pointing: PropTypes.bool,
     position: PropTypes.oneOf(POSITIONS),
-    renderContent: PropTypes.func,
     target: PropTypes.any,
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
     shouldTriggerBeTabbable: PropTypes.bool,
@@ -168,7 +218,7 @@ export default class MenuButton extends AutoControlledComponent<
     }
   }
 
-  handleMenuItemOverrides = (menuItemAccessibilityAttributes: AccessibilityAttributes) =>
+  handleMenuItemOverrides = (menuItemAccessibilityAttributes: any) =>
     _.map(_.get(this.props.menu, 'items'), (item: ShorthandValue<MenuItemProps>) =>
       typeof item === 'object'
         ? {
@@ -189,6 +239,7 @@ export default class MenuButton extends AutoControlledComponent<
     classes,
     unhandledProps,
     accessibility,
+    styles,
   }: RenderResultConfig<ContextMenuProps>): React.ReactNode {
     const { menu, ...popupProps } = this.props
     const content =
@@ -209,22 +260,25 @@ export default class MenuButton extends AutoControlledComponent<
         {...accessibility.attributes.root}
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-        style={{ boxSizing: 'border-box', display: 'inline-block' }}
       >
         <Ref innerRef={this.triggerRef}>
-          <Popup
-            {...popupProps}
-            accessibility={() => accessibility}
-            open={this.state.open}
-            onOpenChange={this.handleOpenChange}
-            inline
-            autoFocus
-            content={{
-              variables: { padding: '', borderSize: '0px' }, // TODO: this should probably be in the context menu variables?
-              content: content && <Ref innerRef={this.menuRef}>{content}</Ref>,
-            }}
-            unstable_pinned
-          />
+          {Popup.create(popupProps, {
+            defaultProps: {
+              inline: true,
+              autoFocus: true,
+              unstable_pinned: true,
+            },
+            overrideProps: {
+              accessibility: () => accessibility,
+              open: this.state.open,
+              onOpenChange: this.handleOpenChange,
+              content: {
+                styles: styles.popupContent,
+                content: content && <Ref innerRef={this.menuRef}>{content}</Ref>,
+              },
+              children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger
+            },
+          })}
         </Ref>
       </ElementType>
     )
