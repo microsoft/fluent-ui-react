@@ -8,9 +8,9 @@ import Usage from './Usage'
 const AvatarExamples = () => (
   <>
     <Types />
-    {/*<Variations />*/}
-    {/*<Usage />*/}
-    {/*<Rtl />*/}
+    <Variations />
+    <Usage />
+    <Rtl />
   </>
 )
 

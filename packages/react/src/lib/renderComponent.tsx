@@ -177,7 +177,7 @@ const renderComponent = <P extends {}>(
     {
       root: props.styles,
     },
-    { root: animationCSSProp }
+    { root: animationCSSProp },
   )
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
@@ -189,6 +189,7 @@ const renderComponent = <P extends {}>(
   const unhandledProps = getUnhandledProps({ handledProps }, props)
 
   const styleParam: ComponentStyleFunctionParam = {
+    displayName,
     props: stateAndProps,
     variables: resolvedVariables,
     theme: context.theme,

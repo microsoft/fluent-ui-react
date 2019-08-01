@@ -4,25 +4,13 @@ import {
   KnobInspector,
   KnobProvider,
 } from '@stardust-ui/docs-components'
+import { Divider, Flex, Menu, Segment, Provider, ICSSInJSStyle } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
 import VisibilitySensor from 'react-visibility-sensor'
-
-import {
-  Divider,
-  Flex,
-  Form,
-  Input,
-  Menu,
-  Segment,
-  Provider,
-  themes,
-  Grid,
-  ICSSInJSStyle, Renderer, callable, Header,
-} from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, scrollToAnchor } from 'docs/src/utils'
 import { constants } from 'src/lib'
@@ -35,11 +23,10 @@ import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager'
 import { ThemeInput } from 'packages/react/src/themes/types'
-import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
-import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ComponentExampleKnobs from './ComponentExampleKnobs'
 import ExamplePlaceholder from '../../ExamplePlaceholder'
-import VariableResolver from 'docs/src/components/VariableResolver'
+import VariableResolver from 'docs/src/components/VariableResolver/VariableResolver'
+import ComponentExampleVariables from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleVariables'
 
 export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
@@ -48,12 +35,11 @@ export interface ComponentExampleProps
   title: React.ReactNode
   description?: React.ReactNode
   examplePath: string
-  themeName?: string
 }
 
 interface ComponentExampleState {
-  themeName: string
   componentVariables: Object
+  resolvedVariables: Object
   showCode: boolean
   showRtl: boolean
   showTransparent: boolean
@@ -77,17 +63,16 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   constructor(props) {
     super(props)
 
-    const { examplePath, themeName } = props
+    const { examplePath } = props
 
     this.anchorName = examplePathToHash(examplePath)
     this.state = {
-      themeName,
       showCode: this.isActiveHash(),
       componentVariables: {},
-      resolvedVariables: null,
+      resolvedVariables: {},
       showRtl: examplePath && examplePath.endsWith('rtl'),
       showTransparent: false,
-      showVariables: true,
+      showVariables: false,
       wasEverVisible: false,
     }
   }
@@ -100,10 +85,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       this.props.location.hash !== nextProps.location.hash
     ) {
       this.clearActiveState()
-    }
-    const { themeName } = nextProps
-    if (this.state.themeName !== themeName) {
-      this.setState({ themeName })
     }
   }
 
@@ -191,18 +172,16 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   renderElement = (element: React.ReactElement<any>) => {
-    const { showRtl, showTransparent, componentVariables, themeName } = this.state
-
-    const theme = themes[themeName]
+    const { showRtl, showTransparent, componentVariables } = this.state
     const newTheme: ThemeInput = {
-      siteVariables: theme.siteVariables,
-      componentVariables: mergeThemeVariables(theme.componentVariables, componentVariables),
+      componentVariables: {
+        ...componentVariables,
+        ProviderBox: { background: showTransparent ? 'initial' : undefined },
+      },
     }
 
-    const providerVariables = showTransparent ? { background: 'initial' } : undefined
-
     return (
-      <Provider theme={newTheme} rtl={showRtl} variables={providerVariables}>
+      <Provider theme={newTheme} rtl={showRtl}>
         {element}
       </Provider>
     )
@@ -394,63 +373,32 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           {this.renderCodeEditorMenu()}
         </div>
 
-        <Editor value={currentCode} onChange={handleCodeChange}/>
+        <Editor value={currentCode} onChange={handleCodeChange} />
       </div>
     ) : null
   }
 
-  renderVariables = () => {
-    const { showVariables, resolvedVariables } = this.state
-    if (!showVariables) return undefined
-    const displayName = this.getDisplayName()
-
-    return (
-      <div style={{ background: 'white' } as React.CSSProperties}>
-        <Divider>
-          <span style={{ opacity: 0.5 }}>Theme</span>
-        </Divider>
-
-        {resolvedVariables ? (
-          _.map(resolvedVariables, (variables, componentName) => (
-            <React.Fragment key={componentName}>
-              <Header as='h3'>{componentName}</Header>
-              <Grid columns="4">
-                  {_.map(variables, (variableValue, variableName) => (
-                    <Form.Field
-                      key={variableName}
-                      label={variableName}
-                      control={{
-                        as: Input,
-                        defaultValue: variableValue,
-                        onChange: this.handleVariableChange(displayName, variableName),
-                      }}
-                    />
-                  ))}
-              </Grid>
-            </React.Fragment>
-          ))
-        ) : (<Segment inverted>{displayName} has no variables to edit.</Segment>)}
-      </div>
-    )
-  }
-
-  handleVariableChange = (component, variable) => _.debounce((e, { value }) => {
+  handleVariableChange = (componentName: string, variableName: string, variableValue: string) => {
     this.setState(state => ({
       componentVariables: {
         ...state.componentVariables,
-        [component] : {
-          ...state.componentVariables[component],
-          [variable]: value,
-        }
+        [componentName]: {
+          ...state.componentVariables[componentName],
+          [variableName]: variableValue,
+        },
       },
     }))
-  }, 50)
+  }
+
+  handleVariableResolve = variables => this.setState({ resolvedVariables: variables })
 
   handleVisibility = (willBeVisible: boolean) => {
     if (willBeVisible && !this.state.wasEverVisible) this.setState({ wasEverVisible: true })
   }
 
   render() {
+    const displayName = this.getDisplayName()
+
     const {
       children,
       currentCode,
@@ -459,7 +407,15 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       description,
       title,
     } = this.props
-    const { showCode, showRtl, showTransparent, themeName, wasEverVisible } = this.state
+    const {
+      componentVariables,
+      resolvedVariables,
+      showCode,
+      showRtl,
+      showTransparent,
+      showVariables,
+      wasEverVisible,
+    } = this.state
 
     return (
       <VisibilitySensor
@@ -471,12 +427,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           <Flex.Item>
             <KnobProvider>
               {/* Ensure anchor links don't occlude card shadow effect */}
-              <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }}/>
+              <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
               <ExamplePlaceholder visible={wasEverVisible}>
                 <Segment styles={{ borderBottom: '1px solid #ddd' }}>
                   <Flex>
-                    <ComponentExampleTitle description={description} title={title}/>
+                    <ComponentExampleTitle description={description} title={title} />
 
                     <Flex.Item push>
                       <ComponentControls
@@ -508,37 +464,26 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                   source={currentCode}
                   renderHtml={showCode}
                   resolver={importResolver}
-                  themeName={themeName}
                   wrap={this.renderElement}
                   unstable_hot
                 >
                   {({ element, error, markup }) => (
                     <>
-                      <Provider.Consumer
-                        render={({ siteVariables }) => {
-                          return (
-                            <Segment
-                              className={`rendered-example ${this.getKebabExamplePath()}`}
-                              styles={{
-                                padding: '2rem',
-                                color: siteVariables.bodyColor,
-                                backgroundColor: siteVariables.bodyBackground,
-                                ...(showTransparent && {
-                                  backgroundImage:
-                                    'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                                  backgroundRepeat: 'repeat',
-                                }),
-                              }}
-                            >
-                              <VariableResolver active={this.state.showVariables} onResolve={variables => {
-                                this.setState({ resolvedVariables: variables })
-                              }}>
-                                {element}
-                              </VariableResolver>
-                            </Segment>
-                          )
+                      <Segment
+                        className={`rendered-example ${this.getKebabExamplePath()}`}
+                        styles={{
+                          padding: '2rem',
+                          ...(showTransparent && {
+                            backgroundImage:
+                              'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                            backgroundRepeat: 'repeat',
+                          }),
                         }}
-                      />
+                      >
+                        <VariableResolver onResolve={this.handleVariableResolve}>
+                          {element}
+                        </VariableResolver>
+                      </Segment>
                       <Segment styles={{ padding: 0 }}>
                         {this.renderSourceCode()}
                         {error && (
@@ -548,16 +493,25 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                         )}
                         {showCode && (
                           <div>
-                            <Divider fitted/>
-                            <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup}/>
+                            <Divider fitted />
+                            <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup} />
                           </div>
                         )}
-                        {this.renderVariables(element)}
                       </Segment>
-                      <div style={{ paddingBottom: '10px' }}/>
+                      <div style={{ paddingBottom: '10px' }} />
                     </>
                   )}
                 </SourceRender>
+
+                {showVariables && (
+                  <Segment>
+                    <ComponentExampleVariables
+                      displayName={displayName}
+                      onChange={this.handleVariableChange}
+                      variables={_.merge(resolvedVariables, componentVariables)}
+                    />
+                  </Segment>
+                )}
               </ExamplePlaceholder>
             </KnobProvider>
           </Flex.Item>
@@ -568,19 +522,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 }
 
 const ComponentExampleWithTheme = props => (
-  <ThemeContext.Consumer>
-    {({ themeName }) => (
-      <ExampleContext.Consumer>
-        {exampleProps => (
-          <ComponentSourceManager examplePath={props.examplePath}>
-            {codeProps => (
-              <ComponentExample {...props} {...exampleProps} {...codeProps} themeName={themeName}/>
-            )}
-          </ComponentSourceManager>
-        )}
-      </ExampleContext.Consumer>
+  <ExampleContext.Consumer>
+    {exampleProps => (
+      <ComponentSourceManager examplePath={props.examplePath}>
+        {codeProps => <ComponentExample {...props} {...exampleProps} {...codeProps} />}
+      </ComponentSourceManager>
     )}
-  </ThemeContext.Consumer>
+  </ExampleContext.Consumer>
 )
 
 export default withRouter(ComponentExampleWithTheme)
