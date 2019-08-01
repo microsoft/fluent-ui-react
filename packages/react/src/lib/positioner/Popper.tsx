@@ -129,7 +129,8 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     }
 
     popperRef.current = createPopper(reference, contentRef.current, options)
-  }, [ // TODO review dependencies for popperHasScrollableParent
+  }, [
+    // TODO review dependencies for popperHasScrollableParent
     computedModifiers,
     enabled,
     userModifiers,
