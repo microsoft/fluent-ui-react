@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { Button, ContextMenu } from '@stardust-ui/react'
+import { Button, MenuButton } from '@stardust-ui/react'
 
 const ContextMenuExampleRtl = () => (
-  <ContextMenu
+  <MenuButton
     trigger={<Button content="ا يجلبه إلينا الأس" />}
     menu={{ items: ['English text!', 'غالباً ونرفض الشعور'] }}
   />

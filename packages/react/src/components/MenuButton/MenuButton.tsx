@@ -43,21 +43,21 @@ export interface ContextMenuState {
 }
 
 /**
- * A ContextMenu displays a menu connected to trigger element.
+ * A MenuButton displays a menu connected to trigger element.
  * @accessibility
  */
-export default class ContextMenu extends AutoControlledComponent<
+export default class MenuButton extends AutoControlledComponent<
   ContextMenuProps,
   ContextMenuState
 > {
-  static displayName = 'ContextMenu'
+  static displayName = 'MenuButton'
 
-  static className = 'ui-contextmenu'
+  static className = 'ui-menuButton'
 
   static create: Function
 
   static slotClassNames: ContextMenuSlotClassNames = {
-    menu: `${ContextMenu.className}__menu`,
+    menu: `${MenuButton.className}__menu`,
   }
 
   static propTypes = {
@@ -88,7 +88,7 @@ export default class ContextMenu extends AutoControlledComponent<
     shouldTriggerBeTabbable: PropTypes.bool,
     unstable_pinned: PropTypes.bool,
     contentRef: customPropTypes.ref,
-    menu: customPropTypes.itemShorthand,
+    menu: customPropTypes.itemShorthandWithoutJSX,
   }
 
   static defaultProps: ContextMenuProps = {
@@ -99,15 +99,15 @@ export default class ContextMenu extends AutoControlledComponent<
 
   static autoControlledProps = ['open']
 
-  // TODO: this does not persist generated ids across re-renders, see ContextMenu-test.tsx
+  // TODO: this does not persist generated ids across re-renders, see menubutton-test.tsx
   static getAutoControlledStateFromProps(
     props: ContextMenuProps,
     state: ContextMenuState,
   ): Partial<ContextMenuState> {
     return {
-      menuId: getOrGenerateIdFromShorthand('contextmenu-menu-', props.menu, state.menuId, true),
+      menuId: getOrGenerateIdFromShorthand('menubutton-menu-', props.menu, state.menuId, true),
       triggerId: getOrGenerateIdFromShorthand(
-        'contextmenu-trigger-',
+        'menubutton-trigger-',
         props.trigger,
         state.triggerId,
         true,
@@ -231,4 +231,4 @@ export default class ContextMenu extends AutoControlledComponent<
   }
 }
 
-ContextMenu.create = createShorthandFactory({ Component: ContextMenu, mappedProp: 'menu' })
+MenuButton.create = createShorthandFactory({ Component: MenuButton, mappedProp: 'menu' })

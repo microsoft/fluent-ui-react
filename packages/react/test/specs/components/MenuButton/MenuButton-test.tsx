@@ -1,16 +1,16 @@
 import * as React from 'react'
 
-import ContextMenu from 'src/components/ContextMenu/ContextMenu'
+import MenuButton from 'src/components/MenuButton/MenuButton'
 import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { mountWithProvider } from '../../../utils'
 
 const mockMenu = { items: ['1', '2', '3'] }
 
-describe('ContextMenu', () => {
-  isConformant(ContextMenu)
+describe('MenuButton', () => {
+  isConformant(MenuButton)
 
   describe('accessibility', () => {
-    handlesAccessibility(ContextMenu, {
+    handlesAccessibility(MenuButton, {
       defaultRootRole: 'none',
     })
 
@@ -18,7 +18,7 @@ describe('ContextMenu', () => {
       test('is called on click', () => {
         const spy = jest.fn()
 
-        mountWithProvider(<ContextMenu trigger={<button />} menu={mockMenu} onOpenChange={spy} />)
+        mountWithProvider(<MenuButton trigger={<button />} menu={mockMenu} onOpenChange={spy} />)
           .find('button')
           .simulate('click')
 
@@ -30,7 +30,7 @@ describe('ContextMenu', () => {
         const spy = jest.fn()
 
         mountWithProvider(
-          <ContextMenu open={false} trigger={<button />} menu={mockMenu} onOpenChange={spy} />,
+          <MenuButton open={false} trigger={<button />} menu={mockMenu} onOpenChange={spy} />,
         )
           .find('button')
           .simulate('click')
@@ -42,12 +42,12 @@ describe('ContextMenu', () => {
 
     describe('ID handling', () => {
       test('trigger id is used', () => {
-        const contextMenu = mountWithProvider(
-          <ContextMenu trigger={<button id="test-id" />} menu={mockMenu} />,
+        const menuButton = mountWithProvider(
+          <MenuButton trigger={<button id="test-id" />} menu={mockMenu} />,
         )
-        const button = contextMenu.find('button')
+        const button = menuButton.find('button')
         button.simulate('click')
-        const menu = contextMenu.find('ul')
+        const menu = menuButton.find('ul')
         const triggerId = button.prop('id')
 
         expect(triggerId).toEqual('test-id')
@@ -55,24 +55,24 @@ describe('ContextMenu', () => {
       })
 
       test('trigger id is generated if not provided', () => {
-        const contextMenu = mountWithProvider(<ContextMenu trigger={<button />} menu={mockMenu} />)
-        const button = contextMenu.find('button')
+        const menuButton = mountWithProvider(<MenuButton trigger={<button />} menu={mockMenu} />)
+        const button = menuButton.find('button')
         button.simulate('click')
-        // const menu = contextMenu.find('ul')
+        // const menu = menuButton.find('ul')
         const triggerId = button.prop('id')
 
-        expect(triggerId).toMatch(/contextmenu-trigger-\d+/)
+        expect(triggerId).toMatch(/menubutton-trigger-\d+/)
         // TODO: component does not persist generated ids across re-renders
         // expect(menu.prop('aria-labelledby')).toEqual(triggerId)
       })
 
       test('menu id is used', () => {
-        const contextMenu = mountWithProvider(
-          <ContextMenu trigger={<button />} menu={{ ...mockMenu, id: 'test-id' }} />,
+        const menuButton = mountWithProvider(
+          <MenuButton trigger={<button />} menu={{ ...mockMenu, id: 'test-id' }} />,
         )
-        const button = contextMenu.find('button')
+        const button = menuButton.find('button')
         button.simulate('click')
-        const menu = contextMenu.find('ul')
+        const menu = menuButton.find('ul')
         const menuId = menu.prop('id')
 
         expect(menuId).toEqual('test-id')
@@ -80,13 +80,13 @@ describe('ContextMenu', () => {
       })
 
       test('menu id is generated if not provided', () => {
-        const contextMenu = mountWithProvider(<ContextMenu trigger={<button />} menu={mockMenu} />)
-        const button = contextMenu.find('button')
+        const menuButton = mountWithProvider(<MenuButton trigger={<button />} menu={mockMenu} />)
+        const button = menuButton.find('button')
         button.simulate('click')
-        const menu = contextMenu.find('ul')
+        const menu = menuButton.find('ul')
         const menuId = menu.prop('id')
 
-        expect(menuId).toMatch(/contextmenu-menu-\d+/)
+        expect(menuId).toMatch(/menubutton-menu-\d+/)
         // TODO: component does not persist generated ids across re-renders
         // expect(button.prop('aria-controls')).toEqual(menuId)
       })

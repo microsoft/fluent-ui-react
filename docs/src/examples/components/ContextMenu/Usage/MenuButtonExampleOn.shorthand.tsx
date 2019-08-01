@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Alert, Button, Flex, ContextMenu } from '@stardust-ui/react'
+import { Alert, Button, Flex, MenuButton } from '@stardust-ui/react'
 
 const items = ['1', '2', '3', { content: 'submenu', menu: { items: ['4', '5'] } }]
 
-class ContextMenuExampleOn extends React.Component {
+class MenuButtonExampleOn extends React.Component {
   state = { alert: false }
 
   showAlert = () => {
@@ -15,22 +15,22 @@ class ContextMenuExampleOn extends React.Component {
     return (
       <>
         <Flex gap="gap.smaller">
-          <ContextMenu
+          <MenuButton
             trigger={<Button icon="expand" content="Click" aria-label="Click button" />}
             menu={{ items }}
             on="click"
           />
-          <ContextMenu
+          <MenuButton
             trigger={<Button icon="expand" content="Hover" aria-label="Hover button" />}
             menu={{ items }}
             on="hover"
           />
-          <ContextMenu
+          <MenuButton
             trigger={<Button icon="expand" content="Focus" aria-label="Focus button" />}
             menu={{ items }}
             on="focus"
           />
-          <ContextMenu
+          <MenuButton
             trigger={
               <Button
                 icon="expand"
@@ -46,7 +46,7 @@ class ContextMenuExampleOn extends React.Component {
         {this.state.alert && (
           <Alert
             warning
-            content="Right, you can still click the button! Right click opens the ContextMenu."
+            content="Right, you can still click the button! Right click opens the MenuButton."
           />
         )}
       </>
@@ -54,4 +54,4 @@ class ContextMenuExampleOn extends React.Component {
   }
 }
 
-export default ContextMenuExampleOn
+export default MenuButtonExampleOn

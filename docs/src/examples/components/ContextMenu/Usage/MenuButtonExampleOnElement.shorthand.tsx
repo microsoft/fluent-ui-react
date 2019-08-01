@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Alert, Button, ContextMenu } from '@stardust-ui/react'
+import { Alert, Button, MenuButton } from '@stardust-ui/react'
 
 const items = ['1', '2', '3', { content: 'submenu', menu: { items: ['4', '5'] } }]
 
-class ContextMenuOnElement extends React.Component {
+class MenuButtonOnElement extends React.Component {
   state = { alert: false }
 
   showAlert = () => {
@@ -14,7 +14,7 @@ class ContextMenuOnElement extends React.Component {
   render() {
     return (
       <>
-        <ContextMenu
+        <MenuButton
           trigger={
             <div style={{ padding: '4rem', border: 'red dashed' }}>
               <Button content="Random button" onClick={this.showAlert} />
@@ -30,4 +30,4 @@ class ContextMenuOnElement extends React.Component {
   }
 }
 
-export default ContextMenuOnElement
+export default MenuButtonOnElement

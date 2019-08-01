@@ -5,7 +5,7 @@ import NonPublicSection from 'docs/src/components/ComponentDoc/NonPublicSection'
 
 const Rtl = () => (
   <NonPublicSection title="Rtl">
-    <ComponentExample examplePath="components/ContextMenu/Rtl/ContextMenuExample.rtl" />
+    <ComponentExample examplePath="components/MenuButton/Rtl/MenuButtonExample.rtl" />
   </NonPublicSection>
 )
 
