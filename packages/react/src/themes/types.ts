@@ -318,9 +318,9 @@ export interface ComponentStyleFunctionParam<
   disableAnimations: boolean
 }
 
-export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((
+export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = (
   styleParam?: ComponentStyleFunctionParam<TProps, TVars>,
-) => ICSSInJSStyle)
+) => ICSSInJSStyle
 
 export type ComponentSlotStyle<TProps = {}, TVars = {}> =
   | ComponentSlotStyleFunction<TProps, TVars>
