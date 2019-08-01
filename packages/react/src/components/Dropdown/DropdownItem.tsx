@@ -15,7 +15,7 @@ export interface DropdownItemSlotClassNames {
   content: string
   header: string
   image: string
-  selectedIndicator: string
+  checkableIndicator: string
 }
 
 export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
@@ -27,6 +27,12 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
 
   /** Item's content. */
   content?: ShorthandValue<BoxProps>
+
+  /** Item can show check indicator if selected. */
+  checkable?: boolean
+
+  /** A slot for a checkable indicator. */
+  checkableIndicator?: ShorthandValue<IconProps>
 
   /** Item's header. */
   header?: ShorthandValue<BoxProps>
@@ -47,9 +53,6 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
 
   /** A dropdown item can be selected if single selection Dropdown is used. */
   selected?: boolean
-
-  /** A slot for a selected indicator. */
-  selectedIndicator?: ShorthandValue<IconProps>
 }
 
 class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
@@ -89,7 +92,8 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
       image,
       accessibilityItemProps,
       selected,
-      selectedIndicator,
+      checkable,
+      checkableIndicator,
     } = this.props
     return (
       <ListItem
@@ -116,11 +120,12 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
           },
         })}
         endMedia={
-          selected && {
-            content: Icon.create(selectedIndicator, {
+          selected &&
+          checkable && {
+            content: Icon.create(checkableIndicator, {
               defaultProps: {
-                className: DropdownItem.slotClassNames.selectedIndicator,
-                styles: styles.selectedIndicator,
+                className: DropdownItem.slotClassNames.checkableIndicator,
+                styles: styles.checkableIndicator,
               },
             }),
             styles: styles.endMedia,
@@ -139,7 +144,7 @@ DropdownItem.slotClassNames = {
   content: `${DropdownItem.className}__content`,
   header: `${DropdownItem.className}__header`,
   image: `${DropdownItem.className}__image`,
-  selectedIndicator: `${DropdownItem.className}__selected-indicator`,
+  checkableIndicator: `${DropdownItem.className}__checkable-indicator`,
 }
 
 DropdownItem.create = createShorthandFactory({ Component: DropdownItem, mappedProp: 'header' })

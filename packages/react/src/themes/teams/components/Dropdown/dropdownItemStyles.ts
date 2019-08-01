@@ -59,7 +59,7 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
     fontSize: v.listItemContentFontSize,
     color: v.listItemContentColor,
   }),
-  selectedIndicator: ({ variables: v }) => ({
+  checkableIndicator: ({ variables: v }) => ({
     position: 'relative',
     left: pxToRem(3),
   }),

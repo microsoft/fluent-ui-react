@@ -61,6 +61,12 @@ export interface DropdownProps
   /** The index of the currently active selected item, if dropdown has a multiple selection. */
   activeSelectedIndex?: number
 
+  /** Item can show check indicator if selected. */
+  checkable?: boolean
+
+  /** A slot for a selected indicator in the dropdown list. */
+  checkableIndicator?: ShorthandValue<IconProps>
+
   /** A dropdown can be clearable and let users remove their selection. */
   clearable?: boolean
 
@@ -201,9 +207,6 @@ export interface DropdownProps
   /** Sets search query value (controlled mode). */
   searchQuery?: string
 
-  /** A slot for a selected indicator in the dropdown list. */
-  selectedIndicator?: ShorthandValue<IconProps>
-
   /** Controls appearance of toggle indicator that shows/hides items list. */
   toggleIndicator?: ShorthandValue<IconProps>
 
@@ -253,6 +256,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     }),
     activeSelectedIndex: PropTypes.number,
     align: PropTypes.oneOf(ALIGNMENTS),
+    checkable: PropTypes.bool,
+    checkableIndicator: customPropTypes.itemShorthandWithoutJSX,
     clearable: PropTypes.bool,
     clearIndicator: customPropTypes.itemShorthand,
     defaultActiveSelectedIndex: PropTypes.number,
@@ -288,7 +293,6 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
-    selectedIndicator: customPropTypes.itemShorthandWithoutJSX,
     toggleIndicator: customPropTypes.itemShorthandWithoutJSX,
     triggerButton: customPropTypes.itemShorthand,
     unstable_pinned: PropTypes.bool,
@@ -301,6 +305,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   static defaultProps = {
     align: 'start',
     as: 'div',
+    checkableIndicator: 'stardust-checkmark',
     clearIndicator: 'stardust-close',
     itemToString: item => {
       if (!item || React.isValidElement(item)) {
@@ -698,7 +703,14 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     highlightedIndex: number,
     value: ShorthandValue<DropdownItemProps> | ShorthandCollection<DropdownItemProps>,
   ) {
-    const { loading, loadingMessage, noResultsMessage, renderItem, selectedIndicator } = this.props
+    const {
+      loading,
+      loadingMessage,
+      noResultsMessage,
+      renderItem,
+      checkable,
+      checkableIndicator,
+    } = this.props
     const { filteredItems } = this.state
 
     const items = _.map(filteredItems, (item, index) => render =>
@@ -708,7 +720,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             className: Dropdown.slotClassNames.item,
             active: highlightedIndex === index,
             selected: !this.props.multiple && value === item,
-            selectedIndicator,
+            checkable,
+            checkableIndicator,
             isFromKeyboard: this.state.itemIsFromKeyboard,
             variables,
             ...(typeof item === 'object' &&
