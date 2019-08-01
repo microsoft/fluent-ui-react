@@ -12,26 +12,19 @@ export default {
     padding: v.rootPadding,
     position: 'relative',
     width: v.rootWidth,
-    // CSS Grid is polifilled only with latest inline-style-prefixer
-    // @ts-ignore is supported by fallback values plugin
-    display: ['grid', '-ms-grid'],
+    display: 'grid',
     gridTemplateColumns: '1fr auto',
-    '-ms-grid-columns': `1fr auto`,
   }),
   actions: (): ICSSInJSStyle => ({
     gridRow: 3,
-    '-ms-grid-row': 3,
-    '-ms-grid-column': 1,
-    '-ms-grid-column-span': 2,
     gridColumn: '1 / span 2',
     '-ms-grid-column-align': 'end',
     justifySelf: 'right',
   }),
   content: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
     margin: v.contentMargin,
+    gridColumn: '1 / span 2',
     gridRow: 2,
-    '-ms-grid-column': 1,
-    '-ms-grid-column-span': 2,
     justifySelf: 'left',
   }),
   header: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
