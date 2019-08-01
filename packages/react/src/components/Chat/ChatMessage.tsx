@@ -274,7 +274,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     return (
       <Ref
         innerRef={domNode => {
-          !this.state.messageDomNode && this.setState({ messageDomNode: domNode })
+          domNode !== this.state.messageDomNode && this.setState({ messageDomNode: domNode })
         }}
       >
         <ElementType
