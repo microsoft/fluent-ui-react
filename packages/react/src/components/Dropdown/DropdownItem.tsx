@@ -73,12 +73,13 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
     accessibilityItemProps: PropTypes.object,
     active: PropTypes.bool,
     content: customPropTypes.itemShorthand,
+    checkable: PropTypes.bool,
+    checkableIndicator: customPropTypes.itemShorthandWithoutJSX,
     header: customPropTypes.itemShorthand,
     image: customPropTypes.itemShorthandWithoutJSX,
     onClick: PropTypes.func,
     isFromKeyboard: PropTypes.bool,
     selected: PropTypes.bool,
-    selectedIndicator: customPropTypes.itemShorthandWithoutJSX,
   }
 
   handleClick = e => {
