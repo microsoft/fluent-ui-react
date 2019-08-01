@@ -33,6 +33,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Documentation
 - Fix code in changing component variables section of theming examples @lucivpav ([#1626](https://github.com/stardust-ui/react/pull/1626))
 - Fix layout issue rendering extra space when viewing documentation in Firefox @notandrew ([#1427](https://github.com/stardust-ui/react/pull/1427))
+- Add search capability @lucivpav ([#1682](https://github.com/stardust-ui/react/pull/1682))
 
 <!--------------------------------[ v0.35.0 ]------------------------------- -->
 ## [v0.35.0](https://github.com/stardust-ui/react/tree/v0.35.0) (2019-07-26)
