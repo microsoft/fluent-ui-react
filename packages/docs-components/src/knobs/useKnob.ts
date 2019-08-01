@@ -15,20 +15,17 @@ const useKnob = <T>(
     knobContext.setKnobValue(name, newValue)
   }
 
-  React.useEffect(
-    () => {
-      knobContext.registerKnob({
-        content,
-        name,
-        type,
-        value: initialValue,
-        values,
-      })
+  React.useEffect(() => {
+    knobContext.registerKnob({
+      content,
+      name,
+      type,
+      value: initialValue,
+      values,
+    })
 
-      return () => knobContext.unregisterKnob(name)
-    },
-    [name],
-  )
+    return () => knobContext.unregisterKnob(name)
+  }, [name])
 
   return [value, setValue]
 }

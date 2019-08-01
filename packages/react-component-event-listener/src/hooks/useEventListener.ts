@@ -13,13 +13,10 @@ const useEventListener = <N extends Node, T extends EventTypes>(
     return listener(event)
   }, [])
 
-  React.useEffect(
-    () => {
-      addEventListener(handler, options)
-      return () => removeEventListener(handler, options)
-    },
-    [type],
-  )
+  React.useEffect(() => {
+    addEventListener(handler, options)
+    return () => removeEventListener(handler, options)
+  }, [type])
 }
 
 export default useEventListener
