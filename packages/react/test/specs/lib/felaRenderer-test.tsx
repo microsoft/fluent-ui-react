@@ -20,6 +20,37 @@ test('css fallback value', () => {
   expect(snapshot).toMatchSnapshot()
 })
 
+test('keyframe', () => {
+  const spinner = {
+    keyframe: ({ fromColor, toColor }) => ({
+      from: {
+        color: fromColor,
+      },
+      to: {
+        color: toColor,
+      },
+    }),
+    keyframeParams: {
+      fromColor: 'red',
+      toColor: 'blue',
+    },
+    duration: '5s',
+  }
+
+  const snapshot = createSnapshot(
+    <Provider theme={teams}>
+      <Provider theme={{ animations: { spinner } }}>
+        <Animation name="spinner">
+          <Icon name="umbrella" circular bordered />
+        </Animation>
+      </Provider>
+    </Provider>,
+    {},
+    felaRenderer,
+  )
+  expect(snapshot).toMatchSnapshot()
+})
+
 test('keyframe returning css fallback value', () => {
   const steps = ['0%', '100%']
 
