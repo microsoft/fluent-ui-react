@@ -5,6 +5,7 @@ import Types from './Types'
 import Variations from './Variations'
 import States from './States'
 import Groups from './Groups'
+import SplitButton from './SplitButton'
 import Usage from './Usage'
 import Rtl from './Rtl'
 import Performance from './Performance'
@@ -16,6 +17,7 @@ const ButtonExamples = () => (
     <States />
     <Variations />
     <Groups />
+    <SplitButton />
     <Usage />
     <Rtl />
     <Performance />
