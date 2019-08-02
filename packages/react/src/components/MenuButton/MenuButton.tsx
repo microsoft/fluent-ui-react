@@ -20,7 +20,6 @@ import { Menu, MenuItemProps, MenuProps, Ref } from '../..'
 import { contextMenuBehavior } from '../../lib/accessibility'
 import { focusMenuItem, focusNearest } from './focusUtils'
 import { ALIGNMENTS, POSITIONS, PositioningProps } from '../../lib/positioner'
-import { AutoFocusZoneProps } from '../../lib/accessibility/FocusZone'
 
 export interface ContextMenuSlotClassNames {
   menu: string
@@ -81,10 +80,11 @@ export interface ContextMenuProps extends StyledComponentProps<ContextMenuProps>
   /** Ref for Popup content DOM node. */
   contentRef?: React.Ref<HTMLElement>
 
-  /** Controls whether or not auto focus should be applied, using boolean or AutoFocusZoneProps type value. */
-  autoFocus?: boolean | AutoFocusZoneProps
-
+  /** Shorthand for menu configuration */
   menu?: ShorthandValue<MenuProps>
+
+  /** Determines if the MenuButton behaves as context menu */
+  contextMenu?: boolean
 }
 
 export interface ContextMenuState {
@@ -139,6 +139,7 @@ export default class MenuButton extends AutoControlledComponent<
     unstable_pinned: PropTypes.bool,
     contentRef: customPropTypes.ref,
     menu: customPropTypes.itemShorthandWithoutJSX,
+    contextMenu: PropTypes.bool,
   }
 
   static defaultProps: ContextMenuProps = {
@@ -241,7 +242,7 @@ export default class MenuButton extends AutoControlledComponent<
     accessibility,
     styles,
   }: RenderResultConfig<ContextMenuProps>): React.ReactNode {
-    const { menu, ...popupProps } = this.props
+    const { contextMenu, menu, ...popupProps } = this.props
     const content =
       menu &&
       Menu.create(menu, {
@@ -253,6 +254,28 @@ export default class MenuButton extends AutoControlledComponent<
           items: this.handleMenuItemOverrides(accessibility.attributes.menuItem),
         },
       })
+
+    const overrideProps = {
+      open: this.state.open,
+      onOpenChange: this.handleOpenChange,
+      content: {
+        styles: styles.popupContent,
+        content: content && <Ref innerRef={this.menuRef}>{content}</Ref>,
+      },
+      children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger
+    }
+
+    if (contextMenu) {
+      return Popup.create(popupProps, {
+        defaultProps: {
+          on: 'context',
+          trapFocus: true,
+          unstable_pinned: true,
+          shouldTriggerBeTabbable: false,
+        },
+        overrideProps,
+      })
+    }
 
     return (
       <ElementType
@@ -270,13 +293,7 @@ export default class MenuButton extends AutoControlledComponent<
             },
             overrideProps: {
               accessibility: () => accessibility,
-              open: this.state.open,
-              onOpenChange: this.handleOpenChange,
-              content: {
-                styles: styles.popupContent,
-                content: content && <Ref innerRef={this.menuRef}>{content}</Ref>,
-              },
-              children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger
+              ...overrideProps,
             },
           })}
         </Ref>

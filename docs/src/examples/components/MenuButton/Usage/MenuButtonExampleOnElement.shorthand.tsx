@@ -22,7 +22,7 @@ class MenuButtonOnElement extends React.Component {
           }
           shouldTriggerBeTabbable={false}
           menu={{ items }}
-          on="context"
+          contextMenu
         />
         {this.state.alert && <Alert warning content="Click!" />}
       </>
