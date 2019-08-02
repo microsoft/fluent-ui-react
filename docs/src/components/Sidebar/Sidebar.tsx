@@ -405,7 +405,7 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'mentions',
         title: { content: 'Mentions', as: NavLink, to: '/prototype-mentions' },
-        public: false,
+        public: true,
       },
       {
         key: 'searchpage',
@@ -426,6 +426,11 @@ class Sidebar extends React.Component<any, any> {
         key: 'menu-button',
         title: { content: 'MenuButton', as: NavLink, to: '/menu-button' },
         public: false,
+      },
+      {
+        key: 'loader-button',
+        title: { content: 'Loader button', as: NavLink, to: '/loader-button' },
+        public: true,
       },
     ]
 

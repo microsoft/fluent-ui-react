@@ -38,6 +38,8 @@ import PopupsPrototype from './prototypes/popups'
 import IconViewerPrototype from './prototypes/IconViewer'
 import MenuButtonPrototype from './prototypes/MenuButton'
 import AlertsPrototype from './prototypes/alerts'
+// import NestedPopupsAndDialogsPrototype from './prototypes/NestedPopupsAndDialogs'
+import LoaderButton from './prototypes/LoaderButton'
 
 const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -61,6 +63,12 @@ const Routes = () => (
           <Route exact path="/icon-viewer" component={IconViewerPrototype} />
           <Route exact path="/menu-button" component={MenuButtonPrototype} />
           <Route exact path="/prototype-alerts" component={AlertsPrototype} />
+          <Route exact path="/loader-button" component={LoaderButton} />
+          {/* <Route
+            exact
+            path="/prototype-nested-popups-and-dialogs"
+            component={NestedPopupsAndDialogsPrototype}
+          /> */}
           <Route exact path="/faq" component={FAQ} />
           <Route exact path="/accessibility" component={Accessibility} />
           <Route exact path="/accessibility-behaviors" component={AccessibilityBehaviors} />

@@ -33,7 +33,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
   const [layout] = useSelectKnob({
     name: 'layout',
     values: availableLayouts,
-    initialValue: undefined,
+    initialValue: 'powerpoint-presenter',
   })
 
   const [isRecording] = useBooleanKnob({
