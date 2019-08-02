@@ -8,9 +8,11 @@ import arrowDown from './arrowDown'
 import ban from './ban'
 import bold from './bold'
 import bookmark from './bookmark'
+import broadcast from './broadcast'
 import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
+import callBlocked from './callBlocked'
 import callParking from './callParking'
 import callControlRelease from './callControlRelease'
 import callControlRequest from './callControlRequest'
@@ -91,6 +93,7 @@ import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
+import oneDrive from './oneDrive'
 import microsoftStream from './microsoftStream'
 import userPhone from './userPhone'
 import speakerMute from './speakerMute'
@@ -153,9 +156,11 @@ export default {
   ban,
   bold,
   bookmark,
+  broadcast,
   bullets,
   calendar,
   call,
+  'call-blocked': callBlocked,
   'call-dialpad': callDialpad,
   'call-end': callEnd,
   'call-parking': callParking,
@@ -233,6 +238,7 @@ export default {
   'microsoft-stream': microsoftStream,
   'user-phone': userPhone,
   'number-list': numberList,
+  onedrive: oneDrive,
   'open-outside': openOutside,
   outdent,
   paperclip,

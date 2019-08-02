@@ -10,7 +10,7 @@ import ComponentProps from './ComponentProps'
 import ComponentAccessibility from './ComponentDocAccessibility'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ExampleContext from 'docs/src/context/ExampleContext'
-import ComponentPlayground from 'docs/src/components/ComponentPlayground'
+import ComponentPlayground from 'docs/src/components/ComponentPlayground/ComponentPlayground'
 import { ComponentInfo } from 'docs/src/types'
 
 const exampleEndStyle: React.CSSProperties = {

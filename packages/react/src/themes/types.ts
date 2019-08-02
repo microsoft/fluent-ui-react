@@ -1,5 +1,5 @@
 import * as CSSType from 'csstype'
-import { IRenderer as FelaRenderer } from 'fela'
+import { IRenderer as FelaRenderer } from '@stardust-ui/fela'
 import * as React from 'react'
 import { Extendable, ObjectOf, ObjectOrFunc, Omit } from '../types'
 import { AccordionContentProps } from '../components/Accordion/AccordionContent'
@@ -318,9 +318,9 @@ export interface ComponentStyleFunctionParam<
   disableAnimations: boolean
 }
 
-export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((
+export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = (
   styleParam?: ComponentStyleFunctionParam<TProps, TVars>,
-) => ICSSInJSStyle)
+) => ICSSInJSStyle
 
 export type ComponentSlotStyle<TProps = {}, TVars = {}> =
   | ComponentSlotStyleFunction<TProps, TVars>
