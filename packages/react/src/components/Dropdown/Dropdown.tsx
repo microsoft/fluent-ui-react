@@ -715,11 +715,12 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
 
     const items = _.map(filteredItems, (item, index) => render =>
       render(item, () => {
+        const selected = !this.props.multiple && value === item
         return DropdownItem.create(item, {
           defaultProps: {
             className: Dropdown.slotClassNames.item,
             active: highlightedIndex === index,
-            selected: !this.props.multiple && value === item,
+            selected,
             checkable,
             checkableIndicator,
             isFromKeyboard: this.state.itemIsFromKeyboard,
@@ -729,7 +730,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                 key: (item as any).header,
               }),
           },
-          overrideProps: this.handleItemOverrides(item, index, getItemProps),
+          overrideProps: this.handleItemOverrides(item, index, getItemProps, selected),
           render: renderItem,
         })
       }),
@@ -837,16 +838,23 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     item: ShorthandValue<DropdownItemProps>,
     index: number,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue<DropdownItemProps>>) => any,
+    selected: boolean,
   ) => (predefinedProps: DropdownItemProps) => ({
-    accessibilityItemProps: getItemProps({
-      item,
-      index,
-      onClick: e => {
-        e.stopPropagation()
-        e.nativeEvent.stopImmediatePropagation()
-        _.invoke(predefinedProps, 'onClick', e, predefinedProps)
-      },
-    }),
+    accessibilityItemProps: {
+      ...getItemProps({
+        item,
+        index,
+        onClick: e => {
+          e.stopPropagation()
+          e.nativeEvent.stopImmediatePropagation()
+          _.invoke(predefinedProps, 'onClick', e, predefinedProps)
+        },
+      }),
+      // for single selection the selected item should have aria-selected, instead of the highlighted
+      ...(!this.props.multiple && {
+        'aria-selected': selected,
+      }),
+    },
   })
 
   handleSelectedItemOverrides = (item: ShorthandValue<DropdownItemProps>, rtl: boolean) => (
