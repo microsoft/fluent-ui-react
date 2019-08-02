@@ -303,7 +303,7 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'mentions',
         title: { content: 'Mentions', as: NavLink, to: '/prototype-mentions' },
-        public: false,
+        public: true,
       },
       {
         key: 'searchpage',
@@ -322,7 +322,7 @@ class Sidebar extends React.Component<any, any> {
           as: NavLink,
           to: '/prototype-nested-popups-and-dialogs',
         },
-        public: true,
+        public: false,
       },
       {
         key: 'iconviewer',
