@@ -375,7 +375,7 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'customtoolbar',
         title: { content: 'Custom Styled Toolbar', as: NavLink, to: '/prototype-custom-toolbar' },
-        public: true,
+        public: false,
       },
       {
         key: 'dropdowns',
@@ -405,7 +405,7 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'mentions',
         title: { content: 'Mentions', as: NavLink, to: '/prototype-mentions' },
-        public: true,
+        public: false,
       },
       {
         key: 'searchpage',
