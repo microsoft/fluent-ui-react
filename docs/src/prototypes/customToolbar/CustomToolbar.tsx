@@ -24,7 +24,7 @@ const tooltips = {
   moreActions: 'More actions',
   chat: 'Show conversation',
   addParticipants: 'Add participants',
-  pptNext: 'Navigate forward ',
+  pptNext: 'Navigate forward',
   pptPrevious: 'Navigate back',
 }
 
