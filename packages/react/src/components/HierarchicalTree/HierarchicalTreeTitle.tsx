@@ -13,11 +13,11 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { treeTitleBehavior } from '../../lib/accessibility'
+import { hierarchicalTreeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 
-export interface TreeTitleProps
+export interface HierarchicalTreeTitleProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
@@ -30,7 +30,7 @@ export interface TreeTitleProps
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
-  onClick?: ComponentEventHandler<TreeTitleProps>
+  onClick?: ComponentEventHandler<HierarchicalTreeTitleProps>
 
   /** Whether or not the subtree of the item is in the open state. */
   open?: boolean
@@ -39,12 +39,12 @@ export interface TreeTitleProps
   hasSubtree?: boolean
 }
 
-class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
+class HierarchicalTreeTitle extends UIComponent<WithAsProp<HierarchicalTreeTitleProps>> {
   static create: Function
 
-  static className = 'ui-tree__title'
+  static className = 'ui-hierarchicaltree__title'
 
-  static displayName = 'TreeTitle'
+  static displayName = 'HierarchicalTreeTitle'
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
@@ -55,7 +55,7 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
 
   static defaultProps = {
     as: 'a',
-    accessibility: treeTitleBehavior,
+    accessibility: hierarchicalTreeTitleBehavior,
   }
 
   actionHandlers = {
@@ -87,9 +87,14 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
   }
 }
 
-TreeTitle.create = createShorthandFactory({ Component: TreeTitle, mappedProp: 'content' })
+HierarchicalTreeTitle.create = createShorthandFactory({
+  Component: HierarchicalTreeTitle,
+  mappedProp: 'content',
+})
 
 /**
  * A TreeTitle renders a title of TreeItem.
  */
-export default withSafeTypeForAs<typeof TreeTitle, TreeTitleProps, 'a'>(TreeTitle)
+export default withSafeTypeForAs<typeof HierarchicalTreeTitle, HierarchicalTreeTitleProps, 'a'>(
+  HierarchicalTreeTitle,
+)

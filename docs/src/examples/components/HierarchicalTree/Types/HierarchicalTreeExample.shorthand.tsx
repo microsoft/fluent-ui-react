@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Tree } from '@stardust-ui/react'
+import { HierarchicalTree } from '@stardust-ui/react'
 
 const items = [
   {
@@ -70,6 +70,6 @@ const items = [
   },
 ]
 
-const TreeExampleShorthand = () => <Tree items={items} />
+const TreeExampleShorthand = () => <HierarchicalTree items={items} />
 
 export default TreeExampleShorthand
