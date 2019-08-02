@@ -65,91 +65,85 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     }
   }, [])
 
-  const createInstance = React.useCallback(
-    () => {
-      destroyInstance()
+  const createInstance = React.useCallback(() => {
+    destroyInstance()
 
-      const reference =
-        targetRef && isRefObject(targetRef)
-          ? (targetRef as React.RefObject<Element>).current
-          : (targetRef as _PopperJS.ReferenceObject)
+    const reference =
+      targetRef && isRefObject(targetRef)
+        ? (targetRef as React.RefObject<Element>).current
+        : (targetRef as _PopperJS.ReferenceObject)
 
-      if (!enabled || !reference || !contentRef.current) {
-        return
-      }
+    if (!enabled || !reference || !contentRef.current) {
+      return
+    }
 
-      const pointerTargetRefElement = pointerTargetRef && pointerTargetRef.current
-      const popperHasScrollableParent = getScrollParent(contentRef.current) !== document.body
+    const pointerTargetRefElement = pointerTargetRef && pointerTargetRef.current
+    const popperHasScrollableParent = getScrollParent(contentRef.current) !== document.body
 
-      const modifiers: PopperJS.Modifiers = _.merge(
-        { preventOverflow: { padding: 0 } },
-        { flip: { padding: 0, flipVariationsByContent: true } },
-        /**
-         * When the popper box is placed in the context of a scrollable element, we need to set
-         * preventOverflow.escapeWithReference to true and flip.boundariesElement to 'scrollParent' (default is 'viewport')
-         * so that the popper box will stick with the targetRef when we scroll targetRef out of the viewport.
-         */
-        popperHasScrollableParent && {
-          preventOverflow: { escapeWithReference: true },
-          flip: { boundariesElement: 'scrollParent' },
-        },
-        /**
-         * unstable_pinned disables the flip modifier by setting flip.enabled to false; this disables automatic
-         * repositioning of the popper box; it will always be placed according to the values of `align` and
-         * `position` props, regardless of the size of the component, the reference element or the viewport.
-         */
-        unstable_pinned && { flip: { enabled: false } },
-        computedModifiers,
-        userModifiers,
-        /**
-         * This modifier is necessary in order to render the pointer.
-         */
-        {
-          arrow: {
-            enabled: !!pointerTargetRefElement,
-            element: pointerTargetRefElement,
-          },
-        },
-      )
-
-      const handleUpdate = (data: PopperJS.Data) => {
-        // PopperJS performs computations that might update the computed placement: auto positioning, flipping the
-        // placement in case the popper box should be rendered at the edge of the viewport and does not fit
-        if (data.placement !== latestPlacement.current) {
-          latestPlacement.current = data.placement
-          setComputedPlacement(data.placement)
-        }
-      }
-
-      const options: PopperJS.PopperOptions = {
-        placement: proposedPlacement,
-        positionFixed,
-        modifiers,
-        onCreate: handleUpdate,
-        onUpdate: handleUpdate,
-      }
-
-      popperRef.current = createPopper(reference, contentRef.current, options)
-    },
-    // TODO review dependencies for popperHasScrollableParent
-    [
+    const modifiers: PopperJS.Modifiers = _.merge(
+      { preventOverflow: { padding: 0 } },
+      { flip: { padding: 0, flipVariationsByContent: true } },
+      /**
+       * When the popper box is placed in the context of a scrollable element, we need to set
+       * preventOverflow.escapeWithReference to true and flip.boundariesElement to 'scrollParent' (default is 'viewport')
+       * so that the popper box will stick with the targetRef when we scroll targetRef out of the viewport.
+       */
+      popperHasScrollableParent && {
+        preventOverflow: { escapeWithReference: true },
+        flip: { boundariesElement: 'scrollParent' },
+      },
+      /**
+       * unstable_pinned disables the flip modifier by setting flip.enabled to false; this disables automatic
+       * repositioning of the popper box; it will always be placed according to the values of `align` and
+       * `position` props, regardless of the size of the component, the reference element or the viewport.
+       */
+      unstable_pinned && { flip: { enabled: false } },
       computedModifiers,
-      enabled,
       userModifiers,
-      positionFixed,
-      proposedPlacement,
-      unstable_pinned,
-      targetRef,
-    ],
-  )
+      /**
+       * This modifier is necessary in order to render the pointer.
+       */
+      {
+        arrow: {
+          enabled: !!pointerTargetRefElement,
+          element: pointerTargetRefElement,
+        },
+      },
+    )
 
-  React.useLayoutEffect(
-    () => {
-      createInstance()
-      return destroyInstance
-    },
-    [createInstance],
-  )
+    const handleUpdate = (data: PopperJS.Data) => {
+      // PopperJS performs computations that might update the computed placement: auto positioning, flipping the
+      // placement in case the popper box should be rendered at the edge of the viewport and does not fit
+      if (data.placement !== latestPlacement.current) {
+        latestPlacement.current = data.placement
+        setComputedPlacement(data.placement)
+      }
+    }
+
+    const options: PopperJS.PopperOptions = {
+      placement: proposedPlacement,
+      positionFixed,
+      modifiers,
+      onCreate: handleUpdate,
+      onUpdate: handleUpdate,
+    }
+
+    popperRef.current = createPopper(reference, contentRef.current, options)
+  }, [
+    // TODO review dependencies for popperHasScrollableParent
+    computedModifiers,
+    enabled,
+    userModifiers,
+    positionFixed,
+    proposedPlacement,
+    unstable_pinned,
+    targetRef,
+  ])
+
+  React.useLayoutEffect(() => {
+    createInstance()
+    return destroyInstance
+  }, [createInstance])
 
   React.useEffect(scheduleUpdate, [...positioningDependencies, computedPlacement])
 
