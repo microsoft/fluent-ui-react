@@ -1,5 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CSS fallback values are rendered 1`] = `
+".a {
+  color: red;
+  color: blue;
+}
+
+
+<div className=ui-box a />;
+"
+`;
+
 exports[`array returned by keyframe results in CSS fallback values 1`] = `
 "@-webkit-keyframes k1 {
   0% {
@@ -48,7 +59,7 @@ exports[`array returned by keyframe results in CSS fallback values 1`] = `
 "
 `;
 
-exports[`basic styles 1`] = `
+exports[`basic styles are rendered 1`] = `
 ".a {
   color: red;
 }
@@ -58,18 +69,7 @@ exports[`basic styles 1`] = `
 "
 `;
 
-exports[`css fallback value 1`] = `
-".a {
-  color: red;
-  color: blue;
-}
-
-
-<div className=ui-box a />;
-"
-`;
-
-exports[`keyframe 1`] = `
+exports[`keyframe colors are rendered 1`] = `
 "@-webkit-keyframes k1 {
   from {
     color: red;
@@ -108,7 +108,7 @@ exports[`keyframe 1`] = `
 "
 `;
 
-exports[`rtl 1`] = `
+exports[`marginLeft is rendered into marginRight due to RTL 1`] = `
 ".a {
   margin-right: 10px;
 }
