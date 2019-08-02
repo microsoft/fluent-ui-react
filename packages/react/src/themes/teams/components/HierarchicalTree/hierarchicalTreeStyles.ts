@@ -1,11 +1,11 @@
 import { ICSSInJSStyle } from '../../../types'
 import { pxToRem } from '../../../../lib'
 
-const treeStyles = {
+const hierarchicalTreeStyles = {
   root: (): ICSSInJSStyle => ({
     display: 'block',
     paddingLeft: `${pxToRem(10)}`,
   }),
 }
 
-export default treeStyles
+export default hierarchicalTreeStyles

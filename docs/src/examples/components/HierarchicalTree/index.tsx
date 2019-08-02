@@ -1,10 +1,10 @@
 import * as React from 'react'
 import Types from './Types'
 
-const TreeExamples = () => (
+const HierarchicalTreeExamples = () => (
   <div>
     <Types />
   </div>
 )
 
-export default TreeExamples
+export default HierarchicalTreeExamples

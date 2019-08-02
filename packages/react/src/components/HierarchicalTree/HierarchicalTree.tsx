@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import TreeItem, { TreeItemProps } from './TreeItem'
+import HierarchicalTreeItem, { HierarchicalTreeItemProps } from './HierarchicalTreeItem'
 import {
   AutoControlledComponent,
   childrenExist,
@@ -23,13 +23,13 @@ import {
   ComponentEventHandler,
 } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
-import { treeBehavior } from '../../lib/accessibility'
+import { hierarchicalTreeBehavior } from '../../lib/accessibility'
 
-export interface TreeSlotClassNames {
+export interface HierarchicalTreeSlotClassNames {
   item: string
 }
 
-export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
+export interface HierarchicalTreeProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active subtree. */
   activeIndex?: number[] | number
 
@@ -43,7 +43,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   exclusive?: boolean
 
   /** Shorthand array of props for Tree. */
-  items?: ShorthandCollection<TreeItemProps>
+  items?: ShorthandCollection<HierarchicalTreeItemProps>
 
   /**
    * A custom render function for the title slot.
@@ -59,22 +59,25 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onActiveIndexChange?: ComponentEventHandler<TreeProps>
+  onActiveIndexChange?: ComponentEventHandler<HierarchicalTreeProps>
 }
 
-export interface TreeState {
+export interface HierarchicalTreeState {
   activeIndex: number[] | number
 }
 
-class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
+class HierarchicalTree extends AutoControlledComponent<
+  WithAsProp<HierarchicalTreeProps>,
+  HierarchicalTreeState
+> {
   static create: Function
 
-  static displayName = 'Tree'
+  static displayName = 'HierarchicalTree'
 
-  static className = 'ui-tree'
+  static className = 'ui-hierarchicaltree'
 
-  static slotClassNames: TreeSlotClassNames = {
-    item: `${Tree.className}__item`,
+  static slotClassNames: HierarchicalTreeSlotClassNames = {
+    item: `${HierarchicalTree.className}__item`,
   }
 
   static propTypes = {
@@ -98,7 +101,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   static defaultProps = {
     as: 'ul',
-    accessibility: treeBehavior,
+    accessibility: hierarchicalTreeBehavior,
   }
 
   static autoControlledProps = ['activeIndex']
@@ -129,7 +132,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     _.invoke(this.props, 'onActiveIndexChange', e, { ...this.props, activeIndex })
   }
 
-  getInitialAutoControlledState({ exclusive }): TreeState {
+  getInitialAutoControlledState({ exclusive }): HierarchicalTreeState {
     return {
       activeIndex: exclusive ? -1 : [],
     }
@@ -140,7 +143,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     return _.isArray(activeIndex) ? activeIndex : [activeIndex]
   }
 
-  computeNewIndex = (treeItemProps: TreeItemProps) => {
+  computeNewIndex = (treeItemProps: HierarchicalTreeItemProps) => {
     const { index, items } = treeItemProps
     const activeIndexes = this.getActiveIndexes()
     const { exclusive } = this.props
@@ -156,8 +159,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       : [...activeIndexes, index]
   }
 
-  handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
-    onTitleClick: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
+  handleTreeItemOverrides = (predefinedProps: HierarchicalTreeItemProps) => ({
+    onTitleClick: (e: React.SyntheticEvent, treeItemProps: HierarchicalTreeItemProps) => {
       this.trySetActiveIndexAndTriggerEvent(e, this.computeNewIndex(treeItemProps))
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
@@ -168,10 +171,10 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     const { activeIndex } = this.state
     const activeIndexes = this.getActiveIndexes()
 
-    return _.map(items, (item: ShorthandValue<TreeItemProps>, index: number) =>
-      TreeItem.create(item, {
+    return _.map(items, (item: ShorthandValue<HierarchicalTreeItemProps>, index: number) =>
+      HierarchicalTreeItem.create(item, {
         defaultProps: {
-          className: Tree.slotClassNames.item,
+          className: HierarchicalTree.slotClassNames.item,
           index,
           exclusive,
           renderItemTitle,
@@ -199,7 +202,10 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   }
 }
 
-Tree.create = createShorthandFactory({ Component: Tree, mappedArrayProp: 'items' })
+HierarchicalTree.create = createShorthandFactory({
+  Component: HierarchicalTree,
+  mappedArrayProp: 'items',
+})
 
 /**
  * A Tree displays data organised in tree hierarchy.
@@ -207,4 +213,6 @@ Tree.create = createShorthandFactory({ Component: Tree, mappedArrayProp: 'items'
  * @accessibility
  * Implements [ARIA TreeView](https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView) design pattern.
  */
-export default withSafeTypeForAs<typeof Tree, TreeProps, 'ul'>(Tree)
+export default withSafeTypeForAs<typeof HierarchicalTree, HierarchicalTreeProps, 'ul'>(
+  HierarchicalTree,
+)

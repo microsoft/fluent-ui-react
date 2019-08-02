@@ -53,9 +53,9 @@ import { ToolbarProps } from '../components/Toolbar/Toolbar'
 import { ToolbarRadioGroupProps } from '../components/Toolbar/ToolbarRadioGroup'
 import { TooltipContentProps } from '../components/Tooltip/TooltipContent'
 import { TooltipProps } from '../components/Tooltip/Tooltip'
-import { TreeItemProps } from '../components/Tree/TreeItem'
-import { TreeProps } from '../components/Tree/Tree'
-import { TreeTitleProps } from '../components/Tree/TreeTitle'
+import { HierarchicalTreeItemProps } from '../components/HierarchicalTree/HierarchicalTreeItem'
+import { HierarchicalTreeProps } from '../components/HierarchicalTree/HierarchicalTree'
+import { HierarchicalTreeTitleProps } from '../components/HierarchicalTree/HierarchicalTreeTitle'
 import { VideoProps } from '../components/Video/Video'
 
 // Themes go through 3 phases.
@@ -457,9 +457,9 @@ type ThemeStylesProps = {
   Tooltip?: TooltipProps
   TooltipContent?: TooltipContentProps
   Text?: TextProps
-  Tree?: TreeProps
-  TreeItem?: TreeItemProps
-  TreeTitle?: TreeTitleProps
+  Tree?: HierarchicalTreeProps
+  TreeItem?: HierarchicalTreeItemProps
+  TreeTitle?: HierarchicalTreeTitleProps
   Video?: VideoProps
 }
 
