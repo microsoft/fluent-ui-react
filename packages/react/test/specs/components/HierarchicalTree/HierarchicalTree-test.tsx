@@ -3,9 +3,9 @@ import * as keyboardKey from 'keyboard-key'
 
 import { isConformant } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
-import Tree from 'src/components/Tree/Tree'
-import TreeTitle from 'src/components/Tree/TreeTitle'
-import TreeItem from 'src/components/Tree/TreeItem'
+import HierarchicalTree from 'src/components/HierarchicalTree/HierarchicalTree'
+import HierarchicalTreeTitle from 'src/components/HierarchicalTree/HierarchicalTreeTitle'
+import HierarchicalTreeItem from 'src/components/HierarchicalTree/HierarchicalTreeItem'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 
 const items = [
@@ -56,9 +56,9 @@ const items = [
 ]
 
 const getTitles = (wrapper: ReactWrapper): CommonWrapper =>
-  wrapper.find(`.${TreeTitle.className}`).filterWhere(n => typeof n.type() === 'string')
+  wrapper.find(`.${HierarchicalTreeTitle.className}`).filterWhere(n => typeof n.type() === 'string')
 const getItems = (wrapper: ReactWrapper): CommonWrapper =>
-  wrapper.find(`.${TreeItem.className}`).filterWhere(n => typeof n.type() === 'string')
+  wrapper.find(`.${HierarchicalTreeItem.className}`).filterWhere(n => typeof n.type() === 'string')
 
 const checkOpenTitles = (wrapper: ReactWrapper, expected: string[]): void => {
   const titles = getTitles(wrapper)
@@ -70,11 +70,11 @@ const checkOpenTitles = (wrapper: ReactWrapper, expected: string[]): void => {
 }
 
 describe('Tree', () => {
-  isConformant(Tree)
+  isConformant(HierarchicalTree)
 
   describe('activeIndex', () => {
     it('should contain index of item open at click', () => {
-      const wrapper = mountWithProvider(<Tree items={items} />)
+      const wrapper = mountWithProvider(<HierarchicalTree items={items} />)
 
       getTitles(wrapper)
         .at(0) // title 1
@@ -88,7 +88,9 @@ describe('Tree', () => {
     })
 
     it('should have index of item removed when closed at click', () => {
-      const wrapper = mountWithProvider(<Tree items={items} defaultActiveIndex={[0, 1]} />)
+      const wrapper = mountWithProvider(
+        <HierarchicalTree items={items} defaultActiveIndex={[0, 1]} />,
+      )
 
       getTitles(wrapper)
         .at(0) // title 1
@@ -97,7 +99,7 @@ describe('Tree', () => {
     })
 
     it('should contain only one index at a time if exclusive', () => {
-      const wrapper = mountWithProvider(<Tree items={items} exclusive />)
+      const wrapper = mountWithProvider(<HierarchicalTree items={items} exclusive />)
 
       getTitles(wrapper)
         .at(0) // title 1
@@ -111,7 +113,7 @@ describe('Tree', () => {
     })
 
     it('should contain index of item open by ArrowRight', () => {
-      const wrapper = mountWithProvider(<Tree items={items} />)
+      const wrapper = mountWithProvider(<HierarchicalTree items={items} />)
 
       getTitles(wrapper)
         .at(0) // title 1
@@ -120,7 +122,9 @@ describe('Tree', () => {
     })
 
     it('should have index of item removed if closed by ArrowLeft', () => {
-      const wrapper = mountWithProvider(<Tree items={items} defaultActiveIndex={[0, 1]} />)
+      const wrapper = mountWithProvider(
+        <HierarchicalTree items={items} defaultActiveIndex={[0, 1]} />,
+      )
 
       getItems(wrapper)
         .at(0) // title 1
@@ -129,7 +133,7 @@ describe('Tree', () => {
     })
 
     it('should have all TreeItems with a subtree open on asterisk key', () => {
-      const wrapper = mountWithProvider(<Tree items={items} />)
+      const wrapper = mountWithProvider(<HierarchicalTree items={items} />)
 
       getTitles(wrapper)
         .at(0) // title 1
@@ -138,7 +142,7 @@ describe('Tree', () => {
     })
 
     it('should expand subtrees only on current level on asterisk key', () => {
-      const wrapper = mountWithProvider(<Tree items={items} defaultActiveIndex={[0]} />)
+      const wrapper = mountWithProvider(<HierarchicalTree items={items} defaultActiveIndex={[0]} />)
 
       getTitles(wrapper)
         .at(1) // title 11
@@ -147,7 +151,9 @@ describe('Tree', () => {
     })
 
     it('should not be changed on asterisk key if all siblings are already expanded', () => {
-      const wrapper = mountWithProvider(<Tree items={items} defaultActiveIndex={[0, 1, 2]} />)
+      const wrapper = mountWithProvider(
+        <HierarchicalTree items={items} defaultActiveIndex={[0, 1, 2]} />,
+      )
 
       getTitles(wrapper)
         .at(0) // title 1

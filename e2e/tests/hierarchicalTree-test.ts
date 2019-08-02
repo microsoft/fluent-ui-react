@@ -1,4 +1,4 @@
-import { selectors } from './tree-example'
+import { selectors } from './hierarchicalTree-example'
 
 const tree = `.${selectors.treeClass}`
 const treeItem = index => `.${selectors.treeItemClass}:nth-child(${index})`
