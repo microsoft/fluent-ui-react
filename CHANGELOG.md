@@ -17,6 +17,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.34.4 ]------------------------------- -->
+## [v0.34.3](https://github.com/stardust-ui/react/tree/v0.34.4) (2019-08-02)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.34.3...v0.34.4)
+
+### Features
+- Add `target` prop on `Provider`, allows to specify a `document` where styles should be renderer @layershifter ([#1252](https://github.com/stardust-ui/react/pull/1252))
+
 <!--------------------------------[ v0.34.3 ]------------------------------- -->
 ## [v0.34.3](https://github.com/stardust-ui/react/tree/v0.34.3) (2019-07-23)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.34.2...v0.34.3)
