@@ -9,6 +9,10 @@ import callable from './callable'
  */
 export default () => {
   const invokeKeyframes = (styles: Object) => {
+    if (typeof styles === 'string') {
+      return styles
+    }
+
     return Object.keys(styles).reduce((acc, cssPropertyName) => {
       const cssPropertyValue = styles[cssPropertyName]
 
@@ -22,6 +26,13 @@ export default () => {
         return {
           ...acc,
           [cssPropertyName]: styles[cssPropertyName],
+        }
+      }
+
+      if (Array.isArray(cssPropertyValue)) {
+        return {
+          ...acc,
+          [cssPropertyName]: cssPropertyValue.map(arrayElement => invokeKeyframes(arrayElement)),
         }
       }
 
