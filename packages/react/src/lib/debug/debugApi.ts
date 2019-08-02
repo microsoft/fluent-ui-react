@@ -37,7 +37,10 @@ const debugApi = (inputComponent?) => {
 
   if (debug === null) {
     console.warn(
-      'There is no debug data registered for Stardust component. Ensure that debug data collection is enabled.',
+      [
+        'Debug data collection is disabled.',
+        'To enable it, paste `window.localStorage.stardustDebug = true` to your browser console and reload the page.',
+      ].join(' '),
     )
     return undefined
   }
@@ -75,16 +78,6 @@ const isDebugEnabled = () => {
 
     enabled = isEnabledBrowserOverride || !isProduction
   } catch {}
-
-  if (!enabled) {
-    console.warn(
-      [
-        '@stardust-ui/react:',
-        'Debug data collection is disabled.',
-        'To enable it, paste `window.localStorage.stardustDebug = true` to your browser console and reload the page.',
-      ].join(' '),
-    )
-  }
 
   return enabled
 }
