@@ -59,13 +59,14 @@ test('array returned by keyframe results in CSS fallback values', () => {
   const steps = ['0%', '100%']
 
   const spinner = {
-    keyframe: () => {
+    keyframe: ({ steps }) => {
       const obj = {}
       steps.forEach((step: string, index) => {
         ;(obj as any)[step] = { color: ['blue', 'red', 'yellow'] }
       })
       return obj
     },
+    keyframeParams: { steps },
   }
 
   const snapshot = createSnapshot(
