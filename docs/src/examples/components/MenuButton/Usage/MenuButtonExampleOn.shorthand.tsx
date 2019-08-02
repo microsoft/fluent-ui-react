@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { Alert, Button, Flex, MenuButton } from '@stardust-ui/react'
 
-const items = ['1', '2', '3', { content: 'submenu', menu: { items: ['4', '5'] } }]
-
 class MenuButtonExampleOn extends React.Component {
   state = { alert: false }
 
@@ -17,17 +15,17 @@ class MenuButtonExampleOn extends React.Component {
         <Flex gap="gap.smaller">
           <MenuButton
             trigger={<Button icon="expand" content="Click" aria-label="Click button" />}
-            menu={{ items }}
+            menu={['1', '2', '3', { content: 'submenu', menu: { items: ['4', '5'] } }]}
             on="click"
           />
           <MenuButton
             trigger={<Button icon="expand" content="Hover" aria-label="Hover button" />}
-            menu={{ items }}
+            menu={['1', '2', '3', { content: 'submenu', menu: { items: ['4', '5'] } }]}
             on="hover"
           />
           <MenuButton
             trigger={<Button icon="expand" content="Focus" aria-label="Focus button" />}
-            menu={{ items }}
+            menu={['1', '2', '3', { content: 'submenu', menu: { items: ['4', '5'] } }]}
             on="focus"
           />
           <MenuButton
@@ -39,7 +37,7 @@ class MenuButtonExampleOn extends React.Component {
                 onClick={this.showAlert}
               />
             }
-            menu={{ items }}
+            menu={['1', '2', '3', { content: 'submenu', menu: { items: ['4', '5'] } }]}
             on="context"
           />
         </Flex>

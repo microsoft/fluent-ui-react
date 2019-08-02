@@ -50,4 +50,4 @@ export { default as checkboxBehavior } from './Behaviors/Checkbox/checkboxBehavi
 export { default as tooltipBehavior } from './Behaviors/Tooltip/tooltipBehavior'
 export { default as tooltipAsLabelBehavior } from './Behaviors/Tooltip/tooltipAsLabelBehavior'
 export { default as sliderBehavior } from './Behaviors/Slider/sliderBehavior'
-export { default as contextMenuBehavior } from './Behaviors/MenuButton/menuButtonBehavior'
+export { default as menuButtonBehavior } from './Behaviors/MenuButton/menuButtonBehavior'

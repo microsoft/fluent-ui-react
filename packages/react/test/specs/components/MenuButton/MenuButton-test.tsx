@@ -16,27 +16,34 @@ describe('MenuButton', () => {
 
     describe('onOpenChange', () => {
       test('is called on click', () => {
-        const spy = jest.fn()
-
-        mountWithProvider(<MenuButton trigger={<button />} menu={mockMenu} onOpenChange={spy} />)
-          .find('button')
-          .simulate('click')
-
-        expect(spy).toHaveBeenCalledTimes(1)
-        expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
-      })
-
-      test('is called on click when controlled', () => {
-        const spy = jest.fn()
+        const onOpenChange = jest.fn()
 
         mountWithProvider(
-          <MenuButton open={false} trigger={<button />} menu={mockMenu} onOpenChange={spy} />,
+          <MenuButton trigger={<button />} menu={mockMenu} onOpenChange={onOpenChange} />,
         )
           .find('button')
           .simulate('click')
 
-        expect(spy).toHaveBeenCalledTimes(1)
-        expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
+        expect(onOpenChange).toHaveBeenCalledTimes(1)
+        expect(onOpenChange.mock.calls[0][1]).toMatchObject({ open: true })
+      })
+
+      test('is called on click when controlled', () => {
+        const onOpenChange = jest.fn()
+
+        mountWithProvider(
+          <MenuButton
+            open={false}
+            trigger={<button />}
+            menu={mockMenu}
+            onOpenChange={onOpenChange}
+          />,
+        )
+          .find('button')
+          .simulate('click')
+
+        expect(onOpenChange).toHaveBeenCalledTimes(1)
+        expect(onOpenChange.mock.calls[0][1]).toMatchObject({ open: true })
       })
     })
 
@@ -58,12 +65,11 @@ describe('MenuButton', () => {
         const menuButton = mountWithProvider(<MenuButton trigger={<button />} menu={mockMenu} />)
         const button = menuButton.find('button')
         button.simulate('click')
-        // const menu = menuButton.find('ul')
+        const menu = menuButton.find('ul')
         const triggerId = button.prop('id')
 
         expect(triggerId).toMatch(/menubutton-trigger-\d+/)
-        // TODO: component does not persist generated ids across re-renders
-        // expect(menu.prop('aria-labelledby')).toEqual(triggerId)
+        expect(menu.prop('aria-labelledby')).toEqual(triggerId)
       })
 
       test('menu id is used', () => {
@@ -87,8 +93,7 @@ describe('MenuButton', () => {
         const menuId = menu.prop('id')
 
         expect(menuId).toMatch(/menubutton-menu-\d+/)
-        // TODO: component does not persist generated ids across re-renders
-        // expect(button.prop('aria-controls')).toEqual(menuId)
+        expect(button.prop('aria-controls')).toEqual(menuId)
       })
     })
   })

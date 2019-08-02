@@ -11,24 +11,26 @@ import {
   commonPropTypes,
   StyledComponentProps,
 } from '../../lib'
-import { ShorthandValue, ComponentEventHandler } from '../../types'
+import { ShorthandValue, ComponentEventHandler, ShorthandCollection } from '../../types'
 
 import { Accessibility } from '../../lib/accessibility/types'
 import { createShorthandFactory } from '../../lib/factories'
 import Popup, { PopupProps, PopupEvents, PopupEventsArray } from '../Popup/Popup'
-import { Menu, MenuItemProps, MenuProps, Ref } from '../..'
-import { contextMenuBehavior } from '../../lib/accessibility'
+import Menu, { MenuProps } from '../Menu/Menu'
+import { MenuItemProps } from '../Menu/MenuItem'
+import { Ref } from '@stardust-ui/react-component-ref'
+import { menuButtonBehavior } from '../../lib/accessibility'
 import { focusMenuItem, focusNearest } from './focusUtils'
 import { ALIGNMENTS, POSITIONS, PositioningProps } from '../../lib/positioner'
 
-export interface ContextMenuSlotClassNames {
+export interface MenuButtonSlotClassNames {
   menu: string
 }
 
-export interface ContextMenuProps extends StyledComponentProps<ContextMenuProps>, PositioningProps {
+export interface MenuButtonProps extends StyledComponentProps<MenuButtonProps>, PositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default contextMenuBehavior
+   * @default menuButtonBehavior
    */
   accessibility?: Accessibility
 
@@ -77,17 +79,14 @@ export interface ContextMenuProps extends StyledComponentProps<ContextMenuProps>
   /** Whether the trigger should be tabbable */
   shouldTriggerBeTabbable?: boolean
 
-  /** Ref for Popup content DOM node. */
-  contentRef?: React.Ref<HTMLElement>
-
   /** Shorthand for menu configuration */
-  menu?: ShorthandValue<MenuProps>
+  menu?: ShorthandValue<MenuProps> | ShorthandCollection<MenuItemProps>
 
   /** Determines if the MenuButton behaves as context menu */
   contextMenu?: boolean
 }
 
-export interface ContextMenuState {
+export interface MenuButtonState {
   open: boolean
   menuId: string
   triggerId: string
@@ -98,17 +97,14 @@ export interface ContextMenuState {
  * A MenuButton displays a menu connected to trigger element.
  * @accessibility
  */
-export default class MenuButton extends AutoControlledComponent<
-  ContextMenuProps,
-  ContextMenuState
-> {
+export default class MenuButton extends AutoControlledComponent<MenuButtonProps, MenuButtonState> {
   static displayName = 'MenuButton'
 
   static className = 'ui-menubutton'
 
   static create: Function
 
-  static slotClassNames: ContextMenuSlotClassNames = {
+  static slotClassNames: MenuButtonSlotClassNames = {
     menu: `${MenuButton.className}__menu`,
   }
 
@@ -137,24 +133,22 @@ export default class MenuButton extends AutoControlledComponent<
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
     shouldTriggerBeTabbable: PropTypes.bool,
     unstable_pinned: PropTypes.bool,
-    contentRef: customPropTypes.ref,
     menu: customPropTypes.itemShorthandWithoutJSX,
     contextMenu: PropTypes.bool,
   }
 
-  static defaultProps: ContextMenuProps = {
-    accessibility: contextMenuBehavior,
-    align: 'start', // top
-    position: 'below', // after
+  static defaultProps: MenuButtonProps = {
+    accessibility: menuButtonBehavior,
+    align: 'start',
+    position: 'below',
   }
 
   static autoControlledProps = ['open']
 
-  // TODO: this does not persist generated ids across re-renders, see menubutton-test.tsx
   static getAutoControlledStateFromProps(
-    props: ContextMenuProps,
-    state: ContextMenuState,
-  ): Partial<ContextMenuState> {
+    props: MenuButtonProps,
+    state: MenuButtonState,
+  ): Partial<MenuButtonState> {
     return {
       menuId: getOrGenerateIdFromShorthand('menubutton-menu-', props.menu, state.menuId, true),
       triggerId: getOrGenerateIdFromShorthand(
@@ -200,7 +194,7 @@ export default class MenuButton extends AutoControlledComponent<
     e.preventDefault()
   }
 
-  handleOpenChange = (e, { open }) => {
+  handleOpenChange = (e, { open }: PopupProps) => {
     _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open } })
     this.setState(() => ({
       open,
@@ -241,19 +235,17 @@ export default class MenuButton extends AutoControlledComponent<
     unhandledProps,
     accessibility,
     styles,
-  }: RenderResultConfig<ContextMenuProps>): React.ReactNode {
+  }: RenderResultConfig<MenuButtonProps>): React.ReactNode {
     const { contextMenu, menu, ...popupProps } = this.props
-    const content =
-      menu &&
-      Menu.create(menu, {
-        defaultProps: {
-          ...accessibility.attributes.menu,
-          vertical: true,
-        },
-        overrideProps: {
-          items: this.handleMenuItemOverrides(accessibility.attributes.menuItem),
-        },
-      })
+    const content = Menu.create(menu, {
+      defaultProps: {
+        ...accessibility.attributes.menu,
+        vertical: true,
+      },
+      overrideProps: {
+        items: this.handleMenuItemOverrides(accessibility.attributes.menuItem),
+      },
+    })
 
     const overrideProps = {
       open: this.state.open,

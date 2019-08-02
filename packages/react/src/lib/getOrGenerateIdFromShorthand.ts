@@ -21,7 +21,7 @@ const getOrGenerateIdFromShorthand = <P extends Record<string, any>>(
   }
 
   if (fallbackToUnique && !result) {
-    result = _.uniqueId(prefix)
+    result = currentValue || _.uniqueId(prefix)
   }
 
   return result

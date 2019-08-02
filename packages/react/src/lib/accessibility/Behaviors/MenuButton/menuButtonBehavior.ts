@@ -3,7 +3,7 @@ import * as keyboardKey from 'keyboard-key'
 import { Accessibility } from '../../types'
 import popupBehavior, { PopupBehaviorProps } from '../Popup/popupBehavior'
 
-const contextMenuBehavior: Accessibility<ContextMenuBehaviorProps> = props => {
+const menuButtonBehavior: Accessibility<MenuButtonBehaviorProps> = props => {
   const behavior = popupBehavior(props)
   return _.merge(behavior, {
     attributes: {
@@ -51,13 +51,13 @@ const contextMenuBehavior: Accessibility<ContextMenuBehaviorProps> = props => {
   })
 }
 
-export interface ContextMenuBehaviorProps extends PopupBehaviorProps {
-  /** menu id */
+export interface MenuButtonBehaviorProps extends PopupBehaviorProps {
+  /** Defines ID of the menu element. */
   menuId?: string
-  /** button id */
+  /** Defines ID of the trigger element. */
   triggerId?: string
-  /** open */
+  /** Defines whether popup is displayed. */
   open?: boolean
 }
 
-export default contextMenuBehavior
+export default menuButtonBehavior
