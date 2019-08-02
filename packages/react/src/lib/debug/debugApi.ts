@@ -57,4 +57,38 @@ debugApi.whosPropContains = (...args) => debugApi().whosPropContains(...args)
 debugApi.whosValue = (...args) => debugApi().whosValue(...args)
 debugApi.whosValueContains = (...args) => debugApi().whosValueContains(...args)
 
+const isDebugEnabled = () => {
+  let enabled = false
+  try {
+    const isProduction = process.env.NODE_ENV === 'production'
+    const isEnabledBrowserOverride = !!window.localStorage.stardustDebug
+
+    if (isEnabledBrowserOverride) {
+      console.warn(
+        [
+          '@stardust-ui/react:',
+          `Availability of debugging tools is overriden to be enabled.`,
+          'To remove this override paste `delete window.localStorage.stardustDebug` to your browser console and reload the page.',
+        ].join(' '),
+      )
+    }
+
+    enabled = isEnabledBrowserOverride || !isProduction
+  } catch {}
+
+  if (!enabled) {
+    console.warn(
+      [
+        '@stardust-ui/react:',
+        'Debugging toolset is disabled.',
+        'To enable it, paste `window.localStorage.stardustDebug = true` to your browser console and reload the page.',
+      ].join(' '),
+    )
+  }
+
+  return enabled
+}
+
+export const isEnabled = isDebugEnabled()
+
 export default debugApi

@@ -31,7 +31,7 @@ import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
-import Debug from './debug'
+import Debug, { isEnabled as isDebugEnabled } from './debug'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -235,7 +235,7 @@ const renderComponent = <P extends {}>(
   }
 
   // conditionally add sources for evaluating debug information to component
-  if (process.env.NODE_ENV !== 'production') {
+  if (isDebugEnabled) {
     saveDebug(
       new Debug({
         componentName: displayName,
