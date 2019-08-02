@@ -6,7 +6,7 @@ import Provider from 'src/components/Provider/Provider'
 import Text from 'src/components/Text/Text'
 import { felaRenderer } from 'src/lib'
 
-test('basic styles', () => {
+test('basic styles are rendered', () => {
   const snapshot = createSnapshot(
     <EmptyThemeProvider>
       <Box styles={{ color: 'red' }} />
@@ -17,7 +17,7 @@ test('basic styles', () => {
   expect(snapshot).toMatchSnapshot()
 })
 
-test('css fallback value', () => {
+test('CSS fallback values are rendered', () => {
   const snapshot = createSnapshot(
     <EmptyThemeProvider>
       <Box styles={{ color: ['red', 'blue'] }} />
@@ -28,7 +28,7 @@ test('css fallback value', () => {
   expect(snapshot).toMatchSnapshot()
 })
 
-test('keyframe', () => {
+test('keyframe colors are rendered', () => {
   const spinner = {
     keyframe: ({ fromColor, toColor }) => ({
       from: {
@@ -79,7 +79,7 @@ test('array returned by keyframe results in CSS fallback values', () => {
   expect(snapshot).toMatchSnapshot()
 })
 
-test('rtl', () => {
+test('marginLeft is rendered into marginRight due to RTL', () => {
   const snapshot = createSnapshot(
     <Provider rtl={true}>
       <Text content="Hello" styles={{ marginLeft: '10px' }} />
