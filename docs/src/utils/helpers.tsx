@@ -13,7 +13,7 @@ export const link = (content: string, href: string) => {
       <a
         className={isAnchor ? 'anchor-link' : undefined}
         href={href}
-        {...isExternal && { target: 'blank' }}
+        {...(isExternal && { target: 'blank' })}
       >
         {content} {isExternal ? <Icon name="external" size="small" /> : ''}
       </a>
