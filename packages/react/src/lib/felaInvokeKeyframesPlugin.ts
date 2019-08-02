@@ -1,4 +1,5 @@
 import callable from './callable'
+import * as _ from 'lodash'
 
 /**
  * Fela plugin for invoking keyframes with params. The keyframes, defined in the animationName prop,
@@ -9,34 +10,23 @@ import callable from './callable'
  */
 export default () => {
   const invokeKeyframes = (styles: Object) => {
-    if (typeof styles === 'string') {
-      return styles
-    }
-
     return Object.keys(styles).reduce((acc, cssPropertyName) => {
       const cssPropertyValue = styles[cssPropertyName]
 
-      if (cssPropertyName === 'animationName' && typeof cssPropertyValue === 'object') {
-        if (cssPropertyValue.keyframe) {
-          styles[cssPropertyName] = callable(cssPropertyValue.keyframe)(
-            cssPropertyValue.params || {},
-          )
+      if (_.isPlainObject(cssPropertyValue)) {
+        if (cssPropertyName === 'animationName') {
+          if (cssPropertyValue.keyframe) {
+            styles[cssPropertyName] = callable(cssPropertyValue.keyframe)(
+              cssPropertyValue.params || {},
+            )
+          }
+
+          return {
+            ...acc,
+            [cssPropertyName]: styles[cssPropertyName],
+          }
         }
 
-        return {
-          ...acc,
-          [cssPropertyName]: styles[cssPropertyName],
-        }
-      }
-
-      if (Array.isArray(cssPropertyValue)) {
-        return {
-          ...acc,
-          [cssPropertyName]: cssPropertyValue.map(arrayElement => invokeKeyframes(arrayElement)),
-        }
-      }
-
-      if (typeof cssPropertyValue === 'object') {
         return {
           ...acc,
           [cssPropertyName]: invokeKeyframes(cssPropertyValue),
