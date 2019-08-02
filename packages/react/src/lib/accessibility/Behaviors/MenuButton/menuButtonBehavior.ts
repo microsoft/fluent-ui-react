@@ -40,11 +40,7 @@ const contextMenuBehavior: Accessibility<ContextMenuBehaviorProps> = props => {
             }
           : _.includes(props.on, 'click') && {
               openAndFocusFirst: {
-                keyCombinations: [
-                  { keyCode: keyboardKey.Enter },
-                  { keyCode: keyboardKey.Space },
-                  { keyCode: keyboardKey.ArrowDown },
-                ],
+                keyCombinations: [{ keyCode: keyboardKey.ArrowDown }],
               },
               openAndFocusLast: {
                 keyCombinations: [{ keyCode: keyboardKey.ArrowUp }],
