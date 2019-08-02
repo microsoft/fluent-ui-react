@@ -67,7 +67,7 @@ const isDebugEnabled = () => {
       console.warn(
         [
           '@stardust-ui/react:',
-          `Availability of debugging tools is overriden to be enabled.`,
+          `Debug data collection is overriden to be enabled.`,
           'To remove this override paste `delete window.localStorage.stardustDebug` to your browser console and reload the page.',
         ].join(' '),
       )
@@ -80,7 +80,7 @@ const isDebugEnabled = () => {
     console.warn(
       [
         '@stardust-ui/react:',
-        'Debugging toolset is disabled.',
+        'Debug data collection is disabled.',
         'To enable it, paste `window.localStorage.stardustDebug = true` to your browser console and reload the page.',
       ].join(' '),
     )
