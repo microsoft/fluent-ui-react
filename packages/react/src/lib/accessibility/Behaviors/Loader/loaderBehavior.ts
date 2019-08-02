@@ -8,12 +8,16 @@ import { Accessibility } from '../../types'
  * Adds role 'progressbar' to 'root' slot.
  */
 
-const loaderBehavior: Accessibility = () => ({
+const loaderBehavior: Accessibility<LoaderBehaviorProps> = props => ({
   attributes: {
     root: {
-      role: 'progressbar',
+      role: props.loaderInAnotherElement ? undefined : 'progressbar',
     },
   },
 })
 
 export default loaderBehavior
+
+export type LoaderBehaviorProps = {
+  loaderInAnotherElement?: boolean
+}

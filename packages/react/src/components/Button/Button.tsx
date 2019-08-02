@@ -177,6 +177,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
 
     return Loader.create(loader, {
       defaultProps: {
+        loaderInAnotherElement: true,
         size: 'smallest',
         styles: styles.loader,
       },

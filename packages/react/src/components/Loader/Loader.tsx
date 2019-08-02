@@ -46,6 +46,8 @@ export interface LoaderProps extends UIComponentProps, ColorComponentProps {
 
   /** A loader can contain a custom svg element. */
   svg?: ShorthandValue<BoxProps>
+
+  loaderInAnotherElement?: boolean
 }
 
 export interface LoaderState {
