@@ -1,7 +1,7 @@
 import { isNotNullOrEmpty, isNotEmptyObjectsArray } from './utils'
 
 import { IDebugData, DebugCategory } from './types'
-import { ComponentSlotStylesPrepared } from 'src/themes/types'
+import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 const traverseComponentThemeStyles = (
   componentStyles: ComponentSlotStylesPrepared,
