@@ -8,5 +8,4 @@ export const windowRef: TargetRef = {
 }
 
 export { default as EventListener } from './EventListener'
-export { default as StackableEventListener } from './StackableEventListener'
 export * from './types'

@@ -1,40 +1,25 @@
-import * as React from 'react'
+import * as PropTypes from 'prop-types'
 
-import addEventListener from './lib/addEventListener'
-import removeEventListener from './lib/removeEventListener'
-import shouldUpdateListener from './lib/shouldUpdateListener'
-import { EventListenerProps } from './types'
-import { listenerPropTypes } from './types.internal'
+import useEventListener from './useEventListener'
+import { EventListenerOptions, EventTypes, TargetRef } from './types'
 
-class EventListener extends React.Component<EventListenerProps> {
-  static displayName = 'EventListener'
-  static propTypes = listenerPropTypes
-  static defaultProps = {
-    capture: false,
-  }
+function EventListener<T extends EventTypes>(props: EventListenerOptions<T>) {
+  useEventListener(props)
 
-  shouldComponentUpdate(nextProps: EventListenerProps) {
-    return shouldUpdateListener(this.props, nextProps)
-  }
+  return null
+}
 
-  componentDidMount() {
-    addEventListener(this.handleEvent, this.props as Required<EventListenerProps>)
-  }
-
-  componentDidUpdate(prevProps: EventListenerProps) {
-    removeEventListener(this.handleEvent, prevProps as Required<EventListenerProps>)
-    addEventListener(this.handleEvent, this.props as Required<EventListenerProps>)
-  }
-
-  componentWillUnmount() {
-    removeEventListener(this.handleEvent, this.props as Required<EventListenerProps>)
-  }
-
-  handleEvent = (e: Event) => this.props.listener(e)
-
-  render() {
-    return null
-  }
+EventListener.displayName = 'EventListener'
+EventListener.propTypes = {
+  capture: PropTypes.bool,
+  listener: PropTypes.func.isRequired,
+  targetRef: PropTypes.shape({
+    current: PropTypes.object,
+  }).isRequired as PropTypes.Validator<TargetRef>,
+  type: PropTypes.string.isRequired as PropTypes.Validator<EventTypes>,
+}
+EventListener.defaultProps = {
+  capture: false,
 }
 
 export default EventListener
