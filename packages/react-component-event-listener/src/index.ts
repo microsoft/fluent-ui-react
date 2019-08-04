@@ -9,3 +9,4 @@ export const windowRef: TargetRef = {
 
 export { default as EventListener } from './EventListener'
 export * from './types'
+export { default as useEventListener } from './useEventListener'
