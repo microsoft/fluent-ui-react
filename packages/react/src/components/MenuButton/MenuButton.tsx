@@ -77,7 +77,7 @@ export interface MenuButtonProps extends StyledComponentProps<MenuButtonProps>, 
   trigger?: JSX.Element
 
   /** Whether the trigger should be tabbable */
-  shouldTriggerBeTabbable?: boolean
+  tabbableTrigger?: boolean
 
   /** Shorthand for menu configuration */
   menu?: ShorthandValue<MenuProps> | ShorthandCollection<MenuItemProps>
@@ -131,7 +131,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
     position: PropTypes.oneOf(POSITIONS),
     target: PropTypes.any,
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
-    shouldTriggerBeTabbable: PropTypes.bool,
+    tabbableTrigger: PropTypes.bool,
     unstable_pinned: PropTypes.bool,
     menu: PropTypes.oneOfType([
       customPropTypes.itemShorthandWithoutJSX,
@@ -242,7 +242,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
       open,
       pointing,
       position,
-      shouldTriggerBeTabbable,
+      tabbableTrigger,
       styles: stylesProp,
       target,
       trigger,
@@ -266,7 +266,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
         open,
         pointing,
         position,
-        shouldTriggerBeTabbable,
+        tabbableTrigger,
         styles: stylesProp,
         target,
         trigger,
@@ -303,7 +303,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
           on: 'context',
           trapFocus: true,
           unstable_pinned: true,
-          shouldTriggerBeTabbable: false,
+          tabbableTrigger: false,
         },
         overrideProps,
       })
