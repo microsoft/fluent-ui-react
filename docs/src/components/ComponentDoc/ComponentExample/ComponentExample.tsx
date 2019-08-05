@@ -390,7 +390,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }))
   }
 
-  handleVariableResolve = variables => this.setState({ resolvedVariables: variables })
+  handleVariableResolve = variables => {
+    // Remove ProviderBox to hide it in variables
+    delete variables['ProviderBox']
+    this.setState({ resolvedVariables: variables })
+  }
 
   handleVisibility = (willBeVisible: boolean) => {
     if (willBeVisible && !this.state.wasEverVisible) this.setState({ wasEverVisible: true })
