@@ -3,7 +3,6 @@ import { ButtonVariables } from '../../../teams/components/Button/buttonVariable
 export default (siteVars: any): Partial<ButtonVariables> => {
   return {
     color: siteVars.colors.white,
-    colorDisabled: siteVars.colors.black,
     backgroundColor: 'transparent',
     backgroundColorActive: siteVars.accessibleYellow,
     backgroundColorHover: siteVars.accessibleYellow,

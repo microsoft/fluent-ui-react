@@ -104,7 +104,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
         borderColor: 'transparent',
         padding: `0 ${pxToRem(8)}`,
 
-        // by default icons should always be outline on rest and filled on hover/focus
+        // by default icons should always be outline, but filled on hover/focus
         ...getIconFillOrOutlineStyles({ outline: true }),
 
         ':hover': {
@@ -156,12 +156,25 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
       ...(p.disabled && {
         cursor: 'default',
         color: v.colorDisabled,
-        backgroundColor: v.backgroundColorDisabled,
-        borderColor: v.borderColorDisabled,
         boxShadow: 'none',
         ':hover': {
-          backgroundColor: v.backgroundColorDisabled,
+          color: v.colorDisabled,
         },
+
+        ...(p.text && {
+          color: v.textColorDisabled,
+          ':hover': {
+            color: v.textColorDisabled,
+          },
+        }),
+
+        ...(!p.text && {
+          backgroundColor: v.backgroundColorDisabled,
+          borderColor: v.borderColorDisabled,
+          ':hover': {
+            backgroundColor: v.backgroundColorDisabled,
+          },
+        }),
       }),
 
       ...(p.fluid && {

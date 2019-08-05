@@ -17,6 +17,12 @@ const ButtonExampleText = () => (
     <Button text iconOnly>
       <Icon name="call-video" />
     </Button>
+    <br />
+    <br />
+    <Button text disabled>
+      <Icon name="call-video" />
+      <Text content="A disabled text button with an icon" />
+    </Button>
   </div>
 )
 
