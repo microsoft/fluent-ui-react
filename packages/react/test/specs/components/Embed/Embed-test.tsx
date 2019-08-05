@@ -16,7 +16,7 @@ describe('Embed', () => {
       expect(onClick).toHaveBeenCalledTimes(1)
       expect(onClick).toHaveBeenCalledWith(
         expect.objectContaining({ type: 'click' }),
-        expect.objectContaining({ active: true }),
+        expect.objectContaining({ onClick, active: true }),
       )
     })
   })
@@ -33,7 +33,7 @@ describe('Embed', () => {
 
       expect(onActiveChanged).toHaveBeenCalledTimes(1)
       expect(onActiveChanged).toHaveBeenCalledWith(
-        expect.objectContaining({ type: 'click' }),
+        expect.objectContaining({ onActiveChanged, type: 'click' }),
         expect.objectContaining({ active: true }),
       )
     })
