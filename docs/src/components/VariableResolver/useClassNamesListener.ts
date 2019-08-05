@@ -21,6 +21,7 @@ const useClassNamesListener = (
     observer.observe(targetRef.current, {
       attributes: true,
       attributeFilter: ['class'],
+      childList: true,
       subtree: true,
     })
 
