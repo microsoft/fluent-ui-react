@@ -1,4 +1,5 @@
 import * as React from 'react'
+
 import Embed from 'src/components/Embed/Embed'
 import { isConformant } from 'test/specs/commonTests'
 import { mountWithProviderAndGetComponent } from 'test/utils'
