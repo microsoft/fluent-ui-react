@@ -211,10 +211,7 @@ const renderComponent = <P extends {}>(
     disableAnimations,
   }
 
-  const resolvedStyles: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(
-    (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
-    {},
-  )
+  const resolvedStyles: ComponentSlotStylesPrepared = resolveStyles(mergedStyles, styleParam)
 
   const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
   classes.root = cx(className, classes.root, props.className)
