@@ -104,9 +104,9 @@ export default (siteVars: any): ButtonVariables => ({
   circularBorderColorFocus: 'transparent',
 
   textColor: siteVars.colorScheme.default.foreground1,
-  textColorHover: siteVars.colorScheme.brand.foregroundHover,
+  textColorHover: siteVars.colorScheme.brand.foreground1,
   textPrimaryColor: siteVars.colorScheme.brand.foreground,
-  textPrimaryColorHover: siteVars.colorScheme.brand.foregroundHover,
+  textPrimaryColorHover: siteVars.colorScheme.brand.foreground1,
 
   boxShadow: siteVars.shadowLevel1,
 
