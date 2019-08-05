@@ -15,14 +15,13 @@ class MenuButtonOnElement extends React.Component {
     return (
       <>
         <MenuButton
+          contextMenu
           trigger={
             <div style={{ padding: '4rem', border: 'red dashed' }}>
               <Button content="Random button" onClick={this.showAlert} />
             </div>
           }
-          shouldTriggerBeTabbable={false}
           menu={{ items }}
-          contextMenu
         />
         {this.state.alert && <Alert warning content="Click!" />}
       </>

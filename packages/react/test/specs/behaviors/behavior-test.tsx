@@ -50,6 +50,7 @@ import {
   toolbarRadioGroupItemBehavior,
   tooltipBehavior,
   tooltipAsLabelBehavior,
+  menuButtonBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -72,6 +73,7 @@ testHelper.addBehavior('loaderBehavior', loaderBehavior)
 testHelper.addBehavior('menuBehavior', menuBehavior)
 testHelper.addBehavior('menuItemBehavior', menuItemBehavior)
 testHelper.addBehavior('menuDividerBehavior', menuDividerBehavior)
+testHelper.addBehavior('menuButtonBehavior', menuButtonBehavior)
 testHelper.addBehavior('submenuBehavior', submenuBehavior)
 testHelper.addBehavior('popupBehavior', popupBehavior)
 testHelper.addBehavior('radioGroupBehavior', radioGroupBehavior)

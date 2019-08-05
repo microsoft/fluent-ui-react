@@ -133,7 +133,10 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
     trigger: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.any]),
     shouldTriggerBeTabbable: PropTypes.bool,
     unstable_pinned: PropTypes.bool,
-    menu: customPropTypes.itemShorthandWithoutJSX,
+    menu: PropTypes.oneOfType([
+      customPropTypes.itemShorthandWithoutJSX,
+      PropTypes.arrayOf(customPropTypes.itemShorthandWithoutJSX),
+    ]),
     contextMenu: PropTypes.bool,
   }
 
@@ -172,7 +175,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
 
   closeAndFocus(e: Event, which: 'next' | 'previous') {
     const renderCallback = () => focusNearest(this.triggerRef.current, which)
-    this.setState(
+    this.trySetState(
       {
         open: false,
         autoFocus: false,
@@ -184,7 +187,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
 
   openAndFocus(e: Event, which: 'first' | 'last') {
     const renderCallback = () => focusMenuItem(this.menuRef.current, which)
-    this.setState(
+    this.trySetState(
       {
         open: true,
         autoFocus: false, // focused by renderCallback
@@ -196,38 +199,22 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
 
   handleOpenChange = (e, { open }: PopupProps) => {
     _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open } })
-    this.setState(() => ({
+    this.trySetState({
       open,
       autoFocus: true,
-    }))
+    })
   }
 
-  handleMenuItemClick = (predefinedProps?: MenuItemProps) => (
+  handleMenuItemClick = (predefinedProps?: MenuProps) => (
     e: React.SyntheticEvent,
     itemProps: MenuItemProps,
   ) => {
-    _.invoke(predefinedProps, 'onClick', e, itemProps)
-    if (!predefinedProps || !predefinedProps.menu) {
+    _.invoke(predefinedProps, 'onItemClick', e, itemProps)
+    if (!itemProps || !itemProps.menu) {
       // do not close if clicked on item with submenu
-      this.setState({ open: false, autoFocus: false })
+      this.trySetState({ open: false, autoFocus: false })
     }
   }
-
-  handleMenuItemOverrides = (menuItemAccessibilityAttributes: any) =>
-    _.map(_.get(this.props.menu, 'items'), (item: ShorthandValue<MenuItemProps>) =>
-      typeof item === 'object'
-        ? {
-            ...item,
-            onClick: this.handleMenuItemClick(item as MenuItemProps),
-            ...menuItemAccessibilityAttributes,
-          }
-        : {
-            content: item,
-            key: item,
-            onClick: this.handleMenuItemClick(),
-            ...menuItemAccessibilityAttributes,
-          },
-    )
 
   renderComponent({
     ElementType,
@@ -236,14 +223,67 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
     accessibility,
     styles,
   }: RenderResultConfig<MenuButtonProps>): React.ReactNode {
-    const { contextMenu, menu, ...popupProps } = this.props
+    const {
+      // MenuButton props:
+      contextMenu,
+      menu,
+      // Popup props:
+      accessibility: accessibilityProp,
+      align,
+      className,
+      defaultOpen,
+      inline,
+      mountDocument,
+      mountNode,
+      mouseLeaveDelay,
+      offset,
+      on,
+      onOpenChange,
+      open,
+      pointing,
+      position,
+      shouldTriggerBeTabbable,
+      styles: stylesProp,
+      target,
+      trigger,
+      unstable_pinned,
+      variables,
+    } = this.props
+
+    const popupProps = _.omitBy(
+      {
+        accessibility: accessibilityProp,
+        align,
+        className,
+        defaultOpen,
+        inline,
+        mountDocument,
+        mountNode,
+        mouseLeaveDelay,
+        offset,
+        on,
+        onOpenChange,
+        open,
+        pointing,
+        position,
+        shouldTriggerBeTabbable,
+        styles: stylesProp,
+        target,
+        trigger,
+        unstable_pinned,
+        variables,
+      },
+      _.isUndefined,
+    )
+
     const content = Menu.create(menu, {
       defaultProps: {
         ...accessibility.attributes.menu,
         vertical: true,
       },
       overrideProps: {
-        items: this.handleMenuItemOverrides(accessibility.attributes.menuItem),
+        onItemClick: (e: React.SyntheticEvent, itemProps: MenuItemProps) =>
+          this.handleMenuItemClick(content)(e, itemProps),
       },
     })
 

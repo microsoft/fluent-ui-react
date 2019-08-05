@@ -20,7 +20,13 @@ import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
-import { WithAsProp, ShorthandCollection, ShorthandValue, withSafeTypeForAs } from '../../types'
+import {
+  WithAsProp,
+  ShorthandCollection,
+  ShorthandValue,
+  withSafeTypeForAs,
+  ComponentEventHandler,
+} from '../../types'
 import MenuDivider from './MenuDivider'
 import { IconProps } from '../Icon/Icon'
 
@@ -52,6 +58,14 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
 
   /** Shorthand array of props for Menu. */
   items?: ShorthandCollection<MenuItemProps, MenuShorthandKinds>
+
+  /**
+   * Called when a panel title is clicked.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All item props.
+   */
+  onItemClick?: ComponentEventHandler<MenuItemProps>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
@@ -106,6 +120,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     fluid: PropTypes.bool,
     iconOnly: PropTypes.bool,
     items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
+    onItemClick: PropTypes.func,
     pills: PropTypes.bool,
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
@@ -132,6 +147,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
 
       this.trySetState({ activeIndex: index })
 
+      _.invoke(this.props, 'onItemClick', e, itemProps)
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },
     onActiveChanged: (e, props) => {

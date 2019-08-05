@@ -13,7 +13,7 @@ const Usage = () => (
     <ComponentExample
       title="Context menu"
       description="A menu button can be attached to any element to create a context menu."
-      examplePath="components/MenuButton/Usage/MenuButtonExampleOnElement"
+      examplePath="components/MenuButton/Usage/MenuButtonExampleContextMenu"
     />
   </ExampleSection>
 )
