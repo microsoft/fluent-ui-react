@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import PopperJS, * as _PopperJS from 'popper.js'
-import { Ref } from '@stardust-ui/react-component-ref'
+import { Ref, isRefObject } from '@stardust-ui/react-component-ref'
 
 import { getPlacement, applyRtlToOffset } from './positioningHelper'
 import { PopperProps, PopperChildrenFn } from './types'
@@ -10,7 +10,7 @@ import getScrollParent from './getScrollParent'
 // `popper.js` has a UMD build without `.default`, it breaks CJS builds:
 // https://github.com/rollup/rollup/issues/1267#issuecomment-446681320
 const createPopper = (
-  reference: Element,
+  reference: Element | _PopperJS.ReferenceObject,
   popper: Element,
   options?: PopperJS.PopperOptions,
 ): PopperJS => new ((_PopperJS as any).default || _PopperJS)(reference, popper, options)
@@ -69,7 +69,12 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     () => {
       destroyInstance()
 
-      if (!enabled || !targetRef.current || !contentRef.current) {
+      const reference =
+        targetRef && isRefObject(targetRef)
+          ? (targetRef as React.RefObject<Element>).current
+          : (targetRef as _PopperJS.ReferenceObject)
+
+      if (!enabled || !reference || !contentRef.current) {
         return
       }
 
@@ -124,10 +129,10 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
         onUpdate: handleUpdate,
       }
 
-      popperRef.current = createPopper(targetRef.current, contentRef.current, options)
+      popperRef.current = createPopper(reference, contentRef.current, options)
     },
-    // TODO review dependencies for popperHasScrollableParent
     [
+      // TODO review dependencies for popperHasScrollableParent
       computedModifiers,
       enabled,
       userModifiers,

@@ -403,6 +403,107 @@ describe('FocusZone', () => {
     expect(lastFocusedElement).toBe(buttonA)
   })
 
+  it('can use arrows bidirectionally by following DOM order', () => {
+    const component = ReactTestUtils.renderIntoDocument<{}, React.Component>(
+      <div {...{ onFocusCapture: onFocus }}>
+        <FocusZone direction={FocusZoneDirection.bidirectionalDomOrder}>
+          <button id="a">a</button>
+          <button id="b">b</button>
+          <button id="c">c</button>
+        </FocusZone>
+      </div>,
+    )
+
+    const focusZone = ReactDOM.findDOMNode(component)!!.firstChild as Element
+
+    const buttonA = focusZone.querySelector('#a') as HTMLElement
+    const buttonB = focusZone.querySelector('#b') as HTMLElement
+    const buttonC = focusZone.querySelector('#c') as HTMLElement
+
+    // Assign bounding locations to buttons.
+    setupElement(buttonA, {
+      clientRect: {
+        top: 0,
+        bottom: 30,
+        left: 0,
+        right: 100,
+      },
+    })
+
+    setupElement(buttonB, {
+      clientRect: {
+        top: 30,
+        bottom: 60,
+        left: 0,
+        right: 100,
+      },
+    })
+
+    setupElement(buttonC, {
+      clientRect: {
+        top: 60,
+        bottom: 90,
+        left: 0,
+        right: 100,
+      },
+    })
+
+    // Pressing down/right arrow keys moves focus to the next focusable item.
+    // Pressing up/left arrow keys moves focus to the previous focusable item.
+
+    // Focus the first button.
+    ReactTestUtils.Simulate.focus(buttonA)
+    expect(lastFocusedElement).toBe(buttonA)
+
+    // Pressing down should go to b.
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowDown })
+    expect(lastFocusedElement).toBe(buttonB)
+
+    // Pressing right should go to c.
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowRight })
+    expect(lastFocusedElement).toBe(buttonC)
+
+    // Pressing down should stay on c.
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowDown })
+    expect(lastFocusedElement).toBe(buttonC)
+
+    // Pressing up should go to b.
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowUp })
+    expect(lastFocusedElement).toBe(buttonB)
+
+    // Pressing left should go to a.
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowLeft })
+    expect(lastFocusedElement).toBe(buttonA)
+
+    // Pressing left should stay on a.
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowLeft })
+    expect(lastFocusedElement).toBe(buttonA)
+
+    // Click on c to focus it.
+    ReactTestUtils.Simulate.focus(buttonC)
+    expect(lastFocusedElement).toBe(buttonC)
+
+    // Pressing up should move to b.
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowUp })
+    expect(lastFocusedElement).toBe(buttonB)
+
+    // Pressing left should move to a.
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowLeft })
+    expect(lastFocusedElement).toBe(buttonA)
+
+    // Pressing right should move to b.
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowRight })
+    expect(lastFocusedElement).toBe(buttonB)
+
+    // Press home should go to the first target.
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.Home })
+    expect(lastFocusedElement).toBe(buttonA)
+
+    // Press end should go to the last target.
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.End })
+    expect(lastFocusedElement).toBe(buttonC)
+  })
+
   it('can reset alignment on mouse down', () => {
     const component = ReactTestUtils.renderIntoDocument<{}, React.Component>(
       <div {...{ onFocusCapture: onFocus }}>

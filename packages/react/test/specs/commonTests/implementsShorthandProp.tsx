@@ -5,6 +5,7 @@ import { Props, PropsOf, InstanceOf } from 'src/types'
 
 export type ShorthandTestOptions<TProps = any> = {
   mapsValueToProp: keyof (TProps & React.HTMLProps<HTMLElement>) | false
+  requiredProps?: any
 }
 
 export const DefaultShorthandTestOptions: ShorthandTestOptions = {
@@ -65,7 +66,11 @@ export default ((Component: React.ComponentType) => {
       }
 
       test(`object value is spread as ${displayName}'s props`, () => {
-        expectShorthandPropsAreHandled({ foo: 'foo value', bar: 'bar value' })
+        expectShorthandPropsAreHandled({
+          ...options.requiredProps,
+          foo: 'foo value',
+          bar: 'bar value',
+        })
       })
     })
   }

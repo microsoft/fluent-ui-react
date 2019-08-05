@@ -398,6 +398,14 @@ definitions.push({
 })
 
 definitions.push({
+  regexp: /arrow key navigation in bidirectionalDomOrder direction/g,
+  testMethod: (parameters: TestMethod) => {
+    const actualFocusZoneHorizontal = parameters.behavior({}).focusZone
+    expect(actualFocusZoneHorizontal.props.direction).toBe(FocusZoneDirection.bidirectionalDomOrder)
+  },
+})
+
+definitions.push({
   regexp: /Keyboard navigation is circular/g,
   testMethod: (parameters: TestMethod) => {
     const actualFocusZone = parameters.behavior({}).focusZone
@@ -513,6 +521,32 @@ definitions.push({
     const [action, key, elementToPerformAction] = [...parameters.props]
     const propertyVertical = { vertical: true }
     const expectedKeyNumberVertical = parameters.behavior(propertyVertical).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    expect(expectedKeyNumberVertical).toBe(keyboardKey[key])
+  },
+})
+
+// Triggers the 'openMenu' action with 'ArrowDown' on 'root', when orientaton is horizontal.
+definitions.push({
+  regexp: /Triggers the '(\w+)' action with '(\w+)' on '([\w-]+)', when orientation is horizontal\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const propertyHorizontal = { horizontal: true }
+    const expectedKeyNumber = parameters.behavior(propertyHorizontal).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    expect(expectedKeyNumber).toBe(keyboardKey[key])
+  },
+})
+
+// Triggers the 'openMenu' action with 'ArrowRight' on 'root', when orientation is vertical.
+definitions.push({
+  regexp: /Triggers the '(\w+)' action with '(\w+)' on '([\w-]+)', when orientation is vertical\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const propertyHorizontal = { horizontal: false }
+    const expectedKeyNumberVertical = parameters.behavior(propertyHorizontal).keyActions[
       elementToPerformAction
     ][action].keyCombinations[0].keyCode
     expect(expectedKeyNumberVertical).toBe(keyboardKey[key])

@@ -2,7 +2,7 @@
 
 This is a list of changes made to this Stardust copy of FocusZone in comparison with the original [Fabric FocusZone @ 0f567e05952c6b50c691df2fb72d100b5e525d9e](https://github.com/OfficeDev/office-ui-fabric-react/blob/0f567e05952c6b50c691df2fb72d100b5e525d9e/packages/office-ui-fabric-react/src/components/FocusZone/FocusZone.tsx).
 
-### fixes
+### Fixes
 - With `defaultTabbableElement` prop set tab indexes are not updated accordingly ([#342](https://github.com/stardust-ui/react/pull/342))
 - Remove unused prop `componentRef` ([#397](https://github.com/stardust-ui/react/pull/397))
 - Fix `defaultTabbableElement` prop to be as a function ([#450](https://github.com/stardust-ui/react/pull/450))
@@ -22,9 +22,11 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 - Enable RTL @sophieH29 ([#646](https://github.com/stardust-ui/react/pull/646))
 
 - Add `shouldFocusFirstElementWhenReceivedFocus` prop, which forces focus to first element when container receives focus @sophieH29 ([#469](https://github.com/stardust-ui/react/pull/469))
-- Handle keyDownCapture based on `shouldHandleKeyDownCapture` prop @sophieH29 ([#563](https://github.com/stardust-ui/react/pull/563)) 
+- Handle keyDownCapture based on `shouldHandleKeyDownCapture` prop @sophieH29 ([#563](https://github.com/stardust-ui/react/pull/563))
+- Add `bidirectionalDomOrder` direction allowing arrow keys navigation following DOM order @sophieH29 ([#1637](https://github.com/stardust-ui/react/pull/1647))
 
-### feat(FocusZone): Implement FocusZone into renderComponent [#116](https://github.com/stardust-ui/react/pull/116)
+
+#### feat(FocusZone): Implement FocusZone into renderComponent [#116](https://github.com/stardust-ui/react/pull/116)
 - Prettier and linting fixes, e.g., removing semicolons, removing underscores from private methods.
 - Moved `IS_FOCUSABLE_ATTRIBUTE` and others to `focusUtilities.ts`.
 - Added prop types, default props, and handled props.
@@ -53,6 +55,9 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 ## FocusTrapZone Changelog
 
 This is a list of changes made to the Stardust copy of FocusTrapZone in comparison with the original [Fabric FocusTrapZone @ 0f567e05952c6b50c691df2fb72d100b5e525d9e](https://github.com/OfficeDev/office-ui-fabric-react/blob/0f567e05952c6b50c691df2fb72d100b5e525d9e/packages/office-ui-fabric-react/src/components/FocusTrapZone/FocusTrapZone.tsx).
+
+### BREAKING CHANGES
+- Allow using `firstFocusableSelector` for all type of selectors, not only class names @sophieH29 ([#1732](https://github.com/stardust-ui/react/pull/1732))
 
 ### fixes
 - Do not focus trigger on outside click @sophieH29 ([#627](https://github.com/stardust-ui/react/pull/627))

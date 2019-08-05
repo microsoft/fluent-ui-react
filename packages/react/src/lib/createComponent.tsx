@@ -1,11 +1,10 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 // @ts-ignore
-import { ThemeContext } from 'react-fela'
+import { ThemeContext } from '@stardust-ui/react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/reactTypes'
-import { FocusZone } from './accessibility/FocusZone'
 import { createShorthandFactory } from './factories'
 import { ObjectOf, ProviderContextPrepared } from '../types'
 
@@ -17,7 +16,6 @@ export interface CreateComponentConfig<P> {
   handledProps?: string[]
   propTypes?: React.WeakValidationMap<P>
   actionHandlers?: AccessibilityActionHandlers
-  focusZoneRef?: (focusZone: FocusZone) => void
   render: (config: RenderResultConfig<P>, props: P) => React.ReactNode
 }
 
@@ -34,7 +32,6 @@ const createComponent = <P extends ObjectOf<any> = any>({
   handledProps = [],
   propTypes,
   actionHandlers,
-  focusZoneRef, // TODO: setFocusZoneRef
   render,
 }: CreateComponentConfig<P>): CreateComponentReturnType<P> => {
   const mergedDefaultProps = {
@@ -43,6 +40,10 @@ const createComponent = <P extends ObjectOf<any> = any>({
   }
 
   const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
+    // Stores debug information for component.
+    // Note that this ref should go as the first one, to be discoverable by debug utils.
+    const stardustDebug = React.useRef(null)
+
     const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
     return renderComponent(
@@ -54,8 +55,8 @@ const createComponent = <P extends ObjectOf<any> = any>({
         props,
         state: {},
         actionHandlers,
-        focusZoneRef,
         render: config => render(config, props),
+        saveDebug: updatedDebug => (stardustDebug.current = updatedDebug),
       },
       context,
     )
