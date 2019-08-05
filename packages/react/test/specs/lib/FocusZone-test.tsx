@@ -1462,13 +1462,9 @@ describe('FocusZone', () => {
     expect(lastFocusedElement).toBe(contentEditableA)
     ReactTestUtils.Simulate.keyDown(contentEditableA, { which: keyboardKey.End })
     expect(lastFocusedElement).toBe(contentEditableA)
-    expect(contentEditableA.tabIndex).toBe(0)
-    expect(buttonB.tabIndex).toBe(-1)
 
-    // Pressing tab will be the only way for us to exit the focus zone
-    ReactTestUtils.Simulate.keyDown(contentEditableA, { which: keyboardKey.Tab })
+    // change focus to buttonB
+    buttonB.focus()
     expect(lastFocusedElement).toBe(buttonB)
-    expect(contentEditableA.tabIndex).toBe(-1)
-    expect(buttonB.tabIndex).toBe(0)
   })
 })
