@@ -502,7 +502,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                           </div>
                         )}
                       </Segment>
-                      <div style={{ paddingBottom: '10px' }} />
                     </>
                   )}
                 </SourceRender>
