@@ -42,55 +42,28 @@ export interface ProviderProps extends ChildrenComponentProps {
 /**
  * The Provider passes the CSS-in-JS renderer, theme styles and other settings to Stardust components.
  */
-class Provider extends React.Component<WithAsProp<ProviderProps>> {
-  static displayName = 'Provider'
+const Provider: React.FunctionComponent<WithAsProp<ProviderProps>> & {
+  Consumer: typeof ProviderConsumer
+  Box: typeof ProviderBox
+} = props => {
+  const incomingContext: ProviderContextInput = React.useContext(ThemeContext)
+  const staticStylesRendered = React.useRef(false)
 
-  static propTypes = {
-    as: customPropTypes.as,
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    theme: PropTypes.shape({
-      siteVariables: PropTypes.object,
-      componentVariables: PropTypes.object,
-      componentStyles: PropTypes.object,
-      fontFaces: PropTypes.arrayOf(
-        PropTypes.shape({
-          name: PropTypes.string,
-          paths: PropTypes.arrayOf(PropTypes.string),
-          style: PropTypes.shape({
-            fontStretch: PropTypes.string,
-            fontStyle: PropTypes.string,
-            fontVariant: PropTypes.string,
-            fontWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-            localAlias: PropTypes.string,
-            unicodeRange: PropTypes.string,
-          }),
-        }),
-      ),
-      staticStyles: PropTypes.arrayOf(
-        PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
-      ),
-      animations: PropTypes.object,
-    }),
-    renderer: PropTypes.object,
-    rtl: PropTypes.bool,
-    disableAnimations: PropTypes.bool,
-    children: PropTypes.node.isRequired,
-    target: PropTypes.object,
-  }
+  const {
+    as,
+    theme,
+    rtl,
+    disableAnimations,
+    renderer,
+    variables,
+    children,
+    target,
+    ...unhandledProps
+  } = props
 
-  static defaultProps = {
-    theme: {},
-  }
-
-  static Consumer = ProviderConsumer
-  static Box = ProviderBox
-  static contextType = ThemeContext
-
-  staticStylesRendered: boolean = false
-
-  renderStaticStyles = (mergedTheme: ThemePrepared) => {
+  const renderStaticStyles = (mergedTheme: ThemePrepared) => {
     const { siteVariables } = mergedTheme
-    const { staticStyles } = this.props.theme
+    const { staticStyles } = theme
 
     if (!staticStyles) return
 
@@ -116,8 +89,15 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     })
   }
 
-  renderFontFaces = () => {
-    const { fontFaces } = this.props.theme
+  const renderStaticStylesOnce = (mergedTheme: ThemePrepared) => {
+    if (!staticStylesRendered.current && theme.staticStyles) {
+      renderStaticStyles(mergedTheme)
+      staticStylesRendered.current = true
+    }
+  }
+
+  const renderFontFaces = () => {
+    const { fontFaces } = theme
 
     if (!fontFaces) return
 
@@ -134,65 +114,82 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     })
   }
 
-  componentDidMount() {
-    this.renderFontFaces()
-  }
+  React.useLayoutEffect(() => {
+    renderFontFaces()
+  })
 
-  render() {
-    const {
-      as,
-      theme,
-      rtl,
-      disableAnimations,
-      renderer,
-      variables,
-      children,
-      target,
-      ...unhandledProps
-    } = this.props
+  const outgoingContext: ProviderContextPrepared = React.useMemo(() => {
     const inputContext: ProviderContextInput = {
       theme,
       rtl,
       disableAnimations,
       renderer,
     }
-    // rehydration disabled to avoid leaking styles between renderers
-    // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
-    const outgoingContext: ProviderContextPrepared = mergeContexts(this.context, inputContext)
 
-    this.renderStaticStylesOnce(outgoingContext.theme)
+    return mergeContexts(incomingContext, inputContext)
+  }, [incomingContext, theme, rtl, disableAnimations, renderer])
 
-    const rtlProps: { dir?: 'rtl' | 'ltr' } = {}
-    // only add dir attribute for top level provider or when direction changes from parent to child
-    if (
-      !this.context ||
-      (this.context.rtl !== outgoingContext.rtl && _.isBoolean(outgoingContext.rtl))
-    ) {
-      rtlProps.dir = outgoingContext.rtl ? 'rtl' : 'ltr'
-    }
+  renderStaticStylesOnce(outgoingContext.theme)
 
-    return (
-      <RendererProvider
-        renderer={outgoingContext.renderer}
-        target={target}
-        {...{ rehydrate: false }}
-      >
-        <ThemeProvider theme={outgoingContext}>
-          <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>
-            {children}
-          </ProviderBox>
-        </ThemeProvider>
-      </RendererProvider>
-    )
+  const rtlProps: { dir?: 'rtl' | 'ltr' } = {}
+  // only add dir attribute for top level provider or when direction changes from parent to child
+  if (
+    !incomingContext ||
+    (incomingContext.rtl !== outgoingContext.rtl && _.isBoolean(outgoingContext.rtl))
+  ) {
+    rtlProps.dir = outgoingContext.rtl ? 'rtl' : 'ltr'
   }
 
-  renderStaticStylesOnce = (mergedTheme: ThemePrepared) => {
-    const { staticStyles } = this.props.theme
-    if (!this.staticStylesRendered && staticStyles) {
-      this.renderStaticStyles(mergedTheme)
-      this.staticStylesRendered = true
-    }
-  }
+  return (
+    <RendererProvider renderer={outgoingContext.renderer} target={target} {...{ rehydrate: false }}>
+      <ThemeProvider theme={outgoingContext}>
+        <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>
+          {children}
+        </ProviderBox>
+      </ThemeProvider>
+    </RendererProvider>
+  )
 }
+
+Provider.displayName = 'Provider'
+Provider.propTypes = {
+  as: customPropTypes.as,
+  variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  theme: PropTypes.shape({
+    siteVariables: PropTypes.object,
+    componentVariables: PropTypes.object,
+    componentStyles: PropTypes.object,
+    fontFaces: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        paths: PropTypes.arrayOf(PropTypes.string),
+        style: PropTypes.shape({
+          fontStretch: PropTypes.string,
+          fontStyle: PropTypes.string,
+          fontVariant: PropTypes.string,
+          fontWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+          localAlias: PropTypes.string,
+          unicodeRange: PropTypes.string,
+        }),
+      }),
+    ),
+    staticStyles: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
+    ),
+    animations: PropTypes.object,
+  }),
+  renderer: PropTypes.object as PropTypes.Validator<Renderer>,
+  rtl: PropTypes.bool,
+  disableAnimations: PropTypes.bool,
+  children: PropTypes.node.isRequired,
+  target: PropTypes.object as PropTypes.Validator<Document>,
+}
+
+Provider.defaultProps = {
+  theme: {},
+}
+
+Provider.Consumer = ProviderConsumer
+Provider.Box = ProviderBox
 
 export default withSafeTypeForAs<typeof Provider, ProviderProps & ProviderBoxProps>(Provider)
