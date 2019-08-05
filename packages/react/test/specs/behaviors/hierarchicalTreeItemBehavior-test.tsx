@@ -1,6 +1,6 @@
 import { hierarchicalTreeItemBehavior } from 'src/lib/accessibility'
 
-describe('TreeItemBehavior', () => {
+describe('HierarchicalTreeItemBehavior', () => {
   describe('tabIndex', () => {
     test(`is added with '0' value to an item that is expandable`, () => {
       const expectedResult = hierarchicalTreeItemBehavior({ items: [{ key: '1' }] })
