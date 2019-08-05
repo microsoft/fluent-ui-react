@@ -9,6 +9,7 @@ import {
   applyAccessibilityKeyHandlers,
   commonPropTypes,
   AutoControlledComponent,
+  isFromKeyboard,
 } from '../../lib'
 import { embedBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -53,6 +54,13 @@ export interface EmbedProps extends UIComponentProps {
    */
   onClick?: ComponentEventHandler<EmbedProps>
 
+  /**
+   * Called after user's focus.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onFocus?: ComponentEventHandler<EmbedProps>
+
   /** Image source URL for when video isn't playing. */
   placeholder?: ShorthandValue<ImageProps>
 
@@ -62,6 +70,7 @@ export interface EmbedProps extends UIComponentProps {
 
 export interface EmbedState {
   active: boolean
+  isFromKeyboard: boolean
 }
 
 class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> {
@@ -82,6 +91,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     iframe: customPropTypes.itemShorthand,
     onActiveChanged: PropTypes.func,
     onClick: PropTypes.func,
+    onFocus: PropTypes.func,
     placeholder: PropTypes.string,
     video: customPropTypes.itemShorthand,
   }
@@ -103,7 +113,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
   }
 
   getInitialAutoControlledState(): EmbedState {
-    return { active: false }
+    return { active: false, isFromKeyboard: false }
   }
 
   handleClick = e => {
@@ -116,6 +126,12 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     _.invoke(this.props, 'onClick', e, { ...this.props, active: !this.state.active })
   }
 
+  handleFocus = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: isFromKeyboard() })
+
+    _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { control, iframe, placeholder, video } = this.props
     const { active } = this.state
@@ -124,6 +140,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
       <ElementType
         className={classes.root}
         onClick={this.handleClick}
+        onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...unhandledProps}
