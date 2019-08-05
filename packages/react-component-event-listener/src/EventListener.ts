@@ -10,14 +10,18 @@ function EventListener<T extends EventTypes>(props: EventListenerOptions<T>) {
 }
 
 EventListener.displayName = 'EventListener'
-EventListener.propTypes = {
-  capture: PropTypes.bool,
-  listener: PropTypes.func.isRequired,
-  targetRef: PropTypes.shape({
-    current: PropTypes.object,
-  }).isRequired as PropTypes.Validator<TargetRef>,
-  type: PropTypes.string.isRequired as PropTypes.Validator<EventTypes>,
-}
+// TODO: use Babel plugin for this
+EventListener.propTypes =
+  process.env.NODE_ENV !== 'production'
+    ? {
+        capture: PropTypes.bool,
+        listener: PropTypes.func.isRequired,
+        targetRef: PropTypes.shape({
+          current: PropTypes.object,
+        }).isRequired as PropTypes.Validator<TargetRef>,
+        type: PropTypes.string.isRequired as PropTypes.Validator<EventTypes>,
+      }
+    : {}
 EventListener.defaultProps = {
   capture: false,
 }
