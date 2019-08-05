@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import Embed from 'src/components/Embed/Embed'
 import { isConformant } from 'test/specs/commonTests'
 import { mountWithProviderAndGetComponent } from 'test/utils'
@@ -34,8 +33,8 @@ describe('Embed', () => {
 
       expect(onActiveChanged).toHaveBeenCalledTimes(1)
       expect(onActiveChanged).toHaveBeenCalledWith(
-        expect.objectContaining({ onActiveChanged, type: 'click' }),
-        expect.objectContaining({ active: true }),
+        expect.objectContaining({ type: 'click' }),
+        expect.objectContaining({ onActiveChanged, active: true }),
       )
     })
   })
