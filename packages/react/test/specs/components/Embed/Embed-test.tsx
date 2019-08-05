@@ -16,7 +16,7 @@ describe('Embed', () => {
       expect(onClick).toHaveBeenCalledTimes(1)
       expect(onClick).toHaveBeenCalledWith(
         expect.objectContaining({ type: 'click' }),
-        expect.objectContaining({ active: true }),
+        expect.objectContaining({ onClick, active: true }),
       )
     })
   })
@@ -34,7 +34,22 @@ describe('Embed', () => {
       expect(onActiveChanged).toHaveBeenCalledTimes(1)
       expect(onActiveChanged).toHaveBeenCalledWith(
         expect.objectContaining({ type: 'click' }),
-        expect.objectContaining({ active: true }),
+        expect.objectContaining({ onActiveChanged, active: true }),
+      )
+    })
+  })
+
+  describe('onFocus', () => {
+    test('is called with (e, props) on a click', () => {
+      const onFocus = jest.fn()
+      const embed = mountWithProviderAndGetComponent(Embed, <Embed onFocus={onFocus} />)
+
+      embed.simulate('focus')
+
+      expect(onFocus).toHaveBeenCalledTimes(1)
+      expect(onFocus).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'focus' }),
+        expect.objectContaining({}),
       )
     })
   })
