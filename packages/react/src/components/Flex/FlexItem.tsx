@@ -6,12 +6,10 @@ import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps 
 import { mergeStyles } from '../../lib/mergeThemes'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
-type ChildrenFunction = (
-  params: {
-    styles: ComponentSlotStylesPrepared
-    classes: string
-  },
-) => React.ReactElement<any>
+type ChildrenFunction = (params: {
+  styles: ComponentSlotStylesPrepared
+  classes: string
+}) => React.ReactElement<any>
 
 export type FlexItemChildren = React.ReactElement<any> | ChildrenFunction
 
