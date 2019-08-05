@@ -12,24 +12,8 @@ const janeAvatar = {
   },
 }
 
-// const controlMessageItems = [
-//   {
-//     key: 'irving',
-//     content: <div><a href="/">John Doe</a> added <a href="/">Jane Doe</a> to the conversation</div>,
-//   },
-//   {
-//     key: 'skyler',
-//     content: <div><a href="/">John Doe1</a> added <a href="/">Jane Doe1</a> to the conversation</div>,
-//   },
-//   {
-//     key: 'dante',
-//     content: <div><a href="/">John Doe2</a> added <a href="/">Jane Doe2</a> to the conversation</div>,
-//   },
-// ]
-
-const cm: ChatItemProps[] = [
+const controlMessageItems: ChatItemProps[] = [
   {
-    key: 'irving1',
     message: {
       content: (
         <Chat.Message
@@ -43,7 +27,6 @@ const cm: ChatItemProps[] = [
     },
   },
   {
-    key: 'skyler2',
     message: {
       content: (
         <Chat.Message
@@ -57,7 +40,6 @@ const cm: ChatItemProps[] = [
     },
   },
   {
-    key: 'dante3',
     message: {
       content: (
         <Chat.Message
@@ -74,6 +56,7 @@ const cm: ChatItemProps[] = [
 
 const ChatExample = () => {
   const [expanded, setExpanded] = React.useState(false)
+  const [focused, setFocused] = React.useState(false)
 
   const items: ShorthandCollection<ChatItemProps> = [
     {
@@ -85,10 +68,13 @@ const ChatExample = () => {
           }
           if (eventCode === keyboardKey.Escape) {
             setExpanded(false)
+            setFocused(true)
           }
         },
         onClick: () => setExpanded(!expanded),
-        content: <ControlMessage expanded={expanded} items={cm} />,
+        content: (
+          <ControlMessage expanded={expanded} items={controlMessageItems} focusMessage={focused} />
+        ),
       },
     },
     {
