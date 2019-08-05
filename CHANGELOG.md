@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Require `name` prop in `Icon` component @lucivpav ([#1723](https://github.com/stardust-ui/react/pull/1723))
 - Export `broadcast` icon in Teams theme @miroslavstastny ([#1737](https://github.com/stardust-ui/react/pull/1737))
+- Ensure `actionsMenu` is not cut-off by the edge of viewport for `ChatMessage` @kuzhelov ([#1739](https://github.com/stardust-ui/react/pull/1739))
 
 ### Features
 - Expose `isFromKeyboard` in `Grid` component @sophieH29 ([#1729](https://github.com/stardust-ui/react/pull/1729))
@@ -65,7 +66,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Fix `ChatMessage`'s focus border overlays `actionMenu` in Teams theme @mnajdova ([#1637](https://github.com/stardust-ui/react/pull/1637))
-- Ensure `actionsMenu` is not cut-off by the edge of viewport for `ChatMessage` @kuzhelov ([#1739](https://github.com/stardust-ui/react/pull/1739))
 - Update `Checkbox` files for Teams Theme to match [redlines] @bcalvery ([#1656](https://github.com/stardust-ui/react/pull/1656))
 - Add `color` prop to `Segment` typings @layershifter ([#1702](https://github.com/stardust-ui/react/pull/1702))
 - Remove `color` prop from `Dialog` typings @layershifter ([#1702](https://github.com/stardust-ui/react/pull/1702))
