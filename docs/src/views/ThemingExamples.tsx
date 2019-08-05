@@ -121,31 +121,39 @@ export default () => (
         import { Button } from '@stardust-ui/react'
 
         const btnExample = () => (
-          <Button
-            icon={{
-              name: "at",
-              variables: { color: "brown" }
-            }}
-            content="Send email"
-            variables={{
-              secondaryColor: "coral",
-              secondaryBackgroundColor: "charcoal",
-              paddingLeftRightValue: 20,
-            }}
-          />
+        <Button
+          content="Secure payment"
+          icon={{
+            name: 'lock',
+            variables: {
+              color: 'blue'
+            }
+          }}
+          secondary
+          variables={{
+            color: 'coral',
+            backgroundColor: 'charcoal',
+            paddingLeftRightValue: 30
+          }}
+        />
         )
 
         export default btnExample
       `}
       render={() => (
         <Button
-          content="Send email"
-          icon={{ name: 'at', variables: { color: 'brown' } }}
+          content="Secure payment"
+          icon={{
+            name: 'lock',
+            variables: {
+              color: 'blue',
+            },
+          }}
           secondary
           variables={{
-            secondaryColor: 'coral',
-            secondaryBackgroundColor: 'charcoal',
-            paddingLeftRightValue: 20,
+            color: 'coral',
+            backgroundColor: 'charcoal',
+            paddingLeftRightValue: 30,
           }}
         />
       )}

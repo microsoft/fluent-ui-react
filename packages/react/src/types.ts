@@ -165,4 +165,5 @@ export interface ProviderContextPrepared {
   rtl: boolean
   disableAnimations: boolean
   theme: ThemePrepared
+  originalThemes: (ThemeInput | undefined)[]
 }

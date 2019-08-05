@@ -1,11 +1,10 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 // @ts-ignore We have this export in package, but it is not present in typings
-import { ThemeContext } from 'react-fela'
+import { ThemeContext } from '@stardust-ui/react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/reactTypes'
-import { FocusZone } from './accessibility/FocusZone'
 
 // TODO @Bugaa92: deprecated by createComponent.tsx
 class UIComponent<P, S = {}> extends React.Component<P, S> {
@@ -30,7 +29,9 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
   }
 
   actionHandlers: AccessibilityActionHandlers
-  focusZone: FocusZone
+
+  // stores debug information
+  stardustDebug: any = null
 
   constructor(props, context) {
     super(props, context)
@@ -60,15 +61,11 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
         props: this.props,
         state: this.state,
         actionHandlers: this.actionHandlers,
-        focusZoneRef: this.setFocusZoneRef,
         render: this.renderComponent,
+        saveDebug: updatedDebug => (this.stardustDebug = updatedDebug),
       },
       this.context,
     )
-  }
-
-  setFocusZoneRef = (focusZone: FocusZone): void => {
-    this.focusZone = focusZone
   }
 }
 
