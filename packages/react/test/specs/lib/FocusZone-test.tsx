@@ -1420,4 +1420,55 @@ describe('FocusZone', () => {
     expect(buttonB.tabIndex).toBe(0)
     expect(buttonA.tabIndex).toBe(-1)
   })
+
+  it('remains focus in element with "contenteditable=true" attribute on Home/End keys', () => {
+    const component = ReactTestUtils.renderIntoDocument<{}, React.Component>(
+      <div {...{ onFocusCapture: onFocus }}>
+        <FocusZone>
+          <div contentEditable={true} id="a" />
+          <button id="b">b</button>
+        </FocusZone>
+      </div>,
+    )
+
+    const focusZone = ReactDOM.findDOMNode(component)!.firstChild as Element
+
+    const contentEditableA = focusZone.querySelector('#a') as HTMLElement
+    const buttonB = focusZone.querySelector('#b') as HTMLElement
+
+    setupElement(contentEditableA, {
+      clientRect: {
+        top: 0,
+        bottom: 20,
+        left: 20,
+        right: 40,
+      },
+    })
+
+    setupElement(buttonB, {
+      clientRect: {
+        top: 0,
+        bottom: 20,
+        left: 20,
+        right: 40,
+      },
+    })
+
+    // contentEditableA should be focused.
+    contentEditableA.focus()
+    expect(lastFocusedElement).toBe(contentEditableA)
+
+    ReactTestUtils.Simulate.keyDown(contentEditableA, { which: keyboardKey.Home })
+    expect(lastFocusedElement).toBe(contentEditableA)
+    ReactTestUtils.Simulate.keyDown(contentEditableA, { which: keyboardKey.End })
+    expect(lastFocusedElement).toBe(contentEditableA)
+    expect(contentEditableA.tabIndex).toBe(0)
+    expect(buttonB.tabIndex).toBe(-1)
+
+    // Pressing tab will be the only way for us to exit the focus zone
+    ReactTestUtils.Simulate.keyDown(contentEditableA, { which: keyboardKey.Tab })
+    expect(lastFocusedElement).toBe(buttonB)
+    expect(contentEditableA.tabIndex).toBe(-1)
+    expect(buttonB.tabIndex).toBe(0)
+  })
 })
