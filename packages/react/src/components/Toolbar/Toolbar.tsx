@@ -124,6 +124,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
 
   wrapperRef = React.createRef<HTMLElement>()
   hiddenToolbarRef = React.createRef<HTMLElement>()
+  animationFrameId: number
 
   handleItemOverrides = variables => predefinedProps => ({
     variables: mergeComponentVariables(variables, predefinedProps.variables),
@@ -173,8 +174,19 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     this.afterComponentRendered()
   }
 
+  componentWillUnmount() {
+    if (this.animationFrameId !== undefined) {
+      window.cancelAnimationFrame(this.animationFrameId)
+      this.animationFrameId = undefined
+    }
+  }
+
   afterComponentRendered() {
-    window.requestAnimationFrame(() => {
+    if (this.animationFrameId !== undefined) {
+      window.cancelAnimationFrame(this.animationFrameId)
+    }
+    this.animationFrameId = window.requestAnimationFrame(() => {
+      this.animationFrameId = undefined
       const { onReduceItems } = this.props
       if (_.isNil(onReduceItems) || !this.hiddenToolbarRef.current || this.state.stable) {
         return
