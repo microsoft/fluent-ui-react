@@ -30,7 +30,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `onActiveIndexChange` prop to `Tree` component @lucivpav ([#1728](https://github.com/stardust-ui/react/pull/1728))
 - Add `horizontal` prop for `List` component @mnajdova ([#1721](https://github.com/stardust-ui/react/pull/1721))
 - Export `call-blocked` icon to Teams theme @francescopalmiotto ([#1736](https://github.com/stardust-ui/react/pull/1736))
-- Add use `useEventListener` hook @layershifter ([#1755](https://github.com/stardust-ui/react/pull/1755))
+- Add `useEventListener` hook @layershifter ([#1755](https://github.com/stardust-ui/react/pull/1755))
 
 ### Documentation
 - Fix code in changing component variables section of theming examples @lucivpav ([#1626](https://github.com/stardust-ui/react/pull/1626))
