@@ -33,29 +33,26 @@ const VariableResolver: React.FunctionComponent<VariableResolverProps> = props =
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
   const [renderer, resolvedVariables] = useEnhancedRenderer(context.renderer)
 
-  const onClassNamesChange = React.useCallback(
-    () => {
-      if (!_.isEqual(resolvedVariables.current, latestVariables.current)) {
-        // deep is required to avoid referencing values
-        latestVariables.current = _.cloneDeep(resolvedVariables.current)
+  const onClassNamesChange = React.useCallback(() => {
+    if (!_.isEqual(resolvedVariables.current, latestVariables.current)) {
+      // deep is required to avoid referencing values
+      latestVariables.current = _.cloneDeep(resolvedVariables.current)
 
-        const ordered = _.reduce(
-          latestVariables.current,
-          (components, variables, componentName) => {
-            if (!_.isEmpty(variables)) {
-              components[componentName] = sortVariables(variables)
-            }
+      const ordered = _.reduce(
+        latestVariables.current,
+        (components, variables, componentName) => {
+          if (!_.isEmpty(variables)) {
+            components[componentName] = sortVariables(variables)
+          }
 
-            return components
-          },
-          {},
-        )
+          return components
+        },
+        {},
+      )
 
-        onResolve(ordered)
-      }
-    },
-    [onResolve],
-  )
+      onResolve(ordered)
+    }
+  }, [onResolve])
 
   useClassNamesListener(elementRef, onClassNamesChange)
 
