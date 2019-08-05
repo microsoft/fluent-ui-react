@@ -4,6 +4,7 @@ import ImportantAndMentionMessages from './ImportantAndMentionMessages'
 import ChatMessageWithPopover from './ChatMessageWithPopover'
 import ControlMessages from './ControlMessages'
 import ControlMessagesV2 from './ControlMessagesV2'
+import ControlMessagesV3 from './ControlMessagesV3'
 
 export default () => (
   <PrototypeSection title="Chat messages">
@@ -24,6 +25,9 @@ export default () => (
     </ComponentPrototype>
     <ComponentPrototype title="Control messagesV2" description="Control messages example">
       <ControlMessagesV2 />
+    </ComponentPrototype>
+    <ComponentPrototype title="Control messagesV3" description="Control messages example">
+      <ControlMessagesV3 />
     </ComponentPrototype>
   </PrototypeSection>
 )

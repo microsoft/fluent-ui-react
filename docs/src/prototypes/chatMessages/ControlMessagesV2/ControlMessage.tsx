@@ -45,7 +45,11 @@ class ControlMessage extends React.Component<ControlMessageProps> {
       <Chat items={items} accessibility={acceessibilityBehavior} />
     ) : (
       <Ref innerRef={this.messageRef}>
-        <Chat.Message {...(items[0].message as ChatMessageProps)} tabIndex={-1} />
+        <Chat.Message
+          {...(items[0].message as ChatMessageProps)}
+          tabIndex={-1}
+          styles={{ padding: 0 }}
+        />
       </Ref>
     )
   }

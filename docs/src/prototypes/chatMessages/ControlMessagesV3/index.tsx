@@ -2,6 +2,7 @@ import * as React from 'react'
 import {
   Chat,
   ChatItemProps,
+  ChatMessageProps,
   ShorthandCollection,
   Avatar,
   Divider,
@@ -11,6 +12,7 @@ import {
 import * as keyboardKey from 'keyboard-key'
 
 import ControlMessage from './ControlMessage'
+import GroupControlMessage from './GroupControlMessage'
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
@@ -20,45 +22,39 @@ const janeAvatar = {
   },
 }
 
-const controlMessageItems: ChatItemProps[] = [
+const controlMessageItems: ChatMessageProps[] = [
   {
-    message: {
-      content: (
-        <Chat.Message
-          content={
-            <div>
-              <a href="/">John Doe</a> added <a href="/">Jane Doe</a> to the conversation
-            </div>
-          }
-        />
-      ),
-    },
+    content: (
+      <Chat.Message
+        content={
+          <div>
+            <a href="/">John Doe</a> added <a href="/">Jane Doe</a> to the conversation
+          </div>
+        }
+      />
+    ),
   },
   {
-    message: {
-      content: (
-        <Chat.Message
-          content={
-            <div>
-              <a href="/">John Doe1</a> added <a href="/">Jane Doe1</a> to the conversation
-            </div>
-          }
-        />
-      ),
-    },
+    content: (
+      <Chat.Message
+        content={
+          <div>
+            <a href="/">John Doe1</a> added <a href="/">Jane Doe1</a> to the conversation
+          </div>
+        }
+      />
+    ),
   },
   {
-    message: {
-      content: (
-        <Chat.Message
-          content={
-            <div>
-              <a href="/">John Doe2</a> added <a href="/">Jane Doe2</a> to the conversation
-            </div>
-          }
-        />
-      ),
-    },
+    content: (
+      <Chat.Message
+        content={
+          <div>
+            <a href="/">John Doe2</a> added <a href="/">Jane Doe2</a> to the conversation
+          </div>
+        }
+      />
+    ),
   },
 ]
 
@@ -83,11 +79,11 @@ const ChatExample = () => {
           <Flex>
             <Icon name="stardust-arrow-end" onClick={() => setExpanded(!expanded)} />
             <Icon name="participant-add" />
-            <ControlMessage
-              expanded={expanded}
-              items={controlMessageItems}
-              focusMessage={focused}
-            />
+            {expanded ? (
+              <GroupControlMessage items={controlMessageItems} />
+            ) : (
+              <ControlMessage messageFocused={focused} message={controlMessageItems[0]} />
+            )}
           </Flex>
         ),
       },
