@@ -30,7 +30,7 @@ class CustomChatMessage extends React.Component {
   togglePopup = () => this.setState({ open: !this.state.open })
 
   renderMenuItem = (MenuItem, props) => {
-    if (props.icon !== 'thumbs up') {
+    if (props.icon !== 'like') {
       return <MenuItem {...props} />
     }
 
@@ -51,7 +51,7 @@ class CustomChatMessage extends React.Component {
           <AsyncData
             data={3}
             render={data => (
-              <MenuItem {...props} icon="thumbs up" content={data} onClick={this.togglePopup} />
+              <MenuItem {...props} icon="like" content={data} onClick={this.togglePopup} />
             )}
           />
         }
@@ -90,9 +90,9 @@ class CustomChatMessage extends React.Component {
               iconOnly
               className="actions"
               items={[
-                { key: 'a', icon: 'thumbs up' },
-                { key: 'b', icon: 'user' },
-                { key: 'c', icon: 'ellipsis horizontal' },
+                { key: 'a', icon: 'like' },
+                { key: 'b', icon: 'user-friends' },
+                { key: 'c', icon: 'more' },
               ].map(item => render => render(item, this.renderMenuItem))}
             />
           </div>
@@ -114,7 +114,7 @@ const gutterContent = (
             render={statusData =>
               renderStatus({
                 color: statusData === 'available' ? 'green' : undefined,
-                icon: statusData === 'available' ? 'check' : undefined,
+                icon: statusData === 'available' ? 'stardust-checkmark' : undefined,
               })
             }
           />

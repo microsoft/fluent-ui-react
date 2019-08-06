@@ -21,7 +21,7 @@ class App extends React.Component<any, ThemeContextData> {
       <ThemeContext.Provider value={this.state}>
         <Provider
           as={React.Fragment}
-          theme={mergeThemes(themes.fontAwesome, themes[themeName], {
+          theme={mergeThemes(themes[themeName], {
             staticStyles: [
               {
                 a: {

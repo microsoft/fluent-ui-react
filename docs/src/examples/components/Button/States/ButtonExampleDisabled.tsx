@@ -12,11 +12,11 @@ const ButtonExampleDisabled = () => (
         Secondary
       </Button>
       <Button disabled icon iconPosition="before" primary>
-        <Icon name="book" xSpacing="after" />
+        <Icon name="emoji" xSpacing="after" />
         <Text content="Click me" />
       </Button>
       <Button disabled circular>
-        <Icon name="coffee" xSpacing="none" />
+        <Icon name="translation" xSpacing="none" />
       </Button>
     </Flex>
     <Button disabled fluid>

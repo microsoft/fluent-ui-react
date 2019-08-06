@@ -4,10 +4,10 @@ import { Button, Flex, Icon } from '@stardust-ui/react'
 const ButtonExampleEmphasisCircular = () => (
   <Flex gap="gap.smaller">
     <Button circular icon primary>
-      <Icon name="coffee" xSpacing="none" />
+      <Icon name="translation" xSpacing="none" />
     </Button>
     <Button circular icon secondary>
-      <Icon name="book" xSpacing="none" />
+      <Icon name="emoji" xSpacing="none" />
     </Button>
   </Flex>
 )

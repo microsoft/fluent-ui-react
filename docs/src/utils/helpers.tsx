@@ -15,7 +15,7 @@ export const link = (content: string, href: string) => {
         href={href}
         {...(isExternal && { target: 'blank' })}
       >
-        {content} {isExternal ? <Icon name="external" size="small" /> : ''}
+        {content} {isExternal ? <Icon name="open-outside" size="small" /> : ''}
       </a>
     )
   }

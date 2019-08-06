@@ -4,12 +4,12 @@ import { Button, Flex, Icon, Text } from '@stardust-ui/react'
 const ButtonExampleContentAndIcon = () => (
   <Flex gap="gap.smaller">
     <Button icon iconPosition="before" primary>
-      <Icon name="book" xSpacing="after" variables={{ color: 'white' }} />
+      <Icon name="emoji" xSpacing="after" variables={{ color: 'white' }} />
       <Text content="Click me before" />
     </Button>
     <Button icon iconPosition="after" secondary>
       <Text content="Click me after" />
-      <Icon name="coffee" xSpacing="before" />
+      <Icon name="translation" xSpacing="before" />
     </Button>
   </Flex>
 )

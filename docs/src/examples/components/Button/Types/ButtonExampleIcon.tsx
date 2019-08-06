@@ -3,7 +3,7 @@ import { Button, Icon } from '@stardust-ui/react'
 
 const ButtonExampleIcon = () => (
   <Button icon primary>
-    <Icon name="book" xSpacing="none" />
+    <Icon name="emoji" xSpacing="none" />
   </Button>
 )
 

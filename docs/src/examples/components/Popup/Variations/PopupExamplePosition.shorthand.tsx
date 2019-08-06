@@ -23,7 +23,12 @@ const PopupExamplePosition = () => {
         align={align}
         position={position}
         unstable_pinned={unstable_pinned}
-        trigger={<Button icon={icons[position]} styles={buttonStyles} />}
+        trigger={
+          <Button
+            icon={{ name: iconNames[position], circular: true, bordered: true }}
+            styles={buttonStyles}
+          />
+        }
         content={
           <p>
             The popup is rendered {position} the trigger
@@ -53,7 +58,7 @@ const positionAndAlignValues = [
   'after-bottom',
 ]
 
-const icons: Record<Position, string> = {
+const iconNames: Record<Position, string> = {
   above: 'arrow circle up',
   below: 'arrow circle down',
   before: 'arrow circle left',

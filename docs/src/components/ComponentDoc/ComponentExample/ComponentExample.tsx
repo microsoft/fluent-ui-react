@@ -324,7 +324,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     const menuItems = [
       {
-        icon: canCodeBeFormatted ? 'magic' : 'check', // (error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')
+        icon: canCodeBeFormatted ? 'indent' : 'stardust-checkmark', // (error && 'bug') || (canCodeBeFormatted ? 'indent' : 'stardust-checkmark')
         // active: !!error,
         content: 'Prettier',
         key: 'prettier',
@@ -332,7 +332,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         disabled: !canCodeBeFormatted,
       },
       {
-        icon: 'refresh',
+        icon: 'retry',
         content: 'Reset',
         key: 'reset',
         onClick: this.resetSourceCode,
@@ -345,7 +345,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               <Component
                 {...props}
                 active={active}
-                icon={active ? 'check' : 'copy'}
+                icon={active ? 'stardust-checkmark' : 'copy'}
                 onClick={onClick}
               />
             )}

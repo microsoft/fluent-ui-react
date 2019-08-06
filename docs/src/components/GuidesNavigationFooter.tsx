@@ -22,7 +22,7 @@ const GuidesNavigationFooter: React.FC<GuidesNavigationFooterProps> = ({ previou
         <Button
           as={Link}
           content={previous.name}
-          icon="arrow left"
+          icon="arrow-left"
           iconPosition="before"
           primary
           to={previous.url}
@@ -32,7 +32,7 @@ const GuidesNavigationFooter: React.FC<GuidesNavigationFooterProps> = ({ previou
         <Button
           as={Link}
           content={next.name}
-          icon="arrow right"
+          icon="arrow-right"
           iconPosition="after"
           primary
           to={next.url}

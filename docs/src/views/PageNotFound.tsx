@@ -5,9 +5,9 @@ const PageNotFound = () => (
   <Grid>
     <div>
       <Header as="h1" align="center">
-        <Icon name="game" />
+        <Icon name="leave" />
         404
-        <Header.Description>How about some good old Atari?</Header.Description>
+        <Header.Description>How about going for a jog?</Header.Description>
       </Header>
     </div>
 

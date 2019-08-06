@@ -94,7 +94,9 @@ const ColorBox = createComponent<ColorBoxProps>({
           {(active, onClick) => (
             <div className={classes.value}>
               <span onClick={onClick}>
-                {value && <Icon name={active ? 'checkmark' : 'copy outline'} size="small" />}
+                {value && (
+                  <Icon name={active ? 'stardust-checkmark' : 'copy outline'} size="small" />
+                )}
                 {value || 'Not defined'}
               </span>
             </div>

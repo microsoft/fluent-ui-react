@@ -15,7 +15,7 @@ class EmployeeCardPrototype extends React.Component<any, { popupOpen: boolean }>
       email: 'John.Doe@company.com',
       avatar: {
         label: { variables: { backgroundColor: '#00b5ad', color: 'white' } },
-        status: { color: 'green', icon: 'check', title: 'Available' },
+        status: { color: 'green', icon: 'stardust-checkmark', title: 'Available' },
       },
     }
     return (

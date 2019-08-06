@@ -4,7 +4,8 @@ import { Button, Grid, Popup } from '@stardust-ui/react'
 const renderButton = rotateArrowUp => (
   <Button
     icon={{
-      name: 'arrow circle up',
+      name: 'arrow-up',
+      circular: true,
       styles: { transform: `rotate(${rotateArrowUp})` },
     }}
     styles={{ height: '80px', minWidth: '80px', padding: 0 }}

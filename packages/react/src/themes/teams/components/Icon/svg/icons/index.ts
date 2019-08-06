@@ -5,6 +5,8 @@ import add from './add'
 import addParticipant from './addParticipant'
 import arrowUp from './arrowUp'
 import arrowDown from './arrowDown'
+import arrowLeft from './arrowLeft'
+import arrowRight from './arrowRight'
 import ban from './ban'
 import bold from './bold'
 import bookmark from './bookmark'
@@ -73,6 +75,7 @@ import fontSize from './fontSize'
 import format from './format'
 import gallery from './gallery'
 import giphy from './giphy'
+import github from './github'
 import hand from './hand'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
@@ -153,6 +156,8 @@ export default {
   add,
   'arrow-up': arrowUp,
   'arrow-down': arrowDown,
+  'arrow-left': arrowLeft,
+  'arrow-right': arrowRight,
   ban,
   bold,
   bookmark,
@@ -214,6 +219,7 @@ export default {
   'font-size': fontSize,
   gallery,
   giphy,
+  github,
   highlight,
   'horizontal-rule': horizontalRule,
   'image-unavailable': imageUnavailable,

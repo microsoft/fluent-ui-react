@@ -89,7 +89,7 @@ const PopupCloseButtonExample = () => {
       content={popupContent}
       trapFocus
     >
-      <Button icon="user" content="People Picker" aria-label="Choose a person." />
+      <Button icon="user-friends" content="People Picker" aria-label="Choose a person." />
     </Popup>
   )
 }

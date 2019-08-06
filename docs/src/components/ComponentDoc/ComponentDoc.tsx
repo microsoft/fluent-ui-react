@@ -146,7 +146,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
             </ExampleContext.Provider>
 
             <div style={exampleEndStyle}>
-              This is the bottom <Icon name="pointing down" />
+              This is the bottom <Icon name="arrow-down" />
             </div>
           </div>
 

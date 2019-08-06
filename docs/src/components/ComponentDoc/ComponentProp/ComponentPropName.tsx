@@ -24,7 +24,7 @@ export default class ComponentPropName extends React.PureComponent<any, any> {
             content="Required"
             align="center"
             styles={{ fontSize: 'x-small' }}
-            trigger={<Icon styles={{ color: 'red' }} name="asterisk" size="small" />}
+            trigger={<Icon styles={{ color: 'red' }} name="redbang" size="small" />}
           />
         )}
         {slot && (

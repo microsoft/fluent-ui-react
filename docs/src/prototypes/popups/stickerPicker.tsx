@@ -50,7 +50,7 @@ class StickerPicker extends React.Component {
       <Popup
         accessibility={dialogBehavior}
         position="below"
-        trigger={<Button icon="sticky note" aria-label="Choose a sticker." />}
+        trigger={<Button icon="sticker" aria-label="Choose a sticker." />}
         content={{
           'aria-label': 'Choose a sticker. Press Enter key to insert sticker.',
           content: (

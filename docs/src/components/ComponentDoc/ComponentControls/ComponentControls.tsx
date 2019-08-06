@@ -67,7 +67,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
         items={[
           {
             key: 'show-code',
-            content: <ComponentButton iconName="code" label="Try it" />,
+            content: <ComponentButton iconName="code-snippet" label="Try it" />,
             onClick: onShowCode,
           },
           {
@@ -82,12 +82,12 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
           },
           {
             key: 'show-variables',
-            content: <ComponentButton iconName="paint brush" label="Theme it" />,
+            content: <ComponentButton iconName="format" label="Theme it" />,
             onClick: onShowVariables,
           },
           {
             key: 'show-transparent',
-            content: <ComponentButton iconName="adjust" label="Transparent" />,
+            content: <ComponentButton iconName="eye" label="Transparent" />,
             onClick: onShowTransparent,
           },
           {
@@ -97,7 +97,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
           },
           {
             key: 'maximize',
-            content: <ComponentButton iconName="external alternate" label="Popout" />,
+            content: <ComponentButton iconName="open-outside" label="Popout" />,
             as: NavLink,
             to: `/maximize/${_.kebabCase(
               examplePath
@@ -114,7 +114,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
               <CopyToClipboard value={anchorName}>
                 {(active, onClick) => (
                   <ComponentButton
-                    iconName="linkify"
+                    iconName="link"
                     label={active ? 'Copied!' : 'Permalink'}
                     onClick={onClick}
                   />

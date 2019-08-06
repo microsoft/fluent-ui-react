@@ -4,7 +4,7 @@ import { Button, Flex, Icon, Text } from '@stardust-ui/react'
 const ButtonExampleText = () => (
   <Flex gap="gap.smaller">
     <Button text>
-      <Icon name="book" xSpacing="after" />
+      <Icon name="emoji" xSpacing="after" />
       <Text content="Default" />
     </Button>
     <Button text primary>
@@ -14,7 +14,7 @@ const ButtonExampleText = () => (
       Secondary
     </Button>
     <Button text circular>
-      <Icon name="compass outline" xSpacing="none" />
+      <Icon name="star" xSpacing="none" />
     </Button>
   </Flex>
 )
