@@ -13,6 +13,9 @@ const ButtonExampleTextShorthand = () => (
     <br />
     <br />
     <Button icon="call-video" text disabled content="A disabled text button with an icon" />
+    <br />
+    <br />
+    <Button icon="call-video" text primary content="A primary text button with an icon" />
   </div>
 )
 

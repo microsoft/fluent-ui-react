@@ -23,6 +23,12 @@ const ButtonExampleText = () => (
       <Icon name="call-video" />
       <Text content="A disabled text button with an icon" />
     </Button>
+    <br />
+    <br />
+    <Button text primary>
+      <Icon name="call-video" />
+      <Text content="A primary text button with an icon" />
+    </Button>
   </div>
 )
 
