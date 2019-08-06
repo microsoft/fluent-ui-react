@@ -117,7 +117,6 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
           outline: 'none',
 
           ...(p.isFromKeyboard && {
-            color: v.textColorHover,
             ...borderFocusStyles,
             ...getIconFillOrOutlineStyles({ outline: false }),
           }),
