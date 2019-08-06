@@ -37,7 +37,7 @@ const hierarchicalTreeItemBehavior: Accessibility<TreeItemBehaviorProps> = props
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
       ...(isSubtreeOpen(props) && {
-        receiveFocus: {
+        focusParent: {
           keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
         },
         collapse: {
