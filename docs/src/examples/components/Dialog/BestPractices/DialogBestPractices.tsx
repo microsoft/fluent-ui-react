@@ -11,7 +11,8 @@ const doList = [
     {link(
       'aria pattern',
       'https://www.w3.org/TR/wai-aria-practices-1.1/examples/dialog-modal/dialog.html',
-    )}
+    )}{' '}
+    for details.
   </Text>,
 ]
 
