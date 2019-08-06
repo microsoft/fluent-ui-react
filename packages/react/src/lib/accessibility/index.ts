@@ -58,3 +58,6 @@ export { default as checkboxBehavior } from './Behaviors/Checkbox/checkboxBehavi
 export { default as tooltipBehavior } from './Behaviors/Tooltip/tooltipBehavior'
 export { default as tooltipAsLabelBehavior } from './Behaviors/Tooltip/tooltipAsLabelBehavior'
 export { default as sliderBehavior } from './Behaviors/Slider/sliderBehavior'
+export { default as treeBehavior } from './Behaviors/tree/treeBehavior'
+export { default as treeItemBehavior } from './Behaviors/tree/treeItemBehavior'
+export { default as treeTitleBehavior } from './Behaviors/tree/treeTitleBehavior'
