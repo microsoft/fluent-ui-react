@@ -1,18 +1,7 @@
 import * as React from 'react'
-import {
-  Chat,
-  ChatItemProps,
-  ChatMessageProps,
-  ShorthandCollection,
-  Avatar,
-  Divider,
-  Flex,
-  Icon,
-} from '@stardust-ui/react'
-import * as keyboardKey from 'keyboard-key'
-
-import ControlMessage from './ControlMessage'
+import { Chat, ChatItemProps, ShorthandCollection, Avatar, Divider } from '@stardust-ui/react'
 import GroupControlMessages from './GroupControlMessages'
+import ControlMessage from './ControlMessage'
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
@@ -22,69 +11,37 @@ const janeAvatar = {
   },
 }
 
-const groupControlMessageItems: ChatMessageProps[] = [
-  {
-    content: (
-      <div>
-        <a href="/">John Doe</a> has added <a href="/">Jane Doe1</a> to the team
-      </div>
-    ),
-  },
-  {
-    content: (
-      <div>
-        <a href="/">John Doe</a> has added <a href="/">Jane Doe2</a> to the team
-      </div>
-    ),
-  },
-  {
-    content: (
-      <div>
-        <a href="/">John Doe</a> has added <a href="/">Jane Doe3</a> to the team
-      </div>
-    ),
-  },
-]
-
-const controlMessage = {
-  content: (
-    <div>
-      <a href="/">John Doe</a> has added <a href="/">Jane Doe1</a> and 2 other to the team
-    </div>
-  ),
-}
-
 const ChatExample = () => {
-  const [expanded, setExpanded] = React.useState(false)
-  const [focused, setFocused] = React.useState(false)
-
   const items: ShorthandCollection<ChatItemProps> = [
     {
       message: {
-        onKeyDown: e => {
-          const eventCode = keyboardKey.getCode(e)
-          if (eventCode === keyboardKey.Enter) {
-            setExpanded(true)
-          }
-          if (eventCode === keyboardKey.Escape) {
-            setExpanded(false)
-            setFocused(true)
-          }
-        },
         content: (
-          <Flex>
-            <Icon
-              name={expanded ? 'stardust-arrow-down' : 'stardust-arrow-end'}
-              onClick={() => setExpanded(!expanded)}
-            />
-            <Icon name="participant-add" />
-            {expanded ? (
-              <GroupControlMessages items={groupControlMessageItems} />
-            ) : (
-              <ControlMessage focused={focused} message={controlMessage} />
-            )}
-          </Flex>
+          // Adding control message
+          <ControlMessage
+            icon={true}
+            message={{
+              content: (
+                <div>
+                  <a href="/">John Doe</a> joined the team
+                </div>
+              ),
+            }}
+          />
         ),
+        styles: {
+          marginLeft: '16px',
+        },
+      },
+    },
+    {
+      message: {
+        content: (
+          // Adding Grouped control messages
+          <GroupControlMessages />
+        ),
+        styles: {
+          marginLeft: 0,
+        },
       },
     },
     {
