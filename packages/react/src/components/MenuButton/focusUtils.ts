@@ -12,11 +12,3 @@ export const focusMenuItem = (menuRef: HTMLElement, order: 'first' | 'last') => 
 
   FocusZoneUtilities.focusAsync(element)
 }
-
-export const focusNearest = (buttonNode: HTMLElement, order: 'next' | 'previous') => {
-  const getter =
-    order === 'next' ? FocusZoneUtilities.getNextElement : FocusZoneUtilities.getPreviousElement
-  const element = getter(document.body, buttonNode)
-
-  FocusZoneUtilities.focusAsync(element)
-}

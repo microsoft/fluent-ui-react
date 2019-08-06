@@ -41,11 +41,11 @@ const menuButtonBehavior: Accessibility<MenuButtonBehaviorProps> = props => {
       root: {
         ...(props.open
           ? {
-              closeAndFocusNext: {
-                keyCombinations: [{ keyCode: keyboardKey.Tab, shiftKey: false }],
-              },
-              closeAndFocusPrevious: {
-                keyCombinations: [{ keyCode: keyboardKey.Tab, shiftKey: true }],
+              closeMenu: {
+                keyCombinations: [
+                  { keyCode: keyboardKey.Tab, shiftKey: false },
+                  { keyCode: keyboardKey.Tab, shiftKey: true },
+                ],
               },
             }
           : _.includes(props.on, 'click') && {

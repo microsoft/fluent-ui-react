@@ -20,7 +20,7 @@ import Menu, { MenuProps } from '../Menu/Menu'
 import { MenuItemProps } from '../Menu/MenuItem'
 import { Ref } from '@stardust-ui/react-component-ref'
 import { menuButtonBehavior } from '../../lib/accessibility'
-import { focusMenuItem, focusNearest } from './focusUtils'
+import { focusMenuItem } from './focusUtils'
 import { ALIGNMENTS, POSITIONS, PositioningProps } from '../../lib/positioner'
 
 export interface MenuButtonSlotClassNames {
@@ -167,22 +167,16 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
   menuRef = React.createRef<HTMLElement>()
 
   actionHandlers = {
-    closeAndFocusNext: e => this.closeAndFocus(e, 'next'),
-    closeAndFocusPrevious: e => this.closeAndFocus(e, 'previous'),
+    closeMenu: () => this.closeMenu(),
     openAndFocusFirst: e => this.openAndFocus(e, 'first'),
     openAndFocusLast: e => this.openAndFocus(e, 'last'),
   }
 
-  closeAndFocus(e: Event, which: 'next' | 'previous') {
-    const renderCallback = () => focusNearest(this.triggerRef.current, which)
-    this.trySetState(
-      {
-        open: false,
-        autoFocus: false,
-      },
-      renderCallback,
-    )
-    e.preventDefault()
+  closeMenu() {
+    this.trySetState({
+      open: false,
+      autoFocus: false,
+    })
   }
 
   openAndFocus(e: Event, which: 'first' | 'last') {
