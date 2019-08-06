@@ -25,35 +25,23 @@ const janeAvatar = {
 const controlMessageItems: ChatMessageProps[] = [
   {
     content: (
-      <Chat.Message
-        content={
-          <div>
-            <a href="/">John Doe</a> added <a href="/">Jane Doe</a> to the conversation
-          </div>
-        }
-      />
+      <div>
+        <a href="/">John Doe</a> added <a href="/">Jane Doe</a> to the conversation
+      </div>
     ),
   },
   {
     content: (
-      <Chat.Message
-        content={
-          <div>
-            <a href="/">John Doe1</a> added <a href="/">Jane Doe1</a> to the conversation
-          </div>
-        }
-      />
+      <div>
+        <a href="/">John Doe1</a> added <a href="/">Jane Doe1</a> to the conversation
+      </div>
     ),
   },
   {
     content: (
-      <Chat.Message
-        content={
-          <div>
-            <a href="/">John Doe2</a> added <a href="/">Jane Doe2</a> to the conversation
-          </div>
-        }
-      />
+      <div>
+        <a href="/">John Doe2</a> added <a href="/">Jane Doe2</a> to the conversation
+      </div>
     ),
   },
 ]
@@ -77,7 +65,10 @@ const ChatExample = () => {
         },
         content: (
           <Flex>
-            <Icon name="stardust-arrow-end" onClick={() => setExpanded(!expanded)} />
+            <Icon
+              name={expanded ? 'stardust-arrow-down' : 'stardust-arrow-end'}
+              onClick={() => setExpanded(!expanded)}
+            />
             <Icon name="participant-add" />
             {expanded ? (
               <GroupControlMessage items={controlMessageItems} />

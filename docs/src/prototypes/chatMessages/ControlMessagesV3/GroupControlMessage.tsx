@@ -1,11 +1,6 @@
 import * as React from 'react'
-import {
-  ListItemProps,
-  chatBehavior,
-  Accessibility,
-  // Ref,
-  List,
-} from '@stardust-ui/react'
+import { ListItemProps, chatBehavior, Accessibility, List, Chat } from '@stardust-ui/react'
+import * as _ from 'lodash'
 
 const acceessibilityBehavior: Accessibility<any> = props => {
   const behaviorData = chatBehavior(props)
@@ -22,24 +17,30 @@ const acceessibilityBehavior: Accessibility<any> = props => {
 }
 
 interface GroupControlMessageProps {
-  expanded?: boolean
   items: ListItemProps[]
-  focusMessage?: boolean
 }
 
 class GroupControlMessage extends React.Component<GroupControlMessageProps> {
-  // messageRef = React.createRef<HTMLElement>()
-
-  // componentDidUpdate() {
-  //   const { expanded, focusMessage } = this.props
-
-  //   if (!expanded && focusMessage && this.messageRef) {
-  //     this.messageRef.current.focus()
-  //   }
-  // }
+  renderItems = () => {
+    return _.map(this.props.items, item => {
+      return {
+        content: (
+          <Chat.Message
+            {...item}
+            styles={{ padding: 0, marginLeft: '10px', backgroundColor: '#f3f2f1' }}
+          />
+        ),
+        styles: {
+          padding: 0,
+          display: 'block',
+          minHeight: '25px',
+        },
+      }
+    })
+  }
 
   render() {
-    return <List accessibility={acceessibilityBehavior} items={this.props.items} />
+    return <List accessibility={acceessibilityBehavior} items={this.renderItems()} />
   }
 }
 
