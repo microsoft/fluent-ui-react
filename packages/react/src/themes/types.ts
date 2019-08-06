@@ -457,9 +457,9 @@ type ThemeStylesProps = {
   Tooltip?: TooltipProps
   TooltipContent?: TooltipContentProps
   Text?: TextProps
-  Tree?: HierarchicalTreeProps
-  TreeItem?: HierarchicalTreeItemProps
-  TreeTitle?: HierarchicalTreeTitleProps
+  HierarchicalTree?: HierarchicalTreeProps
+  HierarchicalTreeItem?: HierarchicalTreeItemProps
+  HierarchicalTreeTitle?: HierarchicalTreeTitleProps
   Video?: VideoProps
 }
 
