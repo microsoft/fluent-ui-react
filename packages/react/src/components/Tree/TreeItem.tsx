@@ -25,7 +25,6 @@ import {
   withSafeTypeForAs,
   ShorthandCollection,
 } from '../../types'
-import { getFirstFocusable } from '../../lib/accessibility/FocusZone/focusUtilities'
 
 export interface TreeItemSlotClassNames {
   title: string
@@ -49,6 +48,12 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
 
   /** Called when a tree title is clicked. */
   onTitleClick?: ComponentEventHandler<TreeItemProps>
+
+  /** Called when the item's first child is focused. */
+  onFirstChildFocus?: ComponentEventHandler<TreeItemProps>
+
+  /** Called when the item's parent is focused. */
+  onParentFocus?: ComponentEventHandler<TreeItemProps>
 
   /** Whether or not the subtree of the item is in the open state. */
   open?: boolean
@@ -94,6 +99,8 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     exclusive: PropTypes.bool,
     level: PropTypes.number,
     onTitleClick: PropTypes.func,
+    onFirstChildFocus: PropTypes.func,
+    onParentFocus: PropTypes.func,
     open: PropTypes.bool,
     parent: customPropTypes.itemShorthand,
     position: PropTypes.number,
@@ -118,14 +125,11 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
       _.invoke(this.props, 'onTitleClick', e, this.props)
     },
-    receiveFocus: e => {
+    focusParent: e => {
       e.preventDefault()
       e.stopPropagation()
 
-      // Focuses the title if the event comes from a child item.
-      if (this.eventComesFromChildItem(e)) {
-        this.itemRef.current.focus()
-      }
+      this.handleParentFocus(e)
     },
     collapse: e => {
       e.preventDefault()
@@ -143,13 +147,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
       this.handleTitleClick(e)
     },
     focusSubtree: e => {
-      e.preventDefault()
-      e.stopPropagation()
-
-      const element = getFirstFocusable(this.treeRef.current, this.treeRef.current, true)
-      if (element) {
-        element.focus()
-      }
+      this.handleFirstChildFocus(e)
     },
   }
 
@@ -159,6 +157,14 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
   handleTitleClick = e => {
     _.invoke(this.props, 'onTitleClick', e, this.props)
+  }
+
+  handleParentFocus = e => {
+    _.invoke(this.props, 'onParentFocus', e, this.props)
+  }
+
+  handleFirstChildFocus = e => {
+    _.invoke(this.props, 'onFirstChildFocus', e, this.props)
   }
 
   handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
