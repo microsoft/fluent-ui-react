@@ -11,8 +11,8 @@ const doList = [
   'Beware of using `autoFocus` as it just grabs focus and do not traps it. User is able to tab out from popup, so consider to use `inline` prop to save a correct tab order.',
   <Text>
     To set aria-label, aria-labelledby and aria-describedby attributes on the popup slot you need to
-    set it inside of the content prop shorthand. See
-    {link(' close button example ', '#usage-close-button')} for details.
+    set it inside of the content prop shorthand. See{' '}
+    {link('close button example', '#usage-close-button')} for details.
   </Text>,
 ]
 
