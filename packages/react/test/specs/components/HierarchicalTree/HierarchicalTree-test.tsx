@@ -69,7 +69,7 @@ const checkOpenTitles = (wrapper: ReactWrapper, expected: string[]): void => {
   })
 }
 
-describe('Tree', () => {
+describe('HierarchialTree', () => {
   isConformant(HierarchicalTree)
 
   describe('activeIndex', () => {
