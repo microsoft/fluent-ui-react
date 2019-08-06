@@ -86,7 +86,10 @@ const PopupCloseButtonExample = () => {
     <Popup
       open={open}
       onOpenChange={(e, { open }) => setOpen(open)}
-      content={popupContent}
+      content={{
+        content: popupContent,
+        'aria-label': 'People picker',
+      }}
       trapFocus
     >
       <Button icon="user-friends" content="People Picker" aria-label="Choose a person." />
