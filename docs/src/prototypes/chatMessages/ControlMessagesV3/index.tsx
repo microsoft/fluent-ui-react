@@ -26,25 +26,33 @@ const controlMessageItems: ChatMessageProps[] = [
   {
     content: (
       <div>
-        <a href="/">John Doe</a> added <a href="/">Jane Doe</a> to the conversation
+        <a href="/">John Doe</a> has added <a href="/">Jane Doe1</a> to the team
       </div>
     ),
   },
   {
     content: (
       <div>
-        <a href="/">John Doe1</a> added <a href="/">Jane Doe1</a> to the conversation
+        <a href="/">John Doe</a> has added <a href="/">Jane Doe2</a> to the team
       </div>
     ),
   },
   {
     content: (
       <div>
-        <a href="/">John Doe2</a> added <a href="/">Jane Doe2</a> to the conversation
+        <a href="/">John Doe</a> has added <a href="/">Jane Doe3</a> to the team
       </div>
     ),
   },
 ]
+
+const controlMessage = {
+  content: (
+    <div>
+      <a href="/">John Doe</a> has added <a href="/">Jane Doe1</a> and 2 other to the team
+    </div>
+  ),
+}
 
 const ChatExample = () => {
   const [expanded, setExpanded] = React.useState(false)
@@ -55,7 +63,7 @@ const ChatExample = () => {
       message: {
         onKeyDown: e => {
           const eventCode = keyboardKey.getCode(e)
-          if (eventCode === keyboardKey.Enter || eventCode === keyboardKey.Spacebar) {
+          if (eventCode === keyboardKey.Enter) {
             setExpanded(true)
           }
           if (eventCode === keyboardKey.Escape) {
@@ -73,7 +81,7 @@ const ChatExample = () => {
             {expanded ? (
               <GroupControlMessage items={controlMessageItems} />
             ) : (
-              <ControlMessage messageFocused={focused} message={controlMessageItems[0]} />
+              <ControlMessage focused={focused} message={controlMessage} />
             )}
           </Flex>
         ),

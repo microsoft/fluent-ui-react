@@ -2,14 +2,14 @@ import * as React from 'react'
 import { Ref, ChatMessageProps, Chat } from '@stardust-ui/react'
 
 interface ControlMessageProps {
-  messageFocused?: boolean
+  focused?: boolean
   message: ChatMessageProps
 }
 class ControlMessage extends React.Component<ControlMessageProps> {
   messageRef = React.createRef<HTMLElement>()
 
   componentDidMount() {
-    if (this.props.messageFocused && this.messageRef) {
+    if (this.props.focused && this.messageRef) {
       this.messageRef.current.focus()
     }
   }
@@ -20,7 +20,7 @@ class ControlMessage extends React.Component<ControlMessageProps> {
         <Chat.Message
           {...this.props.message}
           tabIndex={-1}
-          styles={{ padding: 0, marginLeft: '10px', backgroundColor: '#f3f2f1' }}
+          styles={{ padding: 0, marginLeft: '10px', backgroundColor: '#f3f2f1', fontSize: '14px' }}
         />
       </Ref>
     )

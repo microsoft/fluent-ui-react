@@ -1,9 +1,16 @@
 import * as React from 'react'
-import { ListItemProps, chatBehavior, Accessibility, List, Chat } from '@stardust-ui/react'
 import * as _ from 'lodash'
+
+import { ListItemProps, chatBehavior, Accessibility, List } from '@stardust-ui/react'
+import ControlMessage from './ControlMessage'
 
 const acceessibilityBehavior: Accessibility<any> = props => {
   const behaviorData = chatBehavior(props)
+
+  behaviorData.attributes.root = {
+    ...behaviorData.attributes.root,
+    'data-is-focusable': true,
+  }
 
   behaviorData.focusZone = {
     mode: behaviorData.focusZone.mode,
@@ -11,6 +18,7 @@ const acceessibilityBehavior: Accessibility<any> = props => {
       ...behaviorData.focusZone.props,
       shouldFocusOnMount: true,
       defaultTabbableElement: undefined,
+      shouldFocusInnerElementWhenReceivedFocus: true,
     },
   }
   return behaviorData
@@ -24,12 +32,7 @@ class GroupControlMessage extends React.Component<GroupControlMessageProps> {
   renderItems = () => {
     return _.map(this.props.items, item => {
       return {
-        content: (
-          <Chat.Message
-            {...item}
-            styles={{ padding: 0, marginLeft: '10px', backgroundColor: '#f3f2f1' }}
-          />
-        ),
+        content: <ControlMessage message={item} />,
         styles: {
           padding: 0,
           display: 'block',
