@@ -180,6 +180,13 @@ export {
   default as HierarchicalTreeTitle,
 } from './components/HierarchicalTree/HierarchicalTreeTitle'
 
+export * from './components/Tree/Tree'
+export { default as Tree } from './components/Tree/Tree'
+export * from './components/Tree/TreeItem'
+export { default as TreeItem } from './components/Tree/TreeItem'
+export * from './components/Tree/TreeTitle'
+export { default as TreeTitle } from './components/Tree/TreeTitle'
+
 export * from './components/Reaction/Reaction'
 export { default as Reaction } from './components/Reaction/Reaction'
 export * from './components/Reaction/ReactionGroup'
