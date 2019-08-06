@@ -1,14 +1,14 @@
-import { FocusZoneUtilities } from '../..'
+import {
+  getFirstFocusable,
+  getLastFocusable,
+  focusAsync,
+} from '../../lib/accessibility/FocusZone/focusUtilities'
 
 export const focusMenuItem = (menuRef: HTMLElement, order: 'first' | 'last') => {
   const element =
     order === 'first'
-      ? FocusZoneUtilities.getFirstFocusable(
-          menuRef,
-          menuRef.firstElementChild as HTMLElement,
-          true,
-        )
-      : FocusZoneUtilities.getLastFocusable(menuRef, menuRef.lastElementChild as HTMLElement, true)
+      ? getFirstFocusable(menuRef, menuRef.firstElementChild as HTMLElement, true)
+      : getLastFocusable(menuRef, menuRef.lastElementChild as HTMLElement, true)
 
-  FocusZoneUtilities.focusAsync(element)
+  focusAsync(element)
 }
