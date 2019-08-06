@@ -208,7 +208,7 @@ HierarchicalTree.create = createShorthandFactory({
 })
 
 /**
- * A Tree displays data organised in tree hierarchy.
+ * (DEPRECATED) A Tree displays data organised in tree hierarchy.
  *
  * @accessibility
  * Implements [ARIA TreeView](https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView) design pattern.
