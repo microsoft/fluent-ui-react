@@ -5,6 +5,6 @@ export default (siteVars: any): Partial<InputVariables> => {
   return {
     borderColor: siteVars.bodyColor,
     borderWidth: `${pxToRem(1)} ${pxToRem(1)} ${pxToRem(2)} ${pxToRem(1)}`,
-    inputFocusBorderColor: `transparent transparent ${siteVars.accessibleYellow} transparent`,
+    inputFocusBorderColor: `${siteVars.colors.white} ${siteVars.colors.white} ${siteVars.accessibleYellow} ${siteVars.colors.white}`,
   }
 }
