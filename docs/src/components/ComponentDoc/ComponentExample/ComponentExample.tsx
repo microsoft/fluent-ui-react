@@ -39,7 +39,7 @@ export interface ComponentExampleProps
 
 interface ComponentExampleState {
   componentVariables: Object
-  resolvedVariables: Object
+  usedVariables: Record<string, string[]>
   showCode: boolean
   showRtl: boolean
   showTransparent: boolean
@@ -69,7 +69,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.state = {
       showCode: this.isActiveHash(),
       componentVariables: {},
-      resolvedVariables: {},
+      usedVariables: {},
       showRtl: examplePath && examplePath.endsWith('rtl'),
       showTransparent: false,
       showVariables: false,
@@ -350,11 +350,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   renderSourceCode = () => {
     const { currentCode = '', handleCodeChange } = this.props
-    const { showCode } = this.state
-
     const lineCount = currentCode.match(/^/gm)!.length
 
-    return showCode ? (
+    return (
       // match code editor background and gutter size and colors
       <div style={{ background: EDITOR_BACKGROUND_COLOR } as React.CSSProperties}>
         <div
@@ -375,7 +373,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
         <Editor value={currentCode} onChange={handleCodeChange} />
       </div>
-    ) : null
+    )
   }
 
   handleVariableChange = (componentName: string, variableName: string, variableValue: string) => {
@@ -393,7 +391,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   handleVariableResolve = variables => {
     // Remove ProviderBox to hide it in variables
     delete variables['ProviderBox']
-    this.setState({ resolvedVariables: variables })
+    this.setState({ usedVariables: variables })
   }
 
   handleVisibility = (willBeVisible: boolean) => {
@@ -401,8 +399,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   render() {
-    const displayName = this.getDisplayName()
-
     const {
       children,
       currentCode,
@@ -413,7 +409,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     } = this.props
     const {
       componentVariables,
-      resolvedVariables,
+      usedVariables,
       showCode,
       showRtl,
       showTransparent,
@@ -488,20 +484,27 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                           {element}
                         </VariableResolver>
                       </Segment>
-                      <Segment styles={{ padding: 0 }}>
-                        {this.renderSourceCode()}
-                        {error && (
-                          <Segment inverted color="red">
-                            <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
-                          </Segment>
-                        )}
-                        {showCode && (
-                          <div>
-                            <Divider fitted />
-                            <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup} />
-                          </div>
-                        )}
-                      </Segment>
+                      {showCode && (
+                        <Segment styles={{ padding: 0 }}>
+                          {showCode && this.renderSourceCode()}
+                          {error && (
+                            <Segment inverted color="red">
+                              <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
+                            </Segment>
+                          )}
+                          {showCode && (
+                            <div>
+                              <Divider fitted />
+                              <CodeSnippet
+                                fitted
+                                label="Rendered HTML"
+                                mode="html"
+                                value={markup}
+                              />
+                            </div>
+                          )}
+                        </Segment>
+                      )}
                     </>
                   )}
                 </SourceRender>
@@ -509,9 +512,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                 {showVariables && (
                   <Segment>
                     <ComponentExampleVariables
-                      displayName={displayName}
                       onChange={this.handleVariableChange}
-                      variables={_.merge(resolvedVariables, componentVariables)}
+                      overriddenVariables={componentVariables}
+                      usedVariables={usedVariables}
                     />
                   </Segment>
                 )}
