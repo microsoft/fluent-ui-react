@@ -57,7 +57,11 @@ const GroupControlMessages = () => {
       />
       <Icon name="participant-add" />
       {expanded ? (
-        <List accessibility={overridenChatBehavior} items={renderItems()} />
+        <List
+          accessibility={overridenChatBehavior}
+          items={renderItems()}
+          aria-label={'control messages'}
+        />
       ) : (
         <ControlMessage focused={focused} message={controlMessage} />
       )}
