@@ -7,7 +7,7 @@ const EmojiPicker = () => (
   <Popup
     accessibility={dialogBehavior}
     position="below"
-    trigger={<Button icon="emoji" aria-label="Choose an emoji." />}
+    trigger={<Button icon="smile" aria-label="Choose an emoji." />}
     content={{
       content: <GridImagePicker items={getItemsData(imageNames, 'emoji of')} />,
       'aria-label': 'Choose an emoji. Press Enter key to insert emoji.',

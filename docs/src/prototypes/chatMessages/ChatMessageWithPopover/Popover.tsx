@@ -54,34 +54,34 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
         items={[
           {
             key: 'smile',
-            icon: 'emoji',
+            icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile one',
             onClick: this.handleActionableItemClick,
           },
           {
             key: 'smile2',
-            icon: 'emoji',
+            icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile two',
             onClick: this.handleActionableItemClick,
           },
           {
             key: 'smile3',
-            icon: 'emoji',
+            icon: 'smile',
             className: 'smile-emoji',
             'aria-label': 'smile three',
             onClick: this.handleActionableItemClick,
           },
           {
             key: 'a',
-            icon: 'like',
+            icon: 'thumbs up',
             'aria-label': 'thumbs up',
             onClick: this.handleActionableItemClick,
           },
           {
             key: 'c',
-            icon: 'more',
+            icon: 'ellipsis horizontal',
             onMenuOpenChange: (e, { menuOpen }) => {
               onShowActionMenuChange(true)
               onForceShowActionMenuChange(menuOpen)
@@ -92,8 +92,8 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
               pills: true,
               items: [
                 { key: 'bookmark', icon: 'folder', content: 'Save this message' },
-                { key: 'linkify', icon: 'link', content: 'Copy link' },
-                { key: 'translate', icon: 'translation', content: 'Translate' },
+                { key: 'linkify', icon: 'linkify', content: 'Copy link' },
+                { key: 'translate', icon: 'translate', content: 'Translate' },
               ],
             },
           },

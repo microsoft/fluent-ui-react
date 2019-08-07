@@ -451,7 +451,7 @@ class Sidebar extends React.Component<any, any> {
           <a href={changeLogUrl} target="_blank" rel="noopener noreferrer" style={topItemTheme}>
             <Box>
               CHANGELOG
-              <Icon name="files-txt" styles={{ float: 'right' }} />
+              <Icon name="file alternate outline" styles={{ float: 'right' }} />
             </Box>
           </a>
           <Input

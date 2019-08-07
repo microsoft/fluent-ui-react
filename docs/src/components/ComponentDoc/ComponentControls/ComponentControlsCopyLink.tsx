@@ -25,7 +25,7 @@ export default class ComponentControlsCopyLink extends React.Component<any, any>
 
     return (
       <ComponentButton
-        iconName="link"
+        iconName="linkify"
         label={active ? 'Copied!' : this.btnLabel}
         onClick={this.handleClick}
       />

@@ -13,7 +13,7 @@ import { Ref } from '@stardust-ui/react-component-ref'
 
 const reactions: ShorthandCollection<ReactionProps> = [
   {
-    icon: 'like',
+    icon: 'thumbs up',
     content: '1K',
     key: 'likes',
     variables: { meReacting: true },
@@ -31,7 +31,7 @@ const reactionsWithPopup = reactions.map(reaction => render =>
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
-  status: { color: 'green', icon: 'stardust-checkmark' },
+  status: { color: 'green', icon: 'check' },
 }
 
 const ChatWithPopover = () => {

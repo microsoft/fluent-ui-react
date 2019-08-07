@@ -26,7 +26,7 @@ const ComponentBestPractices: React.FC<ComponentBestPracticesProps> = ({ doList,
       updatedDoList.push({
         key: doList.indexOf(element),
         content: element,
-        media: <Icon name="stardust-checkmark" styles={{ color: 'green' }} />,
+        media: <Icon name="checkmark" styles={{ color: 'green' }} />,
       })
     })
   }

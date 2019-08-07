@@ -8,17 +8,17 @@ const wrapStyle: ICSSInJSStyle = { wordBreak: 'break-word' }
 
 const ContributionPrompt: any = ({ children }) => (
   <Segment inverted styles={wrapStyle}>
-    <Icon name="lightning" />
+    <Icon name="bullhorn" />
     <Text>
       {children && <div>{children}</div>}
       <p>
         If there's no{' '}
         <a href={`${constants.repoURL}/pulls`}>
-          pull request <Icon size="small" name="open-outside" />
+          pull request <Icon size="small" name="external" />
         </a>{' '}
         open for this, you should{' '}
         <a href={`${constants.repoURL}/blob/master/.github/CONTRIBUTING.md`}>
-          contribute <Icon size="small" name="open-outside" />
+          contribute <Icon size="small" name="external" />
         </a>{' '}
         one!
       </p>

@@ -62,11 +62,7 @@ class ComponentControlsCodeSandbox extends React.PureComponent<
 
     if (sandboxUrl) {
       return (
-        <ComponentButton
-          label="Click to open"
-          onClick={this.handleClick}
-          iconName="stardust-checkmark"
-        />
+        <ComponentButton label="Click to open" onClick={this.handleClick} iconName="checkmark" />
       )
     }
 
@@ -87,7 +83,7 @@ class ComponentControlsCodeSandbox extends React.PureComponent<
           const loading = isLoading || isDeploying
           return (
             <ComponentButton
-              iconName={loading ? 'spinner' : 'open-outside'}
+              iconName={loading ? 'spinner' : 'connectdevelop'}
               label={loading ? 'Exporting...' : 'CodeSandbox'}
             />
           )

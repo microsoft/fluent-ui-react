@@ -38,7 +38,7 @@ type ChatItem = {
 type StatusPropsExtendable = Extendable<StatusProps>
 
 const statusMap: Map<UserStatus, StatusPropsExtendable> = new Map([
-  ['Available', { color: 'green', icon: 'stardust-checkmark', title: 'Available' }],
+  ['Available', { color: 'green', icon: 'check', title: 'Available' }],
   ['DoNotDisturb', { color: 'red', icon: 'minus', title: 'Do not disturb' }],
   ['Away', { color: 'yellow', icon: 'clock', title: 'Away' }],
   ['Offline', { color: 'grey', title: 'Offline' }],
@@ -103,7 +103,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
         {
           key: 'linkify',
           content: 'Get link',
-          icon: 'link',
+          icon: 'linkify',
           onClick: menuClickHandler('Get link'),
         },
         {
@@ -132,7 +132,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
           aria-label="More attachment options"
           iconOnly
           circular
-          icon="more"
+          icon="ellipsis horizontal"
           onClick={e => e.stopPropagation()}
           onKeyDown={stopPropagationOnKeys([keyboardKey.Enter, keyboardKey.Spacebar])}
         />
@@ -150,7 +150,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
         {_.map(['MeetingNotes.pptx', 'Document.docx'], (fileName, index) => (
           <Attachment
             key={`attachment-${index}`}
-            icon="word"
+            icon="file word outline"
             aria-label={`File attachment ${fileName}. Press tab for more options Press Enter to open the file`}
             header={fileName}
             action={actionPopup}
