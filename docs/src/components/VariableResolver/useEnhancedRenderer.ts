@@ -7,6 +7,18 @@ import { callable } from 'src/lib'
 
 export type UsedVariables = Record<string, Record<string, null>>
 
+const variableRegex = /<<variable:(\w+)>>/g
+const getAllVariables = (styleValue: string, matches: string[] = []): string[] => {
+  const match = variableRegex.exec(styleValue)
+
+  if (match) {
+    matches.push(match[1])
+    getAllVariables(styleValue, matches)
+  }
+
+  return matches
+}
+
 const useEnhancedRenderRule = (
   renderer: Renderer,
 ): [Renderer['renderRule'], React.RefObject<UsedVariables>] => {
@@ -21,7 +33,7 @@ const useEnhancedRenderRule = (
       // { color: 'blue' } => { color: 'variable.color' }
       const mappedVariables = _.mapValues(props.variables, (variableValue, variableName) => {
         // Temporary workaround until variables be flat
-        return typeof variableValue === 'string' ? `variable.${variableName}` : variableValue
+        return typeof variableValue === 'string' ? `<<variable:${variableName}>>` : variableValue
       })
 
       const resolvedStyles: ComponentSlotStylesPrepared = callable(rule)({
@@ -31,10 +43,11 @@ const useEnhancedRenderRule = (
       const flattenStyles: Record<string, string> = flat(resolvedStyles)
 
       _.forEach(flattenStyles, styleValue => {
-        if (typeof styleValue === 'string' && styleValue.startsWith('variable.')) {
-          const variableName = styleValue.replace(/^variable\./, '')
-
-          variables.current[componentName][variableName] = null
+        if (typeof styleValue === 'string') {
+          // String can contain multiple variables: <<variable:foo>> 1px <<variable:bar>>
+          getAllVariables(styleValue).forEach(variableName => {
+            variables.current[componentName][variableName] = null
+          })
         }
       })
 
