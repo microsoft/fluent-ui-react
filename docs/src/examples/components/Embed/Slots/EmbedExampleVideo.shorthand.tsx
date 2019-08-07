@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Embed, Flex, Text } from '@stardust-ui/react'
 
-const EmbedExample = () => (
+const EmbedExampleVideo = () => (
   <Flex column>
     <Embed
       placeholder="https://raw.githubusercontent.com/bower-media-samples/big-buck-bunny-480p-5s/master/poster.jpg"
@@ -12,4 +12,4 @@ const EmbedExample = () => (
   </Flex>
 )
 
-export default EmbedExample
+export default EmbedExampleVideo
