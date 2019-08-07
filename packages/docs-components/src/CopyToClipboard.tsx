@@ -13,17 +13,14 @@ export const useCopyToClipboard = (
   timeout: number = 3000,
 ): [boolean, () => void] => {
   const [active, setActive] = React.useState(false)
-  const onCopy = React.useCallback(
-    () => {
-      copyToClipboard(value)
-      setActive(true)
+  const onCopy = React.useCallback(() => {
+    copyToClipboard(value)
+    setActive(true)
 
-      const timeoutId = setTimeout(() => setActive(false), timeout)
+    const timeoutId = setTimeout(() => setActive(false), timeout)
 
-      return () => clearTimeout(timeoutId)
-    },
-    [timeout, value],
-  )
+    return () => clearTimeout(timeoutId)
+  }, [timeout, value])
 
   return [active, onCopy]
 }

@@ -1,9 +1,9 @@
-import { IStyle } from 'fela'
+import { IStyle } from '@stardust-ui/fela'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 // @ts-ignore
-import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
+import { RendererProvider, ThemeProvider, ThemeContext } from '@stardust-ui/react-fela'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import { felaRenderer, ChildrenComponentProps } from '../../lib'
@@ -34,6 +34,7 @@ export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
   rtl?: boolean
   disableAnimations?: boolean
+  target?: Document
   theme?: ThemeInput
   variables?: ComponentVariablesInput
 }
@@ -74,6 +75,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     rtl: PropTypes.bool,
     disableAnimations: PropTypes.bool,
     children: PropTypes.node.isRequired,
+    target: PropTypes.object,
   }
 
   static defaultProps = {
@@ -145,6 +147,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       renderer,
       variables,
       children,
+      target,
       ...unhandledProps
     } = this.props
     const inputContext: ProviderContextInput = {
@@ -169,7 +172,11 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     }
 
     return (
-      <RendererProvider renderer={outgoingContext.renderer} {...{ rehydrate: false }}>
+      <RendererProvider
+        renderer={outgoingContext.renderer}
+        target={target}
+        {...{ rehydrate: false }}
+      >
         <ThemeProvider theme={outgoingContext}>
           <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>
             {children}

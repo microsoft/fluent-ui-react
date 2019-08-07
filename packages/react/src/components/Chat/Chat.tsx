@@ -53,10 +53,6 @@ class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
   static Item = ChatItem
   static Message = ChatMessage
 
-  actionHandlers = {
-    focus: () => this.focusZone && this.focusZone.focus(),
-  }
-
   renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, items } = this.props
 

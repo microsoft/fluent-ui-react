@@ -1,8 +1,10 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import * as _ from 'lodash'
+import { Popper } from '../../lib/positioner'
 
 import {
   childrenExist,
@@ -35,6 +37,7 @@ import Text, { TextProps } from '../Text/Text'
 import Reaction, { ReactionProps } from '../Reaction/Reaction'
 import { ReactionGroupProps } from '../Reaction/ReactionGroup'
 import { MenuItemProps } from '@stardust-ui/react'
+import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string
@@ -97,6 +100,7 @@ export interface ChatMessageProps
 export interface ChatMessageState {
   focused: boolean
   isFromKeyboard: boolean
+  messageDomNode: HTMLElement
 }
 
 class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageState> {
@@ -137,9 +141,12 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     reactionGroupPosition: 'start',
   }
 
+  updateActionsMenuPosition = () => {}
+
   state = {
     focused: false,
     isFromKeyboard: false,
+    messageDomNode: null,
   }
 
   actionHandlers = {
@@ -148,9 +155,18 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     preventDefault: event => {
       event.preventDefault()
     },
+
+    focus: event => {
+      if (this.state.messageDomNode) {
+        this.state.messageDomNode.focus()
+        event.stopPropagation()
+      }
+    },
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
+    this.updateActionsMenuPosition()
+
     this.setState({
       focused: true,
       isFromKeyboard: isFromKeyboard(),
@@ -166,6 +182,33 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
 
     this.setState({ focused: shouldPreserveFocusState })
     _.invoke(this.props, 'onBlur', e, this.props)
+  }
+
+  renderActionMenu(
+    actionMenu: ChatMessageProps['actionMenu'],
+    styles: ComponentSlotStylesPrepared,
+  ) {
+    const actionMenuElement = Menu.create(actionMenu, {
+      defaultProps: {
+        [IS_FOCUSABLE_ATTRIBUTE]: true,
+        accessibility: menuAsToolbarBehavior,
+        className: ChatMessage.slotClassNames.actionMenu,
+        styles: styles.actionMenu,
+      },
+    })
+
+    if (!actionMenuElement) {
+      return actionMenuElement
+    }
+
+    return (
+      <Popper unstable_pinned targetRef={this.state.messageDomNode} position="above" align="end">
+        {({ scheduleUpdate }) => {
+          this.updateActionsMenuPosition = scheduleUpdate
+          return actionMenuElement
+        }}
+      </Popper>
+    )
   }
 
   renderComponent({
@@ -202,62 +245,64 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
       },
     })
 
+    const actionMenuElement = this.renderActionMenu(actionMenu, styles)
+
+    const authorElement = Text.create(author, {
+      defaultProps: {
+        size: 'small',
+        styles: styles.author,
+        className: ChatMessage.slotClassNames.author,
+      },
+    })
+
+    const timestampElement = Text.create(timestamp, {
+      defaultProps: {
+        size: 'small',
+        styles: styles.timestamp,
+        timestamp: true,
+        className: ChatMessage.slotClassNames.timestamp,
+      },
+    })
+
+    const messageContent = Box.create(content, {
+      defaultProps: {
+        className: ChatMessage.slotClassNames.content,
+        styles: styles.content,
+      },
+    })
+
     return (
-      <ElementType
-        onBlur={this.handleBlur}
-        onFocus={this.handleFocus}
-        className={className}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+      <Ref
+        innerRef={domNode => {
+          domNode !== this.state.messageDomNode && this.setState({ messageDomNode: domNode })
+        }}
       >
-        {childrenPropExists ? (
-          children
-        ) : (
-          <>
-            {Menu.create(actionMenu, {
-              defaultProps: {
-                [IS_FOCUSABLE_ATTRIBUTE]: true,
-                accessibility: menuAsToolbarBehavior,
-                className: ChatMessage.slotClassNames.actionMenu,
-                styles: styles.actionMenu,
-              },
-            })}
-
-            {badgePosition === 'start' && badgeElement}
-
-            {Text.create(author, {
-              defaultProps: {
-                size: 'small',
-                styles: styles.author,
-                className: ChatMessage.slotClassNames.author,
-              },
-            })}
-            {Text.create(timestamp, {
-              defaultProps: {
-                size: 'small',
-                styles: styles.timestamp,
-                timestamp: true,
-                className: ChatMessage.slotClassNames.timestamp,
-              },
-            })}
-
-            {reactionGroupPosition === 'start' && reactionGroupElement}
-
-            {Box.create(content, {
-              defaultProps: {
-                className: ChatMessage.slotClassNames.content,
-                styles: styles.content,
-              },
-            })}
-
-            {reactionGroupPosition === 'end' && reactionGroupElement}
-
-            {badgePosition === 'end' && badgeElement}
-          </>
-        )}
-      </ElementType>
+        <ElementType
+          onBlur={this.handleBlur}
+          onFocus={this.handleFocus}
+          onMouseEnter={() => this.updateActionsMenuPosition()}
+          className={className}
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+          {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        >
+          {childrenPropExists ? (
+            children
+          ) : (
+            <>
+              {actionMenuElement}
+              {badgePosition === 'start' && badgeElement}
+              {authorElement}
+              {timestampElement}
+              {reactionGroupPosition === 'start' && reactionGroupElement}
+              {messageContent}
+              {reactionGroupPosition === 'end' && reactionGroupElement}
+              {badgePosition === 'end' && badgeElement}
+            </>
+          )}
+        </ElementType>
+      </Ref>
     )
   }
 }

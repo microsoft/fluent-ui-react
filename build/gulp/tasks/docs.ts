@@ -1,4 +1,5 @@
-import { task, src, dest, lastRun, parallel, series, watch } from 'gulp'
+import { dest, lastRun, parallel, series, src, task, watch } from 'gulp'
+import chalk from 'chalk'
 import cache from 'gulp-cache'
 import remember from 'gulp-remember'
 import fs from 'fs'
@@ -27,10 +28,13 @@ const g = require('gulp-load-plugins')()
 
 const { log } = g.util
 
-const handleWatchChange = changedPath => log(`File ${changedPath} was changed, running tasks...`)
-const handleWatchUnlink = (group, changedPath) => {
-  log(`File ${changedPath} was deleted, running tasks...`)
-  remember.forget(group, changedPath)
+const logWatchAdd = filePath => log('Created', chalk.blue(path.basename(filePath)))
+const logWatchChange = filePath => log('Changed', chalk.magenta(path.basename(filePath)))
+const logWatchUnlink = filePath => log('Deleted', chalk.red(path.basename(filePath)))
+
+const handleWatchUnlink = (group, filePath) => {
+  logWatchUnlink(filePath)
+  remember.forget(group, filePath)
 }
 
 // ----------------------------------------
@@ -215,17 +219,22 @@ task('serve:docs:stop', () => forceClose(server))
 
 task('watch:docs', cb => {
   // rebuild component info
-  watch(componentsSrc, series('build:docs:component-info')).on('change', handleWatchChange)
+  watch(componentsSrc, series('build:docs:component-info'))
+    .on('add', logWatchAdd)
+    .on('change', logWatchChange)
+    .on('unlink', logWatchUnlink)
 
   // rebuild example menus
   watch(examplesIndexSrc, series('build:docs:example-menu'))
-    .on('change', handleWatchChange)
-    .on('unlink', changedPath => handleWatchUnlink('example-menu', changedPath))
+    .on('add', logWatchAdd)
+    .on('change', logWatchChange)
+    .on('unlink', filePath => handleWatchUnlink('example-menu', filePath))
 
   watch(examplesSrc, series('build:docs:example-sources'))
-    .on('change', handleWatchChange)
+    .on('add', logWatchAdd)
+    .on('change', logWatchChange)
     .on('unlink', filePath => {
-      log(`File ${filePath} was deleted, running tasks...`)
+      logWatchUnlink(filePath)
 
       const sourceFilename = getRelativePathToSourceFile(filePath)
       const sourcePath = config.paths.docsSrc('exampleSources', sourceFilename)
@@ -236,14 +245,16 @@ task('watch:docs', cb => {
     })
 
   watch(behaviorSrc, series('build:docs:component-menu-behaviors'))
-    .on('change', handleWatchChange)
-    .on('unlink', changedPath => handleWatchUnlink('component-menu-behaviors', changedPath))
+    .on('add', logWatchAdd)
+    .on('change', logWatchChange)
+    .on('unlink', filePath => handleWatchUnlink('component-menu-behaviors', filePath))
 
   // rebuild images
-  watch(`${config.paths.docsSrc()}/**/*.{png,jpg,gif}`, series('build:docs:images')).on(
-    'change',
-    handleWatchChange,
-  )
+  watch(`${config.paths.docsSrc()}/**/*.{png,jpg,gif}`, series('build:docs:images'))
+    .on('add', logWatchAdd)
+    .on('change', logWatchChange)
+    .on('unlink', logWatchUnlink)
+
   cb()
 })
 
