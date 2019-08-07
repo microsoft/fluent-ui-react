@@ -1,8 +1,8 @@
 import {
   Checkbox,
-  Flex,
   Grid,
   Header,
+  Segment,
   ProviderContextPrepared,
   ThemeComponentVariablesPrepared,
 } from '@stardust-ui/react'
@@ -19,6 +19,16 @@ type ComponentExampleVariablesProps = {
   onChange: ComponentExampleVariableProps['onChange']
   overriddenVariables: ThemeComponentVariablesPrepared
   usedVariables: Record<string, string[]>
+}
+
+const getGroupName = (variableName: string): string => {
+  if (/^(font|letter|line)/i.test(variableName)) return 'Typography'
+  if (/color/i.test(variableName)) return 'Colors'
+  if (/border/i.test(variableName)) return 'Border'
+  if (/position|display|margin|padding|width|height|radius/i.test(variableName)) {
+    return 'Box Model'
+  }
+  return 'Other'
 }
 
 const ComponentExampleVariables: React.FunctionComponent<
@@ -57,32 +67,49 @@ const ComponentExampleVariables: React.FunctionComponent<
   )
 
   return (
-    <>
-      <Flex hAlign="end">
-        <Checkbox
-          checked={!showAll}
-          label="Show only active"
-          onChange={(e, data) => setShowAll(!data.checked)}
-        />
-      </Flex>
+    <div>
+      <Checkbox
+        checked={!showAll}
+        label="Show only active"
+        onChange={(e, data) => setShowAll(!data.checked)}
+        styles={{ float: 'right', top: '1.25rem' }}
+      />
 
-      {_.map(filteredVariables, (componentVariables, componentName) => (
-        <React.Fragment key={componentName}>
-          <Header as="h3">{componentName}</Header>
-          <Grid columns="4">
-            {_.map(componentVariables, (variableValue, variableName) => (
-              <ComponentExampleVariable
-                componentName={componentName}
-                key={variableName}
-                onChange={onChange}
-                variableName={variableName}
-                variableValue={variableValue}
-              />
+      {_.map(filteredVariables, (componentVariables, componentName) => {
+        const groupedVariables: Record<string, string[]> = _.groupBy(
+          Object.keys(componentVariables).sort(),
+          getGroupName,
+        )
+
+        return (
+          <Segment key={componentName}>
+            <Header as="h2" styles={{ marginTop: 0 }}>
+              {componentName}
+            </Header>
+
+            {_.map(groupedVariables, (variableNames, groupName) => (
+              <>
+                <Header as="h3" styles={{ marginTop: '4px', marginBottom: '4px' }}>
+                  {groupName}
+                </Header>
+                <Grid columns="4">
+                  {_.map(variableNames, variableName => (
+                    <ComponentExampleVariable
+                      componentName={componentName}
+                      key={variableName}
+                      onChange={onChange}
+                      variableName={variableName}
+                      variableType={/color/i.test(variableName) ? 'color' : 'string'}
+                      variableValue={componentVariables[variableName]}
+                    />
+                  ))}
+                </Grid>
+              </>
             ))}
-          </Grid>
-        </React.Fragment>
-      ))}
-    </>
+          </Segment>
+        )
+      })}
+    </div>
   )
 }
 
