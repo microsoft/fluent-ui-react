@@ -88,7 +88,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             menu: {
               pills: true,
               items: [
-                { key: 'bookmark', icon: 'folder', content: 'Save this message' },
+                { key: 'bookmark', icon: 'download', content: 'Save this message' },
                 { key: 'linkify', icon: 'link', content: 'Copy link' },
                 { key: 'translate', icon: 'translate', content: 'Translate' },
               ],
