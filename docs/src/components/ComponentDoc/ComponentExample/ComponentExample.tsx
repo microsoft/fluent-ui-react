@@ -1,33 +1,19 @@
 import {
-  CodeSnippet,
   CopyToClipboard,
+  CodeSnippet,
   KnobInspector,
   KnobProvider,
 } from '@stardust-ui/docs-components'
+import { Divider, Flex, Menu, Segment, Provider, ICSSInJSStyle } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
-import * as Color from 'color'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
 import VisibilitySensor from 'react-visibility-sensor'
 
-import {
-  Divider,
-  Flex,
-  Form,
-  Grid,
-  ICSSInJSStyle,
-  Input,
-  Menu,
-  Popup,
-  Provider,
-  Segment,
-  themes,
-} from '@stardust-ui/react'
-
 import { examplePathToHash, getFormattedHash, scrollToAnchor } from 'docs/src/utils'
-import { callable, constants } from 'src/lib'
+import { constants } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
 import ExampleContext, { ExampleContextValue } from 'docs/src/context/ExampleContext'
@@ -36,11 +22,11 @@ import ComponentExampleTitle from './ComponentExampleTitle'
 import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager'
-import { ThemeInput, ThemePrepared } from 'packages/react/src/themes/types'
-import { mergeThemeVariables } from '../../../../../packages/react/src/lib/mergeThemes'
-import { ThemeContext } from 'docs/src/context/ThemeContext'
+import { ThemeInput } from 'packages/react/src/themes/types'
 import ComponentExampleKnobs from './ComponentExampleKnobs'
 import ExamplePlaceholder from '../../ExamplePlaceholder'
+import VariableResolver from 'docs/src/components/VariableResolver/VariableResolver'
+import ComponentExampleVariables from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleVariables'
 
 export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
@@ -49,12 +35,11 @@ export interface ComponentExampleProps
   title: React.ReactNode
   description?: React.ReactNode
   examplePath: string
-  themeName?: string
 }
 
 interface ComponentExampleState {
-  themeName: string
   componentVariables: Object
+  usedVariables: Record<string, string[]>
   showCode: boolean
   showRtl: boolean
   showTransparent: boolean
@@ -78,13 +63,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   constructor(props) {
     super(props)
 
-    const { examplePath, themeName } = props
+    const { examplePath } = props
 
     this.anchorName = examplePathToHash(examplePath)
     this.state = {
-      themeName,
       showCode: this.isActiveHash(),
       componentVariables: {},
+      usedVariables: {},
       showRtl: examplePath && examplePath.endsWith('rtl'),
       showTransparent: false,
       showVariables: false,
@@ -100,10 +85,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       this.props.location.hash !== nextProps.location.hash
     ) {
       this.clearActiveState()
-    }
-    const { themeName } = nextProps
-    if (this.state.themeName !== themeName) {
-      this.setState({ themeName })
     }
   }
 
@@ -178,12 +159,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.setState({ showTransparent: !showTransparent })
   }
 
-  handlePass = () => {
-    const { title } = this.props
-
-    if (title) this.props.onExamplePassed(this.anchorName)
-  }
-
   resetSourceCode = () => {
     if (confirm('Lose your changes?')) {
       this.props.handleCodeReset()
@@ -197,20 +172,16 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   renderElement = (element: React.ReactElement<any>) => {
-    const { showRtl, showTransparent, componentVariables, themeName } = this.state
-
-    const theme = themes[themeName]
+    const { showRtl, showTransparent, componentVariables } = this.state
     const newTheme: ThemeInput = {
-      siteVariables: theme.siteVariables,
-      componentVariables: mergeThemeVariables(theme.componentVariables, {
-        [this.getDisplayName()]: componentVariables,
-      }),
+      componentVariables: {
+        ...componentVariables,
+        ProviderBox: { background: showTransparent ? 'initial' : undefined },
+      },
     }
 
-    const providerVariables = showTransparent ? { background: 'initial' } : undefined
-
     return (
-      <Provider theme={newTheme} rtl={showRtl} variables={providerVariables}>
+      <Provider theme={newTheme} rtl={showRtl}>
         {element}
       </Provider>
     )
@@ -379,11 +350,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   renderSourceCode = () => {
     const { currentCode = '', handleCodeChange } = this.props
-    const { showCode } = this.state
-
     const lineCount = currentCode.match(/^/gm)!.length
 
-    return showCode ? (
+    return (
       // match code editor background and gutter size and colors
       <div style={{ background: EDITOR_BACKGROUND_COLOR } as React.CSSProperties}>
         <div
@@ -404,175 +373,25 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
         <Editor value={currentCode} onChange={handleCodeChange} />
       </div>
-    ) : null
-  }
-
-  renderVariables = () => {
-    const { showVariables } = this.state
-    if (!showVariables) return undefined
-
-    const displayName = this.getDisplayName()
-
-    const getGroupName = varName => {
-      if (/^(font|letter|line)/i.test(varName)) return 'Typography'
-      if (/color/i.test(varName)) return 'Colors'
-      if (/border/i.test(varName)) return 'Border'
-      if (/position|display|margin|padding|width|height|radius/i.test(varName)) {
-        return 'Box Model'
-      }
-      return 'Other'
-    }
-
-    const groupNameToItemsMap: any = new Map([
-      ['Box Model', []],
-      ['Colors', []],
-      ['Typography', []],
-      ['Border', []],
-      ['Other', []],
-    ])
-
-    return (
-      <Provider.Consumer
-        render={({ siteVariables, componentVariables }: ThemePrepared) => {
-          const mergedVariables = mergeThemeVariables(componentVariables, {
-            [displayName]: this.state.componentVariables,
-          })
-          const variables = mergedVariables[displayName]
-
-          if (!variables) {
-            return <Segment inverted>{displayName} has no variables to edit.</Segment>
-          }
-
-          const variablesObject = callable(variables)(siteVariables)
-
-          _.toPairs(variablesObject).forEach(([name, value]) => {
-            const groupName = getGroupName(name)
-            const isColor = /color/i.test(name)
-
-            const label = !isColor && <div>{name}</div>
-            const control = !isColor ? (
-              <Input defaultValue={value} onChange={this.handleVariableChange(displayName, name)} />
-            ) : (
-              <Popup
-                pointing
-                trigger={
-                  <div style={{ display: 'inline-block' }}>
-                    {isColor && (
-                      <span
-                        style={{
-                          display: 'inline-block',
-                          width: '1rem',
-                          height: '1rem',
-                          marginRight: '0.5rem',
-                          verticalAlign: 'middle',
-                          background: String(value),
-                          boxShadow: '0 0 0 1px black, 0 0 0 2px white',
-                        }}
-                      />
-                    )}
-                    {name}
-                  </div>
-                }
-                align="start"
-                position="below"
-                content={
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      lineHeight: '2rem',
-                      fontSize: '10px',
-                      fontFamily: 'monospace',
-                      backgroundImage:
-                        'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                      backgroundRepeat: 'repeat',
-                    }}
-                  >
-                    {Object.keys(siteVariables.colors).reduce((colorsAcc, colorName) => {
-                      const shadesObj = siteVariables.colors[colorName]
-
-                      if (!_.isPlainObject(shadesObj)) return colorsAcc
-
-                      return [
-                        ...colorsAcc,
-                        <div key={colorName} style={{ display: 'flex' }}>
-                          <strong style={{ display: 'block', width: '12ch', background: '#fff' }}>
-                            {colorName}
-                          </strong>
-                          {Object.keys(shadesObj).reduce((shadesAcc, shade) => {
-                            const cssColor = shadesObj[shade]
-
-                            if (!cssColor) {
-                              return shadesAcc
-                            }
-
-                            const isActive = value === cssColor
-                            const contrastColor = Color(cssColor).isDark() ? '#fff' : '#000'
-                            return [
-                              ...shadesAcc,
-                              <div
-                                key={shade}
-                                style={{
-                                  height: '2rem',
-                                  width: '2rem',
-                                  fontSize: isActive ? '16px' : 'inherit',
-                                  textAlign: 'center',
-                                  color: contrastColor,
-                                  background: cssColor,
-                                  boxShadow: isActive ? `inset 0 0 0 1px ${contrastColor}` : '',
-                                  outline: 'none',
-                                  cursor: 'pointer',
-                                }}
-                                onClick={e =>
-                                  this.handleVariableChange(displayName, name)(e, {
-                                    value: cssColor,
-                                  })
-                                }
-                              >
-                                {isActive ? '✓' : shade}
-                              </div>,
-                            ]
-                          }, [])}
-                        </div>,
-                      ]
-                    }, [])}
-                  </div>
-                }
-              />
-            )
-
-            groupNameToItemsMap.get(groupName).push(
-              <div key={name} style={{ padding: '0.25rem' }}>
-                {label}
-                {control}
-              </div>,
-            )
-          })
-
-          return (
-            <div style={{ padding: '1rem' }}>
-              {[...groupNameToItemsMap]
-                .filter(([name, controls]) => controls.length)
-                .map(([groupName, controls]) => (
-                  <>
-                    <h3>{groupName}</h3>
-                    <Grid columns="4" content={controls} />
-                  </>
-                ))}
-            </div>
-          )
-        }}
-      />
     )
   }
 
-  handleVariableChange = (component, variable) => (e, { value }) => {
+  handleVariableChange = (componentName: string, variableName: string, variableValue: string) => {
     this.setState(state => ({
       componentVariables: {
         ...state.componentVariables,
-        [variable]: value,
+        [componentName]: {
+          ...state.componentVariables[componentName],
+          [variableName]: variableValue,
+        },
       },
     }))
+  }
+
+  handleVariableResolve = variables => {
+    // Remove ProviderBox to hide it in variables
+    delete variables['ProviderBox']
+    this.setState({ usedVariables: variables })
   }
 
   handleVisibility = (willBeVisible: boolean) => {
@@ -588,7 +407,15 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       description,
       title,
     } = this.props
-    const { showCode, showRtl, showTransparent, themeName, wasEverVisible } = this.state
+    const {
+      componentVariables,
+      usedVariables,
+      showCode,
+      showRtl,
+      showTransparent,
+      showVariables,
+      wasEverVisible,
+    } = this.state
 
     return (
       <VisibilitySensor
@@ -637,52 +464,60 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                   source={currentCode}
                   renderHtml={showCode}
                   resolver={importResolver}
-                  themeName={themeName}
                   wrap={this.renderElement}
                   unstable_hot
                 >
                   {({ element, error, markup }) => (
                     <>
-                      <Provider.Consumer
-                        render={({ siteVariables }) => {
-                          return (
-                            <Segment
-                              className={`rendered-example ${this.getKebabExamplePath()}`}
-                              styles={{
-                                padding: '2rem',
-                                color: siteVariables.bodyColor,
-                                backgroundColor: siteVariables.bodyBackground,
-                                ...(showTransparent && {
-                                  backgroundImage:
-                                    'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                                  backgroundRepeat: 'repeat',
-                                }),
-                              }}
-                            >
-                              {element}
-                            </Segment>
-                          )
+                      <Segment
+                        className={`rendered-example ${this.getKebabExamplePath()}`}
+                        styles={{
+                          padding: '2rem',
+                          ...(showTransparent && {
+                            backgroundImage:
+                              'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                            backgroundRepeat: 'repeat',
+                          }),
                         }}
-                      />
-                      <Segment styles={{ padding: 0 }}>
-                        {this.renderSourceCode()}
-                        {error && (
-                          <Segment inverted color="red">
-                            <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
-                          </Segment>
-                        )}
-                        {showCode && (
-                          <div>
-                            <Divider fitted />
-                            <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup} />
-                          </div>
-                        )}
-                        {this.renderVariables()}
+                      >
+                        <VariableResolver onResolve={this.handleVariableResolve}>
+                          {element}
+                        </VariableResolver>
                       </Segment>
-                      <div style={{ paddingBottom: '10px' }} />
+                      {showCode && (
+                        <Segment styles={{ padding: 0 }}>
+                          {showCode && this.renderSourceCode()}
+                          {error && (
+                            <Segment inverted color="red">
+                              <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
+                            </Segment>
+                          )}
+                          {showCode && (
+                            <div>
+                              <Divider fitted />
+                              <CodeSnippet
+                                fitted
+                                label="Rendered HTML"
+                                mode="html"
+                                value={markup}
+                              />
+                            </div>
+                          )}
+                        </Segment>
+                      )}
                     </>
                   )}
                 </SourceRender>
+
+                {showVariables && (
+                  <Segment>
+                    <ComponentExampleVariables
+                      onChange={this.handleVariableChange}
+                      overriddenVariables={componentVariables}
+                      usedVariables={usedVariables}
+                    />
+                  </Segment>
+                )}
               </ExamplePlaceholder>
             </KnobProvider>
           </Flex.Item>
@@ -693,19 +528,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 }
 
 const ComponentExampleWithTheme = props => (
-  <ThemeContext.Consumer>
-    {({ themeName }) => (
-      <ExampleContext.Consumer>
-        {exampleProps => (
-          <ComponentSourceManager examplePath={props.examplePath}>
-            {codeProps => (
-              <ComponentExample {...props} {...exampleProps} {...codeProps} themeName={themeName} />
-            )}
-          </ComponentSourceManager>
-        )}
-      </ExampleContext.Consumer>
+  <ExampleContext.Consumer>
+    {exampleProps => (
+      <ComponentSourceManager examplePath={props.examplePath}>
+        {codeProps => <ComponentExample {...props} {...exampleProps} {...codeProps} />}
+      </ComponentSourceManager>
     )}
-  </ThemeContext.Consumer>
+  </ExampleContext.Consumer>
 )
 
 export default withRouter(ComponentExampleWithTheme)
