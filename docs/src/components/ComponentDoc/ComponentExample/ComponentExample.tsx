@@ -1,11 +1,12 @@
 import {
-  CopyToClipboard,
   CodeSnippet,
+  CopyToClipboard,
   KnobInspector,
   KnobProvider,
 } from '@stardust-ui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
+import * as Color from 'color'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
@@ -15,13 +16,14 @@ import {
   Divider,
   Flex,
   Form,
-  Input,
-  Menu,
-  Segment,
-  Provider,
-  themes,
   Grid,
   ICSSInJSStyle,
+  Input,
+  Menu,
+  Popup,
+  Provider,
+  Segment,
+  themes,
 } from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, scrollToAnchor } from 'docs/src/utils'
@@ -411,47 +413,156 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     const displayName = this.getDisplayName()
 
+    const getGroupName = varName => {
+      if (/^(font|letter|line)/i.test(varName)) return 'Typography'
+      if (/color/i.test(varName)) return 'Colors'
+      if (/border/i.test(varName)) return 'Border'
+      if (/position|display|margin|padding|width|height|radius/i.test(varName)) {
+        return 'Box Model'
+      }
+      return 'Other'
+    }
+
+    const groupNameToItemsMap: any = new Map([
+      ['Box Model', []],
+      ['Colors', []],
+      ['Typography', []],
+      ['Border', []],
+      ['Other', []],
+    ])
+
     return (
-      <div style={{ background: 'white' } as React.CSSProperties}>
-        <Divider>
-          <span style={{ opacity: 0.5 }}>Theme</span>
-        </Divider>
-        <Provider.Consumer
-          render={({ siteVariables, componentVariables }: ThemePrepared) => {
-            const mergedVariables = mergeThemeVariables(componentVariables, {
-              [displayName]: this.state.componentVariables,
-            })
-            const variables = mergedVariables[displayName]
+      <Provider.Consumer
+        render={({ siteVariables, componentVariables }: ThemePrepared) => {
+          const mergedVariables = mergeThemeVariables(componentVariables, {
+            [displayName]: this.state.componentVariables,
+          })
+          const variables = mergedVariables[displayName]
 
-            if (!variables) {
-              return <Segment inverted>{displayName} has no variables to edit.</Segment>
-            }
+          if (!variables) {
+            return <Segment inverted>{displayName} has no variables to edit.</Segment>
+          }
 
-            const variablesObject = callable(variables)(siteVariables)
+          const variablesObject = callable(variables)(siteVariables)
 
-            const items: any[] = []
+          _.toPairs(variablesObject).forEach(([name, value]) => {
+            const groupName = getGroupName(name)
+            const isColor = /color/i.test(name)
 
-            return (
-              <Form styles={{ padding: '1rem' }}>
-                {_.toPairs(variablesObject).forEach((pair, key) => {
-                  items.push(
-                    <Form.Field
-                      key={pair[0]}
-                      label={pair[0]}
-                      control={{
-                        as: Input,
-                        defaultValue: pair[1],
-                        onChange: this.handleVariableChange(displayName, pair[0]),
-                      }}
-                    />,
-                  )
-                })}
-                <Grid columns="4" content={items} />
-              </Form>
+            const label = !isColor && <div>{name}</div>
+            const control = !isColor ? (
+              <Input defaultValue={value} onChange={this.handleVariableChange(displayName, name)} />
+            ) : (
+              <Popup
+                pointing
+                trigger={
+                  <div style={{ display: 'inline-block' }}>
+                    {isColor && (
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          width: '1rem',
+                          height: '1rem',
+                          marginRight: '0.5rem',
+                          verticalAlign: 'middle',
+                          background: String(value),
+                          boxShadow: '0 0 0 1px black, 0 0 0 2px white',
+                        }}
+                      />
+                    )}
+                    {name}
+                  </div>
+                }
+                align="start"
+                position="below"
+                content={
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      lineHeight: '2rem',
+                      fontSize: '10px',
+                      fontFamily: 'monospace',
+                      backgroundImage:
+                        'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                      backgroundRepeat: 'repeat',
+                    }}
+                  >
+                    {Object.keys(siteVariables.colors).reduce((colorsAcc, colorName) => {
+                      const shadesObj = siteVariables.colors[colorName]
+
+                      if (!_.isPlainObject(shadesObj)) return colorsAcc
+
+                      return [
+                        ...colorsAcc,
+                        <div key={colorName} style={{ display: 'flex' }}>
+                          <strong style={{ display: 'block', width: '12ch', background: '#fff' }}>
+                            {colorName}
+                          </strong>
+                          {Object.keys(shadesObj).reduce((shadesAcc, shade) => {
+                            const cssColor = shadesObj[shade]
+
+                            if (!cssColor) {
+                              return shadesAcc
+                            }
+
+                            const isActive = value === cssColor
+                            const contrastColor = Color(cssColor).isDark() ? '#fff' : '#000'
+                            return [
+                              ...shadesAcc,
+                              <div
+                                key={shade}
+                                style={{
+                                  height: '2rem',
+                                  width: '2rem',
+                                  fontSize: isActive ? '16px' : 'inherit',
+                                  textAlign: 'center',
+                                  color: contrastColor,
+                                  background: cssColor,
+                                  boxShadow: isActive ? `inset 0 0 0 1px ${contrastColor}` : '',
+                                  outline: 'none',
+                                  cursor: 'pointer',
+                                }}
+                                onClick={e =>
+                                  this.handleVariableChange(displayName, name)(e, {
+                                    value: cssColor,
+                                  })
+                                }
+                              >
+                                {isActive ? '✓' : shade}
+                              </div>,
+                            ]
+                          }, [])}
+                        </div>,
+                      ]
+                    }, [])}
+                  </div>
+                }
+              />
             )
-          }}
-        />
-      </div>
+
+            groupNameToItemsMap.get(groupName).push(
+              <div key={name} style={{ padding: '0.25rem' }}>
+                {label}
+                {control}
+              </div>,
+            )
+          })
+
+          return (
+            <div style={{ padding: '1rem' }}>
+              {[...groupNameToItemsMap]
+                .filter(([name, controls]) => controls.length)
+                .map(([groupName, controls]) => (
+                  <>
+                    <h3>{groupName}</h3>
+                    <Grid columns="4" content={controls} />
+                  </>
+                ))}
+            </div>
+          )
+        }}
+      />
     )
   }
 
