@@ -119,6 +119,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { control, iframe, placeholder, video } = this.props
     const { active } = this.state
+    const controlVisible = !_.isNil(video) || !active
 
     return (
       <ElementType
@@ -157,15 +158,16 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
           })
         )}
 
-        {Icon.create(control, {
-          defaultProps: {
-            className: Embed.slotClassNames.control,
-            circular: true,
-            name: active ? 'stardust-pause' : 'stardust-play',
-            size: 'largest',
-            styles: styles.control,
-          },
-        })}
+        {controlVisible &&
+          Icon.create(control, {
+            defaultProps: {
+              className: Embed.slotClassNames.control,
+              circular: true,
+              name: active ? 'stardust-pause' : 'stardust-play',
+              size: 'largest',
+              styles: styles.control,
+            },
+          })}
       </ElementType>
     )
   }
