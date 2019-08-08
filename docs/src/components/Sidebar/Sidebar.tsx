@@ -1,15 +1,15 @@
 import {
   Icon,
-  Tree,
+  HierarchicalTree,
   Segment,
   Text,
   ICSSInJSStyle,
-  TreeItemProps,
-  TreeProps,
+  HierarchicalTreeItemProps,
+  HierarchicalTreeProps,
   Input,
   Flex,
   Box,
-  TreeTitleProps,
+  HierarchicalTreeTitleProps,
 } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
@@ -51,7 +51,7 @@ class Sidebar extends React.Component<any, any> {
   }
 
   findActiveCategoryIndex = (at: string, sections: ShorthandValue<any>[]): number => {
-    return _.findIndex(sections, (section: ShorthandValue<TreeItemProps>) => {
+    return _.findIndex(sections, (section: ShorthandValue<HierarchicalTreeItemProps>) => {
       return _.find((section as any).items, item => item.title.to === at)
     })
   }
@@ -65,7 +65,7 @@ class Sidebar extends React.Component<any, any> {
     if (!hasModifier && isAZ && bodyHasFocus) this.searchInputRef.current.focus()
   }
 
-  handleItemClick = (e: React.SyntheticEvent, data: TreeItemProps) => {
+  handleItemClick = (e: React.SyntheticEvent, data: HierarchicalTreeItemProps) => {
     const { query } = this.state
 
     if (query) {
@@ -76,7 +76,7 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  treeActiveIndexChanged = (e: React.SyntheticEvent, props: TreeProps) => {
+  treeActiveIndexChanged = (e: React.SyntheticEvent, props: HierarchicalTreeProps) => {
     this.setState({ activeCategoryIndex: props.activeIndex })
   }
 
@@ -120,7 +120,7 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  getTreeItems(): TreeProps['items'] {
+  getTreeItems(): HierarchicalTreeProps['items'] {
     return [
       {
         key: 'concepts',
@@ -246,7 +246,7 @@ class Sidebar extends React.Component<any, any> {
     this.setState({ query: data.value })
   }
 
-  getSectionsWithoutSearchFilter = (): TreeItemProps[] => {
+  getSectionsWithoutSearchFilter = (): HierarchicalTreeItemProps[] => {
     const treeItemsByType = _.map(constants.typeOrder, nextType => {
       const items = _.chain([...componentMenu, ...behaviorMenu])
         .filter(({ type }) => type === nextType)
@@ -379,11 +379,11 @@ class Sidebar extends React.Component<any, any> {
     const regexQuery = new RegExp(`^${escapedQuery}`, 'i')
     const allSectionsWithPossibleEmptySections = _.map(
       allSectionsWithoutSearchFilter,
-      (section: TreeItemProps) => {
+      (section: HierarchicalTreeItemProps) => {
         return {
           ...section,
-          items: _.filter(section.items as TreeItemProps[], item =>
-            regexQuery.test((item.title as TreeTitleProps).content as string),
+          items: _.filter(section.items as HierarchicalTreeItemProps[], item =>
+            regexQuery.test((item.title as HierarchicalTreeTitleProps).content as string),
           ),
         }
       },
@@ -391,11 +391,12 @@ class Sidebar extends React.Component<any, any> {
 
     let allSections = _.filter(
       allSectionsWithPossibleEmptySections,
-      (section: TreeItemProps) => Array.isArray(section.items) && section.items.length > 0,
+      (section: HierarchicalTreeItemProps) =>
+        Array.isArray(section.items) && section.items.length > 0,
     )
 
     if (this.state.query !== '') {
-      allSections = _.map(allSections, (section: TreeItemProps) => {
+      allSections = _.map(allSections, (section: HierarchicalTreeItemProps) => {
         return { ...section, open: true }
       })
     }
@@ -467,7 +468,7 @@ class Sidebar extends React.Component<any, any> {
             inputRef={this.searchInputRef}
           />
         </Flex>
-        <Tree
+        <HierarchicalTree
           items={allSections}
           renderItemTitle={titleRenderer}
           activeIndex={this.state.activeCategoryIndex}

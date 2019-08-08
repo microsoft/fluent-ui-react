@@ -1,7 +1,9 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import * as ReactTestUtils from 'react-dom/test-utils'
 
 import Popup, { PopupEvents } from 'src/components/Popup/Popup'
-import { domEvent, mountWithProvider } from '../../../utils'
+import { domEvent, EmptyThemeProvider, mountWithProvider } from '../../../utils'
 import * as keyboardKey from 'keyboard-key'
 import { ReactWrapper } from 'enzyme'
 
@@ -169,41 +171,45 @@ describe('Popup', () => {
 
       const triggerId2 = 'triggerElement2'
       const contentId2 = 'contentId2'
-      const wrapper = mountWithProvider(
-        <React.Fragment>
-          <Popup
-            trigger={<span id={triggerId}>text to trigger popup</span>}
-            content={{ id: contentId }}
-            on="click"
-          />
-          <Popup
-            trigger={<span id={triggerId2}>text to trigger popup</span>}
-            content={{ id: contentId2 }}
-            on="click"
-          />
-        </React.Fragment>,
-        { attachTo },
-      )
-        // TODO: remove when typings will be updated
-        // @ts-ignore https://airbnb.io/enzyme/docs/api/ReactWrapper/getWrappingComponent.html
-        .getWrappingComponent()
 
-      expect(wrapper.find(`#${contentId}`).exists()).toBe(false)
-      expect(wrapper.find(`#${contentId2}`).exists()).toBe(false)
+      ReactTestUtils.act(() => {
+        ReactDOM.render(
+          <EmptyThemeProvider>
+            <React.Fragment>
+              <Popup
+                trigger={<span id={triggerId}>text to trigger popup</span>}
+                content={{ id: contentId }}
+                on="click"
+              />
+              <Popup
+                trigger={<span id={triggerId2}>text to trigger popup</span>}
+                content={{ id: contentId2 }}
+                on="click"
+              />
+            </React.Fragment>
+          </EmptyThemeProvider>,
+          attachTo,
+        )
+      })
 
-      domEvent.keyDown(`#${triggerId}`, { keyCode: keyboardKey.Enter })
-      wrapper.update() // as event comes outside enzyme, we should trigger update
+      expect(document.querySelector(`#${contentId}`)).toBe(null)
+      expect(document.querySelector(`#${contentId2}`)).toBe(null)
 
-      expect(wrapper.find(`#${contentId}`).exists()).toBe(true)
-      expect(wrapper.find(`#${contentId2}`).exists()).toBe(false)
+      ReactTestUtils.act(() => {
+        domEvent.keyDown(`#${triggerId}`, { keyCode: keyboardKey.Enter })
+      })
 
-      domEvent.keyDown(`#${triggerId2}`, { keyCode: keyboardKey.Enter })
-      wrapper.update()
+      expect(document.querySelector(`#${contentId}`)).toBeDefined()
+      expect(document.querySelector(`#${contentId2}`)).toBe(null)
 
-      expect(wrapper.find(`#${contentId}`).exists()).toBe(false)
-      expect(wrapper.find(`#${contentId2}`).exists()).toBe(true)
+      ReactTestUtils.act(() => {
+        domEvent.keyDown(`#${triggerId2}`, { keyCode: keyboardKey.Enter })
+      })
 
-      wrapper.unmount()
+      expect(document.querySelector(`#${contentId}`)).toBe(null)
+      expect(document.querySelector(`#${contentId2}`)).toBeDefined()
+
+      ReactDOM.unmountComponentAtNode(attachTo)
       document.body.removeChild(attachTo)
     })
   })
