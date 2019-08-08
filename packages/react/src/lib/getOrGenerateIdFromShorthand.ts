@@ -6,25 +6,20 @@ const getOrGenerateIdFromShorthand = <P extends Record<string, any>>(
   prefix: string,
   value: ShorthandValue<P>,
   currentValue?: string,
-  fallbackToUnique?: boolean,
 ): string | undefined => {
+  if (_.isNil(value)) {
+    return undefined
+  }
+
   let result: string
 
-  if (_.isNil(value)) {
-    result = undefined
-  } else if (React.isValidElement(value)) {
+  if (React.isValidElement(value)) {
     result = (value as React.ReactElement<{ id?: string }>).props.id
   } else if (_.isPlainObject(value)) {
     result = (value as Record<string, any>).id
-  } else {
-    result = currentValue || _.uniqueId(prefix)
   }
 
-  if (fallbackToUnique && !result) {
-    result = currentValue || _.uniqueId(prefix)
-  }
-
-  return result
+  return result || currentValue || _.uniqueId(prefix)
 }
 
 export default getOrGenerateIdFromShorthand

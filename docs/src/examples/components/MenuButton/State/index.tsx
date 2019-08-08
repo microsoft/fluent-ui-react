@@ -6,9 +6,9 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const State = () => (
   <ExampleSection title="State">
     <ComponentExample
-      title="Controlled"
+      title="Open"
       description="Note that if MenuButton is controlled, then its 'open' prop value could be changed either by parent component, or by user actions (e.g. key press) - thus it is necessary to handle 'onOpenChange' event."
-      examplePath="components/MenuButton/State/MenuButtonExampleControlled"
+      examplePath="components/MenuButton/State/MenuButtonExampleOpen"
     />
   </ExampleSection>
 )

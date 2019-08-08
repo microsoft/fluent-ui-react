@@ -19,7 +19,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### BREAKING CHANGES
 - Fix `firstFocusableSelector` in `FocusTrapZone` and `AutoFocusZone` @sophieH29 ([#1732](https://github.com/stardust-ui/react/pull/1732))
-- Rename Popup `shouldTriggerBeTabbable` prop to `tabbleTrigger` @jurokapsiar ([#1696](https://github.com/stardust-ui/react/pull/1696))
+- Rename Popup `shouldTriggerBeTabbable` prop to `tabbableTrigger` @jurokapsiar ([#1696](https://github.com/stardust-ui/react/pull/1696))
 
 ### Fixes
 - Require `name` prop in `Icon` component @lucivpav ([#1723](https://github.com/stardust-ui/react/pull/1723))

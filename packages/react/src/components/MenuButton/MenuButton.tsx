@@ -40,9 +40,6 @@ export interface MenuButtonProps extends StyledComponentProps<MenuButtonProps>, 
   /** Initial value for 'open'. */
   defaultOpen?: boolean
 
-  /** Whether the Popup should be rendered inline with the trigger or in the body. */
-  inline?: boolean
-
   /** Existing document the popup should add listeners. */
   mountDocument?: Document
 
@@ -90,7 +87,6 @@ export interface MenuButtonState {
   open: boolean
   menuId: string
   triggerId: string
-  autoFocus: boolean
 }
 
 /**
@@ -116,7 +112,6 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
     }),
     align: PropTypes.oneOf(ALIGNMENTS),
     defaultOpen: PropTypes.bool,
-    inline: PropTypes.bool,
     mountDocument: PropTypes.object,
     mountNode: customPropTypes.domNode,
     mouseLeaveDelay: PropTypes.number,
@@ -153,12 +148,11 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
     state: MenuButtonState,
   ): Partial<MenuButtonState> {
     return {
-      menuId: getOrGenerateIdFromShorthand('menubutton-menu-', props.menu, state.menuId, true),
+      menuId: getOrGenerateIdFromShorthand('menubutton-menu-', props.menu, state.menuId),
       triggerId: getOrGenerateIdFromShorthand(
         'menubutton-trigger-',
         props.trigger,
         state.triggerId,
-        true,
       ),
     }
   }
@@ -173,42 +167,29 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
   }
 
   closeMenu() {
-    this.trySetState({
-      open: false,
-      autoFocus: false,
-    })
+    this.trySetState({ open: false })
   }
 
-  openAndFocus(e: Event, which: 'first' | 'last') {
+  openAndFocus(e: React.KeyboardEvent, which: 'first' | 'last') {
     const renderCallback = () => focusMenuItem(this.menuRef.current, which)
-    this.trySetState(
-      {
-        open: true,
-        autoFocus: false, // focused by renderCallback
-      },
-      renderCallback,
-    )
+    this.trySetState({ open: true }, renderCallback)
     e.preventDefault()
   }
 
   handleOpenChange = (e, { open }: PopupProps) => {
-    _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open } })
-    this.trySetState({
-      open,
-      autoFocus: true,
-    })
+    _.invoke(this.props, 'onOpenChange', e, { ...this.props, open })
+    this.trySetState({ open })
   }
 
-  handleMenuItemClick = (predefinedProps?: MenuProps) => (
-    e: React.SyntheticEvent,
-    itemProps: MenuItemProps,
-  ) => {
-    _.invoke(predefinedProps, 'onItemClick', e, itemProps)
-    if (!itemProps || !itemProps.menu) {
-      // do not close if clicked on item with submenu
-      this.trySetState({ open: false, autoFocus: false })
-    }
-  }
+  handleMenuOverrides = (predefinedProps?: MenuProps) => ({
+    onItemClick: (e: React.SyntheticEvent, itemProps: MenuItemProps) => {
+      _.invoke(predefinedProps, 'onItemClick', e, itemProps)
+      if (!itemProps || !itemProps.menu) {
+        // do not close if clicked on item with submenu
+        this.trySetState({ open: false })
+      }
+    },
+  })
 
   renderComponent({
     ElementType,
@@ -226,7 +207,6 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
       align,
       className,
       defaultOpen,
-      inline,
       mountDocument,
       mountNode,
       mouseLeaveDelay,
@@ -244,41 +224,34 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
       variables,
     } = this.props
 
-    const popupProps = _.omitBy(
-      {
-        accessibility: accessibilityProp,
-        align,
-        className,
-        defaultOpen,
-        inline,
-        mountDocument,
-        mountNode,
-        mouseLeaveDelay,
-        offset,
-        on,
-        onOpenChange,
-        open,
-        pointing,
-        position,
-        tabbableTrigger,
-        styles: stylesProp,
-        target,
-        trigger,
-        unstable_pinned,
-        variables,
-      },
-      _.isUndefined,
-    )
+    const popupProps = {
+      accessibility: accessibilityProp,
+      align,
+      className,
+      defaultOpen,
+      mountDocument,
+      mountNode,
+      mouseLeaveDelay,
+      offset,
+      on,
+      onOpenChange,
+      open,
+      pointing,
+      position,
+      tabbableTrigger,
+      styles: stylesProp,
+      target,
+      trigger,
+      unstable_pinned,
+      variables,
+    }
 
     const content = Menu.create(menu, {
       defaultProps: {
         ...accessibility.attributes.menu,
         vertical: true,
       },
-      overrideProps: {
-        onItemClick: (e: React.SyntheticEvent, itemProps: MenuItemProps) =>
-          this.handleMenuItemClick(content)(e, itemProps),
-      },
+      overrideProps: this.handleMenuOverrides,
     })
 
     const overrideProps = {
@@ -288,19 +261,25 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
         styles: styles.popupContent,
         content: content && <Ref innerRef={this.menuRef}>{content}</Ref>,
       },
+      unstable_pinned: true,
       children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger
+      ...(contextMenu
+        ? {
+            on: 'context',
+            trapFocus: true,
+            tabbableTrigger: false,
+          }
+        : {
+            accessibility: () => accessibility,
+            inline: true,
+            autoFocus: true,
+          }),
     }
 
+    const popup = Popup.create(popupProps, { overrideProps })
+
     if (contextMenu) {
-      return Popup.create(popupProps, {
-        defaultProps: {
-          on: 'context',
-          trapFocus: true,
-          unstable_pinned: true,
-          tabbableTrigger: false,
-        },
-        overrideProps,
-      })
+      return popup
     }
 
     return (
@@ -310,19 +289,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        <Ref innerRef={this.triggerRef}>
-          {Popup.create(popupProps, {
-            defaultProps: {
-              inline: true,
-              autoFocus: true,
-              unstable_pinned: true,
-            },
-            overrideProps: {
-              accessibility: () => accessibility,
-              ...overrideProps,
-            },
-          })}
-        </Ref>
+        <Ref innerRef={this.triggerRef}>{popup}</Ref>
       </ElementType>
     )
   }
