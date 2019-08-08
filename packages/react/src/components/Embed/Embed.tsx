@@ -33,7 +33,7 @@ export interface EmbedProps extends UIComponentProps {
   /** Whether the embedded object should start active. */
   defaultActive?: boolean
 
-  /** Shorthand for an control. Only used when 'video' prop is set. */
+  /** Shorthand for an control. */
   control?: ShorthandValue<IconProps>
 
   /** Shorthand for an embedded iframe. */
@@ -135,6 +135,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { control, iframe, placeholder, video } = this.props
     const { active } = this.state
+    const controlVisible = !_.isNil(video) || !active
 
     return (
       <ElementType
@@ -160,25 +161,21 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                 },
               },
             })}
+            {Box.create(iframe, { defaultProps: { as: 'iframe' } })}
           </>
         ) : (
-          <>
-            {video &&
-              Image.create(placeholder, {
-                defaultProps: {
-                  styles: styles.image,
-                  variables: {
-                    width: variables.width,
-                    height: variables.height,
-                  },
-                },
-              })}
-          </>
+          Image.create(placeholder, {
+            defaultProps: {
+              styles: styles.image,
+              variables: {
+                width: variables.width,
+                height: variables.height,
+              },
+            },
+          })
         )}
 
-        {Box.create(iframe, { defaultProps: { as: 'iframe' } })}
-
-        {video &&
+        {controlVisible &&
           Icon.create(control, {
             defaultProps: {
               className: Embed.slotClassNames.control,

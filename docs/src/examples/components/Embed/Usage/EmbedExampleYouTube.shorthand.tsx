@@ -10,6 +10,7 @@ const EmbedExampleYouTube = () => (
       src: 'https://www.youtube.com/embed/D0WnZyxp_Wo',
       frameBorder: 0,
     }}
+    placeholder="http://i.ytimg.com/vi/D0WnZyxp_Wo/hqdefault.jpg"
   />
 )
 

@@ -10,6 +10,8 @@ const EmbedExampleIframe = () => (
       height: 450,
       width: 600,
     }}
+    control="search"
+    placeholder="https://static-maps.yandex.ru/1.x/?lang=en-US&ll=14.4560,50.0478&z=13&l=map&size=600,450"
   />
 )
 
