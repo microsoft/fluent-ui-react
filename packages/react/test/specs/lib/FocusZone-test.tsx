@@ -13,6 +13,8 @@ import { IS_FOCUSABLE_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUti
 
 describe('FocusZone', () => {
   let lastFocusedElement: HTMLElement | undefined
+  let host: HTMLElement
+
   function onFocus(ev: any): void {
     lastFocusedElement = ev.target
   }
@@ -48,6 +50,13 @@ describe('FocusZone', () => {
 
   beforeEach(() => {
     lastFocusedElement = undefined
+  })
+
+  afterEach(() => {
+    if (host) {
+      ReactDOM.unmountComponentAtNode(host)
+      ;(host as any) = undefined
+    }
   })
 
   it('can use arrows vertically', () => {
@@ -1466,5 +1475,180 @@ describe('FocusZone', () => {
     // change focus to buttonB
     buttonB.focus()
     expect(lastFocusedElement).toBe(buttonB)
+  })
+
+  it('should call onKeyDown handler even within another FocusZone', () => {
+    const keyDownHandler = jest.fn()
+
+    const component = ReactTestUtils.renderIntoDocument<{}, React.Component>(
+      <div {...{ onFocusCapture: onFocus }}>
+        <FocusZone>
+          <FocusZone className="innerFocusZone" onKeyDown={keyDownHandler} data-is-focusable={true}>
+            Inner Focus Zone
+          </FocusZone>
+        </FocusZone>
+      </div>,
+    )
+
+    const focusZone = ReactDOM.findDOMNode(component)!.firstChild as Element
+    const innerFocusZone = focusZone.querySelector('.innerFocusZone') as HTMLElement
+    ReactTestUtils.Simulate.keyDown(innerFocusZone, { which: keyboardKey.Enter })
+
+    expect(keyDownHandler).toBeCalled()
+  })
+
+  describe('restores focus', () => {
+    it('to the following item when item removed', () => {
+      host = document.createElement('div')
+
+      // Render component.
+      ReactDOM.render(
+        <FocusZone>
+          <button key="a" id="a" data-is-visible="true">
+            button a
+          </button>
+          <button key="b" id="b" data-is-visible="true">
+            button b
+          </button>
+          <button key="c" id="c" data-is-visible="true">
+            button c
+          </button>
+        </FocusZone>,
+        host,
+      )
+
+      const buttonB = host.querySelector('#b') as HTMLElement
+
+      buttonB.focus()
+
+      // Render component without button A.
+      ReactDOM.render(
+        <FocusZone>
+          <button key="a" id="a" data-is-visible="true">
+            button a
+          </button>
+          <button key="c" id="c" data-is-visible="true">
+            button c
+          </button>
+        </FocusZone>,
+        host,
+      )
+
+      expect(document.activeElement).toBe(host.querySelector('#c'))
+    })
+
+    it('can restore focus to the previous item when end item removed', () => {
+      host = document.createElement('div')
+
+      // Render component.
+      ReactDOM.render(
+        <FocusZone>
+          <button key="a" id="a" data-is-visible="true">
+            button a
+          </button>
+          <button key="b" id="b" data-is-visible="true">
+            button b
+          </button>
+          <button key="c" id="c" data-is-visible="true">
+            button c
+          </button>
+        </FocusZone>,
+        host,
+      )
+
+      const buttonC = host.querySelector('#c') as HTMLElement
+
+      buttonC.focus()
+
+      // Render component without button A.
+      ReactDOM.render(
+        <FocusZone>
+          <button key="a" id="a" data-is-visible="true">
+            button a
+          </button>
+          <button key="b" id="b" data-is-visible="true">
+            button b
+          </button>
+        </FocusZone>,
+        host,
+      )
+
+      expect(document.activeElement).toBe(host.querySelector('#b'))
+    })
+  })
+
+  describe('parking and unparking', () => {
+    let buttonA: HTMLElement
+
+    beforeEach(() => {
+      host = document.createElement('div')
+
+      // Render component.
+      ReactDOM.render(
+        <div>
+          <button key="z" id="z" data-is-visible="true" />
+          <FocusZone id="fz">
+            <button key="a" id="a" data-is-visible="true">
+              button a
+            </button>
+          </FocusZone>
+        </div>,
+        host,
+      )
+      buttonA = host.querySelector('#a') as HTMLElement
+      buttonA.focus()
+
+      // Render component without button A.
+      ReactDOM.render(
+        <div>
+          <button key="z" id="z" data-is-visible="true" />
+          <FocusZone id="fz" />
+        </div>,
+        host,
+      )
+    })
+
+    it('can move focus to container when last item removed', () => {
+      expect(document.activeElement).toBe(host.querySelector('#fz'))
+    })
+
+    it('can move focus from container to first item when added', () => {
+      ReactDOM.render(
+        <div>
+          <button key="z" id="z" />
+          <FocusZone id="fz">
+            <button key="a" id="a" data-is-visible="true">
+              button a
+            </button>
+          </FocusZone>
+        </div>,
+        host,
+      )
+      expect(document.activeElement).toBe(host.querySelector('#a'))
+    })
+
+    it('removes focusability when moving from focused container', () => {
+      expect(host.querySelector('#fz')!.getAttribute('tabindex')).toEqual('-1')
+      ;(host.querySelector('#z') as HTMLElement).focus()
+      expect(host.querySelector('#fz')!.getAttribute('tabindex')).toBeNull()
+    })
+
+    it('does not move focus when items added without container focus', () => {
+      expect(host.querySelector('#fz')!.getAttribute('tabindex')).toEqual('-1')
+      ;(host.querySelector('#z') as HTMLElement).focus()
+
+      ReactDOM.render(
+        <div>
+          <button key="z" id="z" />
+          <FocusZone id="fz">
+            <button key="a" id="a" data-is-visible="true">
+              button a
+            </button>
+          </FocusZone>
+        </div>,
+        host,
+      )
+      expect(document.activeElement).toBe(host.querySelector('#z'))
+    })
   })
 })

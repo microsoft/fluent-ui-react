@@ -443,3 +443,71 @@ export function getWindow(rootElement?: Element | null): Window | undefined {
     (rootElement && rootElement.ownerDocument && rootElement.ownerDocument.defaultView) || window
   )
 }
+
+/**
+ * Helper to get the document object.
+ *
+ * @public
+ */
+export function getDocument(rootElement?: Element | null): Document | undefined {
+  return (rootElement && rootElement.ownerDocument) || document
+}
+
+/**
+ * Returns parent element of passed child element if exists
+ * @param child element to find parent for
+ */
+export function getParent(child: HTMLElement): HTMLElement | null {
+  return child && child.parentElement
+}
+
+/**
+ * Finds the closest focusable element via an index path from a parent. See
+ * `getElementIndexPath` for getting an index path from an element to a child.
+ */
+export function getFocusableByIndexPath(
+  parent: HTMLElement,
+  path: number[],
+): HTMLElement | undefined {
+  let element = parent
+
+  for (const index of path) {
+    const nextChild = element.children[Math.min(index, element.children.length - 1)] as HTMLElement
+
+    if (!nextChild) {
+      break
+    }
+    element = nextChild
+  }
+
+  element =
+    isElementTabbable(element) && isElementVisible(element)
+      ? element
+      : getNextElement(parent, element, true) || getPreviousElement(parent, element)!
+
+  return element as HTMLElement
+}
+
+/**
+ * Finds the element index path from a parent element to a child element.
+ *
+ * If you had this node structure: "A has children [B, C] and C has child D",
+ * the index path from A to D would be [1, 0], or `parent.chidren[1].children[0]`.
+ */
+export function getElementIndexPath(fromElement: HTMLElement, toElement: HTMLElement): number[] {
+  const path: number[] = []
+  let currentElement: HTMLElement = toElement
+
+  while (currentElement && fromElement && currentElement !== fromElement) {
+    const parent = getParent(currentElement)
+
+    if (parent === null) {
+      return []
+    }
+
+    path.unshift(Array.prototype.indexOf.call(parent.children, currentElement))
+    currentElement = parent
+  }
+
+  return path
+}
