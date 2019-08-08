@@ -1222,7 +1222,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     event: React.SyntheticEvent<HTMLElement>,
     newState: Partial<DropdownState>,
   ) => {
-    this.setState(newState)
+    this.setState(newState as DropdownState)
     _.invoke(this.props, handlerName, event, { ...this.props, ...newState })
   }
 
