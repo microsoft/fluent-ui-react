@@ -135,7 +135,6 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { control, iframe, placeholder, video } = this.props
     const { active } = this.state
-    const controlVisible = !_.isNil(video) || !active
 
     return (
       <ElementType
@@ -161,21 +160,25 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                 },
               },
             })}
-            {Box.create(iframe, { defaultProps: { as: 'iframe' } })}
           </>
         ) : (
-          Image.create(placeholder, {
-            defaultProps: {
-              styles: styles.image,
-              variables: {
-                width: variables.width,
-                height: variables.height,
-              },
-            },
-          })
+          <>
+            {video &&
+              Image.create(placeholder, {
+                defaultProps: {
+                  styles: styles.image,
+                  variables: {
+                    width: variables.width,
+                    height: variables.height,
+                  },
+                },
+              })}
+          </>
         )}
 
-        {controlVisible &&
+        {Box.create(iframe, { defaultProps: { as: 'iframe' } })}
+
+        {video &&
           Icon.create(control, {
             defaultProps: {
               className: Embed.slotClassNames.control,
