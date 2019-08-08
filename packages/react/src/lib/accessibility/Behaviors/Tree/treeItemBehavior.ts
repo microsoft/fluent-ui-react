@@ -26,7 +26,7 @@ const hierarchicalTreeItemBehavior: Accessibility<TreeItemBehaviorProps> = props
           [IS_FOCUSABLE_ATTRIBUTE]: true,
           role: 'treeitem',
           'aria-setsize': props.siblings.length,
-          'aria-posinset': props.position,
+          'aria-posinset': props.indexInSubtree + 1,
           'aria-level': props.level,
         }),
     },
@@ -37,9 +37,6 @@ const hierarchicalTreeItemBehavior: Accessibility<TreeItemBehaviorProps> = props
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
       ...(isSubtreeOpen(props) && {
-        focusParent: {
-          keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
-        },
         collapse: {
           keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
         },
@@ -50,6 +47,9 @@ const hierarchicalTreeItemBehavior: Accessibility<TreeItemBehaviorProps> = props
       ...(!isSubtreeOpen(props) && {
         expand: {
           keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+        },
+        focusParent: {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
         },
       }),
     },
@@ -63,7 +63,7 @@ export type TreeItemBehaviorProps = {
   open?: boolean
   siblings?: object[]
   level?: number
-  position?: number
+  indexInSubtree?: number
 }
 
 /** Checks if current tree item has a subtree and it is opened */

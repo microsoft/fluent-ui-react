@@ -2,7 +2,6 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { CellMeasurer, CellMeasurerCache, List as ReactVirtualizedList } from 'react-virtualized'
 import { handleRef, Ref } from '@stardust-ui/react-component-ref'
 
 import TreeItem, { TreeItemProps } from './TreeItem'
@@ -26,6 +25,7 @@ import {
 } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { treeBehavior } from '../../lib/accessibility'
+import { getFirstFocusable } from '../../lib/accessibility/FocusZone/focusUtilities'
 
 export interface TreeSlotClassNames {
   item: string
@@ -105,40 +105,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   static autoControlledProps = ['activeItems']
 
-  cache = new CellMeasurerCache({
-    defaultHeight: 20,
-    fixedWidth: true,
-  })
-
   itemRefs = []
-
-  actionHandlers = {
-    expandSiblings: e => {
-      /* not working yet
-      const { items, exclusive } = this.props
-      e.preventDefault()
-      e.stopPropagation()
-
-      if (exclusive) {
-        return
-      }
-      const activeIndex = items
-        ? items.reduce<number[]>((acc, item, index) => {
-            if (item['items']) {
-              return [...acc, index]
-            }
-            return acc
-          }, [])
-        : []
-      this.trySetActiveIndexAndTriggerEvent(e, activeIndex)
-      */
-    },
-  }
-
-  // trySetActiveIndexAndTriggerEvent = (e, activeIndex) => {
-  //   this.trySetState({ activeItems: activeIndex })
-  //   _.invoke(this.props, 'onActiveIndexChange', e, { ...this.props, activeIndex })
-  // }
 
   getInitialAutoControlledState(): TreeState {
     if (this.props.items) {
@@ -146,7 +113,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         items.forEach((item: ShorthandValue<TreeItemProps>, index: number) => {
           item['level'] = level
           item['siblings'] = items
-          item['position'] = index + 1
+          item['indexInSubtree'] = index
           if (parent) {
             item['parent'] = parent
           }
@@ -170,93 +137,108 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       treeItemProps: TreeItemProps,
       predefinedProps: TreeItemProps,
     ) => {
-      const { index, open, items } = treeItemProps
+      const { indexInTree, open, siblings, indexInSubtree } = treeItemProps
       const { activeItems } = this.state
       if (open) {
-        const end = activeItems.indexOf(_.last(items))
-        this.setState({
-          activeItems: [...activeItems.slice(0, index + 1), ...activeItems.slice(end + 1)],
-        })
+        const nextSibling = siblings[indexInSubtree + 1]
+        if (!nextSibling) {
+          this.setState({
+            activeItems: activeItems.slice(0, indexInTree + 1),
+          })
+        } else {
+          const nextSiblingIndexInTree = activeItems.indexOf(nextSibling)
+          this.setState({
+            activeItems: [
+              ...activeItems.slice(0, indexInTree + 1),
+              ...activeItems.slice(nextSiblingIndexInTree),
+            ],
+          })
+        }
       } else {
-        const subItems = activeItems[index]['items']
+        const subItems = activeItems[indexInTree]['items']
         if (!subItems) {
           return
         }
         this.setState({
           activeItems: [
-            ...activeItems.slice(0, index + 1),
+            ...activeItems.slice(0, indexInTree + 1),
             ...subItems,
-            ...activeItems.slice(index + 1),
+            ...activeItems.slice(indexInTree + 1),
           ],
         })
       }
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
     onParentFocus: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      const { index } = treeItemProps
+      const { indexInTree } = treeItemProps
       const { activeItems } = this.state
-      const parentItem = activeItems[index]['parent']
+      const parentItem = activeItems[indexInTree]['parent']
+
       if (parentItem) {
         const parentItemIndex = activeItems.indexOf(parentItem)
         this.itemRefs[parentItemIndex].current.focus()
       }
+
       _.invoke(predefinedProps, 'onParentFocus', e, treeItemProps)
     },
     onFirstChildFocus: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      const { index } = treeItemProps
+      const { indexInTree } = treeItemProps
       const { activeItems } = this.state
-      if (activeItems[index]['items']) {
-        this.itemRefs[index + 1].current.focus()
+
+      if (activeItems[indexInTree]['items']) {
+        const element = getFirstFocusable(
+          this.itemRefs[indexInTree + 1].current,
+          this.itemRefs[indexInTree + 1].current,
+          true,
+        )
+        if (element) {
+          element.focus()
+        }
       }
+
       _.invoke(predefinedProps, 'onFirstChildFocus', e, treeItemProps)
     },
   })
 
-  rowRenderer = ({ index, key, parent, style }) => {
+  renderContent() {
     const { activeItems } = this.state
-    const isSubtree = !!activeItems[index]['items']
-    const open = isSubtree && activeItems[index + 1] === activeItems[index]['items'][0]
-    return (
-      <CellMeasurer cache={this.cache} columnIndex={0} key={key} parent={parent} rowIndex={index}>
+
+    return _.map(activeItems, (item: ShorthandValue<TreeItemProps>, index: number) => {
+      const isSubtree = !!item['items']
+      const open = isSubtree && activeItems[index + 1] === item['items'][0]
+
+      return (
         <Ref
           innerRef={(itemElement: HTMLElement) => {
+            if (
+              !itemElement ||
+              (this.itemRefs.length &&
+                this.itemRefs[this.itemRefs.length - 1].current === itemElement)
+            ) {
+              return
+            }
+
             const ref = React.createRef()
             this.itemRefs.push(ref)
             handleRef(ref, itemElement)
           }}
         >
-          {TreeItem.create(activeItems[index], {
+          {TreeItem.create(item, {
             defaultProps: {
               className: Tree.slotClassNames.item,
-              style,
               open,
-              index,
+              indexInTree: index,
             },
             overrideProps: this.handleTreeItemOverrides,
           })}
         </Ref>
-      </CellMeasurer>
-    )
-  }
-
-  renderContent() {
-    const { activeItems } = this.state
-    this.itemRefs = []
-
-    return (
-      <ReactVirtualizedList
-        deferredMeasurementCache={this.cache}
-        rowHeight={this.cache.rowHeight}
-        rowRenderer={this.rowRenderer}
-        height={100}
-        rowCount={activeItems.length}
-        width={600}
-      />
-    )
+      )
+    })
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { children } = this.props
+    this.itemRefs = []
 
     return (
       <ElementType
