@@ -36,10 +36,18 @@ export { default as chatBehavior } from './Behaviors/Chat/chatBehavior'
 export { default as chatMessageBehavior } from './Behaviors/Chat/chatMessageBehavior'
 export { default as gridBehavior } from './Behaviors/Grid/gridBehavior'
 export { default as gridHorizontalBehavior } from './Behaviors/Grid/gridHorizontalBehavior'
-export { default as treeBehavior } from './Behaviors/Tree/treeBehavior'
-export { default as treeItemBehavior } from './Behaviors/Tree/treeItemBehavior'
-export { default as treeTitleBehavior } from './Behaviors/Tree/treeTitleBehavior'
-export { default as subtreeBehavior } from './Behaviors/Tree/subtreeBehavior'
+export {
+  default as hierarchicalTreeBehavior,
+} from './Behaviors/HierarchicalTree/hierarchicalTreeBehavior'
+export {
+  default as hierarchicalTreeItemBehavior,
+} from './Behaviors/HierarchicalTree/hierarchicalTreeItemBehavior'
+export {
+  default as hierarchicalTreeTitleBehavior,
+} from './Behaviors/HierarchicalTree/hierarchicalTreeTitleBehavior'
+export {
+  default as hierarchicalSubtreeBehavior,
+} from './Behaviors/HierarchicalTree/hierarchicalSubtreeBehavior'
 export { default as dialogBehavior } from './Behaviors/Dialog/dialogBehavior'
 export { default as statusBehavior } from './Behaviors/Status/statusBehavior'
 export { default as embedBehavior } from './Behaviors/Embed/embedBehavior'
@@ -50,3 +58,4 @@ export { default as checkboxBehavior } from './Behaviors/Checkbox/checkboxBehavi
 export { default as tooltipBehavior } from './Behaviors/Tooltip/tooltipBehavior'
 export { default as tooltipAsLabelBehavior } from './Behaviors/Tooltip/tooltipAsLabelBehavior'
 export { default as sliderBehavior } from './Behaviors/Slider/sliderBehavior'
+export { default as menuButtonBehavior } from './Behaviors/MenuButton/menuButtonBehavior'
