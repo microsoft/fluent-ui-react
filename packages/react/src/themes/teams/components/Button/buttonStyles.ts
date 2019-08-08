@@ -1,6 +1,7 @@
 import * as _ from 'lodash'
 import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import Loader from '../../../../components/Loader/Loader'
 import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
 import { ButtonVariables } from './buttonVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
@@ -20,7 +21,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
 
     return {
       height: v.height,
-      minWidth: _.isNil(p.loading) ? minWidth : loadingMinWidth,
+      minWidth: _.isNil(p.loading) ? v.minWidth : v.loadingMinWidth,
       maxWidth: v.maxWidth,
       color: v.color,
       backgroundColor: v.backgroundColor,
@@ -196,6 +197,25 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
   }),
 
   loader: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    [`& .${Loader.slotClassNames.indicator}`]: {
+      width: p.size === 'small' ? v.sizeSmallLoaderSize : v.loaderSize,
+      height: p.size === 'small' ? v.sizeSmallLoaderSize : v.loaderSize,
+    },
+    [`& .${Loader.slotClassNames.svg}`]: {
+      ':before': {
+        animationName: {
+          to: {
+            transform: `translate3d(0, ${
+              p.size === 'small' ? v.sizeSmallLoaderSvgAnimationHeight : v.loaderSvgAnimationHeight
+            }, 0)`,
+          },
+        },
+        borderWidth: p.size === 'small' ? v.sizeSmallLoaderBorderSize : v.loaderBorderSize,
+        width: p.size === 'small' ? v.sizeSmallLoaderSize : v.loaderSize,
+        height: p.size === 'small' ? v.sizeSmallLoaderSvgHeight : v.loaderSvgHeight,
+      },
+    },
+
     ...(p.content && {
       marginRight: pxToRem(4),
     }),

@@ -103,7 +103,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     icon: customPropTypes.itemShorthandWithoutJSX,
     iconOnly: PropTypes.bool,
     iconPosition: PropTypes.oneOf(['before', 'after']),
-    loader: customPropTypes.itemShorthand,
+    loader: customPropTypes.itemShorthandWithoutJSX,
     loading: PropTypes.bool,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
@@ -184,7 +184,6 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     return Loader.create(loader, {
       defaultProps: {
         role: undefined,
-        size: 'smallest',
         styles: styles.loader,
       },
     })
