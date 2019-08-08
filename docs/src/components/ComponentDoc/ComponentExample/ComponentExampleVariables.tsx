@@ -37,7 +37,7 @@ const ComponentExampleVariables: React.FunctionComponent<
   const { onChange, overriddenVariables, usedVariables } = props
 
   const { theme } = React.useContext<ProviderContextPrepared>(ThemeContext)
-  const [showAll, setShowAll] = React.useState(false)
+  const [hideUnused, setHideUnused] = React.useState(true)
 
   const componentVariables: ThemeComponentVariablesPrepared = _.pickBy(
     mergeThemeVariables(theme.componentVariables, overriddenVariables),
@@ -52,7 +52,7 @@ const ComponentExampleVariables: React.FunctionComponent<
         (acc, variableValue, variableName) => {
           const visible =
             typeof variableValue === 'string' && // TODO: remove after variables will be flatten
-            (showAll || usedVariables[componentName].indexOf(variableName) !== -1)
+            (hideUnused || usedVariables[componentName].indexOf(variableName) !== -1)
 
           if (visible) {
             acc[variableName] = variableValue
@@ -69,10 +69,10 @@ const ComponentExampleVariables: React.FunctionComponent<
   return (
     <div>
       <Checkbox
-        checked={!showAll}
-        label="Show only active"
-        onChange={(e, data) => setShowAll(!data.checked)}
-        styles={{ float: 'right', top: '1.25rem' }}
+        checked={!hideUnused}
+        label="Hide unused variables"
+        onChange={(e, data) => setHideUnused(!data.checked)}
+        styles={{ float: 'right', top: '1.25rem', right: '1.25rem' }}
       />
 
       {_.map(filteredVariables, (componentVariables, componentName) => {
