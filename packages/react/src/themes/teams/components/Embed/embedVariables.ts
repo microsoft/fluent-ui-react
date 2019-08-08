@@ -4,6 +4,7 @@ export interface EmbedVariables {
   width: string
   height: string
   focusBorderColor: string
+  backgroundColor: string
 }
 
 export default (siteVariables): EmbedVariables => ({
@@ -13,4 +14,5 @@ export default (siteVariables): EmbedVariables => ({
   width: undefined,
   height: undefined,
   focusBorderColor: siteVariables.colors.brand[500],
+  backgroundColor: siteVariables.colorScheme.brand.background,
 })

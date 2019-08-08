@@ -1,10 +1,12 @@
 import * as React from 'react'
 
-import Types from './Types'
+import Slots from './Slots'
+import Usage from './Usage'
 
 const EmbedExamples = () => (
   <>
-    <Types />
+    <Slots />
+    <Usage />
   </>
 )
 
