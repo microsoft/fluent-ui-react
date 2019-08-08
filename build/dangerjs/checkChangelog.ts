@@ -1,5 +1,6 @@
 import * as fs from 'fs'
-import * as path from 'path'
+
+import config from '../../config'
 import { DangerJS } from './types'
 
 const CHANGELOG_FILE = 'CHANGELOG.md'
@@ -8,7 +9,7 @@ const CHANGELOG_FILE = 'CHANGELOG.md'
  * This function asserts that added entries into the changelog file are placed in the right section.
  */
 const hasAddedLinesAfterVersionInChangelog = async (danger): Promise<boolean> => {
-  const changelogContent = fs.readFileSync(path.resolve(__dirname, CHANGELOG_FILE)).toString()
+  const changelogContent = fs.readFileSync(config.paths.base(CHANGELOG_FILE)).toString()
   const versionLineNumber = changelogContent
     .split('\n')
     .findIndex(line => line.startsWith('<!--') && line.endsWith('-->'))

@@ -17,7 +17,10 @@ const buttonImplementsShorthandProp = implementsShorthandProp(Button)
 
 describe('Button', () => {
   isConformant(Button)
-  buttonImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })
+  buttonImplementsShorthandProp('icon', Icon, {
+    mapsValueToProp: 'name',
+    requiredProps: { name: 'at' },
+  })
 
   describe('accessibility', () => {
     describe('button', () => {

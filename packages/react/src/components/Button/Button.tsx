@@ -14,6 +14,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  SizeValue,
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
@@ -76,6 +77,9 @@ export interface ButtonProps
 
   /** A button can be formatted to show different levels of emphasis. */
   secondary?: boolean
+
+  /** A size of the button. */
+  size?: SizeValue
 }
 
 export interface ButtonState {
@@ -106,11 +110,13 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     text: PropTypes.bool,
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
+    size: customPropTypes.size,
   }
 
   static defaultProps = {
     as: 'button',
     accessibility: buttonBehavior as Accessibility,
+    size: 'medium',
     loader: {},
   }
 

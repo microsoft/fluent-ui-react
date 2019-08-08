@@ -1,13 +1,15 @@
 import {
   Icon,
-  Tree,
+  HierarchicalTree,
   Segment,
   Text,
   ICSSInJSStyle,
-  TreeItemProps,
-  TreeProps,
+  HierarchicalTreeItemProps,
+  HierarchicalTreeProps,
+  Input,
   Flex,
-  FlexItem,
+  Box,
+  HierarchicalTreeTitleProps,
 } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
@@ -16,8 +18,7 @@ import keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { findDOMNode } from 'react-dom'
-import { NavLink, withRouter } from 'react-router-dom'
+import { NavLink, NavLinkProps, withRouter } from 'react-router-dom'
 
 import { constants } from 'src/lib'
 
@@ -34,27 +35,25 @@ class Sidebar extends React.Component<any, any> {
     history: PropTypes.object.isRequired,
     style: PropTypes.object,
   }
-  state: any = { query: '' }
-  _searchInput: any
-  selectedRoute: any
-  filteredMenu = componentMenu
+  state: any = { query: '', activeCategoryIndex: 0 }
+  searchInputRef = React.createRef<HTMLInputElement>()
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleDocumentKeyDown)
-    this.setSearchInput()
-  }
 
-  componentDidUpdate() {
-    this.setSearchInput()
+    const at = this.props.location.pathname
+    const categoryIndex = this.findActiveCategoryIndex(at, this.getSectionsWithoutSearchFilter())
+    this.setState({ activeCategoryIndex: categoryIndex })
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleDocumentKeyDown)
   }
 
-  setSearchInput() {
-    // TODO: Replace findDOMNode with Ref component when it will be merged
-    this._searchInput = (findDOMNode(this) as any).querySelector('.ui.input input')
+  findActiveCategoryIndex = (at: string, sections: ShorthandValue<any>[]): number => {
+    return _.findIndex(sections, (section: ShorthandValue<HierarchicalTreeItemProps>) => {
+      return _.find((section as any).items, item => item.title.to === at)
+    })
   }
 
   handleDocumentKeyDown = e => {
@@ -63,69 +62,23 @@ class Sidebar extends React.Component<any, any> {
     const hasModifier = e.altKey || e.ctrlKey || e.metaKey
     const bodyHasFocus = document.activeElement === document.body
 
-    if (!hasModifier && isAZ && bodyHasFocus) this._searchInput.focus()
+    if (!hasModifier && isAZ && bodyHasFocus) this.searchInputRef.current.focus()
   }
 
-  handleItemClick = () => {
+  handleItemClick = (e: React.SyntheticEvent, data: HierarchicalTreeItemProps) => {
     const { query } = this.state
 
-    if (query) this.setState({ query: '' })
-    // TODO: as part of search input re-enabling
-    // if (document.activeElement === this._searchInput) this._searchInput.blur()
+    if (query) {
+      this.setState({ query: '' })
+      const at = (data.title as NavLinkProps).to as string
+      const categoryIndex = this.findActiveCategoryIndex(at, this.getSectionsWithoutSearchFilter())
+      this.setState({ activeCategoryIndex: categoryIndex })
+    }
   }
 
-  /* TODO: as part of search input re-enabling
-    private renderSearchItems = () => {
-      const { selectedItemIndex, query } = this.state
-      if (!query) return undefined
-
-      let itemIndex = -1
-      const startsWithMatches: ComponentMenuItem[] = []
-      const containsMatches: ComponentMenuItem[] = []
-      const escapedQuery = _.escapeRegExp(query)
-
-      _.each(componentMenu, info => {
-        if (new RegExp(`^${escapedQuery}`, 'i').test(info.displayName)) {
-          startsWithMatches.push(info)
-        } else if (new RegExp(escapedQuery, 'i').test(info.displayName)) {
-          containsMatches.push(info)
-        }
-      })
-
-      this.filteredMenu = [...startsWithMatches, ...containsMatches]
-      const menuItems = _.map(this.filteredMenu, info => {
-        itemIndex += 1
-        const isSelected = itemIndex === selectedItemIndex
-
-        if (isSelected) this.selectedRoute = getComponentPathname(info)
-
-        return (
-          <Menu.Item
-            key={info.displayName}
-            content={info.displayName}
-            onClick={this.handleItemClick}
-            active={isSelected}
-            as={NavLink}
-            to={getComponentPathname(info)}
-          />
-        )
-      }, this.filteredMenu)
-
-      return (
-        <Menu.Item
-          key={info.displayName}
-          name={info.displayName}
-          onClick={this.handleItemClick}
-          active={isSelected}
-          as={NavLink}
-          to={getComponentPathname(info)}
-        >
-          {info.displayName}
-          {isSelected && selectedItemLabel}
-        </Menu.Item>
-      )
-    })
-*/
+  treeActiveIndexChanged = (e: React.SyntheticEvent, props: HierarchicalTreeProps) => {
+    this.setState({ activeCategoryIndex: props.activeIndex })
+  }
 
   keyDownCallback(e) {
     if (keyboardKey.getCode(e) !== keyboardKey.Enter) {
@@ -151,7 +104,23 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  getTreeItems(): TreeProps['items'] {
+  addItemOnClickCallbacks(sections: ShorthandValue<any>[]) {
+    for (let i = 0; i < sections.length; i++) {
+      const category = sections[i]
+      if ('items' in category) {
+        this.addItemOnClickCallbacks(category.items)
+      } else {
+        if (!('title' in category)) {
+          continue
+        }
+        category['onTitleClick'] = (e, data) => {
+          this.handleItemClick(e, data)
+        }
+      }
+    }
+  }
+
+  getTreeItems(): HierarchicalTreeProps['items'] {
     return [
       {
         key: 'concepts',
@@ -245,21 +214,6 @@ class Sidebar extends React.Component<any, any> {
           },
         ],
       },
-      // TODO: to re-enable the search input - will modify the list of the components depending on the search results
-      // {query ? this.renderSearchItems() : this.menuItemsByType},
-      // {
-      //   key: 'search',
-      //   content: (
-      //     <Input
-      //       className="transparent inverted icon"
-      //       icon="search"
-      //       placeholder="Search components..."
-      //       value={query}
-      //       onChange={this.handleSearchChange}
-      //       onKeyDown={this.handleSearchKeyDown}
-      //     />
-      //   ),
-      // },
     ]
   }
 
@@ -288,78 +242,22 @@ class Sidebar extends React.Component<any, any> {
     })
   }
 
-  render() {
-    const sidebarStyles: ICSSInJSStyle = {
-      background: '#201f1f',
-      width: this.props.width,
-      position: 'fixed',
-      overflowY: 'scroll',
-      top: 0,
-      left: 0,
-      padding: 0,
-      height: '100%',
-      zIndex: 1000,
-    }
+  handleQueryChange = (e, data) => {
+    this.setState({ query: data.value })
+  }
 
-    const logoStyles: ICSSInJSStyle = {
-      paddingRight: '5px',
-      color: 'white',
-      fontWeight: 700,
-    }
-
-    const flexDisplayStyle: any = { width: `${parseInt(this.props.width, 10) - 50}px` }
-
-    const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
-
+  getSectionsWithoutSearchFilter = (): HierarchicalTreeItemProps[] => {
     const treeItemsByType = _.map(constants.typeOrder, nextType => {
       const items = _.chain([...componentMenu, ...behaviorMenu])
         .filter(({ type }) => type === nextType)
         .map(info => ({
           key: info.displayName.concat(nextType),
           title: { content: info.displayName, as: NavLink, to: getComponentPathname(info) },
-          onClick: this.handleItemClick,
         }))
         .value()
 
       return { items }
     })
-
-    const topTreeItems: TreeProps['items'] = [
-      {
-        key: 'github',
-        title: {
-          content: (
-            <Flex style={flexDisplayStyle}>
-              GitHub
-              <FlexItem push>
-                <Icon name="github" />
-              </FlexItem>
-            </Flex>
-          ),
-          href: constants.repoURL,
-          target: '_blank',
-          rel: 'noopener noreferrer',
-        },
-      },
-      {
-        key: 'change',
-        title: {
-          content: (
-            <Flex style={flexDisplayStyle}>
-              CHANGELOG
-              <FlexItem push>
-                <Icon name="file alternate outline" />
-              </FlexItem>
-            </Flex>
-          ),
-          href: changeLogUrl,
-          target: '_blank',
-          rel: 'noopener noreferrer',
-        },
-      },
-    ]
-
-    const treeItems = topTreeItems.concat(this.getTreeItems())
 
     const prototypesTreeItems: (ShorthandValue<{}> & { key: string; public: boolean })[] = [
       {
@@ -418,6 +316,15 @@ class Sidebar extends React.Component<any, any> {
         public: false,
       },
       {
+        key: 'nested-popups-and-dialogs',
+        title: {
+          content: 'Nested Popups & Dialogs',
+          as: NavLink,
+          to: '/prototype-nested-popups-and-dialogs',
+        },
+        public: true,
+      },
+      {
         key: 'iconviewer',
         title: { content: 'Processed Icons', as: NavLink, to: '/icon-viewer' },
         public: false,
@@ -440,30 +347,81 @@ class Sidebar extends React.Component<any, any> {
       items: treeItemsByType[1].items,
     }
 
+    const treeItems = this.getTreeItems()
     const withComponents = treeItems.concat(componentTreeSection)
     const withBehaviors = withComponents.concat(behaviorTreeSection)
-    const allSections = this.getSectionsWithPrototypeSectionIfApplicable(
-      withBehaviors,
-      prototypesTreeItems,
-    )
+    return this.getSectionsWithPrototypeSectionIfApplicable(withBehaviors, prototypesTreeItems)
+  }
 
-    const at = this.props.location.pathname
-    const activeCategoryIndex = _.findIndex(
-      allSections,
-      (section: ShorthandValue<TreeItemProps>) => {
-        return _.find((section as any).items, item => item.title.to === at)
+  render() {
+    const sidebarStyles: ICSSInJSStyle = {
+      background: '#201f1f',
+      width: `${this.props.width}px`,
+      position: 'fixed',
+      overflowY: 'scroll',
+      top: 0,
+      left: 0,
+      padding: 0,
+      height: '100%',
+      zIndex: 1000,
+    }
+
+    const logoStyles: ICSSInJSStyle = {
+      paddingRight: '5px',
+      color: 'white',
+      fontWeight: 700,
+    }
+
+    const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
+    const allSectionsWithoutSearchFilter = this.getSectionsWithoutSearchFilter()
+
+    const escapedQuery = _.escapeRegExp(this.state.query)
+    const regexQuery = new RegExp(`^${escapedQuery}`, 'i')
+    const allSectionsWithPossibleEmptySections = _.map(
+      allSectionsWithoutSearchFilter,
+      (section: HierarchicalTreeItemProps) => {
+        return {
+          ...section,
+          items: _.filter(section.items as HierarchicalTreeItemProps[], item =>
+            regexQuery.test((item.title as HierarchicalTreeTitleProps).content as string),
+          ),
+        }
       },
     )
+
+    let allSections = _.filter(
+      allSectionsWithPossibleEmptySections,
+      (section: HierarchicalTreeItemProps) =>
+        Array.isArray(section.items) && section.items.length > 0,
+    )
+
+    if (this.state.query !== '') {
+      allSections = _.map(allSections, (section: HierarchicalTreeItemProps) => {
+        return { ...section, open: true }
+      })
+    }
+
     // TODO: remove after the issue with TreeItem will be fixed
     // https://github.com/stardust-ui/react/issues/1613
     this.addItemKeyCallbacks(allSections)
 
+    this.addItemOnClickCallbacks(allSections)
+
     const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
       <Component open={open} hasSubtree={hasSubtree} {...restProps}>
         <span>{content}</span>
-        {hasSubtree && <Icon name={open ? 'stardust-arrow-up' : 'stardust-arrow-down'} />}
+        {hasSubtree && this.state.query === '' && (
+          <Icon name={open ? 'stardust-arrow-up' : 'stardust-arrow-down'} />
+        )}
       </Component>
     )
+
+    const topItemTheme = {
+      ...this.props.treeItemStyle,
+      padding: undefined,
+      margin: '0.5em 0em 0.5em 1em',
+      width: `${0.9 * this.props.width}px`,
+    }
 
     // TODO: bring back the active elements indicators
     return (
@@ -479,10 +437,42 @@ class Sidebar extends React.Component<any, any> {
           />
           <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
         </Segment>
-        <Tree
-          defaultActiveIndex={activeCategoryIndex}
+        <Flex column>
+          <a
+            href={constants.repoURL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={topItemTheme}
+          >
+            <Box>
+              GitHub
+              <Icon name="github" styles={{ float: 'right' }} />
+            </Box>
+          </a>
+          <a href={changeLogUrl} target="_blank" rel="noopener noreferrer" style={topItemTheme}>
+            <Box>
+              CHANGELOG
+              <Icon name="file alternate outline" styles={{ float: 'right' }} />
+            </Box>
+          </a>
+          <Input
+            styles={topItemTheme}
+            fluid
+            clearable
+            icon="search"
+            placeholder="Search"
+            iconPosition="end"
+            role="search"
+            onChange={this.handleQueryChange}
+            value={this.state.query}
+            inputRef={this.searchInputRef}
+          />
+        </Flex>
+        <HierarchicalTree
           items={allSections}
           renderItemTitle={titleRenderer}
+          activeIndex={this.state.activeCategoryIndex}
+          onActiveIndexChange={this.treeActiveIndexChanged}
         />
       </Segment>
     )
