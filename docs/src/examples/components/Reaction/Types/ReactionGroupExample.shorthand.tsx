@@ -5,7 +5,7 @@ const ReactionGroupExample = () => (
   <Reaction.Group
     items={[
       { icon: 'like', content: '2K', key: 'up' },
-      { icon: 'thumbs down', content: 10, key: 'down' },
+      { icon: 'emoji', content: 10, key: 'smile' },
     ]}
   />
 )

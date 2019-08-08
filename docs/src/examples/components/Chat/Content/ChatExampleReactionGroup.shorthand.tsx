@@ -3,7 +3,7 @@ import * as React from 'react'
 
 const reactions: ShorthandCollection<ReactionProps> = [
   { key: 'up', icon: 'like', content: '1K' },
-  { key: 'down', icon: 'thumbs down', content: 5 },
+  { key: 'smile', icon: 'emoji', content: 5 },
 ]
 
 const items: ShorthandCollection<ChatItemProps> = [

@@ -12,16 +12,6 @@ const AvatarExampleStatusShorthand = () => (
     &emsp;
     <Avatar
       image="public/images/avatar/small/matt.jpg"
-      status={{ color: 'red', icon: 'minus', title: 'Do not disturb' }}
-    />
-    &emsp;
-    <Avatar
-      image="public/images/avatar/small/matt.jpg"
-      status={{ color: 'yellow', icon: 'clock', title: 'Away' }}
-    />
-    &emsp;
-    <Avatar
-      image="public/images/avatar/small/matt.jpg"
       status={{ color: 'grey', title: 'Offline' }}
     />
     &emsp;

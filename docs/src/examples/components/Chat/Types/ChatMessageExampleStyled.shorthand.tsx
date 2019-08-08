@@ -10,7 +10,7 @@ import {
 
 const reactions: ShorthandCollection<ReactionProps> = [
   { key: 'up', icon: 'like', content: '1K' },
-  { key: 'down', icon: 'thumbs down', content: 5 },
+  { key: 'smile', icon: 'emoji', content: 5 },
 ]
 
 const janeAvatar: AvatarProps = {
