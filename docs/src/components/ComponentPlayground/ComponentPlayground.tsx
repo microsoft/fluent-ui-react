@@ -19,6 +19,7 @@ const unsupportedComponents = [
   'Flex',
   'Form',
   'Grid',
+  'HierarchicalTree',
   'ItemLayout',
   'Layout',
   'List',
@@ -27,7 +28,6 @@ const unsupportedComponents = [
   'Provider',
   'RadioGroup',
   'Toolbar',
-  'Tree',
 ]
 
 const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = props => {

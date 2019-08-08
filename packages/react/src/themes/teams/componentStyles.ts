@@ -80,9 +80,13 @@ export { default as ToolbarMenu } from './components/Toolbar/toolbarMenuStyles'
 export { default as ToolbarMenuDivider } from './components/Toolbar/toolbarMenuDividerStyles'
 export { default as ToolbarMenuItem } from './components/Toolbar/toolbarMenuItemStyles'
 
-export { default as Tree } from './components/Tree/treeStyles'
-export { default as TreeItem } from './components/Tree/treeItemStyles'
-export { default as TreeTitle } from './components/Tree/treeTitleStyles'
+export { default as HierarchicalTree } from './components/HierarchicalTree/hierarchicalTreeStyles'
+export {
+  default as HierarchicalTreeItem,
+} from './components/HierarchicalTree/hierarchicalTreeItemStyles'
+export {
+  default as HierarchicalTreeTitle,
+} from './components/HierarchicalTree/hierarchicalTreeTitleStyles'
 
 export { default as Animation } from './components/Animation/animationStyles'
 
