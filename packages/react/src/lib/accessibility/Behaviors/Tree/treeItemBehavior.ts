@@ -52,6 +52,9 @@ const hierarchicalTreeItemBehavior: Accessibility<TreeItemBehaviorProps> = props
           keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
         },
       }),
+      expandSiblings: {
+        keyCombinations: [{ keyCode: keyboardKey['*'] }],
+      },
     },
   },
 })

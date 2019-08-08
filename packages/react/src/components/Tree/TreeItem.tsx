@@ -52,6 +52,9 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   /** Called when the item's first child is focused. */
   onFirstChildFocus?: ComponentEventHandler<TreeItemProps>
 
+  /** Called when the item's first child is focused. */
+  onSiblingsExpand?: ComponentEventHandler<TreeItemProps>
+
   /** Called when the item's parent is focused. */
   onParentFocus?: ComponentEventHandler<TreeItemProps>
 
@@ -101,6 +104,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     onTitleClick: PropTypes.func,
     onFirstChildFocus: PropTypes.func,
     onParentFocus: PropTypes.func,
+    onSiblingsExpand: PropTypes.func,
     open: PropTypes.bool,
     parent: customPropTypes.itemShorthand,
     indexInSubtree: PropTypes.number,
@@ -149,6 +153,12 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
       this.handleFirstChildFocus(e)
     },
+    expandSiblings: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      this.handleSiblingsExpand(e)
+    },
   }
 
   eventComesFromChildItem = e => {
@@ -165,6 +175,10 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
   handleFirstChildFocus = e => {
     _.invoke(this.props, 'onFirstChildFocus', e, this.props)
+  }
+
+  handleSiblingsExpand = e => {
+    _.invoke(this.props, 'onSiblingsExpand', e, this.props)
   }
 
   handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
