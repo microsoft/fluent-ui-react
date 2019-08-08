@@ -1213,7 +1213,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   }
 
   /**
-   * Calls trySetState (for autoControlledProps) and invokes event handler exposed to user.
+   * Calls setState and invokes event handler exposed to user.
    * We don't have the event object for most events coming from Downshift se we send an empty event
    * because we want to keep the event handling interface
    */
