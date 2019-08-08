@@ -1,10 +1,10 @@
-import { selectors } from './tree-example'
+import { selectors } from './hierarchicalTree-example'
 
 const tree = `.${selectors.treeClass}`
 const treeItem = index => `.${selectors.treeItemClass}:nth-child(${index})`
 const treeTitle = index => `.${selectors.treeTitleClass}:nth-child(${index})`
 
-describe('Tree', () => {
+describe('HierarchialTree', () => {
   describe('Focus behavior', () => {
     beforeEach(async () => {
       await e2e.gotoTestCase(__filename, tree)

@@ -1,15 +1,15 @@
 import { ICSSInJSStyle } from '../../../types'
 import { pxToRem } from '../../../../lib'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
-import TreeTitle from '../../../../components/Tree/TreeTitle'
+import HierarchicalTreeTitle from '../../../../components/HierarchicalTree/HierarchicalTreeTitle'
 
-const treeItemStyles = {
+const hierarchicalTreeItemStyles = {
   root: ({ theme: { siteVariables } }): ICSSInJSStyle => ({
     listStyleType: 'none',
     padding: `0 0 0 ${pxToRem(1)}`,
     ':focus': {
       outline: 0,
-      [`> .${TreeTitle.className}`]: {
+      [`> .${HierarchicalTreeTitle.className}`]: {
         position: 'relative',
         ...getBorderFocusStyles({
           siteVariables,
@@ -20,4 +20,4 @@ const treeItemStyles = {
   }),
 }
 
-export default treeItemStyles
+export default hierarchicalTreeItemStyles

@@ -7,17 +7,17 @@ const Types = () => (
     <ComponentExample
       title="Default"
       description="A default Tree."
-      examplePath="components/Tree/Types/TreeExample"
+      examplePath="components/HierarchicalTree/Types/HierarchicalTreeExample"
     />
     <ComponentExample
       title="Custom Title"
       description="A Tree with customized title rendering."
-      examplePath="components/Tree/Types/TreeTitleCustomizationExample"
+      examplePath="components/HierarchicalTree/Types/HierarchicalTreeTitleCustomizationExample"
     />
     <ComponentExample
       title="Exclusive"
       description="A Tree with only one subtree open at a time."
-      examplePath="components/Tree/Types/TreeExclusiveExample"
+      examplePath="components/HierarchicalTree/Types/HierarchicalTreeExclusiveExample"
     />
   </ExampleSection>
 )
