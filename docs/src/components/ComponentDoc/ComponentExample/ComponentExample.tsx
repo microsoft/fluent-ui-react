@@ -4,7 +4,15 @@ import {
   KnobInspector,
   KnobProvider,
 } from '@stardust-ui/docs-components'
-import { Divider, Flex, Menu, Segment, Provider, ICSSInJSStyle } from '@stardust-ui/react'
+import {
+  Flex,
+  Menu,
+  Segment,
+  Provider,
+  ICSSInJSStyle,
+  themes,
+  mergeThemes,
+} from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
@@ -12,7 +20,13 @@ import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
 import VisibilitySensor from 'react-visibility-sensor'
 
-import { examplePathToHash, getFormattedHash, scrollToAnchor } from 'docs/src/utils'
+import {
+  examplePathToHash,
+  getFormattedHash,
+  scrollToAnchor,
+  ThemeName,
+  themeNames,
+} from 'docs/src/utils'
 import { constants } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
@@ -44,6 +58,7 @@ interface ComponentExampleState {
   showRtl: boolean
   showTransparent: boolean
   showVariables: boolean
+  themeName: ThemeName
   wasEverVisible: boolean
 }
 
@@ -73,6 +88,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showRtl: examplePath && examplePath.endsWith('rtl'),
       showTransparent: false,
       showVariables: false,
+      themeName: 'teams',
       wasEverVisible: false,
     }
   }
@@ -170,24 +186,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     return this.kebabExamplePath
   }
-
-  renderElement = (element: React.ReactElement<any>) => {
-    const { showRtl, showTransparent, componentVariables } = this.state
-    const newTheme: ThemeInput = {
-      componentVariables: {
-        ...componentVariables,
-        ProviderBox: { background: showTransparent ? 'initial' : undefined },
-      },
-    }
-
-    return (
-      <Provider theme={newTheme} rtl={showRtl}>
-        {element}
-      </Provider>
-    )
-  }
-
-  getDisplayName = () => this.props.examplePath.split('/')[1]
 
   handleCodeApiChange = apiType => () => {
     this.props.handleCodeAPIChange(apiType)
@@ -414,8 +412,26 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showRtl,
       showTransparent,
       showVariables,
+      themeName,
       wasEverVisible,
     } = this.state
+
+    const newTheme: ThemeInput = {
+      componentVariables: { componentVariables },
+      componentStyles: {
+        ProviderBox: {
+          root: {
+            padding: '2rem',
+            ...(showTransparent && {
+              backgroundColor: 'transparent',
+              backgroundImage:
+                'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+              backgroundRepeat: 'repeat',
+            }),
+          },
+        },
+      },
+    }
 
     return (
       <VisibilitySensor
@@ -428,97 +444,102 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             <KnobProvider>
               {/* Ensure anchor links don't occlude card shadow effect */}
               <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
-
-              <ExamplePlaceholder visible={wasEverVisible}>
-                <Segment styles={{ borderBottom: '1px solid #ddd' }}>
-                  <Flex>
+              <Segment styles={{ padding: 0 }}>
+                <ExamplePlaceholder visible={wasEverVisible} size="larger">
+                  <Flex styles={{ padding: '1rem' }}>
                     <ComponentExampleTitle description={description} title={title} />
 
                     <Flex.Item push>
-                      <ComponentControls
-                        anchorName={this.anchorName}
-                        exampleCode={currentCode}
-                        exampleLanguage={currentCodeLanguage}
-                        examplePath={currentCodePath}
-                        onShowCode={this.handleShowCodeClick}
-                        onCopyLink={this.handleDirectLinkClick}
-                        onShowRtl={this.handleShowRtlClick}
-                        onShowVariables={this.handleShowVariablesClick}
-                        onShowTransparent={this.handleShowTransparentClick}
-                        showRtl={showRtl}
-                      />
+                      <div>
+                        <ComponentControls
+                          anchorName={this.anchorName}
+                          exampleCode={currentCode}
+                          exampleLanguage={currentCodeLanguage}
+                          examplePath={currentCodePath}
+                          onShowCode={this.handleShowCodeClick}
+                          onCopyLink={this.handleDirectLinkClick}
+                          onShowRtl={this.handleShowRtlClick}
+                          onShowVariables={this.handleShowVariablesClick}
+                          onShowTransparent={this.handleShowTransparentClick}
+                          showRtl={showRtl}
+                        />
+                        <br />
+                        <select
+                          value={themeName}
+                          onChange={e => this.setState({ themeName: e.target.value as ThemeName })}
+                          style={{ float: 'right' }}
+                        >
+                          {themeNames.map(value => (
+                            <option key={value} value={value}>
+                              {_.startCase(value)}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </Flex.Item>
                   </Flex>
 
                   <KnobInspector>
                     {knobs => knobs && <ComponentExampleKnobs>{knobs}</ComponentExampleKnobs>}
                   </KnobInspector>
-                </Segment>
-              </ExamplePlaceholder>
 
-              {children && <Segment styles={childrenStyle}>{children}</Segment>}
+                  {children && <Segment styles={childrenStyle}>{children}</Segment>}
 
-              <ExamplePlaceholder visible={wasEverVisible} size="larger">
-                <SourceRender
-                  babelConfig={babelConfig}
-                  source={currentCode}
-                  renderHtml={showCode}
-                  resolver={importResolver}
-                  wrap={this.renderElement}
-                  unstable_hot
-                >
-                  {({ element, error, markup }) => (
-                    <>
-                      <Segment
-                        className={`rendered-example ${this.getKebabExamplePath()}`}
-                        styles={{
-                          padding: '2rem',
-                          ...(showTransparent && {
-                            backgroundImage:
-                              'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                            backgroundRepeat: 'repeat',
-                          }),
-                        }}
-                      >
-                        <VariableResolver onResolve={this.handleVariableResolve}>
-                          {element}
-                        </VariableResolver>
-                      </Segment>
-                      {showCode && (
-                        <Segment styles={{ padding: 0 }}>
-                          {showCode && this.renderSourceCode()}
-                          {error && (
-                            <Segment inverted color="red">
-                              <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
-                            </Segment>
-                          )}
+                  <SourceRender
+                    babelConfig={babelConfig}
+                    source={currentCode}
+                    renderHtml={false}
+                    resolver={importResolver}
+                    unstable_hot
+                  >
+                    {({ element, error, markup }) => {
+                      return (
+                        <>
+                          <div className={`rendered-example ${this.getKebabExamplePath()}`}>
+                            <Provider
+                              overwrite
+                              theme={mergeThemes(themes[themeName], newTheme)}
+                              rtl={showRtl}
+                            >
+                              <VariableResolver onResolve={this.handleVariableResolve}>
+                                {element}
+                              </VariableResolver>
+                            </Provider>
+                          </div>
                           {showCode && (
                             <div>
-                              <Divider fitted />
-                              <CodeSnippet
-                                fitted
-                                label="Rendered HTML"
-                                mode="html"
-                                value={markup}
-                              />
+                              {showCode && this.renderSourceCode()}
+                              {error && (
+                                <Segment inverted color="red">
+                                  <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
+                                </Segment>
+                              )}
+                              {showCode && (
+                                <CodeSnippet
+                                  fitted
+                                  label="Rendered HTML"
+                                  mode="html"
+                                  value={markup}
+                                />
+                              )}
                             </div>
                           )}
-                        </Segment>
-                      )}
-                    </>
-                  )}
-                </SourceRender>
+                        </>
+                      )
+                    }}
+                  </SourceRender>
 
-                {showVariables && (
-                  <Segment>
-                    <ComponentExampleVariables
-                      onChange={this.handleVariableChange}
-                      overriddenVariables={componentVariables}
-                      usedVariables={usedVariables}
-                    />
-                  </Segment>
-                )}
-              </ExamplePlaceholder>
+                  {showVariables && (
+                    <div>
+                      <ComponentExampleVariables
+                        onChange={this.handleVariableChange}
+                        overriddenVariables={componentVariables}
+                        usedVariables={usedVariables}
+                      />
+                    </div>
+                  )}
+                </ExamplePlaceholder>
+              </Segment>
             </KnobProvider>
           </Flex.Item>
         </Flex>

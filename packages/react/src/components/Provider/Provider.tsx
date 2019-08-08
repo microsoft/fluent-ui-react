@@ -34,6 +34,7 @@ export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
   rtl?: boolean
   disableAnimations?: boolean
+  overwrite?: boolean
   target?: Document
   theme?: ThemeInput
   variables?: ComponentVariablesInput
@@ -47,6 +48,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
   static propTypes = {
     as: customPropTypes.as,
+    overwrite: PropTypes.bool,
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
@@ -148,6 +150,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       variables,
       children,
       target,
+      overwrite,
       ...unhandledProps
     } = this.props
     const inputContext: ProviderContextInput = {
@@ -158,7 +161,9 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     }
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
-    const outgoingContext: ProviderContextPrepared = mergeContexts(this.context, inputContext)
+    const outgoingContext: ProviderContextPrepared = overwrite
+      ? mergeContexts(inputContext)
+      : mergeContexts(this.context, inputContext)
 
     this.renderStaticStylesOnce(outgoingContext.theme)
 

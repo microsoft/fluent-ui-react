@@ -10,6 +10,7 @@ import {
   exampleSourcesContext,
   exampleKebabNameToSourceFilename,
   parseExamplePath,
+  ThemeName,
 } from 'docs/src/utils'
 import PageNotFound from '../views/PageNotFound'
 import { babelConfig, importResolver } from './Playground/renderConfig'
@@ -34,14 +35,14 @@ class ExternalExampleLayout extends React.Component<
 > {
   state = {
     renderId: 0,
-    themeName: undefined,
+    themeName: 'teams',
   }
 
   componentDidMount() {
     window.resetExternalLayout = () =>
       this.setState(prevState => ({ renderId: prevState.renderId + 1 }))
 
-    window.switchTheme = (themeName: string) => this.setState({ themeName })
+    window.switchTheme = (themeName: ThemeName) => this.setState({ themeName })
   }
 
   render() {
@@ -62,6 +63,7 @@ class ExternalExampleLayout extends React.Component<
 
     return (
       <Provider
+        overwrite
         key={this.state.renderId}
         theme={theme}
         rtl={this.props.match.params.rtl === 'true'}

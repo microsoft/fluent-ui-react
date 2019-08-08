@@ -36,7 +36,7 @@ const VariableResolver: React.FunctionComponent<VariableResolverProps> = props =
   useClassNamesListener(elementRef, onClassNamesChange)
 
   return (
-    <Provider renderer={renderer}>
+    <Provider as={React.Fragment} renderer={renderer}>
       <div ref={elementRef}>{props.children}</div>
     </Provider>
   )
