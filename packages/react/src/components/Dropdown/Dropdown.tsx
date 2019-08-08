@@ -806,8 +806,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
 
     if (this.state.open && _.isNumber(changes.highlightedIndex)) {
       const itemIsFromKeyboard = changes.type !== Downshift.stateChangeTypes.itemMouseEnter
-      this.trySetState({ highlightedIndex: changes.highlightedIndex })
-      this.setState({ itemIsFromKeyboard })
+      this.setState({ itemIsFromKeyboard, highlightedIndex: changes.highlightedIndex })
     }
   }
 
@@ -840,7 +839,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     onClick: (e: React.SyntheticEvent, dropdownSelectedItemProps: DropdownSelectedItemProps) => {
       const { value } = this.state as { value: ShorthandCollection<DropdownItemProps> }
 
-      this.trySetState({ activeSelectedIndex: value.indexOf(item) })
+      this.setState({ activeSelectedIndex: value.indexOf(item) })
       e.stopPropagation()
       _.invoke(predefinedProps, 'onClick', e, dropdownSelectedItemProps)
     },
@@ -964,11 +963,11 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     if (value.length > 0) {
       // If last element was already active, perform a 'reset' of activeSelectedIndex.
       if (this.state.activeSelectedIndex === value.length - 1) {
-        this.trySetState({ activeSelectedIndex: null }, () => {
-          this.trySetState({ activeSelectedIndex: value.length - 1 })
+        this.setState({ activeSelectedIndex: null }, () => {
+          this.setState({ activeSelectedIndex: value.length - 1 })
         })
       } else {
-        this.trySetState({ activeSelectedIndex: value.length - 1 })
+        this.setState({ activeSelectedIndex: value.length - 1 })
       }
     }
   }
@@ -1004,7 +1003,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       value,
     })
 
-    this.trySetState({ activeSelectedIndex, highlightedIndex, open, searchQuery, value })
+    this.setState({ activeSelectedIndex, highlightedIndex, open, searchQuery, value })
 
     this.tryFocusSearchInput()
     this.tryFocusTriggerButton()
@@ -1108,15 +1107,15 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
         break
       case previousKey:
         if (value.length > 0 && !_.isNil(activeSelectedIndex) && activeSelectedIndex > 0) {
-          this.trySetState({ activeSelectedIndex: activeSelectedIndex - 1 })
+          this.setState({ activeSelectedIndex: activeSelectedIndex - 1 })
         }
         break
       case nextKey:
         if (value.length > 0 && !_.isNil(activeSelectedIndex)) {
           if (activeSelectedIndex < value.length - 1) {
-            this.trySetState({ activeSelectedIndex: activeSelectedIndex + 1 })
+            this.setState({ activeSelectedIndex: activeSelectedIndex + 1 })
           } else {
-            this.trySetState({ activeSelectedIndex: null })
+            this.setState({ activeSelectedIndex: null })
             if (this.props.search) {
               e.preventDefault() // prevents caret to forward one position in input.
               this.inputRef.current.focus()
@@ -1188,7 +1187,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     predefinedProps: DropdownSelectedItemProps,
     dropdownSelectedItemProps: DropdownSelectedItemProps,
   ) {
-    this.trySetState({ activeSelectedIndex: null })
+    this.setState({ activeSelectedIndex: null })
     this.removeItemFromValue(item)
     this.tryFocusSearchInput()
     this.tryFocusTriggerButton()
@@ -1223,7 +1222,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     event: React.SyntheticEvent<HTMLElement>,
     newState: Partial<DropdownState>,
   ) => {
-    this.trySetState(newState)
+    this.setState(newState)
     _.invoke(this.props, handlerName, event, { ...this.props, ...newState })
   }
 
