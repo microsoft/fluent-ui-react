@@ -3,20 +3,20 @@ import * as React from 'react'
 
 describe('DialogBehavior.ts', () => {
   test('adds tabIndex=0 to trigger if element is not tabbable and tabIndex attribute is not provided', () => {
-    const expectedResult = dialogBehavior({ trigger: <div />, shouldTriggerBeTabbable: true })
+    const expectedResult = dialogBehavior({ trigger: <div />, tabbableTrigger: true })
     expect(expectedResult.attributes.trigger.tabIndex).toEqual(0)
   })
 
   test('adds tabIndex attribute with value passed as prop', () => {
     const expectedResult = dialogBehavior({
       trigger: <div tabIndex={-1} />,
-      shouldTriggerBeTabbable: true,
+      tabbableTrigger: true,
     })
     expect(expectedResult.attributes.trigger.tabIndex).toEqual(-1)
   })
 
   test('does not add tabIndex if element is already tabbable', () => {
-    const expectedResult = dialogBehavior({ trigger: <button />, shouldTriggerBeTabbable: true })
+    const expectedResult = dialogBehavior({ trigger: <button />, tabbableTrigger: true })
     expect(expectedResult.attributes.trigger.tabIndex).toBeUndefined()
   })
 

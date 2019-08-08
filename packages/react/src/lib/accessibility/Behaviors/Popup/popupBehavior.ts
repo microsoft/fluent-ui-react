@@ -17,7 +17,7 @@ const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
   return {
     attributes: {
       trigger: {
-        ...(props.shouldTriggerBeTabbable
+        ...(props.tabbableTrigger
           ? { tabIndex: getAriaAttributeFromProps('tabIndex', props, 0) }
           : undefined),
         'aria-disabled': props.disabled,
@@ -118,7 +118,7 @@ export type PopupBehaviorProps = {
     type?: string
   }
   /** Whether the trigger should be tabbable */
-  shouldTriggerBeTabbable?: boolean
+  tabbableTrigger?: boolean
   /** Whether the popup was opened by right click */
   isOpenedByRightClick?: boolean
 }
