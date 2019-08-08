@@ -33,7 +33,7 @@ export interface EmbedProps extends UIComponentProps {
   /** Whether the embedded object should start active. */
   defaultActive?: boolean
 
-  /** Shorthand for an control. */
+  /** Shorthand for an control. Only used when 'video' prop is set. */
   control?: ShorthandValue<IconProps>
 
   /** Shorthand for an embedded iframe. */

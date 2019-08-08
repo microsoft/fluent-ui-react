@@ -10,7 +10,6 @@ const EmbedExampleIframe = () => (
       height: 450,
       width: 600,
     }}
-    control="search"
   />
 )
 
