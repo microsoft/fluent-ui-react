@@ -357,11 +357,11 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
         this._root.current.setAttribute('tabindex', '-1')
         this._root.current.focus()
       } else if (this._parkedTabIndex) {
-          this._root.current.setAttribute('tabindex', this._parkedTabIndex)
-          this._parkedTabIndex = undefined
-        } else {
-          this._root.current.removeAttribute('tabindex')
-        }
+        this._root.current.setAttribute('tabindex', this._parkedTabIndex)
+        this._parkedTabIndex = undefined
+      } else {
+        this._root.current.removeAttribute('tabindex')
+      }
     }
   }
 
