@@ -131,41 +131,66 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     }
   }
 
+  handleTitleOpen = (treeItemProps: TreeItemProps) => {
+    const { activeItems } = this.state
+    const { indexInTree } = treeItemProps
+    const subItems = activeItems[indexInTree]['items']
+
+    if (!subItems) {
+      return
+    }
+    this.trySetState({
+      activeItems: [
+        ...activeItems.slice(0, indexInTree + 1),
+        ...subItems,
+        ...activeItems.slice(indexInTree + 1),
+      ],
+    })
+  }
+
+  handleTitleClose = (treeItemProps: TreeItemProps) => {
+    const { indexInTree, siblings, indexInSubtree, parent } = treeItemProps
+    const { activeItems } = this.state
+    const nextSibling = siblings[indexInSubtree + 1]
+
+    if (!nextSibling) {
+      const nextParentSibling = parent ? parent['siblings'][parent['indexInSubtree'] + 1] : null
+      if (nextParentSibling) {
+        const nextParentSiblingIndexInTree = activeItems.indexOf(nextParentSibling)
+
+        this.trySetState({
+          activeItems: [
+            ...activeItems.slice(0, indexInTree + 1),
+            ...activeItems.slice(nextParentSiblingIndexInTree),
+          ],
+        })
+      } else {
+        this.trySetState({
+          activeItems: activeItems.slice(0, indexInTree + 1),
+        })
+      }
+    } else {
+      const nextSiblingIndexInTree = activeItems.indexOf(nextSibling)
+      this.trySetState({
+        activeItems: [
+          ...activeItems.slice(0, indexInTree + 1),
+          ...activeItems.slice(nextSiblingIndexInTree),
+        ],
+      })
+    }
+  }
+
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
     onTitleClick: (
       e: React.SyntheticEvent,
       treeItemProps: TreeItemProps,
       predefinedProps: TreeItemProps,
     ) => {
-      const { indexInTree, open, siblings, indexInSubtree } = treeItemProps
-      const { activeItems } = this.state
+      const { open } = treeItemProps
       if (open) {
-        const nextSibling = siblings[indexInSubtree + 1]
-        if (!nextSibling) {
-          this.setState({
-            activeItems: activeItems.slice(0, indexInTree + 1),
-          })
-        } else {
-          const nextSiblingIndexInTree = activeItems.indexOf(nextSibling)
-          this.setState({
-            activeItems: [
-              ...activeItems.slice(0, indexInTree + 1),
-              ...activeItems.slice(nextSiblingIndexInTree),
-            ],
-          })
-        }
+        this.handleTitleClose(treeItemProps)
       } else {
-        const subItems = activeItems[indexInTree]['items']
-        if (!subItems) {
-          return
-        }
-        this.setState({
-          activeItems: [
-            ...activeItems.slice(0, indexInTree + 1),
-            ...subItems,
-            ...activeItems.slice(indexInTree + 1),
-          ],
-        })
+        this.handleTitleOpen(treeItemProps)
       }
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
@@ -198,6 +223,37 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
       _.invoke(predefinedProps, 'onFirstChildFocus', e, treeItemProps)
     },
+    onSiblingsExpand: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
+      const { siblings, indexInSubtree } = treeItemProps
+      let { activeItems } = this.state
+
+      siblings.forEach((sibling: ShorthandValue<TreeItemProps>) => {
+        const siblingIndexInTree = activeItems.indexOf(sibling)
+        const isSubtree = !!sibling['items']
+
+        if (isSubtree) {
+          const isSubtreeOpen = activeItems[siblingIndexInTree + 1] === sibling['items'][0]
+          if (!isSubtreeOpen) {
+            activeItems = [
+              ...activeItems.slice(0, siblingIndexInTree + 1),
+              ...activeItems[siblingIndexInTree]['items'],
+              ...activeItems.slice(siblingIndexInTree + 1),
+            ]
+          }
+        }
+      })
+
+      this.trySetState({ activeItems }, () => {
+        const indexInTree = activeItems.indexOf(siblings[indexInSubtree])
+        const element = getFirstFocusable(
+          this.itemRefs[indexInTree].current,
+          this.itemRefs[indexInTree].current,
+          true,
+        )
+
+        element.focus()
+      })
+    },
   })
 
   renderContent() {
@@ -205,7 +261,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
     return _.map(activeItems, (item: ShorthandValue<TreeItemProps>, index: number) => {
       const isSubtree = !!item['items']
-      const open = isSubtree && activeItems[index + 1] === item['items'][0]
+      const isSubtreeOpen = isSubtree && activeItems[index + 1] === item['items'][0]
 
       return (
         <Ref
@@ -226,7 +282,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           {TreeItem.create(item, {
             defaultProps: {
               className: Tree.slotClassNames.item,
-              open,
+              open: isSubtreeOpen,
               indexInTree: index,
             },
             overrideProps: this.handleTreeItemOverrides,
