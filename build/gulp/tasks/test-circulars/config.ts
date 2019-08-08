@@ -3,7 +3,10 @@ import config from '../../../../config'
 const reactPackageDist = (filePath: string) => config.paths.packageDist('react', 'es', filePath)
 
 export const cyclesToSkip = [
-  [reactPackageDist('components/Tree/Tree.js'), reactPackageDist('components/Tree/TreeItem.js')],
+  [
+    reactPackageDist('components/HierarchicalTree/HierarchicalTree.js'),
+    reactPackageDist('components/HierarchicalTree/HierarchicalTreeItem.js'),
+  ],
   [reactPackageDist('components/Menu/Menu.js'), reactPackageDist('components/Menu/MenuItem.js')],
   [
     reactPackageDist('components/Button/Button.js'),
