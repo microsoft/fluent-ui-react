@@ -75,7 +75,6 @@ import fontSize from './fontSize'
 import format from './format'
 import gallery from './gallery'
 import giphy from './giphy'
-import github from './github'
 import hand from './hand'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
@@ -219,7 +218,6 @@ export default {
   'font-size': fontSize,
   gallery,
   giphy,
-  github,
   highlight,
   'horizontal-rule': horizontalRule,
   'image-unavailable': imageUnavailable,
