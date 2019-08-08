@@ -39,7 +39,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   exclusive?: boolean
 
   /** The index of the item among its sibbling */
-  index?: number
+  indexInTree?: number
 
   /** Array of props for sub tree. */
   items?: ShorthandCollection<TreeItemProps>
@@ -60,7 +60,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
 
   parent?: ShorthandValue<TreeItemProps>
 
-  position?: number
+  indexInSubtree?: number
 
   siblings?: ShorthandCollection<TreeItemProps>
 
@@ -95,7 +95,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
       content: false,
     }),
     items: customPropTypes.collectionShorthand,
-    index: PropTypes.number,
+    indexInTree: PropTypes.number,
     exclusive: PropTypes.bool,
     level: PropTypes.number,
     onTitleClick: PropTypes.func,
@@ -103,7 +103,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     onParentFocus: PropTypes.func,
     open: PropTypes.bool,
     parent: customPropTypes.itemShorthand,
-    position: PropTypes.number,
+    indexInSubtree: PropTypes.number,
     renderItemTitle: PropTypes.func,
     siblings: customPropTypes.collectionShorthand,
     treeItemRtlAttributes: PropTypes.func,
@@ -123,7 +123,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
       e.preventDefault()
       e.stopPropagation()
 
-      _.invoke(this.props, 'onTitleClick', e, this.props)
+      this.handleTitleClick(e)
     },
     focusParent: e => {
       e.preventDefault()
@@ -135,10 +135,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
       e.preventDefault()
       e.stopPropagation()
 
-      // Handle click on title if the keyboard event was dispatched on that title
-      if (!this.eventComesFromChildItem(e)) {
-        this.handleTitleClick(e)
-      }
+      this.handleTitleClick(e)
     },
     expand: e => {
       e.preventDefault()
@@ -147,6 +144,9 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
       this.handleTitleClick(e)
     },
     focusSubtree: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
       this.handleFirstChildFocus(e)
     },
   }
@@ -175,7 +175,16 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
   })
 
   renderContent() {
-    const { items, title, renderItemTitle, open, level, siblings, index, position } = this.props
+    const {
+      items,
+      title,
+      renderItemTitle,
+      open,
+      level,
+      siblings,
+      indexInTree,
+      indexInSubtree,
+    } = this.props
     const hasSubtree = !_.isNil(items)
 
     return TreeTitle.create(title, {
@@ -186,8 +195,8 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
         as: hasSubtree ? 'span' : 'a',
         level,
         siblingsLength: siblings.length,
-        index,
-        position,
+        indexInTree,
+        indexInSubtree,
       },
       render: renderItemTitle,
       overrideProps: this.handleTitleOverrides,

@@ -18,7 +18,7 @@ const hierarchicalTreeTitleBehavior: Accessibility<TreeTitleBehavior> = props =>
         [IS_FOCUSABLE_ATTRIBUTE]: true,
         role: 'treeitem',
         'aria-setsize': props.siblingsLength,
-        'aria-posinset': props.position,
+        'aria-posinset': props.indexInSubtree,
         'aria-level': props.level,
       }),
     },
@@ -41,5 +41,5 @@ type TreeTitleBehavior = {
   open?: boolean
   level?: number
   siblingsLength?: number
-  position?: number
+  indexInSubtree?: number
 }
