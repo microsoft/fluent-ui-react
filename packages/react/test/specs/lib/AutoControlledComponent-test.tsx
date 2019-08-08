@@ -75,10 +75,6 @@ describe('extending AutoControlledComponent', () => {
   })
 
   describe('trySetState', () => {
-    test('is an instance method', () => {
-      expect(typeof getAutoControlledInstance().trySetState).toBe('function')
-    })
-
     test('sets state for autoControlledProps', () => {
       consoleUtil.disableOnce()
 
