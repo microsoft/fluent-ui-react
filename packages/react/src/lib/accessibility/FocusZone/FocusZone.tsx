@@ -35,6 +35,8 @@ const _allInstances: {
   [key: string]: FocusZone
 } = {}
 
+const _outerZones: Set<FocusZone> = new Set()
+
 interface Point {
   left: number
   top: number
@@ -112,11 +114,11 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     }
 
     this._processingTabKey = false
-    this.onKeyDownCapture = this.onKeyDownCapture.bind(this)
   }
 
   componentDidMount(): void {
     _allInstances[this._id] = this
+
     this.setRef(this) // called here to support functional components, we only need HTMLElement ref anyway
 
     if (!this._root.current) {
@@ -135,9 +137,14 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     }
 
     if (!this._isInnerZone) {
-      this.windowElement.addEventListener('keydown', this.onKeyDownCapture, true)
-      this._root.current.addEventListener('blur', this._onBlur, true)
+      _outerZones.add(this)
     }
+
+    if (this.windowElement && _outerZones.size === 1) {
+      this.windowElement.addEventListener('keydown', this._onKeyDownCapture, true)
+    }
+
+    this._root.current.addEventListener('blur', this._onBlur, true)
 
     // Assign initial tab indexes so that we can set initial focus as appropriate.
     this.updateTabIndexes()
@@ -178,8 +185,17 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
   componentWillUnmount() {
     delete _allInstances[this._id]
+
+    if (!this._isInnerZone) {
+      _outerZones.delete(this)
+    }
+
     if (this.windowElement) {
-      this.windowElement.removeEventListener('keydown', this.onKeyDownCapture, true)
+      this.windowElement.removeEventListener('keydown', this._onKeyDownCapture, true)
+    }
+
+    if (this._root.current) {
+      this._root.current.removeEventListener('blur', this._onBlur, true)
     }
   }
 
@@ -407,10 +423,10 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
         this.setFocusAlignment(this._activeElement)
         this.updateTabIndexes()
       }
+    }
 
-      if (onActiveElementChanged) {
-        onActiveElementChanged(this._activeElement as HTMLElement, ev)
-      }
+    if (onActiveElementChanged) {
+      onActiveElementChanged(this._activeElement as HTMLElement, ev)
     }
 
     if (stopFocusPropagation) {
@@ -423,9 +439,9 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
   /**
    * Handle global tab presses so that we can patch tabindexes on the fly.
    */
-  onKeyDownCapture(ev: KeyboardEvent) {
+  _onKeyDownCapture = (ev: KeyboardEvent) => {
     if (keyboardKey.getCode(ev) === keyboardKey.Tab) {
-      this.updateTabIndexes()
+      _outerZones.forEach(zone => zone.updateTabIndexes())
     }
   }
 
@@ -888,9 +904,11 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
             // Going left at a leftmost rectangle will go down a line instead of up a line like in LTR.
             // This is important, because we want to be comparing the top of the target rect
             // with the bottom of the active rect.
-            topBottomComparison = targetRect.top.toFixed(3) < activeRect.bottom.toFixed(3)
+            topBottomComparison =
+              parseFloat(targetRect.top.toFixed(3)) < parseFloat(activeRect.bottom.toFixed(3))
           } else {
-            topBottomComparison = targetRect.bottom.toFixed(3) > activeRect.top.toFixed(3)
+            topBottomComparison =
+              parseFloat(targetRect.bottom.toFixed(3)) > parseFloat(activeRect.top.toFixed(3))
           }
 
           if (
@@ -927,9 +945,11 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
             // Going right at a rightmost rectangle will go up a line instead of down a line like in LTR.
             // This is important, because we want to be comparing the bottom of the target rect
             // with the top of the active rect.
-            topBottomComparison = targetRect.bottom.toFixed(3) > activeRect.top.toFixed(3)
+            topBottomComparison =
+              parseFloat(targetRect.bottom.toFixed(3)) > parseFloat(activeRect.top.toFixed(3))
           } else {
-            topBottomComparison = targetRect.top.toFixed(3) < activeRect.bottom.toFixed(3)
+            topBottomComparison =
+              parseFloat(targetRect.top.toFixed(3)) < parseFloat(activeRect.bottom.toFixed(3))
           }
 
           if (
