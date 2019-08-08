@@ -57,13 +57,13 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     shouldEnterInnerZone: PropTypes.func,
     onActiveElementChanged: PropTypes.func,
     shouldReceiveFocus: PropTypes.func,
-    allowFocusRoot: PropTypes.bool,
     handleTabKey: PropTypes.number,
     shouldInputLoseFocusOnArrowKey: PropTypes.func,
     stopFocusPropagation: PropTypes.bool,
     onFocus: PropTypes.func,
     preventDefaultWhenHandled: PropTypes.bool,
     isRtl: PropTypes.bool,
+    restoreFocusFromRoot: PropTypes.bool,
   }
 
   static defaultProps: FocusZoneProps = {
@@ -163,7 +163,8 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     if (
       doc &&
       this._lastIndexPath &&
-      (doc.activeElement === doc.body || doc.activeElement === this._root.current)
+      (doc.activeElement === doc.body ||
+        (this.props.restoreFocusFromRoot && doc.activeElement === this._root.current))
     ) {
       // The element has been removed after the render, attempt to restore focus.
       const elementToFocus = getFocusableByIndexPath(
@@ -352,19 +353,15 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
       this._isParked = isParked
 
       if (isParked) {
-        if (!this.props.allowFocusRoot) {
-          this._parkedTabIndex = this._root.current.getAttribute('tabindex')
-          this._root.current.setAttribute('tabindex', '-1')
-        }
+        this._parkedTabIndex = this._root.current.getAttribute('tabindex')
+        this._root.current.setAttribute('tabindex', '-1')
         this._root.current.focus()
-      } else if (!this.props.allowFocusRoot) {
-        if (this._parkedTabIndex) {
+      } else if (this._parkedTabIndex) {
           this._root.current.setAttribute('tabindex', this._parkedTabIndex)
           this._parkedTabIndex = undefined
         } else {
           this._root.current.removeAttribute('tabindex')
         }
-      }
     }
   }
 
@@ -510,18 +507,18 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
       return undefined
     }
 
+    if (document.activeElement === this._root.current && this._isInnerZone) {
+      // If this element has focus, it is being controlled by a parent.
+      // Ignore the keystroke.
+      return undefined
+    }
+
     if (this.props.onKeyDown) {
       this.props.onKeyDown(ev)
     }
 
     // If the default has been prevented, do not process keyboard events.
     if (ev.isDefaultPrevented()) {
-      return undefined
-    }
-
-    if (document.activeElement === this._root.current && this._isInnerZone) {
-      // If this element has focus, it is being controlled by a parent.
-      // Ignore the keystroke.
       return undefined
     }
 

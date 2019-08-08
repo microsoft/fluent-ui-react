@@ -66,7 +66,6 @@ export function getFirstTabbable(
     false /* suppressParentTraversal */,
     false /* suppressChildTraversal */,
     includeElementsInFocusZones,
-    false /* allowFocusRoot */,
     true /* tabbable */,
   )
 }
@@ -92,7 +91,6 @@ export function getLastTabbable(
     false /* suppressParentTraversal */,
     true /* traverseChildren */,
     includeElementsInFocusZones,
-    false /* allowFocusRoot */,
     true /* tabbable */,
   )
 }
@@ -110,10 +108,9 @@ export function getPreviousElement(
   suppressParentTraversal?: boolean,
   traverseChildren?: boolean,
   includeElementsInFocusZones?: boolean,
-  allowFocusRoot?: boolean,
   tabbable?: boolean,
 ): HTMLElement | null {
-  if (!currentElement || (!allowFocusRoot && currentElement === rootElement)) {
+  if (!currentElement || currentElement === rootElement) {
     return null
   }
 
@@ -133,7 +130,6 @@ export function getPreviousElement(
       true,
       true,
       includeElementsInFocusZones,
-      allowFocusRoot,
       tabbable,
     )
 
@@ -149,7 +145,6 @@ export function getPreviousElement(
         true,
         true,
         includeElementsInFocusZones,
-        allowFocusRoot,
         tabbable,
       )
       if (childMatchSiblingMatch) {
@@ -170,7 +165,6 @@ export function getPreviousElement(
           true,
           true,
           includeElementsInFocusZones,
-          allowFocusRoot,
           tabbable,
         )
 
@@ -196,7 +190,6 @@ export function getPreviousElement(
     true,
     true,
     includeElementsInFocusZones,
-    allowFocusRoot,
     tabbable,
   )
 
@@ -213,7 +206,6 @@ export function getPreviousElement(
       false,
       false,
       includeElementsInFocusZones,
-      allowFocusRoot,
       tabbable,
     )
   }
@@ -234,13 +226,9 @@ export function getNextElement(
   suppressParentTraversal?: boolean,
   suppressChildTraversal?: boolean,
   includeElementsInFocusZones?: boolean,
-  allowFocusRoot?: boolean,
   tabbable?: boolean,
 ): HTMLElement | null {
-  if (
-    !currentElement ||
-    (currentElement === rootElement && suppressChildTraversal && !allowFocusRoot)
-  ) {
+  if (!currentElement || (currentElement === rootElement && suppressChildTraversal)) {
     return null
   }
 
@@ -265,7 +253,6 @@ export function getNextElement(
       true,
       false,
       includeElementsInFocusZones,
-      allowFocusRoot,
       tabbable,
     )
 
@@ -286,7 +273,6 @@ export function getNextElement(
     true,
     false,
     includeElementsInFocusZones,
-    allowFocusRoot,
     tabbable,
   )
 
@@ -302,7 +288,6 @@ export function getNextElement(
       false,
       true,
       includeElementsInFocusZones,
-      allowFocusRoot,
       tabbable,
     )
   }
