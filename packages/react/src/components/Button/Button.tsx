@@ -117,7 +117,6 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     as: 'button',
     accessibility: buttonBehavior as Accessibility,
     size: 'medium',
-    loader: {},
   }
 
   static Group = ButtonGroup
@@ -181,7 +180,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   renderLoader = (variables, styles) => {
     const { loader } = this.props
 
-    return Loader.create(loader, {
+    return Loader.create(loader || {}, {
       defaultProps: {
         role: undefined,
         styles: styles.loader,
