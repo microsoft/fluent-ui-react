@@ -4,7 +4,6 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 // @ts-ignore
 import { RendererProvider, ThemeProvider, ThemeContext } from '@stardust-ui/react-fela'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import { felaRenderer, ChildrenComponentProps } from '../../lib'
 
@@ -46,7 +45,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   static displayName = 'Provider'
 
   static propTypes = {
-    as: customPropTypes.as,
+    as: PropTypes.elementType,
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,

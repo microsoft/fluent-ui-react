@@ -9,7 +9,7 @@
     "copy-to-clipboard": "^3.2.0",
     "object.values": "^1.1.0",
     "prismjs": "^1.16.0",
-    "prop-types": "^15.6.1"
+    "prop-types": "^15.7.2"
   },
   "files": [
     "dist"
