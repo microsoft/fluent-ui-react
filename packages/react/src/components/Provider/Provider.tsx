@@ -158,11 +158,11 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       disableAnimations,
       renderer,
     }
+
+    const incomingContext: ProviderContextPrepared = overwrite ? {} : this.context
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
-    const outgoingContext: ProviderContextPrepared = overwrite
-      ? mergeContexts(this.context, inputContext)
-      : mergeContexts(inputContext)
+    const outgoingContext: ProviderContextPrepared = mergeContexts(incomingContext, inputContext)
 
     this.renderStaticStylesOnce(outgoingContext.theme)
 
