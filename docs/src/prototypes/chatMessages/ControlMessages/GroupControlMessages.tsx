@@ -5,7 +5,7 @@ import * as keyboardKey from 'keyboard-key'
 import { List, chatBehavior, Accessibility, Flex, Icon } from '@stardust-ui/react'
 import ControlMessage from './ControlMessage'
 
-const overridenChatBehavior: Accessibility<any> = props => {
+const controlMessagesGroupBehavior: Accessibility<any> = props => {
   const behaviorData = chatBehavior(props)
 
   behaviorData.attributes.root = {
@@ -58,7 +58,7 @@ const GroupControlMessages = () => {
       <Icon name="participant-add" />
       {expanded ? (
         <List
-          accessibility={overridenChatBehavior}
+          accessibility={controlMessagesGroupBehavior}
           items={renderItems()}
           aria-label={'control messages'}
         />
