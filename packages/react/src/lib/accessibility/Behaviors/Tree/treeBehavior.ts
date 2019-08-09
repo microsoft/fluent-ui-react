@@ -10,7 +10,7 @@ import { FocusZoneDirection } from '../../FocusZone'
  * Provides arrow key navigation in vertical direction.
  * Triggers 'expandSiblings' action with '*' on 'root'.
  */
-const hierarchicalTreeBehavior: Accessibility<TreeBehaviorProps> = props => {
+const treeBehavior: Accessibility<TreeBehaviorProps> = props => {
   return {
     attributes: {
       root: {
@@ -36,4 +36,4 @@ const hierarchicalTreeBehavior: Accessibility<TreeBehaviorProps> = props => {
 
 type TreeBehaviorProps = {} & Pick<AccessibilityAttributes, 'aria-labelledby'>
 
-export default hierarchicalTreeBehavior
+export default treeBehavior

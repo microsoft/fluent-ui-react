@@ -15,7 +15,7 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  * Triggers 'expand' action with 'ArrowRight' on 'root', when has a closed subtree.
  * Triggers 'focusSubtree' action with 'ArrowRight' on 'root', when has an opened subtree.
  */
-const hierarchicalTreeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
+const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'none',
@@ -75,4 +75,4 @@ const isSubtreeOpen = (props: TreeItemBehaviorProps): boolean => {
   return !!(items && items.length && open)
 }
 
-export default hierarchicalTreeItemBehavior
+export default treeItemBehavior
