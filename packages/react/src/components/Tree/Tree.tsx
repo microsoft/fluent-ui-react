@@ -61,7 +61,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onActiveIndexChange?: ComponentEventHandler<TreeProps>
+  onActiveItemsChange?: ComponentEventHandler<TreeProps>
 }
 
 export interface TreeState {
@@ -131,7 +131,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     }
   }
 
-  handleTitleOpen = (treeItemProps: TreeItemProps) => {
+  handleTitleOpen = (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
     const { activeItems } = this.state
     const { indexInTree } = treeItemProps
     const subItems = activeItems[indexInTree]['items']
@@ -139,16 +139,18 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     if (!subItems) {
       return
     }
+    const newActiveItems = [
+      ...activeItems.slice(0, indexInTree + 1),
+      ...subItems,
+      ...activeItems.slice(indexInTree + 1),
+    ]
     this.trySetState({
-      activeItems: [
-        ...activeItems.slice(0, indexInTree + 1),
-        ...subItems,
-        ...activeItems.slice(indexInTree + 1),
-      ],
+      activeItems: newActiveItems,
     })
+    _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, newActiveItems })
   }
 
-  handleTitleClose = (treeItemProps: TreeItemProps) => {
+  handleTitleClose = (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
     const { indexInTree, siblings, indexInSubtree, parent } = treeItemProps
     const { activeItems } = this.state
     const nextSibling = siblings[indexInSubtree + 1]
@@ -157,26 +159,31 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       const nextParentSibling = parent ? parent['siblings'][parent['indexInSubtree'] + 1] : null
       if (nextParentSibling) {
         const nextParentSiblingIndexInTree = activeItems.indexOf(nextParentSibling)
-
+        const newActiveItems = [
+          ...activeItems.slice(0, indexInTree + 1),
+          ...activeItems.slice(nextParentSiblingIndexInTree),
+        ]
         this.trySetState({
-          activeItems: [
-            ...activeItems.slice(0, indexInTree + 1),
-            ...activeItems.slice(nextParentSiblingIndexInTree),
-          ],
+          activeItems: newActiveItems,
         })
+        _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, newActiveItems })
       } else {
+        const newActiveItems = activeItems.slice(0, indexInTree + 1)
         this.trySetState({
-          activeItems: activeItems.slice(0, indexInTree + 1),
+          activeItems: newActiveItems,
         })
+        _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, newActiveItems })
       }
     } else {
       const nextSiblingIndexInTree = activeItems.indexOf(nextSibling)
+      const newActiveItems = [
+        ...activeItems.slice(0, indexInTree + 1),
+        ...activeItems.slice(nextSiblingIndexInTree),
+      ]
       this.trySetState({
-        activeItems: [
-          ...activeItems.slice(0, indexInTree + 1),
-          ...activeItems.slice(nextSiblingIndexInTree),
-        ],
+        activeItems: newActiveItems,
       })
+      _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, newActiveItems })
     }
   }
 
@@ -188,9 +195,9 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     ) => {
       const { open } = treeItemProps
       if (open) {
-        this.handleTitleClose(treeItemProps)
+        this.handleTitleClose(e, treeItemProps)
       } else {
-        this.handleTitleOpen(treeItemProps)
+        this.handleTitleOpen(e, treeItemProps)
       }
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
@@ -252,6 +259,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         )
 
         element.focus()
+
+        _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, activeItems })
       })
     },
   })
