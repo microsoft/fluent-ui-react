@@ -24,6 +24,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add `loading` and `loader` props to `Button` component @mnajdova ([#1662](https://github.com/stardust-ui/react/pull/1662))
 
+### Fixes
+- Fix `hand` icon in Teams theme @lucivpav ([#1782](https://github.com/stardust-ui/react/pull/1782))
+
 <!--------------------------------[ v0.36.0 ]------------------------------- -->
 ## [v0.36.0](https://github.com/stardust-ui/react/tree/v0.36.0) (2019-08-08)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.35.0...v0.36.0)
