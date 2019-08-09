@@ -43,7 +43,7 @@ const ComponentExampleColorPicker: React.FunctionComponent<
             {_.startCase(colorName)}
           </strong>
 
-          {_.map(colorShades, (shadeValue, shadeName) => {
+          {_.map(_.pickBy(colorShades), (shadeValue, shadeName) => {
             const isActive = variableValue === shadeValue
             const contrastColor = Color(shadeValue).isDark() ? '#fff' : '#000'
 
