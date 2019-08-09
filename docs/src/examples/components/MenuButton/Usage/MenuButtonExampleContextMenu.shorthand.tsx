@@ -1,14 +1,9 @@
 import * as React from 'react'
-import { Alert, Button, Flex, Popup } from '@stardust-ui/react'
+import { Alert, Button, MenuButton } from '@stardust-ui/react'
 
-const contentWithButtons = (
-  <Flex gap="gap.smaller">
-    <Button>First</Button>
-    <Button primary>Second</Button>
-  </Flex>
-)
+const items = ['1', '2', '3', { content: 'submenu', menu: { items: ['4', '5'] } }]
 
-class PopupContextOnElement extends React.Component {
+class MenuButtonOnElement extends React.Component {
   state = { alert: false }
 
   showAlert = () => {
@@ -19,18 +14,14 @@ class PopupContextOnElement extends React.Component {
   render() {
     return (
       <>
-        <Popup
-          position="after"
-          align="top"
+        <MenuButton
+          contextMenu
           trigger={
             <div style={{ padding: '4rem', border: 'red dashed' }}>
               <Button content="Random button" onClick={this.showAlert} />
             </div>
           }
-          tabbableTrigger={false}
-          content={contentWithButtons}
-          trapFocus
-          on="context"
+          menu={{ items }}
         />
         {this.state.alert && <Alert warning content="Click!" />}
       </>
@@ -38,4 +29,4 @@ class PopupContextOnElement extends React.Component {
   }
 }
 
-export default PopupContextOnElement
+export default MenuButtonOnElement

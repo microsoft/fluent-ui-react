@@ -119,7 +119,7 @@ definitions.push({
     const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
       attributeToBeAdded
     ]
-    expect(expectedResult).toEqual(
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toEqual(
       testHelper.convertToMatchingTypeIfApplicable(propertyDependingOnValue),
     )
   },
