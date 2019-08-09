@@ -1,6 +1,6 @@
-import * as keyboardKey from 'keyboard-key'
-import { Accessibility } from '../../types'
+import { Accessibility, FocusZoneMode } from '../../types'
 import { ListBehaviorProps } from './listBehavior'
+import { FocusZoneDirection } from '../../FocusZone'
 
 /**
  * @description
@@ -8,31 +8,24 @@ import { ListBehaviorProps } from './listBehavior'
  *
  * @specification
  * Adds role='listbox'.
- * Triggers 'moveNext' action with 'ArrowDown' on 'root'.
- * Triggers 'movePrevious' action with 'ArrowUp' on 'root'.
- * Triggers 'moveFirst' action with 'Home' on 'root'.
- * Triggers 'moveLast' action with 'End' on 'root'.
+ * Adds attribute 'aria-orientation=horizontal' to 'root' slot if 'horizontal' property is true. Does not set the attribute otherwise.
+ * Embeds component into FocusZone.
+ * Provides arrow key navigation in bidirectionalDomOrder direction.
  */
 const selectableListBehavior: Accessibility<ListBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'listbox',
+      ...(props.horizontal && {
+        'aria-orientation': 'horizontal',
+      }),
     },
   },
-  keyActions: {
-    root: {
-      moveNext: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowDown }],
-      },
-      movePrevious: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowUp }],
-      },
-      moveFirst: {
-        keyCombinations: [{ keyCode: keyboardKey.Home }],
-      },
-      moveLast: {
-        keyCombinations: [{ keyCode: keyboardKey.End }],
-      },
+  focusZone: {
+    mode: FocusZoneMode.Embed,
+    props: {
+      shouldFocusInnerElementWhenReceivedFocus: true,
+      direction: FocusZoneDirection.bidirectionalDomOrder,
     },
   },
 })
