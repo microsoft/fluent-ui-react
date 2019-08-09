@@ -2,38 +2,25 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
 
-import { List, chatBehavior, Accessibility, Flex, Icon } from '@stardust-ui/react'
+import { List, ChatMessageProps, Flex, Icon } from '@stardust-ui/react'
 import ControlMessage from './ControlMessage'
+import controlMessagesGroupBehavior from './controlMessagesGroupBehavior'
 
-const controlMessagesGroupBehavior: Accessibility<any> = props => {
-  const behaviorData = chatBehavior(props)
-
-  behaviorData.attributes.root = {
-    ...behaviorData.attributes.root,
-    'data-is-focusable': true,
-  }
-
-  behaviorData.focusZone = {
-    mode: behaviorData.focusZone.mode,
-    props: {
-      ...behaviorData.focusZone.props,
-      shouldFocusOnMount: true,
-      shouldFocusInnerElementWhenReceivedFocus: true,
-      defaultTabbableElement: undefined,
-    },
-  }
-  return behaviorData
+type GroupControlMessagesProps = {
+  items: ChatMessageProps[]
+  mainMessage: ChatMessageProps
 }
 
-const GroupControlMessages = () => {
+const GroupControlMessages = (props: GroupControlMessagesProps) => {
   const [expanded, setExpanded] = React.useState(false)
   const [focused, setFocused] = React.useState(false)
 
   const renderItems = () => {
-    return _.map(groupControlMessageItems, item => {
+    const { items } = props
+    return _.map(items, (item, index) => {
       return {
         content: <ControlMessage message={item} />,
-        styles: { padding: 0, display: 'block', minHeight: '25px' },
+        key: `control-message-${index}`,
       }
     })
   }
@@ -63,45 +50,10 @@ const GroupControlMessages = () => {
           aria-label={'control messages'}
         />
       ) : (
-        <ControlMessage focused={focused} message={controlMessage} />
+        <ControlMessage focused={focused} message={props.mainMessage} />
       )}
     </Flex>
   )
 }
 
 export default GroupControlMessages
-
-const groupControlMessageItems = [
-  {
-    key: 'joe-doe1',
-    content: (
-      <div>
-        <a href="/">John Doe</a> has added <a href="/">Jane Doe1</a> to the team
-      </div>
-    ),
-  },
-  {
-    key: 'joe-doe2',
-    content: (
-      <div>
-        <a href="/">John Doe</a> has added <a href="/">Jane Doe2</a> to the team
-      </div>
-    ),
-  },
-  {
-    key: 'joe-doe3',
-    content: (
-      <div>
-        <a href="/">John Doe</a> has added <a href="/">Jane Doe3</a> to the team
-      </div>
-    ),
-  },
-]
-
-const controlMessage = {
-  content: (
-    <div>
-      <a href="/">John Doe</a> has added <a href="/">Jane Doe1</a> and 2 other to the team
-    </div>
-  ),
-}

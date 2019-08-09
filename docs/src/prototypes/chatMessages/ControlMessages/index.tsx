@@ -1,7 +1,15 @@
 import * as React from 'react'
-import { Chat, ChatItemProps, ShorthandCollection, Avatar, Divider } from '@stardust-ui/react'
+import {
+  Chat,
+  ChatItemProps,
+  ShorthandCollection,
+  Avatar,
+  Divider,
+  Provider,
+} from '@stardust-ui/react'
 import GroupControlMessages from './GroupControlMessages'
 import ControlMessage from './ControlMessage'
+import { groupControlMessageItems, mainControlMessage } from './mockData'
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
@@ -11,52 +19,42 @@ const janeAvatar = {
   },
 }
 
-const ChatExample = () => {
+const ChatExampleWithControlMessages = () => {
   const items: ShorthandCollection<ChatItemProps> = [
     {
-      message: {
-        content: (
-          // Adding control message
-          <ControlMessage
-            icon={true}
-            message={{
-              content: (
-                <div>
-                  <a href="/">John Doe</a> joined the team
-                </div>
-              ),
-            }}
-          />
-        ),
-        styles: {
-          marginLeft: '16px',
-        },
-      },
+      message: (
+        // Adding control message
+        <ControlMessage
+          icon={true}
+          message={{
+            content: (
+              <div>
+                <a href="/">John Doe</a> joined the team
+              </div>
+            ),
+          }}
+        />
+      ),
+      className: 'control-message-item',
+      key: 'message-id-6',
     },
     {
-      message: {
-        content: (
-          // Adding Grouped control messages
-          <GroupControlMessages />
-        ),
-        styles: {
-          marginLeft: 0,
-        },
-      },
+      // Adding Grouped control messages
+      message: (
+        <GroupControlMessages items={groupControlMessageItems} mainMessage={mainControlMessage} />
+      ),
+      className: 'group-message-item',
+      key: 'message-id-7',
     },
     {
-      gutter: {
-        content: <Avatar {...janeAvatar} />,
-      },
-      message: {
-        content: (
-          <Chat.Message
-            content="Sure! Let's try it."
-            author="Jane Doe"
-            timestamp="Yesterday, 10:15 PM"
-          />
-        ),
-      },
+      gutter: <Avatar {...janeAvatar} />,
+      message: (
+        <Chat.Message
+          content="Sure! Let's try it."
+          author="Jane Doe"
+          timestamp="Yesterday, 10:15 PM"
+        />
+      ),
       key: 'message-id-8',
     },
     {
@@ -64,21 +62,50 @@ const ChatExample = () => {
       key: 'message-id-9',
     },
     {
-      message: {
-        content: (
-          <Chat.Message
-            content="Ok, let's go."
-            author="John Doe"
-            timestamp="Today, 11:15 PM"
-            mine
-          />
-        ),
-      },
+      message: (
+        <Chat.Message content="Ok, let's go." author="John Doe" timestamp="Today, 11:15 PM" mine />
+      ),
       contentPosition: 'end',
       key: 'message-id-10',
     },
   ]
-  return <Chat items={items} />
+  return (
+    <Provider
+      theme={{
+        componentStyles: {
+          ChatItem: {
+            root: {
+              '&.group-message-item .ui-chat__item__message': {
+                marginLeft: 0,
+              },
+              '&.control-message-item .ui-chat__item__message': {
+                marginLeft: '16px',
+              },
+            },
+          },
+          ChatMessage: {
+            root: ({ props: p, theme: { siteVariables } }) => ({
+              '&.control-message': {
+                padding: 0,
+                marginLeft: '10px',
+                backgroundColor: siteVariables.colors.grey[100],
+                fontSize: '14px',
+              },
+            }),
+          },
+          ListItem: {
+            root: {
+              padding: 0,
+              display: 'block',
+              minHeight: '25px',
+            },
+          },
+        },
+      }}
+    >
+      <Chat items={items} />
+    </Provider>
+  )
 }
 
-export default ChatExample
+export default ChatExampleWithControlMessages
