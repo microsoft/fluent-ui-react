@@ -147,7 +147,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     this.trySetState({
       activeItems: newActiveItems,
     })
-    _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, newActiveItems })
+    _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, activeItems: newActiveItems })
   }
 
   handleTitleClose = (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
@@ -166,13 +166,19 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         this.trySetState({
           activeItems: newActiveItems,
         })
-        _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, newActiveItems })
+        _.invoke(this.props, 'onActiveItemsChange', e, {
+          ...this.props,
+          activeItems: newActiveItems,
+        })
       } else {
         const newActiveItems = activeItems.slice(0, indexInTree + 1)
         this.trySetState({
           activeItems: newActiveItems,
         })
-        _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, newActiveItems })
+        _.invoke(this.props, 'onActiveItemsChange', e, {
+          ...this.props,
+          activeItems: newActiveItems,
+        })
       }
     } else {
       const nextSiblingIndexInTree = activeItems.indexOf(nextSibling)
@@ -183,7 +189,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       this.trySetState({
         activeItems: newActiveItems,
       })
-      _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, newActiveItems })
+      _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, activeItems: newActiveItems })
     }
   }
 
