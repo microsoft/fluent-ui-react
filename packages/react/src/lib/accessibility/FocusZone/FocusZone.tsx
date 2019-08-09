@@ -328,17 +328,19 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     }
     const doc = getDocument(this._root.current)
 
-    if (doc) {
-      const focusedElement = doc.activeElement as HTMLElement
+    if (!doc) {
+      return
+    }
 
-      // Only update the index path if we are not parked on the root.
-      if (focusedElement !== this._root.current) {
-        const shouldRestoreFocus = this._root.current.contains(focusedElement)
+    const focusedElement = doc.activeElement as HTMLElement
 
-        this._lastIndexPath = shouldRestoreFocus
-          ? getElementIndexPath(this._root.current as HTMLElement, doc.activeElement as HTMLElement)
-          : undefined
-      }
+    // Only update the index path if we are not parked on the root.
+    if (focusedElement !== this._root.current) {
+      const shouldRestoreFocus = this._root.current.contains(focusedElement)
+
+      this._lastIndexPath = shouldRestoreFocus
+        ? getElementIndexPath(this._root.current as HTMLElement, doc.activeElement as HTMLElement)
+        : undefined
     }
   }
 

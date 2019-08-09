@@ -1530,7 +1530,6 @@ describe('FocusZone', () => {
     it('to the following item when item removed', () => {
       host = document.createElement('div')
 
-      // Render component.
       ReactDOM.render(
         <FocusZone>
           <button key="a" id="a" data-is-visible="true">
@@ -1550,7 +1549,7 @@ describe('FocusZone', () => {
 
       buttonB.focus()
 
-      // Render component without button A.
+      // Render component without button B.
       ReactDOM.render(
         <FocusZone>
           <button key="a" id="a" data-is-visible="true">
@@ -1569,7 +1568,6 @@ describe('FocusZone', () => {
     it('can restore focus to the previous item when end item removed', () => {
       host = document.createElement('div')
 
-      // Render component.
       ReactDOM.render(
         <FocusZone>
           <button key="a" id="a" data-is-visible="true">
@@ -1589,7 +1587,7 @@ describe('FocusZone', () => {
 
       buttonC.focus()
 
-      // Render component without button A.
+      // Render component without button C.
       ReactDOM.render(
         <FocusZone>
           <button key="a" id="a" data-is-visible="true">
@@ -1612,7 +1610,6 @@ describe('FocusZone', () => {
     beforeEach(() => {
       host = document.createElement('div')
 
-      // Render component.
       ReactDOM.render(
         <div>
           <button key="z" id="z" data-is-visible="true" />
