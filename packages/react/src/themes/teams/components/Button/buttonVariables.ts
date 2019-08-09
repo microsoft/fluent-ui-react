@@ -6,6 +6,7 @@ export interface ButtonVariables {
   padding: string
   height: string
   minWidth: string
+  loadingMinWidth: string
   maxWidth: string
   borderRadius: string
   contentFontWeight: FontWeightProperty
@@ -53,17 +54,27 @@ export interface ButtonVariables {
 
   boxShadow: string
 
+  loaderBorderSize: string
+  loaderSize: string
+  loaderSvgHeight: string
+  loaderSvgAnimationHeight: string
+
   sizeSmallContentFontSize: string
   sizeSmallContentLineHeight: string
   sizeSmallHeight: string
   sizeSmallMinWidth: string
   sizeSmallPadding: string
+  sizeSmallLoaderBorderSize: string
+  sizeSmallLoaderSize: string
+  sizeSmallLoaderSvgHeight: string
+  sizeSmallLoaderSvgAnimationHeight: string
 }
 
 export default (siteVars: any): ButtonVariables => ({
   padding: `0 ${pxToRem(20)}`,
   height: pxToRem(32),
   minWidth: pxToRem(96),
+  loadingMinWidth: pxToRem(118),
   maxWidth: pxToRem(280),
   borderRadius: siteVars.borderRadius,
 
@@ -112,9 +123,18 @@ export default (siteVars: any): ButtonVariables => ({
 
   boxShadow: siteVars.shadowLevel1,
 
+  loaderBorderSize: pxToRem(2),
+  loaderSize: pxToRem(20),
+  loaderSvgHeight: pxToRem(1220),
+  loaderSvgAnimationHeight: pxToRem(-1200),
+
   sizeSmallContentFontSize: siteVars.fontSizes.small,
   sizeSmallContentLineHeight: siteVars.lineHeightSmall,
   sizeSmallHeight: pxToRem(24),
   sizeSmallMinWidth: pxToRem(72),
   sizeSmallPadding: `0 ${pxToRem(8)}`,
+  sizeSmallLoaderBorderSize: pxToRem(2),
+  sizeSmallLoaderSize: pxToRem(15),
+  sizeSmallLoaderSvgHeight: pxToRem(895),
+  sizeSmallLoaderSvgAnimationHeight: pxToRem(-880),
 })
