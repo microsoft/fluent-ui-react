@@ -18,6 +18,7 @@ import {
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
+import Loader, { LoaderProps } from '../Loader/Loader'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
@@ -47,6 +48,12 @@ export interface ButtonProps
 
   /** An icon button can format an Icon to appear before or after the button */
   iconPosition?: 'before' | 'after'
+
+  /** A button in loading state, can show a loader. */
+  loader?: ShorthandValue<LoaderProps>
+
+  /** A button can show a loading indicator. */
+  loading?: boolean
 
   /**
    * Called after user's click.
@@ -96,6 +103,8 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     icon: customPropTypes.itemShorthandWithoutJSX,
     iconOnly: PropTypes.bool,
     iconPosition: PropTypes.oneOf(['before', 'after']),
+    loader: customPropTypes.itemShorthandWithoutJSX,
+    loading: PropTypes.bool,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
@@ -131,7 +140,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     styles,
     unhandledProps,
   }): React.ReactNode {
-    const { children, content, disabled, iconPosition } = this.props
+    const { children, content, disabled, iconPosition, loading } = this.props
     const hasChildren = childrenExist(children)
 
     return (
@@ -146,6 +155,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
         {...unhandledProps}
       >
         {hasChildren && children}
+        {!hasChildren && loading && this.renderLoader(variables, styles)}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
         {Box.create(!hasChildren && content, {
           defaultProps: { as: 'span', styles: styles.content },
@@ -163,6 +173,17 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
         styles: styles.icon,
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
         variables: variables.icon,
+      },
+    })
+  }
+
+  renderLoader = (variables, styles) => {
+    const { loader } = this.props
+
+    return Loader.create(loader || {}, {
+      defaultProps: {
+        role: undefined,
+        styles: styles.loader,
       },
     })
   }
