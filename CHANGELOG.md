@@ -20,6 +20,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Documentation
 - Restore docs for `Ref` component @layershifter ([#1777](https://github.com/stardust-ui/react/pull/1777))
 
+### Fixes
+- Make `Embed` focusable via keyboard @lucivpav ([#1758](https://github.com/stardust-ui/react/pull/1758))
+
 <!--------------------------------[ v0.36.1 ]------------------------------- -->
 ## [v0.36.1](https://github.com/stardust-ui/react/tree/v0.36.1) (2019-08-09)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.36.0...v0.36.1)
@@ -43,7 +46,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Ensure `actionsMenu` is not cut-off by the edge of viewport for `ChatMessage` @kuzhelov ([#1739](https://github.com/stardust-ui/react/pull/1739))
 - `FocusZone` should respect elements with `contenteditable` attribute on Home/End key press @sophieH29 ([#1749](https://github.com/stardust-ui/react/pull/1749))
 - Fix incorrect order of plugin execution in `felaRenderer` @lucivpav ([#1741](https://github.com/stardust-ui/react/pull/1741))
-- Make `Embed` focusable via keyboard @lucivpav ([#1758](https://github.com/stardust-ui/react/pull/1758))
 
 ### Features
 - Expose `isFromKeyboard` in `Grid` component @sophieH29 ([#1729](https://github.com/stardust-ui/react/pull/1729))
