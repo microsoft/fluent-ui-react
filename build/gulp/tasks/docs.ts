@@ -79,7 +79,7 @@ task(
 
 const componentsSrc = [
   `${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`,
-  `${paths.posix.packageSrc('react-component-ref')}/src/[A-Z]*.tsx`,
+  `${paths.posix.packageSrc('react-component-ref')}/[A-Z]*.tsx`,
   `${paths.posix.packageSrc('react')}/lib/accessibility/FocusZone/[A-Z]!(*.types).tsx`,
 ]
 const behaviorSrc = [`${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*.ts`]

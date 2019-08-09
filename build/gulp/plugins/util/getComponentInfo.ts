@@ -74,10 +74,16 @@ const getComponentInfo = (filepath: string, ignoredParentInterfaces: string[]): 
   const constructorName = _.get(Component, 'prototype.constructor.name', null)
 
   // add component type
-  const type = componentType
-
+  let type = componentType
   // add parent/child info
-  const isParent = filenameWithoutExt === dirname
+  let isParent = filenameWithoutExt === dirname
+
+  // Tweak for Ref component as it is distributed as a separate package
+  if (info.displayName === 'Ref') {
+    type = 'component'
+    isParent = true
+  }
+
   const isChild = !isParent
   const parentDisplayName = isParent ? null : dirname
   // "Field" for "FormField" since it is accessed as "Form.Field" in the API
