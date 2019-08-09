@@ -1,12 +1,38 @@
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
-// TODO: import { createComponent } from '@stardust-ui/react'
-import createComponent from '../../lib/createStardustComponent'
 
+import {
+  commonPropTypes,
+  ContentComponentProps,
+  isBrowser,
+  UIComponent,
+  UIComponentProps,
+} from '../../lib'
+import { RenderResultConfig } from '../../lib/renderComponent'
+import { Accessibility } from '../../lib/accessibility/types'
+import { ShorthandValue, WithAsProp } from '../../types'
 import AppLayoutArea, { AppLayoutAreaProps } from './AppLayoutArea'
 
-export interface AppLayoutProps {
+if (isBrowser()) {
+  ;(window as any).React1 = require('react')
+}
+
+export interface AppSlotClassNames {
+  content: string
+}
+
+export interface AppLayoutProps extends UIComponentProps, ContentComponentProps<ShorthandValue> {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default AppBehavior
+   * @available AppWarningBehavior
+   */
+  accessibility?: Accessibility
+
   debug?: boolean
   gap?: string
+  mode?: string
+  renderActiveOnly?: boolean
   slots?: {
     [key: string]: AppLayoutAreaProps
     header?: AppLayoutAreaProps
@@ -32,23 +58,62 @@ const getSlotOrder = template =>
       return acc
     }, [])
 
-const AppLayout = createComponent<AppLayoutProps>({
-  displayName: 'AppLayout',
+/**
+ * A app layout contains and arranges the high level areas of an application.
+ */
+class AppLayout extends UIComponent<WithAsProp<AppLayoutProps>> {
+  static displayName = 'AppLayout'
+  static className = 'ui-app-layout'
 
-  render({ stardust, ...props }) {
-    const { classes } = stardust
-    const { debug, slots, template } = props
+  static defaultProps = {
+    renderActiveOnly: true,
+  }
+
+  static propTypes = {
+    ...commonPropTypes.createCommon({ content: 'shorthand' }),
+    debug: PropTypes.bool,
+    gap: PropTypes.string,
+    renderActiveOnly: PropTypes.bool,
+    slots: PropTypes.objectOf(
+      PropTypes.shape({
+        styles: PropTypes.object,
+        content: PropTypes.node,
+      }),
+    ),
+    template: PropTypes.string,
+  }
+
+  // getUnusedSlots = () => {
+  //   const { slots, template } = this.props
+  //
+  //   return Object.keys(slots).filter(name => {
+  //     return new RegExp(`/\W${_.escapeRegExp(name)}\W/`).test(template)
+  //   })
+  // }
+
+  renderComponent(config: RenderResultConfig<AppLayoutProps>) {
+    const { classes, ElementType, unhandledProps } = config
+    const { debug, slots, template } = this.props
 
     return (
-      <div className={classes.root}>
+      <ElementType className={classes.root} {...unhandledProps}>
         {getSlotOrder(template).map(k => {
           const v = slots[k]
 
-          return <AppLayoutArea debug={debug} key={k} area={k} {...v} />
+          return (
+            <AppLayoutArea
+              debug={debug}
+              key={k}
+              area={k}
+              className={`${AppLayoutArea.className}-${k}`}
+              {...v}
+            />
+          )
         })}
-      </div>
+        {/* {!renderActiveOnly && this.getUnusedSlots.map()} */}
+      </ElementType>
     )
-  },
-})
+  }
+}
 
 export default AppLayout
