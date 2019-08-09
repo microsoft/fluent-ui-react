@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 // @ts-ignore
-import { ThemeContext } from 'react-fela'
+import { ThemeContext } from '@stardust-ui/react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/reactTypes'
@@ -35,6 +35,10 @@ const createComponent = <P extends ObjectOf<any> = any>({
   render,
 }: CreateComponentConfig<P>): CreateComponentReturnType<P> => {
   const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
+    // Stores debug information for component.
+    // Note that this ref should go as the first one, to be discoverable by debug utils.
+    const stardustDebug = React.useRef(null)
+
     const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
     const { wrap, ...config } = renderComponent<P>({
@@ -45,6 +49,7 @@ const createComponent = <P extends ObjectOf<any> = any>({
       state: {},
       actionHandlers,
       context,
+      saveDebug: updatedDebug => (stardustDebug.current = updatedDebug),
     })
 
     return wrap(render(config, props))

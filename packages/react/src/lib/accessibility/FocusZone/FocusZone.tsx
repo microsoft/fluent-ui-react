@@ -498,8 +498,9 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
         case keyboardKey.Home:
           if (
-            this.isElementInput(ev.target as HTMLElement) &&
-            !this.shouldInputLoseFocus(ev.target as HTMLInputElement, false)
+            this.isContentEditableElement(ev.target as HTMLElement) ||
+            (this.isElementInput(ev.target as HTMLElement) &&
+              !this.shouldInputLoseFocus(ev.target as HTMLInputElement, false))
           ) {
             return false
           }
@@ -516,8 +517,9 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
         case keyboardKey.End:
           if (
-            this.isElementInput(ev.target as HTMLElement) &&
-            !this.shouldInputLoseFocus(ev.target as HTMLInputElement, true)
+            this.isContentEditableElement(ev.target as HTMLElement) ||
+            (this.isElementInput(ev.target as HTMLElement) &&
+              !this.shouldInputLoseFocus(ev.target as HTMLInputElement, false))
           ) {
             return false
           }
@@ -952,6 +954,10 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
       this.updateTabIndexes(child)
     }
+  }
+
+  isContentEditableElement(element: HTMLElement): boolean {
+    return element && element.getAttribute('contenteditable') === 'true'
   }
 
   isElementInput(element: HTMLElement): boolean {

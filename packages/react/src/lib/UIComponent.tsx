@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 // @ts-ignore We have this export in package, but it is not present in typings
-import { ThemeContext } from 'react-fela'
+import { ThemeContext } from '@stardust-ui/react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/reactTypes'
@@ -30,6 +30,9 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
 
   actionHandlers: AccessibilityActionHandlers
 
+  // stores debug information
+  stardustDebug: any = null
+
   constructor(props, context) {
     super(props, context)
     if (process.env.NODE_ENV !== 'production') {
@@ -57,6 +60,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
       state: this.state,
       actionHandlers: this.actionHandlers,
       context: this.context,
+      saveDebug: updatedDebug => (this.stardustDebug = updatedDebug),
     })
 
     return wrap(this.renderComponent(config))

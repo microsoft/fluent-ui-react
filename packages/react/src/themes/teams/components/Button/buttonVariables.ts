@@ -3,12 +3,15 @@ import { FontWeightProperty } from 'csstype'
 import { pxToRem } from '../../../../lib'
 
 export interface ButtonVariables {
+  padding: string
   height: string
   minWidth: string
+  loadingMinWidth: string
   maxWidth: string
   borderRadius: string
-  paddingLeftRightValue: number
   contentFontWeight: FontWeightProperty
+  contentFontSize: string
+  contentLineHeight: string
 
   color: string
   colorHover: string
@@ -51,15 +54,34 @@ export interface ButtonVariables {
   textSecondaryColorHover: string
 
   boxShadow: string
+
+  loaderBorderSize: string
+  loaderSize: string
+  loaderSvgHeight: string
+  loaderSvgAnimationHeight: string
+
+  sizeSmallContentFontSize: string
+  sizeSmallContentLineHeight: string
+  sizeSmallHeight: string
+  sizeSmallMinWidth: string
+  sizeSmallPadding: string
+  sizeSmallLoaderBorderSize: string
+  sizeSmallLoaderSize: string
+  sizeSmallLoaderSvgHeight: string
+  sizeSmallLoaderSvgAnimationHeight: string
 }
 
 export default (siteVars: any): ButtonVariables => ({
+  padding: `0 ${pxToRem(20)}`,
   height: pxToRem(32),
   minWidth: pxToRem(96),
+  loadingMinWidth: pxToRem(118),
   maxWidth: pxToRem(280),
   borderRadius: siteVars.borderRadius,
+
+  contentFontSize: siteVars.fontSizes.medium,
   contentFontWeight: siteVars.fontWeightSemibold,
-  paddingLeftRightValue: 20,
+  contentLineHeight: siteVars.lineHeightMedium,
 
   color: siteVars.colors.grey[750],
   colorHover: siteVars.colors.grey[750],
@@ -102,4 +124,19 @@ export default (siteVars: any): ButtonVariables => ({
   textSecondaryColorHover: siteVars.colors.brand[800],
 
   boxShadow: siteVars.shadowLevel1,
+
+  loaderBorderSize: pxToRem(2),
+  loaderSize: pxToRem(20),
+  loaderSvgHeight: pxToRem(1220),
+  loaderSvgAnimationHeight: pxToRem(-1200),
+
+  sizeSmallContentFontSize: siteVars.fontSizes.small,
+  sizeSmallContentLineHeight: siteVars.lineHeightSmall,
+  sizeSmallHeight: pxToRem(24),
+  sizeSmallMinWidth: pxToRem(72),
+  sizeSmallPadding: `0 ${pxToRem(8)}`,
+  sizeSmallLoaderBorderSize: pxToRem(2),
+  sizeSmallLoaderSize: pxToRem(15),
+  sizeSmallLoaderSvgHeight: pxToRem(895),
+  sizeSmallLoaderSvgAnimationHeight: pxToRem(-880),
 })

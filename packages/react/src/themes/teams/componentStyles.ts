@@ -53,6 +53,8 @@ export { default as Menu } from './components/Menu/menuStyles'
 export { default as MenuItem } from './components/Menu/menuItemStyles'
 export { default as MenuDivider } from './components/Menu/menuDividerStyles'
 
+export { default as MenuButton } from './components/MenuButton/menuButtonStyles'
+
 export { default as Popup } from './components/Popup/popupStyles'
 export { default as PopupContent } from './components/Popup/popupContentStyles'
 
@@ -78,9 +80,13 @@ export { default as ToolbarMenu } from './components/Toolbar/toolbarMenuStyles'
 export { default as ToolbarMenuDivider } from './components/Toolbar/toolbarMenuDividerStyles'
 export { default as ToolbarMenuItem } from './components/Toolbar/toolbarMenuItemStyles'
 
-export { default as Tree } from './components/Tree/treeStyles'
-export { default as TreeItem } from './components/Tree/treeItemStyles'
-export { default as TreeTitle } from './components/Tree/treeTitleStyles'
+export { default as HierarchicalTree } from './components/HierarchicalTree/hierarchicalTreeStyles'
+export {
+  default as HierarchicalTreeItem,
+} from './components/HierarchicalTree/hierarchicalTreeItemStyles'
+export {
+  default as HierarchicalTreeTitle,
+} from './components/HierarchicalTree/hierarchicalTreeTitleStyles'
 
 export { default as Animation } from './components/Animation/animationStyles'
 

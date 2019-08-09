@@ -30,12 +30,9 @@ import { ObjectOf } from '../types'
  * Merges a single component's styles (keyed by component part) with another component's styles.
  */
 export const mergeComponentStyles = (
-  target: ComponentSlotStylesInput,
-  ...sources: (ComponentSlotStylesInput | null | undefined)[] | undefined
+  ...sources: (ComponentSlotStylesInput | null | undefined)[]
 ): ComponentSlotStylesPrepared => {
-  const initial: ComponentSlotStylesPrepared = _.mapValues(target, partStyle => {
-    return callable(partStyle)
-  })
+  const initial: ComponentSlotStylesPrepared = {}
 
   return sources.reduce<ComponentSlotStylesPrepared>((partStylesPrepared, stylesByPart) => {
     _.forEach(stylesByPart, (partStyle, partName) => {
@@ -57,10 +54,9 @@ export const mergeComponentStyles = (
  * Merges a single component's variables with another component's variables.
  */
 export const mergeComponentVariables = (
-  target: ComponentVariablesInput,
   ...sources: ComponentVariablesInput[]
 ): ComponentVariablesPrepared => {
-  const initial = (...args) => callable(target)(...args) || {}
+  const initial = () => ({})
 
   return sources.reduce<ComponentVariablesPrepared>((acc, next) => {
     return (...args) => {
@@ -91,12 +87,10 @@ export const mergeComponentVariables = (
  * They are flat objects and do not depend on render-time values, such as props.
  */
 export const mergeSiteVariables = (
-  target: SiteVariablesInput,
   ...sources: (SiteVariablesInput | null | undefined)[]
 ): SiteVariablesPrepared => {
   const initial: SiteVariablesPrepared = {
-    ...target,
-    fontSizes: (target && target.fontSizes) || {},
+    fontSizes: {},
   }
   return sources.reduce<SiteVariablesPrepared>((acc, next) => ({ ...acc, ...next }), initial)
 }
@@ -110,10 +104,9 @@ export const mergeSiteVariables = (
  */
 
 export const mergeThemeVariables = (
-  target: ThemeComponentVariablesInput,
   ...sources: (ThemeComponentVariablesInput | null | undefined)[]
 ): ThemeComponentVariablesPrepared => {
-  const displayNames = _.union(_.keys(target), ..._.map(sources, _.keys))
+  const displayNames = _.union(..._.map(sources, _.keys))
   return sources.reduce<ThemeComponentVariablesInput>((acc, next) => {
     return displayNames.reduce((componentVariables, displayName) => {
       if (!next) return acc
@@ -132,7 +125,7 @@ export const mergeThemeVariables = (
 
       return componentVariables
     }, {})
-  }, target)
+  }, {})
 }
 
 /**
@@ -141,12 +134,9 @@ export const mergeThemeVariables = (
  *   that they return style objects.
  */
 export const mergeThemeStyles = (
-  target: ThemeComponentStylesInput,
   ...sources: (ThemeComponentStylesInput | null | undefined)[]
 ): ThemeComponentStylesPrepared => {
-  const initial: ThemeComponentStylesPrepared = _.mapValues(target, stylesByPart => {
-    return _.mapValues(stylesByPart, callable)
-  })
+  const initial: ThemeComponentStylesPrepared = {}
 
   return sources.reduce<ThemeComponentStylesPrepared>((themeComponentStyles, next) => {
     _.forEach(next, (stylesByPart, displayName) => {
@@ -168,15 +158,14 @@ export const mergeStaticStyles = (...sources: StaticStyle[]) => {
   return toCompactArray<StaticStyle>(...sources)
 }
 
-export const mergeIcons = (target: ThemeIcons, ...sources: ThemeIcons[]): ThemeIcons => {
-  return Object.assign(target, ...sources)
+export const mergeIcons = (...sources: ThemeIcons[]): ThemeIcons => {
+  return Object.assign({}, ...sources)
 }
 
 export const mergeAnimations = (
-  target: { [key: string]: ThemeAnimation },
   ...sources: { [key: string]: ThemeAnimation }[]
 ): { [key: string]: ThemeAnimation } => {
-  return Object.assign(target, ...sources)
+  return Object.assign({}, ...sources)
 }
 
 export const mergeStyles = (...sources: ComponentSlotStyle[]) => {

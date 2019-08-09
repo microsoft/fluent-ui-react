@@ -16,6 +16,7 @@ import {
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
+  ComponentSlotStylesInput,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
 import { FocusZoneMode } from './accessibility/types'
@@ -25,6 +26,7 @@ import { FocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
 import getAccessibility from './accessibility/getAccessibility'
+import Debug, { isEnabled as isDebugEnabled } from './debug'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -51,10 +53,30 @@ export interface RenderConfig<P> {
   state: State
   actionHandlers?: AccessibilityActionHandlers
   context: ProviderContextPrepared
+  saveDebug: (debug: Debug | null) => void
+}
+
+const resolveStyles = (
+  styles: ComponentSlotStylesInput,
+  styleParam: ComponentStyleFunctionParam,
+): ComponentSlotStylesPrepared => {
+  return Object.keys(styles).reduce(
+    (acc, slot) => ({ ...acc, [slot]: callable(styles[slot])(styleParam) }),
+    {},
+  )
 }
 
 const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultConfig<P> => {
-  const { className, displayName, handledProps, props, state, actionHandlers, context } = config
+  const {
+    className,
+    displayName,
+    handledProps,
+    props,
+    state,
+    actionHandlers,
+    context,
+    saveDebug,
+  } = config
 
   if (_.isEmpty(context)) {
     logProviderMissingWarning()
@@ -107,6 +129,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultCon
   const unhandledProps = getUnhandledProps(handledProps, props)
 
   const styleParam: ComponentStyleFunctionParam = {
+    displayName,
     props: stateAndProps,
     variables: resolvedVariables,
     theme: context.theme,
@@ -114,16 +137,8 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultCon
     disableAnimations,
   }
 
-  // TODO: This operation should be pulled into a "resolveStyles" function
-  // doing this work can be brittle and duplicated unnecessarily.
-  const resolvedStyles: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(
-    (slots, slot) => ({ ...slots, [slot]: callable(mergedStyles[slot])(styleParam) }),
-    {},
-  )
+  const resolvedStyles: ComponentSlotStylesPrepared = resolveStyles(mergedStyles, styleParam)
 
-  // TODO: this should probably take in resolved styles and not know about style functions and style param.
-  // currently, it is using implementation knowledge of style functions and param to resolve styles.
-  // it is also duplicating this work with "resolvedStyles" above. we are executing all styles 2x for all components on all renders :/ ...
   const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
   classes.root = cx(className, classes.root, props.className)
 
@@ -160,6 +175,20 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultCon
     }
     resolvedConfig.unhandledProps.as = originalElementType
     resolvedConfig.unhandledProps.isRtl = resolvedConfig.rtl
+  }
+
+  // conditionally add sources for evaluating debug information to component
+  if (isDebugEnabled) {
+    saveDebug(
+      new Debug({
+        componentName: displayName,
+        themes: context.originalThemes,
+        instanceStylesOverrides: props.styles,
+        instanceVariablesOverrides: props.variables,
+        resolveStyles: styles => resolveStyles(styles, styleParam),
+        resolveVariables: variables => callable(variables)(siteVariables),
+      }),
+    )
   }
 
   return resolvedConfig
