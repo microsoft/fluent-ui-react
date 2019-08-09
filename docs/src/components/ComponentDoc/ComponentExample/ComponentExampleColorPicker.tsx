@@ -62,6 +62,7 @@ const ComponentExampleColorPicker: React.FunctionComponent<
                   cursor: 'pointer',
                 }}
                 onClick={handleClick(shadeValue)}
+                title={shadeValue}
               >
                 {isActive ? '✓' : shadeName}
               </div>
