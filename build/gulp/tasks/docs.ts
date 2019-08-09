@@ -21,7 +21,6 @@ import { getRelativePathToSourceFile } from '../plugins/util'
 import webpackPlugin from '../plugins/gulp-webpack'
 import { Server } from 'http'
 import serve, { forceClose } from '../serve'
-import OpenBrowserPlugin from '../plugins/webpack-open-browser'
 
 const { paths } = config
 const g = require('gulp-load-plugins')()
@@ -80,7 +79,7 @@ task(
 
 const componentsSrc = [
   `${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`,
-  `${paths.posix.packageSrc('react-component-ref')}/src/[A-Z]*.tsx`,
+  `${paths.posix.packageSrc('react-component-ref')}/[A-Z]*.tsx`,
   `${paths.posix.packageSrc('react')}/lib/accessibility/FocusZone/[A-Z]!(*.types).tsx`,
 ]
 const behaviorSrc = [`${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
@@ -185,13 +184,6 @@ task('deploy:docs', cb => {
 let server: Server
 task('serve:docs', async () => {
   const webpackConfig = require('../../webpack.config').default
-
-  webpackConfig.plugins.push(
-    new OpenBrowserPlugin({
-      host: config.server_host,
-      port: config.server_port,
-    }),
-  )
   const compiler = webpack(webpackConfig)
 
   server = await serve(paths.docsDist(), config.server_host, config.server_port, app =>
