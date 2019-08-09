@@ -6,6 +6,8 @@ import {
   Provider,
   ReactionProps,
   ShorthandCollection,
+  Text,
+  Icon,
 } from '@stardust-ui/react'
 
 const reactions: ShorthandCollection<ReactionProps> = [
@@ -83,6 +85,10 @@ const ChatMessageExampleStyled = () => (
             ),
             backgroundColor: '#FFFF00',
           },
+          header: {
+            ...slotLabelStyles('header', {}),
+            backgroundColor: '#FFE0FF',
+          },
           reactionGroup: {
             ...slotLabelStyles('reactions', {}, { padding: '8px' }),
             backgroundColor: '#FFFFE0',
@@ -127,6 +133,25 @@ const ChatMessageExampleStyled = () => (
               timestamp="Yesterday, 10:15 PM"
               badge={{ icon: 'exclamation' }}
               reactionGroup={reactions}
+              actionMenu={{ vertical: true, items: ['one', 'two', 'three', 'four'] }}
+              customSlots={[
+                {
+                  position: 'afterAuthor',
+                  content: <span key="c1">c1</span>,
+                },
+                {
+                  position: 'afterTimestamp',
+                  content: (
+                    <Text key="error" error>
+                      <Icon name="error" /> Failed to send
+                    </Text>
+                  ),
+                },
+                {
+                  position: 'afterAuthor',
+                  content: <span key="c3">c3</span>,
+                },
+              ]}
             />
           ),
         },

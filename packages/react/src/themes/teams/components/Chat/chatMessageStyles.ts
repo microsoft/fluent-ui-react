@@ -110,6 +110,9 @@ const chatMessageStyles: ComponentSlotStylesInput<
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
     fontWeight: v.authorFontWeight,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   }),
 
   timestamp: ({ props: p, variables: v }) => ({
@@ -120,6 +123,9 @@ const chatMessageStyles: ComponentSlotStylesInput<
     ...((p.attached === 'bottom' || p.attached === true) &&
       !p.reactionGroup &&
       screenReaderContainerStyles),
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   }),
 
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -155,12 +161,19 @@ const chatMessageStyles: ComponentSlotStylesInput<
     }
   },
   reactionGroup: ({ props: p, variables: v }) => ({
-    marginLeft: v.reactionGroupMarginLeft,
+    marginLeft: 'auto', // todo: remove variable
     ...(p.badge &&
       p.badgePosition === 'end' && {
         marginRight: pxToRem(2),
       }),
-    float: 'right',
+    // float: 'right',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  }),
+  header: () => ({
+    display: 'flex',
+    alignItems: 'center',
   }),
 }
 

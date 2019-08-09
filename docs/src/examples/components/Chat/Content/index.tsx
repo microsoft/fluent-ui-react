@@ -15,6 +15,11 @@ const Content = () => (
       description="A chat message can contain group of reactions."
       examplePath="components/Chat/Content/ChatExampleReactionGroup"
     />
+    <ComponentExample
+      title="Custom slots"
+      description="It is possible to add custom slots to predefined positions in a chat message."
+      examplePath="components/Chat/Content/ChatExampleCustomSlots"
+    />
   </ExampleSection>
 )
 

@@ -45,6 +45,7 @@ export interface ChatMessageSlotClassNames {
   timestamp: string
   badge: string
   content: string
+  header: string
   reactionGroup: string
 }
 
@@ -95,6 +96,10 @@ export interface ChatMessageProps
 
   /** A message can format the reactions group to appear at the start or the end of the message. */
   reactionGroupPosition?: 'start' | 'end'
+
+  header?: ShorthandValue<BoxProps>
+
+  customSlots?: any
 }
 
 export interface ChatMessageState {
@@ -132,6 +137,8 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
       customPropTypes.itemShorthand,
     ]),
     reactionGroupPosition: PropTypes.oneOf(['start', 'end']),
+    header: customPropTypes.itemShorthand,
+    customSlots: PropTypes.any,
   }
 
   static defaultProps = {
@@ -139,6 +146,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     as: 'div',
     badgePosition: 'end',
     reactionGroupPosition: 'start',
+    header: {},
   }
 
   updateActionsMenuPosition = () => {}
@@ -228,6 +236,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
       timestamp,
       reactionGroup,
       reactionGroupPosition,
+      header,
     } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
@@ -271,6 +280,26 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
       },
     })
 
+    const headerElement = Box.create(header, {
+      defaultProps: {
+        className: ChatMessage.slotClassNames.header,
+        styles: styles.header,
+      },
+      overrideProps: () => ({
+        children: (
+          <>
+            {_.map(_.filter(this.props.customSlots, ['position', 'headerStart']), 'content')}
+            {authorElement}
+            {_.map(_.filter(this.props.customSlots, ['position', 'afterAuthor']), 'content')}
+            {timestampElement}
+            {_.map(_.filter(this.props.customSlots, ['position', 'afterTimestamp']), 'content')}
+            {reactionGroupPosition === 'start' && reactionGroupElement}
+            {_.map(_.filter(this.props.customSlots, ['position', 'headerEnd']), 'content')}
+          </>
+        ),
+      }),
+    })
+
     return (
       <Ref
         innerRef={domNode => {
@@ -293,9 +322,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
             <>
               {actionMenuElement}
               {badgePosition === 'start' && badgeElement}
-              {authorElement}
-              {timestampElement}
-              {reactionGroupPosition === 'start' && reactionGroupElement}
+              {headerElement}
               {messageContent}
               {reactionGroupPosition === 'end' && reactionGroupElement}
               {badgePosition === 'end' && badgeElement}
@@ -314,6 +341,7 @@ ChatMessage.slotClassNames = {
   timestamp: `${ChatMessage.className}__timestamp`,
   badge: `${ChatMessage.className}__badge`,
   content: `${ChatMessage.className}__content`,
+  header: `${ChatMessage.className}__header`,
   reactionGroup: `${ChatMessage.className}__reactions`,
 }
 
