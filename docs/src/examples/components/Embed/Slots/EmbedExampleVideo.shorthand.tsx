@@ -5,6 +5,7 @@ const EmbedExampleVideo = () => (
   <Flex column>
     <Embed
       placeholder="https://raw.githubusercontent.com/bower-media-samples/big-buck-bunny-480p-5s/master/poster.jpg"
+      title="Big Buck Bunny video"
       video="https://raw.githubusercontent.com/bower-media-samples/big-buck-bunny-1080p-5s/master/video.mp4"
       variables={{ height: '400px', width: '711.11px' }}
     />

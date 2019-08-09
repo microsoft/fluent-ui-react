@@ -12,6 +12,7 @@ const EmbedExampleYouTube = () => (
       allow: ['autoplay'],
     }}
     placeholder="http://i.ytimg.com/vi/D0WnZyxp_Wo/hqdefault.jpg"
+    title="Picachu YouTube video"
   />
 )
 
