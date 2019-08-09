@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentation
 - Restore docs for `Ref` component @layershifter ([#1777](https://github.com/stardust-ui/react/pull/1777))
+- Remove Font Awesome icons from docs examples @lucivpav ([#1764](https://github.com/stardust-ui/react/pull/1764))
 
 <!--------------------------------[ v0.36.1 ]------------------------------- -->
 ## [v0.36.1](https://github.com/stardust-ui/react/tree/v0.36.1) (2019-08-09)
@@ -59,7 +60,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix layout issue rendering extra space when viewing documentation in Firefox @notandrew ([#1427](https://github.com/stardust-ui/react/pull/1427))
 - Add search capability @lucivpav ([#1682](https://github.com/stardust-ui/react/pull/1682))
 - Improve `Theme it` section under component examples @layershifter ([#1748](https://github.com/stardust-ui/react/pull/1748))
-- Remove Font Awesome icons from docs examples @lucivpav ([#1764](https://github.com/stardust-ui/react/pull/1764))
 
 <!--------------------------------[ v0.35.0 ]------------------------------- -->
 ## [v0.35.0](https://github.com/stardust-ui/react/tree/v0.35.0) (2019-07-26)
