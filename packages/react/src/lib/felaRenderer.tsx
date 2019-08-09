@@ -52,6 +52,8 @@ const rendererConfig = {
   filterClassName,
   enhancers: [],
   plugins: [
+    felaDisableAnimationsPlugin(),
+
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
     felaSanitizeCss({
@@ -59,6 +61,8 @@ const rendererConfig = {
     }),
 
     felaPluginPlaceholderPrefixer(),
+    felaInvokeKeyframesPlugin(),
+    felaPluginEmbedded(),
     felaPluginPrefixer(),
 
     // Heads up!
@@ -66,9 +70,6 @@ const rendererConfig = {
     felaPluginFallbackValue(),
 
     felaExpandCssShorthandsPlugin(),
-    felaDisableAnimationsPlugin(),
-    felaInvokeKeyframesPlugin(),
-    felaPluginEmbedded(),
 
     felaPluginRtl(),
   ],
