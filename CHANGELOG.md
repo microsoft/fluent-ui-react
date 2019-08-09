@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.36.1 ]------------------------------- -->
+## [v0.36.1](https://github.com/stardust-ui/react/tree/v0.36.1) (2019-08-09)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.36.0...v0.36.1)
+
 ### Features
 - Add `loading` and `loader` props to `Button` component @mnajdova ([#1662](https://github.com/stardust-ui/react/pull/1662))
 
