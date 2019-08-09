@@ -49,6 +49,9 @@ export { default as ChatMessage } from './components/Chat/ChatMessage'
 export * from './components/Checkbox/Checkbox'
 export { default as Checkbox } from './components/Checkbox/Checkbox'
 
+export * from './components/MenuButton/MenuButton'
+export { default as MenuButton } from './components/MenuButton/MenuButton'
+
 export * from './components/Divider/Divider'
 export { default as Divider } from './components/Divider/Divider'
 
@@ -211,6 +214,8 @@ export * from './lib/positioner/types'
 import {
   getFirstTabbable,
   getLastTabbable,
+  getFirstFocusable,
+  getLastFocusable,
   getNextElement,
   getPreviousElement,
   focusAsync,
@@ -219,6 +224,8 @@ import {
 export const FocusZoneUtilities = {
   getFirstTabbable,
   getLastTabbable,
+  getFirstFocusable,
+  getLastFocusable,
   getNextElement,
   getPreviousElement,
   focusAsync,

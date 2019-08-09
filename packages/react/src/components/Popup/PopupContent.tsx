@@ -26,6 +26,10 @@ import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
 
+export interface PopupContentSlotClassNames {
+  content: string
+}
+
 export interface PopupContentProps
   extends UIComponentProps,
     ChildrenComponentProps,
@@ -68,6 +72,7 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
 
   static displayName = 'PopupContent'
   static className = 'ui-popup__content'
+  static slotClassNames: PopupContentSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
@@ -117,6 +122,7 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
           {},
           {
             defaultProps: {
+              className: PopupContent.slotClassNames.content,
               children: childrenExist(children) ? children : content,
               styles: styles.content,
             },
@@ -147,6 +153,10 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
 
     return <ElementType {...popupContentProps}>{popupContent}</ElementType>
   }
+}
+
+PopupContent.slotClassNames = {
+  content: `${PopupContent.className}__content`,
 }
 
 PopupContent.create = createShorthandFactory({ Component: PopupContent, mappedProp: 'content' })
