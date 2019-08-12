@@ -35,7 +35,7 @@ const ChatExampleWithControlMessages = () => {
           }}
         />
       ),
-      className: 'control-message-item',
+      className: 'ui-chat__item_control',
       key: 'message-id-6',
     },
     {
@@ -43,7 +43,7 @@ const ChatExampleWithControlMessages = () => {
       message: (
         <GroupControlMessages items={groupControlMessageItems} mainMessage={mainControlMessage} />
       ),
-      className: 'group-message-item',
+      className: 'ui-chat__item_control_group',
       key: 'message-id-7',
     },
     {
@@ -75,17 +75,17 @@ const ChatExampleWithControlMessages = () => {
         componentStyles: {
           ChatItem: {
             root: {
-              '&.group-message-item .ui-chat__item__message': {
+              '&.ui-chat__item_control_group .ui-chat__item__message': {
                 marginLeft: 0,
               },
-              '&.control-message-item .ui-chat__item__message': {
+              '&.ui-chat__item_control .ui-chat__item__message': {
                 marginLeft: '16px',
               },
             },
           },
           ChatMessage: {
             root: ({ props: p, theme: { siteVariables } }) => ({
-              '&.control-message': {
+              '&.ui-chat__message_control': {
                 padding: 0,
                 marginLeft: '10px',
                 backgroundColor: siteVariables.colors.grey[100],

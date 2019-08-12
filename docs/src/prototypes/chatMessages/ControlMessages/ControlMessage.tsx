@@ -20,7 +20,7 @@ class ControlMessage extends React.Component<ControlMessageProps> {
       <>
         {this.props.icon ? <Icon name="participant-add" /> : null}
         <Ref innerRef={this.messageRef}>
-          <Chat.Message {...this.props.message} className="control-message" />
+          <Chat.Message {...this.props.message} className="ui-chat__message_control" />
         </Ref>
       </>
     )
