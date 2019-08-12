@@ -2,7 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { handleRef, Ref } from '@stardust-ui/react-component-ref'
+import { Ref } from '@stardust-ui/react-component-ref'
 
 import TreeItem, { TreeItemProps } from './TreeItem'
 import {
@@ -20,7 +20,6 @@ import {
   WithAsProp,
   withSafeTypeForAs,
   ShorthandCollection,
-  ComponentEventHandler,
   ShorthandValue,
 } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -32,14 +31,11 @@ export interface TreeSlotClassNames {
 }
 
 export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
-  /** Index of the currently active subtree. */
-  activeItems?: ShorthandCollection<TreeItemProps>
-
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Initial activeIndex value. */
-  defaultActiveItems?: ShorthandCollection<TreeItemProps>
+  defaultActiveItemsList?: ShorthandCollection<TreeItemProps>
 
   /** Only allow one subtree to be open at a time. */
   exclusive?: boolean
@@ -55,17 +51,10 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
   renderItemTitle?: ShorthandRenderFunction
-
-  /** Called when activeIndex changes.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
-   */
-  onActiveItemsChange?: ComponentEventHandler<TreeProps>
 }
 
 export interface TreeState {
-  activeItems: ShorthandCollection<TreeItemProps>
+  activeItems: Map<ShorthandValue<TreeItemProps>, { open?: boolean; element: HTMLElement }>
 }
 
 class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
@@ -83,11 +72,11 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    activeItems: customPropTypes.every([
+    activeItemsList: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
-    defaultActiveItems: customPropTypes.every([
+    defaultActiveItemsList: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
@@ -95,7 +84,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
     rtlAttributes: PropTypes.func,
-    onActiveItemsChange: PropTypes.func,
+    onactiveItemsListChange: PropTypes.func,
   }
 
   static defaultProps = {
@@ -103,23 +92,27 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     accessibility: treeBehavior,
   }
 
-  static autoControlledProps = ['activeItems']
+  static autoControlledProps = ['activeItemsList']
 
   itemRefs = []
 
   getInitialAutoControlledState(): TreeState {
+    const activeItems = new Map()
     if (this.props.items) {
       const setItemsLevelAndSize = (items = this.props.items, level = 1, parent?) => {
         items.forEach((item: ShorthandValue<TreeItemProps>, index: number) => {
           item['level'] = level
           item['siblings'] = items
-          item['indexInSubtree'] = index
+          item['index'] = index
           if (parent) {
             item['parent'] = parent
           }
-
+          if (!item['id']) {
+            item['id'] = `${parent ? parent['id'] : ''}${index}`
+          }
           if (item['items']) {
             setItemsLevelAndSize(item['items'], level + 1, item)
+            activeItems.set(item['id'], { open: false })
           }
         })
       }
@@ -127,69 +120,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     }
 
     return {
-      activeItems: this.props.items || [],
-    }
-  }
-
-  handleTitleOpen = (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-    const { activeItems } = this.state
-    const { indexInTree } = treeItemProps
-    const subItems = activeItems[indexInTree]['items']
-
-    if (!subItems) {
-      return
-    }
-    const newActiveItems = [
-      ...activeItems.slice(0, indexInTree + 1),
-      ...subItems,
-      ...activeItems.slice(indexInTree + 1),
-    ]
-    this.trySetState({
-      activeItems: newActiveItems,
-    })
-    _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, activeItems: newActiveItems })
-  }
-
-  handleTitleClose = (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-    const { indexInTree, siblings, indexInSubtree, parent } = treeItemProps
-    const { activeItems } = this.state
-    const nextSibling = siblings[indexInSubtree + 1]
-
-    if (!nextSibling) {
-      const nextParentSibling = parent ? parent['siblings'][parent['indexInSubtree'] + 1] : null
-      if (nextParentSibling) {
-        const nextParentSiblingIndexInTree = activeItems.indexOf(nextParentSibling)
-        const newActiveItems = [
-          ...activeItems.slice(0, indexInTree + 1),
-          ...activeItems.slice(nextParentSiblingIndexInTree),
-        ]
-        this.trySetState({
-          activeItems: newActiveItems,
-        })
-        _.invoke(this.props, 'onActiveItemsChange', e, {
-          ...this.props,
-          activeItems: newActiveItems,
-        })
-      } else {
-        const newActiveItems = activeItems.slice(0, indexInTree + 1)
-        this.trySetState({
-          activeItems: newActiveItems,
-        })
-        _.invoke(this.props, 'onActiveItemsChange', e, {
-          ...this.props,
-          activeItems: newActiveItems,
-        })
-      }
-    } else {
-      const nextSiblingIndexInTree = activeItems.indexOf(nextSibling)
-      const newActiveItems = [
-        ...activeItems.slice(0, indexInTree + 1),
-        ...activeItems.slice(nextSiblingIndexInTree),
-      ]
-      this.trySetState({
-        activeItems: newActiveItems,
-      })
-      _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, activeItems: newActiveItems })
+      activeItems,
     }
   }
 
@@ -199,112 +130,101 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       treeItemProps: TreeItemProps,
       predefinedProps: TreeItemProps,
     ) => {
-      const { open } = treeItemProps
-      if (open) {
-        this.handleTitleClose(e, treeItemProps)
-      } else {
-        this.handleTitleOpen(e, treeItemProps)
-      }
+      const { activeItems } = this.state
+      const itemId = treeItemProps['id']
+      const activeItemValue = activeItems.get(itemId)
+
+      activeItems.set(itemId, { ...activeItemValue, open: !activeItemValue.open })
+      this.trySetState({
+        activeItems,
+      })
+
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
-    onParentFocus: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      const { indexInTree } = treeItemProps
-      const { activeItems } = this.state
-      const parentItem = activeItems[indexInTree]['parent']
+    onFocusParent: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
+      const { parent } = treeItemProps
 
-      if (parentItem) {
-        const parentItemIndex = activeItems.indexOf(parentItem)
-        this.itemRefs[parentItemIndex].current.focus()
+      if (!parent) {
+        return
       }
 
-      _.invoke(predefinedProps, 'onParentFocus', e, treeItemProps)
+      const { activeItems } = this.state
+
+      activeItems.get(parent['id']).element.focus()
+
+      _.invoke(predefinedProps, 'onFocusParent', e, treeItemProps)
     },
-    onFirstChildFocus: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      const { indexInTree } = treeItemProps
-      const { activeItems } = this.state
+    onFocusFirstChild: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
+      const { items } = treeItemProps
 
-      if (activeItems[indexInTree]['items']) {
-        const element = getFirstFocusable(
-          this.itemRefs[indexInTree + 1].current,
-          this.itemRefs[indexInTree + 1].current,
-          true,
-        )
-        if (element) {
-          element.focus()
-        }
+      if (!items) {
+        return
       }
 
-      _.invoke(predefinedProps, 'onFirstChildFocus', e, treeItemProps)
+      const { activeItems } = this.state
+      const firstChildElement = activeItems.get(items[0]['id']).element
+
+      const element = getFirstFocusable(firstChildElement, firstChildElement, true)
+      if (element) {
+        element.focus()
+      }
+
+      _.invoke(predefinedProps, 'onFocusFirstChild', e, treeItemProps)
     },
     onSiblingsExpand: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      const { siblings, indexInSubtree } = treeItemProps
-      let { activeItems } = this.state
+      const { siblings } = treeItemProps
+      const { activeItems } = this.state
+      const itemId = treeItemProps['id']
+      const activeItemValue = activeItems.get(itemId)
 
-      siblings.forEach((sibling: ShorthandValue<TreeItemProps>) => {
-        const siblingIndexInTree = activeItems.indexOf(sibling)
-        const isSubtree = !!sibling['items']
-
-        if (isSubtree) {
-          const isSubtreeOpen = activeItems[siblingIndexInTree + 1] === sibling['items'][0]
-          if (!isSubtreeOpen) {
-            activeItems = [
-              ...activeItems.slice(0, siblingIndexInTree + 1),
-              ...activeItems[siblingIndexInTree]['items'],
-              ...activeItems.slice(siblingIndexInTree + 1),
-            ]
-          }
-        }
+      siblings.forEach(sibling => {
+        activeItems.set(sibling['id'], { ...activeItemValue, open: true })
       })
 
-      this.trySetState({ activeItems }, () => {
-        const indexInTree = activeItems.indexOf(siblings[indexInSubtree])
-        const element = getFirstFocusable(
-          this.itemRefs[indexInTree].current,
-          this.itemRefs[indexInTree].current,
-          true,
-        )
-
-        element.focus()
-
-        _.invoke(this.props, 'onActiveItemsChange', e, { ...this.props, activeItems })
+      this.trySetState({
+        activeItems,
       })
+      // todo onSiblignsExpand event
     },
   })
 
-  renderContent() {
+  renderItems(items = this.props.items) {
     const { activeItems } = this.state
 
-    return _.map(activeItems, (item: ShorthandValue<TreeItemProps>, index: number) => {
-      const isSubtree = !!item['items']
-      const isSubtreeOpen = isSubtree && activeItems[index + 1] === item['items'][0]
-
-      return (
+    return items.reduce((renderedItems, item) => {
+      const isSubtreeOpen = item['items'] && activeItems.get(item['id']).open
+      const renderedItem = (
         <Ref
+          key={item['key'] || item['id']}
           innerRef={(itemElement: HTMLElement) => {
-            if (
-              !itemElement ||
-              (this.itemRefs.length &&
-                this.itemRefs[this.itemRefs.length - 1].current === itemElement)
-            ) {
-              return
-            }
+            const activeItemValue = activeItems.get(item['id'])
 
-            const ref = React.createRef()
-            this.itemRefs.push(ref)
-            handleRef(ref, itemElement)
+            activeItems.set(item['id'], { ...activeItemValue, element: itemElement })
           }}
         >
           {TreeItem.create(item, {
             defaultProps: {
               className: Tree.slotClassNames.item,
               open: isSubtreeOpen,
-              indexInTree: index,
             },
             overrideProps: this.handleTreeItemOverrides,
           })}
         </Ref>
       )
-    })
+
+      return [
+        ...(renderedItems as any[]),
+        renderedItem,
+        ...[isSubtreeOpen ? this.renderItems(item['items']) : []],
+      ]
+    }, [])
+  }
+
+  renderContent() {
+    const { items } = this.props
+    if (!items) return null
+
+    return this.renderItems()
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {

@@ -37,14 +37,12 @@ export interface TreeTitleProps
   /** Whether or not the subtree of the item is in the open state. */
   open?: boolean
 
-  indexInSubtree?: number
-
   /** Whether or not the item has a subtree. */
   hasSubtree?: boolean
 
   siblingsLength?: number
 
-  indexInTree?: number
+  index?: number
 }
 
 class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
@@ -61,8 +59,7 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
     open: PropTypes.bool,
     hasSubtree: PropTypes.bool,
     siblingsLength: PropTypes.number,
-    indexInSubtree: PropTypes.number,
-    indexInTree: PropTypes.number,
+    index: PropTypes.number,
   }
 
   static defaultProps = {

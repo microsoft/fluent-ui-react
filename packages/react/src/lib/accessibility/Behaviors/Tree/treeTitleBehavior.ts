@@ -18,7 +18,7 @@ const treeTitleBehavior: Accessibility<TreeTitleBehavior> = props => ({
         [IS_FOCUSABLE_ATTRIBUTE]: true,
         role: 'treeitem',
         'aria-setsize': props.siblingsLength,
-        'aria-posinset': props.indexInSubtree + 1,
+        'aria-posinset': props.index + 1,
         'aria-level': props.level,
       }),
     },
@@ -41,5 +41,5 @@ type TreeTitleBehavior = {
   open?: boolean
   level?: number
   siblingsLength?: number
-  indexInSubtree?: number
+  index?: number
 }
