@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add `overwrite` prop to `Provider` @layershifter ([#1780](https://github.com/stardust-ui/react/pull/1780))
+
 ### Documentation
 - Restore docs for `Ref` component @layershifter ([#1777](https://github.com/stardust-ui/react/pull/1777))
 - Add prototype for expandable control messages in `Chat` @sophieH29 ([#1765](https://github.com/stardust-ui/react/pull/1765))
