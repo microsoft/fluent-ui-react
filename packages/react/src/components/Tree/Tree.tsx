@@ -6,7 +6,6 @@ import { Ref } from '@stardust-ui/react-component-ref'
 
 import TreeItem, { TreeItemProps } from './TreeItem'
 import {
-  AutoControlledComponent,
   childrenExist,
   commonPropTypes,
   createShorthandFactory,
@@ -14,6 +13,7 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  UIComponent,
 } from '../../lib'
 import {
   ShorthandRenderFunction,
@@ -54,10 +54,10 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
 }
 
 export interface TreeState {
-  activeItems: Map<ShorthandValue<TreeItemProps>, { open?: boolean; element: HTMLElement }>
+  activeItems: Map<ShorthandValue<TreeItemProps>, { open: boolean; element: HTMLElement }>
 }
 
-class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
+class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
   static create: Function
 
   static displayName = 'Tree'
@@ -96,7 +96,9 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   itemRefs = []
 
-  getInitialAutoControlledState(): TreeState {
+  constructor(props, context) {
+    super(props, context)
+
     const activeItems = new Map()
     if (this.props.items) {
       const setItemsLevelAndSize = (items = this.props.items, level = 1, parent?) => {
@@ -119,9 +121,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       setItemsLevelAndSize()
     }
 
-    return {
-      activeItems,
-    }
+    this.state = { activeItems }
   }
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
@@ -135,7 +135,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       const activeItemValue = activeItems.get(itemId)
 
       activeItems.set(itemId, { ...activeItemValue, open: !activeItemValue.open })
-      this.trySetState({
+      this.setState({
         activeItems,
       })
 
@@ -181,7 +181,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         activeItems.set(sibling['id'], { ...activeItemValue, open: true })
       })
 
-      this.trySetState({
+      this.setState({
         activeItems,
       })
       // todo onSiblignsExpand event
