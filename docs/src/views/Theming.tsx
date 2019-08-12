@@ -97,27 +97,6 @@ export default () => (
       the <NavLink to="components/provider">Provider</NavLink>.
     </p>
     <ExampleSnippet
-      value={`
-        <>
-          <Icon name="calendar" circular />
-          <Icon name="calendar" circular />
-
-          <Provider
-            theme={{
-              componentVariables: {
-                Icon: {
-                  color: 'cornflowerblue',
-                },
-              },
-            }}
-          >
-            <span>
-              <Icon name="calendar" circular />
-              <Icon name="calendar" circular />
-            </span>
-          </Provider>
-        </>
-      `}
       render={() => (
         <>
           <Icon name="calendar" circular />
