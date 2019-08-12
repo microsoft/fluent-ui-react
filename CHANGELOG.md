@@ -17,11 +17,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-### Documentation
-- Restore docs for `Ref` component @layershifter ([#1777](https://github.com/stardust-ui/react/pull/1777))
-
 ### Fixes
 - Fix `hand` icon in Teams theme @lucivpav ([#1782](https://github.com/stardust-ui/react/pull/1782))
+
+### Documentation
+- Restore docs for `Ref` component @layershifter ([#1777](https://github.com/stardust-ui/react/pull/1777))
 
 <!--------------------------------[ v0.36.1 ]------------------------------- -->
 ## [v0.36.1](https://github.com/stardust-ui/react/tree/v0.36.1) (2019-08-09)
