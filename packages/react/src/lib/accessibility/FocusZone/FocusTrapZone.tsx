@@ -251,7 +251,8 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
   }
 
   _handleOutsideFocus = (ev: FocusEvent): void => {
-    const focusedElement = document.activeElement as HTMLElement
+    const focusedElement =
+      (ev.relatedTarget as HTMLElement) || (document.activeElement as HTMLElement)
     focusedElement && this._forceFocusInTrap(ev, focusedElement)
   }
 
