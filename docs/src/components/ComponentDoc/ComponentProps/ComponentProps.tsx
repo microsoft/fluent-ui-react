@@ -6,7 +6,7 @@ import { getComponentGroup } from 'docs/src/utils'
 import ComponentTableProps from '../ComponentPropsTable'
 import ComponentPropsComponents from './ComponentPropsComponents'
 import ComponentPropsDescription from './ComponentPropsDescription'
-import { ICSSInJSStyle, Flex, Checkbox } from '@stardust-ui/react'
+import { ICSSInJSStyle, Flex } from '@stardust-ui/react'
 
 const propsContainerStyle: ICSSInJSStyle = { overflowX: 'auto' }
 
@@ -19,7 +19,10 @@ export default class ComponentProps extends React.Component<any, any> {
   componentWillMount() {
     const { displayName } = this.props
 
-    this.setState({ componentGroup: getComponentGroup(displayName) })
+    this.setState({
+      componentGroup: getComponentGroup(displayName),
+      activeDisplayName: displayName,
+    })
   }
 
   componentWillReceiveProps({ displayName: next }) {
@@ -33,15 +36,8 @@ export default class ComponentProps extends React.Component<any, any> {
     }
   }
 
-  handleComponentClick = (e, { name }) => {
-    this.setState({ activeDisplayName: name })
-  }
-
-  handleToggle = () => {
-    const { displayName } = this.props
-    const { activeDisplayName } = this.state
-
-    this.setState({ activeDisplayName: activeDisplayName ? false : displayName })
+  handleSelectedChange = (e, { value }) => {
+    this.setState({ activeDisplayName: value.replace('.', '') })
   }
 
   render() {
@@ -55,11 +51,10 @@ export default class ComponentProps extends React.Component<any, any> {
       <Flex column gap="gap.small">
         <Flex.Item styles={{ display: 'block', verticalAlign: 'middle' }}>
           <Flex gap="gap.medium">
-            <Checkbox checked={!!activeDisplayName} onChange={this.handleToggle} label="Props" />
             <ComponentPropsComponents
               activeDisplayName={activeDisplayName}
               displayNames={displayNames}
-              onItemClick={this.handleComponentClick}
+              onSelectedChange={this.handleSelectedChange}
               parentDisplayName={displayName}
             />
           </Flex>

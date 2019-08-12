@@ -4,6 +4,15 @@
 export const exampleIndexContext = require.context('docs/src/examples/', true, /index.tsx$/)
 
 /**
+ * The Webpack Context for doc site example groups.
+ */
+export const exampleBestPracticesContext = require.context(
+  'docs/src/examples/',
+  true,
+  /BestPractices.tsx$/,
+)
+
+/**
  * The Webpack Context for component playgrounds.
  */
 export const examplePlaygroundContext = require.context(

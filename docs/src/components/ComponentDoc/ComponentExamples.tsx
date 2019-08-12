@@ -23,11 +23,11 @@ export default class ComponentExamples extends React.Component<ComponentExamples
 
   /**
    * RULES for a component with displayName=MyComponent:
-   * 1. create a file at ./docs/src/components/MyComponent/index.tsx referencing all MyComponent examples
+   * 1. create a file at ./docs/src/examples/components/MyComponent/index.tsx referencing all MyComponent examples
    * 2. all example file names must contain the word 'Example'; e.g.: MyComponentExampleCircular.tsx
-   * 3. all example files must be under ./docs/src/components/MyComponent path; e.g.: ./docs/src/components/MyComponent/SomeType/SomeExample.tsx
-   * 2. for every ./docs/src/components/{...}/{...}MyComponent{...}Example{...}.tsx there needs to be a shorthand version of it:
-   *              ./docs/src/components/{...}/{...}MyComponent{...}Example{...}.shorthand.tsx
+   * 3. all example files must be under ./docs/src/examples/components/MyComponent path; e.g.: ./docs/src/examples/components/MyComponent/SomeType/SomeExample.tsx
+   * 4. for every ./docs/src/examples/components/{...}/{...}MyComponent{...}Example{...}.tsx there needs to be a shorthand version of it:
+   *              ./docs/src/examples/components/{...}/{...}MyComponent{...}Example{...}.shorthand.tsx
    */
   renderExamples = (): JSX.Element | null => {
     const { displayName } = this.props
@@ -45,7 +45,7 @@ export default class ComponentExamples extends React.Component<ComponentExamples
       return null
     }
 
-    // rules #2 and #3
+    // rules #3 and #4
     const missingPaths = this.getMissingExamplePaths(displayName, exampleSourcesContext.keys())
     return missingPaths && missingPaths.length ? (
       <div>

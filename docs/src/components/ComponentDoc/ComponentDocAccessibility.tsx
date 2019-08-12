@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Flex, Loader, Text, Accordion } from '@stardust-ui/react'
+import { Flex, Loader, Text, Provider } from '@stardust-ui/react'
 
 const InlineMarkdown = React.lazy(() => import('./InlineMarkdown'))
 
@@ -57,25 +57,12 @@ const ComponentDocAccessibility = ({ info }) => {
     </>
   )
 
-  const accessPanels = [
-    {
-      key: 'accessibility',
-      content: { content: accessibilityDetails, styles: { paddingLeft: '14px' } },
-      title: {
-        content: <Text content="Accessibility" />,
-        as: 'span',
-        'aria-level': '2',
-        styles: { paddingBottom: '0', paddingTop: '0' },
-      },
-    },
-  ]
-
   return (
     <Flex column>
       <Flex.Item>
-        <>
-          <Accordion panels={accessPanels} />
-        </>
+        <Provider styles={{ paddingLeft: '14px', background: 'transparent' }}>
+          {accessibilityDetails}
+        </Provider>
       </Flex.Item>
     </Flex>
   )

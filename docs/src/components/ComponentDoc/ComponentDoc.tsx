@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { Flex, Header, Icon, Dropdown, Text, Grid } from '@stardust-ui/react'
+import { Flex, Header, Icon, Dropdown, Text, Grid, Menu } from '@stardust-ui/react'
 
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
 import ComponentDocLinks from './ComponentDocLinks'
@@ -12,6 +12,7 @@ import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ExampleContext from 'docs/src/context/ExampleContext'
 import ComponentPlayground from 'docs/src/components/ComponentPlayground/ComponentPlayground'
 import { ComponentInfo } from 'docs/src/types'
+import ComponentBestPractices from './ComponentBestPractices'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -24,7 +25,8 @@ type ComponentDocProps = {
 } & RouteComponentProps<{}>
 
 class ComponentDoc extends React.Component<ComponentDocProps, any> {
-  state: any = {}
+  state: any = { currentTabTitle: 'Definition' }
+  tabs = ['Definition', 'Usage', 'Props', 'Accessibility']
 
   componentWillMount() {
     const { history, location } = this.props
@@ -55,6 +57,10 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
     history.replace(`${location.pathname}#${activePath}`)
     // set active hash path
     this.setState({ activePath }, scrollToAnchor)
+  }
+
+  handleTabClick = (e, props) => {
+    this.setState({ currentTabTitle: this.tabs[props.index] })
   }
 
   render() {
@@ -125,32 +131,52 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
                 </Flex.Item>
               </Flex>
               <Text styles={{ marginBottom: '1.4rem' }} content={info.docblock.description} />
-              <ComponentAccessibility info={info} />
+              <Menu
+                underlined
+                primary
+                defaultActiveIndex={0}
+                items={this.tabs}
+                onItemClick={this.handleTabClick}
+              />
               <ComponentDocSee displayName={info.displayName} />
-              <ComponentProps displayName={info.displayName} props={info.props} />
             </>
           </Flex.Item>
         </Flex>
 
-        <ComponentPlayground componentName={info.displayName} key={info.displayName} />
+        {this.state.currentTabTitle === 'Accessibility' && <ComponentAccessibility info={info} />}
 
-        <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
-          <div ref={this.handleExamplesRef}>
-            <ExampleContext.Provider
-              value={{
-                activeAnchorName: activePath,
-                onExamplePassed: this.handleExamplePassed,
-              }}
+        {this.state.currentTabTitle === 'Props' && (
+          <ComponentProps displayName={info.displayName} props={info.props} />
+        )}
+
+        {this.state.currentTabTitle === 'Definition' && (
+          <>
+            <ComponentPlayground componentName={info.displayName} key={info.displayName} />
+            <Grid
+              columns="auto 300px"
+              styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}
             >
-              <ComponentExamples displayName={info.displayName} />
-            </ExampleContext.Provider>
+              <div>
+                <ComponentBestPractices displayName={info.displayName} />
+              </div>
+            </Grid>
+          </>
+        )}
 
-            <div style={exampleEndStyle}>
-              This is the bottom <Icon name="pointing down" />
+        {this.state.currentTabTitle === 'Usage' && (
+          <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
+            <div ref={this.handleExamplesRef}>
+              <ExampleContext.Provider
+                value={{
+                  activeAnchorName: activePath,
+                  onExamplePassed: this.handleExamplePassed,
+                }}
+              >
+                <ComponentExamples displayName={info.displayName} />
+              </ExampleContext.Provider>
             </div>
-          </div>
 
-          {/* TODO: bring back the right floating menu
+            {/* TODO: bring back the right floating menu
             <Box styles={{ width: '25%', paddingLeft: '14px' }}>
               <ComponentSidebar
                 activePath={activePath}
@@ -160,7 +186,12 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
               />
             </Box>
           */}
-        </Grid>
+          </Grid>
+        )}
+
+        <div style={exampleEndStyle}>
+          This is the bottom <Icon name="pointing down" />
+        </div>
       </div>
     )
   }
