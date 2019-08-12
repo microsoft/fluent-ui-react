@@ -17,28 +17,25 @@ const useEventListener = <T extends EventTypes>(options: EventListenerOptions<T>
     return latestListener.current(event)
   }, [])
 
-  React.useEffect(
-    () => {
-      if (isActionSupported(targetRef, 'addEventListener')) {
-        ;(targetRef.current as NonNullable<Node>).addEventListener(type, eventHandler, capture)
+  React.useEffect(() => {
+    if (isActionSupported(targetRef, 'addEventListener')) {
+      ;(targetRef.current as NonNullable<Node>).addEventListener(type, eventHandler, capture)
+    } else if (process.env.NODE_ENV !== 'production') {
+      throw new Error(
+        '@stardust-ui/react-component-event-listener: Passed `targetRef` is not valid or does not support `addEventListener()` method.',
+      )
+    }
+
+    return () => {
+      if (isActionSupported(targetRef, 'removeEventListener')) {
+        ;(targetRef.current as NonNullable<Node>).removeEventListener(type, eventHandler, capture)
       } else if (process.env.NODE_ENV !== 'production') {
         throw new Error(
-          '@stardust-ui/react-component-event-listener: Passed `targetRef` is not valid or does not support `addEventListener()` method.',
+          '@stardust-ui/react-component-event-listener: Passed `targetRef` is not valid or does not support `removeEventListener()` method.',
         )
       }
-
-      return () => {
-        if (isActionSupported(targetRef, 'removeEventListener')) {
-          ;(targetRef.current as NonNullable<Node>).removeEventListener(type, eventHandler, capture)
-        } else if (process.env.NODE_ENV !== 'production') {
-          throw new Error(
-            '@stardust-ui/react-component-event-listener: Passed `targetRef` is not valid or does not support `removeEventListener()` method.',
-          )
-        }
-      }
-    },
-    [capture, targetRef, type],
-  )
+    }
+  }, [capture, targetRef, type])
 }
 
 export default useEventListener
