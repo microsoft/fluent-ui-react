@@ -558,7 +558,7 @@ definitions.push({
   regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when has an opened subtree\./g,
   testMethod: (parameters: TestMethod) => {
     const [action, key, elementToPerformAction] = [...parameters.props]
-    const propertyOpenedSubtree = { open: true, items: [{ a: 1 }] }
+    const propertyOpenedSubtree = { open: true, items: [{ a: 1 }], siblings: [] }
     const expectedKeyNumberVertical = parameters.behavior(propertyOpenedSubtree).keyActions[
       elementToPerformAction
     ][action].keyCombinations[0].keyCode

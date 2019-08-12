@@ -10,10 +10,10 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  *
  * @specification
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
- * Triggers 'receiveFocus' action with 'ArrowLeft' on 'root', when has an opened subtree.
+ * Triggers 'focusParent' action with 'ArrowLeft' on 'root', when has a closed subtree.
  * Triggers 'collapse' action with 'ArrowLeft' on 'root', when has an opened subtree.
  * Triggers 'expand' action with 'ArrowRight' on 'root', when has a closed subtree.
- * Triggers 'focusSubtree' action with 'ArrowRight' on 'root', when has an opened subtree.
+ * Triggers 'focusFirstChild' action with 'ArrowRight' on 'root', when has an opened subtree.
  */
 const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
   attributes: {

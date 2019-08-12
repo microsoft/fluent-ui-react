@@ -100,7 +100,8 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
     super(props, context)
 
     const activeItems = new Map()
-    if (this.props.items) {
+
+    if (props.items) {
       const setItemsLevelAndSize = (items = this.props.items, level = 1, parent?) => {
         items.forEach((item: ShorthandValue<TreeItemProps>, index: number) => {
           item['level'] = level
