@@ -26,6 +26,13 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 - Handle keyDownCapture based on `shouldHandleKeyDownCapture` prop @sophieH29 ([#563](https://github.com/stardust-ui/react/pull/563))
 - Add `bidirectionalDomOrder` direction allowing arrow keys navigation following DOM order @sophieH29 ([#1637](https://github.com/stardust-ui/react/pull/1647))
 
+### Upgrade `FocusZone` to the latest version from `fabric-ui` @sophieH29 ([#1772](https://github.com/stardust-ui/react/pull/1772))
+- Restore focus on removing item ([OfficeDev/office-ui-fabric-react#7818](https://github.com/OfficeDev/office-ui-fabric-react/pull/7818))
+- `onActiveItemChanged` now fires ([OfficeDev/office-ui-fabric-react#7958](https://github.com/OfficeDev/office-ui-fabric-react/pull/7958))
+- Reduce global event listeners ([OfficeDev/office-ui-fabric-react#8421](https://github.com/OfficeDev/office-ui-fabric-react/pull/8421))
+- Track innerzones correctly ([OfficeDev/office-ui-fabric-react#8560](https://github.com/OfficeDev/office-ui-fabric-react/pull/8560))
+- Check for no wrap fix ([OfficeDev/office-ui-fabric-react#9542](https://github.com/OfficeDev/office-ui-fabric-react/pull/9542))
+
 
 #### feat(FocusZone): Implement FocusZone into renderComponent [#116](https://github.com/stardust-ui/react/pull/116)
 - Prettier and linting fixes, e.g., removing semicolons, removing underscores from private methods.
