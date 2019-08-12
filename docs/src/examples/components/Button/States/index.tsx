@@ -9,6 +9,11 @@ const States = () => (
       description="A button can show it is currently unable to be interacted with."
       examplePath="components/Button/States/ButtonExampleDisabled"
     />
+    <ComponentExample
+      title="Loading"
+      description="A button can show a loading indicator."
+      examplePath="components/Button/States/ButtonExampleLoading"
+    />
   </ExampleSection>
 )
 
