@@ -1,3 +1,5 @@
+import { getPackageName } from './utils/packageNameUtils'
+
 export default [
   '@babel/runtime@7.1.2',
   '@babel/runtime@7.4.5',
@@ -64,6 +66,6 @@ export default [
   'webpack@4.25.1',
 ]
 
-export const isIgnored = (packageId): boolean => {
-  return packageId.startsWith('@stardust-ui/')
+export const isIgnored = (packageId: string): boolean => {
+  return packageId.startsWith('@stardust-ui/') || getPackageName(packageId) === 'fela'
 }

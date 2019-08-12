@@ -2,6 +2,7 @@ import * as React from 'react'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 import ImportantAndMentionMessages from './ImportantAndMentionMessages'
 import ChatMessageWithPopover from './ChatMessageWithPopover'
+import ControlMessages from './ControlMessages'
 
 export default () => (
   <PrototypeSection title="Chat messages">
@@ -16,6 +17,9 @@ export default () => (
       description="Important and mention messages support in Teams theme."
     >
       <ImportantAndMentionMessages />
+    </ComponentPrototype>
+    <ComponentPrototype title="Control messages" description="Control messages example">
+      <ControlMessages />
     </ComponentPrototype>
   </PrototypeSection>
 )

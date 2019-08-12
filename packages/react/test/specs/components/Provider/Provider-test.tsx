@@ -1,7 +1,8 @@
+import { mount } from 'enzyme'
 import * as React from 'react'
+
 import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
-import { mount } from 'enzyme'
 
 describe('Provider', () => {
   test('is exported', () => {
@@ -10,6 +11,64 @@ describe('Provider', () => {
 
   test('has a ProviderConsumer subcomponent', () => {
     expect(require('src/index.ts').Provider.Consumer).toEqual(ProviderConsumer)
+  })
+
+  describe('overwrite', () => {
+    const outerTheme = { siteVariables: { brand: 'blue' } }
+    const innerTheme = { siteVariables: { secondary: 'yellow' } }
+
+    test('do not overwrite by default', () => {
+      const wrapper = mount(
+        <Provider theme={outerTheme}>
+          <Provider theme={innerTheme}>
+            <span />
+          </Provider>
+        </Provider>,
+      )
+
+      expect(
+        wrapper
+          .find('ThemeProvider')
+          .at(1)
+          .prop('theme'),
+      ).toEqual(
+        expect.objectContaining({
+          theme: expect.objectContaining({
+            siteVariables: {
+              brand: 'blue',
+              secondary: 'yellow',
+              fontSizes: {},
+            },
+          }),
+        }),
+      )
+    })
+
+    test('does overwrite when is true', () => {
+      const wrapper = mount(
+        <Provider theme={outerTheme}>
+          <Provider overwrite theme={innerTheme}>
+            <span />
+          </Provider>
+        </Provider>,
+      )
+
+      expect(
+        wrapper
+          .find('ThemeProvider')
+          .at(1)
+          .prop('theme'),
+      ).toEqual(
+        expect.objectContaining({
+          theme: expect.objectContaining({
+            siteVariables: {
+              secondary: 'yellow',
+              fontSizes: {},
+            },
+          }),
+        }),
+      )
+    })
   })
 
   describe('staticStyles', () => {
