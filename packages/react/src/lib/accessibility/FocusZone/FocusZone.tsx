@@ -76,6 +76,11 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
   static displayName = 'FocusZone'
   static className = 'ms-FocusZone'
 
+  /** Used for testing purposes only. */
+  static getOuterZones(): number {
+    return _outerZones.size
+  }
+
   _root: { current: HTMLElement | null } = { current: null }
   _id: string
   /** The most recently focused child element. */

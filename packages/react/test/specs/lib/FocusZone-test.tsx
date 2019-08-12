@@ -1526,6 +1526,28 @@ describe('FocusZone', () => {
     called = false
   })
 
+  it('only adds outerzones to be updated for tab changes', () => {
+    const activeZones = FocusZone.getOuterZones()
+
+    host = document.createElement('div')
+
+    // Render component without button A.
+    ReactDOM.render(
+      <FocusZone>
+        <FocusZone>
+          <button>ok</button>
+        </FocusZone>
+      </FocusZone>,
+      host,
+    )
+
+    expect(FocusZone.getOuterZones()).toEqual(activeZones + 1)
+
+    ReactDOM.unmountComponentAtNode(host)
+
+    expect(FocusZone.getOuterZones()).toEqual(activeZones)
+  })
+
   describe('restores focus', () => {
     it('to the following item when item removed', () => {
       host = document.createElement('div')

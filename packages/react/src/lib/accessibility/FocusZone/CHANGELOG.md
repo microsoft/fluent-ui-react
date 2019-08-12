@@ -28,7 +28,8 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 
 ### Upgrade `FocusZone` to the latest version from `fabric-ui` @sophieH29 ([#1772](https://github.com/stardust-ui/react/pull/1772))
 - Restore focus on removing item ([OfficeDev/office-ui-fabric-react#7818](https://github.com/OfficeDev/office-ui-fabric-react/pull/7818))
-- Reduce global event listeners ([OfficeDev/office-ui-fabric-react#7958](https://github.com/OfficeDev/office-ui-fabric-react/pull/7958))
+- `onActiveItemChanged` now fires ([OfficeDev/office-ui-fabric-react#7958](https://github.com/OfficeDev/office-ui-fabric-react/pull/7958))
+- Reduce global event listeners ([OfficeDev/office-ui-fabric-react#8421](https://github.com/OfficeDev/office-ui-fabric-react/pull/8421))
 - Track innerzones correctly ([OfficeDev/office-ui-fabric-react#8560](https://github.com/OfficeDev/office-ui-fabric-react/pull/8560))
 - Check for no wrap fix ([OfficeDev/office-ui-fabric-react#9542](https://github.com/OfficeDev/office-ui-fabric-react/pull/9542))
 
