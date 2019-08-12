@@ -40,7 +40,7 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
         collapse: {
           keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
         },
-        focusSubtree: {
+        focusFirstChild: {
           keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
         },
       }),

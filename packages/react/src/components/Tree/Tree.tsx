@@ -184,11 +184,12 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
       this.setState({
         activeItems,
       })
-      // todo onSiblignsExpand event
+
+      _.invoke(predefinedProps, 'onSiblingsExpand', e, treeItemProps)
     },
   })
 
-  renderItems(items = this.props.items) {
+  renderItems(items: ShorthandCollection<TreeItemProps>) {
     const { activeItems } = this.state
 
     return items.reduce((renderedItems, item) => {
@@ -224,7 +225,7 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
     const { items } = this.props
     if (!items) return null
 
-    return this.renderItems()
+    return this.renderItems(items)
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {

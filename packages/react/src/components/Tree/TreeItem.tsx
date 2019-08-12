@@ -147,7 +147,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
       this.handleTitleClick(e)
     },
-    focusSubtree: e => {
+    focusFirstChild: e => {
       e.preventDefault()
       e.stopPropagation()
 
