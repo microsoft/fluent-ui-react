@@ -33,6 +33,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Export `call-blocked` icon to Teams theme @francescopalmiotto ([#1736](https://github.com/stardust-ui/react/pull/1736))
 - Add support for component styles debugging @kuzhelov ([#1726](https://github.com/stardust-ui/react/pull/1726))
 - Use FocusZone in selectable list @jurokapsiar ([#1757](https://github.com/stardust-ui/react/pull/1757))
+- Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
 
 ### Documentation
 - Fix code in changing component variables section of theming examples @lucivpav ([#1626](https://github.com/stardust-ui/react/pull/1626))
@@ -66,7 +67,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `align` prop for `Text` component @Bugaa92 ([#1668](https://github.com/stardust-ui/react/pull/1668))
 - Add `size` prop for `Button` component @layershifter ([#1716](https://github.com/stardust-ui/react/pull/1716))
 - Add `target` prop on `Provider`, allows to specify a `document` where styles should be renderer @layershifter ([#1252](https://github.com/stardust-ui/react/pull/1252))
-- Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
 
 ### Fixes
 - Fix `ChatMessage`'s focus border overlays `actionMenu` in Teams theme @mnajdova ([#1637](https://github.com/stardust-ui/react/pull/1637))
