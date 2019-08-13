@@ -59,10 +59,10 @@ const positionAndAlignValues = [
 ]
 
 const iconNames: Record<Position, string> = {
-  above: 'arrow circle up',
-  below: 'arrow circle down',
-  before: 'arrow circle left',
-  after: 'arrow circle right',
+  above: 'arrow-up',
+  below: 'arrow-down',
+  before: 'arrow-left',
+  after: 'arrow-right',
 }
 
 const paddings: Record<string, React.CSSProperties['padding']> = {

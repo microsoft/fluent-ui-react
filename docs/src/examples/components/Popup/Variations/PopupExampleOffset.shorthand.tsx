@@ -6,6 +6,7 @@ const renderButton = rotateArrowUp => (
     icon={{
       name: 'arrow-up',
       circular: true,
+      bordered: true,
       styles: { transform: `rotate(${rotateArrowUp})` },
     }}
     styles={{ height: '80px', minWidth: '80px', padding: 0 }}
