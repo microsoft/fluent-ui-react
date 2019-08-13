@@ -10,9 +10,9 @@ const doList = [
     the Popup.
   </Text>,
   <Text>
-    Beware of using {link('autoFocus', '/auto-focus-zone#usage')} as it just grabs focus and do not
-    traps it. User is able to tab out from popup, so consider to use `inline` prop to save a correct
-    tab order.
+    Beware of using {link('autoFocus', '/auto-focus-zone#usage')} as it just grabs focus and does
+    not trap it. User is able to tab out from popup, so consider to use `inline` prop to save a
+    correct tab order.
   </Text>,
   <Text>
     To set aria-label, aria-labelledby and aria-describedby attributes on the popup slot you need to
