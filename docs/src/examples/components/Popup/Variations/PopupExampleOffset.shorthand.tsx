@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { Button, Grid, Popup } from '@stardust-ui/react'
 
-const renderButton = rotateArrowUp => (
+const renderButton = () => (
   <Button
     icon={{
       name: 'arrow-up',
       circular: true,
       bordered: true,
-      styles: { transform: `rotate(${rotateArrowUp})` },
+      rotate: -45,
     }}
     styles={{ height: '80px', minWidth: '80px', padding: 0 }}
   />
@@ -19,7 +19,7 @@ const PopupExamplePosition = () => (
       align="start"
       position="above"
       offset="-100%p"
-      trigger={renderButton('-45deg')}
+      trigger={renderButton()}
       content={
         <p>
           The popup is rendered at above-start
