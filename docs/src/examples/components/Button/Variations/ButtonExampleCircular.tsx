@@ -7,6 +7,9 @@ const ButtonExampleCircular = () => (
     <Button circular icon>
       <Icon name="book" xSpacing="none" />
     </Button>
+    <Button circular icon primary>
+      <Icon name="coffee" xSpacing="none" />
+    </Button>
   </Flex>
 )
 
