@@ -50,8 +50,7 @@ export interface ButtonVariables {
   textColorHover: string
   textPrimaryColor: string
   textPrimaryColorHover: string
-  textSecondaryColor: string
-  textSecondaryColorHover: string
+  textColorDisabled: string
 
   boxShadow: string
 
@@ -86,7 +85,7 @@ export default (siteVars: any): ButtonVariables => ({
   color: siteVars.colors.grey[750],
   colorHover: siteVars.colors.grey[750],
   colorFocus: siteVars.colors.grey[750],
-  colorDisabled: siteVars.colors.grey[250],
+  colorDisabled: siteVars.colorScheme.brand.foregroundDisabled,
   backgroundColor: siteVars.colors.white,
   backgroundColorActive: siteVars.colors.grey[200],
   backgroundColorHover: siteVars.colors.grey[50],
@@ -116,12 +115,11 @@ export default (siteVars: any): ButtonVariables => ({
   circularBorderColorHover: 'transparent',
   circularBorderColorFocus: 'transparent',
 
-  textColor: siteVars.colors.brand[600],
-  textColorHover: siteVars.colors.brand[800],
-  textPrimaryColor: siteVars.colors.brand[600],
-  textPrimaryColorHover: siteVars.colors.brand[800],
-  textSecondaryColor: siteVars.colors.grey[450],
-  textSecondaryColorHover: siteVars.colors.brand[800],
+  textColor: siteVars.colorScheme.default.foreground1,
+  textColorHover: siteVars.colorScheme.brand.foreground1,
+  textPrimaryColor: siteVars.colorScheme.brand.foreground,
+  textPrimaryColorHover: siteVars.colorScheme.brand.foreground1,
+  textColorDisabled: siteVars.colorScheme.brand.foregroundDisabled1,
 
   boxShadow: siteVars.shadowLevel1,
 
