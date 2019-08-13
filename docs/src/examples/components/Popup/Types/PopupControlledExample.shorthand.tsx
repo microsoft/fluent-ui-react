@@ -18,7 +18,7 @@ const PopupControlledExample = () => {
     <Popup
       open={open}
       onOpenChange={(e, { open }) => setOpen(open)}
-      trigger={<Button icon="expand" title="Open popup" />}
+      trigger={<Button icon="open-outside" title="Open popup" />}
       content={popupContent}
       trapFocus
     />

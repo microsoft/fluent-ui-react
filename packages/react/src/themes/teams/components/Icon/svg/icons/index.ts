@@ -5,6 +5,8 @@ import add from './add'
 import addParticipant from './addParticipant'
 import arrowUp from './arrowUp'
 import arrowDown from './arrowDown'
+import arrowLeft from './arrowLeft'
+import arrowRight from './arrowRight'
 import ban from './ban'
 import bold from './bold'
 import bookmark from './bookmark'
@@ -153,6 +155,8 @@ export default {
   add,
   'arrow-up': arrowUp,
   'arrow-down': arrowDown,
+  'arrow-left': arrowLeft,
+  'arrow-right': arrowRight,
   ban,
   bold,
   bookmark,
