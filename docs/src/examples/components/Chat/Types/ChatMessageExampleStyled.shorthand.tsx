@@ -9,13 +9,13 @@ import {
 } from '@stardust-ui/react'
 
 const reactions: ShorthandCollection<ReactionProps> = [
-  { key: 'up', icon: 'thumbs up', content: '1K' },
-  { key: 'down', icon: 'thumbs down', content: 5 },
+  { key: 'up', icon: 'like', content: '1K' },
+  { key: 'smile', icon: 'emoji', content: 5 },
 ]
 
 const janeAvatar: AvatarProps = {
   image: 'public/images/avatar/small/ade.jpg',
-  status: { color: 'green', icon: 'check' },
+  status: { color: 'green', icon: 'stardust-checkmark' },
 }
 
 const content = (
@@ -108,7 +108,7 @@ const ChatMessageExampleStyled = () => (
                 author="John Doe"
                 timestamp="Yesterday, 10:15 PM"
                 mine
-                badge={{ icon: 'at' }}
+                badge={{ icon: 'mention' }}
                 badgePosition="start"
                 reactionGroup={reactions}
               />
@@ -125,7 +125,7 @@ const ChatMessageExampleStyled = () => (
               content={{ content }}
               author="Jane Doe"
               timestamp="Yesterday, 10:15 PM"
-              badge={{ icon: 'exclamation' }}
+              badge={{ icon: 'exclamation-circle' }}
               reactionGroup={reactions}
             />
           ),
