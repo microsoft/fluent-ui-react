@@ -149,7 +149,10 @@ export default () => (
     </p>
     <ExampleSnippet
       render={() => (
-        <Button icon={{ name: 'user', styles: { boxShadow: '0 0 0 2px red' } }} content="Profile" />
+        <Button
+          icon={{ name: 'calendar', styles: { boxShadow: '0 0 0 2px red' } }}
+          content="Profile"
+        />
       )}
     />
 
@@ -165,8 +168,8 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <>
-          <Button icon="user" content="Profile" />
-          <Button icon="user" content="Profile" />
+          <Button icon="calendar" content="Profile" />
+          <Button icon="calendar" content="Profile" />
 
           <Provider
             theme={{
@@ -180,8 +183,8 @@ export default () => (
             }}
           >
             <span>
-              <Button icon="user" content="Profile" />
-              <Button icon="user" content="Profile" />
+              <Button icon="calendar" content="Profile" />
+              <Button icon="calendar" content="Profile" />
             </span>
           </Provider>
         </>
@@ -247,9 +250,9 @@ export default () => (
         >
           <div>
             <Animation name="spinner">
-              <Icon name="user" circular />
+              <Icon name="calendar" circular />
             </Animation>
-            <Icon name="book" animation="spinner" circular />
+            <Icon name="emoji" animation="spinner" circular />
           </div>
         </Provider>
       )}
@@ -286,10 +289,10 @@ export default () => (
         >
           <div>
             <Animation name="spinner" delay="2s" duration="1s">
-              <Icon name="user" circular />
+              <Icon name="calendar" circular />
             </Animation>
             <Icon
-              name="book"
+              name="emoji"
               animation={{ name: 'spinner', delay: '5s', duration: '2s' }}
               circular
             />
