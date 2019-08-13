@@ -2,8 +2,8 @@ import * as React from 'react'
 import { Avatar, Chat, ChatItemProps, ReactionProps, ShorthandCollection } from '@stardust-ui/react'
 
 const reactions: ShorthandCollection<ReactionProps> = [
-  { icon: 'thumbs up', content: '1K', key: 'likes', variables: { meReacting: true }, as: 'button' },
-  { icon: 'thumbs down', content: 2, key: 'dislikes', as: 'button' },
+  { icon: 'like', content: '1K', key: 'likes', variables: { meReacting: true }, as: 'button' },
+  { icon: 'emoji', content: 2, key: 'smiles', as: 'button' },
 ]
 
 const items: ShorthandCollection<ChatItemProps> = [
