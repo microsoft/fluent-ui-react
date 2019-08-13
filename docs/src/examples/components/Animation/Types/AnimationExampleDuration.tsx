@@ -17,7 +17,7 @@ const spinner = {
 const AnimationExampleDuration = () => (
   <Provider theme={{ animations: { spinner } }}>
     <Animation name="spinner" duration="1s">
-      <Icon name="umbrella" circular bordered />
+      <Icon name="mention" circular bordered />
     </Animation>
   </Provider>
 )

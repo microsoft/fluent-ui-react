@@ -4,8 +4,8 @@ import { Button } from '@stardust-ui/react'
 const ButtonGroupExampleShorthand = () => (
   <Button.Group
     buttons={[
-      { key: 'book', icon: 'book', iconOnly: true },
-      { key: 'coffee', icon: 'coffee', iconOnly: true },
+      { key: 'emoji', icon: 'emoji', iconOnly: true },
+      { key: 'translation', icon: 'translation', iconOnly: true },
       { key: 'play', icon: 'play', iconOnly: true },
     ]}
   />
