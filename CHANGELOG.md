@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update text `Button` styles for Teams Theme to match [redlines] @codepretty ([#1719](https://github.com/stardust-ui/react/pull/1719))
 - Fix `Menu` and `MenuItem` styles to match [redlines] @bcalvery ([#1712](https://github.com/stardust-ui/react/pull/1712))
 - Update vulnerable version of `lodash` dependency @layershifter ([#1700](https://github.com/stardust-ui/react/pull/1700))
+- Make `Embed` focusable via keyboard @lucivpav ([#1758](https://github.com/stardust-ui/react/pull/1758))
 
 ### Features
 - Add `overwrite` prop to `Provider` @layershifter ([#1780](https://github.com/stardust-ui/react/pull/1780))

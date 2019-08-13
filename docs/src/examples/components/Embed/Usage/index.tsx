@@ -3,14 +3,14 @@ import * as React from 'react'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
-const Types = () => (
-  <ExampleSection title="Types">
+const Usage = () => (
+  <ExampleSection title="Usage">
     <ComponentExample
-      title="Embed"
-      description="A basic embedded GIF."
-      examplePath="components/Embed/Types/EmbedExample"
+      title="YouTube"
+      description="An embed component can embed a YouTube video by iframe."
+      examplePath="components/Embed/Usage/EmbedExampleYouTube"
     />
   </ExampleSection>
 )
 
-export default Types
+export default Usage
