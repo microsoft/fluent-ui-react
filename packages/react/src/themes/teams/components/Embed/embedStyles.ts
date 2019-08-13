@@ -51,4 +51,7 @@ export default {
     top: '50%',
     transform: 'translate(-50%, -50%)',
   }),
+  iframe: (): ICSSInJSStyle => ({
+    display: 'block',
+  }),
 } as ComponentSlotStylesInput<EmbedProps & EmbedState, EmbedVariables>
