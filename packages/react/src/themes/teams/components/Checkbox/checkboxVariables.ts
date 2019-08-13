@@ -1,22 +1,73 @@
 import { CheckboxVariables as BaseCheckboxVariables } from '../../../base/components/Checkbox/checkboxVariables'
+import { pxToRem } from '../../../../lib'
+import * as _ from 'lodash'
 
-export type CheckboxVariables = Partial<BaseCheckboxVariables>
+export type CheckboxVariables = Partial<BaseCheckboxVariables> & {
+  rootPadding: string
+
+  textColor: string
+  indicatorColor: string
+
+  textColorHover: string
+  borderColorHover: string
+  checkedBackgroundHover: string
+  checkedTextColor: string
+  checkedIndicatorColor: string
+
+  toggleIndicatorSize: string
+  toggleCheckedPadding: string
+
+  disabledBackgroundChecked: string
+  disabledCheckedIndicatorColor: string
+}
+
+const toggleMovementDistance = pxToRem(20)
+const padding = pxToRem(2)
+const defaultValue = 'red'
 
 export default (siteVars: any): CheckboxVariables => ({
-  checkboxBorderColor: siteVars.colors.grey[750],
+  textColor: _.get(siteVars, 'colorScheme.default.foreground1', defaultValue),
+  background: _.get(siteVars, 'colorScheme.default.background', defaultValue),
+  borderColor: _.get(siteVars, 'colorScheme.default.foreground1', defaultValue),
+  borderStyle: 'solid',
+  borderRadius: pxToRem(3),
+  borderWidth: pxToRem(1),
+  indicatorColor: 'transparent',
+  gap: pxToRem(12),
+  margin: `${pxToRem(20)}, 0`,
+  padding,
+  rootPadding: '3px 5px',
 
-  toggleColor: siteVars.colors.brand[600],
+  textColorHover: _.get(siteVars, 'colorScheme.default.foreground', defaultValue),
+  borderColorHover: _.get(siteVars, 'colorScheme.default.foreground', defaultValue),
+  checkedBackgroundHover: _.get(siteVars, 'colorScheme.brand.backgroundHover', defaultValue),
 
-  checkedCheckboxBackground: siteVars.colors.brand[600],
-  checkedCheckboxBorderColor: siteVars.colors.brand[600],
-  checkedCheckboxColor: siteVars.colors.white,
-  checkedToggleBackground: siteVars.colors.brand[600],
-  checkedToggleBorderColor: siteVars.colors.brand[600],
-  checkedToggleColor: siteVars.colors.white,
+  toggleBorderRadius: pxToRem(999),
+  toggleIndicatorSize: pxToRem(14),
+  toggleMargin: `${pxToRem(20)}, 0`,
+  togglePadding: `${padding} ${toggleMovementDistance} ${padding} ${padding}`,
 
-  disabledColor: siteVars.colors.grey[250],
-  disabledCheckboxBackground: siteVars.colors.grey[250],
-  disabledCheckboxBorderColor: siteVars.colors.grey[250],
-  disabledToggleBackground: siteVars.colors.grey[250],
-  disabledToggleBorderColor: siteVars.colors.grey[250],
+  checkedTextColor: _.get(siteVars, 'colorScheme.default.foreground', defaultValue),
+  checkedBackground: _.get(siteVars, 'colorScheme.brand.backgroundActive1', defaultValue),
+  checkedBorderColor: 'transparent',
+  checkedIndicatorColor: _.get(siteVars, 'colorScheme.default.background', defaultValue),
+  toggleCheckedPadding: `${padding} ${padding} ${padding} ${toggleMovementDistance}`,
+
+  disabledBackground: _.get(siteVars, 'colorScheme.default.background', defaultValue),
+  disabledBackgroundChecked: _.get(
+    siteVars,
+    'colorScheme.default.backgroundDisabled',
+    defaultValue,
+  ),
+  disabledBorderColor: _.get(siteVars, 'colorScheme.default.foregroundDisabled1', defaultValue),
+  disabledCheckedIndicatorColor: _.get(
+    siteVars,
+    'colorScheme.default.foregroundDisabled',
+    defaultValue,
+  ),
+  disabledToggleIndicatorColor: _.get(
+    siteVars,
+    'colorScheme.default.foregroundDisabled',
+    defaultValue,
+  ),
 })

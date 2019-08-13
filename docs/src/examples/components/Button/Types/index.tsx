@@ -15,9 +15,9 @@ const Types = () => (
       examplePath="components/Button/Types/ButtonExampleEmphasis"
     />
     <ComponentExample
-      title="Icon"
-      description="A button can be made of only an icon."
-      examplePath="components/Button/Types/ButtonExampleIcon"
+      title="Text"
+      description="A button can be shown in form of a text to indicate some less-pronounced actions."
+      examplePath="components/Button/Types/ButtonExampleText"
     />
     <ComponentExample
       title="Icon Only"

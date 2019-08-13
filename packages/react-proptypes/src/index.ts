@@ -492,6 +492,8 @@ export const size = PropTypes.oneOf([
   'largest',
 ])
 
+export const align = PropTypes.oneOf(['start', 'end', 'center', 'justify'])
+
 export const animation = PropTypes.oneOfType([
   // Validator is broken in the latest @react/types
   PropTypes.shape({

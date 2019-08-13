@@ -228,12 +228,15 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           {...accessibility.attributes.root}
           {...accessibility.keyHandlers.root}
           {...unhandledProps}
-          {...!wrapper && { onClick: this.handleClick }}
+          {...(!wrapper && { onClick: this.handleClick })}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           {icon &&
             Icon.create(this.props.icon, {
-              defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+              defaultProps: {
+                xSpacing: !!content ? 'after' : 'none',
+                styles: styles.icon,
+              },
             })}
           {rtlTextContainer.createFor({ element: content })}
           {menu &&
