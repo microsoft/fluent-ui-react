@@ -4,7 +4,7 @@ import ComponentBestPractices from 'docs/src/components/ComponentBestPractices'
 
 const doList = [
   'Add textual representation if the component only contains an icon (using `title`, `aria-label` or `aria-labelledby` props).',
-  'Add aria-live announcement, when using loading property.',
+  'Use react-aria-live or similar component to announce the loading button state change.',
 ]
 
 const ButtonBestPractices: React.FunctionComponent<{}> = () => {
