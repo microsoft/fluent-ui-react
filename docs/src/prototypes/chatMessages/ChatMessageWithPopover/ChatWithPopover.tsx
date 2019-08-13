@@ -19,9 +19,9 @@ const reactions: ShorthandCollection<ReactionProps> = [
     variables: { meReacting: true },
   },
   {
-    icon: 'thumbs down',
+    icon: 'emoji',
     content: 2,
-    key: 'dislikes',
+    key: 'smiles',
   },
 ]
 
