@@ -5,6 +5,7 @@ import add from './add'
 import addParticipant from './addParticipant'
 import arrowUp from './arrowUp'
 import arrowDown from './arrowDown'
+import audioOff from './audioOff'
 import ban from './ban'
 import bold from './bold'
 import bookmark from './bookmark'
@@ -27,6 +28,7 @@ import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
 import callMissedLine from './callMissedLine'
+import clipboardCopiedTo from './clipboardCopiedTo'
 import screencast from './screencast'
 import chat from './chat'
 import chevronDown from './chevronDown'
@@ -153,6 +155,7 @@ export default {
   add,
   'arrow-up': arrowUp,
   'arrow-down': arrowDown,
+  'audio-off': audioOff,
   ban,
   bold,
   bookmark,
@@ -173,6 +176,7 @@ export default {
   'call-control-stop-presenting-new': callControlStopPresentingNew,
   'call-control-share': callControlShare,
   'call-missed-line': callMissedLine,
+  'clipboard-copied-to': clipboardCopiedTo,
   'call-pstn': callPstn,
   'call-recording': callRecording,
   screencast,
