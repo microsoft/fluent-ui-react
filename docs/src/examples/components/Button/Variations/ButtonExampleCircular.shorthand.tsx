@@ -4,7 +4,8 @@ import { Button, Flex } from '@stardust-ui/react'
 const ButtonExampleCircular = () => (
   <Flex gap="gap.smaller">
     <Button circular content="C" />
-    <Button circular icon="book" />
+    <Button circular icon="emoji" />
+    <Button circular icon="broadcast" primary />
   </Flex>
 )
 export default ButtonExampleCircular

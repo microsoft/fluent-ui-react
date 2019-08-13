@@ -28,7 +28,10 @@ describe('Attachment', () => {
   isConformant(Attachment)
   attachmentImplementsShorthandProp('header', Text)
   attachmentImplementsShorthandProp('description', Text)
-  attachmentImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })
+  attachmentImplementsShorthandProp('icon', Icon, {
+    mapsValueToProp: 'name',
+    requiredProps: { name: 'at' },
+  })
   attachmentImplementsShorthandProp('action', Button)
 
   describe('accessibility', () => {

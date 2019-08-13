@@ -75,7 +75,9 @@ export { default as ToolbarMenu } from './components/Toolbar/toolbarMenuVariable
 export { default as ToolbarMenuDivider } from './components/Toolbar/toolbarMenuDividerVariables'
 export { default as ToolbarMenuItem } from './components/Toolbar/toolbarMenuItemVariables'
 
-export { default as TreeTitle } from './components/Tree/treeTitleVariables'
+export {
+  default as HierarchicalTreeTitle,
+} from './components/HierarchicalTree/hierarchicalTreeTitleVariables'
 
 export { default as Animation } from './components/Animation/animationVariables'
 
