@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { Flex, Header, Icon, Dropdown, Text, Grid, Menu } from '@stardust-ui/react'
+import { Flex, Header, Icon, Dropdown, Text, Grid, Menu, Box } from '@stardust-ui/react'
 
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
 import ComponentDocLinks from './ComponentDocLinks'
 import ComponentDocSee from './ComponentDocSee'
-import ComponentExamples from './ComponentExamples'
+import { ComponentExamples } from './ComponentExamples'
 import ComponentProps from './ComponentProps'
-import ComponentAccessibility from './ComponentDocAccessibility'
+import { ComponentDocAccessibility } from './ComponentDocAccessibility'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ExampleContext from 'docs/src/context/ExampleContext'
 import ComponentPlayground from 'docs/src/components/ComponentPlayground/ComponentPlayground'
@@ -22,11 +22,15 @@ const exampleEndStyle: React.CSSProperties = {
 
 type ComponentDocProps = {
   info: ComponentInfo
+  tabs: string[]
 } & RouteComponentProps<{}>
 
 class ComponentDoc extends React.Component<ComponentDocProps, any> {
-  state: any = { currentTabTitle: 'Definition' }
-  tabs = ['Definition', 'Usage', 'Props', 'Accessibility']
+  state: any = {}
+
+  getCurrentTabTitle() {
+    return this.props.tabs[this.state.currentTabIndex]
+  }
 
   componentWillMount() {
     const { history, location } = this.props
@@ -38,7 +42,9 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
     }
   }
 
-  componentWillReceiveProps({ info }) {
+  componentWillReceiveProps({ info, tabs }) {
+    this.setState({ currentTabIndex: 0 })
+
     if (info.displayName !== this.props.info.displayName) {
       this.setState({ activePath: undefined })
     }
@@ -60,7 +66,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
   }
 
   handleTabClick = (e, props) => {
-    this.setState({ currentTabTitle: this.tabs[props.index] })
+    this.setState({ currentTabIndex: props.index })
   }
 
   render() {
@@ -130,12 +136,12 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
                   />
                 </Flex.Item>
               </Flex>
-              <Text styles={{ marginBottom: '1.4rem' }} content={info.docblock.description} />
               <Menu
                 underlined
                 primary
                 defaultActiveIndex={0}
-                items={this.tabs}
+                activeIndex={this.state.currentTabIndex}
+                items={this.props.tabs}
                 onItemClick={this.handleTabClick}
               />
               <ComponentDocSee displayName={info.displayName} />
@@ -143,14 +149,20 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
           </Flex.Item>
         </Flex>
 
-        {this.state.currentTabTitle === 'Accessibility' && <ComponentAccessibility info={info} />}
+        {this.getCurrentTabTitle() === 'Accessibility' && <ComponentDocAccessibility info={info} />}
 
-        {this.state.currentTabTitle === 'Props' && (
+        {this.getCurrentTabTitle() === 'Props' && (
           <ComponentProps displayName={info.displayName} props={info.props} />
         )}
 
-        {this.state.currentTabTitle === 'Definition' && (
+        {this.getCurrentTabTitle() === 'Definition' && (
           <>
+            <Text
+              size="large"
+              styles={{ marginBottom: '1.4rem' }}
+              content={info.docblock.description}
+            />
+            <Box styles={{ height: '10px' }} />
             <ComponentPlayground componentName={info.displayName} key={info.displayName} />
             <Grid
               columns="auto 300px"
@@ -163,7 +175,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
           </>
         )}
 
-        {this.state.currentTabTitle === 'Usage' && (
+        {this.getCurrentTabTitle() === 'Usage' && (
           <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
             <div ref={this.handleExamplesRef}>
               <ExampleContext.Provider

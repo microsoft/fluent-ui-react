@@ -6,6 +6,8 @@ import ComponentDoc from '../components/ComponentDoc'
 import PageNotFound from '../views/PageNotFound'
 import componentInfoContext from '../utils/componentInfoContext'
 import DocsBehaviorRoot from './DocsBehaviorRoot'
+import { containsExamples } from './ComponentDoc/ComponentExamples'
+import { containsAccessibility } from './ComponentDoc/ComponentDocAccessibility'
 
 class DocsRoot extends React.Component<any, any> {
   static propTypes = {
@@ -20,6 +22,22 @@ class DocsRoot extends React.Component<any, any> {
 
   state = {}
 
+  getNonEmptyTabs(info) {
+    const tabs = ['Definition']
+
+    if (containsExamples(info.displayName)) {
+      tabs.push('Usage')
+    }
+
+    tabs.push('Props')
+
+    if (containsAccessibility(info)) {
+      tabs.push('Accessibility')
+    }
+
+    return tabs
+  }
+
   render() {
     const { match } = this.props
     const displayName = _.startCase(match.params.name).replace(/ /g, '')
@@ -27,8 +45,9 @@ class DocsRoot extends React.Component<any, any> {
       return <DocsBehaviorRoot {...this.props} />
     }
     const info = componentInfoContext.byDisplayName[displayName]
+    const tabs = this.getNonEmptyTabs(info)
 
-    if (info) return <ComponentDoc info={info} />
+    if (info) return <ComponentDoc info={info} tabs={tabs} />
 
     return <PageNotFound />
   }

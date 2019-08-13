@@ -12,7 +12,28 @@ interface ComponentExamplesProps {
   displayName: string
 }
 
-export default class ComponentExamples extends React.Component<ComponentExamplesProps, any> {
+export function containsExamples(displayName: string) {
+  return !!getExamplesElement(displayName)
+}
+
+function getExamplesElement(displayName: string) {
+  // rule #1
+  const indexPath = _.find(exampleIndexContext.keys(), path =>
+    new RegExp(`\/${displayName}\/index\.tsx$`).test(path),
+  )
+  if (!indexPath) {
+    return null
+  }
+
+  const ExamplesElement = React.createElement(exampleIndexContext(indexPath).default) as any
+  if (!ExamplesElement) {
+    return null
+  }
+
+  return ExamplesElement
+}
+
+export class ComponentExamples extends React.Component<ComponentExamplesProps, any> {
   static propTypes = {
     displayName: PropTypes.string.isRequired,
   }
@@ -32,15 +53,7 @@ export default class ComponentExamples extends React.Component<ComponentExamples
   renderExamples = (): JSX.Element | null => {
     const { displayName } = this.props
 
-    // rule #1
-    const indexPath = _.find(exampleIndexContext.keys(), path =>
-      new RegExp(`\/${displayName}\/index\.tsx$`).test(path),
-    )
-    if (!indexPath) {
-      return null
-    }
-
-    const ExamplesElement = React.createElement(exampleIndexContext(indexPath).default) as any
+    const ExamplesElement = getExamplesElement(displayName)
     if (!ExamplesElement) {
       return null
     }

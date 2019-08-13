@@ -6,16 +6,32 @@ const InlineMarkdown = React.lazy(() => import('./InlineMarkdown'))
 
 const behaviorMenu = require('docs/src/behaviorMenu')
 
-const ComponentDocAccessibility = ({ info }) => {
-  const description = _.get(_.find(info.docblock.tags, { title: 'accessibility' }), 'description')
-  const defaultValue = _.get(_.find(info.props, { name: 'accessibility' }), 'defaultValue')
+export function containsAccessibility(info) {
+  const stem = getStem(info)
+  return !!getDescription(info) || !!getBehaviorName(stem)
+}
 
-  const stem = defaultValue && defaultValue.split('.').pop()
+function getDescription(info) {
+  return _.get(_.find(info.docblock.tags, { title: 'accessibility' }), 'description')
+}
+
+function getStem(info) {
+  const defaultValue = _.get(_.find(info.props, { name: 'accessibility' }), 'defaultValue')
+  return defaultValue && defaultValue.split('.').pop()
+}
+
+function getBehaviorName(stem) {
   const filename = stem && `${stem}.ts`
 
-  const behaviorName = behaviorMenu.reduce((acc, next) => {
+  return behaviorMenu.reduce((acc, next) => {
     return _.find(next.variations, { name: filename }) ? next.displayName : acc
   }, null)
+}
+
+export const ComponentDocAccessibility = ({ info }) => {
+  const stem = getStem(info)
+  const description = getDescription(info)
+  const behaviorName = getBehaviorName(stem)
 
   if (!behaviorName && !description) return null
 
@@ -67,5 +83,3 @@ const ComponentDocAccessibility = ({ info }) => {
     </Flex>
   )
 }
-
-export default ComponentDocAccessibility
