@@ -19,7 +19,6 @@ export default {
       width: v.width,
       height: v.height || 'auto',
       outline: 0,
-      background: v.backgroundColor,
 
       ...(p.isFromKeyboard && {
         ':focus': {
