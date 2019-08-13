@@ -172,7 +172,7 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <Flex space="between">
-          <Button content="Logo" icon="chess rook" />
+          <Button content="Logo" icon="emoji" />
 
           <Flex gap="gap.small">
             <Button content="Page 1" />
@@ -189,7 +189,7 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <Flex gap="gap.small">
-          <Button content="Logo" icon="chess rook" />
+          <Button content="Logo" icon="emoji" />
           <Flex.Item push>
             <Button content="Page 1" />
           </Flex.Item>
