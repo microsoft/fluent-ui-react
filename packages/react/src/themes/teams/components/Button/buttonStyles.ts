@@ -5,6 +5,7 @@ import Loader from '../../../../components/Loader/Loader'
 import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
 import { ButtonVariables } from './buttonVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
+import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
@@ -103,21 +104,29 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
         color: v.textColor,
         backgroundColor: 'transparent',
         borderColor: 'transparent',
+        padding: `0 ${pxToRem(8)}`,
+
+        // by default icons should always be outline, but filled on hover/focus
+        ...getIconFillOrOutlineStyles({ outline: true }),
+
         ':hover': {
           color: v.textColorHover,
+          ...getIconFillOrOutlineStyles({ outline: false }),
         },
-        ...(p.primary && {
-          color: v.textPrimaryColor,
-          ':hover': {
-            color: v.textPrimaryColorHover,
-          },
-        }),
 
         ':focus': {
           boxShadow: 'none',
           outline: 'none',
-          ...(p.isFromKeyboard && borderFocusStyles),
+
+          ...(p.isFromKeyboard && {
+            ...borderFocusStyles,
+            ...getIconFillOrOutlineStyles({ outline: false }),
+          }),
         },
+
+        ...(p.primary && {
+          color: v.textPrimaryColor,
+        }),
       }),
 
       // Overrides for "primary" buttons
@@ -148,12 +157,25 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
       ...(p.disabled && {
         cursor: 'default',
         color: v.colorDisabled,
-        backgroundColor: v.backgroundColorDisabled,
-        borderColor: v.borderColorDisabled,
         boxShadow: 'none',
         ':hover': {
-          backgroundColor: v.backgroundColorDisabled,
+          color: v.colorDisabled,
         },
+
+        ...(p.text && {
+          color: v.textColorDisabled,
+          ':hover': {
+            color: v.textColorDisabled,
+          },
+        }),
+
+        ...(!p.text && {
+          backgroundColor: v.backgroundColorDisabled,
+          borderColor: v.borderColorDisabled,
+          ':hover': {
+            backgroundColor: v.backgroundColorDisabled,
+          },
+        }),
       }),
 
       ...(p.fluid && {

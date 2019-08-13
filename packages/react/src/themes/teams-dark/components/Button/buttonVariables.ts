@@ -5,7 +5,6 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     color: siteVars.colors.white,
     colorHover: siteVars.colors.white,
     colorFocus: siteVars.colors.white,
-    colorDisabled: siteVars.colors.grey[450],
     backgroundColor: 'transparent',
     backgroundColorHover: siteVars.colors.grey[700],
     backgroundColorFocus: siteVars.colors.grey[500],
@@ -24,10 +23,5 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     circularBackgroundColorHover: siteVars.colors.grey[300],
     circularBackgroundColorFocus: siteVars.colors.grey[250],
     circularBorderColor: siteVars.colors.grey[250],
-
-    textColorHover: siteVars.colors.brand[300],
-    textPrimaryColorHover: siteVars.colors.brand[300],
-    textSecondaryColor: siteVars.colors.grey[300],
-    textSecondaryColorHover: siteVars.colors.brand[300],
   }
 }
