@@ -49,6 +49,7 @@ export default [
   'keyboard-key@1.0.1',
   'lodash@4.17.5',
   'lodash@4.17.11',
+  'lodash@4.17.15',
   'object-assign@4.1.1',
   'popper.js@1.15.0',
   'prop-types@15.6.2',
