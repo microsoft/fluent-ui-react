@@ -49,18 +49,18 @@ export default () => (
         export default () =>
          <Provider theme={themes.teams}>
             <Button content="Button" />
-            <Button icon="plus" iconOnly primary />
-            <Button icon="at" content="Send email" secondary />
-            <Icon name="chess rook" size="larger" />
+            <Button icon="add" iconOnly primary />
+            <Button icon="email" content="Send email" secondary />
+            <Icon name="emoji" size="larger" />
             <Label content="Label with icon" icon="close" />
          </Provider>
       `}
       render={() => (
         <>
           <Button content="Button" />
-          <Button icon="plus" iconOnly primary />
-          <Button icon="at" content="Send email" secondary />
-          <Icon name="chess rook" size="larger" />
+          <Button icon="add" iconOnly primary />
+          <Button icon="email" content="Send email" secondary />
+          <Icon name="emoji" size="larger" />
           <Label content="Label with icon" icon="close" />
         </>
       )}
@@ -90,7 +90,7 @@ export default () => (
           <Button
             content="Send email"
             icon={{
-              name: "at",
+              name: "email",
               styles: { color: "brown" },
             }}
             secondary
@@ -102,7 +102,7 @@ export default () => (
       render={() => (
         <Button
           content="Send email"
-          icon={{ name: 'at', styles: { color: 'brown' } }}
+          icon={{ name: 'email', styles: { color: 'brown' } }}
           styles={{
             color: 'coral',
             backgroundColor: 'charcoal',
@@ -222,9 +222,9 @@ export default () => (
           <Provider theme={theme}>
             <div>
               <Button content="Button" />
-              <Button icon="plus" iconOnly primary />
-              <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="larger" />
+              <Button icon="add" iconOnly primary />
+              <Button icon="email" content="Send email" secondary />
+              <Icon name="emoji" size="larger" />
               <Label content="Label with icon" icon="close" />
             </div>
           </Provider>
@@ -266,9 +266,9 @@ export default () => (
           >
             <div>
               <Button content="Button" />
-              <Button icon="plus" iconOnly primary />
-              <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="larger" />
+              <Button icon="add" iconOnly primary />
+              <Button icon="email" content="Send email" secondary />
+              <Icon name="emoji" size="larger" />
               <Label content="Label with icon" icon="close" />
             </div>
           </Provider>
@@ -287,9 +287,9 @@ export default () => (
           {/* Default theming */}
           <Header as="h3" content="Default theming" />
           <Button content="Button" />
-          <Button icon="plus" iconOnly primary />
-          <Button icon="at" content="Send email" secondary />
-          <Icon name="chess rook" size="larger" />
+          <Button icon="add" iconOnly primary />
+          <Button icon="email" content="Send email" secondary />
+          <Icon name="emoji" size="larger" />
           <Label content="Label with icon" icon="close" />
 
           {/* First nested theming */}
@@ -307,9 +307,9 @@ export default () => (
               <Header as="h3" content="First nested theming" />
 
               <Button content="Button" />
-              <Button icon="plus" iconOnly primary />
-              <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="larger" />
+              <Button icon="add" iconOnly primary />
+              <Button icon="email" content="Send email" secondary />
+              <Icon name="emoji" size="larger" />
               <Label content="Label with icon" icon="close" />
 
               {/* Second nested theming */}
@@ -327,8 +327,8 @@ export default () => (
 
                   <Button content="Button" />
                   <Button icon="plus" iconOnly primary />
-                  <Button icon="at" content="Send email" secondary />
-                  <Icon name="chess rook" size="larger" />
+                  <Button icon="email" content="Send email" secondary />
+                  <Icon name="emoji" size="larger" />
                   <Label content="Label with icon" icon="close" />
                 </div>
               </Provider>
@@ -340,9 +340,9 @@ export default () => (
         <div>
           <Header as="h3" content="Default theming" />
           <Button content="Button" />
-          <Button icon="plus" iconOnly primary />
-          <Button icon="at" content="Send email" secondary />
-          <Icon name="chess rook" size="larger" />
+          <Button icon="add" iconOnly primary />
+          <Button icon="email" content="Send email" secondary />
+          <Icon name="emoji" size="larger" />
           <Label content="Label with icon" icon="close" />
 
           <Provider
@@ -358,9 +358,9 @@ export default () => (
               <Header as="h3" content="First nested theming" />
 
               <Button content="Button" />
-              <Button icon="plus" iconOnly primary />
-              <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="larger" />
+              <Button icon="add" iconOnly primary />
+              <Button icon="email" content="Send email" secondary />
+              <Icon name="emoji" size="larger" />
               <Label content="Label with icon" icon="close" />
 
               <Provider
@@ -376,9 +376,9 @@ export default () => (
                   <Header as="h3" content="Second nested theming" />
 
                   <Button content="Button" />
-                  <Button icon="plus" iconOnly primary />
-                  <Button icon="at" content="Send email" secondary />
-                  <Icon name="chess rook" size="larger" />
+                  <Button icon="add" iconOnly primary />
+                  <Button icon="email" content="Send email" secondary />
+                  <Icon name="emoji" size="larger" />
                   <Label content="Label with icon" icon="close" />
                 </>
               </Provider>

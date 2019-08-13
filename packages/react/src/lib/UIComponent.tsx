@@ -30,6 +30,9 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
 
   actionHandlers: AccessibilityActionHandlers
 
+  // stores debug information
+  stardustDebug: any = null
+
   constructor(props, context) {
     super(props, context)
     if (process.env.NODE_ENV !== 'production') {
@@ -59,6 +62,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
         state: this.state,
         actionHandlers: this.actionHandlers,
         render: this.renderComponent,
+        saveDebug: updatedDebug => (this.stardustDebug = updatedDebug),
       },
       this.context,
     )

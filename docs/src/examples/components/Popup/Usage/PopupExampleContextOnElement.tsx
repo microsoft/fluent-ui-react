@@ -27,7 +27,7 @@ class PopupContextOnElement extends React.Component {
               <Button content="Random button" onClick={this.showAlert} />
             </div>
           }
-          shouldTriggerBeTabbable={false}
+          tabbableTrigger={false}
           content={contentWithButtons}
           trapFocus
           on="context"

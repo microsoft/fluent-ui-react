@@ -68,7 +68,7 @@ describe('EventListener', () => {
   })
 
   describe('type', () => {
-    it('handlers changes', () => {
+    it('handles changes', () => {
       const listener = jest.fn()
       const wrapper = mount(
         <EventListener listener={listener} targetRef={documentRef} type="click" />,

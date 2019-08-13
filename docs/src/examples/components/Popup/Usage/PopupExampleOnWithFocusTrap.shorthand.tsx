@@ -21,19 +21,19 @@ class PopupExampleOnWithFocusTrap extends React.Component {
       <>
         <Flex gap="gap.smaller">
           <Popup
-            trigger={<Button icon="expand" content="Click" aria-label="Click button" />}
+            trigger={<Button icon="more" content="Click" aria-label="Click button" />}
             content={contentWithButtons}
             trapFocus
             on="click"
           />
           <Popup
-            trigger={<Button icon="expand" content="Hover" aria-label="Hover button" />}
+            trigger={<Button icon="more" content="Hover" aria-label="Hover button" />}
             content={contentWithButtons}
             trapFocus
             on="hover"
           />
           <Popup
-            trigger={<Button icon="expand" content="Focus" aria-label="Focus button" />}
+            trigger={<Button icon="more" content="Focus" aria-label="Focus button" />}
             content={contentWithButtons}
             trapFocus
             on="focus"
@@ -41,7 +41,7 @@ class PopupExampleOnWithFocusTrap extends React.Component {
           <Popup
             trigger={
               <Button
-                icon="expand"
+                icon="more"
                 content="Context"
                 aria-label="Context button"
                 onClick={this.showAlert}

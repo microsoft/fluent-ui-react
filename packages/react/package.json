@@ -1,17 +1,17 @@
 {
   "name": "@stardust-ui/react",
   "description": "A themable React component library.",
-  "version": "0.35.0",
+  "version": "0.36.1",
   "author": "Levi Thomason <me@levithomason.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@stardust-ui/fela": "^10.6.1",
-    "@stardust-ui/react-component-event-listener": "^0.35.0",
-    "@stardust-ui/react-component-nesting-registry": "^0.35.0",
-    "@stardust-ui/react-component-ref": "^0.35.0",
+    "@stardust-ui/react-component-event-listener": "^0.36.0",
+    "@stardust-ui/react-component-nesting-registry": "^0.36.0",
+    "@stardust-ui/react-component-ref": "^0.36.0",
     "@stardust-ui/react-fela": "^10.6.2",
-    "@stardust-ui/react-proptypes": "^0.35.0",
+    "@stardust-ui/react-proptypes": "^0.36.0",
     "classnames": "^2.2.5",
     "downshift": "^3.2.10",
     "fast-memoize": "^2.5.1",
@@ -21,13 +21,14 @@
     "fela-plugin-prefixer": "^10.5.0",
     "fela-plugin-rtl": "^10.5.0",
     "keyboard-key": "^1.0.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "popper.js": "^1.15.0",
     "prop-types": "^15.6.1",
-    "react-is": "^16.6.3"
+    "react-is": "^16.6.3",
+    "react-resize-detector": "^4.2.0"
   },
   "devDependencies": {
-    "@stardust-ui/internal-tooling": "^0.35.0",
+    "@stardust-ui/internal-tooling": "^0.36.0",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [

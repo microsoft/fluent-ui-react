@@ -4,6 +4,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import * as _ from 'lodash'
+import { Popper } from '../../lib/positioner'
 
 import {
   childrenExist,
@@ -36,6 +37,7 @@ import Text, { TextProps } from '../Text/Text'
 import Reaction, { ReactionProps } from '../Reaction/Reaction'
 import { ReactionGroupProps } from '../Reaction/ReactionGroup'
 import { MenuItemProps } from '@stardust-ui/react'
+import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string
@@ -98,6 +100,7 @@ export interface ChatMessageProps
 export interface ChatMessageState {
   focused: boolean
   isFromKeyboard: boolean
+  messageDomNode: HTMLElement
 }
 
 class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageState> {
@@ -138,12 +141,13 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     reactionGroupPosition: 'start',
   }
 
+  updateActionsMenuPosition = () => {}
+
   state = {
     focused: false,
     isFromKeyboard: false,
+    messageDomNode: null,
   }
-
-  messageRef = React.createRef<HTMLElement>()
 
   actionHandlers = {
     // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys
@@ -153,14 +157,16 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     },
 
     focus: event => {
-      if (this.messageRef) {
-        this.messageRef.current.focus()
+      if (this.state.messageDomNode) {
+        this.state.messageDomNode.focus()
         event.stopPropagation()
       }
     },
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
+    this.updateActionsMenuPosition()
+
     this.setState({
       focused: true,
       isFromKeyboard: isFromKeyboard(),
@@ -176,6 +182,33 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
 
     this.setState({ focused: shouldPreserveFocusState })
     _.invoke(this.props, 'onBlur', e, this.props)
+  }
+
+  renderActionMenu(
+    actionMenu: ChatMessageProps['actionMenu'],
+    styles: ComponentSlotStylesPrepared,
+  ) {
+    const actionMenuElement = Menu.create(actionMenu, {
+      defaultProps: {
+        [IS_FOCUSABLE_ATTRIBUTE]: true,
+        accessibility: menuAsToolbarBehavior,
+        className: ChatMessage.slotClassNames.actionMenu,
+        styles: styles.actionMenu,
+      },
+    })
+
+    if (!actionMenuElement) {
+      return actionMenuElement
+    }
+
+    return (
+      <Popper unstable_pinned targetRef={this.state.messageDomNode} position="above" align="end">
+        {({ scheduleUpdate }) => {
+          this.updateActionsMenuPosition = scheduleUpdate
+          return actionMenuElement
+        }}
+      </Popper>
+    )
   }
 
   renderComponent({
@@ -212,14 +245,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
       },
     })
 
-    const actionMenuElement = Menu.create(actionMenu, {
-      defaultProps: {
-        [IS_FOCUSABLE_ATTRIBUTE]: true,
-        accessibility: menuAsToolbarBehavior,
-        className: ChatMessage.slotClassNames.actionMenu,
-        styles: styles.actionMenu,
-      },
-    })
+    const actionMenuElement = this.renderActionMenu(actionMenu, styles)
 
     const authorElement = Text.create(author, {
       defaultProps: {
@@ -246,10 +272,15 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     })
 
     return (
-      <Ref innerRef={this.messageRef}>
+      <Ref
+        innerRef={domNode => {
+          domNode !== this.state.messageDomNode && this.setState({ messageDomNode: domNode })
+        }}
+      >
         <ElementType
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
+          onMouseEnter={() => this.updateActionsMenuPosition()}
           className={className}
           {...accessibility.attributes.root}
           {...unhandledProps}
