@@ -24,7 +24,8 @@
     "lodash": "^4.17.15",
     "popper.js": "^1.15.0",
     "prop-types": "^15.6.1",
-    "react-is": "^16.6.3"
+    "react-is": "^16.6.3",
+    "react-resize-detector": "^4.2.0"
   },
   "devDependencies": {
     "@stardust-ui/internal-tooling": "^0.36.0",
