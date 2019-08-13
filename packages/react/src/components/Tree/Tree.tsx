@@ -102,7 +102,7 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
     const activeItems = new Map()
 
     if (props.items) {
-      const setItemsLevelAndSize = (items = this.props.items, level = 1, parent?) => {
+      const setItemsLevelAndSize = (items = props.items, level = 1, parent?) => {
         items.forEach((item: ShorthandValue<TreeItemProps>, index: number) => {
           item['level'] = level
           item['siblings'] = items
@@ -132,13 +132,15 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
       predefinedProps: TreeItemProps,
     ) => {
       const { activeItems } = this.state
-      const itemId = treeItemProps['id']
+      const itemId = treeItemProps.id
       const activeItemValue = activeItems.get(itemId)
 
-      activeItems.set(itemId, { ...activeItemValue, open: !activeItemValue.open })
-      this.setState({
-        activeItems,
-      })
+      if (treeItemProps.items) {
+        activeItems.set(itemId, { ...activeItemValue, open: !activeItemValue.open })
+        this.setState({
+          activeItems,
+        })
+      }
 
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
@@ -179,7 +181,9 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
       const activeItemValue = activeItems.get(itemId)
 
       siblings.forEach(sibling => {
-        activeItems.set(sibling['id'], { ...activeItemValue, open: true })
+        if (sibling['items']) {
+          activeItems.set(sibling['id'], { ...activeItemValue, open: true })
+        }
       })
 
       this.setState({
@@ -193,30 +197,36 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
   renderItems(items: ShorthandCollection<TreeItemProps>) {
     const { activeItems } = this.state
 
-    return items.reduce((renderedItems, item) => {
-      const isSubtreeOpen = item['items'] && activeItems.get(item['id']).open
-      const renderedItem = (
-        <Ref
-          key={item['key'] || item['id']}
-          innerRef={(itemElement: HTMLElement) => {
-            const activeItemValue = activeItems.get(item['id'])
+    return items.reduce((renderedItems, item, index) => {
+      const isSubtree = !!item['items']
+      const isFirstChild = item['parent'] && index === 0
+      const isSubtreeOpen = isSubtree && activeItems.get(item['id']).open
+      const renderedItem = TreeItem.create(item, {
+        defaultProps: {
+          className: Tree.slotClassNames.item,
+          open: isSubtreeOpen,
+        },
+        overrideProps: this.handleTreeItemOverrides,
+      })
+      const renderedFinalItem =
+        isSubtree || isFirstChild ? (
+          <Ref
+            key={item['key'] || item['id']}
+            innerRef={(itemElement: HTMLElement) => {
+              const activeItemValue = activeItems.get(item['id'])
 
-            activeItems.set(item['id'], { ...activeItemValue, element: itemElement })
-          }}
-        >
-          {TreeItem.create(item, {
-            defaultProps: {
-              className: Tree.slotClassNames.item,
-              open: isSubtreeOpen,
-            },
-            overrideProps: this.handleTreeItemOverrides,
-          })}
-        </Ref>
-      )
+              activeItems.set(item['id'], { ...activeItemValue, element: itemElement })
+            }}
+          >
+            {renderedItem}
+          </Ref>
+        ) : (
+          renderedItem
+        )
 
       return [
         ...(renderedItems as any[]),
-        renderedItem,
+        renderedFinalItem,
         ...[isSubtreeOpen ? this.renderItems(item['items']) : []],
       ]
     }, [])
