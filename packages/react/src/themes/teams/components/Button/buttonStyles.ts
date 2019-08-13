@@ -57,7 +57,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
         },
 
         ':active': {
-          transform: 'scale(.9)',
+          transform: 'scale(.96)',
         },
 
         ':focus': {
