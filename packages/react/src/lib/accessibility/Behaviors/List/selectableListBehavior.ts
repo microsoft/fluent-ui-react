@@ -1,6 +1,6 @@
-import * as keyboardKey from 'keyboard-key'
-import { Accessibility } from '../../types'
+import { Accessibility, FocusZoneMode } from '../../types'
 import { ListBehaviorProps } from './listBehavior'
+import { FocusZoneDirection } from '../../FocusZone'
 
 /**
  * @description
@@ -9,12 +9,8 @@ import { ListBehaviorProps } from './listBehavior'
  * @specification
  * Adds role='listbox'.
  * Adds attribute 'aria-orientation=horizontal' to 'root' slot if 'horizontal' property is true. Does not set the attribute otherwise.
- * Triggers the 'moveNext' action with 'ArrowDown' on 'root', when orientation is vertical.
- * Triggers the 'moveNext' action with 'ArrowRight' on 'root', when orientation is horizontal.
- * Triggers the 'movePrevious' action with 'ArrowUp' on 'root', when orientation is vertical.
- * Triggers the 'movePrevious' action with 'ArrowLeft' on 'root', when orientation is horizontal.
- * Triggers 'moveFirst' action with 'Home' on 'root'.
- * Triggers 'moveLast' action with 'End' on 'root'.
+ * Embeds component into FocusZone.
+ * Provides arrow key navigation in bidirectionalDomOrder direction.
  */
 const selectableListBehavior: Accessibility<ListBehaviorProps> = props => ({
   attributes: {
@@ -25,24 +21,11 @@ const selectableListBehavior: Accessibility<ListBehaviorProps> = props => ({
       }),
     },
   },
-  keyActions: {
-    root: {
-      moveNext: {
-        keyCombinations: [
-          { keyCode: props.horizontal ? keyboardKey.ArrowRight : keyboardKey.ArrowDown },
-        ],
-      },
-      movePrevious: {
-        keyCombinations: [
-          { keyCode: props.horizontal ? keyboardKey.ArrowLeft : keyboardKey.ArrowUp },
-        ],
-      },
-      moveFirst: {
-        keyCombinations: [{ keyCode: keyboardKey.Home }],
-      },
-      moveLast: {
-        keyCombinations: [{ keyCode: keyboardKey.End }],
-      },
+  focusZone: {
+    mode: FocusZoneMode.Embed,
+    props: {
+      shouldFocusInnerElementWhenReceivedFocus: true,
+      direction: FocusZoneDirection.bidirectionalDomOrder,
     },
   },
 })

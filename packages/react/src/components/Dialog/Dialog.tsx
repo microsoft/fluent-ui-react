@@ -20,6 +20,7 @@ import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
+import ButtonGroup from '../Button/ButtonGroup'
 import Box, { BoxProps } from '../Box/Box'
 import Header, { HeaderProps } from '../Header/Header'
 import Portal, { TriggerAccessibility } from '../Portal/Portal'
@@ -249,7 +250,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             },
           })}
 
-          {Box.create(actions, {
+          {ButtonGroup.create(actions, {
             defaultProps: {
               styles: styles.actions,
             },
