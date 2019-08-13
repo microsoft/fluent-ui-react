@@ -5,6 +5,7 @@ const ButtonExampleCircular = () => (
   <Flex gap="gap.smaller">
     <Button circular content="C" />
     <Button circular icon="emoji" />
+    <Button circular icon="broadcast" primary />
   </Flex>
 )
 export default ButtonExampleCircular
