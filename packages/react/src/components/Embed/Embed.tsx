@@ -165,7 +165,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                 },
               },
             })}
-            {Box.create(iframe, { defaultProps: { as: 'iframe' } })}
+            {Box.create(iframe, { defaultProps: { as: 'iframe', style: { display: 'block' } } })}
           </>
         ) : (
           Image.create(placeholder, {
