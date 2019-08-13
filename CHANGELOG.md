@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Upgrade `FocusZone` to the latest version from `fabric-ui` @sophieH29 ([#1772](https://github.com/stardust-ui/react/pull/1772))
 - Add possibility for a Toolbar to rearrange its items according to space available @miroslavstastny ([#1657](https://github.com/stardust-ui/react/pull/1657))
 - Edit `buttonBehavior` Adding aria-disabled when button has loading state @kolaps33 ([#1789](https://github.com/stardust-ui/react/pull/1789))
+- Add unified ramp of category colors and category color schemes (`foreground`, `foreground1`, `background`) to the Teams themes @natashamayurshah ([#1711](https://github.com/stardust-ui/react/pull/1711))
 
 ### Documentation
 - Restore docs for `Ref` component @layershifter ([#1777](https://github.com/stardust-ui/react/pull/1777))
@@ -67,7 +68,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Use FocusZone in selectable list @jurokapsiar ([#1757](https://github.com/stardust-ui/react/pull/1757))
 - Add `MenuButton` component @jurokapsiar ([#1696](https://github.com/stardust-ui/react/pull/1696))
 - Add `useEventListener` hook @layershifter ([#1755](https://github.com/stardust-ui/react/pull/1755))
-- Add unified ramp of category colors and category color schemes (`foreground`, `foreground1`, `background`) to the Teams themes @natashamayurshah ([#1711](https://github.com/stardust-ui/react/pull/1711))
 
 ### Documentation
 - Fix code in changing component variables section of theming examples @lucivpav ([#1626](https://github.com/stardust-ui/react/pull/1626))
