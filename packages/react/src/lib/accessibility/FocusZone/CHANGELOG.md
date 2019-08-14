@@ -12,7 +12,7 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 - Make `FocusZoneTabbableElements` a usual enum @layershifter ([#867](https://github.com/stardust-ui/react/pull/867))
 - Update tabindexes and focus alignment when item is focused programatically @sophieH29 ([#1098](https://github.com/stardust-ui/react/pull/1098))
 - `FocusZone` should respect elements with `contenteditable` attribute on Home/End key press @sophieH29 ([#1749](https://github.com/stardust-ui/react/pull/1749))
-- Fix bidirectional `FocusZone` to land focus correctly on DOWN key press after series of UP arrow keys @sophieH29 ([#1659](https://github.com/stardust-ui/react/issues/1659))
+- Fix bidirectional `FocusZone` to land focus correctly on DOWN key press after series of UP arrow keys @sophieH29 ([#1794](https://github.com/stardust-ui/react/pull/1794))
 
 ### Features
 - Add embed mode for FocusZone and new Chat behavior ([#233](https://github.com/stardust-ui/react/pull/233))
