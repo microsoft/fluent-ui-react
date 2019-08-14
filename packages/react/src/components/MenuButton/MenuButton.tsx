@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Ref, handleRef } from '@stardust-ui/react-component-ref'
 
 import {
   AutoControlledComponent,
@@ -18,7 +19,6 @@ import { createShorthandFactory } from '../../lib/factories'
 import Popup, { PopupProps, PopupEvents, PopupEventsArray } from '../Popup/Popup'
 import Menu, { MenuProps } from '../Menu/Menu'
 import { MenuItemProps } from '../Menu/MenuItem'
-import { Ref } from '@stardust-ui/react-component-ref'
 import { menuButtonBehavior } from '../../lib/accessibility'
 import { focusMenuItem } from './focusUtils'
 import { ALIGNMENTS, POSITIONS, PositioningProps } from '../../lib/positioner'
@@ -36,6 +36,9 @@ export interface MenuButtonProps extends StyledComponentProps<MenuButtonProps>, 
 
   /** Additional CSS class name(s) to apply.  */
   className?: string
+
+  /** Ref to the component itself. */
+  componentRef?: React.Ref<MenuButton>
 
   /** Initial value for 'open'. */
   defaultOpen?: boolean
@@ -111,6 +114,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
       content: false,
     }),
     align: PropTypes.oneOf(ALIGNMENTS),
+    componentRef: customPropTypes.ref,
     defaultOpen: PropTypes.bool,
     mountDocument: PropTypes.object,
     mountNode: customPropTypes.domNode,
@@ -155,6 +159,10 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
         state.triggerId,
       ),
     }
+  }
+
+  componentDidMount() {
+    handleRef(this.props.componentRef, this)
   }
 
   triggerRef = React.createRef<HTMLElement>()

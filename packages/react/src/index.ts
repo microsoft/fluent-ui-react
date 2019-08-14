@@ -185,6 +185,9 @@ export { default as Reaction } from './components/Reaction/Reaction'
 export * from './components/Reaction/ReactionGroup'
 export { default as ReactionGroup } from './components/Reaction/ReactionGroup'
 
+export * from './components/Button/SplitButton'
+export { default as SplitButton } from './components/Button/SplitButton'
+
 export * from './components/Video/Video'
 export { default as Video } from './components/Video/Video'
 

@@ -8,6 +8,7 @@ import Groups from './Groups'
 import Usage from './Usage'
 import Rtl from './Rtl'
 import Performance from './Performance'
+import SplitButton from './SplitButton'
 
 const ButtonExamples = () => (
   <>
@@ -16,6 +17,7 @@ const ButtonExamples = () => (
     <States />
     <Variations />
     <Groups />
+    <SplitButton />
     <Usage />
     <Rtl />
     <Performance />

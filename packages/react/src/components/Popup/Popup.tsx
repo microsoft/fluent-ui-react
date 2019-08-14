@@ -587,6 +587,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       this.trySetOpen(false, e)
       onClose && onClose()
       e.stopPropagation()
+      e.preventDefault()
     }
   }
 
