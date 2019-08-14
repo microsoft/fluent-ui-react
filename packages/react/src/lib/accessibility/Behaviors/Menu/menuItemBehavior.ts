@@ -17,7 +17,7 @@ import * as keyboardKey from 'keyboard-key'
  * Adds attribute 'aria-expanded=true' based on the property 'menuOpen' if the component has 'menu' property to 'root' slot.
  * Adds attribute 'aria-haspopup=true' to 'root' slot if 'menu' property is set.
  * Adds attribute 'aria-disabled=true' to 'root' slot based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
- * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
+ * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
  * Triggers 'closeMenuAndFocusTrigger' action with 'Escape' on 'wrapper'.
  * Triggers 'closeAllMenusAndFocusNextParentItem' action with 'ArrowRight' on 'wrapper'.
  * Triggers 'closeMenu' action with 'ArrowLeft' on 'wrapper'.
