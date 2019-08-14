@@ -43,12 +43,10 @@ const menuItemBehavior: Accessibility<MenuItemBehaviorProps> = props => ({
   },
 
   keyActions: {
-    root: {
+    wrapper: {
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
-    },
-    wrapper: {
       closeAllMenusAndFocusNextParentItem: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
       },

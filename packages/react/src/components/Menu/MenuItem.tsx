@@ -326,7 +326,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
   }
 
   performClick = e => {
-    const { active, menu } = this.props
+    const { active, menu, inSubmenu } = this.props
 
     if (menu) {
       if (doesNodeContainClick(this.menuRef.current, e)) {
@@ -338,7 +338,10 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
         e.stopPropagation()
         e.preventDefault()
       }
-    } else {
+    }
+
+    // avoid spacebar scrolling the page
+    if (!inSubmenu) {
       e.preventDefault()
     }
   }
