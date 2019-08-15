@@ -4,14 +4,13 @@ import { link, code } from '../../../../utils/helpers'
 import { Text } from '@stardust-ui/react'
 
 const doList = [
-  'Do use `trapFocus` prop to control focus trapping behavior.',
+  <Text>
+    Do use {link('trapFocus', '/focus-trap-zone#usage')} prop to control focus trapping behavior.
+  </Text>,
   <Text>
     Do use {code('aria-describedby')} prop to override or omit description if the dialog content is
     complex (contains actionable elements). Refer to{' '}
-    {link(
-      'aria pattern',
-      'https://www.w3.org/TR/wai-aria-practices-1.1/examples/dialog-modal/dialog.html',
-    )}{' '}
+    {link('ARIA Modal Dialog pattern', 'https://www.w3.org/TR/wai-aria-practices/#dialog_modal')}{' '}
     for details.
   </Text>,
 ]

@@ -5,6 +5,15 @@ const toolbarStyles: ComponentSlotStylesInput = {
     display: 'flex',
     alignItems: 'center',
   }),
+
+  wrapper: (): ICSSInJSStyle => ({
+    position: 'relative',
+  }),
+
+  measurement: (): ICSSInJSStyle => ({
+    position: 'fixed',
+    visibility: 'hidden',
+  }),
 }
 
 export default toolbarStyles
