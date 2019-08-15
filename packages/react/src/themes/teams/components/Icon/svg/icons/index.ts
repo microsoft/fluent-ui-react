@@ -150,6 +150,9 @@ import userBlur from './userBlur'
 import userFriends from './userFriends'
 import videoCameraEmphasis from './videoCameraEmphasis'
 import yammer from './yammer'
+import windowMaximize from './windowMaximize'
+import windowMinimize from './windowMinimize'
+import windowUnmaximize from './windowUnmaximize'
 
 export default {
   'stardust-circle': stardustCircle,
@@ -294,6 +297,9 @@ export default {
   'user-friends': userFriends,
   'video-camera-emphasis': videoCameraEmphasis,
   yammer,
+  'window-maximize': windowMaximize,
+  'window-minimize': windowMinimize,
+  'window-unmaximize': windowUnmaximize,
 
   // Office icons
   word: filesWord,
