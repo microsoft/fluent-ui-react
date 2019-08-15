@@ -6,7 +6,7 @@ const PopupFocusTrapExample = () => (
     <Popup
       /** Provided prop introduces focus trap to popup content. */
       trapFocus
-      trigger={<Button icon="expand" content="Trap focus on appearence" />}
+      trigger={<Button icon="more" content="Trap focus on appearence" />}
       content={
         <>
           <Header as="h4">This content traps focus on appearance.</Header>
@@ -17,7 +17,7 @@ const PopupFocusTrapExample = () => (
 
     {/* Default Popup behavior doesn't introduce focus trap. */}
     <Popup
-      trigger={<Button icon="expand" content="Do not trap focus" />}
+      trigger={<Button icon="more" content="Do not trap focus" />}
       content={
         <>
           <Header as="h4">Focus is not trapped for this content.</Header>
