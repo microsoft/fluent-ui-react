@@ -55,6 +55,9 @@ class Sidebar extends React.Component<any, any> {
     if (at.startsWith('/components')) {
       newAt = newAt.replace(/[^\/]*$/, '')
     }
+    if (newAt[newAt.length - 1] === '/') {
+      newAt = newAt.substr(0, newAt.length - 1)
+    }
 
     return _.findIndex(sections, (section: ShorthandValue<HierarchicalTreeItemProps>) => {
       return _.find((section as any).items, item => item.title.to.startsWith(newAt))
