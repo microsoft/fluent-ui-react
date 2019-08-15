@@ -2,6 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as _ from 'lodash'
 
 import { WithAsProp, withSafeTypeForAs, ComponentEventHandler, ShorthandValue } from '../../types'
 import {
@@ -14,7 +15,6 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import Button, { ButtonProps } from './Button'
-import { MenuItemProps } from '../Menu/MenuItem'
 import MenuButton, { MenuButtonProps } from '../MenuButton/MenuButton'
 import { splitButtonBehavior } from '../../lib/accessibility'
 
@@ -41,14 +41,6 @@ export interface SplitButtonProps
    */
   onClick?: ComponentEventHandler<ButtonProps>
 
-  /**
-   * Called when an item is clicked.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All item props.
-   */
-  onItemClick?: ComponentEventHandler<MenuItemProps>
-
   /** A split button can be formatted to show different levels of emphasis. */
   primary?: boolean
 
@@ -70,7 +62,6 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
     button: customPropTypes.itemShorthand,
     menuButton: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
-    onItemClick: PropTypes.func,
     onToggle: PropTypes.func,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
@@ -106,13 +97,12 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
     styles,
     unhandledProps,
   }): React.ReactNode {
-    const { button, menuButton, onClick, primary, secondary } = this.props
+    const { button, menuButton, primary, secondary } = this.props
 
     return (
       <Ref innerRef={this.splitButtonRef}>
         <ElementType
           className={classes.root}
-          onClick={onClick}
           {...accessibility.attributes.root}
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
@@ -126,6 +116,12 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
               ...accessibility.attributes.button,
               ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.button, unhandledProps),
             },
+            overrideProps: (predefinedProps?: ButtonProps) => ({
+              onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+                _.invoke(predefinedProps, 'onClick', e, buttonProps)
+                _.invoke(this.props, 'onClick', e, buttonProps)
+              },
+            }),
           })}
           {MenuButton.create(menuButton, {
             defaultProps: {
