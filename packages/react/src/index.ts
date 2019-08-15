@@ -231,6 +231,8 @@ export const FocusZoneUtilities = {
   focusAsync,
 }
 export * from './lib/accessibility/FocusZone/FocusZone.types'
+export * from './lib/accessibility/FocusZone/FocusTrapZone.types'
+export * from './lib/accessibility/FocusZone/AutoFocusZone.types'
 export * from './lib/accessibility/types'
 export * from './lib/accessibility/reactTypes'
 
