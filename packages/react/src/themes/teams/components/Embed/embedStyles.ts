@@ -2,9 +2,15 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { pxToRem } from '../../../../lib'
 import Embed, { EmbedProps, EmbedState } from '../../../../components/Embed/Embed'
 import { EmbedVariables } from './embedVariables'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 export default {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
+    const { ':focus': borderFocusStyles } = getBorderFocusStyles({
+      siteVariables,
+      isFromKeyboard: p.isFromKeyboard,
+    })
+
     return {
       display: 'inline-block',
       verticalAlign: 'middle',
@@ -19,6 +25,7 @@ export default {
           [`& .${Embed.slotClassNames.control}`]: {
             borderColor: v.focusBorderColor,
             opacity: 1,
+            ...borderFocusStyles,
           },
         },
       }),
@@ -43,5 +50,8 @@ export default {
     position: 'absolute',
     top: '50%',
     transform: 'translate(-50%, -50%)',
+  }),
+  iframe: (): ICSSInJSStyle => ({
+    display: 'block',
   }),
 } as ComponentSlotStylesInput<EmbedProps & EmbedState, EmbedVariables>

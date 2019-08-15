@@ -5,6 +5,9 @@ import add from './add'
 import addParticipant from './addParticipant'
 import arrowUp from './arrowUp'
 import arrowDown from './arrowDown'
+import arrowLeft from './arrowLeft'
+import arrowRight from './arrowRight'
+import audioOff from './audioOff'
 import ban from './ban'
 import bold from './bold'
 import bookmark from './bookmark'
@@ -30,6 +33,7 @@ import callMissedLine from './callMissedLine'
 import screencast from './screencast'
 import chat from './chat'
 import chevronDown from './chevronDown'
+import clipboardCopiedTo from './clipboardCopiedTo'
 import close from './close'
 import codeSnippet from './codeSnippet'
 import filesAftereffects from './filesAftereffects'
@@ -153,6 +157,9 @@ export default {
   add,
   'arrow-up': arrowUp,
   'arrow-down': arrowDown,
+  'arrow-left': arrowLeft,
+  'arrow-right': arrowRight,
+  'audio-off': audioOff,
   ban,
   bold,
   bookmark,
@@ -179,6 +186,7 @@ export default {
   'canvas-add-page': canvasAddPage,
   chat,
   'chevron-down': chevronDown,
+  'clipboard-copied-to': clipboardCopiedTo,
   close,
   'code-snippet': codeSnippet,
   'files-aftereffects': filesAftereffects,
