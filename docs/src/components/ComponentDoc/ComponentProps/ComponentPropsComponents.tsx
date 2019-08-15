@@ -14,7 +14,7 @@ const ComponentPropsComponents: any = ({
   const items: Object[] = _.map(displayNames, displayName =>
     displayName === parentDisplayName
       ? displayName
-      : displayName.replace(parentDisplayName, `${parentDisplayName}.`),
+      : displayName.replace(parentDisplayName, `${parentDisplayName}`),
   )
   return (
     <Flex column>

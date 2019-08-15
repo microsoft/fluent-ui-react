@@ -2,7 +2,7 @@ import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { Flex, Header, Icon, Dropdown, Text, Grid, Menu, Box } from '@stardust-ui/react'
 
-import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
+import { getFormattedHash } from 'docs/src/utils'
 import ComponentDocLinks from './ComponentDocLinks'
 import ComponentDocSee from './ComponentDocSee'
 import { ComponentExamples } from './ComponentExamples'
@@ -13,6 +13,7 @@ import ExampleContext from 'docs/src/context/ExampleContext'
 import ComponentPlayground from 'docs/src/components/ComponentPlayground/ComponentPlayground'
 import { ComponentInfo } from 'docs/src/types'
 import ComponentBestPractices from './ComponentBestPractices'
+import * as _ from 'lodash'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -28,23 +29,36 @@ type ComponentDocProps = {
 class ComponentDoc extends React.Component<ComponentDocProps, any> {
   state: any = {}
 
+  getTabIndexOrFallbackToZero(tab: string) {
+    const lowercaseTabs = _.map(this.props.tabs, tab => tab.toLowerCase())
+    const index = lowercaseTabs.indexOf(tab)
+    if (index === -1) return 0 // TODO: change URL to /definition
+    return index
+  }
+
   getCurrentTabTitle() {
     return this.props.tabs[this.state.currentTabIndex]
   }
 
   componentWillMount() {
     const { history, location } = this.props
-    this.setState({ currentTabIndex: 0 })
+    const tab = location.pathname.match(/[^\/]*$/)[0]
+    const tabIndex = this.getTabIndexOrFallbackToZero(tab)
+    this.setState({ currentTabIndex: tabIndex })
 
     if (location.hash) {
       const activePath = getFormattedHash(location.hash)
       history.replace(`${location.pathname}#${activePath}`)
       this.setState({ activePath })
+      if (this.props.tabs[tabIndex] === 'Props') {
+        this.setState({ defaultPropComponent: activePath })
+      }
     }
   }
 
-  componentWillReceiveProps({ info, tabs }) {
-    this.setState({ currentTabIndex: 0 })
+  componentWillReceiveProps({ info, location }) {
+    const tab = location.pathname.match(/[^\/]*$/)[0]
+    this.setState({ currentTabIndex: this.getTabIndexOrFallbackToZero(tab) })
 
     if (info.displayName !== this.props.info.displayName) {
       this.setState({ activePath: undefined })
@@ -57,6 +71,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
 
   handleExamplesRef = examplesRef => this.setState({ examplesRef })
 
+  /* TODO: bring back the right floating menu
   handleSidebarItemClick = (e, { examplePath }) => {
     const { history, location } = this.props
     const activePath = examplePathToHash(examplePath)
@@ -65,9 +80,21 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
     // set active hash path
     this.setState({ activePath }, scrollToAnchor)
   }
+  */
 
   handleTabClick = (e, props) => {
-    this.setState({ currentTabIndex: props.index })
+    const newIndex = props.index
+    const { history, location } = this.props
+    const at = location.pathname
+    const newLocation = at.replace(/[^\/]*$/, this.props.tabs[newIndex].toLowerCase())
+
+    history.replace(newLocation)
+    this.setState({ currentTabIndex: newIndex })
+  }
+
+  onPropComponentSelected = (e, props) => {
+    const { history, location } = this.props
+    history.replace(`${location.pathname}#${props.value}`)
   }
 
   render() {
@@ -153,7 +180,12 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
         {this.getCurrentTabTitle() === 'Accessibility' && <ComponentDocAccessibility info={info} />}
 
         {this.getCurrentTabTitle() === 'Props' && (
-          <ComponentProps displayName={info.displayName} props={info.props} />
+          <ComponentProps
+            displayName={info.displayName}
+            props={info.props}
+            defaultComponentProp={this.state.defaultPropComponent}
+            onPropComponentSelected={this.onPropComponentSelected}
+          />
         )}
 
         {this.getCurrentTabTitle() === 'Definition' && (

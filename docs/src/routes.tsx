@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import ExternalExampleLayout from './components/ExternalExampleLayout'
 import DocsLayout from './components/DocsLayout'
 import DocsRoot from './components/DocsRoot'
+import DocsBehaviorRoot from './components/DocsBehaviorRoot'
 import MarkdownPage from 'docs/src/components/MarkdownPage'
 
 import * as Composition from './pages/Composition.mdx'
@@ -47,7 +48,8 @@ const Routes = () => (
       <DocsLayout>
         <Switch>
           <Route exact path="/" component={Introduction} />
-          <Route exact path="/:type/:name" component={DocsRoot} sidebar />
+          <Route exact path="/components/:name/:tab" component={DocsRoot} sidebar />
+          <Route exact path="/behaviors/:name" component={DocsBehaviorRoot} sidebar />
           <Route exact path="/quick-start" component={QuickStart} />
           <Route exact path="/prototype-chat-pane" component={ChatPanePrototype} />
           <Route exact path="/prototype-chat-messages" component={ChatMessagesPrototype} />

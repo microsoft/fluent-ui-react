@@ -5,7 +5,6 @@ import * as React from 'react'
 import ComponentDoc from '../components/ComponentDoc'
 import PageNotFound from '../views/PageNotFound'
 import componentInfoContext from '../utils/componentInfoContext'
-import DocsBehaviorRoot from './DocsBehaviorRoot'
 import { containsExamples } from './ComponentDoc/ComponentExamples'
 import { containsAccessibility } from './ComponentDoc/ComponentDocAccessibility'
 
@@ -15,7 +14,7 @@ class DocsRoot extends React.Component<any, any> {
     match: PropTypes.shape({
       params: PropTypes.shape({
         name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
+        tab: PropTypes.string.isRequired,
       }),
     }),
   }
@@ -42,7 +41,7 @@ class DocsRoot extends React.Component<any, any> {
     const { match } = this.props
     const displayName = _.startCase(match.params.name).replace(/ /g, '')
     if (match.params.type === 'behaviors') {
-      return <DocsBehaviorRoot {...this.props} />
+      return null
     }
     const info = componentInfoContext.byDisplayName[displayName]
     const tabs = this.getNonEmptyTabs(info)
