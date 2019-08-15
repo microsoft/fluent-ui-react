@@ -27,7 +27,7 @@ const defaultValue = 'red'
 
 export default (siteVars: any): CheckboxVariables => ({
   textColor: _.get(siteVars, 'colorScheme.default.foreground1', defaultValue),
-  background: _.get(siteVars, 'colorScheme.default.background', defaultValue),
+  background: 'transparent',
   borderColor: _.get(siteVars, 'colorScheme.default.foreground1', defaultValue),
   borderStyle: 'solid',
   borderRadius: pxToRem(3),
