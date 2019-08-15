@@ -3,12 +3,7 @@ import { Ref } from '@stardust-ui/react-component-ref'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import {
-  WithAsProp,
-  withSafeTypeForAs,
-  ShorthandCollection,
-  ComponentEventHandler,
-} from '../../types'
+import { WithAsProp, withSafeTypeForAs, ComponentEventHandler, ShorthandValue } from '../../types'
 import {
   UIComponent,
   UIComponentProps,
@@ -20,7 +15,7 @@ import {
 import { Accessibility } from '../../lib/accessibility/types'
 import Button, { ButtonProps } from './Button'
 import { MenuItemProps } from '../Menu/MenuItem'
-import MenuButton from '../MenuButton/MenuButton'
+import MenuButton, { MenuButtonProps } from '../MenuButton/MenuButton'
 import { splitButtonBehavior } from '../../lib/accessibility'
 
 export interface SplitButtonProps
@@ -32,8 +27,11 @@ export interface SplitButtonProps
    */
   accessibility?: Accessibility
 
-  /** Shorthand array of props for Menu. */
-  items: ShorthandCollection<MenuItemProps>
+  /** Element to be rendered in-place where the popup is defined. */
+  button?: ShorthandValue<ButtonProps>
+
+  /** Element to be rendered in-place where the popup is defined. */
+  menuButton?: ShorthandValue<MenuButtonProps>
 
   /**
    * Called after user's click.
@@ -50,14 +48,6 @@ export interface SplitButtonProps
    * @param {object} data - All item props.
    */
   onItemClick?: ComponentEventHandler<MenuItemProps>
-
-  /**
-   * Called after user's click on the toggle button.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All item props.
-   */
-  onToggle?: ComponentEventHandler<ButtonProps>
 
   /** A split button can be formatted to show different levels of emphasis. */
   primary?: boolean
@@ -77,14 +67,13 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    items: customPropTypes.collectionShorthand,
-    mainItemIndex: PropTypes.number,
+    button: customPropTypes.itemShorthand,
+    menuButton: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
     onItemClick: PropTypes.func,
     onToggle: PropTypes.func,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
-    toggleButton: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
@@ -117,7 +106,7 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
     styles,
     unhandledProps,
   }): React.ReactNode {
-    const { items, onClick, primary, secondary } = this.props
+    const { button, menuButton, onClick, primary, secondary } = this.props
 
     return (
       <Ref innerRef={this.splitButtonRef}>
@@ -128,7 +117,7 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
-          {Button.create(items[0], {
+          {Button.create(button, {
             defaultProps: {
               styles: styles.button,
               variables: variables.button,
@@ -138,24 +127,25 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
               ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.button, unhandledProps),
             },
           })}
-          <MenuButton
-            accessibility={accessibility.childBehaviors.toggleButton}
-            componentRef={this.menuButtonRef}
-            menu={items}
-            onOpenChange={() => {
-              this.splitButtonRef.current.focus()
-            }}
-            trigger={
-              <Button
-                styles={styles.toggleButton}
-                variables={variables.toggleButton}
-                icon="chevron-down"
-                iconOnly
-                primary={primary}
-                secondary={secondary}
-              />
-            }
-          />
+          {MenuButton.create(menuButton, {
+            defaultProps: {
+              accessibility: accessibility.childBehaviors.toggleButton,
+              componentRef: this.menuButtonRef,
+              trigger: (
+                <Button
+                  styles={styles.toggleButton}
+                  variables={variables.toggleButton}
+                  icon="chevron-down"
+                  iconOnly
+                  primary={primary}
+                  secondary={secondary}
+                  onFocus={e => {
+                    this.splitButtonRef.current.focus()
+                  }}
+                />
+              ),
+            },
+          })}
         </ElementType>
       </Ref>
     )
