@@ -34,6 +34,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
 
   componentWillMount() {
     const { history, location } = this.props
+    this.setState({ currentTabIndex: 0 })
 
     if (location.hash) {
       const activePath = getFormattedHash(location.hash)
