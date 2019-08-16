@@ -14,7 +14,7 @@ import {
   commonPropTypes,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import Button, { ButtonProps } from './Button'
+import Button, { ButtonProps } from '../Button/Button'
 import MenuButton from '../MenuButton/MenuButton'
 import { splitButtonBehavior } from '../../lib/accessibility'
 import { MenuProps } from '../Menu/Menu'
