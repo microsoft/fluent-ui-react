@@ -179,7 +179,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     accessibility: popupBehavior,
     align: 'start',
     mountDocument: isBrowser() ? document : null,
-    mountNode: isBrowser() ? document.body : null,
     position: 'above',
     on: 'click',
     mouseLeaveDelay: 500,
