@@ -78,7 +78,8 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
   menuButtonRef = React.createRef<MenuButton>()
 
   actionHandlers = {
-    closeMenuAndFocusButton: () => {
+    closeMenuAndFocusButton: e => {
+      e.preventDefault()
       this.closeMenu()
       this.buttonRef.current.focus()
     },
