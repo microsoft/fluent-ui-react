@@ -30,13 +30,15 @@ type ComponentDocProps = {
 class ComponentDoc extends React.Component<ComponentDocProps, any> {
   state: any = {}
 
+  tabRegex = new RegExp(/[^\/]*$/)
+
   getTabIndexOrRedirectToDefault(tab: string) {
     const lowercaseTabs = _.map(this.props.tabs, tab => tab.toLowerCase())
     const index = lowercaseTabs.indexOf(tab)
     if (index === -1) {
       const { history, location } = this.props
       const at = location.pathname
-      const newLocation = at.replace(/[^\/]*$/, 'definition')
+      const newLocation = at.replace(this.tabRegex, 'definition')
       history.replace(newLocation)
       return 0
     }
@@ -49,7 +51,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
 
   componentWillMount() {
     const { history, location } = this.props
-    const tab = location.pathname.match(/[^\/]*$/)[0]
+    const tab = location.pathname.match(this.tabRegex)[0]
     const tabIndex = this.getTabIndexOrRedirectToDefault(tab)
     this.setState({ currentTabIndex: tabIndex })
 
@@ -64,7 +66,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
   }
 
   componentWillReceiveProps({ info, location }) {
-    const tab = location.pathname.match(/[^\/]*$/)[0]
+    const tab = location.pathname.match(this.tabRegex)[0]
     this.setState({ currentTabIndex: this.getTabIndexOrRedirectToDefault(tab) })
 
     if (info.displayName !== this.props.info.displayName) {
@@ -93,7 +95,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
     const newIndex = props.index
     const { history, location } = this.props
     const at = location.pathname
-    const newLocation = at.replace(/[^\/]*$/, this.props.tabs[newIndex].toLowerCase())
+    const newLocation = at.replace(this.tabRegex, this.props.tabs[newIndex].toLowerCase())
 
     history.replace(newLocation)
     this.setState({ currentTabIndex: newIndex })
