@@ -277,7 +277,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   }
 
   trySetOpen(newValue: boolean, eventArgs: any) {
-    this.trySetState({ open: newValue })
+    this.setState({ open: newValue })
     _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
   }
 

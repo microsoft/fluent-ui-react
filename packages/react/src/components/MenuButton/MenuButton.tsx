@@ -167,18 +167,18 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
   }
 
   closeMenu() {
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 
   openAndFocus(e: React.KeyboardEvent, which: 'first' | 'last') {
     const renderCallback = () => focusMenuItem(this.menuRef.current, which)
-    this.trySetState({ open: true }, renderCallback)
+    this.setState({ open: true }, renderCallback)
     e.preventDefault()
   }
 
   handleOpenChange = (e, { open }: PopupProps) => {
     _.invoke(this.props, 'onOpenChange', e, { ...this.props, open })
-    this.trySetState({ open })
+    this.setState({ open })
   }
 
   handleMenuOverrides = (predefinedProps?: MenuProps) => ({
@@ -186,7 +186,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
       _.invoke(predefinedProps, 'onItemClick', e, itemProps)
       if (!itemProps || !itemProps.menu) {
         // do not close if clicked on item with submenu
-        this.trySetState({ open: false })
+        this.setState({ open: false })
       }
     },
   })

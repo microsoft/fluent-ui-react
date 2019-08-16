@@ -183,7 +183,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
 
     _.invoke(this.props, 'onTriggerClick', e) // Call handler from parent component
     _.invoke(trigger, 'props.onClick', e, ...unhandledProps) // Call original event handler
-    this.trySetState({ open: !this.state.open })
+    this.setState({ open: !this.state.open })
   }
 
   handleDocumentClick = (e: MouseEvent) => {
@@ -195,7 +195,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
       return // ignore the click
     }
     _.invoke(this.props, 'onOutsideClick', e)
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 }
 

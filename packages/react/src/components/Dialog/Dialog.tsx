@@ -163,17 +163,17 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 
   handleDialogCancel = (e: Event | React.SyntheticEvent) => {
     _.invoke(this.props, 'onCancel', e, { ...this.props, open: false })
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 
   handleDialogConfirm = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onConfirm', e, { ...this.props, open: false })
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 
   handleDialogOpen = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onOpen', e, { ...this.props, open: true })
-    this.trySetState({ open: true })
+    this.setState({ open: true })
   }
 
   handleCancelButtonOverrides = (predefinedProps: ButtonProps) => ({
