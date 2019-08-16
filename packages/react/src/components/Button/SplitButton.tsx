@@ -15,8 +15,9 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import Button, { ButtonProps } from './Button'
-import MenuButton, { MenuButtonProps } from '../MenuButton/MenuButton'
+import MenuButton from '../MenuButton/MenuButton'
 import { splitButtonBehavior } from '../../lib/accessibility'
+import { MenuProps } from '../Menu/Menu'
 
 export interface SplitButtonProps
   extends UIComponentProps,
@@ -31,7 +32,7 @@ export interface SplitButtonProps
   button?: ShorthandValue<ButtonProps>
 
   /** Element to be rendered in-place where the popup is defined. */
-  menuButton?: ShorthandValue<MenuButtonProps>
+  menu?: ShorthandValue<MenuProps>
 
   /**
    * Called after user's click.
@@ -60,7 +61,7 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
       content: false,
     }),
     button: customPropTypes.itemShorthand,
-    menuButton: customPropTypes.itemShorthand,
+    menu: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
     onToggle: PropTypes.func,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
@@ -73,11 +74,14 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
     primary: true,
   }
 
+  buttonRef = React.createRef<HTMLElement>()
   menuButtonRef = React.createRef<MenuButton>()
-  splitButtonRef = React.createRef<HTMLElement>()
 
   actionHandlers = {
-    closeMenu: () => this.closeMenu(),
+    closeMenuAndFocusButton: () => {
+      this.closeMenu()
+      this.buttonRef.current.focus()
+    },
     openAndFocusFirst: e => this.openAndFocusFirst(e),
   }
 
@@ -97,16 +101,16 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
     styles,
     unhandledProps,
   }): React.ReactNode {
-    const { button, menuButton, primary, secondary } = this.props
+    const { button, menu, primary, secondary } = this.props
 
     return (
-      <Ref innerRef={this.splitButtonRef}>
-        <ElementType
-          className={classes.root}
-          {...accessibility.attributes.root}
-          {...unhandledProps}
-          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-        >
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+      >
+        <Ref innerRef={this.buttonRef}>
           {Button.create(button, {
             defaultProps: {
               styles: styles.button,
@@ -114,7 +118,7 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
               primary,
               secondary,
               ...accessibility.attributes.button,
-              ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.button, unhandledProps),
+              ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.button, button),
             },
             overrideProps: (predefinedProps?: ButtonProps) => ({
               onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
@@ -123,27 +127,24 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
               },
             }),
           })}
-          {MenuButton.create(menuButton, {
-            defaultProps: {
-              accessibility: accessibility.childBehaviors.toggleButton,
-              componentRef: this.menuButtonRef,
-              trigger: (
-                <Button
-                  styles={styles.toggleButton}
-                  variables={variables.toggleButton}
-                  icon="chevron-down"
-                  iconOnly
-                  primary={primary}
-                  secondary={secondary}
-                  onFocus={e => {
-                    this.splitButtonRef.current.focus()
-                  }}
-                />
-              ),
-            },
-          })}
-        </ElementType>
-      </Ref>
+        </Ref>
+        <MenuButton
+          accessibility={accessibility.childBehaviors.menuButton}
+          componentRef={this.menuButtonRef}
+          menu={menu}
+          trigger={
+            <Button
+              styles={styles.menuButton}
+              variables={variables.menuButton}
+              icon="chevron-down"
+              iconOnly
+              primary={primary}
+              secondary={secondary}
+            />
+          }
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.menuButton, menu)}
+        />
+      </ElementType>
     )
   }
 }

@@ -32,11 +32,7 @@ const items = [
 ]
 
 const SplitButtonExampleShorthand = () => (
-  <SplitButton
-    onClick={handleMainOptionClick}
-    menuButton={{ menu: { items } }}
-    button={items[0].content}
-  />
+  <SplitButton onClick={handleMainOptionClick} menu={items} button={items[0].content} />
 )
 
 export default SplitButtonExampleShorthand

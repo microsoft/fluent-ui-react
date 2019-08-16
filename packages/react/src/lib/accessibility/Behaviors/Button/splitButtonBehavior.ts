@@ -13,6 +13,7 @@ import menuButtonBehavior from '../MenuButton/menuButtonBehavior'
 const buttonBehavior: Accessibility<SplitButtonProps> = props => {
   const splitButtonMenuButtonBehavior = props => {
     const menuButtonBehaviorData = menuButtonBehavior(props)
+    menuButtonBehaviorData.keyActions = {}
 
     return _.merge(menuButtonBehaviorData, {
       attributes: {
@@ -20,38 +21,27 @@ const buttonBehavior: Accessibility<SplitButtonProps> = props => {
           tabIndex: -1,
         },
       },
-      keyActions: {
-        popup: {
-          closeAndFocusTrigger: {
-            keyCombinations: [
-              { keyCode: keyboardKey.Escape },
-              { keyCode: keyboardKey.ArrowUp, altKey: true },
-            ],
-          },
-        },
-      },
     })
   }
+
   return {
-    attributes: {
-      root: {
-        tabIndex: 0,
+    keyActions: {
+      menuButton: {
+        closeMenuAndFocusButton: {
+          keyCombinations: [
+            { keyCode: keyboardKey.Escape },
+            { keyCode: keyboardKey.ArrowUp, altKey: true },
+          ],
+        },
       },
       button: {
-        tabIndex: -1,
-      },
-    },
-
-    keyActions: {
-      root: {
         openAndFocusFirst: {
           keyCombinations: [{ keyCode: keyboardKey.ArrowDown, altKey: true }],
         },
       },
     },
-
     childBehaviors: {
-      toggleButton: splitButtonMenuButtonBehavior,
+      menuButton: splitButtonMenuButtonBehavior,
     },
   }
 }
