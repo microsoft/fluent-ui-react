@@ -8,16 +8,6 @@ type ObjectOf<T> = Record<string, T>
 const typeOf = (x: any) => Object.prototype.toString.call(x)
 
 /**
- * Ensure a component can render as a give prop value.
- */
-export const as = PropTypes.oneOfType([
-  PropTypes.func,
-  PropTypes.object,
-  PropTypes.string,
-  PropTypes.symbol,
-])
-
-/**
  * Ensure a prop is a valid DOM node.
  */
 export const domNode = (props: ObjectOf<any>, propName: string) => {
