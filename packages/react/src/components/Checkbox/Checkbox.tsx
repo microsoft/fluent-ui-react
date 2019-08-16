@@ -119,7 +119,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     const checked = !this.state.checked
 
     if (!disabled) {
-      this.trySetState({ checked })
+      this.setState({ checked })
       _.invoke(this.props, 'onChange', e, { ...this.props, checked })
     }
   }
@@ -129,7 +129,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     const checked = !this.state.checked
 
     if (!disabled) {
-      this.trySetState({ checked })
+      this.setState({ checked })
 
       _.invoke(this.props, 'onClick', e, { ...this.props, checked })
       _.invoke(this.props, 'onChange', e, { ...this.props, checked })

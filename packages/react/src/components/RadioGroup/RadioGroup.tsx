@@ -199,9 +199,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     event: React.SyntheticEvent
     props: RadioGroupItemProps
   }) {
-    this.trySetState({ checkedValue })
-    this.setState({ shouldFocus })
-
+    this.setState({ checkedValue, shouldFocus })
     _.invoke(this.props, 'checkedValueChanged', event, props)
   }
 }
