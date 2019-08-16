@@ -128,7 +128,7 @@ class HierarchicalTree extends AutoControlledComponent<
   }
 
   trySetActiveIndexAndTriggerEvent = (e, activeIndex) => {
-    this.trySetState({ activeIndex })
+    this.setState({ activeIndex })
     _.invoke(this.props, 'onActiveIndexChange', e, { ...this.props, activeIndex })
   }
 
