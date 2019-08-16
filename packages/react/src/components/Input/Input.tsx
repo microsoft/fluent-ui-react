@@ -197,13 +197,13 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
 
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
 
-    this.trySetState({ value })
+    this.setState({ value })
   }
 
   handleOnClear = (e: React.SyntheticEvent) => {
     if (this.props.clearable) {
       _.invoke(this.props, 'onChange', e, { ...this.props, value: '' })
-      this.trySetState({ value: '' })
+      this.setState({ value: '' })
     }
   }
 
