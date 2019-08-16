@@ -5,7 +5,7 @@ const config: ScreenerTestsConfig = {
     builder =>
       builder.setValue(`.${Input.className} input`, 'Some text...').snapshot('Can be clearable'),
   ],
-  themes: ['teams', 'base'],
+  themes: ['teams', 'teamsDark', 'teamsHighContrast'],
 }
 
 export default config
