@@ -46,10 +46,6 @@ class PortalInner extends React.Component<PortalInnerProps> {
     onUnmount: PropTypes.func,
   }
 
-  static defaultProps = {
-    mountNode: isBrowser() ? document.body : null,
-  }
-
   componentDidMount() {
     _.invoke(this.props, 'onMount', this.props)
   }

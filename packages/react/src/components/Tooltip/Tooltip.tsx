@@ -9,7 +9,6 @@ import {
   childrenExist,
   AutoControlledComponent,
   RenderResultConfig,
-  isBrowser,
   ChildrenComponentProps,
   ContentComponentProps,
   StyledComponentProps,
@@ -120,7 +119,6 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
   static defaultProps: TooltipProps = {
     align: 'center',
-    mountNode: isBrowser() ? document.body : null,
     position: 'above',
     mouseLeaveDelay: 10,
     pointing: true,
