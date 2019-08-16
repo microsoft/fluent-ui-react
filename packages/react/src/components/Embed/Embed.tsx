@@ -123,7 +123,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     const iframeNil = _.isNil(this.props.iframe)
 
     if (iframeNil || (!iframeNil && !this.state.active)) {
-      this.trySetState({ active: !this.state.active })
+      this.setState({ active: !this.state.active })
       _.invoke(this.props, 'onActiveChanged', e, { ...this.props, active: !this.state.active })
     }
 
