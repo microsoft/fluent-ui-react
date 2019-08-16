@@ -136,6 +136,19 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
     const { info } = this.props
     const { activePath } = this.state
 
+    const examples = (
+      <div ref={this.handleExamplesRef}>
+        <ExampleContext.Provider
+          value={{
+            activeAnchorName: activePath,
+            onExamplePassed: this.handleExamplePassed,
+          }}
+        >
+          <ComponentExamples displayName={info.displayName} />
+        </ExampleContext.Provider>
+      </div>
+    )
+
     return (
       <div style={{ padding: '20px' }}>
         <Flex column styles={{ paddingBottom: '1rem' }}>
@@ -213,6 +226,9 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
             >
               <div>
                 <ComponentBestPractices displayName={info.displayName} />
+                {
+                  examples /* TODO: remove this and allow to tweak the examples in the playground instead */
+                }
               </div>
             </Grid>
           </>
@@ -220,17 +236,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
 
         {this.getCurrentTabTitle() === 'Usage' && (
           <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
-            <div ref={this.handleExamplesRef}>
-              <ExampleContext.Provider
-                value={{
-                  activeAnchorName: activePath,
-                  onExamplePassed: this.handleExamplePassed,
-                }}
-              >
-                <ComponentExamples displayName={info.displayName} />
-              </ExampleContext.Provider>
-            </div>
-
+            {examples}
             {/* TODO: bring back the right floating menu
             <Box styles={{ width: '25%', paddingLeft: '14px' }}>
               <ComponentSidebar
