@@ -2,8 +2,8 @@ import * as React from 'react'
 import { Menu } from '@stardust-ui/react'
 
 const items = [
-  { key: 'home', content: 'Home', icon: 'home' },
-  { key: 'users', content: 'Users', icon: 'users' },
+  { key: 'onedrive', icon: 'onedrive' },
+  { key: 'star', icon: 'star' },
   { key: 'search', icon: 'search' },
 ]
 

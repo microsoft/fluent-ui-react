@@ -52,12 +52,12 @@ const items: ShorthandCollection<MenuItemProps> = [
     'aria-label': 'Meetup Tool',
   },
   {
-    key: 'book',
+    key: 'settings',
     icon: {
-      name: 'book',
+      name: 'settings',
       outline: true,
     },
-    'aria-label': 'Book Tool',
+    'aria-label': 'Settings',
   },
   {
     key: 'menuButton2',
