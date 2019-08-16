@@ -1,7 +1,11 @@
+import * as _ from 'lodash'
+import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import Loader from '../../../../components/Loader/Loader'
 import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
 import { ButtonVariables } from './buttonVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
+import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
@@ -18,7 +22,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
 
     return {
       height: v.height,
-      minWidth: v.minWidth,
+      minWidth: _.isNil(p.loading) ? v.minWidth : v.loadingMinWidth,
       maxWidth: v.maxWidth,
       color: v.color,
       backgroundColor: v.backgroundColor,
@@ -100,21 +104,29 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
         color: v.textColor,
         backgroundColor: 'transparent',
         borderColor: 'transparent',
+        padding: `0 ${pxToRem(8)}`,
+
+        // by default icons should always be outline, but filled on hover/focus
+        ...getIconFillOrOutlineStyles({ outline: true }),
+
         ':hover': {
           color: v.textColorHover,
+          ...getIconFillOrOutlineStyles({ outline: false }),
         },
-        ...(p.primary && {
-          color: v.textPrimaryColor,
-          ':hover': {
-            color: v.textPrimaryColorHover,
-          },
-        }),
 
         ':focus': {
           boxShadow: 'none',
           outline: 'none',
-          ...(p.isFromKeyboard && borderFocusStyles),
+
+          ...(p.isFromKeyboard && {
+            ...borderFocusStyles,
+            ...getIconFillOrOutlineStyles({ outline: false }),
+          }),
         },
+
+        ...(p.primary && {
+          color: v.textPrimaryColor,
+        }),
       }),
 
       // Overrides for "primary" buttons
@@ -145,12 +157,25 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
       ...(p.disabled && {
         cursor: 'default',
         color: v.colorDisabled,
-        backgroundColor: v.backgroundColorDisabled,
-        borderColor: v.borderColorDisabled,
         boxShadow: 'none',
         ':hover': {
-          backgroundColor: v.backgroundColorDisabled,
+          color: v.colorDisabled,
         },
+
+        ...(p.text && {
+          color: v.textColorDisabled,
+          ':hover': {
+            color: v.textColorDisabled,
+          },
+        }),
+
+        ...(!p.text && {
+          backgroundColor: v.backgroundColorDisabled,
+          borderColor: v.borderColorDisabled,
+          ':hover': {
+            backgroundColor: v.backgroundColorDisabled,
+          },
+        }),
       }),
 
       ...(p.fluid && {
@@ -181,6 +206,40 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
     ...(p.size === 'small' && {
       fontSize: v.sizeSmallContentFontSize,
       lineHeight: v.sizeSmallContentLineHeight,
+    }),
+  }),
+
+  icon: ({ props: p, variables: v }) => ({
+    // when loading, hide the icon
+    ...(p.loading && {
+      margin: 0,
+      opacity: 0,
+      width: 0,
+    }),
+  }),
+
+  loader: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    [`& .${Loader.slotClassNames.indicator}`]: {
+      width: p.size === 'small' ? v.sizeSmallLoaderSize : v.loaderSize,
+      height: p.size === 'small' ? v.sizeSmallLoaderSize : v.loaderSize,
+    },
+    [`& .${Loader.slotClassNames.svg}`]: {
+      ':before': {
+        animationName: {
+          to: {
+            transform: `translate3d(0, ${
+              p.size === 'small' ? v.sizeSmallLoaderSvgAnimationHeight : v.loaderSvgAnimationHeight
+            }, 0)`,
+          },
+        },
+        borderWidth: p.size === 'small' ? v.sizeSmallLoaderBorderSize : v.loaderBorderSize,
+        width: p.size === 'small' ? v.sizeSmallLoaderSize : v.loaderSize,
+        height: p.size === 'small' ? v.sizeSmallLoaderSvgHeight : v.loaderSvgHeight,
+      },
+    },
+
+    ...(p.content && {
+      marginRight: pxToRem(4),
     }),
   }),
 }

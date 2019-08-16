@@ -28,6 +28,7 @@ const unsupportedComponents = [
   'Provider',
   'RadioGroup',
   'Toolbar',
+  'Ref',
 ]
 
 const ComponentPlayground: React.FunctionComponent<ComponentPlaygroundProps> = props => {

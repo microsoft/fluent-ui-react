@@ -20,6 +20,7 @@ const chatMessageBehavior: Accessibility = () => ({
   attributes: {
     root: {
       [IS_FOCUSABLE_ATTRIBUTE]: true,
+      tabIndex: -1,
     },
   },
   focusZone: {

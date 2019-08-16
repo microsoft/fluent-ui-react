@@ -61,6 +61,12 @@ export interface DropdownProps
   /** The index of the currently active selected item, if dropdown has a multiple selection. */
   activeSelectedIndex?: number
 
+  /** Item can show check indicator if selected. */
+  checkable?: boolean
+
+  /** A slot for a selected indicator in the dropdown list. */
+  checkableIndicator?: ShorthandValue<IconProps>
+
   /** A dropdown can be clearable and let users remove their selection. */
   clearable?: boolean
 
@@ -250,6 +256,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     }),
     activeSelectedIndex: PropTypes.number,
     align: PropTypes.oneOf(ALIGNMENTS),
+    checkable: PropTypes.bool,
+    checkableIndicator: customPropTypes.itemShorthandWithoutJSX,
     clearable: PropTypes.bool,
     clearIndicator: customPropTypes.itemShorthand,
     defaultActiveSelectedIndex: PropTypes.number,
@@ -285,7 +293,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
-    toggleIndicator: customPropTypes.itemShorthand,
+    toggleIndicator: customPropTypes.itemShorthandWithoutJSX,
     triggerButton: customPropTypes.itemShorthand,
     unstable_pinned: PropTypes.bool,
     value: PropTypes.oneOfType([
@@ -297,6 +305,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   static defaultProps = {
     align: 'start',
     as: 'div',
+    checkableIndicator: 'stardust-checkmark',
     clearIndicator: 'stardust-close',
     itemToString: item => {
       if (!item || React.isValidElement(item)) {
@@ -694,16 +703,26 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     highlightedIndex: number,
     value: ShorthandValue<DropdownItemProps> | ShorthandCollection<DropdownItemProps>,
   ) {
-    const { loading, loadingMessage, noResultsMessage, renderItem } = this.props
+    const {
+      loading,
+      loadingMessage,
+      noResultsMessage,
+      renderItem,
+      checkable,
+      checkableIndicator,
+    } = this.props
     const { filteredItems } = this.state
 
     const items = _.map(filteredItems, (item, index) => render =>
       render(item, () => {
+        const selected = !this.props.multiple && value === item
         return DropdownItem.create(item, {
           defaultProps: {
             className: Dropdown.slotClassNames.item,
             active: highlightedIndex === index,
-            selected: !this.props.multiple && value === item,
+            selected,
+            checkable,
+            checkableIndicator,
             isFromKeyboard: this.state.itemIsFromKeyboard,
             variables,
             ...(typeof item === 'object' &&
@@ -711,7 +730,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                 key: (item as any).header,
               }),
           },
-          overrideProps: this.handleItemOverrides(item, index, getItemProps),
+          overrideProps: this.handleItemOverrides(item, index, getItemProps, selected),
           render: renderItem,
         })
       }),
@@ -818,16 +837,23 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     item: ShorthandValue<DropdownItemProps>,
     index: number,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue<DropdownItemProps>>) => any,
+    selected: boolean,
   ) => (predefinedProps: DropdownItemProps) => ({
-    accessibilityItemProps: getItemProps({
-      item,
-      index,
-      onClick: e => {
-        e.stopPropagation()
-        e.nativeEvent.stopImmediatePropagation()
-        _.invoke(predefinedProps, 'onClick', e, predefinedProps)
-      },
-    }),
+    accessibilityItemProps: {
+      ...getItemProps({
+        item,
+        index,
+        onClick: e => {
+          e.stopPropagation()
+          e.nativeEvent.stopImmediatePropagation()
+          _.invoke(predefinedProps, 'onClick', e, predefinedProps)
+        },
+      }),
+      // for single selection the selected item should have aria-selected, instead of the highlighted
+      ...(!this.props.multiple && {
+        'aria-selected': selected,
+      }),
+    },
   })
 
   handleSelectedItemOverrides = (item: ShorthandValue<DropdownItemProps>, rtl: boolean) => (
