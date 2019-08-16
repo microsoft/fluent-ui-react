@@ -30,10 +30,16 @@ type ComponentDocProps = {
 class ComponentDoc extends React.Component<ComponentDocProps, any> {
   state: any = {}
 
-  getTabIndexOrFallbackToZero(tab: string) {
+  getTabIndexOrRedirectToDefault(tab: string) {
     const lowercaseTabs = _.map(this.props.tabs, tab => tab.toLowerCase())
     const index = lowercaseTabs.indexOf(tab)
-    if (index === -1) return 0 // TODO: change URL to /definition
+    if (index === -1) {
+      const { history, location } = this.props
+      const at = location.pathname
+      const newLocation = at.replace(/[^\/]*$/, 'definition')
+      history.replace(newLocation)
+      return 0
+    }
     return index
   }
 
@@ -44,7 +50,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
   componentWillMount() {
     const { history, location } = this.props
     const tab = location.pathname.match(/[^\/]*$/)[0]
-    const tabIndex = this.getTabIndexOrFallbackToZero(tab)
+    const tabIndex = this.getTabIndexOrRedirectToDefault(tab)
     this.setState({ currentTabIndex: tabIndex })
 
     if (location.hash) {
@@ -59,7 +65,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
 
   componentWillReceiveProps({ info, location }) {
     const tab = location.pathname.match(/[^\/]*$/)[0]
-    this.setState({ currentTabIndex: this.getTabIndexOrFallbackToZero(tab) })
+    this.setState({ currentTabIndex: this.getTabIndexOrRedirectToDefault(tab) })
 
     if (info.displayName !== this.props.info.displayName) {
       this.setState({ activePath: undefined })
