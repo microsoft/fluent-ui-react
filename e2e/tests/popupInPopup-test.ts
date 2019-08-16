@@ -5,12 +5,12 @@ const popupContent = `#${selectors.popupContentId}`
 const popupTriggerNested = `#${selectors.popupTriggerNestedId}`
 const popupContentNested = `#${selectors.popupContentNestedId}`
 
-describe('Nested Popups', () => {
+describe('Popup in Popup', () => {
   beforeEach(async () => {
     await e2e.gotoTestCase(__filename, popupTrigger)
   })
 
-  it('the last opened Popup is closed when press ESC and focus moved to body', async () => {
+  it('A click on content and pressing ESC button should close the last opened popup', async () => {
     await e2e.clickOn(popupTrigger) // opens popup
     expect(await e2e.exists(popupContent)).toBe(true)
 
