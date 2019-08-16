@@ -273,7 +273,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
     // if focus was lost from Popup and moved to body, for e.g. when click on popup content
     // and ESC is pressed, the last opened Popup should get closed and the trigger should get focus
-    const isLastOpenedPopup: boolean = getRefs().length === 1
+    const lastContentRef = getRefs().pop()
+    const isLastOpenedPopup: boolean =
+      lastContentRef && lastContentRef.current === this.popupDomElement
     const bodyHasFocus: boolean = document.activeElement === document.body
 
     if (keyCode === keyboardKey.Escape && bodyHasFocus && isLastOpenedPopup) {

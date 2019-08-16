@@ -205,11 +205,10 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   }
 
   handleDocumentKeydown = e => {
-    // if focus was lost from Dialog and moved to body, for e.g. when click on Dialog's content
+    // if focus was lost from Dialog, for e.g. when click on Dialog's content
     // and ESC is pressed, the opened Dialog should get closed and the trigger should get focus
-    const bodyHasFocus: boolean = document.activeElement === document.body
     const keyCode = keyboardKey.getCode(e)
-    if (keyCode === keyboardKey.Escape && bodyHasFocus && this.state.open) {
+    if (keyCode === keyboardKey.Escape && this.state.open) {
       this.handleDialogCancel(e)
       _.invoke(this.triggerRef, 'current.focus')
     }
