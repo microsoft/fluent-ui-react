@@ -12,7 +12,6 @@ import {
   childrenExist,
   AutoControlledComponent,
   RenderResultConfig,
-  isBrowser,
   ChildrenComponentProps,
   ContentComponentProps,
   StyledComponentProps,
@@ -178,7 +177,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   static defaultProps: PopupProps = {
     accessibility: popupBehavior,
     align: 'start',
-    mountDocument: isBrowser() ? document : null,
     position: 'above',
     on: 'click',
     mouseLeaveDelay: 500,
