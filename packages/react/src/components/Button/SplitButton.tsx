@@ -131,7 +131,7 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
         </Ref>
         <MenuButton
           accessibility={accessibility.childBehaviors.menuButton}
-          componentRef={this.menuButtonRef}
+          ref={this.menuButtonRef}
           menu={menu}
           trigger={
             <Button
