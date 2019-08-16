@@ -13,6 +13,7 @@ import ExampleContext from 'docs/src/context/ExampleContext'
 import ComponentPlayground from 'docs/src/components/ComponentPlayground/ComponentPlayground'
 import { ComponentInfo } from 'docs/src/types'
 import ComponentBestPractices from './ComponentBestPractices'
+import { tabListBehavior } from 'src/lib/accessibility'
 import * as _ from 'lodash'
 
 const exampleEndStyle: React.CSSProperties = {
@@ -171,6 +172,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
                 activeIndex={this.state.currentTabIndex}
                 items={this.props.tabs}
                 onItemClick={this.handleTabClick}
+                accessibility={tabListBehavior}
               />
               <ComponentDocSee displayName={info.displayName} />
             </>
