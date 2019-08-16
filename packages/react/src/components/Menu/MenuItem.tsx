@@ -228,7 +228,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           {...accessibility.attributes.root}
           {...accessibility.keyHandlers.root}
           {...unhandledProps}
-          {...!wrapper && { onClick: this.handleClick }}
+          {...(!wrapper && { onClick: this.handleClick })}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           {icon &&
