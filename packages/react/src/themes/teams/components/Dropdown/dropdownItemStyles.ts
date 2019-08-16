@@ -59,6 +59,13 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
     fontSize: v.listItemContentFontSize,
     color: v.listItemContentColor,
   }),
+  checkableIndicator: ({ variables: v }) => ({
+    position: 'relative',
+    left: pxToRem(3),
+  }),
+  endMedia: () => ({
+    lineHeight: pxToRem(16),
+  }),
 }
 
 export default dropdownItemStyles
