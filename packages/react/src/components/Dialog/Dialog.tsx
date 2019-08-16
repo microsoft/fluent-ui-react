@@ -5,6 +5,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 
 import {
   UIComponentProps,
@@ -203,6 +204,17 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     }
   }
 
+  handleDocumentKeydown = e => {
+    // if focus was lost from Dialog and moved to body, for e.g. when click on Dialog's content
+    // and ESC is pressed, the opened Dialog should get closed and the trigger should get focus
+    const bodyHasFocus: boolean = document.activeElement === document.body
+    const keyCode = keyboardKey.getCode(e)
+    if (keyCode === keyboardKey.Escape && bodyHasFocus && this.state.open) {
+      this.handleDialogCancel(e)
+      _.invoke(this.triggerRef, 'current.focus')
+    }
+  }
+
   renderComponent({ accessibility, classes, ElementType, styles, unhandledProps }) {
     const {
       actions,
@@ -308,6 +320,12 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
                 listener={this.handleOverlayClick}
                 targetRef={documentRef}
                 type="click"
+                capture
+              />
+              <EventListener
+                listener={this.handleDocumentKeydown}
+                targetRef={documentRef}
+                type="keydown"
                 capture
               />
             </>
