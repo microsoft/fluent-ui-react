@@ -31,7 +31,7 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
       animation: customPropTypes.animation,
     }),
     ...(as && {
-      as: customPropTypes.as,
+      as: PropTypes.elementType,
     }),
     ...(children && {
       children: children === 'element' ? PropTypes.element : PropTypes.node,
