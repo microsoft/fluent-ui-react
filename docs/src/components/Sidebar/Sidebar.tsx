@@ -52,7 +52,7 @@ class Sidebar extends React.Component<any, any> {
 
   findActiveCategoryIndex = (at: string, sections: ShorthandValue<any>[]): number => {
     return _.findIndex(sections, (section: ShorthandValue<HierarchicalTreeItemProps>) => {
-      return _.find((section as any).items, item => item.title.to === at)
+      return _.find((section as any).items, item => new RegExp(`^${item.title.to}\$`, 'i').test(at))
     })
   }
 
@@ -342,7 +342,7 @@ class Sidebar extends React.Component<any, any> {
       items: treeItemsByType[0].items,
     }
     const behaviorTreeSection = {
-      key: 'behaviour',
+      key: 'behaviors',
       title: 'Behaviors',
       items: treeItemsByType[1].items,
     }
