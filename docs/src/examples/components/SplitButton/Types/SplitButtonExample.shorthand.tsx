@@ -1,38 +1,54 @@
 import * as React from 'react'
 import { SplitButton } from '@stardust-ui/react'
 
-const handleMainOptionClick = e => {
-  alert('PDF is all around us!')
-}
-const items = [
-  {
-    content: 'Export to PDF',
-    icon: 'files-pdf',
-    onClick: handleMainOptionClick,
-  },
-  {
-    content: 'Export to PDS',
-    icon: 'files-photoshop',
-    onClick: e => {
-      alert('Photoshop is awesone!')
+class SplitButtonExampleShorthand extends React.Component {
+  items = [
+    {
+      content: 'Export to PDF',
+      icon: 'files-pdf',
+      onClick: () => {
+        this.setState({ index: 0 })
+      },
     },
-  },
-  {
-    content: 'Export as GIF',
-    icon: 'files-gif',
-    disabled: true,
-  },
-  {
-    content: 'Export to EPS',
-    icon: 'files-illustrator',
-    onClick: e => {
-      alert('Illustrator is kinda cool!')
+    {
+      content: 'Export to PDS',
+      icon: 'files-photoshop',
+      onClick: () => {
+        this.setState({ index: 1 })
+      },
     },
-  },
-]
+    {
+      content: 'Export as GIF',
+      icon: 'files-gif',
+      disabled: true,
+    },
+    {
+      content: 'Export to EPS',
+      icon: 'files-illustrator',
+      onClick: () => {
+        this.setState({ index: 3 })
+      },
+    },
+  ]
+  state = {
+    index: 0,
+    message: 'Use to export your work:',
+  }
 
-const SplitButtonExampleShorthand = () => (
-  <SplitButton onClick={handleMainOptionClick} menu={items} button={items[0].content} />
-)
+  render() {
+    return (
+      <>
+        <div>{this.state.message}</div>
+        <SplitButton
+          onClick={() => {
+            this.setState({ message: 'Exported successfuly!' })
+          }}
+          menu={this.items}
+          button={this.items[this.state.index]}
+        />
+      </>
+    )
+  }
+}
 
 export default SplitButtonExampleShorthand
