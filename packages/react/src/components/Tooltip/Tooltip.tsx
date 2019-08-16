@@ -1,7 +1,6 @@
 import { toRefObject, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
@@ -31,6 +30,7 @@ import TooltipContent, { TooltipContentProps } from './TooltipContent'
 import { tooltipBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import PortalInner from '../Portal/PortalInner'
 
 export interface TooltipSlotClassNames {
   content: string
@@ -175,7 +175,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
             })}
           </Ref>
         )}
-        {mountNode && ReactDOM.createPortal(tooltipContent, mountNode)}
+        <PortalInner mountNode={mountNode}>{tooltipContent}</PortalInner>
       </>
     )
   }

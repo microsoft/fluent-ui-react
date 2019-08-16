@@ -3,7 +3,6 @@ import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nest
 import { handleRef, toRefObject, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
@@ -39,6 +38,7 @@ import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import { createShorthandFactory } from '../../lib/factories'
 import createReferenceFromContextClick from './createReferenceFromContextClick'
 import isRightClick from '../../lib/isRightClick'
+import PortalInner from '../Portal/PortalInner'
 
 export type PopupEvents = 'click' | 'hover' | 'focus' | 'context'
 export type RestrictedClickEvents = 'click' | 'focus'
@@ -247,7 +247,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       <>
         {this.renderTrigger(accessibility)}
         {open &&
-          (inline ? popupContent : mountNode && ReactDOM.createPortal(popupContent, mountNode))}
+          (inline ? popupContent : <PortalInner mountNode={mountNode}>{popupContent}</PortalInner>)}
       </>
     )
   }

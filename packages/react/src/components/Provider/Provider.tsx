@@ -157,6 +157,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       rtl,
       disableAnimations,
       renderer,
+      target,
     }
 
     const incomingContext: ProviderContextPrepared = overwrite ? {} : this.context

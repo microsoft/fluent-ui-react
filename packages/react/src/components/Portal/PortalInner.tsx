@@ -2,6 +2,9 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+// @ts-ignore
+import { ThemeContext } from '@stardust-ui/react-fela'
+
 import { isBrowser, ChildrenComponentProps, commonPropTypes } from '../../lib'
 
 export interface PortalInnerProps extends ChildrenComponentProps {
@@ -27,6 +30,8 @@ export interface PortalInnerProps extends ChildrenComponentProps {
  * A PortalInner is a container for Portal's content.
  */
 class PortalInner extends React.Component<PortalInnerProps> {
+  static contextType = ThemeContext
+
   static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
@@ -56,7 +61,10 @@ class PortalInner extends React.Component<PortalInnerProps> {
   render() {
     const { children, mountNode } = this.props
 
-    return mountNode && ReactDOM.createPortal(children, mountNode)
+    const target: HTMLElement | null = isBrowser() ? this.context.target.body : null
+    const container: HTMLElement | null = mountNode || target
+
+    return container && ReactDOM.createPortal(children, container)
   }
 }
 
