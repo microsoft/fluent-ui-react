@@ -7,6 +7,7 @@ import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropType
 import { ShorthandValue, ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
+import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Box, { BoxProps } from '../Box/Box'
 
@@ -14,6 +15,7 @@ export interface DropdownItemSlotClassNames {
   content: string
   header: string
   image: string
+  checkableIndicator: string
 }
 
 export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
@@ -25,6 +27,12 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
 
   /** Item's content. */
   content?: ShorthandValue<BoxProps>
+
+  /** Item can show check indicator if selected. */
+  checkable?: boolean
+
+  /** A slot for a checkable indicator. */
+  checkableIndicator?: ShorthandValue<IconProps>
 
   /** Item's header. */
   header?: ShorthandValue<BoxProps>
@@ -65,6 +73,8 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
     accessibilityItemProps: PropTypes.object,
     active: PropTypes.bool,
     content: customPropTypes.itemShorthand,
+    checkable: PropTypes.bool,
+    checkableIndicator: customPropTypes.itemShorthandWithoutJSX,
     header: customPropTypes.itemShorthand,
     image: customPropTypes.itemShorthandWithoutJSX,
     onClick: PropTypes.func,
@@ -77,7 +87,15 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
   }
 
   renderComponent({ classes, styles, unhandledProps }: RenderResultConfig<DropdownItemProps>) {
-    const { content, header, image, accessibilityItemProps } = this.props
+    const {
+      content,
+      header,
+      image,
+      accessibilityItemProps,
+      selected,
+      checkable,
+      checkableIndicator,
+    } = this.props
     return (
       <ListItem
         className={DropdownItem.className}
@@ -102,6 +120,18 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
             styles: styles.content,
           },
         })}
+        endMedia={
+          selected &&
+          checkable && {
+            content: Icon.create(checkableIndicator, {
+              defaultProps: {
+                className: DropdownItem.slotClassNames.checkableIndicator,
+                styles: styles.checkableIndicator,
+              },
+            }),
+            styles: styles.endMedia,
+          }
+        }
         truncateContent
         truncateHeader
         {...accessibilityItemProps}
@@ -115,6 +145,7 @@ DropdownItem.slotClassNames = {
   content: `${DropdownItem.className}__content`,
   header: `${DropdownItem.className}__header`,
   image: `${DropdownItem.className}__image`,
+  checkableIndicator: `${DropdownItem.className}__checkable-indicator`,
 }
 
 DropdownItem.create = createShorthandFactory({ Component: DropdownItem, mappedProp: 'header' })

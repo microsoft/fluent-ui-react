@@ -510,13 +510,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                 </SourceRender>
 
                 {showVariables && (
-                  <Segment>
-                    <ComponentExampleVariables
-                      onChange={this.handleVariableChange}
-                      overriddenVariables={componentVariables}
-                      usedVariables={usedVariables}
-                    />
-                  </Segment>
+                  <ComponentExampleVariables
+                    onChange={this.handleVariableChange}
+                    overriddenVariables={componentVariables}
+                    usedVariables={usedVariables}
+                  />
                 )}
               </ExamplePlaceholder>
             </KnobProvider>
