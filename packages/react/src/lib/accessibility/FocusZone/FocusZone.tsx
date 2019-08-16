@@ -1,4 +1,3 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
@@ -52,7 +51,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     shouldResetActiveElementWhenTabFromZone: PropTypes.bool,
     shouldFocusInnerElementWhenReceivedFocus: PropTypes.bool,
     disabled: PropTypes.bool,
-    as: customPropTypes.as,
+    as: PropTypes.elementType,
     isCircularNavigation: PropTypes.bool,
     shouldEnterInnerZone: PropTypes.func,
     onActiveElementChanged: PropTypes.func,
