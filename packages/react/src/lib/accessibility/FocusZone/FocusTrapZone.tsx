@@ -1,4 +1,3 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
@@ -38,7 +37,7 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
     !this.props.isClickableOutsideFocusTrap || !this.props.focusTriggerOnOutsideClick
 
   static propTypes = {
-    as: customPropTypes.as,
+    as: PropTypes.elementType,
     className: PropTypes.string,
     elementToFocusOnDismiss: PropTypes.object,
     ariaLabelledBy: PropTypes.string,
