@@ -2,9 +2,12 @@ import { CodeSnippet } from '@stardust-ui/docs-components'
 import * as React from 'react'
 
 import renderElementToJSX from 'docs/src/components/ExampleSnippet/renderElementToJSX'
+import { ComponentInfo } from '../types'
 
 type ComponentPlaygroundSnippetProps = {
   component: React.FunctionComponent
+  componentName: string
+  info: ComponentInfo
 }
 
 /**

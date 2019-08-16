@@ -12,6 +12,7 @@ import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ExampleContext from 'docs/src/context/ExampleContext'
 import ComponentPlayground from 'docs/src/components/ComponentPlayground'
 import ComponentExplorer from './ComponentExplorer'
+import { ComponentInfo } from 'docs/src/types'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',

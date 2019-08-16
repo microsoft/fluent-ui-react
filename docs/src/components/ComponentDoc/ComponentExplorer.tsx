@@ -1,7 +1,6 @@
 import { CodeSnippet } from '@stardust-ui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
-import * as ReactDOMServer from 'react-dom/server'
 import reactElementToJsxString from 'react-element-to-jsx-string'
 import * as faker from 'faker'
 
@@ -488,11 +487,6 @@ class ComponentExplorer extends React.Component<ComponentExplorerProps, Componen
       return /^on[A-Z]\w+$/.test(name)
     })
 
-    const enumProps = filteredProps.filter(({ type, name }) => {
-      // TODO: these should be of type "enum" in the schema
-      return type.includes('|')
-    })
-
     const stringProps = filteredProps.filter(({ type, name }) => {
       return type === 'string' || type === 'ShorthandValue' || name === 'content'
     })
@@ -502,7 +496,6 @@ class ComponentExplorer extends React.Component<ComponentExplorerProps, Componen
       animationProp,
       asProp,
       ...booleanProps,
-      ...enumProps,
       ...stringProps,
       ...callbackProps,
     )
@@ -709,8 +702,18 @@ class ComponentExplorer extends React.Component<ComponentExplorerProps, Componen
                           }}
                         >
                           <span>Event Log</span>
-                          <span>💡 See browser console for full output</span>
-                          <button onClick={this.clearEventLog}>✖ Clear</button>
+                          <span>
+                            <span role="img" aria-label="light">
+                              💡
+                            </span>{' '}
+                            See browser console for full output
+                          </span>
+                          <button onClick={this.clearEventLog}>
+                            <span role="img" aria-label="close">
+                              ✖
+                            </span>{' '}
+                            Clear
+                          </button>
                         </div>
 
                         <pre
@@ -837,40 +840,6 @@ class ComponentExplorer extends React.Component<ComponentExplorerProps, Componen
                 </div>
               )}
 
-              {/* SELECTS */}
-              {enumProps.map(prop => {
-                const values = prop.type.split('|').map(string => {
-                  const value = string.trim().replace(/"/g, '')
-                  return value === 'boolean' ? true : value
-                })
-
-                return (
-                  <div key={prop.name}>
-                    <label>
-                      <strong style={hasTooltipStyle} title={prop.description}>
-                        {prop.name}
-                      </strong>
-                      <select
-                        style={{ width: '100%' }}
-                        name={prop.name}
-                        value={activeProps[prop.name] || ''}
-                        onInput={this.handleSelectChange(prop.name)}
-                      >
-                        <option value={undefined} />
-                        {values.map(value => {
-                          const string = typeof value !== 'string' ? JSON.stringify(value) : value
-                          return (
-                            <option key={string} value={string}>
-                              {string}
-                            </option>
-                          )
-                        })}
-                      </select>
-                    </label>
-                  </div>
-                )
-              })}
-
               {/* ANIMATION */}
               {animationProp && (
                 <Provider.Consumer
@@ -911,7 +880,12 @@ class ComponentExplorer extends React.Component<ComponentExplorerProps, Componen
                   <br />
                   {callbackProps.map(prop => prop.name).join(', ')}
                   <br />
-                  <small>💡 See browser console for events</small>
+                  <small>
+                    <span role="img" aria-label="light">
+                      💡
+                    </span>{' '}
+                    See browser console for events
+                  </small>
                 </div>
               )}
 
