@@ -8,5 +8,5 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'window-unmaximize',
+  exportedAs: 'window-restore',
 } as TeamsProcessedSvgIconSpec

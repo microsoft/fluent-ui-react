@@ -152,7 +152,7 @@ import videoCameraEmphasis from './videoCameraEmphasis'
 import yammer from './yammer'
 import windowMaximize from './windowMaximize'
 import windowMinimize from './windowMinimize'
-import windowUnmaximize from './windowUnmaximize'
+import windowRestore from './windowRestore'
 
 export default {
   'stardust-circle': stardustCircle,
@@ -299,7 +299,7 @@ export default {
   yammer,
   'window-maximize': windowMaximize,
   'window-minimize': windowMinimize,
-  'window-unmaximize': windowUnmaximize,
+  'window-restore': windowRestore,
 
   // Office icons
   word: filesWord,
