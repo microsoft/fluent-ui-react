@@ -43,10 +43,19 @@ const menuItemBehavior: Accessibility<MenuItemBehaviorProps> = props => ({
   },
 
   keyActions: {
+    root: {
+      ...(!props.hasWrapper && {
+        performClick: {
+          keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+        },
+      }),
+    },
     wrapper: {
-      performClick: {
-        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
-      },
+      ...(props.hasWrapper && {
+        performClick: {
+          keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+        },
+      }),
       closeAllMenusAndFocusNextParentItem: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
       },
@@ -76,4 +85,6 @@ export type MenuItemBehaviorProps = {
   disabled?: boolean
   /** If a menu displays elements vertically. */
   vertical?: boolean
+  /** If a wrapper is set. */
+  hasWrapper?: boolean
 } & Pick<AccessibilityAttributes, 'aria-label' | 'aria-labelledby' | 'aria-describedby'>

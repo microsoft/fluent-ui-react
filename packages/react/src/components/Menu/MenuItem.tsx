@@ -145,6 +145,7 @@ export interface MenuItemProps
 export interface MenuItemState {
   isFromKeyboard: boolean
   menuOpen: boolean
+  hasWrapper: boolean
 }
 
 class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuItemState> {
@@ -197,6 +198,12 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
 
   menuRef = React.createRef<HTMLElement>()
   itemRef = React.createRef<HTMLElement>()
+
+  static getAutoControlledStateFromProps(props: MenuItemProps): Partial<MenuItemState> {
+    return {
+      hasWrapper: !_.isNil(props.wrapper),
+    }
+  }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
     const {
