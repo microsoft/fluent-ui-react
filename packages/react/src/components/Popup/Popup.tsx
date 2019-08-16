@@ -576,7 +576,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       this.updateTriggerFocusableDomElement()
       this.updateContextPosition(isOpenedByRightClick && eventArgs.nativeEvent)
     }
-    this.trySetState({ open: newValue, isOpenedByRightClick })
+    this.setState({ open: newValue, isOpenedByRightClick })
     _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
   }
 
