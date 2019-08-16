@@ -594,7 +594,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
    */
   updateTriggerFocusableDomElement() {
     const { mountDocument } = this.props
-    const activeElement = mountDocument.activeElement
+
+    const activeDocument = mountDocument || this.context.target
+    const activeElement = activeDocument.activeElement
 
     this.triggerFocusableDomElement = this.triggerRef.current.contains(activeElement)
       ? activeElement
