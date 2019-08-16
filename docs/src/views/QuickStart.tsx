@@ -49,7 +49,7 @@ export default () => (
         import React from 'react'
         import { Button } from '@stardust-ui/react'
 
-        export default () => <Button content="Theming" icon="arrow-right" iconPosition="after" primary />
+        export default () => <Button content="Get started" icon="play" iconPosition="after" primary />
       `}
     />
 
