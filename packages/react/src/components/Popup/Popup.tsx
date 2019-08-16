@@ -478,8 +478,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       trapFocus,
       autoFocus,
     } = this.props
+
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
-    const documentRef = toRefObject(mountDocument)
+    const targetRef = toRefObject(mountDocument || this.context.target)
 
     const popupContent = Popup.Content.create(content || {}, {
       defaultProps: {
@@ -513,19 +514,19 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
             <EventListener
               listener={this.handleDocumentClick(getRefs)}
-              targetRef={documentRef}
+              targetRef={targetRef}
               type="click"
               capture
             />
             <EventListener
               listener={this.handleDocumentClick(getRefs)}
-              targetRef={documentRef}
+              targetRef={targetRef}
               type="contextmenu"
               capture
             />
             <EventListener
               listener={this.handleDocumentKeyDown(getRefs)}
-              targetRef={documentRef}
+              targetRef={targetRef}
               type="keydown"
               capture
             />
@@ -534,13 +535,13 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
               <>
                 <EventListener
                   listener={this.dismissOnScroll}
-                  targetRef={documentRef}
+                  targetRef={targetRef}
                   type="wheel"
                   capture
                 />
                 <EventListener
                   listener={this.dismissOnScroll}
-                  targetRef={documentRef}
+                  targetRef={targetRef}
                   type="touchmove"
                   capture
                 />
