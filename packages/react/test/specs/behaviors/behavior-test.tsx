@@ -51,6 +51,7 @@ import {
   tooltipBehavior,
   tooltipAsLabelBehavior,
   menuButtonBehavior,
+  splitButtonBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -106,5 +107,6 @@ testHelper.addBehavior('toolbarRadioGroupBehavior', toolbarRadioGroupBehavior)
 testHelper.addBehavior('toolbarRadioGroupItemBehavior', toolbarRadioGroupItemBehavior)
 testHelper.addBehavior('tooltipBehavior', tooltipBehavior)
 testHelper.addBehavior('tooltipAsLabelBehavior', tooltipAsLabelBehavior)
+testHelper.addBehavior('splitButtonBehavior', splitButtonBehavior)
 
 testHelper.run(behaviorMenuItems)

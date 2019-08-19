@@ -7,7 +7,7 @@ import menuButtonBehavior from '../MenuButton/menuButtonBehavior'
  * @specification
  * Triggers 'closeMenuAndFocusButton' action with 'Escape' on 'menuButton'.
  */
-const buttonBehavior: Accessibility<SplitButtonProps> = props => {
+const splitButtonBehavior: Accessibility<SplitButtonProps> = props => {
   const splitButtonMenuButtonBehavior = props => {
     const menuButtonBehaviorData = menuButtonBehavior(props)
     menuButtonBehaviorData.keyActions = {}
@@ -43,7 +43,7 @@ const buttonBehavior: Accessibility<SplitButtonProps> = props => {
   }
 }
 
-export default buttonBehavior
+export default splitButtonBehavior
 
 export type SplitButtonProps = {
   /** Element type. */
