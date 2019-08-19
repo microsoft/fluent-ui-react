@@ -18,7 +18,8 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
 import Button, { ButtonProps } from '../Button/Button'
-import { IconProps, Icon, TextProps } from '../..'
+import Icon, { IconProps } from '../Icon/Icon'
+import { TextProps } from '../Text/Text'
 
 export interface AlertSlotClassNames {
   content: string
