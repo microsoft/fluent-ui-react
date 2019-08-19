@@ -107,7 +107,7 @@ export default (siteVars: any): ButtonVariables => ({
   circularBorderRadius: pxToRem(999),
   circularColor: siteVars.colors.grey[500],
   circularColorActive: siteVars.colors.white,
-  circularBackgroundColor: siteVars.colors.white,
+  circularBackgroundColor: 'transparent',
   circularBackgroundColorActive: siteVars.colors.grey[500],
   circularBackgroundColorHover: siteVars.colors.grey[450],
   circularBackgroundColorFocus: siteVars.colors.grey[450],
