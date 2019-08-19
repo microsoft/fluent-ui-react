@@ -1,5 +1,15 @@
 import { Accessibility } from '../../types'
 
+/**
+ * @specification
+ * Adds attribute 'aria-disabled=true' based on the property 'disabled'.
+ * Adds attribute 'aria-orientation=vertical' or 'horizontal' based on the property 'vertical'.
+ * Adds attribute 'aria-valuemin' with value based on the property 'min'.
+ * Adds attribute 'aria-valuemax' with value based on the property 'max'.
+ * Adds attribute 'aria-valuenow' with value based on the property 'value'.
+ * Adds attribute 'aria-valuetext' with value based on the callback function 'getA11yValueMessageOnChange'.
+ */
+
 const sliderBehavior: Accessibility<SliderBehaviorProps> = props => ({
   attributes: {
     root: {

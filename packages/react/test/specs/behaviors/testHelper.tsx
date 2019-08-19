@@ -21,6 +21,7 @@ const skipSpecChecksForFiles = [
   'listBehavior.ts', // tests are written in listBehavior-test.tsx
   'listItemBehavior.ts', // tests are written in listItemBehavior-test.tsx
   'alertBehavior.ts', // tests are written in alertBehavior-test.tsx
+  'sliderBehavior.ts', // tests are written in sliderBehavior-test.ts
 ]
 
 export class TestHelper {
@@ -68,6 +69,9 @@ export class TestHelper {
   findRegexAndAssingCorrespondingInfoToArray(behaviorMenuItems: any) {
     behaviorMenuItems.forEach(behavior => {
       behavior.variations.forEach(variant => {
+        if (skipSpecChecksForFiles.find(item => item === variant.name)) {
+          return
+        }
         if (!variant.specification && !variant.description) {
           this.failDescriptionPresenceTest(variant.name)
         }
