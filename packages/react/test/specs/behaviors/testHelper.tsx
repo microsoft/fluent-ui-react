@@ -69,9 +69,6 @@ export class TestHelper {
   findRegexAndAssingCorrespondingInfoToArray(behaviorMenuItems: any) {
     behaviorMenuItems.forEach(behavior => {
       behavior.variations.forEach(variant => {
-        if (skipSpecChecksForFiles.find(item => item === variant.name)) {
-          return
-        }
         if (!variant.specification && !variant.description) {
           this.failDescriptionPresenceTest(variant.name)
         }

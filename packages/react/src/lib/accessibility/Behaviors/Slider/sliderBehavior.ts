@@ -1,7 +1,7 @@
 import { Accessibility } from '../../types'
 
 /**
- * @specification
+ * @description
  * Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  * Adds attribute 'aria-orientation=vertical' or 'horizontal' based on the property 'vertical'.
  * Adds attribute 'aria-valuemin' with value based on the property 'min'.
