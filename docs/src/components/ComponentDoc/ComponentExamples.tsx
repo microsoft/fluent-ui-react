@@ -12,10 +12,6 @@ interface ComponentExamplesProps {
   displayName: string
 }
 
-export function containsExamples(displayName: string) {
-  return !!getExamplesElement(displayName)
-}
-
 function getExamplesElement(displayName: string) {
   // rule #1
   const indexPath = _.find(exampleIndexContext.keys(), path =>
@@ -44,7 +40,7 @@ export class ComponentExamples extends React.Component<ComponentExamplesProps, a
 
   /**
    * RULES for a component with displayName=MyComponent:
-   * 1. create a file at ./docs/src/examples/components/MyComponent/index.tsx referencing all MyComponent examples
+   * 1. create a file at ./docs/src/examples/components/MyComponent/index.tsx referencing all MyComponent examples (except for Usage examples)
    * 2. all example file names must contain the word 'Example'; e.g.: MyComponentExampleCircular.tsx
    * 3. all example files must be under ./docs/src/examples/components/MyComponent path; e.g.: ./docs/src/examples/components/MyComponent/SomeType/SomeExample.tsx
    * 4. for every ./docs/src/examples/components/{...}/{...}MyComponent{...}Example{...}.tsx there needs to be a shorthand version of it:
