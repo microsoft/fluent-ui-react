@@ -1,6 +1,6 @@
 import { Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
-import { Ref } from '@stardust-ui/react-component-ref'
+import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -287,6 +287,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
         </ElementType>
       </Ref>
     )
+
+    const targetRef = toRefObject(this.context.target)
     const triggerAccessibility: TriggerAccessibility = {
       attributes: accessibility.attributes.trigger,
       keyHandlers: accessibility.keyHandlers.trigger,
@@ -320,7 +322,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               </Ref>
               <EventListener
                 listener={this.handleOverlayClick}
-                targetRef={documentRef}
+                targetRef={targetRef}
                 type="click"
                 capture
               />
