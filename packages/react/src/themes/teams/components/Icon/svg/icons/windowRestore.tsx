@@ -4,9 +4,8 @@ import { TeamsProcessedSvgIconSpec } from '../types'
 export default {
   icon: ({ classes }) => (
     <svg role="presentation" focusable="false" viewBox="8 8 16 16" className={classes.svg}>
-      <path d="M10 10h12v12H10V10zm11 11V11H11v10h10z" />
+      <path d="M11 9v2H9v12h12v-2h2V9H11zm9 13H10V12h10v10zm2-2h-1v-9h-9v-1h10v10z" />
     </svg>
   ),
   styles: {},
-  exportedAs: 'window-maximize',
 } as TeamsProcessedSvgIconSpec
