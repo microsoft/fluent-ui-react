@@ -204,15 +204,14 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     }
   }
 
-  handleDocumentKeydown = (getRefs: Function) => e => {
+  handleDocumentKeydown = (getRefs: Function) => (e: KeyboardEvent) => {
     // if focus was lost from Dialog, for e.g. when click on Dialog's content
     // and ESC is pressed, the opened Dialog should get closed and the trigger should get focus
     const lastOverlayRef = getRefs().pop()
     const isLastOpenedDialog: boolean =
       lastOverlayRef && lastOverlayRef.current === this.overlayRef.current
 
-    const keyCode = keyboardKey.getCode(e)
-    if (keyCode === keyboardKey.Escape && isLastOpenedDialog && this.state.open) {
+    if (keyboardKey.getCode(e) === keyboardKey.Escape && isLastOpenedDialog) {
       this.handleDialogCancel(e)
       _.invoke(this.triggerRef, 'current.focus')
     }
