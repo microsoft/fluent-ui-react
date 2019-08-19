@@ -22,7 +22,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import Button, { ButtonProps } from '../Button/Button'
-import MenuButton from '../MenuButton/MenuButton'
+import MenuButton, { MenuButtonProps } from '../MenuButton/MenuButton'
 import { splitButtonBehavior } from '../../lib/accessibility'
 import { MenuProps } from '../Menu/Menu'
 import { MenuItemProps } from '../Menu/MenuItem'
@@ -50,6 +50,14 @@ export interface SplitButtonProps
    */
   onClick?: ComponentEventHandler<ButtonProps>
 
+  /**
+   * Called after user's click on a menu item.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onMenuItemClick?: ComponentEventHandler<MenuItemProps>
+
   /** A split button can be formatted to show different levels of emphasis. */
   primary?: boolean
 
@@ -71,7 +79,7 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
     button: customPropTypes.itemShorthand,
     menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.itemShorthand]),
     onClick: PropTypes.func,
-    onToggle: PropTypes.func,
+    onMenuItemClick: PropTypes.func,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
   }
@@ -105,15 +113,10 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
     this.menuButtonRef.current.openAndFocus(e, 'first')
   }
 
-  handleButtonFocus = () => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-  }
-
   renderComponent({
     ElementType,
     classes,
     accessibility,
-    variables,
     styles,
     unhandledProps,
   }): React.ReactNode {
@@ -141,7 +144,7 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
                 _.invoke(this.props, 'onClick', e, buttonProps)
               },
               onFocus: () => {
-                this.handleButtonFocus()
+                this.setState({ isFromKeyboard: isFromKeyboard() })
               },
             }),
           })}
@@ -165,6 +168,13 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
               ),
               ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.menuButton, menu),
             },
+            overrideProps: (predefinedProps: MenuButtonProps) => ({
+              onMenuItemClick: (e: React.SyntheticEvent, menuItemProps: MenuItemProps) => {
+                _.invoke(predefinedProps, 'onMenuItemClick', e, menuItemProps)
+                _.invoke(this.props, 'onMenuItemClick', e, menuItemProps)
+                this.buttonRef.current.focus()
+              },
+            }),
           },
         )}
       </ElementType>

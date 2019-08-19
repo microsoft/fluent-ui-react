@@ -35,14 +35,17 @@ class SplitButtonExampleShorthand extends React.Component {
     message: 'Use to export your work:',
   }
 
+  handleClick = () => {
+    this.setState({ message: 'Exported successfuly!' })
+  }
+
   render() {
     return (
       <>
         <div>{this.state.message}</div>
         <SplitButton
-          onClick={() => {
-            this.setState({ message: 'Exported successfuly!' })
-          }}
+          onClick={this.handleClick}
+          onMenuItemClick={this.handleClick}
           menu={this.items}
           button={this.items[this.state.index]}
         />
