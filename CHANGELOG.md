@@ -24,14 +24,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Make `Embed` focusable via keyboard @lucivpav ([#1758](https://github.com/stardust-ui/react/pull/1758))
 - Update screener tests for `Input` to only capture Teams themes @codepretty ([#1801](https://github.com/stardust-ui/react/pull/1801))
 - Fix `Checkbox` style bug in background color [redlines] @bcalvery ([#1796](https://github.com/stardust-ui/react/pull/1796))
+- Fix bidirectional `FocusZone` to land focus correctly on DOWN key press after series of UP arrow keys @sophieH29 ([#1794](https://github.com/stardust-ui/react/pull/1794))
 - Fix `hand` icon in Teams theme @lucivpav ([#1782](https://github.com/stardust-ui/react/pull/1782))
 
 ### Features
 - Add `overwrite` prop to `Provider` @layershifter ([#1780](https://github.com/stardust-ui/react/pull/1780))
 - Upgrade `FocusZone` to the latest version from `fabric-ui` @sophieH29 ([#1772](https://github.com/stardust-ui/react/pull/1772))
+- Add `inverted` prop to `Input` for changing the background color [redlines] @codepretty ([#1684](https://github.com/stardust-ui/react/pull/1684))
 - Add possibility for a Toolbar to rearrange its items according to space available @miroslavstastny ([#1657](https://github.com/stardust-ui/react/pull/1657))
 - Edit `buttonBehavior` Adding aria-disabled when button has loading state @kolaps33 ([#1789](https://github.com/stardust-ui/react/pull/1789))
 - Added `audio-off` and `clipboard-copied-to` icon to Teams theme @bcalvery ([#1792](https://github.com/stardust-ui/react/pull/1792))
+- Added `window-maximize`, `window-minimize` and `window-restore` icons to Teams theme @codepretty ([#1803](https://github.com/stardust-ui/react/pull/1803))
 - Export `FocusTrapZoneProps` and `AutoFocusZoneProps` from the main package @sophieH29 ([#1795](https://github.com/stardust-ui/react/pull/1795))
 - Add `checkable` and `checkableIndicator` to the `Dropdown` and `DropdownItem` components @mnajdova ([#1738](https://github.com/stardust-ui/react/pull/1738))
 - Add unified ramp of category colors and category color schemes: `foreground`, `foreground1`, `background` to the Teams themes @natashamayurshah ([#1711](https://github.com/stardust-ui/react/pull/1711))
