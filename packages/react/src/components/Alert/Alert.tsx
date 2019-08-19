@@ -21,7 +21,7 @@ import Button, { ButtonProps } from '../Button/Button'
 
 export interface AlertSlotClassNames {
   content: string
-  action: string
+  dismissAction: string
 }
 
 export interface AlertProps
@@ -69,7 +69,7 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
 
   static slotClassNames: AlertSlotClassNames = {
     content: `${Alert.className}__content`,
-    action: `${Alert.className}__action`,
+    dismissAction: `${Alert.className}__dismissAction`,
   }
 
   static propTypes = {
