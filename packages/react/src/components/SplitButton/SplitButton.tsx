@@ -16,6 +16,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
+  isFromKeyboard,
   applyAccessibilityKeyHandlers,
   commonPropTypes,
 } from '../../lib'
@@ -77,7 +78,11 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
 
   static defaultProps = {
     accessibility: splitButtonBehavior,
-    as: 'span',
+    as: 'div',
+  }
+
+  state = {
+    isFromKeyboard: false,
   }
 
   buttonRef = React.createRef<HTMLElement>()
@@ -98,6 +103,10 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
 
   openAndFocusFirst(e) {
     this.menuButtonRef.current.openAndFocus(e, 'first')
+  }
+
+  handleButtonFocus = () => {
+    this.setState({ isFromKeyboard: isFromKeyboard() })
   }
 
   renderComponent({
@@ -121,7 +130,6 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
           {Button.create(button, {
             defaultProps: {
               styles: styles.button,
-              variables: variables.button,
               primary,
               secondary,
               ...accessibility.attributes.button,
@@ -132,6 +140,9 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
                 _.invoke(predefinedProps, 'onClick', e, buttonProps)
                 _.invoke(this.props, 'onClick', e, buttonProps)
               },
+              onFocus: () => {
+                this.handleButtonFocus()
+              },
             }),
           })}
         </Ref>
@@ -141,10 +152,11 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
             defaultProps: {
               accessibility: accessibility.childBehaviors.menuButton,
               menu,
+              ref: this.menuButtonRef,
+              styles: styles.menuButton,
               trigger: (
                 <Button
                   styles={styles.menuButton}
-                  variables={variables.menuButton}
                   icon="chevron-down"
                   iconOnly
                   primary={primary}
