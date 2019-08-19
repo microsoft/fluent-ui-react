@@ -5,10 +5,7 @@ import menuButtonBehavior from '../MenuButton/menuButtonBehavior'
 
 /**
  * @specification
- * Adds role='button' if element type is other than 'button'. This allows screen readers to handle the component as a button.
- * Adds attribute 'tabIndex=0' if element type is other than 'button'.
- * Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
- * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
+ * Triggers 'closeMenuAndFocusButton' action with 'Escape' on 'menuButton'.
  */
 const buttonBehavior: Accessibility<SplitButtonProps> = props => {
   const splitButtonMenuButtonBehavior = props => {
