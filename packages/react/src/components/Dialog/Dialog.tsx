@@ -328,7 +328,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               />
               <EventListener
                 listener={this.handleDocumentKeydown(getRefs)}
-                targetRef={documentRef}
+                targetRef={targetRef}
                 type="keydown"
                 capture
               />
