@@ -90,7 +90,7 @@ const setUp = () => {
  * events
  */
 
-const addListeners = (eventTarget: Window | Document) => {
+const addListeners = (eventTarget: Window) => {
   // `pointermove`, `MSPointerMove`, `mousemove` and mouse wheel event binding
   // can only demonstrate potential, but not actual, interaction
   // and are treated separately
@@ -246,7 +246,7 @@ export const setUpWhatInput = (target: Document) => {
     }
     target[whatInputInitialized] = true
 
-    addListeners(target)
+    addListeners(target.defaultView)
     doUpdate()
   }
 }
