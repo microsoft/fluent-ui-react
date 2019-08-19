@@ -843,7 +843,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
         return distance
       })
     ) {
-      this.setFocusAlignment(this._activeElement as HTMLElement, false, true)
+      this.setFocusAlignment(this._activeElement as HTMLElement, true, true)
       return true
     }
 
@@ -887,7 +887,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
         return distance
       })
     ) {
-      this.setFocusAlignment(this._activeElement as HTMLElement, false, true)
+      this.setFocusAlignment(this._activeElement as HTMLElement, true, true)
       return true
     }
 
