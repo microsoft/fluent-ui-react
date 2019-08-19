@@ -18,7 +18,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
 import Button, { ButtonProps } from '../Button/Button'
-import { IconProps, Icon } from '../..'
+import { IconProps, Icon, TextProps } from '../..'
 
 export interface AlertSlotClassNames {
   content: string
@@ -43,7 +43,7 @@ export interface AlertProps
   icon?: ShorthandValue<IconProps>
 
   /** An alert may contain a header. */
-  header?: string
+  header?: ShorthandValue<TextProps>
 
   /** Controls Alert's relation to neighboring items. */
   attached?: boolean | 'top' | 'bottom'
@@ -87,7 +87,7 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
     ...commonPropTypes.createCommon({ content: 'shorthand' }),
     action: customPropTypes.itemShorthand,
     icon: customPropTypes.itemShorthandWithoutJSX,
-    header: PropTypes.string,
+    header: customPropTypes.itemShorthand,
     attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
     danger: PropTypes.bool,
     info: PropTypes.bool,
