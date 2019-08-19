@@ -18,10 +18,13 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
 import Button, { ButtonProps } from '../Button/Button'
+import { IconProps, Icon } from '../..'
 
 export interface AlertSlotClassNames {
   content: string
   action: string
+  icon: string
+  header: string
 }
 
 export interface AlertProps
@@ -35,6 +38,12 @@ export interface AlertProps
 
   /** Button shorthand for the action slot. */
   action?: ShorthandValue<ButtonProps>
+
+  /** An alert may contain an icon. */
+  icon?: ShorthandValue<IconProps>
+
+  /** An alert may contain a header. */
+  header?: string
 
   /** Controls Alert's relation to neighboring items. */
   attached?: boolean | 'top' | 'bottom'
@@ -70,11 +79,15 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
   static slotClassNames: AlertSlotClassNames = {
     content: `${Alert.className}__content`,
     action: `${Alert.className}__action`,
+    icon: `${Alert.className}__icon`,
+    header: `${Alert.className}__header`,
   }
 
   static propTypes = {
     ...commonPropTypes.createCommon({ content: 'shorthand' }),
     action: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
+    header: PropTypes.string,
     attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
     danger: PropTypes.bool,
     info: PropTypes.bool,
@@ -94,10 +107,28 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
   }
 
   renderContent = ({ styles, accessibility }: RenderResultConfig<AlertProps>) => {
-    const { action, content } = this.props
+    const { action, icon, header, content } = this.props
 
     return (
       <>
+        {Icon.create(icon, {
+          defaultProps: {
+            className: Alert.slotClassNames.icon,
+            styles: styles.icon,
+            xSpacing: 'after',
+          },
+        })}
+        {Box.create(header, {
+          defaultProps: {
+            className: Alert.slotClassNames.header,
+            ...accessibility.attributes.header,
+            styles: {
+              ...styles.header,
+              fontWeight: 'bold',
+              marginRight: '10px',
+            },
+          },
+        })}
         {Box.create(content, {
           defaultProps: {
             className: Alert.slotClassNames.content,

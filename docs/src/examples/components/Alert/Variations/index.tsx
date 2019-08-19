@@ -44,6 +44,16 @@ const Variations = () => (
       description="An Alert can provide the user with an action. Click on the icon to see the effect."
       examplePath="components/Alert/Variations/AlertExampleAction"
     />
+    <ComponentExample
+      title="Icon"
+      description="An Alert can contain an icon."
+      examplePath="components/Alert/Variations/AlertExampleIcon"
+    />
+    <ComponentExample
+      title="Header"
+      description="An Alert can contain a header."
+      examplePath="components/Alert/Variations/AlertExampleHeader"
+    />
   </ExampleSection>
 )
 
