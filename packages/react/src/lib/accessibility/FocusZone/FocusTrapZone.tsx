@@ -9,6 +9,7 @@ import {
   getFirstTabbable,
   getLastTabbable,
   getWindow,
+  getDocument,
   focusAsync,
   HIDDEN_FROM_ACC_TREE,
 } from './focusUtilities'
@@ -74,7 +75,8 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
       forceFocusInsideTrapOnOutsideFocus,
       disabled,
     } = this.props
-    const activeElement = document.activeElement as HTMLElement
+    const doc = getDocument(this._root.current)
+    const activeElement = doc.activeElement as HTMLElement
 
     // if after componentDidUpdate focus is not inside the focus trap, bring it back
     if (
@@ -111,10 +113,11 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
 
   componentWillUnmount(): void {
     // don't handle return focus unless forceFocusInsideTrapOnOutsideFocus is true or focus is still within FocusTrapZone
+    const doc = getDocument(this._root.current)
     if (
       !this.props.disabled ||
       this.props.forceFocusInsideTrapOnOutsideFocus ||
-      !this._root.current.contains(document.activeElement as HTMLElement)
+      !this._root.current.contains(doc.activeElement as HTMLElement)
     ) {
       this._releaseFocusTrapZone()
     }
@@ -199,7 +202,8 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
       // even when it's not. Using document.activeElement is another way
       // for us to be able to get what the relatedTarget without relying
       // on the event
-      relatedTarget = document.activeElement as Element
+      const doc = getDocument(this._root.current)
+      relatedTarget = doc.activeElement as Element
     }
 
     if (!this._root.current.contains(relatedTarget as HTMLElement)) {
@@ -282,11 +286,12 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
     })
 
     // try to focus element which triggered FocusTrapZone - prviously focused element outside trap zone
-    const activeElement = document.activeElement as HTMLElement
+    const doc = getDocument(this._root.current)
+    const activeElement = doc.activeElement as HTMLElement
     if (
       !ignoreExternalFocusing &&
       this._previouslyFocusedElementOutsideTrapZone &&
-      (this._root.current.contains(activeElement) || activeElement === document.body)
+      (this._root.current.contains(activeElement) || activeElement === doc.body)
     ) {
       this._focusAsync(this._previouslyFocusedElementOutsideTrapZone)
     }
@@ -374,7 +379,8 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
   }
 
   _handleOutsideFocus = (ev: FocusEvent): void => {
-    const focusedElement = document.activeElement as HTMLElement
+    const doc = getDocument(this._root.current)
+    const focusedElement = doc.activeElement as HTMLElement
     focusedElement && this._forceFocusInTrap(ev, focusedElement)
   }
 
@@ -414,16 +420,18 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
     if (elementToFocusOnDismiss && previouslyFocusedElement !== elementToFocusOnDismiss) {
       previouslyFocusedElement = elementToFocusOnDismiss
     } else if (!previouslyFocusedElement) {
-      previouslyFocusedElement = document.activeElement as HTMLElement
+      const doc = getDocument(this._root.current)
+      previouslyFocusedElement = doc.activeElement as HTMLElement
     }
 
     return previouslyFocusedElement
   }
 
   _hideContentFromAccessibilityTree = () => {
-    const bodyChildren = (document.body && document.body.children) || []
+    const doc = getDocument(this._root.current)
+    const bodyChildren = (doc.body && doc.body.children) || []
 
-    if (bodyChildren.length && !document.body.contains(this._root.current)) {
+    if (bodyChildren.length && !doc.body.contains(this._root.current)) {
       // In case popup render options will change
       /* eslint-disable-next-line no-console */
       console.warn(
@@ -449,7 +457,8 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
   }
 
   _showContentInAccessibilityTree = () => {
-    const hiddenElements = document.querySelectorAll(`[${HIDDEN_FROM_ACC_TREE}="true"]`)
+    const doc = getDocument(this._root.current)
+    const hiddenElements = doc.querySelectorAll(`[${HIDDEN_FROM_ACC_TREE}="true"]`)
     for (let index = 0; index < hiddenElements.length; index++) {
       const element = hiddenElements[index]
       element.removeAttribute('aria-hidden')
