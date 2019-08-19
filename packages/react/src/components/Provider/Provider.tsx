@@ -155,6 +155,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       rtl,
       disableAnimations,
       renderer,
+      target,
     }
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
