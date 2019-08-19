@@ -82,3 +82,13 @@ This is a list of changes made to the Stardust copy of FocusTrapZone in comparis
     - Got rid of `componentWillMount` as it deprecated in higher versions of React.
     - Added `aria-hidden` to the body children outside of the Popup to prevent screen reader from reading background information.
     - Renamed `focus` method to `_findElementAndFocusAsync`, made it private and removed `IFocusTrapZone` interface as it's no longer needed.
+
+
+### Upgrade `FocusTrapZone` to the latest version from `fabric-ui` @sophieH29 ([#1790](https://github.com/stardust-ui/react/pull/1790))
+- When `IsHiddenOnDismiss` is true focus does not automatically enter `Panel` ([OfficeDev/office-ui-fabric-react#7362](https://github.com/OfficeDev/office-ui-fabric-react/pull/7362))
+- Refactor trapping behavior ([OfficeDev/office-ui-fabric-react#8216](https://github.com/OfficeDev/office-ui-fabric-react/pull/8216))
+- Fix zero tabbable element scenarios ([OfficeDev/office-ui-fabric-react#8274](https://github.com/OfficeDev/office-ui-fabric-react/pull/8274))
+- Fix focus and blur callbacks ([OfficeDev/office-ui-fabric-react#8404](https://github.com/OfficeDev/office-ui-fabric-react/pull/8404))
+- Add new disabled prop ([OfficeDev/office-ui-fabric-react#8809](https://github.com/OfficeDev/office-ui-fabric-react/pull/8809))
+- Update focus handling in DatePicker and FocusTrapZone ([OfficeDev/office-ui-fabric-react#8875](https://github.com/OfficeDev/office-ui-fabric-react/pull/8875))
+- Remove aria-hidden from FocusTrapZone's bumpers ([OfficeDev/office-ui-fabric-react#9019](https://github.com/OfficeDev/office-ui-fabric-react/pull/9019))
