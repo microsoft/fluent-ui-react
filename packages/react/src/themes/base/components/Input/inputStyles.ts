@@ -15,6 +15,10 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
 
   input: ({ props: p, variables: v }): ICSSInJSStyle => ({
     backgroundColor: v.backgroundColor,
+    ...(p.inverted && {
+      backgroundColor: v.backgroundColorInverted,
+    }),
+
     color: v.fontColor,
 
     borderColor: v.borderColor,
