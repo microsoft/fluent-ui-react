@@ -239,14 +239,20 @@ if (isBrowser() && 'addEventListener' in window && Array.prototype.indexOf) {
  */
 
 export const setUpWhatInput = (target: Document) => {
-  if (isBrowser() && 'addEventListener' in window && Array.prototype.indexOf) {
+  const targetWindow = target.defaultView
+  if (
+    isBrowser() &&
+    targetWindow &&
+    'addEventListener' in targetWindow &&
+    Array.prototype.indexOf
+  ) {
     const whatInputInitialized = 'whatInputInitialized'
     if (target[whatInputInitialized] === true) {
       return
     }
     target[whatInputInitialized] = true
 
-    addListeners(target.defaultView)
+    addListeners(targetWindow)
     doUpdate()
   }
 }
