@@ -20,25 +20,25 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Update text `Button` styles for Teams Theme to match [redlines] @codepretty ([#1719](https://github.com/stardust-ui/react/pull/1719))
 - Fix `Menu` and `MenuItem` styles to match [redlines] @bcalvery ([#1712](https://github.com/stardust-ui/react/pull/1712))
-- Update vulnerable version of `lodash` dependency @layershifter ([#1700](https://github.com/stardust-ui/react/pull/1700))
 - Make `Embed` focusable via keyboard @lucivpav ([#1758](https://github.com/stardust-ui/react/pull/1758))
 - Update screener tests for `Input` to only capture Teams themes @codepretty ([#1801](https://github.com/stardust-ui/react/pull/1801))
 - Fix `Checkbox` style bug in background color [redlines] @bcalvery ([#1796](https://github.com/stardust-ui/react/pull/1796))
 - Fix bidirectional `FocusZone` to land focus correctly on DOWN key press after series of UP arrow keys @sophieH29 ([#1794](https://github.com/stardust-ui/react/pull/1794))
 - Fix `hand` icon in Teams theme @lucivpav ([#1782](https://github.com/stardust-ui/react/pull/1782))
-- Use `target` from `Provider` in `ReactDOM.createPortal()` calls @layershifter ([#1810](https://github.com/stardust-ui/react/pull/1810))
+- ESC key should close the last opened `Popup` or `Dialog` if body has focus @sophieH29 ([#1807](https://github.com/stardust-ui/react/pull/1807))
+- Correctly define current document object of the `FocusZone` and `FocusTrapZone` @sophieH29 ([#1820](https://github.com/stardust-ui/react/pull/1820))
 
 ### Features
 - Add `overwrite` prop to `Provider` @layershifter ([#1780](https://github.com/stardust-ui/react/pull/1780))
 - Upgrade `FocusZone` to the latest version from `fabric-ui` @sophieH29 ([#1772](https://github.com/stardust-ui/react/pull/1772))
 - Add `inverted` prop to `Input` for changing the background color [redlines] @codepretty ([#1684](https://github.com/stardust-ui/react/pull/1684))
-- Add possibility for a Toolbar to rearrange its items according to space available @miroslavstastny ([#1657](https://github.com/stardust-ui/react/pull/1657))
 - Edit `buttonBehavior` Adding aria-disabled when button has loading state @kolaps33 ([#1789](https://github.com/stardust-ui/react/pull/1789))
 - Added `audio-off` and `clipboard-copied-to` icon to Teams theme @bcalvery ([#1792](https://github.com/stardust-ui/react/pull/1792))
 - Added `window-maximize`, `window-minimize` and `window-restore` icons to Teams theme @codepretty ([#1803](https://github.com/stardust-ui/react/pull/1803))
 - Export `FocusTrapZoneProps` and `AutoFocusZoneProps` from the main package @sophieH29 ([#1795](https://github.com/stardust-ui/react/pull/1795))
 - Add `checkable` and `checkableIndicator` to the `Dropdown` and `DropdownItem` components @mnajdova ([#1738](https://github.com/stardust-ui/react/pull/1738))
 - Add unified ramp of category colors and category color schemes: `foreground`, `foreground1`, `background` to the Teams themes @natashamayurshah ([#1711](https://github.com/stardust-ui/react/pull/1711))
+- Upgrade `FocusTrapZone` to the latest version from `fabric-ui` @sophieH29 ([#1790](https://github.com/stardust-ui/react/pull/1790))
 
 ### Documentation
 - Restore docs for `Ref` component @layershifter ([#1777](https://github.com/stardust-ui/react/pull/1777))
@@ -46,6 +46,18 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Remove Font Awesome icons from docs examples @lucivpav ([#1764](https://github.com/stardust-ui/react/pull/1764))
 - Improve QuickStart code example @lucivpav ([#1797](https://github.com/stardust-ui/react/pull/1797))
 - Implement component tab UI @lucivpav ([#1784](https://github.com/stardust-ui/react/pull/1784))
+
+<!--------------------------------[ v0.36.2 ]------------------------------- -->
+## [v0.36.2](https://github.com/stardust-ui/react/tree/v0.36.1) (2019-08-19)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.36.1...v0.36.2)
+
+### Fixes
+- Update vulnerable version of `lodash` dependency @layershifter ([#1700](https://github.com/stardust-ui/react/pull/1700))
+- Use `target` from `Provider` in `ReactDOM.createPortal()` calls @layershifter ([#1810](https://github.com/stardust-ui/react/pull/1810))
+
+### Features
+- Add possibility for a Toolbar to rearrange its items according to space available @miroslavstastny ([#1657](https://github.com/stardust-ui/react/pull/1657))
+- Focus indicator for additional documents @jurokapsiar ([#1816](https://github.com/stardust-ui/react/pull/1816))
 
 <!--------------------------------[ v0.36.1 ]------------------------------- -->
 ## [v0.36.1](https://github.com/stardust-ui/react/tree/v0.36.1) (2019-08-09)
