@@ -121,12 +121,8 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
         {Box.create(header, {
           defaultProps: {
             className: Alert.slotClassNames.header,
+            styles: styles.header,
             ...accessibility.attributes.header,
-            styles: {
-              ...styles.header,
-              fontWeight: 'bold',
-              marginRight: '10px',
-            },
           },
         })}
         {Box.create(content, {

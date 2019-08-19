@@ -91,6 +91,11 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     }),
   }),
 
+  header: (): ICSSInJSStyle => ({
+    fontWeight: 'bold',
+    marginRight: '10px',
+  }),
+
   content: (): ICSSInJSStyle => ({
     flexGrow: 1,
   }),
