@@ -82,7 +82,7 @@ const setUp = () => {
   // add correct mouse wheel event mapping to `inputMap`
   inputMap[detectWheel()] = 'mouse'
 
-  addListeners()
+  addListeners(window)
   doUpdate()
 }
 
@@ -90,7 +90,7 @@ const setUp = () => {
  * events
  */
 
-const addListeners = () => {
+const addListeners = (eventTarget: Window | Document) => {
   // `pointermove`, `MSPointerMove`, `mousemove` and mouse wheel event binding
   // can only demonstrate potential, but not actual, interaction
   // and are treated separately
@@ -98,29 +98,29 @@ const addListeners = () => {
 
   // pointer events (mouse, pen, touch)
   // @ts-ignore
-  if (window.PointerEvent) {
-    window.addEventListener('pointerdown', setInput)
+  if (eventTarget.PointerEvent) {
+    eventTarget.addEventListener('pointerdown', setInput)
     // @ts-ignore
   } else if (window.MSPointerEvent) {
-    window.addEventListener('MSPointerDown', setInput)
+    eventTarget.addEventListener('MSPointerDown', setInput)
   } else {
     // mouse events
-    window.addEventListener('mousedown', setInput, true)
+    eventTarget.addEventListener('mousedown', setInput, true)
 
     // touch events
-    if ('ontouchstart' in window) {
-      window.addEventListener('touchstart', eventBuffer, options)
-      window.addEventListener('touchend', setInput, true)
+    if ('ontouchstart' in eventTarget) {
+      eventTarget.addEventListener('touchstart', eventBuffer, options)
+      eventTarget.addEventListener('touchend', setInput, true)
     }
   }
 
   // keyboard events
-  window.addEventListener('keydown', eventBuffer, true)
-  window.addEventListener('keyup', eventBuffer, true)
+  eventTarget.addEventListener('keydown', eventBuffer, true)
+  eventTarget.addEventListener('keyup', eventBuffer, true)
 
   // focus events
-  window.addEventListener('focusin', setElement)
-  window.addEventListener('focusout', clearElement)
+  eventTarget.addEventListener('focusin', setElement)
+  eventTarget.addEventListener('focusout', clearElement)
 }
 
 // checks conditions before updating new input
@@ -232,6 +232,23 @@ const detectWheel = () => {
 // (also passes if polyfills are used)
 if (isBrowser() && 'addEventListener' in window && Array.prototype.indexOf) {
   setUp()
+}
+
+/*
+ * set up for document
+ */
+
+export const setUpWhatInput = (target: Document) => {
+  if (isBrowser() && 'addEventListener' in window && Array.prototype.indexOf) {
+    const whatInputInitialized = 'whatInputInitialized'
+    if (target[whatInputInitialized] === true) {
+      return
+    }
+    target[whatInputInitialized] = true
+
+    addListeners(target)
+    doUpdate()
+  }
 }
 
 export const setWhatInputSource = (newInput: 'mouse' | 'keyboard' | 'initial') => {
