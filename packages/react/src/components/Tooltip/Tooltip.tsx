@@ -1,7 +1,6 @@
 import { toRefObject, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
@@ -10,7 +9,6 @@ import {
   childrenExist,
   AutoControlledComponent,
   RenderResultConfig,
-  isBrowser,
   ChildrenComponentProps,
   ContentComponentProps,
   StyledComponentProps,
@@ -31,6 +29,7 @@ import TooltipContent, { TooltipContentProps } from './TooltipContent'
 import { tooltipBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import PortalInner from '../Portal/PortalInner'
 
 export interface TooltipSlotClassNames {
   content: string
@@ -120,7 +119,6 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
   static defaultProps: TooltipProps = {
     align: 'center',
-    mountNode: isBrowser() ? document.body : null,
     position: 'above',
     mouseLeaveDelay: 10,
     pointing: true,
@@ -175,7 +173,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
             })}
           </Ref>
         )}
-        {mountNode && ReactDOM.createPortal(tooltipContent, mountNode)}
+        <PortalInner mountNode={mountNode}>{tooltipContent}</PortalInner>
       </>
     )
   }
@@ -277,7 +275,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   }
 
   trySetOpen(newValue: boolean, eventArgs: any) {
-    this.trySetState({ open: newValue })
+    this.setState({ open: newValue })
     _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
   }
 

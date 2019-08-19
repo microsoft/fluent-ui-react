@@ -12,6 +12,8 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 - Make `FocusZoneTabbableElements` a usual enum @layershifter ([#867](https://github.com/stardust-ui/react/pull/867))
 - Update tabindexes and focus alignment when item is focused programatically @sophieH29 ([#1098](https://github.com/stardust-ui/react/pull/1098))
 - `FocusZone` should respect elements with `contenteditable` attribute on Home/End key press @sophieH29 ([#1749](https://github.com/stardust-ui/react/pull/1749))
+- Fix bidirectional `FocusZone` to land focus correctly on DOWN key press after series of UP arrow keys @sophieH29 ([#1794](https://github.com/stardust-ui/react/pull/1794))
+- Use always `getDocument` to correctly define current document object @sophieH29 ([#1820](https://github.com/stardust-ui/react/pull/1820))
 
 ### Features
 - Add embed mode for FocusZone and new Chat behavior ([#233](https://github.com/stardust-ui/react/pull/233))
@@ -67,12 +69,13 @@ This is a list of changes made to the Stardust copy of FocusTrapZone in comparis
 ### BREAKING CHANGES
 - Allow using `firstFocusableSelector` for all type of selectors, not only class names @sophieH29 ([#1732](https://github.com/stardust-ui/react/pull/1732))
 
-### fixes
+### Fixes
 - Do not focus trigger on outside click @sophieH29 ([#627](https://github.com/stardust-ui/react/pull/627))
 - Do not hide aria-live regions from accessibility tree @sophieH29 ([#917](https://github.com/stardust-ui/react/pull/917))
 - Do not propagate any keyboard events @sophieH29 ([#1180](https://github.com/stardust-ui/react/pull/1180))
+- Use always `getDocument` to correctly define current document object @sophieH29 ([#1820](https://github.com/stardust-ui/react/pull/1820))
 
-### features
+### Features
 - Add focus trap zone [#239](https://github.com/stardust-ui/react/pull/239)
     - Used Stardust utils instead of Fabric utilities:
     - Used `EventListener` [#949](https://github.com/stardust-ui/react/pull/949)
@@ -81,3 +84,13 @@ This is a list of changes made to the Stardust copy of FocusTrapZone in comparis
     - Got rid of `componentWillMount` as it deprecated in higher versions of React.
     - Added `aria-hidden` to the body children outside of the Popup to prevent screen reader from reading background information.
     - Renamed `focus` method to `_findElementAndFocusAsync`, made it private and removed `IFocusTrapZone` interface as it's no longer needed.
+
+
+### Upgrade `FocusTrapZone` to the latest version from `fabric-ui` @sophieH29 ([#1790](https://github.com/stardust-ui/react/pull/1790))
+- When `IsHiddenOnDismiss` is true focus does not automatically enter `Panel` ([OfficeDev/office-ui-fabric-react#7362](https://github.com/OfficeDev/office-ui-fabric-react/pull/7362))
+- Refactor trapping behavior ([OfficeDev/office-ui-fabric-react#8216](https://github.com/OfficeDev/office-ui-fabric-react/pull/8216))
+- Fix zero tabbable element scenarios ([OfficeDev/office-ui-fabric-react#8274](https://github.com/OfficeDev/office-ui-fabric-react/pull/8274))
+- Fix focus and blur callbacks ([OfficeDev/office-ui-fabric-react#8404](https://github.com/OfficeDev/office-ui-fabric-react/pull/8404))
+- Add new disabled prop ([OfficeDev/office-ui-fabric-react#8809](https://github.com/OfficeDev/office-ui-fabric-react/pull/8809))
+- Update focus handling in DatePicker and FocusTrapZone ([OfficeDev/office-ui-fabric-react#8875](https://github.com/OfficeDev/office-ui-fabric-react/pull/8875))
+- Remove aria-hidden from FocusTrapZone's bumpers ([OfficeDev/office-ui-fabric-react#9019](https://github.com/OfficeDev/office-ui-fabric-react/pull/9019))

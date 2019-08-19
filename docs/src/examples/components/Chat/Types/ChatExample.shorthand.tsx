@@ -3,7 +3,7 @@ import { Avatar, Chat, ChatItemProps, Divider, ShorthandCollection } from '@star
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
-  status: { color: 'green', icon: 'check' },
+  status: { color: 'green', icon: 'stardust-checkmark' },
 }
 
 const items: ShorthandCollection<ChatItemProps> = [

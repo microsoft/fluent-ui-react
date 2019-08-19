@@ -152,8 +152,8 @@ export default () => (
     <CodeSnippet
       value={`
         <>
-          <Button icon='envelope' />
-          <Button icon='envelope' aria-label='Send message' />
+          <Button icon='email' />
+          <Button icon='email' aria-label='Send message' />
           <Radio aria-label='Include history from the past day. Press TAB to change the number of days.' />
         </>
       `}
@@ -405,14 +405,14 @@ export default () => (
     <p>Example:</p>
     <CodeSnippet
       value={`
-        <Button icon="book" aria-label="Confirm booking" primary />
+        <Button icon="add" aria-label="Add item to list" primary />
       `}
     />
     <p>Rendered HTML:</p>
     <CodeSnippet
       mode="html"
       value={`
-        <button class="ui-button" aria-label="Confirm booking">
+        <button class="ui-button" aria-label="Add item to list">
           <span class="ui-icon" color="white"></span>
         </button>
       `}
