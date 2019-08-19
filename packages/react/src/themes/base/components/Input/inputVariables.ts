@@ -2,6 +2,7 @@ import { pxToRem } from '../../../../lib'
 
 export interface InputVariables {
   backgroundColor: string
+  backgroundColorInverted: string
   borderColor: string
   borderRadius: string
   borderWidth: string
@@ -21,6 +22,7 @@ export interface InputVariables {
 
 export default (siteVars): InputVariables => ({
   backgroundColor: siteVars.colors.grey[50],
+  backgroundColorInverted: siteVars.colors.white,
   borderColor: siteVars.colors.grey[300],
   borderRadius: pxToRem(3),
   borderWidth: `1px`,
