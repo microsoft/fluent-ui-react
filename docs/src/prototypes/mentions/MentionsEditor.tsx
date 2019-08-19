@@ -82,9 +82,13 @@ const MentionsEditor: React.FunctionComponent<
     dispatch({ type: 'RESET_UPDATE_FLAG' })
   }, [state.shouldUpdate])
 
-  const handleEditorKeyChange = (e: any) => {
-    const editorContent = e.target.textContent
-    if (!state.open && editorContent[editorContent.length - 1] === '@') {
+  const handleEditorKeyChange = () => {
+    const selectionContent = window.getSelection().anchorNode.nodeValue
+    if (
+      !state.open &&
+      selectionContent &&
+      selectionContent[window.getSelection().focusOffset - 1] === '@'
+    ) {
       dispatch({ type: 'OPEN' })
     }
   }
@@ -134,7 +138,7 @@ const MentionsEditor: React.FunctionComponent<
       <div
         contentEditable
         ref={contendEditableRef}
-        onInput={event => handleEditorKeyChange(event)}
+        onInput={handleEditorKeyChange}
         style={editorStyle}
       />
       <PortalAtCursorPosition open={state.open}>
