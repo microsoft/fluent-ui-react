@@ -25,6 +25,7 @@ const mergeProviderContexts = (
     rtl: false,
     disableAnimations: false,
     originalThemes: [],
+    target: document,
   } as ProviderContextPrepared
 
   return contexts.reduce<ProviderContextPrepared>(
@@ -38,6 +39,9 @@ const mergeProviderContexts = (
       if (typeof mergedRTL === 'boolean') {
         acc.rtl = mergedRTL
       }
+
+      // Use provided renderer if it is defined
+      acc.target = next.target || acc.target
 
       // Use provided renderer if it is defined
       acc.renderer = next.renderer || acc.renderer
