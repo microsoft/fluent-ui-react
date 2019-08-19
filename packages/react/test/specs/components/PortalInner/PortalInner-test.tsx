@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { mount } from 'enzyme'
 
 import PortalInner, { PortalInnerProps } from 'src/components/Portal/PortalInner'
+import { mountWithProvider } from 'test/utils'
 
 const mountPortalInner = (props: PortalInnerProps) =>
-  mount(
+  mountWithProvider(
     <PortalInner {...props}>
       <p />
     </PortalInner>,
