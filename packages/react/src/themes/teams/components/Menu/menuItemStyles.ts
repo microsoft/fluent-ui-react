@@ -407,7 +407,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       ...(p.inSubmenu && {
         width: 'max-content',
         display: 'inline-block',
-        minWidth: pxToRem(220),
+        minWidth: pxToRem(162),
         maxWidth: pxToRem(262),
         marginRight: pxToRem(10),
       }),
@@ -424,11 +424,17 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
   menu: () => ({ zIndex: '1000' }),
 
-  indicator: () => ({
+  indicator: ({ props: p }) => ({
     position: 'relative',
     float: 'right',
     left: pxToRem(10),
     userSelect: 'none',
+
+    ...(p.inSubmenu && {
+      position: 'absolute',
+      right: pxToRem(10),
+      left: 'unset',
+    }),
   }),
 }
 
