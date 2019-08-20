@@ -13,7 +13,7 @@ type MenuPropsAndState = MenuProps & MenuState
 
 export default {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const { iconOnly, fluid, pointing, pills, primary, underlined, vertical, submenu } = p
+    const { iconOnly, pointing, pills, primary, underlined, vertical, submenu } = p
     const colors = getColorScheme(v.colorScheme, null, primary)
 
     return {
@@ -32,7 +32,6 @@ export default {
         ...(submenu && {
           boxShadow: v.verticalBoxShadow,
         }),
-        ...(!fluid && { width: pxToRem(200) }),
         ...(iconOnly && {
           display: 'inline-block',
           width: 'auto',

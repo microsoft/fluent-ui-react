@@ -29,8 +29,13 @@ const items = [
         { key: '1', content: 'item1' },
         {
           key: '2',
-          content: 'item2',
+          content: 'item2 with longer content',
           menu: [{ key: '1', content: 'item2.1' }, { key: '2', content: 'item2.2' }],
+        },
+        {
+          key: '3',
+          content: 'item3 with a very unreasonably long content that must wrap',
+          menu: [{ key: '1', content: 'item3.1' }, { key: '2', content: 'item3.2' }],
         },
       ],
     },

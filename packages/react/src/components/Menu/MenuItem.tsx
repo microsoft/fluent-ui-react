@@ -16,7 +16,6 @@ import {
   ContentComponentProps,
   commonPropTypes,
   isFromKeyboard,
-  rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -239,11 +238,13 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
                 styles: styles.icon,
               },
             })}
-          {rtlTextContainer.createFor({ element: content })}
+          {Box.create(content, {
+            defaultProps: { as: 'span', styles: styles.content },
+          })}
           {menu &&
             Icon.create(indicatorWithDefaults, {
               defaultProps: {
-                name: vertical ? 'stardust-arrow-end' : 'stardust-arrow-down',
+                name: vertical ? 'chevron-right' : 'chevron-down',
                 styles: styles.indicator,
               },
             })}

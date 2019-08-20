@@ -402,6 +402,18 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
+  content: ({ props: p }): ICSSInJSStyle => {
+    return {
+      ...(p.inSubmenu && {
+        width: 'max-content',
+        display: 'inline-block',
+        minWidth: pxToRem(220),
+        maxWidth: pxToRem(262),
+        marginRight: pxToRem(10),
+      }),
+    }
+  },
+
   icon: ({ props: p }): ICSSInJSStyle => ({
     ...(!p.iconOnly && {
       // reduce margins so text has the dominant influence on the vertical height
