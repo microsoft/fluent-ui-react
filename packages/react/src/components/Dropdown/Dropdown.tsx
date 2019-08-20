@@ -450,7 +450,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
               { refKey: 'innerRef' },
               { suppressRefError: true },
             )
-            const showClearIndicator = clearable && value.length > 1
+            const showClearIndicator = clearable && value.length > 0
 
             return (
               <Ref innerRef={innerRef}>
@@ -1243,7 +1243,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     newState: Partial<DropdownState>,
   ) => {
     const proposedValue = _.isNil(newState.value) ? this.state.value : newState.value
-    const newValue = this.props.multiple ? proposedValue : proposedValue[0]
+    const newValue = this.props.multiple ? proposedValue : proposedValue[0] || null
 
     this.setState(newState as DropdownState)
     _.invoke(this.props, handlerName, event, {
@@ -1302,7 +1302,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       return 0
     }
 
-    if (!multiple && !search && value) {
+    if (!multiple && !search && value.length > 0) {
       // in single selection, if there is a selected item, highlight it.
       const offset = isArrowUp ? -1 : isArrowDown ? 1 : 0
       const newHighlightedIndex = items.indexOf(value[0]) + offset
