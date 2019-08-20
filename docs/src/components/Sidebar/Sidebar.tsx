@@ -51,8 +51,18 @@ class Sidebar extends React.Component<any, any> {
   }
 
   findActiveCategoryIndex = (at: string, sections: ShorthandValue<any>[]): number => {
+    let newAt = at
+    if (at.startsWith('/components')) {
+      newAt = newAt.replace(/[^\/]*$/, '')
+    }
+    if (newAt[newAt.length - 1] === '/') {
+      newAt = newAt.substr(0, newAt.length - 1)
+    }
+
     return _.findIndex(sections, (section: ShorthandValue<HierarchicalTreeItemProps>) => {
-      return _.find((section as any).items, item => new RegExp(`^${item.title.to}\$`, 'i').test(at))
+      return _.find((section as any).items, item =>
+        new RegExp(`^${newAt}`, 'i').test(item.title.to),
+      )
     })
   }
 

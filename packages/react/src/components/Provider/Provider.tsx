@@ -5,7 +5,7 @@ import * as React from 'react'
 // @ts-ignore
 import { RendererProvider, ThemeProvider, ThemeContext } from '@stardust-ui/react-fela'
 
-import { felaRenderer, ChildrenComponentProps } from '../../lib'
+import { felaRenderer, ChildrenComponentProps, setUpWhatInput } from '../../lib'
 
 import {
   ThemePrepared,
@@ -136,6 +136,9 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
   componentDidMount() {
     this.renderFontFaces()
+    if (this.props.target) {
+      setUpWhatInput(this.props.target)
+    }
   }
 
   render() {
