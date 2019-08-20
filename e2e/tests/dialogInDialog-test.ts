@@ -59,4 +59,31 @@ describe('Dialog in Dialog', () => {
     expect(await e2e.exists(outerHeader)).toBe(false)
     expect(await e2e.exists(innerHeader)).toBe(false)
   })
+
+  it('A click on content and pressing ESC button should close the last opened dialog', async () => {
+    await e2e.clickOn(outerTrigger) // opens dialog
+    expect(await e2e.exists(outerHeader)).toBe(true)
+
+    await e2e.clickOn(innerTrigger) // opens nested dialog
+    expect(await e2e.exists(innerHeader)).toBe(true)
+
+    await e2e.clickOn(innerHeader)
+
+    // check that focus moved to body after clicking on Dialog content
+    expect(await e2e.isFocused('body')).toBe(true)
+
+    // press ESC and check if nested dialog is closed and focus is on nested trigger
+    await e2e.pressKey('Escape')
+    expect(await e2e.exists(innerHeader)).toBe(false)
+    expect(await e2e.isFocused(innerTrigger)).toBe(true)
+
+    // click on dialog content to move focus to body
+    await e2e.clickOn(outerHeader)
+    expect(await e2e.isFocused('body')).toBe(true)
+
+    // press ESC again and check if the last dialog is closed and focus is on trigger
+    await e2e.pressKey('Escape')
+    expect(await e2e.exists(outerHeader)).toBe(false)
+    expect(await e2e.isFocused(outerTrigger)).toBe(true)
+  })
 })

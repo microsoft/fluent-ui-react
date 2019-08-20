@@ -58,11 +58,12 @@ export function getFirstTabbable(
   rootElement: HTMLElement,
   currentElement: HTMLElement,
   includeElementsInFocusZones?: boolean,
+  checkNode?: boolean,
 ): HTMLElement | null {
   return getNextElement(
     rootElement,
     currentElement,
-    true /* checkNode */,
+    checkNode,
     false /* suppressParentTraversal */,
     false /* suppressChildTraversal */,
     includeElementsInFocusZones,
@@ -83,11 +84,12 @@ export function getLastTabbable(
   rootElement: HTMLElement,
   currentElement: HTMLElement,
   includeElementsInFocusZones?: boolean,
+  checkNode?: boolean,
 ): HTMLElement | null {
   return getPreviousElement(
     rootElement,
     currentElement,
-    true /* checkNode */,
+    checkNode,
     false /* suppressParentTraversal */,
     true /* traverseChildren */,
     includeElementsInFocusZones,
@@ -178,7 +180,7 @@ export function getPreviousElement(
   }
 
   // Check the current node, if it's not the first traversal.
-  if (checkNode && isCurrentElementVisible && isElementTabbable(currentElement)) {
+  if (checkNode && isCurrentElementVisible && isElementTabbable(currentElement, tabbable)) {
     return currentElement
   }
 

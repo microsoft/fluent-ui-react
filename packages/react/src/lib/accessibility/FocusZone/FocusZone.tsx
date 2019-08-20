@@ -131,8 +131,9 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
     this.windowElement = getWindow(this._root.current)
     let parentElement = getParent(this._root.current)
+    const doc = getDocument(this._root.current)
 
-    while (parentElement && parentElement !== document.body && parentElement.nodeType === 1) {
+    while (parentElement && parentElement !== doc.body && parentElement.nodeType === 1) {
       if (isElementFocusZone(parentElement)) {
         this._isInnerZone = true
         break
@@ -513,7 +514,9 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
       return undefined
     }
 
-    if (document.activeElement === this._root.current && this._isInnerZone) {
+    const doc = getDocument(this._root.current)
+
+    if (doc.activeElement === this._root.current && this._isInnerZone) {
       // If this element has focus, it is being controlled by a parent.
       // Ignore the keystroke.
       return undefined
@@ -1004,13 +1007,10 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
   }
 
   getOwnerZone(element?: HTMLElement): HTMLElement | null {
+    const doc = getDocument(this._root.current)
     let parentElement = getParent(element as HTMLElement)
 
-    while (
-      parentElement &&
-      parentElement !== this._root.current &&
-      parentElement !== document.body
-    ) {
+    while (parentElement && parentElement !== this._root.current && parentElement !== doc.body) {
       if (isElementFocusZone(parentElement)) {
         return parentElement
       }
