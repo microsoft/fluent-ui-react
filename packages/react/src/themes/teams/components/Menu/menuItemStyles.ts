@@ -404,7 +404,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
   content: ({ props: p }): ICSSInJSStyle => {
     return {
-      ...(p.inSubmenu && {
+      ...((p.inSubmenu || p.vertical) && {
         width: 'max-content',
         display: 'inline-block',
         minWidth: pxToRem(162),
@@ -417,8 +417,9 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
   icon: ({ props: p }): ICSSInJSStyle => ({
     ...(!p.iconOnly && {
       // reduce margins so text has the dominant influence on the vertical height
-      marginTop: pxToRem(-10),
+      marginTop: 0,
       marginBottom: pxToRem(-8),
+      verticalAlign: 'top',
     }),
   }),
 
@@ -432,6 +433,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
     ...(p.inSubmenu && {
       position: 'absolute',
+      top: pxToRem(6),
       right: pxToRem(10),
       left: 'unset',
     }),
