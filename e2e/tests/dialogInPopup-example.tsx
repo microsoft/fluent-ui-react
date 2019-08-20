@@ -6,18 +6,21 @@ export const selectors = {
   dialogHeader: Dialog.slotClassNames.header,
   dialogOverlay: Dialog.slotClassNames.overlay,
   dialogTrigger: 'dialog-trigger',
-  popupContent: Popup.Content.className,
+  popupContent: 'popup-content',
   popupTrigger: 'popup-trigger',
 }
 
 const DialogInPopupExample = () => (
   <Popup
     content={
-      <Dialog
-        cancelButton={{ content: 'Close', id: selectors.dialogCancel }}
-        header="A dialog"
-        trigger={<Button id={selectors.dialogTrigger} content="Open a dialog" />}
-      />
+      <>
+        <div id={selectors.popupContent}>Popup content</div>
+        <Dialog
+          cancelButton={{ content: 'Close', id: selectors.dialogCancel }}
+          header="A dialog"
+          trigger={<Button id={selectors.dialogTrigger} content="Open a dialog" />}
+        />
+      </>
     }
     trigger={<Button id={selectors.popupTrigger} content="Open a popup" />}
   />

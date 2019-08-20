@@ -395,13 +395,13 @@ describe('FocusZone', () => {
     ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowDown })
     expect(lastFocusedElement).toBe(buttonC)
 
+    // Pressing left should go to d.
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowDown })
+    expect(lastFocusedElement).toBe(buttonD)
+
     // Pressing down should go to e.
     ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowDown })
     expect(lastFocusedElement).toBe(buttonE)
-
-    // Pressing left should go to d.
-    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowLeft })
-    expect(lastFocusedElement).toBe(buttonD)
 
     // Pressing up should go to c.
     ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowUp })
@@ -1380,13 +1380,13 @@ describe('FocusZone', () => {
     ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowDown })
     expect(lastFocusedElement).toBe(buttonC)
 
-    // Pressing down should go to e.
-    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowDown })
-    expect(lastFocusedElement).toBe(buttonE)
-
     // Pressing right should go to d.
-    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowRight })
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowDown })
     expect(lastFocusedElement).toBe(buttonD)
+
+    // Pressing down should go to e.
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowLeft })
+    expect(lastFocusedElement).toBe(buttonE)
 
     // Pressing up should go to c.
     ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowUp })

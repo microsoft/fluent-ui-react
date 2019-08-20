@@ -1,17 +1,21 @@
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { Flex, Header, Icon, Dropdown, Text, Grid } from '@stardust-ui/react'
+import { Flex, Header, Icon, Dropdown, Text, Grid, Menu, Box } from '@stardust-ui/react'
 
-import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
+import { getFormattedHash } from 'docs/src/utils'
 import ComponentDocLinks from './ComponentDocLinks'
 import ComponentDocSee from './ComponentDocSee'
-import ComponentExamples from './ComponentExamples'
+import { ComponentExamples } from './ComponentExamples'
+import { ComponentUsage } from './ComponentUsage'
 import ComponentProps from './ComponentProps'
-import ComponentAccessibility from './ComponentDocAccessibility'
+import { ComponentDocAccessibility } from './ComponentDocAccessibility'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ExampleContext from 'docs/src/context/ExampleContext'
 import ComponentPlayground from 'docs/src/components/ComponentPlayground/ComponentPlayground'
 import { ComponentInfo } from 'docs/src/types'
+import ComponentBestPractices from './ComponentBestPractices'
+import { tabListBehavior } from 'src/lib/accessibility'
+import * as _ from 'lodash'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -21,22 +25,51 @@ const exampleEndStyle: React.CSSProperties = {
 
 type ComponentDocProps = {
   info: ComponentInfo
+  tabs: string[]
 } & RouteComponentProps<{}>
 
 class ComponentDoc extends React.Component<ComponentDocProps, any> {
   state: any = {}
 
+  tabRegex = new RegExp(/[^\/]*$/)
+
+  getTabIndexOrRedirectToDefault(tab: string) {
+    const lowercaseTabs = _.map(this.props.tabs, tab => tab.toLowerCase())
+    const index = lowercaseTabs.indexOf(tab)
+    if (index === -1) {
+      const { history, location } = this.props
+      const at = location.pathname
+      const newLocation = at.replace(this.tabRegex, 'definition')
+      history.replace(newLocation)
+      return 0
+    }
+    return index
+  }
+
+  getCurrentTabTitle() {
+    return this.props.tabs[this.state.currentTabIndex]
+  }
+
   componentWillMount() {
     const { history, location } = this.props
+    const tab = location.pathname.match(this.tabRegex)[0]
+    const tabIndex = this.getTabIndexOrRedirectToDefault(tab)
+    this.setState({ currentTabIndex: tabIndex })
 
     if (location.hash) {
       const activePath = getFormattedHash(location.hash)
       history.replace(`${location.pathname}#${activePath}`)
       this.setState({ activePath })
+      if (this.props.tabs[tabIndex] === 'Props') {
+        this.setState({ defaultPropComponent: activePath })
+      }
     }
   }
 
-  componentWillReceiveProps({ info }) {
+  componentWillReceiveProps({ info, location }) {
+    const tab = location.pathname.match(this.tabRegex)[0]
+    this.setState({ currentTabIndex: this.getTabIndexOrRedirectToDefault(tab) })
+
     if (info.displayName !== this.props.info.displayName) {
       this.setState({ activePath: undefined })
     }
@@ -48,6 +81,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
 
   handleExamplesRef = examplesRef => this.setState({ examplesRef })
 
+  /* TODO: bring back the right floating menu
   handleSidebarItemClick = (e, { examplePath }) => {
     const { history, location } = this.props
     const activePath = examplePathToHash(examplePath)
@@ -55,6 +89,22 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
     history.replace(`${location.pathname}#${activePath}`)
     // set active hash path
     this.setState({ activePath }, scrollToAnchor)
+  }
+  */
+
+  handleTabClick = (e, props) => {
+    const newIndex = props.index
+    const { history, location } = this.props
+    const at = location.pathname
+    const newLocation = at.replace(this.tabRegex, this.props.tabs[newIndex].toLowerCase())
+
+    history.replace(newLocation)
+    this.setState({ currentTabIndex: newIndex })
+  }
+
+  onPropComponentSelected = (e, props) => {
+    const { history, location } = this.props
+    history.replace(`${location.pathname}#${props.value}`)
   }
 
   render() {
@@ -124,33 +174,74 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
                   />
                 </Flex.Item>
               </Flex>
-              <Text styles={{ marginBottom: '1.4rem' }} content={info.docblock.description} />
-              <ComponentAccessibility info={info} />
+              <Menu
+                underlined
+                primary
+                defaultActiveIndex={0}
+                activeIndex={this.state.currentTabIndex}
+                items={this.props.tabs}
+                onItemClick={this.handleTabClick}
+                accessibility={tabListBehavior}
+              />
               <ComponentDocSee displayName={info.displayName} />
-              <ComponentProps displayName={info.displayName} props={info.props} />
             </>
           </Flex.Item>
         </Flex>
 
-        <ComponentPlayground componentName={info.displayName} key={info.displayName} />
+        {this.getCurrentTabTitle() === 'Accessibility' && <ComponentDocAccessibility info={info} />}
 
-        <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
-          <div ref={this.handleExamplesRef}>
-            <ExampleContext.Provider
-              value={{
-                activeAnchorName: activePath,
-                onExamplePassed: this.handleExamplePassed,
-              }}
+        {this.getCurrentTabTitle() === 'Props' && (
+          <ComponentProps
+            displayName={info.displayName}
+            props={info.props}
+            defaultComponentProp={this.state.defaultPropComponent}
+            onPropComponentSelected={this.onPropComponentSelected}
+          />
+        )}
+
+        {this.getCurrentTabTitle() === 'Definition' && (
+          <>
+            <Text
+              size="large"
+              styles={{ marginBottom: '1.4rem' }}
+              content={info.docblock.description}
+            />
+            <Box styles={{ height: '10px' }} />
+            <ComponentPlayground componentName={info.displayName} key={info.displayName} />
+            <Grid
+              columns="auto 300px"
+              styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}
             >
-              <ComponentExamples displayName={info.displayName} />
-            </ExampleContext.Provider>
+              <div>
+                <ComponentBestPractices displayName={info.displayName} />
+                <div ref={this.handleExamplesRef}>
+                  <ExampleContext.Provider
+                    value={{
+                      activeAnchorName: activePath,
+                      onExamplePassed: this.handleExamplePassed,
+                    }}
+                  >
+                    <ComponentExamples displayName={info.displayName} />
+                  </ExampleContext.Provider>
+                </div>
+              </div>
+            </Grid>
+          </>
+        )}
 
-            <div style={exampleEndStyle}>
-              This is the bottom <Icon name="pointing down" />
+        {this.getCurrentTabTitle() === 'Usage' && (
+          <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
+            <div>
+              <ExampleContext.Provider
+                value={{
+                  activeAnchorName: activePath,
+                  onExamplePassed: this.handleExamplePassed,
+                }}
+              >
+                <ComponentUsage displayName={info.displayName} />
+              </ExampleContext.Provider>
             </div>
-          </div>
-
-          {/* TODO: bring back the right floating menu
+            {/* TODO: bring back the right floating menu
             <Box styles={{ width: '25%', paddingLeft: '14px' }}>
               <ComponentSidebar
                 activePath={activePath}
@@ -160,7 +251,12 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
               />
             </Box>
           */}
-        </Grid>
+          </Grid>
+        )}
+
+        <div style={exampleEndStyle}>
+          This is the bottom <Icon name="pointing down" />
+        </div>
       </div>
     )
   }

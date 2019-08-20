@@ -4,7 +4,12 @@ import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
 const Usage = () => (
-  <ExampleSection title="Usage">
+  <ExampleSection title="">
+    <ComponentExample
+      title="Content and Icon"
+      description="A button can have an icon in addition to content."
+      examplePath="components/Button/Usage/ButtonExampleContentAndIcon"
+    />
     <ComponentExample
       title="Overflow"
       description="A button can have content that overflows."
