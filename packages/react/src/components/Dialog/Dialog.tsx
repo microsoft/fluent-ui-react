@@ -217,7 +217,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     }
   }
 
-  renderComponent({ accessibility, classes, ElementType, styles, unhandledProps }) {
+  renderComponent({ accessibility, classes, ElementType, styles, unhandledProps, rtl }) {
     const {
       actions,
       confirmButton,
@@ -230,6 +230,18 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       trigger,
     } = this.props
     const { open } = this.state
+    const headerActionButton = Button.create(headerAction, {
+      defaultProps: {
+        className: Dialog.slotClassNames.headerAction,
+        styles: styles.headerAction,
+        text: true,
+        iconOnly: true,
+        ...accessibility.attributes.headerAction,
+      },
+    })
+    const createdCancelButton = Button.create(cancelButton, {
+      overrideProps: this.handleCancelButtonOverrides,
+    })
 
     const dialogContent = (
       <Ref innerRef={this.contentRef}>
@@ -239,6 +251,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
         >
+          {rtl && headerActionButton}
           {Header.create(header, {
             defaultProps: {
               as: 'h2',
@@ -247,15 +260,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               ...accessibility.attributes.header,
             },
           })}
-          {Button.create(headerAction, {
-            defaultProps: {
-              className: Dialog.slotClassNames.headerAction,
-              styles: styles.headerAction,
-              text: true,
-              iconOnly: true,
-              ...accessibility.attributes.headerAction,
-            },
-          })}
+          {!rtl && headerActionButton}
+
           {Box.create(content, {
             defaultProps: {
               styles: styles.content,
@@ -270,16 +276,15 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             },
             overrideProps: {
               content: (
-                <Flex gap="gap.smaller" hAlign="end">
-                  {Button.create(cancelButton, {
-                    overrideProps: this.handleCancelButtonOverrides,
-                  })}
+                <Flex gap="gap.smaller" hAlign={rtl ? 'start' : 'end'}>
+                  {!rtl && createdCancelButton}
                   {Button.create(confirmButton, {
                     defaultProps: {
                       primary: true,
                     },
                     overrideProps: this.handleConfirmButtonOverrides,
                   })}
+                  {rtl && createdCancelButton}
                 </Flex>
               ),
             },

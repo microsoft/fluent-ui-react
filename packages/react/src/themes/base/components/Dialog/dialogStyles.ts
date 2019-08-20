@@ -15,16 +15,24 @@ export default {
     display: 'flex',
     flexWrap: 'wrap',
   }),
-  actions: (): ICSSInJSStyle => ({
-    textAlign: 'right',
+  actions: ({ rtl }: DialogStyleParams): ICSSInJSStyle => ({
+    ...(!rtl && {
+      textAlign: 'right',
+    }),
     flexBasis: '100%',
     marginLeft: 'auto',
   }),
-  content: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
+  content: ({ variables: v, rtl }: DialogStyleParams): ICSSInJSStyle => ({
+    ...(rtl && {
+      textAlign: 'left',
+    }),
     margin: v.contentMargin,
     flexBasis: '100%',
   }),
-  header: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
+  header: ({ variables: v, rtl }: DialogStyleParams): ICSSInJSStyle => ({
+    ...(rtl && {
+      textAlign: 'left',
+    }),
     margin: v.headerMargin,
     flexGrow: 1,
   }),

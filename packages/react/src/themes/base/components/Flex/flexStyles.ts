@@ -5,7 +5,7 @@ import { toFlexAlignment } from './utils'
 import { FlexVariables } from './flexVariables'
 
 const flexStyles: ComponentSlotStylesInput<FlexProps, FlexVariables> = {
-  root: ({ props: p, variables: v }) => ({
+  root: ({ props: p, variables: v, rtl }) => ({
     display: 'flex',
     ...(p.debug && { border: '1px dotted grey', background: 'lightgrey' }),
 
@@ -35,7 +35,7 @@ const flexStyles: ComponentSlotStylesInput<FlexProps, FlexVariables> = {
 
     ...(p.gap && {
       '> *:not(:last-child)': {
-        [p.column ? 'marginBottom' : 'marginRight']: v[p.gap],
+        [p.column ? 'marginBottom' : rtl ? 'marginLeft' : 'marginRight']: v[p.gap],
       },
     }),
   }),
