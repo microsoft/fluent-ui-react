@@ -1,21 +1,37 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Flex, Loader, Text, Accordion } from '@stardust-ui/react'
+import { Flex, Loader, Text, Provider } from '@stardust-ui/react'
 
 const InlineMarkdown = React.lazy(() => import('./InlineMarkdown'))
 
 const behaviorMenu = require('docs/src/behaviorMenu')
 
-const ComponentDocAccessibility = ({ info }) => {
-  const description = _.get(_.find(info.docblock.tags, { title: 'accessibility' }), 'description')
-  const defaultValue = _.get(_.find(info.props, { name: 'accessibility' }), 'defaultValue')
+export function containsAccessibility(info) {
+  const stem = getStem(info)
+  return !!getDescription(info) || !!getBehaviorName(stem)
+}
 
-  const stem = defaultValue && defaultValue.split('.').pop()
+function getDescription(info) {
+  return _.get(_.find(info.docblock.tags, { title: 'accessibility' }), 'description')
+}
+
+function getStem(info) {
+  const defaultValue = _.get(_.find(info.props, { name: 'accessibility' }), 'defaultValue')
+  return defaultValue && defaultValue.split('.').pop()
+}
+
+function getBehaviorName(stem) {
   const filename = stem && `${stem}.ts`
 
-  const behaviorName = behaviorMenu.reduce((acc, next) => {
+  return behaviorMenu.reduce((acc, next) => {
     return _.find(next.variations, { name: filename }) ? next.displayName : acc
   }, null)
+}
+
+export const ComponentDocAccessibility = ({ info }) => {
+  const stem = getStem(info)
+  const description = getDescription(info)
+  const behaviorName = getBehaviorName(stem)
 
   if (!behaviorName && !description) return null
 
@@ -57,28 +73,13 @@ const ComponentDocAccessibility = ({ info }) => {
     </>
   )
 
-  const accessPanels = [
-    {
-      key: 'accessibility',
-      content: { content: accessibilityDetails, styles: { paddingLeft: '14px' } },
-      title: {
-        content: <Text content="Accessibility" />,
-        as: 'span',
-        'aria-level': '2',
-        styles: { paddingBottom: '0', paddingTop: '0' },
-      },
-    },
-  ]
-
   return (
     <Flex column>
       <Flex.Item>
-        <>
-          <Accordion panels={accessPanels} />
-        </>
+        <Provider styles={{ paddingLeft: '14px', background: 'transparent' }}>
+          {accessibilityDetails}
+        </Provider>
       </Flex.Item>
     </Flex>
   )
 }
-
-export default ComponentDocAccessibility
