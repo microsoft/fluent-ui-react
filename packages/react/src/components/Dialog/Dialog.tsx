@@ -26,6 +26,7 @@ import Box, { BoxProps } from '../Box/Box'
 import Header, { HeaderProps } from '../Header/Header'
 import Portal, { TriggerAccessibility } from '../Portal/Portal'
 import Flex from '../Flex/Flex'
+import Provider from '../Provider/Provider'
 
 export interface DialogSlotClassNames {
   header: string
@@ -276,16 +277,18 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             },
             overrideProps: {
               content: (
-                <Flex gap="gap.smaller" hAlign={rtl ? 'start' : 'end'}>
-                  {!rtl && createdCancelButton}
-                  {Button.create(confirmButton, {
-                    defaultProps: {
-                      primary: true,
-                    },
-                    overrideProps: this.handleConfirmButtonOverrides,
-                  })}
-                  {rtl && createdCancelButton}
-                </Flex>
+                <Provider rtl={rtl}>
+                  <Flex gap="gap.smaller">
+                    {!rtl && createdCancelButton}
+                    {Button.create(confirmButton, {
+                      defaultProps: {
+                        primary: true,
+                      },
+                      overrideProps: this.handleConfirmButtonOverrides,
+                    })}
+                    {rtl && createdCancelButton}
+                  </Flex>
+                </Provider>
               ),
             },
           })}
