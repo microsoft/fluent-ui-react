@@ -366,40 +366,35 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     const { items, itemToString, multiple, search } = props
     const { searchQuery, value: rawValue } = state
 
-    const normalizedValue: ShorthandCollection<DropdownItemProps> = _.isArray(rawValue)
-      ? rawValue
-      : [rawValue]
+    // `normalizedValue` should be normilized always as it can be received from props
+    const normalizedValue = _.isArray(rawValue) ? rawValue : [rawValue]
     const value = multiple ? normalizedValue : normalizedValue.slice(0, 1)
 
-    if (!items) {
-      return { value }
-    }
+    const filteredItemsByValue = multiple ? _.difference(items, value) : items || []
+    const filteredItemStrings = filteredItemsByValue.map(filteredItem =>
+      itemToString(filteredItem).toLowerCase(),
+    )
 
-    const filteredItemsByValue = multiple ? _.difference(items, value) : items
+    const modifiedState: Partial<DropdownState> = {
+      filteredItems: filteredItemsByValue,
+      filteredItemStrings,
+      value,
+    }
 
     if (search) {
       if (_.isFunction(search)) {
-        return { ...state, filteredItems: search(filteredItemsByValue, searchQuery), value }
-      }
-
-      return {
-        filteredItems: filteredItemsByValue.filter(
+        modifiedState.filteredItems = search(filteredItemsByValue, searchQuery)
+      } else {
+        modifiedState.filteredItems = filteredItemsByValue.filter(
           item =>
             itemToString(item)
               .toLowerCase()
               .indexOf(searchQuery.toLowerCase()) !== -1,
-        ),
-        value,
+        )
       }
     }
 
-    return {
-      filteredItems: filteredItemsByValue,
-      filteredItemStrings: filteredItemsByValue.map(filteredItem =>
-        itemToString(filteredItem).toLowerCase(),
-      ),
-      value,
-    }
+    return modifiedState
   }
 
   renderComponent({
@@ -1243,14 +1238,12 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     newState: Partial<DropdownState>,
   ) => {
     const proposedValue = _.isNil(newState.value) ? this.state.value : newState.value
+    // `proposedValue` should be normalized for single/multiple variations, `null` condition is
+    // required as first item can be undefined
     const newValue = this.props.multiple ? proposedValue : proposedValue[0] || null
 
     this.setState(newState as DropdownState)
-    _.invoke(this.props, handlerName, event, {
-      ...this.props,
-      ...newState,
-      value: newValue,
-    })
+    _.invoke(this.props, handlerName, event, { ...this.props, ...newState, value: newValue })
   }
 
   tryFocusTriggerButton = () => {
