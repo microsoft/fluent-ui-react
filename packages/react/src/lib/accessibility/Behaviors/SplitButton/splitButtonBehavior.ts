@@ -9,16 +9,23 @@ import menuButtonBehavior from '../MenuButton/menuButtonBehavior'
  */
 const splitButtonBehavior: Accessibility<SplitButtonProps> = props => {
   const splitButtonMenuButtonBehavior = props => {
-    const menuButtonBehaviorData = menuButtonBehavior(props)
-    menuButtonBehaviorData.keyActions = {}
+    const { attributes, keyActions } = menuButtonBehavior(props)
 
-    return _.merge(menuButtonBehaviorData, {
-      attributes: {
-        trigger: {
-          tabIndex: -1,
+    return _.merge(
+      { attributes },
+      {
+        attributes: {
+          trigger: {
+            tabIndex: -1,
+          },
+        },
+        keyActions: {
+          root: {
+            closeMenu: keyActions.root.closeMenu,
+          },
         },
       },
-    })
+    )
   }
 
   return {
