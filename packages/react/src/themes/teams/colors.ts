@@ -632,11 +632,12 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
   },
   amethyst: {
     foreground: undefined,
-    background: undefined,
+    background: colors.amethyst[500],
     border: undefined,
     shadow: undefined,
     foregroundHover: undefined,
     backgroundHover: colors.amethyst[700],
+    backgroundHover1: colors.amethyst[500],
     borderHover: undefined,
     shadowHover: undefined,
     foregroundActive: undefined,

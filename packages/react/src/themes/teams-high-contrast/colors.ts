@@ -400,11 +400,12 @@ export const colorScheme: ColorSchemeMapping = {
   },
   amethyst: {
     foreground: undefined,
-    background: undefined,
+    background: colors.silver[900],
     border: undefined,
     shadow: undefined,
     foregroundHover: undefined,
     backgroundHover: accessibleYellow,
+    backgroundHover1: accessibleYellow,
     borderHover: undefined,
     shadowHover: undefined,
     foregroundActive: undefined,
