@@ -4,6 +4,7 @@ import { SplitButton } from '@stardust-ui/react'
 class SplitButtonExampleShorthand extends React.Component {
   items = [
     {
+      key: 'pdf',
       content: 'Export to PDF',
       icon: 'files-pdf',
       onClick: () => {
@@ -11,6 +12,7 @@ class SplitButtonExampleShorthand extends React.Component {
       },
     },
     {
+      key: 'pds',
       content: 'Export to PDS',
       icon: 'files-photoshop',
       onClick: () => {
@@ -18,11 +20,13 @@ class SplitButtonExampleShorthand extends React.Component {
       },
     },
     {
+      key: 'gif',
       content: 'Export as GIF',
       icon: 'files-gif',
       disabled: true,
     },
     {
+      key: 'eps',
       content: 'Export to EPS',
       icon: 'files-illustrator',
       onClick: () => {

@@ -36,14 +36,14 @@ export interface SplitButtonProps
    */
   accessibility?: Accessibility
 
-  /** Element to be rendered in-place where the popup is defined. */
+  /** Shorthand for the main button. */
   button?: ShorthandValue<ButtonProps>
 
-  /** Element to be rendered in-place where the popup is defined. */
+  /** Shorthand for the menu. */
   menu?: ShorthandValue<MenuProps> | ShorthandCollection<MenuItemProps>
 
   /**
-   * Called after user's click.
+   * Called after user's click on the main button.
    *
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
@@ -77,7 +77,10 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
       content: false,
     }),
     button: customPropTypes.itemShorthand,
-    menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.itemShorthand]),
+    menu: PropTypes.oneOfType([
+      customPropTypes.itemShorthand,
+      PropTypes.arrayOf(customPropTypes.itemShorthandWithoutJSX),
+    ]),
     onClick: PropTypes.func,
     onMenuItemClick: PropTypes.func,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
