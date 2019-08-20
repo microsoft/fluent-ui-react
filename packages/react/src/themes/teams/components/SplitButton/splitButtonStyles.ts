@@ -4,20 +4,16 @@ import MenuButton from '../../../../components/MenuButton/MenuButton'
 import Button from '../../../../components/Button/Button'
 
 const splitButtonStyles = {
-  button: ({ props: p, theme: { siteVariables } }): ICSSInJSStyle => {
-    const { ':focus': borderFocusStyles } = getBorderFocusStyles({
-      siteVariables: {
-        ...siteVariables,
-        focusInnerBorderColor: undefined,
-        focusOuterBorderColor: undefined,
-      },
-      isFromKeyboard: p.isFromKeyboard,
-    })
-
+  button: ({ props: p, variables: v }): ICSSInJSStyle => {
     return {
+      border: 0,
       ':focus': {
-        boxShadow: 'none',
-        ...borderFocusStyles,
+        ...(p.isFromKeyboard
+          ? {
+              '::before': { border: 0 },
+              '::after': { border: 0 },
+            }
+          : { ':active': { backgroundColor: v.backgroundColorActive } }),
       },
     }
   },
@@ -29,23 +25,27 @@ const splitButtonStyles = {
     })
 
     return {
+      border: `${borderWidth} solid ${v.borderColor}`,
       borderRadius: v.borderRadius,
-      borderStyle: 'solid',
-      borderWidth,
-      borderColor: v.borderColor,
-      boxShadow: v.boxShadow,
-      outline: 0,
-
-      boxSizing: 'border-box',
+      position: 'relative',
       display: 'inline-block',
+
+      [`& .${MenuButton.className} .${Button.className}`]: {
+        borderRight: 0,
+        borderTop: 0,
+        borderBottom: 0,
+      },
 
       ':focus-within': {
         boxShadow: 'none',
-        [`& .${MenuButton.className} .${Button.className}`]: {
-          backgroundColor: 'transparent',
-        },
         ...(p.isFromKeyboard
           ? {
+              [`& .${MenuButton.className} .${Button.className}`]: {
+                color: v.colorFocus,
+                backgroundColor: v.backgroundColorFocus,
+                borderColor: siteVariables.colors.white,
+              },
+
               color: v.colorFocus,
               backgroundColor: v.backgroundColorFocus,
               ...borderFocusStyles,

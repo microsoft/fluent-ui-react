@@ -89,7 +89,7 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
 
   static defaultProps = {
     accessibility: splitButtonBehavior,
-    as: 'div',
+    as: 'span',
   }
 
   state = {
