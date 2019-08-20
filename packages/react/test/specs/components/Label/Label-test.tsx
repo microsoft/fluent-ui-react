@@ -10,7 +10,7 @@ describe('Label', () => {
   isConformant(Label)
   labelImplementsShorthandProp('icon', Icon, {
     mapsValueToProp: 'name',
-    requiredProps: { name: 'at' },
+    requiredProps: { icon: 'at' },
   })
   labelImplementsShorthandProp('image', Image, { mapsValueToProp: 'src' })
 })

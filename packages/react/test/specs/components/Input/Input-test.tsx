@@ -45,7 +45,7 @@ describe('Input', () => {
   implementsShorthandProp(Input)('input', Box, { mapsValueToProp: 'type' })
   implementsShorthandProp(Input)('icon', Icon, {
     mapsValueToProp: 'name',
-    requiredProps: { name: 'at' },
+    requiredProps: { icon: 'at' },
   })
 
   describe('wrapper', () => {

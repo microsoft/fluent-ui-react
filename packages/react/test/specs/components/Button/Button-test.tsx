@@ -19,7 +19,7 @@ describe('Button', () => {
   isConformant(Button)
   buttonImplementsShorthandProp('icon', Icon, {
     mapsValueToProp: 'name',
-    requiredProps: { name: 'at' },
+    requiredProps: { icon: 'at' },
   })
 
   describe('accessibility', () => {
