@@ -27,7 +27,10 @@ describe('Alert', () => {
     requiredProps: { content: 'test', warning: true },
   })
 
-  alertImplementsShorthandProp('dismissAction', Button, { mapsValueToProp: 'content' })
+  alertImplementsShorthandProp('dismissAction', Button, {
+    mapsValueToProp: 'content',
+    requiredProps: { dismissible: true },
+  })
   alertImplementsShorthandProp('content', Box, { mapsValueToProp: 'children' })
 
   describe('compliance', () => {
