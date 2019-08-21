@@ -3,7 +3,6 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import callable from './callable'
-import felaRenderer from './felaRenderer'
 import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
@@ -161,7 +160,7 @@ const renderComponent = <P extends {}>(
     logProviderMissingWarning()
   }
 
-  const { rtl = false, renderer = felaRenderer, disableAnimations = false } = context || {}
+  const { rtl = false, renderer = null, disableAnimations = false } = context || {}
 
   const {
     siteVariables = {
@@ -188,9 +187,7 @@ const renderComponent = <P extends {}>(
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
     componentStyles[displayName],
-    {
-      root: props.styles,
-    },
+    { root: props.styles },
     { root: animationCSSProp },
   )
 
@@ -213,7 +210,9 @@ const renderComponent = <P extends {}>(
 
   const resolvedStyles: ComponentSlotStylesPrepared = resolveStyles(mergedStyles, styleParam)
 
-  const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
+  const classes: ComponentSlotClasses = renderer
+    ? getClasses(renderer, mergedStyles, styleParam)
+    : {}
   classes.root = cx(className, classes.root, props.className)
 
   const resolvedConfig: RenderResultConfig<P> = {
