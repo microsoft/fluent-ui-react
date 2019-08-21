@@ -18,8 +18,8 @@ export interface LabelVariables {
 export default (siteVars: SiteVariablesPrepared): LabelVariables => {
   const colorScheme = extendColorScheme(siteVars.colorScheme, {
     default: {
-      background: siteVars.colors.grey[100],
-      foreground: siteVars.colors.grey[750],
+      background: 'rgba(0, 0, 0, 0.6)',
+      foreground: 'rgb(232, 232, 232)',
     },
     brand: {
       background: siteVars.colorScheme.brand.foreground4,
