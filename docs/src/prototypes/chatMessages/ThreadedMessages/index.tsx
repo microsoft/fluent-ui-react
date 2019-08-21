@@ -44,6 +44,9 @@ const ChatExampleWithThreadedMessages = () => {
               '&.ui-chat__item__reply': {
                 padding: 0,
               },
+              '& .ui-chat__item__message-reply': {
+                margin: 0,
+              },
               '& .ui-chat__item__reply__gutter': {
                 left: '15px',
                 zIndex: '1111',
@@ -63,6 +66,12 @@ const ChatExampleWithThreadedMessages = () => {
                 borderBottom: '1px solid grey',
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 0,
+              },
+              '&.ui-chat__message__reply': {
+                width: '100%',
+                minWidth: '100%',
+                margin: '1px 0',
+                paddingLeft: '60px',
               },
             },
           },

@@ -69,13 +69,17 @@ const ThreadReplies = (props: ThreadRepliesProps) => {
         author: reply.author,
         timestamp: reply.timestamp,
         actionMenu: reply.actionMenu,
+        className: 'ui-chat__message__reply',
       }
       const chatItemProps: ChatItemProps = {
         gutter: {
           content: reply.avatar,
           className: 'ui-chat__item__reply__gutter',
         },
-        message: <Chat.Message {...messageProps} />,
+        message: {
+          content: <Chat.Message {...messageProps} />,
+          className: 'ui-chat__item__message-reply',
+        },
         className: 'ui-chat__item__reply',
       }
       return <ChatItem as="div" {...chatItemProps} key={`reply-message-id-${index}`} />
@@ -89,24 +93,5 @@ const ThreadReplies = (props: ThreadRepliesProps) => {
     </>
   )
 }
-// class ThreadReplies extends React.Component<ThreadRepliesProps> {
-//   renderCollapseAllOrRepliesButton = () => {
-//     return (
-//       <Button
-//         as="a"
-//         fluid
-//         accessibility={null}
-//         style={{ border: 'none', marginBottom: '1px', justifyContent: 'start', boxShadow: 'none' }}
-//       >
-//         <div className="screen-reader-text" role="heading" aria-level={5} />
-//         <div aria-hidden="true">2 replies from Joe and Jack</div>
-//       </Button>
-//     )
-//   }
-
-//   render() {
-//     return <>{this.renderCollapseAllOrRepliesButton()}</>
-//   }
-// }
 
 export default ThreadReplies
