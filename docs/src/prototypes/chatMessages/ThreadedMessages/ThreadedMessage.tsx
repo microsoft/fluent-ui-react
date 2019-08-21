@@ -1,10 +1,12 @@
 import * as React from 'react'
 import { Chat, ChatMessageProps, Text, Flex, Button } from '@stardust-ui/react'
 import threadedMessageBehavior from './threadedMessageBehavior'
+import ThreadReplies, { ThreadReplyProps } from './ThreadReplies'
+import { actionMenu } from './mockData'
 
 interface ThreadedMessageProps extends ChatMessageProps {
   subject?: string
-  items?: ChatMessageProps[]
+  replies?: ThreadReplyProps[]
 }
 class ThreadedMessage extends React.Component<ThreadedMessageProps> {
   renderContent = () => {
@@ -24,21 +26,8 @@ class ThreadedMessage extends React.Component<ThreadedMessageProps> {
         className="ui-chat__message__thread-body"
         {...this.props}
         content={this.renderContent()}
+        actionMenu={actionMenu}
       />
-    )
-  }
-
-  renderCollapseAllOrRepliesButton = () => {
-    return (
-      <Button
-        as="a"
-        fluid
-        accessibility={null}
-        style={{ border: 'none', marginBottom: '1px', justifyContent: 'start', boxShadow: 'none' }}
-      >
-        <div className="screen-reader-text" role="heading" aria-level={5} />
-        <div aria-hidden="true">2 replies from Joe and Jack</div>
-      </Button>
     )
   }
 
@@ -58,7 +47,7 @@ class ThreadedMessage extends React.Component<ThreadedMessageProps> {
         content={
           <Flex column>
             {this.renderMainMessageBody()}
-            {this.renderCollapseAllOrRepliesButton()}
+            <ThreadReplies replies={this.props.replies} />
             {this.renderReplyButton()}
           </Flex>
         }

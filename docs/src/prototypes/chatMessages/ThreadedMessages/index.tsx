@@ -1,30 +1,7 @@
 import * as React from 'react'
 import { Chat, ChatItemProps, ShorthandCollection, Avatar, Provider } from '@stardust-ui/react'
 import ThreadedMessage from './ThreadedMessage'
-
-const janeAvatar = {
-  image: 'public/images/avatar/small/ade.jpg',
-  status: {
-    color: 'green',
-    icon: 'check',
-  },
-}
-
-const actionMenu = {
-  iconOnly: true,
-  items: [
-    {
-      key: 'like',
-      icon: 'like',
-      title: 'Like',
-    },
-    {
-      key: 'more',
-      icon: 'more',
-      title: 'More actions',
-    },
-  ],
-}
+import { janeAvatar, replies } from './mockData'
 
 const ChatExampleWithThreadedMessages = () => {
   const items: ShorthandCollection<ChatItemProps> = [
@@ -33,10 +10,10 @@ const ChatExampleWithThreadedMessages = () => {
       message: (
         <ThreadedMessage
           subject="Beer on Friday evening"
-          content="Sure! Let's try it."
+          content="Weather is perfect for a beer outside. What do you think?"
           author="Jane Doe"
           timestamp="Yesterday, 10:15 PM"
-          actionMenu={actionMenu}
+          replies={replies}
         />
       ),
       key: 'thread-message-id-1',
@@ -49,7 +26,6 @@ const ChatExampleWithThreadedMessages = () => {
           content="Sure! Let's try it."
           author="Jane Doe"
           timestamp="Yesterday, 10:15 PM"
-          actionMenu={actionMenu}
         />
       ),
       key: 'thread-message-id-2',
@@ -64,6 +40,13 @@ const ChatExampleWithThreadedMessages = () => {
             root: {
               '& .ui-chat__item__message': {
                 width: '100%',
+              },
+              '&.ui-chat__item__reply': {
+                padding: 0,
+              },
+              '& .ui-chat__item__reply__gutter': {
+                left: '15px',
+                zIndex: '1111',
               },
             },
           },
