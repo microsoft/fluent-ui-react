@@ -30,7 +30,7 @@ describe('Attachment', () => {
   attachmentImplementsShorthandProp('description', Text)
   attachmentImplementsShorthandProp('icon', Icon, {
     mapsValueToProp: 'name',
-    requiredProps: { name: 'at' },
+    requiredShorthandProps: { name: 'at' },
   })
   attachmentImplementsShorthandProp('action', Button)
 
