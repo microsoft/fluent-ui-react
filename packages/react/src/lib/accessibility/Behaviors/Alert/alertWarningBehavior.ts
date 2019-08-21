@@ -1,4 +1,5 @@
 import { Accessibility } from '../../types'
+import AlertBehaviorProps from './alertBehaviorProps'
 
 /**
  * @specification
