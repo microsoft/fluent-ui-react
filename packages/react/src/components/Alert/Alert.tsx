@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
-  UIComponent,
+  AutoControlledComponent,
   UIComponentProps,
   ContentComponentProps,
   commonPropTypes,
@@ -15,15 +15,24 @@ import {
 import { RenderResultConfig } from '../../lib/renderComponent'
 import { alertBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import {
+  ComponentEventHandler,
+  WithAsProp,
+  ShorthandValue,
+  withSafeTypeForAs,
+  ShorthandCollection,
+} from '../../types'
 import Box, { BoxProps } from '../Box/Box'
 import Button, { ButtonProps } from '../Button/Button'
 import Icon, { IconProps } from '../Icon/Icon'
 import { TextProps } from '../Text/Text'
 
+import ButtonGroup, { ButtonGroupProps } from '../Button/ButtonGroup'
+
 export interface AlertSlotClassNames {
   content: string
-  action: string
+  actions: string
+  dismissAction: string
   icon: string
   header: string
 }
@@ -37,8 +46,8 @@ export interface AlertProps
    */
   accessibility?: Accessibility
 
-  /** Button shorthand for the action slot. */
-  action?: ShorthandValue<ButtonProps>
+  /** An Alert can contain action buttons. */
+  actions?: ShorthandValue<ButtonGroupProps> | ShorthandCollection<ButtonProps>
 
   /** An alert may contain an icon. */
   icon?: ShorthandValue<IconProps>
@@ -52,8 +61,27 @@ export interface AlertProps
   /** An alert may be formatted to display a danger message. */
   danger?: boolean
 
+  /** A default value for the `visible` prop. */
+  defaultVisible?: boolean
+
+  /** An alert can be dismissible. */
+  dismissible?: boolean
+
+  /**
+   * A button shorthand for the dismiss action slot. To use this slot the alert should be
+   * dismissible.
+   */
+  dismissAction?: ShorthandValue<ButtonProps>
+
   /** An alert may be formatted to display information. */
   info?: boolean
+
+  /**
+   * Called after user will dismiss the alert.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onDismiss?: ComponentEventHandler<AlertProps>
 
   /**
    * Called after user's focus.
@@ -65,41 +93,73 @@ export interface AlertProps
   /** An alert may be formatted to display a successful message. */
   success?: boolean
 
+  /** An alert can be set to visible to force itself to be shown. */
+  visible?: boolean
+
   /** An alert may be formatted to display a warning message. */
   warning?: boolean
 }
 
 export interface AlertState {
   isFromKeyboard: boolean
+  visible: boolean
 }
 
-class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
+class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> {
   static displayName = 'Alert'
   static className = 'ui-alert'
 
   static slotClassNames: AlertSlotClassNames = {
     content: `${Alert.className}__content`,
-    action: `${Alert.className}__action`,
+    actions: `${Alert.className}__actions`,
+    dismissAction: `${Alert.className}__dismissAction`,
     icon: `${Alert.className}__icon`,
     header: `${Alert.className}__header`,
   }
 
   static propTypes = {
     ...commonPropTypes.createCommon({ content: 'shorthand' }),
-    action: customPropTypes.itemShorthand,
+    actions: PropTypes.oneOfType([
+      customPropTypes.itemShorthand,
+      customPropTypes.collectionShorthand,
+    ]),
     icon: customPropTypes.itemShorthandWithoutJSX,
     header: customPropTypes.itemShorthand,
     attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
     danger: PropTypes.bool,
+    defaultVisible: PropTypes.bool,
+    dismissible: PropTypes.bool,
+    dismissAction: customPropTypes.itemShorthand,
     info: PropTypes.bool,
+    onDismiss: PropTypes.func,
     onFocus: PropTypes.func,
     success: PropTypes.bool,
+    visible: PropTypes.bool,
     warning: PropTypes.bool,
   }
 
-  static defaultProps = { accessibility: alertBehavior }
+  static defaultProps = {
+    accessibility: alertBehavior,
+    dismissAction: { icon: 'close' },
+  }
 
-  state = { isFromKeyboard: false }
+  static autoControlledProps = ['visible']
+
+  getInitialAutoControlledState(): AlertState {
+    return {
+      isFromKeyboard: false,
+      visible: true,
+    }
+  }
+
+  handleDismissOverrides = (predefinedProps: ButtonProps) => ({
+    onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+      _.invoke(predefinedProps, 'onClick', e, buttonProps)
+
+      _.invoke(this.props, 'onDismiss', e, { ...this.props, visible: false })
+      this.setState({ visible: false })
+    },
+  })
 
   handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
@@ -108,7 +168,7 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
   }
 
   renderContent = ({ styles, accessibility }: RenderResultConfig<AlertProps>) => {
-    const { action, icon, header, content } = this.props
+    const { actions, dismissible, dismissAction, content, icon, header } = this.props
 
     return (
       <>
@@ -133,14 +193,22 @@ class Alert extends UIComponent<WithAsProp<AlertProps>, AlertState> {
             ...accessibility.attributes.content,
           },
         })}
-        {Button.create(action, {
+        {ButtonGroup.create(actions, {
           defaultProps: {
-            iconOnly: true,
-            text: true,
-            className: Alert.slotClassNames.action,
-            styles: styles.action,
+            className: Alert.slotClassNames.actions,
+            styles: styles.actions,
           },
         })}
+        {dismissible &&
+          Button.create(dismissAction, {
+            defaultProps: {
+              iconOnly: true,
+              text: true,
+              className: Alert.slotClassNames.dismissAction,
+              styles: styles.dismissAction,
+            },
+            overrideProps: this.handleDismissOverrides,
+          })}
       </>
     )
   }
