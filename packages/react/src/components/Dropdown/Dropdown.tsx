@@ -370,8 +370,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     const normalizedValue = _.isArray(rawValue) ? rawValue : [rawValue]
     const value = multiple ? normalizedValue : normalizedValue.slice(0, 1)
 
-    const filteredItemsByValue = multiple ? _.difference(items, value) : items || []
-    const filteredItemStrings = filteredItemsByValue.map(filteredItem =>
+    const filteredItemsByValue = multiple ? _.difference(items, value) : items
+    const filteredItemStrings = _.map(filteredItemsByValue, filteredItem =>
       itemToString(filteredItem).toLowerCase(),
     )
 
