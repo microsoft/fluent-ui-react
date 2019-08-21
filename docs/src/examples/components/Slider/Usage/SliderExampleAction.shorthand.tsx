@@ -57,7 +57,7 @@ const SliderExampleActionShorthand = () => {
         icon={state.mute ? 'mic-off' : 'mic'}
         onClick={() => dispatch({ type: 'toggle_mute' })}
       />
-      <Slider {...commonProps} />
+      <Slider {...commonProps} vertical={vertical} />
       <Input type="number" input={{ styles: { width: '64px' } }} {...commonProps} />
     </Flex>
   )
