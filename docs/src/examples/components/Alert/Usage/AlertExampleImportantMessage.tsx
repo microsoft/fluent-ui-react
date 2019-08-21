@@ -7,6 +7,7 @@ const AlertExampleImportantMessage = () => (
     icon="exclamation-triangle"
     header="Your password may have been compromised"
     content="Please change your password"
+    dismissible
   />
 )
 
