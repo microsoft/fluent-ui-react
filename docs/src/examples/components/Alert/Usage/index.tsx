@@ -7,7 +7,7 @@ const Usage = () => (
   <ExampleSection title="Usage">
     <ComponentExample
       title="Dismiss on actions"
-      description="You can dismiss alerts also on actions."
+      description="You can also dismiss alerts on actions."
       examplePath="components/Alert/Usage/AlertExampleDismissActions"
     />
   </ExampleSection>
