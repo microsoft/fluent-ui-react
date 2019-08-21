@@ -465,7 +465,7 @@ class Sidebar extends React.Component<any, any> {
           </a>
           <Input
             styles={topItemTheme}
-            variables={siteVars => ({ backgroundColor: siteVars.colorScheme.default.background3 })}
+            inverted
             fluid
             clearable
             icon="search"
