@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Rename `action` slot to `dismissAction` in `Alert` component @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
+- To make `dismissAction` slot visible in `Alert` component `dismissible` prop is required now @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
+
 ### Fixes
 - Update text `Button` styles for Teams Theme to match [redlines] @codepretty ([#1719](https://github.com/stardust-ui/react/pull/1719))
 - Fix `Menu` and `MenuItem` styles to match [redlines] @bcalvery ([#1712](https://github.com/stardust-ui/react/pull/1712))
@@ -40,6 +44,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `checkable` and `checkableIndicator` to the `Dropdown` and `DropdownItem` components @mnajdova ([#1738](https://github.com/stardust-ui/react/pull/1738))
 - Add unified ramp of category colors and category color schemes: `foreground`, `foreground1`, `background` to the Teams themes @natashamayurshah ([#1711](https://github.com/stardust-ui/react/pull/1711))
 - Upgrade `FocusTrapZone` to the latest version from `fabric-ui` @sophieH29 ([#1790](https://github.com/stardust-ui/react/pull/1790))
+- Add `visible` prop to `Alert` @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
+- Add `actions` slot to `Alert` @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
 
 ### Documentation
 - Restore docs for `Ref` component @layershifter ([#1777](https://github.com/stardust-ui/react/pull/1777))
@@ -49,7 +55,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Implement component tab UI @lucivpav ([#1784](https://github.com/stardust-ui/react/pull/1784))
 
 <!--------------------------------[ v0.36.2 ]------------------------------- -->
-## [v0.36.2](https://github.com/stardust-ui/react/tree/v0.36.1) (2019-08-19)
+## [v0.36.2](https://github.com/stardust-ui/react/tree/v0.36.2) (2019-08-19)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.36.1...v0.36.2)
 
 ### Fixes
