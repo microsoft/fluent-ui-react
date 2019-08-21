@@ -26,7 +26,6 @@ import Box, { BoxProps } from '../Box/Box'
 import Header, { HeaderProps } from '../Header/Header'
 import Portal, { TriggerAccessibility } from '../Portal/Portal'
 import Flex from '../Flex/Flex'
-import Provider from '../Provider/Provider'
 
 export interface DialogSlotClassNames {
   header: string
@@ -231,28 +230,16 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       trigger,
     } = this.props
     const { open } = this.state
-    const headerActionButton = Button.create(headerAction, {
-      defaultProps: {
-        className: Dialog.slotClassNames.headerAction,
-        styles: styles.headerAction,
-        text: true,
-        iconOnly: true,
-        ...accessibility.attributes.headerAction,
-      },
-    })
-    const createdCancelButton = Button.create(cancelButton, {
-      overrideProps: this.handleCancelButtonOverrides,
-    })
 
     const dialogContent = (
       <Ref innerRef={this.contentRef}>
         <ElementType
           className={classes.root}
+          dir={rtl ? 'rtl' : undefined}
           {...accessibility.attributes.popup}
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
         >
-          {rtl && headerActionButton}
           {Header.create(header, {
             defaultProps: {
               as: 'h2',
@@ -261,7 +248,15 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               ...accessibility.attributes.header,
             },
           })}
-          {!rtl && headerActionButton}
+          {Button.create(headerAction, {
+            defaultProps: {
+              className: Dialog.slotClassNames.headerAction,
+              styles: styles.headerAction,
+              text: true,
+              iconOnly: true,
+              ...accessibility.attributes.headerAction,
+            },
+          })}
 
           {Box.create(content, {
             defaultProps: {
@@ -277,18 +272,17 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             },
             overrideProps: {
               content: (
-                <Provider rtl={rtl}>
-                  <Flex gap="gap.smaller">
-                    {!rtl && createdCancelButton}
-                    {Button.create(confirmButton, {
-                      defaultProps: {
-                        primary: true,
-                      },
-                      overrideProps: this.handleConfirmButtonOverrides,
-                    })}
-                    {rtl && createdCancelButton}
-                  </Flex>
-                </Provider>
+                <Flex gap="gap.smaller">
+                  {Button.create(cancelButton, {
+                    overrideProps: this.handleCancelButtonOverrides,
+                  })}
+                  {Button.create(confirmButton, {
+                    defaultProps: {
+                      primary: true,
+                    },
+                    overrideProps: this.handleConfirmButtonOverrides,
+                  })}
+                </Flex>
               ),
             },
           })}

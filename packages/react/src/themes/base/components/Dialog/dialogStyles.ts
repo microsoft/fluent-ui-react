@@ -12,29 +12,37 @@ export default {
     padding: v.rootPadding,
     position: 'relative',
     width: v.rootWidth,
-    display: 'flex',
-    flexWrap: 'wrap',
+    // CSS Grid is polifilled only with latest inline-style-prefixer
+    // @ts-ignore is supported by fallback values plugin
+    display: ['grid', '-ms-grid'],
+    gridTemplateColumns: '1fr auto',
+    msGridColumns: `1fr auto`,
   }),
-  actions: ({ rtl }: DialogStyleParams): ICSSInJSStyle => ({
-    ...(!rtl && {
-      textAlign: 'right',
-    }),
-    flexBasis: '100%',
-    marginLeft: 'auto',
+  actions: (): ICSSInJSStyle => ({
+    gridRow: 3,
+    msGridRow: 3,
+    msGridColumn: 1,
+    msGridColumnSpan: 2,
+    gridColumn: '1 / span 2',
+    '-ms-grid-column-align': 'end',
+    justifySelf: 'right',
   }),
-  content: ({ variables: v, rtl }: DialogStyleParams): ICSSInJSStyle => ({
-    ...(rtl && {
-      textAlign: 'left',
-    }),
+  content: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
     margin: v.contentMargin,
-    flexBasis: '100%',
+    gridRow: 2,
+    msGridColumn: 1,
+    msGridColumnSpan: 2,
+    justifySelf: 'left',
   }),
-  header: ({ variables: v, rtl }: DialogStyleParams): ICSSInJSStyle => ({
-    ...(rtl && {
-      textAlign: 'left',
-    }),
+  header: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
     margin: v.headerMargin,
-    flexGrow: 1,
+    gridRow: 1,
+    gridColumn: 1,
+    justifySelf: 'left',
+  }),
+  headerAction: (): ICSSInJSStyle => ({
+    gridRow: 1,
+    gridColumn: 2,
   }),
   overlay: ({ props: p, variables: v }: DialogStyleParams): ICSSInJSStyle => ({
     alignItems: 'center',
