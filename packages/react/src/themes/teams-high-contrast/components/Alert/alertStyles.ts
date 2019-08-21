@@ -4,7 +4,7 @@ import { AlertHighContrastVariables } from './alertVariables'
 import getBorderFocusStyles from '../../../teams/getBorderFocusStyles'
 
 const alertStyles: ComponentSlotStylesInput<AlertProps, AlertHighContrastVariables> = {
-  action: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => ({
+  dismissAction: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => ({
     ...(p.isFromKeyboard && {
       ':focus': {
         backgroundColor: v.focusBackgroundColor,
