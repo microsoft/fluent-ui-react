@@ -353,5 +353,10 @@ Dialog.slotClassNames = {
  *
  * @accessibility
  * Implements [ARIA Dialog (Modal)](https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal) design pattern.
+ * @accessibilityIssues
+ * [NVDA narrates dialog title and button twice](https://github.com/nvaccess/nvda/issues/10003)
+ * [NVDA does not recognize the ARIA 1.1 values of aria-haspopup](https://github.com/nvaccess/nvda/issues/8235)
+ * [Jaws does not announce token values of aria-haspopup](https://github.com/FreedomScientific/VFO-standards-support/issues/33)
+ * [Issue 989517: VoiceOver narrates dialog content and button twice](https://bugs.chromium.org/p/chromium/issues/detail?id=989517)
  */
 export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)
