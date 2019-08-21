@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING CHANGES
 - Rename `action` slot to `dismissAction` in `Alert` component @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
 - To make `dismissAction` slot visible in `Alert` component `dismissible` prop is required now @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
+- Fix `Tooltip` shadow incorrect - removed `boxShadowStart`, `boxShadowColor`, `boxShadowEnd` from `tooltipContentVariables`, replaced with `boxShadow` [redlines] @bcalvery ([#1825](https://github.com/stardust-ui/react/pull/1825))
 
 ### Fixes
 - Update text `Button` styles for Teams Theme to match [redlines] @codepretty ([#1719](https://github.com/stardust-ui/react/pull/1719))
