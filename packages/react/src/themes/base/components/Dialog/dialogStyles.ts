@@ -16,13 +16,13 @@ export default {
     // @ts-ignore is supported by fallback values plugin
     display: ['grid', '-ms-grid'],
     gridTemplateColumns: '1fr auto',
-    msGridColumns: `1fr auto`,
+    '-ms-grid-columns': `1fr auto`,
   }),
   actions: (): ICSSInJSStyle => ({
     gridRow: 3,
-    msGridRow: 3,
-    msGridColumn: 1,
-    msGridColumnSpan: 2,
+    '-ms-grid-row': 3,
+    '-ms-grid-column': 1,
+    '-ms-grid-column-span': 2,
     gridColumn: '1 / span 2',
     '-ms-grid-column-align': 'end',
     justifySelf: 'right',
@@ -30,8 +30,8 @@ export default {
   content: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
     margin: v.contentMargin,
     gridRow: 2,
-    msGridColumn: 1,
-    msGridColumnSpan: 2,
+    '-ms-grid-column': 1,
+    '-ms-grid-column-span': 2,
     justifySelf: 'left',
   }),
   header: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
