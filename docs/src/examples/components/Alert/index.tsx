@@ -4,6 +4,7 @@ import Rtl from './Rtl'
 import Types from './Types'
 import Slots from './Slots'
 import State from './State'
+import Usage from './Usage'
 import Variations from './Variations'
 
 const AlertExamples = () => (
@@ -13,6 +14,7 @@ const AlertExamples = () => (
     <State />
     <Slots />
     <Rtl />
+    <Usage />
   </>
 )
 
