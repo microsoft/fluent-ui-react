@@ -18,18 +18,94 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING CHANGES
+- Rename `action` slot to `dismissAction` in `Alert` component @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
+- To make `dismissAction` slot visible in `Alert` component `dismissible` prop is required now @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
+
+### Fixes
+- Update text `Button` styles for Teams Theme to match [redlines] @codepretty ([#1719](https://github.com/stardust-ui/react/pull/1719))
+- Fix `Menu` and `MenuItem` styles to match [redlines] @bcalvery ([#1712](https://github.com/stardust-ui/react/pull/1712))
+- Make `Embed` focusable via keyboard @lucivpav ([#1758](https://github.com/stardust-ui/react/pull/1758))
+- Update screener tests for `Input` to only capture Teams themes @codepretty ([#1801](https://github.com/stardust-ui/react/pull/1801))
+- Fix `Checkbox` style bug in background color [redlines] @bcalvery ([#1796](https://github.com/stardust-ui/react/pull/1796))
+- Fix bidirectional `FocusZone` to land focus correctly on DOWN key press after series of UP arrow keys @sophieH29 ([#1794](https://github.com/stardust-ui/react/pull/1794))
+- Fix `hand` icon in Teams theme @lucivpav ([#1782](https://github.com/stardust-ui/react/pull/1782))
+- ESC key should close the last opened `Popup` or `Dialog` if body has focus @sophieH29 ([#1807](https://github.com/stardust-ui/react/pull/1807))
+- Correctly define current document object of the `FocusZone` and `FocusTrapZone` @sophieH29 ([#1820](https://github.com/stardust-ui/react/pull/1820))
+- Fix switching modes in `Dropdown` @layershifter ([#1830](https://github.com/stardust-ui/react/pull/1830))
+- Fix a runtime error if context is missing @layershifter ([#1837](https://github.com/stardust-ui/react/pull/1837))
+
+### Features
+- Add `overwrite` prop to `Provider` @layershifter ([#1780](https://github.com/stardust-ui/react/pull/1780))
+- Upgrade `FocusZone` to the latest version from `fabric-ui` @sophieH29 ([#1772](https://github.com/stardust-ui/react/pull/1772))
+- Add `inverted` prop to `Input` for changing the background color [redlines] @codepretty ([#1684](https://github.com/stardust-ui/react/pull/1684))
+- Edit `buttonBehavior` Adding aria-disabled when button has loading state @kolaps33 ([#1789](https://github.com/stardust-ui/react/pull/1789))
+- Added `audio-off` and `clipboard-copied-to` icon to Teams theme @bcalvery ([#1792](https://github.com/stardust-ui/react/pull/1792))
+- Added `window-maximize`, `window-minimize` and `window-restore` icons to Teams theme @codepretty ([#1803](https://github.com/stardust-ui/react/pull/1803))
+- Export `FocusTrapZoneProps` and `AutoFocusZoneProps` from the main package @sophieH29 ([#1795](https://github.com/stardust-ui/react/pull/1795))
+- Add `checkable` and `checkableIndicator` to the `Dropdown` and `DropdownItem` components @mnajdova ([#1738](https://github.com/stardust-ui/react/pull/1738))
+- Add unified ramp of category colors and category color schemes: `foreground`, `foreground1`, `background` to the Teams themes @natashamayurshah ([#1711](https://github.com/stardust-ui/react/pull/1711))
+- Upgrade `FocusTrapZone` to the latest version from `fabric-ui` @sophieH29 ([#1790](https://github.com/stardust-ui/react/pull/1790))
+- Add `visible` prop to `Alert` @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
+- Add `actions` slot to `Alert` @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
+
+### Documentation
+- Restore docs for `Ref` component @layershifter ([#1777](https://github.com/stardust-ui/react/pull/1777))
+- Add prototype for expandable control messages in `Chat` @sophieH29 ([#1765](https://github.com/stardust-ui/react/pull/1765))
+- Remove Font Awesome icons from docs examples @lucivpav ([#1764](https://github.com/stardust-ui/react/pull/1764))
+- Improve QuickStart code example @lucivpav ([#1797](https://github.com/stardust-ui/react/pull/1797))
+- Implement component tab UI @lucivpav ([#1784](https://github.com/stardust-ui/react/pull/1784))
+
+<!--------------------------------[ v0.36.2 ]------------------------------- -->
+## [v0.36.2](https://github.com/stardust-ui/react/tree/v0.36.2) (2019-08-19)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.36.1...v0.36.2)
+
+### Fixes
+- Update vulnerable version of `lodash` dependency @layershifter ([#1700](https://github.com/stardust-ui/react/pull/1700))
+- Use `target` from `Provider` in `ReactDOM.createPortal()` calls @layershifter ([#1810](https://github.com/stardust-ui/react/pull/1810))
+
+### Features
+- Add possibility for a Toolbar to rearrange its items according to space available @miroslavstastny ([#1657](https://github.com/stardust-ui/react/pull/1657))
+- Focus indicator for additional documents @jurokapsiar ([#1816](https://github.com/stardust-ui/react/pull/1816))
+
+<!--------------------------------[ v0.36.1 ]------------------------------- -->
+## [v0.36.1](https://github.com/stardust-ui/react/tree/v0.36.1) (2019-08-09)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.36.0...v0.36.1)
+
+### Features
+- Add `loading` and `loader` props to `Button` component @mnajdova ([#1662](https://github.com/stardust-ui/react/pull/1662))
+
+<!--------------------------------[ v0.36.0 ]------------------------------- -->
+## [v0.36.0](https://github.com/stardust-ui/react/tree/v0.36.0) (2019-08-08)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.35.0...v0.36.0)
+
+### BREAKING CHANGES
 - Fix `firstFocusableSelector` in `FocusTrapZone` and `AutoFocusZone` @sophieH29 ([#1732](https://github.com/stardust-ui/react/pull/1732))
+- Rename Popup `shouldTriggerBeTabbable` prop to `tabbableTrigger` @jurokapsiar ([#1696](https://github.com/stardust-ui/react/pull/1696))
+- `StackableEventListener` is removed @layershifter ([#1755](https://github.com/stardust-ui/react/pull/1755))
+- Rename `Tree` to `HierarchicalTree` @silviuavram ([#1752](https://github.com/stardust-ui/react/pull/1752))
+
+### Fixes
+- Require `name` prop in `Icon` component @lucivpav ([#1723](https://github.com/stardust-ui/react/pull/1723))
+- Export `broadcast` icon in Teams theme @miroslavstastny ([#1737](https://github.com/stardust-ui/react/pull/1737))
+- Ensure `actionsMenu` is not cut-off by the edge of viewport for `ChatMessage` @kuzhelov ([#1739](https://github.com/stardust-ui/react/pull/1739))
+- `FocusZone` should respect elements with `contenteditable` attribute on Home/End key press @sophieH29 ([#1749](https://github.com/stardust-ui/react/pull/1749))
+- Fix incorrect order of plugin execution in `felaRenderer` @lucivpav ([#1741](https://github.com/stardust-ui/react/pull/1741))
 
 ### Features
 - Expose `isFromKeyboard` in `Grid` component @sophieH29 ([#1729](https://github.com/stardust-ui/react/pull/1729))
 - Add `onActiveIndexChange` prop to `Tree` component @lucivpav ([#1728](https://github.com/stardust-ui/react/pull/1728))
-
-### Fixes
-- Require `name` prop in `Icon` component @lucivpav ([#1723](https://github.com/stardust-ui/react/pull/1723))
+- Add `horizontal` prop for `List` component @mnajdova ([#1721](https://github.com/stardust-ui/react/pull/1721))
+- Export `call-blocked` icon to Teams theme @francescopalmiotto ([#1736](https://github.com/stardust-ui/react/pull/1736))
+- Add support for component styles debugging @kuzhelov ([#1726](https://github.com/stardust-ui/react/pull/1726))
+- Use FocusZone in selectable list @jurokapsiar ([#1757](https://github.com/stardust-ui/react/pull/1757))
+- Add `MenuButton` component @jurokapsiar ([#1696](https://github.com/stardust-ui/react/pull/1696))
+- Add `useEventListener` hook @layershifter ([#1755](https://github.com/stardust-ui/react/pull/1755))
 
 ### Documentation
 - Fix code in changing component variables section of theming examples @lucivpav ([#1626](https://github.com/stardust-ui/react/pull/1626))
 - Fix layout issue rendering extra space when viewing documentation in Firefox @notandrew ([#1427](https://github.com/stardust-ui/react/pull/1427))
+- Add search capability @lucivpav ([#1682](https://github.com/stardust-ui/react/pull/1682))
+- Improve `Theme it` section under component examples @layershifter ([#1748](https://github.com/stardust-ui/react/pull/1748))
 
 <!--------------------------------[ v0.35.0 ]------------------------------- -->
 ## [v0.35.0](https://github.com/stardust-ui/react/tree/v0.35.0) (2019-07-26)
@@ -38,7 +114,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING CHANGES
 -  Add `trapFocus` and `autoFocus` props to `Popup` and remove `popupFocusTrapBehavior` and `popupAutoFocusBehavior` @sophieH29 ([#1565](https://github.com/stardust-ui/react/pull/1565))
 - `defaultBehavior` was removed @layershifter ([#1600](https://github.com/stardust-ui/react/pull/1600))
-- `ReactElement`s are now handled in the same way as string in all shorthands @layershifter ([#1600](https://github.com/stardust-ui/react/pull/1600))
+- `ReactElement`s are now handled in the same way as string in all shorthands @layershifter ([#1513](https://github.com/stardust-ui/react/pull/1513))
 - `Props` param is required in `ShorthandValue` and `ShorthandCollection` @layershifter ([#1605](https://github.com/stardust-ui/react/pull/1605))
 - `LoaderPosition` type is no longer exported @layershifter ([#1634](https://github.com/stardust-ui/react/pull/1634))
 - Changed values for `textAlign` prop and renamed it to `align` for `Header` component @Bugaa92 ([#1668](https://github.com/stardust-ui/react/pull/1668))

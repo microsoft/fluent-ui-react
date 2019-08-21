@@ -86,8 +86,11 @@ const PopupControlledExample = () => {
     <Popup
       open={open}
       onOpenChange={(e, { open }) => setOpen(open)}
-      trigger={<Button icon="user" content="People Picker" aria-label="Choose a person." />}
-      content={popupContent}
+      trigger={<Button icon="user-friends" content="People Picker" aria-label="Choose a person." />}
+      content={{
+        content: popupContent,
+        'aria-label': 'People picker',
+      }}
       trapFocus
     />
   )

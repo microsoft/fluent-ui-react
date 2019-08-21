@@ -18,7 +18,7 @@ Each component's slot has associated default element type. For example, by defau
 
 ```jsx
 // 💡 'name' and 'size' will be used as <Icon /> element's props
-<Button icon={{ name: 'camera', size: 'small' }} />
+<Button icon={{ name: 'call-video', size: 'small' }} />
 ```
 
 ## Primitive as value
@@ -33,7 +33,7 @@ will be used as icon's `name`:
 <>
   <Button icon="camera" />
   {/* 💡 has identical effect to the previous one */}
-  <Button icon={{ name: 'camera' }} />
+  <Button icon={{ name: 'call-video' }} />
 </>
 ```
 
@@ -67,7 +67,7 @@ powerful option for customizing component's slot. The only requirements for this
 Thus, in its simplest form, it could be used the following way:
 
 ```jsx
-<Button icon={() => <Icon name="chess rook" />} />
+<Button icon={() => <Icon name="emoji" />} />
 ```
 
 However, if it will be just about that, this function form wouldn't introduce any additional value. So, lets take a look on the scenarios where it is really helpful.
@@ -83,11 +83,11 @@ Here is an example that represents this:
 ```jsx
 <>
   {/* All three have the same effect: */}
-  <Button icon="chess rook" />
+  <Button icon="emoji" />
   {/* render() transforms string to <Icon /> element */}
-  <Button icon={render => render('chess rook')} />
+  <Button icon={render => render('emoji')} />
   {/* render() transforms object to <Icon /> element */}
-  <Button icon={render => render({ name: 'chess rook' })} />
+  <Button icon={render => render({ name: 'emoji' })} />
 </>
 ```
 
@@ -162,12 +162,12 @@ element.
   icon={render =>
     render(
       /* what to render */
-      { name: 'chess rook' },
+      { name: 'emoji' },
 
       /* how to render */
       (ComponentType, props) => (
         <div class="my-icon-container">
-          <i class="my-chess-rook-icon" {...props.accessibility.root} />
+          <i class="my-emoji-icon" {...props.accessibility.root} />
         </div>
       ),
     )

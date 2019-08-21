@@ -64,7 +64,7 @@ export default (siteVars: any): MenuVariables => {
     colorScheme: pickValuesFromColorScheme(
       extendColorScheme(siteVars.colorScheme, {
         default: {
-          borderActive: siteVars.colors.grey[600],
+          borderActive: siteVars.colorScheme.default.border2,
           backgroundActive: siteVars.colorScheme.default.backgroundActive1,
           backgroundFocus: siteVars.colorScheme.default.backgroundFocus1,
           foregroundDisabled: siteVars.colorScheme.default.foregroundDisabled1,
@@ -104,10 +104,10 @@ export default (siteVars: any): MenuVariables => {
     underlinedBorderColor: siteVars.colors.grey[200],
 
     lineHeightBase: siteVars.lineHeightMedium,
-    horizontalPadding: `${pxToRem(14)} ${pxToRem(18)} ${pxToRem(14)} ${pxToRem(18)}`,
+    horizontalPadding: `${pxToRem(14)} ${pxToRem(18)}`,
 
     verticalBackgroundColor: siteVars.colors.white,
-    verticalItemPadding: `${pxToRem(9)} ${pxToRem(16)} ${pxToRem(9)} ${pxToRem(16)}`,
+    verticalItemPadding: `${pxToRem(7)} ${pxToRem(16)}`,
     verticalBoxShadow: siteVars.shadowLevel3,
     verticalDividerMargin: `${pxToRem(8)} 0`,
     verticalItemBorderWidth: pxToRem(2),
@@ -118,7 +118,7 @@ export default (siteVars: any): MenuVariables => {
     pointingIndicatorBackgroundColor: siteVars.colors.brand[600],
 
     underlinedBottomBorderWidth: pxToRem(2),
-    primaryBorderColor: siteVars.colors.grey[100],
+    primaryBorderColor: siteVars.colorScheme.default.border2,
 
     dividerHeight: pxToRem(1),
     borderWidth: pxToRem(1),

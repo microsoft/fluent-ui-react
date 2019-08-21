@@ -53,9 +53,9 @@ import { ToolbarProps } from '../components/Toolbar/Toolbar'
 import { ToolbarRadioGroupProps } from '../components/Toolbar/ToolbarRadioGroup'
 import { TooltipContentProps } from '../components/Tooltip/TooltipContent'
 import { TooltipProps } from '../components/Tooltip/Tooltip'
-import { TreeItemProps } from '../components/Tree/TreeItem'
-import { TreeProps } from '../components/Tree/Tree'
-import { TreeTitleProps } from '../components/Tree/TreeTitle'
+import { HierarchicalTreeItemProps } from '../components/HierarchicalTree/HierarchicalTreeItem'
+import { HierarchicalTreeProps } from '../components/HierarchicalTree/HierarchicalTree'
+import { HierarchicalTreeTitleProps } from '../components/HierarchicalTree/HierarchicalTreeTitle'
 import { VideoProps } from '../components/Video/Video'
 
 // Themes go through 3 phases.
@@ -76,13 +76,21 @@ export type ColorVariants = Extendable<
   Partial<{
     50: string
     100: string
+    150: string
     200: string
+    250: string
     300: string
+    350: string
     400: string
+    450: string
     500: string
+    550: string
     600: string
+    650: string
     700: string
+    750: string
     800: string
+    850: string
     900: string
   }>,
   string
@@ -311,6 +319,7 @@ export interface ComponentStyleFunctionParam<
   TProps extends PropsWithVarsAndStyles = PropsWithVarsAndStyles,
   TVars extends ComponentVariablesObject = ComponentVariablesObject
 > {
+  displayName: string
   props: State & TProps
   variables: TVars
   theme: ThemePrepared
@@ -318,9 +327,9 @@ export interface ComponentStyleFunctionParam<
   disableAnimations: boolean
 }
 
-export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((
+export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = (
   styleParam?: ComponentStyleFunctionParam<TProps, TVars>,
-) => ICSSInJSStyle)
+) => ICSSInJSStyle
 
 export type ComponentSlotStyle<TProps = {}, TVars = {}> =
   | ComponentSlotStyleFunction<TProps, TVars>
@@ -456,9 +465,9 @@ type ThemeStylesProps = {
   Tooltip?: TooltipProps
   TooltipContent?: TooltipContentProps
   Text?: TextProps
-  Tree?: TreeProps
-  TreeItem?: TreeItemProps
-  TreeTitle?: TreeTitleProps
+  HierarchicalTree?: HierarchicalTreeProps
+  HierarchicalTreeItem?: HierarchicalTreeItemProps
+  HierarchicalTreeTitle?: HierarchicalTreeTitleProps
   Video?: VideoProps
 }
 

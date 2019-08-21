@@ -4,9 +4,8 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 // @ts-ignore
 import { RendererProvider, ThemeProvider, ThemeContext } from '@stardust-ui/react-fela'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 
-import { felaRenderer, ChildrenComponentProps } from '../../lib'
+import { felaRenderer, ChildrenComponentProps, setUpWhatInput } from '../../lib'
 
 import {
   ThemePrepared,
@@ -34,6 +33,7 @@ export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
   rtl?: boolean
   disableAnimations?: boolean
+  overwrite?: boolean
   target?: Document
   theme?: ThemeInput
   variables?: ComponentVariablesInput
@@ -46,7 +46,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   static displayName = 'Provider'
 
   static propTypes = {
-    as: customPropTypes.as,
+    as: PropTypes.elementType,
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
@@ -136,18 +136,22 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
   componentDidMount() {
     this.renderFontFaces()
+    if (this.props.target) {
+      setUpWhatInput(this.props.target)
+    }
   }
 
   render() {
     const {
       as,
-      theme,
-      rtl,
-      disableAnimations,
-      renderer,
-      variables,
       children,
+      disableAnimations,
+      overwrite,
+      renderer,
+      rtl,
       target,
+      theme,
+      variables,
       ...unhandledProps
     } = this.props
     const inputContext: ProviderContextInput = {
@@ -155,10 +159,13 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       rtl,
       disableAnimations,
       renderer,
+      target,
     }
+
+    const incomingContext: ProviderContextPrepared = overwrite ? {} : this.context
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
-    const outgoingContext: ProviderContextPrepared = mergeContexts(this.context, inputContext)
+    const outgoingContext: ProviderContextPrepared = mergeContexts(incomingContext, inputContext)
 
     this.renderStaticStylesOnce(outgoingContext.theme)
 
@@ -177,7 +184,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
         target={target}
         {...{ rehydrate: false }}
       >
-        <ThemeProvider theme={outgoingContext}>
+        <ThemeProvider theme={outgoingContext} overwrite>
           <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>
             {children}
           </ProviderBox>

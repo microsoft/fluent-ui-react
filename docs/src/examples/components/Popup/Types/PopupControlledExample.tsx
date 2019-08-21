@@ -21,7 +21,7 @@ const PopupControlledExample = () => {
       content={popupContent}
       trapFocus
     >
-      <Button icon="expand" title="Open popup" />
+      <Button icon="open-outside" title="Open popup" />
     </Popup>
   )
 }

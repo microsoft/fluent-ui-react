@@ -1,6 +1,6 @@
 {
   "name": "@stardust-ui/internal-tooling",
-  "version": "0.35.0",
+  "version": "0.36.0",
   "dependencies": {
     "@babel/core": "^7.3.4",
     "@babel/plugin-proposal-class-properties": "^7.3.4",
@@ -9,7 +9,7 @@
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
-    "@stardust-ui/eslint-plugin": "^0.35.0",
+    "@stardust-ui/eslint-plugin": "^0.36.0",
     "@types/jest": "^24.0.11",
     "@types/jest-axe": "^2.2.3",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
@@ -24,8 +24,11 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-react-hooks": "^1.6.0",
+    "fela": "^10.6.1",
     "jest": "^24.5.0",
-    "jest-axe": "^3.1.1"
+    "jest-axe": "^3.1.1",
+    "jest-react-fela": "^10.6.1",
+    "react-fela": "^10.6.1"
   },
   "files": [
     "babel",
