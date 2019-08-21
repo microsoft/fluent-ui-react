@@ -7,6 +7,7 @@ import arrowUp from './arrowUp'
 import arrowDown from './arrowDown'
 import arrowLeft from './arrowLeft'
 import arrowRight from './arrowRight'
+import audioOff from './audioOff'
 import ban from './ban'
 import bold from './bold'
 import bookmark from './bookmark'
@@ -32,6 +33,7 @@ import callMissedLine from './callMissedLine'
 import screencast from './screencast'
 import chat from './chat'
 import chevronDown from './chevronDown'
+import clipboardCopiedTo from './clipboardCopiedTo'
 import close from './close'
 import codeSnippet from './codeSnippet'
 import filesAftereffects from './filesAftereffects'
@@ -148,6 +150,9 @@ import userBlur from './userBlur'
 import userFriends from './userFriends'
 import videoCameraEmphasis from './videoCameraEmphasis'
 import yammer from './yammer'
+import windowMaximize from './windowMaximize'
+import windowMinimize from './windowMinimize'
+import windowRestore from './windowRestore'
 
 export default {
   'stardust-circle': stardustCircle,
@@ -157,6 +162,7 @@ export default {
   'arrow-down': arrowDown,
   'arrow-left': arrowLeft,
   'arrow-right': arrowRight,
+  'audio-off': audioOff,
   ban,
   bold,
   bookmark,
@@ -183,6 +189,7 @@ export default {
   'canvas-add-page': canvasAddPage,
   chat,
   'chevron-down': chevronDown,
+  'clipboard-copied-to': clipboardCopiedTo,
   close,
   'code-snippet': codeSnippet,
   'files-aftereffects': filesAftereffects,
@@ -290,6 +297,9 @@ export default {
   'user-friends': userFriends,
   'video-camera-emphasis': videoCameraEmphasis,
   yammer,
+  'window-maximize': windowMaximize,
+  'window-minimize': windowMinimize,
+  'window-restore': windowRestore,
 
   // Office icons
   word: filesWord,

@@ -1,5 +1,5 @@
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
-import { handleRef, Ref } from '@stardust-ui/react-component-ref'
+import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { handleRef, Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -121,8 +121,10 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   renderPortal(): JSX.Element | undefined {
     const { children, content, trapFocus } = this.props
     const { open } = this.state
+
     const contentToRender = childrenExist(children) ? children : content
     const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
+    const targetRef = toRefObject(this.context.target)
 
     return (
       open && (
@@ -137,11 +139,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
             ) : (
               contentToRender
             )}
-            <EventListener
-              listener={this.handleDocumentClick}
-              targetRef={documentRef}
-              type="click"
-            />
+            <EventListener listener={this.handleDocumentClick} targetRef={targetRef} type="click" />
           </PortalInner>
         </Ref>
       )
@@ -185,7 +183,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
 
     _.invoke(this.props, 'onTriggerClick', e) // Call handler from parent component
     _.invoke(trigger, 'props.onClick', e, ...unhandledProps) // Call original event handler
-    this.trySetState({ open: !this.state.open })
+    this.setState({ open: !this.state.open })
   }
 
   handleDocumentClick = (e: MouseEvent) => {
@@ -197,7 +195,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
       return // ignore the click
     }
     _.invoke(this.props, 'onOutsideClick', e)
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 }
 

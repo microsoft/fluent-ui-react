@@ -3,8 +3,8 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import cx from 'classnames'
-import { Ref } from '@stardust-ui/react-component-ref'
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
+import { EventListener } from '@stardust-ui/react-component-event-listener'
 
 import {
   UIComponent,
@@ -173,6 +173,8 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
   menuRef = React.createRef<HTMLElement>()
 
   renderSubmenu(menu, variables) {
+    const targetRef = toRefObject(this.context.target)
+
     return (
       <>
         <Ref innerRef={this.menuRef}>
@@ -194,7 +196,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
         </Ref>
         <EventListener
           listener={this.handleOutsideClick}
-          targetRef={documentRef}
+          targetRef={targetRef}
           type="click"
           capture
         />
