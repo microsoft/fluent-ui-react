@@ -55,7 +55,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix sidebar search input element's background color @lucivpav ([#1836](https://github.com/stardust-ui/react/pull/1836))
 
 <!--------------------------------[ v0.36.2 ]------------------------------- -->
-## [v0.36.2](https://github.com/stardust-ui/react/tree/v0.36.1) (2019-08-19)
+## [v0.36.2](https://github.com/stardust-ui/react/tree/v0.36.2) (2019-08-19)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.36.1...v0.36.2)
 
 ### Fixes
