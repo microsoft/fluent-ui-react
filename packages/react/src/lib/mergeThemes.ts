@@ -210,6 +210,7 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
 
       return acc
     },
+    // .reduce() will modify "emptyTheme" object, so we should clone it before actual usage
     { ...emptyTheme },
   )
 }
