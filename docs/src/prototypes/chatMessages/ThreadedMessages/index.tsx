@@ -43,6 +43,8 @@ const ChatExampleWithThreadedMessages = () => {
               },
               '&.ui-chat__item__reply': {
                 padding: 0,
+                // TODO take color from variables
+                backgroundColor: '#f7f7f7',
               },
               '& .ui-chat__item__message-reply': {
                 margin: 0,
@@ -62,8 +64,8 @@ const ChatExampleWithThreadedMessages = () => {
               '&.ui-chat__message__thread-body': {
                 width: '100%',
                 minWidth: '100%',
-                // / TODO change grey
-                borderBottom: '1px solid grey',
+                // TODO take color from variables
+                borderBottom: '1px solid #f3f2f1',
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 0,
               },
@@ -72,6 +74,36 @@ const ChatExampleWithThreadedMessages = () => {
                 minWidth: '100%',
                 margin: '1px 0',
                 paddingLeft: '60px',
+                // TODO take color from variables
+                backgroundColor: '#f7f7f7',
+              },
+              '&.ui-chat__message__reply-editor': {
+                width: '100%',
+                minWidth: '100%',
+                padding: 0,
+                margin: 0,
+                // TODO take color from variables
+                backgroundColor: '#f3f2f1',
+              },
+            },
+          },
+          Button: {
+            root: {
+              '&.ui-button-replies': {
+                border: 'none',
+                marginBottom: '1px',
+                justifyContent: 'start',
+                boxShadow: 'none',
+                textDecoration: 'none',
+              },
+            },
+          },
+          Input: {
+            root: {
+              '& .ui-input__input': {
+                height: '50px',
+                // TODO take color from variables
+                backgroundColor: '#fff',
               },
             },
           },

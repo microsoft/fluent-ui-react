@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import {
   AvatarProps,
+  Avatar,
   ChatMessageProps,
   Button,
   ChatItem,
@@ -46,9 +47,9 @@ const ThreadReplies = (props: ThreadRepliesProps) => {
     return (
       <Button
         as="a"
+        className="ui-button-replies"
         fluid
         accessibility={repliesButtonBehavior}
-        style={{ border: 'none', marginBottom: '1px', justifyContent: 'start', boxShadow: 'none' }}
         onClick={() => setExpanded(!expanded)}
       >
         <div className="screen-reader-text" role="heading" aria-level={5} />
@@ -73,7 +74,7 @@ const ThreadReplies = (props: ThreadRepliesProps) => {
       }
       const chatItemProps: ChatItemProps = {
         gutter: {
-          content: reply.avatar,
+          content: <Avatar {...reply.avatar} />,
           className: 'ui-chat__item__reply__gutter',
         },
         message: {

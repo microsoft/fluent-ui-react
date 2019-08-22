@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { Chat, ChatMessageProps, Text, Flex, Button } from '@stardust-ui/react'
+import { Chat, ChatMessageProps, Text, Flex } from '@stardust-ui/react'
 import threadedMessageBehavior from './threadedMessageBehavior'
 import ThreadReplies, { ThreadReplyProps } from './ThreadReplies'
+import ThreadReplyEditor from './ThreadReplyEditor'
 import { actionMenu } from './mockData'
 
 interface ThreadedMessageProps extends ChatMessageProps {
@@ -31,14 +32,6 @@ class ThreadedMessage extends React.Component<ThreadedMessageProps> {
     )
   }
 
-  renderReplyButton = () => {
-    return (
-      <Button fluid style={{ border: 'none', justifyContent: 'start' }}>
-        Reply
-      </Button>
-    )
-  }
-
   render() {
     return (
       <Chat.Message
@@ -48,7 +41,7 @@ class ThreadedMessage extends React.Component<ThreadedMessageProps> {
           <Flex column>
             {this.renderMainMessageBody()}
             <ThreadReplies replies={this.props.replies} />
-            {this.renderReplyButton()}
+            <ThreadReplyEditor />
           </Flex>
         }
       />
