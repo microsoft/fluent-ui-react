@@ -235,6 +235,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       <Ref innerRef={this.contentRef}>
         <ElementType
           className={classes.root}
+          // it's required to have an `rtl` attribute there as Dialog is rendered outside the main DOM tree
           dir={rtl ? 'rtl' : undefined}
           {...accessibility.attributes.popup}
           {...unhandledProps}
