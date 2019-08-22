@@ -99,14 +99,12 @@ export interface AlertProps
 
   /** An alert may be formatted to display a warning message. */
   warning?: boolean
-
-  /** Id of a body containing header and content */
-  bodyId?: string
 }
 
 export interface AlertState {
   isFromKeyboard: boolean
   visible: boolean
+  bodyId: string
 }
 
 class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> {
@@ -140,13 +138,11 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     success: PropTypes.bool,
     visible: PropTypes.bool,
     warning: PropTypes.bool,
-    bodyId: PropTypes.string,
   }
 
   static defaultProps = {
     accessibility: alertBehavior,
     dismissAction: { icon: 'close' },
-    bodyId: _.uniqueId('alert-body-'),
   }
 
   static autoControlledProps = ['visible']
@@ -155,6 +151,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     return {
       isFromKeyboard: false,
       visible: true,
+      bodyId: _.uniqueId('alert-body-'),
     }
   }
 
@@ -174,15 +171,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
   }
 
   renderContent = ({ styles, accessibility }: RenderResultConfig<AlertProps>) => {
-    const {
-      actions,
-      dismissible,
-      dismissAction,
-      content,
-      icon,
-      header,
-      bodyId,
-    } = this.props
+    const { actions, dismissible, dismissAction, content, icon, header } = this.props
 
     return (
       <>
@@ -193,7 +182,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
             xSpacing: 'after',
           },
         })}
-        <Flex as="div" className="body" {...accessibility.attributes.body} id={bodyId}>
+        <Flex as="div" className="body" {...accessibility.attributes.body} id={this.state.bodyId}>
           {Box.create(header, {
             defaultProps: {
               className: Alert.slotClassNames.header,
