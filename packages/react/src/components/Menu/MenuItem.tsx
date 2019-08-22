@@ -145,7 +145,6 @@ export interface MenuItemProps
 export interface MenuItemState {
   isFromKeyboard: boolean
   menuOpen: boolean
-  hasWrapper: boolean
 }
 
 class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuItemState> {
@@ -198,12 +197,6 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
 
   menuRef = React.createRef<HTMLElement>()
   itemRef = React.createRef<HTMLElement>()
-
-  static getAutoControlledStateFromProps(props: MenuItemProps): Partial<MenuItemState> {
-    return {
-      hasWrapper: !_.isNil(props.wrapper),
-    }
-  }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
     const {
@@ -321,6 +314,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     doNotNavigateNextParentItem: event => {
       event.stopPropagation()
     },
+    closeAllMenus: event => this.closeAllMenus(event),
   }
 
   outsideClickHandler = e => {
@@ -334,7 +328,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
   }
 
   performClick = e => {
-    const { active, menu, inSubmenu } = this.props
+    const { active, menu } = this.props
 
     if (menu) {
       if (doesNodeContainClick(this.menuRef.current, e)) {
@@ -346,11 +340,6 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
         e.stopPropagation()
         e.preventDefault()
       }
-    }
-
-    // avoid spacebar scrolling the page
-    if (!inSubmenu) {
-      e.preventDefault()
     }
   }
 
@@ -391,10 +380,15 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     }
     const { inSubmenu } = this.props
     this.trySetMenuOpen(false, e, () => {
-      if (!inSubmenu && this.props.vertical) {
+      if (!inSubmenu) {
         focusAsync(this.itemRef.current)
       }
     })
+
+    // avoid spacebar scrolling the page
+    if (!inSubmenu) {
+      e.preventDefault()
+    }
   }
 
   closeMenu = (e: Event, forceTriggerFocus?: boolean) => {

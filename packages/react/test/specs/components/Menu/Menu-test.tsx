@@ -81,10 +81,16 @@ describe('Menu', () => {
       const menu = mountWithProvider(<Menu items={getNestedItems()} />)
       const menuItems = menu.find('MenuItem')
 
-      menuItems.at(1).simulate('keydown', { keyCode: keyboardKey.Spacebar })
+      menuItems
+        .at(1)
+        .find('a')
+        .first()
+        .simulate('keydown', { keyCode: keyboardKey.Spacebar })
       menuItems
         .at(1)
         .at(0)
+        .find('a')
+        .first()
         .simulate('keydown', { keyCode: keyboardKey.Spacebar })
 
       expect(menuItems.at(1).state('menuOpen')).toBe(false)
