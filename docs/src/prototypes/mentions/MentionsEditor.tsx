@@ -83,12 +83,10 @@ const MentionsEditor: React.FunctionComponent<
   }, [state.shouldUpdate])
 
   const handleEditorKeyChange = () => {
-    const selectionContent = window.getSelection().anchorNode.nodeValue
-    if (
-      !state.open &&
-      selectionContent &&
-      selectionContent[window.getSelection().focusOffset - 1] === '@'
-    ) {
+    const { anchorNode, focusOffset } = window.getSelection()
+    const lastCharacter = anchorNode.nodeValue && anchorNode.nodeValue[focusOffset - 1]
+
+    if (!state.open && lastCharacter === '@') {
       dispatch({ type: 'OPEN' })
     }
   }
