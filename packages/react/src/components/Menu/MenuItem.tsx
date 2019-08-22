@@ -197,7 +197,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
   menuRef = React.createRef<HTMLElement>()
   itemRef = React.createRef<HTMLElement>()
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, rtl }) {
     const {
       children,
       content,
@@ -256,8 +256,8 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
         <>
           <Ref innerRef={this.menuRef}>
             <Popper
-              align={vertical ? 'top' : 'start'}
-              position={vertical ? 'after' : 'below'}
+              align={vertical ? 'top' : rtl ? 'end' : 'start'}
+              position={vertical ? (rtl ? 'before' : 'after') : 'below'}
               targetRef={this.itemRef}
             >
               {Menu.create(menu, {
