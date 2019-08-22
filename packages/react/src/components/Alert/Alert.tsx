@@ -140,13 +140,13 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     success: PropTypes.bool,
     visible: PropTypes.bool,
     warning: PropTypes.bool,
-    wrapperId: PropTypes.string,
+    bodyId: PropTypes.string,
   }
 
   static defaultProps = {
     accessibility: alertBehavior,
     dismissAction: { icon: 'close' },
-    wrapperId: _.uniqueId('alert-wrapper-'),
+    bodyId: _.uniqueId('alert-body-'),
   }
 
   static autoControlledProps = ['visible']
@@ -181,7 +181,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
       content,
       icon,
       header,
-      bodyId: wrapperId,
+      bodyId,
     } = this.props
 
     return (
@@ -193,7 +193,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
             xSpacing: 'after',
           },
         })}
-        <Flex as="div" className="wrapper" {...accessibility.attributes.wrapper} id={wrapperId}>
+        <Flex as="div" className="body" {...accessibility.attributes.body} id={bodyId}>
           {Box.create(header, {
             defaultProps: {
               className: Alert.slotClassNames.header,
