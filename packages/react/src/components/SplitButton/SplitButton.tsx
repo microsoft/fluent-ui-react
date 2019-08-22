@@ -26,6 +26,10 @@ import { MenuProps } from '../Menu/Menu'
 import { MenuItemProps } from '../Menu/MenuItem'
 import { PopupProps } from '../Popup/Popup'
 
+export interface SplitButtonSlotClassNames {
+  toggleButton: string
+}
+
 export interface SplitButtonProps
   extends UIComponentProps,
     ChildrenComponentProps,
@@ -68,6 +72,9 @@ export interface SplitButtonProps
 
   /** A split button can be formatted to show different levels of emphasis. */
   secondary?: boolean
+
+  /** Shorthand for the toggle button. */
+  toggleButton?: ShorthandValue<ButtonProps>
 }
 
 export interface SplitButtonState {
@@ -81,6 +88,10 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
   static displayName = 'SplitButton'
 
   static className = 'ui-splitbutton'
+
+  static slotClassNames: SplitButtonSlotClassNames = {
+    toggleButton: `${SplitButton.className}__toggleButton`,
+  }
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -97,6 +108,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
     open: PropTypes.bool,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
+    toggleButton: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
@@ -120,7 +132,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
     styles,
     unhandledProps,
   }): React.ReactNode {
-    const { button, menu, primary, secondary } = this.props
+    const { button, menu, primary, secondary, toggleButton } = this.props
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
@@ -130,10 +142,11 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
             defaultProps: {
               accessibility: accessibility.childBehaviors.menuButton,
               menu,
-              styles: styles.menuButton,
+              styles: styles.button,
               on: [],
               open: this.state.open,
               onOpenChange: (e: React.SyntheticEvent, { open }: PopupProps) => {
+                e.stopPropagation()
                 this.setState({ open })
               },
               trigger: Button.create(button, {
@@ -161,26 +174,24 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
             }),
           },
         )}
-        {Button.create(
-          {},
-          {
-            defaultProps: {
-              styles: styles.menuButton,
-              icon: 'chevron-down',
-              iconOnly: true,
-              primary,
-              secondary,
-              ...accessibility.attributes.secondaryButton,
-            },
-            overrideProps: (predefinedProps: ButtonProps) => ({
-              ...(!this.state.open && {
-                onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
-                  this.setState(state => ({ open: !state.open }))
-                },
-              }),
-            }),
+        {Button.create(toggleButton || {}, {
+          defaultProps: {
+            className: SplitButton.slotClassNames.toggleButton,
+            styles: styles.secondaryButton,
+            icon: 'chevron-down',
+            iconOnly: true,
+            primary,
+            secondary,
+            ...accessibility.attributes.secondaryButton,
           },
-        )}
+          overrideProps: (predefinedProps: ButtonProps) => ({
+            ...(!this.state.open && {
+              onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+                this.setState(state => ({ open: !state.open }))
+              },
+            }),
+          }),
+        })}
         {}
       </ElementType>
     )

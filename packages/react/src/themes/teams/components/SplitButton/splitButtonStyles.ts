@@ -1,7 +1,6 @@
 import { ICSSInJSStyle } from '../../../types'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
-import MenuButton from '../../../../components/MenuButton/MenuButton'
-import Button from '../../../../components/Button/Button'
+import SplitButton from '../../../../components/SplitButton/SplitButton'
 
 const splitButtonStyles = {
   button: ({ props: p, variables: v }): ICSSInJSStyle => {
@@ -30,7 +29,7 @@ const splitButtonStyles = {
       position: 'relative',
       display: 'inline-block',
 
-      [`& .${MenuButton.className} .${Button.className}`]: {
+      [`& .${SplitButton.slotClassNames.toggleButton}`]: {
         borderRight: 0,
         borderTop: 0,
         borderBottom: 0,
@@ -40,7 +39,7 @@ const splitButtonStyles = {
         boxShadow: 'none',
         ...(p.isFromKeyboard
           ? {
-              [`& .${MenuButton.className} .${Button.className}`]: {
+              [`& .${SplitButton.slotClassNames.toggleButton}`]: {
                 color: v.colorFocus,
                 backgroundColor: v.backgroundColorFocus,
                 borderColor: siteVariables.colors.white,
