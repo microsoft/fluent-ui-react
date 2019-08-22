@@ -100,8 +100,8 @@ export interface AlertProps
   /** An alert may be formatted to display a warning message. */
   warning?: boolean
 
-  /** Id of a wrapper containing header and content */
-  wrapperId?: string
+  /** Id of a body containing header and content */
+  bodyId?: string
 }
 
 export interface AlertState {
@@ -174,7 +174,15 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
   }
 
   renderContent = ({ styles, accessibility }: RenderResultConfig<AlertProps>) => {
-    const { actions, dismissible, dismissAction, content, icon, header, wrapperId } = this.props
+    const {
+      actions,
+      dismissible,
+      dismissAction,
+      content,
+      icon,
+      header,
+      bodyId: wrapperId,
+    } = this.props
 
     return (
       <>

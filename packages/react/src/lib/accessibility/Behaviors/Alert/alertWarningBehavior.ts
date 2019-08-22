@@ -1,20 +1,20 @@
 import { Accessibility } from '../../types'
-import AlertBehaviorProps from './alertBehaviorProps'
+import AlertProps from './alertProps'
 
 /**
  * @specification
- * Adds role 'alert' to 'wrapper' element.
- * Adds attribute 'aria-live=polite' to 'wrpper' element.
+ * Adds role 'alert' to 'body' slot.
+ * Adds attribute 'aria-live=polite' to 'body' slot.
  */
 
-const alertWarningBehavior: Accessibility<AlertBehaviorProps> = props => ({
+const alertWarningBehavior: Accessibility<AlertProps> = props => ({
   attributes: {
-    wrapper: {
+    body: {
       role: 'alert',
       'aria-live': 'polite',
     },
     dismissAction: {
-      'aria-labelledby': props.wrapperId,
+      'aria-labelledby': props.bodyId,
     },
   },
 })
