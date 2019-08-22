@@ -4,9 +4,8 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 // @ts-ignore
 import { RendererProvider, ThemeProvider, ThemeContext } from '@stardust-ui/react-fela'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 
-import { felaRenderer, ChildrenComponentProps } from '../../lib'
+import { felaRenderer, ChildrenComponentProps, setUpWhatInput } from '../../lib'
 
 import {
   ThemePrepared,
@@ -47,7 +46,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   static displayName = 'Provider'
 
   static propTypes = {
-    as: customPropTypes.as,
+    as: PropTypes.elementType,
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
@@ -137,6 +136,9 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
   componentDidMount() {
     this.renderFontFaces()
+    if (this.props.target) {
+      setUpWhatInput(this.props.target)
+    }
   }
 
   render() {
@@ -157,6 +159,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       rtl,
       disableAnimations,
       renderer,
+      target,
     }
 
     const incomingContext: ProviderContextPrepared = overwrite ? {} : this.context

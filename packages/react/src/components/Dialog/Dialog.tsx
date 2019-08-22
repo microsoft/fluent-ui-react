@@ -1,10 +1,11 @@
 import { Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
-import { Ref } from '@stardust-ui/react-component-ref'
+import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 
 import {
   UIComponentProps,
@@ -163,17 +164,17 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 
   handleDialogCancel = (e: Event | React.SyntheticEvent) => {
     _.invoke(this.props, 'onCancel', e, { ...this.props, open: false })
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 
   handleDialogConfirm = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onConfirm', e, { ...this.props, open: false })
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 
   handleDialogOpen = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onOpen', e, { ...this.props, open: true })
-    this.trySetState({ open: true })
+    this.setState({ open: true })
   }
 
   handleCancelButtonOverrides = (predefinedProps: ButtonProps) => ({
@@ -203,7 +204,20 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     }
   }
 
-  renderComponent({ accessibility, classes, ElementType, styles, unhandledProps }) {
+  handleDocumentKeydown = (getRefs: Function) => (e: KeyboardEvent) => {
+    // if focus was lost from Dialog, for e.g. when click on Dialog's content
+    // and ESC is pressed, the opened Dialog should get closed and the trigger should get focus
+    const lastOverlayRef = getRefs().pop()
+    const isLastOpenedDialog: boolean =
+      lastOverlayRef && lastOverlayRef.current === this.overlayRef.current
+
+    if (keyboardKey.getCode(e) === keyboardKey.Escape && isLastOpenedDialog) {
+      this.handleDialogCancel(e)
+      _.invoke(this.triggerRef, 'current.focus')
+    }
+  }
+
+  renderComponent({ accessibility, classes, ElementType, styles, unhandledProps, rtl }) {
     const {
       actions,
       confirmButton,
@@ -221,6 +235,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       <Ref innerRef={this.contentRef}>
         <ElementType
           className={classes.root}
+          // it's required to have an `rtl` attribute there as Dialog is rendered outside the main DOM tree
+          dir={rtl ? 'rtl' : undefined}
           {...accessibility.attributes.popup}
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
@@ -242,6 +258,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               ...accessibility.attributes.headerAction,
             },
           })}
+
           {Box.create(content, {
             defaultProps: {
               styles: styles.content,
@@ -256,7 +273,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             },
             overrideProps: {
               content: (
-                <Flex gap="gap.smaller" hAlign="end">
+                <Flex gap="gap.smaller">
                   {Button.create(cancelButton, {
                     overrideProps: this.handleCancelButtonOverrides,
                   })}
@@ -273,6 +290,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
         </ElementType>
       </Ref>
     )
+
+    const targetRef = toRefObject(this.context.target)
     const triggerAccessibility: TriggerAccessibility = {
       attributes: accessibility.attributes.trigger,
       keyHandlers: accessibility.keyHandlers.trigger,
@@ -306,8 +325,14 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               </Ref>
               <EventListener
                 listener={this.handleOverlayClick}
-                targetRef={documentRef}
+                targetRef={targetRef}
                 type="click"
+                capture
+              />
+              <EventListener
+                listener={this.handleDocumentKeydown(getRefs)}
+                targetRef={targetRef}
+                type="keydown"
                 capture
               />
             </>

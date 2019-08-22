@@ -4,7 +4,7 @@ import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
 const Usage = () => (
-  <ExampleSection title="Usage">
+  <ExampleSection title="">
     <ComponentExample
       title="With tooltips"
       description={
