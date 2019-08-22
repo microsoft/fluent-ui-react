@@ -13,6 +13,7 @@ import {
 } from 'src/lib/accessibility'
 import { AccessibilityDefinition } from 'src/lib/accessibility/types'
 import { ReactWrapper } from 'enzyme'
+import * as keyboardKey from 'keyboard-key'
 
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
 
@@ -23,6 +24,16 @@ describe('Menu', () => {
   const getItems = () => [
     { key: 'home', content: 'home', onClick: jest.fn(), 'data-foo': 'something' },
     { key: 'users', content: 'users', 'data-foo': 'something' },
+  ]
+
+  const getNestedItems = () => [
+    { key: 'home', content: 'home', onClick: jest.fn(), 'data-foo': 'something' },
+    {
+      key: 'users',
+      content: 'users',
+      'data-foo': 'something',
+      menu: [{ key: '1', content: 'Alice' }, { key: '2', content: 'Bob' }],
+    },
   ]
 
   describe('items', () => {
@@ -64,6 +75,25 @@ describe('Menu', () => {
       const menuItems = mountWithProvider(<Menu items={getItems()} />).find('MenuItem')
 
       expect(menuItems.everyWhere(item => item.prop('data-foo') === 'something')).toBe(true)
+    })
+
+    it('closes menu when item is clicked using spacebar', () => {
+      const menu = mountWithProvider(<Menu items={getNestedItems()} />)
+      const menuItems = menu.find('MenuItem')
+
+      menuItems
+        .at(1)
+        .find('a')
+        .first()
+        .simulate('keydown', { keyCode: keyboardKey.Spacebar })
+      menuItems
+        .at(1)
+        .at(0)
+        .find('a')
+        .first()
+        .simulate('keydown', { keyCode: keyboardKey.Spacebar })
+
+      expect(menuItems.at(1).state('menuOpen')).toBe(false)
     })
 
     describe('activeIndex', () => {

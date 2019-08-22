@@ -49,6 +49,9 @@ const menuItemBehavior: Accessibility<MenuItemBehaviorProps> = props => ({
       },
     },
     wrapper: {
+      closeAllMenus: {
+        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
       closeAllMenusAndFocusNextParentItem: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
       },
