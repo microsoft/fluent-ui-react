@@ -10,6 +10,7 @@ import {
   Chat,
 } from '@stardust-ui/react'
 import repliesButtonBehavior from './repliesButtonBehavior'
+import ScreenReaderHeaderText from './SreenReaderHeaderText'
 
 export type ThreadReplyProps = ChatMessageProps & {
   avatar?: AvatarProps
@@ -52,7 +53,7 @@ const ThreadReplies = (props: ThreadRepliesProps) => {
         accessibility={repliesButtonBehavior}
         onClick={() => setExpanded(!expanded)}
       >
-        <div className="screen-reader-text" role="heading" aria-level={5} />
+        <ScreenReaderHeaderText level="5" text={buttonText} />
         <div aria-hidden="true">{buttonText}</div>
       </Button>
     )
@@ -78,7 +79,16 @@ const ThreadReplies = (props: ThreadRepliesProps) => {
           className: 'ui-chat__item__reply__gutter',
         },
         message: {
-          content: <Chat.Message {...messageProps} />,
+          content: (
+            <>
+              <ScreenReaderHeaderText
+                level="5"
+                text={messageProps.content.toString()}
+                author={messageProps.author.toString()}
+              />
+              <Chat.Message {...messageProps} />
+            </>
+          ),
           className: 'ui-chat__item__message-reply',
         },
         className: 'ui-chat__item__reply',

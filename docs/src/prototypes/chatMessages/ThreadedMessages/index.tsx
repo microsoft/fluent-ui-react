@@ -22,10 +22,13 @@ const ChatExampleWithThreadedMessages = () => {
       gutter: <Avatar {...janeAvatar} />,
       message: (
         <ThreadedMessage
-          subject="Beer on Friday evening"
-          content="Sure! Let's try it."
+          content="Scheduled a meeting"
           author="Jane Doe"
-          timestamp="Yesterday, 10:15 PM"
+          meeting={{
+            header: 'Team Standup',
+            description: 'Occurs every work day (Mon-Fri) @10:30 AM',
+          }}
+          timestamp="Yesterday, 15:15 PM"
         />
       ),
       key: 'thread-message-id-2',
@@ -64,6 +67,8 @@ const ChatExampleWithThreadedMessages = () => {
               '&.ui-chat__message__thread-body': {
                 width: '100%',
                 minWidth: '100%',
+                padding: 0,
+                margin: 0,
                 // TODO take color from variables
                 borderBottom: '1px solid #f3f2f1',
                 borderBottomLeftRadius: 0,
@@ -105,6 +110,26 @@ const ChatExampleWithThreadedMessages = () => {
                 // TODO take color from variables
                 backgroundColor: '#fff',
               },
+            },
+          },
+          Attachment: {
+            root: {
+              width: '100%',
+              minWidth: '100%',
+              boxShadow: 'none',
+              border: 0,
+              backgroundColor: 'rgb(98, 100, 167)',
+              borderRadius: 'unset',
+              marginBottom: 0,
+            },
+            header: {
+              color: '#fff',
+            },
+            description: {
+              color: '#fff',
+            },
+            icon: {
+              color: '#fff',
             },
           },
         },
