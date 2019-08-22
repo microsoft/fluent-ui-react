@@ -64,7 +64,7 @@ const tooltipContentStyles: ComponentSlotStylesInput<
     padding: v.padding,
 
     borderRadius: 'inherit',
-    boxShadow: `${v.boxShadowStart} ${v.boxShadowColor}, ${v.boxShadowEnd} ${v.boxShadowColor}`,
+    boxShadow: v.boxShadow,
   }),
 }
 
