@@ -315,6 +315,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     doNotNavigateNextParentItem: event => {
       event.stopPropagation()
     },
+    closeAllMenus: event => this.closeAllMenus(event),
   }
 
   outsideClickHandler = e => {
@@ -380,10 +381,15 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     }
     const { inSubmenu } = this.props
     this.trySetMenuOpen(false, e, () => {
-      if (!inSubmenu && this.props.vertical) {
+      if (!inSubmenu) {
         focusAsync(this.itemRef.current)
       }
     })
+
+    // avoid spacebar scrolling the page
+    if (!inSubmenu) {
+      e.preventDefault()
+    }
   }
 
   closeMenu = (e: Event, forceTriggerFocus?: boolean) => {

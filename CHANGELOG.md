@@ -34,6 +34,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Correctly define current document object of the `FocusZone` and `FocusTrapZone` @sophieH29 ([#1820](https://github.com/stardust-ui/react/pull/1820))
 - Fix switching modes in `Dropdown` @layershifter ([#1830](https://github.com/stardust-ui/react/pull/1830))
 - Fix a runtime error if context is missing @layershifter ([#1837](https://github.com/stardust-ui/react/pull/1837))
+- Fix RTL mode in `Dialog` @lucivpav ([#1828](https://github.com/stardust-ui/react/pull/1828))
+- Do not scroll the page when spacebar is pressed on focused `MenuItem`, fix submenu not closing @lucivpav ([#1735](https://github.com/stardust-ui/react/pull/1735))
 - Fix `Menu` and `Submenu` to use correct indicator icon and have correct width behavior [redlines] @bcalvery ([#1831](https://github.com/stardust-ui/react/pull/1831))
 
 ### Features
@@ -56,6 +58,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Remove Font Awesome icons from docs examples @lucivpav ([#1764](https://github.com/stardust-ui/react/pull/1764))
 - Improve QuickStart code example @lucivpav ([#1797](https://github.com/stardust-ui/react/pull/1797))
 - Implement component tab UI @lucivpav ([#1784](https://github.com/stardust-ui/react/pull/1784))
+- Fix sidebar search input element's background color @lucivpav ([#1836](https://github.com/stardust-ui/react/pull/1836))
 
 <!--------------------------------[ v0.36.2 ]------------------------------- -->
 ## [v0.36.2](https://github.com/stardust-ui/react/tree/v0.36.2) (2019-08-19)
