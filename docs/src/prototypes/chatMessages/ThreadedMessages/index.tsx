@@ -94,12 +94,24 @@ const ChatExampleWithThreadedMessages = () => {
           },
           Button: {
             root: {
-              '&.ui-button-replies': {
+              '&.ui-button__reply': {
                 border: 'none',
-                marginBottom: '1px',
                 justifyContent: 'start',
+                marginBottom: '1px',
                 boxShadow: 'none',
                 textDecoration: 'none',
+
+                '&:focus': {
+                  backgroundColor: '#fff',
+                },
+
+                '&:hover': {
+                  backgroundColor: '#fff',
+                },
+
+                '&:active': {
+                  backgroundColor: '#fff',
+                },
               },
             },
           },
@@ -121,6 +133,14 @@ const ChatExampleWithThreadedMessages = () => {
               backgroundColor: 'rgb(98, 100, 167)',
               borderRadius: 'unset',
               marginBottom: 0,
+
+              '&:focus': {
+                backgroundColor: 'rgb(98, 100, 167)',
+              },
+
+              '&:hover': {
+                backgroundColor: 'rgb(98, 100, 167)',
+              },
             },
             header: {
               color: '#fff',

@@ -48,7 +48,7 @@ const ThreadReplies = (props: ThreadRepliesProps) => {
     return (
       <Button
         as="a"
-        className="ui-button-replies"
+        className="ui-button__reply"
         fluid
         accessibility={repliesButtonBehavior}
         onClick={() => setExpanded(!expanded)}

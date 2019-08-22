@@ -21,7 +21,7 @@ class ThreadReplyEditor extends React.Component<{}, ThreadReplyEditorState> {
       <Ref innerRef={this.buttonRef}>
         <Button
           fluid
-          style={{ border: 'none', justifyContent: 'start' }}
+          className="ui-button__reply"
           content="Reply"
           onClick={() => {
             this.setState({ editMode: true }, () => {
@@ -53,14 +53,7 @@ class ThreadReplyEditor extends React.Component<{}, ThreadReplyEditorState> {
             }
           }}
         >
-          <Input
-            fluid
-            placeholder="Reply"
-            inputRef={this.inputRef}
-            // input={{ styles: { height: '3.1429rem' /* 44px */ } }}
-            // styles={{ ...getInputWrapperStyles(props), borderColor: siteVars.colors.grey[200] }}
-            // variables={{ backgroundColor: siteVars.colors.white }}
-          />
+          <Input fluid placeholder="Reply" inputRef={this.inputRef} />
           <Flex space="between">
             <Toolbar items={toolbarItems} aria-label="Editor tools" data-is-focusable={true} />
             <Flex gap="gap.small">
