@@ -5,7 +5,12 @@ import { teamsIconClassNames } from '../teamsIconClassNames'
 
 export default {
   icon: ({ classes }) => (
-    <svg role="presentation" focusable="false" viewBox="8 8 16 16" className={classes.svg}>
+    <svg
+      role="presentation"
+      focusable="false"
+      viewBox="8 8 16 16"
+      className={classes.svgFlippingInRtl}
+    >
       <path
         className={cx(teamsIconClassNames.outline, classes.outlinePart)}
         d="M20.9,15.7l-7-7c-0.2-0.2-0.5-0.2-0.7,0c0,0,0,0,0,0c-0.2,0.2-0.2,0.5,0,0.7c0,0,0,0,0,0l6.6,6.6l-6.6,6.6c-0.2,0.2-0.2,0.5,0,0.7c0,0,0,0,0,0c0.2,0.2,0.5,0.2,0.7,0c0,0,0,0,0,0l7-7C21,16.3,21,16.2,21,16C21,15.9,21,15.8,20.9,15.7z"
