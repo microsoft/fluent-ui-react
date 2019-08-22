@@ -10,6 +10,11 @@ export interface FocusTrapZoneProps extends React.HTMLAttributes<HTMLDivElement>
   className?: string
 
   /**
+   * Disables the FocusTrapZone's focus trapping behavior when set.
+   */
+  disabled?: boolean
+
+  /**
    * Sets the HTMLElement to focus on when exiting the FocusTrapZone. By default, the target which triggered the FocusTrapZone will get focus.
    */
   elementToFocusOnDismiss?: HTMLElement
@@ -36,6 +41,7 @@ export interface FocusTrapZoneProps extends React.HTMLAttributes<HTMLDivElement>
 
   /**
    * Indicates whether focus trap zone should force focus inside the trap zone when focus event occurs outside the zone.
+   * @defaultvalue true
    */
   forceFocusInsideTrapOnOutsideFocus?: boolean
 

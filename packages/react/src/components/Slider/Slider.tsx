@@ -153,7 +153,7 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = _.get(e, 'target.value')
       _.invoke(this.props, 'onChange', e, { ...this.props, value })
-      this.trySetState({ value })
+      this.setState({ value })
     },
     onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
       this.setState({ isFromKeyboard: isFromKeyboard() })

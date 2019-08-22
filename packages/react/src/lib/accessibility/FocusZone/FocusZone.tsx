@@ -1,4 +1,3 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
@@ -52,7 +51,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     shouldResetActiveElementWhenTabFromZone: PropTypes.bool,
     shouldFocusInnerElementWhenReceivedFocus: PropTypes.bool,
     disabled: PropTypes.bool,
-    as: customPropTypes.as,
+    as: PropTypes.elementType,
     isCircularNavigation: PropTypes.bool,
     shouldEnterInnerZone: PropTypes.func,
     onActiveElementChanged: PropTypes.func,
@@ -132,8 +131,9 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
     this.windowElement = getWindow(this._root.current)
     let parentElement = getParent(this._root.current)
+    const doc = getDocument(this._root.current)
 
-    while (parentElement && parentElement !== document.body && parentElement.nodeType === 1) {
+    while (parentElement && parentElement !== doc.body && parentElement.nodeType === 1) {
       if (isElementFocusZone(parentElement)) {
         this._isInnerZone = true
         break
@@ -514,7 +514,9 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
       return undefined
     }
 
-    if (document.activeElement === this._root.current && this._isInnerZone) {
+    const doc = getDocument(this._root.current)
+
+    if (doc.activeElement === this._root.current && this._isInnerZone) {
       // If this element has focus, it is being controlled by a parent.
       // Ignore the keystroke.
       return undefined
@@ -844,7 +846,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
         return distance
       })
     ) {
-      this.setFocusAlignment(this._activeElement as HTMLElement, false, true)
+      this.setFocusAlignment(this._activeElement as HTMLElement, true, true)
       return true
     }
 
@@ -888,7 +890,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
         return distance
       })
     ) {
-      this.setFocusAlignment(this._activeElement as HTMLElement, false, true)
+      this.setFocusAlignment(this._activeElement as HTMLElement, true, true)
       return true
     }
 
@@ -1005,13 +1007,10 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
   }
 
   getOwnerZone(element?: HTMLElement): HTMLElement | null {
+    const doc = getDocument(this._root.current)
     let parentElement = getParent(element as HTMLElement)
 
-    while (
-      parentElement &&
-      parentElement !== this._root.current &&
-      parentElement !== document.body
-    ) {
+    while (parentElement && parentElement !== this._root.current && parentElement !== doc.body) {
       if (isElementFocusZone(parentElement)) {
         return parentElement
       }

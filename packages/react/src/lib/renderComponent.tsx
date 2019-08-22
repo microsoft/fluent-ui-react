@@ -3,7 +3,6 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import callable from './callable'
-import felaRenderer from './felaRenderer'
 import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
@@ -27,7 +26,7 @@ import {
 } from './accessibility/types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
-import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
+import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
@@ -143,7 +142,7 @@ const resolveStyles = (
 
 const renderComponent = <P extends {}>(
   config: RenderConfig<P>,
-  context: ProviderContextPrepared,
+  context?: ProviderContextPrepared,
 ): React.ReactElement<P> => {
   const {
     className,
@@ -161,25 +160,17 @@ const renderComponent = <P extends {}>(
     logProviderMissingWarning()
   }
 
-  const { rtl = false, renderer = felaRenderer, disableAnimations = false } = context || {}
-
-  const {
-    siteVariables = {
-      fontSizes: {},
-    },
-    componentVariables = {},
-    componentStyles = {},
-  } = (context.theme as ThemePrepared) || {}
+  const { disableAnimations = false, renderer = null, rtl = false, theme = emptyTheme } =
+    context || {}
 
   const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
-
   const stateAndProps = { ...state, ...props }
 
   // Resolve variables for this component, allow props.variables to override
   const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
-    componentVariables[displayName],
+    theme.componentVariables[displayName],
     props.variables,
-  )(siteVariables)
+  )(theme.siteVariables)
 
   const animationCSSProp = props.animation
     ? createAnimationStyles(props.animation, context.theme)
@@ -187,10 +178,8 @@ const renderComponent = <P extends {}>(
 
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
-    componentStyles[displayName],
-    {
-      root: props.styles,
-    },
+    theme.componentStyles[displayName],
+    { root: props.styles },
     { root: animationCSSProp },
   )
 
@@ -206,14 +195,16 @@ const renderComponent = <P extends {}>(
     displayName,
     props: stateAndProps,
     variables: resolvedVariables,
-    theme: context.theme,
+    theme,
     rtl,
     disableAnimations,
   }
 
   const resolvedStyles: ComponentSlotStylesPrepared = resolveStyles(mergedStyles, styleParam)
 
-  const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
+  const classes: ComponentSlotClasses = renderer
+    ? getClasses(renderer, mergedStyles, styleParam)
+    : {}
   classes.root = cx(className, classes.root, props.className)
 
   const resolvedConfig: RenderResultConfig<P> = {
@@ -224,7 +215,7 @@ const renderComponent = <P extends {}>(
     styles: resolvedStyles,
     accessibility,
     rtl,
-    theme: context.theme,
+    theme,
   }
 
   if (accessibility.focusZone) {
@@ -236,11 +227,11 @@ const renderComponent = <P extends {}>(
     saveDebug(
       new Debug({
         componentName: displayName,
-        themes: context.originalThemes,
+        themes: context ? context.originalThemes : [],
         instanceStylesOverrides: props.styles,
         instanceVariablesOverrides: props.variables,
         resolveStyles: styles => resolveStyles(styles, styleParam),
-        resolveVariables: variables => callable(variables)(siteVariables),
+        resolveVariables: variables => callable(variables)(theme.siteVariables),
       }),
     )
   }

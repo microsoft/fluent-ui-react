@@ -122,7 +122,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
         _.invoke(predefinedProps, 'onClick', e, itemProps)
 
         if (selectable) {
-          this.trySetState({ selectedIndex: itemProps.index })
+          this.setState({ selectedIndex: itemProps.index })
           _.invoke(this.props, 'onSelectedIndexChange', e, {
             ...this.props,
             ...{ selectedIndex: itemProps.index },
