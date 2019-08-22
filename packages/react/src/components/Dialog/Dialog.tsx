@@ -217,7 +217,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     }
   }
 
-  renderComponent({ accessibility, classes, ElementType, styles, unhandledProps }) {
+  renderComponent({ accessibility, classes, ElementType, styles, unhandledProps, rtl }) {
     const {
       actions,
       confirmButton,
@@ -235,6 +235,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       <Ref innerRef={this.contentRef}>
         <ElementType
           className={classes.root}
+          // it's required to have an `rtl` attribute there as Dialog is rendered outside the main DOM tree
+          dir={rtl ? 'rtl' : undefined}
           {...accessibility.attributes.popup}
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
@@ -256,6 +258,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               ...accessibility.attributes.headerAction,
             },
           })}
+
           {Box.create(content, {
             defaultProps: {
               styles: styles.content,
@@ -270,7 +273,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             },
             overrideProps: {
               content: (
-                <Flex gap="gap.smaller" hAlign="end">
+                <Flex gap="gap.smaller">
                   {Button.create(cancelButton, {
                     overrideProps: this.handleCancelButtonOverrides,
                   })}
