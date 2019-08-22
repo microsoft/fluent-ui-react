@@ -17,14 +17,10 @@ class ThreadedMessage extends React.Component<ThreadedMessageProps> {
     const subjectEl = subject ? <Text weight="semibold" size="large" content={subject} /> : null
     return (
       <div>
-        <Flex column style={{ padding: '8px 16px' }}>
+        <Flex className="ui-chat__message__content-inner" column>
           <Flex>
-            <Text size="small" content={author} styles={{ padding: '5px 5px 5px 0' }} />
-            <Text
-              size="small"
-              content={timestamp}
-              styles={{ padding: '5px', color: 'rgb(151, 149, 147)' }}
-            />
+            <Text size="small" className="ui-chat__message__author-inner" content={author} />
+            <Text size="small" className="ui-chat__message__timestamp-inner" content={timestamp} />
           </Flex>
           {subjectEl}
           {content}
