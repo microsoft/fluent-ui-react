@@ -1,9 +1,7 @@
 import { pxToRem } from '../../../../lib'
 
 export interface TooltipContentVariables {
-  boxShadowStart: string
-  boxShadowColor: string
-  boxShadowEnd: string
+  boxShadow: string
 
   borderRadius: string
   borderSize: string
@@ -22,9 +20,8 @@ export interface TooltipContentVariables {
 }
 
 export default (siteVars: any): TooltipContentVariables => ({
-  boxShadowStart: '0 2px 4px 0',
-  boxShadowEnd: '0 2px 10px 0',
-  boxShadowColor: siteVars.colors.grey[250],
+  boxShadow: siteVars.shadowLevel2,
+
   borderRadius: pxToRem(3),
   borderSize: '1px',
   padding: `${pxToRem(5)} ${pxToRem(12)} ${pxToRem(7)} ${pxToRem(12)}`,
