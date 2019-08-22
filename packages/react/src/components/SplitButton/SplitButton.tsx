@@ -1,5 +1,4 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { Ref } from '@stardust-ui/react-component-ref'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -12,13 +11,12 @@ import {
   ShorthandCollection,
 } from '../../types'
 import {
-  UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
   isFromKeyboard,
-  applyAccessibilityKeyHandlers,
   commonPropTypes,
+  AutoControlledComponent,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import Button, { ButtonProps } from '../Button/Button'
@@ -26,6 +24,7 @@ import MenuButton, { MenuButtonProps } from '../MenuButton/MenuButton'
 import { splitButtonBehavior } from '../../lib/accessibility'
 import { MenuProps } from '../Menu/Menu'
 import { MenuItemProps } from '../Menu/MenuItem'
+import { PopupProps } from '../Popup/Popup'
 
 export interface SplitButtonProps
   extends UIComponentProps,
@@ -38,6 +37,9 @@ export interface SplitButtonProps
 
   /** Shorthand for the main button. */
   button?: ShorthandValue<ButtonProps>
+
+  /** Initial value for 'open'. */
+  defaultOpen?: boolean
 
   /** Shorthand for the menu. */
   menu?: ShorthandValue<MenuProps> | ShorthandCollection<MenuItemProps>
@@ -58,6 +60,9 @@ export interface SplitButtonProps
    */
   onMenuItemClick?: ComponentEventHandler<MenuItemProps>
 
+  /** Defines whether menu is displayed. */
+  open?: boolean
+
   /** A split button can be formatted to show different levels of emphasis. */
   primary?: boolean
 
@@ -65,7 +70,12 @@ export interface SplitButtonProps
   secondary?: boolean
 }
 
-class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
+export interface SplitButtonState {
+  isFromKeyboard: boolean
+  open: boolean
+}
+
+class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, SplitButtonState> {
   static create: Function
 
   static displayName = 'SplitButton'
@@ -77,12 +87,14 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
       content: false,
     }),
     button: customPropTypes.itemShorthand,
+    defaultOpen: PropTypes.bool,
     menu: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
       PropTypes.arrayOf(customPropTypes.itemShorthandWithoutJSX),
     ]),
     onClick: PropTypes.func,
     onMenuItemClick: PropTypes.func,
+    open: PropTypes.bool,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
   }
@@ -92,28 +104,13 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
     as: 'span',
   }
 
-  state = {
-    isFromKeyboard: false,
-  }
+  static autoControlledProps = ['open']
 
-  buttonRef = React.createRef<HTMLElement>()
-  menuButtonRef = React.createRef<MenuButton>()
-
-  actionHandlers = {
-    closeMenuAndFocusButton: e => {
-      e.preventDefault()
-      this.closeMenu()
-      this.buttonRef.current.focus()
-    },
-    openAndFocusFirst: e => this.openAndFocusFirst(e),
-  }
-
-  closeMenu() {
-    this.menuButtonRef.current.closeMenu()
-  }
-
-  openAndFocusFirst(e) {
-    this.menuButtonRef.current.openAndFocus(e, 'first')
+  getInitialAutoControlledState(): SplitButtonState {
+    return {
+      isFromKeyboard: false,
+      open: false,
+    }
   }
 
   renderComponent({
@@ -126,22 +123,34 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
     const { button, menu, primary, secondary } = this.props
 
     return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-      >
-        <Ref innerRef={this.buttonRef}>
-          {Button.create(button, {
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
+        {MenuButton.create(
+          {},
+          {
             defaultProps: {
-              styles: styles.button,
-              primary,
-              secondary,
-              ...accessibility.attributes.button,
-              ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.button, button),
+              accessibility: accessibility.childBehaviors.menuButton,
+              menu,
+              styles: styles.menuButton,
+              on: [],
+              open: this.state.open,
+              onOpenChange: (e: React.SyntheticEvent, { open }: PopupProps) => {
+                this.setState({ open })
+              },
+              trigger: Button.create(button, {
+                defaultProps: {
+                  styles: styles.button,
+                  primary,
+                  secondary,
+                },
+              }),
             },
-            overrideProps: (predefinedProps: ButtonProps) => ({
+            overrideProps: (predefinedProps: MenuButtonProps) => ({
+              onMenuItemClick: (e: React.SyntheticEvent, menuItemProps: MenuItemProps) => {
+                this.setState({ open: false })
+
+                _.invoke(predefinedProps, 'onMenuItemClick', e, menuItemProps)
+                _.invoke(this.props, 'onMenuItemClick', e, menuItemProps)
+              },
               onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
                 _.invoke(predefinedProps, 'onClick', e, buttonProps)
                 _.invoke(this.props, 'onClick', e, buttonProps)
@@ -150,36 +159,29 @@ class SplitButton extends UIComponent<WithAsProp<SplitButtonProps>> {
                 this.setState({ isFromKeyboard: isFromKeyboard() })
               },
             }),
-          })}
-        </Ref>
-        {MenuButton.create(
+          },
+        )}
+        {Button.create(
           {},
           {
             defaultProps: {
-              accessibility: accessibility.childBehaviors.menuButton,
-              menu,
-              ref: this.menuButtonRef,
               styles: styles.menuButton,
-              trigger: (
-                <Button
-                  styles={styles.menuButton}
-                  icon="chevron-down"
-                  iconOnly
-                  primary={primary}
-                  secondary={secondary}
-                />
-              ),
-              ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.menuButton, menu),
+              icon: 'chevron-down',
+              iconOnly: true,
+              primary,
+              secondary,
+              ...accessibility.attributes.secondaryButton,
             },
-            overrideProps: (predefinedProps: MenuButtonProps) => ({
-              onMenuItemClick: (e: React.SyntheticEvent, menuItemProps: MenuItemProps) => {
-                _.invoke(predefinedProps, 'onMenuItemClick', e, menuItemProps)
-                _.invoke(this.props, 'onMenuItemClick', e, menuItemProps)
-                this.buttonRef.current.focus()
-              },
+            overrideProps: (predefinedProps: ButtonProps) => ({
+              ...(!this.state.open && {
+                onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+                  this.setState(state => ({ open: !state.open }))
+                },
+              }),
             }),
           },
         )}
+        {}
       </ElementType>
     )
   }

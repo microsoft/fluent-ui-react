@@ -7,41 +7,33 @@ import menuButtonBehavior from '../MenuButton/menuButtonBehavior'
  * @specification
  * Triggers 'closeMenuAndFocusButton' action with 'Escape' on 'menuButton'.
  */
-const splitButtonBehavior: Accessibility<SplitButtonProps> = props => {
+const splitButtonBehavior: Accessibility = props => {
   const splitButtonMenuButtonBehavior = props => {
-    const { attributes, keyActions } = menuButtonBehavior(props)
+    const menuButtonBehaviorData = menuButtonBehavior(props)
 
-    return _.merge(
-      { attributes },
-      {
-        attributes: {
-          trigger: {
-            tabIndex: -1,
+    return _.merge(menuButtonBehaviorData, {
+      keyActions: {
+        trigger: {
+          open: {
+            keyCombinations: [{ keyCode: keyboardKey.ArrowDown, altKey: true }],
           },
         },
-        keyActions: {
-          root: {
-            closeMenu: keyActions.root.closeMenu,
+        popup: {
+          closeAndFocusTrigger: {
+            keyCombinations: [
+              { keyCode: keyboardKey.Escape },
+              { keyCode: keyboardKey.ArrowUp, altKey: true },
+            ],
           },
         },
       },
-    )
+    })
   }
 
   return {
-    keyActions: {
-      menuButton: {
-        closeMenuAndFocusButton: {
-          keyCombinations: [
-            { keyCode: keyboardKey.Escape },
-            { keyCode: keyboardKey.ArrowUp, altKey: true },
-          ],
-        },
-      },
-      button: {
-        openAndFocusFirst: {
-          keyCombinations: [{ keyCode: keyboardKey.ArrowDown, altKey: true }],
-        },
+    attributes: {
+      secondaryButton: {
+        tabIndex: -1,
       },
     },
     childBehaviors: {
@@ -51,10 +43,3 @@ const splitButtonBehavior: Accessibility<SplitButtonProps> = props => {
 }
 
 export default splitButtonBehavior
-
-export type SplitButtonProps = {
-  /** Element type. */
-  // as: string
-  /** A button can show it is currently unable to be interacted with. */
-  // disabled?: boolean
-}
