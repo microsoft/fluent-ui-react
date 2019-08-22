@@ -28,7 +28,6 @@ import Icon, { IconProps } from '../Icon/Icon'
 import { TextProps } from '../Text/Text'
 
 import ButtonGroup, { ButtonGroupProps } from '../Button/ButtonGroup'
-import Flex from '../Flex/Flex'
 
 export interface AlertSlotClassNames {
   content: string
@@ -36,6 +35,7 @@ export interface AlertSlotClassNames {
   dismissAction: string
   icon: string
   header: string
+  body: string
 }
 
 export interface AlertProps
@@ -99,6 +99,9 @@ export interface AlertProps
 
   /** An alert may be formatted to display a warning message. */
   warning?: boolean
+
+  /** Body contains header and content elements. */
+  body?: ShorthandValue<BoxProps>
 }
 
 export interface AlertState {
@@ -117,6 +120,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     dismissAction: `${Alert.className}__dismissAction`,
     icon: `${Alert.className}__icon`,
     header: `${Alert.className}__header`,
+    body: `${Alert.className}__body`,
   }
 
   static propTypes = {
@@ -138,11 +142,13 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     success: PropTypes.bool,
     visible: PropTypes.bool,
     warning: PropTypes.bool,
+    body: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
     accessibility: alertBehavior,
     dismissAction: { icon: 'close' },
+    body: {},
   }
 
   static autoControlledProps = ['visible']
@@ -171,7 +177,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
   }
 
   renderContent = ({ styles, accessibility }: RenderResultConfig<AlertProps>) => {
-    const { actions, dismissible, dismissAction, content, icon, header } = this.props
+    const { actions, dismissible, dismissAction, content, icon, header, body } = this.props
 
     return (
       <>
@@ -182,22 +188,33 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
             xSpacing: 'after',
           },
         })}
-        <Flex as="div" className="body" {...accessibility.attributes.body} id={this.state.bodyId}>
-          {Box.create(header, {
-            defaultProps: {
-              className: Alert.slotClassNames.header,
-              styles: styles.header,
-              ...accessibility.attributes.header,
-            },
-          })}
-          {Box.create(content, {
-            defaultProps: {
-              className: Alert.slotClassNames.content,
-              styles: styles.content,
-              ...accessibility.attributes.content,
-            },
-          })}
-        </Flex>
+        {Box.create(body, {
+          defaultProps: {
+            id: this.state.bodyId,
+            className: Alert.slotClassNames.body,
+            ...accessibility.attributes.body,
+            styles: styles.body,
+            children: (
+              <>
+                {Box.create(header, {
+                  defaultProps: {
+                    className: Alert.slotClassNames.header,
+                    styles: styles.header,
+                    ...accessibility.attributes.header,
+                  },
+                })}
+                {Box.create(content, {
+                  defaultProps: {
+                    className: Alert.slotClassNames.content,
+                    styles: styles.content,
+                    ...accessibility.attributes.content,
+                  },
+                })}
+              </>
+            ),
+          },
+        })}
+
         {ButtonGroup.create(actions, {
           defaultProps: {
             className: Alert.slotClassNames.actions,

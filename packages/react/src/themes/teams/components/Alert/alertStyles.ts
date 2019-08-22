@@ -105,7 +105,8 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     marginRight: '10px',
   }),
 
-  content: (): ICSSInJSStyle => ({
+  body: (): ICSSInJSStyle => ({
+    display: 'flex',
     flexGrow: 1,
   }),
 
