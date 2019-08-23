@@ -9,7 +9,6 @@ import { Accessibility } from '../../types'
  * Adds attribute 'aria-valuenow' with value based on the property 'value'.
  * Adds attribute 'aria-valuetext' with value based on the callback function 'getA11yValueMessageOnChange'.
  */
-
 const sliderBehavior: Accessibility<SliderBehaviorProps> = props => ({
   attributes: {
     root: {

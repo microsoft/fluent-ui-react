@@ -1,14 +1,22 @@
 import { sliderBehavior } from 'src/lib/accessibility'
 
-function generatePropertyTest(
-  propName: string,
-  propValue: string | boolean | number,
-  slot: string,
-  expectedAttr: string,
-  customExpResult?: string,
-) {
-  test(`${expectedAttr} is set based on property ${propName}:${propValue}`, () => {
-    const expectedResultValue = customExpResult || propValue
+type SliderBehaviorTestOptions = {
+  propName: string
+  propValue: string | boolean | number
+  slotName: string
+  attrName: string
+  result?: string
+}
+
+function generatePropertyTest({
+  result,
+  attrName,
+  propName,
+  propValue,
+  slotName,
+}: SliderBehaviorTestOptions) {
+  test(`${attrName} is set based on property ${propName}:${propValue}`, () => {
+    const resultValue = result || propValue
     const props = {
       [propName]: propValue,
       getA11yValueMessageOnChange: () => {
@@ -16,17 +24,49 @@ function generatePropertyTest(
       },
     }
     const expectedResult = sliderBehavior(props)
-    expect(expectedResult.attributes[slot][expectedAttr]).toEqual(expectedResultValue)
+    expect(expectedResult.attributes[slotName][attrName]).toEqual(resultValue)
   })
 }
 
 describe('SliderBehavior.ts', () => {
-  generatePropertyTest('disabled', true, 'root', 'aria-disabled')
-  generatePropertyTest('min', 0, 'input', 'aria-valuemin')
-  generatePropertyTest('max', 0, 'input', 'aria-valuemax')
-  generatePropertyTest('value', 0, 'input', 'aria-valuenow')
-  generatePropertyTest('vertical', true, 'input', 'aria-orientation', 'vertical')
-  generatePropertyTest('vertical', false, 'input', 'aria-orientation', 'horizontal')
+  generatePropertyTest({
+    propName: 'disabled',
+    propValue: true,
+    slotName: 'root',
+    attrName: 'aria-disabled',
+  })
+  generatePropertyTest({
+    propName: 'min',
+    propValue: 0,
+    slotName: 'input',
+    attrName: 'aria-valuemin',
+  })
+  generatePropertyTest({
+    propName: 'max',
+    propValue: 0,
+    slotName: 'input',
+    attrName: 'aria-valuemax',
+  })
+  generatePropertyTest({
+    propName: 'value',
+    propValue: 0,
+    slotName: 'input',
+    attrName: 'aria-valuenow',
+  })
+  generatePropertyTest({
+    propName: 'vertical',
+    propValue: true,
+    slotName: 'input',
+    attrName: 'aria-orientation',
+    result: 'vertical',
+  })
+  generatePropertyTest({
+    propName: 'vertical',
+    propValue: false,
+    slotName: 'input',
+    attrName: 'aria-orientation',
+    result: 'horizontal',
+  })
 
   test('aria-valuetext is set based on the property getA11yValueMessageOnChange', () => {
     const ariaValueText = 'custom aria value text'
