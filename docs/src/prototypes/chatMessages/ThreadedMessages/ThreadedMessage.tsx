@@ -5,6 +5,7 @@ import ThreadReplies, { ThreadReplyProps } from './ThreadReplies'
 import ThreadReplyEditor from './ThreadReplyEditor'
 import ScreenReaderHeaderText from './SreenReaderHeaderText'
 import { actionMenu } from './mockData'
+import classNames from './classNames'
 
 interface ThreadedMessageProps extends ChatMessageProps {
   subject?: string
@@ -16,10 +17,14 @@ class ThreadedMessage extends React.Component<ThreadedMessageProps> {
     const { subject, content, author, timestamp, meeting } = this.props
     return (
       <div>
-        <Flex className="ui-chat__message__content-inner" column>
+        <Flex className={classNames.threadedMessage.innerContent} column>
           <Flex>
-            <Text size="small" className="ui-chat__message__author-inner" content={author} />
-            <Text size="small" className="ui-chat__message__timestamp-inner" content={timestamp} />
+            <Text size="small" className={classNames.threadedMessage.author} content={author} />
+            <Text
+              size="small"
+              className={classNames.threadedMessage.timestamp}
+              content={timestamp}
+            />
           </Flex>
           {subject && <Text weight="semibold" size="large" content={subject} />}
           {content}
@@ -48,12 +53,12 @@ class ThreadedMessage extends React.Component<ThreadedMessageProps> {
       <>
         <ScreenReaderHeaderText level="4" text={authorString} author={messageString} />
         <Chat.Message
-          className="ui-chat__message__thread"
+          className={classNames.threadedMessage.thread}
           accessibility={threadedMessageBehavior}
           content={
             <Flex column>
               <Chat.Message
-                className="ui-chat__message__thread-body"
+                className={classNames.threadedMessage.threadBody}
                 content={this.renderContent()}
                 actionMenu={actionMenu}
               />

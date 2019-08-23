@@ -3,6 +3,7 @@ import * as keyboardKey from 'keyboard-key'
 
 import { Button, Flex, Input, Toolbar, Ref, Chat } from '@stardust-ui/react'
 import { toolbarItems } from './mockData'
+import classNames from './classNames'
 
 interface ThreadReplyEditorState {
   editMode: boolean
@@ -21,7 +22,7 @@ class ThreadReplyEditor extends React.Component<{}, ThreadReplyEditorState> {
       <Ref innerRef={this.buttonRef}>
         <Button
           fluid
-          className="ui-button__reply"
+          className={classNames.threadReplies.trigger}
           content="Reply"
           onClick={() => {
             this.setState({ editMode: true }, () => {
@@ -51,10 +52,7 @@ class ThreadReplyEditor extends React.Component<{}, ThreadReplyEditorState> {
 
   renderEditor = () => {
     return (
-      <Chat.Message
-        className="ui-chat__message__reply-editor"
-        onKeyDown={this.handleOnEditorKeydown}
-      >
+      <Chat.Message className={classNames.replyEditor} onKeyDown={this.handleOnEditorKeydown}>
         <Flex column>
           <Input fluid placeholder="Reply" inputRef={this.inputRef} />
           <Flex space="between">

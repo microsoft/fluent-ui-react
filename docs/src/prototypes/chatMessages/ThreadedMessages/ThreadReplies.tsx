@@ -11,6 +11,7 @@ import {
 } from '@stardust-ui/react'
 import repliesButtonBehavior from './repliesButtonBehavior'
 import ScreenReaderHeaderText from './SreenReaderHeaderText'
+import classNames from './classNames'
 
 export type ThreadReplyProps = ChatMessageProps & {
   avatar?: AvatarProps
@@ -48,7 +49,7 @@ const ThreadReplies: React.FC<ThreadRepliesProps> = props => {
     return (
       <Button
         as="a"
-        className={`${Button.className}__reply`}
+        className={classNames.threadReplies.trigger}
         fluid
         accessibility={repliesButtonBehavior}
         onClick={() => setExpanded(!expanded)}
@@ -71,12 +72,12 @@ const ThreadReplies: React.FC<ThreadRepliesProps> = props => {
         author: reply.author,
         timestamp: reply.timestamp,
         actionMenu: reply.actionMenu,
-        className: 'ui-chat__message__reply',
+        className: classNames.threadReplies.message,
       }
       const chatItemProps: ChatItemProps = {
         gutter: {
           content: <Avatar {...reply.avatar} />,
-          className: 'ui-chat__item__reply__gutter',
+          className: classNames.threadReplies.gutter,
         },
         message: {
           content: (
@@ -89,9 +90,9 @@ const ThreadReplies: React.FC<ThreadRepliesProps> = props => {
               <Chat.Message {...messageProps} />
             </>
           ),
-          className: 'ui-chat__item__message-reply',
+          className: classNames.threadReplies.chatItemMessage,
         },
-        className: 'ui-chat__item__reply',
+        className: classNames.threadReplies.chatItem,
       }
       return <ChatItem as="div" {...chatItemProps} key={`reply-message-id-!!${index}!!`} />
     })
