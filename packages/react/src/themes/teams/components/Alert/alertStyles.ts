@@ -100,9 +100,9 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     margin: v.actionsMargin,
   }),
 
-  header: (): ICSSInJSStyle => ({
-    fontWeight: 'bold',
-    marginRight: '10px',
+  header: ({ variables: v }): ICSSInJSStyle => ({
+    fontWeight: v.headerFontWeight,
+    margin: v.headerMargin,
   }),
 
   body: (): ICSSInJSStyle => ({

@@ -179,6 +179,25 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
   renderContent = ({ styles, accessibility }: RenderResultConfig<AlertProps>) => {
     const { actions, dismissible, dismissAction, content, icon, header, body } = this.props
 
+    const bodyContent = (
+      <>
+        {Box.create(header, {
+          defaultProps: {
+            className: Alert.slotClassNames.header,
+            styles: styles.header,
+            ...accessibility.attributes.header,
+          },
+        })}
+        {Box.create(content, {
+          defaultProps: {
+            className: Alert.slotClassNames.content,
+            styles: styles.content,
+            ...accessibility.attributes.content,
+          },
+        })}
+      </>
+    )
+
     return (
       <>
         {Icon.create(icon, {
@@ -194,24 +213,9 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
             className: Alert.slotClassNames.body,
             ...accessibility.attributes.body,
             styles: styles.body,
-            children: (
-              <>
-                {Box.create(header, {
-                  defaultProps: {
-                    className: Alert.slotClassNames.header,
-                    styles: styles.header,
-                    ...accessibility.attributes.header,
-                  },
-                })}
-                {Box.create(content, {
-                  defaultProps: {
-                    className: Alert.slotClassNames.content,
-                    styles: styles.content,
-                    ...accessibility.attributes.content,
-                  },
-                })}
-              </>
-            ),
+          },
+          overrideProps: {
+            children: bodyContent,
           },
         })}
 
