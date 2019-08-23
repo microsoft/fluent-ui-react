@@ -25,7 +25,7 @@ import {
 import Box, { BoxProps } from '../Box/Box'
 import Button, { ButtonProps } from '../Button/Button'
 import Icon, { IconProps } from '../Icon/Icon'
-import { Text, TextProps } from '../Text/Text'
+import Text, { TextProps } from '../Text/Text'
 
 import ButtonGroup, { ButtonGroupProps } from '../Button/ButtonGroup'
 
