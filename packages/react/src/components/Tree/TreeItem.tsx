@@ -1,5 +1,4 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { Ref } from '@stardust-ui/react-component-ref'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -35,40 +34,42 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
-  /** Only allow one subtree to be open at a time. */
-  exclusive?: boolean
-
+  /** Id needed to identify this item inside the Tree. */
   id?: string
 
-  /** The index of the item among its sibbling */
+  /** The index of the item among its siblings. */
   index?: number
 
   /** Array of props for sub tree. */
   items?: ShorthandCollection<TreeItemProps>
 
+  /** Level of the tree/subtree that contains this item. */
   level?: number
 
   /** Called when a tree title is clicked. */
   onTitleClick?: ComponentEventHandler<TreeItemProps>
 
-  /** Called when the item's first child is focused. */
+  /** Called when the item's first child is about to be focused. */
   onFocusFirstChild?: ComponentEventHandler<TreeItemProps>
 
-  /** Called when the item's first child is focused. */
+  /** Called when the item's siblings are about to be expanded. */
   onSiblingsExpand?: ComponentEventHandler<TreeItemProps>
 
-  /** Called when the item's parent is focused. */
+  /** Called when the item's parent is about to be focused. */
   onFocusParent?: ComponentEventHandler<TreeItemProps>
 
-  /** Whether or not the subtree of the item is in the open state. */
+  /** Whether or not the item is in the open state. Only makes sense if item has children items. */
   open?: boolean
 
+  /** The id of the parent tree item, if any. */
   parentId?: string
+
+  /** Array with the ids of the tree item's siblings, if any. */
   siblingsLength?: number
 
   /**
-   * A custom render iterator for rendering each Accordion panel title.
-   * The default component, props, and children are available for each panel title.
+   * A custom render iterator for rendering each tree title.
+   * The default component, props, and children are available for each tree title.
    *
    * @param {React.ReactType} Component - The computed component for this slot.
    * @param {object} props - The computed props for this slot.
@@ -96,32 +97,26 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    id: PropTypes.string,
-    items: customPropTypes.collectionShorthand,
-    index: PropTypes.number,
-    exclusive: PropTypes.bool,
     level: PropTypes.number,
+    id: PropTypes.string,
+    index: PropTypes.number,
+    items: customPropTypes.collectionShorthand,
     onTitleClick: PropTypes.func,
     onFocusFirstChild: PropTypes.func,
     onFocusParent: PropTypes.func,
     onSiblingsExpand: PropTypes.func,
     open: PropTypes.bool,
-    parent: customPropTypes.itemShorthand,
-    renderItemTitle: PropTypes.func,
-    siblings: customPropTypes.collectionShorthand,
-    treeItemRtlAttributes: PropTypes.func,
-    title: customPropTypes.itemShorthand,
     parentId: PropTypes.string,
+    renderItemTitle: PropTypes.func,
     siblingsLength: PropTypes.number,
+    title: customPropTypes.itemShorthand,
+    treeItemRtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'div',
     accessibility: treeItemBehavior,
   }
-
-  itemRef = React.createRef<HTMLElement>()
-  treeRef = React.createRef<HTMLElement>()
 
   actionHandlers = {
     performClick: e => {
@@ -212,17 +207,15 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     const { children } = this.props
 
     return (
-      <Ref innerRef={this.itemRef}>
-        <ElementType
-          className={classes.root}
-          {...accessibility.attributes.root}
-          {...rtlTextContainer.getAttributes({ forElements: [children] })}
-          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-          {...unhandledProps}
-        >
-          {childrenExist(children) ? children : this.renderContent()}
-        </ElementType>
-      </Ref>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        {...unhandledProps}
+      >
+        {childrenExist(children) ? children : this.renderContent()}
+      </ElementType>
     )
   }
 }

@@ -34,8 +34,11 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
+  /** Map with the subtrees and information related to their open/closed state. */
+  activeItems?: Map<string, TreeActiveItemProps>
+
   /** Initial activeIndex value. */
-  defaultActiveItemsList?: ShorthandCollection<TreeItemProps>
+  defaultActiveItems?: Map<string, TreeActiveItemProps>
 
   /** Only allow one subtree to be open at a time. */
   exclusive?: boolean
@@ -54,20 +57,24 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
 }
 
 export interface TreeItemForRenderProps {
+  level: number
+  id: string
+  index: number
   item: ShorthandValue<TreeItemProps>
   items: TreeItemForRenderProps[]
-  level: number
-  index: number
-  id: string
   parentId: string
   siblingsLength: number
 }
 
+export interface TreeActiveItemProps {
+  element?: HTMLElement
+  parentId?: string
+  open: boolean
+  siblingSubtreeIds?: string[]
+}
+
 export interface TreeState {
-  activeItems: Map<
-    string,
-    { open: boolean; element?: HTMLElement; parentId?: string; siblingSubtreeIds?: string[] }
-  >
+  activeItems: Map<string, TreeActiveItemProps>
 }
 
 class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
@@ -143,11 +150,11 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
       predefinedProps: TreeItemProps,
     ) => {
       const { activeItems } = this.state
-      const itemId = treeItemProps.id
-      const activeItemValue = activeItems.get(itemId)
+      const { id } = treeItemProps
+      const activeItemValue = activeItems.get(id)
 
       if (treeItemProps.items) {
-        activeItems.set(itemId, { ...activeItemValue, open: !activeItemValue.open })
+        activeItems.set(id, { ...activeItemValue, open: !activeItemValue.open })
         this.setState({
           activeItems,
         })
@@ -242,7 +249,7 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
           return [
             ...(renderedItems as any[]),
             finalRenderedItem,
-            ...[isSubtreeOpen ? renderItems(itemForRender['items']) : []],
+            ...[isSubtreeOpen ? renderItems(items) : []],
           ]
         },
         [],

@@ -37,8 +37,6 @@ export default treeTitleBehavior
 type TreeTitleBehavior = {
   /** Indicated if tree title has a subtree */
   hasSubtree?: boolean
-  /** If subtree is opened. */
-  open?: boolean
   level?: number
   siblingsLength?: number
   index?: number

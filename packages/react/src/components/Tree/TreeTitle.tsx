@@ -24,6 +24,10 @@ export interface TreeTitleProps
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
+  /** The index of the item among its siblings. */
+  index?: number
+
+  /** Level of the tree/subtree that contains this item. */
   level?: number
 
   /**
@@ -37,12 +41,8 @@ export interface TreeTitleProps
   /** Whether or not the subtree of the item is in the open state. */
   open?: boolean
 
-  /** Whether or not the item has a subtree. */
-  hasSubtree?: boolean
-
+  /** Array with the ids of the tree item's siblings, if any. */
   siblingsLength?: number
-
-  index?: number
 }
 
 class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
@@ -54,12 +54,11 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
+    index: PropTypes.number,
     level: PropTypes.number,
     onClick: PropTypes.func,
     open: PropTypes.bool,
-    hasSubtree: PropTypes.bool,
     siblingsLength: PropTypes.number,
-    index: PropTypes.number,
   }
 
   static defaultProps = {
