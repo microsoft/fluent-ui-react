@@ -25,7 +25,7 @@ import {
 import Box, { BoxProps } from '../Box/Box'
 import Button, { ButtonProps } from '../Button/Button'
 import Icon, { IconProps } from '../Icon/Icon'
-import { TextProps } from '../Text/Text'
+import { Text, TextProps } from '../Text/Text'
 
 import ButtonGroup, { ButtonGroupProps } from '../Button/ButtonGroup'
 
@@ -181,7 +181,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
 
     const bodyContent = (
       <>
-        {Box.create(header, {
+        {Text.create(header, {
           defaultProps: {
             className: Alert.slotClassNames.header,
             styles: styles.header,
