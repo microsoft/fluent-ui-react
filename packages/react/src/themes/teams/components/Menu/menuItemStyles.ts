@@ -296,6 +296,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       color: 'inherit',
       display: 'block',
       cursor: 'pointer',
+      whiteSpace: 'nowrap',
 
       ...(pointing &&
         vertical && {
@@ -403,13 +404,15 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
   },
 
   content: ({ props: p }): ICSSInJSStyle => {
+    const widthAdjust = (p.icon ? 26 : 0) + (p.menu ? 16 : 0)
     return {
+      whiteSpace: 'normal',
       ...((p.inSubmenu || p.vertical) && {
         width: 'max-content',
         display: 'inline-block',
-        minWidth: pxToRem(162),
-        maxWidth: pxToRem(262),
-        marginRight: pxToRem(10),
+        minWidth: pxToRem(162 - widthAdjust),
+        maxWidth: pxToRem(262 - widthAdjust),
+        marginRight: pxToRem(16),
       }),
     }
   },
@@ -430,11 +433,12 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     float: 'right',
     left: pxToRem(10),
     userSelect: 'none',
+    marginRight: pxToRem(4),
 
     ...(p.inSubmenu && {
       position: 'absolute',
       top: pxToRem(6),
-      right: pxToRem(10),
+      right: pxToRem(6),
       left: 'unset',
     }),
   }),

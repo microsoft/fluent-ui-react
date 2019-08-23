@@ -244,7 +244,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           {menu &&
             Icon.create(indicatorWithDefaults, {
               defaultProps: {
-                name: vertical ? 'chevron-right' : 'chevron-down',
+                name: vertical ? 'stardust-menu-arrow-end' : 'stardust-menu-arrow-down',
                 styles: styles.indicator,
               },
             })}

@@ -42,6 +42,8 @@ const icons: ThemeIcons = {
   'stardust-arrow-up': themeIcons['triangle-up'],
   'stardust-arrow-down': themeIcons['triangle-down'],
   'stardust-arrow-end': themeIcons['triangle-right'],
+  'stardust-menu-arrow-down': themeIcons['chevron-down'],
+  'stardust-menu-arrow-end': themeIcons['chevron-right'],
   'stardust-pause': themeIcons['pause'],
   'stardust-play': themeIcons['play'],
 }
