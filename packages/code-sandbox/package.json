@@ -1,20 +1,16 @@
 {
-  "name": "@stardust-ui/docs-components",
-  "description": "A set of React components to built docs sites.",
-  "version": "0.36.0",
+  "name": "@stardust-ui/code-sandbox",
+  "description": "Stardust UI tools for CodeSandbox.",
+  "version": "0.36.0-0",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
-    "@babel/runtime": "^7.1.2",
-    "copy-to-clipboard": "^3.2.0",
-    "object.values": "^1.1.0",
-    "prismjs": "^1.16.0",
-    "prop-types": "^15.7.2"
+    "@stardust-ui/react": "*"
   },
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/stardust-ui/react/tree/master/packages/docs-components",
+  "homepage": "https://github.com/stardust-ui/react/tree/master/packages/code-sandbox",
   "jsnext:main": "dist/es/index.js",
   "license": "MIT",
   "main": "dist/commonjs/index.js",
@@ -28,7 +24,7 @@
   },
   "repository": "stardust-ui/react.git",
   "scripts": {
-    "build": "gulp bundle:package:no-umd --package docs-components"
+    "build": "gulp bundle:package:no-umd --package code-sandbox"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"
