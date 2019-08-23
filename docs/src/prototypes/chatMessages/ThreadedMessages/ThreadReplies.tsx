@@ -20,7 +20,7 @@ type ThreadRepliesProps = {
   replies?: ThreadReplyProps[]
 }
 
-const ThreadReplies = (props: ThreadRepliesProps) => {
+const ThreadReplies: React.FC<ThreadRepliesProps> = (props) => {
   const [expanded, setExpanded] = React.useState(false)
 
   const renderCollapseAllOrRepliesButton = () => {
