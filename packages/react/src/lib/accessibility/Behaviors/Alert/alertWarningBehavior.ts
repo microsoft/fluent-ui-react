@@ -1,5 +1,4 @@
 import { Accessibility } from '../../types'
-import AlertProps from './alertProps'
 
 /**
  * @specification
@@ -21,3 +20,12 @@ const alertWarningBehavior: Accessibility<AlertProps> = props => ({
 })
 
 export default alertWarningBehavior
+
+export type AlertProps = {
+  /** An alert may be formatted to display a danger message. */
+  danger?: boolean
+  /** An alert may be formatted to display a warning message. */
+  warning?: boolean
+  /** Id of the alert body element. */
+  bodyId?: string
+}
