@@ -35,24 +35,27 @@ class ThreadReplyEditor extends React.Component<{}, ThreadReplyEditorState> {
     )
   }
 
+  handleOnEditorKeydown = (e: React.KeyboardEvent) => {
+    const eventCode = keyboardKey.getCode(e)
+    if (eventCode !== keyboardKey.Escape) {
+      return
+    }
+    this.setState({ editMode: false }, () => {
+      if (this.buttonRef && this.buttonRef.current) {
+        this.buttonRef.current.focus()
+      }
+    })
+    e.stopPropagation()
+    e.preventDefault()
+  }
+
   renderEditor = () => {
     return (
-      <Chat.Message className="ui-chat__message__reply-editor">
-        <Flex
-          column
-          onKeyDown={e => {
-            const eventCode = keyboardKey.getCode(e)
-            if (eventCode === keyboardKey.Escape) {
-              this.setState({ editMode: false }, () => {
-                if (this.buttonRef && this.buttonRef.current) {
-                  this.buttonRef.current.focus()
-                }
-              })
-              e.stopPropagation()
-              e.preventDefault()
-            }
-          }}
-        >
+      <Chat.Message
+        className="ui-chat__message__reply-editor"
+        onKeyDown={this.handleOnEditorKeydown}
+      >
+        <Flex column>
           <Input fluid placeholder="Reply" inputRef={this.inputRef} />
           <Flex space="between">
             <Toolbar items={toolbarItems} aria-label="Editor tools" data-is-focusable={true} />

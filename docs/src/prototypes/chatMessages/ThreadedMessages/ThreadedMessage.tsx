@@ -14,7 +14,6 @@ interface ThreadedMessageProps extends ChatMessageProps {
 class ThreadedMessage extends React.Component<ThreadedMessageProps> {
   renderContent = () => {
     const { subject, content, author, timestamp, meeting } = this.props
--    const subjectEl = subject ? <Text weight="semibold" size="large" content={subject} /> : null
     return (
       <div>
         <Flex className="ui-chat__message__content-inner" column>
@@ -22,10 +21,10 @@ class ThreadedMessage extends React.Component<ThreadedMessageProps> {
             <Text size="small" className="ui-chat__message__author-inner" content={author} />
             <Text size="small" className="ui-chat__message__timestamp-inner" content={timestamp} />
           </Flex>
-          {subjectEl}
+          {subject && <Text weight="semibold" size="large" content={subject} />}
           {content}
         </Flex>
-        {meeting ? (
+        {meeting && (
           <Attachment
             actionable
             icon="calendar"
@@ -35,36 +34,30 @@ class ThreadedMessage extends React.Component<ThreadedMessageProps> {
               icon: 'more',
             }}
           />
-        ) : null}
+        )}
       </div>
     )
   }
 
-  renderMainMessageBody = () => {
-    return (
-      <Chat.Message
-        className="ui-chat__message__thread-body"
-        content={this.renderContent()}
-        actionMenu={actionMenu}
-      />
-    )
-  }
-
   render() {
+    const { author, content, replies } = this.props
+    const authorString = author.toString()
+    const messageString = content.toString()
+
     return (
       <>
-        <ScreenReaderHeaderText
-          level="4"
-          text={this.props.content.toString()}
-          author={this.props.author.toString()}
-        />
+        <ScreenReaderHeaderText level="4" text={authorString} author={messageString} />
         <Chat.Message
           className="ui-chat__message__thread"
           accessibility={threadedMessageBehavior}
           content={
             <Flex column>
-              {this.renderMainMessageBody()}
-              <ThreadReplies replies={this.props.replies} />
+              <Chat.Message
+                className="ui-chat__message__thread-body"
+                content={this.renderContent()}
+                actionMenu={actionMenu}
+              />
+              <ThreadReplies replies={replies} />
               <ThreadReplyEditor />
             </Flex>
           }

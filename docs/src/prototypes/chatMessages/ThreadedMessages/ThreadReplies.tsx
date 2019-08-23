@@ -20,10 +20,10 @@ type ThreadRepliesProps = {
   replies?: ThreadReplyProps[]
 }
 
-const ThreadReplies: React.FC<ThreadRepliesProps> = (props) => {
+const ThreadReplies: React.FC<ThreadRepliesProps> = props => {
   const [expanded, setExpanded] = React.useState(false)
 
-  const renderCollapseAllOrRepliesButton = () => {
+  const renderTriggerButton = () => {
     const { replies } = props
     if (!replies) {
       return null
@@ -48,7 +48,7 @@ const ThreadReplies: React.FC<ThreadRepliesProps> = (props) => {
     return (
       <Button
         as="a"
-        className="ui-button__reply"
+        className={`${Button.className}__reply`}
         fluid
         accessibility={repliesButtonBehavior}
         onClick={() => setExpanded(!expanded)}
@@ -99,7 +99,7 @@ const ThreadReplies: React.FC<ThreadRepliesProps> = (props) => {
 
   return (
     <>
-      {renderCollapseAllOrRepliesButton()}
+      {renderTriggerButton()}
       {renderReplies()}
     </>
   )
