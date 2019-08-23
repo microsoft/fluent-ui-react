@@ -24,12 +24,18 @@ import {
 } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
 import Button, { ButtonProps } from '../Button/Button'
+import Icon, { IconProps } from '../Icon/Icon'
+import Text, { TextProps } from '../Text/Text'
+
 import ButtonGroup, { ButtonGroupProps } from '../Button/ButtonGroup'
 
 export interface AlertSlotClassNames {
   content: string
   actions: string
   dismissAction: string
+  icon: string
+  header: string
+  body: string
 }
 
 export interface AlertProps
@@ -43,6 +49,12 @@ export interface AlertProps
 
   /** An Alert can contain action buttons. */
   actions?: ShorthandValue<ButtonGroupProps> | ShorthandCollection<ButtonProps>
+
+  /** An alert may contain an icon. */
+  icon?: ShorthandValue<IconProps>
+
+  /** An alert may contain a header. */
+  header?: ShorthandValue<TextProps>
 
   /** Controls Alert's relation to neighboring items. */
   attached?: boolean | 'top' | 'bottom'
@@ -87,11 +99,15 @@ export interface AlertProps
 
   /** An alert may be formatted to display a warning message. */
   warning?: boolean
+
+  /** Body contains header and content elements. */
+  body?: ShorthandValue<BoxProps>
 }
 
 export interface AlertState {
   isFromKeyboard: boolean
   visible: boolean
+  bodyId: string
 }
 
 class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> {
@@ -102,6 +118,9 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     content: `${Alert.className}__content`,
     actions: `${Alert.className}__actions`,
     dismissAction: `${Alert.className}__dismissAction`,
+    icon: `${Alert.className}__icon`,
+    header: `${Alert.className}__header`,
+    body: `${Alert.className}__body`,
   }
 
   static propTypes = {
@@ -110,6 +129,8 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
       customPropTypes.itemShorthand,
       customPropTypes.collectionShorthand,
     ]),
+    icon: customPropTypes.itemShorthandWithoutJSX,
+    header: customPropTypes.itemShorthand,
     attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
     danger: PropTypes.bool,
     defaultVisible: PropTypes.bool,
@@ -121,11 +142,13 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     success: PropTypes.bool,
     visible: PropTypes.bool,
     warning: PropTypes.bool,
+    body: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
     accessibility: alertBehavior,
     dismissAction: { icon: 'close' },
+    body: {},
   }
 
   static autoControlledProps = ['visible']
@@ -134,6 +157,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     return {
       isFromKeyboard: false,
       visible: true,
+      bodyId: _.uniqueId('alert-body-'),
     }
   }
 
@@ -153,10 +177,17 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
   }
 
   renderContent = ({ styles, accessibility }: RenderResultConfig<AlertProps>) => {
-    const { actions, dismissible, dismissAction, content } = this.props
+    const { actions, dismissible, dismissAction, content, icon, header, body } = this.props
 
-    return (
+    const bodyContent = (
       <>
+        {Text.create(header, {
+          defaultProps: {
+            className: Alert.slotClassNames.header,
+            styles: styles.header,
+            ...accessibility.attributes.header,
+          },
+        })}
         {Box.create(content, {
           defaultProps: {
             className: Alert.slotClassNames.content,
@@ -164,6 +195,29 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
             ...accessibility.attributes.content,
           },
         })}
+      </>
+    )
+
+    return (
+      <>
+        {Icon.create(icon, {
+          defaultProps: {
+            className: Alert.slotClassNames.icon,
+            styles: styles.icon,
+          },
+        })}
+        {Box.create(body, {
+          defaultProps: {
+            id: this.state.bodyId,
+            className: Alert.slotClassNames.body,
+            ...accessibility.attributes.body,
+            styles: styles.body,
+          },
+          overrideProps: {
+            children: bodyContent,
+          },
+        })}
+
         {ButtonGroup.create(actions, {
           defaultProps: {
             className: Alert.slotClassNames.actions,
@@ -177,6 +231,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
               text: true,
               className: Alert.slotClassNames.dismissAction,
               styles: styles.dismissAction,
+              ...accessibility.attributes.dismissAction,
             },
             overrideProps: this.handleDismissOverrides,
           })}
