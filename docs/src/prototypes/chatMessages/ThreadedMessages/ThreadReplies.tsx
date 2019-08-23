@@ -93,7 +93,7 @@ const ThreadReplies: React.FC<ThreadRepliesProps> = props => {
         },
         className: 'ui-chat__item__reply',
       }
-      return <ChatItem as="div" {...chatItemProps} key={`reply-message-id-${index}`} />
+      return <ChatItem as="div" {...chatItemProps} key={`reply-message-id-!!${index}!!`} />
     })
   }
 
