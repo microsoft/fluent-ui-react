@@ -14,7 +14,7 @@ interface ThreadedMessageProps extends ChatMessageProps {
 class ThreadedMessage extends React.Component<ThreadedMessageProps> {
   renderContent = () => {
     const { subject, content, author, timestamp, meeting } = this.props
-    const subjectEl = subject ? <Text weight="semibold" size="large" content={subject} /> : null
+-    const subjectEl = subject ? <Text weight="semibold" size="large" content={subject} /> : null
     return (
       <div>
         <Flex className="ui-chat__message__content-inner" column>
