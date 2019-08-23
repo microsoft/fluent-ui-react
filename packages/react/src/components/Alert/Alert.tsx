@@ -204,7 +204,6 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
           defaultProps: {
             className: Alert.slotClassNames.icon,
             styles: styles.icon,
-            xSpacing: 'after',
           },
         })}
         {Box.create(body, {

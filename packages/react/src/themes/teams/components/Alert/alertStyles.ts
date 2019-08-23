@@ -114,6 +114,10 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     flexGrow: 1,
   }),
 
+  icon: ({ variables: v }): ICSSInJSStyle => ({
+    margin: v.iconMargin,
+  }),
+
   dismissAction: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => {
     const iconFilledStyles = getIconFillOrOutlineStyles({ outline: false })
 
