@@ -113,7 +113,7 @@ export default class ComponentSourceManager extends React.Component<
 
   handleCodeFormat = (): void => {
     const { currentCode, currentCodeLanguage } = this.state
-    const prettierParser = currentCodeLanguage === 'ts' ? 'typescript' : 'babylon'
+    const prettierParser = currentCodeLanguage === 'ts' ? 'typescript' : 'babel'
 
     try {
       const formattedCode = prettifyCode(currentCode, prettierParser)

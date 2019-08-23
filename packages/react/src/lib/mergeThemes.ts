@@ -22,6 +22,18 @@ import callable from './callable'
 import toCompactArray from './toCompactArray'
 import { ObjectOf } from '../types'
 
+export const emptyTheme: ThemePrepared = {
+  siteVariables: {
+    fontSizes: {},
+  },
+  componentVariables: {},
+  componentStyles: {},
+  fontFaces: [],
+  staticStyles: [],
+  icons: {},
+  animations: {},
+}
+
 // ----------------------------------------
 // Component level merge functions
 // ----------------------------------------
@@ -177,36 +189,30 @@ export const mergeStyles = (...sources: ComponentSlotStyle[]) => {
 }
 
 const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
-  const emptyTheme = {
-    siteVariables: {},
-    componentVariables: {},
-    componentStyles: {},
-    fontFaces: [],
-    staticStyles: [],
-    icons: {},
-    animations: {},
-  } as ThemePrepared
+  return themes.reduce<ThemePrepared>(
+    (acc: ThemePrepared, next: ThemeInput) => {
+      if (!next) return acc
 
-  return themes.reduce<ThemePrepared>((acc: ThemePrepared, next: ThemeInput) => {
-    if (!next) return acc
+      acc.siteVariables = mergeSiteVariables(acc.siteVariables, next.siteVariables)
 
-    acc.siteVariables = mergeSiteVariables(acc.siteVariables, next.siteVariables)
+      acc.componentVariables = mergeThemeVariables(acc.componentVariables, next.componentVariables)
 
-    acc.componentVariables = mergeThemeVariables(acc.componentVariables, next.componentVariables)
+      acc.componentStyles = mergeThemeStyles(acc.componentStyles, next.componentStyles)
 
-    acc.componentStyles = mergeThemeStyles(acc.componentStyles, next.componentStyles)
+      // Merge icons set, last one wins in case of collisions
+      acc.icons = mergeIcons(acc.icons, next.icons)
 
-    // Merge icons set, last one wins in case of collisions
-    acc.icons = mergeIcons(acc.icons, next.icons)
+      acc.fontFaces = mergeFontFaces(...acc.fontFaces, ...(next.fontFaces || []))
 
-    acc.fontFaces = mergeFontFaces(...acc.fontFaces, ...(next.fontFaces || []))
+      acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...(next.staticStyles || []))
 
-    acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...(next.staticStyles || []))
+      acc.animations = mergeAnimations(acc.animations, next.animations)
 
-    acc.animations = mergeAnimations(acc.animations, next.animations)
-
-    return acc
-  }, emptyTheme)
+      return acc
+    },
+    // .reduce() will modify "emptyTheme" object, so we should clone it before actual usage
+    { ...emptyTheme },
+  )
 }
 
 export default mergeThemes

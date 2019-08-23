@@ -24,11 +24,6 @@ const Types = () => (
       description="A button can be formatted differently if it indicate that it contains only an icon."
       examplePath="components/Button/Types/ButtonExampleIconOnly"
     />
-    <ComponentExample
-      title="Content and Icon"
-      description="A button can have an icon in addition to content."
-      examplePath="components/Button/Types/ButtonExampleContentAndIcon"
-    />
   </ExampleSection>
 )
 

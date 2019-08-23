@@ -1380,6 +1380,21 @@ describe('Dropdown', () => {
     })
   })
 
+  describe('multiple', () => {
+    it('can be switched to "multiple"', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} value={items[0]} />)
+
+      expect(
+        findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`),
+      ).toHaveLength(0)
+
+      wrapper.setProps({ multiple: true })
+      expect(
+        findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`),
+      ).toHaveLength(1)
+    })
+  })
+
   describe('items', () => {
     it('have onClick called when passed stop event from being propagated', () => {
       const onClick = jest.fn()
