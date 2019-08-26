@@ -97,10 +97,10 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    level: PropTypes.number,
     id: PropTypes.string,
     index: PropTypes.number,
     items: customPropTypes.collectionShorthand,
+    level: PropTypes.number,
     onTitleClick: PropTypes.func,
     onFocusFirstChild: PropTypes.func,
     onFocusParent: PropTypes.func,

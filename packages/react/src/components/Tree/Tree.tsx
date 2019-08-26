@@ -92,6 +92,8 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
+    activeItems: PropTypes.any,
+    defaultActiveItems: PropTypes.any,
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
