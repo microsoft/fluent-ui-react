@@ -5,7 +5,7 @@ import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
 import { ThemeInput } from 'src/themes/types'
 import teams from 'src/themes/teams'
-import RendererMock from './RendererMock'
+import { createRenderer } from '@stardust-ui/fela'
 
 describe('Provider', () => {
   test('is exported', () => {
@@ -193,17 +193,16 @@ describe('Provider', () => {
       const theme: ThemeInput = {
         fontFaces: teams.fontFaces,
       }
-
-      const rendererMock = new RendererMock()
-      const renderFontSpy = jest.spyOn(rendererMock, 'renderFont')
+      const renderer = createRenderer()
+      const renderFont = jest.spyOn(renderer, 'renderFont')
 
       mount(
-        <Provider theme={theme} renderer={rendererMock}>
+        <Provider theme={theme} renderer={renderer}>
           <div />
         </Provider>,
       )
 
-      expect(renderFontSpy).toHaveBeenCalled()
+      expect(renderFont).toHaveBeenCalled()
     })
   })
 
@@ -217,16 +216,15 @@ describe('Provider', () => {
         },
       ],
     }
-
-    const rendererMock = new RendererMock()
-    const renderStaticSpy = jest.spyOn(rendererMock, 'renderStatic')
+    const renderer = createRenderer()
+    const renderStatic = jest.spyOn(renderer, 'renderStatic')
 
     mount(
-      <Provider theme={theme} renderer={rendererMock}>
+      <Provider theme={theme} renderer={renderer}>
         <div />
       </Provider>,
     )
 
-    expect(renderStaticSpy).toHaveBeenCalled()
+    expect(renderStatic).toHaveBeenCalled()
   })
 })
