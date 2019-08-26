@@ -31,12 +31,14 @@ const getStateForPath = (examplePath: string) => {
   const rtl = exampleNameWithExtension.endsWith('.rtl.tsx')
   const exampleUrl = _.kebabCase(exampleNameWithoutExtension)
 
+  const pageUrl = `http://${config.server_host}:${config.server_port}/maximize/${exampleUrl}/${rtl}`
+
   return {
-    url: `http://${config.server_host}:${config.server_port}/maximize/${exampleUrl}/${rtl}`,
+    url: pageUrl,
     name: exampleNameWithExtension,
 
     // https://www.npmjs.com/package/screener-runner#testing-interactions
-    steps: getScreenerSteps(`${exampleDir}/${exampleNameWithoutExtension}.steps`),
+    steps: getScreenerSteps(pageUrl, `${exampleDir}/${exampleNameWithoutExtension}.steps`),
   }
 }
 

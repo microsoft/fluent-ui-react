@@ -1,8 +1,8 @@
-import { getHoverScreenerSteps } from '../commonScreenerSteps'
+import { getScreenerSteps } from '../commonScreenerSteps'
 
 const config: ScreenerTestsConfig = {
   themes: ['teams', 'teamsDark', 'teamsHighContrast'],
-  steps: getHoverScreenerSteps(),
+  steps: getScreenerSteps(),
 }
 
 export default config
