@@ -28,7 +28,7 @@ const createExampleSourceCode = (file: Vinyl): ExampleSource => {
   })
   const prettierResult = prettier.format(babelResult.code, {
     ...prettierConfig,
-    parser: 'babylon',
+    parser: 'babel',
   })
   // https://eslint.org/docs/developer-guide/nodejs-api#cliengineexecuteontext
   // Results will contain single entry
