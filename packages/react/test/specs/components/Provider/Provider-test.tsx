@@ -4,7 +4,6 @@ import * as React from 'react'
 import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
 import { ThemeInput } from 'src/themes/types'
-import teams from 'src/themes/teams'
 import { createRenderer } from '@stardust-ui/fela'
 
 describe('Provider', () => {
@@ -191,7 +190,13 @@ describe('Provider', () => {
   describe('calls provided renderer', () => {
     test('calls renderFont', () => {
       const theme: ThemeInput = {
-        fontFaces: teams.fontFaces,
+        fontFaces: [
+          {
+            name: 'Segoe UI',
+            paths: ['public/fonts/segoe-ui-regular.woff2'],
+            style: { fontWeight: 400 },
+          },
+        ],
       }
       const renderer = createRenderer()
       const renderFont = jest.spyOn(renderer, 'renderFont')
