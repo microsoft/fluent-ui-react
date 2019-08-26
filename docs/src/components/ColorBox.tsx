@@ -63,7 +63,6 @@ export const colorBoxStyles: ComponentSlotStylesInput<ColorBoxProps, ColorBoxVar
       _.isNil(p.value) && {
         backgroundColor: 'transparent',
       }),
-    border: '1px solid transparent',
     borderRadius: p.rounded && '.25rem',
     color: p.value !== undefined && Color(p.value).isDark() ? v.colorWhite : v.colorBlack,
   }),
