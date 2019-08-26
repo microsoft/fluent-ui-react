@@ -13,7 +13,7 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
-  UIComponent,
+  AutoControlledComponent,
 } from '../../lib'
 import {
   ShorthandRenderFunction,
@@ -81,7 +81,7 @@ export interface TreeState {
   activeItems: Map<string, TreeActiveItemProps>
 }
 
-class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
+class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   static create: Function
 
   static displayName = 'Tree'
@@ -109,10 +109,15 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
     accessibility: treeBehavior,
   }
 
+  // In state we need only the items that can expand and spawn sub-trees.
+  static autoControlledProps = ['activeItems']
+
+  getInitialAutoControlledState() {
+    return { activeItems: new Map() }
+  }
+
   itemRefs = []
   treeRef = React.createRef<HTMLElement>()
-  // In state we need only the items that can expand and spawn sub-trees.
-  state: TreeState = { activeItems: new Map() }
 
   /**
    * For each item it adds information needed for accessibility (screen readers and kb navigation).
