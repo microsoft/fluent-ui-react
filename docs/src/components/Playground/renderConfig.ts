@@ -6,6 +6,10 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Classnames from 'classnames'
 
+const packageJson = require('../../../../package.json')
+const docsComponentsPackageJson = require('@stardust-ui/docs-components/package.json')
+const stardustReactPackageJson = require('@stardust-ui/react/package.json')
+
 export const babelConfig = {
   plugins: [
     'proposal-class-properties',
@@ -17,13 +21,34 @@ export const babelConfig = {
 }
 
 export const imports = {
-  '@stardust-ui/docs-components': DocsComponent,
-  '@stardust-ui/react': Stardust,
-  classnames: Classnames,
-  lodash: _,
-  react: React,
-  'react-dom': ReactDOM,
-  'react-fela': ReactFela,
+  '@stardust-ui/docs-components': {
+    version: docsComponentsPackageJson.version,
+    module: DocsComponent,
+  },
+  '@stardust-ui/react': {
+    version: stardustReactPackageJson.version,
+    module: Stardust,
+  },
+  classnames: {
+    version: stardustReactPackageJson.dependencies['classnames'],
+    module: Classnames,
+  },
+  lodash: {
+    version: packageJson.devDependencies['@types/lodash'],
+    module: _,
+  },
+  react: {
+    version: packageJson.devDependencies['react'],
+    module: React,
+  },
+  'react-dom': {
+    version: packageJson.devDependencies['react-dom'],
+    module: ReactDOM,
+  },
+  '@stardust-ui/react-fela': {
+    version: stardustReactPackageJson.dependencies['@stardust-ui/react-fela'],
+    module: ReactFela,
+  },
 }
 
-export const importResolver = importName => imports[importName]
+export const importResolver = importName => imports[importName].module
