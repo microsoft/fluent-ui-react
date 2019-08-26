@@ -186,7 +186,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
 
   renderContent() {
     const { items, title, renderItemTitle, open, level, siblingsLength, index } = this.props
-    const hasSubtree = !_.isNil(items)
+    const hasSubtree = !_.isNil(items) && items.length > 0
 
     return TreeTitle.create(title, {
       defaultProps: {
