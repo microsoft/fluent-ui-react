@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.37.0 ]------------------------------- -->
+## [v0.37.0](https://github.com/stardust-ui/react/tree/v0.37.0) (2019-08-26)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.36.2...v0.37.0)
+
 ### BREAKING CHANGES
 - Rename `action` slot to `dismissAction` in `Alert` component @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
 - To make `dismissAction` slot visible in `Alert` component `dismissible` prop is required now @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
