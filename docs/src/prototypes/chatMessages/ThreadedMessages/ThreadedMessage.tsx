@@ -3,7 +3,7 @@ import { Chat, ChatMessageProps, Text, Flex, Attachment, AttachmentProps } from 
 import threadedMessageBehavior from './threadedMessageBehavior'
 import ThreadReplies, { ThreadReplyProps } from './ThreadReplies'
 import ThreadReplyEditor from './ThreadReplyEditor'
-import ScreenReaderHeaderText from './SreenReaderHeaderText'
+import ScreenReaderHeaderText from './ScreenReaderHeaderText'
 import { actionMenu } from './mockData'
 import classNames from './classNames'
 

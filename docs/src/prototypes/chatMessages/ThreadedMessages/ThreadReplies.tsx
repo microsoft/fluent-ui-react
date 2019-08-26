@@ -10,7 +10,7 @@ import {
   Chat,
 } from '@stardust-ui/react'
 import repliesButtonBehavior from './repliesButtonBehavior'
-import ScreenReaderHeaderText from './SreenReaderHeaderText'
+import ScreenReaderHeaderText from './ScreenReaderHeaderText'
 import classNames from './classNames'
 
 export type ThreadReplyProps = ChatMessageProps & {
@@ -23,15 +23,10 @@ type ThreadRepliesProps = {
 
 const ThreadReplies: React.FC<ThreadRepliesProps> = props => {
   const [expanded, setExpanded] = React.useState(false)
+  const { replies = [] } = props
+  const repliesCount = replies.length
 
   const renderTriggerButton = () => {
-    const { replies } = props
-    if (!replies) {
-      return null
-    }
-
-    const repliesCount = replies.length
-
     if (repliesCount === 0 || repliesCount === 1) {
       return null
     }
@@ -61,11 +56,6 @@ const ThreadReplies: React.FC<ThreadRepliesProps> = props => {
   }
 
   const renderReplies = () => {
-    const { replies } = props
-    if (!replies || replies.length === 0 || !expanded) {
-      return null
-    }
-
     return _.map(replies, (reply, index) => {
       const messageProps: ChatMessageProps = {
         content: reply.content,
@@ -94,6 +84,8 @@ const ThreadReplies: React.FC<ThreadRepliesProps> = props => {
         },
         className: classNames.threadReplies.chatItem,
       }
+      // Don't use indexes for generating unique keys for items! Was only done for prototype purpose
+      // https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318
       return <ChatItem as="div" {...chatItemProps} key={`reply-message-id-!!${index}!!`} />
     })
   }
@@ -101,7 +93,7 @@ const ThreadReplies: React.FC<ThreadRepliesProps> = props => {
   return (
     <>
       {renderTriggerButton()}
-      {renderReplies()}
+      {expanded && renderReplies()}
     </>
   )
 }
