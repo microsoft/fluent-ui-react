@@ -13,7 +13,6 @@ const fields = [
   {
     control: {
       as: Checkbox,
-      labelPosition: 'start',
       label: 'Subscribe to newsletter',
     },
     key: 'newsletter',
