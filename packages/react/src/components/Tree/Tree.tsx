@@ -107,11 +107,12 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
 
   itemRefs = []
   treeRef = React.createRef<HTMLElement>()
+  // In state we need only the items that can expand and spawn sub-trees.
   state: TreeState = { activeItems: new Map() }
 
   /**
    * For each item it adds information needed for accessibility (screen readers and kb navigation).
-   * Returned values are used for rendering.
+   * Returned values are used for rendering, while the items prop will remain unchanged.
    */
   getItemsForRender = _.memoize((itemsFromProps: ShorthandCollection<TreeItemProps>) => {
     let generatedId = 0
@@ -140,12 +141,15 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
           }
 
           acc.push({
+            // initial item.
             item,
+            // added props needed for a11y.
             level,
             index,
             siblingsLength: items.length,
             parentId,
             id,
+            // children items will go through the same process.
             ...(isSubtree && { items: itemsForRenderGenerator(item['items'], level + 1, id) }),
           })
           return acc

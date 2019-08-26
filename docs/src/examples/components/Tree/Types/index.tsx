@@ -19,6 +19,11 @@ const Types = () => (
       description="A Tree with only one subtree open at a time."
       examplePath="components/Tree/Types/TreeExclusiveExample"
     />
+    <ComponentExample
+      title="Initially Open"
+      description="A Tree with some items initially open."
+      examplePath="components/Tree/Types/TreeInitiallyOpenExample"
+    />
   </ExampleSection>
 )
 

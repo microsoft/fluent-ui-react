@@ -40,6 +40,9 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   /** The index of the item among its siblings. */
   index?: number
 
+  /** Initial open state. */
+  initialOpen?: boolean
+
   /** Array of props for sub tree. */
   items?: ShorthandCollection<TreeItemProps>
 
@@ -99,6 +102,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     }),
     id: PropTypes.string,
     index: PropTypes.number,
+    initialOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     level: PropTypes.number,
     onTitleClick: PropTypes.func,
