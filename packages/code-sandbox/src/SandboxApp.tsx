@@ -35,7 +35,7 @@ const SandboxApp: React.FunctionComponent = props => {
         </Text>{' '}
         and{' '}
         <Text as="a" href="https://github.com/stardust-ui/react">
-          Github
+          GitHub
         </Text>
         .
       </p>
