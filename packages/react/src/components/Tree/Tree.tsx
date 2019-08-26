@@ -69,7 +69,7 @@ export interface TreeItemForRenderProps {
 export interface TreeActiveItemProps {
   element?: HTMLElement
   parentId?: string
-  open: boolean
+  open?: boolean
   siblingSubtreeIds?: string[]
 }
 
@@ -114,8 +114,12 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
   getItemsForRender = _.memoize((itemsFromProps: ShorthandCollection<TreeItemProps>) => {
     let generatedId = 0
     const { activeItems } = this.state
+    const { exclusive } = this.props
+
     const itemsForRenderGenerator = (items = itemsFromProps, level = 1, parentId?: string) => {
       const siblingSubtreeIds = []
+      let subtreeAlreadyOpen = false
+
       return _.reduce(
         items,
         (acc: TreeItemForRenderProps[], item: ShorthandValue<TreeItemProps>, index: number) => {
@@ -124,7 +128,12 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
 
           // activeItems will contain only the items that can spawn sub-trees.
           if (isSubtree) {
-            activeItems.set(id, { open: !!item['defaultOpen'], siblingSubtreeIds })
+            const subtreeOpen = !!item['initialOpen']
+            if (subtreeOpen && exclusive) {
+              // if exclusive, will open only first subtree.
+              subtreeAlreadyOpen = true
+            }
+            activeItems.set(id, { open: subtreeOpen && !subtreeAlreadyOpen, siblingSubtreeIds })
             siblingSubtreeIds.push(id)
           }
 
@@ -143,9 +152,18 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
       )
     }
 
+    const itemsForRender = itemsForRenderGenerator()
+
+    /* Remove each item's id from its array of siblingSubtreeIds. */
+    for (const key of Array.from(activeItems.keys())) {
+      this.setActiveItem(key, ({ siblingSubtreeIds }) => ({
+        siblingSubtreeIds: siblingSubtreeIds.filter(id => id !== key),
+      }))
+    }
+
     this.setState({ activeItems })
 
-    return itemsForRenderGenerator()
+    return itemsForRender
   })
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
@@ -155,11 +173,12 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
       predefinedProps: TreeItemProps,
     ) => {
       const { activeItems } = this.state
-      const { id } = treeItemProps
-      const activeItemValue = activeItems.get(id)
+      const { id, items } = treeItemProps
 
-      if (treeItemProps.items && treeItemProps.items.length > 0) {
-        activeItems.set(id, { ...activeItemValue, open: !activeItemValue.open })
+      if (items && items.length > 0) {
+        this.closeSiblingWhenExlusive(id)
+        this.setActiveItem(id, ({ open }) => ({ open: !open }))
+
         this.setState({
           activeItems,
         })
@@ -204,13 +223,16 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
       _.invoke(predefinedProps, 'onFocusFirstChild', e, treeItemProps)
     },
     onSiblingsExpand: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
+      if (this.props.exclusive) {
+        return
+      }
+
       const { id } = treeItemProps
       const { activeItems } = this.state
       const { siblingSubtreeIds } = activeItems.get(id)
 
       siblingSubtreeIds.forEach(siblingSubtreeId => {
-        const siblingSubtreeData = activeItems.get(siblingSubtreeId)
-        activeItems.set(siblingSubtreeId, { ...siblingSubtreeData, open: true })
+        this.setActiveItem(siblingSubtreeId, { open: true })
       })
 
       this.setState({
@@ -254,8 +276,7 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
               <Ref
                 key={item['key'] || id}
                 innerRef={(itemElement: HTMLElement) => {
-                  const activeItemValue = activeItems.get(id)
-                  activeItems.set(id, { ...activeItemValue, element: itemElement })
+                  this.setActiveItem(id, { element: itemElement })
                 }}
               >
                 {renderedItem}
@@ -294,6 +315,54 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
         </ElementType>
       </Ref>
     )
+  }
+
+  /**
+   * Similar to how setState works, merges changes on top of old value of an activeItem.
+   *
+   * @param id Id of the activeItem.
+   * @param changes Changes to be merged on top of old value or a callback that takes old
+   * value as param and returns a new value.
+   */
+  setActiveItem(
+    id: string,
+    changes: ((oldValue: TreeActiveItemProps) => TreeActiveItemProps) | TreeActiveItemProps,
+  ) {
+    const { activeItems } = this.state
+    const activeItemValue = activeItems.get(id)
+    activeItems.set(id, {
+      ...activeItemValue,
+      ...(_.isFunction(changes) ? changes(activeItemValue) : changes),
+    })
+  }
+
+  /**
+   * In the case of exclusive tree, we will close the other open sibling at opening
+   * a tree item.
+   *
+   * @param id The id of the tree item to be opened.
+   */
+  closeSiblingWhenExlusive(id: string) {
+    const { exclusive } = this.props
+
+    if (!exclusive) {
+      return
+    }
+
+    const { activeItems } = this.state
+    const activeItemValue = activeItems.get(id)
+
+    if (activeItemValue.siblingSubtreeIds.length === 0) {
+      return
+    }
+
+    const alreadyOpenSiblingId = activeItemValue.siblingSubtreeIds.find(siblingSubtreeId => {
+      return activeItems.get(siblingSubtreeId).open
+    })
+
+    if (alreadyOpenSiblingId) {
+      this.setActiveItem(alreadyOpenSiblingId, { open: false })
+    }
   }
 }
 

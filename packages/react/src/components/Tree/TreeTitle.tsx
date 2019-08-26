@@ -24,6 +24,9 @@ export interface TreeTitleProps
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
+  /** Whether or not the item has a subtree. */
+  hasSubtree?: boolean
+
   /** The index of the item among its siblings. */
   index?: number
 
@@ -54,6 +57,7 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
+    hasSubtree: PropTypes.bool,
     index: PropTypes.number,
     level: PropTypes.number,
     onClick: PropTypes.func,
