@@ -2,12 +2,14 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import Checkbox, { CheckboxProps, CheckboxState } from '../../../../components/Checkbox/Checkbox'
 import { CheckboxVariables } from './checkboxVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
+import { pxToRem } from '../../../../lib'
 
 const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, CheckboxVariables> = {
   root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => ({
     color: v.textColor,
     padding: v.rootPadding,
     verticalAlign: 'middle',
+    alignItems: 'start',
 
     ...getBorderFocusStyles({
       siteVariables: t.siteVariables,
@@ -50,7 +52,7 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     borderRadius: v.borderRadius,
     borderWidth: v.borderWidth,
     color: v.indicatorColor,
-    margin: v.margin,
+    margin: `${pxToRem(2)} ${v.margin} ${v.margin} ${v.margin}`,
     padding: v.padding,
 
     ...(p.checked && {
