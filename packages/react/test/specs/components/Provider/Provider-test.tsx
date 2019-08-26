@@ -3,6 +3,9 @@ import * as React from 'react'
 
 import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
+import { ThemeInput } from 'src/themes/types'
+import teams from 'src/themes/teams'
+import RendererMock from './RendererMock'
 
 describe('Provider', () => {
   test('is exported', () => {
@@ -183,5 +186,47 @@ describe('Provider', () => {
         expect(nestedProviderDiv.prop('dir')).toEqual(expectedChildDir)
       })
     })
+  })
+
+  describe('calls provided renderer', () => {
+    test('calls renderFont', () => {
+      const theme: ThemeInput = {
+        fontFaces: teams.fontFaces,
+      }
+
+      const renderFontCalled = jest.fn()
+      const rendererMock = new RendererMock(renderFontCalled, jest.fn())
+
+      mount(
+        <Provider theme={theme} renderer={rendererMock}>
+          <div />
+        </Provider>,
+      )
+
+      expect(renderFontCalled).toHaveBeenCalled()
+    })
+  })
+
+  test('calls renderStatic', () => {
+    const theme: ThemeInput = {
+      staticStyles: [
+        {
+          a: {
+            textDecoration: 'none',
+          },
+        },
+      ],
+    }
+
+    const renderStaticCalled = jest.fn()
+    const rendererMock = new RendererMock(jest.fn(), renderStaticCalled)
+
+    mount(
+      <Provider theme={theme} renderer={rendererMock}>
+        <div />
+      </Provider>,
+    )
+
+    expect(renderStaticCalled).toHaveBeenCalled()
   })
 })
