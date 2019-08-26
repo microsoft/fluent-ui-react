@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, Button, Checkbox, Provider } from '@stardust-ui/react'
+import { Form, Button, Checkbox } from '@stardust-ui/react'
 
 const fields = [
   {
@@ -28,25 +28,13 @@ const fields = [
   },
 ]
 
-const theme = {
-  componentStyles: {
-    Checkbox: {
-      root: {
-        padding: 0,
-      },
-    },
-  },
-}
-
 const FormExampleCheckbox = () => (
-  <Provider theme={theme}>
-    <Form
-      onSubmit={() => {
-        alert('Form submitted')
-      }}
-      fields={fields}
-    />
-  </Provider>
+  <Form
+    onSubmit={() => {
+      alert('Form submitted')
+    }}
+    fields={fields}
+  />
 )
 
 export default FormExampleCheckbox
