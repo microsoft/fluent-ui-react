@@ -107,6 +107,10 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
   treeRef = React.createRef<HTMLElement>()
   state: TreeState = { activeItems: new Map() }
 
+  /**
+   * For each item it adds information needed for accessibility (screen readers and kb navigation).
+   * Returned values are used for rendering.
+   */
   getItemsForRender = _.memoize((itemsFromProps: ShorthandCollection<TreeItemProps>) => {
     let generatedId = 0
     const { activeItems } = this.state
@@ -115,9 +119,10 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
       return _.reduce(
         items,
         (acc: TreeItemForRenderProps[], item: ShorthandValue<TreeItemProps>, index: number) => {
-          const isSubtree = !!item['items']
+          const isSubtree = !!item['items'] && item['items'].length > 0
           const id = item['id'] || `treeItemId${generatedId++}`
 
+          // activeItems will contain only the items that can spawn sub-trees.
           if (isSubtree) {
             activeItems.set(id, { open: !!item['defaultOpen'], siblingSubtreeIds })
             siblingSubtreeIds.push(id)
@@ -153,7 +158,7 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
       const { id } = treeItemProps
       const activeItemValue = activeItems.get(id)
 
-      if (treeItemProps.items) {
+      if (treeItemProps.items && treeItemProps.items.length > 0) {
         activeItems.set(id, { ...activeItemValue, open: !activeItemValue.open })
         this.setState({
           activeItems,
@@ -170,9 +175,13 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
       }
 
       const { activeItems } = this.state
+      const elementToBeFocused = activeItems.get(parentId).element
 
-      activeItems.get(parentId).element.focus()
+      if (!elementToBeFocused) {
+        return
+      }
 
+      elementToBeFocused.focus()
       _.invoke(predefinedProps, 'onFocusParent', e, treeItemProps)
     },
     onFocusFirstChild: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
@@ -181,11 +190,17 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
       const { activeItems } = this.state
       const currentElement = activeItems.get(id).element
 
-      const element = getNextElement(this.treeRef.current, currentElement)
-      if (element) {
-        element.focus()
+      if (!currentElement) {
+        return
       }
 
+      const elementToBeFocused = getNextElement(this.treeRef.current, currentElement)
+
+      if (!elementToBeFocused) {
+        return
+      }
+
+      elementToBeFocused.focus()
       _.invoke(predefinedProps, 'onFocusFirstChild', e, treeItemProps)
     },
     onSiblingsExpand: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
@@ -217,7 +232,7 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
         (renderedItems: any[], itemForRender: TreeItemForRenderProps, index: number) => {
           const { item, items, parentId, id, ...rest } = itemForRender
           const isFirstChild = index === 0 && !!parentId
-          const isSubtree = !!items
+          const isSubtree = !!items && items.length > 0
           const isSubtreeOpen = isSubtree && activeItems.get(id).open
 
           const renderedItem = TreeItem.create(item, {
@@ -232,6 +247,8 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
             overrideProps: this.handleTreeItemOverrides,
           })
 
+          // Only need refs of the items that spawn subtrees, when they need to be focused
+          // by any of their children, using Arrow Left.
           const finalRenderedItem =
             isSubtree || isFirstChild ? (
               <Ref
