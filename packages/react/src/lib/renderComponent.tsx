@@ -26,7 +26,8 @@ import {
 } from './accessibility/types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
-import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
+import createEmptyTheme from './createEmptyTheme'
+import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
@@ -160,7 +161,7 @@ const renderComponent = <P extends {}>(
     logProviderMissingWarning()
   }
 
-  const { disableAnimations = false, renderer = null, rtl = false, theme = emptyTheme } =
+  const { disableAnimations = false, renderer = null, rtl = false, theme = createEmptyTheme() } =
     context || {}
 
   const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
