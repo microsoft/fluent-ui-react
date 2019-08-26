@@ -53,11 +53,16 @@ export const colorBoxVariables = (siteVariables): ColorBoxVariables => ({
 
 export const colorBoxStyles: ComponentSlotStylesInput<ColorBoxProps, ColorBoxVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    ...(p.showColorValue && {
-      backgroundImage:
-        'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-      backgroundRepeat: 'repeat',
-    }),
+    ...(p.showColorValue &&
+      !_.isNil(p.value) && {
+        backgroundImage:
+          'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+        backgroundRepeat: 'repeat',
+      }),
+    ...(p.showColorValue &&
+      _.isNil(p.value) && {
+        backgroundColor: 'transparent',
+      }),
     border: '1px solid transparent',
     borderRadius: p.rounded && '.25rem',
     color: p.value !== undefined && Color(p.value).isDark() ? v.colorWhite : v.colorBlack,

@@ -1,6 +1,7 @@
 import { colors } from '../teams/siteVariables'
 import { TeamsCategoryColorSchemeMapping } from '../teams/types'
 import { ColorSchemeMapping } from '../../themes/types'
+import { createColorScheme as createEmptyColorScheme } from '../teams/colors'
 
 export const accessibleYellow = '#ffff01'
 export const accessibleGreen = '#3ff23f' // always disabled color in high contrast
@@ -44,7 +45,7 @@ const createColorScheme = (customValues = {}) => {
 }
 
 export const colorScheme: ColorSchemeMapping = {
-  default: {
+  default: createEmptyColorScheme({
     foreground: colors.white,
     foreground1: colors.white,
     foreground2: colors.white,
@@ -76,8 +77,6 @@ export const colorScheme: ColorSchemeMapping = {
     foregroundPressed: colors.black,
     backgroundPressed: accessibleYellow,
     borderPressed: accessibleYellow,
-    shadowPressed: undefined,
-
     foregroundActive: accessibleCyan,
     foregroundActive1: colors.black,
 
@@ -88,8 +87,6 @@ export const colorScheme: ColorSchemeMapping = {
     borderActive1: accessibleCyan,
     borderActive2: accessibleCyan,
     borderActive3: accessibleCyan,
-
-    shadowActive: undefined,
 
     foregroundFocus: colors.black,
     foregroundFocus1: colors.black,
@@ -104,8 +101,6 @@ export const colorScheme: ColorSchemeMapping = {
     borderFocusWithin: colors.black,
     borderFocus: accessibleCyan,
 
-    shadowFocus: undefined,
-
     foregroundDisabled1: accessibleGreen,
     foregroundDisabled: colors.black,
 
@@ -113,9 +108,8 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundDisabled1: colors.black,
 
     borderDisabled: accessibleGreen,
-    shadowDisabled: undefined,
-  },
-  brand: {
+  }),
+  brand: createEmptyColorScheme({
     foreground: colors.white,
     foreground1: accessibleYellow,
     foreground2: accessibleYellow,
@@ -148,7 +142,6 @@ export const colorScheme: ColorSchemeMapping = {
     foregroundPressed1: colors.black,
     backgroundPressed: accessibleYellow,
     borderPressed: accessibleYellow,
-    shadowPressed: undefined,
 
     foregroundActive: accessibleCyan,
     foregroundActive1: colors.black,
@@ -160,8 +153,6 @@ export const colorScheme: ColorSchemeMapping = {
     borderActive: accessibleCyan, // buttons
     borderActive1: accessibleCyan,
     borderActive2: accessibleCyan,
-
-    shadowActive: undefined,
 
     foregroundFocus: colors.black,
     foregroundFocus1: colors.black,
@@ -177,7 +168,6 @@ export const colorScheme: ColorSchemeMapping = {
     borderFocus: accessibleCyan,
     borderFocusWithin: colors.black,
     borderFocus1: accessibleCyan,
-    shadowFocus: undefined,
 
     foregroundDisabled: colors.black,
     foregroundDisabled1: accessibleGreen,
@@ -186,12 +176,11 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundDisabled1: colors.black,
 
     borderDisabled: accessibleGreen,
-    shadowDisabled: undefined,
-  },
+  }),
   black: createColorScheme(),
   white: createColorScheme(),
   grey: createColorScheme(),
-  green: {
+  green: createEmptyColorScheme({
     foreground: colors.white,
     foreground1: colors.black,
     foreground2: colors.white,
@@ -218,62 +207,20 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundDisabled: undefined,
     borderDisabled: undefined,
     shadowDisabled: undefined,
-  },
-  orange: {
+  }),
+  orange: createEmptyColorScheme({
     foreground: accessibleYellow,
     foreground1: accessibleYellow,
     background: accessibleYellow,
     border: accessibleCyan,
-    shadow: undefined,
-    foregroundHover: undefined,
-    backgroundHover: undefined,
-    borderHover: undefined,
-    shadowHover: undefined,
-    foregroundActive: undefined,
-    backgroundActive: undefined,
-    borderActive: undefined,
-    shadowActive: undefined,
-    foregroundFocus: undefined,
-    backgroundFocus: undefined,
-    borderFocus: undefined,
-    shadowFocus: undefined,
-    foregroundPressed: undefined,
-    backgroundPressed: undefined,
-    borderPressed: undefined,
-    shadowPressed: undefined,
-    foregroundDisabled: undefined,
-    backgroundDisabled: undefined,
-    borderDisabled: undefined,
-    shadowDisabled: undefined,
-  },
-  pink: {
+  }),
+  pink: createEmptyColorScheme({
     foreground: colors.black,
     foreground1: colors.white,
     background: colors.white,
     border: colors.white,
-    shadow: undefined,
-    foregroundHover: undefined,
-    backgroundHover: undefined,
-    borderHover: undefined,
-    shadowHover: undefined,
-    foregroundActive: undefined,
-    backgroundActive: undefined,
-    borderActive: undefined,
-    shadowActive: undefined,
-    foregroundFocus: undefined,
-    backgroundFocus: undefined,
-    borderFocus: undefined,
-    shadowFocus: undefined,
-    foregroundPressed: undefined,
-    backgroundPressed: undefined,
-    borderPressed: undefined,
-    shadowPressed: undefined,
-    foregroundDisabled: undefined,
-    backgroundDisabled: undefined,
-    borderDisabled: undefined,
-    shadowDisabled: undefined,
-  },
-  red: {
+  }),
+  red: createEmptyColorScheme({
     foreground: colors.white,
     foreground1: colors.black,
     foreground2: colors.black,
@@ -285,146 +232,45 @@ export const colorScheme: ColorSchemeMapping = {
 
     border: colors.white,
 
-    shadow: undefined,
-
     foregroundHover: colors.black,
     backgroundHover: accessibleYellow,
-    borderHover: undefined,
-    shadowHover: undefined,
-
-    foregroundActive: undefined,
-    backgroundActive: undefined,
-    borderActive: undefined,
-    shadowActive: undefined,
-
-    foregroundFocus: undefined,
-    backgroundFocus: undefined,
-    borderFocus: undefined,
-    shadowFocus: undefined,
 
     foregroundPressed: colors.black,
     backgroundPressed: accessibleYellow,
-    borderPressed: undefined,
-    shadowPressed: undefined,
-
-    foregroundDisabled: undefined,
-    backgroundDisabled: undefined,
-    borderDisabled: undefined,
-    shadowDisabled: undefined,
-  },
-  yellow: {
+  }),
+  yellow: createEmptyColorScheme({
     foreground: colors.white,
     foreground1: colors.black,
     foreground2: colors.black,
     background: colors.white,
-    background1: undefined,
     background2: colors.white,
-    border: undefined,
-    shadow: undefined,
-    foregroundHover: undefined,
-    backgroundHover: undefined,
-    borderHover: undefined,
-    shadowHover: undefined,
-    foregroundActive: undefined,
-    backgroundActive: undefined,
-    borderActive: undefined,
-    shadowActive: undefined,
-    foregroundFocus: undefined,
-    backgroundFocus: undefined,
-    borderFocus: undefined,
-    shadowFocus: undefined,
-    foregroundPressed: undefined,
-    backgroundPressed: undefined,
-    borderPressed: undefined,
-    shadowPressed: undefined,
-    foregroundDisabled: undefined,
-    backgroundDisabled: undefined,
-    borderDisabled: undefined,
-    shadowDisabled: undefined,
-  },
-  silver: {
+  }),
+  silver: createEmptyColorScheme({
     foreground: colors.white,
     foreground1: colors.white,
     background: colors.black,
     border: colors.white,
-    shadow: undefined,
-    foregroundHover: undefined,
     backgroundHover: colors.black,
     borderHover: colors.white,
-    shadowHover: undefined,
-    foregroundActive: undefined,
-    backgroundActive: undefined,
-    borderActive: undefined,
-    shadowActive: undefined,
-    foregroundFocus: undefined,
-    backgroundFocus: undefined,
-    borderFocus: undefined,
-    shadowFocus: undefined,
-    foregroundPressed: undefined,
     backgroundPressed: colors.black,
     borderPressed: colors.white,
-    shadowPressed: undefined,
     foregroundDisabled: accessibleGreen,
     backgroundDisabled: colors.black,
     borderDisabled: accessibleGreen,
-    shadowDisabled: undefined,
-  },
-  onyx: {
-    foreground: undefined,
+  }),
+  onyx: createEmptyColorScheme({
     background: colors.black,
     background1: colors.black,
     background2: colors.white,
     border: colors.white,
     border1: colors.white,
-    shadow: undefined,
-    foregroundHover: undefined,
-    backgroundHover: undefined,
-    borderHover: undefined,
-    shadowHover: undefined,
-    foregroundActive: undefined,
-    backgroundActive: undefined,
-    borderActive: undefined,
-    shadowActive: undefined,
-    foregroundFocus: undefined,
-    backgroundFocus: undefined,
-    borderFocus: undefined,
-    shadowFocus: undefined,
-    foregroundPressed: undefined,
-    backgroundPressed: undefined,
-    borderPressed: undefined,
-    shadowPressed: undefined,
-    foregroundDisabled: undefined,
-    backgroundDisabled: undefined,
-    borderDisabled: undefined,
-    shadowDisabled: undefined,
-  },
-  amethyst: {
-    foreground: undefined,
+  }),
+  amethyst: createEmptyColorScheme({
     background: colors.silver[900],
-    border: undefined,
-    shadow: undefined,
-    foregroundHover: undefined,
     backgroundHover: accessibleYellow,
     backgroundHover1: accessibleYellow,
-    borderHover: undefined,
-    shadowHover: undefined,
-    foregroundActive: undefined,
     backgroundActive: accessibleCyan,
-    borderActive: undefined,
-    shadowActive: undefined,
-    foregroundFocus: undefined,
-    backgroundFocus: undefined,
-    borderFocus: undefined,
-    shadowFocus: undefined,
-    foregroundPressed: undefined,
-    backgroundPressed: undefined,
-    borderPressed: undefined,
-    shadowPressed: undefined,
-    foregroundDisabled: undefined,
-    backgroundDisabled: undefined,
-    borderDisabled: undefined,
-    shadowDisabled: undefined,
-  },
+  }),
 }
 
 const createCategoryColorScheme = (customValues = {}) => {
