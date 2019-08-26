@@ -34,7 +34,7 @@ export const imports = {
     module: Classnames,
   },
   lodash: {
-    version: packageJson.devDependencies['@types/lodash'],
+    version: stardustReactPackageJson.devDependencies['@types/lodash'],
     module: _,
   },
   react: {
