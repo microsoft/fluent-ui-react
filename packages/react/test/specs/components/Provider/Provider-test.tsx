@@ -194,8 +194,8 @@ describe('Provider', () => {
         fontFaces: teams.fontFaces,
       }
 
-      const renderFontCalled = jest.fn()
-      const rendererMock = new RendererMock(renderFontCalled, jest.fn())
+      const rendererMock = new RendererMock()
+      const renderFontSpy = jest.spyOn(rendererMock, 'renderFont')
 
       mount(
         <Provider theme={theme} renderer={rendererMock}>
@@ -203,7 +203,7 @@ describe('Provider', () => {
         </Provider>,
       )
 
-      expect(renderFontCalled).toHaveBeenCalled()
+      expect(renderFontSpy).toHaveBeenCalled()
     })
   })
 
@@ -218,8 +218,8 @@ describe('Provider', () => {
       ],
     }
 
-    const renderStaticCalled = jest.fn()
-    const rendererMock = new RendererMock(jest.fn(), renderStaticCalled)
+    const rendererMock = new RendererMock()
+    const renderStaticSpy = jest.spyOn(rendererMock, 'renderStatic')
 
     mount(
       <Provider theme={theme} renderer={rendererMock}>
@@ -227,6 +227,6 @@ describe('Provider', () => {
       </Provider>,
     )
 
-    expect(renderStaticCalled).toHaveBeenCalled()
+    expect(renderStaticSpy).toHaveBeenCalled()
   })
 })
