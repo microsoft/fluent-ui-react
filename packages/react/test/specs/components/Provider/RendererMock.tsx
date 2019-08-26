@@ -29,14 +29,12 @@ export default class RendererMock implements Renderer {
     this.renderFontCalled()
   }
 
-  /*eslint-disable */
   renderStatic(style: string, selector?: string): void {
     this.renderStaticCalled()
   }
   renderStatic(style: IStyle, selector: string): void {
     this.renderStaticCalled()
   }
-  /* eslint-enable */
 
   renderToString(): string {
     return undefined
