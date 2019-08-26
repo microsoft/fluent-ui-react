@@ -431,14 +431,14 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
   indicator: ({ props: p }) => ({
     position: 'relative',
     float: 'right',
-    left: pxToRem(10),
+    left: pxToRem(12),
     userSelect: 'none',
     marginRight: pxToRem(4),
 
     ...(p.inSubmenu && {
       position: 'absolute',
       top: pxToRem(6),
-      right: pxToRem(6),
+      right: pxToRem(2),
       left: 'unset',
     }),
   }),
