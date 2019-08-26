@@ -1,4 +1,5 @@
 import { chatBehavior, Accessibility } from '@stardust-ui/react'
+import classNames from './classNames'
 
 const threadChatBehavior: Accessibility = props => {
   const behaviorData = chatBehavior(props)
