@@ -1,4 +1,4 @@
-import { ThemeInput, ChatItem, Input, Icon, pxToRem } from '@stardust-ui/react'
+import { ThemeInput, ChatItem, Input, Icon, Button, pxToRem } from '@stardust-ui/react'
 import classNames from './classNames'
 
 const customizedTheme: ThemeInput = {
@@ -10,7 +10,7 @@ const customizedTheme: ThemeInput = {
         },
         [`&.${classNames.threadReplies.chatItem}`]: {
           padding: 0,
-          backgroundColor: siteVariables.colors.grey[50],
+          backgroundColor: siteVariables.colorScheme.default.background1,
         },
         [`& .${classNames.threadReplies.chatItemMessage}`]: {
           margin: 0,
@@ -32,7 +32,7 @@ const customizedTheme: ThemeInput = {
           minWidth: '100%',
           padding: 0,
           margin: 0,
-          borderBottom: `${pxToRem(1)} solid ${siteVariables.colors.grey[100]}`,
+          borderBottom: `${pxToRem(1)} solid ${siteVariables.colorScheme.default.background2}`,
           borderBottomLeftRadius: 0,
           borderBottomRightRadius: 0,
 
@@ -44,7 +44,7 @@ const customizedTheme: ThemeInput = {
           },
           [`& .${classNames.threadedMessage.timestamp}`]: {
             padding: pxToRem(5),
-            color: siteVariables.colors.grey[350],
+            color: siteVariables.colorScheme.default.foreground2,
           },
         },
         [`&.${classNames.threadReplies.message}`]: {
@@ -52,14 +52,14 @@ const customizedTheme: ThemeInput = {
           minWidth: '100%',
           margin: `${pxToRem(1)} 0`,
           paddingLeft: pxToRem(60),
-          backgroundColor: siteVariables.colors.grey[50],
+          backgroundColor: siteVariables.colorScheme.default.background1,
         },
         [`&.${classNames.replyEditor}`]: {
           width: '100%',
           minWidth: '100%',
           padding: 0,
           margin: 0,
-          backgroundColor: siteVariables.colors.grey[100],
+          backgroundColor: siteVariables.colorScheme.default.background2,
         },
       }),
     },
@@ -73,15 +73,15 @@ const customizedTheme: ThemeInput = {
           textDecoration: 'none',
 
           '&:focus': {
-            backgroundColor: siteVariables.colors.grey[0],
+            backgroundColor: siteVariables.colorScheme.default.background,
           },
 
           '&:hover': {
-            backgroundColor: siteVariables.colors.grey[0],
+            backgroundColor: siteVariables.colorScheme.default.background,
           },
 
           '&:active': {
-            backgroundColor: siteVariables.colors.grey[0],
+            backgroundColor: siteVariables.colorScheme.default.background,
           },
         },
       }),
@@ -90,7 +90,7 @@ const customizedTheme: ThemeInput = {
       root: ({ props: p, theme: { siteVariables } }) => ({
         [`& .${Input.slotClassNames.input}`]: {
           height: pxToRem(50),
-          backgroundColor: siteVariables.colors.grey[0],
+          backgroundColor: siteVariables.colorScheme.default.background,
         },
       }),
     },
@@ -100,27 +100,30 @@ const customizedTheme: ThemeInput = {
         minWidth: '100%',
         boxShadow: 'none',
         border: 0,
-        backgroundColor: siteVariables.colors.brand[600],
+        backgroundColor: siteVariables.colorScheme.brand.foreground,
         borderRadius: 'unset',
         marginBottom: 0,
 
         '&:focus': {
-          backgroundColor: siteVariables.colors.brand[600],
+          backgroundColor: siteVariables.colorScheme.brand.foreground,
         },
 
         '&:hover': {
-          backgroundColor: siteVariables.colors.brand[600],
+          backgroundColor: siteVariables.colorScheme.brand.foreground,
         },
 
-        [`& .${Icon.className}`]: {
-          color: siteVariables.colors.grey[0],
+        [`& .${Button.className} .${Icon.className}`]: {
+          color: siteVariables.colorScheme.default.background,
         },
       }),
       header: ({ props: p, theme: { siteVariables } }) => ({
-        color: siteVariables.colors.grey[0],
+        color: siteVariables.colorScheme.default.background,
       }),
       description: ({ props: p, theme: { siteVariables } }) => ({
-        color: siteVariables.colors.grey[0],
+        color: siteVariables.colorScheme.default.background,
+      }),
+      icon: ({ props: p, theme: { siteVariables } }) => ({
+        color: siteVariables.colorScheme.default.background,
       }),
     },
   },
