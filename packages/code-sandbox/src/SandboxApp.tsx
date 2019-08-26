@@ -26,7 +26,7 @@ const SandboxApp: React.FunctionComponent = props => {
   const [theme, setTheme] = React.useState(items[0].value)
 
   return (
-    <Provider theme={themes[theme]} styles={{ height: '100vh', padding: '1rem' }}>
+    <Provider theme={themes[theme]} styles={{ padding: '0 0 0 1rem' }}>
       <Header>Stardust UI @ {pkg.version}</Header>
       <p>
         This example is powered by Stardust UI, check{' '}
