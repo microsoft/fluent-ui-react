@@ -208,7 +208,7 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
 
   renderContent() {
     const { activeItems } = this.state
-    const { items } = this.props
+    const { items, renderItemTitle } = this.props
 
     if (!items) return null
 
@@ -226,6 +226,7 @@ class Tree extends UIComponent<WithAsProp<TreeProps>, TreeState> {
               open: isSubtreeOpen,
               id,
               parentId,
+              renderItemTitle,
               ...rest,
             },
             overrideProps: this.handleTreeItemOverrides,
