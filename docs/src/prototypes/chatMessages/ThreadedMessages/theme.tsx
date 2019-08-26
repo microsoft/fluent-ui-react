@@ -1,4 +1,4 @@
-import { ThemeInput, ChatItem, Input } from '@stardust-ui/react'
+import { ThemeInput, ChatItem, Input, Icon, pxToRem } from '@stardust-ui/react'
 import classNames from './classNames'
 
 const customizedTheme: ThemeInput = {
@@ -16,8 +16,8 @@ const customizedTheme: ThemeInput = {
           margin: 0,
         },
         [`& .${classNames.threadReplies.gutter}`]: {
-          left: '15px',
-          zIndex: '1111',
+          left: pxToRem(15),
+          zIndex: '1',
         },
       }),
     },
@@ -32,26 +32,26 @@ const customizedTheme: ThemeInput = {
           minWidth: '100%',
           padding: 0,
           margin: 0,
-          borderBottom: `1px solid ${siteVariables.colors.grey[100]}`,
+          borderBottom: `${pxToRem(1)} solid ${siteVariables.colors.grey[100]}`,
           borderBottomLeftRadius: 0,
           borderBottomRightRadius: 0,
 
           [`& .${classNames.threadedMessage.innerContent}`]: {
-            padding: '8px 16px',
+            padding: `${pxToRem(8)} ${pxToRem(16)}`,
           },
           [`& .${classNames.threadedMessage.author}`]: {
-            padding: '5px 5px 5px 0',
+            padding: `${pxToRem(5)} ${pxToRem(5)} ${pxToRem(5)} 0`,
           },
           [`& .${classNames.threadedMessage.timestamp}`]: {
-            padding: '5px',
+            padding: pxToRem(5),
             color: siteVariables.colors.grey[350],
           },
         },
         [`&.${classNames.threadReplies.message}`]: {
           width: '100%',
           minWidth: '100%',
-          margin: '1px 0',
-          paddingLeft: '60px',
+          margin: `${pxToRem(1)} 0`,
+          paddingLeft: pxToRem(60),
           backgroundColor: siteVariables.colors.grey[50],
         },
         [`&.${classNames.replyEditor}`]: {
@@ -68,7 +68,7 @@ const customizedTheme: ThemeInput = {
         [`&.${classNames.threadReplies.trigger}`]: {
           border: 'none',
           justifyContent: 'start',
-          marginBottom: '1px',
+          marginBottom: pxToRem(1),
           boxShadow: 'none',
           textDecoration: 'none',
 
@@ -89,7 +89,7 @@ const customizedTheme: ThemeInput = {
     Input: {
       root: ({ props: p, theme: { siteVariables } }) => ({
         [`& .${Input.slotClassNames.input}`]: {
-          height: '50px',
+          height: pxToRem(50),
           backgroundColor: siteVariables.colors.grey[0],
         },
       }),
@@ -111,14 +111,15 @@ const customizedTheme: ThemeInput = {
         '&:hover': {
           backgroundColor: siteVariables.colors.brand[600],
         },
+
+        [`& .${Icon.className}`]: {
+          color: siteVariables.colors.grey[0],
+        },
       }),
       header: ({ props: p, theme: { siteVariables } }) => ({
         color: siteVariables.colors.grey[0],
       }),
       description: ({ props: p, theme: { siteVariables } }) => ({
-        color: siteVariables.colors.grey[0],
-      }),
-      icon: ({ props: p, theme: { siteVariables } }) => ({
         color: siteVariables.colors.grey[0],
       }),
     },
