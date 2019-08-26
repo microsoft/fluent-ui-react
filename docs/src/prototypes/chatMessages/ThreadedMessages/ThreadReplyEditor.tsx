@@ -1,60 +1,51 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
 
 import { Button, Flex, Input, Toolbar, Ref, Chat } from '@stardust-ui/react'
 import { toolbarItems } from './mockData'
 import classNames from './classNames'
 
-interface ThreadReplyEditorState {
-  editMode: boolean
-}
+const ThreadReplyEditor: React.FC = () => {
+  const buttonRef = React.useRef(null)
+  const inputRef = React.useRef(null)
+  const [editMode, setEditMode] = React.useState(false)
 
-class ThreadReplyEditor extends React.Component<{}, ThreadReplyEditorState> {
-  state = {
-    editMode: false,
-  }
+  React.useEffect(() => {
+    if (editMode) {
+      _.invoke(inputRef.current, 'focus')
+    } else {
+      _.invoke(buttonRef.current, 'focus')
+    }
+  }, [editMode])
 
-  buttonRef = React.createRef<HTMLElement>()
-  inputRef = React.createRef<HTMLElement>()
-
-  renderReplyButton = () => {
+  const renderReplyButton = () => {
     return (
-      <Ref innerRef={this.buttonRef}>
+      <Ref innerRef={buttonRef}>
         <Button
           fluid
           className={classNames.threadReplies.trigger}
           content="Reply"
-          onClick={() => {
-            this.setState({ editMode: true }, () => {
-              if (this.inputRef && this.inputRef.current) {
-                this.inputRef.current.focus()
-              }
-            })
-          }}
+          onClick={() => setEditMode(true)}
         />
       </Ref>
     )
   }
 
-  handleOnEditorKeydown = (e: React.KeyboardEvent) => {
+  const handleOnEditorKeydown = (e: React.KeyboardEvent) => {
     const eventCode = keyboardKey.getCode(e)
-    if (eventCode !== keyboardKey.Escape) {
-      return
+    if (eventCode === keyboardKey.Escape) {
+      setEditMode(false)
+      e.stopPropagation()
+      e.preventDefault()
     }
-    this.setState({ editMode: false }, () => {
-      if (this.buttonRef && this.buttonRef.current) {
-        this.buttonRef.current.focus()
-      }
-    })
-    e.stopPropagation()
-    e.preventDefault()
   }
 
-  renderEditor = () => {
+  const renderEditor = () => {
     return (
-      <Chat.Message className={classNames.replyEditor} onKeyDown={this.handleOnEditorKeydown}>
+      <Chat.Message className={classNames.replyEditor} onKeyDown={handleOnEditorKeydown}>
         <Flex column>
-          <Input fluid placeholder="Reply" inputRef={this.inputRef} />
+          <Input fluid placeholder="Reply" inputRef={inputRef} />
           <Flex space="between">
             <Toolbar items={toolbarItems} aria-label="Editor tools" data-is-focusable={true} />
             <Flex gap="gap.small">
@@ -66,9 +57,7 @@ class ThreadReplyEditor extends React.Component<{}, ThreadReplyEditorState> {
     )
   }
 
-  render() {
-    return this.state.editMode ? this.renderEditor() : this.renderReplyButton()
-  }
+  return editMode ? renderEditor() : renderReplyButton()
 }
 
 export default ThreadReplyEditor
