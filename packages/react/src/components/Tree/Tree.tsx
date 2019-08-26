@@ -66,6 +66,10 @@ export interface TreeItemForRenderProps {
   siblingsLength: number
 }
 
+/*
+ * Needed to keep track of sub-trees open state and also for a11y keyboard navigation,
+ * such as expanding siblings on '*' or focusing parent on Arrow Left.
+ */
 export interface TreeActiveItemProps {
   element?: HTMLElement
   parentId?: string
