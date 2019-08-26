@@ -120,6 +120,7 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
 
   dismissAction: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => {
     const iconFilledStyles = getIconFillOrOutlineStyles({ outline: false })
+    const borderFocusStyles = getBorderFocusStyles({ siteVariables })
 
     return {
       height: v.dismissActionSize,
@@ -134,9 +135,10 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
         ...iconFilledStyles,
       },
 
-      ':focus': {
-        ...(p.isFromKeyboard && iconFilledStyles),
-        ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard })[':focus'],
+      ':focus': borderFocusStyles[':focus'],
+      ':focus-visible': {
+        ...iconFilledStyles,
+        ...borderFocusStyles[':focus-visible'],
       },
     }
   },

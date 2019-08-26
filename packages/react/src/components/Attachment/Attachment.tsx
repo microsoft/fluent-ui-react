@@ -7,7 +7,6 @@ import {
   UIComponent,
   createShorthandFactory,
   commonPropTypes,
-  isFromKeyboard,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -49,24 +48,13 @@ export interface AttachmentProps extends UIComponentProps, ChildrenComponentProp
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<AttachmentProps>
-
-  /**
-   * Called after user's focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
-   */
-  onFocus?: ComponentEventHandler<AttachmentProps>
-}
-
-export interface AttachmentState {
-  isFromKeyboard: boolean
 }
 
 export interface AttachmentSlotClassNames {
   action: string
 }
 
-class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentState> {
+class Attachment extends UIComponent<WithAsProp<AttachmentProps>> {
   static create: Function
 
   static className = 'ui-attachment'
@@ -91,10 +79,6 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
     accessibility: attachmentBehavior as Accessibility,
   }
 
-  state = {
-    isFromKeyboard: false,
-  }
-
   renderComponent({ ElementType, classes, unhandledProps, styles, variables, accessibility }) {
     const { header, description, icon, action, progress } = this.props
 
@@ -102,7 +86,6 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
       <ElementType
         className={classes.root}
         onClick={this.handleClick}
-        onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
@@ -159,12 +142,6 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
     }
 
     _.invoke(this.props, 'onClick', e, this.props)
-  }
-
-  handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-
-    _.invoke(this.props, 'onFocus', e, this.props)
   }
 }
 

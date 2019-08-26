@@ -87,10 +87,8 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
       ...(p.search && { borderBottomColor: v.borderColorFocus }),
       ...(!p.search &&
         !p.open &&
-        getBorderFocusStyles({
-          siteVariables,
-          isFromKeyboard: p.isFromKeyboard,
-        })[':focus']),
+        p.isFromKeyboard &&
+        getBorderFocusStyles({ siteVariables })[':focus-visible']),
     }),
     ...(p.inline && {
       ...transparentColorStyleObj,

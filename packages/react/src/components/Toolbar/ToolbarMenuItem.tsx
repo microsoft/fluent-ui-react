@@ -13,7 +13,6 @@ import {
   UIComponentProps,
   createShorthandFactory,
   childrenExist,
-  isFromKeyboard,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
@@ -49,33 +48,15 @@ export interface ToolbarMenuItemProps
    */
   onClick?: ComponentEventHandler<ToolbarMenuItemProps>
 
-  /**
-   * Called after user's focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
-   */
-  onFocus?: ComponentEventHandler<ToolbarMenuItemProps>
-
-  /**
-   * Called after item blur.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
-   */
-  onBlur?: ComponentEventHandler<ToolbarMenuItemProps>
-
   /** Shorthand for the wrapper component. */
   wrapper?: ShorthandValue<BoxProps>
-}
-
-export interface ToolbarMenuItemState {
-  isFromKeyboard: boolean
 }
 
 export interface ToolbarMenuItemSlotClassNames {
   wrapper: string
 }
 
-class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, ToolbarMenuItemState> {
+class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
   static displayName = 'ToolbarMenuItem'
 
   static className = 'ui-toolbar__menuitem'
@@ -92,8 +73,6 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, Tool
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
     wrapper: customPropTypes.itemShorthand,
   }
 
@@ -122,8 +101,6 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, Tool
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         disabled={disabled}
         className={classes.root}
-        onBlur={this.handleBlur}
-        onFocus={this.handleFocus}
         onClick={this.handleClick}
       >
         {childrenExist(children) ? (
@@ -150,18 +127,6 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, Tool
         children: menuItemInner,
       }),
     })
-  }
-
-  handleBlur = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: false })
-
-    _.invoke(this.props, 'onBlur', e, this.props)
-  }
-
-  handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-
-    _.invoke(this.props, 'onFocus', e, this.props)
   }
 
   handleClick = (e: React.SyntheticEvent) => {

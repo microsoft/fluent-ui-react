@@ -7,20 +7,18 @@ import Icon from '../../../../components/Icon/Icon'
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     ...((p.actionable || p.onClick) && {
-      ...(p.isFromKeyboard && {
-        ':focus': {
-          backgroundColor: v.backgroundColorHover,
+      ':focus-visible': {
+        backgroundColor: v.backgroundColorHover,
+        color: v.textColorHover,
+
+        [`& .${Button.className}`]: {
           color: v.textColorHover,
-
-          [`& .${Button.className}`]: {
-            color: v.textColorHover,
-          },
-
-          [`& .${Icon.className}`]: {
-            color: v.textColorHover,
-          },
         },
-      }),
+
+        [`& .${Icon.className}`]: {
+          color: v.textColorHover,
+        },
+      },
 
       ':hover': {
         [`& .${Button.className}`]: {

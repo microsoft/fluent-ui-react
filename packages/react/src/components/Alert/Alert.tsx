@@ -9,7 +9,6 @@ import {
   ContentComponentProps,
   commonPropTypes,
   childrenExist,
-  isFromKeyboard,
   rtlTextContainer,
 } from '../../lib'
 import { RenderResultConfig } from '../../lib/renderComponent'
@@ -105,7 +104,6 @@ export interface AlertProps
 }
 
 export interface AlertState {
-  isFromKeyboard: boolean
   visible: boolean
   bodyId: string
 }
@@ -155,7 +153,6 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
 
   getInitialAutoControlledState(): AlertState {
     return {
-      isFromKeyboard: false,
       visible: true,
       bodyId: _.uniqueId('alert-body-'),
     }
@@ -171,8 +168,6 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
   })
 
   handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
