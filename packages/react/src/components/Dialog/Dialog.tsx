@@ -43,6 +43,9 @@ export interface DialogProps
   /** A dialog can contain actions. */
   actions?: ShorthandValue<BoxProps>
 
+  /** A dialog can display overlay. */
+  backdrop?: boolean
+
   /** A dialog can contain a cancel button. */
   cancelButton?: ShorthandValue<ButtonProps>
 
@@ -110,6 +113,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       content: 'shorthand',
     }),
     actions: customPropTypes.itemShorthand,
+    backdrop: PropTypes.bool,
     headerAction: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
     confirmButton: customPropTypes.itemShorthand,
@@ -127,6 +131,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   static defaultProps = {
     accessibility: dialogBehavior,
     actions: {},
+    backdrop: true,
     overlay: {},
     trapFocus: true,
   }
@@ -197,7 +202,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     const isInsideContentClick = doesNodeContainClick(this.contentRef.current, e)
     const isInsideOverlayClick = doesNodeContainClick(this.overlayRef.current, e)
 
-    const shouldClose = !isInsideContentClick && isInsideOverlayClick
+    const shouldClose = !isInsideContentClick && isInsideOverlayClick && this.props.backdrop
 
     if (shouldClose) {
       this.handleDialogCancel(e)

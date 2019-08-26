@@ -46,7 +46,6 @@ export default {
   }),
   overlay: ({ props: p, variables: v }: DialogStyleParams): ICSSInJSStyle => ({
     alignItems: 'center',
-    background: v.overlayBackground,
     bottom: 0,
     display: 'flex',
     flexDirection: 'column',
@@ -57,5 +56,9 @@ export default {
     right: 0,
     top: 0,
     zIndex: v.overlayZIndex,
+
+    ...(p.backdrop && {
+      background: v.overlayBackground,
+    }),
   }),
 }
