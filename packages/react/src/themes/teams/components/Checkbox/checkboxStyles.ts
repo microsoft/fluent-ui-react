@@ -52,8 +52,12 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     borderRadius: v.borderRadius,
     borderWidth: v.borderWidth,
     color: v.indicatorColor,
-    margin: `${pxToRem(2)} ${v.margin} ${v.margin} ${v.margin}`,
+    margin: v.margin,
     padding: v.padding,
+
+    [`& .${Checkbox.slotClassNames.indicator}`]: {
+      marginTop: pxToRem(2),
+    },
 
     ...(p.checked && {
       background: v.checkedBackground,
