@@ -115,6 +115,12 @@ module.exports = {
         '@stardust-ui/no-visibility-modifiers': 'error',
       },
     },
+    {
+      files: '**/*.{ts,tsx}',
+      rules: {
+        'no-dupe-class-members': 'off',
+      },
+    },
   ],
   settings: {
     'import/resolver': {

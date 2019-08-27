@@ -36,6 +36,11 @@ export interface AlertVariables {
   urgentColor: string
   urgentBackgroundColor: string
   urgentBorderColor: string
+
+  headerFontWeight: FontWeightProperty
+  headerMargin: string
+
+  iconMargin: string
 }
 
 export default (siteVars: SiteVariablesPrepared): AlertVariables => {
@@ -74,5 +79,10 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     urgentColor: siteVars.colors.white,
     urgentBackgroundColor: siteVars.colors.red[400],
     urgentBorderColor: siteVars.colors.red[400],
+
+    headerFontWeight: siteVars.fontWeightBold,
+    headerMargin: `0 ${pxToRem(10)} 0 0`,
+
+    iconMargin: `0 ${pxToRem(10)} 0 0`,
   }
 }

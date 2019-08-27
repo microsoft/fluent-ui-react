@@ -26,7 +26,7 @@ const normalizeToString = (value: CodeSnippetValue): string => {
   return _.isObject(value) ? JSON.stringify(value, null, 2) : (value as string)
 }
 
-export const prettifyCode = (code: string, parser: 'babylon' | 'html' | 'typescript') => {
+export const prettifyCode = (code: string, parser: 'babel' | 'html' | 'typescript') => {
   const formatted = prettier.format(code, {
     ...prettierConfig,
     // a narrower print width is more friendly to doc examples
@@ -39,8 +39,8 @@ export const prettifyCode = (code: string, parser: 'babylon' | 'html' | 'typescr
 const formatters = {
   bash: (val: string = ''): string => val.replace(/^/g, '$  '),
   json: (val: string): string => val,
-  js: (val: string = ''): string => prettifyCode(val, 'babylon'),
-  jsx: (val: string = ''): string => prettifyCode(val, 'babylon'),
+  js: (val: string = ''): string => prettifyCode(val, 'babel'),
+  jsx: (val: string = ''): string => prettifyCode(val, 'babel'),
   html: (val: string = ''): string => prettifyCode(val, 'html'),
 }
 
