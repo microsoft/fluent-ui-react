@@ -18,7 +18,9 @@ type ComponentDocAccessibility = {
 export function containsAccessibility(info) {
   const defaulBehaviorName = getDefaultBehaviorName(info)
   return (
-    !!getDescription(info) || !!getBehaviorName(defaulBehaviorName) || info.behaviors.length > 0
+    !!getDescription(info) ||
+    !!getBehaviorName(defaulBehaviorName) ||
+    (info.behaviors && info.behaviors.length > 0)
   )
 }
 
@@ -70,7 +72,7 @@ export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({
   const behaviorName = getBehaviorName(defaultBehaviorName)
   const accIssues = getAccIssues(info)
 
-  if (!behaviorName && !description && info.behaviors.length === 0) return null
+  if (!behaviorName && !description && (info.behaviors && info.behaviors.length === 0)) return null
 
   const accessibilityDetails = (
     <>
