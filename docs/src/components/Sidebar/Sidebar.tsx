@@ -276,7 +276,7 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'chatMssages',
         title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
-        public: false,
+        public: true,
       },
       {
         key: 'customtoolbar',
