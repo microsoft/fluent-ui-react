@@ -407,9 +407,12 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     const widthAdjust = (p.icon ? 26 : 0) + (p.menu ? 16 : 0)
     return {
       whiteSpace: 'normal',
+      lineHeight: 1.5,
+      marginTop: pxToRem(-4),
+      marginBottom: pxToRem(-4),
+      display: 'inline-block',
       ...((p.inSubmenu || p.vertical) && {
         width: 'max-content',
-        display: 'inline-block',
         minWidth: pxToRem(46 - widthAdjust),
         maxWidth: pxToRem(262 - widthAdjust),
         marginRight: pxToRem(16),
