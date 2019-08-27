@@ -1,48 +1,15 @@
 import { categoryColors, colors } from '../teams/siteVariables'
 import { TeamsCategoryColorSchemeMapping } from '../teams/types'
 import { ColorSchemeMapping } from '../../themes/types'
-
-const createColorScheme = (color: string, customValues = {}) => {
-  return {
-    foreground: colors[color][600],
-    background: colors[color][50],
-    border: colors[color][600],
-    shadow: colors[color][600],
-
-    foregroundHover: colors[color][50],
-    backgroundHover: colors[color][600],
-    borderHover: colors[color][600],
-    shadowHover: colors[color][600],
-
-    foregroundActive: colors[color][50],
-    backgroundActive: colors[color][600],
-    borderActive: colors[color][600],
-    shadowActive: colors[color][600],
-
-    foregroundFocus: colors[color][50],
-    backgroundFocus: colors[color][600],
-    borderFocus: colors[color][600],
-    shadowFocus: colors[color][600],
-
-    foregroundPressed: colors[color][50],
-    backgroundPressed: colors[color][600],
-    borderPressed: colors[color][600],
-    shadowPressed: colors[color][600],
-
-    foregroundDisabled: colors[color][50],
-    backgroundDisabled: colors[color][600],
-    borderDisabled: colors[color][600],
-    shadowDisabled: colors[color][600],
-    ...customValues,
-  }
-}
+import { createColorScheme } from '../teams/colors'
 
 export const colorScheme: ColorSchemeMapping = {
-  default: {
+  default: createColorScheme({
     foreground: colors.white,
     foreground1: colors.grey[250],
     foreground2: colors.grey[300],
     foreground3: colors.white,
+    foreground4: colors.white,
 
     background: colors.grey[650],
     background1: colors.grey[700],
@@ -69,7 +36,6 @@ export const colorScheme: ColorSchemeMapping = {
     foregroundPressed: colors.white,
     backgroundPressed: colors.grey[500],
     borderPressed: colors.grey[400],
-    shadowPressed: undefined,
 
     foregroundActive: colors.white,
     foregroundActive1: colors.white,
@@ -81,8 +47,6 @@ export const colorScheme: ColorSchemeMapping = {
     borderActive1: colors.grey[850],
     borderActive2: colors.grey[900],
     borderActive3: colors.grey[650],
-
-    shadowActive: undefined,
 
     foregroundFocus: colors.white,
     foregroundFocus1: colors.grey[250],
@@ -97,8 +61,6 @@ export const colorScheme: ColorSchemeMapping = {
     borderFocusWithin: colors.black,
     borderFocus: colors.white,
 
-    shadowFocus: undefined,
-
     foregroundDisabled1: colors.grey[450],
     foregroundDisabled: colors.grey[450],
 
@@ -106,9 +68,8 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundDisabled: colors.grey[550],
 
     borderDisabled: colors.grey[550],
-    shadowDisabled: undefined,
-  },
-  brand: {
+  }),
+  brand: createColorScheme({
     foreground: colors.brand[400],
     foreground1: colors.brand[400],
     foreground2: colors.brand[400],
@@ -130,6 +91,7 @@ export const colorScheme: ColorSchemeMapping = {
 
     foregroundHover: colors.brand[400],
     foregroundHover1: colors.white,
+    foregroundHover2: colors.brand[200],
 
     borderHover: colors.brand[600],
 
@@ -140,7 +102,6 @@ export const colorScheme: ColorSchemeMapping = {
     foregroundPressed1: colors.white,
     backgroundPressed: colors.brand[700],
     borderPressed: colors.brand[800],
-    shadowPressed: undefined,
 
     foregroundActive: colors.brand[400],
     foregroundActive1: colors.brand[400],
@@ -153,8 +114,6 @@ export const colorScheme: ColorSchemeMapping = {
     borderActive: colors.grey[450], // buttons
     borderActive1: colors.brand[800],
     borderActive2: colors.brand[800],
-
-    shadowActive: undefined,
 
     foregroundFocus: colors.brand[400],
     foregroundFocus1: colors.brand[400],
@@ -170,7 +129,6 @@ export const colorScheme: ColorSchemeMapping = {
     borderFocus: colors.white,
     borderFocusWithin: colors.black,
     borderFocus1: colors.brand[400], // only input
-    shadowFocus: undefined,
 
     foregroundDisabled1: colors.grey[450],
     foregroundDisabled: colors.grey[450],
@@ -179,8 +137,7 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundDisabled: colors.grey[550],
 
     borderDisabled: colors.grey[550],
-    shadowDisabled: undefined,
-  },
+  }),
   black: {
     foreground: colors.black,
     background: colors.white,
@@ -243,13 +200,25 @@ export const colorScheme: ColorSchemeMapping = {
     borderDisabled: colors.white,
     shadowDisabled: colors.white,
   },
-  grey: createColorScheme('grey', { foreground: colors.grey[250] }),
-  green: createColorScheme('green', {
-    background: colors.white,
+  green: createColorScheme({
+    foreground: colors.green[200],
+    foreground1: colors.grey[800],
+    foreground2: colors.green[200],
+    background: colors.green[200],
   }),
-  orange: createColorScheme('orange'),
-  pink: createColorScheme('pink'),
-  red: {
+  orange: createColorScheme({
+    foreground: colors.orange[300],
+    foreground1: colors.orange[300],
+    background: colors.orange[300],
+    border: colors.grey[400],
+  }),
+  pink: createColorScheme({
+    foreground: colors.pink[200],
+    foreground1: colors.pink[400],
+    background: colors.pink[800],
+    border: colors.pink[900],
+  }),
+  red: createColorScheme({
     foreground: colors.red[200],
     foreground1: colors.white,
     foreground2: colors.grey[800],
@@ -261,37 +230,47 @@ export const colorScheme: ColorSchemeMapping = {
 
     border: colors.red[900],
 
-    shadow: undefined,
-
     foregroundHover: colors.white,
     backgroundHover: colors.ruby[600],
-    borderHover: undefined,
-    shadowHover: undefined,
-
-    foregroundActive: undefined,
-    backgroundActive: undefined,
-    borderActive: undefined,
-    shadowActive: undefined,
-
-    foregroundFocus: undefined,
-    backgroundFocus: undefined,
-    borderFocus: undefined,
-    shadowFocus: undefined,
 
     foregroundPressed: colors.white,
-    backgroundPressed: colors.ruby[600],
-    borderPressed: undefined,
-    shadowPressed: undefined,
-
-    foregroundDisabled: undefined,
-    backgroundDisabled: undefined,
-    borderDisabled: undefined,
-    shadowDisabled: undefined,
-  },
-  yellow: createColorScheme('yellow', {
-    background: colors.yellow[100],
+    backgroundPressed: colors.ruby[700],
+  }),
+  yellow: createColorScheme({
+    foreground: colors.yellow[300],
+    foreground1: colors.grey[800],
+    foreground2: colors.grey[800],
+    background: colors.yellow[400],
+    background1: colors.grey[450],
+    background2: colors.yellow[500],
+  }),
+  silver: createColorScheme({
+    foreground: colors.white,
+    foreground1: colors.silver[200],
+    border: colors.silver[600],
+    backgroundHover: colors.silver[800],
+    borderHover: colors.silver[600],
+    backgroundPressed: colors.silver[700],
+    borderPressed: colors.silver[600],
+    foregroundDisabled: colors.silver[600],
+    backgroundDisabled: colors.silver[900],
+  }),
+  onyx: createColorScheme({
+    background: colors.onyx[500],
+    background1: colors.onyx[100],
+    background2: colors.onyx[500],
+    border: colors.onyx[800],
+    border1: 'transparent',
+  }),
+  amethyst: createColorScheme({
+    background: colors.onyx[200],
+    backgroundHover: colors.amethyst[700],
+    backgroundHover1: colors.grey[750],
+    backgroundActive: colors.amethyst[700],
   }),
 }
+
+colorScheme.grey = colorScheme.default
 
 const createCategoryColorScheme = (color: string, customValues = {}) => {
   return {
