@@ -59,7 +59,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
     // Otherwise, if the variable is not provided, the default appearance logic will be used for actions menu.
     ...(_.isNil(v.showActionMenu) && {
       ':hover': {
-        [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
+        [`> .${ChatMessage.slotClassNames.actionMenu}`]: {
           opacity: 1,
           width: 'auto',
         },
