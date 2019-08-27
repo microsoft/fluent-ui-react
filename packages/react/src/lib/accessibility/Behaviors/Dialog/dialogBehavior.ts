@@ -22,7 +22,7 @@ const dialogBehavior: Accessibility<DialogBehaviorProps> = props => {
   behaviorData.attributes.popup = {
     ...behaviorData.attributes.popup,
     role: 'dialog',
-    'aria-modal': true,
+    'aria-modal': props.closeOnDocumentClick,
     'aria-labelledby': defaultAriaLabelledBy || props['aria-labelledby'],
     'aria-describedby': defaultAriaDescribedBy || props['aria-describedby'],
   }
@@ -61,6 +61,7 @@ const getDefaultAriaDescribedBy = (props: DialogBehaviorProps) => {
 export default dialogBehavior
 
 type DialogBehaviorProps = {
+  closeOnDocumentClick?: boolean
   headerId?: string
   contentId?: string
 } & PopupBehaviorProps &

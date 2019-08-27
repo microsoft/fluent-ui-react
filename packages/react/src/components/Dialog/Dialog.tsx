@@ -49,6 +49,8 @@ export interface DialogProps
   /** A dialog can contain a cancel button. */
   cancelButton?: ShorthandValue<ButtonProps>
 
+  closeOnClickOutside?: boolean
+
   /** A dialog can contain a confirm button. */
   confirmButton?: ShorthandValue<ButtonProps>
 
@@ -60,6 +62,8 @@ export interface DialogProps
 
   /** A dialog can contain a button next to the header. */
   headerAction?: ShorthandValue<ButtonProps>
+
+  inert?: boolean
 
   /**
    * Called after user's click a cancel button.
@@ -116,6 +120,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     backdrop: PropTypes.bool,
     headerAction: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
+    closeOnClickOutside: PropTypes.bool,
     confirmButton: customPropTypes.itemShorthand,
     defaultOpen: PropTypes.bool,
     header: customPropTypes.itemShorthand,
@@ -132,6 +137,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     accessibility: dialogBehavior,
     actions: {},
     backdrop: true,
+    closeOnClickOutside: true,
+    inert: false,
     overlay: {},
     trapFocus: true,
   }
@@ -197,12 +204,14 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   })
 
   handleOverlayClick = (e: MouseEvent) => {
+    const { closeOnClickOutside } = this.props
+
     // Dialog has different conditions to close than Popup, so we don't need to iterate across all
     // refs
     const isInsideContentClick = doesNodeContainClick(this.contentRef.current, e)
     const isInsideOverlayClick = doesNodeContainClick(this.overlayRef.current, e)
 
-    const shouldClose = !isInsideContentClick && isInsideOverlayClick && this.props.backdrop
+    const shouldClose = closeOnClickOutside && !isInsideContentClick && isInsideOverlayClick
 
     if (shouldClose) {
       this.handleDialogCancel(e)
