@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Fix `muted` prop in `Video` component @layershifter ([#1847](https://github.com/stardust-ui/react/pull/1847))
 - Fix `felaRenderer` is used in `Provider` explicitly @lucivpav ([#1842](https://github.com/stardust-ui/react/pull/1842))
+- Fix `Menu` and `Submenu` to use correct indicator icon and have correct width behavior [redlines] @bcalvery ([#1831](https://github.com/stardust-ui/react/pull/1831))
 
 ### Documentation
 - Add usage example regarding `Checkbox` in `Form` @lucivpav ([#1845](https://github.com/stardust-ui/react/pull/1845))
@@ -38,7 +39,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Update text `Button` styles for Teams Theme to match [redlines] @codepretty ([#1719](https://github.com/stardust-ui/react/pull/1719))
-- Fix `Menu` and `MenuItem` styles to match [redlines] @bcalvery ([#1712](https://github.com/stardust-ui/react/pull/1712))
 - Make `Embed` focusable via keyboard @lucivpav ([#1758](https://github.com/stardust-ui/react/pull/1758))
 - Update screener tests for `Input` to only capture Teams themes @codepretty ([#1801](https://github.com/stardust-ui/react/pull/1801))
 - Fix `Checkbox` style bug in background color [redlines] @bcalvery ([#1796](https://github.com/stardust-ui/react/pull/1796))
@@ -50,7 +50,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix a runtime error if context is missing @layershifter ([#1837](https://github.com/stardust-ui/react/pull/1837))
 - Fix RTL mode in `Dialog` @lucivpav ([#1828](https://github.com/stardust-ui/react/pull/1828))
 - Do not scroll the page when spacebar is pressed on focused `MenuItem`, fix submenu not closing @lucivpav ([#1735](https://github.com/stardust-ui/react/pull/1735))
-- Fix `Menu` and `Submenu` to use correct indicator icon and have correct width behavior [redlines] @bcalvery ([#1831](https://github.com/stardust-ui/react/pull/1831))
 
 ### Features
 - Add `overwrite` prop to `Provider` @layershifter ([#1780](https://github.com/stardust-ui/react/pull/1780))
