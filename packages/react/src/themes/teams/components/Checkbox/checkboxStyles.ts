@@ -55,7 +55,7 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     margin: v.margin,
     padding: v.padding,
 
-    [`& .${Checkbox.slotClassNames.indicator}`]: {
+    [`&.${Checkbox.slotClassNames.indicator}`]: {
       marginTop: pxToRem(2),
     },
 
