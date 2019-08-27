@@ -138,14 +138,15 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           const isSubtree = !!item['items'] && item['items'].length > 0
           const id = item['id'] || `treeItemId${generatedId++}`
 
-          // activeItems will contain only the items that can spawn sub-trees.
+          activeItems.set(id, { siblingSubtreeIds })
+
           if (isSubtree) {
             const subtreeOpen = !!item['initialOpen']
             if (subtreeOpen && exclusive) {
               // if exclusive, will open only first subtree.
               subtreeAlreadyOpen = true
             }
-            activeItems.set(id, { open: subtreeOpen && !subtreeAlreadyOpen, siblingSubtreeIds })
+            this.setActiveItem(id, { open: subtreeOpen && !subtreeAlreadyOpen })
             siblingSubtreeIds.push(id)
           }
 
@@ -242,13 +243,17 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         return
       }
 
-      const { id } = treeItemProps
+      const { id, items } = treeItemProps
       const { activeItems } = this.state
       const { siblingSubtreeIds } = activeItems.get(id)
 
       siblingSubtreeIds.forEach(siblingSubtreeId => {
         this.setActiveItem(siblingSubtreeId, { open: true })
       })
+
+      if (items && items.length > 0) {
+        this.setActiveItem(id, { open: true })
+      }
 
       this.setState({
         activeItems,
