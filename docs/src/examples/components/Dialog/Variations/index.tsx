@@ -10,6 +10,11 @@ const DialogVariationsExamples = () => (
       description="A dialog can have a backdrop on its overlay."
       examplePath="components/Dialog/Variations/DialogExampleBackdrop"
     />
+    <ComponentExample
+      title="Inert"
+      description="Whether the dialog should be inert, e.g. not dismiss when focusing/clicking outside of the dialog. Hides an overlay."
+      examplePath="components/Dialog/Variations/DialogExampleInert"
+    />
   </ExampleSection>
 )
 
