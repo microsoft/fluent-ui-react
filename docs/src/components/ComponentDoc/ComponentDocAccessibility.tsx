@@ -16,15 +16,17 @@ type ComponentDocAccessibility = {
 }
 
 export function containsAccessibility(info) {
-  const stem = getStem(info)
-  return !!getDescription(info) || !!getBehaviorName(stem)
+  const defaulBehaviorName = getDefaultBehaviorName(info)
+  return (
+    !!getDescription(info) || !!getBehaviorName(defaulBehaviorName) || info.behaviors.length > 0
+  )
 }
 
 function getDescription(info) {
   return _.get(_.find(info.docblock.tags, { title: 'accessibility' }), 'description')
 }
 
-function getStem(info) {
+function getDefaultBehaviorName(info) {
   const defaultValue = _.get(_.find(info.props, { name: 'accessibility' }), 'defaultValue')
   return defaultValue && defaultValue.split('.').pop()
 }
@@ -63,12 +65,12 @@ function getAccIssues(info) {
 }
 
 export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({ info }) => {
-  const stem = getStem(info)
+  const defaultBehaviorName = getDefaultBehaviorName(info)
   const description = getDescription(info)
-  const behaviorName = getBehaviorName(stem)
+  const behaviorName = getBehaviorName(defaultBehaviorName)
   const accIssues = getAccIssues(info)
 
-  if (!behaviorName && !description) return null
+  if (!behaviorName && !description && info.behaviors.length === 0) return null
 
   const accessibilityDetails = (
     <>
