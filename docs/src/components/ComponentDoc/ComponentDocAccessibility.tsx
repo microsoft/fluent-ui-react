@@ -20,7 +20,8 @@ export function containsAccessibility(info) {
   return (
     !!getDescription(info) ||
     !!getBehaviorName(defaulBehaviorName) ||
-    (info.behaviors && info.behaviors.length > 0)
+    (info.behaviors && info.behaviors.length > 0) ||
+    !!getAccIssues(info)
   )
 }
 
