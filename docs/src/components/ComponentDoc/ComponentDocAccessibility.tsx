@@ -67,6 +67,19 @@ function getAccIssues(info) {
   return _.get(_.find(info.docblock.tags, { title: 'accessibilityIssues' }), 'description')
 }
 
+function getAllAvailableBehaviors(
+  behaviorName: string,
+  defaultBehaviorName: string,
+  availableBehaviors: BehaviorInfo[],
+): BehaviorVariantionInfo[] {
+  const behaviorVariantsWithoutDefault = behaviorMenu
+    .find(behavior => behavior.displayName === behaviorName)
+    .variations.filter(behavior => behavior.name !== `${defaultBehaviorName}.ts`)
+  const otherAvailableVariants = getAvailableVariantsFromJson(availableBehaviors)
+  const uniqueAvailableVariants = _.union(behaviorVariantsWithoutDefault, otherAvailableVariants)
+  return uniqueAvailableVariants
+}
+
 export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({ info }) => {
   const defaultBehaviorName = getDefaultBehaviorName(info)
   const description = getDescription(info)
@@ -112,7 +125,8 @@ export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({
           <Header content="Default behavior" id="default-behavior" as="h2" />
           {behaviorMenu
             .find(behavior => behavior.displayName === behaviorName)
-            .variations.map(variation => (
+            .variations.filter(behavior => behavior.name === `${defaultBehaviorName}.ts`)
+            .map(variation => (
               <BehaviorCard variation={variation} />
             ))}
         </>
@@ -122,9 +136,11 @@ export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({
         <>
           <Text>
             <Header content="Available behaviors" id="available-behaviors" as="h2" />
-            {getAvailableVariantsFromJson(info.behaviors).map(variation => {
-              return <BehaviorCard variation={variation} />
-            })}
+            {getAllAvailableBehaviors(behaviorName, defaultBehaviorName, info.behaviors).map(
+              variation => {
+                return <BehaviorCard variation={variation} />
+              },
+            )}
           </Text>
         </>
       )}
