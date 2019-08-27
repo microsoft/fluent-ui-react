@@ -234,7 +234,7 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundHover: colors.ruby[600],
 
     foregroundPressed: colors.white,
-    backgroundPressed: colors.ruby[600],
+    backgroundPressed: colors.ruby[700],
   }),
   yellow: createColorScheme({
     foreground: colors.yellow[300],
@@ -260,6 +260,7 @@ export const colorScheme: ColorSchemeMapping = {
     background1: colors.onyx[100],
     background2: colors.onyx[500],
     border: colors.onyx[800],
+    border1: 'transparent',
   }),
   amethyst: createColorScheme({
     background: colors.onyx[200],

@@ -228,7 +228,7 @@ export const colorScheme: ColorSchemeMapping = {
     background: colors.white,
     background1: colors.white,
     background2: colors.black,
-    background3: colors.white,
+    background3: accessibleYellow,
 
     border: colors.white,
 
