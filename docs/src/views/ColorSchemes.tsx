@@ -31,7 +31,18 @@ export default () => {
       <DocPage title="Color schemes">
         <Flex column>
           <Dropdown
-            items={['default', 'brand', 'red']}
+            items={[
+              'default',
+              'brand',
+              'red',
+              'green',
+              'yellow',
+              'orange',
+              'pink',
+              'silver',
+              'onyx',
+              'amethyst',
+            ]}
             defaultValue={'brand'}
             placeholder="Select the color"
             onSelectedChange={(e, { value }) => setColor(value as string)}
