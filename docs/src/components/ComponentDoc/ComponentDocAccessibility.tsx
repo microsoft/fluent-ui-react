@@ -72,12 +72,18 @@ function getAllAvailableBehaviors(
   defaultBehaviorName: string,
   availableBehaviors: BehaviorInfo[],
 ): BehaviorVariantionInfo[] {
-  const behaviorVariantsWithoutDefault = behaviorMenu
-    .find(behavior => behavior.displayName === behaviorName)
-    .variations.filter(behavior => behavior.name !== `${defaultBehaviorName}.ts`)
-  const otherAvailableVariants = getAvailableVariantsFromJson(availableBehaviors)
-  const uniqueAvailableVariants = _.union(behaviorVariantsWithoutDefault, otherAvailableVariants)
-  return uniqueAvailableVariants
+  let behaviorVariantsWithoutDefault = []
+  if (defaultBehaviorName && behaviorName) {
+    behaviorVariantsWithoutDefault = behaviorMenu
+      .find(behavior => behavior.displayName === behaviorName)
+      .variations.filter(behavior => behavior.name !== `${_.camelCase(defaultBehaviorName)}.ts`)
+  }
+
+  let otherAvailableVariants = []
+  if (availableBehaviors) {
+    otherAvailableVariants = getAvailableVariantsFromJson(availableBehaviors)
+  }
+  return _.union(behaviorVariantsWithoutDefault, otherAvailableVariants)
 }
 
 export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({ info }) => {
@@ -85,8 +91,15 @@ export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({
   const description = getDescription(info)
   const behaviorName = getBehaviorName(defaultBehaviorName)
   const accIssues = getAccIssues(info)
+  const allAvailableBehaviors = getAllAvailableBehaviors(
+    behaviorName,
+    defaultBehaviorName,
+    info.behaviors,
+  )
 
-  if (!behaviorName && !description && (info.behaviors && info.behaviors.length === 0)) return null
+  if (!behaviorName && !description && (info.behaviors && info.behaviors.length === 0)) {
+    return null
+  }
 
   const accessibilityDetails = (
     <>
@@ -125,22 +138,22 @@ export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({
           <Header content="Default behavior" id="default-behavior" as="h2" />
           {behaviorMenu
             .find(behavior => behavior.displayName === behaviorName)
-            .variations.filter(behavior => behavior.name === `${defaultBehaviorName}.ts`)
+            .variations.filter(
+              behavior => behavior.name === `${_.camelCase(defaultBehaviorName)}.ts`,
+            )
             .map(variation => (
               <BehaviorCard variation={variation} />
             ))}
         </>
       )}
 
-      {info.behaviors && (
+      {(info.behaviors || allAvailableBehaviors.length > 0) && (
         <>
           <Text>
             <Header content="Available behaviors" id="available-behaviors" as="h2" />
-            {getAllAvailableBehaviors(behaviorName, defaultBehaviorName, info.behaviors).map(
-              variation => {
-                return <BehaviorCard variation={variation} />
-              },
-            )}
+            {allAvailableBehaviors.map(variation => {
+              return <BehaviorCard variation={variation} />
+            })}
           </Text>
         </>
       )}
