@@ -8,6 +8,7 @@ import DropdownSelectedItem from 'src/components/Dropdown/DropdownSelectedItem'
 import { isConformant } from 'test/specs/commonTests'
 import { findIntrinsicElement, mountWithProvider } from 'test/utils'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
+import Button from 'src/components/Button/Button'
 
 jest.dontMock('keyboard-key')
 jest.useFakeTimers()
@@ -1439,6 +1440,59 @@ describe('Dropdown', () => {
         }),
       )
       expect(stopPropagation).toBeCalledTimes(1)
+    })
+  })
+
+  describe('renderSelectedItem', () => {
+    it('calls renderSelectedItem', () => {
+      const renderSelectedItem = jest.fn((button, props) => (
+        <Button {...props} content={`${props.content} (selected)`} />
+      ))
+      const wrapper = mountWithProvider(
+        <Dropdown items={items} renderSelectedItem={renderSelectedItem} />,
+      )
+      const triggerButton = getTriggerButtonWrapper(wrapper)
+
+      triggerButton.simulate('click')
+      const firstItem = getItemAtIndexWrapper(wrapper)
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
+
+      expect(renderSelectedItem).toBeCalled()
+    })
+
+    it('renders custom text', () => {
+      const renderSelectedItem = jest.fn((button, props) => (
+        <Button {...props} content={`${props.content} (selected)`} />
+      ))
+      const wrapper = mountWithProvider(
+        <Dropdown items={items} renderSelectedItem={renderSelectedItem} />,
+      )
+      const triggerButton = getTriggerButtonWrapper(wrapper)
+
+      triggerButton.simulate('click')
+      const firstItem = getItemAtIndexWrapper(wrapper)
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
+
+      expect(triggerButton.getDOMNode().textContent).toBe('item1 (selected)')
+    })
+
+    it('calls renderSelectedItem in multiple selection', () => {
+      const renderSelectedItem = jest.fn((button, props) => (
+        <Button {...props} multiple content={`${props.content} (selected)`} />
+      ))
+      const wrapper = mountWithProvider(
+        <Dropdown items={items} renderSelectedItem={renderSelectedItem} />,
+      )
+      const triggerButton = getTriggerButtonWrapper(wrapper)
+
+      triggerButton.simulate('click')
+      const firstItem = getItemAtIndexWrapper(wrapper)
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
+      triggerButton.simulate('click')
+      const secondItem = getItemAtIndexWrapper(wrapper, 1)
+      secondItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
+
+      expect(renderSelectedItem).toBeCalled()
     })
   })
 })

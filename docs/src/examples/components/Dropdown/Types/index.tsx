@@ -34,6 +34,11 @@ const Types = () => (
       description="A dropdown can be used inline with text."
       examplePath="components/Dropdown/Types/DropdownExampleInline"
     />
+    <ComponentExample
+      title="Custom render function for the selected item"
+      description="A selected Dropdown item can be rendered using provided function."
+      examplePath="components/Dropdown/Types/DropdownExampleRenderSelectedItem"
+    />
   </ExampleSection>
 )
 

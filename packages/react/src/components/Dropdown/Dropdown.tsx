@@ -535,7 +535,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     rtl: boolean,
     getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
   ): JSX.Element {
-    const { triggerButton } = this.props
+    const { triggerButton, renderSelectedItem } = this.props
     const { value } = this.state
 
     const content = this.getSelectedItemAsString(value[0])
@@ -582,6 +582,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
               _.invoke(predefinedProps, 'onKeyDown', e, predefinedProps)
             },
           }),
+          render: value.length > 0 && renderSelectedItem,
         })}
       </Ref>
     )
