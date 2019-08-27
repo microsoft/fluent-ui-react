@@ -34,11 +34,8 @@ function getDefaultBehaviorName(info) {
   return defaultValue && defaultValue.split('.').pop()
 }
 
-function getBehaviorName(stem) {
-  if (!stem) {
-    return undefined
-  }
-  const filename = stem && `${_.camelCase(stem)}.ts`
+function getBehaviorName(defaulBehaviorName) {
+  const filename = defaulBehaviorName && `${_.camelCase(defaulBehaviorName)}.ts`
   for (const category of behaviorMenu) {
     const behavior = category.variations.find(variation => variation.name === filename)
     if (behavior) {
@@ -69,14 +66,14 @@ function getAccIssues(info) {
 
 function getAllAvailableBehaviors(
   behaviorName: string,
-  defaultBehaviorName: string,
+  defaultBehaviorFileName: string,
   availableBehaviors: BehaviorInfo[],
 ): BehaviorVariantionInfo[] {
   let behaviorVariantsWithoutDefault = []
-  if (defaultBehaviorName && behaviorName) {
+  if (defaultBehaviorFileName && behaviorName) {
     behaviorVariantsWithoutDefault = behaviorMenu
       .find(behavior => behavior.displayName === behaviorName)
-      .variations.filter(behavior => behavior.name !== `${_.camelCase(defaultBehaviorName)}.ts`)
+      .variations.filter(behavior => behavior.name !== defaultBehaviorFileName)
   }
 
   let otherAvailableVariants = []
@@ -88,12 +85,13 @@ function getAllAvailableBehaviors(
 
 export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({ info }) => {
   const defaultBehaviorName = getDefaultBehaviorName(info)
+  const defaultBehaviorFileName = `${_.camelCase(defaultBehaviorName)}.ts`
   const description = getDescription(info)
   const behaviorName = getBehaviorName(defaultBehaviorName)
   const accIssues = getAccIssues(info)
   const allAvailableBehaviors = getAllAvailableBehaviors(
     behaviorName,
-    defaultBehaviorName,
+    defaultBehaviorFileName,
     info.behaviors,
   )
 
@@ -111,9 +109,9 @@ export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({
         </Text>
       )}
 
-      {((behaviorName && info.behaviors) ||
+      {((behaviorName && allAvailableBehaviors.length > 0) ||
         (behaviorName && accIssues) ||
-        (info.behaviors && accIssues)) && (
+        (allAvailableBehaviors.length > 0 && accIssues)) && (
         <ul>
           <li>
             Behaviors
@@ -138,9 +136,7 @@ export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({
           <Header content="Default behavior" id="default-behavior" as="h2" />
           {behaviorMenu
             .find(behavior => behavior.displayName === behaviorName)
-            .variations.filter(
-              behavior => behavior.name === `${_.camelCase(defaultBehaviorName)}.ts`,
-            )
+            .variations.filter(behavior => behavior.name === defaultBehaviorFileName)
             .map(variation => (
               <BehaviorCard variation={variation} />
             ))}
