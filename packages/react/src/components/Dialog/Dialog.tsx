@@ -43,13 +43,14 @@ export interface DialogProps
   /** A dialog can contain actions. */
   actions?: ShorthandValue<BoxProps>
 
-  /** A dialog can display overlay. */
+  /** A dialog can have a backdrop on its overlay. */
   backdrop?: boolean
 
   /** A dialog can contain a cancel button. */
   cancelButton?: ShorthandValue<ButtonProps>
 
-  closeOnClickOutside?: boolean
+  /** Controls whether or not a dialog should close when the document is clicked. */
+  closeOnDocumentClick?: boolean
 
   /** A dialog can contain a confirm button. */
   confirmButton?: ShorthandValue<ButtonProps>
@@ -63,6 +64,10 @@ export interface DialogProps
   /** A dialog can contain a button next to the header. */
   headerAction?: ShorthandValue<ButtonProps>
 
+  /**
+   * Whether the dialog should be inert, e.g. not dismiss when focusing/clicking outside of the dialog. Hides an
+   * overlay.
+   */
   inert?: boolean
 
   /**
@@ -120,10 +125,11 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     backdrop: PropTypes.bool,
     headerAction: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
-    closeOnClickOutside: PropTypes.bool,
+    closeOnDocumentClick: PropTypes.bool,
     confirmButton: customPropTypes.itemShorthand,
     defaultOpen: PropTypes.bool,
     header: customPropTypes.itemShorthand,
+    inert: PropTypes.bool,
     onCancel: PropTypes.func,
     onConfirm: PropTypes.func,
     onOpen: PropTypes.func,
@@ -137,7 +143,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     accessibility: dialogBehavior,
     actions: {},
     backdrop: true,
-    closeOnClickOutside: true,
+    closeOnDocumentClick: true,
     inert: false,
     overlay: {},
     trapFocus: true,
@@ -204,14 +210,14 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   })
 
   handleOverlayClick = (e: MouseEvent) => {
-    const { closeOnClickOutside } = this.props
+    const { closeOnDocumentClick } = this.props
 
     // Dialog has different conditions to close than Popup, so we don't need to iterate across all
     // refs
     const isInsideContentClick = doesNodeContainClick(this.contentRef.current, e)
     const isInsideOverlayClick = doesNodeContainClick(this.overlayRef.current, e)
 
-    const shouldClose = closeOnClickOutside && !isInsideContentClick && isInsideOverlayClick
+    const shouldClose = closeOnDocumentClick && !isInsideContentClick && isInsideOverlayClick
 
     if (shouldClose) {
       this.handleDialogCancel(e)
@@ -239,6 +245,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       content,
       header,
       headerAction,
+      inert,
       overlay,
       trapFocus,
       trigger,
@@ -323,26 +330,32 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
         <Unstable_NestingAuto>
           {(getRefs, nestingRef) => (
             <>
-              <Ref
-                innerRef={(contentNode: HTMLElement) => {
-                  this.overlayRef.current = contentNode
-                  nestingRef.current = contentNode
-                }}
-              >
-                {Box.create(overlay, {
-                  defaultProps: {
-                    className: Dialog.slotClassNames.overlay,
-                    styles: styles.overlay,
-                  },
-                  overrideProps: { content: dialogContent },
-                })}
-              </Ref>
-              <EventListener
-                listener={this.handleOverlayClick}
-                targetRef={targetRef}
-                type="click"
-                capture
-              />
+              {inert && dialogContent}
+
+              {!inert && (
+                <Ref
+                  innerRef={(contentNode: HTMLElement) => {
+                    this.overlayRef.current = contentNode
+                    nestingRef.current = contentNode
+                  }}
+                >
+                  {Box.create(overlay, {
+                    defaultProps: {
+                      className: Dialog.slotClassNames.overlay,
+                      styles: styles.overlay,
+                    },
+                    overrideProps: { content: dialogContent },
+                  })}
+                </Ref>
+              )}
+              {!inert && (
+                <EventListener
+                  listener={this.handleOverlayClick}
+                  targetRef={targetRef}
+                  type="click"
+                  capture
+                />
+              )}
               <EventListener
                 listener={this.handleDocumentKeydown(getRefs)}
                 targetRef={targetRef}
