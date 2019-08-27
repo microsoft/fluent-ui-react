@@ -1477,11 +1477,11 @@ describe('Dropdown', () => {
     })
 
     it('calls renderSelectedItem in multiple selection', () => {
-      const renderSelectedItem = jest.fn((button, props) => (
-        <Button {...props} multiple content={`${props.content} (selected)`} />
+      const renderSelectedItem = jest.fn((SelectedItem, props) => (
+        <SelectedItem {...props} header={`${props.header} (selected)`} />
       ))
       const wrapper = mountWithProvider(
-        <Dropdown items={items} renderSelectedItem={renderSelectedItem} />,
+        <Dropdown multiple items={items} renderSelectedItem={renderSelectedItem} />,
       )
       const triggerButton = getTriggerButtonWrapper(wrapper)
 
