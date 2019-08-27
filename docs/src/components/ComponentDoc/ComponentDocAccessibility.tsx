@@ -119,8 +119,8 @@ export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({
             Behaviors
             <ul>
               {behaviorName && <li>{link(`Default: ${behaviorName}`, '#default-behavior')} </li>}
-              {info.behaviors &&
-                getAvailableVariantsFromJson(info.behaviors).map(variant => {
+              {(info.behaviors || allAvailableBehaviors.length > 0) &&
+                allAvailableBehaviors.map(variant => {
                   return (
                     <li>
                       {link(`${variant.name.replace('.ts', '')}`, `#${_.kebabCase(variant.name)}`)}
