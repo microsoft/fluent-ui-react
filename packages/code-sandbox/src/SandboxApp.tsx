@@ -52,7 +52,7 @@ const SandboxApp: React.FunctionComponent = props => {
         <Divider />
 
         {children}
-      </Provider>
+      </div>
     </Provider>
   )
 }
