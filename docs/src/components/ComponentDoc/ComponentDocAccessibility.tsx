@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Flex, Loader, Text, Provider, Segment, Header } from '@stardust-ui/react'
+import { Flex, Loader, Text, Segment, Header } from '@stardust-ui/react'
 import { link } from './../../utils/helpers'
 import { BehaviorInfo, ComponentInfo, BehaviorVariantionInfo } from 'docs/src/types'
 import { BehaviorCard, exampleStyle, behaviorVariantDisplayName } from './BehaviorCard'
@@ -103,9 +103,7 @@ export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({
     <>
       {description && (
         <Text style={{ whiteSpace: 'pre-line' }}>
-          <React.Suspense fallback={<Loader />}>
-            <InlineMarkdown value={description} />
-          </React.Suspense>
+          <InlineMarkdown value={description} />
         </Text>
       )}
 
@@ -162,9 +160,7 @@ export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({
           <Header content="Known issues" id={knownIsusesId} as="h2" />
           <Segment className="docs-example" styles={exampleStyle}>
             <Text style={{ whiteSpace: 'pre-line' }}>
-              <React.Suspense fallback={<Loader />}>
-                <InlineMarkdown value={accIssues} />
-              </React.Suspense>
+              <InlineMarkdown value={accIssues} />
             </Text>
           </Segment>
         </>
@@ -174,11 +170,7 @@ export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({
 
   return (
     <Flex column>
-      <Flex.Item>
-        <Provider styles={{ paddingLeft: '14px', background: 'transparent' }}>
-          {accessibilityDetails}
-        </Provider>
-      </Flex.Item>
+      <React.Suspense fallback={<Loader />}>{accessibilityDetails}</React.Suspense>
     </Flex>
   )
 }
