@@ -28,6 +28,16 @@ class CopyToClipboard extends React.Component<CopyToClipboardProps> {
   }
 
   render() {
+    const copiedText = (
+      <Text
+        styles={({ theme: { siteVariables } }) => ({
+          color: siteVariables.colorScheme.brand.foreground4,
+        })}
+      >
+        Copied to clipboard
+      </Text>
+    )
+    const copyText = <Text>Copy commit ID</Text>
     return (
       <Popup
         pointing
@@ -43,8 +53,11 @@ class CopyToClipboard extends React.Component<CopyToClipboardProps> {
             })}
           />
         }
-        content={<Text>{this.state.copied ? 'Copied to clipboard' : 'Copy commit ID'}</Text>}
+        content={this.state.copied ? copiedText : copyText}
         on={['hover', 'context']}
+        variables={siteVariables => ({
+          contentBackgroundColor: this.state.copied && siteVariables.colorScheme.brand.background4,
+        })}
       />
     )
   }
