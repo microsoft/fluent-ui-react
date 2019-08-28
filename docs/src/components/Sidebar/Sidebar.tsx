@@ -342,6 +342,11 @@ class Sidebar extends React.Component<any, any> {
         title: { content: 'MenuButton', as: NavLink, to: '/menu-button' },
         public: false,
       },
+      {
+        key: 'copy-to-clipboard',
+        title: { content: 'Copy to clipboard', as: NavLink, to: '/prototype-copy-to-clipboard' },
+        public: true,
+      },
     ]
 
     const componentTreeSection = {
