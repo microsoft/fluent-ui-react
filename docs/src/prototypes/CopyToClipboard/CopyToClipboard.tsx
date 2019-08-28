@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Popup, Button, Text } from '@stardust-ui/react/src'
+import * as copyToClipboard from 'copy-to-clipboard'
 
 export type CopyToClipboardProps = {
   timeout?: number
@@ -16,13 +17,14 @@ class CopyToClipboard extends React.Component<CopyToClipboardProps> {
     if (this.timeoutId !== undefined) {
       clearTimeout(this.timeoutId)
     }
-    const { timeout } = this.props
+    const { timeout, value } = this.props
     this.setState({
       copied: true,
     })
     this.timeoutId = setTimeout(() => {
       this.setState({ copied: false })
     }, timeout)
+    copyToClipboard(value)
   }
 
   render() {
