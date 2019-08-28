@@ -35,7 +35,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   accessibility?: Accessibility
 
   /** Id needed to identify this item inside the Tree. */
-  id?: string
+  id: string
 
   /** The index of the item among its siblings. */
   index?: number
@@ -65,10 +65,10 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   open?: boolean
 
   /** The id of the parent tree item, if any. */
-  parentId?: string
+  parent?: ShorthandValue<TreeItemProps>
 
   /** Array with the ids of the tree item's siblings, if any. */
-  siblingsLength?: number
+  siblings?: ShorthandCollection<TreeItemProps>
 
   /**
    * A custom render iterator for rendering each tree title.
@@ -100,7 +100,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    id: PropTypes.string,
+    id: PropTypes.string.isRequired,
     index: PropTypes.number,
     initialOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
@@ -110,9 +110,9 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     onFocusParent: PropTypes.func,
     onSiblingsExpand: PropTypes.func,
     open: PropTypes.bool,
-    parentId: PropTypes.string,
+    parent: customPropTypes.itemShorthand,
     renderItemTitle: PropTypes.func,
-    siblingsLength: PropTypes.number,
+    siblings: customPropTypes.collectionShorthand,
     title: customPropTypes.itemShorthand,
     treeItemRtlAttributes: PropTypes.func,
   }
@@ -189,7 +189,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
   })
 
   renderContent() {
-    const { items, title, renderItemTitle, open, level, siblingsLength, index } = this.props
+    const { items, title, renderItemTitle, open, level, siblings, index } = this.props
     const hasSubtree = !_.isNil(items) && items.length > 0
 
     return TreeTitle.create(title, {
@@ -199,7 +199,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
         hasSubtree,
         as: hasSubtree ? 'span' : 'a',
         level,
-        siblingsLength,
+        siblingsLength: siblings.length,
         index,
       },
       render: renderItemTitle,

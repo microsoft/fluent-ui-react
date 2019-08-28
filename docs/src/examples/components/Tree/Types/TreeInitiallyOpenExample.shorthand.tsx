@@ -3,43 +3,43 @@ import { Tree } from '@stardust-ui/react'
 
 const items = [
   {
-    key: '1',
+    id: '1',
     title: 'House Lannister',
     initialOpen: true,
     items: [
       {
-        key: '11',
+        id: '11',
         title: 'Tywin',
         items: [
           {
-            key: '111',
+            id: '111',
             title: 'Jaime',
           },
           {
-            key: '112',
+            id: '112',
             title: 'Cersei',
           },
           {
-            key: '113',
+            id: '113',
             title: 'Tyrion',
           },
         ],
       },
       {
-        key: '21',
+        id: '21',
         title: 'Kevan',
         initialOpen: true,
         items: [
           {
-            key: '211',
+            id: '211',
             title: 'Lancel',
           },
           {
-            key: '212',
+            id: '212',
             title: 'Willem',
           },
           {
-            key: '213',
+            id: '213',
             title: 'Martyn',
           },
         ],
@@ -47,24 +47,24 @@ const items = [
     ],
   },
   {
-    key: '2',
+    id: '2',
     title: 'House Targaryen',
     items: [
       {
-        key: '21',
+        id: '21',
         title: 'Aerys',
         initialOpen: true,
         items: [
           {
-            key: '211',
+            id: '211',
             title: 'Rhaegar',
           },
           {
-            key: '212',
+            id: '212',
             title: 'Viserys',
           },
           {
-            key: '213',
+            id: '213',
             title: 'Daenerys',
           },
         ],

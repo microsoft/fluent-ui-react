@@ -25,7 +25,7 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
           tabIndex: -1,
           [IS_FOCUSABLE_ATTRIBUTE]: true,
           role: 'treeitem',
-          'aria-setsize': props.siblingsLength,
+          'aria-setsize': props.siblings.length,
           'aria-posinset': props.index + 1,
           'aria-level': props.level,
         }),
@@ -64,7 +64,7 @@ export type TreeItemBehaviorProps = {
   items?: object[]
   /** If item is a subtree, it indicates if it's open. */
   open?: boolean
-  siblingsLength?: number
+  siblings?: object[]
   level?: number
   index?: number
 }

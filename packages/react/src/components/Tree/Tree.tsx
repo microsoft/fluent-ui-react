@@ -2,7 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Ref } from '@stardust-ui/react-component-ref'
+import { handleRef, Ref } from '@stardust-ui/react-component-ref'
 
 import TreeItem, { TreeItemProps } from './TreeItem'
 import {
@@ -35,10 +35,10 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   accessibility?: Accessibility
 
   /** Map with the subtrees and information related to their open/closed state. */
-  activeItems?: Map<string, TreeActiveItemProps>
+  activeItemIds?: string[]
 
   /** Initial activeIndex value. */
-  defaultActiveItems?: Map<string, TreeActiveItemProps>
+  defaultActiveItemIds?: string[]
 
   /** Only allow one subtree to be open at a time. */
   exclusive?: boolean
@@ -57,28 +57,18 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
 }
 
 export interface TreeItemForRenderProps {
-  level: number
+  elementRef: React.RefObject<HTMLElement>
   id: string
   index: number
-  item: ShorthandValue<TreeItemProps>
   items: TreeItemForRenderProps[]
-  parentId: string
-  siblingsLength: number
-}
-
-/*
- * Needed to keep track of sub-trees open state and also for a11y keyboard navigation,
- * such as expanding siblings on '*' or focusing parent on Arrow Left.
- */
-export interface TreeActiveItemProps {
-  element?: HTMLElement
-  parentId?: string
-  open?: boolean
-  siblingSubtreeIds?: string[]
+  level: number
+  parent: ShorthandValue<TreeItemProps>
+  siblings: ShorthandCollection<TreeItemProps>
 }
 
 export interface TreeState {
-  activeItems: Map<string, TreeActiveItemProps>
+  activeItemIds: string[]
+  itemsForRender: { [s: string]: TreeItemForRenderProps }
 }
 
 class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
@@ -96,8 +86,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    activeItems: PropTypes.any,
-    defaultActiveItems: PropTypes.any,
+    activeItemIds: customPropTypes.collectionShorthand,
+    defaultActiveItemIds: customPropTypes.collectionShorthand,
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
@@ -109,78 +99,57 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     accessibility: treeBehavior,
   }
 
-  // In state we need only the items that can expand and spawn sub-trees.
-  static autoControlledProps = ['activeItems']
+  static autoControlledProps = ['activeItemIds']
 
-  getInitialAutoControlledState() {
-    return { activeItems: new Map() }
-  }
-
-  itemRefs = []
-  treeRef = React.createRef<HTMLElement>()
-
-  /**
-   * For each item it adds information needed for accessibility (screen readers and kb navigation).
-   * Returned values are used for rendering, while the items prop will remain unchanged.
-   */
-  getItemsForRender = _.memoize((itemsFromProps: ShorthandCollection<TreeItemProps>) => {
-    let generatedId = 0
-    const { activeItems } = this.state
-    const { exclusive } = this.props
-
-    const itemsForRenderGenerator = (items = itemsFromProps, level = 1, parentId?: string) => {
-      const siblingSubtreeIds = []
-      let subtreeAlreadyOpen = false
-
+  static getItemsForRender = _.memoize((itemsFromProps: ShorthandCollection<TreeItemProps>) => {
+    // activeItemIds = [] // if we get new items, we reset the active items.
+    const itemsForRenderGenerator = (
+      items = itemsFromProps,
+      level = 1,
+      parent?: ShorthandValue<TreeItemProps>,
+    ) => {
       return _.reduce(
         items,
-        (acc: TreeItemForRenderProps[], item: ShorthandValue<TreeItemProps>, index: number) => {
-          const isSubtree = !!item['items'] && item['items'].length > 0
-          const id = item['id'] || `treeItemId${generatedId++}`
+        (acc: Object, item: ShorthandValue<TreeItemProps>, index: number) => {
+          const id = item['id']
+          const isSubtree = item['items'] && item['items'].length > 0
 
-          activeItems.set(id, { siblingSubtreeIds })
-
-          if (isSubtree) {
-            const subtreeOpen = !!item['initialOpen']
-            if (subtreeOpen && exclusive) {
-              // if exclusive, will open only first subtree.
-              subtreeAlreadyOpen = true
-            }
-            this.setActiveItem(id, { open: subtreeOpen && !subtreeAlreadyOpen })
-            siblingSubtreeIds.push(id)
-          }
-
-          acc.push({
-            // initial item.
-            item,
-            // added props needed for a11y.
+          acc[id] = {
+            elementRef: React.createRef<HTMLElement>(),
             level,
             index,
-            siblingsLength: items.length,
-            parentId,
-            id,
-            // children items will go through the same process.
-            ...(isSubtree && { items: itemsForRenderGenerator(item['items'], level + 1, id) }),
-          })
-          return acc
+            parent,
+            siblings: items.filter(currentItem => currentItem !== item),
+          }
+
+          return {
+            ...acc,
+            ...(isSubtree ? itemsForRenderGenerator(item['items'], level + 1, item) : {}),
+          }
         },
-        [],
+        {},
       )
     }
 
-    const itemsForRender = itemsForRenderGenerator()
-
-    /* Remove each item's id from its array of siblingSubtreeIds. */
-    for (const key of Array.from(activeItems.keys())) {
-      this.setActiveItem(key, ({ siblingSubtreeIds }) => ({
-        siblingSubtreeIds: siblingSubtreeIds.filter(id => id !== key),
-      }))
-    }
-
-    this.setState({ activeItems })
-
-    return itemsForRender
+    return itemsForRenderGenerator(itemsFromProps)
   })
+
+  static getAutoControlledStateFromProps(nextProps: TreeProps, prevState: TreeState) {
+    const { activeItemIds } = prevState
+
+    const itemsForRender = Tree.getItemsForRender(nextProps.items)
+
+    return {
+      itemsForRender,
+      activeItemIds,
+    }
+  }
+
+  getInitialAutoControlledState() {
+    return { activeItemIds: [] }
+  }
+
+  treeRef = React.createRef<HTMLElement>()
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
     onTitleClick: (
@@ -188,48 +157,67 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       treeItemProps: TreeItemProps,
       predefinedProps: TreeItemProps,
     ) => {
-      const { activeItems } = this.state
-      const { id, items } = treeItemProps
+      const { activeItemIds } = this.state
+      const { id, items, siblings } = treeItemProps
+      const { exclusive } = this.props
 
-      if (items && items.length > 0) {
-        this.closeSiblingWhenExlusive(id)
-        this.setActiveItem(id, ({ open }) => ({ open: !open }))
-
-        this.setState({
-          activeItems,
-        })
+      if (!items || items.length === 0) {
+        return
       }
+
+      const indexOfActiveItem = activeItemIds.indexOf(id)
+
+      if (indexOfActiveItem > -1) {
+        activeItemIds.splice(indexOfActiveItem, 1)
+      } else {
+        if (exclusive) {
+          siblings.some(sibling => {
+            const activeSiblingIndex = activeItemIds.indexOf(sibling['id'])
+            if (activeSiblingIndex > -1) {
+              activeItemIds.splice(activeSiblingIndex, 1)
+              return true
+            }
+            return false
+          })
+        }
+
+        activeItemIds.push(id)
+      }
+
+      this.setState({
+        activeItemIds,
+      })
 
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
     onFocusParent: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      const { parentId } = treeItemProps
+      const { parent } = treeItemProps
 
-      if (!parentId) {
+      if (!parent) {
         return
       }
 
-      const { activeItems } = this.state
-      const elementToBeFocused = activeItems.get(parentId).element
+      const { itemsForRender } = this.state
+      const elementToBeFocused = itemsForRender[parent['id']].elementRef
 
       if (!elementToBeFocused) {
         return
       }
 
-      elementToBeFocused.focus()
+      elementToBeFocused.current.focus()
       _.invoke(predefinedProps, 'onFocusParent', e, treeItemProps)
     },
     onFocusFirstChild: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
       const { id } = treeItemProps
 
-      const { activeItems } = this.state
-      const currentElement = activeItems.get(id).element
+      const { itemsForRender } = this.state
+      const currentElement = itemsForRender[id].elementRef
 
-      if (!currentElement) {
+      if (!currentElement && currentElement.current) {
         return
       }
 
-      const elementToBeFocused = getNextElement(this.treeRef.current, currentElement)
+      const elementToBeFocused = getNextElement(this.treeRef.current, currentElement.current)
 
       if (!elementToBeFocused) {
         return
@@ -244,19 +232,21 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       }
 
       const { id, items } = treeItemProps
-      const { activeItems } = this.state
-      const { siblingSubtreeIds } = activeItems.get(id)
+      const { itemsForRender, activeItemIds } = this.state
+      const { siblings } = itemsForRender[id]
 
-      siblingSubtreeIds.forEach(siblingSubtreeId => {
-        this.setActiveItem(siblingSubtreeId, { open: true })
+      siblings.forEach(sibling => {
+        if (activeItemIds.indexOf(sibling['id']) < 0) {
+          activeItemIds.push(sibling['id'])
+        }
       })
 
-      if (items && items.length > 0) {
-        this.setActiveItem(id, { open: true })
+      if (items && items.length > 0 && activeItemIds.indexOf(id) < 0) {
+        activeItemIds.push(id)
       }
 
       this.setState({
-        activeItems,
+        activeItemIds,
       })
 
       _.invoke(predefinedProps, 'onSiblingsExpand', e, treeItemProps)
@@ -264,63 +254,58 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   })
 
   renderContent() {
-    const { activeItems } = this.state
+    const { activeItemIds, itemsForRender } = this.state
     const { items, renderItemTitle } = this.props
 
     if (!items) return null
 
-    const renderItems = (itemsForRender: TreeItemForRenderProps[]) => {
-      return itemsForRender.reduce(
-        (renderedItems: any[], itemForRender: TreeItemForRenderProps, index: number) => {
-          const { item, items, parentId, id, ...rest } = itemForRender
-          const isFirstChild = index === 0 && !!parentId
-          const isSubtree = !!items && items.length > 0
-          const isSubtreeOpen = isSubtree && activeItems.get(id).open
+    const renderItems = (items: ShorthandCollection<TreeItemProps>): any[] => {
+      return items.reduce((renderedItems: any[], item: ShorthandValue<TreeItemProps>) => {
+        const itemForRender = itemsForRender[item['id']]
+        const items = item['items']
+        const { elementRef, ...rest } = itemForRender
+        const isSubtree = !!items && items.length > 0
+        const isSubtreeOpen = activeItemIds.indexOf(item['id']) > -1
 
-          const renderedItem = TreeItem.create(item, {
-            defaultProps: {
-              className: Tree.slotClassNames.item,
-              open: isSubtreeOpen,
-              id,
-              parentId,
-              renderItemTitle,
-              ...rest,
-            },
-            overrideProps: this.handleTreeItemOverrides,
-          })
+        const renderedItem = TreeItem.create(item, {
+          defaultProps: {
+            className: Tree.slotClassNames.item,
+            open: isSubtreeOpen,
+            renderItemTitle,
+            key: item['id'],
+            ...rest,
+          },
+          overrideProps: this.handleTreeItemOverrides,
+        })
 
-          // Only need refs of the items that spawn subtrees, when they need to be focused
-          // by any of their children, using Arrow Left.
-          const finalRenderedItem =
-            isSubtree || isFirstChild ? (
-              <Ref
-                key={item['key'] || id}
-                innerRef={(itemElement: HTMLElement) => {
-                  this.setActiveItem(id, { element: itemElement })
-                }}
-              >
-                {renderedItem}
-              </Ref>
-            ) : (
-              renderedItem
-            )
+        // Only need refs of the items that spawn subtrees, when they need to be focused
+        // by any of their children, using Arrow Left.
+        const finalRenderedItem = isSubtree ? (
+          <Ref
+            key={item['key'] || item['id']}
+            innerRef={(itemElement: HTMLElement) => {
+              handleRef(elementRef, itemElement)
+            }}
+          >
+            {renderedItem}
+          </Ref>
+        ) : (
+          renderedItem
+        )
 
-          return [
-            ...(renderedItems as any[]),
-            finalRenderedItem,
-            ...[isSubtreeOpen ? renderItems(items) : []],
-          ]
-        },
-        [],
-      )
+        return [
+          ...(renderedItems as any[]),
+          finalRenderedItem,
+          ...[isSubtreeOpen ? renderItems(items) : []],
+        ]
+      }, [])
     }
 
-    return renderItems(this.getItemsForRender(items))
+    return renderItems(items)
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { children } = this.props
-    this.itemRefs = []
 
     return (
       <Ref innerRef={this.treeRef}>
@@ -335,54 +320,6 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         </ElementType>
       </Ref>
     )
-  }
-
-  /**
-   * Similar to how setState works, merges changes on top of old value of an activeItem.
-   *
-   * @param id Id of the activeItem.
-   * @param changes Changes to be merged on top of old value or a callback that takes old
-   * value as param and returns a new value.
-   */
-  setActiveItem(
-    id: string,
-    changes: ((oldValue: TreeActiveItemProps) => TreeActiveItemProps) | TreeActiveItemProps,
-  ) {
-    const { activeItems } = this.state
-    const activeItemValue = activeItems.get(id)
-    activeItems.set(id, {
-      ...activeItemValue,
-      ...(_.isFunction(changes) ? changes(activeItemValue) : changes),
-    })
-  }
-
-  /**
-   * In the case of exclusive tree, we will close the other open sibling at opening
-   * a tree item.
-   *
-   * @param id The id of the tree item to be opened.
-   */
-  closeSiblingWhenExlusive(id: string) {
-    const { exclusive } = this.props
-
-    if (!exclusive) {
-      return
-    }
-
-    const { activeItems } = this.state
-    const activeItemValue = activeItems.get(id)
-
-    if (activeItemValue.siblingSubtreeIds.length === 0) {
-      return
-    }
-
-    const alreadyOpenSiblingId = activeItemValue.siblingSubtreeIds.find(siblingSubtreeId => {
-      return activeItems.get(siblingSubtreeId).open
-    })
-
-    if (alreadyOpenSiblingId) {
-      this.setActiveItem(alreadyOpenSiblingId, { open: false })
-    }
   }
 }
 
