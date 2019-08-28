@@ -16,7 +16,7 @@ const selectableListBehavior: Accessibility<ListBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'listbox',
-      tabIndex: props.selectable ? (props.isItemFocused ? -1 : 0) : undefined,
+      tabIndex: props.isItemFocused ? -1 : 0,
       ...(props.horizontal && {
         'aria-orientation': 'horizontal',
       }),
