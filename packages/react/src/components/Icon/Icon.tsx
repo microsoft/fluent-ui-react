@@ -94,8 +94,5 @@ Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name', allo
 
 /**
  * An Icon displays a pictogram with semantic meaning.
- *
- * @accessibility
- * Icon is usually only a visual representation and therefore is hidden from screen readers, unless 'alt' or 'aria-label' property is provided.
  */
 export default withSafeTypeForAs<typeof Icon, IconProps, 'span'>(Icon)
