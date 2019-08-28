@@ -26,7 +26,7 @@ const config: ScreenerTestsConfig = {
         .snapshot('Focuses trigger')
         .keys(selectors.triggerButton, keys.downArrow)
         .snapshot('Focuses first item')
-        .keys(selectors.item(1), keys.downArrow)
+        .keys(selectors.triggerButton, keys.downArrow)
         .snapshot('Focuses second item'),
   ],
 }
