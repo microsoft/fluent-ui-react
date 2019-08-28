@@ -20,6 +20,14 @@ const config: ScreenerTestsConfig = {
         .snapshot('Highlights another item')
         .click(selectors.triggerButton)
         .snapshot('Closes the list'),
+    (builder, keys) =>
+      builder
+        .keys('body', keys.tab)
+        .snapshot('Focuses trigger')
+        .keys(selectors.triggerButton, keys.downArrow)
+        .snapshot('Focuses first item')
+        .hover(selectors.item(1))
+        .snapshot('Focuses second item'),
   ],
 }
 
