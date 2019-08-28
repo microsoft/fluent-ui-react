@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import { Flex, Loader, Text, Provider, Segment, Header } from '@stardust-ui/react'
 import { link } from './../../utils/helpers'
 import { BehaviorInfo, ComponentInfo, BehaviorVariantionInfo } from 'docs/src/types'
-import { BehaviorCard, exampleStyle } from './BehaviorCard'
+import { BehaviorCard, exampleStyle, behaviorVariantDisplayName } from './BehaviorCard'
 
 const InlineMarkdown = React.lazy(() => import('./InlineMarkdown'))
 
@@ -121,7 +121,10 @@ export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({
                 allAvailableBehaviors.map(variant => {
                   return (
                     <li>
-                      {link(`${variant.name.replace('.ts', '')}`, `#${_.kebabCase(variant.name)}`)}
+                      {link(
+                        `${behaviorVariantDisplayName(variant.name)}`,
+                        `#${_.kebabCase(variant.name)}`,
+                      )}
                     </li>
                   )
                 })}

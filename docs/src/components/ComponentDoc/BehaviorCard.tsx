@@ -5,7 +5,7 @@ import ComponentExampleTitle from './ComponentExample/ComponentExampleTitle'
 import BehaviorDescription from './BehaviorDescription'
 import { BehaviorVariantionInfo } from 'docs/src/types'
 
-const baseName = (fileName: string) => {
+export const behaviorVariantDisplayName = (fileName: string) => {
   const divided = _.startCase(fileName.replace(/Behavior\.ts$/, ''))
   return _.upperFirst(_.lowerCase(divided))
 }
@@ -25,7 +25,7 @@ export class BehaviorCard extends React.Component<BehaviorCardProps> {
       <>
         <Segment className="docs-example" id={_.kebabCase(variation.name)} styles={exampleStyle}>
           <ComponentExampleTitle
-            title={baseName(variation.name)}
+            title={behaviorVariantDisplayName(variation.name)}
             description={`Name: ${variation.name.replace('.ts', '')}`}
           />
           <Divider />
