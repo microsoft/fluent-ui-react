@@ -13,7 +13,7 @@ Steps.prototype.switchTheme = function switchTheme(themeName: ScreenerThemeName)
   return this.executeScript(`window.switchTheme("${themeName}")`)
 }
 
-const getScreenerSteps = (stepsModulePath: string): any[] => {
+const getScreenerSteps = (pageUrl: string, stepsModulePath: string): any[] => {
   if (!fs.existsSync(`${stepsModulePath}.ts`)) {
     return undefined
   }
@@ -29,7 +29,9 @@ const getScreenerSteps = (stepsModulePath: string): any[] => {
 
     _.forEach(screenerSteps, screenerStep => {
       screenerStep(stepsBuilder, keys)
-      stepsBuilder.resetExternalLayout()
+
+      // We need to reload page to reset mouse position between tests
+      stepsBuilder.url(pageUrl).switchTheme(themeName)
     })
   })
 
