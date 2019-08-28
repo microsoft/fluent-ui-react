@@ -1,15 +1,28 @@
 import * as React from 'react'
 import { Popup, Button, Text } from '@stardust-ui/react/src'
 
-class CopyToClipboard extends React.Component {
+export type CopyToClipboardProps = {
+  timeout?: number
+  value: string
+}
+
+class CopyToClipboard extends React.Component<CopyToClipboardProps> {
   state = {
-    popupContent: 'Copy commit ID',
+    copied: false,
   }
+  timeoutId = undefined
 
   handleClick = () => {
+    if (this.timeoutId !== undefined) {
+      clearTimeout(this.timeoutId)
+    }
+    const { timeout } = this.props
     this.setState({
-      popupContent: 'Copied to clipboard',
+      copied: true,
     })
+    this.timeoutId = setTimeout(() => {
+      this.setState({ copied: false })
+    }, timeout)
   }
 
   render() {
@@ -18,8 +31,17 @@ class CopyToClipboard extends React.Component {
         pointing
         position="below"
         align="center"
-        trigger={<Button icon="clipboard-copied-to" iconOnly onClick={this.handleClick} />}
-        content={<Text>{this.state.popupContent}</Text>}
+        trigger={
+          <Button
+            icon="clipboard-copied-to"
+            iconOnly
+            onClick={this.handleClick}
+            variables={siteVariables => ({
+              colorHover: !this.state.copied && siteVariables.colors.brand[400],
+            })}
+          />
+        }
+        content={<Text>{this.state.copied ? 'Copied to clipboard' : 'Copy commit ID'}</Text>}
         on={['hover', 'context']}
       />
     )
