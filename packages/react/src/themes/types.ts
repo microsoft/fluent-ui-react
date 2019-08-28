@@ -548,3 +548,13 @@ export type RequiredIconNames =
 export type ThemeIcons = Partial<Record<RequiredIconNames, ThemeIconSpec>> & {
   [iconName: string]: ThemeIconSpec
 }
+
+export type RequiredAnimationNames =
+  | 'stardust-menu-animation'
+  | 'stardust-popup-animation'
+  | 'stardust-other-animation'
+
+// I'm pretty sure I need to do something with the ThemeAnimation interface here
+export type ThemeAnimations = Partial<Record<RequiredAnimationNames, string>> & {
+  [animationName: string]: string
+}

@@ -261,6 +261,8 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
             >
               {Menu.create(menu, {
                 defaultProps: {
+                  animation: 'stardust-menu-animation', // I can just put an animation name (i.e. fadeEnterFast) from the theme here, but this has the same problem as Icon does, with using a themed icon in a component
+                  // animation: 'fadeEnterFast', // This works
                   accessibility: submenuBehavior,
                   className: MenuItem.slotClassNames.submenu,
                   vertical: true,
