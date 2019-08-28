@@ -64,6 +64,13 @@ export interface ListItemProps
    * @param {object} data - All props.
    */
   onFocus?: ComponentEventHandler<ListItemProps>
+
+  /**
+   * Called after item's blur.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onBlur?: ComponentEventHandler<ListItemProps>
 }
 
 export interface ListItemState {
@@ -104,6 +111,7 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
 
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
   }
 
   static defaultProps = {
@@ -129,6 +137,11 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
   handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
     _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
+  handleBlur = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: false })
+    _.invoke(this.props, 'onBlur', e, this.props)
   }
 
   renderComponent({ classes, accessibility, unhandledProps, styles }) {
@@ -197,6 +210,7 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
         className={classes.root}
         onClick={this.handleClick}
         onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
         {...accessibility.attributes.root}
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
