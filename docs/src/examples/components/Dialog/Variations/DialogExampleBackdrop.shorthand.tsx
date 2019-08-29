@@ -3,7 +3,7 @@ import { Button, Dialog } from '@stardust-ui/react'
 import * as React from 'react'
 
 const DialogExampleBackdrop = () => {
-  const [backdrop] = useBooleanKnob({ initialValue: false, name: 'backdrop' })
+  const [backdrop] = useBooleanKnob({ name: 'backdrop', initialValue: true })
 
   return (
     <Dialog
