@@ -25,6 +25,7 @@ import {
 import { Accessibility } from '../../lib/accessibility/types'
 import { treeBehavior } from '../../lib/accessibility'
 import { getNextElement } from '../../lib/accessibility/FocusZone/focusUtilities'
+import { hasSubtree, removeItemAtIndex } from './lib'
 
 export interface TreeSlotClassNames {
   item: string
@@ -34,10 +35,10 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
-  /** Map with the subtrees and information related to their open/closed state. */
+  /** Ids of opened items. */
   activeItemIds?: string[]
 
-  /** Initial activeIndex value. */
+  /** Initial activeItemIds value. */
   defaultActiveItemIds?: string[]
 
   /** Only allow one subtree to be open at a time. */
@@ -100,10 +101,6 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   static autoControlledProps = ['activeItemIds']
 
-  static hasSubtree(item: TreeItemProps | ShorthandValue<TreeItemProps>): boolean {
-    return !_.isNil(item['items']) && item['items'].length > 0
-  }
-
   static getItemsForRender = _.memoize((itemsFromProps: ShorthandCollection<TreeItemProps>) => {
     const itemsForRenderGenerator = (
       items = itemsFromProps,
@@ -114,7 +111,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         items,
         (acc: Object, item: ShorthandValue<TreeItemProps>, index: number) => {
           const id = item['id']
-          const isSubtree = Tree.hasSubtree(item)
+          const isSubtree = hasSubtree(item)
 
           acc[id] = {
             elementRef: React.createRef<HTMLElement>(),
@@ -152,7 +149,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
     onTitleClick: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      if (!Tree.hasSubtree(treeItemProps)) {
+      if (!hasSubtree(treeItemProps)) {
         return
       }
 
@@ -163,19 +160,14 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       const activeItemIdIndex = activeItemIds.indexOf(id)
 
       if (activeItemIdIndex > -1) {
-        activeItemIds = [
-          ...activeItemIds.slice(0, activeItemIdIndex),
-          ...activeItemIds.slice(activeItemIdIndex + 1),
-        ]
+        activeItemIds = removeItemAtIndex(activeItemIds, activeItemIdIndex)
       } else {
         if (exclusive) {
           siblings.some(sibling => {
             const activeSiblingIdIndex = activeItemIds.indexOf(sibling['id'])
             if (activeSiblingIdIndex > -1) {
-              activeItemIds = [
-                ...activeItemIds.slice(0, activeSiblingIdIndex),
-                ...activeItemIds.slice(activeSiblingIdIndex + 1),
-              ]
+              activeItemIds = removeItemAtIndex(activeItemIds, activeSiblingIdIndex)
+
               return true
             }
             return false
@@ -236,12 +228,12 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       const { activeItemIds } = this.state
 
       siblings.forEach(sibling => {
-        if (Tree.hasSubtree(sibling) && activeItemIds.indexOf(sibling['id']) < 0) {
+        if (hasSubtree(sibling) && this.isActiveItem(sibling['id'])) {
           activeItemIds.push(sibling['id'])
         }
       })
 
-      if (Tree.hasSubtree(treeItemProps) && activeItemIds.indexOf(id) < 0) {
+      if (hasSubtree(treeItemProps) && this.isActiveItem(id)) {
         activeItemIds.push(id)
       }
 
@@ -254,7 +246,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   })
 
   renderContent(): React.ReactElement[] {
-    const { activeItemIds, itemsForRender } = this.state
+    const { itemsForRender } = this.state
     const { items, renderItemTitle } = this.props
 
     if (!items) return null
@@ -263,8 +255,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       return items.reduce((renderedItems: any[], item: ShorthandValue<TreeItemProps>) => {
         const itemForRender = itemsForRender[item['id']]
         const { elementRef, ...restItemForRender } = itemForRender
-        const isSubtree = Tree.hasSubtree(item)
-        const isSubtreeOpen = isSubtree && activeItemIds.indexOf(item['id']) > -1
+        const isSubtree = hasSubtree(item)
+        const isSubtreeOpen = isSubtree && this.isActiveItem(item['id'])
 
         const renderedItem = TreeItem.create(item, {
           defaultProps: {
@@ -314,6 +306,11 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         </ElementType>
       </Ref>
     )
+  }
+
+  isActiveItem = (id: string): boolean => {
+    const { activeItemIds } = this.state
+    return activeItemIds.indexOf(id) > -1
   }
 }
 
