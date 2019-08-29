@@ -152,13 +152,13 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
     onTitleClick: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      let { activeItemIds } = this.state
-      const { id, siblings } = treeItemProps
-      const { exclusive } = this.props
-
       if (!Tree.hasSubtree(treeItemProps)) {
         return
       }
+
+      let { activeItemIds } = this.state
+      const { id, siblings } = treeItemProps
+      const { exclusive } = this.props
 
       const activeItemIdIndex = activeItemIds.indexOf(id)
 
@@ -214,7 +214,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       const { itemsForRender } = this.state
       const currentElement = itemsForRender[id].elementRef
 
-      if (!currentElement && currentElement.current) {
+      if (!currentElement || !currentElement.current) {
         return
       }
 
