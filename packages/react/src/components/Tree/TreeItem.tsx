@@ -3,7 +3,6 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import Tree from './Tree'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
 import { treeItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -25,6 +24,7 @@ import {
   withSafeTypeForAs,
   ShorthandCollection,
 } from '../../types'
+import { hasSubtree } from './lib'
 
 export interface TreeItemSlotClassNames {
   title: string
@@ -131,7 +131,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
 
   static getDerivedStateFromProps(props: TreeItemProps) {
     return {
-      hasSubtree: Tree.hasSubtree(props),
+      hasSubtree: hasSubtree(props),
       treeSize: props.siblings.length + 1,
     }
   }

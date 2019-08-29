@@ -191,13 +191,17 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       }
 
       const { itemsForRender } = this.state
-      const elementToBeFocused = itemsForRender[parent['id']].elementRef
+      const parentItemForRender = itemsForRender[parent['id']]
 
-      if (!elementToBeFocused) {
+      if (
+        !parentItemForRender ||
+        !parentItemForRender.elementRef ||
+        !parentItemForRender.elementRef.current
+      ) {
         return
       }
 
-      elementToBeFocused.current.focus()
+      parentItemForRender.elementRef.current.focus()
       _.invoke(predefinedProps, 'onFocusParent', e, treeItemProps)
     },
     onFocusFirstChild: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
@@ -228,12 +232,12 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       const { activeItemIds } = this.state
 
       siblings.forEach(sibling => {
-        if (hasSubtree(sibling) && this.isActiveItem(sibling['id'])) {
+        if (hasSubtree(sibling) && !this.isActiveItem(sibling['id'])) {
           activeItemIds.push(sibling['id'])
         }
       })
 
-      if (hasSubtree(treeItemProps) && this.isActiveItem(id)) {
+      if (hasSubtree(treeItemProps) && !this.isActiveItem(id)) {
         activeItemIds.push(id)
       }
 
