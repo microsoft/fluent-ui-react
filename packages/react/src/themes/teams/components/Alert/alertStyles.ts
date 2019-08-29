@@ -100,8 +100,22 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     margin: v.actionsMargin,
   }),
 
+  header: ({ variables: v }): ICSSInJSStyle => ({
+    fontWeight: v.headerFontWeight,
+    margin: v.headerMargin,
+  }),
+
+  body: (): ICSSInJSStyle => ({
+    display: 'flex',
+    flexGrow: 1,
+  }),
+
   content: (): ICSSInJSStyle => ({
     flexGrow: 1,
+  }),
+
+  icon: ({ variables: v }): ICSSInJSStyle => ({
+    margin: v.iconMargin,
   }),
 
   dismissAction: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => {

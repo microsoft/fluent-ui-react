@@ -1,27 +1,17 @@
-export const appTemplateJs = `import { Provider, themes } from "@stardust-ui/react"
-import React from "react";
-import ReactDOM from "react-dom";
-
-import Example from "./example";
-
-ReactDOM.render(
-  <Provider theme={themes.teams}>
-    <Example />
-  </Provider>,
-  document.getElementById("root")
-);
-`
-
-export const appTemplateTs = `import { Provider, themes } from "@stardust-ui/react"
+export const appTemplate = `import { SandboxApp } from "@stardust-ui/code-sandbox"
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import Example from "./example";
 
+//
+// You can edit this example in "example.js" or "example.tsx".
+//
+
 ReactDOM.render(
-  <Provider theme={themes.teams}>
+  <SandboxApp>
     <Example />
-  </Provider>,
+  </SandboxApp>,
   document.getElementById("root")
 );
 `

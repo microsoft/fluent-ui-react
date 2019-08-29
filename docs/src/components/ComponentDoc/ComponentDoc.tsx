@@ -28,8 +28,18 @@ type ComponentDocProps = {
   tabs: string[]
 } & RouteComponentProps<{}>
 
-class ComponentDoc extends React.Component<ComponentDocProps, any> {
-  state: any = {}
+type ComponentDocState = {
+  activePath: string
+  currentTabIndex: number
+  defaultPropComponent: string
+}
+
+class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState> {
+  state = {
+    activePath: '',
+    defaultPropComponent: '',
+    currentTabIndex: 0,
+  }
 
   tabRegex = new RegExp(/[^\/]*$/)
 
@@ -78,8 +88,6 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
   handleExamplePassed = (passedAnchorName: string) => {
     this.setState({ activePath: passedAnchorName })
   }
-
-  handleExamplesRef = examplesRef => this.setState({ examplesRef })
 
   /* TODO: bring back the right floating menu
   handleSidebarItemClick = (e, { examplePath }) => {
@@ -134,8 +142,8 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
       return ''
     }
 
-    const { info } = this.props
-    const { activePath } = this.state
+    const { info, tabs } = this.props
+    const { activePath, currentTabIndex, defaultPropComponent } = this.state
 
     return (
       <div style={{ padding: '20px' }}>
@@ -177,9 +185,8 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
               <Menu
                 underlined
                 primary
-                defaultActiveIndex={0}
-                activeIndex={this.state.currentTabIndex}
-                items={this.props.tabs}
+                activeIndex={currentTabIndex}
+                items={tabs}
                 onItemClick={this.handleTabClick}
                 accessibility={tabListBehavior}
               />
@@ -194,7 +201,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
           <ComponentProps
             displayName={info.displayName}
             props={info.props}
-            defaultComponentProp={this.state.defaultPropComponent}
+            defaultComponentProp={defaultPropComponent}
             onPropComponentSelected={this.onPropComponentSelected}
           />
         )}
@@ -214,16 +221,14 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
             >
               <div>
                 <ComponentBestPractices displayName={info.displayName} />
-                <div ref={this.handleExamplesRef}>
-                  <ExampleContext.Provider
-                    value={{
-                      activeAnchorName: activePath,
-                      onExamplePassed: this.handleExamplePassed,
-                    }}
-                  >
-                    <ComponentExamples displayName={info.displayName} />
-                  </ExampleContext.Provider>
-                </div>
+                <ExampleContext.Provider
+                  value={{
+                    activeAnchorName: activePath,
+                    onExamplePassed: this.handleExamplePassed,
+                  }}
+                >
+                  <ComponentExamples displayName={info.displayName} />
+                </ExampleContext.Provider>
               </div>
             </Grid>
           </>

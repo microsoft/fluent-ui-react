@@ -82,7 +82,9 @@ const componentsSrc = [
   `${paths.posix.packageSrc('react-component-ref')}/[A-Z]*.tsx`,
   `${paths.posix.packageSrc('react')}/lib/accessibility/FocusZone/[A-Z]!(*.types).tsx`,
 ]
-const behaviorSrc = [`${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
+const behaviorSrc = [
+  `${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*Behavior.ts`,
+]
 const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/!(*index|.knobs).tsx`
 const markdownSrc = [
