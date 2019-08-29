@@ -9,18 +9,14 @@ export default {
     background: v.rootBackground,
     borderRadius: v.rootBorderRadius,
     outline: 'none',
-    position: 'absolute',
     padding: v.rootPadding,
+    position: 'relative',
     width: v.rootWidth,
     // CSS Grid is polifilled only with latest inline-style-prefixer
     // @ts-ignore is supported by fallback values plugin
     display: ['grid', '-ms-grid'],
     gridTemplateColumns: '1fr auto',
     '-ms-grid-columns': `1fr auto`,
-
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
 
     zIndex: v.zIndex,
   }),
@@ -51,17 +47,17 @@ export default {
     gridColumn: 2,
   }),
   overlay: ({ props: p, variables: v }: DialogStyleParams): ICSSInJSStyle => ({
+    alignItems: 'center',
     bottom: 0,
     display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
     left: 0,
     overflow: 'auto',
     position: 'fixed',
     right: 0,
     top: 0,
-    zIndex: v.overlayZIndex,
 
-    ...(p.backdrop && {
-      background: v.overlayBackground,
-    }),
+    ...(p.modal && { background: v.overlayBackground, zIndex: v.overlayZIndex }),
   }),
 }

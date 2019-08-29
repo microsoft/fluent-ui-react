@@ -43,9 +43,6 @@ export interface DialogProps
   /** A dialog can contain actions. */
   actions?: ShorthandValue<BoxProps>
 
-  /** A dialog can have a backdrop on its overlay. */
-  backdrop?: boolean
-
   /** A dialog can contain a cancel button. */
   cancelButton?: ShorthandValue<ButtonProps>
 
@@ -65,10 +62,10 @@ export interface DialogProps
   headerAction?: ShorthandValue<ButtonProps>
 
   /**
-   * Whether the dialog should be inert, e.g. not dismiss when focusing/clicking outside of the dialog. Hides an
-   * overlay.
+   * Whether content outside should be inert, e.g. when focusing/clicking outside is not possible and the dialog will\
+   * have a visible overlay.
    */
-  inert?: boolean
+  modal?: boolean
 
   /**
    * Called after user's click a cancel button.
@@ -122,14 +119,13 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       content: 'shorthand',
     }),
     actions: customPropTypes.itemShorthand,
-    backdrop: PropTypes.bool,
     headerAction: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
     closeOnOutsideClick: PropTypes.bool,
     confirmButton: customPropTypes.itemShorthand,
     defaultOpen: PropTypes.bool,
     header: customPropTypes.itemShorthand,
-    inert: PropTypes.bool,
+    modal: PropTypes.bool,
     onCancel: PropTypes.func,
     onConfirm: PropTypes.func,
     onOpen: PropTypes.func,
@@ -142,9 +138,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   static defaultProps = {
     accessibility: dialogBehavior,
     actions: {},
-    backdrop: true,
     closeOnOutsideClick: true,
-    inert: false,
+    modal: true,
     overlay: {},
     trapFocus: true,
   }
@@ -210,14 +205,12 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   })
 
   handleOverlayClick = (e: MouseEvent) => {
-    const { closeOnOutsideClick } = this.props
-
     // Dialog has different conditions to close than Popup, so we don't need to iterate across all
     // refs
     const isInsideContentClick = doesNodeContainClick(this.contentRef.current, e)
     const isInsideOverlayClick = doesNodeContainClick(this.overlayRef.current, e)
 
-    const shouldClose = closeOnOutsideClick && !isInsideContentClick && isInsideOverlayClick
+    const shouldClose = !isInsideContentClick && isInsideOverlayClick
 
     if (shouldClose) {
       this.handleDialogCancel(e)
@@ -240,12 +233,13 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   renderComponent({ accessibility, classes, ElementType, styles, unhandledProps, rtl }) {
     const {
       actions,
-      confirmButton,
       cancelButton,
+      closeOnOutsideClick,
+      confirmButton,
       content,
       header,
       headerAction,
-      inert,
+      modal,
       overlay,
       trapFocus,
       trigger,
@@ -322,7 +316,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       <Portal
         onTriggerClick={this.handleDialogOpen}
         open={open}
-        trapFocus={trapFocus}
+        trapFocus={modal && trapFocus}
         trigger={trigger}
         triggerAccessibility={triggerAccessibility}
         triggerRef={this.triggerRef}
@@ -330,25 +324,22 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
         <Unstable_NestingAuto>
           {(getRefs, nestingRef) => (
             <>
-              {inert && dialogContent}
+              <Ref
+                innerRef={(contentNode: HTMLElement) => {
+                  this.overlayRef.current = contentNode
+                  nestingRef.current = contentNode
+                }}
+              >
+                {Box.create(overlay, {
+                  defaultProps: {
+                    className: Dialog.slotClassNames.overlay,
+                    styles: styles.overlay,
+                  },
+                  overrideProps: { content: dialogContent },
+                })}
+              </Ref>
 
-              {!inert && (
-                <Ref
-                  innerRef={(contentNode: HTMLElement) => {
-                    this.overlayRef.current = contentNode
-                    nestingRef.current = contentNode
-                  }}
-                >
-                  {Box.create(overlay, {
-                    defaultProps: {
-                      className: Dialog.slotClassNames.overlay,
-                      styles: styles.overlay,
-                    },
-                    overrideProps: { content: dialogContent },
-                  })}
-                </Ref>
-              )}
-              {!inert && (
+              {closeOnOutsideClick && modal && (
                 <EventListener
                   listener={this.handleOverlayClick}
                   targetRef={targetRef}
