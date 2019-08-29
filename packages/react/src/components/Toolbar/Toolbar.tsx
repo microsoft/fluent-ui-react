@@ -309,5 +309,7 @@ Toolbar.create = createShorthandFactory({ Component: Toolbar, mappedProp: 'conte
  *
  * @accessibility
  *  * Implements [ARIA Toolbar](https://www.w3.org/TR/wai-aria-practices-1.1/#toolbar) design pattern.
+ * @accessibilityIssues
+ * [Issue 988424: VoiceOver narrates selected for button in toolbar](https://bugs.chromium.org/p/chromium/issues/detail?id=988424)
  */
 export default withSafeTypeForAs<typeof Toolbar, ToolbarProps>(Toolbar)
