@@ -82,12 +82,12 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   title?: ShorthandValue<TreeTitleProps>
 }
 
-export interface TreeState {
+export interface TreeItemState {
   treeSize: number // size of the tree without children.
   hasSubtree: boolean
 }
 
-class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeState> {
+class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
   static create: Function
 
   static displayName = 'TreeItem'
