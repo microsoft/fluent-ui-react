@@ -94,7 +94,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
    * Flag to define when we've intentionally parked focus on the root element to temporarily
    * hold focus until items appear within the zone.
    */
-  _isParked: boolean
+  _isParked: boolean = false
   _parkedTabIndex: string | null | undefined
 
   /** The child element with tabindex=0. */
