@@ -32,7 +32,7 @@ const splitButtonBehavior: Accessibility = props => {
 
   return {
     attributes: {
-      secondaryButton: {
+      toggleButton: {
         tabIndex: -1,
       },
     },
