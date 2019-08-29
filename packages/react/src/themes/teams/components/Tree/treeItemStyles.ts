@@ -5,9 +5,9 @@ import { TreeItemProps } from '../../../../components/Tree/TreeItem'
 import TreeTitle from '../../../../components/Tree/TreeTitle'
 
 const treeItemStyles: ComponentSlotStylesInput<TreeItemProps> = {
-  root: ({ theme: { siteVariables }, props: { level } }): ICSSInJSStyle => ({
+  root: ({ theme: { siteVariables }, props: p }): ICSSInJSStyle => ({
     listStyleType: 'none',
-    padding: `0 0 0 ${pxToRem(1 + (level - 1) * 10)}`,
+    padding: `0 0 0 ${pxToRem(1 + (p.level - 1) * 10)}`,
     ':focus': {
       outline: 0,
       [`> .${TreeTitle.className}`]: {

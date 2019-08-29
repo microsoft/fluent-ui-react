@@ -1,12 +1,11 @@
 import { ICSSInJSStyle } from '../../../types'
-import { pxToRem } from '../../../../lib'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const treeTitleStyles = {
-  root: ({ variables, theme: { siteVariables } }): ICSSInJSStyle => ({
-    padding: `${pxToRem(1)} 0`,
+  root: ({ variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
+    padding: v.padding,
     cursor: 'pointer',
-    color: variables.defaultColor,
+    color: v.color,
     position: 'relative',
     ...getBorderFocusStyles({
       siteVariables,

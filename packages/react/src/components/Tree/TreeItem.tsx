@@ -116,7 +116,6 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
     renderItemTitle: PropTypes.func,
     siblings: customPropTypes.collectionShorthand,
     title: customPropTypes.itemShorthand,
-    treeItemRtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
