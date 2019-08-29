@@ -5,7 +5,7 @@ import menuButtonBehavior from '../MenuButton/menuButtonBehavior'
 
 /**
  * @specification
- * Triggers 'closeMenuAndFocusButton' action with 'Escape' on 'menuButton'.
+ * Adds attribute 'tabIndex=-1' to 'toggleButton' slot.
  */
 const splitButtonBehavior: Accessibility = props => {
   const splitButtonMenuButtonBehavior = props => {
