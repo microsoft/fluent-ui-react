@@ -100,8 +100,11 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   static autoControlledProps = ['activeItemIds']
 
+  static isSubtree(item: TreeItemProps | ShorthandValue<TreeItemProps>): boolean {
+    return !!item['items'] && item['items'].length > 0
+  }
+
   static getItemsForRender = _.memoize((itemsFromProps: ShorthandCollection<TreeItemProps>) => {
-    // activeItemIds = [] // if we get new items, we reset the active items.
     const itemsForRenderGenerator = (
       items = itemsFromProps,
       level = 1,
@@ -111,7 +114,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         items,
         (acc: Object, item: ShorthandValue<TreeItemProps>, index: number) => {
           const id = item['id']
-          const isSubtree = item['items'] && item['items'].length > 0
+          const isSubtree = Tree.isSubtree(item)
 
           acc[id] = {
             elementRef: React.createRef<HTMLElement>(),
@@ -134,13 +137,10 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   })
 
   static getAutoControlledStateFromProps(nextProps: TreeProps, prevState: TreeState) {
-    const { activeItemIds } = prevState
-
     const itemsForRender = Tree.getItemsForRender(nextProps.items)
 
     return {
       itemsForRender,
-      activeItemIds,
     }
   }
 
@@ -157,10 +157,10 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       predefinedProps: TreeItemProps,
     ) => {
       const { activeItemIds } = this.state
-      const { id, items, siblings } = treeItemProps
+      const { id, siblings } = treeItemProps
       const { exclusive } = this.props
 
-      if (!items || items.length === 0) {
+      if (!Tree.isSubtree(treeItemProps)) {
         return
       }
 
@@ -230,20 +230,16 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         return
       }
 
-      const { id, items, siblings } = treeItemProps
+      const { id, siblings } = treeItemProps
       const { activeItemIds } = this.state
 
       siblings.forEach(sibling => {
-        if (
-          sibling['items'] &&
-          sibling['items'].length > 0 &&
-          activeItemIds.indexOf(sibling['id']) < 0
-        ) {
+        if (Tree.isSubtree(sibling) && activeItemIds.indexOf(sibling['id']) < 0) {
           activeItemIds.push(sibling['id'])
         }
       })
 
-      if (items && items.length > 0 && activeItemIds.indexOf(id) < 0) {
+      if (Tree.isSubtree(treeItemProps) && activeItemIds.indexOf(id) < 0) {
         activeItemIds.push(id)
       }
 
@@ -264,9 +260,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     const renderItems = (items: ShorthandCollection<TreeItemProps>): any[] => {
       return items.reduce((renderedItems: any[], item: ShorthandValue<TreeItemProps>) => {
         const itemForRender = itemsForRender[item['id']]
-        const items = item['items']
         const { elementRef, ...rest } = itemForRender
-        const isSubtree = !!items && items.length > 0
+        const isSubtree = Tree.isSubtree(item)
         const isSubtreeOpen = isSubtree && activeItemIds.indexOf(item['id']) > -1
 
         const renderedItem = TreeItem.create(item, {
