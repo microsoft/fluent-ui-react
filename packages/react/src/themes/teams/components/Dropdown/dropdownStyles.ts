@@ -118,6 +118,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
         color: v.color,
       },
       ':focus-visible': {
+        color: v.color,
         ...transparentColorStyle,
         ':after': {
           borderColor: 'transparent',
