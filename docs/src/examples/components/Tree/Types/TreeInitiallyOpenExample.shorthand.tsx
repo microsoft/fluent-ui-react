@@ -5,7 +5,6 @@ const items = [
   {
     id: '1',
     title: 'House Lannister',
-    initialOpen: true,
     items: [
       {
         id: '11',
@@ -28,7 +27,6 @@ const items = [
       {
         id: '12',
         title: 'Kevan',
-        initialOpen: true,
         items: [
           {
             id: '121',
@@ -53,7 +51,6 @@ const items = [
       {
         id: '21',
         title: 'Aerys',
-        initialOpen: true,
         items: [
           {
             id: '211',
@@ -73,6 +70,8 @@ const items = [
   },
 ]
 
-const TreeInitiallyOpenExampleShorthand = () => <Tree items={items} />
+const TreeInitiallyOpenExampleShorthand = () => (
+  <Tree items={items} defaultActiveItemIds={['1', '12', '2']} />
+)
 
 export default TreeInitiallyOpenExampleShorthand

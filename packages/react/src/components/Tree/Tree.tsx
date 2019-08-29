@@ -260,7 +260,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     const renderItems = (items: ShorthandCollection<TreeItemProps>): any[] => {
       return items.reduce((renderedItems: any[], item: ShorthandValue<TreeItemProps>) => {
         const itemForRender = itemsForRender[item['id']]
-        const { elementRef, ...rest } = itemForRender
+        const { elementRef, ...restItemForRender } = itemForRender
         const isSubtree = Tree.isSubtree(item)
         const isSubtreeOpen = isSubtree && activeItemIds.indexOf(item['id']) > -1
 
@@ -270,7 +270,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
             open: isSubtreeOpen,
             renderItemTitle,
             key: item['id'],
-            ...rest,
+            ...restItemForRender,
           },
           overrideProps: this.handleTreeItemOverrides,
         })
@@ -293,7 +293,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         return [
           ...(renderedItems as any[]),
           finalRenderedItem,
-          ...[isSubtreeOpen ? renderItems(items) : []],
+          ...[isSubtreeOpen ? renderItems(item['items']) : []],
         ]
       }, [])
     }
