@@ -19,16 +19,15 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'none',
-      ...(props.items &&
-        props.items.length && {
-          'aria-expanded': props.open,
-          tabIndex: -1,
-          [IS_FOCUSABLE_ATTRIBUTE]: true,
-          role: 'treeitem',
-          'aria-setsize': props.siblings.length + 1,
-          'aria-posinset': props.index + 1,
-          'aria-level': props.level,
-        }),
+      ...(props.hasSubtree && {
+        'aria-expanded': props.open,
+        tabIndex: -1,
+        [IS_FOCUSABLE_ATTRIBUTE]: true,
+        role: 'treeitem',
+        'aria-setsize': props.treeSize,
+        'aria-posinset': props.index,
+        'aria-level': props.level,
+      }),
     },
   },
   keyActions: {
@@ -60,19 +59,18 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
 })
 
 export type TreeItemBehaviorProps = {
-  /** If item is a subtree, it contains items. */
-  items?: object[]
   /** If item is a subtree, it indicates if it's open. */
   open?: boolean
-  siblings?: object[]
   level?: number
   index?: number
+  hasSubtree?: boolean
+  treeSize?: number
 }
 
 /** Checks if current tree item has a subtree and it is opened */
 const isSubtreeOpen = (props: TreeItemBehaviorProps): boolean => {
-  const { items, open } = props
-  return !!(items && items.length && open)
+  const { hasSubtree, open } = props
+  return !!(hasSubtree && open)
 }
 
 export default treeItemBehavior

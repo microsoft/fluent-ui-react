@@ -27,7 +27,7 @@ export interface TreeTitleProps
   /** Whether or not the title has a subtree. */
   hasSubtree?: boolean
 
-  /** The index of the title among its siblings. */
+  /** The index of the title among its siblings. Count starts at 1. */
   index?: number
 
   /** Level of the tree/subtree that contains this title. */
@@ -44,8 +44,8 @@ export interface TreeTitleProps
   /** Whether or not the subtree of the title is in the open state. */
   open?: boolean
 
-  /** Size of this title's siblings. */
-  siblingsLength?: number
+  /** Size of the tree containing this title without any children. */
+  treeSize?: number
 }
 
 class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
@@ -62,7 +62,7 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
     level: PropTypes.number,
     onClick: PropTypes.func,
     open: PropTypes.bool,
-    siblingsLength: PropTypes.number,
+    treeSize: PropTypes.number,
   }
 
   static defaultProps = {

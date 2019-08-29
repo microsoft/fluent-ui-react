@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
+import Tree from './Tree'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
 import { treeItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -37,7 +38,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   /** Id needed to identify this item inside the Tree. */
   id: string
 
-  /** The index of the item among its siblings. */
+  /** The index of the item among its siblings. Count starts at 1. */
   index?: number
 
   /** Array of props for sub tree. */
@@ -81,7 +82,12 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   title?: ShorthandValue<TreeTitleProps>
 }
 
-class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
+export interface TreeState {
+  treeSize: number // size of the tree without children.
+  hasSubtree: boolean
+}
+
+class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeState> {
   static create: Function
 
   static displayName = 'TreeItem'
@@ -118,6 +124,18 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     accessibility: treeItemBehavior,
   }
 
+  state = {
+    hasSubtree: false,
+    treeSize: 0,
+  }
+
+  static getDerivedStateFromProps(props: TreeItemProps) {
+    return {
+      hasSubtree: Tree.hasSubtree(props),
+      treeSize: props.siblings.length + 1,
+    }
+  }
+
   actionHandlers = {
     performClick: e => {
       e.preventDefault()
@@ -129,7 +147,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
       e.preventDefault()
       e.stopPropagation()
 
-      this.handleParentFocus(e)
+      _.invoke(this.props, 'onFocusParent', e, this.props)
     },
     collapse: e => {
       e.preventDefault()
@@ -147,34 +165,18 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
       e.preventDefault()
       e.stopPropagation()
 
-      this.handleFocusFirstChild(e)
+      _.invoke(this.props, 'onFocusFirstChild', e, this.props)
     },
     expandSiblings: e => {
       e.preventDefault()
       e.stopPropagation()
 
-      this.handleSiblingsExpand(e)
+      _.invoke(this.props, 'onSiblingsExpand', e, this.props)
     },
-  }
-
-  eventComesFromChildItem = e => {
-    return e.currentTarget !== e.target
   }
 
   handleTitleClick = e => {
     _.invoke(this.props, 'onTitleClick', e, this.props)
-  }
-
-  handleParentFocus = e => {
-    _.invoke(this.props, 'onFocusParent', e, this.props)
-  }
-
-  handleFocusFirstChild = e => {
-    _.invoke(this.props, 'onFocusFirstChild', e, this.props)
-  }
-
-  handleSiblingsExpand = e => {
-    _.invoke(this.props, 'onSiblingsExpand', e, this.props)
   }
 
   handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
@@ -185,8 +187,8 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
   })
 
   renderContent() {
-    const { items, title, renderItemTitle, open, level, siblings, index } = this.props
-    const hasSubtree = !_.isNil(items) && items.length > 0
+    const { title, renderItemTitle, open, level, index } = this.props
+    const { hasSubtree, treeSize } = this.state
 
     return TreeTitle.create(title, {
       defaultProps: {
@@ -195,7 +197,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
         hasSubtree,
         as: hasSubtree ? 'span' : 'a',
         level,
-        siblingsLength: siblings.length,
+        treeSize,
         index,
       },
       render: renderItemTitle,

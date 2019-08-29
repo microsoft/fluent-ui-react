@@ -2,7 +2,7 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { handleRef, Ref } from '@stardust-ui/react-component-ref'
+import { Ref } from '@stardust-ui/react-component-ref'
 
 import TreeItem, { TreeItemProps } from './TreeItem'
 import {
@@ -67,7 +67,7 @@ export interface TreeItemForRenderProps {
 
 export interface TreeState {
   activeItemIds: string[]
-  itemsForRender: { [s: string]: TreeItemForRenderProps }
+  itemsForRender: Record<string, TreeItemForRenderProps>
 }
 
 class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
@@ -100,8 +100,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   static autoControlledProps = ['activeItemIds']
 
-  static isSubtree(item: TreeItemProps | ShorthandValue<TreeItemProps>): boolean {
-    return !!item['items'] && item['items'].length > 0
+  static hasSubtree(item: TreeItemProps | ShorthandValue<TreeItemProps>): boolean {
+    return !_.isNil(item['items']) && item['items'].length > 0
   }
 
   static getItemsForRender = _.memoize((itemsFromProps: ShorthandCollection<TreeItemProps>) => {
@@ -114,12 +114,12 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         items,
         (acc: Object, item: ShorthandValue<TreeItemProps>, index: number) => {
           const id = item['id']
-          const isSubtree = Tree.isSubtree(item)
+          const isSubtree = Tree.hasSubtree(item)
 
           acc[id] = {
             elementRef: React.createRef<HTMLElement>(),
             level,
-            index,
+            index: index + 1, // Used for aria-posinset and it's 1-based.
             parent,
             siblings: items.filter(currentItem => currentItem !== item),
           }
@@ -156,7 +156,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       const { id, siblings } = treeItemProps
       const { exclusive } = this.props
 
-      if (!Tree.isSubtree(treeItemProps)) {
+      if (!Tree.hasSubtree(treeItemProps)) {
         return
       }
 
@@ -236,12 +236,12 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
       const { activeItemIds } = this.state
 
       siblings.forEach(sibling => {
-        if (Tree.isSubtree(sibling) && activeItemIds.indexOf(sibling['id']) < 0) {
+        if (Tree.hasSubtree(sibling) && activeItemIds.indexOf(sibling['id']) < 0) {
           activeItemIds.push(sibling['id'])
         }
       })
 
-      if (Tree.isSubtree(treeItemProps) && activeItemIds.indexOf(id) < 0) {
+      if (Tree.hasSubtree(treeItemProps) && activeItemIds.indexOf(id) < 0) {
         activeItemIds.push(id)
       }
 
@@ -253,17 +253,17 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     },
   })
 
-  renderContent() {
+  renderContent(): React.ReactElement[] {
     const { activeItemIds, itemsForRender } = this.state
     const { items, renderItemTitle } = this.props
 
     if (!items) return null
 
-    const renderItems = (items: ShorthandCollection<TreeItemProps>): any[] => {
+    const renderItems = (items: ShorthandCollection<TreeItemProps>): React.ReactElement[] => {
       return items.reduce((renderedItems: any[], item: ShorthandValue<TreeItemProps>) => {
         const itemForRender = itemsForRender[item['id']]
         const { elementRef, ...restItemForRender } = itemForRender
-        const isSubtree = Tree.isSubtree(item)
+        const isSubtree = Tree.hasSubtree(item)
         const isSubtreeOpen = isSubtree && activeItemIds.indexOf(item['id']) > -1
 
         const renderedItem = TreeItem.create(item, {
@@ -280,12 +280,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         // Only need refs of the items that spawn subtrees, when they need to be focused
         // by any of their children, using Arrow Left.
         const finalRenderedItem = isSubtree ? (
-          <Ref
-            key={item['key'] || item['id']}
-            innerRef={(itemElement: HTMLElement) => {
-              handleRef(elementRef, itemElement)
-            }}
-          >
+          <Ref key={item['id']} innerRef={elementRef}>
             {renderedItem}
           </Ref>
         ) : (
