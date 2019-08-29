@@ -17,7 +17,7 @@ const treeTitleBehavior: Accessibility<TreeTitleBehavior> = props => ({
         tabIndex: -1,
         [IS_FOCUSABLE_ATTRIBUTE]: true,
         role: 'treeitem',
-        'aria-setsize': props.siblingsLength,
+        'aria-setsize': props.siblingsLength + 1,
         'aria-posinset': props.index + 1,
         'aria-level': props.level,
       }),

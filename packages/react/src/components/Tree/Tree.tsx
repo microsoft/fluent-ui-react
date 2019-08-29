@@ -60,7 +60,6 @@ export interface TreeItemForRenderProps {
   elementRef: React.RefObject<HTMLElement>
   id: string
   index: number
-  items: TreeItemForRenderProps[]
   level: number
   parent: ShorthandValue<TreeItemProps>
   siblings: ShorthandCollection<TreeItemProps>
@@ -231,12 +230,15 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         return
       }
 
-      const { id, items } = treeItemProps
-      const { itemsForRender, activeItemIds } = this.state
-      const { siblings } = itemsForRender[id]
+      const { id, items, siblings } = treeItemProps
+      const { activeItemIds } = this.state
 
       siblings.forEach(sibling => {
-        if (activeItemIds.indexOf(sibling['id']) < 0) {
+        if (
+          sibling['items'] &&
+          sibling['items'].length > 0 &&
+          activeItemIds.indexOf(sibling['id']) < 0
+        ) {
           activeItemIds.push(sibling['id'])
         }
       })
@@ -265,7 +267,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         const items = item['items']
         const { elementRef, ...rest } = itemForRender
         const isSubtree = !!items && items.length > 0
-        const isSubtreeOpen = activeItemIds.indexOf(item['id']) > -1
+        const isSubtreeOpen = isSubtree && activeItemIds.indexOf(item['id']) > -1
 
         const renderedItem = TreeItem.create(item, {
           defaultProps: {
