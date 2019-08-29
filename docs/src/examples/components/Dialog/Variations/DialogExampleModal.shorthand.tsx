@@ -18,7 +18,6 @@ const DialogExampleModal = () => {
       }
       modal={modal}
       open={open}
-      onCancel={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       trigger={<Button content="Open a dialog" />}
     />
