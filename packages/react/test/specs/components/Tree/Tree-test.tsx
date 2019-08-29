@@ -10,19 +10,19 @@ import { ReactWrapper, CommonWrapper } from 'enzyme'
 
 const items = [
   {
-    key: '1',
+    id: '1',
     title: '1',
     items: [
       {
-        key: '11',
+        id: '11',
         title: '11',
       },
       {
-        key: '12',
+        id: '12',
         title: '12',
         items: [
           {
-            key: '121',
+            id: '121',
             title: '121',
           },
         ],
@@ -30,27 +30,27 @@ const items = [
     ],
   },
   {
-    key: '2',
+    id: '2',
     title: '2',
     items: [
       {
-        key: '21',
+        id: '21',
         title: '21',
         items: [
           {
-            key: '211',
+            id: '211',
             title: '211',
           },
         ],
       },
       {
-        key: '22',
+        id: '22',
         title: '22',
       },
     ],
   },
   {
-    key: '3',
+    id: '3',
     title: '3',
   },
 ]
@@ -72,15 +72,7 @@ const checkOpenTitles = (wrapper: ReactWrapper, expected: string[]): void => {
 describe('Tree', () => {
   isConformant(Tree)
 
-  describe('activeItems', () => {
-    it('should have item already open by passing initialOpen', () => {
-      const copiedItems = JSON.parse(JSON.stringify(items))
-      copiedItems[1]['initialOpen'] = true
-      const wrapper = mountWithProvider(<Tree items={copiedItems} />)
-
-      checkOpenTitles(wrapper, ['1', '2', '21', '22', '3'])
-    })
-
+  describe('activeItemIds', () => {
     it('should contain index of item open at click', () => {
       const wrapper = mountWithProvider(<Tree items={items} />)
 
@@ -96,10 +88,7 @@ describe('Tree', () => {
     })
 
     it('should have index of item removed when closed at click', () => {
-      const copiedItems = JSON.parse(JSON.stringify(items))
-      copiedItems[0]['initialOpen'] = true
-      copiedItems[1]['initialOpen'] = true
-      const wrapper = mountWithProvider(<Tree items={copiedItems} />)
+      const wrapper = mountWithProvider(<Tree items={items} defaultActiveItemIds={['1', '2']} />)
 
       getTitles(wrapper)
         .at(0) // title 1
@@ -131,10 +120,7 @@ describe('Tree', () => {
     })
 
     it('should have index of item removed if closed by ArrowLeft', () => {
-      const copiedItems = JSON.parse(JSON.stringify(items))
-      copiedItems[0]['initialOpen'] = true
-      copiedItems[1]['initialOpen'] = true
-      const wrapper = mountWithProvider(<Tree items={copiedItems} />)
+      const wrapper = mountWithProvider(<Tree items={items} defaultActiveItemIds={['1', '2']} />)
 
       getItems(wrapper)
         .at(0) // title 1
@@ -152,9 +138,7 @@ describe('Tree', () => {
     })
 
     it('should expand subtrees only on current level on asterisk key', () => {
-      const copiedItems = JSON.parse(JSON.stringify(items))
-      copiedItems[0]['initialOpen'] = true
-      const wrapper = mountWithProvider(<Tree items={copiedItems} />)
+      const wrapper = mountWithProvider(<Tree items={items} defaultActiveItemIds={['1']} />)
 
       getTitles(wrapper)
         .at(1) // title 11
@@ -163,23 +147,12 @@ describe('Tree', () => {
     })
 
     it('should not be changed on asterisk key if all siblings are already expanded', () => {
-      const copiedItems = JSON.parse(JSON.stringify(items))
-      copiedItems[0]['initialOpen'] = true
-      copiedItems[1]['initialOpen'] = true
-      copiedItems[2]['initialOpen'] = true
-      const wrapper = mountWithProvider(<Tree items={copiedItems} />)
+      const wrapper = mountWithProvider(
+        <Tree items={items} defaultActiveItemIds={['1', '2', '3']} />,
+      )
 
       getTitles(wrapper)
         .at(0) // title 1
-        .simulate('keydown', { keyCode: keyboardKey['*'] })
-      checkOpenTitles(wrapper, ['1', '11', '12', '2', '21', '22', '3'])
-    })
-
-    it('should expand siblings even if the item is not expandable', () => {
-      const wrapper = mountWithProvider(<Tree items={items} />)
-
-      getTitles(wrapper)
-        .at(2) // title 3
         .simulate('keydown', { keyCode: keyboardKey['*'] })
       checkOpenTitles(wrapper, ['1', '11', '12', '2', '21', '22', '3'])
     })
