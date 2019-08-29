@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- `Alert`, `Attachment`, `Button`, `ChatMessage`, `Checkbox`, `Embed`, `Grid`, `ListItem`, `RadioGroupItem`, `Reaction`, `Slider`, `ToolbarCustomItem`, `ToolbarItem`, `ToolbarMenuItem` do not have `isFromKeyboard` in their style functions anymore @layershifter ([#1850](https://github.com/stardust-ui/react/pull/1850))
+
 ### Features
 - Add `yellow`, `green`, `orange`, `pink`, `amethyst`, `silver` and `onyx` color schemes in Teams theme @mnajdova ([#1826](https://github.com/stardust-ui/react/pull/1826))
 
