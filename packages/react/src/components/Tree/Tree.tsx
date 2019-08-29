@@ -151,12 +151,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   treeRef = React.createRef<HTMLElement>()
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
-    onTitleClick: (
-      e: React.SyntheticEvent,
-      treeItemProps: TreeItemProps,
-      predefinedProps: TreeItemProps,
-    ) => {
-      const { activeItemIds } = this.state
+    onTitleClick: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
+      let { activeItemIds } = this.state
       const { id, siblings } = treeItemProps
       const { exclusive } = this.props
 
@@ -164,23 +160,29 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         return
       }
 
-      const indexOfActiveItem = activeItemIds.indexOf(id)
+      const activeItemIdIndex = activeItemIds.indexOf(id)
 
-      if (indexOfActiveItem > -1) {
-        activeItemIds.splice(indexOfActiveItem, 1)
+      if (activeItemIdIndex > -1) {
+        activeItemIds = [
+          ...activeItemIds.slice(0, activeItemIdIndex),
+          ...activeItemIds.slice(activeItemIdIndex + 1),
+        ]
       } else {
         if (exclusive) {
           siblings.some(sibling => {
-            const activeSiblingIndex = activeItemIds.indexOf(sibling['id'])
-            if (activeSiblingIndex > -1) {
-              activeItemIds.splice(activeSiblingIndex, 1)
+            const activeSiblingIdIndex = activeItemIds.indexOf(sibling['id'])
+            if (activeSiblingIdIndex > -1) {
+              activeItemIds = [
+                ...activeItemIds.slice(0, activeSiblingIdIndex),
+                ...activeItemIds.slice(activeSiblingIdIndex + 1),
+              ]
               return true
             }
             return false
           })
         }
 
-        activeItemIds.push(id)
+        activeItemIds = [...activeItemIds, id]
       }
 
       this.setState({
