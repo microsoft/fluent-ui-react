@@ -24,13 +24,13 @@ export interface TreeTitleProps
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
-  /** Whether or not the item has a subtree. */
+  /** Whether or not the title has a subtree. */
   hasSubtree?: boolean
 
-  /** The index of the item among its siblings. */
+  /** The index of the title among its siblings. */
   index?: number
 
-  /** Level of the tree/subtree that contains this item. */
+  /** Level of the tree/subtree that contains this title. */
   level?: number
 
   /**
@@ -41,10 +41,10 @@ export interface TreeTitleProps
    */
   onClick?: ComponentEventHandler<TreeTitleProps>
 
-  /** Whether or not the subtree of the item is in the open state. */
+  /** Whether or not the subtree of the title is in the open state. */
   open?: boolean
 
-  /** Array with the ids of the tree item's siblings, if any. */
+  /** Size of this title's siblings. */
   siblingsLength?: number
 }
 
