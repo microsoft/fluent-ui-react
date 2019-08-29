@@ -50,7 +50,7 @@ definitions.push({
 // Example: Adds attribute 'tabIndex=0' to 'anchor' slot.
 //          Adds attribute 'data-is-focusable=true' to 'anchor' slot.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' slot\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\-d]+)' to '([\w-]+)' slot\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, attributeExpectedValue, elementWhereToBeAdded] = parameters.props
     const property = {}
