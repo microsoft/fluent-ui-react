@@ -200,7 +200,7 @@ Embed.create = createShorthandFactory({ Component: Embed })
  * An Embed displays content from external websites, like a post from external social network.
  *
  * @accessibility
- * A `placeholder` slot represents an [`Image`](/components/image) component, please follow recommendations from its
+ * A `placeholder` slot represents an [`Image`](/components/image/definition) component, please follow recommendations from its
  * accessibility section.
  */
 export default withSafeTypeForAs<typeof Embed, EmbedProps, 'span'>(Embed)

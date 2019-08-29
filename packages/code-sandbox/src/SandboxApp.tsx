@@ -27,30 +27,32 @@ const SandboxApp: React.FunctionComponent = props => {
 
   return (
     <Provider theme={themes[theme]} styles={{ height: '100vh', padding: '1rem' }}>
-      <Header>Stardust UI @ {pkg.version}</Header>
-      <p>
-        This example is powered by Stardust UI, check{' '}
-        <Text as="a" href="https://stardust-ui.github.io/react/">
-          our docs
-        </Text>{' '}
-        and{' '}
-        <Text as="a" href="https://github.com/stardust-ui/react">
-          GitHub
-        </Text>
-        .
-      </p>
+      <div>
+        <Header>Stardust UI @ {pkg.version}</Header>
+        <p>
+          This example is powered by Stardust UI, check{' '}
+          <Text as="a" href="https://stardust-ui.github.io/react/">
+            our docs
+          </Text>{' '}
+          and{' '}
+          <Text as="a" href="https://github.com/stardust-ui/react">
+            GitHub
+          </Text>
+          .
+        </p>
 
-      <Flex>
-        Select theme:
-        <RadioGroup
-          checkedValueChanged={(e, data) => setTheme(data.value as string)}
-          checkedValue={theme}
-          items={items}
-        />
-      </Flex>
-      <Divider />
+        <Flex>
+          Select theme:
+          <RadioGroup
+            checkedValueChanged={(e, data) => setTheme(data.value as string)}
+            checkedValue={theme}
+            items={items}
+          />
+        </Flex>
+        <Divider />
 
-      {children}
+        {children}
+      </div>
     </Provider>
   )
 }

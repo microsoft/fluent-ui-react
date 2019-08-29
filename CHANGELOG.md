@@ -17,12 +17,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add `yellow`, `green`, `orange`, `pink`, `amethyst`, `silver` and `onyx` color schemes in Teams theme @mnajdova ([#1826](https://github.com/stardust-ui/react/pull/1826))
+
 ### Fixes
 - Fix `muted` prop in `Video` component @layershifter ([#1847](https://github.com/stardust-ui/react/pull/1847))
 - Fix `felaRenderer` is used in `Provider` explicitly @lucivpav ([#1842](https://github.com/stardust-ui/react/pull/1842))
 
 ### Documentation
 - Add usage example regarding `Checkbox` in `Form` @lucivpav ([#1845](https://github.com/stardust-ui/react/pull/1845))
+- Fix styles in `code-sandbox` package @lucivpav ([#1853](https://github.com/stardust-ui/react/pull/1853))
+- Adding accessibility tab content @kolaps33 ([#1840](https://github.com/stardust-ui/react/pull/1840))
 
 <!--------------------------------[ v0.37.0 ]------------------------------- -->
 ## [v0.37.0](https://github.com/stardust-ui/react/tree/v0.37.0) (2019-08-26)
