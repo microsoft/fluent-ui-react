@@ -65,7 +65,6 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 export interface ListState {
   focusedIndex: number
   selectedIndex?: number
-  isItemFocused: boolean
 }
 
 class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
@@ -100,7 +99,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
   static autoControlledProps = ['selectedIndex']
 
   getInitialAutoControlledState() {
-    return { selectedIndex: -1, focusedIndex: 0, isItemFocused: false }
+    return { selectedIndex: -1, focusedIndex: 0 }
   }
 
   static Item = ListItem
@@ -116,14 +115,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
         _.invoke(predefinedProps, 'onFocus', e, itemProps)
 
         if (selectable) {
-          this.setState({ focusedIndex: itemProps.index, isItemFocused: true })
-        }
-      },
-      onBlur: (e: React.SyntheticEvent, itemProps: ListItemProps) => {
-        _.invoke(predefinedProps, 'onBlur', e, itemProps)
-
-        if (selectable) {
-          this.setState({ isItemFocused: false })
+          this.setState({ focusedIndex: itemProps.index })
         }
       },
       onClick: (e: React.SyntheticEvent, itemProps: ListItemProps) => {

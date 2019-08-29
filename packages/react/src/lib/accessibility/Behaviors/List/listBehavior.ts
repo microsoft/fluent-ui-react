@@ -17,7 +17,4 @@ export type ListBehaviorProps = {
 
   /** Indicates if the list is horizontal. */
   horizontal?: boolean
-
-  /** Indicates if any item of the list is in focus */
-  isItemFocused?: boolean
 }
