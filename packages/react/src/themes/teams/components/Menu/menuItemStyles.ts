@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem, createAnimationStyles } from '../../../../lib'
 import {
   ComponentSlotStylesInput,
   ICSSInJSStyle,
@@ -410,7 +410,15 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }),
   }),
 
-  menu: () => ({ zIndex: '1000' }),
+  menu: ({ props: p, theme }) => ({
+    zIndex: '1000',
+    display: 'block',
+    ...(p.menu && p.active && p.menuOpen && createAnimationStyles('fadeEnterFast', theme)),
+    ...(!(p.menu && p.active && p.menuOpen) && {
+      ...createAnimationStyles('fadeExitFast', theme),
+      // Exit animation does not currently work because element is removed before it can be animated
+    }),
+  }),
 
   indicator: () => ({
     position: 'relative',
