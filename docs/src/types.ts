@@ -12,6 +12,12 @@ export type BehaviorInfo = {
   category: string
 }
 
+export type BehaviorVariantionInfo = {
+  name: string
+  description: string
+  specification: string
+}
+
 export type ComponentInfo = {
   behaviors?: BehaviorInfo[]
   constructorName: string
