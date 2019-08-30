@@ -78,7 +78,7 @@ class CopyToClipboard extends React.Component<CopyToClipboardProps> {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      position: 'fixed',
+      position: 'fixed' as 'fixed',
       backgroundColor: 'black',
       color: 'white',
       zIndex: 1000,
