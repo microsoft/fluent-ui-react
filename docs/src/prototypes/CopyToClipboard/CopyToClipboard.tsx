@@ -74,6 +74,17 @@ class CopyToClipboard extends React.Component<CopyToClipboardProps> {
       boxShadow: 'none',
       borderColor: 'transparent',
     }
+    const portalContentStyle = {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'fixed',
+      backgroundColor: 'black',
+      color: 'white',
+      zIndex: 1000,
+      top: `calc(50% - ${this.state.copiedHeight / 2}px)`,
+      left: `calc(50% - ${this.state.copiedWidth / 2}px)`,
+    }
     return (
       <>
         <Popup
@@ -102,19 +113,7 @@ class CopyToClipboard extends React.Component<CopyToClipboardProps> {
           <Portal
             open={true}
             content={
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  position: 'fixed',
-                  backgroundColor: 'black',
-                  color: 'white',
-                  zIndex: 1000,
-                  top: `calc(50% - ${this.state.copiedHeight / 2}px)`,
-                  left: `calc(50% - ${this.state.copiedWidth / 2}px)`,
-                }}
-              >
+              <div style={portalContentStyle}>
                 <Ref innerRef={this.copiedTextRef}>{copiedText}</Ref>
               </div>
             }
