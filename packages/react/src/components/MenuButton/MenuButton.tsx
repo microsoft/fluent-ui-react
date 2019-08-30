@@ -2,7 +2,6 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { Ref } from '@stardust-ui/react-component-ref'
 
 import {
   AutoControlledComponent,
@@ -19,6 +18,7 @@ import { createShorthandFactory } from '../../lib/factories'
 import Popup, { PopupProps, PopupEvents, PopupEventsArray } from '../Popup/Popup'
 import Menu, { MenuProps } from '../Menu/Menu'
 import { MenuItemProps } from '../Menu/MenuItem'
+import { Ref } from '@stardust-ui/react-component-ref'
 import { menuButtonBehavior } from '../../lib/accessibility'
 import { focusMenuItem } from './focusUtils'
 import { ALIGNMENTS, POSITIONS, PositioningProps } from '../../lib/positioner'

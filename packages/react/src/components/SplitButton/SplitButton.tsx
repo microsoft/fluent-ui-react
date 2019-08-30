@@ -17,6 +17,7 @@ import {
   isFromKeyboard,
   commonPropTypes,
   AutoControlledComponent,
+  RenderResultConfig,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import Button, { ButtonProps } from '../Button/Button'
@@ -53,7 +54,7 @@ export interface SplitButtonProps
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
-  onClick?: ComponentEventHandler<ButtonProps>
+  onMainButtonClick?: ComponentEventHandler<ButtonProps>
 
   /**
    * Called after user's click on a menu item.
@@ -102,7 +103,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
       customPropTypes.itemShorthand,
       PropTypes.arrayOf(customPropTypes.itemShorthandWithoutJSX),
     ]),
-    onClick: PropTypes.func,
+    onMainButtonClick: PropTypes.func,
     onMenuItemClick: PropTypes.func,
     open: PropTypes.bool,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
@@ -130,7 +131,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
     accessibility,
     styles,
     unhandledProps,
-  }): React.ReactNode {
+  }: RenderResultConfig<MenuButtonProps>): React.ReactNode {
     const { button, menu, primary, secondary, toggleButton } = this.props
     const trigger = Button.create(button, {
       defaultProps: {
@@ -146,7 +147,9 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
           {},
           {
             defaultProps: {
-              accessibility: accessibility.childBehaviors.menuButton,
+              accessibility: accessibility.childBehaviors
+                ? accessibility.childBehaviors.menuButton
+                : undefined,
               menu,
               styles: styles.button,
               // Opening is handled manually.
@@ -167,7 +170,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
               },
               onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
                 _.invoke(predefinedProps, 'onClick', e, buttonProps)
-                _.invoke(this.props, 'onClick', e, buttonProps)
+                _.invoke(this.props, 'onMainButtonClick', e, buttonProps)
               },
               onFocus: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
                 _.invoke(predefinedProps, 'onFocus', e, buttonProps)
@@ -199,6 +202,6 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
 }
 
 /**
- * A SplitButton enables users to take one of several related actions, out of which one is dominant and rest are displayed in an attached menu.
+ * A SplitButton enables users to take one of several related actions, one being dominant and rest being displayed in a menu.
  */
 export default withSafeTypeForAs<typeof SplitButton, SplitButtonProps>(SplitButton)
