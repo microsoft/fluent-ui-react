@@ -46,7 +46,7 @@ class CopyToClipboard extends React.Component<CopyToClipboardProps> {
     const hideContent = this.state.copied && !attached
     const copiedStr = 'Copied to clipboard'
     const copiedText = hideContent ? (
-      <Text size={hideContent ? 'larger' : 'medium'} styles={{ padding: '5px 5px 5px 5px' }}>
+      <Text size="larger" styles={{ padding: '5px 5px 5px 5px' }}>
         {copiedStr}
       </Text>
     ) : (
