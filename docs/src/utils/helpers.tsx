@@ -10,11 +10,7 @@ export const link = (content: string, href: string) => {
 
   if (isAnchor || isExternal) {
     return (
-      <a
-        className={isAnchor ? 'anchor-link' : undefined}
-        href={href}
-        {...(isExternal && { target: 'blank' })}
-      >
+      <a href={isAnchor ? location.pathname + href : href} {...(isExternal && { target: 'blank' })}>
         {content} {isExternal ? <Icon name="external" size="small" /> : ''}
       </a>
     )
