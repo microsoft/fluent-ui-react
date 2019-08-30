@@ -13,7 +13,6 @@ const dependencies = {
   // https://github.com/stardust-ui/react/issues/1519
   'react-scripts': 'latest',
 }
-const devDependencies = {}
 
 const createPackageJson = (mainFilename: string, language: ComponentSourceManagerLanguage) => ({
   content: JSON.stringify(
@@ -23,7 +22,6 @@ const createPackageJson = (mainFilename: string, language: ComponentSourceManage
       description,
       main: mainFilename,
       dependencies,
-      devDependencies: language === 'ts' ? devDependencies : {},
     },
     null,
     2,

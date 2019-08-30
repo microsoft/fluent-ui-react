@@ -6,7 +6,6 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Classnames from 'classnames'
 
-const packageJson = require('../../../../package.json')
 const docsComponentsPackageJson = require('@stardust-ui/docs-components/package.json')
 const stardustReactPackageJson = require('@stardust-ui/react/package.json')
 
@@ -34,15 +33,15 @@ export const imports = {
     module: Classnames,
   },
   lodash: {
-    version: stardustReactPackageJson.devDependencies['@types/lodash'],
+    version: stardustReactPackageJson.dependencies['lodash'],
     module: _,
   },
   react: {
-    version: packageJson.devDependencies['react'],
+    version: stardustReactPackageJson.peerDependencies['react'],
     module: React,
   },
   'react-dom': {
-    version: packageJson.devDependencies['react-dom'],
+    version: stardustReactPackageJson.peerDependencies['react-dom'],
     module: ReactDOM,
   },
   '@stardust-ui/react-fela': {
