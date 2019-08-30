@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Popup, Button, Text, Portal, Ref } from '@stardust-ui/react/src'
+import { Button, Text, Portal, Ref, Tooltip } from '@stardust-ui/react/src'
 import * as copyToClipboard from 'copy-to-clipboard'
 
 export type CopyToClipboardProps = {
@@ -48,9 +48,9 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
     <Text>{copiedStr}</Text>
   )
   const copyText = <Text>{copyPrompt}</Text>
-  let popupContent = copied ? copiedText : copyText
+  let tooltipContent = copied ? copiedText : copyText
   if (hideContent) {
-    popupContent = <Text />
+    tooltipContent = <Text />
   }
   const button = (
     <Button
@@ -62,12 +62,10 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
       })}
     />
   )
-  const hiddenPopupVariables = {
-    contentBackgroundColor: 'transparent',
-  }
-  const hiddenPopupContentVariables = {
+  const hiddenTooltipContentVariables = {
     boxShadow: 'none',
     borderColor: 'transparent',
+    backgroundColor: 'transparent',
   }
   const portalContentStyle = {
     display: 'flex',
@@ -83,27 +81,23 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
 
   return (
     <>
-      <Popup
+      <Tooltip
         pointing={pointing}
         position="below"
         align="center"
         trigger={button}
         content={{
-          content: popupContent,
-          variables: {
-            ...(hideContent && hiddenPopupContentVariables),
-          },
+          content: tooltipContent,
+          variables: siteVariables => ({
+            color: copied
+              ? siteVariables.colorScheme.brand.foreground4
+              : siteVariables.colors.black,
+            backgroundColor: copied
+              ? siteVariables.colorScheme.brand.background4
+              : siteVariables.colors.white,
+            ...(hideContent && hiddenTooltipContentVariables),
+          }),
         }}
-        on={['hover', 'context']}
-        variables={siteVariables => ({
-          contentColor: copied
-            ? siteVariables.colorScheme.brand.foreground4
-            : siteVariables.colors.black,
-          contentBackgroundColor: copied
-            ? siteVariables.colorScheme.brand.background4
-            : siteVariables.colors.white,
-          ...(hideContent && hiddenPopupVariables),
-        })}
       />
       {hideContent && (
         <Portal
