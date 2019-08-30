@@ -4,25 +4,43 @@ import { Flex, SplitButton } from '@stardust-ui/react'
 class SplitButtonExampleShorthand extends React.Component {
   items = [
     {
-      key: 'conversation',
-      content: 'New conversation',
+      key: 'pdf',
+      content: 'Export to PDF',
+      icon: 'files-pdf',
+      onClick: () => {
+        this.setState({ index: 0 })
+      },
     },
     {
-      key: 'group',
-      content: 'New group message',
+      key: 'pds',
+      content: 'Export to PDS',
+      icon: 'files-photoshop',
+      onClick: () => {
+        this.setState({ index: 1 })
+      },
     },
     {
-      key: 'channel',
-      content: 'New channel message',
+      key: 'gif',
+      content: 'Export as GIF',
+      icon: 'files-gif',
+      disabled: true,
+    },
+    {
+      key: 'eps',
+      content: 'Export to EPS',
+      icon: 'files-illustrator',
+      onClick: () => {
+        this.setState({ index: 3 })
+      },
     },
   ]
   state = {
     index: 0,
-    message: 'Send a message',
+    message: 'Use to export your work:',
   }
 
   handleClick = () => {
-    this.setState({ message: 'Great! Now start writing your message.' })
+    this.setState({ message: 'Exported successfuly!' })
   }
 
   render() {

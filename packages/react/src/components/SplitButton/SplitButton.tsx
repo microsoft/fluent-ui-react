@@ -45,6 +45,9 @@ export interface SplitButtonProps
   /** Initial value for 'open'. */
   defaultOpen?: boolean
 
+  /** A split button can be disabled. */
+  disabled?: boolean
+
   /** Shorthand for the menu. */
   menu?: ShorthandValue<MenuProps> | ShorthandCollection<MenuItemProps>
 
@@ -133,12 +136,13 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
     styles,
     unhandledProps,
   }: RenderResultConfig<MenuButtonProps>): React.ReactNode {
-    const { button, menu, primary, secondary, toggleButton } = this.props
+    const { button, disabled, menu, primary, secondary, toggleButton } = this.props
     const trigger = Button.create(button, {
       defaultProps: {
         styles: styles.button,
         primary,
         secondary,
+        disabled,
       },
     })
 
@@ -152,7 +156,6 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
                 ? accessibility.childBehaviors.menuButton
                 : undefined,
               menu,
-              styles: styles.button,
               // Opening is handled manually.
               on: [],
               open: this.state.open,
@@ -183,7 +186,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
         {Button.create(toggleButton, {
           defaultProps: {
             className: SplitButton.slotClassNames.toggleButton,
-            styles: styles.toggleButton,
+            disabled,
             icon: 'stardust-arrow-down',
             iconOnly: true,
             primary,
