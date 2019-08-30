@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { Button, Text, Portal, Ref, Tooltip } from '@stardust-ui/react/src'
+import { Button, Text, Tooltip } from '@stardust-ui/react/src'
 import * as copyToClipboard from 'copy-to-clipboard'
+import CopyButtonNotification from './CopyButtonNotification'
 
 export type CopyToClipboardProps = {
   value: string
@@ -12,10 +13,7 @@ export type CopyToClipboardProps = {
 
 const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
   const [copied, setCopied] = React.useState<boolean>(false)
-  const [copiedHeight, setCopiedHeight] = React.useState<number>(0)
-  const [copiedWidth, setCopiedWidth] = React.useState<number>(0)
   let timeoutId = undefined
-  const copiedTextRef = React.useRef<HTMLElement>(null)
 
   const handleClick = () => {
     if (timeoutId !== undefined) {
@@ -28,14 +26,6 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
     }, timeout)
     copyToClipboard(value)
   }
-
-  React.useEffect(() => {
-    if (copiedTextRef.current === null) {
-      return
-    }
-    setCopiedHeight(copiedTextRef.current.clientHeight)
-    setCopiedWidth(copiedTextRef.current.clientWidth)
-  })
 
   const { attached, pointing, copyPrompt } = props
   const hideContent = copied && !attached
@@ -67,17 +57,6 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
     borderColor: 'transparent',
     backgroundColor: 'transparent',
   }
-  const portalContentStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'fixed' as 'fixed',
-    backgroundColor: 'black',
-    color: 'white',
-    zIndex: 1000,
-    top: `calc(50% - ${copiedHeight / 2}px)`,
-    left: `calc(50% - ${copiedWidth / 2}px)`,
-  }
 
   return (
     <>
@@ -99,16 +78,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
           }),
         }}
       />
-      {hideContent && (
-        <Portal
-          open={true}
-          content={
-            <div style={portalContentStyle}>
-              <Ref innerRef={copiedTextRef}>{copiedText}</Ref>
-            </div>
-          }
-        />
-      )}
+      {hideContent && <CopyButtonNotification>{copiedText}</CopyButtonNotification>}
     </>
   )
 }
