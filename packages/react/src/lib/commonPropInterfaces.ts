@@ -3,6 +3,12 @@ import { ComponentVariablesInput, ComponentSlotStyle, AnimationProp } from '../t
 import { ReactChildren } from '../types'
 
 export interface StyledComponentProps<P = any, V = any> {
+  /** FIX ME */
+  enhanceName?: string
+
+  /** FIX ME */
+  replaceName?: string
+
   /** Additional CSS styles to apply to the component instance.  */
   styles?: ComponentSlotStyle<P, V>
 

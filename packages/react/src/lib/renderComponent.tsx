@@ -166,9 +166,24 @@ const renderComponent = <P extends {}>(
   const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
 
+  /** FIX ME */
+  if (props.enhanceName && props.replaceName) {
+    throw new Error('"enhanceName" and "replaceName" props can not be combined')
+  }
+
+  /** FIX ME */
+  if (props.enhanceName) {
+    if (!props.enhanceName.starsWith(`${displayName}:`)) {
+      throw new Error(
+        `"enhanceName" prop should start with "displayName" of matching component, i.e. "${displayName}:Variant"`,
+      )
+    }
+  }
+
   // Resolve variables for this component, allow props.variables to override
   const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
-    theme.componentVariables[displayName],
+    theme.componentVariables[props.replaceName || displayName],
+    theme.componentVariables[props.enhanceName],
     props.variables,
   )(theme.siteVariables)
 
@@ -178,7 +193,8 @@ const renderComponent = <P extends {}>(
 
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
-    theme.componentStyles[displayName],
+    theme.componentStyles[props.replaceName || displayName],
+    theme.componentStyles[props.enhanceName],
     { root: props.styles },
     { root: animationCSSProp },
   )
