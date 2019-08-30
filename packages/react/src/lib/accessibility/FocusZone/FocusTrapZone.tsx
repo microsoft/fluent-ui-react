@@ -130,7 +130,7 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
       ariaLabelledBy,
       disabled = false,
     } = this.props
-    const unhandledProps = getUnhandledProps(..._.keys(FocusTrapZone.propTypes), this.props)
+    const unhandledProps = getUnhandledProps(_.keys(FocusTrapZone.propTypes), this.props)
     const ElementType = getElementType({ defaultProps: FocusTrapZone.defaultProps }, this.props)
 
     const bumperProps = {
