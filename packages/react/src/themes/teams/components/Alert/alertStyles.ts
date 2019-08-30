@@ -79,6 +79,7 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     minHeight: v.minHeight,
     padding: v.padding,
     fontWeight: v.fontWeight,
+    visibility: 'visible',
 
     ...getIntentColorsFromProps(p, v, siteVariables),
 
@@ -89,19 +90,41 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     ...(p.attached === 'bottom' && {
       borderRadius: `0 0 ${v.borderRadius} ${v.borderRadius}`,
     }),
+
+    ...(!p.visible && {
+      visibility: 'hidden',
+    }),
+  }),
+
+  actions: ({ variables: v }): ICSSInJSStyle => ({
+    margin: v.actionsMargin,
+  }),
+
+  header: ({ variables: v }): ICSSInJSStyle => ({
+    fontWeight: v.headerFontWeight,
+    margin: v.headerMargin,
+  }),
+
+  body: (): ICSSInJSStyle => ({
+    display: 'flex',
+    flexGrow: 1,
   }),
 
   content: (): ICSSInJSStyle => ({
     flexGrow: 1,
   }),
 
-  action: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => {
+  icon: ({ variables: v }): ICSSInJSStyle => ({
+    margin: v.iconMargin,
+  }),
+
+  dismissAction: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => {
     const iconFilledStyles = getIconFillOrOutlineStyles({ outline: false })
 
     return {
-      height: v.actionSize,
-      minWidth: v.actionSize,
-      color: v.actionColor || 'currentColor',
+      height: v.dismissActionSize,
+      minWidth: v.dismissActionSize,
+      color: v.dismissActionColor || 'currentColor',
       border: 0,
       borderRadius: v.borderRadius,
       ...getIconFillOrOutlineStyles({ outline: true }),

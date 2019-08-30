@@ -1,7 +1,10 @@
+import { mount } from 'enzyme'
 import * as React from 'react'
+
 import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
-import { mount } from 'enzyme'
+import { ThemeInput } from 'src/themes/types'
+import { createRenderer } from '@stardust-ui/fela'
 
 describe('Provider', () => {
   test('is exported', () => {
@@ -10,6 +13,64 @@ describe('Provider', () => {
 
   test('has a ProviderConsumer subcomponent', () => {
     expect(require('src/index.ts').Provider.Consumer).toEqual(ProviderConsumer)
+  })
+
+  describe('overwrite', () => {
+    const outerTheme = { siteVariables: { brand: 'blue' } }
+    const innerTheme = { siteVariables: { secondary: 'yellow' } }
+
+    test('do not overwrite by default', () => {
+      const wrapper = mount(
+        <Provider theme={outerTheme}>
+          <Provider theme={innerTheme}>
+            <span />
+          </Provider>
+        </Provider>,
+      )
+
+      expect(
+        wrapper
+          .find('ThemeProvider')
+          .at(1)
+          .prop('theme'),
+      ).toEqual(
+        expect.objectContaining({
+          theme: expect.objectContaining({
+            siteVariables: {
+              brand: 'blue',
+              secondary: 'yellow',
+              fontSizes: {},
+            },
+          }),
+        }),
+      )
+    })
+
+    test('does overwrite when is true', () => {
+      const wrapper = mount(
+        <Provider theme={outerTheme}>
+          <Provider overwrite theme={innerTheme}>
+            <span />
+          </Provider>
+        </Provider>,
+      )
+
+      expect(
+        wrapper
+          .find('ThemeProvider')
+          .at(1)
+          .prop('theme'),
+      ).toEqual(
+        expect.objectContaining({
+          theme: expect.objectContaining({
+            siteVariables: {
+              secondary: 'yellow',
+              fontSizes: {},
+            },
+          }),
+        }),
+      )
+    })
   })
 
   describe('staticStyles', () => {
@@ -124,5 +185,51 @@ describe('Provider', () => {
         expect(nestedProviderDiv.prop('dir')).toEqual(expectedChildDir)
       })
     })
+  })
+
+  describe('calls provided renderer', () => {
+    test('calls renderFont', () => {
+      const theme: ThemeInput = {
+        fontFaces: [
+          {
+            name: 'Segoe UI',
+            paths: ['public/fonts/segoe-ui-regular.woff2'],
+            style: { fontWeight: 400 },
+          },
+        ],
+      }
+      const renderer = createRenderer()
+      const renderFont = jest.spyOn(renderer, 'renderFont')
+
+      mount(
+        <Provider theme={theme} renderer={renderer}>
+          <div />
+        </Provider>,
+      )
+
+      expect(renderFont).toHaveBeenCalled()
+    })
+  })
+
+  test('calls renderStatic', () => {
+    const theme: ThemeInput = {
+      staticStyles: [
+        {
+          a: {
+            textDecoration: 'none',
+          },
+        },
+      ],
+    }
+    const renderer = createRenderer()
+    const renderStatic = jest.spyOn(renderer, 'renderStatic')
+
+    mount(
+      <Provider theme={theme} renderer={renderer}>
+        <div />
+      </Provider>,
+    )
+
+    expect(renderStatic).toHaveBeenCalled()
   })
 })

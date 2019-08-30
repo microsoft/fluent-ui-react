@@ -220,23 +220,4 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
   static getAutoControlledStateFromProps(props, state) {
     return null
   }
-
-  /**
-   * Safely attempt to set state for props that might be controlled by the user.
-   * Second argument is a state object that is always passed to setState.
-   * @param {object} maybeState State that corresponds to controlled props.
-   * @param {object} [state] Actual state, useful when you also need to setState.
-   * @param {object} callback Callback which is called after setState applied.
-   */
-  trySetState = (maybeState: Partial<S>, callback?: () => void) => {
-    const newState = Object.keys(maybeState).reduce((acc, prop) => {
-      // ignore props defined by the parent
-      if (this.props[prop] !== undefined) return acc
-
-      acc[prop] = maybeState[prop]
-      return acc
-    }, {})
-
-    if (Object.keys(newState).length > 0) this.setState(newState, callback)
-  }
 }

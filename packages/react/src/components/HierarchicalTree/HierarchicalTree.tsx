@@ -95,7 +95,6 @@ class HierarchicalTree extends AutoControlledComponent<
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
-    rtlAttributes: PropTypes.func,
     onActiveIndexChange: PropTypes.func,
   }
 
@@ -128,7 +127,7 @@ class HierarchicalTree extends AutoControlledComponent<
   }
 
   trySetActiveIndexAndTriggerEvent = (e, activeIndex) => {
-    this.trySetState({ activeIndex })
+    this.setState({ activeIndex })
     _.invoke(this.props, 'onActiveIndexChange', e, { ...this.props, activeIndex })
   }
 

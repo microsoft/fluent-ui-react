@@ -1,7 +1,7 @@
 {
   "name": "@stardust-ui/docs-components",
-  "description": "Registers a DOM nodes within a context.",
-  "version": "0.36.0",
+  "description": "A set of React components to build docs sites.",
+  "version": "0.37.0",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
@@ -9,7 +9,7 @@
     "copy-to-clipboard": "^3.2.0",
     "object.values": "^1.1.0",
     "prismjs": "^1.16.0",
-    "prop-types": "^15.6.1"
+    "prop-types": "^15.7.2"
   },
   "files": [
     "dist"

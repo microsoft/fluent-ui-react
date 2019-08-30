@@ -153,7 +153,7 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = _.get(e, 'target.value')
       _.invoke(this.props, 'onChange', e, { ...this.props, value })
-      this.trySetState({ value })
+      this.setState({ value })
     },
     onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
       this.setState({ isFromKeyboard: isFromKeyboard() })
@@ -245,5 +245,8 @@ Slider.slotClassNames = {
  *
  * @accessibility
  * Implements [ARIA Slider](https://www.w3.org/TR/wai-aria-practices-1.1/#slider) design pattern.
+ * @accessibilityIssues
+ * [Slider - JAWS narrates slider value twice when using PageUp / PageDown](https://github.com/FreedomScientific/VFO-standards-support/issues/220)
+ * [Slider - JAWS narrates current and new value in vertical slider](https://github.com/FreedomScientific/VFO-standards-support/issues/219)
  */
 export default withSafeTypeForAs<typeof Slider, SliderProps, 'input'>(Slider)

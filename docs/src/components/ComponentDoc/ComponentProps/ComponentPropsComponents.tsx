@@ -1,36 +1,30 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Menu, tabListBehavior } from '@stardust-ui/react'
+import { Dropdown, Header, Flex } from '@stardust-ui/react'
 
 const ComponentPropsComponents: any = ({
   activeDisplayName,
   displayNames,
-  onItemClick,
+  onSelectedChange,
   parentDisplayName,
 }) => {
   if (displayNames.length < 2) return null
 
-  const items: Object[] = _.map(displayNames, displayName => ({
-    key: displayName,
-    active: activeDisplayName === displayName,
-    content:
-      displayName === parentDisplayName
-        ? displayName
-        : displayName.replace(parentDisplayName, `${parentDisplayName}.`),
-    name: displayName,
-    onClick: onItemClick,
-    styles: { paddingTop: '0px' },
-  }))
-
+  const items: Object[] = _.map(displayNames, displayName =>
+    displayName === parentDisplayName
+      ? displayName
+      : displayName.replace(parentDisplayName, `${parentDisplayName}`),
+  )
   return (
-    <Menu
-      styles={{ display: 'inline-flex', borderBottomWidth: '0px' }}
-      primary
-      underlined
-      accessibility={tabListBehavior}
-      items={items}
-    />
+    <Flex column>
+      <Header as="h3">Component:</Header>
+      <Dropdown
+        items={items}
+        defaultValue={activeDisplayName}
+        onSelectedChange={onSelectedChange}
+      />
+    </Flex>
   )
 }
 

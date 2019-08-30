@@ -40,7 +40,7 @@ export interface MenuSlotClassNames {
 export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @available menuAsToolbarBehavior, tabListBehavior
+   * @available menuAsToolbarBehavior, tabListBehavior, tabBehavior
    */
   accessibility?: Accessibility
 
@@ -145,7 +145,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     onClick: (e, itemProps) => {
       const { index } = itemProps
 
-      this.trySetState({ activeIndex: index })
+      this.setState({ activeIndex: index })
 
       _.invoke(this.props, 'onItemClick', e, itemProps)
       _.invoke(predefinedProps, 'onClick', e, itemProps)
@@ -153,9 +153,9 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     onActiveChanged: (e, props) => {
       const { index, active } = props
       if (active) {
-        this.trySetState({ activeIndex: index })
+        this.setState({ activeIndex: index })
       } else if (this.state.activeIndex === index) {
-        this.trySetState({ activeIndex: null })
+        this.setState({ activeIndex: null })
       }
       _.invoke(predefinedProps, 'onActiveChanged', e, props)
     },
@@ -261,5 +261,9 @@ Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items'
  *
  * @accessibility
  * Implements ARIA [Menu](https://www.w3.org/TR/wai-aria-practices-1.1/#menu), [Toolbar](https://www.w3.org/TR/wai-aria-practices-1.1/#toolbar) or [Tabs](https://www.w3.org/TR/wai-aria-practices-1.1/#tabpanel) design pattern, depending on the behavior used.
+ * @accessibilityIssues
+ * [JAWS - navigation instruction for menubar](https://github.com/FreedomScientific/VFO-standards-support/issues/203)
+ * [JAWS - navigation instruction for menu with aria-orientation="horizontal"](https://github.com/FreedomScientific/VFO-standards-support/issues/204)
+ * 51114083 VoiceOver+Web narrate wrong position in menu / total count of menu items, when pseudo element ::after or ::before is used
  */
 export default withSafeTypeForAs<typeof Menu, MenuProps, 'ul'>(Menu)

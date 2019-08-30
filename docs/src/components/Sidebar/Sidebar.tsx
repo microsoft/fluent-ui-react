@@ -51,8 +51,16 @@ class Sidebar extends React.Component<any, any> {
   }
 
   findActiveCategoryIndex = (at: string, sections: ShorthandValue<any>[]): number => {
+    let newAt = at
+    if (at.startsWith('/components')) {
+      newAt = newAt.replace(/[^\/]*$/, '')
+    }
+    if (newAt[newAt.length - 1] === '/') {
+      newAt = newAt.substr(0, newAt.length - 1)
+    }
+
     return _.findIndex(sections, (section: ShorthandValue<HierarchicalTreeItemProps>) => {
-      return _.find((section as any).items, item => item.title.to === at)
+      return _.find((section as any).items, item => item.title.to.startsWith(newAt))
     })
   }
 
@@ -268,7 +276,7 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'chatMssages',
         title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
-        public: false,
+        public: true,
       },
       {
         key: 'customtoolbar',
@@ -303,7 +311,7 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'mentions',
         title: { content: 'Mentions', as: NavLink, to: '/prototype-mentions' },
-        public: false,
+        public: true,
       },
       {
         key: 'searchpage',
@@ -341,16 +349,10 @@ class Sidebar extends React.Component<any, any> {
       title: 'Components',
       items: treeItemsByType[0].items,
     }
-    const behaviorTreeSection = {
-      key: 'behaviour',
-      title: 'Behaviors',
-      items: treeItemsByType[1].items,
-    }
 
     const treeItems = this.getTreeItems()
     const withComponents = treeItems.concat(componentTreeSection)
-    const withBehaviors = withComponents.concat(behaviorTreeSection)
-    return this.getSectionsWithPrototypeSectionIfApplicable(withBehaviors, prototypesTreeItems)
+    return this.getSectionsWithPrototypeSectionIfApplicable(withComponents, prototypesTreeItems)
   }
 
   render() {
@@ -457,6 +459,7 @@ class Sidebar extends React.Component<any, any> {
           </a>
           <Input
             styles={topItemTheme}
+            inverted
             fluid
             clearable
             icon="search"

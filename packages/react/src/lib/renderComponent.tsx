@@ -3,7 +3,6 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import callable from './callable'
-import felaRenderer from './felaRenderer'
 import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
@@ -21,7 +20,7 @@ import {
 import { Props, ProviderContextPrepared } from '../types'
 import { FocusZoneMode } from './accessibility/types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
-import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
+import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
@@ -82,15 +81,8 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultCon
     logProviderMissingWarning()
   }
 
-  const { rtl = false, renderer = felaRenderer, disableAnimations = false } = context || {}
-
-  const {
-    siteVariables = {
-      fontSizes: {},
-    },
-    componentVariables = {},
-    componentStyles = {},
-  } = (context.theme as ThemePrepared) || {}
+  const { disableAnimations = false, renderer = null, rtl = false, theme = emptyTheme } =
+    context || {}
 
   const ElementType = getElementType(props) as React.ReactType<P>
 
@@ -104,9 +96,9 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultCon
   //   - this doesn't solve all problems, we need to know how to replace all "red" colors for instance in a merge operation
   // Resolve variables for this component, allow props.variables to override
   const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
-    componentVariables[displayName],
+    theme.componentVariables[displayName],
     props.variables,
-  )(siteVariables)
+  )(theme.siteVariables)
 
   const animationCSSProp = props.animation
     ? createAnimationStyles(props.animation, context.theme)
@@ -114,7 +106,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultCon
 
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
-    componentStyles[displayName],
+    theme.componentStyles[displayName],
     { root: props.styles },
     { root: animationCSSProp },
   )
@@ -132,14 +124,16 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultCon
     displayName,
     props: stateAndProps,
     variables: resolvedVariables,
-    theme: context.theme,
+    theme,
     rtl,
     disableAnimations,
   }
 
   const resolvedStyles: ComponentSlotStylesPrepared = resolveStyles(mergedStyles, styleParam)
 
-  const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
+  const classes: ComponentSlotClasses = renderer
+    ? getClasses(renderer, mergedStyles, styleParam)
+    : {}
   classes.root = cx(className, classes.root, props.className)
 
   const resolvedConfig: RenderResultConfig<P> = {
@@ -150,7 +144,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultCon
     styles: resolvedStyles,
     accessibility,
     rtl,
-    theme: context.theme,
+    theme,
     wrap: (element: React.ReactElement<P>) => element,
   }
 
@@ -182,11 +176,11 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): RenderResultCon
     saveDebug(
       new Debug({
         componentName: displayName,
-        themes: context.originalThemes,
+        themes: context ? context.originalThemes : [],
         instanceStylesOverrides: props.styles,
         instanceVariablesOverrides: props.variables,
         resolveStyles: styles => resolveStyles(styles, styleParam),
-        resolveVariables: variables => callable(variables)(siteVariables),
+        resolveVariables: variables => callable(variables)(theme.siteVariables),
       }),
     )
   }

@@ -19,6 +19,7 @@ const toolbarItemStyles: ComponentSlotStylesInput<ToolbarItemPropsAndState, Tool
       borderRadius: v.borderRadius,
       height: v.itemHeight,
       minWidth: v.itemHeight,
+      padding: v.itemPadding,
       color: v.foreground || colors.foreground1,
       cursor: 'pointer',
 
