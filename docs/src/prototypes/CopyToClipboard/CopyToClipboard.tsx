@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Text, Tooltip } from '@stardust-ui/react/src'
+import { Button, Text, Tooltip, ShorthandValue, ButtonProps } from '@stardust-ui/react/src'
 import * as copyToClipboard from 'copy-to-clipboard'
 import CopyButtonNotification from './CopyButtonNotification'
 
@@ -9,13 +9,14 @@ export type CopyToClipboardProps = {
   timeout?: number
   attached?: boolean
   pointing?: boolean
+  button?: ShorthandValue<ButtonProps>
 }
 
 const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
   const [copied, setCopied] = React.useState<boolean>(false)
   let timeoutId = undefined
 
-  const handleClick = () => {
+  const onClick = () => {
     if (timeoutId !== undefined) {
       clearTimeout(timeoutId)
     }
@@ -27,7 +28,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
     copyToClipboard(value)
   }
 
-  const { attached, pointing, copyPrompt } = props
+  const { attached, pointing, copyPrompt, button } = props
   const hideContent = copied && !attached
   const copiedStr = 'Copied to clipboard'
   const copiedText = hideContent ? (
@@ -42,16 +43,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
   if (hideContent) {
     tooltipContent = <Text />
   }
-  const button = (
-    <Button
-      icon="clipboard-copied-to"
-      iconOnly
-      onClick={handleClick}
-      variables={siteVariables => ({
-        colorHover: !copied && siteVariables.colors.brand[400],
-      })}
-    />
-  )
+
   const hiddenTooltipContentVariables = {
     boxShadow: 'none',
     borderColor: 'transparent',
@@ -64,7 +56,15 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
         pointing={pointing}
         position="below"
         align="center"
-        trigger={button}
+        trigger={Button.create(button, {
+          defaultProps: {
+            iconOnly: true,
+            variables: siteVariables => ({
+              colorHover: !copied && siteVariables.colors.brand[400],
+            }),
+          },
+          overrideProps: () => ({ onClick }),
+        })}
         content={{
           content: tooltipContent,
           variables: siteVariables => ({
@@ -87,6 +87,7 @@ CopyToClipboard.defaultProps = {
   timeout: 4000,
   attached: false,
   pointing: false,
+  button: { icon: 'clipboard-copied-to' },
 }
 
 export default CopyToClipboard
