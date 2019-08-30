@@ -173,7 +173,7 @@ const renderComponent = <P extends {}>(
 
   /** FIX ME */
   if (props.enhanceName) {
-    if (!props.enhanceName.starsWith(`${displayName}:`)) {
+    if (!props.enhanceName.startsWith(`${displayName}:`)) {
       throw new Error(
         `"enhanceName" prop should start with "displayName" of matching component, i.e. "${displayName}:Variant"`,
       )
