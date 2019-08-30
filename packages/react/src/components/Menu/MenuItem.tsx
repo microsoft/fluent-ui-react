@@ -145,6 +145,7 @@ export interface MenuItemProps
 export interface MenuItemState {
   isFromKeyboard: boolean
   menuOpen: boolean
+  menuAnimationFinished: boolean
 }
 
 class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuItemState> {
@@ -212,7 +213,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
       indicator,
       disabled,
     } = this.props
-    const { menuOpen } = this.state
+    const { menuOpen, menuAnimationFinished } = this.state
 
     const indicatorWithDefaults = indicator === undefined ? {} : indicator
     const targetRef = toRefObject(this.context.target)
@@ -251,7 +252,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
       </Ref>
     )
     const maybeSubmenu =
-      menu && active && menuOpen ? (
+      menu && active && (menuOpen || (!menuOpen && !menuAnimationFinished)) ? (
         <>
           <Ref innerRef={this.menuRef}>
             <Popper
@@ -269,6 +270,10 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
                   styles: styles.menu,
                   submenu: true,
                   indicator,
+                  ...(!menuOpen && {
+                    onAnimationStart: e => this.setState({ menuAnimationFinished: false }),
+                    onAnimationEnd: e => this.setState({ menuAnimationFinished: true }),
+                  }),
                 },
               })}
             </Popper>
