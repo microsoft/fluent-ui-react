@@ -1,22 +1,24 @@
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 
 import SplitButton from 'src/components/SplitButton/SplitButton'
 import { isConformant } from 'test/specs/commonTests'
-import { mountWithProvider } from '../../../utils'
-import Menu from 'src/components/Menu/Menu'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
+import { mountWithProvider, findIntrinsicElement } from '../../../utils'
+import Menu from 'src/components/Menu/Menu'
 import MenuButton from 'src/components/MenuButton/MenuButton'
+import Button from 'src/components/Button/Button'
 
 const mockMenu = { items: ['1', '2', '3'] }
 
 const getToggleButton = (wrapper: ReactWrapper): CommonWrapper =>
-  wrapper
-    .find(`.${SplitButton.slotClassNames.toggleButton}`)
-    .filterWhere(n => typeof n.type() === 'string')
+  findIntrinsicElement(wrapper, `.${SplitButton.slotClassNames.toggleButton}`)
 const getMainButton = (wrapper: ReactWrapper): CommonWrapper =>
-  wrapper.find(`.${MenuButton.className}`).filterWhere(n => typeof n.type() === 'string')
+  findIntrinsicElement(wrapper, `.${MenuButton.className} .${Button.className}`)
 const getMenuItems = (wrapper: ReactWrapper): CommonWrapper =>
-  wrapper.find(`.${Menu.slotClassNames.item}`).filterWhere(n => typeof n.type() === 'string')
+  findIntrinsicElement(wrapper, `.${Menu.slotClassNames.item}`)
+const getMenu = (wrapper: ReactWrapper): CommonWrapper =>
+  findIntrinsicElement(wrapper, `.${Menu.className}`)
 
 describe('SplitButton', () => {
   isConformant(SplitButton)
@@ -41,6 +43,34 @@ describe('SplitButton', () => {
       getMenuItems(wrapper)
         .at(0)
         .simulate('click')
+      expect(getMenuItems(wrapper).length).toBe(0)
+    })
+
+    test('is open when Alt+ArrowDown is sent to the main button', () => {
+      const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button={'test'} />)
+
+      getMainButton(wrapper).simulate('keydown', { keyCode: keyboardKey.ArrowDown, altKey: true })
+
+      expect(getMenuItems(wrapper).length).toBe(mockMenu.items.length)
+    })
+
+    test('is open when Alt+ArrowUp is sent to the menu', () => {
+      const wrapper = mountWithProvider(
+        <SplitButton menu={mockMenu} button={'test'} defaultOpen={true} />,
+      )
+
+      getMenu(wrapper).simulate('keydown', { keyCode: keyboardKey.ArrowUp, altKey: true })
+
+      expect(getMenuItems(wrapper).length).toBe(0)
+    })
+
+    test('is open when Escape is sent to the menu', () => {
+      const wrapper = mountWithProvider(
+        <SplitButton menu={mockMenu} button={'test'} defaultOpen={true} />,
+      )
+
+      getMenu(wrapper).simulate('keydown', { keyCode: keyboardKey.Escape })
+
       expect(getMenuItems(wrapper).length).toBe(0)
     })
   })
