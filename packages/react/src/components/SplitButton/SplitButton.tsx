@@ -114,6 +114,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
   static defaultProps = {
     accessibility: splitButtonBehavior,
     as: 'span',
+    toggleButton: {},
   }
 
   static autoControlledProps = ['open']
@@ -179,7 +180,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
             }),
           },
         )}
-        {Button.create(toggleButton || {}, {
+        {Button.create(toggleButton, {
           defaultProps: {
             className: SplitButton.slotClassNames.toggleButton,
             styles: styles.toggleButton,
