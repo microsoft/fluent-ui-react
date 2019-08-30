@@ -40,8 +40,8 @@ const splitButtonStyles = {
         ...(p.isFromKeyboard
           ? {
               [`& .${SplitButton.slotClassNames.toggleButton}`]: {
-                color: v.colorFocus,
-                backgroundColor: v.backgroundColorFocus,
+                color: p.primary ? v.primaryColorFocus : v.colorFocus,
+                backgroundColor: p.primary ? v.primaryBackgroundColorFocus : v.backgroundColorFocus,
                 borderColor: siteVariables.colors.white,
               },
 

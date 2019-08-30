@@ -6,6 +6,8 @@ export interface SplitButtonVariables {
   boxShadow: string
   borderColor: string
   colorFocus: string
+  primaryBackgroundColorFocus: string
+  primaryColorFocus: string
 }
 
 export default (siteVars: SiteVariablesPrepared): SplitButtonVariables => {
@@ -15,5 +17,7 @@ export default (siteVars: SiteVariablesPrepared): SplitButtonVariables => {
     boxShadow: siteVars.shadowLevel1,
     borderColor: siteVars.colors.grey[200],
     colorFocus: siteVars.colors.grey[750],
+    primaryBackgroundColorFocus: siteVars.colors.brand[800],
+    primaryColorFocus: siteVars.colors.white,
   }
 }
