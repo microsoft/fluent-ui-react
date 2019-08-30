@@ -51,6 +51,9 @@ import {
   tooltipBehavior,
   tooltipAsLabelBehavior,
   menuButtonBehavior,
+  treeBehavior,
+  treeItemBehavior,
+  treeTitleBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -106,5 +109,8 @@ testHelper.addBehavior('toolbarRadioGroupBehavior', toolbarRadioGroupBehavior)
 testHelper.addBehavior('toolbarRadioGroupItemBehavior', toolbarRadioGroupItemBehavior)
 testHelper.addBehavior('tooltipBehavior', tooltipBehavior)
 testHelper.addBehavior('tooltipAsLabelBehavior', tooltipAsLabelBehavior)
+testHelper.addBehavior('treeBehavior', treeBehavior)
+testHelper.addBehavior('treeItemBehavior', treeItemBehavior)
+testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
 
 testHelper.run(behaviorMenuItems)
