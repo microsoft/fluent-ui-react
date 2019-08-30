@@ -2,7 +2,6 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import Checkbox, { CheckboxProps, CheckboxState } from '../../../../components/Checkbox/Checkbox'
 import { CheckboxVariables } from './checkboxVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
-import { pxToRem } from '../../../../lib'
 
 const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, CheckboxVariables> = {
   root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => ({
@@ -54,10 +53,6 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     color: v.indicatorColor,
     margin: v.margin,
     padding: v.padding,
-
-    [`&.${Checkbox.slotClassNames.indicator}`]: {
-      marginTop: pxToRem(2),
-    },
 
     ...(p.checked && {
       background: v.checkedBackground,
