@@ -95,7 +95,6 @@ class HierarchicalTree extends AutoControlledComponent<
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
-    rtlAttributes: PropTypes.func,
     onActiveIndexChange: PropTypes.func,
   }
 
