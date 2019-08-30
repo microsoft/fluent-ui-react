@@ -88,7 +88,6 @@ class HierarchicalTreeItem extends UIComponent<WithAsProp<HierarchicalTreeItemPr
     onTitleClick: PropTypes.func,
     open: PropTypes.bool,
     renderItemTitle: PropTypes.func,
-    treeItemRtlAttributes: PropTypes.func,
     title: customPropTypes.itemShorthand,
   }
 
