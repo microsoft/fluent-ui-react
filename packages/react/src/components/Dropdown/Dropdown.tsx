@@ -1357,5 +1357,7 @@ Dropdown.slotClassNames = {
  *
  * @accessibility
  * Implements [ARIA Combo Box](https://www.w3.org/TR/wai-aria-practices-1.1/#combobox) design pattern, uses aria-live to announce state changes.
+ * @accessibilityIssues
+ * [Issue 991203: VoiceOver doesn't narrate properly elements in the input/combobox](https://bugs.chromium.org/p/chromium/issues/detail?id=991203)
  */
 export default withSafeTypeForAs<typeof Dropdown, DropdownProps>(Dropdown)

@@ -1,9 +1,14 @@
-import { ToolbarItem } from '@stardust-ui/react'
+import { ToolbarItem, ToolbarMenuItem } from '@stardust-ui/react'
 
 const config: ScreenerTestsConfig = {
   themes: ['teams', 'teamsDark', 'teamsHighContrast'],
   steps: [
-    builder => builder.click(`.${ToolbarItem.className}:nth-child(1)`).snapshot('Shows menu'),
+    (builder, keys) =>
+      builder
+        .click(`.${ToolbarItem.className}:nth-child(1)`)
+        .snapshot('Shows menu')
+        .keys(`.${ToolbarMenuItem.className}`, keys.downArrow)
+        .snapshot('Moves focus to second item in menu'),
   ],
 }
 
