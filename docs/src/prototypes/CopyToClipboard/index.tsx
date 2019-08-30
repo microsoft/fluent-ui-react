@@ -5,12 +5,13 @@ import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 
 class CopyToClipboardPrototypeAttached extends React.Component {
   render() {
+    const commitID = '3422f7d'
     return (
       <Provider theme={themes.teams} style={{ padding: 10 }}>
         <Flex gap="gap.medium" vAlign="center">
           <Text content="Commit: " />
-          <Text content="3421f" color="brand" />
-          <CopyToClipboard attached timeout={4000} value="lorem ipsum" />
+          <Text content={commitID} color="brand" />
+          <CopyToClipboard attached pointing value={commitID} copyPrompt="Copy commit ID" />
         </Flex>
       </Provider>
     )
@@ -19,12 +20,13 @@ class CopyToClipboardPrototypeAttached extends React.Component {
 
 class CopyToClipboardPrototypeNotAttached extends React.Component {
   render() {
+    const commitID = '3421f7d'
     return (
       <Provider theme={themes.teams} style={{ padding: 10 }}>
         <Flex gap="gap.medium" vAlign="center">
           <Text content="Commit: " />
-          <Text content="3421f" color="brand" />
-          <CopyToClipboard timeout={4000} value="lorem ipsum" />
+          <Text content={commitID} color="brand" />
+          <CopyToClipboard pointing value={commitID} copyPrompt="Copy commit ID" />
         </Flex>
       </Provider>
     )

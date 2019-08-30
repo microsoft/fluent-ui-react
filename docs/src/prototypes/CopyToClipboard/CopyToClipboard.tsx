@@ -3,9 +3,11 @@ import { Popup, Button, Text, Portal, Ref } from '@stardust-ui/react/src'
 import * as copyToClipboard from 'copy-to-clipboard'
 
 export type CopyToClipboardProps = {
-  timeout?: number
   value: string
+  copyPrompt: string
+  timeout?: number
   attached?: boolean
+  pointing?: boolean
 }
 
 class CopyToClipboard extends React.Component<CopyToClipboardProps> {
@@ -16,6 +18,12 @@ class CopyToClipboard extends React.Component<CopyToClipboardProps> {
   }
   timeoutId = undefined
   copiedTextRef = React.createRef<HTMLElement>()
+
+  static defaultProps = {
+    timeout: 4000,
+    attached: false,
+    pointing: false,
+  }
 
   handleClick = () => {
     if (this.timeoutId !== undefined) {
@@ -42,7 +50,7 @@ class CopyToClipboard extends React.Component<CopyToClipboardProps> {
   }
 
   render() {
-    const { attached } = this.props
+    const { attached, pointing, copyPrompt } = this.props
     const hideContent = this.state.copied && !attached
     const copiedStr = 'Copied to clipboard'
     const copiedText = hideContent ? (
@@ -52,7 +60,7 @@ class CopyToClipboard extends React.Component<CopyToClipboardProps> {
     ) : (
       <Text>{copiedStr}</Text>
     )
-    const copyText = <Text>Copy commit ID</Text>
+    const copyText = <Text>{copyPrompt}</Text>
     let popupContent = this.state.copied ? copiedText : copyText
     if (hideContent) {
       popupContent = <Text />
@@ -88,7 +96,7 @@ class CopyToClipboard extends React.Component<CopyToClipboardProps> {
     return (
       <>
         <Popup
-          pointing
+          pointing={pointing}
           position="below"
           align="center"
           trigger={button}
