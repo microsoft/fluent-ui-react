@@ -19,7 +19,7 @@ export const babelConfig = {
   presets: ['es2015'],
 }
 
-export const imports = {
+export const imports: Record<string, { version: string; module: any }> = {
   '@stardust-ui/docs-components': {
     version: docsComponentsPackageJson.version,
     module: DocsComponent,
