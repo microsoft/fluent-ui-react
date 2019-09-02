@@ -90,7 +90,7 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
       borderRadius: `0 0 ${v.borderRadius} ${v.borderRadius}`,
     }),
 
-    ...(p.compact && { display: 'inline-flex' }),
+    ...(p.fitted && { display: 'inline-flex' }),
 
     ...(p.dismissible && { padding: v.dismissiblePadding }),
 
