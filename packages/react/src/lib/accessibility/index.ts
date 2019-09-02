@@ -60,3 +60,6 @@ export { default as tooltipAsLabelBehavior } from './Behaviors/Tooltip/tooltipAs
 export { default as sliderBehavior } from './Behaviors/Slider/sliderBehavior'
 export { default as menuButtonBehavior } from './Behaviors/MenuButton/menuButtonBehavior'
 export { default as splitButtonBehavior } from './Behaviors/SplitButton/splitButtonBehavior'
+export { default as treeBehavior } from './Behaviors/Tree/treeBehavior'
+export { default as treeItemBehavior } from './Behaviors/Tree/treeItemBehavior'
+export { default as treeTitleBehavior } from './Behaviors/Tree/treeTitleBehavior'
