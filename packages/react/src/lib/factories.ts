@@ -95,7 +95,7 @@ export type CreateShorthandFactoryConfig = CreateShorthandFactoryConfigInner
 export type ShorthandFactory = (
   value: ShorthandValue<UIComponentProps>,
   options?: CreateShorthandOptions,
-) => React.ReactElement<Props> | null | undefined
+) => React.ReactElement | null | undefined
 // ============================================================
 // Factory Creators
 // ============================================================
