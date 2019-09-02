@@ -72,7 +72,7 @@ export interface TreeState {
 }
 
 class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
-  static create: Function
+  static create: CreateShorthandFactoryResult
 
   static displayName = 'Tree'
 
@@ -263,7 +263,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           const isSubtree = hasSubtree(item)
           const isSubtreeOpen = isSubtree && this.isActiveItem(item['id'])
 
-          const renderedItem = TreeItem.create(item, {
+          const renderedItem: any = TreeItem.create(item, {
             defaultProps: {
               className: Tree.slotClassNames.item,
               open: isSubtreeOpen,
@@ -273,6 +273,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
             },
             overrideProps: this.handleTreeItemOverrides,
           })
+          console.error(JSON.stringify(renderedItem))
 
           // Only need refs of the items that spawn subtrees, when they need to be focused
           // by any of their children, using Arrow Left.

@@ -743,8 +743,10 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       !loading &&
         items.length === 0 &&
         ListItem.create(noResultsMessage, {
-          key: 'no-results-message',
-          styles: styles.noResultsMessage,
+          defaultProps: {
+            key: 'no-results-message',
+            styles: styles.noResultsMessage,
+          },
         }),
     ]
   }

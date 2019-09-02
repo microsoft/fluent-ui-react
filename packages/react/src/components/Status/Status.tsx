@@ -11,6 +11,7 @@ import {
   UIComponentProps,
   commonPropTypes,
   SizeValue,
+  CreateShorthandFactoryResult,
 } from '../../lib'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
@@ -32,7 +33,7 @@ export interface StatusProps extends UIComponentProps {
 }
 
 class Status extends UIComponent<WithAsProp<StatusProps>, any> {
-  static create: Function
+  static create: CreateShorthandFactoryResult
 
   static className = 'ui-status'
 

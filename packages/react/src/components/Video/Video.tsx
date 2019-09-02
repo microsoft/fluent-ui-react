@@ -2,7 +2,13 @@ import { Ref } from '@stardust-ui/react-component-ref'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
+import {
+  createShorthandFactory,
+  UIComponent,
+  UIComponentProps,
+  commonPropTypes,
+  CreateShorthandFactoryResult,
+} from '../../lib'
 
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
@@ -27,7 +33,7 @@ export interface VideoProps extends UIComponentProps {
 }
 
 class Video extends UIComponent<WithAsProp<VideoProps>> {
-  static create: Function
+  static create: CreateShorthandFactoryResult
 
   static className = 'ui-video'
 

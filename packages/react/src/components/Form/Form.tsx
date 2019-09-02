@@ -10,6 +10,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  CreateShorthandFactoryResult,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import {
@@ -45,7 +46,7 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
 }
 
 class Form extends UIComponent<WithAsProp<FormProps>, any> {
-  static create: Function
+  static create: CreateShorthandFactoryResult
 
   static displayName = 'Form'
 

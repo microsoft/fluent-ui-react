@@ -14,6 +14,7 @@ import {
   rtlTextContainer,
   SizeValue,
   AlignValue,
+  CreateShorthandFactoryResult,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -64,7 +65,7 @@ export interface TextProps
 }
 
 class Text extends UIComponent<WithAsProp<TextProps>, any> {
-  static create: Function
+  static create: CreateShorthandFactoryResult
 
   static className = 'ui-text'
 

@@ -11,6 +11,7 @@ import {
   commonPropTypes,
   isFromKeyboard,
   UIComponentProps,
+  CreateShorthandFactoryResult,
 } from '../../lib'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -72,7 +73,7 @@ export interface CheckboxState {
 class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, CheckboxState> {
   static slotClassNames: CheckboxSlotClassNames
 
-  static create: Function
+  static create: CreateShorthandFactoryResult
 
   static displayName = 'Checkbox'
 

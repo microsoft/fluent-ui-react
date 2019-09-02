@@ -9,6 +9,7 @@ import {
   commonPropTypes,
   isFromKeyboard,
   applyAccessibilityKeyHandlers,
+  CreateShorthandFactoryResult,
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Button, { ButtonProps } from '../Button/Button'
@@ -67,7 +68,7 @@ export interface AttachmentSlotClassNames {
 }
 
 class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentState> {
-  static create: Function
+  static create: CreateShorthandFactoryResult
 
   static className = 'ui-attachment'
 

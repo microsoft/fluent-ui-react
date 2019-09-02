@@ -17,6 +17,7 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  CreateShorthandFactoryResult,
 } from '../../lib'
 import {
   ComponentEventHandler,
@@ -67,7 +68,7 @@ export interface HierarchicalTreeItemProps extends UIComponentProps, ChildrenCom
 }
 
 class HierarchicalTreeItem extends UIComponent<WithAsProp<HierarchicalTreeItemProps>> {
-  static create: Function
+  static create: CreateShorthandFactoryResult
 
   static displayName = 'HierarchicalTreeItem'
 

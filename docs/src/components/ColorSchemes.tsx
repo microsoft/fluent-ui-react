@@ -57,7 +57,7 @@ const ColorSchemes = createComponent<ColorVariantsProps>({
     return (
       <div className={classes.root}>
         <Grid columns={columns}>
-          {headers && headers.map(header => Header.create(header))}
+          {headers && headers.map(header => Header.create(header, {}))}
           {elements}
         </Grid>
       </div>

@@ -18,6 +18,7 @@ import {
   isFromKeyboard,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  CreateShorthandFactoryResult,
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Menu, { MenuProps, MenuShorthandKinds } from './Menu'
@@ -157,7 +158,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     wrapper: `${MenuItem.className}__wrapper`,
   }
 
-  static create: Function
+  static create: CreateShorthandFactoryResult
 
   static propTypes = {
     ...commonPropTypes.createCommon(),

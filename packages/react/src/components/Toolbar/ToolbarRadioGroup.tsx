@@ -12,6 +12,7 @@ import {
   childrenExist,
   commonPropTypes,
   applyAccessibilityKeyHandlers,
+  CreateShorthandFactoryResult,
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
@@ -42,7 +43,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
 
   static className = 'ui-toolbars' // FIXME: required by getComponentInfo/isConformant. But this is group inside a toolbar not a group of toolbars
 
-  static create: Function
+  static create: CreateShorthandFactoryResult
 
   static propTypes = {
     ...commonPropTypes.createCommon(),

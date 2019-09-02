@@ -18,6 +18,7 @@ import {
   isFromKeyboard,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  CreateShorthandFactoryResult,
 } from '../../lib'
 import {
   WithAsProp,
@@ -106,7 +107,7 @@ export interface ChatMessageState {
 class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageState> {
   static className = 'ui-chat__message'
 
-  static create: Function
+  static create: CreateShorthandFactoryResult
 
   static slotClassNames: ChatMessageSlotClassNames
 

@@ -10,6 +10,7 @@ import {
   childrenExist,
   commonPropTypes,
   isFromKeyboard,
+  CreateShorthandFactoryResult,
 } from '../../lib'
 
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
@@ -63,7 +64,7 @@ class ToolbarCustomItem extends UIComponent<
 
   static className = 'ui-toolbar__customitem'
 
-  static create: Function
+  static create: CreateShorthandFactoryResult
 
   static propTypes = {
     ...commonPropTypes.createCommon(),

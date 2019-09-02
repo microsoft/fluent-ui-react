@@ -10,6 +10,7 @@ import {
   ShorthandRenderer,
 } from '../types'
 import { mergeStyles } from './mergeThemes'
+import { UIComponentProps } from '.'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
@@ -91,6 +92,10 @@ type CreateShorthandFactoryConfigInner<TPropName = string> = {
   mappedArrayProp?: TPropName
 }
 export type CreateShorthandFactoryConfig = CreateShorthandFactoryConfigInner
+export type CreateShorthandFactoryResult = (
+  a: ShorthandValue<UIComponentProps>,
+  b: CreateShorthandOptions,
+) => React.ReactElement<Props> | null | undefined
 // ============================================================
 // Factory Creators
 // ============================================================
@@ -107,25 +112,20 @@ export function createShorthandFactory<TStringElement extends keyof JSX.Intrinsi
   mappedProp?: keyof PropsOf<TStringElement>
   mappedArrayProp?: keyof PropsOf<TStringElement>
   allowsJSX?: boolean
-})
+}): CreateShorthandFactoryResult
 export function createShorthandFactory<TFunctionComponent extends React.FunctionComponent>(config: {
   Component: TFunctionComponent
   mappedProp?: keyof PropsOf<TFunctionComponent>
   mappedArrayProp?: keyof PropsOf<TFunctionComponent>
   allowsJSX?: boolean
-})
+}): CreateShorthandFactoryResult
 export function createShorthandFactory<TInstance extends React.Component>(config: {
   Component: { new (...args: any[]): TInstance }
   mappedProp?: keyof PropsOf<TInstance>
   mappedArrayProp?: keyof PropsOf<TInstance>
   allowsJSX?: boolean
-})
-export function createShorthandFactory({
-  Component,
-  mappedProp,
-  mappedArrayProp,
-  allowsJSX,
-}: CreateShorthandFactoryConfigInner<any>) {
+}): CreateShorthandFactoryResult
+export function createShorthandFactory({ Component, mappedProp, mappedArrayProp, allowsJSX }) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthandFactory() Component must be a string or function.')
   }

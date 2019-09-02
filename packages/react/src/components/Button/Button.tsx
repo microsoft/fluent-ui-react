@@ -15,6 +15,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   SizeValue,
+  CreateShorthandFactoryResult,
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
@@ -87,7 +88,7 @@ export interface ButtonState {
 }
 
 class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
-  static create: Function
+  static create: CreateShorthandFactoryResult
 
   static displayName = 'Button'
 
