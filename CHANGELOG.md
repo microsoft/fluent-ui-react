@@ -31,6 +31,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add usage example regarding `Checkbox` in `Form` @lucivpav ([#1845](https://github.com/stardust-ui/react/pull/1845))
 - Fix styles in `code-sandbox` package @lucivpav ([#1853](https://github.com/stardust-ui/react/pull/1853))
 - Adding accessibility tab content @kolaps33 ([#1840](https://github.com/stardust-ui/react/pull/1840))
+- Fix CodeSandbox examples versions mismatch @lucivpav ([#1849](https://github.com/stardust-ui/react/pull/1849))
 
 <!--------------------------------[ v0.37.0 ]------------------------------- -->
 ## [v0.37.0](https://github.com/stardust-ui/react/tree/v0.37.0) (2019-08-26)
