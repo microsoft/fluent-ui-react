@@ -283,14 +283,15 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   isOutsidePopupElementAndOutsideTriggerElement(refs: NodeRef[], e) {
     const isOutsidePopupElement = this.isOutsidePopupElement(refs, e)
     const isOutsideTriggerElement =
-      this.triggerRef.current && !doesNodeContainClick(this.triggerRef.current, e)
+      this.triggerRef.current &&
+      !doesNodeContainClick(this.triggerRef.current, e, this.context.target)
 
     return isOutsidePopupElement && isOutsideTriggerElement
   }
 
   isOutsidePopupElement(refs: NodeRef[], e) {
     const isInsideNested = _.some(refs, (childRef: NodeRef) => {
-      return doesNodeContainClick(childRef.current, e)
+      return doesNodeContainClick(childRef.current as HTMLElement, e, this.context.target)
     })
 
     const isOutsidePopupElement = this.popupDomElement && !isInsideNested
