@@ -10,7 +10,7 @@ import {
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -28,7 +28,7 @@ export interface HeaderDescriptionProps
 }
 
 class HeaderDescription extends UIComponent<WithAsProp<HeaderDescriptionProps>, any> {
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static className = 'ui-header__description'
 

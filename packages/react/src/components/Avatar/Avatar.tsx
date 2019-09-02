@@ -12,7 +12,7 @@ import {
   UIComponentProps,
   commonPropTypes,
   SizeValue,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 
 export interface AvatarProps extends UIComponentProps {
@@ -41,7 +41,7 @@ export interface AvatarProps extends UIComponentProps {
 }
 
 class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static className = 'ui-avatar'
 

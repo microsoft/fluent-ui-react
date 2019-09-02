@@ -13,7 +13,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   createShorthandFactory,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import Button, { ButtonProps } from './Button'
@@ -35,7 +35,7 @@ export interface ButtonGroupProps
 }
 
 class ButtonGroup extends UIComponent<WithAsProp<ButtonGroupProps>, any> {
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static displayName = 'ButtonGroup'
 

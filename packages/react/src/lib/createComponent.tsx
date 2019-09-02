@@ -5,7 +5,7 @@ import { ThemeContext } from '@stardust-ui/react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/reactTypes'
-import { createShorthandFactory, CreateShorthandFactoryResult } from './factories'
+import { createShorthandFactory, ShorthandFactory } from './factories'
 import { ObjectOf, ProviderContextPrepared } from '../types'
 
 export interface CreateComponentConfig<P> {
@@ -21,7 +21,7 @@ export interface CreateComponentConfig<P> {
 
 export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
   className: string
-  create: CreateShorthandFactoryResult
+  create: ShorthandFactory
 }
 
 const createComponent = <P extends ObjectOf<any> = any>({

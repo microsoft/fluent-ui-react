@@ -9,7 +9,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -54,7 +54,7 @@ class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
 
   static className = 'ui-form__field'
 
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static propTypes = {
     ...commonPropTypes.createCommon({

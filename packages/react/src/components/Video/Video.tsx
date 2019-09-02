@@ -7,7 +7,7 @@ import {
   UIComponent,
   UIComponentProps,
   commonPropTypes,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 
 import { WithAsProp, withSafeTypeForAs } from '../../types'
@@ -33,7 +33,7 @@ export interface VideoProps extends UIComponentProps {
 }
 
 class Video extends UIComponent<WithAsProp<VideoProps>> {
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static className = 'ui-video'
 

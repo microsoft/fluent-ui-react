@@ -8,7 +8,7 @@ import {
   RenderResultConfig,
   createShorthandFactory,
   commonPropTypes,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
@@ -70,7 +70,7 @@ export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearc
 
 class DropdownSearchInput extends UIComponent<WithAsProp<DropdownSearchInputProps>, any> {
   static displayName = 'DropdownSearchInput'
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
   static slotClassNames: DropdownSearchInputSlotClassNames
   static className = 'ui-dropdown__searchinput'
 

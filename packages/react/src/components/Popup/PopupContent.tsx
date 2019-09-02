@@ -14,7 +14,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import {
@@ -69,7 +69,7 @@ export interface PopupContentProps
 }
 
 class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static displayName = 'PopupContent'
   static className = 'ui-popup__content'

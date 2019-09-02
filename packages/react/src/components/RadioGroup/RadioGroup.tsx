@@ -13,7 +13,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
@@ -62,7 +62,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     item: `${RadioGroup.className}__item`,
   }
 
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static propTypes = {
     ...commonPropTypes.createCommon({

@@ -12,7 +12,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   rtlTextContainer,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
@@ -32,7 +32,7 @@ export interface MenuDividerProps
 class MenuDivider extends UIComponent<WithAsProp<MenuDividerProps>> {
   static displayName = 'MenuDivider'
 
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static className = 'ui-menu__divider'
 

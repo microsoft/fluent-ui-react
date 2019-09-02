@@ -12,7 +12,7 @@ import {
   ContentComponentProps,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -50,7 +50,7 @@ export interface TreeTitleProps
 }
 
 class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static className = 'ui-tree__title'
 

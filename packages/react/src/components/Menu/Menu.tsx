@@ -12,7 +12,7 @@ import {
   commonPropTypes,
   getKindProp,
   rtlTextContainer,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
@@ -110,7 +110,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     item: `${Menu.className}__item`,
   }
 
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static propTypes = {
     ...commonPropTypes.createCommon({

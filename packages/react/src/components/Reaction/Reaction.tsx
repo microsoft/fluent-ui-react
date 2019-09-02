@@ -13,7 +13,7 @@ import {
   createShorthandFactory,
   ContentComponentProps,
   isFromKeyboard,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -52,7 +52,7 @@ export interface ReactionState {
 }
 
 class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static className = 'ui-reaction'
 

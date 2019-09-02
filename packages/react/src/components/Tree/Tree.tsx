@@ -14,7 +14,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   AutoControlledComponent,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import {
   ShorthandRenderFunction,
@@ -73,7 +73,7 @@ export interface TreeState {
 }
 
 class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static displayName = 'Tree'
 

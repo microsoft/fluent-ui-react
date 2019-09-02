@@ -14,7 +14,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { WithAsProp, ComponentEventHandler, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -66,7 +66,7 @@ export interface AccordionTitleProps
 class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
   static displayName = 'AccordionTitle'
 
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static className = 'ui-accordion__title'
 

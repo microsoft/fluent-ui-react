@@ -1,5 +1,5 @@
-import * as _ from 'lodash'
 import cx from 'classnames'
+import * as _ from 'lodash'
 import * as React from 'react'
 import {
   ShorthandValue,
@@ -10,7 +10,7 @@ import {
   ShorthandRenderer,
 } from '../types'
 import { mergeStyles } from './mergeThemes'
-import { UIComponentProps } from '.'
+import { UIComponentProps } from './commonPropInterfaces'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
@@ -92,9 +92,9 @@ type CreateShorthandFactoryConfigInner<TPropName = string> = {
   mappedArrayProp?: TPropName
 }
 export type CreateShorthandFactoryConfig = CreateShorthandFactoryConfigInner
-export type CreateShorthandFactoryResult = (
-  a: ShorthandValue<UIComponentProps>,
-  b: CreateShorthandOptions,
+export type ShorthandFactory = (
+  value: ShorthandValue<UIComponentProps>,
+  options?: CreateShorthandOptions,
 ) => React.ReactElement<Props> | null | undefined
 // ============================================================
 // Factory Creators
@@ -112,19 +112,19 @@ export function createShorthandFactory<TStringElement extends keyof JSX.Intrinsi
   mappedProp?: keyof PropsOf<TStringElement>
   mappedArrayProp?: keyof PropsOf<TStringElement>
   allowsJSX?: boolean
-}): CreateShorthandFactoryResult
+}): ShorthandFactory
 export function createShorthandFactory<TFunctionComponent extends React.FunctionComponent>(config: {
   Component: TFunctionComponent
   mappedProp?: keyof PropsOf<TFunctionComponent>
   mappedArrayProp?: keyof PropsOf<TFunctionComponent>
   allowsJSX?: boolean
-}): CreateShorthandFactoryResult
+}): ShorthandFactory
 export function createShorthandFactory<TInstance extends React.Component>(config: {
   Component: { new (...args: any[]): TInstance }
   mappedProp?: keyof PropsOf<TInstance>
   mappedArrayProp?: keyof PropsOf<TInstance>
   allowsJSX?: boolean
-}): CreateShorthandFactoryResult
+}): ShorthandFactory
 export function createShorthandFactory({ Component, mappedProp, mappedArrayProp, allowsJSX }) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthandFactory() Component must be a string or function.')

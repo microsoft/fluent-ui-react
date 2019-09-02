@@ -8,7 +8,7 @@ import {
   RenderResultConfig,
   createShorthandFactory,
   commonPropTypes,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { ShorthandValue, ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
@@ -64,7 +64,7 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
 class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
   static displayName = 'DropdownItem'
 
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static className = 'ui-dropdown__item'
 

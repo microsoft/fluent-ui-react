@@ -12,7 +12,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
@@ -45,7 +45,7 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
 
   static className = 'ui-toolbar__menu'
 
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static propTypes = {
     ...commonPropTypes.createCommon(),

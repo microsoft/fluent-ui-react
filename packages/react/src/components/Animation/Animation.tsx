@@ -8,7 +8,7 @@ import {
   StyledComponentProps,
   commonPropTypes,
   ChildrenComponentProps,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
@@ -80,7 +80,7 @@ export interface AnimationProps
 }
 
 class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static className = 'ui-animation'
 

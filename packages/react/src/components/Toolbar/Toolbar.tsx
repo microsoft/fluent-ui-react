@@ -15,7 +15,7 @@ import {
   commonPropTypes,
   ColorComponentProps,
   applyAccessibilityKeyHandlers,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
@@ -78,7 +78,7 @@ export interface ToolbarSlotClassNames {
 }
 
 class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static className = 'ui-toolbar'
 

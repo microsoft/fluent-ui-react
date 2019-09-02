@@ -61,7 +61,7 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
         {...unhandledProps}
         className={classes.root}
       >
-        {childrenExist(children) ? children : Box.create(content, {})}
+        {childrenExist(children) ? children : Box.create(content)}
       </ElementType>
     )
   }

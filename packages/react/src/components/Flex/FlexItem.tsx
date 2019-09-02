@@ -7,7 +7,7 @@ import {
   commonPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { mergeStyles } from '../../lib/mergeThemes'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
@@ -81,7 +81,7 @@ class FlexItem extends UIComponent<FlexItemProps> {
 
   displayName: 'FlexItem'
 
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   // Boolean flag for now, Symbol-based approach may be used instead.
   // However, there are  concerns related to browser compatibility if Symbols will be used.

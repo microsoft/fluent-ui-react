@@ -8,7 +8,7 @@ import {
   UIComponentProps,
   commonPropTypes,
   SizeValue,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { loaderBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -56,7 +56,7 @@ export interface LoaderState {
  * A loader alerts a user that content is being loaded or processed and they should wait for the activity to complete.
  */
 class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
   static displayName = 'Loader'
   static className = 'ui-loader'
   static slotClassNames: LoaderSlotClassNames = {

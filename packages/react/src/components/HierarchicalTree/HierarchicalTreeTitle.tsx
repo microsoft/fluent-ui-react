@@ -12,7 +12,7 @@ import {
   ContentComponentProps,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { hierarchicalTreeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -41,7 +41,7 @@ export interface HierarchicalTreeTitleProps
 }
 
 class HierarchicalTreeTitle extends UIComponent<WithAsProp<HierarchicalTreeTitleProps>> {
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static className = 'ui-hierarchicaltree__title'
 

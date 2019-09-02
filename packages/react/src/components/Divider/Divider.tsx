@@ -11,7 +11,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -40,7 +40,7 @@ export interface DividerProps
 class Divider extends UIComponent<WithAsProp<DividerProps>, any> {
   static displayName = 'Divider'
 
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static className = 'ui-divider'
 

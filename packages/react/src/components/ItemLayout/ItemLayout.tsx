@@ -10,7 +10,7 @@ import {
   commonPropTypes,
   ContentComponentProps,
   rtlTextContainer,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses } from '../../themes/types'
@@ -66,7 +66,7 @@ export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps
 }
 
 class ItemLayout extends UIComponent<WithAsProp<ItemLayoutProps>, any> {
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static displayName = 'ItemLayout'
 

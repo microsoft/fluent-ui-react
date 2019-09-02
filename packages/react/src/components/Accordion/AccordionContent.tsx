@@ -11,7 +11,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import { accordionContentBehavior } from '../../lib/accessibility'
@@ -38,7 +38,7 @@ export interface AccordionContentProps
 class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, any> {
   static displayName = 'AccordionContent'
 
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static className = 'ui-accordion__content'
 

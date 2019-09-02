@@ -13,7 +13,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   getElementProp,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import Box, { BoxProps } from '../Box/Box'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -47,7 +47,7 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
 
 class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
   static className = 'ui-chat__item'
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
   static displayName = 'ChatItem'
   static slotClassNames: ChatItemSlotClassNames
 

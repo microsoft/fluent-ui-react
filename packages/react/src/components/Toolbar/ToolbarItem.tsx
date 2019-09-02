@@ -17,7 +17,7 @@ import {
   childrenExist,
   isFromKeyboard,
   applyAccessibilityKeyHandlers,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import {
   ComponentEventHandler,
@@ -124,7 +124,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     wrapper: `${ToolbarItem.className}__wrapper`,
   }
 
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
@@ -218,7 +218,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
         onFocus={this.handleFocus}
         onClick={this.handleClick}
       >
-        {childrenExist(children) ? children : Icon.create(icon, {})}
+        {childrenExist(children) ? children : Icon.create(icon)}
       </ElementType>
     )
 

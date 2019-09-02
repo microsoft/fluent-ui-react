@@ -18,7 +18,7 @@ import {
   UIComponent,
   RenderResultConfig,
   commonPropTypes,
-  CreateShorthandFactoryResult,
+  ShorthandFactory,
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
@@ -73,7 +73,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
   itemRef = React.createRef<HTMLElement>()
 
   static displayName = 'DropdownSelectedItem'
-  static create: CreateShorthandFactoryResult
+  static create: ShorthandFactory
   static slotClassNames: DropdownSelectedItemSlotClassNames
   static className = 'ui-dropdown__selecteditem'
 
