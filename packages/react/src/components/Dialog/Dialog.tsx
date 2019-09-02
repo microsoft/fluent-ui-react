@@ -193,8 +193,16 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   handleOverlayClick = (e: MouseEvent) => {
     // Dialog has different conditions to close than Popup, so we don't need to iterate across all
     // refs
-    const isInsideContentClick = doesNodeContainClick(this.contentRef.current, e)
-    const isInsideOverlayClick = doesNodeContainClick(this.overlayRef.current, e)
+    const isInsideContentClick = doesNodeContainClick(
+      this.contentRef.current,
+      e,
+      this.context.target,
+    )
+    const isInsideOverlayClick = doesNodeContainClick(
+      this.overlayRef.current,
+      e,
+      this.context.target,
+    )
 
     const shouldClose = !isInsideContentClick && isInsideOverlayClick
 

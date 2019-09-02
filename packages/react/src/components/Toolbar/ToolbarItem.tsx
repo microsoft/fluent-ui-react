@@ -300,10 +300,10 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  handleOutsideClick = (e: Event) => {
+  handleOutsideClick = (e: MouseEvent) => {
     if (
-      !doesNodeContainClick(this.menuRef.current, e) &&
-      !doesNodeContainClick(this.itemRef.current, e)
+      !doesNodeContainClick(this.menuRef.current, e, this.context.target) &&
+      !doesNodeContainClick(this.itemRef.current, e, this.context.target)
     ) {
       this.trySetMenuOpen(false, e)
     }

@@ -15,6 +15,11 @@
 # Changelog
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixes
+- Use a proper `document` to find nodes in `doesNodeContainClick()` @layershifter ([#1874](https://github.com/stardust-ui/react/pull/1874))
+
 <!--------------------------------[ v0.36.2 ]------------------------------- -->
 ## [v0.36.2](https://github.com/stardust-ui/react/tree/v0.36.2) (2019-08-19)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.36.1...v0.36.2)
