@@ -320,8 +320,8 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
   outsideClickHandler = e => {
     if (!this.isSubmenuOpen()) return
     if (
-      !doesNodeContainClick(this.itemRef.current, e) &&
-      !doesNodeContainClick(this.menuRef.current, e)
+      !doesNodeContainClick(this.itemRef.current, e, this.context.target) &&
+      !doesNodeContainClick(this.menuRef.current, e, this.context.target)
     ) {
       this.trySetMenuOpen(false, e)
     }
@@ -331,7 +331,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     const { active, menu } = this.props
 
     if (menu) {
-      if (doesNodeContainClick(this.menuRef.current, e)) {
+      if (doesNodeContainClick(this.menuRef.current, e, this.context.target)) {
         // submenu was clicked => close it and propagate
         this.trySetMenuOpen(false, e, () => focusAsync(this.itemRef.current))
       } else {
