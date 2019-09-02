@@ -39,6 +39,11 @@ const Variations = () => (
       description="An Alert can be can be formatted to attach itself to other content."
       examplePath="components/Alert/Variations/AlertExampleAttached"
     />
+    <ComponentExample
+      title="Compact"
+      description="An alert can only take up the width of its content."
+      examplePath="components/Alert/Variations/AlertExampleCompact"
+    />
   </ExampleSection>
 )
 
