@@ -1444,9 +1444,7 @@ describe('Dropdown', () => {
 
   describe('renderSelectedItem', () => {
     it('calls renderSelectedItem in multiple selection', () => {
-      const renderSelectedItem = jest.fn((SelectedItem, props) => (
-        <SelectedItem {...props} header={`${props.header} (selected)`} />
-      ))
+      const renderSelectedItem = jest.fn((selectedItem, props) => null)
       const wrapper = mountWithProvider(
         <Dropdown multiple items={items} renderSelectedItem={renderSelectedItem} />,
       )
@@ -1454,10 +1452,10 @@ describe('Dropdown', () => {
 
       triggerButton.simulate('click')
       const firstItem = getItemAtIndexWrapper(wrapper)
-      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: _.noop } })
       triggerButton.simulate('click')
       const secondItem = getItemAtIndexWrapper(wrapper, 1)
-      secondItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
+      secondItem.simulate('click', { nativeEvent: { stopImmediatePropagation: _.noop } })
 
       expect(renderSelectedItem).toBeCalled()
     })
