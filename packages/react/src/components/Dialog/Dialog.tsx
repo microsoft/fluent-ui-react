@@ -62,7 +62,7 @@ export interface DialogProps
   headerAction?: ShorthandValue<ButtonProps>
 
   /**
-   * Whether content outside should be inert, e.g. when focusing/clicking outside is not possible and the dialog will\
+   * Whether content outside should be inert, e.g. when focusing/clicking outside is not possible and the dialog will
    * have a visible overlay.
    */
   modal?: boolean
