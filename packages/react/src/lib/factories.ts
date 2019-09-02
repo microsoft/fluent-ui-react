@@ -10,7 +10,6 @@ import {
   ShorthandRenderer,
 } from '../types'
 import { mergeStyles } from './mergeThemes'
-import { UIComponentProps } from './commonPropInterfaces'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
@@ -92,8 +91,8 @@ type CreateShorthandFactoryConfigInner<TPropName = string> = {
   mappedArrayProp?: TPropName
 }
 export type CreateShorthandFactoryConfig = CreateShorthandFactoryConfigInner
-export type ShorthandFactory = (
-  value: ShorthandValue<UIComponentProps>,
+export type ShorthandFactory<P> = (
+  value: ShorthandValue<P>,
   options?: CreateShorthandOptions,
 ) => React.ReactElement | null | undefined
 // ============================================================
@@ -107,24 +106,30 @@ export type ShorthandFactory = (
  * @param {string} config.allowsJSX Indicates if factory supports React Elements
  * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
  */
-export function createShorthandFactory<TStringElement extends keyof JSX.IntrinsicElements>(config: {
+export function createShorthandFactory<
+  TStringElement extends keyof JSX.IntrinsicElements,
+  P
+>(config: {
   Component: TStringElement
   mappedProp?: keyof PropsOf<TStringElement>
   mappedArrayProp?: keyof PropsOf<TStringElement>
   allowsJSX?: boolean
-}): ShorthandFactory
-export function createShorthandFactory<TFunctionComponent extends React.FunctionComponent>(config: {
+}): ShorthandFactory<P>
+export function createShorthandFactory<
+  TFunctionComponent extends React.FunctionComponent,
+  P
+>(config: {
   Component: TFunctionComponent
   mappedProp?: keyof PropsOf<TFunctionComponent>
   mappedArrayProp?: keyof PropsOf<TFunctionComponent>
   allowsJSX?: boolean
-}): ShorthandFactory
-export function createShorthandFactory<TInstance extends React.Component>(config: {
+}): ShorthandFactory<P>
+export function createShorthandFactory<TInstance extends React.Component, P>(config: {
   Component: { new (...args: any[]): TInstance }
   mappedProp?: keyof PropsOf<TInstance>
   mappedArrayProp?: keyof PropsOf<TInstance>
   allowsJSX?: boolean
-}): ShorthandFactory
+}): ShorthandFactory<P>
 export function createShorthandFactory({ Component, mappedProp, mappedArrayProp, allowsJSX }) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthandFactory() Component must be a string or function.')

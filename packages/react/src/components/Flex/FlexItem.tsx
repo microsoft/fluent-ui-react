@@ -81,7 +81,7 @@ class FlexItem extends UIComponent<FlexItemProps> {
 
   displayName: 'FlexItem'
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<FlexItemProps>
 
   // Boolean flag for now, Symbol-based approach may be used instead.
   // However, there are  concerns related to browser compatibility if Symbols will be used.

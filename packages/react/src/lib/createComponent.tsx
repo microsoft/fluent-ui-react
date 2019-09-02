@@ -21,7 +21,7 @@ export interface CreateComponentConfig<P> {
 
 export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
   className: string
-  create: ShorthandFactory
+  create: ShorthandFactory<P>
 }
 
 const createComponent = <P extends ObjectOf<any> = any>({

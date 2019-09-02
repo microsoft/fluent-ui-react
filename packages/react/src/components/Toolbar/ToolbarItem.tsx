@@ -124,7 +124,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     wrapper: `${ToolbarItem.className}__wrapper`,
   }
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ToolbarItemProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon(),

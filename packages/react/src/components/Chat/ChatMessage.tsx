@@ -107,7 +107,7 @@ export interface ChatMessageState {
 class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageState> {
   static className = 'ui-chat__message'
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ChatMessageProps>
 
   static slotClassNames: ChatMessageSlotClassNames
 

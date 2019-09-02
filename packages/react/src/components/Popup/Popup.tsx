@@ -133,7 +133,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   static className = 'ui-popup'
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<PopupProps>
 
   static slotClassNames: PopupSlotClassNames = {
     content: `${Popup.className}__content`,

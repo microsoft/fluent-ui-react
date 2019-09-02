@@ -80,7 +80,7 @@ export interface AnimationProps
 }
 
 class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<AnimationProps>
 
   static className = 'ui-animation'
 

@@ -41,7 +41,7 @@ export interface AvatarProps extends UIComponentProps {
 }
 
 class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<AvatarProps>
 
   static className = 'ui-avatar'
 

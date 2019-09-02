@@ -78,7 +78,7 @@ export interface ToolbarSlotClassNames {
 }
 
 class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ToolbarProps>
 
   static className = 'ui-toolbar'
 

@@ -66,7 +66,7 @@ export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps
 }
 
 class ItemLayout extends UIComponent<WithAsProp<ItemLayoutProps>, any> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ItemLayoutProps>
 
   static displayName = 'ItemLayout'
 

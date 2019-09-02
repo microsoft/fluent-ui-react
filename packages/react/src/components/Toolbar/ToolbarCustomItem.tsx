@@ -64,7 +64,7 @@ class ToolbarCustomItem extends UIComponent<
 
   static className = 'ui-toolbar__customitem'
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ToolbarCustomItemProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon(),

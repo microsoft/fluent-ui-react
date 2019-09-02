@@ -55,7 +55,7 @@ export interface LabelProps
 class Label extends UIComponent<WithAsProp<LabelProps>, any> {
   static displayName = 'Label'
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<LabelProps>
 
   static className = 'ui-label'
 

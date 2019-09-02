@@ -28,7 +28,7 @@ export interface HeaderDescriptionProps
 }
 
 class HeaderDescription extends UIComponent<WithAsProp<HeaderDescriptionProps>, any> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<HeaderDescriptionProps>
 
   static className = 'ui-header__description'
 

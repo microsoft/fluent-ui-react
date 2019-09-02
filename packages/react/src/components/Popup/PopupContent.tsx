@@ -69,7 +69,7 @@ export interface PopupContentProps
 }
 
 class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<PopupContentProps>
 
   static displayName = 'PopupContent'
   static className = 'ui-popup__content'

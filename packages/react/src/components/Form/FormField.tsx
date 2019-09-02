@@ -54,7 +54,7 @@ class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
 
   static className = 'ui-form__field'
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<FormFieldProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon({

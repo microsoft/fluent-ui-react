@@ -62,7 +62,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     item: `${RadioGroup.className}__item`,
   }
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<RadioGroupProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon({

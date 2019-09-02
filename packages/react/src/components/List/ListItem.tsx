@@ -72,7 +72,7 @@ export interface ListItemState {
 }
 
 class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ListItemProps>
 
   static displayName = 'ListItem'
 

@@ -35,7 +35,7 @@ export interface ButtonGroupProps
 }
 
 class ButtonGroup extends UIComponent<WithAsProp<ButtonGroupProps>, any> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ButtonGroupProps>
 
   static displayName = 'ButtonGroup'
 

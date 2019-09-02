@@ -50,7 +50,7 @@ class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
     description: `${Header.className}__description`,
   }
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<HeaderProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),

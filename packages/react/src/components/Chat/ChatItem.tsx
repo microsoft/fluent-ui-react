@@ -47,7 +47,7 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
 
 class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
   static className = 'ui-chat__item'
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ChatItemProps>
   static displayName = 'ChatItem'
   static slotClassNames: ChatItemSlotClassNames
 

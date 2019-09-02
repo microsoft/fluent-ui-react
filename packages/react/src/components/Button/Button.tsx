@@ -88,7 +88,7 @@ export interface ButtonState {
 }
 
 class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ButtonProps>
 
   static displayName = 'Button'
 

@@ -68,7 +68,7 @@ export interface HierarchicalTreeItemProps extends UIComponentProps, ChildrenCom
 }
 
 class HierarchicalTreeItem extends UIComponent<WithAsProp<HierarchicalTreeItemProps>> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<HierarchicalTreeItemProps>
 
   static displayName = 'HierarchicalTreeItem'
 

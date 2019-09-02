@@ -89,7 +89,7 @@ export interface TreeItemState {
 }
 
 class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<TreeItemProps>
 
   static displayName = 'TreeItem'
 

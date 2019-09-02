@@ -98,7 +98,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
 
   static className = 'ui-menubutton'
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<MenuButtonProps>
 
   static slotClassNames: MenuButtonSlotClassNames = {
     menu: `${MenuButton.className}__menu`,

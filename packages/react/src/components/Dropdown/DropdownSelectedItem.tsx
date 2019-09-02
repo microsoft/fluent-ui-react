@@ -73,7 +73,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
   itemRef = React.createRef<HTMLElement>()
 
   static displayName = 'DropdownSelectedItem'
-  static create: ShorthandFactory
+  static create: ShorthandFactory<DropdownSelectedItemProps>
   static slotClassNames: DropdownSelectedItemSlotClassNames
   static className = 'ui-dropdown__selecteditem'
 

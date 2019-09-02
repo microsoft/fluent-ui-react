@@ -50,7 +50,7 @@ export interface TreeTitleProps
 }
 
 class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<TreeTitleProps>
 
   static className = 'ui-tree__title'
 

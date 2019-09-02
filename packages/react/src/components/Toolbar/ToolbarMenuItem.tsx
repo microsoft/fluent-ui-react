@@ -85,7 +85,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>, Tool
     wrapper: `${ToolbarMenuItem.className}__wrapper`,
   }
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ToolbarMenuItemProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon(),

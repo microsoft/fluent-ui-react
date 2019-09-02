@@ -91,7 +91,7 @@ class RadioGroupItem extends AutoControlledComponent<
 > {
   elementRef = React.createRef<HTMLElement>()
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<RadioGroupItemProps>
 
   static displayName = 'RadioGroupItem'
 

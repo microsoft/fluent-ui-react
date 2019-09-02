@@ -71,7 +71,7 @@ class HierarchicalTree extends AutoControlledComponent<
   WithAsProp<HierarchicalTreeProps>,
   HierarchicalTreeState
 > {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<HierarchicalTreeProps>
 
   static displayName = 'HierarchicalTree'
 

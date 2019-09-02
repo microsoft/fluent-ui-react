@@ -65,7 +65,7 @@ export interface TextProps
 }
 
 class Text extends UIComponent<WithAsProp<TextProps>, any> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<TextProps>
 
   static className = 'ui-text'
 

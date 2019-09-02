@@ -46,7 +46,7 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
 }
 
 class Form extends UIComponent<WithAsProp<FormProps>, any> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<FormProps>
 
   static displayName = 'Form'
 

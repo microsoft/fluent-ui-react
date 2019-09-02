@@ -52,7 +52,7 @@ export interface ReactionState {
 }
 
 class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ReactionProps>
 
   static className = 'ui-reaction'
 

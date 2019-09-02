@@ -45,7 +45,7 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
 
   static className = 'ui-toolbar__menu'
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ToolbarMenuProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon(),

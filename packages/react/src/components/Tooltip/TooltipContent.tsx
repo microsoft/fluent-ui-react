@@ -41,7 +41,7 @@ export interface TooltipContentProps
 }
 
 class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<TooltipContentProps>
 
   static displayName = 'TooltipContent'
   static className = 'ui-tooltip__content'

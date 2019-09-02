@@ -41,7 +41,7 @@ export interface HierarchicalTreeTitleProps
 }
 
 class HierarchicalTreeTitle extends UIComponent<WithAsProp<HierarchicalTreeTitleProps>> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<HierarchicalTreeTitleProps>
 
   static className = 'ui-hierarchicaltree__title'
 

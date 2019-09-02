@@ -110,7 +110,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     item: `${Menu.className}__item`,
   }
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<MenuProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon({

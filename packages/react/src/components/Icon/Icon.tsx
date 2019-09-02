@@ -47,7 +47,7 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
 }
 
 class Icon extends UIComponent<WithAsProp<IconProps>, any> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<IconProps>
 
   static className = 'ui-icon'
 

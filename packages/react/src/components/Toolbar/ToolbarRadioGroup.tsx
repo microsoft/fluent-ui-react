@@ -43,7 +43,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
 
   static className = 'ui-toolbars' // FIXME: required by getComponentInfo/isConformant. But this is group inside a toolbar not a group of toolbars
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ToolbarRadioGroupProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon(),

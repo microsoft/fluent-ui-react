@@ -38,7 +38,7 @@ export interface AccordionContentProps
 class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, any> {
   static displayName = 'AccordionContent'
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<AccordionContentProps>
 
   static className = 'ui-accordion__content'
 

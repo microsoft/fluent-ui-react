@@ -31,7 +31,7 @@ export interface ImageProps extends UIComponentProps {
 }
 
 class Image extends UIComponent<WithAsProp<ImageProps>, any> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ImageProps>
 
   static className = 'ui-image'
 

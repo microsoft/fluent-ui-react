@@ -68,7 +68,7 @@ export interface AttachmentSlotClassNames {
 }
 
 class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentState> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<AttachmentProps>
 
   static className = 'ui-attachment'
 

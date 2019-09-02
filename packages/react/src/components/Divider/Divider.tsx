@@ -40,7 +40,7 @@ export interface DividerProps
 class Divider extends UIComponent<WithAsProp<DividerProps>, any> {
   static displayName = 'Divider'
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<DividerProps>
 
   static className = 'ui-divider'
 

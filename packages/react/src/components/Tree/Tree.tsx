@@ -73,7 +73,7 @@ export interface TreeState {
 }
 
 class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<TreeProps>
 
   static displayName = 'Tree'
 

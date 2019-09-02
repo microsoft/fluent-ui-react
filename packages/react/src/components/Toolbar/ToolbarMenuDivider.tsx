@@ -24,7 +24,7 @@ export interface ToolbarMenuDividerProps
 class ToolbarMenuDivider extends UIComponent<WithAsProp<ToolbarMenuDividerProps>> {
   static displayName = 'ToolbarMenuDivider'
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ToolbarMenuDividerProps>
 
   static className = 'ui-toolbar__menudivider'
 

@@ -32,7 +32,7 @@ export interface MenuDividerProps
 class MenuDivider extends UIComponent<WithAsProp<MenuDividerProps>> {
   static displayName = 'MenuDivider'
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<MenuDividerProps>
 
   static className = 'ui-menu__divider'
 

@@ -70,7 +70,7 @@ export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearc
 
 class DropdownSearchInput extends UIComponent<WithAsProp<DropdownSearchInputProps>, any> {
   static displayName = 'DropdownSearchInput'
-  static create: ShorthandFactory
+  static create: ShorthandFactory<DropdownSearchInputProps>
   static slotClassNames: DropdownSearchInputSlotClassNames
   static className = 'ui-dropdown__searchinput'
 

@@ -33,7 +33,7 @@ export interface StatusProps extends UIComponentProps {
 }
 
 class Status extends UIComponent<WithAsProp<StatusProps>, any> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<StatusProps>
 
   static className = 'ui-status'
 

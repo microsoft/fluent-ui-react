@@ -31,7 +31,7 @@ export interface ReactionGroupProps
 }
 
 class ReactionGroup extends UIComponent<WithAsProp<ReactionGroupProps>> {
-  static create: ShorthandFactory
+  static create: ShorthandFactory<ReactionGroupProps>
 
   static displayName = 'ReactionGroup'
 

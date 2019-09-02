@@ -73,7 +73,7 @@ export interface CheckboxState {
 class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, CheckboxState> {
   static slotClassNames: CheckboxSlotClassNames
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<CheckboxProps>
 
   static displayName = 'Checkbox'
 

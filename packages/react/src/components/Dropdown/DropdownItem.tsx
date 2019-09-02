@@ -64,7 +64,7 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
 class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
   static displayName = 'DropdownItem'
 
-  static create: ShorthandFactory
+  static create: ShorthandFactory<DropdownItemProps>
 
   static className = 'ui-dropdown__item'
 
