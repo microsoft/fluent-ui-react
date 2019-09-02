@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { KnobComponentProps, KnobComponents } from './types'
+import { KnobComponentProps, KnobComponents, KnobRangeKnobComponentProps } from './types'
+import parseValue from './lib/parseRangeValue'
 
 const KnobField: React.FunctionComponent<KnobComponentProps> = props => (
   <div
@@ -60,34 +61,19 @@ const KnobSelect: React.FunctionComponent<KnobComponentProps> = props => (
   </select>
 )
 
-const KnobRange: React.FunctionComponent<KnobComponentProps> = props => {
-  const parseValue = (parseValue: string): number => {
-    const hasDecimal = /\.\d/.test(parseValue)
-
-    return hasDecimal ? parseFloat(parseValue) : parseInt(parseValue, 10)
-  }
-  const { defaultValue, unit } = React.useMemo(
-    () => ({
-      defaultValue: parseValue(props.value),
-      unit: `${props.value}`.replace(`${parseValue(props.value)}`, ''),
-    }),
-    [],
-  )
-
-  return (
-    <input
-      type="range"
-      min="0"
-      max={defaultValue * 3}
-      step="1"
-      value={parseValue(props.value)}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        props.setValue(`${e.target.value}${unit}`)
-      }}
-      style={{ width: '100%' }}
-    />
-  )
-}
+const KnobRange: React.FunctionComponent<KnobRangeKnobComponentProps> = props => (
+  <input
+    type="range"
+    min={props.min}
+    max={props.max}
+    step={props.step}
+    value={parseValue(props.value)}
+    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+      props.setValue(`${e.target.value}${props.unit}`)
+    }}
+    style={{ width: '100%' }}
+  />
+)
 
 const KnobString: React.FunctionComponent<KnobComponentProps> = props => (
   <input

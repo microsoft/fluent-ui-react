@@ -12,7 +12,7 @@ export type KnobName = string
 
 export type KnobSet = Record<KnobName, KnobDefinition>
 
-export type KnobComponent = React.FunctionComponent<KnobComponentProps>
+export type KnobComponent<P = KnobComponentProps> = React.FunctionComponent<P>
 
 export type KnobComponents = {
   KnobField: KnobComponent
@@ -21,13 +21,20 @@ export type KnobComponents = {
 
   KnobBoolean: KnobComponent
   KnobNumber: KnobComponent
-  KnobRange: KnobComponent
+  KnobRange: KnobComponent<KnobRangeKnobComponentProps>
   KnobSelect: KnobComponent
   KnobString: KnobComponent
 }
 
 export type KnobComponentProps = KnobDefinition & {
   setValue: (value: any) => void
+}
+
+export type KnobRangeKnobComponentProps = KnobComponentProps & {
+  min: string
+  max: string
+  step: string
+  unit: string
 }
 
 export type UseKnobOptions<T> = {
