@@ -1,5 +1,7 @@
 import { SiteVariablesPrepared } from '../../../types'
 
+import { pxToRem } from '../../../../lib'
+
 export interface SplitButtonVariables {
   borderRadius: string
   backgroundColorFocus: string
@@ -8,6 +10,8 @@ export interface SplitButtonVariables {
   colorFocus: string
   primaryBackgroundColorFocus: string
   primaryColorFocus: string
+  padding: string
+  iconMargin: string
 }
 
 export default (siteVars: SiteVariablesPrepared): SplitButtonVariables => {
@@ -19,5 +23,7 @@ export default (siteVars: SiteVariablesPrepared): SplitButtonVariables => {
     colorFocus: siteVars.colors.grey[750],
     primaryBackgroundColorFocus: siteVars.colors.brand[800],
     primaryColorFocus: siteVars.colors.white,
+    padding: `0 ${pxToRem(16)}`,
+    iconMargin: `0 0 ${pxToRem(8)} 0`,
   }
 }
