@@ -36,6 +36,14 @@ export { default as Grid } from './components/Grid/gridStyles'
 export { default as Header } from './components/Header/headerStyles'
 export { default as HeaderDescription } from './components/Header/headerDescriptionStyles'
 
+export { default as HierarchicalTree } from './components/HierarchicalTree/hierarchicalTreeStyles'
+export {
+  default as HierarchicalTreeItem,
+} from './components/HierarchicalTree/hierarchicalTreeItemStyles'
+export {
+  default as HierarchicalTreeTitle,
+} from './components/HierarchicalTree/hierarchicalTreeTitleStyles'
+
 export { default as Icon } from './components/Icon/iconStyles'
 
 export { default as Label } from './components/Label/labelStyles'
@@ -82,13 +90,9 @@ export { default as ToolbarMenu } from './components/Toolbar/toolbarMenuStyles'
 export { default as ToolbarMenuDivider } from './components/Toolbar/toolbarMenuDividerStyles'
 export { default as ToolbarMenuItem } from './components/Toolbar/toolbarMenuItemStyles'
 
-export { default as HierarchicalTree } from './components/HierarchicalTree/hierarchicalTreeStyles'
-export {
-  default as HierarchicalTreeItem,
-} from './components/HierarchicalTree/hierarchicalTreeItemStyles'
-export {
-  default as HierarchicalTreeTitle,
-} from './components/HierarchicalTree/hierarchicalTreeTitleStyles'
+export { default as Tree } from './components/Tree/treeStyles'
+export { default as TreeItem } from './components/Tree/treeItemStyles'
+export { default as TreeTitle } from './components/Tree/treeTitleStyles'
 
 export { default as Animation } from './components/Animation/animationStyles'
 
