@@ -264,7 +264,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           const isSubtree = hasSubtree(item)
           const isSubtreeOpen = isSubtree && this.isActiveItem(item['id'])
 
-          const renderedItem: any = TreeItem.create(item, {
+          const renderedItem = TreeItem.create(item, {
             defaultProps: {
               className: Tree.slotClassNames.item,
               open: isSubtreeOpen,
@@ -288,7 +288,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           return [
             ...renderedItems,
             finalRenderedItem,
-            ...[isSubtreeOpen ? renderItems(item['items']) : []],
+            ...([isSubtreeOpen ? renderItems(item['items']) : []] as any),
           ]
         },
         [],
