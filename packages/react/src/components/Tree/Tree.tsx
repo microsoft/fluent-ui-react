@@ -14,6 +14,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   AutoControlledComponent,
+  CreateShorthandFactoryResult,
 } from '../../lib'
 import {
   ShorthandRenderFunction,
