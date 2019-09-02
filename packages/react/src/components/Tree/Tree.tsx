@@ -273,7 +273,6 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
             },
             overrideProps: this.handleTreeItemOverrides,
           })
-          console.error(JSON.stringify(renderedItem))
 
           // Only need refs of the items that spawn subtrees, when they need to be focused
           // by any of their children, using Arrow Left.
