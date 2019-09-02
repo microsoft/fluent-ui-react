@@ -1,11 +1,11 @@
 import values from 'object.values'
 import * as React from 'react'
 
-import KnobsContext from './KnobContext'
+import { KnobContext } from './KnobContexts'
 import { KnobDefinition } from './types'
 
 const useKnobValues = (): KnobDefinition[] => {
-  const knobsContext = React.useContext(KnobsContext)
+  const knobsContext = React.useContext(KnobContext)
 
   return values(knobsContext.knobs)
 }

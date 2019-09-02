@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import defaultComponents from './defaultComponents'
-import KnobsContext, { KnobContextValue } from './KnobContext'
+import { KnobContext, KnobContextValue, LogContext, LogContextValue } from './KnobContexts'
 import { KnobComponents, KnobDefinition, KnobName, KnobSet } from './types'
 
 type KnobProviderProps = {
@@ -10,7 +10,9 @@ type KnobProviderProps = {
 
 const KnobProvider: React.FunctionComponent<KnobProviderProps> = props => {
   const { children, components } = props
+
   const [knobs, setKnobs] = React.useState<KnobSet>({})
+  const [lines, setLines] = React.useState<string[]>([])
 
   const registerKnob = (knob: KnobDefinition) => {
     setKnobs(prevKnobs => {
@@ -37,7 +39,13 @@ const KnobProvider: React.FunctionComponent<KnobProviderProps> = props => {
     })
   }
 
-  const value: KnobContextValue = React.useMemo(
+  const appendLog = React.useCallback(
+    (value: string) => setLines(prevLog => [...prevLog, value]),
+    [],
+  )
+  const clearLog = React.useCallback(() => setLines([]), [])
+
+  const contextValue: KnobContextValue = React.useMemo(
     () => ({
       components: { ...defaultComponents, ...components },
       knobs,
@@ -47,8 +55,16 @@ const KnobProvider: React.FunctionComponent<KnobProviderProps> = props => {
     }),
     [knobs, components],
   )
+  const callbackValue: LogContextValue = React.useMemo(
+    () => ({ append: appendLog, clear: clearLog, lines }),
+    [lines],
+  )
 
-  return <KnobsContext.Provider value={value}>{children}</KnobsContext.Provider>
+  return (
+    <KnobContext.Provider value={contextValue}>
+      <LogContext.Provider value={callbackValue}>{children}</LogContext.Provider>
+    </KnobContext.Provider>
+  )
 }
 
 KnobProvider.defaultProps = {

@@ -24,6 +24,8 @@ export type KnobComponents = {
   KnobRange: KnobComponent<KnobRangeKnobComponentProps>
   KnobSelect: KnobComponent
   KnobString: KnobComponent
+
+  LogInspector: React.FunctionComponent<LogContainerProps>
 }
 
 export type KnobComponentProps = KnobDefinition & {
@@ -35,6 +37,11 @@ export type KnobRangeKnobComponentProps = KnobComponentProps & {
   max: string
   step: string
   unit: string
+}
+
+export type LogContainerProps = {
+  clearLog: () => void
+  lines: string[]
 }
 
 export type UseKnobOptions<T> = {

@@ -1,5 +1,10 @@
 import * as React from 'react'
-import { KnobComponentProps, KnobComponents, KnobRangeKnobComponentProps } from './types'
+import {
+  KnobComponentProps,
+  KnobComponents,
+  KnobRangeKnobComponentProps,
+  LogContainerProps,
+} from './types'
 import parseValue from './lib/parseRangeValue'
 
 const KnobField: React.FunctionComponent<KnobComponentProps> = props => (
@@ -84,6 +89,46 @@ const KnobString: React.FunctionComponent<KnobComponentProps> = props => (
   />
 )
 
+const LogInspector: React.FunctionComponent<LogContainerProps> = props => (
+  <div style={{ border: '1px solid #ccc', borderRadius: 5 }}>
+    <div style={{ display: 'flex', padding: 5 }}>
+      <div style={{ flexGrow: 1 }}>
+        Event log{' '}
+        <span
+          style={{
+            padding: 3,
+            background: '#ccc',
+            borderRadius: '4rem',
+            minWidth: '1.75rem',
+            minHeight: '1.75rem',
+            display: 'inline-block',
+            textAlign: 'center',
+          }}
+        >
+          {props.lines.length}
+        </span>
+      </div>
+      <button onClick={props.clearLog} style={{ fontSize: '0.9rem' }}>
+        Clear
+      </button>
+    </div>
+    <div
+      style={{
+        background: 'rgba(0, 0, 0, 0.04)',
+        display: 'flex',
+        flexDirection: 'column',
+        fontFamily: 'monospace',
+        fontSize: '0.9rem',
+        padding: 5,
+      }}
+    >
+      {props.lines.map((line, index) => (
+        <div key={index}>{line}</div>
+      ))}
+    </div>
+  </div>
+)
+
 const defaultComponents: KnobComponents = {
   KnobControl,
   KnobField,
@@ -94,6 +139,8 @@ const defaultComponents: KnobComponents = {
   KnobRange,
   KnobSelect,
   KnobString,
+
+  LogInspector,
 }
 
 export default defaultComponents

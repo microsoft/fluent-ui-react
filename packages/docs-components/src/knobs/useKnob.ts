@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import KnobContext from './KnobContext'
+import { KnobContext } from './KnobContexts'
 import { KnobDefinition, UseKnobOptions } from './types'
 
 const useKnob = <T>(

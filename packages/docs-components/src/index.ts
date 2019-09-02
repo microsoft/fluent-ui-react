@@ -1,4 +1,4 @@
-export { default as unstable_KnobContext } from './knobs/KnobContext'
+export { KnobContext as unstable_KnobContext } from './knobs/KnobContexts'
 export { default as KnobInspector } from './knobs/KnobInspector'
 export { default as KnobProvider } from './knobs/KnobProvider'
 
@@ -10,6 +10,9 @@ export { default as useNumberKnob } from './knobs/useNumberKnob'
 export { default as useRangeKnob } from './knobs/useRangeKnob'
 export { default as useSelectKnob } from './knobs/useSelectKnob'
 export { default as useStringKnob } from './knobs/useStringKnob'
+
+export { default as useCallbackLogKnob } from './knobs/useCallbackLogKnob'
+export { default as LogInspector } from './knobs/LogInspector'
 
 export { formatCode, prettifyCode } from './CodeSnippet/formatCode'
 export { default as CodeSnippet } from './CodeSnippet/CodeSnippet'
