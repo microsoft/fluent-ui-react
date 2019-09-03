@@ -50,12 +50,18 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
     backgroundColor: 'transparent',
   }
 
+  const additionalProps = {}
+  if (copied && !hideContent) {
+    additionalProps['open'] = true
+  }
+
   return (
     <>
       <Tooltip
         pointing={pointing}
         position="below"
         align="center"
+        {...additionalProps}
         trigger={Button.create(button, {
           defaultProps: {
             iconOnly: true,
