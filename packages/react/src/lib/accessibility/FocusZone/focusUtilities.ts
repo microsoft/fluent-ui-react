@@ -434,6 +434,15 @@ export function focusAsync(element: HTMLElement | { focus: () => void } | undefi
 }
 
 /**
+ * Helper to get the document object.
+ *
+ * @public
+ */
+export function getDocument(rootElement?: Element | null): Document | undefined {
+  return (rootElement && rootElement.ownerDocument) || document
+}
+
+/**
  * Helper to get the window object.
  *
  * @public

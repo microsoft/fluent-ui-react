@@ -10,6 +10,7 @@ import {
   getNextElement,
   getFirstTabbable,
   getLastTabbable,
+  getDocument,
   getWindow,
   focusAsync,
   HIDDEN_FROM_ACC_TREE,
@@ -68,7 +69,8 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
       return
     }
 
-    const activeElement = document.activeElement as HTMLElement
+    const doc = getDocument(this._root.current)
+    const activeElement = doc.activeElement as HTMLElement
     // if after componentDidUpdate focus is not inside the focus trap, bring it back
     if (!this._root.current.contains(activeElement)) {
       this._bringFocusIntoZone()
@@ -123,11 +125,12 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
       return this !== value
     })
 
-    const activeElement = document.activeElement as HTMLElement
+    const doc = getDocument(this._root.current)
+    const activeElement = doc.activeElement as HTMLElement
     if (
       !ignoreExternalFocusing &&
       this._previouslyFocusedElementOutsideTrapZone &&
-      (this._root.current.contains(activeElement) || activeElement === document.body)
+      (this._root.current.contains(activeElement) || activeElement === doc.body)
     ) {
       focusAsync(this._previouslyFocusedElementOutsideTrapZone)
     }
@@ -251,7 +254,8 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
   }
 
   _handleOutsideFocus = (ev: FocusEvent): void => {
-    const focusedElement = document.activeElement as HTMLElement
+    const doc = getDocument(this._root.current)
+    const focusedElement = doc.activeElement as HTMLElement
     focusedElement && this._forceFocusInTrap(ev, focusedElement)
   }
 
@@ -276,21 +280,23 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
 
   _getPreviouslyFocusedElementOutsideTrapZone = () => {
     const { elementToFocusOnDismiss } = this.props
+    const doc = getDocument(this._root.current)
     let previouslyFocusedElement = this._previouslyFocusedElementOutsideTrapZone
 
     if (elementToFocusOnDismiss && previouslyFocusedElement !== elementToFocusOnDismiss) {
       previouslyFocusedElement = elementToFocusOnDismiss
     } else if (!previouslyFocusedElement) {
-      previouslyFocusedElement = document.activeElement as HTMLElement
+      previouslyFocusedElement = doc.activeElement as HTMLElement
     }
 
     return previouslyFocusedElement
   }
 
   _hideContentFromAccessibilityTree = () => {
-    const bodyChildren = (document.body && document.body.children) || []
+    const doc = getDocument(this._root.current)
+    const bodyChildren = (doc.body && doc.body.children) || []
 
-    if (bodyChildren.length && !document.body.contains(this._root.current)) {
+    if (bodyChildren.length && !doc.body.contains(this._root.current)) {
       // In case popup render options will change
       /* eslint-disable-next-line no-console */
       console.warn(
@@ -316,7 +322,8 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
   }
 
   _showContentInAccessibilityTree = () => {
-    const hiddenElements = document.querySelectorAll(`[${HIDDEN_FROM_ACC_TREE}="true"]`)
+    const doc = getDocument(this._root.current)
+    const hiddenElements = doc.querySelectorAll(`[${HIDDEN_FROM_ACC_TREE}="true"]`)
     for (let index = 0; index < hiddenElements.length; index++) {
       const element = hiddenElements[index]
       element.removeAttribute('aria-hidden')

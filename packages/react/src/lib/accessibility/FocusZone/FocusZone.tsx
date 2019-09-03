@@ -17,6 +17,7 @@ import {
   isElementFocusZone,
   isElementFocusSubZone,
   isElementTabbable,
+  getDocument,
   getWindow,
   IS_FOCUSABLE_ATTRIBUTE,
   FOCUSZONE_ID_ATTRIBUTE,
@@ -108,10 +109,11 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     this.setRef(this) // called here to support functional components, we only need HTMLElement ref anyway
     if (this._root.current) {
       this.windowElement = getWindow(this._root.current)
+      const doc = getDocument(this._root.current)
 
       let parentElement = getParent(this._root.current)
 
-      while (parentElement && parentElement !== document.body && parentElement.nodeType === 1) {
+      while (parentElement && parentElement !== doc.body && parentElement.nodeType === 1) {
         if (isElementFocusZone(parentElement)) {
           this._isInnerZone = true
           break
@@ -382,12 +384,13 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
    */
   _onKeyDown = (ev: React.KeyboardEvent<HTMLElement>): boolean | undefined => {
     const { direction, disabled, shouldEnterInnerZone } = this.props
+    const doc = getDocument(this._root.current)
 
     if (disabled) {
       return undefined
     }
 
-    if (document.activeElement === this._root.current && this._isInnerZone) {
+    if (doc.activeElement === this._root.current && this._isInnerZone) {
       // If this element has focus, it is being controlled by a parent.
       // Ignore the keystroke.
       return undefined
@@ -875,12 +878,9 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
   getOwnerZone(element?: HTMLElement): HTMLElement | null {
     let parentElement = getParent(element as HTMLElement)
+    const doc = getDocument(this._root.current)
 
-    while (
-      parentElement &&
-      parentElement !== this._root.current &&
-      parentElement !== document.body
-    ) {
+    while (parentElement && parentElement !== this._root.current && parentElement !== doc.body) {
       if (isElementFocusZone(parentElement)) {
         return parentElement
       }
