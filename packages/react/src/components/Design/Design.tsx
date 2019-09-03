@@ -1,8 +1,10 @@
+// @ts-ignore
 import { ThemeContext } from '@stardust-ui/react-fela'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import { ProviderContextPrepared, ReactChildren } from '../../types'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 export type DesignConfig = {
   position?: string
@@ -63,34 +65,7 @@ Design.displayName = 'Design'
 Design.propTypes = {
   children: PropTypes.func.isRequired,
 
-  config: PropTypes.shape({
-    position: PropTypes.string,
-    display: PropTypes.string,
-
-    top: PropTypes.string,
-    right: PropTypes.string,
-    bottom: PropTypes.string,
-    left: PropTypes.string,
-
-    padding: PropTypes.string,
-    paddingTop: PropTypes.string,
-    paddingRight: PropTypes.string,
-    paddingBottom: PropTypes.string,
-    paddingLeft: PropTypes.string,
-
-    margin: PropTypes.string,
-    marginTop: PropTypes.string,
-    marginRight: PropTypes.string,
-    marginBottom: PropTypes.string,
-    marginLeft: PropTypes.string,
-
-    width: PropTypes.string,
-    height: PropTypes.string,
-    minWidth: PropTypes.string,
-    maxWidth: PropTypes.string,
-    minHeight: PropTypes.string,
-    maxHeight: PropTypes.string,
-  }).isRequired,
+  config: customPropTypes.design.isRequired,
 }
 
 export default Design
