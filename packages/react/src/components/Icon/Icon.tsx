@@ -9,6 +9,7 @@ import {
   commonPropTypes,
   ColorComponentProps,
   SizeValue,
+  ShorthandFactory,
 } from '../../lib'
 import { iconBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -46,7 +47,7 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
 }
 
 class Icon extends UIComponent<WithAsProp<IconProps>, any> {
-  static create: Function
+  static create: ShorthandFactory<IconProps>
 
   static className = 'ui-icon'
 

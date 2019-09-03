@@ -18,6 +18,7 @@ import {
   isFromKeyboard,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Menu, { MenuProps, MenuShorthandKinds } from './Menu'
@@ -157,7 +158,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     wrapper: `${MenuItem.className}__wrapper`,
   }
 
-  static create: Function
+  static create: ShorthandFactory<MenuItemProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
@@ -214,7 +215,8 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     } = this.props
     const { menuOpen } = this.state
 
-    const indicatorWithDefaults = indicator === undefined ? {} : indicator
+    const defaultIndicator = { name: vertical ? 'stardust-arrow-end' : 'stardust-arrow-down' }
+    const indicatorWithDefaults = indicator === undefined ? defaultIndicator : indicator
     const targetRef = toRefObject(this.context.target)
 
     const menuItemInner = childrenExist(children) ? (
@@ -243,7 +245,6 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           {menu &&
             Icon.create(indicatorWithDefaults, {
               defaultProps: {
-                name: vertical ? 'stardust-arrow-end' : 'stardust-arrow-down',
                 styles: styles.indicator,
               },
             })}
