@@ -71,13 +71,15 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
           left: '.1rem',
         },
 
-        ':focus::after': {
-          borderColor: '#252423',
-        },
+        ...(p.isFromKeyboard && {
+          ':focus::after': {
+            borderColor: '#252423',
+          },
 
-        ':focus::before': {
-          borderColor: '#fff',
-        },
+          ':focus::before': {
+            borderColor: '#fff',
+          },
+        }),
 
         ':hover': {
           color: v.colorHover,
