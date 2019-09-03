@@ -140,6 +140,10 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     },
   }
 
+  getInitialAutoControlledState(): Partial<TooltipState> {
+    return { open: false }
+  }
+
   static getAutoControlledStateFromProps(
     props: TooltipProps,
     state: TooltipState,
