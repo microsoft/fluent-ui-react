@@ -8,6 +8,7 @@ import {
   commonPropTypes,
   ContentComponentProps,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
@@ -59,7 +60,7 @@ export interface ListItemProps
 }
 
 class ListItem extends UIComponent<WithAsProp<ListItemProps>> {
-  static create: Function
+  static create: ShorthandFactory<ListItemProps>
 
   static displayName = 'ListItem'
 

@@ -10,6 +10,7 @@ import {
   rtlTextContainer,
   createShorthandFactory,
   ContentComponentProps,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -37,7 +38,7 @@ export interface ReactionProps
 }
 
 class Reaction extends UIComponent<WithAsProp<ReactionProps>> {
-  static create: Function
+  static create: ShorthandFactory<ReactionProps>
 
   static className = 'ui-reaction'
 

@@ -58,6 +58,9 @@ export interface AlertProps
   /** Controls Alert's relation to neighboring items. */
   attached?: boolean | 'top' | 'bottom'
 
+  /** An alert can only take up the width of its content. */
+  fitted?: boolean
+
   /** An alert may be formatted to display a danger message. */
   danger?: boolean
 
@@ -130,6 +133,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     icon: customPropTypes.itemShorthandWithoutJSX,
     header: customPropTypes.itemShorthand,
     attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
+    fitted: PropTypes.bool,
     danger: PropTypes.bool,
     defaultVisible: PropTypes.bool,
     dismissible: PropTypes.bool,

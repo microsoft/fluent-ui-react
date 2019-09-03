@@ -14,6 +14,7 @@ import {
   createShorthandFactory,
   childrenExist,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -65,7 +66,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
     wrapper: `${ToolbarMenuItem.className}__wrapper`,
   }
 
-  static create: Function
+  static create: ShorthandFactory<ToolbarMenuItemProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon(),

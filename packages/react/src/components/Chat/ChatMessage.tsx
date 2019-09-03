@@ -17,6 +17,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import {
   WithAsProp,
@@ -104,7 +105,7 @@ export interface ChatMessageState {
 class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageState> {
   static className = 'ui-chat__message'
 
-  static create: Function
+  static create: ShorthandFactory<ChatMessageProps>
 
   static slotClassNames: ChatMessageSlotClassNames
 

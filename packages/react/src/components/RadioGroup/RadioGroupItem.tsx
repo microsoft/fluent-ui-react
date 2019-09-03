@@ -11,6 +11,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import Box, { BoxProps } from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
@@ -74,7 +75,7 @@ class RadioGroupItem extends AutoControlledComponent<
 > {
   elementRef = React.createRef<HTMLElement>()
 
-  static create: Function
+  static create: ShorthandFactory<RadioGroupItemProps>
 
   static displayName = 'RadioGroupItem'
 
