@@ -2,7 +2,13 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import * as _ from 'lodash'
-import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
+import {
+  UIComponent,
+  commonPropTypes,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ShorthandFactory,
+} from '../../lib'
 import { mergeStyles } from '../../lib/mergeThemes'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
@@ -75,7 +81,7 @@ class FlexItem extends UIComponent<FlexItemProps> {
 
   displayName: 'FlexItem'
 
-  static create: Function
+  static create: ShorthandFactory<FlexItemProps>
 
   // Boolean flag for now, Symbol-based approach may be used instead.
   // However, there are  concerns related to browser compatibility if Symbols will be used.

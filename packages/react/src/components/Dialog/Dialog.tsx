@@ -194,8 +194,16 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   handleOverlayClick = (e: MouseEvent) => {
     // Dialog has different conditions to close than Popup, so we don't need to iterate across all
     // refs
-    const isInsideContentClick = doesNodeContainClick(this.contentRef.current, e)
-    const isInsideOverlayClick = doesNodeContainClick(this.overlayRef.current, e)
+    const isInsideContentClick = doesNodeContainClick(
+      this.contentRef.current,
+      e,
+      this.context.target,
+    )
+    const isInsideOverlayClick = doesNodeContainClick(
+      this.overlayRef.current,
+      e,
+      this.context.target,
+    )
 
     const shouldClose = !isInsideContentClick && isInsideOverlayClick
 
@@ -217,7 +225,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     }
   }
 
-  renderComponent({ accessibility, classes, ElementType, styles, unhandledProps }) {
+  renderComponent({ accessibility, classes, ElementType, styles, unhandledProps, rtl }) {
     const {
       actions,
       confirmButton,
@@ -235,6 +243,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       <Ref innerRef={this.contentRef}>
         <ElementType
           className={classes.root}
+          // it's required to have an `rtl` attribute there as Dialog is rendered outside the main DOM tree
+          dir={rtl ? 'rtl' : undefined}
           {...accessibility.attributes.popup}
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
@@ -256,6 +266,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               ...accessibility.attributes.headerAction,
             },
           })}
+
           {Box.create(content, {
             defaultProps: {
               styles: styles.content,
@@ -270,7 +281,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             },
             overrideProps: {
               content: (
-                <Flex gap="gap.smaller" hAlign="end">
+                <Flex gap="gap.smaller">
                   {Button.create(cancelButton, {
                     overrideProps: this.handleCancelButtonOverrides,
                   })}
@@ -353,5 +364,10 @@ Dialog.slotClassNames = {
  *
  * @accessibility
  * Implements [ARIA Dialog (Modal)](https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal) design pattern.
+ * @accessibilityIssues
+ * [NVDA narrates dialog title and button twice](https://github.com/nvaccess/nvda/issues/10003)
+ * [NVDA does not recognize the ARIA 1.1 values of aria-haspopup](https://github.com/nvaccess/nvda/issues/8235)
+ * [Jaws does not announce token values of aria-haspopup](https://github.com/FreedomScientific/VFO-standards-support/issues/33)
+ * [Issue 989517: VoiceOver narrates dialog content and button twice](https://bugs.chromium.org/p/chromium/issues/detail?id=989517)
  */
 export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)

@@ -17,9 +17,33 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix `muted` prop in `Video` component @layershifter ([#1847](https://github.com/stardust-ui/react/pull/1847))
+- Fix `felaRenderer` is used in `Provider` explicitly @lucivpav ([#1842](https://github.com/stardust-ui/react/pull/1842))
+- Fix `selectableListBehavior` to set `tabindex=-1` to `List`'s container to work correctly with screen readers @sophieH29 ([#1858](https://github.com/stardust-ui/react/pull/1858))
+- Fix `Checkbox` changed to be vertically aligned to the top of it's content @bcalvery ([#1857](https://github.com/stardust-ui/react/pull/1857))
+- Fix `createShorthandFactory` types @lucivpav ([#1875](https://github.com/stardust-ui/react/pull/1875))
+
+### Features
+- Add `yellow`, `green`, `orange`, `pink`, `amethyst`, `silver` and `onyx` color schemes in Teams theme @mnajdova ([#1826](https://github.com/stardust-ui/react/pull/1826))
+- Add `Tree` component that is flat DOM structured @silviuavram ([#1779](https://github.com/stardust-ui/react/pull/1779))
+- Add `fitted` prop to `Alert` component @layershifter ([#1872](https://github.com/stardust-ui/react/pull/1872))
+
+### Documentation
+- Add usage example regarding `Checkbox` in `Form` @lucivpav ([#1845](https://github.com/stardust-ui/react/pull/1845))
+- Fix styles in `code-sandbox` package @lucivpav ([#1853](https://github.com/stardust-ui/react/pull/1853))
+- Adding accessibility tab content @kolaps33 ([#1840](https://github.com/stardust-ui/react/pull/1840))
+- Fix CodeSandbox examples versions mismatch @lucivpav ([#1849](https://github.com/stardust-ui/react/pull/1849))
+- Update documentation regarding `renderSelectedItem` prop in `Dropdown` @lucivpav ([#1856](https://github.com/stardust-ui/react/pull/1856))
+
+<!--------------------------------[ v0.37.0 ]------------------------------- -->
+## [v0.37.0](https://github.com/stardust-ui/react/tree/v0.37.0) (2019-08-26)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.36.2...v0.37.0)
+
 ### BREAKING CHANGES
 - Rename `action` slot to `dismissAction` in `Alert` component @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
 - To make `dismissAction` slot visible in `Alert` component `dismissible` prop is required now @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
+- Fix `Tooltip` shadow incorrect - removed `boxShadowStart`, `boxShadowColor`, `boxShadowEnd` from `tooltipContentVariables`, replaced with `boxShadow` [redlines] @bcalvery ([#1825](https://github.com/stardust-ui/react/pull/1825))
 
 ### Fixes
 - Update text `Button` styles for Teams Theme to match [redlines] @codepretty ([#1719](https://github.com/stardust-ui/react/pull/1719))
@@ -30,8 +54,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix bidirectional `FocusZone` to land focus correctly on DOWN key press after series of UP arrow keys @sophieH29 ([#1794](https://github.com/stardust-ui/react/pull/1794))
 - Fix `hand` icon in Teams theme @lucivpav ([#1782](https://github.com/stardust-ui/react/pull/1782))
 - ESC key should close the last opened `Popup` or `Dialog` if body has focus @sophieH29 ([#1807](https://github.com/stardust-ui/react/pull/1807))
-- Correctly define current document object of the `FocusZone` and `FocusTrapZone` @sophieH29 ([#1820](https://github.com/stardust-ui/react/pull/1820))
 - Fix switching modes in `Dropdown` @layershifter ([#1830](https://github.com/stardust-ui/react/pull/1830))
+- Fix a runtime error if context is missing @layershifter ([#1837](https://github.com/stardust-ui/react/pull/1837))
+- Fix RTL mode in `Dialog` @lucivpav ([#1828](https://github.com/stardust-ui/react/pull/1828))
+- Do not scroll the page when spacebar is pressed on focused `MenuItem`, fix submenu not closing @lucivpav ([#1735](https://github.com/stardust-ui/react/pull/1735))
 
 ### Features
 - Add `overwrite` prop to `Provider` @layershifter ([#1780](https://github.com/stardust-ui/react/pull/1780))
@@ -46,6 +72,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Upgrade `FocusTrapZone` to the latest version from `fabric-ui` @sophieH29 ([#1790](https://github.com/stardust-ui/react/pull/1790))
 - Add `visible` prop to `Alert` @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
 - Add `actions` slot to `Alert` @layershifter ([#1823](https://github.com/stardust-ui/react/pull/1823))
+- Add `header` and `icon` slots to `Alert` component @lucivpav ([#1821](https://github.com/stardust-ui/react/pull/1821))
 
 ### Documentation
 - Restore docs for `Ref` component @layershifter ([#1777](https://github.com/stardust-ui/react/pull/1777))
@@ -53,6 +80,19 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Remove Font Awesome icons from docs examples @lucivpav ([#1764](https://github.com/stardust-ui/react/pull/1764))
 - Improve QuickStart code example @lucivpav ([#1797](https://github.com/stardust-ui/react/pull/1797))
 - Implement component tab UI @lucivpav ([#1784](https://github.com/stardust-ui/react/pull/1784))
+- Fix sidebar search input element's background color @lucivpav ([#1836](https://github.com/stardust-ui/react/pull/1836))
+- Improve an example on CodeSandbox @layershifter ([#1844](https://github.com/stardust-ui/react/pull/1844))
+
+<!--------------------------------[ v0.36.3 ]------------------------------- -->
+## [v0.36.3](https://github.com/stardust-ui/react/tree/v0.36.3) (2019-09-03)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.36.2...v0.36.3)
+
+ ### Fixes
+- Use a proper `document` to find nodes in `doesNodeContainClick()` @layershifter ([#1874](https://github.com/stardust-ui/react/pull/1874))
+- Correctly define current document object of the `FocusZone` and `FocusTrapZone` @sophieH29 ([#1820](https://github.com/stardust-ui/react/pull/1820))
+
+ ### Performance
+- Fix `Popper` positioning called when unnecessary in `Tooltip` @lucivpav ([#1882](https://github.com/stardust-ui/react/pull/1882))
 
 <!--------------------------------[ v0.36.2 ]------------------------------- -->
 ## [v0.36.2](https://github.com/stardust-ui/react/tree/v0.36.2) (2019-08-19)

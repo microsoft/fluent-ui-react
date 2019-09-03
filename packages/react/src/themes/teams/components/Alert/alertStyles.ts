@@ -72,7 +72,6 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
-    width: '100%',
     borderStyle: v.borderStyle,
     borderWidth: v.borderWidth,
     borderRadius: v.borderRadius,
@@ -91,6 +90,10 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
       borderRadius: `0 0 ${v.borderRadius} ${v.borderRadius}`,
     }),
 
+    ...(p.fitted && { display: 'inline-flex' }),
+
+    ...(p.dismissible && { padding: v.dismissiblePadding }),
+
     ...(!p.visible && {
       visibility: 'hidden',
     }),
@@ -100,8 +103,22 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     margin: v.actionsMargin,
   }),
 
+  header: ({ variables: v }): ICSSInJSStyle => ({
+    fontWeight: v.headerFontWeight,
+    margin: v.headerMargin,
+  }),
+
+  body: (): ICSSInJSStyle => ({
+    display: 'flex',
+    flexGrow: 1,
+  }),
+
   content: (): ICSSInJSStyle => ({
     flexGrow: 1,
+  }),
+
+  icon: ({ variables: v }): ICSSInJSStyle => ({
+    margin: v.iconMargin,
   }),
 
   dismissAction: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => {

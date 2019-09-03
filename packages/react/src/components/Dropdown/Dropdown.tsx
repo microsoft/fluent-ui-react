@@ -126,9 +126,9 @@ export interface DropdownProps
   items?: ShorthandCollection<DropdownItemProps>
 
   /**
-   * Function that converts an item to string. Used when dropdown has the search boolean prop set to true.
+   * Function that converts an item to string. Used when dropdown has the `search` boolean prop set to true.
    * By default, it:
-   * - returns the header property (if it exists on an item)
+   * - returns the `header` property (if it exists on an item)
    * - converts an item to string (if the item is a primitive)
    */
   itemToString?: (item: ShorthandValue<DropdownItemProps>) => string
@@ -185,7 +185,7 @@ export interface DropdownProps
   renderItem?: ShorthandRenderFunction
 
   /**
-   * A custom render function for the selected item.
+   * A custom render function for the selected item. Only applicable with the `multiple` prop.
    *
    * @param {React.ReactType} Component - The computed component for this slot.
    * @param {object} props - The computed props for this slot.
@@ -743,8 +743,10 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       !loading &&
         items.length === 0 &&
         ListItem.create(noResultsMessage, {
-          key: 'no-results-message',
-          styles: styles.noResultsMessage,
+          defaultProps: {
+            key: 'no-results-message',
+            styles: styles.noResultsMessage,
+          },
         }),
     ]
   }
@@ -1357,5 +1359,7 @@ Dropdown.slotClassNames = {
  *
  * @accessibility
  * Implements [ARIA Combo Box](https://www.w3.org/TR/wai-aria-practices-1.1/#combobox) design pattern, uses aria-live to announce state changes.
+ * @accessibilityIssues
+ * [Issue 991203: VoiceOver doesn't narrate properly elements in the input/combobox](https://bugs.chromium.org/p/chromium/issues/detail?id=991203)
  */
 export default withSafeTypeForAs<typeof Dropdown, DropdownProps>(Dropdown)

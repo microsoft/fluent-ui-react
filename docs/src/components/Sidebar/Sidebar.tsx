@@ -276,7 +276,7 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'chatMssages',
         title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
-        public: false,
+        public: true,
       },
       {
         key: 'customtoolbar',
@@ -311,7 +311,7 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'mentions',
         title: { content: 'Mentions', as: NavLink, to: '/prototype-mentions' },
-        public: false,
+        public: true,
       },
       {
         key: 'searchpage',
@@ -349,16 +349,10 @@ class Sidebar extends React.Component<any, any> {
       title: 'Components',
       items: treeItemsByType[0].items,
     }
-    const behaviorTreeSection = {
-      key: 'behaviour',
-      title: 'Behaviors',
-      items: treeItemsByType[1].items,
-    }
 
     const treeItems = this.getTreeItems()
     const withComponents = treeItems.concat(componentTreeSection)
-    const withBehaviors = withComponents.concat(behaviorTreeSection)
-    return this.getSectionsWithPrototypeSectionIfApplicable(withBehaviors, prototypesTreeItems)
+    return this.getSectionsWithPrototypeSectionIfApplicable(withComponents, prototypesTreeItems)
   }
 
   render() {
@@ -465,6 +459,7 @@ class Sidebar extends React.Component<any, any> {
           </a>
           <Input
             styles={topItemTheme}
+            inverted
             fluid
             clearable
             icon="search"
