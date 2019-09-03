@@ -25,6 +25,9 @@ export type TriggerAccessibility = {
 }
 
 export interface PortalProps extends ChildrenComponentProps, ContentComponentProps {
+  /** Controls whether or not the portal should close when the document is clicked. */
+  closeOnDocumentClick?: boolean
+
   /** Initial value of open. */
   defaultOpen?: boolean
 
@@ -93,6 +96,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
       className: false,
       styled: false,
     }),
+    closeOnDocumentClick: PropTypes.bool,
     defaultOpen: PropTypes.bool,
     onMount: PropTypes.func,
     onUnmount: PropTypes.func,
@@ -106,6 +110,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   }
 
   static defaultProps: PortalProps = {
+    closeOnDocumentClick: true,
     triggerAccessibility: {},
   }
 

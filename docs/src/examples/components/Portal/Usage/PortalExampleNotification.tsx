@@ -1,8 +1,8 @@
 import { useBooleanKnob } from '@stardust-ui/docs-components'
-import { Button, Dialog } from '@stardust-ui/react'
+import { Button, Portal } from '@stardust-ui/react'
 import * as React from 'react'
 
-const DialogExampleNotification = () => {
+const PortalExampleNotification = () => {
   const [open, setOpen] = useBooleanKnob({ name: 'open' })
   const timeoutId = React.useRef<number>()
 
@@ -25,9 +25,8 @@ const DialogExampleNotification = () => {
         }}
       />
 
-      <Dialog
-        content="An important message. Will hide in 2s."
-        modal={false}
+      <Portal
+        onOutsideClick={}
         open={open}
         variables={{
           foregroundColor: 'white',
@@ -36,9 +35,11 @@ const DialogExampleNotification = () => {
           rootPadding: '10px',
           rootWidth: '300px',
         }}
-      />
+      >
+        An important message. Will hide in 2s.
+      </Portal>
     </>
   )
 }
 
-export default DialogExampleNotification
+export default PortalExampleNotification

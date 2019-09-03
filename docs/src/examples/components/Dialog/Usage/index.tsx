@@ -10,11 +10,6 @@ const DialogUsageExamples = () => (
       description="A dialog has different callbacks."
       examplePath="components/Dialog/Usage/DialogExampleCallbacks"
     />
-    <ComponentExample
-      title="Callbacks"
-      description="A dialog can be used to show notifications."
-      examplePath="components/Dialog/Usage/DialogExampleNotification"
-    />
   </ExampleSection>
 )
 
