@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 export interface RefProps {
@@ -11,9 +10,3 @@ export interface RefProps {
    */
   innerRef: React.Ref<any>
 }
-
-/** A checker that matches the React.Ref type. */
-export const refPropType = PropTypes.oneOfType([
-  PropTypes.func,
-  PropTypes.object,
-]) as PropTypes.Requireable<React.Ref<any>>

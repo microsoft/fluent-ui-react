@@ -5,7 +5,9 @@ const nullRefObject: React.RefObject<null> = { current: null }
 // A map of created ref objects to provide memoization.
 const refObjects = new WeakMap<Node, React.RefObject<Node>>()
 
-/** Creates a React ref object from existing DOM node. */
+/**
+ * Creates a React ref object from existing DOM node.
+ */
 const toRefObject = <T extends Node>(node: T): React.RefObject<T> => {
   // A "null" is not valid key for a WeakMap
   if (node === null) {

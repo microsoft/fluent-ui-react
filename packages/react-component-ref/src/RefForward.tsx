@@ -1,20 +1,17 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import handleRef from './handleRef'
-import { RefProps, refPropType } from './types'
+import { RefProps } from './types'
 
 export default class RefForward extends React.Component<RefProps> {
   static displayName = 'RefForward'
 
-  // TODO: use Babel plugin for this
-  static propTypes =
-    process.env.NODE_ENV !== 'production'
-      ? {
-          children: PropTypes.element.isRequired,
-          innerRef: refPropType.isRequired,
-        }
-      : {}
+  static propTypes = {
+    children: PropTypes.element.isRequired,
+    innerRef: customPropTypes.ref.isRequired as PropTypes.Validator<React.Ref<any>>,
+  }
 
   handleRefOverride = (node: HTMLElement) => {
     const { children, innerRef } = this.props
