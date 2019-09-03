@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, Popup } from '@stardust-ui/react'
+import { Avatar, Popup, WithExpectedProps, AvatarProps } from '@stardust-ui/react'
 import EmployeeCard, { EmployeeCardProps } from './EmployeeCard'
 import { Extendable } from 'src/types'
 
@@ -63,7 +63,7 @@ class AvatarEmployeeCard extends React.Component<
             onMouseLeave: () => {
               this.setPopupOpen(false)
             },
-          },
+          } as WithExpectedProps<AvatarProps>,
         })}
         content={{
           styles: { marginLeft: '10px' },

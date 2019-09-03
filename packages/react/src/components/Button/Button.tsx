@@ -171,6 +171,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
 
     return Icon.create(icon, {
       defaultProps: {
+        name: 'stardust-circle',
         styles: styles.icon,
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
         variables: variables.icon,
@@ -183,7 +184,6 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
 
     return Loader.create(loader || {}, {
       defaultProps: {
-        role: undefined,
         styles: styles.loader,
       },
     })

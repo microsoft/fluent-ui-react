@@ -8,30 +8,25 @@ import {
   ShorthandRenderCallback,
   ShorthandRenderFunction,
   ShorthandRenderer,
+  WithAsProp,
 } from '../types'
 import { mergeStyles } from './mergeThemes'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
 
-interface CreateShorthandOptions {
+interface CreateShorthandOptions<P> {
   /** Default props object */
-  defaultProps?: Props
+  defaultProps?: P
 
   /** Override props object or function (called with regular props) */
-  overrideProps?: Props & ((props: Props) => Props) | Props
+  overrideProps?: P & ((props: P) => P) | P
 
   /** Whether or not automatic key generation is allowed */
   generateKey?: boolean
 
   /** Override the default render implementation. */
   render?: ShorthandRenderFunction
-}
-
-const CREATE_SHORTHAND_DEFAULT_OPTIONS: CreateShorthandOptions = {
-  defaultProps: {},
-  overrideProps: {},
-  generateKey: true,
 }
 
 // It's only necessary to map props that don't use 'children' as value ('children' is the default)
@@ -45,21 +40,34 @@ const mappedProps: { [key in HTMLTag]: ShorthandProp } = {
 // Factories
 // ============================================================
 
+export type WithExpectedProps<T> = T & {
+  as?
+  children?
+  className?
+  style?
+  styles?
+  key?
+  kind?
+  onChange?
+  onFocus?
+  onMouseDown?
+}
+
 /** A more robust React.createElement. It can create elements from primitive values. */
-export function createShorthand({
+export function createShorthand<P>({
   allowsJSX,
   Component,
   mappedProp,
   mappedArrayProp,
   valueOrRenderCallback,
-  options = CREATE_SHORTHAND_DEFAULT_OPTIONS,
+  options,
 }: {
   Component: React.ElementType
   allowsJSX?: boolean
   mappedProp?: string
   mappedArrayProp?: string
-  valueOrRenderCallback?: ShorthandValue<Props> | ShorthandRenderCallback
-  options?: CreateShorthandOptions
+  valueOrRenderCallback?: ShorthandValue<P> | ShorthandRenderCallback
+  options?: CreateShorthandOptions<WithExpectedProps<P>>
 }): React.ReactElement<Props> | null | undefined {
   const valIsRenderFunction =
     typeof valueOrRenderCallback === 'function' && !React.isValidElement(valueOrRenderCallback)
@@ -93,7 +101,7 @@ type CreateShorthandFactoryConfigInner<TPropName = string> = {
 export type CreateShorthandFactoryConfig = CreateShorthandFactoryConfigInner
 export type ShorthandFactory<P> = (
   value: ShorthandValue<P>,
-  options?: CreateShorthandOptions,
+  options?: CreateShorthandOptions<WithExpectedProps<P>>,
 ) => React.ReactElement | null | undefined
 // ============================================================
 // Factory Creators
@@ -130,12 +138,12 @@ export function createShorthandFactory<TInstance extends React.Component, P>(con
   mappedArrayProp?: keyof PropsOf<TInstance>
   allowsJSX?: boolean
 }): ShorthandFactory<P>
-export function createShorthandFactory({ Component, mappedProp, mappedArrayProp, allowsJSX }) {
+export function createShorthandFactory<P>({ Component, mappedProp, mappedArrayProp, allowsJSX }) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthandFactory() Component must be a string or function.')
   }
 
-  return (val, options: CreateShorthandOptions) =>
+  return (val, options: CreateShorthandOptions<P>) =>
     createShorthand({
       Component,
       mappedProp,
@@ -150,7 +158,7 @@ export function createShorthandFactory({ Component, mappedProp, mappedArrayProp,
 // Private Utils
 // ============================================================
 
-function createShorthandFromValue({
+function createShorthandFromValue<P>({
   Component,
   mappedProp,
   mappedArrayProp,
@@ -162,8 +170,8 @@ function createShorthandFromValue({
   mappedProp?: string
   mappedArrayProp?: string
   allowsJSX?: boolean
-  value?: ShorthandValue<Props>
-  options?: CreateShorthandOptions
+  value?: ShorthandValue<P>
+  options?: CreateShorthandOptions<WithExpectedProps<P>>
 }) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthand() Component must be a string or function.')
@@ -207,7 +215,7 @@ function createShorthandFromValue({
   // ----------------------------------------
   // Build up props
   // ----------------------------------------
-  const { defaultProps = {} } = options
+  const { defaultProps } = options
 
   // User's props
   const usersProps = (valIsReactElement && {}) || (valIsPropsObject && (value as Props)) || {}
@@ -222,7 +230,8 @@ function createShorthandFromValue({
   // Merge props
   const props = { ...defaultProps, ...usersProps, ...overrideProps }
 
-  const mappedHTMLProps = mappedProps[overrideProps.as || defaultProps.as]
+  const mappedHTMLProps =
+    mappedProps[(overrideProps as WithAsProp<P>).as || (defaultProps as WithAsProp<P>).as]
 
   // Map prop for primitive value
   if (valIsPrimitive || valIsReactElement) {
@@ -302,7 +311,7 @@ function createShorthandFromValue({
   return null
 }
 
-function createShorthandFromRenderCallback({
+function createShorthandFromRenderCallback<P>({
   Component,
   renderCallback,
   mappedProp,
@@ -315,9 +324,9 @@ function createShorthandFromRenderCallback({
   mappedProp?: string
   mappedArrayProp?: string
   allowsJSX?: boolean
-  options?: CreateShorthandOptions
+  options?: CreateShorthandOptions<WithExpectedProps<P>>
 }) {
-  const render: ShorthandRenderer<Props> = (shorthandValue, renderTree) => {
+  const render: ShorthandRenderer<P> = (shorthandValue, renderTree) => {
     return createShorthandFromValue({
       Component,
       mappedProp,

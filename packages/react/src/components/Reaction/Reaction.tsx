@@ -95,6 +95,7 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
           <>
             {Icon.create(icon, {
               defaultProps: {
+                name: 'stardust-circle',
                 className: Reaction.slotClassNames.icon,
                 styles: styles.icon,
               },

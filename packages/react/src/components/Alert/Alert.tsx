@@ -206,6 +206,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
       <>
         {Icon.create(icon, {
           defaultProps: {
+            name: 'stardust-circle',
             className: Alert.slotClassNames.icon,
             styles: styles.icon,
           },

@@ -12,6 +12,7 @@ import {
   Alignment,
   Position,
   UNSTABLE_Popper,
+  WithExpectedProps,
 } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
@@ -181,7 +182,7 @@ class MenuButton extends React.Component<MenuButtonProps, MenuButtonState> {
                   'data-placement': placement,
                   styles: { background: '#fff', zIndex: 1 },
                   vertical: true,
-                },
+                } as WithExpectedProps<MenuProps>,
                 overrideProps: {
                   items: this.handleMenuItemOverrides(accessibilityBehavior.attributes.menuItem),
                 },

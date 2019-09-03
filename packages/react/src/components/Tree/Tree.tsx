@@ -15,6 +15,7 @@ import {
   applyAccessibilityKeyHandlers,
   AutoControlledComponent,
   ShorthandFactory,
+  WithExpectedProps,
 } from '../../lib'
 import {
   ShorthandRenderFunction,
@@ -272,7 +273,9 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
               key: item['id'],
               ...restItemForRender,
             },
-            overrideProps: this.handleTreeItemOverrides,
+            overrideProps: (this.handleTreeItemOverrides as unknown) as WithExpectedProps<
+              TreeItemProps
+            >,
           })
 
           // Only need refs of the items that spawn subtrees, when they need to be focused

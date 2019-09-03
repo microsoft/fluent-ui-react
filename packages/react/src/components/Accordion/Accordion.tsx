@@ -265,7 +265,6 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
             index,
             contentRef,
             canBeCollapsed,
-            id: titleId,
             accordionContentId: contentId,
           },
           overrideProps: this.handleTitleOverrides,
@@ -277,7 +276,6 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
           defaultProps: {
             className: Accordion.slotClassNames.content,
             active,
-            id: contentId,
             accordionTitleId: titleId,
           },
           render: renderPanelContent,

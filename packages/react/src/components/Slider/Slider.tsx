@@ -15,6 +15,7 @@ import {
   UIComponentProps,
   RenderResultConfig,
   setWhatInputSource,
+  WithExpectedProps,
 } from '../../lib'
 import {
   ComponentEventHandler,
@@ -217,7 +218,7 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
                 value,
                 styles: styles.input,
                 ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
-              },
+              } as WithExpectedProps<BoxProps>,
               overrideProps: this.handleInputOverrides,
             })}
           </Ref>

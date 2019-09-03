@@ -107,6 +107,7 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
     })
     const iconElement = Icon.create(icon, {
       defaultProps: {
+        name: 'stardust-circle',
         styles: styles.icon,
         variables: variables.icon,
       },

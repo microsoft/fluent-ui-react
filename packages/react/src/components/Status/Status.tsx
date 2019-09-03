@@ -63,6 +63,7 @@ class Status extends UIComponent<WithAsProp<StatusProps>, any> {
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
         {Icon.create(icon, {
           defaultProps: {
+            name: 'stardust-circle',
             size: 'smallest',
             styles: styles.icon,
             variables: variables.icon,

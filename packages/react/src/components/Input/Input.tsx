@@ -13,6 +13,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   applyAccessibilityKeyHandlers,
+  WithExpectedProps,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { inputBehavior } from '../../lib/accessibility'
@@ -163,11 +164,12 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
                   styles: styles.input,
                   onChange: this.handleChange,
                   ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
-                },
+                } as WithExpectedProps<BoxProps>,
               })}
             </Ref>
             {Icon.create(this.computeIcon(), {
               defaultProps: {
+                name: 'stardust-circular',
                 styles: styles.icon,
                 variables: variables.icon,
               },
