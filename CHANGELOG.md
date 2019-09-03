@@ -26,12 +26,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `felaRenderer` is used in `Provider` explicitly @lucivpav ([#1842](https://github.com/stardust-ui/react/pull/1842))
 - Fix `selectableListBehavior` to set `tabindex=-1` to `List`'s container to work correctly with screen readers @sophieH29 ([#1858](https://github.com/stardust-ui/react/pull/1858))
 - Fix `Checkbox` changed to be vertically aligned to the top of it's content @bcalvery ([#1857](https://github.com/stardust-ui/react/pull/1857))
+- Use a proper `document` to find nodes in `doesNodeContainClick()` @layershifter ([#1874](https://github.com/stardust-ui/react/pull/1874))
 - Fix `createShorthandFactory` types @lucivpav ([#1875](https://github.com/stardust-ui/react/pull/1875))
 
 ### Documentation
 - Add usage example regarding `Checkbox` in `Form` @lucivpav ([#1845](https://github.com/stardust-ui/react/pull/1845))
 - Fix styles in `code-sandbox` package @lucivpav ([#1853](https://github.com/stardust-ui/react/pull/1853))
 - Adding accessibility tab content @kolaps33 ([#1840](https://github.com/stardust-ui/react/pull/1840))
+- Fix CodeSandbox examples versions mismatch @lucivpav ([#1849](https://github.com/stardust-ui/react/pull/1849))
+- Update documentation regarding `renderSelectedItem` prop in `Dropdown` @lucivpav ([#1856](https://github.com/stardust-ui/react/pull/1856))
 
 <!--------------------------------[ v0.37.0 ]------------------------------- -->
 ## [v0.37.0](https://github.com/stardust-ui/react/tree/v0.37.0) (2019-08-26)
