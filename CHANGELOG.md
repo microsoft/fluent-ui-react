@@ -15,7 +15,9 @@
 # Changelog
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+<!--------------------------------[ v0.36.2 ]------------------------------- -->
+## [v0.36.2](https://github.com/stardust-ui/react/tree/v0.36.2) (2019-08-19)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.36.1...v0.36.2)
 
 ### Fixes
 - Update vulnerable version of `lodash` dependency @layershifter ([#1700](https://github.com/stardust-ui/react/pull/1700))
