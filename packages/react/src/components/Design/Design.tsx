@@ -4,43 +4,15 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import { ProviderContextPrepared, ReactChildren } from '../../types'
+import { ComponentDesign } from '../../themes/types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
-
-export type DesignConfig = {
-  position?: string
-  display?: string
-
-  top?: string
-  right?: string
-  bottom?: string
-  left?: string
-
-  padding?: string
-  paddingTop?: string
-  paddingRight?: string
-  paddingBottom?: string
-  paddingLeft?: string
-
-  margin?: string
-  marginTop?: string
-  marginRight?: string
-  marginBottom?: string
-  marginLeft?: string
-
-  width?: string
-  height?: string
-  minWidth?: string
-  maxWidth?: string
-  minHeight?: string
-  maxHeight?: string
-}
 
 export type DesignProps = {
   /** A render function that receives the generated className as its only argument */
   children: ({ className: string }) => ReactChildren
 
   /** Design config takes a limited set of layout and position CSS properties. */
-  config: DesignConfig
+  config: ComponentDesign
 }
 
 /**

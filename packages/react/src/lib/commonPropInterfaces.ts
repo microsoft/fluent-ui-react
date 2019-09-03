@@ -3,7 +3,7 @@ import {
   ComponentVariablesInput,
   ComponentSlotStyle,
   AnimationProp,
-  ComponentDesignStyle,
+  ComponentDesign,
 } from '../themes/types'
 import { ReactChildren } from '../types'
 
@@ -25,7 +25,7 @@ export interface UIComponentProps<P = any, V = any>
     AnimatedComponentProps {
   /** Additional CSS class name(s) to apply.  */
   className?: string
-  design?: ComponentDesignStyle<P, V>
+  design?: ComponentDesign
 }
 
 export type SizeValue = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'

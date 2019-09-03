@@ -499,6 +499,8 @@ export const animation = PropTypes.oneOfType([
   PropTypes.string,
 ])
 
+// Heads Up!
+// Keep in sync with packages/react/src/themes/types.ts
 export const design = PropTypes.shape({
   position: PropTypes.string,
   display: PropTypes.string,

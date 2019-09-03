@@ -327,8 +327,9 @@ export interface ComponentStyleFunctionParam<
   disableAnimations: boolean
 }
 
-export type ComponentDesignStyleObject = {
-  // position properties
+// Heads Up!
+// Keep in sync with packages/react-proptypes/src/index.ts
+export type ComponentDesign = {
   display?: ICSSInJSStyle['display']
   position?: ICSSInJSStyle['position']
 
@@ -337,45 +338,25 @@ export type ComponentDesignStyleObject = {
   left?: ICSSInJSStyle['left']
   right?: ICSSInJSStyle['right']
 
-  flex?: ICSSInJSStyle['flex']
-  flexBasis?: ICSSInJSStyle['flexBasis']
-  flexDirection?: ICSSInJSStyle['flexDirection']
-  flexFlow?: ICSSInJSStyle['flexFlow']
-  flexGrow?: ICSSInJSStyle['flexGrow']
-  flexShrink?: ICSSInJSStyle['flexShrink']
-  flexWrap?: ICSSInJSStyle['flexWrap']
-
-  // space properties
-  margin?: ICSSInJSStyle['margin']
-  marginTop?: ICSSInJSStyle['marginTop']
-  marginRight?: ICSSInJSStyle['marginRight']
-  marginBottom?: ICSSInJSStyle['marginBottom']
-  marginLeft?: ICSSInJSStyle['marginLeft']
   padding?: ICSSInJSStyle['padding']
   paddingTop?: ICSSInJSStyle['paddingTop']
   paddingRight?: ICSSInJSStyle['paddingRight']
   paddingBottom?: ICSSInJSStyle['paddingBottom']
   paddingLeft?: ICSSInJSStyle['paddingLeft']
-  gridGap?: ICSSInJSStyle['gridGap']
-  gridColumnGap?: ICSSInJSStyle['gridColumnGap']
-  gridRowGap?: ICSSInJSStyle['gridRowGap']
 
-  // size properties
+  margin?: ICSSInJSStyle['margin']
+  marginTop?: ICSSInJSStyle['marginTop']
+  marginRight?: ICSSInJSStyle['marginRight']
+  marginBottom?: ICSSInJSStyle['marginBottom']
+  marginLeft?: ICSSInJSStyle['marginLeft']
+
   width?: ICSSInJSStyle['width']
+  height?: ICSSInJSStyle['height']
   minWidth?: ICSSInJSStyle['minWidth']
   maxWidth?: ICSSInJSStyle['maxWidth']
-  height?: ICSSInJSStyle['height']
   minHeight?: ICSSInJSStyle['minHeight']
   maxHeight?: ICSSInJSStyle['maxHeight']
 }
-
-export type ComponentDesignFunction<TProps = {}, TVars = {}> = (
-  styleParam?: ComponentStyleFunctionParam<TProps, TVars>,
-) => ComponentDesignStyleObject
-
-export type ComponentDesignStyle<TProps = {}, TVars = {}> =
-  | ComponentDesignFunction<TProps, TVars>
-  | ComponentDesignStyleObject
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = (
   styleParam?: ComponentStyleFunctionParam<TProps, TVars>,
