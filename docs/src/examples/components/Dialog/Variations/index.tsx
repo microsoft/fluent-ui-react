@@ -7,8 +7,8 @@ const DialogVariationsExamples = () => (
   <ExampleSection title="Variations">
     <ComponentExample
       title="Modal"
-      description="Whether content outside should be inert, e.g. when focusing/clicking outside is not possible and the dialog will have a visible overlay."
-      examplePath="components/Dialog/Variations/DialogExampleModal"
+      description="A dialog can have a backdrop on its overlay."
+      examplePath="components/Dialog/Variations/DialogExampleBackdrop"
     />
   </ExampleSection>
 )

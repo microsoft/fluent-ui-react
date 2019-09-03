@@ -43,6 +43,9 @@ export interface DialogProps
   /** A dialog can contain actions. */
   actions?: ShorthandValue<BoxProps>
 
+  /** A dialog can have a backdrop on its overlay. */
+  backdrop?: boolean
+
   /** A dialog can contain a cancel button. */
   cancelButton?: ShorthandValue<ButtonProps>
 
@@ -60,12 +63,6 @@ export interface DialogProps
 
   /** A dialog can contain a button next to the header. */
   headerAction?: ShorthandValue<ButtonProps>
-
-  /**
-   * Whether content outside should be inert, e.g. when focusing/clicking outside is not possible and the dialog will
-   * have a visible overlay.
-   */
-  modal?: boolean
 
   /**
    * Called after user's click a cancel button.
@@ -119,6 +116,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       content: 'shorthand',
     }),
     actions: customPropTypes.itemShorthand,
+    backdrop: PropTypes.bool,
     headerAction: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
     closeOnOutsideClick: PropTypes.bool,
@@ -239,7 +237,6 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       content,
       header,
       headerAction,
-      modal,
       overlay,
       trapFocus,
       trigger,
@@ -316,7 +313,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       <Portal
         onTriggerClick={this.handleDialogOpen}
         open={open}
-        trapFocus={modal && trapFocus}
+        trapFocus={trapFocus}
         trigger={trigger}
         triggerAccessibility={triggerAccessibility}
         triggerRef={this.triggerRef}
@@ -339,7 +336,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
                 })}
               </Ref>
 
-              {closeOnOutsideClick && modal && (
+              {closeOnOutsideClick && (
                 <EventListener
                   listener={this.handleOverlayClick}
                   targetRef={targetRef}

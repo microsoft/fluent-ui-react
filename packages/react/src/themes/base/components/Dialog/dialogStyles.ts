@@ -17,8 +17,6 @@ export default {
     display: ['grid', '-ms-grid'],
     gridTemplateColumns: '1fr auto',
     '-ms-grid-columns': `1fr auto`,
-
-    zIndex: v.zIndex,
   }),
   actions: (): ICSSInJSStyle => ({
     gridRow: 3,
@@ -57,7 +55,8 @@ export default {
     position: 'fixed',
     right: 0,
     top: 0,
+    zIndex: v.overlayZIndex,
 
-    ...(p.modal && { background: v.overlayBackground, zIndex: v.overlayZIndex }),
+    ...(p.backdrop && { background: v.overlayBackground }),
   }),
 }
