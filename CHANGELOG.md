@@ -17,11 +17,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-### Features
-- Add `yellow`, `green`, `orange`, `pink`, `amethyst`, `silver` and `onyx` color schemes in Teams theme @mnajdova ([#1826](https://github.com/stardust-ui/react/pull/1826))
-- Add `Tree` component that is flat DOM structured @silviuavram ([#1779](https://github.com/stardust-ui/react/pull/1779))
-- Add `fitted` prop to `Alert` component @layershifter ([#1872](https://github.com/stardust-ui/react/pull/1872))
-
 ### Fixes
 - Fix `muted` prop in `Video` component @layershifter ([#1847](https://github.com/stardust-ui/react/pull/1847))
 - Fix `felaRenderer` is used in `Provider` explicitly @lucivpav ([#1842](https://github.com/stardust-ui/react/pull/1842))
@@ -29,6 +24,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `Checkbox` changed to be vertically aligned to the top of it's content @bcalvery ([#1857](https://github.com/stardust-ui/react/pull/1857))
 - Use a proper `document` to find nodes in `doesNodeContainClick()` @layershifter ([#1874](https://github.com/stardust-ui/react/pull/1874))
 - Fix `createShorthandFactory` types @lucivpav ([#1875](https://github.com/stardust-ui/react/pull/1875))
+
+### Features
+- Add `yellow`, `green`, `orange`, `pink`, `amethyst`, `silver` and `onyx` color schemes in Teams theme @mnajdova ([#1826](https://github.com/stardust-ui/react/pull/1826))
+- Add `Tree` component that is flat DOM structured @silviuavram ([#1779](https://github.com/stardust-ui/react/pull/1779))
+- Add `fitted` prop to `Alert` component @layershifter ([#1872](https://github.com/stardust-ui/react/pull/1872))
 
 ### Documentation
 - Add usage example regarding `Checkbox` in `Form` @lucivpav ([#1845](https://github.com/stardust-ui/react/pull/1845))
