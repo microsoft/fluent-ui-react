@@ -238,6 +238,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
         pointerTargetRef={this.pointerTargetRef}
         align={align}
         position={position}
+        enabled={this.state.open}
         rtl={rtl}
         targetRef={target ? toRefObject(target) : this.triggerRef}
         children={this.renderPopperChildren.bind(this, tooltipPositionClasses, rtl, accessibility)}
