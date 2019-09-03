@@ -236,13 +236,14 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     accessibility: ReactAccessibilityBehavior,
   ): JSX.Element {
     const { align, position, target } = this.props
+    const { open } = this.state
 
     return (
       <Popper
         pointerTargetRef={this.pointerTargetRef}
         align={align}
         position={position}
-        enabled={this.state.open}
+        enabled={open}
         rtl={rtl}
         targetRef={target ? toRefObject(target) : this.triggerRef}
         children={this.renderPopperChildren.bind(this, tooltipPositionClasses, rtl, accessibility)}
