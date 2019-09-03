@@ -6,7 +6,7 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const DialogVariationsExamples = () => (
   <ExampleSection title="Variations">
     <ComponentExample
-      title="Modal"
+      title="Backdrop"
       description="A dialog can have a backdrop on its overlay."
       examplePath="components/Dialog/Variations/DialogExampleBackdrop"
     />
