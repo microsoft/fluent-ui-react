@@ -9,6 +9,7 @@ import {
   ContentComponentProps,
   isFromKeyboard,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
@@ -71,7 +72,7 @@ export interface ListItemState {
 }
 
 class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
-  static create: Function
+  static create: ShorthandFactory<ListItemProps>
 
   static displayName = 'ListItem'
 

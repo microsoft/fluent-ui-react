@@ -10,6 +10,7 @@ import {
   commonPropTypes,
   AutoControlledComponent,
   isFromKeyboard,
+  ShorthandFactory,
 } from '../../lib'
 import { embedBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -74,7 +75,7 @@ export interface EmbedState {
 }
 
 class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> {
-  static create: Function
+  static create: ShorthandFactory<EmbedProps>
 
   static className = 'ui-embed'
 
@@ -200,7 +201,7 @@ Embed.create = createShorthandFactory({ Component: Embed })
  * An Embed displays content from external websites, like a post from external social network.
  *
  * @accessibility
- * A `placeholder` slot represents an [`Image`](/components/image) component, please follow recommendations from its
+ * A `placeholder` slot represents an [`Image`](/components/image/definition) component, please follow recommendations from its
  * accessibility section.
  */
 export default withSafeTypeForAs<typeof Embed, EmbedProps, 'span'>(Embed)

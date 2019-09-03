@@ -13,6 +13,7 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import {
   ShorthandValue,
@@ -70,7 +71,7 @@ class HierarchicalTree extends AutoControlledComponent<
   WithAsProp<HierarchicalTreeProps>,
   HierarchicalTreeState
 > {
-  static create: Function
+  static create: ShorthandFactory<HierarchicalTreeProps>
 
   static displayName = 'HierarchicalTree'
 
@@ -95,7 +96,6 @@ class HierarchicalTree extends AutoControlledComponent<
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
-    rtlAttributes: PropTypes.func,
     onActiveIndexChange: PropTypes.func,
   }
 

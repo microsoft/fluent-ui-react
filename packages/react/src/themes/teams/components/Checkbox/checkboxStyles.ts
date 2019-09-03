@@ -8,6 +8,7 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     color: v.textColor,
     padding: v.rootPadding,
     verticalAlign: 'middle',
+    alignItems: 'start',
 
     ...getBorderFocusStyles({
       siteVariables: t.siteVariables,
