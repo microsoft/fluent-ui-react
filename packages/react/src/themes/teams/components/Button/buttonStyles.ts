@@ -9,8 +9,6 @@ import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
-    const { borderWidth } = siteVariables
-
     const { ':focus': borderFocusStyles } = getBorderFocusStyles({
       siteVariables,
       isFromKeyboard: p.isFromKeyboard,
@@ -44,7 +42,6 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
 
       // rectangular button defaults
       ...(!p.text && {
-        borderWidth,
         borderStyle: 'solid',
         borderColor: v.borderColor,
         boxShadow: v.boxShadow,
