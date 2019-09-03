@@ -84,7 +84,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Improve an example on CodeSandbox @layershifter ([#1844](https://github.com/stardust-ui/react/pull/1844))
 
 <!--------------------------------[ v0.36.3 ]------------------------------- -->
-## [v0.36.2](https://github.com/stardust-ui/react/tree/v0.36.3) (2019-09-03)
+## [v0.36.3](https://github.com/stardust-ui/react/tree/v0.36.3) (2019-09-03)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.36.2...v0.36.3)
 
  ### Fixes
