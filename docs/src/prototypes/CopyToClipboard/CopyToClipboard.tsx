@@ -66,8 +66,19 @@ const CopyToClipboard = createComponent<CopyToClipboardProps>({
 
     return (
       <>
-        {!copied && <Tooltip {...tooltipProps} content={Text.create(promptText)} />}
-        {copied && attached && <Tooltip {...tooltipProps} content={Text.create(noticeText)} open />}
+        {!copied && (
+          <Tooltip
+            {...tooltipProps}
+            content={{ content: Text.create(promptText), variables: { basic: true } }}
+          />
+        )}
+        {copied && attached && (
+          <Tooltip
+            {...tooltipProps}
+            content={{ content: Text.create(noticeText), variables: { primary: true } }}
+            open
+          />
+        )}
 
         {copied && !attached && trigger}
         {copied && !attached && <Notification>{Text.create(noticeText)}</Notification>}
