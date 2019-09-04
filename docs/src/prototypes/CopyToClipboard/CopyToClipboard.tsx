@@ -25,7 +25,7 @@ export type CopyToClipboardProps = {
   promptText?: ShorthandValue<TextProps>
 }
 
-const CopyToClipboard = createComponent({
+const CopyToClipboard = createComponent<CopyToClipboardProps>({
   displayName: 'CopyToClipboard',
   render: props => {
     const { attached, button, noticeText, pointing, promptText, timeout, value } = props
@@ -67,8 +67,9 @@ const CopyToClipboard = createComponent({
     return (
       <>
         {!copied && <Tooltip {...tooltipProps} content={Text.create(promptText)} />}
-
         {copied && attached && <Tooltip {...tooltipProps} content={Text.create(noticeText)} open />}
+
+        {copied && !attached && trigger}
         {copied && !attached && <Notification>{Text.create(noticeText)}</Notification>}
       </>
     )
