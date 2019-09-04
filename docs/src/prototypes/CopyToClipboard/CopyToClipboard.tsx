@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Button, Text, Tooltip, ShorthandValue, ButtonProps } from '@stardust-ui/react/src'
+import { Button, Text, Tooltip, ShorthandValue, ButtonProps } from '@stardust-ui/react'
 import * as copyToClipboard from 'copy-to-clipboard'
-import CopyButtonNotification from './CopyButtonNotification'
+import CopyButtonNotification from './Notification'
 
 export type CopyToClipboardProps = {
   value: string

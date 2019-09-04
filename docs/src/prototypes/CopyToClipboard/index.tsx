@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { Flex, Text } from '@stardust-ui/react/src'
+import { Flex, Provider, Text } from '@stardust-ui/react'
 import CopyToClipboard from './CopyToClipboard'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
+import themeOverrides from './themeOverrides'
 
 type CopyToClipboardPrototypeProps = {
   value: string
@@ -10,16 +11,18 @@ type CopyToClipboardPrototypeProps = {
 
 const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props => {
   return (
-    <Flex gap="gap.medium" vAlign="center" padding="padding.medium">
-      <Text content="Commit: " />
-      <Text content={props.value} color="brand" />
-      <CopyToClipboard
-        attached={props.attached}
-        pointing
-        value={props.value}
-        copyPrompt="Copy commit ID"
-      />
-    </Flex>
+    <Provider theme={themeOverrides}>
+      <Flex gap="gap.medium" vAlign="center" padding="padding.medium">
+        <Text content="Commit: " />
+        <Text content={props.value} color="brand" />
+        <CopyToClipboard
+          attached={props.attached}
+          pointing
+          value={props.value}
+          copyPrompt="Copy commit ID"
+        />
+      </Flex>
+    </Provider>
   )
 }
 

@@ -259,9 +259,10 @@ export type ComponentVariablesObject = any
 
 export type ComponentVariablesPrepared = (
   siteVariables?: SiteVariablesPrepared,
-  props?: any,
+  props?: any, // TODO: REMOVE THIS CRUFT
 ) => ComponentVariablesObject
 
+// TODO: Make this generic
 export type ComponentVariablesInput = ComponentVariablesObject | ComponentVariablesPrepared
 
 // ========================================================
