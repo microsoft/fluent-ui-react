@@ -5,7 +5,6 @@ export interface DialogVariables {
   rootBorderRadius: string
   rootPadding: string
   rootWidth: string
-  zIndex: number
 
   contentMargin: string
 
@@ -20,7 +19,6 @@ export default (siteVariables): DialogVariables => ({
   rootBorderRadius: pxToRem(3),
   rootPadding: pxToRem(24),
   rootWidth: '50vw',
-  zIndex: 1001,
 
   contentMargin: `0 0 ${pxToRem(20)} 0`,
 

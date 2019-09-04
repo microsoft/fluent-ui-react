@@ -123,7 +123,6 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     confirmButton: customPropTypes.itemShorthand,
     defaultOpen: PropTypes.bool,
     header: customPropTypes.itemShorthand,
-    modal: PropTypes.bool,
     onCancel: PropTypes.func,
     onConfirm: PropTypes.func,
     onOpen: PropTypes.func,

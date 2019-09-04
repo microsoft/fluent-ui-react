@@ -46,6 +46,7 @@ export default {
   }),
   overlay: ({ props: p, variables: v }: DialogStyleParams): ICSSInJSStyle => ({
     alignItems: 'center',
+    background: 'transparent',
     bottom: 0,
     display: 'flex',
     flexDirection: 'column',

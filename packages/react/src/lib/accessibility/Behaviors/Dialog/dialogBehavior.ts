@@ -61,7 +61,6 @@ const getDefaultAriaDescribedBy = (props: DialogBehaviorProps) => {
 export default dialogBehavior
 
 type DialogBehaviorProps = {
-  closeOnOutsideClick?: boolean
   headerId?: string
   contentId?: string
 } & PopupBehaviorProps &
