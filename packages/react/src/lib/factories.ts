@@ -1,5 +1,5 @@
-import * as _ from 'lodash'
 import cx from 'classnames'
+import * as _ from 'lodash'
 import * as React from 'react'
 import {
   ShorthandValue,
@@ -91,6 +91,10 @@ type CreateShorthandFactoryConfigInner<TPropName = string> = {
   mappedArrayProp?: TPropName
 }
 export type CreateShorthandFactoryConfig = CreateShorthandFactoryConfigInner
+export type ShorthandFactory<P> = (
+  value: ShorthandValue<P>,
+  options?: CreateShorthandOptions,
+) => React.ReactElement | null | undefined
 // ============================================================
 // Factory Creators
 // ============================================================
@@ -102,30 +106,31 @@ export type CreateShorthandFactoryConfig = CreateShorthandFactoryConfigInner
  * @param {string} config.allowsJSX Indicates if factory supports React Elements
  * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
  */
-export function createShorthandFactory<TStringElement extends keyof JSX.IntrinsicElements>(config: {
+export function createShorthandFactory<
+  TStringElement extends keyof JSX.IntrinsicElements,
+  P
+>(config: {
   Component: TStringElement
   mappedProp?: keyof PropsOf<TStringElement>
   mappedArrayProp?: keyof PropsOf<TStringElement>
   allowsJSX?: boolean
-})
-export function createShorthandFactory<TFunctionComponent extends React.FunctionComponent>(config: {
+}): ShorthandFactory<P>
+export function createShorthandFactory<
+  TFunctionComponent extends React.FunctionComponent,
+  P
+>(config: {
   Component: TFunctionComponent
   mappedProp?: keyof PropsOf<TFunctionComponent>
   mappedArrayProp?: keyof PropsOf<TFunctionComponent>
   allowsJSX?: boolean
-})
-export function createShorthandFactory<TInstance extends React.Component>(config: {
+}): ShorthandFactory<P>
+export function createShorthandFactory<TInstance extends React.Component, P>(config: {
   Component: { new (...args: any[]): TInstance }
   mappedProp?: keyof PropsOf<TInstance>
   mappedArrayProp?: keyof PropsOf<TInstance>
   allowsJSX?: boolean
-})
-export function createShorthandFactory({
-  Component,
-  mappedProp,
-  mappedArrayProp,
-  allowsJSX,
-}: CreateShorthandFactoryConfigInner<any>) {
+}): ShorthandFactory<P>
+export function createShorthandFactory({ Component, mappedProp, mappedArrayProp, allowsJSX }) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthandFactory() Component must be a string or function.')
   }

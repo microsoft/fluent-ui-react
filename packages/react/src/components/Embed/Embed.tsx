@@ -10,6 +10,7 @@ import {
   commonPropTypes,
   AutoControlledComponent,
   isFromKeyboard,
+  ShorthandFactory,
 } from '../../lib'
 import { embedBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -74,7 +75,7 @@ export interface EmbedState {
 }
 
 class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> {
-  static create: Function
+  static create: ShorthandFactory<EmbedProps>
 
   static className = 'ui-embed'
 

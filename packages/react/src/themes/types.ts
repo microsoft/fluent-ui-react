@@ -328,6 +328,37 @@ export interface ComponentStyleFunctionParam<
   disableAnimations: boolean
 }
 
+// Heads Up!
+// Keep in sync with packages/react-proptypes/src/index.ts
+export type ComponentDesign = {
+  display?: ICSSInJSStyle['display']
+  position?: ICSSInJSStyle['position']
+
+  top?: ICSSInJSStyle['top']
+  bottom?: ICSSInJSStyle['bottom']
+  left?: ICSSInJSStyle['left']
+  right?: ICSSInJSStyle['right']
+
+  padding?: ICSSInJSStyle['padding']
+  paddingTop?: ICSSInJSStyle['paddingTop']
+  paddingRight?: ICSSInJSStyle['paddingRight']
+  paddingBottom?: ICSSInJSStyle['paddingBottom']
+  paddingLeft?: ICSSInJSStyle['paddingLeft']
+
+  margin?: ICSSInJSStyle['margin']
+  marginTop?: ICSSInJSStyle['marginTop']
+  marginRight?: ICSSInJSStyle['marginRight']
+  marginBottom?: ICSSInJSStyle['marginBottom']
+  marginLeft?: ICSSInJSStyle['marginLeft']
+
+  width?: ICSSInJSStyle['width']
+  height?: ICSSInJSStyle['height']
+  minWidth?: ICSSInJSStyle['minWidth']
+  maxWidth?: ICSSInJSStyle['maxWidth']
+  minHeight?: ICSSInJSStyle['minHeight']
+  maxHeight?: ICSSInJSStyle['maxHeight']
+}
+
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = (
   styleParam?: ComponentStyleFunctionParam<TProps, TVars>,
 ) => ICSSInJSStyle
