@@ -4,35 +4,40 @@ import * as copyToClipboard from 'copy-to-clipboard'
 import CopyButtonNotification from './Notification'
 
 export type CopyToClipboardProps = {
-  value: string
-  copyPrompt: string
-  timeout?: number
   attached?: boolean
-  pointing?: boolean
   button?: ShorthandValue<ButtonProps>
+  pointing?: boolean
+  timeout?: number
+  value: string
+
+  copyPrompt: string
 }
 
 const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
-  const [copied, setCopied] = React.useState<boolean>(false)
-  let timeoutId = undefined
+  const { timeout, value } = props
+  const { attached, pointing, copyPrompt, button } = props
 
-  const onClick = () => {
-    if (timeoutId !== undefined) {
-      clearTimeout(timeoutId)
-    }
-    const { timeout, value } = props
-    setCopied(true)
-    timeoutId = setTimeout(() => {
+  const [copied, setCopied] = React.useState<boolean>(false)
+  const timeoutId = React.useRef<number>()
+
+  React.useEffect(() => {
+    timeoutId.current = window.setTimeout(() => {
       setCopied(false)
     }, timeout)
-    copyToClipboard(value)
-  }
 
-  const { attached, pointing, copyPrompt, button } = props
+    return () => clearTimeout(timeoutId.current)
+  }, [copied])
+
+  const handleClick = React.useCallback(() => {
+    setCopied(true)
+    copyToClipboard(value)
+  }, [value])
+
   const hideContent = copied && !attached
-  const copiedStr = 'Copied to clipboard'
+  const copiedStr = 'Copied to clipboard' // TODO: do not hardcode
   const copiedText = hideContent ? (
     <Text size="larger" styles={{ padding: '5px 5px 5px 5px' }}>
+      {/* TODO: inline styles not cool */}
       {copiedStr}
     </Text>
   ) : (
@@ -69,7 +74,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
               colorHover: !copied && siteVariables.colors.brand[400],
             }),
           },
-          overrideProps: () => ({ onClick }),
+          overrideProps: () => ({ onClick: handleClick }),
         })}
         content={{
           content: tooltipContent,

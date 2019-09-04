@@ -1,4 +1,4 @@
-import { Portal, createComponent } from '@stardust-ui/react/src'
+import { Portal, createComponent } from '@stardust-ui/react'
 import * as React from 'react'
 
 const Notification = createComponent({
