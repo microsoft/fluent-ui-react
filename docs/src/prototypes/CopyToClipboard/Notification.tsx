@@ -1,11 +1,16 @@
 import { Portal, createComponent } from '@stardust-ui/react'
 import * as React from 'react'
 
-const Notification = createComponent({
+type NotificationProps = {
+  children?: React.ReactChildren
+  open?: boolean
+}
+
+const Notification = createComponent<NotificationProps>({
   displayName: 'Notification',
-  render: ({ children, stardust: { classes } }) => {
+  render: ({ children, open, stardust: { classes } }) => {
     return (
-      <Portal open>
+      <Portal open={open}>
         <div className={classes.root}>
           <div className={classes.overlay}>
             <div className={classes.content}>{children}</div>

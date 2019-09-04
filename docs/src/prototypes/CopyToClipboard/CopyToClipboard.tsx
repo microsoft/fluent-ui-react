@@ -5,7 +5,6 @@ import {
   Tooltip,
   ShorthandValue,
   ButtonProps,
-  TooltipProps,
   TextProps,
 } from '@stardust-ui/react'
 import * as copyToClipboard from 'copy-to-clipboard'
@@ -31,6 +30,7 @@ const CopyToClipboard = createComponent<CopyToClipboardProps>({
     const { attached, button, noticeText, pointing, promptText, timeout, value } = props
 
     const [copied, setCopied] = React.useState<boolean>(false)
+    const [promptOpen, setPromptOpen] = React.useState<boolean>(false)
     const timeoutId = React.useRef<number>()
 
     React.useEffect(() => {
@@ -57,31 +57,27 @@ const CopyToClipboard = createComponent<CopyToClipboardProps>({
         },
       }),
     })
-    const tooltipProps: TooltipProps = {
-      align: 'center',
-      position: 'below',
-      pointing,
-      trigger,
-    }
+
+    const tooltipContent = copied
+      ? { content: Text.create(noticeText), variables: { primary: true } }
+      : {
+          content: Text.create(promptText),
+          variables: { basic: true },
+        }
+    const tooltipOpen = (promptOpen && !copied) || (copied && attached)
 
     return (
       <>
-        {!copied && (
-          <Tooltip
-            {...tooltipProps}
-            content={{ content: Text.create(promptText), variables: { basic: true } }}
-          />
-        )}
-        {copied && attached && (
-          <Tooltip
-            {...tooltipProps}
-            content={{ content: Text.create(noticeText), variables: { primary: true } }}
-            open
-          />
-        )}
-
-        {copied && !attached && trigger}
-        {copied && !attached && <Notification>{Text.create(noticeText)}</Notification>}
+        <Tooltip
+          align="center"
+          content={tooltipContent}
+          pointing={pointing}
+          position="below"
+          onOpenChange={(e, data) => setPromptOpen(data.open)}
+          open={tooltipOpen}
+          trigger={trigger}
+        />
+        <Notification open={!attached && copied}>{Text.create(noticeText)}</Notification>
       </>
     )
   },
