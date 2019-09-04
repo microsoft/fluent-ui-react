@@ -8,6 +8,8 @@ import {
 type NotificationVariables = {
   contentBackgroundColor: string
   contentColor: string
+  contentFontSize: string
+  contentFontWeight: number
   contentPadding: string
 }
 
@@ -39,6 +41,8 @@ const themeOverrides: ThemeOverrides = {
       content: ({ variables: v }) => ({
         backgroundColor: v.contentBackgroundColor,
         color: v.contentColor,
+        fontSize: v.contentFontSize,
+        fontWeight: v.contentFontWeight,
         padding: v.contentPadding,
       }),
     },
@@ -48,6 +52,8 @@ const themeOverrides: ThemeOverrides = {
       contentBackgroundColor: siteVariables.colorScheme.default.foreground,
       contentColor: siteVariables.colorScheme.default.background,
       contentPadding: pxToRem(10),
+      contentFontSize: siteVariables.fontSizes.larger,
+      contentFontWeight: siteVariables.fontWeightSemibold,
     }),
   },
 }

@@ -1,21 +1,29 @@
 import * as React from 'react'
-import { Button, Text, Tooltip, ShorthandValue, ButtonProps } from '@stardust-ui/react'
+import {
+  Button,
+  Text,
+  Tooltip,
+  ShorthandValue,
+  ButtonProps,
+  TooltipProps,
+  TextProps,
+} from '@stardust-ui/react'
 import * as copyToClipboard from 'copy-to-clipboard'
 import CopyButtonNotification from './Notification'
 
 export type CopyToClipboardProps = {
   attached?: boolean
-  button?: ShorthandValue<ButtonProps>
   pointing?: boolean
   timeout?: number
   value: string
 
-  copyPrompt: string
+  button?: ShorthandValue<ButtonProps>
+  noticeText?: ShorthandValue<TextProps>
+  promptText?: ShorthandValue<TextProps>
 }
 
 const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
-  const { timeout, value } = props
-  const { attached, pointing, copyPrompt, button } = props
+  const { attached, button, noticeText, pointing, promptText, timeout, value } = props
 
   const [copied, setCopied] = React.useState<boolean>(false)
   const timeoutId = React.useRef<number>()
@@ -33,72 +41,42 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
     copyToClipboard(value)
   }, [value])
 
-  const hideContent = copied && !attached
-  const copiedStr = 'Copied to clipboard' // TODO: do not hardcode
-  const copiedText = hideContent ? (
-    <Text size="larger" styles={{ padding: '5px 5px 5px 5px' }}>
-      {/* TODO: inline styles not cool */}
-      {copiedStr}
-    </Text>
-  ) : (
-    <Text>{copiedStr}</Text>
-  )
-  const copyText = <Text>{copyPrompt}</Text>
-  let tooltipContent = copied ? copiedText : copyText
-  if (hideContent) {
-    tooltipContent = <Text />
-  }
-
-  const hiddenTooltipContentVariables = {
-    boxShadow: 'none',
-    borderColor: 'transparent',
-    backgroundColor: 'transparent',
-  }
-
-  const additionalProps = {}
-  if (copied && !hideContent) {
-    additionalProps['open'] = true
+  const trigger = Button.create(button, {
+    defaultProps: {
+      iconOnly: true,
+      variables: siteVariables => ({
+        colorHover: !copied && siteVariables.colors.brand[400],
+      }),
+    },
+    overrideProps: () => ({ onClick: handleClick }),
+  })
+  const tooltipProps: TooltipProps = {
+    align: 'center',
+    position: 'below',
+    pointing,
+    trigger,
   }
 
   return (
     <>
-      <Tooltip
-        pointing={pointing}
-        position="below"
-        align="center"
-        {...additionalProps}
-        trigger={Button.create(button, {
-          defaultProps: {
-            iconOnly: true,
-            variables: siteVariables => ({
-              colorHover: !copied && siteVariables.colors.brand[400],
-            }),
-          },
-          overrideProps: () => ({ onClick: handleClick }),
-        })}
-        content={{
-          content: tooltipContent,
-          variables: siteVariables => ({
-            color: copied
-              ? siteVariables.colorScheme.brand.foreground4
-              : siteVariables.colors.black,
-            backgroundColor: copied
-              ? siteVariables.colorScheme.brand.background4
-              : siteVariables.colors.white,
-            ...(hideContent && hiddenTooltipContentVariables),
-          }),
-        }}
-      />
-      {hideContent && <CopyButtonNotification>{copiedText}</CopyButtonNotification>}
+      {!copied && <Tooltip {...tooltipProps} content={Text.create(promptText)} />}
+
+      {copied && attached && <Tooltip {...tooltipProps} content={Text.create(noticeText)} open />}
+      {copied && !attached && (
+        <CopyButtonNotification>{Text.create(noticeText)}</CopyButtonNotification>
+      )}
     </>
   )
 }
 
 CopyToClipboard.defaultProps = {
-  timeout: 4000,
   attached: false,
   pointing: false,
+  timeout: 4000,
+
   button: { icon: 'clipboard-copied-to' },
+  noticeText: 'Copied to clipboard',
+  promptText: 'Click to copy',
 }
 
 export default CopyToClipboard
