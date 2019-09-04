@@ -1,21 +1,9 @@
-import {
-  Text,
-  Tooltip,
-  ShorthandValue,
-  TextProps,
-  AccessibilityAttributes,
-  AccessibilityHandlerProps,
-} from '@stardust-ui/react'
+import { Text, Tooltip, ShorthandValue, TextProps } from '@stardust-ui/react'
 import * as copyToClipboard from 'copy-to-clipboard'
 import * as _ from 'lodash'
 import * as React from 'react'
 
-import Notification from './Notification'
-
-export type TriggerAccessibility = {
-  attributes?: AccessibilityAttributes
-  keyHandlers?: AccessibilityHandlerProps
-}
+import { NotificationContext } from './NotificationProvider'
 
 export type CopyToClipboardProps = {
   attached?: boolean
@@ -26,22 +14,26 @@ export type CopyToClipboardProps = {
   noticeText?: ShorthandValue<TextProps>
   promptText?: ShorthandValue<TextProps>
 
-  trigger?: JSX.Element
-  triggerAccessibility?: TriggerAccessibility
+  align?: TooltipProps['align']
+  position?: TooltipProps['position']
+
+  trigger: JSX.Element
 }
 
 const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
   const {
+    align,
     attached,
     noticeText,
     pointing,
+    position,
     promptText,
     timeout,
-    value,
     trigger,
-    triggerAccessibility,
+    value,
   } = props
 
+  const setNotification = React.useContext(NotificationContext)
   const [copied, setCopied] = React.useState<boolean>(false)
   const [promptOpen, setPromptOpen] = React.useState<boolean>(false)
   const timeoutId = React.useRef<number>()
@@ -55,10 +47,14 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
   }, [copied])
 
   const handleTriggerClick = React.useCallback(
-    (e: React.MouseEvent) => {
+    (e: React.MouseEvent, ...args) => {
       setCopied(true)
+      if (!attached) {
+        setNotification(Text.create(noticeText), timeout)
+      }
+
       copyToClipboard(value)
-      _.invoke(props, 'onTriggerClick', event, e)
+      _.invoke(props, 'onClick', e, ...args)
     },
     [value],
   )
@@ -70,34 +66,25 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
         variables: { basic: true },
       }
   const tooltipOpen = (promptOpen && !copied) || (copied && attached)
-  const triggerWrapper =
-    trigger &&
-    React.cloneElement(trigger, {
-      onClick: handleTriggerClick,
-      ...triggerAccessibility.attributes,
-      ...triggerAccessibility.keyHandlers,
-    })
   return (
-    <>
-      <Tooltip
-        align="center"
-        content={tooltipContent}
-        pointing={pointing}
-        position="below"
-        onOpenChange={(e, data) => setPromptOpen(data.open)}
-        open={tooltipOpen}
-        trigger={triggerWrapper}
-      />
-      <Notification open={!attached && copied}>{Text.create(noticeText)}</Notification>
-    </>
+    <Tooltip
+      align={align}
+      content={tooltipContent}
+      pointing={pointing}
+      position={position}
+      onOpenChange={(e, data) => setPromptOpen(data.open)}
+      open={tooltipOpen}
+      trigger={React.cloneElement(trigger, { onClick: handleTriggerClick })}
+    />
   )
 }
 
 CopyToClipboard.defaultProps = {
+  align: 'center',
   noticeText: 'Copied to clipboard',
+  position: 'below',
   promptText: 'Click to copy',
   timeout: 4000,
-  triggerAccessibility: {},
 }
 
 export default CopyToClipboard
