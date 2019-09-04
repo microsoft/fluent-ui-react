@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Provider, Text } from '@stardust-ui/react'
+import { Flex, Provider, Text, Button } from '@stardust-ui/react'
 import CopyToClipboard from './CopyToClipboard'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 import themeOverrides from './themeOverrides'
@@ -16,7 +16,12 @@ const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props 
         <Text content="Commit: " />
         <Text content={props.value} color="brand" />
 
-        <CopyToClipboard attached={props.attached} pointing value={props.value} />
+        <CopyToClipboard
+          attached={props.attached}
+          pointing
+          value={props.value}
+          trigger={<Button iconOnly icon="clipboard-copied-to" />}
+        />
       </Flex>
     </Provider>
   )
