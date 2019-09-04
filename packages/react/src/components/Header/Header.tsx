@@ -13,6 +13,7 @@ import {
   ColorComponentProps,
   rtlTextContainer,
   AlignValue,
+  ShorthandFactory,
 } from '../../lib'
 import HeaderDescription, { HeaderDescriptionProps } from './HeaderDescription'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -49,7 +50,7 @@ class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
     description: `${Header.className}__description`,
   }
 
-  static create: Function
+  static create: ShorthandFactory<HeaderProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),

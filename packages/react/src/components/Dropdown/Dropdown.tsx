@@ -126,9 +126,9 @@ export interface DropdownProps
   items?: ShorthandCollection<DropdownItemProps>
 
   /**
-   * Function that converts an item to string. Used when dropdown has the search boolean prop set to true.
+   * Function that converts an item to string. Used when dropdown has the `search` boolean prop set to true.
    * By default, it:
-   * - returns the header property (if it exists on an item)
+   * - returns the `header` property (if it exists on an item)
    * - converts an item to string (if the item is a primitive)
    */
   itemToString?: (item: ShorthandValue<DropdownItemProps>) => string
@@ -185,7 +185,7 @@ export interface DropdownProps
   renderItem?: ShorthandRenderFunction
 
   /**
-   * A custom render function for the selected item.
+   * A custom render function for the selected item. Only applicable with the `multiple` prop.
    *
    * @param {React.ReactType} Component - The computed component for this slot.
    * @param {object} props - The computed props for this slot.
@@ -744,8 +744,10 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       !loading &&
         items.length === 0 &&
         ListItem.create(noResultsMessage, {
-          key: 'no-results-message',
-          styles: styles.noResultsMessage,
+          defaultProps: {
+            key: 'no-results-message',
+            styles: styles.noResultsMessage,
+          },
         }),
     ]
   }

@@ -49,6 +49,7 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
     ...(styled && {
       styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
       variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      design: customPropTypes.design,
     }),
   }
 }

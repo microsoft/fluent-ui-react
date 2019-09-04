@@ -179,6 +179,7 @@ const renderComponent = <P extends {}>(
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
     theme.componentStyles[displayName],
+    { root: props.design },
     { root: props.styles },
     { root: animationCSSProp },
   )
