@@ -54,7 +54,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
       }
 
       copyToClipboard(value)
-      _.invoke(props, 'onClick', e, ...args)
+      _.invoke(trigger.props, 'onClick', e, ...args)
     },
     [value],
   )
