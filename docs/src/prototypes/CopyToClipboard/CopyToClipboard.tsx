@@ -1,4 +1,5 @@
 import {
+  createComponent,
   Button,
   Text,
   Tooltip,
@@ -24,52 +25,55 @@ export type CopyToClipboardProps = {
   promptText?: ShorthandValue<TextProps>
 }
 
-const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
-  const { attached, button, noticeText, pointing, promptText, timeout, value } = props
+const CopyToClipboard = createComponent({
+  displayName: 'CopyToClipboard',
+  render: props => {
+    const { attached, button, noticeText, pointing, promptText, timeout, value } = props
 
-  const [copied, setCopied] = React.useState<boolean>(false)
-  const timeoutId = React.useRef<number>()
+    const [copied, setCopied] = React.useState<boolean>(false)
+    const timeoutId = React.useRef<number>()
 
-  React.useEffect(() => {
-    timeoutId.current = window.setTimeout(() => {
-      setCopied(false)
-    }, timeout)
+    React.useEffect(() => {
+      timeoutId.current = window.setTimeout(() => {
+        setCopied(false)
+      }, timeout)
 
-    return () => clearTimeout(timeoutId.current)
-  }, [copied])
+      return () => clearTimeout(timeoutId.current)
+    }, [copied])
 
-  const handleClick = React.useCallback(() => {
-    setCopied(true)
-    copyToClipboard(value)
-  }, [value])
+    const handleClick = React.useCallback(() => {
+      setCopied(true)
+      copyToClipboard(value)
+    }, [value])
 
-  const trigger = Button.create(button, {
-    defaultProps: {
-      iconOnly: true,
-    },
-    overrideProps: (predefinedProps: ButtonProps): ButtonProps => ({
-      onClick: (event, data) => {
-        handleClick()
-        _.invoke(predefinedProps, 'onClick', event, data)
+    const trigger = Button.create(button, {
+      defaultProps: {
+        iconOnly: true,
       },
-    }),
-  })
-  const tooltipProps: TooltipProps = {
-    align: 'center',
-    position: 'below',
-    pointing,
-    trigger,
-  }
+      overrideProps: (predefinedProps: ButtonProps): ButtonProps => ({
+        onClick: (event, data) => {
+          handleClick()
+          _.invoke(predefinedProps, 'onClick', event, data)
+        },
+      }),
+    })
+    const tooltipProps: TooltipProps = {
+      align: 'center',
+      position: 'below',
+      pointing,
+      trigger,
+    }
 
-  return (
-    <>
-      {!copied && <Tooltip {...tooltipProps} content={Text.create(promptText)} />}
+    return (
+      <>
+        {!copied && <Tooltip {...tooltipProps} content={Text.create(promptText)} />}
 
-      {copied && attached && <Tooltip {...tooltipProps} content={Text.create(noticeText)} open />}
-      {copied && !attached && <Notification>{Text.create(noticeText)}</Notification>}
-    </>
-  )
-}
+        {copied && attached && <Tooltip {...tooltipProps} content={Text.create(noticeText)} open />}
+        {copied && !attached && <Notification>{Text.create(noticeText)}</Notification>}
+      </>
+    )
+  },
+})
 
 CopyToClipboard.defaultProps = {
   attached: false,
