@@ -56,6 +56,8 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
   renderItemTitle?: ShorthandRenderFunction
+
+  virtualized?: (items: any[]) => React.ReactNode
 }
 
 export interface TreeItemForRenderProps {
@@ -92,6 +94,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
+    virtualized: PropTypes.node,
   }
 
   static defaultProps = {
@@ -299,7 +302,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
-    const { children } = this.props
+    const { children, virtualized } = this.props
 
     return (
       <Ref innerRef={this.treeRef}>
@@ -310,7 +313,11 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
-          {childrenExist(children) ? children : this.renderContent()}
+          {childrenExist(children)
+            ? children
+            : virtualized
+            ? virtualized(this.renderContent())
+            : this.renderContent()}
         </ElementType>
       </Ref>
     )
