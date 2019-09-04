@@ -45,16 +45,22 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
         borderStyle: 'solid',
         borderColor: v.borderColor,
         boxShadow: v.boxShadow,
+        borderRadius: '.2rem',
+        border: 0,
 
         '::after': {
           position: 'absolute',
           content: '""',
           borderRadius: '.2rem',
-          border: '.1rem solid transparent',
+          border: '1px solid',
+          borderColor: '#e1dfdd',
           top: 0,
           right: 0,
           bottom: 0,
           left: 0,
+          ...(p.primary && {
+            borderColor: v.primaryBorderColor,
+          }),
         },
 
         '::before': {
@@ -169,7 +175,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
           backgroundColor: v.primaryBackgroundColor,
           borderWidth: '0',
           borderStyle: 'none',
-          boxShadow: siteVariables.shadowLevel1Darker,
+          boxShadow: siteVariables.shadowLevel1Dark,
 
           ':hover': {
             color: v.primaryColorHover,
