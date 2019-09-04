@@ -11,7 +11,7 @@ import * as copyToClipboard from 'copy-to-clipboard'
 import * as _ from 'lodash'
 import * as React from 'react'
 
-import CopyButtonNotification from './Notification'
+import Notification from './Notification'
 
 export type CopyToClipboardProps = {
   attached?: boolean
@@ -46,9 +46,6 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
   const trigger = Button.create(button, {
     defaultProps: {
       iconOnly: true,
-      variables: siteVariables => ({
-        colorHover: !copied && siteVariables.colors.brand[400],
-      }),
     },
     overrideProps: (predefinedProps: ButtonProps): ButtonProps => ({
       onClick: (event, data) => {
@@ -69,9 +66,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
       {!copied && <Tooltip {...tooltipProps} content={Text.create(promptText)} />}
 
       {copied && attached && <Tooltip {...tooltipProps} content={Text.create(noticeText)} open />}
-      {copied && !attached && (
-        <CopyButtonNotification>{Text.create(noticeText)}</CopyButtonNotification>
-      )}
+      {copied && !attached && <Notification>{Text.create(noticeText)}</Notification>}
     </>
   )
 }
