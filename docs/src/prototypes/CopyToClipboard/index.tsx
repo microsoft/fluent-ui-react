@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Provider, Text, Button } from '@stardust-ui/react'
+import { Flex, Provider, Text, Button, Menu } from '@stardust-ui/react'
 import CopyToClipboard from './CopyToClipboard'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 import themeOverrides from './themeOverrides'
@@ -27,6 +27,34 @@ const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props 
   )
 }
 
+const CopyToClipboardInMenu: React.FC = props => {
+  const items = [
+    {
+      key: 'edit',
+      content: 'Edit',
+      menu: {
+        items: [
+          {
+            key: 'copy',
+            content: (
+              <CopyToClipboard
+                pointing
+                value={'Julius Caesar'}
+                trigger={<Button icon="clipboard-copied-to" content="Copy" />}
+              />
+            ),
+          },
+        ],
+      },
+    },
+  ]
+  return (
+    <Provider theme={themeOverrides}>
+      <Menu items={items} />
+    </Provider>
+  )
+}
+
 const CopyToClipboardPrototypes: React.FC = () => {
   const commitID = '3422f7d'
   return (
@@ -42,6 +70,9 @@ const CopyToClipboardPrototypes: React.FC = () => {
         description="Not attached version of Copy to Clipboard prototype"
       >
         <CopyToClipboardPrototype value={commitID} />
+      </ComponentPrototype>
+      <ComponentPrototype title="In menu" description="Copy to Clipboard can reside within a menu">
+        <CopyToClipboardInMenu />
       </ComponentPrototype>
     </PrototypeSection>
   )
