@@ -84,13 +84,10 @@ const CopyToClipboard = createComponent<CopyToClipboardProps>({
 })
 
 CopyToClipboard.defaultProps = {
-  attached: false,
-  pointing: false,
-  timeout: 4000,
-
   button: { icon: 'clipboard-copied-to' },
   noticeText: 'Copied to clipboard',
   promptText: 'Click to copy',
+  timeout: 4000,
 }
 
 export default CopyToClipboard
