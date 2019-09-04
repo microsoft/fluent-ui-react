@@ -49,6 +49,9 @@ export { default as ChatMessage } from './components/Chat/ChatMessage'
 export * from './components/Checkbox/Checkbox'
 export { default as Checkbox } from './components/Checkbox/Checkbox'
 
+export * from './components/Design/Design'
+export { default as Design } from './components/Design/Design'
+
 export * from './components/MenuButton/MenuButton'
 export { default as MenuButton } from './components/MenuButton/MenuButton'
 
