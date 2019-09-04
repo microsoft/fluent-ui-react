@@ -45,6 +45,27 @@ const themeOverrides: ThemeOverrides = {
   componentStyles: {
     Notification: {
       root: () => ({
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+
+        height: 'unset',
+        width: 'unset',
+
+        position: 'static',
+        visibility: 'hidden',
+        zIndex: 1000,
+      }),
+      content: ({ variables: v }) => ({
+        backgroundColor: v.contentBackgroundColor,
+        color: v.contentColor,
+        fontSize: v.contentFontSize,
+        fontWeight: v.contentFontWeight,
+        padding: v.contentPadding,
+        visibility: 'visible',
+      }),
+      overlay: () => ({
         alignItems: 'center',
         bottom: 0,
         display: 'flex',
@@ -55,14 +76,6 @@ const themeOverrides: ThemeOverrides = {
         position: 'fixed',
         right: 0,
         top: 0,
-        zIndex: 1000,
-      }),
-      content: ({ variables: v }) => ({
-        backgroundColor: v.contentBackgroundColor,
-        color: v.contentColor,
-        fontSize: v.contentFontSize,
-        fontWeight: v.contentFontWeight,
-        padding: v.contentPadding,
       }),
     },
     TooltipContent: {

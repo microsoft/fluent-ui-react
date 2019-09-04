@@ -7,7 +7,9 @@ const Notification = createComponent({
     return (
       <Portal open>
         <div className={classes.root}>
-          <div className={classes.content}>{children}</div>
+          <div className={classes.overlay}>
+            <div className={classes.content}>{children}</div>
+          </div>
         </div>
       </Portal>
     )
