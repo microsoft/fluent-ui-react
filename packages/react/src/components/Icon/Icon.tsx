@@ -9,6 +9,7 @@ import {
   commonPropTypes,
   ColorComponentProps,
   SizeValue,
+  ShorthandFactory,
 } from '../../lib'
 import { iconBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -30,7 +31,7 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
   disabled?: boolean
 
   /** Name of the icon. */
-  name?: string
+  name: string
 
   /** An icon can provide an outline variant. */
   outline?: boolean
@@ -46,7 +47,7 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
 }
 
 class Icon extends UIComponent<WithAsProp<IconProps>, any> {
-  static create: Function
+  static create: ShorthandFactory<IconProps>
 
   static className = 'ui-icon'
 
@@ -61,7 +62,7 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
     bordered: PropTypes.bool,
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
     outline: PropTypes.bool,
     rotate: PropTypes.number,
     size: customPropTypes.size,
@@ -94,8 +95,5 @@ Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name', allo
 
 /**
  * An Icon displays a pictogram with semantic meaning.
- *
- * @accessibility
- * Icon is usually only a visual representation and therefore is hidden from screen readers, unless 'alt' or 'aria-label' property is provided.
  */
 export default withSafeTypeForAs<typeof Icon, IconProps, 'span'>(Icon)

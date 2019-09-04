@@ -17,6 +17,9 @@ const treeTitleBehavior: Accessibility<TreeTitleBehavior> = props => ({
         tabIndex: -1,
         [IS_FOCUSABLE_ATTRIBUTE]: true,
         role: 'treeitem',
+        'aria-setsize': props.treeSize,
+        'aria-posinset': props.index,
+        'aria-level': props.level,
       }),
     },
   },
@@ -34,6 +37,7 @@ export default treeTitleBehavior
 type TreeTitleBehavior = {
   /** Indicated if tree title has a subtree */
   hasSubtree?: boolean
-  /** If subtree is opened. */
-  open?: boolean
+  level?: number
+  treeSize?: number
+  index?: number
 }

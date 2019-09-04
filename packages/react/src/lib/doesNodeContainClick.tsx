@@ -5,20 +5,21 @@ import * as _ from 'lodash'
  *
  * @see https://github.com/Semantic-Org/Semantic-UI-React/pull/2384
  *
- * @param {object} node - A DOM node.
- * @param {object} e - A SyntheticEvent or DOM Event.
+ * @param {object} node A DOM node.
+ * @param {Event} e A SyntheticEvent or DOM Event.
+ * @param {Document} target A target document.
  * @returns {boolean}
  */
-const doesNodeContainClick = (node, e) => {
+const doesNodeContainClick = (node: HTMLElement, e: MouseEvent, target: Document = document) => {
   if (_.some([e, node], _.isNil)) return false
 
   // if there is an e.target and it is in the document, use a simple node.contains() check
   if (e.target) {
     _.invoke(e.target, 'setAttribute', 'data-suir-click-target', true)
 
-    if (document.querySelector('[data-suir-click-target=true]')) {
+    if (target.querySelector('[data-suir-click-target=true]')) {
       _.invoke(e.target, 'removeAttribute', 'data-suir-click-target')
-      return node.contains(e.target)
+      return node.contains(e.target as HTMLElement)
     }
   }
 
@@ -39,7 +40,7 @@ const doesNodeContainClick = (node, e) => {
   if (!node.offsetWidth || !node.offsetHeight || !clientRects || !clientRects.length) return false
 
   // false if the node doesn't have a valid bounding rect
-  const { top, bottom, left, right } = _.first(clientRects) as any
+  const { top, bottom, left, right } = _.first(clientRects)
   if (_.some([top, bottom, left, right], _.isNil)) return false
 
   // we add a small decimal to the upper bound just to make it inclusive

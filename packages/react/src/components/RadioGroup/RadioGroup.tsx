@@ -13,6 +13,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
@@ -61,7 +62,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     item: `${RadioGroup.className}__item`,
   }
 
-  static create: Function
+  static create: ShorthandFactory<RadioGroupProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -199,9 +200,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     event: React.SyntheticEvent
     props: RadioGroupItemProps
   }) {
-    this.trySetState({ checkedValue })
-    this.setState({ shouldFocus })
-
+    this.setState({ checkedValue, shouldFocus })
     _.invoke(this.props, 'checkedValueChanged', event, props)
   }
 }

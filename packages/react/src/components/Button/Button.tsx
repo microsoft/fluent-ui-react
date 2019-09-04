@@ -7,7 +7,6 @@ import {
   UIComponent,
   childrenExist,
   createShorthandFactory,
-  isFromKeyboard,
   UIComponentProps,
   ContentComponentProps,
   ChildrenComponentProps,
@@ -15,9 +14,11 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   SizeValue,
+  ShorthandFactory,
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
+import Loader, { LoaderProps } from '../Loader/Loader'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
@@ -48,6 +49,12 @@ export interface ButtonProps
   /** An icon button can format an Icon to appear before or after the button */
   iconPosition?: 'before' | 'after'
 
+  /** A button in loading state, can show a loader. */
+  loader?: ShorthandValue<LoaderProps>
+
+  /** A button can show a loading indicator. */
+  loading?: boolean
+
   /**
    * Called after user's click.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
@@ -75,12 +82,8 @@ export interface ButtonProps
   size?: SizeValue
 }
 
-export interface ButtonState {
-  isFromKeyboard: boolean
-}
-
-class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
-  static create: Function
+class Button extends UIComponent<WithAsProp<ButtonProps>> {
+  static create: ShorthandFactory<ButtonProps>
 
   static displayName = 'Button'
 
@@ -96,6 +99,8 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     icon: customPropTypes.itemShorthandWithoutJSX,
     iconOnly: PropTypes.bool,
     iconPosition: PropTypes.oneOf(['before', 'after']),
+    loader: customPropTypes.itemShorthandWithoutJSX,
+    loading: PropTypes.bool,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
@@ -112,10 +117,6 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
 
   static Group = ButtonGroup
 
-  state = {
-    isFromKeyboard: false,
-  }
-
   actionHandlers = {
     performClick: event => {
       event.preventDefault()
@@ -131,7 +132,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     styles,
     unhandledProps,
   }): React.ReactNode {
-    const { children, content, disabled, iconPosition } = this.props
+    const { children, content, disabled, iconPosition, loading } = this.props
     const hasChildren = childrenExist(children)
 
     return (
@@ -146,6 +147,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
         {...unhandledProps}
       >
         {hasChildren && children}
+        {!hasChildren && loading && this.renderLoader(variables, styles)}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
         {Box.create(!hasChildren && content, {
           defaultProps: { as: 'span', styles: styles.content },
@@ -167,6 +169,17 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
     })
   }
 
+  renderLoader = (variables, styles) => {
+    const { loader } = this.props
+
+    return Loader.create(loader || {}, {
+      defaultProps: {
+        role: undefined,
+        styles: styles.loader,
+      },
+    })
+  }
+
   handleClick = (e: React.SyntheticEvent) => {
     const { disabled } = this.props
 
@@ -179,8 +192,6 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 }

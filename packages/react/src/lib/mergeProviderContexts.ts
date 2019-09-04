@@ -8,7 +8,9 @@ export const mergeBooleanValues = (target, ...sources) => {
   }, target)
 }
 
-const mergeProviderContexts = (...contexts: ProviderContextInput[]): ProviderContextPrepared => {
+const mergeProviderContexts = (
+  ...contexts: (ProviderContextInput | ProviderContextPrepared)[]
+): ProviderContextPrepared => {
   const emptyContext = {
     theme: {
       siteVariables: {},
@@ -22,10 +24,12 @@ const mergeProviderContexts = (...contexts: ProviderContextInput[]): ProviderCon
     renderer: felaRenderer,
     rtl: false,
     disableAnimations: false,
+    originalThemes: [],
+    target: document,
   } as ProviderContextPrepared
 
   return contexts.reduce<ProviderContextPrepared>(
-    (acc: ProviderContextPrepared, next: ProviderContextInput) => {
+    (acc: ProviderContextPrepared, next: ProviderContextInput | ProviderContextPrepared) => {
       if (!next) return acc
 
       acc.theme = mergeThemes(acc.theme, next.theme)
@@ -35,6 +39,9 @@ const mergeProviderContexts = (...contexts: ProviderContextInput[]): ProviderCon
       if (typeof mergedRTL === 'boolean') {
         acc.rtl = mergedRTL
       }
+
+      // Use provided renderer if it is defined
+      acc.target = next.target || acc.target
 
       // Use provided renderer if it is defined
       acc.renderer = next.renderer || acc.renderer
@@ -47,6 +54,13 @@ const mergeProviderContexts = (...contexts: ProviderContextInput[]): ProviderCon
       if (typeof mergedDisableAnimations === 'boolean') {
         acc.disableAnimations = mergedDisableAnimations
       }
+
+      const contextOriginalThemes = (next as ProviderContextPrepared).originalThemes
+        ? (next as ProviderContextPrepared).originalThemes
+        : [next.theme]
+
+      acc.originalThemes = [...acc.originalThemes, ...contextOriginalThemes]
+
       return acc
     },
     emptyContext,

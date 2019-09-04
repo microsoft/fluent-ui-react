@@ -2,9 +2,12 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { pxToRem } from '../../../../lib'
 import Embed, { EmbedProps, EmbedState } from '../../../../components/Embed/Embed'
 import { EmbedVariables } from './embedVariables'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 export default {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
+    const borderFocusStyles = getBorderFocusStyles({ siteVariables })
+
     return {
       display: 'inline-block',
       verticalAlign: 'middle',
@@ -14,14 +17,15 @@ export default {
       height: v.height || 'auto',
       outline: 0,
 
-      ...(p.isFromKeyboard && {
-        ':focus': {
-          [`& .${Embed.slotClassNames.control}`]: {
-            borderColor: v.focusBorderColor,
-            opacity: 1,
-          },
+      ...borderFocusStyles[':focus'],
+      ':focus-visible': {
+        [`& .${Embed.slotClassNames.control}`]: {
+          borderColor: v.focusBorderColor,
+          opacity: 1,
+          ...borderFocusStyles[':focus-visible'],
         },
-      }),
+      },
+
       ':hover': {
         [`& .${Embed.slotClassNames.control}`]: {
           opacity: 1,
@@ -43,5 +47,8 @@ export default {
     position: 'absolute',
     top: '50%',
     transform: 'translate(-50%, -50%)',
+  }),
+  iframe: (): ICSSInJSStyle => ({
+    display: 'block',
   }),
 } as ComponentSlotStylesInput<EmbedProps & EmbedState, EmbedVariables>

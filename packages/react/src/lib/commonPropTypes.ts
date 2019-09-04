@@ -31,7 +31,7 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
       animation: customPropTypes.animation,
     }),
     ...(as && {
-      as: customPropTypes.as,
+      as: PropTypes.elementType,
     }),
     ...(children && {
       children: children === 'element' ? PropTypes.element : PropTypes.node,
@@ -49,6 +49,7 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
     ...(styled && {
       styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
       variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      design: customPropTypes.design,
     }),
   }
 }

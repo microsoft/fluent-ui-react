@@ -2,10 +2,10 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { Ref } from '@stardust-ui/react-component-ref'
 
 import TreeItem, { TreeItemProps } from './TreeItem'
 import {
-  AutoControlledComponent,
   childrenExist,
   commonPropTypes,
   createShorthandFactory,
@@ -13,30 +13,34 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  AutoControlledComponent,
+  ShorthandFactory,
 } from '../../lib'
 import {
-  ShorthandValue,
   ShorthandRenderFunction,
   WithAsProp,
   withSafeTypeForAs,
   ShorthandCollection,
+  ShorthandValue,
 } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { treeBehavior } from '../../lib/accessibility'
+import { getNextElement } from '../../lib/accessibility/FocusZone/focusUtilities'
+import { hasSubtree, removeItemAtIndex } from './lib'
 
 export interface TreeSlotClassNames {
   item: string
 }
 
 export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
-  /** Index of the currently active subtree. */
-  activeIndex?: number[] | number
-
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
-  /** Initial activeIndex value. */
-  defaultActiveIndex?: number[] | number
+  /** Ids of opened items. */
+  activeItemIds?: string[]
+
+  /** Initial activeItemIds value. */
+  defaultActiveItemIds?: string[]
 
   /** Only allow one subtree to be open at a time. */
   exclusive?: boolean
@@ -54,12 +58,22 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   renderItemTitle?: ShorthandRenderFunction
 }
 
+export interface TreeItemForRenderProps {
+  elementRef: React.RefObject<HTMLElement>
+  id: string
+  index: number
+  level: number
+  parent: ShorthandValue<TreeItemProps>
+  siblings: ShorthandCollection<TreeItemProps>
+}
+
 export interface TreeState {
-  activeIndex: number[] | number
+  activeItemIds: string[]
+  itemsForRender: Record<string, TreeItemForRenderProps>
 }
 
 class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
-  static create: Function
+  static create: ShorthandFactory<TreeProps>
 
   static displayName = 'Tree'
 
@@ -73,119 +87,245 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    activeIndex: customPropTypes.every([
-      customPropTypes.disallow(['children']),
-      PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
-    ]),
-    defaultActiveIndex: customPropTypes.every([
-      customPropTypes.disallow(['children']),
-      PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
-    ]),
+    activeItemIds: customPropTypes.collectionShorthand,
+    defaultActiveItemIds: customPropTypes.collectionShorthand,
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
-    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
-    as: 'ul',
+    as: 'div',
     accessibility: treeBehavior,
   }
 
-  static autoControlledProps = ['activeIndex']
+  static autoControlledProps = ['activeItemIds']
 
-  actionHandlers = {
-    expandSiblings: e => {
-      const { items, exclusive } = this.props
-      e.preventDefault()
-      e.stopPropagation()
+  // memoize this function if performance issue occurs.
+  static getItemsForRender = (itemsFromProps: ShorthandCollection<TreeItemProps>) => {
+    const itemsForRenderGenerator = (
+      items = itemsFromProps,
+      level = 1,
+      parent?: ShorthandValue<TreeItemProps>,
+    ) => {
+      return _.reduce(
+        items,
+        (acc: Object, item: ShorthandValue<TreeItemProps>, index: number) => {
+          const id = item['id']
+          const isSubtree = hasSubtree(item)
 
-      if (exclusive) {
-        return
-      }
-      const activeIndex = items
-        ? items.reduce<number[]>((acc, item, index) => {
-            if (item['items']) {
-              return [...acc, index]
-            }
-            return acc
-          }, [])
-        : []
-      this.trySetState({ activeIndex })
-    },
+          acc[id] = {
+            elementRef: React.createRef<HTMLElement>(),
+            level,
+            index: index + 1, // Used for aria-posinset and it's 1-based.
+            parent,
+            siblings: items.filter(currentItem => currentItem !== item),
+          }
+
+          return {
+            ...acc,
+            ...(isSubtree ? itemsForRenderGenerator(item['items'], level + 1, item) : {}),
+          }
+        },
+        {},
+      )
+    }
+
+    return itemsForRenderGenerator(itemsFromProps)
   }
 
-  getInitialAutoControlledState({ exclusive }): TreeState {
+  static getAutoControlledStateFromProps(nextProps: TreeProps, prevState: TreeState) {
+    const itemsForRender = Tree.getItemsForRender(nextProps.items)
+
     return {
-      activeIndex: exclusive ? -1 : [],
+      itemsForRender,
     }
   }
 
-  getActiveIndexes(): number[] {
-    const { activeIndex } = this.state
-    return _.isArray(activeIndex) ? activeIndex : [activeIndex]
+  getInitialAutoControlledState() {
+    return { activeItemIds: [] }
   }
 
-  computeNewIndex = (treeItemProps: TreeItemProps) => {
-    const { index, items } = treeItemProps
-    const activeIndexes = this.getActiveIndexes()
-    const { exclusive } = this.props
-    if (!items) {
-      return activeIndexes
-    }
-
-    if (exclusive) return index
-
-    // check to see if index is in array, and remove it, if not then add it
-    return _.includes(activeIndexes, index)
-      ? _.without(activeIndexes, index)
-      : [...activeIndexes, index]
-  }
+  treeRef = React.createRef<HTMLElement>()
 
   handleTreeItemOverrides = (predefinedProps: TreeItemProps) => ({
     onTitleClick: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
-      this.trySetState({ activeIndex: this.computeNewIndex(treeItemProps) })
+      if (!hasSubtree(treeItemProps)) {
+        return
+      }
+
+      let { activeItemIds } = this.state
+      const { id, siblings } = treeItemProps
+      const { exclusive } = this.props
+
+      const activeItemIdIndex = activeItemIds.indexOf(id)
+
+      if (activeItemIdIndex > -1) {
+        activeItemIds = removeItemAtIndex(activeItemIds, activeItemIdIndex)
+      } else {
+        if (exclusive) {
+          siblings.some(sibling => {
+            const activeSiblingIdIndex = activeItemIds.indexOf(sibling['id'])
+            if (activeSiblingIdIndex > -1) {
+              activeItemIds = removeItemAtIndex(activeItemIds, activeSiblingIdIndex)
+
+              return true
+            }
+            return false
+          })
+        }
+
+        activeItemIds = [...activeItemIds, id]
+      }
+
+      this.setState({
+        activeItemIds,
+      })
+
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
+    },
+    onFocusParent: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
+      const { parent } = treeItemProps
+
+      if (!parent) {
+        return
+      }
+
+      const { itemsForRender } = this.state
+      const parentItemForRender = itemsForRender[parent['id']]
+
+      if (
+        !parentItemForRender ||
+        !parentItemForRender.elementRef ||
+        !parentItemForRender.elementRef.current
+      ) {
+        return
+      }
+
+      parentItemForRender.elementRef.current.focus()
+      _.invoke(predefinedProps, 'onFocusParent', e, treeItemProps)
+    },
+    onFocusFirstChild: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
+      const { id } = treeItemProps
+
+      const { itemsForRender } = this.state
+      const currentElement = itemsForRender[id].elementRef
+
+      if (!currentElement || !currentElement.current) {
+        return
+      }
+
+      const elementToBeFocused = getNextElement(this.treeRef.current, currentElement.current)
+
+      if (!elementToBeFocused) {
+        return
+      }
+
+      elementToBeFocused.focus()
+      _.invoke(predefinedProps, 'onFocusFirstChild', e, treeItemProps)
+    },
+    onSiblingsExpand: (e: React.SyntheticEvent, treeItemProps: TreeItemProps) => {
+      if (this.props.exclusive) {
+        return
+      }
+
+      const { id, siblings } = treeItemProps
+      const { activeItemIds } = this.state
+
+      siblings.forEach(sibling => {
+        if (hasSubtree(sibling) && !this.isActiveItem(sibling['id'])) {
+          activeItemIds.push(sibling['id'])
+        }
+      })
+
+      if (hasSubtree(treeItemProps) && !this.isActiveItem(id)) {
+        activeItemIds.push(id)
+      }
+
+      this.setState({
+        activeItemIds,
+      })
+
+      _.invoke(predefinedProps, 'onSiblingsExpand', e, treeItemProps)
     },
   })
 
-  renderContent() {
-    const { items, renderItemTitle, exclusive } = this.props
-    const { activeIndex } = this.state
-    const activeIndexes = this.getActiveIndexes()
+  renderContent(): React.ReactElement[] {
+    const { itemsForRender } = this.state
+    const { items, renderItemTitle } = this.props
 
-    return _.map(items, (item: ShorthandValue<TreeItemProps>, index: number) =>
-      TreeItem.create(item, {
-        defaultProps: {
-          className: Tree.slotClassNames.item,
-          index,
-          exclusive,
-          renderItemTitle,
-          open: exclusive ? index === activeIndex : _.includes(activeIndexes, index),
+    if (!items) return null
+
+    const renderItems = (items: ShorthandCollection<TreeItemProps>): React.ReactElement[] => {
+      return items.reduce(
+        (renderedItems: React.ReactElement[], item: ShorthandValue<TreeItemProps>) => {
+          const itemForRender = itemsForRender[item['id']]
+          const { elementRef, ...restItemForRender } = itemForRender
+          const isSubtree = hasSubtree(item)
+          const isSubtreeOpen = isSubtree && this.isActiveItem(item['id'])
+
+          const renderedItem = TreeItem.create(item, {
+            defaultProps: {
+              className: Tree.slotClassNames.item,
+              open: isSubtreeOpen,
+              renderItemTitle,
+              key: item['id'],
+              ...restItemForRender,
+            },
+            overrideProps: this.handleTreeItemOverrides,
+          })
+
+          // Only need refs of the items that spawn subtrees, when they need to be focused
+          // by any of their children, using Arrow Left.
+          const finalRenderedItem = isSubtree ? (
+            <Ref key={item['id']} innerRef={elementRef}>
+              {renderedItem}
+            </Ref>
+          ) : (
+            renderedItem
+          )
+
+          return [
+            ...renderedItems,
+            finalRenderedItem,
+            ...([isSubtreeOpen ? renderItems(item['items']) : []] as any),
+          ]
         },
-        overrideProps: this.handleTreeItemOverrides,
-      }),
-    )
+        [],
+      )
+    }
+
+    return renderItems(items)
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { children } = this.props
 
     return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...rtlTextContainer.getAttributes({ forElements: [children] })}
-        {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-      >
-        {childrenExist(children) ? children : this.renderContent()}
-      </ElementType>
+      <Ref innerRef={this.treeRef}>
+        <ElementType
+          className={classes.root}
+          {...accessibility.attributes.root}
+          {...rtlTextContainer.getAttributes({ forElements: [children] })}
+          {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        >
+          {childrenExist(children) ? children : this.renderContent()}
+        </ElementType>
+      </Ref>
     )
+  }
+
+  isActiveItem = (id: string): boolean => {
+    const { activeItemIds } = this.state
+    return activeItemIds.indexOf(id) > -1
   }
 }
 
-Tree.create = createShorthandFactory({ Component: Tree, mappedArrayProp: 'items' })
+Tree.create = createShorthandFactory({
+  Component: Tree,
+  mappedArrayProp: 'items',
+})
 
 /**
  * A Tree displays data organised in tree hierarchy.

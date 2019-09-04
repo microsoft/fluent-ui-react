@@ -1,6 +1,6 @@
+import * as keyboardKey from 'keyboard-key'
 import { Accessibility, AccessibilityAttributes, FocusZoneMode } from '../../types'
 import { FocusZoneDirection } from '../../FocusZone'
-import subtreeBehavior from './subtreeBehavior'
 
 /**
  * @specification
@@ -11,18 +11,18 @@ import subtreeBehavior from './subtreeBehavior'
  * Triggers 'expandSiblings' action with '*' on 'root'.
  */
 const treeBehavior: Accessibility<TreeBehaviorProps> = props => {
-  const subtreeBehaviorData = subtreeBehavior({})
   return {
     attributes: {
       root: {
-        ...subtreeBehaviorData.attributes.root,
         role: 'tree',
         'aria-labelledby': props['aria-labelledby'],
       },
     },
     keyActions: {
       root: {
-        ...subtreeBehaviorData.keyActions.root,
+        expandSiblings: {
+          keyCombinations: [{ keyCode: keyboardKey['*'] }],
+        },
       },
     },
     focusZone: {

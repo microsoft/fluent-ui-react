@@ -31,10 +31,10 @@ import {
   toggleButtonBehavior,
   menuAsToolbarBehavior,
   menuItemAsToolbarButtonBehavior,
-  treeBehavior,
-  treeTitleBehavior,
-  treeItemBehavior,
-  subtreeBehavior,
+  hierarchicalTreeBehavior,
+  hierarchicalTreeTitleBehavior,
+  hierarchicalTreeItemBehavior,
+  hierarchicalSubtreeBehavior,
   gridBehavior,
   gridHorizontalBehavior,
   statusBehavior,
@@ -50,6 +50,10 @@ import {
   toolbarRadioGroupItemBehavior,
   tooltipBehavior,
   tooltipAsLabelBehavior,
+  menuButtonBehavior,
+  treeBehavior,
+  treeItemBehavior,
+  treeTitleBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -72,6 +76,7 @@ testHelper.addBehavior('loaderBehavior', loaderBehavior)
 testHelper.addBehavior('menuBehavior', menuBehavior)
 testHelper.addBehavior('menuItemBehavior', menuItemBehavior)
 testHelper.addBehavior('menuDividerBehavior', menuDividerBehavior)
+testHelper.addBehavior('menuButtonBehavior', menuButtonBehavior)
 testHelper.addBehavior('submenuBehavior', submenuBehavior)
 testHelper.addBehavior('popupBehavior', popupBehavior)
 testHelper.addBehavior('radioGroupBehavior', radioGroupBehavior)
@@ -84,10 +89,10 @@ testHelper.addBehavior('tabListBehavior', tabListBehavior)
 testHelper.addBehavior('menuAsToolbarBehavior', menuAsToolbarBehavior)
 testHelper.addBehavior('toggleButtonBehavior', toggleButtonBehavior)
 testHelper.addBehavior('menuItemAsToolbarButtonBehavior', menuItemAsToolbarButtonBehavior)
-testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
-testHelper.addBehavior('treeBehavior', treeBehavior)
-testHelper.addBehavior('treeItemBehavior', treeItemBehavior)
-testHelper.addBehavior('subtreeBehavior', subtreeBehavior)
+testHelper.addBehavior('hierarchicalTreeTitleBehavior', hierarchicalTreeTitleBehavior)
+testHelper.addBehavior('hierarchicalTreeBehavior', hierarchicalTreeBehavior)
+testHelper.addBehavior('hierarchicalTreeItemBehavior', hierarchicalTreeItemBehavior)
+testHelper.addBehavior('hierarchicalSubtreeBehavior', hierarchicalSubtreeBehavior)
 testHelper.addBehavior('gridBehavior', gridBehavior)
 testHelper.addBehavior('gridHorizontalBehavior', gridHorizontalBehavior)
 testHelper.addBehavior('dialogBehavior', dialogBehavior)
@@ -104,5 +109,8 @@ testHelper.addBehavior('toolbarRadioGroupBehavior', toolbarRadioGroupBehavior)
 testHelper.addBehavior('toolbarRadioGroupItemBehavior', toolbarRadioGroupItemBehavior)
 testHelper.addBehavior('tooltipBehavior', tooltipBehavior)
 testHelper.addBehavior('tooltipAsLabelBehavior', tooltipAsLabelBehavior)
+testHelper.addBehavior('treeBehavior', treeBehavior)
+testHelper.addBehavior('treeItemBehavior', treeItemBehavior)
+testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
 
 testHelper.run(behaviorMenuItems)

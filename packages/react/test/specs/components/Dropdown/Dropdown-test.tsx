@@ -1380,6 +1380,21 @@ describe('Dropdown', () => {
     })
   })
 
+  describe('multiple', () => {
+    it('can be switched to "multiple"', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} value={items[0]} />)
+
+      expect(
+        findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`),
+      ).toHaveLength(0)
+
+      wrapper.setProps({ multiple: true })
+      expect(
+        findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`),
+      ).toHaveLength(1)
+    })
+  })
+
   describe('items', () => {
     it('have onClick called when passed stop event from being propagated', () => {
       const onClick = jest.fn()
@@ -1424,6 +1439,25 @@ describe('Dropdown', () => {
         }),
       )
       expect(stopPropagation).toBeCalledTimes(1)
+    })
+  })
+
+  describe('renderSelectedItem', () => {
+    it('calls renderSelectedItem in multiple selection', () => {
+      const renderSelectedItem = jest.fn((selectedItem, props) => null)
+      const wrapper = mountWithProvider(
+        <Dropdown multiple items={items} renderSelectedItem={renderSelectedItem} />,
+      )
+      const triggerButton = getTriggerButtonWrapper(wrapper)
+
+      triggerButton.simulate('click')
+      const firstItem = getItemAtIndexWrapper(wrapper)
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: _.noop } })
+      triggerButton.simulate('click')
+      const secondItem = getItemAtIndexWrapper(wrapper, 1)
+      secondItem.simulate('click', { nativeEvent: { stopImmediatePropagation: _.noop } })
+
+      expect(renderSelectedItem).toBeCalled()
     })
   })
 })

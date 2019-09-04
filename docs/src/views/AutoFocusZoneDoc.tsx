@@ -51,7 +51,7 @@ export default () => (
       label="PopupExample.jsx"
       value={`
         const Popup = () => (
-          <Popup autoFocus={{ firstFocusableSelector: "btn-submit" }} />
+          <Popup autoFocus={{ firstFocusableSelector: ".btn-submit" }} />
         )`}
     />
     <p>Read more about:</p>

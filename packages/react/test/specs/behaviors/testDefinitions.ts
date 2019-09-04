@@ -50,7 +50,7 @@ definitions.push({
 // Example: Adds attribute 'tabIndex=0' to 'anchor' slot.
 //          Adds attribute 'data-is-focusable=true' to 'anchor' slot.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' slot\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\-d]+)' to '([\w-]+)' slot\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, attributeExpectedValue, elementWhereToBeAdded] = parameters.props
     const property = {}
@@ -119,7 +119,7 @@ definitions.push({
     const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
       attributeToBeAdded
     ]
-    expect(expectedResult).toEqual(
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResult)).toEqual(
       testHelper.convertToMatchingTypeIfApplicable(propertyDependingOnValue),
     )
   },
@@ -527,12 +527,38 @@ definitions.push({
   },
 })
 
+// Triggers the 'openMenu' action with 'ArrowDown' on 'root', when orientaton is horizontal.
+definitions.push({
+  regexp: /Triggers the '(\w+)' action with '(\w+)' on '([\w-]+)', when orientation is horizontal\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const propertyHorizontal = { horizontal: true }
+    const expectedKeyNumber = parameters.behavior(propertyHorizontal).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    expect(expectedKeyNumber).toBe(keyboardKey[key])
+  },
+})
+
+// Triggers the 'openMenu' action with 'ArrowRight' on 'root', when orientation is vertical.
+definitions.push({
+  regexp: /Triggers the '(\w+)' action with '(\w+)' on '([\w-]+)', when orientation is vertical\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const propertyHorizontal = { horizontal: false }
+    const expectedKeyNumberVertical = parameters.behavior(propertyHorizontal).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    expect(expectedKeyNumberVertical).toBe(keyboardKey[key])
+  },
+})
+
 // Triggers 'receiveFocus' action with 'ArrowLeft' on 'root', when has an opened subtree.
 definitions.push({
   regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when has an opened subtree\./g,
   testMethod: (parameters: TestMethod) => {
     const [action, key, elementToPerformAction] = [...parameters.props]
-    const propertyOpenedSubtree = { open: true, items: [{ a: 1 }] }
+    const propertyOpenedSubtree = { open: true, items: [{ a: 1 }], siblings: [], hasSubtree: true }
     const expectedKeyNumberVertical = parameters.behavior(propertyOpenedSubtree).keyActions[
       elementToPerformAction
     ][action].keyCombinations[0].keyCode
@@ -545,7 +571,7 @@ definitions.push({
   regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when has a closed subtree\./g,
   testMethod: (parameters: TestMethod) => {
     const [action, key, elementToPerformAction] = [...parameters.props]
-    const propertyClosedSubtree = { open: false }
+    const propertyClosedSubtree = { open: false, hasSubtree: false }
     const expectedKeyNumberVertical = parameters.behavior(propertyClosedSubtree).keyActions[
       elementToPerformAction
     ][action].keyCombinations[0].keyCode

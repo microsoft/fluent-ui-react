@@ -17,11 +17,8 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
     }),
     position: 'relative',
     ...(p.active && {
-      ...getBorderFocusStyles({
-        siteVariables,
-        isFromKeyboard: p.isFromKeyboard,
-        borderRadius: 0,
-      })[':focus'],
+      ...(p.isFromKeyboard &&
+        getBorderFocusStyles({ siteVariables, borderRadius: 0 })[':focus-visible']),
       ...(!p.isFromKeyboard && {
         color: v.listItemColorHover,
         backgroundColor: v.listItemBackgroundColorHover,
@@ -58,6 +55,13 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
   content: ({ variables: v }): ICSSInJSStyle => ({
     fontSize: v.listItemContentFontSize,
     color: v.listItemContentColor,
+  }),
+  checkableIndicator: ({ variables: v }) => ({
+    position: 'relative',
+    left: pxToRem(3),
+  }),
+  endMedia: () => ({
+    lineHeight: pxToRem(16),
   }),
 }
 

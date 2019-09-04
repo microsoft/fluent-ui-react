@@ -7,15 +7,11 @@ const name = 'stardust-ui-example'
 const description =
   'An exported example from Stardust UI React, https://stardust-ui.github.io/react/'
 const dependencies = {
-  ..._.mapValues(imports, () => 'latest'),
+  '@stardust-ui/code-sandbox': 'latest',
+  ..._.mapValues(imports, pkg => pkg.version),
   // required to enable all features due old templates in https://github.com/codesandbox/codesandbox-importers
   // https://github.com/stardust-ui/react/issues/1519
   'react-scripts': 'latest',
-}
-const devDependencies = {
-  '@types/lodash': 'latest',
-  '@types/react': 'latest',
-  '@types/react-dom': 'latest',
 }
 
 const createPackageJson = (mainFilename: string, language: ComponentSourceManagerLanguage) => ({
@@ -26,7 +22,6 @@ const createPackageJson = (mainFilename: string, language: ComponentSourceManage
       description,
       main: mainFilename,
       dependencies,
-      devDependencies: language === 'ts' ? devDependencies : {},
     },
     null,
     2,

@@ -18,16 +18,19 @@ describe('Alert', () => {
   handlesAccessibility(Alert, { defaultRootRole: undefined, requiredProps: { content: 'test' } })
   handlesAccessibility(Alert, {
     defaultRootRole: undefined,
-    partSelector: `.${Alert.slotClassNames.content}`,
+    partSelector: `.${Alert.slotClassNames.body}`,
     requiredProps: { content: 'test' },
   })
   handlesAccessibility(Alert, {
     defaultRootRole: 'alert',
-    partSelector: `.${Alert.slotClassNames.content}`,
+    partSelector: `.${Alert.slotClassNames.body}`,
     requiredProps: { content: 'test', warning: true },
   })
 
-  alertImplementsShorthandProp('action', Button, { mapsValueToProp: 'content' })
+  alertImplementsShorthandProp('dismissAction', Button, {
+    mapsValueToProp: 'content',
+    requiredProps: { dismissible: true },
+  })
   alertImplementsShorthandProp('content', Box, { mapsValueToProp: 'children' })
 
   describe('compliance', () => {

@@ -13,6 +13,21 @@ import {
   ShorthandValue,
 } from '@stardust-ui/react'
 
+const tooltips = {
+  videoOn: 'Turn camera off',
+  videoOff: 'Turn camera on',
+  micOn: 'Mute',
+  micOff: 'Unmute',
+  share: 'Share',
+  shareStop: 'Stop sharing',
+  endCall: 'Hang up',
+  moreActions: 'More actions',
+  chat: 'Show conversation',
+  addParticipants: 'Add participants',
+  pptNext: 'Navigate forward',
+  pptPrevious: 'Navigate back',
+}
+
 export interface CustomToolbarProps {
   layout?: 'standard' | 'desktop-share' | 'powerpoint-presenter'
 
@@ -70,6 +85,7 @@ const commonLayout: CustomToolbarLayout = props =>
     { key: 'timer-divider', kind: 'divider' as ToolbarItemShorthandKinds },
 
     {
+      title: props.cameraActive ? tooltips.videoOn : tooltips.videoOff,
       active: props.cameraActive,
       icon: {
         name: props.cameraActive ? 'call-video' : 'call-video-off',
@@ -81,7 +97,7 @@ const commonLayout: CustomToolbarLayout = props =>
     },
 
     {
-      id: 'toolbar-mic-button',
+      title: props.micActive ? tooltips.micOn : tooltips.micOff,
       active: props.micActive,
       icon: {
         name: props.micActive ? 'mic' : 'mic-off',
@@ -93,6 +109,7 @@ const commonLayout: CustomToolbarLayout = props =>
     },
 
     {
+      title: props.screenShareActive ? tooltips.shareStop : tooltips.share,
       active: props.screenShareActive,
       icon: {
         name: props.screenShareActive ? 'call-control-close-tray' : 'call-control-present-new',
@@ -104,6 +121,7 @@ const commonLayout: CustomToolbarLayout = props =>
     },
 
     {
+      title: tooltips.moreActions,
       key: 'more',
       icon: {
         name: 'more',
@@ -118,6 +136,7 @@ const commonLayout: CustomToolbarLayout = props =>
 
 const sidebarButtons: CustomToolbarLayout = props => [
   {
+    title: tooltips.chat,
     active: props.sidebarSelected === 'chat',
     icon: {
       name: 'chat',
@@ -130,6 +149,7 @@ const sidebarButtons: CustomToolbarLayout = props => [
     variables: { isCtItemWithNotification: props.chatHasNotification, isCtItemIconNoFill: true },
   },
   {
+    title: tooltips.addParticipants,
     active: props.sidebarSelected === 'participant-add',
     icon: {
       name: 'participant-add',
@@ -149,6 +169,7 @@ const sidebarButtons: CustomToolbarLayout = props => [
 
 const layoutItems: ShorthandValue<ToolbarItemProps> = {
   endCall: props => ({
+    title: tooltips.endCall,
     key: 'end-call',
     icon: {
       name: 'call-end',
@@ -181,6 +202,7 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
     { key: 'divider-sidebar', kind: 'divider' },
 
     {
+      title: tooltips.shareStop,
       key: 'stop-sharing',
       icon: {
         name: 'call-control-stop-presenting-new',
@@ -190,6 +212,8 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
     },
 
     {
+      'aria-label': `${props.pptSlide} ${tooltips.pptPrevious}`,
+      title: tooltips.pptPrevious,
       key: 'ppt-prev',
       icon: {
         name: 'chevron-down',
@@ -207,6 +231,8 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
     },
 
     {
+      'aria-label': `${props.pptSlide} ${tooltips.pptNext}`,
+      title: tooltips.pptNext,
       key: 'ppt-next',
       icon: {
         name: 'chevron-down',

@@ -1,5 +1,4 @@
 import { Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -16,7 +15,7 @@ export default class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
   root = React.createRef<HTMLElement>()
 
   static propTypes = {
-    as: customPropTypes.as,
+    as: PropTypes.elementType,
     firstFocusableSelector: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   }
 
@@ -48,7 +47,7 @@ export default class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
     const focusSelector = callable(firstFocusableSelector)()
 
     const firstFocusableChild = focusSelector
-      ? (this.root.current.querySelector(`.${focusSelector}`) as HTMLElement)
+      ? (this.root.current.querySelector(focusSelector) as HTMLElement)
       : getNextElement(
           this.root.current,
           this.root.current.firstChild as HTMLElement,

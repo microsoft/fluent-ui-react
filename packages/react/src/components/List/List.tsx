@@ -1,7 +1,6 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 
 import {
@@ -16,7 +15,6 @@ import {
 import ListItem, { ListItemProps } from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 import {
   WithAsProp,
   ComponentEventHandler,
@@ -59,6 +57,9 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 
   /** Truncates header */
   truncateHeader?: boolean
+
+  /** A horizontal list displays elements horizontally. */
+  horizontal?: boolean
 }
 
 export interface ListState {
@@ -87,6 +88,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
     selectedIndex: PropTypes.number,
     defaultSelectedIndex: PropTypes.number,
     onSelectedIndexChange: PropTypes.func,
+    horizontal: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -105,44 +107,6 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selectable', 'truncateContent', 'truncateHeader', 'variables']
 
-  focusHandler: ContainerFocusHandler = null
-  itemRefs = []
-
-  actionHandlers = {
-    moveNext: e => {
-      e.preventDefault()
-      this.focusHandler.moveNext()
-    },
-    movePrevious: e => {
-      e.preventDefault()
-      this.focusHandler.movePrevious()
-    },
-    moveFirst: e => {
-      e.preventDefault()
-      this.focusHandler.moveFirst()
-    },
-    moveLast: e => {
-      e.preventDefault()
-      this.focusHandler.moveLast()
-    },
-  }
-
-  constructor(props, context) {
-    super(props, context)
-
-    this.focusHandler = new ContainerFocusHandler(
-      () => this.props.items.length,
-      index => {
-        this.setState({ focusedIndex: index }, () => {
-          const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
-          const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
-
-          targetDomNode && targetDomNode.focus()
-        })
-      },
-    )
-  }
-
   handleItemOverrides = (predefinedProps: ListItemProps) => {
     const { selectable } = this.props
 
@@ -158,7 +122,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
         _.invoke(predefinedProps, 'onClick', e, itemProps)
 
         if (selectable) {
-          this.trySetState({ selectedIndex: itemProps.index })
+          this.setState({ selectedIndex: itemProps.index })
           _.invoke(this.props, 'onSelectedIndexChange', e, {
             ...this.props,
             ...{ selectedIndex: itemProps.index },
@@ -188,18 +152,10 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
     const { items, selectable } = this.props
     const { focusedIndex, selectedIndex } = this.state
 
-    this.focusHandler.syncFocusedIndex(focusedIndex)
-
-    this.itemRefs = []
-
     return _.map(items, (item, index) => {
       const maybeSelectableItemProps = {} as any
 
       if (selectable) {
-        const ref = React.createRef()
-        this.itemRefs[index] = ref
-
-        maybeSelectableItemProps.ref = ref
         maybeSelectableItemProps.selected = index === selectedIndex
         maybeSelectableItemProps.tabIndex = index === focusedIndex ? 0 : -1
       }

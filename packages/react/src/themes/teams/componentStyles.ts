@@ -36,6 +36,14 @@ export { default as Grid } from './components/Grid/gridStyles'
 export { default as Header } from './components/Header/headerStyles'
 export { default as HeaderDescription } from './components/Header/headerDescriptionStyles'
 
+export { default as HierarchicalTree } from './components/HierarchicalTree/hierarchicalTreeStyles'
+export {
+  default as HierarchicalTreeItem,
+} from './components/HierarchicalTree/hierarchicalTreeItemStyles'
+export {
+  default as HierarchicalTreeTitle,
+} from './components/HierarchicalTree/hierarchicalTreeTitleStyles'
+
 export { default as Icon } from './components/Icon/iconStyles'
 
 export { default as Label } from './components/Label/labelStyles'
@@ -52,6 +60,8 @@ export { default as ListItem } from './components/List/listItemStyles'
 export { default as Menu } from './components/Menu/menuStyles'
 export { default as MenuItem } from './components/Menu/menuItemStyles'
 export { default as MenuDivider } from './components/Menu/menuDividerStyles'
+
+export { default as MenuButton } from './components/MenuButton/menuButtonStyles'
 
 export { default as Popup } from './components/Popup/popupStyles'
 export { default as PopupContent } from './components/Popup/popupContentStyles'

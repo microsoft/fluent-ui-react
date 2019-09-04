@@ -27,14 +27,14 @@ const defaultValue = 'red'
 
 export default (siteVars: any): CheckboxVariables => ({
   textColor: _.get(siteVars, 'colorScheme.default.foreground1', defaultValue),
-  background: _.get(siteVars, 'colorScheme.default.background', defaultValue),
+  background: 'transparent',
   borderColor: _.get(siteVars, 'colorScheme.default.foreground1', defaultValue),
   borderStyle: 'solid',
   borderRadius: pxToRem(3),
   borderWidth: pxToRem(1),
   indicatorColor: 'transparent',
   gap: pxToRem(12),
-  margin: `${pxToRem(20)}, 0`,
+  margin: `${pxToRem(2)} 0 0 0`,
   padding,
   rootPadding: '3px 5px',
 
@@ -44,7 +44,7 @@ export default (siteVars: any): CheckboxVariables => ({
 
   toggleBorderRadius: pxToRem(999),
   toggleIndicatorSize: pxToRem(14),
-  toggleMargin: `${pxToRem(20)}, 0`,
+  toggleMargin: '0',
   togglePadding: `${padding} ${toggleMovementDistance} ${padding} ${padding}`,
 
   checkedTextColor: _.get(siteVars, 'colorScheme.default.foreground', defaultValue),

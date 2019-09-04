@@ -1,16 +1,16 @@
 import * as React from 'react'
 
-import BestPractices from './BestPractices'
 import Content from './Content'
 import Types from './Types'
-import Usage from './Usage'
+import Rtl from './Rtl'
+import Variations from './Variations'
 
 const DialogExamples = () => (
   <>
-    <BestPractices />
     <Types />
+    <Variations />
     <Content />
-    <Usage />
+    <Rtl />
   </>
 )
 

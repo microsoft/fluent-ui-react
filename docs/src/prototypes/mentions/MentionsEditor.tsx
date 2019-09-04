@@ -70,23 +70,23 @@ const MentionsEditor: React.FunctionComponent<
     selectedItem: '',
   })
 
-  React.useEffect(
-    () => {
-      if (!state.shouldUpdate) {
-        return
-      }
+  React.useEffect(() => {
+    if (!state.shouldUpdate) {
+      return
+    }
 
-      _.invoke(contendEditableRef.current, 'focus')
+    _.invoke(contendEditableRef.current, 'focus')
 
-      // after the wrapped component is closed the value of the search query is inserted in the editor at cursor position
-      insertTextAtCursorPosition(state.selectedItem)
-      dispatch({ type: 'RESET_UPDATE_FLAG' })
-    },
-    [state.shouldUpdate],
-  )
+    // after the wrapped component is closed the value of the search query is inserted in the editor at cursor position
+    insertTextAtCursorPosition(state.selectedItem)
+    dispatch({ type: 'RESET_UPDATE_FLAG' })
+  }, [state.shouldUpdate])
 
-  const handleEditorKeyUp = (e: React.KeyboardEvent) => {
-    if (!state.open && e.shiftKey && keyboardKey.getCode(e) === keyboardKey.AtSign) {
+  const handleEditorKeyChange = () => {
+    const { anchorNode, focusOffset } = window.getSelection()
+    const lastCharacter = anchorNode.nodeValue && anchorNode.nodeValue[focusOffset - 1]
+
+    if (!state.open && lastCharacter === '@') {
       dispatch({ type: 'OPEN' })
     }
   }
@@ -136,7 +136,7 @@ const MentionsEditor: React.FunctionComponent<
       <div
         contentEditable
         ref={contendEditableRef}
-        onKeyUp={handleEditorKeyUp}
+        onInput={handleEditorKeyChange}
         style={editorStyle}
       />
       <PortalAtCursorPosition open={state.open}>

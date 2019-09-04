@@ -402,6 +402,14 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
+  icon: ({ props: p }): ICSSInJSStyle => ({
+    ...(!p.iconOnly && {
+      // reduce margins so text has the dominant influence on the vertical height
+      marginTop: pxToRem(-10),
+      marginBottom: pxToRem(-8),
+    }),
+  }),
+
   menu: () => ({ zIndex: '1000' }),
 
   indicator: () => ({

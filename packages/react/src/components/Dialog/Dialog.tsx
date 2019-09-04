@@ -1,10 +1,11 @@
 import { Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
-import { Ref } from '@stardust-ui/react-component-ref'
+import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 
 import {
   UIComponentProps,
@@ -20,6 +21,7 @@ import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
+import ButtonGroup from '../Button/ButtonGroup'
 import Box, { BoxProps } from '../Box/Box'
 import Header, { HeaderProps } from '../Header/Header'
 import Portal, { TriggerAccessibility } from '../Portal/Portal'
@@ -41,8 +43,14 @@ export interface DialogProps
   /** A dialog can contain actions. */
   actions?: ShorthandValue<BoxProps>
 
+  /** A dialog can have a backdrop on its overlay. */
+  backdrop?: boolean
+
   /** A dialog can contain a cancel button. */
   cancelButton?: ShorthandValue<ButtonProps>
+
+  /** Controls whether or not a dialog should close when a click outside is happened. */
+  closeOnOutsideClick?: boolean
 
   /** A dialog can contain a confirm button. */
   confirmButton?: ShorthandValue<ButtonProps>
@@ -108,8 +116,10 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       content: 'shorthand',
     }),
     actions: customPropTypes.itemShorthand,
+    backdrop: PropTypes.bool,
     headerAction: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
+    closeOnOutsideClick: PropTypes.bool,
     confirmButton: customPropTypes.itemShorthand,
     defaultOpen: PropTypes.bool,
     header: customPropTypes.itemShorthand,
@@ -125,6 +135,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   static defaultProps = {
     accessibility: dialogBehavior,
     actions: {},
+    backdrop: true,
+    closeOnOutsideClick: true,
     overlay: {},
     trapFocus: true,
   }
@@ -162,17 +174,17 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 
   handleDialogCancel = (e: Event | React.SyntheticEvent) => {
     _.invoke(this.props, 'onCancel', e, { ...this.props, open: false })
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 
   handleDialogConfirm = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onConfirm', e, { ...this.props, open: false })
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 
   handleDialogOpen = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onOpen', e, { ...this.props, open: true })
-    this.trySetState({ open: true })
+    this.setState({ open: true })
   }
 
   handleCancelButtonOverrides = (predefinedProps: ButtonProps) => ({
@@ -192,8 +204,16 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   handleOverlayClick = (e: MouseEvent) => {
     // Dialog has different conditions to close than Popup, so we don't need to iterate across all
     // refs
-    const isInsideContentClick = doesNodeContainClick(this.contentRef.current, e)
-    const isInsideOverlayClick = doesNodeContainClick(this.overlayRef.current, e)
+    const isInsideContentClick = doesNodeContainClick(
+      this.contentRef.current,
+      e,
+      this.context.target,
+    )
+    const isInsideOverlayClick = doesNodeContainClick(
+      this.overlayRef.current,
+      e,
+      this.context.target,
+    )
 
     const shouldClose = !isInsideContentClick && isInsideOverlayClick
 
@@ -202,11 +222,25 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     }
   }
 
-  renderComponent({ accessibility, classes, ElementType, styles, unhandledProps }) {
+  handleDocumentKeydown = (getRefs: Function) => (e: KeyboardEvent) => {
+    // if focus was lost from Dialog, for e.g. when click on Dialog's content
+    // and ESC is pressed, the opened Dialog should get closed and the trigger should get focus
+    const lastOverlayRef = getRefs().pop()
+    const isLastOpenedDialog: boolean =
+      lastOverlayRef && lastOverlayRef.current === this.overlayRef.current
+
+    if (keyboardKey.getCode(e) === keyboardKey.Escape && isLastOpenedDialog) {
+      this.handleDialogCancel(e)
+      _.invoke(this.triggerRef, 'current.focus')
+    }
+  }
+
+  renderComponent({ accessibility, classes, ElementType, styles, unhandledProps, rtl }) {
     const {
       actions,
-      confirmButton,
       cancelButton,
+      closeOnOutsideClick,
+      confirmButton,
       content,
       header,
       headerAction,
@@ -220,6 +254,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       <Ref innerRef={this.contentRef}>
         <ElementType
           className={classes.root}
+          // it's required to have an `rtl` attribute there as Dialog is rendered outside the main DOM tree
+          dir={rtl ? 'rtl' : undefined}
           {...accessibility.attributes.popup}
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
@@ -241,6 +277,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               ...accessibility.attributes.headerAction,
             },
           })}
+
           {Box.create(content, {
             defaultProps: {
               styles: styles.content,
@@ -249,13 +286,13 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             },
           })}
 
-          {Box.create(actions, {
+          {ButtonGroup.create(actions, {
             defaultProps: {
               styles: styles.actions,
             },
             overrideProps: {
               content: (
-                <Flex gap="gap.smaller" hAlign="end">
+                <Flex gap="gap.smaller">
                   {Button.create(cancelButton, {
                     overrideProps: this.handleCancelButtonOverrides,
                   })}
@@ -272,6 +309,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
         </ElementType>
       </Ref>
     )
+
+    const targetRef = toRefObject(this.context.target)
     const triggerAccessibility: TriggerAccessibility = {
       attributes: accessibility.attributes.trigger,
       keyHandlers: accessibility.keyHandlers.trigger,
@@ -303,10 +342,19 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
                   overrideProps: { content: dialogContent },
                 })}
               </Ref>
+
+              {closeOnOutsideClick && (
+                <EventListener
+                  listener={this.handleOverlayClick}
+                  targetRef={targetRef}
+                  type="click"
+                  capture
+                />
+              )}
               <EventListener
-                listener={this.handleOverlayClick}
-                targetRef={documentRef}
-                type="click"
+                listener={this.handleDocumentKeydown(getRefs)}
+                targetRef={targetRef}
+                type="keydown"
                 capture
               />
             </>
@@ -330,5 +378,10 @@ Dialog.slotClassNames = {
  *
  * @accessibility
  * Implements [ARIA Dialog (Modal)](https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal) design pattern.
+ * @accessibilityIssues
+ * [NVDA narrates dialog title and button twice](https://github.com/nvaccess/nvda/issues/10003)
+ * [NVDA does not recognize the ARIA 1.1 values of aria-haspopup](https://github.com/nvaccess/nvda/issues/8235)
+ * [Jaws does not announce token values of aria-haspopup](https://github.com/FreedomScientific/VFO-standards-support/issues/33)
+ * [Issue 989517: VoiceOver narrates dialog content and button twice](https://bugs.chromium.org/p/chromium/issues/detail?id=989517)
  */
 export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)

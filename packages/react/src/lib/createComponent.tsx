@@ -5,7 +5,7 @@ import { ThemeContext } from '@stardust-ui/react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/reactTypes'
-import { createShorthandFactory } from './factories'
+import { createShorthandFactory, ShorthandFactory } from './factories'
 import { ObjectOf, ProviderContextPrepared } from '../types'
 
 export interface CreateComponentConfig<P> {
@@ -21,7 +21,7 @@ export interface CreateComponentConfig<P> {
 
 export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
   className: string
-  create: Function
+  create: ShorthandFactory<P>
 }
 
 const createComponent = <P extends ObjectOf<any> = any>({
@@ -40,6 +40,10 @@ const createComponent = <P extends ObjectOf<any> = any>({
   }
 
   const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
+    // Stores debug information for component.
+    // Note that this ref should go as the first one, to be discoverable by debug utils.
+    const stardustDebug = React.useRef(null)
+
     const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
     return renderComponent(
@@ -52,6 +56,7 @@ const createComponent = <P extends ObjectOf<any> = any>({
         state: {},
         actionHandlers,
         render: config => render(config, props),
+        saveDebug: updatedDebug => (stardustDebug.current = updatedDebug),
       },
       context,
     )

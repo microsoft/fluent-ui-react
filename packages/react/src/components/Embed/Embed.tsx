@@ -9,6 +9,7 @@ import {
   applyAccessibilityKeyHandlers,
   commonPropTypes,
   AutoControlledComponent,
+  ShorthandFactory,
 } from '../../lib'
 import { embedBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -65,7 +66,7 @@ export interface EmbedState {
 }
 
 class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> {
-  static create: Function
+  static create: ShorthandFactory<EmbedProps>
 
   static className = 'ui-embed'
 
@@ -110,15 +111,20 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     e.stopPropagation()
     e.preventDefault()
 
-    this.trySetState({ active: !this.state.active })
+    const iframeNil = _.isNil(this.props.iframe)
 
-    _.invoke(this.props, 'onActiveChanged', e, { ...this.props, active: !this.state.active })
+    if (iframeNil || (!iframeNil && !this.state.active)) {
+      this.setState({ active: !this.state.active })
+      _.invoke(this.props, 'onActiveChanged', e, { ...this.props, active: !this.state.active })
+    }
+
     _.invoke(this.props, 'onClick', e, { ...this.props, active: !this.state.active })
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { control, iframe, placeholder, video } = this.props
     const { active } = this.state
+    const controlVisible = !_.isNil(video) || !active
 
     return (
       <ElementType
@@ -143,7 +149,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                 },
               },
             })}
-            {Box.create(iframe, { defaultProps: { as: 'iframe' } })}
+            {Box.create(iframe, { defaultProps: { as: 'iframe', styles: styles.iframe } })}
           </>
         ) : (
           Image.create(placeholder, {
@@ -157,15 +163,16 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
           })
         )}
 
-        {Icon.create(control, {
-          defaultProps: {
-            className: Embed.slotClassNames.control,
-            circular: true,
-            name: active ? 'stardust-pause' : 'stardust-play',
-            size: 'largest',
-            styles: styles.control,
-          },
-        })}
+        {controlVisible &&
+          Icon.create(control, {
+            defaultProps: {
+              className: Embed.slotClassNames.control,
+              circular: true,
+              name: active ? 'stardust-pause' : 'stardust-play',
+              size: 'largest',
+              styles: styles.control,
+            },
+          })}
       </ElementType>
     )
   }
@@ -177,7 +184,7 @@ Embed.create = createShorthandFactory({ Component: Embed })
  * An Embed displays content from external websites, like a post from external social network.
  *
  * @accessibility
- * A `placeholder` slot represents an [`Image`](/components/image) component, please follow recommendations from its
+ * A `placeholder` slot represents an [`Image`](/components/image/definition) component, please follow recommendations from its
  * accessibility section.
  */
 export default withSafeTypeForAs<typeof Embed, EmbedProps, 'span'>(Embed)

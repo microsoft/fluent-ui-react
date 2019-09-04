@@ -52,14 +52,14 @@ const chatMessageStyles: ComponentSlotStylesInput<
       },
     }),
 
-    ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard }),
+    ...getBorderFocusStyles({ siteVariables }),
 
     // actions menu's appearance can be controlled by the value of showActionMenu variable - in this
     // case this variable will serve the single source of truth on whether actions menu should be shown.
     // Otherwise, if the variable is not provided, the default appearance logic will be used for actions menu.
     ...(_.isNil(v.showActionMenu) && {
       ':hover': {
-        [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
+        [`> .${ChatMessage.slotClassNames.actionMenu}`]: {
           opacity: 1,
           width: 'auto',
         },
@@ -86,9 +86,6 @@ const chatMessageStyles: ComponentSlotStylesInput<
     backgroundColor: v.backgroundColor,
     borderRadius: v.borderRadius,
     boxShadow: v.actionMenuBoxShadow,
-    position: 'absolute',
-    right: v.actionMenuPositionRight,
-    top: v.actionMenuPositionTop,
     // we need higher zIndex for the action menu in order to be displayed above the focus border of the chat message
     zIndex: 1000,
 

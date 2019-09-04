@@ -3,8 +3,8 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import cx from 'classnames'
-import { Ref } from '@stardust-ui/react-component-ref'
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
+import { EventListener } from '@stardust-ui/react-component-event-listener'
 
 import {
   UIComponent,
@@ -15,8 +15,8 @@ import {
   ContentComponentProps,
   commonPropTypes,
   childrenExist,
-  isFromKeyboard,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import {
   ComponentEventHandler,
@@ -106,15 +106,11 @@ export interface ToolbarItemProps
   wrapper?: ShorthandValue<BoxProps>
 }
 
-export interface ToolbarItemState {
-  isFromKeyboard: boolean
-}
-
 export interface ToolbarItemSlotClassNames {
   wrapper: string
 }
 
-class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemState> {
+class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
   static displayName = 'ToolbarItem'
 
   static className = 'ui-toolbar__item'
@@ -123,7 +119,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     wrapper: `${ToolbarItem.className}__wrapper`,
   }
 
-  static create: Function
+  static create: ShorthandFactory<ToolbarItemProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
@@ -173,6 +169,8 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
   menuRef = React.createRef<HTMLElement>()
 
   renderSubmenu(menu, variables) {
+    const targetRef = toRefObject(this.context.target)
+
     return (
       <>
         <Ref innerRef={this.menuRef}>
@@ -194,7 +192,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
         </Ref>
         <EventListener
           listener={this.handleOutsideClick}
-          targetRef={documentRef}
+          targetRef={targetRef}
           type="click"
           capture
         />
@@ -272,14 +270,10 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
   }
 
   handleBlur = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: false })
-
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
@@ -298,10 +292,10 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  handleOutsideClick = (e: Event) => {
+  handleOutsideClick = (e: MouseEvent) => {
     if (
-      !doesNodeContainClick(this.menuRef.current, e) &&
-      !doesNodeContainClick(this.itemRef.current, e)
+      !doesNodeContainClick(this.menuRef.current, e, this.context.target) &&
+      !doesNodeContainClick(this.itemRef.current, e, this.context.target)
     ) {
       this.trySetMenuOpen(false, e)
     }

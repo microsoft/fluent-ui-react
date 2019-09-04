@@ -49,6 +49,12 @@ export { default as ChatMessage } from './components/Chat/ChatMessage'
 export * from './components/Checkbox/Checkbox'
 export { default as Checkbox } from './components/Checkbox/Checkbox'
 
+export * from './components/Design/Design'
+export { default as Design } from './components/Design/Design'
+
+export * from './components/MenuButton/MenuButton'
+export { default as MenuButton } from './components/MenuButton/MenuButton'
+
 export * from './components/Divider/Divider'
 export { default as Divider } from './components/Divider/Divider'
 
@@ -168,6 +174,15 @@ export { default as ToolbarMenuItem } from './components/Toolbar/ToolbarMenuItem
 export * from './components/Toolbar/ToolbarRadioGroup'
 export { default as ToolbarRadioGroup } from './components/Toolbar/ToolbarRadioGroup'
 
+export * from './components/HierarchicalTree/HierarchicalTree'
+export { default as HierarchicalTree } from './components/HierarchicalTree/HierarchicalTree'
+export * from './components/HierarchicalTree/HierarchicalTreeItem'
+export { default as HierarchicalTreeItem } from './components/HierarchicalTree/HierarchicalTreeItem'
+export * from './components/HierarchicalTree/HierarchicalTreeTitle'
+export {
+  default as HierarchicalTreeTitle,
+} from './components/HierarchicalTree/HierarchicalTreeTitle'
+
 export * from './components/Tree/Tree'
 export { default as Tree } from './components/Tree/Tree'
 export * from './components/Tree/TreeItem'
@@ -209,6 +224,8 @@ export * from './lib/positioner/types'
 import {
   getFirstTabbable,
   getLastTabbable,
+  getFirstFocusable,
+  getLastFocusable,
   getNextElement,
   getPreviousElement,
   focusAsync,
@@ -217,11 +234,15 @@ import {
 export const FocusZoneUtilities = {
   getFirstTabbable,
   getLastTabbable,
+  getFirstFocusable,
+  getLastFocusable,
   getNextElement,
   getPreviousElement,
   focusAsync,
 }
 export * from './lib/accessibility/FocusZone/FocusZone.types'
+export * from './lib/accessibility/FocusZone/FocusTrapZone.types'
+export * from './lib/accessibility/FocusZone/AutoFocusZone.types'
 export * from './lib/accessibility/types'
 export * from './lib/accessibility/reactTypes'
 

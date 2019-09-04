@@ -8,6 +8,7 @@ import felaPluginRtl from 'fela-plugin-rtl'
 import { Renderer } from '../themes/types'
 import felaDisableAnimationsPlugin from './felaDisableAnimationsPlugin'
 import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
+import felaFocusVisibleEnhancer from './felaFocusVisibleEnhancer'
 import felaInvokeKeyframesPlugin from './felaInvokeKeyframesPlugin'
 import felaSanitizeCss from './felaSanitizeCssPlugin'
 
@@ -50,8 +51,10 @@ const filterClassName = (className: string): boolean =>
 const rendererConfig = {
   devMode: felaDevMode,
   filterClassName,
-  enhancers: [],
+  enhancers: [felaFocusVisibleEnhancer],
   plugins: [
+    felaDisableAnimationsPlugin(),
+
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
     felaSanitizeCss({
@@ -59,6 +62,8 @@ const rendererConfig = {
     }),
 
     felaPluginPlaceholderPrefixer(),
+    felaInvokeKeyframesPlugin(),
+    felaPluginEmbedded(),
     felaPluginPrefixer(),
 
     // Heads up!
@@ -66,9 +71,6 @@ const rendererConfig = {
     felaPluginFallbackValue(),
 
     felaExpandCssShorthandsPlugin(),
-    felaDisableAnimationsPlugin(),
-    felaInvokeKeyframesPlugin(),
-    felaPluginEmbedded(),
 
     felaPluginRtl(),
   ],

@@ -10,22 +10,24 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  *
  * @specification
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
- * Triggers 'receiveFocus' action with 'ArrowLeft' on 'root', when has an opened subtree.
+ * Triggers 'focusParent' action with 'ArrowLeft' on 'root', when has a closed subtree.
  * Triggers 'collapse' action with 'ArrowLeft' on 'root', when has an opened subtree.
  * Triggers 'expand' action with 'ArrowRight' on 'root', when has a closed subtree.
- * Triggers 'focusSubtree' action with 'ArrowRight' on 'root', when has an opened subtree.
+ * Triggers 'focusFirstChild' action with 'ArrowRight' on 'root', when has an opened subtree.
  */
 const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'none',
-      ...(props.items &&
-        props.items.length && {
-          'aria-expanded': props.open ? 'true' : 'false',
-          tabIndex: -1,
-          [IS_FOCUSABLE_ATTRIBUTE]: true,
-          role: 'treeitem',
-        }),
+      ...(props.hasSubtree && {
+        'aria-expanded': props.open,
+        tabIndex: -1,
+        [IS_FOCUSABLE_ATTRIBUTE]: true,
+        role: 'treeitem',
+        'aria-setsize': props.treeSize,
+        'aria-posinset': props.index,
+        'aria-level': props.level,
+      }),
     },
   },
   keyActions: {
@@ -34,13 +36,10 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
       ...(isSubtreeOpen(props) && {
-        receiveFocus: {
-          keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
-        },
         collapse: {
           keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
         },
-        focusSubtree: {
+        focusFirstChild: {
           keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
         },
       }),
@@ -48,22 +47,30 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
         expand: {
           keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
         },
+        focusParent: {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+        },
       }),
+      expandSiblings: {
+        keyCombinations: [{ keyCode: keyboardKey['*'] }],
+      },
     },
   },
 })
 
 export type TreeItemBehaviorProps = {
-  /** If item is a subtree, it contains items. */
-  items?: object[]
   /** If item is a subtree, it indicates if it's open. */
   open?: boolean
+  level?: number
+  index?: number
+  hasSubtree?: boolean
+  treeSize?: number
 }
 
 /** Checks if current tree item has a subtree and it is opened */
 const isSubtreeOpen = (props: TreeItemBehaviorProps): boolean => {
-  const { items, open } = props
-  return !!(items && items.length && open)
+  const { hasSubtree, open } = props
+  return !!(hasSubtree && open)
 }
 
 export default treeItemBehavior

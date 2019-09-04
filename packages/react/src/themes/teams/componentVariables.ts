@@ -31,6 +31,10 @@ export { default as Embed } from './components/Embed/embedVariables'
 export { default as Header } from './components/Header/headerVariables'
 export { default as HeaderDescription } from './components/Header/headerDescriptionVariables'
 
+export {
+  default as HierarchicalTreeTitle,
+} from './components/HierarchicalTree/hierarchicalTreeTitleVariables'
+
 export { default as Icon } from './components/Icon/iconVariables'
 
 export { default as Input } from './components/Input/inputVariables'
