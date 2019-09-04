@@ -6,7 +6,7 @@ const ToolbarExampleOverflow = () => {
   const icons = ['bold', 'italic', 'underline']
 
   const itemData = [
-    ..._.times(30, i => ({
+    ..._.times(40, i => ({
       key: `a${i}`,
       content: `${icons[i % icons.length]} #${i}`,
       icon: icons[i % icons.length],

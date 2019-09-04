@@ -194,8 +194,8 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   handleDocumentClick = (e: MouseEvent) => {
     if (
       !this.portalNode || // no portal
-      doesNodeContainClick(this.triggerNode, e) || // event happened in trigger (delegate to trigger handlers)
-      doesNodeContainClick(this.portalNode, e) // event happened in the portal
+      doesNodeContainClick(this.triggerNode, e, this.context.target) || // event happened in trigger (delegate to trigger handlers)
+      doesNodeContainClick(this.portalNode, e, this.context.target) // event happened in the portal
     ) {
       return // ignore the click
     }

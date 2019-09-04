@@ -17,6 +17,7 @@ import {
   childrenExist,
   isFromKeyboard,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import {
   ComponentEventHandler,
@@ -123,7 +124,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     wrapper: `${ToolbarItem.className}__wrapper`,
   }
 
-  static create: Function
+  static create: ShorthandFactory<ToolbarItemProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
@@ -300,10 +301,10 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  handleOutsideClick = (e: Event) => {
+  handleOutsideClick = (e: MouseEvent) => {
     if (
-      !doesNodeContainClick(this.menuRef.current, e) &&
-      !doesNodeContainClick(this.itemRef.current, e)
+      !doesNodeContainClick(this.menuRef.current, e, this.context.target) &&
+      !doesNodeContainClick(this.itemRef.current, e, this.context.target)
     ) {
       this.trySetMenuOpen(false, e)
     }

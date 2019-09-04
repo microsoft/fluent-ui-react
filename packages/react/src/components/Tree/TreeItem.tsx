@@ -15,6 +15,7 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import {
   ComponentEventHandler,
@@ -88,7 +89,7 @@ export interface TreeItemState {
 }
 
 class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
-  static create: Function
+  static create: ShorthandFactory<TreeItemProps>
 
   static displayName = 'TreeItem'
 
