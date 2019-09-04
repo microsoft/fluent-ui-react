@@ -87,10 +87,8 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
       ...(p.search && { borderBottomColor: v.borderColorFocus }),
       ...(!p.search &&
         !p.open &&
-        getBorderFocusStyles({
-          siteVariables,
-          isFromKeyboard: p.isFromKeyboard,
-        })[':focus']),
+        p.isFromKeyboard &&
+        getBorderFocusStyles({ siteVariables })[':focus-visible']),
     }),
     ...(p.inline && {
       ...transparentColorStyleObj,
@@ -117,6 +115,9 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
       ...(p.multiple && { minWidth: 0, flex: 1 }),
       ...transparentColorStyleObj,
       ':focus': {
+        color: v.color,
+      },
+      ':focus-visible': {
         color: v.color,
         ...transparentColorStyle,
         ':after': {

@@ -8,6 +8,7 @@ import felaPluginRtl from 'fela-plugin-rtl'
 import { Renderer } from '../themes/types'
 import felaDisableAnimationsPlugin from './felaDisableAnimationsPlugin'
 import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
+import felaFocusVisibleEnhancer from './felaFocusVisibleEnhancer'
 import felaInvokeKeyframesPlugin from './felaInvokeKeyframesPlugin'
 import felaSanitizeCss from './felaSanitizeCssPlugin'
 
@@ -50,7 +51,7 @@ const filterClassName = (className: string): boolean =>
 const rendererConfig = {
   devMode: felaDevMode,
   filterClassName,
-  enhancers: [],
+  enhancers: [felaFocusVisibleEnhancer],
   plugins: [
     felaDisableAnimationsPlugin(),
 

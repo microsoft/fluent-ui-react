@@ -52,7 +52,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
       },
     }),
 
-    ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard }),
+    ...getBorderFocusStyles({ siteVariables }),
 
     // actions menu's appearance can be controlled by the value of showActionMenu variable - in this
     // case this variable will serve the single source of truth on whether actions menu should be shown.
