@@ -2,7 +2,7 @@ import { Portal, createComponent } from '@stardust-ui/react'
 import * as React from 'react'
 
 type NotificationProps = {
-  children?: React.ReactChildren
+  children?: React.ReactNode
   open?: boolean
 }
 
