@@ -94,7 +94,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
-    virtualized: PropTypes.node,
+    virtualized: PropTypes.func,
   }
 
   static defaultProps = {
@@ -266,7 +266,6 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           const { elementRef, ...restItemForRender } = itemForRender
           const isSubtree = hasSubtree(item)
           const isSubtreeOpen = isSubtree && this.isActiveItem(item['id'])
-
           const renderedItem = TreeItem.create(item, {
             defaultProps: {
               className: Tree.slotClassNames.item,
@@ -280,18 +279,35 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
           // Only need refs of the items that spawn subtrees, when they need to be focused
           // by any of their children, using Arrow Left.
-          const finalRenderedItem = isSubtree ? (
+          const finalRenderedItem = true ? (
             <Ref key={item['id']} innerRef={elementRef}>
               {renderedItem}
             </Ref>
           ) : (
             renderedItem
           )
+          /*
+          const finalRenderedItem = props => (
+            <Ref key={item['id']} innerRef={elementRef}>
+              {TreeItem.create(item, {
+                defaultProps: {
+                  className: Tree.slotClassNames.item,
+                  open: isSubtreeOpen,
+                  renderItemTitle,
+                  key: item['id'],
+                  ...restItemForRender,
+                  ...props,
+                },
+                overrideProps: this.handleTreeItemOverrides,
+              })}
+            </Ref>
+          )
+          */
 
           return [
             ...renderedItems,
             finalRenderedItem,
-            ...([isSubtreeOpen ? renderItems(item['items']) : []] as any),
+            ...(isSubtreeOpen ? renderItems(item['items']) : []),
           ]
         },
         [],

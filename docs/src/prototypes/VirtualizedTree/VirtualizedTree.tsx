@@ -3,7 +3,7 @@ import { Tree } from '@stardust-ui/react'
 import { CellMeasurer, CellMeasurerCache, List as ReactVirtualizedList } from 'react-virtualized'
 
 interface TreeVirtualizerProps {
-  renderedItems: React.Component[]
+  renderedItems: React.ReactElement[]
 }
 
 class TreeVirtualizer extends React.Component<TreeVirtualizerProps> {
@@ -20,10 +20,12 @@ class TreeVirtualizer extends React.Component<TreeVirtualizerProps> {
 
   rowRenderer = ({ index, isScrolling, key, parent, style }) => {
     const { renderedItems } = this.props
+    // const TreeItem = renderedItems[index]
 
     return (
       <CellMeasurer cache={this.cache} columnIndex={0} key={key} parent={parent} rowIndex={index}>
-        {renderedItems[index]}
+        {React.cloneElement(renderedItems[index], { style })}
+        {/* <TreeItem style={style} /> */}
       </CellMeasurer>
     )
   }
