@@ -1,4 +1,4 @@
-import { createRenderer } from '@stardust-ui/fela'
+import { createRenderer } from 'fela'
 import { renderToString } from 'fela-tools'
 import { RULE_TYPE } from 'fela-utils'
 

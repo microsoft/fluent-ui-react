@@ -1,4 +1,4 @@
-import { IRenderer } from '@stardust-ui/fela'
+import { IRenderer } from 'fela'
 import { RULE_TYPE } from 'fela-utils'
 import * as _ from 'lodash'
 

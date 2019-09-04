@@ -1,5 +1,5 @@
 import * as CSSType from 'csstype'
-import { IRenderer as FelaRenderer } from '@stardust-ui/fela'
+import { IRenderer as FelaRenderer } from 'fela'
 import * as React from 'react'
 import { Extendable, ObjectOf, ObjectOrFunc, Omit } from '../types'
 import { AccordionContentProps } from '../components/Accordion/AccordionContent'
