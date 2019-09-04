@@ -15,12 +15,8 @@ const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props 
       <Flex gap="gap.medium" vAlign="center" padding="padding.medium">
         <Text content="Commit: " />
         <Text content={props.value} color="brand" />
-        <CopyToClipboard
-          attached={props.attached}
-          pointing
-          value={props.value}
-          copyPrompt="Copy commit ID"
-        />
+
+        <CopyToClipboard attached={props.attached} pointing value={props.value} />
       </Flex>
     </Provider>
   )
