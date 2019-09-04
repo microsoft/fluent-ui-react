@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {
   Button,
   Text,
@@ -9,6 +8,9 @@ import {
   TextProps,
 } from '@stardust-ui/react'
 import * as copyToClipboard from 'copy-to-clipboard'
+import * as _ from 'lodash'
+import * as React from 'react'
+
 import CopyButtonNotification from './Notification'
 
 export type CopyToClipboardProps = {
@@ -48,7 +50,12 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
         colorHover: !copied && siteVariables.colors.brand[400],
       }),
     },
-    overrideProps: () => ({ onClick: handleClick }),
+    overrideProps: (predefinedProps: ButtonProps): ButtonProps => ({
+      onClick: (event, data) => {
+        handleClick()
+        _.invoke(predefinedProps, 'onClick', event, data)
+      },
+    }),
   })
   const tooltipProps: TooltipProps = {
     align: 'center',
