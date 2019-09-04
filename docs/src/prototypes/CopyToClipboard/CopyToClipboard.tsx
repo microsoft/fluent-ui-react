@@ -1,4 +1,4 @@
-import { Text, Tooltip, ShorthandValue, TextProps } from '@stardust-ui/react'
+import { Text, Tooltip, ShorthandValue, TextProps, TooltipProps } from '@stardust-ui/react'
 import * as copyToClipboard from 'copy-to-clipboard'
 import * as _ from 'lodash'
 import * as React from 'react'
