@@ -1,7 +1,5 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
-import * as _ from 'lodash'
-import * as PropTypes from 'prop-types'
 
 import {
   UIComponent,
@@ -12,12 +10,11 @@ import {
   rtlTextContainer,
   createShorthandFactory,
   ContentComponentProps,
-  isFromKeyboard,
   ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
 import ReactionGroup from './ReactionGroup'
@@ -38,20 +35,9 @@ export interface ReactionProps
 
   /** A reaction can have icon for the indicator of the reaction. */
   icon?: ShorthandValue<IconProps>
-
-  /**
-   * Called after user's focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
-   */
-  onFocus?: ComponentEventHandler<ReactionProps>
 }
 
-export interface ReactionState {
-  isFromKeyboard: boolean
-}
-
-class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
+class Reaction extends UIComponent<WithAsProp<ReactionProps>> {
   static create: ShorthandFactory<ReactionProps>
 
   static className = 'ui-reaction'
@@ -65,7 +51,6 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
       content: 'shorthand',
     }),
     icon: customPropTypes.itemShorthandWithoutJSX,
-    onFocus: PropTypes.func,
   }
 
   static defaultProps = {
@@ -73,10 +58,6 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
   }
 
   static Group = ReactionGroup
-
-  state = {
-    isFromKeyboard: false,
-  }
 
   renderComponent({ accessibility, ElementType, classes, styles, unhandledProps }) {
     const { children, icon, content } = this.props
@@ -87,7 +68,6 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
         {...accessibility.attributes.root}
         {...unhandledProps}
         className={classes.root}
-        onFocus={this.handleFocus}
       >
         {childrenExist(children) ? (
           children
@@ -109,11 +89,6 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>, ReactionState> {
         )}
       </ElementType>
     )
-  }
-
-  handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-    _.invoke(this.props, 'onFocus', e, this.props)
   }
 }
 
