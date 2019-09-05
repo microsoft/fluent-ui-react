@@ -49,6 +49,9 @@ export { default as ChatMessage } from './components/Chat/ChatMessage'
 export * from './components/Checkbox/Checkbox'
 export { default as Checkbox } from './components/Checkbox/Checkbox'
 
+export * from './components/Design/Design'
+export { default as Design } from './components/Design/Design'
+
 export * from './components/MenuButton/MenuButton'
 export { default as MenuButton } from './components/MenuButton/MenuButton'
 
@@ -179,6 +182,13 @@ export * from './components/HierarchicalTree/HierarchicalTreeTitle'
 export {
   default as HierarchicalTreeTitle,
 } from './components/HierarchicalTree/HierarchicalTreeTitle'
+
+export * from './components/Tree/Tree'
+export { default as Tree } from './components/Tree/Tree'
+export * from './components/Tree/TreeItem'
+export { default as TreeItem } from './components/Tree/TreeItem'
+export * from './components/Tree/TreeTitle'
+export { default as TreeTitle } from './components/Tree/TreeTitle'
 
 export * from './components/Reaction/Reaction'
 export { default as Reaction } from './components/Reaction/Reaction'

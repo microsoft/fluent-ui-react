@@ -10,7 +10,6 @@ import {
   AutoControlledComponent,
   ChildrenComponentProps,
   commonPropTypes,
-  isFromKeyboard,
   partitionHTMLProps,
   UIComponentProps,
   RenderResultConfig,
@@ -108,7 +107,6 @@ export interface SliderProps
 
 export interface SliderState {
   value: SliderProps['value']
-  isFromKeyboard: boolean
 }
 
 class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderState> {
@@ -155,13 +153,8 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
       _.invoke(this.props, 'onChange', e, { ...this.props, value })
       this.setState({ value })
     },
-    onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
-      this.setState({ isFromKeyboard: isFromKeyboard() })
-      _.invoke(this.props, 'onFocus', e, this.props)
-    },
     onMouseDown: (e: React.MouseEvent<HTMLInputElement>) => {
       setWhatInputSource('mouse')
-      this.setState({ isFromKeyboard: false })
       _.invoke(this.props, 'onMouseDown', e, this.props)
     },
   })
@@ -245,5 +238,8 @@ Slider.slotClassNames = {
  *
  * @accessibility
  * Implements [ARIA Slider](https://www.w3.org/TR/wai-aria-practices-1.1/#slider) design pattern.
+ * @accessibilityIssues
+ * [Slider - JAWS narrates slider value twice when using PageUp / PageDown](https://github.com/FreedomScientific/VFO-standards-support/issues/220)
+ * [Slider - JAWS narrates current and new value in vertical slider](https://github.com/FreedomScientific/VFO-standards-support/issues/219)
  */
 export default withSafeTypeForAs<typeof Slider, SliderProps, 'input'>(Slider)

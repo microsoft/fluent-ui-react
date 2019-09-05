@@ -43,8 +43,14 @@ export interface DialogProps
   /** A dialog can contain actions. */
   actions?: ShorthandValue<BoxProps>
 
+  /** A dialog can have a backdrop on its overlay. */
+  backdrop?: boolean
+
   /** A dialog can contain a cancel button. */
   cancelButton?: ShorthandValue<ButtonProps>
+
+  /** Controls whether or not a dialog should close when a click outside is happened. */
+  closeOnOutsideClick?: boolean
 
   /** A dialog can contain a confirm button. */
   confirmButton?: ShorthandValue<ButtonProps>
@@ -110,8 +116,10 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       content: 'shorthand',
     }),
     actions: customPropTypes.itemShorthand,
+    backdrop: PropTypes.bool,
     headerAction: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
+    closeOnOutsideClick: PropTypes.bool,
     confirmButton: customPropTypes.itemShorthand,
     defaultOpen: PropTypes.bool,
     header: customPropTypes.itemShorthand,
@@ -127,6 +135,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   static defaultProps = {
     accessibility: dialogBehavior,
     actions: {},
+    backdrop: true,
+    closeOnOutsideClick: true,
     overlay: {},
     trapFocus: true,
   }
@@ -194,8 +204,16 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   handleOverlayClick = (e: MouseEvent) => {
     // Dialog has different conditions to close than Popup, so we don't need to iterate across all
     // refs
-    const isInsideContentClick = doesNodeContainClick(this.contentRef.current, e)
-    const isInsideOverlayClick = doesNodeContainClick(this.overlayRef.current, e)
+    const isInsideContentClick = doesNodeContainClick(
+      this.contentRef.current,
+      e,
+      this.context.target,
+    )
+    const isInsideOverlayClick = doesNodeContainClick(
+      this.overlayRef.current,
+      e,
+      this.context.target,
+    )
 
     const shouldClose = !isInsideContentClick && isInsideOverlayClick
 
@@ -220,8 +238,9 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   renderComponent({ accessibility, classes, ElementType, styles, unhandledProps, rtl }) {
     const {
       actions,
-      confirmButton,
       cancelButton,
+      closeOnOutsideClick,
+      confirmButton,
       content,
       header,
       headerAction,
@@ -323,12 +342,15 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
                   overrideProps: { content: dialogContent },
                 })}
               </Ref>
-              <EventListener
-                listener={this.handleOverlayClick}
-                targetRef={targetRef}
-                type="click"
-                capture
-              />
+
+              {closeOnOutsideClick && (
+                <EventListener
+                  listener={this.handleOverlayClick}
+                  targetRef={targetRef}
+                  type="click"
+                  capture
+                />
+              )}
               <EventListener
                 listener={this.handleDocumentKeydown(getRefs)}
                 targetRef={targetRef}
@@ -356,5 +378,10 @@ Dialog.slotClassNames = {
  *
  * @accessibility
  * Implements [ARIA Dialog (Modal)](https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal) design pattern.
+ * @accessibilityIssues
+ * [NVDA narrates dialog title and button twice](https://github.com/nvaccess/nvda/issues/10003)
+ * [NVDA does not recognize the ARIA 1.1 values of aria-haspopup](https://github.com/nvaccess/nvda/issues/8235)
+ * [Jaws does not announce token values of aria-haspopup](https://github.com/FreedomScientific/VFO-standards-support/issues/33)
+ * [Issue 989517: VoiceOver narrates dialog content and button twice](https://bugs.chromium.org/p/chromium/issues/detail?id=989517)
  */
 export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)

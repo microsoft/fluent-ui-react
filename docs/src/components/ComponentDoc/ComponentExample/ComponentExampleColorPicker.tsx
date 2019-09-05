@@ -1,9 +1,9 @@
 import { ProviderContextPrepared } from '@stardust-ui/react'
-// @ts-ignore
-import { ThemeContext } from '@stardust-ui/react-fela'
 import * as Color from 'color'
 import * as _ from 'lodash'
 import * as React from 'react'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
 
 import { ColorVariants } from 'src/themes/types'
 
