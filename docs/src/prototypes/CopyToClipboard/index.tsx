@@ -56,6 +56,10 @@ const CopyToClipboardPrototypes: React.FC = () => {
   const commitID = '3422f7d'
   return (
     <PrototypeSection title="Copy to Clipboard">
+      <Text>
+        Note: For screen reader users, make sure to use <code>react-aria-live</code> or similar
+        library to announce the notification.
+      </Text>
       <Provider theme={themeOverrides}>
         <NotificationProvider>
           <ComponentPrototype
