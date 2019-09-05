@@ -178,7 +178,7 @@ function createShorthandFromValue<P>({
   }
   // short circuit noop values
   const valIsNoop = _.isNil(value) || typeof value === 'boolean'
-  if (valIsNoop && !options.render) return null
+  if (valIsNoop && options && !options.render) return null
 
   const valIsPrimitive = typeof value === 'string' || typeof value === 'number'
   const valIsPropsObject = _.isPlainObject(value)
@@ -215,23 +215,25 @@ function createShorthandFromValue<P>({
   // ----------------------------------------
   // Build up props
   // ----------------------------------------
-  const { defaultProps } = options
+  const defaultProps = options ? options.defaultProps : undefined
 
   // User's props
   const usersProps = (valIsReactElement && {}) || (valIsPropsObject && (value as Props)) || {}
 
   // Override props
-  let { overrideProps } = options
+  let overrideProps = options ? options.overrideProps : undefined
   overrideProps =
     typeof overrideProps === 'function'
-      ? (overrideProps as Function)({ ...defaultProps, ...usersProps })
+      ? ((overrideProps as unknown) as Function)({ ...defaultProps, ...usersProps })
       : overrideProps || {}
 
   // Merge props
   const props = { ...defaultProps, ...usersProps, ...overrideProps }
 
   const mappedHTMLProps =
-    mappedProps[(overrideProps as WithAsProp<P>).as || (defaultProps as WithAsProp<P>).as]
+    mappedProps[
+      (overrideProps as WithAsProp<P>).as || (defaultProps && (defaultProps as WithAsProp<P>).as)
+    ]
 
   // Map prop for primitive value
   if (valIsPrimitive || valIsReactElement) {
@@ -244,9 +246,9 @@ function createShorthandFromValue<P>({
   }
 
   // Merge className
-  if (defaultProps.className || overrideProps.className || usersProps.className) {
+  if ((defaultProps && defaultProps.className) || overrideProps.className || usersProps.className) {
     const mergedClassesNames = cx(
-      defaultProps.className,
+      defaultProps && defaultProps.className,
       overrideProps.className,
       usersProps.className,
     )
@@ -254,19 +256,27 @@ function createShorthandFromValue<P>({
   }
 
   // Merge style
-  if (defaultProps.style || overrideProps.style || usersProps.style) {
-    props.style = { ...defaultProps.style, ...usersProps.style, ...overrideProps.style }
+  if ((defaultProps && defaultProps.style) || overrideProps.style || usersProps.style) {
+    props.style = {
+      ...(defaultProps && defaultProps.style),
+      ...usersProps.style,
+      ...overrideProps.style,
+    }
   }
 
   // Merge styles
-  if (defaultProps.styles || overrideProps.styles || usersProps.styles) {
-    props.styles = mergeStyles(defaultProps.styles, usersProps.styles, overrideProps.styles)
+  if ((defaultProps && defaultProps.styles) || overrideProps.styles || usersProps.styles) {
+    props.styles = mergeStyles(
+      defaultProps && defaultProps.styles,
+      usersProps.styles,
+      overrideProps.styles,
+    )
   }
 
   // ----------------------------------------
   // Get key
   // ----------------------------------------
-  const { generateKey = true } = options
+  const generateKey = options ? options.generateKey : true
 
   // Use key or generate key
   if (generateKey && _.isNil(props.key)) {
@@ -294,7 +304,7 @@ function createShorthandFromValue<P>({
   // ----------------------------------------
   // Create Element
   // ----------------------------------------
-  const { render } = options
+  const render = options ? options.render : undefined
   if (render) {
     return render(Component, props)
   }
