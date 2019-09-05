@@ -487,7 +487,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                       </Segment>
 
                       <Segment styles={{ padding: 0 }}>
-                        <LogInspector />
+                        <LogInspector silent />
                       </Segment>
 
                       {showCode && (

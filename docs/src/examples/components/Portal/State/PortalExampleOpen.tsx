@@ -1,10 +1,10 @@
-import { useBooleanKnob, useCallbackLogKnob } from '@stardust-ui/docs-components'
+import { useBooleanKnob, useLogKnob } from '@stardust-ui/docs-components'
 import { Button, Header, Portal } from '@stardust-ui/react'
 import * as React from 'react'
 
 const PortalExampleOpen = () => {
   const [open, setOpen] = useBooleanKnob({ name: 'open' })
-  const onClick = useCallbackLogKnob('onClick()', () => setOpen(!open))
+  const onClick = useLogKnob('onClick()', () => setOpen(!open))
 
   return (
     <>

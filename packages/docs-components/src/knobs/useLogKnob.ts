@@ -3,22 +3,22 @@ import { LogContext } from './KnobContexts'
 
 const defaultFormatter = (name: string) => `${new Date().toLocaleTimeString()}: ${name}`
 
-const useCallbackLogKnob = <T = (...args: any[]) => any>(
+const useLogKnob = <T = (...args: any[]) => any>(
   name: string,
   callback?: T,
   formatter: Function = defaultFormatter,
-): [T] => {
-  const { append } = React.useContext(LogContext)
+): T => {
+  const { appendLog } = React.useContext(LogContext)
 
   const proxy = React.useCallback<any>(
     (...a) => {
-      append(formatter(name, ...a))
+      appendLog(formatter(name, ...a))
       return (callback as any)(...a)
     },
-    [append, callback, name, formatter],
+    [appendLog, callback, name, formatter],
   )
 
-  return [proxy as T]
+  return proxy as T
 }
 
-export default useCallbackLogKnob
+export default useLogKnob

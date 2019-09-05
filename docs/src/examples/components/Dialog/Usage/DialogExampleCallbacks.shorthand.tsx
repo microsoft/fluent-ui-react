@@ -1,13 +1,13 @@
-import { useBooleanKnob, useCallbackLogKnob } from '@stardust-ui/docs-components'
+import { useBooleanKnob, useLogKnob } from '@stardust-ui/docs-components'
 import { Button, Dialog } from '@stardust-ui/react'
 import * as React from 'react'
 
 const DialogExampleCallbacks = () => {
   const [open, setOpen] = useBooleanKnob({ name: 'open' })
 
-  const [onCancel] = useCallbackLogKnob('onCancel()', () => setOpen(false))
-  const [onConfirm] = useCallbackLogKnob('onConfirm()', () => setOpen(false))
-  const [onOpen] = useCallbackLogKnob('onOpen()', () => setOpen(true))
+  const onCancel = useLogKnob('onCancel()', () => setOpen(false))
+  const onConfirm = useLogKnob('onConfirm()', () => setOpen(false))
+  const onOpen = useLogKnob('onOpen()', () => setOpen(true))
 
   return (
     <Dialog

@@ -11,9 +11,9 @@ export type KnobContextValue = {
 }
 
 export type LogContextValue = {
-  append: (value: string) => void
-  clear: () => void
-  lines: string[]
+  appendLog: (value: string) => void
+  clearLog: () => void
+  items: string[]
 }
 
 const noop = () => null
@@ -28,7 +28,7 @@ export const KnobContext = React.createContext<KnobContextValue>({
 })
 
 export const LogContext = React.createContext<LogContextValue>({
-  append: noop,
-  clear: noop,
-  lines: [],
+  appendLog: noop,
+  clearLog: noop,
+  items: [],
 })

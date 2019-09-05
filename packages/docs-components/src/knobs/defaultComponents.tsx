@@ -3,7 +3,7 @@ import {
   KnobComponentProps,
   KnobComponents,
   KnobRangeKnobComponentProps,
-  LogContainerProps,
+  LogInspectorProps,
 } from './types'
 import parseValue from './lib/parseRangeValue'
 
@@ -89,7 +89,7 @@ const KnobString: React.FunctionComponent<KnobComponentProps> = props => (
   />
 )
 
-const LogInspector: React.FunctionComponent<LogContainerProps> = props => (
+const LogInspector: React.FunctionComponent<LogInspectorProps> = props => (
   <>
     <div style={{ display: 'flex', padding: 5 }}>
       <div style={{ flexGrow: 1 }}>
@@ -105,27 +105,29 @@ const LogInspector: React.FunctionComponent<LogContainerProps> = props => (
             textAlign: 'center',
           }}
         >
-          {props.lines.length}
+          {props.items.length}
         </span>
       </div>
       <button onClick={props.clearLog} style={{ fontSize: '0.9rem' }}>
         Clear
       </button>
     </div>
-    <div
-      style={{
-        background: 'rgba(0, 0, 0, 0.04)',
-        display: 'flex',
-        flexDirection: 'column',
-        fontFamily: 'monospace',
-        fontSize: '0.9rem',
-        padding: 5,
-      }}
-    >
-      {props.lines.map((line, index) => (
-        <div key={index}>{line}</div>
-      ))}
-    </div>
+    {props.items.length > 0 && (
+      <div
+        style={{
+          background: 'rgba(0, 0, 0, 0.04)',
+          display: 'flex',
+          flexDirection: 'column',
+          fontFamily: 'monospace',
+          fontSize: '0.9rem',
+          padding: 5,
+        }}
+      >
+        {props.items.map((line, index) => (
+          <div key={index}>{line}</div>
+        ))}
+      </div>
+    )}
   </>
 )
 

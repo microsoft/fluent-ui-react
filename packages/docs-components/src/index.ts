@@ -11,7 +11,7 @@ export { default as useRangeKnob } from './knobs/useRangeKnob'
 export { default as useSelectKnob } from './knobs/useSelectKnob'
 export { default as useStringKnob } from './knobs/useStringKnob'
 
-export { default as useCallbackLogKnob } from './knobs/useCallbackLogKnob'
+export { default as useLogKnob } from './knobs/useLogKnob'
 export { default as LogInspector } from './knobs/LogInspector'
 
 export { formatCode, prettifyCode } from './CodeSnippet/formatCode'

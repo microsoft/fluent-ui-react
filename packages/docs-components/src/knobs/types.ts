@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { LogContextValue } from './KnobContexts'
 
 export type KnobDefinition = {
   content?: React.ReactNode
@@ -25,7 +26,7 @@ export type KnobComponents = {
   KnobSelect: KnobComponent
   KnobString: KnobComponent
 
-  LogInspector: React.FunctionComponent<LogContainerProps>
+  LogInspector: React.FunctionComponent<LogInspectorProps>
 }
 
 export type KnobComponentProps = KnobDefinition & {
@@ -39,10 +40,7 @@ export type KnobRangeKnobComponentProps = KnobComponentProps & {
   unit: string
 }
 
-export type LogContainerProps = {
-  clearLog: () => void
-  lines: string[]
-}
+export type LogInspectorProps = Pick<LogContextValue, 'clearLog' | 'items'>
 
 export type UseKnobOptions<T> = {
   content?: React.ReactNode
