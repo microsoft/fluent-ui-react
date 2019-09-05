@@ -18,6 +18,7 @@ export interface AlertVariables {
 
   dismissActionSize: string
   dismissActionColor: string
+  dismissiblePadding: string
 
   dangerColor: string
   dangerBackgroundColor: string
@@ -55,12 +56,13 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     color: siteVars.colors.grey[500],
     fontWeight: siteVars.fontWeightRegular,
     minHeight,
-    padding: `0 0 0 ${pxToRem(16)}`,
+    padding: `0 ${pxToRem(16)}`,
 
     actionsMargin: pxToRem(5),
 
     dismissActionSize: minHeight,
     dismissActionColor: undefined,
+    dismissiblePadding: `0 0 0 ${pxToRem(16)}`,
 
     dangerColor: siteVars.colors.red[400],
     dangerBackgroundColor: siteVars.colors.red[50],

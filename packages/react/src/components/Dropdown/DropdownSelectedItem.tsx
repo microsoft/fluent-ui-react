@@ -13,7 +13,13 @@ import {
   withSafeTypeForAs,
 } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { createShorthandFactory, UIComponent, RenderResultConfig, commonPropTypes } from '../../lib'
+import {
+  createShorthandFactory,
+  UIComponent,
+  RenderResultConfig,
+  commonPropTypes,
+  ShorthandFactory,
+} from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Label from '../Label/Label'
@@ -67,7 +73,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
   itemRef = React.createRef<HTMLElement>()
 
   static displayName = 'DropdownSelectedItem'
-  static create: Function
+  static create: ShorthandFactory<DropdownSelectedItemProps>
   static slotClassNames: DropdownSelectedItemSlotClassNames
   static className = 'ui-dropdown__selecteditem'
 
