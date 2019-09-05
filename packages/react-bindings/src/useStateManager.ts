@@ -1,4 +1,4 @@
-import { Manager, ManagerFactory, Middleware } from '@stardust-ui/state'
+import { Actions, Manager, ManagerFactory, Middleware } from '@stardust-ui/state'
 import * as React from 'react'
 
 import { getDefinedAutoControlledProps, getInitialAutoControlledState } from './stateUtils'
@@ -6,7 +6,7 @@ import { AnyProps } from './types'
 
 const useStateManager = <
   State extends AnyProps,
-  ActionNames extends keyof any,
+  ActionNames extends string,
   Props extends Partial<State>,
   AProps extends keyof State
 >(
@@ -42,6 +42,7 @@ const useStateManager = <
       : getInitialAutoControlledState(autoControlledProps, props)
 
     return managerFactory({
+      actions: {} as Actions<State, ActionNames>,
       state: initialState,
       middleware: [overrideAutoControlledProps],
       sideEffects: [syncState],
