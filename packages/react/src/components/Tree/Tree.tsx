@@ -307,7 +307,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           return [
             ...renderedItems,
             finalRenderedItem,
-            ...(isSubtreeOpen ? renderItems(item['items']) : []),
+            ...(isSubtreeOpen ? renderItems(item['items']) : ([] as any)),
           ]
         },
         [],
