@@ -7,7 +7,7 @@ type NotificationProps = {
 
 type NotificationContextValue = (value: React.ReactNode, timeout: number) => void
 export const NotificationContext = React.createContext<NotificationContextValue>(() => {
-  throw new Error('Foo')
+  throw new Error('No matching NotificationContext.Provider')
 })
 
 export const NotificationProvider: React.FC = props => {
