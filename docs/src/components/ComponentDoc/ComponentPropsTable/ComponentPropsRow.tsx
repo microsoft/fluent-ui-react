@@ -23,11 +23,13 @@ const ComponentPropValue: React.FunctionComponent<ComponentPropType> = props => 
     const kindParam = parameters[1] && parameters[1].name !== 'never'
     const kindIsVisible = name === 'ShorthandCollection' && kindParam
 
+    const propsSection = parentInfo.parentDisplayName ? `#${componentName}` : ''
+
     return (
       <span>
         {name}
         {`<`}
-        <Link to={`/components/${linkName}`}>{parameters[0].name}</Link>
+        <Link to={`/components/${linkName}/props${propsSection}`}>{parameters[0].name}</Link>
         {kindIsVisible && <span>, {parameters[1].name}</span>}
         {`>`}
       </span>

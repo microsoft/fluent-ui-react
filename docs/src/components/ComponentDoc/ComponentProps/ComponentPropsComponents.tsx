@@ -19,11 +19,7 @@ const ComponentPropsComponents: any = ({
   return (
     <Flex column>
       <Header as="h3">Component:</Header>
-      <Dropdown
-        items={items}
-        defaultValue={activeDisplayName}
-        onSelectedChange={onSelectedChange}
-      />
+      <Dropdown items={items} value={activeDisplayName} onSelectedChange={onSelectedChange} />
     </Flex>
   )
 }

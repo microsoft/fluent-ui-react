@@ -14,28 +14,26 @@ export default class ComponentProps extends React.Component<any, any> {
   static propTypes = {
     displayName: PropTypes.string.isRequired,
     props: PropTypes.arrayOf(PropTypes.object).isRequired,
-    defaultComponentProp: PropTypes.string,
+    componentProp: PropTypes.string,
     onPropComponentSelected: PropTypes.func,
   }
 
   componentWillMount() {
-    const { displayName, defaultComponentProp } = this.props
+    const { displayName, componentProp } = this.props
 
     this.setState({
       componentGroup: getComponentGroup(displayName),
-      activeDisplayName: defaultComponentProp || displayName,
+      activeDisplayName: componentProp || displayName,
     })
   }
 
-  componentWillReceiveProps({ displayName: next }) {
-    const current = this.props.displayName
+  componentWillReceiveProps(nextProps) {
+    const { displayName, componentProp } = nextProps
 
-    if (current !== next) {
-      this.setState({
-        activeDisplayName: null,
-        componentGroup: getComponentGroup(next),
-      })
-    }
+    this.setState({
+      componentGroup: getComponentGroup(displayName),
+      activeDisplayName: componentProp || displayName,
+    })
   }
 
   handleSelectedChange = (e, props) => {
