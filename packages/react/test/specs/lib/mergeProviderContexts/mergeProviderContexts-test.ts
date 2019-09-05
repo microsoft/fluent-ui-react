@@ -1,4 +1,28 @@
-import mergeProviderContexts from 'src/lib/mergeProviderContexts'
+import mergeProviderContexts, { mergeRenderers } from 'src/lib/mergeProviderContexts'
+import { felaRenderer } from 'src/lib/felaRenderer'
+
+describe('mergeRenderers', () => {
+  test(`always uses "next" renderer`, () => {
+    const next = jest.fn()
+    expect(mergeRenderers(felaRenderer, next as any)).toBe(next)
+  })
+
+  test(`always returns pre-created renderer for main document`, () => {
+    expect(mergeRenderers(jest.fn() as any, null, document)).toBe(felaRenderer)
+  })
+
+  test(`creates a new renderer for a new document and keeps it`, () => {
+    const target = document.implementation.createDocument(
+      'http://www.w3.org/1999/xhtml',
+      'html',
+      null,
+    )
+    const renderer = mergeRenderers(jest.fn() as any, null, target)
+
+    expect(renderer).toHaveProperty('renderRule')
+    expect(mergeRenderers(jest.fn() as any, null, target)).toBe(renderer)
+  })
+})
 
 describe('mergeContexts', () => {
   test(`always returns an object`, () => {

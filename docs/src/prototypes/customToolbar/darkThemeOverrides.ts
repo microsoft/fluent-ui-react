@@ -137,11 +137,11 @@ export const darkThemeOverrides: ThemeInput = {
           ...(v.isCtItemPrimary && { background: v.ctItemPrimaryBackground }),
           ...(v.isCtItemIndicator && { padding: v.ctItemIndicatorPadding }),
 
-          ...(p.isFromKeyboard && {
+          ':focus-visible': {
             background: v.ctItemBackgroundHover,
             borderColor: v.ctItemBorderColorFocus,
             color: v.ctItemColorFocus,
-          }),
+          },
         }),
       }),
     },
@@ -181,11 +181,11 @@ export const darkThemeOverrides: ThemeInput = {
                   right: `-${v.ctBorderWidth}`,
                   background: v.ctItemActiveBackgroundOverlay,
 
-                  ...(p.isFromKeyboard && {
+                  ':focus-visible': {
                     borderStyle: v.ctBorderStyle,
                     borderWidth: v.ctBorderWidth,
                     borderColor: v.ctItemBorderColorFocus,
-                  }),
+                  },
                 },
               }),
 
@@ -224,7 +224,7 @@ export const darkThemeOverrides: ThemeInput = {
               },
             }),
 
-            ...(p.isFromKeyboard && {
+            ':focus-visible': {
               background: v.ctItemBackgroundHover,
               borderColor: v.ctItemBorderColorFocus,
               color: v.ctItemColorFocus,
@@ -238,7 +238,7 @@ export const darkThemeOverrides: ThemeInput = {
                 color: v.ctItemPrimaryColorHover,
                 background: v.ctItemPrimaryBackgroundHover,
               }),
-            }),
+            },
           }),
 
           ...(v.isCtItemIconNoFill && {

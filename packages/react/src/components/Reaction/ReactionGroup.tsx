@@ -12,6 +12,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   createShorthandFactory,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import Reaction, { ReactionProps } from './Reaction'
@@ -30,7 +31,7 @@ export interface ReactionGroupProps
 }
 
 class ReactionGroup extends UIComponent<WithAsProp<ReactionGroupProps>> {
-  static create: Function
+  static create: ShorthandFactory<ReactionGroupProps>
 
   static displayName = 'ReactionGroup'
 

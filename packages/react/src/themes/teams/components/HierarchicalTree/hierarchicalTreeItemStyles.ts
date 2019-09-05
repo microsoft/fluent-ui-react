@@ -11,10 +11,7 @@ const hierarchicalTreeItemStyles = {
       outline: 0,
       [`> .${HierarchicalTreeTitle.className}`]: {
         position: 'relative',
-        ...getBorderFocusStyles({
-          siteVariables,
-          isFromKeyboard: true,
-        })[':focus'],
+        ...getBorderFocusStyles({ siteVariables }),
       },
     },
   }),

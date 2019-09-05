@@ -14,6 +14,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import { WithAsProp, ComponentEventHandler, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -65,7 +66,7 @@ export interface AccordionTitleProps
 class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
   static displayName = 'AccordionTitle'
 
-  static create: Function
+  static create: ShorthandFactory<AccordionTitleProps>
 
   static className = 'ui-accordion__title'
 
@@ -106,7 +107,8 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
 
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
     const { contentRef, children, content, indicator, active } = this.props
-    const indicatorWithDefaults = indicator === undefined ? {} : indicator
+    const defaultIndicator = { name: active ? 'stardust-arrow-down' : 'stardust-arrow-end' }
+    const indicatorWithDefaults = indicator === undefined ? defaultIndicator : indicator
 
     const contentElement = (
       <Ref innerRef={contentRef}>
@@ -118,7 +120,6 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.content, unhandledProps)}
           start={Icon.create(indicatorWithDefaults, {
             defaultProps: {
-              name: active ? 'stardust-arrow-down' : 'stardust-arrow-end',
               styles: styles.indicator,
             },
           })}
