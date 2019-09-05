@@ -1,18 +1,13 @@
 import * as React from 'react'
 import { LogContext } from './KnobContexts'
 
-type UseCallbackLogKnobOptions<T> = {
-  name: string
-  callback?: T
-  formatter?: Function
-}
-
 const defaultFormatter = (name: string) => `${new Date().toLocaleTimeString()}: ${name}`
 
 const useCallbackLogKnob = <T = (...args: any[]) => any>(
-  options: UseCallbackLogKnobOptions<T>,
+  name: string,
+  callback?: T,
+  formatter: Function = defaultFormatter,
 ): [T] => {
-  const { callback, formatter = defaultFormatter, name } = options
   const { append } = React.useContext(LogContext)
 
   const proxy = React.useCallback<any>(

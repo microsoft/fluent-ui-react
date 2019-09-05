@@ -90,7 +90,7 @@ const KnobString: React.FunctionComponent<KnobComponentProps> = props => (
 )
 
 const LogInspector: React.FunctionComponent<LogContainerProps> = props => (
-  <div style={{ border: '1px solid #ccc', borderRadius: 5 }}>
+  <>
     <div style={{ display: 'flex', padding: 5 }}>
       <div style={{ flexGrow: 1 }}>
         Event log{' '}
@@ -126,7 +126,7 @@ const LogInspector: React.FunctionComponent<LogContainerProps> = props => (
         <div key={index}>{line}</div>
       ))}
     </div>
-  </div>
+  </>
 )
 
 const defaultComponents: KnobComponents = {
