@@ -266,28 +266,22 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           const { elementRef, ...restItemForRender } = itemForRender
           const isSubtree = hasSubtree(item)
           const isSubtreeOpen = isSubtree && this.isActiveItem(item['id'])
-          const renderedItem = TreeItem.create(item, {
-            defaultProps: {
-              className: Tree.slotClassNames.item,
-              open: isSubtreeOpen,
-              renderItemTitle,
-              key: item['id'],
-              ...restItemForRender,
-            },
-            overrideProps: this.handleTreeItemOverrides,
-          })
-
-          // Only need refs of the items that spawn subtrees, when they need to be focused
-          // by any of their children, using Arrow Left.
-          const finalRenderedItem = true ? (
+          const renderedItem = (
             <Ref key={item['id']} innerRef={elementRef}>
-              {renderedItem}
+              {TreeItem.create(item, {
+                defaultProps: {
+                  className: Tree.slotClassNames.item,
+                  open: isSubtreeOpen,
+                  renderItemTitle,
+                  key: item['id'],
+                  ...restItemForRender,
+                },
+                overrideProps: this.handleTreeItemOverrides,
+              })}
             </Ref>
-          ) : (
-            renderedItem
           )
           /*
-          const finalRenderedItem = props => (
+          const renderedItem = props => (
             <Ref key={item['id']} innerRef={elementRef}>
               {TreeItem.create(item, {
                 defaultProps: {
@@ -306,7 +300,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
           return [
             ...renderedItems,
-            finalRenderedItem,
+            renderedItem,
             ...(isSubtreeOpen ? renderItems(item['items']) : ([] as any)),
           ]
         },
