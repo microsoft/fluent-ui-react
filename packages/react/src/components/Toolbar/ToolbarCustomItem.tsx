@@ -9,7 +9,7 @@ import {
   UIComponent,
   childrenExist,
   commonPropTypes,
-  isFromKeyboard,
+  ShorthandFactory,
 } from '../../lib'
 
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
@@ -51,19 +51,12 @@ export interface ToolbarCustomItemProps
   onBlur?: ComponentEventHandler<ToolbarCustomItemProps>
 }
 
-interface ToolbarCustomItemState {
-  isFromKeyboard: boolean
-}
-
-class ToolbarCustomItem extends UIComponent<
-  WithAsProp<ToolbarCustomItemProps>,
-  ToolbarCustomItemState
-> {
+class ToolbarCustomItem extends UIComponent<WithAsProp<ToolbarCustomItemProps>> {
   static displayName = 'ToolbarCustomItem'
 
   static className = 'ui-toolbar__customitem'
 
-  static create: Function
+  static create: ShorthandFactory<ToolbarCustomItemProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
@@ -75,14 +68,12 @@ class ToolbarCustomItem extends UIComponent<
 
   handleBlur = (e: React.SyntheticEvent) => {
     if (this.props.focusable) {
-      this.setState({ isFromKeyboard: false })
       _.invoke(this.props, 'onBlur', e, this.props)
     }
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
     if (this.props.focusable) {
-      this.setState({ isFromKeyboard: isFromKeyboard() })
       _.invoke(this.props, 'onFocus', e, this.props)
     }
   }
