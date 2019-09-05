@@ -276,7 +276,7 @@ function createShorthandFromValue<P>({
   // ----------------------------------------
   // Get key
   // ----------------------------------------
-  const generateKey = options ? options.generateKey : true
+  const generateKey = options && options.generateKey !== undefined ? options.generateKey : true
 
   // Use key or generate key
   if (generateKey && _.isNil(props.key)) {
