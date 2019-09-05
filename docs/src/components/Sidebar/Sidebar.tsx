@@ -258,6 +258,7 @@ class Sidebar extends React.Component<any, any> {
     const treeItemsByType = _.map(constants.typeOrder, nextType => {
       const items = _.chain([...componentMenu, ...behaviorMenu])
         .filter(({ type }) => type === nextType)
+        .filter(({ displayName }) => displayName !== 'Design')
         .map(info => ({
           key: info.displayName.concat(nextType),
           title: { content: info.displayName, as: NavLink, to: getComponentPathname(info) },

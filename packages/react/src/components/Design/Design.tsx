@@ -1,11 +1,11 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 // @ts-ignore
-import { ThemeContext } from '@stardust-ui/react-fela'
+import { ThemeContext } from 'react-fela'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import { ProviderContextPrepared, ReactChildren } from '../../types'
 import { ComponentDesign } from '../../themes/types'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 export type DesignProps = {
   /** A render function that receives the generated className as its only argument */

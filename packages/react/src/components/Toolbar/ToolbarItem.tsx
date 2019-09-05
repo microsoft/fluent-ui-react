@@ -15,7 +15,6 @@ import {
   ContentComponentProps,
   commonPropTypes,
   childrenExist,
-  isFromKeyboard,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
 } from '../../lib'
@@ -107,15 +106,11 @@ export interface ToolbarItemProps
   wrapper?: ShorthandValue<BoxProps>
 }
 
-export interface ToolbarItemState {
-  isFromKeyboard: boolean
-}
-
 export interface ToolbarItemSlotClassNames {
   wrapper: string
 }
 
-class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemState> {
+class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
   static displayName = 'ToolbarItem'
 
   static className = 'ui-toolbar__item'
@@ -275,14 +270,10 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>, ToolbarItemS
   }
 
   handleBlur = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: false })
-
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 

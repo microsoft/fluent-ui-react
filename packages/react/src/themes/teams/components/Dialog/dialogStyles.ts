@@ -5,7 +5,7 @@ import { DialogVariables } from './dialogVariables'
 type DialogStyleParams = ComponentStyleFunctionParam<DialogProps, DialogVariables>
 
 export default {
-  root: ({ props: p, variables: v }: DialogStyleParams): ICSSInJSStyle => ({
+  root: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
     boxShadow: v.boxShadow,
     color: v.foregroundColor,
   }),

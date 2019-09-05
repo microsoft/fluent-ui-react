@@ -10,11 +10,7 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     verticalAlign: 'middle',
     alignItems: 'start',
 
-    ...getBorderFocusStyles({
-      siteVariables: t.siteVariables,
-      isFromKeyboard: p.isFromKeyboard,
-      borderRadius: '3px',
-    }),
+    ...getBorderFocusStyles({ siteVariables: t.siteVariables, borderRadius: '3px' }),
 
     ':hover': {
       color: v.textColorHover,
