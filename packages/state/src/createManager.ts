@@ -1,20 +1,17 @@
-import { Action, Manager, ManagerConfig } from './types'
+import { Action, Actions, Manager, ManagerConfig } from './types'
 
-const assign = Object.assign
-const clone = (object: any) => assign({}, object)
-
-const createManager = <S, A extends Record<string, Action<S, A>>>(
-  config: ManagerConfig<S, A>,
-): Manager<S, A> => {
+const createManager = <State, ActionNames extends keyof any>(
+  config: ManagerConfig<State, ActionNames>,
+): Manager<State, ActionNames> => {
   const { actions, debug, middleware = [], sideEffects = [], state } = config
 
-  const _state: S = clone(state)
+  const _state: State = Object.assign({}, state) as State
 
-  const getState = (): S => clone(_state)
-  const setState = (partial: Partial<S> | void): S => assign(_state, partial)
+  const getState = (): State => Object.assign({}, _state)
+  const setState = (partial: Partial<State> | void): State => Object.assign(_state, partial)
 
-  const manager: Manager<S, A> = {
-    actions: {} as A,
+  const manager: Manager<State, ActionNames> = {
+    actions: {} as Actions<State, ActionNames>,
     get state() {
       return getState()
     },
@@ -23,17 +20,15 @@ const createManager = <S, A extends Record<string, Action<S, A>>>(
   // assign actions to manager's api
   Object.keys(actions).forEach(actionName => {
     const enhancedAction = (...args: any[]) => {
-      applyAction(actions[actionName] as Action<S, A>, ...args)
+      applyAction(actions[actionName] as Action<State, ActionNames>, ...args)
       applyMiddleware()
       applySideEffects()
     }
 
-    // TODO: fix typings
-    // @ts-ignore
     manager.actions[actionName] = enhancedAction
   })
 
-  const applyAction = (action: Action<S, A>, ...args: any[]) => {
+  const applyAction = (action: Action<State, ActionNames>, ...args: any[]) => {
     if (!action) return
 
     if (debug) console.log('manager ACTION', action.name || 'Anonymous')

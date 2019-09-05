@@ -1,20 +1,35 @@
-export type Action<S, A> = (...args: any[]) => (state: S, actions: A) => Partial<S> | void
+export type Action<State, ActionNames extends keyof any> = (
+  ...args: any[]
+) => (state: State, actions: Actions<State, ActionNames>) => Partial<State> | void
 
-export type Middleware<S, A> = (prevState: S, nextState: S, actions: A) => S | void
+export type Actions<State, ActionNames extends keyof any> = Record<
+  ActionNames,
+  Action<State, ActionNames>
+>
 
-export type SideEffect<S, A> = (manager: Manager<S, A>) => void
+export type Middleware<State, ActionNames extends keyof any> = (
+  prevState: State,
+  nextState: State,
+  actions: Actions<State, ActionNames>,
+) => State | void
 
-export type ManagerConfig<S, A> = {
-  actions: A
+export type SideEffect<State, ActionNames extends keyof any> = (
+  manager: Manager<State, ActionNames>,
+) => void
+
+export type ManagerConfig<State, ActionNames extends keyof any> = {
+  actions?: Actions<State, ActionNames>
   debug?: boolean
-  middleware?: Middleware<S, A>[]
-  state?: Partial<S>
-  sideEffects?: SideEffect<S, A>[]
+  middleware?: Middleware<State, ActionNames>[]
+  state?: Partial<State>
+  sideEffects?: SideEffect<State, ActionNames>[]
 }
 
-export type Manager<S, A> = {
-  readonly state: S
-  actions: A
+export type Manager<State, ActionNames extends keyof any> = {
+  readonly state: State
+  actions: Actions<State, ActionNames>
 }
 
-export type ManagerFactory<S, A> = (config: ManagerConfig<S, A>) => Manager<S, A>
+export type ManagerFactory<State, ActionNames extends keyof any> = (
+  config: ManagerConfig<State, ActionNames>,
+) => Manager<State, ActionNames>

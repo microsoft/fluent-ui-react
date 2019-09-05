@@ -2,24 +2,32 @@ import { Manager, ManagerFactory, Middleware } from '@stardust-ui/state'
 import * as React from 'react'
 
 import { getDefinedAutoControlledProps, getInitialAutoControlledState } from './stateUtils'
+import { AnyProps } from './types'
 
 const useStateManager = <
-  State,
-  Actions,
+  State extends AnyProps,
+  ActionNames extends keyof any,
   Props extends Partial<State>,
-  AProps extends keyof State & string
+  AProps extends keyof State
 >(
-  createStateManager: ManagerFactory<State, Actions>,
+  managerFactory: ManagerFactory<State, ActionNames>,
   props: Props,
-  autoControlledProps: string[] = [],
-): Manager<State, Actions> => {
+  autoControlledProps: (keyof Props)[] = [],
+): Manager<State, ActionNames> => {
+  const latestManager = React.useRef<Manager<State, ActionNames> | null>(null)
+
+  // Heads up! setState() is used only for triggering rerenders stateManager is SSOT()
+  const [, setState] = React.useState()
+  const syncState = React.useCallback(({ state }) => setState(state), [])
+
   const definedAutoControlledProps = getDefinedAutoControlledProps(autoControlledProps, props)
+  // Is used as dependencies to recreate manager
   const autoControlledValues = autoControlledProps.reduce(
     (values: any[], propName: AProps) => [...values, props[propName]],
     [],
   )
 
-  const overrideAutoControlledProps: Middleware<State, Actions> = (
+  const overrideAutoControlledProps: Middleware<State, ActionNames> = (
     _prevState: State,
     nextState: State,
   ) => ({
@@ -27,26 +35,13 @@ const useStateManager = <
     ...definedAutoControlledProps,
   })
 
-  // Heads up! setState() is used only for triggering rerenders stateManager is SSOT()
-  const [, setState] = React.useState()
-  const syncState = React.useCallback(({ state }) => setState(state), [])
-
-  const latestManager = React.useRef<Manager<State, Actions> | null>(null)
   const manager = React.useMemo(() => {
-    console.log('Manager', latestManager)
+    // If manager exists, the current state will be used
     const initialState = latestManager.current
-      ? { ...latestManager.current, ...definedAutoControlledProps }
-      : getInitialAutoControlledState(
-          /* TODO: fix types */
-          // @ts-ignore
-          autoControlledProps,
-          props,
-        )
+      ? { ...latestManager.current.state, ...definedAutoControlledProps }
+      : getInitialAutoControlledState(autoControlledProps, props)
 
-    // @ts-ignore
-    return createStateManager({
-      debug: true,
-      // TODO: defaultOpen prop
+    return managerFactory({
       state: initialState,
       middleware: [overrideAutoControlledProps],
       sideEffects: [syncState],

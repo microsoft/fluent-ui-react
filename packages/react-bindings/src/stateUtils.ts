@@ -1,9 +1,13 @@
+import { AnyProps } from './types'
+
 export const getDefaultPropName = (propName: string) =>
   `default${propName[0].toUpperCase() + propName.slice(1)}`
 
-// TODO: type args
-export const getDefinedAutoControlledProps = (autoControlledProps: any[] = [], props: any) => {
-  const definedProps: any = {}
+export const getDefinedAutoControlledProps = <Props extends AnyProps>(
+  autoControlledProps: (keyof Props)[],
+  props: Props,
+): Partial<Props> => {
+  const definedProps: Partial<Props> = {}
 
   autoControlledProps.forEach(k => {
     if (props[k] !== undefined) {
@@ -26,10 +30,10 @@ export const getDefinedAutoControlledProps = (autoControlledProps: any[] = [], p
  *  @param {string} propName A prop name
  *  @param {object} [props] A props object
  */
-export const getAutoControlledStateValue = <P extends Record<string, any>, N extends keyof P>(
-  propName: N,
-  props: P,
-) => {
+export const getAutoControlledStateValue = <Props extends AnyProps, PropName extends keyof Props>(
+  propName: PropName,
+  props: Props,
+): any => {
   // regular props
   const propValue = props[propName]
   if (propValue !== undefined) return propValue
@@ -46,13 +50,10 @@ export const getAutoControlledStateValue = <P extends Record<string, any>, N ext
   // otherwise, undefined
 }
 
-export const getInitialAutoControlledState = <
-  P extends Record<string, any>,
-  N extends keyof P & string
->(
-  autoControlledProps: N[],
-  props: P,
-): Partial<P> => {
+export const getInitialAutoControlledState = <Props extends AnyProps, PropName extends keyof Props>(
+  autoControlledProps: PropName[],
+  props: Props,
+): Partial<Props> => {
   // Auto controlled props are copied to state.
   // Set initial state by copying auto controlled props to state.
   // Also look for the default prop for any auto controlled props (foo => defaultFoo)
@@ -63,6 +64,6 @@ export const getInitialAutoControlledState = <
 
       return acc
     },
-    {} as Partial<P>,
+    {} as Partial<Props>,
   )
 }
