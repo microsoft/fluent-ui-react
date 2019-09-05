@@ -72,7 +72,6 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
-    width: '100%',
     borderStyle: v.borderStyle,
     borderWidth: v.borderWidth,
     borderRadius: v.borderRadius,
@@ -90,6 +89,10 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     ...(p.attached === 'bottom' && {
       borderRadius: `0 0 ${v.borderRadius} ${v.borderRadius}`,
     }),
+
+    ...(p.fitted && { display: 'inline-flex' }),
+
+    ...(p.dismissible && { padding: v.dismissiblePadding }),
 
     ...(!p.visible && {
       visibility: 'hidden',
@@ -120,6 +123,7 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
 
   dismissAction: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => {
     const iconFilledStyles = getIconFillOrOutlineStyles({ outline: false })
+    const borderFocusStyles = getBorderFocusStyles({ siteVariables })
 
     return {
       height: v.dismissActionSize,
@@ -134,9 +138,10 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
         ...iconFilledStyles,
       },
 
-      ':focus': {
-        ...(p.isFromKeyboard && iconFilledStyles),
-        ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard })[':focus'],
+      ':focus': borderFocusStyles[':focus'],
+      ':focus-visible': {
+        ...iconFilledStyles,
+        ...borderFocusStyles[':focus-visible'],
       },
     }
   },

@@ -15,9 +15,9 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
-  isFromKeyboard,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import {
   WithAsProp,
@@ -99,14 +99,13 @@ export interface ChatMessageProps
 
 export interface ChatMessageState {
   focused: boolean
-  isFromKeyboard: boolean
   messageDomNode: HTMLElement
 }
 
 class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageState> {
   static className = 'ui-chat__message'
 
-  static create: Function
+  static create: ShorthandFactory<ChatMessageProps>
 
   static slotClassNames: ChatMessageSlotClassNames
 
@@ -145,7 +144,6 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
 
   state = {
     focused: false,
-    isFromKeyboard: false,
     messageDomNode: null,
   }
 
@@ -169,7 +167,6 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
 
     this.setState({
       focused: true,
-      isFromKeyboard: isFromKeyboard(),
     })
 
     _.invoke(this.props, 'onFocus', e, this.props)

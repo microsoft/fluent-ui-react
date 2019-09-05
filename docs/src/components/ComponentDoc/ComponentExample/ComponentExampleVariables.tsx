@@ -9,7 +9,7 @@ import {
 import * as _ from 'lodash'
 import * as React from 'react'
 // @ts-ignore
-import { ThemeContext } from '@stardust-ui/react-fela'
+import { ThemeContext } from 'react-fela'
 
 import ComponentExampleVariable, { ComponentExampleVariableProps } from './ComponentExampleVariable'
 import { mergeThemeVariables } from 'src/lib/mergeThemes'
