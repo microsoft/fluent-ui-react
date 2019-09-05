@@ -3,10 +3,7 @@ import { Action, ManagerActions, Manager, ManagerConfig, ManagerAction } from '.
 const createManager = <State, ActionNames extends string>(
   config: ManagerConfig<State, ActionNames>,
 ): Manager<State, ActionNames> => {
-  const { actions, debug, middleware = [], sideEffects = [], state } = config as Required<
-    ManagerConfig<State, ActionNames>
-  >
-
+  const { actions, debug, middleware = [], sideEffects = [], state } = config
   const _state: State = Object.assign({}, state) as State
 
   const getState = (): State => Object.assign({}, _state)

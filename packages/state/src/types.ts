@@ -18,7 +18,7 @@ export type SideEffect<State, ActionNames extends string> = (
 ) => void
 
 export type ManagerConfig<State, ActionNames extends string> = {
-  actions?: Actions<State, ActionNames>
+  actions: Actions<State, ActionNames>
   debug?: boolean
   middleware?: Middleware<State, ActionNames>[]
   state?: Partial<State>
