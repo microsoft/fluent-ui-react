@@ -19,7 +19,7 @@ module.exports = api => {
       {
         modules: useESModules ? false : 'cjs',
         targets: isNode ? { node: '8' } : undefined,
-        exclude: ['transform-async-to-generator'],
+        exclude: ['proposal-object-rest-spread', 'transform-async-to-generator'],
       },
     ],
     '@babel/preset-react',
@@ -27,6 +27,7 @@ module.exports = api => {
   ]
   const plugins = [
     '@babel/plugin-proposal-class-properties',
+    ['@babel/plugin-proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
     '@babel/plugin-syntax-dynamic-import',
     ['@babel/plugin-transform-runtime', { useESModules }],
 
