@@ -3,24 +3,20 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 import SplitButton from '../../../../components/SplitButton/SplitButton'
 
 const splitButtonStyles = {
-  button: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  menuButton: ({ variables: v }): ICSSInJSStyle => ({
     border: 0,
     padding: v.padding,
 
-    ':focus': {
-      ...(p.isFromKeyboard
-        ? {
-            '::before': { border: 0 },
-            '::after': { border: 0 },
-          }
-        : { ':active': { backgroundColor: v.backgroundColorActive } }),
+    ':focus-visible': {
+      '::before': { border: 0 },
+      '::after': { border: 0 },
     },
+    ':active': { backgroundColor: v.backgroundColorActive },
   }),
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
     const { borderWidth } = siteVariables
-    const { ':focus': borderFocusStyles } = getBorderFocusStyles({
+    const borderFocusStyles = getBorderFocusStyles({
       siteVariables,
-      isFromKeyboard: p.isFromKeyboard,
     })
 
     return {
@@ -47,7 +43,7 @@ const splitButtonStyles = {
 
               color: v.colorFocus,
               backgroundColor: v.backgroundColorFocus,
-              ...borderFocusStyles,
+              ...borderFocusStyles[':focus-visible'],
             }
           : { ':active': { backgroundColor: v.backgroundColorActive } }),
       },
