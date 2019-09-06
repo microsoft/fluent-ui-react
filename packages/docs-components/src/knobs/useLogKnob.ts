@@ -1,12 +1,15 @@
 import * as React from 'react'
-import { LogContext } from './KnobContexts'
 
-const defaultFormatter = (name: string) => `${new Date().toLocaleTimeString()}: ${name}`
+import { LogContext } from './KnobContexts'
+import { LogFormatter } from '@stardust-ui/docs-components'
+
+const defaultFormatter: LogFormatter = (name: string) =>
+  `${new Date().toLocaleTimeString()}: ${name}`
 
 const useLogKnob = <T = (...args: any[]) => any>(
   name: string,
   callback?: T,
-  formatter: Function = defaultFormatter,
+  formatter: LogFormatter = defaultFormatter,
 ): T => {
   const { appendLog } = React.useContext(LogContext)
 

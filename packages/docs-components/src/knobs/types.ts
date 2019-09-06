@@ -42,6 +42,8 @@ export type KnobRangeKnobComponentProps = KnobComponentProps & {
 
 export type LogInspectorProps = Pick<LogContextValue, 'clearLog' | 'items'>
 
+export type LogFormatter<T extends any[] = any[]> = (name: string, ...args: T) => string
+
 export type UseKnobOptions<T> = {
   content?: React.ReactNode
   name: string
