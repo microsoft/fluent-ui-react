@@ -9,6 +9,16 @@ const Types = () => (
       description="A text area with a placeholder."
       examplePath="components/TextArea/Types/TextAreaExample"
     />
+    <ComponentExample
+      title="Max length"
+      description="A text area with a limited space."
+      examplePath="components/TextArea/Types/TextAreaMaxLengthExample"
+    />
+    <ComponentExample
+      title="Disabled"
+      description="A text area that is read-only."
+      examplePath="components/TextArea/Types/TextAreaDisabledExample"
+    />
   </ExampleSection>
 )
 
