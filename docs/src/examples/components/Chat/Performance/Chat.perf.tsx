@@ -28,7 +28,7 @@ const ChatExample = () => {
       }}
     >
       <Chat
-        items={_.times(30, i => ({
+        items={_.times(100, i => ({
           key: `a${i}`,
           message: (
             <Chat.Message

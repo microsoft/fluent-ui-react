@@ -3,10 +3,16 @@ import { Alert } from '@stardust-ui/react'
 import * as React from 'react'
 
 const AlertExampleWidth = () => {
-  const [width] = useRangeKnob({ name: 'width', initialValue: '500px' })
+  const [width] = useRangeKnob({
+    name: 'width',
+    min: '350px',
+    max: '800px',
+    initialValue: '500px',
+    step: '10px',
+  })
 
   return (
-    <div style={{ minWidth: 350, maxWidth: 800, width }}>
+    <div style={{ width }}>
       <Alert
         actions={[{ content: 'Join and add the room', primary: true }]}
         header="There is a conference room close to you."
