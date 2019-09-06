@@ -19,7 +19,11 @@ module.exports = api => {
       {
         modules: useESModules ? false : 'cjs',
         targets: isNode ? { node: '8' } : undefined,
-        exclude: ['proposal-object-rest-spread', 'transform-async-to-generator'],
+        exclude: [
+          // https://github.com/stardust-ui/react/pull/1895
+          'proposal-object-rest-spread',
+          'transform-async-to-generator',
+        ],
       },
     ],
     '@babel/preset-react',
