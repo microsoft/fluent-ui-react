@@ -217,7 +217,8 @@ describe('Popup', () => {
   describe('inline', () => {
     test('renders the content in the document body the inline prop is not provided', () => {
       mountWithProvider(<Popup trigger={<button />} content="Content" open />)
-      const contentElement = document.body.firstElementChild
+      // First child is the ProviderBox, it's first children is the PopupContent component
+      const contentElement = document.body.firstElementChild.firstElementChild
 
       expect(contentElement.classList.contains(Popup.Content.className)).toEqual(true)
     })
