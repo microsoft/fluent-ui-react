@@ -174,7 +174,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
     const { button, disabled, menu, primary, secondary, toggleButton } = this.props
     const trigger = Button.create(button, {
       defaultProps: {
-        styles: styles.menuButton,
+        styles: styles.button,
         primary,
         secondary,
         disabled,

@@ -3,7 +3,7 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 import SplitButton from '../../../../components/SplitButton/SplitButton'
 
 const splitButtonStyles = {
-  menuButton: ({ variables: v }): ICSSInJSStyle => ({
+  button: ({ variables: v }): ICSSInJSStyle => ({
     border: 0,
     padding: v.padding,
 
