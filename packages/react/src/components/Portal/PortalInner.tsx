@@ -6,6 +6,7 @@ import * as ReactDOM from 'react-dom'
 import { ThemeContext } from 'react-fela'
 
 import { isBrowser, ChildrenComponentProps, commonPropTypes } from '../../lib'
+import ProviderBox from '../Provider/ProviderBox'
 
 export interface PortalInnerProps extends ChildrenComponentProps {
   /** Existing element the portal should be bound to. */
@@ -59,8 +60,9 @@ class PortalInner extends React.Component<PortalInnerProps> {
 
     const target: HTMLElement | null = isBrowser() ? this.context.target.body : null
     const container: HTMLElement | null = mountNode || target
+    const childrenWithProviderBox = <ProviderBox>{children}</ProviderBox>
 
-    return container && ReactDOM.createPortal(children, container)
+    return container && ReactDOM.createPortal(childrenWithProviderBox, container)
   }
 }
 
