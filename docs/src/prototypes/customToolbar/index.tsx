@@ -70,16 +70,16 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
   //   }
   // }
 
-  const removeAlert = (alertDefinition: any) => {
-    setNewAlert(prevState => {
-      const index = prevState.indexOf(alertDefinition)
-      if (index > -1) {
-        return _.pull(prevState, alertDefinition)
-        // return prevState.splice(index, 1);
-      }
-      return prevState
-    })
-  }
+  // const removeAlert = (alertDefinition: any) => {
+  //   setNewAlert(prevState => {
+  //     const index = prevState.indexOf(alertDefinition)
+  //     if (index > -1) {
+  //       return _.pull(prevState, alertDefinition)
+  //       // return prevState.splice(index, 1);
+  //     }
+  //     return prevState
+  //   })
+  // }
 
   const addAlert = (alertDefinition: any) => {
     setTimeout(() => {
@@ -99,15 +99,15 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     contentId: 'alert-1',
     buttons: [
       <Button content="Turn off my audio" onClick={() => alert('any action here')} primary />,
-      <Button
-        aria-describedby="topUfd-1"
-        icon="close"
-        iconOnly
-        text
-        title="Dismiss from index"
-        onClick={() => removeAlert(firstAlertDefinition)}
-        primary
-      />,
+      // <Button
+      //   aria-describedby="topUfd-1"
+      //   icon="close"
+      //   iconOnly
+      //   text
+      //   title="Dismiss from index"
+      //   onClick={() => removeAlert(firstAlertDefinition)}
+      //   primary
+      // />,
     ],
   }
 
