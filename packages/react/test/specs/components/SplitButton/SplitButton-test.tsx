@@ -25,7 +25,7 @@ describe('SplitButton', () => {
 
   describe('open', () => {
     test('is toggled between true and false on toggle button click', () => {
-      const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button={'test'} />)
+      const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button="test" />)
       const toggleButton = getToggleButton(wrapper)
 
       toggleButton.simulate('click')
@@ -36,9 +36,7 @@ describe('SplitButton', () => {
     })
 
     test('is false when clicking menu item', () => {
-      const wrapper = mountWithProvider(
-        <SplitButton menu={mockMenu} button={'test'} defaultOpen={true} />,
-      )
+      const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button="test" defaultOpen />)
 
       getMenuItems(wrapper)
         .at(0)
@@ -47,7 +45,7 @@ describe('SplitButton', () => {
     })
 
     test('is open when Alt+ArrowDown is sent to the main button', () => {
-      const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button={'test'} />)
+      const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button="test" />)
 
       getMainButton(wrapper).simulate('keydown', { keyCode: keyboardKey.ArrowDown, altKey: true })
 
@@ -55,9 +53,7 @@ describe('SplitButton', () => {
     })
 
     test('is open when Alt+ArrowUp is sent to the menu', () => {
-      const wrapper = mountWithProvider(
-        <SplitButton menu={mockMenu} button={'test'} defaultOpen={true} />,
-      )
+      const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button="test" defaultOpen />)
 
       getMenu(wrapper).simulate('keydown', { keyCode: keyboardKey.ArrowUp, altKey: true })
 
@@ -65,9 +61,7 @@ describe('SplitButton', () => {
     })
 
     test('is open when Escape is sent to the menu', () => {
-      const wrapper = mountWithProvider(
-        <SplitButton menu={mockMenu} button={'test'} defaultOpen={true} />,
-      )
+      const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button="test" defaultOpen />)
 
       getMenu(wrapper).simulate('keydown', { keyCode: keyboardKey.Escape })
 
@@ -78,12 +72,7 @@ describe('SplitButton', () => {
   test('onMenuItemClick', () => {
     const onMenuItemClick = jest.fn()
     const wrapper = mountWithProvider(
-      <SplitButton
-        menu={mockMenu}
-        button={'test'}
-        onMenuItemClick={onMenuItemClick}
-        defaultOpen={true}
-      />,
+      <SplitButton menu={mockMenu} button="test" onMenuItemClick={onMenuItemClick} defaultOpen />,
     )
 
     getMenuItems(wrapper)
@@ -95,10 +84,14 @@ describe('SplitButton', () => {
   test('onMainButtonClick', () => {
     const onMainButtonClick = jest.fn()
     const wrapper = mountWithProvider(
-      <SplitButton menu={mockMenu} button={'test'} onMainButtonClick={onMainButtonClick} />,
+      <SplitButton menu={mockMenu} button="test" onMainButtonClick={onMainButtonClick} />,
     )
 
     getMainButton(wrapper).simulate('click')
     expect(onMainButtonClick).toHaveBeenCalledTimes(1)
+    expect(onMainButtonClick).toHaveBeenCalledWith(
+      expect.any(Object),
+      expect.objectContaining({ content: 'test' }),
+    )
   })
 })

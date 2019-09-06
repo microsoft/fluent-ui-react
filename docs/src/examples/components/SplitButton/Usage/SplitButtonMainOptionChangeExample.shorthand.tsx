@@ -1,72 +1,27 @@
+import { useNumberKnob } from '@stardust-ui/docs-components'
+import { SplitButton } from '@stardust-ui/react'
 import * as React from 'react'
-import { Flex, SplitButton } from '@stardust-ui/react'
 
-class SplitButtonExampleShorthand extends React.Component {
-  items = [
-    {
-      key: 'pdf',
-      content: 'Export to PDF',
-      icon: 'files-pdf',
-      onClick: () => {
-        this.setState({ index: 0 })
-      },
-    },
-    {
-      key: 'pds',
-      content: 'Export to PDS',
-      icon: 'files-photoshop',
-      onClick: () => {
-        this.setState({ index: 1 })
-      },
-    },
-    {
-      key: 'gif',
-      content: 'Export as GIF',
-      icon: 'files-gif',
-      disabled: true,
-    },
-    {
-      key: 'eps',
-      content: 'Export to EPS',
-      icon: 'files-illustrator',
-      onClick: () => {
-        this.setState({ index: 3 })
-      },
-    },
-  ]
-  state = {
-    index: 0,
-    message: 'Use to export your work:',
-  }
+const items = [
+  { key: 'group', content: 'New group message' },
+  { key: 'channel', content: 'New channel message' },
+  { key: 'conversation', content: 'New conversation' },
+]
 
-  handleClick = () => {
-    this.setState({ message: 'Exported successfuly!' })
-  }
+const SplitButtonExampleMenuShorthand = () => {
+  const [activeIndex, setActiveIndex] = useNumberKnob({ name: 'activeIndex' })
+  const activeItem = items[activeIndex]
 
-  render() {
-    const { index, message } = this.state
-    const filteredItems = [...this.items.slice(0, index), ...this.items.slice(index + 1)]
-    return (
-      <>
-        <div>{message}</div>
-        <Flex gap="gap.small">
-          <SplitButton
-            onMainButtonClick={this.handleClick}
-            onMenuItemClick={this.handleClick}
-            menu={filteredItems}
-            button={this.items[index]}
-          />
-          <SplitButton
-            onMainButtonClick={this.handleClick}
-            onMenuItemClick={this.handleClick}
-            menu={filteredItems}
-            button={this.items[index]}
-            primary
-          />
-        </Flex>
-      </>
-    )
-  }
+  return (
+    <SplitButton
+      button={activeItem}
+      menu={{
+        activeIndex,
+        items,
+      }}
+      onMenuItemClick={(e, { index }) => setActiveIndex(index)}
+    />
+  )
 }
 
-export default SplitButtonExampleShorthand
+export default SplitButtonExampleMenuShorthand

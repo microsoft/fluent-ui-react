@@ -9,6 +9,11 @@ const SplitButton = () => (
       description="Buttons can be split into action and toggle."
       examplePath="components/SplitButton/Types/SplitButtonExample"
     />
+    <ComponentExample
+      title="Emphasis"
+      description="A SplitButton can be formatted to show primary level of emphasis."
+      examplePath="components/SplitButton/Types/SplitButtonExamplePrimary"
+    />
   </ExampleSection>
 )
 
