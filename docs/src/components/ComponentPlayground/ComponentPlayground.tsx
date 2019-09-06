@@ -27,6 +27,7 @@ const unsupportedComponents = [
   'Portal',
   'Provider',
   'RadioGroup',
+  'TextArea',
   'Toolbar',
   'Ref',
 ]

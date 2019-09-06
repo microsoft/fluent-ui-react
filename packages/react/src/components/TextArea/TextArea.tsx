@@ -1,8 +1,8 @@
 import { Accessibility } from '../../lib/accessibility/types'
-import { ShorthandValue, ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
-import Box, { BoxProps } from '../Box/Box'
+import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
+import * as _ from 'lodash'
+import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import {
   UIComponentProps,
   ChildrenComponentProps,
@@ -12,7 +12,6 @@ import {
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { textAreaBehavior } from '../../lib/accessibility'
-import * as _ from 'lodash'
 
 export interface TextAreaSlotClassNames {
   textArea: string
@@ -27,16 +26,13 @@ export interface TextAreaProps extends UIComponentProps, ChildrenComponentProps 
   /** The default value of the text area. */
   defaultValue?: string
 
-  /** Shorthand for the text area component. */
-  textArea?: ShorthandValue<BoxProps>
-
   /**
    * Called on change.
    *
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param {object} data - All props.
    */
-  onChange?: ComponentEventHandler<TextAreaProps & { value: string }>
+  onChange?: ComponentEventHandler<TextAreaProps>
 
   /** The value of the text area. */
   value?: string
@@ -71,7 +67,6 @@ class TextArea extends AutoControlledComponent<WithAsProp<TextAreaProps>, TextAr
       content: false,
     }),
     defaultValue: PropTypes.string,
-    textArea: customPropTypes.itemShorthand,
     onChange: PropTypes.func,
     value: PropTypes.string,
     maxLength: PropTypes.number,
@@ -80,40 +75,39 @@ class TextArea extends AutoControlledComponent<WithAsProp<TextAreaProps>, TextAr
   }
 
   static defaultProps = {
+    as: 'textarea',
     accessibility: textAreaBehavior,
-    textArea: {},
   }
 
   static autoControlledProps = ['value']
 
   renderComponent({
-    accessibility,
     ElementType,
     classes,
-    unhandledProps,
-    styles,
+    accessibility,
     variables,
+    styles,
+    unhandledProps,
   }: RenderResultConfig<TextAreaProps>) {
-    const { textArea, placeholder, maxLength, disabled } = this.props
+    const { placeholder, maxLength, disabled } = this.props
     const { value = '' } = this.state
 
-    return Box.create(textArea, {
-      defaultProps: {
-        as: 'textarea',
-        value,
-        className: TextArea.slotClassNames.textArea,
-        styles: styles.textArea,
-        onChange: this.handleChange,
-        placeholder,
-        maxLength,
-        disabled,
-        ...unhandledProps,
-        ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.textArea, unhandledProps),
-      },
-    })
+    return (
+      <ElementType
+        value={value}
+        className={TextArea.slotClassNames.textArea}
+        styles={styles.textArea}
+        onChange={this.handleChange}
+        placeholder={placeholder}
+        maxLength={maxLength}
+        disabled={disabled}
+        {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.textArea, unhandledProps)}
+      />
+    )
   }
 
-  handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  handleChange = (e: React.ChangeEvent | React.FormEvent) => {
     const value = _.get(e, 'target.value')
 
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
@@ -123,7 +117,7 @@ class TextArea extends AutoControlledComponent<WithAsProp<TextAreaProps>, TextAr
 }
 
 TextArea.slotClassNames = {
-  textArea: `${TextArea.className}__input`,
+  textArea: `${TextArea.className}__textarea`,
 }
 
 export default withSafeTypeForAs<typeof TextArea, TextAreaProps, 'div'>(TextArea)
