@@ -23,6 +23,7 @@ import Ufd from './Ufd'
 import useToolbarKnobs from './useToolbarKnobs'
 import MouseTrigger from './MouseTrigger'
 import { UfdRegion } from './UfdRegion'
+import { AlertStacks } from './AlertsStack'
 
 const CustomToolbarPrototype: React.FunctionComponent = () => {
   const knobs = useToolbarKnobs()
@@ -33,12 +34,15 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
   const [showTopUfd, setShowTopUfd] = React.useState(false)
   const [showSecondTopUfd, setSecondShowTopUfd] = React.useState(false)
 
-  const [showTopUfdSingleRegion, setShowTopUfdUniqueRegion] = React.useState(false)
-  const [showSecondTopUfdSingleRegion, setSecondShowTopUfdUniqueRegion] = React.useState(false)
+  // const [showTopUfdSingleRegion, setShowTopUfdUniqueRegion] = React.useState(false)
+  // const [showSecondTopUfdSingleRegion, setSecondShowTopUfdUniqueRegion] = React.useState(false)
 
   const [showCenteredUfd, setShowCenteredUfd] = React.useState(false)
   const [showAttachedUfd, setShowAttachedUfd] = React.useState(false)
   const [showAttachedUfdWithButtons, setShowAttachedUfdWithButtons] = React.useState(false)
+
+  // const [alertsArray, setNewAlert] = React.useState("alertsArray", [])
+  const [alertsArray, setNewAlert] = React.useState([])
 
   let theme = {}
   if (themeName === 'teamsDark') {
@@ -59,54 +63,101 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
   ---pbar----  +- region
   */
 
+  // const removeAlert = (alertDefinition: any) => {
+  //   const test = getNewArray(alertDefinition);
+  //   if (test){
+  //     setNewAlert(test)
+  //   }
+  // }
+
+  const removeAlert = (alertDefinition: any) => {
+    setNewAlert(prevState => {
+      const index = prevState.indexOf(alertDefinition)
+      if (index > -1) {
+        return _.pull(prevState, alertDefinition)
+        // return prevState.splice(index, 1);
+      }
+      return prevState
+    })
+  }
+
+  const addAlert = (alertDefinition: any) => {
+    setTimeout(() => {
+      setNewAlert(prevState => {
+        if (prevState.filter(alert => alert.content === alertDefinition.content).length === 0) {
+          return [...prevState, alertDefinition]
+        }
+        return prevState
+      })
+    }, 3000)
+  }
+
+  const firstAlertDefinition = {
+    content: 'Others may have trouble hearing you clearly. Try moving a bit away from your mic.',
+    position: 'top',
+    label: 'Alert',
+    contentId: 'alert-1',
+    buttons: [
+      <Button content="Turn off my audio" onClick={() => alert('any action here')} primary />,
+      <Button
+        aria-describedby="topUfd-1"
+        icon="close"
+        iconOnly
+        text
+        title="Dismiss from index"
+        onClick={() => removeAlert(firstAlertDefinition)}
+        primary
+      />,
+    ],
+  }
+
+  const secondAlertDefinition = {
+    content: 'Your internet connection is lost',
+    position: 'top',
+    label: 'Alert',
+    contentId: 'alert-2',
+    buttons: [
+      <Button content="reconnect" onClick={() => alert('any action here')} primary />,
+      //   <Button
+      //   aria-describedby="topUfd-1"
+      //   icon="close"
+      //   iconOnly
+      //   text
+      //   title="Dismiss from index"
+      //   onClick={() => removeAlert(secondAlertDefinition)}
+      //   primary
+      // />
+    ],
+  }
+
+  const thirdAlertDefinition = {
+    content:
+      "Your microphone isn't working. Switch to a different device or try reconnecting this one.",
+    position: 'top',
+    label: 'Alert',
+    contentId: 'alert-2',
+    buttons: [
+      <Button content="Device settings" onClick={() => alert('any action here')} primary />,
+      <Button content="Call me back" onClick={() => alert('any action here')} primary />,
+      // <Button
+      //   aria-describedby="topUfd-1"
+      //   icon="close"
+      //   iconOnly
+      //   text
+      //   title="Dismiss"
+      //   onClick={() => setNewAlert(removeAlert(secondAlertDefinition))}
+      //   primary
+      // />
+    ],
+  }
+
   return (
     <div style={{ height: '100vh' }}>
       <Provider theme={theme} rtl={rtl}>
         <div role="main" aria-labelledby="meeting-header">
-          {(showTopUfd || showSecondTopUfd) && (
-            <UfdRegion aria-label="top warning">
-              {showTopUfd && (
-                <Ufd
-                  content="Others may have trouble hearing you clearly. Try moving a bit away from your mic."
-                  position="top"
-                  label="Alert"
-                  buttons={[
-                    <Button
-                      aria-describedby="topUfd-1"
-                      content="Dismiss"
-                      onClick={() => setShowTopUfd(false)}
-                      primary
-                    />,
-                  ]}
-                  contentId="topUfd-1"
-                />
-              )}
-              {showSecondTopUfd && (
-                <Ufd
-                  content="Echo in your room! Turn off your audio or ask others to turn off theirs."
-                  position="top"
-                  label="Alert"
-                  buttons={[
-                    <Button
-                      aria-describedby="topUfd-2"
-                      content="Turn off my audio"
-                      onClick={() => setSecondShowTopUfd(false)}
-                      primary
-                    />,
-                    <Button
-                      aria-describedby="topUfd-2"
-                      content="Dismiss"
-                      onClick={() => setSecondShowTopUfd(false)}
-                      primary
-                    />,
-                  ]}
-                  contentId="topUfd-2"
-                />
-              )}
-            </UfdRegion>
-          )}
-          {showTopUfdSingleRegion && (
-            <UfdRegion aria-label="warning mic">
+          <UfdRegion aria-label="Warnings">
+            {alertsArray.length >= 1 ? <AlertStacks alerts={alertsArray} /> : null}
+            {(showTopUfd || showSecondTopUfd) && showTopUfd && (
               <Ufd
                 content="Others may have trouble hearing you clearly. Try moving a bit away from your mic."
                 position="top"
@@ -114,39 +165,37 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                 buttons={[
                   <Button
                     aria-describedby="topUfd-1"
-                    content="Dismiss"
-                    onClick={() => setShowTopUfdUniqueRegion(false)}
+                    icon="close"
+                    iconOnly
+                    text
+                    title="Dismiss"
+                    onClick={() => setShowTopUfd(false)}
                     primary
                   />,
                 ]}
                 contentId="topUfd-1"
               />
-            </UfdRegion>
-          )}
-          {showSecondTopUfdSingleRegion && (
-            <UfdRegion aria-label="warning audio">
+            )}
+            {showSecondTopUfd && (
               <Ufd
-                content="Echo in your room! Turn off your audio or ask others to turn off theirs."
+                content="Speaker volume low. You may not be able to hear because your speaker volume is too low."
                 position="top"
                 label="Alert"
                 buttons={[
                   <Button
-                    aria-describedby="topUfd-2"
-                    content="Turn off my audio"
-                    onClick={() => setSecondShowTopUfdUniqueRegion(false)}
-                    primary
-                  />,
-                  <Button
-                    aria-describedby="topUfd-2"
-                    content="Dismiss"
-                    onClick={() => setSecondShowTopUfdUniqueRegion(false)}
+                    aria-describedby="topUfd-1"
+                    icon="close"
+                    iconOnly
+                    text
+                    title="Dismiss"
+                    onClick={() => setShowTopUfd(false)}
                     primary
                   />,
                 ]}
                 contentId="topUfd-2"
               />
-            </UfdRegion>
-          )}
+            )}
+          </UfdRegion>
           <Flex column fill>
             <Header as="h2" id="meeting-header" content="Random meeting title" />
             <Flex
@@ -159,29 +208,34 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
               <Flex gap="gap.small">
                 <Divider />
                 <Flex column style={{ width: '300px' }}>
-                  <Divider content="Alerts join under one region" color="pink" />
+                  <Divider content="Informational banner" color="black" />
                   <MouseTrigger content="TOP UFD Join Region" setter={setSecondShowTopUfd} />
                   <MouseTrigger content="TOP UFD second Join Region" setter={setShowTopUfd} />
                 </Flex>
+
                 <Flex column style={{ width: '300px' }}>
-                  <Divider content="Each alert has own region" color="pink" />
-                  <MouseTrigger
-                    content="TOP UFD Unique Region"
-                    setter={setShowTopUfdUniqueRegion}
-                  />
-                  <MouseTrigger
-                    content="TOP UFD second Unique Region"
-                    setter={setSecondShowTopUfdUniqueRegion}
-                  />
-                </Flex>
-                <Flex column style={{ width: '300px' }}>
-                  <Divider content="Centered UFD" color="pink" />
+                  {/* <Divider content="Centered UFD" color="pink" />
                   <MouseTrigger content="Show centered UFD" setter={setShowCenteredUfd} />
-                  <MouseTrigger content="Show attached UFD" setter={setShowAttachedUfd} />
+                  <MouseTrigger content="Show attached UFD" setter={setShowAttachedUfd} />  */}
+
+                  <Divider content="Persistent UFD into multi stack" color="black" />
                   <MouseTrigger
+                    content="Add alert 1"
+                    setter={() => addAlert(firstAlertDefinition)}
+                  />
+                  <MouseTrigger
+                    content="Add alert 2"
+                    setter={() => addAlert(secondAlertDefinition)}
+                  />
+                  <MouseTrigger
+                    content="Add alert 3"
+                    setter={() => addAlert(thirdAlertDefinition)}
+                  />
+
+                  {/* <MouseTrigger
                     content="Show UFD mic not working "
                     setter={setShowAttachedUfdWithButtons}
-                  />
+                  /> */}
                 </Flex>
               </Flex>
             </Flex>

@@ -49,7 +49,7 @@ const UfdAlert = props => {
     <Alert
       danger
       content={{ id: contentId, content }}
-      action={
+      actions={
         buttons
           ? render =>
               render({}, (Component, props) => {
@@ -67,7 +67,7 @@ const UfdAlert = props => {
         dangerColor: 'white',
         ...(hideBorder && { borderStyle: 'transparent' }),
       }}
-      {...height && { styles: { height } }}
+      {...(height && { styles: { height } })}
     />
   )
 }
