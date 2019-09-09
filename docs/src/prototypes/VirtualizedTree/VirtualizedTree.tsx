@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import * as React from 'react'
 import { Tree } from '@stardust-ui/react'
 import { CellMeasurer, CellMeasurerCache, List as ReactVirtualizedList } from 'react-virtualized'
@@ -34,7 +35,8 @@ class TreeVirtualizer extends React.Component<TreeVirtualizerProps> {
         deferredMeasurementCache={this.cache}
         rowHeight={this.cache.rowHeight}
         rowRenderer={this.rowRenderer}
-        height={100}
+        estimatedRowSize={20}
+        height={300}
         rowCount={this.props.renderedItems.length}
         width={600}
       />
@@ -42,74 +44,27 @@ class TreeVirtualizer extends React.Component<TreeVirtualizerProps> {
   }
 }
 
-const items = [
-  {
-    id: '1',
-    title: 'House Lannister',
-    items: [
-      {
-        id: '11',
-        title: 'Tywin',
-        items: [
-          {
-            id: '111',
-            title: 'Jaime',
-          },
-          {
-            id: '112',
-            title: 'Cersei',
-          },
-          {
-            id: '113',
-            title: 'Tyrion',
-          },
-        ],
-      },
-      {
-        id: '12',
-        title: 'Kevan',
-        items: [
-          {
-            id: '121',
-            title: 'Lancel',
-          },
-          {
-            id: '122',
-            title: 'Willem',
-          },
-          {
-            id: '123',
-            title: 'Martyn',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: '2',
-    title: 'House Targaryen',
-    items: [
-      {
-        id: '21',
-        title: 'Aerys',
-        items: [
-          {
-            id: '211',
-            title: 'Rhaegar',
-          },
-          {
-            id: '212',
-            title: 'Viserys',
-          },
-          {
-            id: '213',
-            title: 'Daenerys',
-          },
-        ],
-      },
-    ],
-  },
-]
+const maxLevel = 1
+const minItems = 20
+const maxItems = 40
+const getItemsNumber = () => _.random(minItems, maxItems)
+
+function generateLevel(level = 0, parent = '') {
+  if (level === 0) {
+  }
+  const result = []
+  for (let index = 0; index < getItemsNumber(); index++) {
+    const item = {
+      id: `${parent}${parent ? '-' : ''}${index}`,
+      title: `${parent}${parent ? '-' : ''}${index}`,
+      ...(level < maxLevel && { items: generateLevel(level + 1, `${parent}${index}`) }),
+    }
+    result.push(item)
+  }
+  return result
+}
+
+const items = generateLevel()
 
 const VirtualizedTreePrototype = () => (
   <Tree
