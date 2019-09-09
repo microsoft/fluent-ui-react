@@ -97,8 +97,8 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
 
         {reverseAlerts && reverseAlerts.length > 1 && (
           <div
-            role="dialog"
-            aria-label="alerts"
+            role="alertdialog"
+            aria-label="multiple alerts"
             aria-describedby={reverseAlerts[this.state.currentAlert].contentId}
             aria-modal={false}
           >

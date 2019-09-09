@@ -158,42 +158,54 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
           <UfdRegion aria-label="Warnings">
             {alertsArray.length >= 1 ? <AlertStacks alerts={alertsArray} /> : null}
             {(showTopUfd || showSecondTopUfd) && showTopUfd && (
-              <Ufd
-                content="Others may have trouble hearing you clearly. Try moving a bit away from your mic."
-                position="top"
-                label="Alert"
-                buttons={[
-                  <Button
-                    aria-describedby="topUfd-1"
-                    icon="close"
-                    iconOnly
-                    text
-                    title="Dismiss"
-                    onClick={() => setShowTopUfd(false)}
-                    primary
-                  />,
-                ]}
-                contentId="topUfd-1"
-              />
+              <div
+                role="alertdialog"
+                aria-label="single alert"
+                aria-describedby="topUfd-1"
+                aria-modal={false}
+              >
+                <Ufd
+                  content="Others may have trouble hearing you clearly. Try moving a bit away from your mic."
+                  position="top"
+                  label="Alert"
+                  buttons={[
+                    <Button
+                      icon="close"
+                      iconOnly
+                      text
+                      title="Dismiss"
+                      onClick={() => setShowTopUfd(false)}
+                      primary
+                    />,
+                  ]}
+                  contentId="topUfd-1"
+                />
+              </div>
             )}
             {showSecondTopUfd && (
-              <Ufd
-                content="Speaker volume low. You may not be able to hear because your speaker volume is too low."
-                position="top"
-                label="Alert"
-                buttons={[
-                  <Button
-                    aria-describedby="topUfd-1"
-                    icon="close"
-                    iconOnly
-                    text
-                    title="Dismiss"
-                    onClick={() => setShowTopUfd(false)}
-                    primary
-                  />,
-                ]}
-                contentId="topUfd-2"
-              />
+              <div
+                role="alertdialog"
+                aria-label="single alert"
+                aria-describedby="topUfd-2"
+                aria-modal={false}
+              >
+                <Ufd
+                  content="Speaker volume low. You may not be able to hear because your speaker volume is too low."
+                  position="top"
+                  label="Alert"
+                  buttons={[
+                    <Button
+                      icon="close"
+                      iconOnly
+                      text
+                      title="Dismiss"
+                      onClick={() => setShowTopUfd(false)}
+                      primary
+                    />,
+                  ]}
+                  contentId="topUfd-2"
+                />
+              </div>
             )}
           </UfdRegion>
           <Flex column fill>
