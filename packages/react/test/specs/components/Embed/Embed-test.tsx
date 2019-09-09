@@ -1,10 +1,14 @@
 import * as React from 'react'
 import Embed from 'src/components/Embed/Embed'
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { mountWithProviderAndGetComponent } from 'test/utils'
 
 describe('Embed', () => {
   isConformant(Embed)
+
+  describe('accessibility', () => {
+    handlesAccessibility(Embed, { defaultRootRole: 'presentation' })
+  })
 
   describe('onClick', () => {
     test('is called with (e, props) on a click', () => {

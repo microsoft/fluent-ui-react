@@ -1,9 +1,12 @@
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 
-import { mountWithProviderAndGetComponent } from 'test/utils'
+import { mountWithProviderAndGetComponent, mountWithProvider } from 'test/utils'
 import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/types'
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
+import { UIComponent } from 'src/lib'
+import { EVENT_TARGET_ATTRIBUTE, getEventTargetComponent } from './eventTarget'
 
 export const getRenderedAttribute = (renderedComponent, propName, partSelector) => {
   const target = partSelector
@@ -67,6 +70,42 @@ export default (
     )
     const role = getRenderedAttribute(rendered, 'role', partSelector)
     expect(role).toBeFalsy()
+  })
+
+  test(`handles "onKeyDown" overrides`, () => {
+    const actionHandler = jest.fn()
+    const eventHandler = jest.fn()
+
+    const actionBehavior: Accessibility = () => ({
+      keyActions: {
+        root: {
+          mockAction: {
+            keyCombinations: [{ keyCode: keyboardKey.Enter }],
+          },
+        },
+      },
+    })
+
+    const wrapperProps = {
+      ...requiredProps,
+      accessibility: actionBehavior,
+      [EVENT_TARGET_ATTRIBUTE]: true,
+      onKeyDown: eventHandler,
+    }
+
+    const wrapper = mountWithProvider(<Component {...wrapperProps} />)
+    const component = wrapper.find(Component)
+
+    ;(component.instance() as UIComponent<any, any>).actionHandlers.mockAction = actionHandler
+    // Force render component to apply updated key handlers
+    wrapper.setProps({})
+
+    getEventTargetComponent(component, 'onKeyDown').simulate('keydown', {
+      keyCode: keyboardKey.Enter,
+    })
+
+    expect(actionHandler).toBeCalledTimes(1)
+    expect(eventHandler).toBeCalledTimes(1)
   })
 
   if (!partSelector) {

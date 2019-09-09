@@ -20,6 +20,7 @@ import * as stardust from 'src/index'
 import { Accessibility, AriaRole } from 'src/lib/accessibility/types'
 import { FocusZone, IS_FOCUSABLE_ATTRIBUTE } from 'src/lib/accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
+import { getEventTargetComponent, EVENT_TARGET_ATTRIBUTE } from './eventTarget'
 
 export interface Conformant {
   eventTargets?: object
@@ -83,27 +84,6 @@ export default (Component, options: Conformant = {}) => {
     // in that case 'topLevelChildElement' we've found so far is a wrapper's topmost child
     // thus, we should continue search
     return wrapperComponent ? toNextNonTrivialChild(componentElement) : componentElement
-  }
-
-  const getEventTargetComponent = (wrapper: ReactWrapper, listenerName: string) => {
-    const eventTarget = eventTargets[listenerName]
-      ? wrapper
-          .find(eventTargets[listenerName])
-          .hostNodes()
-          .first()
-      : wrapper
-          .find('[data-simulate-event-here]')
-          .hostNodes()
-          .first()
-
-    // if (eventTarget.length === 0) {
-    //   throw new Error(
-    //     'The event prop was not delegated to the children. You probably ' +
-    //     'forgot to use `getUnhandledProps` util to spread the `unhandledProps` props.',
-    //   )
-    // }
-
-    return eventTarget
   }
 
   // make sure components are properly exported
@@ -365,12 +345,12 @@ export default (Component, options: Conformant = {}) => {
 
         const wrapperProps = {
           ...requiredProps,
-          'data-simulate-event-here': true,
+          [EVENT_TARGET_ATTRIBUTE]: true,
           [listenerName]: handler,
         }
         const wrapper = mount(<Component {...wrapperProps} />)
 
-        getEventTargetComponent(wrapper, listenerName).simulate(eventName)
+        getEventTargetComponent(wrapper, listenerName, eventTargets).simulate(eventName)
         expect(handler).toBeCalledTimes(1)
       })
     })
@@ -398,11 +378,11 @@ export default (Component, options: Conformant = {}) => {
         const props = {
           ...requiredProps,
           [listenerName]: handlerSpy,
-          'data-simulate-event-here': true,
+          [EVENT_TARGET_ATTRIBUTE]: true,
         }
 
         const component = mount(<Component {...props} />)
-        const eventTarget = getEventTargetComponent(component, listenerName)
+        const eventTarget = getEventTargetComponent(component, listenerName, eventTargets)
         const customHandler: Function = eventTarget.prop(listenerName)
 
         if (customHandler) {
