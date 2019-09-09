@@ -37,14 +37,6 @@ export interface TextAreaProps extends UIComponentProps, ChildrenComponentProps 
   /** The value of the text area. */
   value?: string
 
-  /** The maximum number of characters allowed in the text area. */
-  maxLength?: number
-
-  /**
-   * Text describing the expected value of the text area.
-   */
-  placeholder?: string
-
   /**
    * The text area becomes read-only.
    */
@@ -89,7 +81,7 @@ class TextArea extends AutoControlledComponent<WithAsProp<TextAreaProps>, TextAr
     styles,
     unhandledProps,
   }: RenderResultConfig<TextAreaProps>) {
-    const { placeholder, maxLength, disabled } = this.props
+    const { disabled } = this.props
     const { value = '' } = this.state
 
     return (
@@ -98,8 +90,6 @@ class TextArea extends AutoControlledComponent<WithAsProp<TextAreaProps>, TextAr
         className={TextArea.slotClassNames.textArea}
         styles={styles.textArea}
         onChange={this.handleChange}
-        placeholder={placeholder}
-        maxLength={maxLength}
         disabled={disabled}
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.textArea, unhandledProps)}
@@ -111,7 +101,6 @@ class TextArea extends AutoControlledComponent<WithAsProp<TextAreaProps>, TextAr
     const value = _.get(e, 'target.value')
 
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
-
     this.setState({ value })
   }
 }
@@ -120,4 +109,4 @@ TextArea.slotClassNames = {
   textArea: `${TextArea.className}__textarea`,
 }
 
-export default withSafeTypeForAs<typeof TextArea, TextAreaProps, 'div'>(TextArea)
+export default withSafeTypeForAs<typeof TextArea, TextAreaProps, 'textarea'>(TextArea)
