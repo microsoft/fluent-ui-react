@@ -91,7 +91,7 @@ export interface ChatMessageProps
   onFocus?: ComponentEventHandler<ChatMessageProps>
 
   /**
-   * Called after user will enter by mouse.
+   * Called after user enters by mouse.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
