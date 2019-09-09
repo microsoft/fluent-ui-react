@@ -198,8 +198,8 @@ class HierarchicalTreeItem extends UIComponent<WithAsProp<HierarchicalTreeItemPr
           className={classes.root}
           {...accessibility.attributes.root}
           {...rtlTextContainer.getAttributes({ forElements: [children] })}
-          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
           {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           {childrenExist(children) ? children : this.renderContent()}
         </ElementType>
