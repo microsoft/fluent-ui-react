@@ -13,10 +13,6 @@ import {
 } from '../../lib'
 import { textAreaBehavior } from '../../lib/accessibility'
 
-export interface TextAreaSlotClassNames {
-  textArea: string
-}
-
 export interface TextAreaProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -52,8 +48,6 @@ class TextArea extends AutoControlledComponent<WithAsProp<TextAreaProps>, TextAr
 
   static displayName = 'TextArea'
 
-  static slotClassNames: TextAreaSlotClassNames
-
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
@@ -87,12 +81,12 @@ class TextArea extends AutoControlledComponent<WithAsProp<TextAreaProps>, TextAr
     return (
       <ElementType
         value={value}
-        className={TextArea.slotClassNames.textArea}
-        styles={styles.textArea}
+        className={classes.root}
         onChange={this.handleChange}
         disabled={disabled}
+        {...accessibility.attributes.root}
         {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.textArea, unhandledProps)}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       />
     )
   }
@@ -105,8 +99,10 @@ class TextArea extends AutoControlledComponent<WithAsProp<TextAreaProps>, TextAr
   }
 }
 
-TextArea.slotClassNames = {
-  textArea: `${TextArea.className}__textarea`,
-}
-
+/**
+ * A TextArea is a multi-line plan-text editing control.
+ *
+ * @accessibility
+ * For good screen reader experience set `aria-label` or `aria-labelledby` attribute for textarea.
+ */
 export default withSafeTypeForAs<typeof TextArea, TextAreaProps, 'textarea'>(TextArea)
