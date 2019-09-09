@@ -2,16 +2,17 @@ import * as _ from 'lodash'
 import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import Loader from '../../../../components/Loader/Loader'
-import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
+import { ButtonProps } from '../../../../components/Button/Button'
 import { ButtonVariables } from './buttonVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
-const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVariables> = {
+const buttonStyles: ComponentSlotStylesInput<ButtonProps, ButtonVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
-    const { ':focus': borderFocusStyles } = getBorderFocusStyles({
+    const { borderWidth } = siteVariables
+
+    const borderFocusStyles = getBorderFocusStyles({
       siteVariables,
-      isFromKeyboard: p.isFromKeyboard,
       ...(p.circular && {
         borderRadius: v.circularBorderRadius,
         focusOuterBorderColor: v.circularBorderColorFocus,
@@ -96,13 +97,23 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
         },
 
         ':focus': {
+          ...borderFocusStyles[':focus'],
           boxShadow: 'none',
+<<<<<<< HEAD
           ...(p.isFromKeyboard
             ? {
                 color: v.colorFocus,
                 backgroundColor: v.backgroundColorFocus,
               }
             : { ':active': { backgroundColor: v.backgroundColorActive } }),
+=======
+          ':active': { backgroundColor: v.backgroundColorActive },
+        },
+        ':focus-visible': {
+          ...borderFocusStyles[':focus-visible'],
+          color: v.colorFocus,
+          backgroundColor: v.backgroundColorFocus,
+>>>>>>> master
         },
       }),
 
@@ -127,14 +138,14 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
           },
 
           ':focus': {
+            ...borderFocusStyles[':focus'],
             boxShadow: 'none',
-            ...(p.isFromKeyboard
-              ? {
-                  color: v.circularColorActive,
-                  backgroundColor: v.circularBackgroundColorFocus,
-                  ...borderFocusStyles,
-                }
-              : { ':active': { backgroundColor: v.circularBackgroundColorActive } }),
+            ':active': { backgroundColor: v.circularBackgroundColorActive },
+          },
+          ':focus-visible': {
+            ...borderFocusStyles[':focus-visible'],
+            color: v.circularColorActive,
+            backgroundColor: v.circularBackgroundColorFocus,
           },
         }),
 
@@ -155,12 +166,11 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
 
         ':focus': {
           boxShadow: 'none',
-          outline: 'none',
-
-          ...(p.isFromKeyboard && {
-            ...borderFocusStyles,
-            ...getIconFillOrOutlineStyles({ outline: false }),
-          }),
+          ...borderFocusStyles[':focus'],
+        },
+        ':focus-visible': {
+          ...borderFocusStyles[':focus-visible'],
+          ...getIconFillOrOutlineStyles({ outline: false }),
         },
 
         ...(p.primary && {
@@ -183,14 +193,14 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVa
           },
 
           ':focus': {
+            ...borderFocusStyles[':focus'],
             boxShadow: 'none',
-            ...(p.isFromKeyboard
-              ? {
-                  color: v.primaryColorFocus,
-                  backgroundColor: v.primaryBackgroundColorFocus,
-                  ...borderFocusStyles,
-                }
-              : { ':active': { backgroundColor: v.primaryBackgroundColorActive } }),
+            ':active': { backgroundColor: v.primaryBackgroundColorActive },
+          },
+          ':focus-visible': {
+            ...borderFocusStyles[':focus-visible'],
+            color: v.primaryColorFocus,
+            backgroundColor: v.primaryBackgroundColorFocus,
           },
         }),
 

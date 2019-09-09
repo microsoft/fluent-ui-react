@@ -1,13 +1,7 @@
 import { pxToRem } from '../../../../lib'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import {
-  default as ListItem,
-  ListItemProps,
-  ListItemState,
-} from '../../../../components/List/ListItem'
-
-type ListItemPropsAndState = ListItemProps & ListItemState
+import { default as ListItem, ListItemProps } from '../../../../components/List/ListItem'
 
 const truncateStyle = {
   overflow: 'hidden',
@@ -15,7 +9,7 @@ const truncateStyle = {
   whiteSpace: 'nowrap',
 }
 
-const selectableHoverStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
+const selectableHoverStyle = (p: ListItemProps, v): ICSSInJSStyle => ({
   background: v.selectableFocusHoverBackgroundColor,
   color: v.selectableFocusHoverColor,
   cursor: 'pointer',
@@ -34,14 +28,14 @@ const selectableHoverStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
   [`& .${ListItem.slotClassNames.endMedia}`]: { display: 'block', color: 'inherit' },
 })
 
-const selectableFocusStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
+const selectableFocusStyle = (p: ListItemProps, v): ICSSInJSStyle => ({
   ...selectableHoverStyle(p, v),
   outline: 0,
 
-  ...(p.isFromKeyboard && {
+  ':focus-visible': {
     outline: `.2rem solid ${v.selectedFocusOutlineColor}`,
     zIndex: 1,
-  }),
+  },
 })
 
 const selectedStyle = variables => ({
@@ -49,7 +43,7 @@ const selectedStyle = variables => ({
   color: variables.selectedColor,
 })
 
-const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
+const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     minHeight: v.minHeight,
     padding: v.rootPadding,
