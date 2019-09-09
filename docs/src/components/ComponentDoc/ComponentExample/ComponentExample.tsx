@@ -3,6 +3,7 @@ import {
   CodeSnippet,
   KnobInspector,
   KnobProvider,
+  LogInspector,
 } from '@stardust-ui/docs-components'
 import { Divider, Flex, Menu, Segment, Provider, ICSSInJSStyle } from '@stardust-ui/react'
 import * as _ from 'lodash'
@@ -484,6 +485,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                           {element}
                         </VariableResolver>
                       </Segment>
+
+                      <Segment styles={{ padding: 0 }}>
+                        <LogInspector silent />
+                      </Segment>
+
                       {showCode && (
                         <Segment styles={{ padding: 0 }}>
                           {showCode && this.renderSourceCode()}

@@ -1698,56 +1698,6 @@
   resolved "https://registry.yarnpkg.com/@snyk/gemfile/-/gemfile-1.2.0.tgz#919857944973cce74c650e5428aaf11bcd5c0457"
   integrity sha512-nI7ELxukf7pT4/VraL4iabtNNMz8mUo7EXlqCFld8O5z6mIMLX9llps24iPpaIZOwArkY3FWA+4t+ixyvtTSIA==
 
-"@stardust-ui/fela-bindings@^10.6.2":
-  version "10.6.2"
-  resolved "https://registry.yarnpkg.com/@stardust-ui/fela-bindings/-/fela-bindings-10.6.2.tgz#eb16bcf4492bbe8cf84e54819f10f231ed79e260"
-  integrity sha512-DlctTgTG3F0K/djugvvr/7o2g4q9laI1Ks8DA+x/SgyObYzlNJHfEHZeOc2ARNgZE1ulVc6oJSYXrPjkiLWpew==
-  dependencies:
-    "@stardust-ui/fela-dom" "^10.6.2"
-    "@stardust-ui/fela-tools" "^10.6.2"
-    fast-loops "^1.0.0"
-    react-addons-shallow-compare "^15.6.2"
-    shallow-equal "^1.0.0"
-
-"@stardust-ui/fela-dom@^10.6.2":
-  version "10.6.2"
-  resolved "https://registry.yarnpkg.com/@stardust-ui/fela-dom/-/fela-dom-10.6.2.tgz#6aa9a98aac518b604a7e2a697256d817f1e68a76"
-  integrity sha512-JruOJTlfEB5SjVEiPv1YMQyGf3O2lYk02mHQBsAAd4S7q9PottDdVT1tZXWIXuq2kIYOWOuwT8eFTDb08pwhtw==
-  dependencies:
-    css-in-js-utils "^3.0.0"
-    fast-loops "^1.0.1"
-    fela-utils "^10.5.0"
-
-"@stardust-ui/fela-tools@^10.6.2":
-  version "10.6.2"
-  resolved "https://registry.yarnpkg.com/@stardust-ui/fela-tools/-/fela-tools-10.6.2.tgz#ef91b44b4ba36c6b0c5022141eef85f836c87825"
-  integrity sha512-TyZxcqirytt4QFSKND+lflw+VLFHiZQdawPfzkrraZcnofa72sQ2JGu5oTO5kw0/TnDEDgcQHfYhpq3QjxWgqA==
-  dependencies:
-    "@stardust-ui/fela" "^10.6.1"
-    css-in-js-utils "^3.0.0"
-    fast-loops "^1.0.0"
-    fela-utils "^10.5.0"
-
-"@stardust-ui/fela@^10.6.1":
-  version "10.6.1"
-  resolved "https://registry.yarnpkg.com/@stardust-ui/fela/-/fela-10.6.1.tgz#bb96a30a25d14c7f797b8a5db13811464de09a9a"
-  integrity sha512-RMI8Z/pDzXKp7W02Fc/V3fF6f7bc0RSELAZS16Qu0/HLPImvAVdMKkTpLsWAGTOPcH2bHDFvweML6Y9Y//zeqw==
-  dependencies:
-    css-in-js-utils "^3.0.0"
-    csstype "^2.5.5"
-    fast-loops "^1.0.0"
-    fela-utils "^10.5.0"
-    isobject "^3.0.1"
-
-"@stardust-ui/react-fela@^10.6.2":
-  version "10.6.2"
-  resolved "https://registry.yarnpkg.com/@stardust-ui/react-fela/-/react-fela-10.6.2.tgz#e282f632c9a16eaceb244d1bb144f6b733db665f"
-  integrity sha512-cD6qjfV+Y66P+8yRt7fiXjE2l+h1L9VtXTaYzxfWq8mVdmXhcu6lBlQt4amOliARvAA5k4N2jMNeXnAWS9qKGw==
-  dependencies:
-    "@stardust-ui/fela-bindings" "^10.6.2"
-    "@stardust-ui/fela-dom" "^10.6.2"
-    prop-types "^15.5.8"
-
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"
@@ -3593,28 +3543,6 @@ check-types@^7.3.0:
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/check-types/-/check-types-7.4.0.tgz#0378ec1b9616ec71f774931a3c6516fad8c152f4"
   integrity sha512-YbulWHdfP99UfZ73NcUDlNJhEIDgm9Doq9GhpyXbF+7Aegi3CVV7qqMCKTTqJxlvEvnQBp9IA+dxsGN6xK/nSg==
-
-cheerio@0.22.0:
-  version "0.22.0"
-  resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-0.22.0.tgz#a9baa860a3f9b595a6b81b1a86873121ed3a269e"
-  integrity sha1-qbqoYKP5tZWmuBsahocxIe06Jp4=
-  dependencies:
-    css-select "~1.2.0"
-    dom-serializer "~0.1.0"
-    entities "~1.1.1"
-    htmlparser2 "^3.9.1"
-    lodash.assignin "^4.0.9"
-    lodash.bind "^4.1.4"
-    lodash.defaults "^4.0.1"
-    lodash.filter "^4.4.0"
-    lodash.flatten "^4.2.0"
-    lodash.foreach "^4.3.0"
-    lodash.map "^4.4.0"
-    lodash.merge "^4.4.0"
-    lodash.pick "^4.2.1"
-    lodash.reduce "^4.4.0"
-    lodash.reject "^4.4.0"
-    lodash.some "^4.4.0"
 
 cheerio@^1.0.0-rc.2:
   version "1.0.0-rc.2"
@@ -6014,53 +5942,53 @@ fela-dom@^10.6.1:
     fast-loops "^1.0.1"
     fela-utils "^10.6.1"
 
-fela-plugin-custom-property@^10.5.0:
-  version "10.5.0"
-  resolved "https://registry.yarnpkg.com/fela-plugin-custom-property/-/fela-plugin-custom-property-10.5.0.tgz#cda6c247c1c8cbe0602a1334ff0259a16e8c8f39"
-  integrity sha512-r0LsY/nBTJ8xq82rORaTo0IoxAahX4Pcvm/AV/cbWjfg/i9lVq5MIis2ouD1Zq7ZukaC1OGL9g1Raw43LFqCyQ==
+fela-plugin-custom-property@^10.6.1:
+  version "10.6.1"
+  resolved "https://registry.yarnpkg.com/fela-plugin-custom-property/-/fela-plugin-custom-property-10.6.1.tgz#3a2d06ac4e509a7ea0335b3b959850ad5f3eede1"
+  integrity sha512-TTxCJaJTjiY33U8tLPTPhXgQhTtPeT0gK0BbdvOnYfh9wdjRCF7cjFxl0pb3NhjQWG2znfIZraHzSACZ9tlLQg==
   dependencies:
     css-in-js-utils "^3.0.0"
     isobject "^3.0.1"
 
-fela-plugin-embedded@^10.5.0:
-  version "10.5.0"
-  resolved "https://registry.yarnpkg.com/fela-plugin-embedded/-/fela-plugin-embedded-10.5.0.tgz#b97b9e200479dd5907ef208f7ace3896ccc0c8e7"
-  integrity sha512-brYKcwe/AbrtdXyTjP4SJtguryGQTn82hPmOUV1oFgq5np2e55RriFbPUpDETSxI8Kjw2sTgJ3ZHyyoI/tD3nQ==
+fela-plugin-embedded@^10.6.1:
+  version "10.6.1"
+  resolved "https://registry.yarnpkg.com/fela-plugin-embedded/-/fela-plugin-embedded-10.6.1.tgz#a16bc2d306df9f5030644c296977502b13b25f9e"
+  integrity sha512-K2s+EW1wj1ulPu5XPUysBW+dyRlmWL1m+rREhy04tjaO3dasYDnzgL5121HzEB465iCnGaALVlFyoBOq+FAVlA==
   dependencies:
     fast-loops "^1.0.0"
     isobject "^3.0.1"
 
-fela-plugin-fallback-value@^10.5.0:
-  version "10.5.0"
-  resolved "https://registry.yarnpkg.com/fela-plugin-fallback-value/-/fela-plugin-fallback-value-10.5.0.tgz#829be50180f7d2da8d76cf99811a919a458a22da"
-  integrity sha512-CgirjSPtTvoRxoS3JfTAIKtvlrqe2PzXyELUIQ2V1o2lWVozBJc9lmRC493FPPtyPpgP8Zn311JLxaUC2hOGVQ==
+fela-plugin-fallback-value@^10.6.1:
+  version "10.6.1"
+  resolved "https://registry.yarnpkg.com/fela-plugin-fallback-value/-/fela-plugin-fallback-value-10.6.1.tgz#124da673e7ba4b8d59bdd83ae6d904160c131497"
+  integrity sha512-ViOTKlDMt+6OlOseRoUYRSeTKY4haPWpgiOq25NlgV6b640XoSZPQSvbhe+BHjZMEykYgEh3OuWzQqHvfpDKzg==
   dependencies:
     css-in-js-utils "^3.0.0"
     isobject "^3.0.1"
 
-fela-plugin-placeholder-prefixer@^10.5.0:
-  version "10.5.0"
-  resolved "https://registry.yarnpkg.com/fela-plugin-placeholder-prefixer/-/fela-plugin-placeholder-prefixer-10.5.0.tgz#561983ab3422228b75e873d237eeaffac8c7523a"
-  integrity sha512-2+DNpapbdjeZsT4oNJvBiM+2AhMG0TNPPvRgsP+c5ZhPZnG+s4P8AjYwAXEu8t/++aVkT/DPdD+9j3gLYSJHIA==
+fela-plugin-placeholder-prefixer@^10.6.1:
+  version "10.6.1"
+  resolved "https://registry.yarnpkg.com/fela-plugin-placeholder-prefixer/-/fela-plugin-placeholder-prefixer-10.6.1.tgz#c55b27cb32c61eefeee660ebcac39c64c0de1d6b"
+  integrity sha512-yZcTYsjRXjNrDFeDvML5QalgeO9hHN6sqC3geAwC44GTpaw9BG22BKiuCInvzhkSYWuT+q8XSgPrW7wDwL1TRQ==
   dependencies:
     fast-loops "^1.0.0"
-    fela-plugin-custom-property "^10.5.0"
+    fela-plugin-custom-property "^10.6.1"
 
-fela-plugin-prefixer@^10.5.0:
-  version "10.5.0"
-  resolved "https://registry.yarnpkg.com/fela-plugin-prefixer/-/fela-plugin-prefixer-10.5.0.tgz#3bf383fa4829bb6afe0d91ca2c16677520571251"
-  integrity sha512-gDGcRaSVndI8tJbnrW95z7Tx+W31MrkYKvot4eUAQ89XiziAFcGgW+39TGeGgPjBbVK6D++xUWePsCKLDPlaTw==
+fela-plugin-prefixer@^10.6.1:
+  version "10.6.1"
+  resolved "https://registry.yarnpkg.com/fela-plugin-prefixer/-/fela-plugin-prefixer-10.6.1.tgz#a13c358446ac563520672f277fa0273380bf6713"
+  integrity sha512-1QXNzwlkos5Ezi8mpYY6jJVrN1KzZdCWTjqm2yWj32zF5SFUVAFPF1/4+Shld7iFPZMshl7ijDdK1zLM/H/fuw==
   dependencies:
     css-in-js-utils "^3.0.0"
     fast-loops "^1.0.0"
-    fela-plugin-fallback-value "^10.5.0"
-    inline-style-prefixer "^5.0.1"
+    fela-plugin-fallback-value "^10.6.1"
+    inline-style-prefixer "^5.1.0"
     isobject "^3.0.1"
 
-fela-plugin-rtl@^10.5.0:
-  version "10.5.0"
-  resolved "https://registry.yarnpkg.com/fela-plugin-rtl/-/fela-plugin-rtl-10.5.0.tgz#a4ccb51e0ce6504fe7ea705b23d89ca7f0423244"
-  integrity sha512-kZWEgZrU8DpV4fA7VnCliEpbO8ag5hj+BPoakSFgHtjSieb/r9iY6B+ZCvz4OLYgU+84X+RonnddAFwukAwk/w==
+fela-plugin-rtl@^10.6.1:
+  version "10.6.1"
+  resolved "https://registry.yarnpkg.com/fela-plugin-rtl/-/fela-plugin-rtl-10.6.1.tgz#67110d80973dddfc08af63ea9431e6b58921964c"
+  integrity sha512-TaTQy5flxD1VJOP0oHLD70sj7ptL6pd6F/qGGpzFFmhIK++LR9fwN3HT0adiQ7t7HLQBX3VY4G8DcpIMzJluiA==
   dependencies:
     rtl-css-js "^1.1.3"
 
@@ -6074,7 +6002,7 @@ fela-tools@^10.6.1:
     fela "^10.6.1"
     fela-utils "^10.6.1"
 
-fela-utils@^10.5.0, fela-utils@^10.6.1:
+fela-utils@^10.6.1:
   version "10.6.1"
   resolved "https://registry.yarnpkg.com/fela-utils/-/fela-utils-10.6.1.tgz#cbb58d94c32dddc0a561f28e67174f3b9ae27700"
   integrity sha512-7xYmvfWpFwktchtXMnwbRNcAcCE3GRxYY44U7VUfAcnVUf+6JiuD72yVWLlsQcMMWRFlr+NRi/d5QvqgWNZAbA==
@@ -6689,15 +6617,6 @@ git-url-parse@11.1.2, git-url-parse@^11.1.2:
   integrity sha512-gZeLVGY8QVKMIkckncX+iCq2/L8PlwncvDFKiWkBn9EtCfYDbliRTTp6qzyQ1VMdITUfq7293zDzfpjdiGASSQ==
   dependencies:
     git-up "^4.0.0"
-
-gitbook-plugin-prism@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/gitbook-plugin-prism/-/gitbook-plugin-prism-2.4.0.tgz#4128e2cbfa4c8c4610e8ed330056c249c5ceb2e9"
-  integrity sha512-qt16TmNJA5SVpFF+4OhiaPf5VHg/aWj9QFuYEC/dUHmBgYbaq5HMwsqGFFXj4N/zwqAzr3YDiq1V/udsU5D1qA==
-  dependencies:
-    cheerio "0.22.0"
-    mkdirp "0.5.1"
-    prismjs "^1.15.0"
 
 gitconfiglocal@^1.0.0:
   version "1.0.0"
@@ -7719,13 +7638,12 @@ inline-style-parser@0.1.1:
   resolved "https://registry.yarnpkg.com/inline-style-parser/-/inline-style-parser-0.1.1.tgz#ec8a3b429274e9c0a1f1c4ffa9453a7fef72cea1"
   integrity sha512-7NXolsK4CAS5+xvdj5OMMbI962hU/wvwoxk+LWR9Ek9bVtyuuYScDN6eS0rUm6TxApFpw7CX1o4uJzcd4AyD3Q==
 
-inline-style-prefixer@^5.0.1:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-5.0.3.tgz#14e4f99b932eb57686f1fa912d63a979831bcdf5"
-  integrity sha512-cD31gdJKWn84vAJYQTFH54jhq0t05xOAQr6YGmcCT8UV34A8ebu9Evwt/LI4YAcnNJGxmXWO+YEEvb1j+aqydA==
+inline-style-prefixer@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-5.1.0.tgz#cb63195f9456dcda25cf59743e45c4d9815b0811"
+  integrity sha512-giteQHPMrApQOSjNSjteO5ZGSGMRf9gas14fRy2lg2buSc1nRnj6o6xuNds5cMTKrkncyrTu3gJn/yflFMVdmg==
   dependencies:
     css-in-js-utils "^2.0.0"
-    gitbook-plugin-prism "^2.4.0"
 
 inquirer@^6.2.0, inquirer@^6.2.2:
   version "6.3.1"
@@ -9404,15 +9322,10 @@ lodash.assign@^4.0.3, lodash.assign@^4.0.6, lodash.assign@^4.2.0:
   resolved "https://registry.yarnpkg.com/lodash.assign/-/lodash.assign-4.2.0.tgz#0d99f3ccd7a6d261d19bdaeb9245005d285808e7"
   integrity sha1-DZnzzNem0mHRm9rrkkUAXShYCOc=
 
-lodash.assignin@^4.0.9, lodash.assignin@^4.2.0:
+lodash.assignin@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.assignin/-/lodash.assignin-4.2.0.tgz#ba8df5fb841eb0a3e8044232b0e263a8dc6a28a2"
   integrity sha1-uo31+4QesKPoBEIysOJjqNxqKKI=
-
-lodash.bind@^4.1.4:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/lodash.bind/-/lodash.bind-4.2.1.tgz#7ae3017e939622ac31b7d7d7dcb1b34db1690d35"
-  integrity sha1-euMBfpOWIqwxt9fX3LGzTbFpDTU=
 
 lodash.camelcase@^4.3.0:
   version "4.3.0"
@@ -9429,11 +9342,6 @@ lodash.clonedeep@^4.3.0, lodash.clonedeep@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
 
-lodash.defaults@^4.0.1:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
-  integrity sha1-0JF4cW/+pN3p5ft7N/bwgCJ0WAw=
-
 lodash.escape@^3.0.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/lodash.escape/-/lodash.escape-3.2.0.tgz#995ee0dc18c1b48cc92effae71a10aab5b487698"
@@ -9446,17 +9354,12 @@ lodash.escape@^4.0.1:
   resolved "https://registry.yarnpkg.com/lodash.escape/-/lodash.escape-4.0.1.tgz#c9044690c21e04294beaa517712fded1fa88de98"
   integrity sha1-yQRGkMIeBClL6qUXcS/e0fqI3pg=
 
-lodash.filter@^4.4.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.filter/-/lodash.filter-4.6.0.tgz#668b1d4981603ae1cc5a6fa760143e480b4c4ace"
-  integrity sha1-ZosdSYFgOuHMWm+nYBQ+SAtMSs4=
-
 lodash.find@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.find/-/lodash.find-4.6.0.tgz#cb0704d47ab71789ffa0de8b97dd926fb88b13b1"
   integrity sha1-ywcE1Hq3F4n/oN6Ll92Sb7iLE7E=
 
-lodash.flatten@^4.2.0, lodash.flatten@^4.4.0:
+lodash.flatten@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.flatten/-/lodash.flatten-4.4.0.tgz#f31c22225a9632d2bbf8e4addbef240aa765a61f"
   integrity sha1-8xwiIlqWMtK7+OSt2+8kCqdlph8=
@@ -9465,11 +9368,6 @@ lodash.flattendeep@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"
   integrity sha1-+wMJF/hqMTTlvJvsDWngAT3f7bI=
-
-lodash.foreach@^4.3.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/lodash.foreach/-/lodash.foreach-4.5.0.tgz#1a6a35eace401280c7f06dddec35165ab27e3e53"
-  integrity sha1-Gmo16s5AEoDH8G3d7DUWWrJ+PlM=
 
 lodash.get@^4.4.2:
   version "4.4.2"
@@ -9540,12 +9438,7 @@ lodash.keys@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.keys/-/lodash.keys-4.2.0.tgz#a08602ac12e4fb83f91fc1fb7a360a4d9ba35205"
   integrity sha1-oIYCrBLk+4P5H8H7ejYKTZujUgU=
 
-lodash.map@^4.4.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.map/-/lodash.map-4.6.0.tgz#771ec7839e3473d9c4cde28b19394c3562f4f6d3"
-  integrity sha1-dx7Hg540c9nEzeKLGTlMNWL09tM=
-
-lodash.merge@4.6.1, lodash.merge@^4.4.0:
+lodash.merge@4.6.1:
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.1.tgz#adc25d9cb99b9391c59624f379fbba60d7111d54"
   integrity sha512-AOYza4+Hf5z1/0Hztxpm2/xiPZgi/cjMqdnKTUWTBSKchJlxXXuUSxCCl8rJlf4g6yww/j6mA8nC8Hw/EZWxKQ==
@@ -9555,20 +9448,10 @@ lodash.once@^4.0.0:
   resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
   integrity sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=
 
-lodash.pick@^4.2.1, lodash.pick@^4.4.0:
+lodash.pick@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
   integrity sha1-UvBWEP/53tQiYRRB7R/BI6AwAbM=
-
-lodash.reduce@^4.4.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.reduce/-/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
-  integrity sha1-8atrg5KZrUj3hKu/R2WW8DuRTTs=
-
-lodash.reject@^4.4.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.reject/-/lodash.reject-4.6.0.tgz#80d6492dc1470864bbf583533b651f42a9f52415"
-  integrity sha1-gNZJLcFHCGS79YNTO2UfQqn1JBU=
 
 lodash.restparam@^3.0.0:
   version "3.6.1"
@@ -9579,11 +9462,6 @@ lodash.set@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
   integrity sha1-2HV7HagH3eJIFrDWqEvqGnYjCyM=
-
-lodash.some@^4.4.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.some/-/lodash.some-4.6.0.tgz#1bb9f314ef6b8baded13b549169b2a945eb68e4d"
-  integrity sha1-G7nzFO9ri63tE7VJFpsqlF62jk0=
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
@@ -11635,7 +11513,7 @@ pretty-hrtime@^1.0.0:
   resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz#b7e3ea42435a4c9b2759d99e0f201eb195802ee1"
   integrity sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=
 
-prismjs@^1.15.0, prismjs@^1.16.0:
+prismjs@^1.16.0:
   version "1.16.0"
   resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.16.0.tgz#406eb2c8aacb0f5f0f1167930cb83835d10a4308"
   integrity sha512-OA4MKxjFZHSvZcisLGe14THYsug/nF6O1f0pAJc0KN0wTyAcLqmsbE+lTGKSpyh+9pEW57+k6pg2AfYR+coyHA==

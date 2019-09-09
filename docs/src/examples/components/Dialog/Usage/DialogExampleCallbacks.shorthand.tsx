@@ -1,67 +1,33 @@
-import { Button, Dialog, Divider, Grid, Label, Segment } from '@stardust-ui/react'
+import { useBooleanKnob, useLogKnob } from '@stardust-ui/docs-components'
+import { Button, Dialog, DialogProps } from '@stardust-ui/react'
 import * as React from 'react'
 
-type DialogExampleCallbacksState = {
-  log: string[]
-  logCount: number
-  open: boolean
+const logFormatter = (name: string, e: React.SyntheticEvent, data: DialogProps) => {
+  return [
+    `[${new Date().toLocaleTimeString()}]`,
+    `${name}(e: { type: ${e.type} }, data: { open: ${data.open} })`,
+  ].join(' ')
 }
 
-export default class DialogExampleCallbacks extends React.Component<
-  {},
-  DialogExampleCallbacksState
-> {
-  state = {
-    log: [],
-    logCount: 0,
-    open: false,
-  }
+const DialogExampleCallbacks = () => {
+  const [open, setOpen] = useBooleanKnob({ name: 'open' })
 
-  handleOpen = () => {
-    this.setState({ open: true })
-    this.writeLog('onOpen()')
-  }
+  const onCancel = useLogKnob('onCancel', () => setOpen(false), logFormatter)
+  const onConfirm = useLogKnob('onConfirm', () => setOpen(false), logFormatter)
+  const onOpen = useLogKnob('onOpen', () => setOpen(true), logFormatter)
 
-  handleClose = (callbackName: string) => () => {
-    this.setState({ open: false })
-    this.writeLog(callbackName)
-  }
-
-  clearLog = () => this.setState({ log: [], logCount: 0 })
-
-  writeLog = (eventName: string) =>
-    this.setState({
-      log: [`${new Date().toLocaleTimeString()}: ${eventName}`, ...this.state.log].slice(0, 20),
-      logCount: this.state.logCount + 1,
-    })
-
-  render() {
-    const { log, logCount, open } = this.state
-
-    return (
-      <Grid columns={2}>
-        <Dialog
-          cancelButton="Cancel"
-          confirmButton="Confirm"
-          onCancel={this.handleClose('onCancel()')}
-          onConfirm={this.handleClose('onConfirm()')}
-          onOpen={this.handleOpen}
-          open={open}
-          header="Action confirmation"
-          trigger={<Button content="Open a dialog" />}
-        />
-
-        <Segment>
-          <Button onClick={this.clearLog}>Clear</Button>
-          Event Log <Label circular>{logCount}</Label>
-          {log.length > 0 && <Divider />}
-          <pre>
-            {log.map((e, i) => (
-              <div key={i}>{e}</div>
-            ))}
-          </pre>
-        </Segment>
-      </Grid>
-    )
-  }
+  return (
+    <Dialog
+      cancelButton="Cancel"
+      confirmButton="Confirm"
+      onCancel={onCancel}
+      onConfirm={onConfirm}
+      onOpen={onOpen}
+      open={open}
+      header="Action confirmation"
+      trigger={<Button content="Open a dialog" />}
+    />
+  )
 }
+
+export default DialogExampleCallbacks

@@ -17,6 +17,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix `Menu` and `Submenu` to use correct indicator icon and have correct width behavior [redlines] @bcalvery ([#1831](https://github.com/stardust-ui/react/pull/1831))
+
+<!--------------------------------[ v0.38.0 ]------------------------------- -->
+## [v0.38.0](https://github.com/stardust-ui/react/tree/v0.38.0) (2019-09-06)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.37...v0.38.0)
+
 ### BREAKING CHANGES
 - `Alert`, `Attachment`, `Button`, `ChatMessage`, `Checkbox`, `Embed`, `Grid`, `ListItem`, `RadioGroupItem`, `Reaction`, `Slider`, `ToolbarCustomItem`, `ToolbarItem`, `ToolbarMenuItem` do not have `isFromKeyboard` in their style functions anymore @layershifter ([#1850](https://github.com/stardust-ui/react/pull/1850))
 - `AttachmentState`, `ButtonState`, `GridState`, `ListItemState`, `ReactionState`, `ToolbarCustomItemState`, `ToolbarItemState`, `ToolbarMenuItemState` interfaces are no longer exported @layershifter ([#1850](https://github.com/stardust-ui/react/pull/1850))
@@ -26,6 +33,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `felaRenderer` is used in `Provider` explicitly @lucivpav ([#1842](https://github.com/stardust-ui/react/pull/1842))
 - Fix `selectableListBehavior` to set `tabindex=-1` to `List`'s container to work correctly with screen readers @sophieH29 ([#1858](https://github.com/stardust-ui/react/pull/1858))
 - Fix `Checkbox` changed to be vertically aligned to the top of it's content @bcalvery ([#1857](https://github.com/stardust-ui/react/pull/1857))
+- Fix `Dropdown` context by passing custom `window` to `Downshift` @silviuavram ([#1884](https://github.com/stardust-ui/react/pull/1884))
 - Fix `createShorthandFactory` types @lucivpav ([#1875](https://github.com/stardust-ui/react/pull/1875))
 - Fix `Toolbar` overflow screener test @lucivpav ([#1879](https://github.com/stardust-ui/react/pull/1879))
 
@@ -35,12 +43,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `fitted` prop to `Alert` component @layershifter ([#1872](https://github.com/stardust-ui/react/pull/1872))
 - Add `backdrop` and `closeOnOutsideClick` props to `Dialog` component @layershifter ([#1847](https://github.com/stardust-ui/react/pull/1847))
 
+### Performance
+- Use `Object.assign` in `@babel/plugin-proposal-object-rest-spread` @layershifter ([#1895](https://github.com/stardust-ui/react/pull/1895))
+
 ### Documentation
 - Add usage example regarding `Checkbox` in `Form` @lucivpav ([#1845](https://github.com/stardust-ui/react/pull/1845))
 - Fix styles in `code-sandbox` package @lucivpav ([#1853](https://github.com/stardust-ui/react/pull/1853))
 - Adding accessibility tab content @kolaps33 ([#1840](https://github.com/stardust-ui/react/pull/1840))
 - Fix CodeSandbox examples versions mismatch @lucivpav ([#1849](https://github.com/stardust-ui/react/pull/1849))
 - Update documentation regarding `renderSelectedItem` prop in `Dropdown` @lucivpav ([#1856](https://github.com/stardust-ui/react/pull/1856))
+- Fix navigation links pointing to wrong direction @lucivpav ([#1868](https://github.com/stardust-ui/react/pull/1868))
+- Add `Copy To Clipboard` prototype @lucivpav ([#1860](https://github.com/stardust-ui/react/pull/1860))
 
 <!--------------------------------[ v0.37.0 ]------------------------------- -->
 ## [v0.37.0](https://github.com/stardust-ui/react/tree/v0.37.0) (2019-08-26)
