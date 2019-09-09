@@ -272,7 +272,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
               open: isSubtreeOpen,
               renderItemTitle,
               key: item['id'],
-              ref: elementRef,
+              contentRef: elementRef,
               ...restItemForRender,
             },
             overrideProps: this.handleTreeItemOverrides,
