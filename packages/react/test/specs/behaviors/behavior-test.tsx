@@ -23,6 +23,8 @@ import {
   dialogBehavior,
   radioGroupBehavior,
   radioGroupItemBehavior,
+  navigableListBehavior,
+  navigableListItemBehavior,
   selectableListBehavior,
   selectableListItemBehavior,
   sliderBehavior,
@@ -81,6 +83,8 @@ testHelper.addBehavior('submenuBehavior', submenuBehavior)
 testHelper.addBehavior('popupBehavior', popupBehavior)
 testHelper.addBehavior('radioGroupBehavior', radioGroupBehavior)
 testHelper.addBehavior('radioGroupItemBehavior', radioGroupItemBehavior)
+testHelper.addBehavior('navigableListBehavior', navigableListBehavior)
+testHelper.addBehavior('navigableListItemBehavior', navigableListItemBehavior)
 testHelper.addBehavior('selectableListBehavior', selectableListBehavior)
 testHelper.addBehavior('selectableListItemBehavior', selectableListItemBehavior)
 testHelper.addBehavior('sliderBehavior', sliderBehavior)

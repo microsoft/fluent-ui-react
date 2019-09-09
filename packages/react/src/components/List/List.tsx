@@ -39,6 +39,9 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /** A selectable list formats list items as possible choices. */
   selectable?: boolean
 
+  /** A navigable list allows user to navigate through items. */
+  navigable?: boolean
+
   /** Index of the currently selected item. */
   selectedIndex?: number
 
@@ -63,7 +66,6 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 }
 
 export interface ListState {
-  focusedIndex: number
   selectedIndex?: number
 }
 
@@ -83,6 +85,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
     debug: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     selectable: PropTypes.bool,
+    navigable: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
     selectedIndex: PropTypes.number,
@@ -99,25 +102,25 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
   static autoControlledProps = ['selectedIndex']
 
   getInitialAutoControlledState() {
-    return { selectedIndex: -1, focusedIndex: 0 }
+    return { selectedIndex: -1 }
   }
 
   static Item = ListItem
 
   // List props that are passed to each individual Item props
-  static itemProps = ['debug', 'selectable', 'truncateContent', 'truncateHeader', 'variables']
+  static itemProps = [
+    'debug',
+    'selectable',
+    'navigable',
+    'truncateContent',
+    'truncateHeader',
+    'variables',
+  ]
 
   handleItemOverrides = (predefinedProps: ListItemProps) => {
     const { selectable } = this.props
 
     return {
-      onFocus: (e: React.SyntheticEvent, itemProps: ListItemProps) => {
-        _.invoke(predefinedProps, 'onFocus', e, itemProps)
-
-        if (selectable) {
-          this.setState({ focusedIndex: itemProps.index })
-        }
-      },
       onClick: (e: React.SyntheticEvent, itemProps: ListItemProps) => {
         _.invoke(predefinedProps, 'onClick', e, itemProps)
 
@@ -150,14 +153,13 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
 
   renderItems() {
     const { items, selectable } = this.props
-    const { focusedIndex, selectedIndex } = this.state
+    const { selectedIndex } = this.state
 
     return _.map(items, (item, index) => {
       const maybeSelectableItemProps = {} as any
 
       if (selectable) {
         maybeSelectableItemProps.selected = index === selectedIndex
-        maybeSelectableItemProps.tabIndex = index === focusedIndex ? 0 : -1
       }
 
       const itemProps = {

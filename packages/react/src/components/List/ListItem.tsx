@@ -46,6 +46,9 @@ export interface ListItemProps
   /** A list item can indicate that it can be selected. */
   selectable?: boolean
 
+  /** A list item can indicate that it can be navigable. */
+  navigable?: boolean
+
   /** Indicates if the current list item is selected. */
   selected?: boolean
   truncateContent?: boolean
@@ -85,6 +88,7 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>> {
     media: PropTypes.any,
 
     selectable: PropTypes.bool,
+    navigable: PropTypes.bool,
     index: PropTypes.number,
     selected: PropTypes.bool,
 

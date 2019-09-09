@@ -19,6 +19,11 @@ const Types = () => (
       description="List can handle selected index in controlled mode."
       examplePath="components/List/Types/ListExampleSelectableControlled"
     />
+    <ComponentExample
+      title="Navigable list"
+      description="List can allow the user to navigate through the list items"
+      examplePath="components/List/Types/ListExampleNavigable"
+    />
   </ExampleSection>
 )
 

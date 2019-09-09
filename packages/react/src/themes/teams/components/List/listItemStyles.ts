@@ -47,7 +47,7 @@ const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     minHeight: v.minHeight,
     padding: v.rootPadding,
-    ...(p.selectable && {
+    ...((p.selectable || p.navigable) && {
       position: 'relative',
 
       // hide the end media by default
@@ -102,7 +102,7 @@ const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
     lineHeight: v.contentMediaLineHeight,
   }),
   endMedia: ({ props: p }) => ({
-    ...(p.selectable && { display: 'none' }),
+    ...((p.selectable || p.navigable) && { display: 'none' }),
     flexShrink: 0,
   }),
   main: () => ({
