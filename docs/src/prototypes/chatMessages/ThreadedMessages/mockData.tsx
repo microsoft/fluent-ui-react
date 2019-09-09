@@ -3,14 +3,60 @@ import { ThreadReplyProps } from './ThreadReplies'
 
 export const actionMenu = {
   iconOnly: true,
+  open: true,
   items: [
+    {
+      key: 'more',
+      icon: 'more',
+      title: 'More actions',
+    },
     {
       key: 'like',
       icon: 'like',
       title: 'Like',
     },
     {
-      key: 'more',
+      key: 'like2',
+      icon: 'like',
+      title: 'Like',
+    },
+    {
+      key: 'like3',
+      icon: 'like',
+      title: 'Like',
+    },
+    {
+      key: 'like4',
+      icon: 'like',
+      title: 'Like',
+    },
+    {
+      key: 'like5',
+      icon: 'like',
+      title: 'Like',
+    },
+    {
+      key: 'like6',
+      icon: 'like',
+      title: 'Like',
+    },
+    {
+      key: 'like7',
+      icon: 'like',
+      title: 'Like',
+    },
+    {
+      key: 'like8',
+      icon: 'like',
+      title: 'Like',
+    },
+    {
+      key: 'like9',
+      icon: 'like',
+      title: 'Like',
+    },
+    {
+      key: 'more2',
       icon: 'more',
       title: 'More actions',
     },

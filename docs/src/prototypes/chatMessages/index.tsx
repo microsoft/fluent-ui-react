@@ -4,6 +4,7 @@ import ImportantAndMentionMessages from './ImportantAndMentionMessages'
 import ChatMessageWithPopover from './ChatMessageWithPopover'
 import ControlMessages from './ControlMessages'
 import ThreadedMessages from './ThreadedMessages'
+import Test from './ThreadedMessages/test'
 
 export default () => (
   <PrototypeSection title="Chat messages">
@@ -24,6 +25,9 @@ export default () => (
     </ComponentPrototype>
     <ComponentPrototype title="Threaded messages" description="Threaded messages example">
       <ThreadedMessages />
+    </ComponentPrototype>
+    <ComponentPrototype title="Test" description="Test">
+      <Test />
     </ComponentPrototype>
   </PrototypeSection>
 )
