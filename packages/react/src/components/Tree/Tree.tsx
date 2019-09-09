@@ -57,7 +57,14 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    */
   renderItemTitle?: ShorthandRenderFunction
 
-  virtualized?: (items: any[]) => React.ReactNode
+  /**
+   * Callback that provides rendered tree items to be used by react-virtualized for instance.
+   * Acts as a render prop, with the rendered tree items being the re-used logic.
+   *
+   * @param {React.ReactElement[]} renderedItem The array of rendered items.
+   * @return {React.ReactNode} The render prop result.
+   */
+  renderedItems?: (renderedItems: React.ReactElement[]) => React.ReactNode
 }
 
 export interface TreeItemForRenderProps {
@@ -94,7 +101,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
-    virtualized: PropTypes.func,
+    renderedItems: PropTypes.func,
   }
 
   static defaultProps = {
@@ -292,7 +299,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
-    const { children, virtualized } = this.props
+    const { children, renderedItems } = this.props
 
     return (
       <Ref innerRef={this.treeRef}>
@@ -305,8 +312,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         >
           {childrenExist(children)
             ? children
-            : virtualized
-            ? virtualized(this.renderContent())
+            : renderedItems
+            ? renderedItems(this.renderContent())
             : this.renderContent()}
         </ElementType>
       </Ref>
