@@ -18,6 +18,7 @@ export type CopyToClipboardProps = {
   position?: TooltipProps['position']
 
   trigger: JSX.Element
+  targetRef?: React.MutableRefObject<HTMLElement>
 }
 
 const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
@@ -30,6 +31,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
     promptText,
     timeout,
     trigger,
+    targetRef,
     value,
   } = props
 
@@ -49,8 +51,8 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
   const handleTriggerClick = React.useCallback(
     (e: React.MouseEvent, ...args) => {
       setCopied(true)
-      if (!attached) {
-        setNotification(Text.create(noticeText), timeout)
+      if (!attached || !!targetRef) {
+        setNotification(Text.create(noticeText), targetRef, timeout)
       }
 
       copyToClipboard(value)

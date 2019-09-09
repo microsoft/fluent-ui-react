@@ -161,9 +161,9 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     const { mountNode, children, trigger } = this.props
     const tooltipContent = this.renderTooltipContent(classes.content, rtl, accessibility)
 
-    const triggerElement = React.Children.only(
-      childrenExist(children) ? children : trigger,
-    ) as React.ReactElement<any>
+    const triggerElement =
+      (children || trigger) &&
+      (React.Children.only(childrenExist(children) ? children : trigger) as React.ReactElement<any>)
     const triggerProps = this.getTriggerProps(triggerElement)
 
     return (
