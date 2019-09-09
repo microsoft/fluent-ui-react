@@ -95,7 +95,6 @@ export default (
 
     const wrapper = mountWithProvider(<Component {...wrapperProps} />)
     const component = wrapper.find(Component)
-
     ;(component.instance() as UIComponent<any, any>).actionHandlers.mockAction = actionHandler
     // Force render component to apply updated key handlers
     wrapper.setProps({})
