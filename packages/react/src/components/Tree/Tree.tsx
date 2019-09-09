@@ -266,37 +266,17 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           const { elementRef, ...restItemForRender } = itemForRender
           const isSubtree = hasSubtree(item)
           const isSubtreeOpen = isSubtree && this.isActiveItem(item['id'])
-          const renderedItem = (
-            <Ref key={item['id']} innerRef={elementRef}>
-              {TreeItem.create(item, {
-                defaultProps: {
-                  className: Tree.slotClassNames.item,
-                  open: isSubtreeOpen,
-                  renderItemTitle,
-                  key: item['id'],
-                  ...restItemForRender,
-                },
-                overrideProps: this.handleTreeItemOverrides,
-              })}
-            </Ref>
-          )
-          /*
-          const renderedItem = props => (
-            <Ref key={item['id']} innerRef={elementRef}>
-              {TreeItem.create(item, {
-                defaultProps: {
-                  className: Tree.slotClassNames.item,
-                  open: isSubtreeOpen,
-                  renderItemTitle,
-                  key: item['id'],
-                  ...restItemForRender,
-                  ...props,
-                },
-                overrideProps: this.handleTreeItemOverrides,
-              })}
-            </Ref>
-          )
-          */
+          const renderedItem = TreeItem.create(item, {
+            defaultProps: {
+              className: Tree.slotClassNames.item,
+              open: isSubtreeOpen,
+              renderItemTitle,
+              key: item['id'],
+              ref: elementRef,
+              ...restItemForRender,
+            },
+            overrideProps: this.handleTreeItemOverrides,
+          })
 
           return [
             ...renderedItems,

@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
+import { Ref } from '@stardust-ui/react-component-ref'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
 import { treeItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -44,6 +45,9 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
 
   /** Array of props for sub tree. */
   items?: ShorthandCollection<TreeItemProps>
+
+  /** Ref for the item DOM element. */
+  contentRef?: React.Ref<HTMLElement>
 
   /** Level of the tree/subtree that contains this item. */
   level?: number
@@ -104,6 +108,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
+    contentRef: PropTypes.object,
     id: PropTypes.string.isRequired,
     index: PropTypes.number,
     items: customPropTypes.collectionShorthand,
@@ -206,9 +211,8 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
   }
 
   renderComponent({ ElementType, accessibility, classes, unhandledProps, styles, variables }) {
-    const { children } = this.props
-
-    return (
+    const { children, contentRef } = this.props
+    const element = (
       <ElementType
         className={classes.root}
         {...accessibility.attributes.root}
@@ -219,6 +223,8 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
         {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
     )
+
+    return contentRef ? <Ref innerRef={contentRef}>{element}</Ref> : element
   }
 }
 
