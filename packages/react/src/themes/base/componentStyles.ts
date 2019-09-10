@@ -3,8 +3,6 @@ export { default as FlexItem } from './components/Flex/flexItemStyles'
 
 export { default as Icon } from './components/Icon/iconStyles'
 
-export { default as Input } from './components/Input/inputStyles'
-
 export { default as Loader } from './components/Loader/loaderStyles'
 
 export { default as Toolbar } from './components/Toolbar/toolbarStyles'
