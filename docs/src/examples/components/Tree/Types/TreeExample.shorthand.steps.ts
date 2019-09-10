@@ -1,7 +1,8 @@
-import { TreeItem } from '@stardust-ui/react'
+import { TreeItem, TreeTitle } from '@stardust-ui/react'
 
 const selectors = {
-  treeItem: (itemIndex: number) => `.${TreeItem.className} :nth-child(${itemIndex}`,
+  treeItem: (itemIndex: number) =>
+    `.${TreeItem.className}:nth-of-type(${itemIndex} .${TreeTitle.className}`,
 }
 
 const config: ScreenerTestsConfig = {
