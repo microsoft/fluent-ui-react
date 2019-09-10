@@ -13,7 +13,7 @@ const callbackLogFormatter = (props: string[]) => (
 
   return [
     `/*[${new Date().toLocaleTimeString()}]*/`,
-    `${name} (e: { "type": "${e.type}" }, data: ${formatCode(JSON.stringify(pickedProps), 'json')}`,
+    `${name} (e: { "type": "${e.type}" }, data: ${formatCode(JSON.stringify(pickedProps), 'json')})`,
   ].join(' ')
 }
 
