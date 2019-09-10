@@ -10,9 +10,11 @@ const treeItemStyles: ComponentSlotStylesInput<TreeItemProps> = {
     padding: `0 0 0 ${pxToRem(1 + (p.level - 1) * 10)}`,
     ':focus': {
       outline: 0,
+    },
+    ':focus-visible': {
       [`> .${TreeTitle.className}`]: {
         position: 'relative',
-        ...getBorderFocusStyles({ siteVariables }),
+        ...getBorderFocusStyles({ siteVariables })[':focus-visible'],
       },
     },
   }),

@@ -9,9 +9,11 @@ const hierarchicalTreeItemStyles = {
     padding: `0 0 0 ${pxToRem(1)}`,
     ':focus': {
       outline: 0,
+    },
+    ':focus-visible': {
       [`> .${HierarchicalTreeTitle.className}`]: {
         position: 'relative',
-        ...getBorderFocusStyles({ siteVariables }),
+        ...getBorderFocusStyles({ siteVariables })[':focus-visible'],
       },
     },
   }),
