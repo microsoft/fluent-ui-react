@@ -20,7 +20,6 @@ import {
 } from '../themes/types'
 import callable from './callable'
 import toCompactArray from './toCompactArray'
-import { ObjectOf } from '../types'
 
 export const emptyTheme: ThemePrepared = {
   siteVariables: {
@@ -74,18 +73,8 @@ export const mergeComponentVariables = (
     return (...args) => {
       const accumulatedVariables = acc(...args)
       const computedComponentVariables = callable(next)(...args)
-      const mergedVariables: ObjectOf<any> = {}
 
-      _.forEach(computedComponentVariables, (variableToMerge, variableName) => {
-        const accumulatedVariable = accumulatedVariables[variableName]
-
-        mergedVariables[variableName] =
-          _.isObject(variableToMerge) && _.isObject(accumulatedVariable)
-            ? { ...accumulatedVariable, ...variableToMerge }
-            : variableToMerge
-      })
-
-      return { ...accumulatedVariables, ...mergedVariables }
+      return _.merge(accumulatedVariables, computedComponentVariables)
     }
   }, initial)
 }
@@ -119,24 +108,9 @@ export const mergeThemeVariables = (
   ...sources: (ThemeComponentVariablesInput | null | undefined)[]
 ): ThemeComponentVariablesPrepared => {
   const displayNames = _.union(..._.map(sources, _.keys))
-  return sources.reduce<ThemeComponentVariablesInput>((acc, next) => {
-    return displayNames.reduce((componentVariables, displayName) => {
-      if (!next) return acc
-
-      // Break references to avoid an infinite loop.
-      // We are replacing functions with new ones that calls the originals.
-      const originalTarget = acc[displayName]
-      const originalSource = next[displayName]
-
-      componentVariables[displayName] = (...args) => {
-        return {
-          ...callable(originalTarget)(...args),
-          ...callable(originalSource)(...args),
-        }
-      }
-
-      return componentVariables
-    }, {})
+  return displayNames.reduce((componentVariables, displayName) => {
+    componentVariables[displayName] = mergeComponentVariables(..._.map(sources, displayName))
+    return componentVariables
   }, {})
 }
 

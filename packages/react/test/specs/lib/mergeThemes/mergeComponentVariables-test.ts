@@ -30,6 +30,22 @@ describe('mergeComponentVariables', () => {
     expect(mergeComponentVariables({ color: undefined }, { color: 'black' })).not.toThrow()
   })
 
+  test('undefined does NOT overwrite previously set value', () => {
+    const merged = mergeComponentVariables({ color: 'black' }, { color: undefined })
+
+    expect(merged()).toMatchObject({
+      color: 'black',
+    })
+  })
+
+  test('null overwrites previously set value', () => {
+    const merged = mergeComponentVariables({ color: 'black' }, { color: null })
+
+    expect(merged()).toMatchObject({
+      color: null,
+    })
+  })
+
   test('merged functions return merged variables', () => {
     const target = () => ({ one: 1, three: 3 })
     const source = () => ({ one: 'one', two: 'two' })
@@ -60,15 +76,15 @@ describe('mergeComponentVariables', () => {
   })
 
   test('object values of variables are merged', () => {
-    const target = { foo: { bar: true }, target: true }
-    const source = { foo: { baz: false }, source: true }
+    const target = { foo: { bar: true, deep: { dOne: 1 } }, target: true }
+    const source = { foo: { baz: false, deep: { dTwo: 'two' } }, source: true }
 
     const merged = mergeComponentVariables(target, source)
 
     expect(merged()).toMatchObject({
       source: true,
       target: true,
-      foo: { bar: true, baz: false },
+      foo: { bar: true, baz: false, deep: { dOne: 1, dTwo: 'two' } },
     })
   })
 })

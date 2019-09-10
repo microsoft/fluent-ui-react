@@ -37,6 +37,22 @@ describe('mergeSiteVariables', () => {
     expect(() => mergeSiteVariables({ color: undefined }, { color: 'black' })).not.toThrow()
   })
 
+  test('undefined does NOT overwrite previously set value', () => {
+    const merged = mergeSiteVariables({ color: 'black' }, { color: undefined })
+
+    expect(merged).toMatchObject({
+      color: 'black',
+    })
+  })
+
+  test('null overwrites previously set value', () => {
+    const merged = mergeSiteVariables({ color: 'black' }, { color: null })
+
+    expect(merged).toMatchObject({
+      color: null,
+    })
+  })
+
   test('merges top level keys', () => {
     const target = { overridden: false, keep: true }
     const source = { overridden: true, add: true }
@@ -48,10 +64,12 @@ describe('mergeSiteVariables', () => {
     })
   })
 
-  test('disregards nested keys', () => {
-    const target = { nested: { replaced: true } }
-    const source = { nested: { other: 'value' } }
+  test('deep merges nested keys', () => {
+    const target = { nested: { replaced: false, deep: { dOne: 1 } } }
+    const source = { nested: { other: 'value', deep: { dTwo: 'two' } } }
 
-    expect(mergeSiteVariables(target, source)).toMatchObject({ nested: { other: 'value' } })
+    expect(mergeSiteVariables(target, source)).toMatchObject({
+      nested: { replaced: false, other: 'value', deep: { dOne: 1, dTwo: 'two' } },
+    })
   })
 })
