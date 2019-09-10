@@ -15,7 +15,7 @@ export default (siteVars): Partial<DropdownVariablesHC> => ({
   selectedItemColor: siteVars.colors.white,
   listBackgroundColor: siteVars.colors.black,
   listBorderColor: siteVars.colors.white,
-  listBoxShadow: undefined,
+  listBoxShadow: null,
   listBorderWidth: '1px',
   listItemFocusBorderWidth: pxToRem(2),
   listItemHeaderColor: siteVars.colors.white,
