@@ -277,6 +277,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
           defaultProps: {
             className: Accordion.slotClassNames.content,
             active,
+            id: contentId,
             accordionTitleId: titleId,
           },
           render: renderPanelContent,

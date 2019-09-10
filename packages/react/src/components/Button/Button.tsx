@@ -174,6 +174,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
 
     return Loader.create(loader || {}, {
       defaultProps: {
+        role: undefined,
         styles: styles.loader,
       },
     })

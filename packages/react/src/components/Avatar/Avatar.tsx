@@ -94,6 +94,7 @@ class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
           defaultProps: {
             fluid: true,
             avatar: true,
+            title: name,
             styles: styles.image,
           },
         })}
@@ -102,6 +103,7 @@ class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
             defaultProps: {
               content: getInitials(name),
               circular: true,
+              title: name,
               styles: styles.label,
             },
           })}
