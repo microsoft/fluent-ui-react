@@ -145,7 +145,6 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
           render(icon, (ComponentType, props) =>
             Icon.create(icon, {
               defaultProps: {
-                name: 'stardust-circle',
                 'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
                 className: DropdownSelectedItem.slotClassNames.icon,
                 styles: styles.icon,

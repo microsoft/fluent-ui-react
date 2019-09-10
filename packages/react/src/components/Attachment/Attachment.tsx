@@ -93,7 +93,7 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>> {
       >
         {icon &&
           Icon.create(icon, {
-            defaultProps: { name: 'stardust-circle', size: 'larger', styles: styles.icon },
+            defaultProps: { size: 'larger', styles: styles.icon },
           })}
         {(header || description) && (
           <div className={classes.content}>

@@ -120,7 +120,6 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.content, unhandledProps)}
           start={Icon.create(indicatorWithDefaults, {
             defaultProps: {
-              name: 'stardust-circle',
               styles: styles.indicator,
             },
           })}

@@ -168,7 +168,6 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
             </Ref>
             {Icon.create(this.computeIcon(), {
               defaultProps: {
-                name: 'stardust-circular',
                 styles: styles.icon,
                 variables: variables.icon,
               },

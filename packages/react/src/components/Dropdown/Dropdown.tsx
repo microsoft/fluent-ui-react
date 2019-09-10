@@ -475,7 +475,6 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                   {showClearIndicator
                     ? Icon.create(clearIndicator, {
                         defaultProps: {
-                          name: 'stardust-circle',
                           className: Dropdown.slotClassNames.clearIndicator,
                           styles: styles.clearIndicator,
                           xSpacing: 'none',

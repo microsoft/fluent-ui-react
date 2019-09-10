@@ -131,7 +131,6 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
           checkable && {
             content: Icon.create(checkableIndicator, {
               defaultProps: {
-                name: 'stardust-circle',
                 className: DropdownItem.slotClassNames.checkableIndicator,
                 styles: styles.checkableIndicator,
               },

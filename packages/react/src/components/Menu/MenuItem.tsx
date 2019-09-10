@@ -236,7 +236,6 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           {icon &&
             Icon.create(this.props.icon, {
               defaultProps: {
-                name: 'stardust-circle',
                 xSpacing: !!content ? 'after' : 'none',
                 styles: styles.icon,
               },
