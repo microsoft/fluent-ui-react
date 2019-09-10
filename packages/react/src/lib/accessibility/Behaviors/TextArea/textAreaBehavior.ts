@@ -5,7 +5,7 @@ import { Accessibility } from '../../types'
  */
 const textAreaBehavior: Accessibility<TextAreaBehaviorProps> = props => ({
   attributes: {
-    textArea: {
+    root: {
       'aria-disabled': props.disabled,
     },
   },
