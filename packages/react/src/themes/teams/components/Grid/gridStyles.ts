@@ -1,4 +1,4 @@
-import { GridVariables } from '../../../base/components/Grid/gridVariables'
+import { GridVariables } from './gridVariables'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { GridProps } from '../../../../components/Grid/Grid'
 
