@@ -102,5 +102,9 @@ class TextArea extends AutoControlledComponent<WithAsProp<TextAreaProps>, TextAr
  *
  * @accessibility
  * For good screen reader experience set `aria-label` or `aria-labelledby` attribute for textarea.
+ * When using maxlength attribute, provide the information about max length in label for screen reader.
+ * @accessibilityIssues
+ * [NVDA - No announcement of maxlength](https://github.com/nvaccess/nvda/issues/7910)
+ * [JAWS - textarea - no announcement of maxlength](https://github.com/FreedomScientific/VFO-standards-support/issues/300)
  */
 export default withSafeTypeForAs<typeof TextArea, TextAreaProps, 'textarea'>(TextArea)
