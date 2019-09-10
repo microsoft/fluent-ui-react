@@ -1,3 +1,4 @@
+import { knobComponents } from '@stardust-ui/code-sandbox'
 import {
   CopyToClipboard,
   KnobInspector,
@@ -427,7 +428,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       >
         <Flex column>
           <Flex.Item>
-            <KnobProvider>
+            <KnobProvider components={knobComponents}>
               {/* Ensure anchor links don't occlude card shadow effect */}
               <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
@@ -487,9 +488,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                         </VariableResolver>
                       </Segment>
 
-                      <Segment styles={{ padding: 0 }}>
-                        <LogInspector silent />
-                      </Segment>
+                      <LogInspector silent />
 
                       {showCode && (
                         <div
