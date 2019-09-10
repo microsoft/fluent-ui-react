@@ -5,10 +5,10 @@
   "author": "Marat Abdullin <marata@microsoft.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
-    "ability-attributes": "^0.0.3"
+    "ability-attributes": "^0.0.4"
   },
   "devDependencies": {
-    "ability-attributes-generator": "^0.0.3"
+    "ability-attributes-generator": "^0.0.4"
   },
   "files": [
     "dist"
