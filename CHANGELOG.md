@@ -19,6 +19,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Fix `Menu` and `Submenu` to use correct indicator icon and have correct width behavior [redlines] @bcalvery ([#1831](https://github.com/stardust-ui/react/pull/1831))
+- Fix handling of `onMouseEnter` prop in `ChatMessage` @layershifter ([#1903](https://github.com/stardust-ui/react/pull/1903))
+
+### Documentation
+- Fix broken code editor in some doc site examples and improve error experience @levithomason ([#1906](https://github.com/stardust-ui/react/pull/1906))
 
 <!--------------------------------[ v0.38.0 ]------------------------------- -->
 ## [v0.38.0](https://github.com/stardust-ui/react/tree/v0.38.0) (2019-09-06)
