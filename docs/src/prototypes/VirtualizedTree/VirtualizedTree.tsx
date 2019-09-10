@@ -69,7 +69,7 @@ const items = generateLevel()
 const VirtualizedTreePrototype = () => (
   <Tree
     items={items}
-    virtualized={renderedItems => <TreeVirtualizer renderedItems={renderedItems} />}
+    renderedItems={renderedItems => <TreeVirtualizer renderedItems={renderedItems} />}
   />
 )
 
