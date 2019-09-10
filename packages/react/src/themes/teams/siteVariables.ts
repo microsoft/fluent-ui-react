@@ -36,11 +36,13 @@ export const shadowLevel1Darker = '0 .2rem .4rem -.075rem rgba(0, 0, 0, 0.5)'
 // FONT SIZES
 //
 export const fontSizes = {
+  smallest: pxToRem(10),
   smaller: pxToRem(10),
   small: pxToRem(12),
   medium: pxToRem(14),
   large: pxToRem(18),
   larger: pxToRem(24),
+  largest: pxToRem(24),
 }
 
 //
@@ -55,11 +57,13 @@ export const fontWeightBold = 700
 //
 // LINE HEIGHTS
 //
+export const lineHeightSmallest = 1.2
 export const lineHeightSmaller = 1.2
 export const lineHeightSmall = 1.3333
 export const lineHeightMedium = 1.4286
 export const lineHeightLarge = 1.3333
 export const lineHeightLarger = 1.3333
+export const lineHeightLargest = 1.3333
 
 //
 // SEMANTIC ASSIGNMENTS
