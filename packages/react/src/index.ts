@@ -253,5 +253,11 @@ export * from './lib/accessibility/FocusZone/FocusTrapZone.types'
 export * from './lib/accessibility/FocusZone/AutoFocusZone.types'
 export * from './lib/accessibility/types'
 export * from './lib/accessibility/reactTypes'
+// Dev-time accessibility attributes integrity validation.
+import { setup } from '@stardust-ui/ability-attributes'
+
+if (process.env.NODE_ENV !== 'production') {
+  setup()
+}
 
 export * from '@stardust-ui/react-component-ref'
