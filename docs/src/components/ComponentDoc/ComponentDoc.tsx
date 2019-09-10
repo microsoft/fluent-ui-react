@@ -68,7 +68,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
 
     if (location.hash) {
       const activePath = getFormattedHash(location.hash)
-      history.replace(`${location.pathname}#${activePath}`)
+      history.replace({ ...history.location, hash: activePath })
       this.setState({ activePath })
       if (this.props.tabs[tabIndex] === 'Props') {
         this.setState({ defaultPropComponent: activePath })
@@ -91,10 +91,10 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
 
   /* TODO: bring back the right floating menu
   handleSidebarItemClick = (e, { examplePath }) => {
-    const { history, location } = this.props
+    const { history } = this.props
     const activePath = examplePathToHash(examplePath)
 
-    history.replace(`${location.pathname}#${activePath}`)
+    history.replace({ ...history.location, hash: activePath })
     // set active hash path
     this.setState({ activePath }, scrollToAnchor)
   }
@@ -111,8 +111,8 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
   }
 
   onPropComponentSelected = (e, props) => {
-    const { history, location } = this.props
-    history.replace(`${location.pathname}#${props.value}`)
+    const { history } = this.props
+    history.replace({ ...history.location, hash: props.value })
   }
 
   render() {
