@@ -3,7 +3,6 @@ import { getColorScheme } from '../../colors'
 
 const toolbarMenuItemStyles = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const { disabled, isFromKeyboard } = p
     const colors = getColorScheme(v.colorScheme)
 
     return {
@@ -26,12 +25,12 @@ const toolbarMenuItemStyles = {
         backgroundColor: v.menuItemBackgroundHover || colors.menuItemBackgroundHover,
       },
 
-      ...(isFromKeyboard && {
+      ':focus-visible': {
         color: v.menuItemForegroundFocus || colors.menuItemForegroundFocus,
         backgroundColor: v.menuItemBackgroundFocus || colors.menuItemBackgroundFocus,
-      }),
+      },
 
-      ...(disabled && {
+      ...(p.disabled && {
         cursor: 'default',
         color: v.menuItemForegroundDisabled || colors.foregroundDisabled1,
         backgroundColor: v.menuItemBackgroundDisabled,

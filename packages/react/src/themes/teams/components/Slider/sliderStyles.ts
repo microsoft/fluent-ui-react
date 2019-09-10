@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { SliderVariables } from './sliderVariables'
 import Slider, { SliderProps, SliderState } from '../../../../components/Slider/Slider'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
@@ -7,7 +8,7 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 const thumbFromPreviousSiblingSelector = `&+ .${Slider.slotClassNames.thumb}`
 
 const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVariables> = {
-  input: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
+  input: ({ variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
     const activeThumbStyles: React.CSSProperties = {
       height: v.activeThumbHeight,
       width: v.activeThumbWidth,
@@ -15,18 +16,21 @@ const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVa
       marginTop: `calc(${v.height} / 2  - ${v.activeThumbHeight} / 2)`,
       marginLeft: `calc(-${v.activeThumbWidth} / 2)`,
     }
+    const borderFocusStyles = getBorderFocusStyles({
+      siteVariables,
+      borderPadding: v.thumbBorderPadding,
+    })
 
     return {
       ':active': { [thumbFromPreviousSiblingSelector]: activeThumbStyles },
 
       ':focus': {
+        [thumbFromPreviousSiblingSelector]: borderFocusStyles[':focus'],
+      },
+      ':focus-visible': {
         [thumbFromPreviousSiblingSelector]: {
-          ...(p.isFromKeyboard && activeThumbStyles),
-          ...getBorderFocusStyles({
-            siteVariables,
-            isFromKeyboard: p.isFromKeyboard,
-            borderPadding: v.thumbBorderPadding,
-          })[':focus'],
+          ...borderFocusStyles[':focus-visible'],
+          ...activeThumbStyles,
         },
       },
     }

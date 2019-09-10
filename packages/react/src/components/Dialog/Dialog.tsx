@@ -43,8 +43,14 @@ export interface DialogProps
   /** A dialog can contain actions. */
   actions?: ShorthandValue<BoxProps>
 
+  /** A dialog can have a backdrop on its overlay. */
+  backdrop?: boolean
+
   /** A dialog can contain a cancel button. */
   cancelButton?: ShorthandValue<ButtonProps>
+
+  /** Controls whether or not a dialog should close when a click outside is happened. */
+  closeOnOutsideClick?: boolean
 
   /** A dialog can contain a confirm button. */
   confirmButton?: ShorthandValue<ButtonProps>
@@ -110,8 +116,10 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       content: 'shorthand',
     }),
     actions: customPropTypes.itemShorthand,
+    backdrop: PropTypes.bool,
     headerAction: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
+    closeOnOutsideClick: PropTypes.bool,
     confirmButton: customPropTypes.itemShorthand,
     defaultOpen: PropTypes.bool,
     header: customPropTypes.itemShorthand,
@@ -127,6 +135,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   static defaultProps = {
     accessibility: dialogBehavior,
     actions: {},
+    backdrop: true,
+    closeOnOutsideClick: true,
     overlay: {},
     trapFocus: true,
   }
@@ -228,8 +238,9 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   renderComponent({ accessibility, classes, ElementType, styles, unhandledProps, rtl }) {
     const {
       actions,
-      confirmButton,
       cancelButton,
+      closeOnOutsideClick,
+      confirmButton,
       content,
       header,
       headerAction,
@@ -331,12 +342,15 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
                   overrideProps: { content: dialogContent },
                 })}
               </Ref>
-              <EventListener
-                listener={this.handleOverlayClick}
-                targetRef={targetRef}
-                type="click"
-                capture
-              />
+
+              {closeOnOutsideClick && (
+                <EventListener
+                  listener={this.handleOverlayClick}
+                  targetRef={targetRef}
+                  type="click"
+                  capture
+                />
+              )}
               <EventListener
                 listener={this.handleDocumentKeydown(getRefs)}
                 targetRef={targetRef}

@@ -7,7 +7,6 @@ import {
   UIComponent,
   childrenExist,
   createShorthandFactory,
-  isFromKeyboard,
   UIComponentProps,
   ContentComponentProps,
   ChildrenComponentProps,
@@ -83,11 +82,7 @@ export interface ButtonProps
   size?: SizeValue
 }
 
-export interface ButtonState {
-  isFromKeyboard: boolean
-}
-
-class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
+class Button extends UIComponent<WithAsProp<ButtonProps>> {
   static create: ShorthandFactory<ButtonProps>
 
   static displayName = 'Button'
@@ -121,10 +116,6 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   }
 
   static Group = ButtonGroup
-
-  state = {
-    isFromKeyboard: false,
-  }
 
   actionHandlers = {
     performClick: event => {
@@ -201,8 +192,6 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 }

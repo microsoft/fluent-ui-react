@@ -1,5 +1,10 @@
 import * as React from 'react'
-import { ComponentVariablesInput, ComponentSlotStyle, AnimationProp } from '../themes/types'
+import {
+  ComponentVariablesInput,
+  ComponentSlotStyle,
+  AnimationProp,
+  ComponentDesign,
+} from '../themes/types'
 import { ReactChildren } from '../types'
 
 export interface StyledComponentProps<P = any, V = any> {
@@ -20,6 +25,7 @@ export interface UIComponentProps<P = any, V = any>
     AnimatedComponentProps {
   /** Additional CSS class name(s) to apply.  */
   className?: string
+  design?: ComponentDesign
 }
 
 export type SizeValue = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'

@@ -499,5 +499,36 @@ export const animation = PropTypes.oneOfType([
   PropTypes.string,
 ])
 
+// Heads Up!
+// Keep in sync with packages/react/src/themes/types.ts
+export const design = PropTypes.shape({
+  position: PropTypes.string,
+  display: PropTypes.string,
+
+  top: PropTypes.string,
+  right: PropTypes.string,
+  bottom: PropTypes.string,
+  left: PropTypes.string,
+
+  padding: PropTypes.string,
+  paddingTop: PropTypes.string,
+  paddingRight: PropTypes.string,
+  paddingBottom: PropTypes.string,
+  paddingLeft: PropTypes.string,
+
+  margin: PropTypes.string,
+  marginTop: PropTypes.string,
+  marginRight: PropTypes.string,
+  marginBottom: PropTypes.string,
+  marginLeft: PropTypes.string,
+
+  width: PropTypes.string,
+  height: PropTypes.string,
+  minWidth: PropTypes.string,
+  maxWidth: PropTypes.string,
+  minHeight: PropTypes.string,
+  maxHeight: PropTypes.string,
+})
+
 /** A checker that matches the React.Ref type. */
 export const ref = PropTypes.oneOfType([PropTypes.func, PropTypes.object])

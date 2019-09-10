@@ -1,10 +1,10 @@
 import {
   CopyToClipboard,
-  CodeSnippet,
   KnobInspector,
   KnobProvider,
+  LogInspector,
 } from '@stardust-ui/docs-components'
-import { Divider, Flex, Menu, Segment, Provider, ICSSInJSStyle } from '@stardust-ui/react'
+import { Flex, Menu, Segment, Provider, ICSSInJSStyle } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
@@ -27,6 +27,8 @@ import ComponentExampleKnobs from './ComponentExampleKnobs'
 import ExamplePlaceholder from '../../ExamplePlaceholder'
 import VariableResolver from 'docs/src/components/VariableResolver/VariableResolver'
 import ComponentExampleVariables from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleVariables'
+
+const ERROR_COLOR = '#D34'
 
 export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
@@ -462,12 +464,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                 <SourceRender
                   babelConfig={babelConfig}
                   source={currentCode}
-                  renderHtml={showCode}
+                  renderHtml={false}
                   resolver={importResolver}
                   wrap={this.renderElement}
                   unstable_hot
                 >
-                  {({ element, error, markup }) => (
+                  {({ element, error }) => (
                     <>
                       <Segment
                         className={`rendered-example ${this.getKebabExamplePath()}`}
@@ -484,26 +486,38 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                           {element}
                         </VariableResolver>
                       </Segment>
+
+                      <Segment styles={{ padding: 0 }}>
+                        <LogInspector silent />
+                      </Segment>
+
                       {showCode && (
-                        <Segment styles={{ padding: 0 }}>
-                          {showCode && this.renderSourceCode()}
+                        <div
+                          style={{
+                            boxShadow: `0 0 0 0.5em ${error ? ERROR_COLOR : 'transparent'}`,
+                          }}
+                        >
+                          {this.renderSourceCode()}
                           {error && (
-                            <Segment inverted color="red">
-                              <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
-                            </Segment>
+                            <pre
+                              style={{
+                                position: 'sticky',
+                                bottom: 0,
+                                padding: '1em',
+                                // don't block viewport
+                                maxHeight: '50vh',
+                                overflowY: 'auto',
+                                color: '#fff',
+                                background: ERROR_COLOR,
+                                whiteSpace: 'pre-wrap',
+                                // above code editor text :/
+                                zIndex: 4,
+                              }}
+                            >
+                              {error.toString()}
+                            </pre>
                           )}
-                          {showCode && (
-                            <div>
-                              <Divider fitted />
-                              <CodeSnippet
-                                fitted
-                                label="Rendered HTML"
-                                mode="html"
-                                value={markup}
-                              />
-                            </div>
-                          )}
-                        </Segment>
+                        </div>
                       )}
                     </>
                   )}

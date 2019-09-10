@@ -32,7 +32,7 @@ export default {
         ...(submenu && {
           boxShadow: v.verticalBoxShadow,
         }),
-        ...(!fluid && { width: pxToRem(200) }),
+        ...(!fluid && !submenu && { width: 'fit-content' }),
         ...(iconOnly && {
           display: 'inline-block',
           width: 'auto',

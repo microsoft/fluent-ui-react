@@ -1,9 +1,9 @@
-import { IStyle } from '@stardust-ui/fela'
+import { IStyle } from 'fela'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 // @ts-ignore
-import { RendererProvider, ThemeProvider, ThemeContext } from '@stardust-ui/react-fela'
+import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
 
 import { ChildrenComponentProps, setUpWhatInput } from '../../lib'
 
@@ -182,8 +182,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     return (
       <RendererProvider
         renderer={this.outgoingContext.renderer}
-        target={target}
-        {...{ rehydrate: false }}
+        {...{ rehydrate: false, targetDocument: this.outgoingContext.target }}
       >
         <ThemeProvider theme={this.outgoingContext} overwrite>
           <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>

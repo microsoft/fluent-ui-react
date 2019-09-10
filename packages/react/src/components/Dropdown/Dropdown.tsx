@@ -182,7 +182,7 @@ export interface DropdownProps
    * @param {object} props - The computed props for this slot.
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
-  renderItem?: ShorthandRenderFunction
+  renderItem?: ShorthandRenderFunction<DropdownItemProps>
 
   /**
    * A custom render function for the selected item. Only applicable with the `multiple` prop.
@@ -191,7 +191,7 @@ export interface DropdownProps
    * @param {object} props - The computed props for this slot.
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
-  renderSelectedItem?: ShorthandRenderFunction
+  renderSelectedItem?: ShorthandRenderFunction<DropdownSelectedItemProps>
 
   /** A dropdown can have a search field instead of trigger button. Can receive a custom search function that will replace the default equivalent. */
   search?:
@@ -430,6 +430,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           highlightedIndex={highlightedIndex}
           onStateChange={this.handleStateChange}
           labelId={this.props['aria-labelledby']}
+          environment={this.context.target.defaultView}
         >
           {({
             getInputProps,

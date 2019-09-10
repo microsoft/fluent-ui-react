@@ -25,7 +25,6 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
 
     ...getBorderFocusStyles({
       siteVariables,
-      isFromKeyboard: p.isFromKeyboard,
       borderRadius: v.borderRadius,
     }),
 
@@ -64,6 +63,10 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
 
   action: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
     const iconFilledStyles = getIconFillOrOutlineStyles({ outline: false })
+    const borderFocusStyles = getBorderFocusStyles({
+      siteVariables,
+      borderRadius: v.borderRadius,
+    })
 
     return {
       [`& .${Icon.className}`]: {
@@ -74,13 +77,10 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
 
       ':hover': iconFilledStyles,
 
-      ':focus': {
-        ...(p.isFromKeyboard && iconFilledStyles),
-        ...getBorderFocusStyles({
-          siteVariables,
-          isFromKeyboard: p.isFromKeyboard,
-          borderRadius: v.borderRadius,
-        })[':focus'],
+      ':focus': borderFocusStyles[':focus'],
+      ':focus-visible': {
+        ...iconFilledStyles,
+        ...borderFocusStyles[':focus-visible'],
       },
     }
   },

@@ -58,7 +58,7 @@ const radioStyles: ComponentSlotStylesInput<
       ...restHoverFocusTextColor(v.colorDisabled),
     }),
 
-    ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard }),
+    ...getBorderFocusStyles({ siteVariables }),
   }),
 
   icon: ({ props: p, variables: v }): ICSSInJSStyle => ({

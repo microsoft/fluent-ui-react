@@ -35,11 +35,11 @@ const toolbarCustomItemStyles: ComponentSlotStylesInput<
         outline: 0,
       },
 
-      ...(p.isFromKeyboard && {
+      ':focus-visible': {
         color: v.foregroundFocus || colors.foregroundFocus,
         backgroundColor: v.backgroundFocus || colors.backgroundFocus,
         borderColor: v.borderFocus || colors.borderFocus,
-      }),
+      },
     }
   },
 }

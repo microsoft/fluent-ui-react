@@ -6,10 +6,7 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 export default {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
-    const { ':focus': borderFocusStyles } = getBorderFocusStyles({
-      siteVariables,
-      isFromKeyboard: p.isFromKeyboard,
-    })
+    const borderFocusStyles = getBorderFocusStyles({ siteVariables })
 
     return {
       display: 'inline-block',
@@ -20,15 +17,15 @@ export default {
       height: v.height || 'auto',
       outline: 0,
 
-      ...(p.isFromKeyboard && {
-        ':focus': {
-          [`& .${Embed.slotClassNames.control}`]: {
-            borderColor: v.focusBorderColor,
-            opacity: 1,
-            ...borderFocusStyles,
-          },
+      ...borderFocusStyles[':focus'],
+      ':focus-visible': {
+        [`& .${Embed.slotClassNames.control}`]: {
+          borderColor: v.focusBorderColor,
+          opacity: 1,
+          ...borderFocusStyles[':focus-visible'],
         },
-      }),
+      },
+
       ':hover': {
         [`& .${Embed.slotClassNames.control}`]: {
           opacity: 1,

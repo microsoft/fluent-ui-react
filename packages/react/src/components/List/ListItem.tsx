@@ -7,7 +7,6 @@ import {
   UIComponentProps,
   commonPropTypes,
   ContentComponentProps,
-  isFromKeyboard,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
 } from '../../lib'
@@ -58,20 +57,9 @@ export interface ListItemProps
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<ListItemProps>
-
-  /**
-   * Called after user's focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
-   */
-  onFocus?: ComponentEventHandler<ListItemProps>
 }
 
-export interface ListItemState {
-  isFromKeyboard: boolean
-}
-
-class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
+class ListItem extends UIComponent<WithAsProp<ListItemProps>> {
   static create: ShorthandFactory<ListItemProps>
 
   static displayName = 'ListItem'
@@ -104,16 +92,11 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
     truncateHeader: PropTypes.bool,
 
     onClick: PropTypes.func,
-    onFocus: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'li',
     accessibility: listItemBehavior as Accessibility,
-  }
-
-  state = {
-    isFromKeyboard: false,
   }
 
   actionHandlers = {
@@ -125,11 +108,6 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
 
   handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     _.invoke(this.props, 'onClick', e, this.props)
-  }
-
-  handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-    _.invoke(this.props, 'onFocus', e, this.props)
   }
 
   renderComponent({ classes, accessibility, unhandledProps, styles }) {
@@ -197,7 +175,6 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
         debug={debug}
         className={classes.root}
         onClick={this.handleClick}
-        onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}

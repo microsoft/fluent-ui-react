@@ -12,10 +12,7 @@ const treeItemStyles: ComponentSlotStylesInput<TreeItemProps> = {
       outline: 0,
       [`> .${TreeTitle.className}`]: {
         position: 'relative',
-        ...getBorderFocusStyles({
-          siteVariables,
-          isFromKeyboard: true,
-        })[':focus'],
+        ...getBorderFocusStyles({ siteVariables }),
       },
     },
   }),

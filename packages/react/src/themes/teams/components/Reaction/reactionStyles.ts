@@ -1,16 +1,12 @@
 import { FontWeightProperty } from 'csstype'
 import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
-import {
-  default as Reaction,
-  ReactionProps,
-  ReactionState,
-} from '../../../../components/Reaction/Reaction'
+import { default as Reaction, ReactionProps } from '../../../../components/Reaction/Reaction'
 import { pxToRem } from '../../../../lib'
 import { ReactionVariables } from './reactionVariables'
 
 const contentClassNameSelector = `& .${Reaction.slotClassNames.content}`
 
-const reactionStyles: ComponentSlotStylesInput<ReactionProps & ReactionState, ReactionVariables> = {
+const reactionStyles: ComponentSlotStylesInput<ReactionProps, ReactionVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     cursor: 'pointer',
     background: 'transparent',
@@ -27,29 +23,24 @@ const reactionStyles: ComponentSlotStylesInput<ReactionProps & ReactionState, Re
       },
     },
     position: 'relative',
-    ...(!p.isFromKeyboard && {
-      ':focus': {
-        outline: 'none',
+    ':focus': {
+      outline: 'none',
+    },
+    ':focus-visible': {
+      ':after': {
+        content: '""',
+        position: 'absolute',
+        top: `-${pxToRem(2)}`,
+        right: `-${pxToRem(2)}`,
+        bottom: `-${pxToRem(2)}`,
+        left: `-${pxToRem(2)}`,
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderColor: v.borderColorFocus,
+        borderRadius: pxToRem(2),
+        boxShadow: `0px 0px 0px 1px ${v.boxShadowColor} inset`,
       },
-    }),
-    ...(p.isFromKeyboard && {
-      ':focus': {
-        outline: 'none',
-        ':after': {
-          content: '""',
-          position: 'absolute',
-          top: `-${pxToRem(2)}`,
-          right: `-${pxToRem(2)}`,
-          bottom: `-${pxToRem(2)}`,
-          left: `-${pxToRem(2)}`,
-          borderWidth: '1px',
-          borderStyle: 'solid',
-          borderColor: v.borderColorFocus,
-          borderRadius: pxToRem(2),
-          boxShadow: `0px 0px 0px 1px ${v.boxShadowColor} inset`,
-        },
-      },
-    }),
+    },
   }),
   icon: ({ props: p }) => ({
     marginRight: p.content ? pxToRem(4) : pxToRem(0),

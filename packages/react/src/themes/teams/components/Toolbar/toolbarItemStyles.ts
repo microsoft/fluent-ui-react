@@ -1,14 +1,11 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { ToolbarItemProps, ToolbarItemState } from '../../../../components/Toolbar/ToolbarItem'
+import { ToolbarItemProps } from '../../../../components/Toolbar/ToolbarItem'
 import { ToolbarVariables } from './toolbarVariables'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 import { getColorScheme } from '../../colors'
 
-type ToolbarItemPropsAndState = ToolbarItemProps & ToolbarItemState
-
-const toolbarItemStyles: ComponentSlotStylesInput<ToolbarItemPropsAndState, ToolbarVariables> = {
+const toolbarItemStyles: ComponentSlotStylesInput<ToolbarItemProps, ToolbarVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const { active, disabled, isFromKeyboard } = p
     const colors = getColorScheme(v.colorScheme)
 
     return {
@@ -27,7 +24,7 @@ const toolbarItemStyles: ComponentSlotStylesInput<ToolbarItemPropsAndState, Tool
         outline: 0,
       },
 
-      ...(active && {
+      ...(p.active && {
         color: v.foregroundActive || colors.foregroundActive,
         backgroundColor: v.backgroundActive,
         ...getIconFillOrOutlineStyles({ outline: false }),
@@ -39,14 +36,14 @@ const toolbarItemStyles: ComponentSlotStylesInput<ToolbarItemPropsAndState, Tool
         ...getIconFillOrOutlineStyles({ outline: false }),
       },
 
-      ...(isFromKeyboard && {
+      ':focus-visible': {
         color: v.foregroundFocus || colors.foregroundFocus,
         backgroundColor: v.backgroundFocus || colors.backgroundFocus,
         borderColor: v.borderFocus || colors.borderFocus,
         ...getIconFillOrOutlineStyles({ outline: false }),
-      }),
+      },
 
-      ...(disabled && {
+      ...(p.disabled && {
         color: v.foregroundDisabled || colors.foregroundDisabled1,
         backgroundColor: v.backgroundDisabled,
         cursor: 'default',

@@ -20,6 +20,7 @@ const getClasses = (
 
   // Fela plugins rely on `direction` param in `theme` prop instead of RTL
   // Our API should be aligned with it
+  // Heads Up! Keep in sync with Design.tsx render logic
   const direction = styleParam.rtl ? 'rtl' : 'ltr'
   const mergedStyleParam = {
     ...styleParam,
