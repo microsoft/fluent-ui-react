@@ -19,7 +19,6 @@ import {
   RenderResultConfig,
   commonPropTypes,
   ShorthandFactory,
-  WithExpectedProps,
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
@@ -150,7 +149,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
                 'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
                 className: DropdownSelectedItem.slotClassNames.icon,
                 styles: styles.icon,
-              } as WithExpectedProps<IconProps>,
+              } as IconProps,
               overrideProps: this.handleIconOverrides(props),
             }),
           )

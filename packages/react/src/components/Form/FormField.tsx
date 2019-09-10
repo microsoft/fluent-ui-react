@@ -10,7 +10,6 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   ShorthandFactory,
-  WithExpectedProps,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -90,7 +89,7 @@ class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
         as: 'label',
         htmlFor: id,
         styles: styles.label,
-      } as WithExpectedProps<TextProps>,
+      } as TextProps,
     })
 
     const messageElement = Text.create(message, {
@@ -100,9 +99,7 @@ class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
     })
 
     const controlElement = Box.create(control || {}, {
-      defaultProps: { required, id, name, type, styles: styles.control } as WithExpectedProps<
-        TextProps
-      >,
+      defaultProps: { required, id, name, type, styles: styles.control },
     })
 
     const content = (

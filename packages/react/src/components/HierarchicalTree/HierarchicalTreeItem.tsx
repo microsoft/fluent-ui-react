@@ -61,7 +61,7 @@ export interface HierarchicalTreeItemProps extends UIComponentProps, ChildrenCom
    * @param {object} props - The computed props for this slot.
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
-  renderItemTitle?: ShorthandRenderFunction
+  renderItemTitle?: ShorthandRenderFunction<HierarchicalTreeTitleProps>
 
   /** Properties for TreeTitle. */
   title?: ShorthandValue<HierarchicalTreeTitleProps>

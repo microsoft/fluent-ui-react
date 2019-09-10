@@ -15,7 +15,6 @@ import {
   applyAccessibilityKeyHandlers,
   AutoControlledComponent,
   ShorthandFactory,
-  WithExpectedProps,
 } from '../../lib'
 import {
   ShorthandRenderFunction,
@@ -28,6 +27,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { treeBehavior } from '../../lib/accessibility'
 import { getNextElement } from '../../lib/accessibility/FocusZone/focusUtilities'
 import { hasSubtree, removeItemAtIndex } from './lib'
+import { TreeTitleProps } from './TreeTitle'
 
 export interface TreeSlotClassNames {
   item: string
@@ -56,7 +56,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * @param {object} props - The computed props for this slot.
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
-  renderItemTitle?: ShorthandRenderFunction
+  renderItemTitle?: ShorthandRenderFunction<TreeTitleProps>
 }
 
 export interface TreeItemForRenderProps {
@@ -273,9 +273,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
               key: item['id'],
               ...restItemForRender,
             },
-            overrideProps: (this.handleTreeItemOverrides as unknown) as WithExpectedProps<
-              TreeItemProps
-            >,
+            overrideProps: (this.handleTreeItemOverrides as unknown) as TreeItemProps,
           })
 
           // Only need refs of the items that spawn subtrees, when they need to be focused

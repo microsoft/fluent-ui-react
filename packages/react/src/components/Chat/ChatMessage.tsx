@@ -18,7 +18,6 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-  WithExpectedProps,
 } from '../../lib'
 import {
   WithAsProp,
@@ -205,7 +204,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
         accessibility: menuAsToolbarBehavior,
         className: ChatMessage.slotClassNames.actionMenu,
         styles: styles.actionMenu,
-      } as WithExpectedProps<MenuProps>,
+      } as MenuProps,
     })
 
     if (!actionMenuElement) {
