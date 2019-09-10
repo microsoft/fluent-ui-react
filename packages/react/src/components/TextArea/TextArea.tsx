@@ -55,8 +55,6 @@ class TextArea extends AutoControlledComponent<WithAsProp<TextAreaProps>, TextAr
     defaultValue: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.string,
-    maxLength: PropTypes.number,
-    placeholder: PropTypes.string,
     disabled: PropTypes.bool,
   }
 
