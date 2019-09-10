@@ -1,5 +1,3 @@
-export { default as Checkbox } from './components/Checkbox/checkboxStyles'
-
 export { default as Dialog } from './components/Dialog/dialogStyles'
 
 export { default as Flex } from './components/Flex/flexStyles'
