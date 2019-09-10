@@ -7,8 +7,6 @@ export { default as Input } from './components/Input/inputVariables'
 
 export { default as Loader } from './components/Loader/loaderVariables'
 
-export { default as Text } from './components/Text/textVariables'
-
 export { default as Grid } from './components/Grid/gridVariables'
 
 export { default as Slider } from './components/Slider/sliderVariables'
