@@ -19,8 +19,8 @@ export interface IconVariables extends BaseIconVariables {
 
 export default (siteVars): Partial<IconVariables> => ({
   colorScheme: pickValuesFromColorScheme(siteVars.colorScheme, iconColorAreas),
-  color: undefined,
-  borderColor: undefined,
+  color: null,
+  borderColor: null,
   brandColor: siteVars.brandColor,
   secondaryColor: siteVars.colors.white,
   redColor: siteVars.colors.red[400],
