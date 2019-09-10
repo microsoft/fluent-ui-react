@@ -1,7 +1,7 @@
 {
   "name": "@stardust-ui/ability-attributes",
   "description": "Accessibility attributes schema for Stardust UI",
-  "version": "0.37.0",
+  "version": "0.38.0",
   "author": "Marat Abdullin <marata@microsoft.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
@@ -28,7 +28,9 @@
   "repository": "stardust-ui/react.git",
   "scripts": {
     "build": "npm run schema && gulp bundle:package:no-umd --package ability-attributes",
-    "schema": "allyschema -c \"process.env.NODE_ENV !== 'production'\" schema.json > ./src/schema.ts"
+    "schema": "allyschema -c \"process.env.NODE_ENV !== 'production'\" schema.json > ./src/schema.ts",
+    "preinstall": "npm run build",
+    "prepare": "npm run build"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"
