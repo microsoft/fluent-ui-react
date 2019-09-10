@@ -16,7 +16,7 @@ const knobComponents: Partial<KnobComponents> = {
       <div style={{ display: 'flex', padding: 5 }}>
         <div style={{ flexGrow: 1 }}>
           <Text weight="semibold">Event log</Text>
-          <Label circular color="brand">
+          <Label circular color="brand" styles={{ marginLeft: '5px' }}>
             {props.items.length}
           </Label>
         </div>
