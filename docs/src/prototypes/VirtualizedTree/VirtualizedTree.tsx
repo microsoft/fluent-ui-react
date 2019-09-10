@@ -7,41 +7,33 @@ interface TreeVirtualizerProps {
   renderedItems: React.ReactElement[]
 }
 
-class TreeVirtualizer extends React.Component<TreeVirtualizerProps> {
-  cache = null
+function TreeVirtualizer(props: TreeVirtualizerProps) {
+  const cache = new CellMeasurerCache({
+    defaultHeight: 20,
+    fixedWidth: true,
+  })
 
-  constructor(props) {
-    super(props)
-
-    this.cache = new CellMeasurerCache({
-      defaultHeight: 20,
-      fixedWidth: true,
-    })
-  }
-
-  rowRenderer = ({ index, isScrolling, key, parent, style }) => {
-    const { renderedItems } = this.props
+  const rowRenderer = ({ index, isScrolling, key, parent, style }) => {
+    const { renderedItems } = props
 
     return (
-      <CellMeasurer cache={this.cache} columnIndex={0} key={key} parent={parent} rowIndex={index}>
+      <CellMeasurer cache={cache} columnIndex={0} key={key} parent={parent} rowIndex={index}>
         {React.cloneElement(renderedItems[index], { style })}
       </CellMeasurer>
     )
   }
 
-  render() {
-    return (
-      <ReactVirtualizedList
-        deferredMeasurementCache={this.cache}
-        rowHeight={this.cache.rowHeight}
-        rowRenderer={this.rowRenderer}
-        estimatedRowSize={20}
-        height={300}
-        rowCount={this.props.renderedItems.length}
-        width={600}
-      />
-    )
-  }
+  return (
+    <ReactVirtualizedList
+      deferredMeasurementCache={cache}
+      rowHeight={cache.rowHeight}
+      rowRenderer={rowRenderer}
+      estimatedRowSize={20}
+      height={300}
+      rowCount={props.renderedItems.length}
+      width={600}
+    />
+  )
 }
 
 const items = getItems()

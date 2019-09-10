@@ -108,7 +108,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    contentRef: PropTypes.object,
+    contentRef: customPropTypes.ref,
     id: PropTypes.string.isRequired,
     index: PropTypes.number,
     items: customPropTypes.collectionShorthand,
