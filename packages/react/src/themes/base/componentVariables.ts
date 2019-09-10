@@ -13,6 +13,4 @@ export { default as Text } from './components/Text/textVariables'
 
 export { default as Grid } from './components/Grid/gridVariables'
 
-export { default as Image } from './components/Image/imageVariables'
-
 export { default as Slider } from './components/Slider/sliderVariables'

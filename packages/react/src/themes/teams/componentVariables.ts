@@ -37,6 +37,8 @@ export {
 
 export { default as Icon } from './components/Icon/iconVariables'
 
+export { default as Image } from './components/Image/imageVariables'
+
 export { default as Input } from './components/Input/inputVariables'
 
 export { default as Label } from './components/Label/labelVariables'

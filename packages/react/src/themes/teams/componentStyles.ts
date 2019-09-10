@@ -46,6 +46,8 @@ export {
 
 export { default as Icon } from './components/Icon/iconStyles'
 
+export { default as Image } from './components/Image/imageStyles'
+
 export { default as Label } from './components/Label/labelStyles'
 
 export { default as Layout } from './components/Layout/layoutStyles'

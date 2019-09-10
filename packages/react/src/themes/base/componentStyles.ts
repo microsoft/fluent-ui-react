@@ -16,6 +16,4 @@ export { default as ToolbarRadioGroup } from './components/Toolbar/toolbarRadioG
 
 export { default as Grid } from './components/Grid/gridStyles'
 
-export { default as Image } from './components/Image/imageStyles'
-
 export { default as Slider } from './components/Slider/sliderStyles'
