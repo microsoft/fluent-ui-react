@@ -9,8 +9,6 @@ import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const buttonStyles: ComponentSlotStylesInput<ButtonProps, ButtonVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
-    const { borderWidth } = siteVariables
-
     const borderFocusStyles = getBorderFocusStyles({
       siteVariables,
       ...(p.circular && {
@@ -99,21 +97,13 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps, ButtonVariables> = {
         ':focus': {
           ...borderFocusStyles[':focus'],
           boxShadow: 'none',
-<<<<<<< HEAD
-          ...(p.isFromKeyboard
-            ? {
-                color: v.colorFocus,
-                backgroundColor: v.backgroundColorFocus,
-              }
-            : { ':active': { backgroundColor: v.backgroundColorActive } }),
-=======
+
           ':active': { backgroundColor: v.backgroundColorActive },
         },
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
           color: v.colorFocus,
           backgroundColor: v.backgroundColorFocus,
->>>>>>> master
         },
       }),
 
