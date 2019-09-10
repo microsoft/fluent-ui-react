@@ -9,8 +9,8 @@ const doList = [
 
 const dontList = []
 
-const MenuBestPractices: React.FunctionComponent<{}> = () => {
+const SplitButtonBestPractices: React.FunctionComponent<{}> = () => {
   return <ComponentBestPractices doList={doList} dontList={dontList} />
 }
 
-export default MenuBestPractices
+export default SplitButtonBestPractices
