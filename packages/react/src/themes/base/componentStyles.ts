@@ -1,5 +1,3 @@
-export { default as Dialog } from './components/Dialog/dialogStyles'
-
 export { default as Flex } from './components/Flex/flexStyles'
 export { default as FlexItem } from './components/Flex/flexItemStyles'
 
