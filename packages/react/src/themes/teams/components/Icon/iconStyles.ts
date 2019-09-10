@@ -6,10 +6,14 @@ import {
   ICSSInJSStyle,
   StrictColorScheme,
   ItemType,
+  ThemeIconSpec,
+  FontIconSpec,
 } from '../../../types'
-import { IconProps } from '../../../../components/Icon/Icon'
+import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, iconColorAreas } from './iconVariables'
+
+export const emptyIcon: ThemeIconSpec = { icon: { content: '?' } }
 
 const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),
@@ -40,20 +44,64 @@ const getIconColor = (variables, colors: StrictColorScheme<ItemType<typeof iconC
   return _.get(colors, 'foreground', variables.color || 'currentColor')
 }
 
+const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICSSInJSStyle => {
+  switch (xSpacing) {
+    case 'none':
+      return { marginLeft: 0, marginRight: 0 }
+    case 'before':
+      return { marginLeft: horizontalSpace, marginRight: 0 }
+    case 'after':
+      return { marginLeft: 0, marginRight: horizontalSpace }
+    case 'both':
+      return { marginLeft: horizontalSpace, marginRight: horizontalSpace }
+  }
+}
+
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
-  root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, theme: t, rtl }): ICSSInJSStyle => {
+    const iconSpec: ThemeIconSpec = t.icons[p.name] || emptyIcon
+    const isFontIcon = !iconSpec.isSvg
+
     const colors = v.colorScheme[p.color]
 
     const maybeIcon = t.icons[p.name]
     const isSvgIcon = maybeIcon && maybeIcon.isSvg
 
     return {
+      speak: 'none',
+      verticalAlign: 'middle',
+
+      ...getXSpacingStyles(p.xSpacing, v.horizontalSpace),
+
+      ...(p.circular && { ...getPaddedStyle(), borderRadius: '50%' }),
+      ...(p.disabled && {
+        color: v.disabledColor,
+      }),
       display: 'inline-block', // we overriding this for Base theme
 
       // overriding base theme border handling
       ...((p.bordered || v.borderColor) &&
         getBorderedStyles(v.borderColor || getIconColor(v, colors))),
 
+      ...(isFontIcon && {
+        fontWeight: 900, // required for the fontAwesome to render
+        alignItems: 'center',
+        boxSizing: 'content-box',
+        display: 'inline-flex',
+        justifyContent: 'center',
+
+        fontFamily: (iconSpec.icon as FontIconSpec).fontFamily,
+        fontSize: v[`${p.size}Size`],
+        lineHeight: 1,
+        width: v[`${p.size}Size`],
+        height: v[`${p.size}Size`],
+
+        '::before': {
+          content: (iconSpec.icon as FontIconSpec).content,
+        },
+
+        transform: rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
+      }),
       ...(isSvgIcon && { backgroundColor: v.backgroundColor }),
     }
   },
