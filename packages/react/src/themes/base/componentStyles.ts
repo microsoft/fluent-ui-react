@@ -3,8 +3,6 @@ export { default as FlexItem } from './components/Flex/flexItemStyles'
 
 export { default as Icon } from './components/Icon/iconStyles'
 
-export { default as Loader } from './components/Loader/loaderStyles'
-
 export { default as Toolbar } from './components/Toolbar/toolbarStyles'
 export { default as ToolbarRadioGroup } from './components/Toolbar/toolbarRadioGroupStyles'
 
