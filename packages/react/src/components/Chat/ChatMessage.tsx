@@ -15,7 +15,6 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
-  isFromKeyboard,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
@@ -92,6 +91,13 @@ export interface ChatMessageProps
    */
   onFocus?: ComponentEventHandler<ChatMessageProps>
 
+  /**
+   * Called after user enters by mouse.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onMouseEnter?: ComponentEventHandler<ChatMessageProps>
+
   /** Reaction group applied to the message. */
   reactionGroup?: ShorthandValue<ReactionGroupProps> | ShorthandCollection<ReactionProps>
 
@@ -101,7 +107,6 @@ export interface ChatMessageProps
 
 export interface ChatMessageState {
   focused: boolean
-  isFromKeyboard: boolean
   messageDomNode: HTMLElement
 }
 
@@ -129,6 +134,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     timestamp: customPropTypes.itemShorthand,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
+    onMouseEnter: PropTypes.func,
     reactionGroup: PropTypes.oneOfType([
       customPropTypes.collectionShorthand,
       customPropTypes.itemShorthand,
@@ -147,7 +153,6 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
 
   state = {
     focused: false,
-    isFromKeyboard: false,
     messageDomNode: null,
   }
 
@@ -171,7 +176,6 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
 
     this.setState({
       focused: true,
-      isFromKeyboard: isFromKeyboard(),
     })
 
     _.invoke(this.props, 'onFocus', e, this.props)
@@ -184,6 +188,11 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
 
     this.setState({ focused: shouldPreserveFocusState })
     _.invoke(this.props, 'onBlur', e, this.props)
+  }
+
+  handleMouseEnter = (e: React.SyntheticEvent) => {
+    this.updateActionsMenuPosition()
+    _.invoke(this.props, 'onMouseEnter', e, this.props)
   }
 
   renderActionMenu(
@@ -282,7 +291,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
         <ElementType
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
-          onMouseEnter={() => this.updateActionsMenuPosition()}
+          onMouseEnter={this.handleMouseEnter}
           className={className}
           {...accessibility.attributes.root}
           {...unhandledProps}

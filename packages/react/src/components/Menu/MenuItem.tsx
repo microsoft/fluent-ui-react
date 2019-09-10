@@ -16,7 +16,6 @@ import {
   ContentComponentProps,
   commonPropTypes,
   isFromKeyboard,
-  rtlTextContainer,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
 } from '../../lib'
@@ -199,7 +198,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
   menuRef = React.createRef<HTMLElement>()
   itemRef = React.createRef<HTMLElement>()
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, rtl }) {
     const {
       children,
       content,
@@ -242,11 +241,13 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
                 styles: styles.icon,
               },
             })}
-          {rtlTextContainer.createFor({ element: content })}
+          {Box.create(content, {
+            defaultProps: { as: 'span', styles: styles.content },
+          })}
           {menu &&
             Icon.create(indicatorWithDefaults, {
               defaultProps: {
-                name: 'stardust-circle',
+                name: vertical ? 'stardust-menu-arrow-end' : 'stardust-menu-arrow-down',
                 styles: styles.indicator,
               },
             })}
@@ -258,8 +259,8 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
         <>
           <Ref innerRef={this.menuRef}>
             <Popper
-              align={vertical ? 'top' : 'start'}
-              position={vertical ? 'after' : 'below'}
+              align={vertical ? 'top' : rtl ? 'end' : 'start'}
+              position={vertical ? (rtl ? 'before' : 'after') : 'below'}
               targetRef={this.itemRef}
             >
               {Menu.create(menu, {

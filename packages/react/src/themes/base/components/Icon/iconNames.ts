@@ -11,6 +11,8 @@ export const icons: ThemeIcons = {
   'stardust-arrow-down': fontIcon('25BE'),
   'stardust-arrow-end': fontIcon('25B8'),
   'stardust-arrow-up': fontIcon('25B4'),
+  'stardust-menu-arrow-down': fontIcon('25BE'),
+  'stardust-menu-arrow-end': fontIcon('25B8'),
   'stardust-pause': fontIcon('25B6'),
   'stardust-play': fontIcon('23F8'),
 }

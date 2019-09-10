@@ -7,10 +7,7 @@ const treeTitleStyles = {
     cursor: 'pointer',
     color: v.color,
     position: 'relative',
-    ...getBorderFocusStyles({
-      siteVariables,
-      isFromKeyboard: true,
-    }),
+    ...getBorderFocusStyles({ siteVariables }),
   }),
 }
 

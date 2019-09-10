@@ -296,6 +296,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       color: 'inherit',
       display: 'block',
       cursor: 'pointer',
+      whiteSpace: 'nowrap',
 
       ...(pointing &&
         vertical && {
@@ -402,21 +403,47 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
+  content: ({ props: p }): ICSSInJSStyle => {
+    const widthAdjust = (p.icon ? 26 : 0) + (p.menu ? 16 : 0)
+    return {
+      whiteSpace: 'normal',
+      lineHeight: 1.5,
+      marginTop: pxToRem(-4),
+      marginBottom: pxToRem(-4),
+      display: 'inline-block',
+      ...((p.inSubmenu || p.vertical) && {
+        width: 'max-content',
+        minWidth: pxToRem(46 - widthAdjust),
+        maxWidth: pxToRem(262 - widthAdjust),
+        marginRight: pxToRem(16),
+      }),
+    }
+  },
+
   icon: ({ props: p }): ICSSInJSStyle => ({
     ...(!p.iconOnly && {
       // reduce margins so text has the dominant influence on the vertical height
-      marginTop: pxToRem(-10),
+      marginTop: 0,
       marginBottom: pxToRem(-8),
+      verticalAlign: 'top',
     }),
   }),
 
   menu: () => ({ zIndex: '1000' }),
 
-  indicator: () => ({
+  indicator: ({ props: p }) => ({
     position: 'relative',
     float: 'right',
-    left: pxToRem(10),
+    left: pxToRem(12),
     userSelect: 'none',
+    marginRight: pxToRem(4),
+
+    ...(p.inSubmenu && {
+      position: 'absolute',
+      top: pxToRem(6),
+      right: pxToRem(2),
+      left: 'unset',
+    }),
   }),
 }
 

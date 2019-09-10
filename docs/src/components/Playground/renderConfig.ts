@@ -1,6 +1,6 @@
 import * as DocsComponent from '@stardust-ui/docs-components'
 import * as Stardust from '@stardust-ui/react'
-import * as ReactFela from '@stardust-ui/react-fela'
+import * as ReactFela from 'react-fela'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
@@ -44,8 +44,8 @@ export const imports: Record<string, { version: string; module: any }> = {
     version: stardustReactPackageJson.peerDependencies['react-dom'],
     module: ReactDOM,
   },
-  '@stardust-ui/react-fela': {
-    version: stardustReactPackageJson.dependencies['@stardust-ui/react-fela'],
+  'react-fela': {
+    version: stardustReactPackageJson.dependencies['react-fela'],
     module: ReactFela,
   },
 }
