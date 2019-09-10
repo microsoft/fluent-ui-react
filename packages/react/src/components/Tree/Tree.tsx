@@ -101,6 +101,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   static autoControlledProps = ['activeItemIds']
 
+  static Item = TreeItem
+
   // memoize this function if performance issue occurs.
   static getItemsForRender = (itemsFromProps: ShorthandCollection<TreeItemProps>) => {
     const itemsForRenderGenerator = (
