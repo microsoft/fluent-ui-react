@@ -163,7 +163,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
                   styles: styles.input,
                   onChange: this.handleChange,
                   ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
-                } as BoxProps,
+                },
               })}
             </Ref>
             {Icon.create(this.computeIcon(), {

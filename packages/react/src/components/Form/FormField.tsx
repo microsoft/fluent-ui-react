@@ -89,7 +89,7 @@ class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
         as: 'label',
         htmlFor: id,
         styles: styles.label,
-      } as TextProps,
+      },
     })
 
     const messageElement = Text.create(message, {

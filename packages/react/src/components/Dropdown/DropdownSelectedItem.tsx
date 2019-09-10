@@ -149,7 +149,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
                 'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
                 className: DropdownSelectedItem.slotClassNames.icon,
                 styles: styles.icon,
-              } as IconProps,
+              },
               overrideProps: this.handleIconOverrides(props),
             }),
           )

@@ -204,7 +204,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
         accessibility: menuAsToolbarBehavior,
         className: ChatMessage.slotClassNames.actionMenu,
         styles: styles.actionMenu,
-      } as MenuProps,
+      },
     })
 
     if (!actionMenuElement) {
