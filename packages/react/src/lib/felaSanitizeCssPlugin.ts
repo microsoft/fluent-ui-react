@@ -1,7 +1,13 @@
+import * as _ from 'lodash'
 /**
  * Checks whether provided CSS property value is safe for being rendered by Fela engine.
  */
 const isValidCssValue = (value: any) => {
+  if (value === null) {
+    // FIXME: this does not belong here
+    return false
+  }
+
   if (typeof value !== 'string') {
     return true
   }
@@ -44,7 +50,7 @@ export default (config?: { skip?: string[] }) => {
     Object.keys(styles).forEach(cssPropertyNameOrIndex => {
       const cssPropertyValue = styles[cssPropertyNameOrIndex]
 
-      if (typeof cssPropertyValue === 'object') {
+      if (_.isObject(cssPropertyValue)) {
         processedStyles[cssPropertyNameOrIndex] = sanitizeCssStyleObject(cssPropertyValue)
         return
       }
