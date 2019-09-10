@@ -108,9 +108,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
           children
         ) : (
           <>
-            {Icon.create(icon, {
-              defaultProps: { name: 'stardust-circle', xSpacing: !!content ? 'after' : 'none' },
-            })}
+            {Icon.create(icon, { defaultProps: { xSpacing: !!content ? 'after' : 'none' } })}
             {content}
           </>
         )}
