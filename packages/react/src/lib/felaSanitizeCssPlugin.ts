@@ -50,7 +50,7 @@ export default (config?: { skip?: string[] }) => {
     Object.keys(styles).forEach(cssPropertyNameOrIndex => {
       const cssPropertyValue = styles[cssPropertyNameOrIndex]
 
-      if (_.isObject(cssPropertyValue)) {
+      if (_.isPlainObject(cssPropertyValue) || _.isArray(cssPropertyValue)) {
         processedStyles[cssPropertyNameOrIndex] = sanitizeCssStyleObject(cssPropertyValue)
         return
       }
