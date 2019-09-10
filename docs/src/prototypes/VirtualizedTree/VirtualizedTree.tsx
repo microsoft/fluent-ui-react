@@ -1,7 +1,7 @@
-import * as _ from 'lodash'
 import * as React from 'react'
 import { Tree } from '@stardust-ui/react'
 import { CellMeasurer, CellMeasurerCache, List as ReactVirtualizedList } from 'react-virtualized'
+import getItems from './itemsGenerator'
 
 interface TreeVirtualizerProps {
   renderedItems: React.ReactElement[]
@@ -44,27 +44,7 @@ class TreeVirtualizer extends React.Component<TreeVirtualizerProps> {
   }
 }
 
-const maxLevel = 1
-const minItems = 20
-const maxItems = 40
-const getItemsNumber = () => _.random(minItems, maxItems)
-
-function generateLevel(level = 0, parent = '') {
-  if (level === 0) {
-  }
-  const result = []
-  for (let index = 0; index < getItemsNumber(); index++) {
-    const item = {
-      id: `${parent}${parent ? '-' : ''}${index}`,
-      title: `${parent}${parent ? '-' : ''}${index}`,
-      ...(level < maxLevel && { items: generateLevel(level + 1, `${parent}${index}`) }),
-    }
-    result.push(item)
-  }
-  return result
-}
-
-const items = generateLevel()
+const items = getItems()
 
 const VirtualizedTreePrototype = () => (
   <Tree
