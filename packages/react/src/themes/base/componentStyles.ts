@@ -9,5 +9,3 @@ export { default as Toolbar } from './components/Toolbar/toolbarStyles'
 export { default as ToolbarRadioGroup } from './components/Toolbar/toolbarRadioGroupStyles'
 
 export { default as Grid } from './components/Grid/gridStyles'
-
-export { default as Slider } from './components/Slider/sliderStyles'
