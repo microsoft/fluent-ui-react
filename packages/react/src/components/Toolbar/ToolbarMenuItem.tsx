@@ -41,6 +41,9 @@ export interface ToolbarMenuItemProps
   /** Name or shorthand for Toolbar Item Icon */
   icon?: ShorthandValue<IconProps>
 
+  /** TODO: */
+  index?: number
+
   /**
    * Called on click.
    *
@@ -91,7 +94,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
-    const { children, content, disabled, icon, wrapper } = this.props
+    const { checked, children, content, disabled, icon, wrapper } = this.props
 
     const menuItemInner = childrenExist(children) ? (
       children
@@ -110,6 +113,10 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
           <>
             {Icon.create(icon, { defaultProps: { xSpacing: !!content ? 'after' : 'none' } })}
             {content}
+            {checked &&
+              Icon.create('checkmark', {
+                defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+              })}
           </>
         )}
       </ElementType>

@@ -19,6 +19,7 @@ import { mergeComponentVariables } from '../../lib/mergeThemes'
 import { ComponentEventHandler, ShorthandCollection, withSafeTypeForAs } from '../../types'
 import { submenuBehavior } from '../../lib/accessibility'
 
+import ToolbarMenuCheckboxGroup from './ToolbarMenuCheckboxGroup'
 import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
 
@@ -76,10 +77,21 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
 
     return _.map(items, item => {
       const kind = _.get(item, 'kind', 'item')
-      if (kind === 'divider') {
-        return ToolbarMenuDivider.create(item, { overrideProps: dividerOverridesFn })
+
+      switch (kind) {
+        case 'checkbox-group':
+          return ToolbarMenuCheckboxGroup.create(item, {
+            overrideProps: {
+              /* TODO */
+            },
+          })
+
+        case 'divider':
+          return ToolbarMenuDivider.create(item, { overrideProps: dividerOverridesFn })
+
+        default:
+          return ToolbarMenuItem.create(item, { overrideProps: itemOverridesFn })
       }
-      return ToolbarMenuItem.create(item, { overrideProps: itemOverridesFn })
     })
   }
 
