@@ -14,7 +14,7 @@ import {
 import { ShorthandValue, ComponentEventHandler, ShorthandCollection } from '../../types'
 
 import { Accessibility } from '../../lib/accessibility/types'
-import { createShorthandFactory, ShorthandFactory, WithExpectedProps } from '../../lib/factories'
+import { createShorthandFactory, ShorthandFactory } from '../../lib/factories'
 import Popup, { PopupProps, PopupEvents, PopupEventsArray } from '../Popup/Popup'
 import Menu, { MenuProps } from '../Menu/Menu'
 import { MenuItemProps } from '../Menu/MenuItem'

@@ -50,17 +50,17 @@ export type PropsOf<T> = T extends React.Component<infer TProps>
 // Shorthand Factories
 // ========================================================
 
-export type ShorthandRenderFunction = (
+export type ShorthandRenderFunction<P> = (
   Component: React.ReactType,
-  props: Props,
+  props: P,
 ) => React.ReactElement<any>
 
 export type ShorthandRenderer<P> = (
   value: ShorthandValue<P>,
-  renderTree?: ShorthandRenderFunction,
+  renderTree?: ShorthandRenderFunction<P>,
 ) => React.ReactElement<any>
 
-export type ShorthandRenderCallback = <P>(render: ShorthandRenderer<P>) => React.ReactElement<any>
+export type ShorthandRenderCallback<P> = (render: ShorthandRenderer<P>) => React.ReactElement<any>
 
 // The ReactFragment here is replaced from the original typings with ReactNodeArray because of incorrect inheriting of the type when it is defined as {}
 type ReactNode =
