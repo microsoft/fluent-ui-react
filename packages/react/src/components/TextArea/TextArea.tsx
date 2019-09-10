@@ -14,9 +14,7 @@ import {
 import { textAreaBehavior } from '../../lib/accessibility'
 
 export interface TextAreaProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** The default value of the text area. */
@@ -33,9 +31,7 @@ export interface TextAreaProps extends UIComponentProps, ChildrenComponentProps 
   /** The value of the text area. */
   value?: string
 
-  /**
-   * The text area becomes read-only.
-   */
+  /** The text area becomes read-only. */
   disabled?: boolean
 }
 

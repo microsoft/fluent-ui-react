@@ -31,15 +31,13 @@ const setUserInputValue = (inputComp: ReactWrapper, value: string) => {
 }
 
 describe('Input', () => {
-  describe('conformance', () => {
-    isConformant(Input, {
-      eventTargets: {
-        onChange: 'input',
-        onKeyDown: 'input',
-        onKeyPress: 'input',
-        onKeyUp: 'input',
-      },
-    })
+  isConformant(Input, {
+    eventTargets: {
+      onChange: 'input',
+      onKeyDown: 'input',
+      onKeyPress: 'input',
+      onKeyUp: 'input',
+    },
   })
 
   implementsShorthandProp(Input)('input', Box, { mapsValueToProp: 'type' })

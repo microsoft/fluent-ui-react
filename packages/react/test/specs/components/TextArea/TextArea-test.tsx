@@ -1,65 +1,49 @@
 import * as React from 'react'
-import { ReactWrapper } from 'enzyme'
 import { mountWithProvider as mount } from 'test/utils'
 import TextArea from 'src/components/TextArea/TextArea'
 import { isConformant } from 'test/specs/commonTests'
 
-const getTextAreaDomNode = (textAreaComp: ReactWrapper): HTMLTextAreaElement =>
-  textAreaComp.find('textarea').getDOMNode() as HTMLTextAreaElement
-
-const setUserTextAreaValue = (textAreaComp: ReactWrapper, value: string) => {
-  textAreaComp.find('textarea').simulate('change', { target: { value } })
-}
-
 const testValue = 'test value'
 
 describe('TextArea', () => {
-  describe('conformance', () => {
-    isConformant(TextArea, {
-      eventTargets: {
-        onChange: 'textarea',
-        onKeyDown: 'textarea',
-        onKeyPress: 'textarea',
-        onKeyUp: 'textarea',
-      },
-    })
-  })
+  isConformant(TextArea)
 
-  describe('auto-controlled', () => {
-    it('sets input value from user when the value prop is not set (non-controlled mode)', () => {
-      const textAreaComp = mount(<TextArea />)
-      const domNode = getTextAreaDomNode(textAreaComp)
-      setUserTextAreaValue(textAreaComp, testValue)
+  describe('defaultValue', () => {
+    test('sets "defaultValue" as initial "value"', () => {
+      const wrapper = mount(<TextArea defaultValue={testValue} />)
 
-      expect(domNode.value).toEqual(testValue)
-    })
-
-    it('cannot set input value from user when the value prop is already set (controlled mode)', () => {
-      const controlledTextAreaValue = 'controlled input value'
-      const textAreaComp = mount(<TextArea value={controlledTextAreaValue} />)
-      const domNode = getTextAreaDomNode(textAreaComp)
-      setUserTextAreaValue(textAreaComp, testValue)
-
-      expect(domNode.value).toEqual(controlledTextAreaValue)
+      expect(wrapper.find('textarea').prop('value')).toBe(testValue)
     })
   })
 
   describe('auto-controlled', () => {
     it('sets TextArea value from user when the value prop is not set (non-controlled mode)', () => {
-      const textAreaComp = mount(<TextArea />)
-      const domNode = getTextAreaDomNode(textAreaComp)
-      setUserTextAreaValue(textAreaComp, testValue)
+      const wrapper = mount(<TextArea />)
+      wrapper.simulate('change', { target: { value: testValue } })
 
-      expect(domNode.value).toEqual(testValue)
+      expect(wrapper.find('textarea').prop('value')).toBe(testValue)
     })
 
     it('cannot set TextArea value from user when the value prop is already set (controlled mode)', () => {
       const controlledTextAreaValue = 'controlled TextArea value'
-      const textAreaComp = mount(<TextArea value={controlledTextAreaValue} />)
-      const domNode = getTextAreaDomNode(textAreaComp)
-      setUserTextAreaValue(textAreaComp, testValue)
+      const wrapper = mount(<TextArea value={controlledTextAreaValue} />)
+      wrapper.simulate('change', { target: { value: testValue } })
 
-      expect(domNode.value).toEqual(controlledTextAreaValue)
+      expect(wrapper.find('textarea').prop('value')).toBe(controlledTextAreaValue)
+    })
+  })
+
+  describe('onChange', () => {
+    test('is called with (e, data)', () => {
+      const onChange = jest.fn()
+      const wrapper = mount(<TextArea onChange={onChange} />)
+
+      wrapper.simulate('change', { target: { value: testValue } })
+      expect(onChange).toBeCalledTimes(1)
+      expect(onChange).toBeCalledWith(
+        expect.objectContaining({ type: 'change' }),
+        expect.objectContaining({ value: testValue }),
+      )
     })
   })
 })
