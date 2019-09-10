@@ -63,6 +63,7 @@ export interface EmbedProps extends UIComponentProps {
 
 export interface EmbedState {
   active: boolean
+  iframeLoaded: boolean
 }
 
 class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> {
@@ -104,7 +105,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
   }
 
   getInitialAutoControlledState(): EmbedState {
-    return { active: false }
+    return { active: false, iframeLoaded: false }
   }
 
   handleClick = e => {
@@ -123,8 +124,17 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { control, iframe, placeholder, video } = this.props
-    const { active } = this.state
+    const { active, iframeLoaded } = this.state
     const controlVisible = !_.isNil(video) || !active
+    const placeholderImage = Image.create(placeholder, {
+      defaultProps: {
+        styles: styles.image,
+        variables: {
+          width: variables.width,
+          height: variables.height,
+        },
+      },
+    })
 
     return (
       <ElementType
@@ -134,6 +144,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...unhandledProps}
       >
+        {iframe && active && !iframeLoaded && placeholderImage}
         {active ? (
           <>
             {Video.create(video, {
@@ -142,6 +153,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                 controls: false,
                 loop: true,
                 muted: true,
+                poster: placeholder,
                 styles: styles.video,
                 variables: {
                   width: variables.width,
@@ -149,18 +161,19 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                 },
               },
             })}
-            {Box.create(iframe, { defaultProps: { as: 'iframe', styles: styles.iframe } })}
+            {Box.create(iframe, {
+              defaultProps: {
+                as: 'iframe',
+                styles: styles.iframe,
+                style: { visibility: iframeLoaded ? 'visible' : 'hidden' },
+                onLoad: () => {
+                  this.setState({ iframeLoaded: true })
+                },
+              },
+            })}
           </>
         ) : (
-          Image.create(placeholder, {
-            defaultProps: {
-              styles: styles.image,
-              variables: {
-                width: variables.width,
-                height: variables.height,
-              },
-            },
-          })
+          placeholderImage
         )}
 
         {controlVisible &&
