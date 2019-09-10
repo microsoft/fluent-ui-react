@@ -1,7 +1,9 @@
 import { pxToRem } from '../../../../lib'
-import { ProviderBoxVariables as BaseProviderBoxVariables } from '../../../base/components/Provider/providerBoxVariables'
 
-export interface ProviderBoxVariables extends BaseProviderBoxVariables {
+export interface ProviderBoxVariables {
+  background: string
+  color: string
+
   scrollbarHeight: string
   scrollbarWidth: string
 
@@ -14,6 +16,9 @@ export interface ProviderBoxVariables extends BaseProviderBoxVariables {
 }
 
 export default (siteVariables): Partial<ProviderBoxVariables> => ({
+  background: siteVariables.bodyBackground,
+  color: siteVariables.bodyColor,
+
   scrollbarHeight: pxToRem(16),
   scrollbarWidth: pxToRem(16),
 

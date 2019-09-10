@@ -5,6 +5,10 @@ export default {
   root: ({
     variables: v,
   }: ComponentStyleFunctionParam<never, ProviderBoxVariables>): ICSSInJSStyle => ({
+    background: v.background,
+    color: v.color,
+    textAlign: 'left',
+
     '& ::-webkit-scrollbar': {
       height: v.scrollbarHeight,
       width: v.scrollbarWidth,

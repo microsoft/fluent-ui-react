@@ -7,8 +7,6 @@ export { default as Input } from './components/Input/inputStyles'
 
 export { default as Loader } from './components/Loader/loaderStyles'
 
-export { default as ProviderBox } from './components/Provider/providerBoxStyles'
-
 export { default as Text } from './components/Text/textStyles'
 
 export { default as Toolbar } from './components/Toolbar/toolbarStyles'
