@@ -2,7 +2,7 @@ import { TreeItem, TreeTitle } from '@stardust-ui/react'
 
 const selectors = {
   treeItem: (itemIndex: number) =>
-    `.${TreeItem.className}:nth-of-type(${itemIndex} .${TreeTitle.className}`,
+    `.${TreeItem.className}:nth-of-type(${itemIndex}) .${TreeTitle.className}`,
 }
 
 const config: ScreenerTestsConfig = {
