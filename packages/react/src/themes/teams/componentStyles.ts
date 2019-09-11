@@ -88,6 +88,8 @@ export { default as Status } from './components/Status/statusStyles'
 
 export { default as Text } from './components/Text/textStyles'
 
+export { default as TextArea } from './components/TextArea/textAreaStyles'
+
 export { default as Toolbar } from './components/Toolbar/toolbarStyles'
 export { default as ToolbarRadioGroup } from './components/Toolbar/toolbarRadioGroupStyles'
 export { default as ToolbarCustomItem } from './components/Toolbar/toolbarCustomItemStyles'
