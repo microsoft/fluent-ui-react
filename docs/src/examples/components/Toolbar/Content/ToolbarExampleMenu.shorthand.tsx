@@ -1,10 +1,10 @@
 import { createCallbackLogFormatter } from '@stardust-ui/code-sandbox'
-import { useBooleanKnob, useLogKnob } from '@stardust-ui/docs-components'
+import { useLogKnob } from '@stardust-ui/docs-components'
 import { Toolbar } from '@stardust-ui/react'
 import * as React from 'react'
 
 const ToolbarExampleMenuShorthand = () => {
-  const [menuOpen, setMenuOpen] = useBooleanKnob({ initialValue: false, name: 'menuOpen' })
+  const [menuOpen, setMenuOpen] = React.useState(false)
 
   const onItemClick = useLogKnob('onItemClick', null, createCallbackLogFormatter(['content']))
   const onMenuOpenChange = useLogKnob(
