@@ -70,16 +70,15 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
   //   }
   // }
 
-  // const removeAlert = (alertDefinition: any) => {
-  //   setNewAlert(prevState => {
-  //     const index = prevState.indexOf(alertDefinition)
-  //     if (index > -1) {
-  //       return _.pull(prevState, alertDefinition)
-  //       // return prevState.splice(index, 1);
-  //     }
-  //     return prevState
-  //   })
-  // }
+  const removeAlert = (alertDefinition: any) => {
+    setNewAlert(prevState => {
+      const index = prevState.indexOf(alertDefinition)
+      if (index > -1) {
+        return _.without(prevState, alertDefinition)
+      }
+      return prevState
+    })
+  }
 
   const addAlert = (alertDefinition: any) => {
     setTimeout(() => {
@@ -99,16 +98,18 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     contentId: 'alert-1',
     buttons: [
       <Button content="Turn off my audio" onClick={() => alert('any action here')} primary />,
-      // <Button
-      //   aria-describedby="topUfd-1"
-      //   icon="close"
-      //   iconOnly
-      //   text
-      //   title="Dismiss from index"
-      //   onClick={() => removeAlert(firstAlertDefinition)}
-      //   primary
-      // />,
     ],
+    closeButton: (
+      <Button
+        key="closeButton"
+        icon="close"
+        iconOnly
+        text
+        title="Dismiss"
+        onClick={() => removeAlert(firstAlertDefinition)}
+        primary
+      />
+    ),
   }
 
   const secondAlertDefinition = {
@@ -116,18 +117,18 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     position: 'top',
     label: 'Alert',
     contentId: 'alert-2',
-    buttons: [
-      <Button content="reconnect" onClick={() => alert('any action here')} primary />,
-      //   <Button
-      //   aria-describedby="topUfd-1"
-      //   icon="close"
-      //   iconOnly
-      //   text
-      //   title="Dismiss from index"
-      //   onClick={() => removeAlert(secondAlertDefinition)}
-      //   primary
-      // />
-    ],
+    buttons: [<Button content="reconnect" onClick={() => alert('any action here')} primary />],
+    closeButton: (
+      <Button
+        key="closeButton"
+        icon="close"
+        iconOnly
+        text
+        title="Dismiss"
+        onClick={() => removeAlert(secondAlertDefinition)}
+        primary
+      />
+    ),
   }
 
   const thirdAlertDefinition = {
@@ -139,16 +140,18 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     buttons: [
       <Button content="Device settings" onClick={() => alert('any action here')} primary />,
       <Button content="Call me back" onClick={() => alert('any action here')} primary />,
-      // <Button
-      //   aria-describedby="topUfd-1"
-      //   icon="close"
-      //   iconOnly
-      //   text
-      //   title="Dismiss"
-      //   onClick={() => setNewAlert(removeAlert(secondAlertDefinition))}
-      //   primary
-      // />
     ],
+    closeButton: (
+      <Button
+        key="closeButton"
+        icon="close"
+        iconOnly
+        text
+        title="Dismiss"
+        onClick={() => removeAlert(thirdAlertDefinition)}
+        primary
+      />
+    ),
   }
 
   return (
@@ -199,7 +202,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                       iconOnly
                       text
                       title="Dismiss"
-                      onClick={() => setShowTopUfd(false)}
+                      onClick={() => setSecondShowTopUfd(false)}
                       primary
                     />,
                   ]}
@@ -221,8 +224,8 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                 <Divider />
                 <Flex column style={{ width: '300px' }}>
                   <Divider content="Informational banner" color="black" />
-                  <MouseTrigger content="TOP UFD Join Region" setter={setSecondShowTopUfd} />
-                  <MouseTrigger content="TOP UFD second Join Region" setter={setShowTopUfd} />
+                  <MouseTrigger content="TOP UFD 1" setter={setShowTopUfd} />
+                  <MouseTrigger content="TOP UFD 2" setter={setSecondShowTopUfd} />
                 </Flex>
 
                 <Flex column style={{ width: '300px' }}>

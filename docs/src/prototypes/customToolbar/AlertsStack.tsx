@@ -18,6 +18,15 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
     }
   }
 
+  static getDerivedStateFromProps(props, state) {
+    if (props.alerts.length === state.currentAlert) {
+      return {
+        currentAlert: props.alerts.length - 1,
+      }
+    }
+    return state
+  }
+
   setPrevious() {
     this.setState(prevState => ({
       currentAlert: prevState.currentAlert - 1 < 0 ? 0 : prevState.currentAlert - 1,
@@ -33,7 +42,7 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
     }))
   }
 
-  alertButtonsForMultipleAlerts(anotherButtons) {
+  alertButtonsForMultipleAlerts(anotherButtons, closeButton) {
     const baseButtons = [
       <Button
         key="previousAlert"
@@ -61,16 +70,25 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
         onClick={() => this.setNext()}
         primary
       />,
-      <Button icon="close" iconOnly text title="Dismiss" primary />,
     ]
     const allButtons = anotherButtons.concat(baseButtons)
+    if (allButtons.indexOf(closeButton) === -1) {
+      allButtons.push(closeButton)
+      return allButtons
+    }
+    allButtons.splice(allButtons.indexOf(closeButton), 1)
+    allButtons.push(closeButton)
     return allButtons
   }
 
-  alertButtonsForSingleAlert(anotherButtons) {
-    const baseButton = [<Button icon="close" iconOnly text title="Dismiss" primary />]
-    const buttonsTogether = anotherButtons.concat(baseButton)
-    return buttonsTogether
+  getButtonsForSingleAlert(anotherButtons, closeButton) {
+    if (anotherButtons.length > 0) {
+      if (anotherButtons.indexOf(closeButton) === -1) {
+        anotherButtons.push(closeButton)
+        return anotherButtons
+      }
+      return anotherButtons
+    }
   }
 
   render() {
@@ -90,7 +108,10 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
               position={reverseAlerts[0].position}
               label={reverseAlerts[0].label}
               contentId={reverseAlerts[0].contentId}
-              buttons={this.alertButtonsForSingleAlert(reverseAlerts[0].buttons)}
+              buttons={this.getButtonsForSingleAlert(
+                reverseAlerts[0].buttons,
+                reverseAlerts[0].closeButton,
+              )}
             />
           </div>
         )}
@@ -109,6 +130,7 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
               contentId={reverseAlerts[this.state.currentAlert].contentId}
               buttons={this.alertButtonsForMultipleAlerts(
                 reverseAlerts[this.state.currentAlert].buttons,
+                reverseAlerts[this.state.currentAlert].closeButton,
               )}
             />
           </div>
