@@ -33,6 +33,9 @@ export interface TextAreaProps extends UIComponentProps, ChildrenComponentProps 
 
   /** The text area becomes read-only. */
   disabled?: boolean
+
+  /** An input can have inverted colors. */
+  inverted?: boolean
 }
 
 export interface TextAreaState {
