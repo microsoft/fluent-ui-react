@@ -72,41 +72,6 @@ export default (
     expect(role).toBeFalsy()
   })
 
-  test(`handles "onKeyDown" overrides`, () => {
-    const actionHandler = jest.fn()
-    const eventHandler = jest.fn()
-
-    const actionBehavior: Accessibility = () => ({
-      keyActions: {
-        root: {
-          mockAction: {
-            keyCombinations: [{ keyCode: keyboardKey.Enter }],
-          },
-        },
-      },
-    })
-
-    const wrapperProps = {
-      ...requiredProps,
-      accessibility: actionBehavior,
-      [EVENT_TARGET_ATTRIBUTE]: true,
-      onKeyDown: eventHandler,
-    }
-
-    const wrapper = mountWithProvider(<Component {...wrapperProps} />)
-    const component = wrapper.find(Component)
-    ;(component.instance() as UIComponent<any, any>).actionHandlers.mockAction = actionHandler
-    // Force render component to apply updated key handlers
-    wrapper.setProps({})
-
-    getEventTargetComponent(component, 'onKeyDown').simulate('keydown', {
-      keyCode: keyboardKey.Enter,
-    })
-
-    expect(actionHandler).toBeCalledTimes(1)
-    expect(eventHandler).toBeCalledTimes(1)
-  })
-
   if (!partSelector) {
     // temporarily disabled as we do not support overriding of attributes applied to parts
     test('gets correct role when overrides accessibility', () => {
@@ -143,6 +108,46 @@ export default (
       const rendered = mountWithProviderAndGetComponent(Component, element)
       const role = getRenderedAttribute(rendered, 'role', partSelector)
       expect(role).toBe(testRole)
+    })
+
+    test(`handles "onKeyDown" overrides`, () => {
+      const actionHandler = jest.fn()
+      const eventHandler = jest.fn()
+
+      const actionBehavior: Accessibility = () => ({
+        keyActions: {
+          root: {
+            mockAction: {
+              keyCombinations: [{ keyCode: keyboardKey.Enter }],
+            },
+          },
+        },
+      })
+
+      const wrapperProps = {
+        ...requiredProps,
+        accessibility: actionBehavior,
+        [EVENT_TARGET_ATTRIBUTE]: true,
+        onKeyDown: eventHandler,
+      }
+
+      const wrapper = mountWithProvider(<Component {...wrapperProps} />)
+      const component = wrapper.find(Component)
+      const instance = component.instance() as UIComponent<any, any>
+      if (instance.actionHandlers) {
+        instance.actionHandlers.mockAction = actionHandler
+      }
+      // Force render component to apply updated key handlers
+      wrapper.setProps({})
+
+      getEventTargetComponent(component, 'onKeyDown').simulate('keydown', {
+        keyCode: keyboardKey.Enter,
+      })
+
+      if (instance.actionHandlers) {
+        expect(actionHandler).toBeCalledTimes(1)
+      }
+      expect(eventHandler).toBeCalledTimes(1)
     })
   }
 
