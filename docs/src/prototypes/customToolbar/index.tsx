@@ -163,7 +163,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
             {(showTopUfd || showSecondTopUfd) && showTopUfd && (
               <div
                 role="alertdialog"
-                aria-label="single alert"
+                aria-label="notification"
                 aria-describedby="topUfd-1"
                 aria-modal={false}
               >
@@ -188,7 +188,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
             {showSecondTopUfd && (
               <div
                 role="alertdialog"
-                aria-label="single alert"
+                aria-label="notification"
                 aria-describedby="topUfd-2"
                 aria-modal={false}
               >
