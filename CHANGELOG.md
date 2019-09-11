@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `Menu` and `Submenu` to use correct indicator icon and have correct width behavior [redlines] @bcalvery ([#1831](https://github.com/stardust-ui/react/pull/1831))
 - Fix handling of `onMouseEnter` prop in `ChatMessage` @layershifter ([#1903](https://github.com/stardust-ui/react/pull/1903))
 - Fix `CreateShorthandOptions` should be typed @lucivpav ([#1886](https://github.com/stardust-ui/react/pull/1886))
+- Add `shadowLevel1Dark` in Teams themes @notandrew ([#1887](https://github.com/stardust-ui/react/pull/1887))
 
 ### Documentation
 - Fix broken code editor in some doc site examples and improve error experience @levithomason ([#1906](https://github.com/stardust-ui/react/pull/1906))
@@ -46,7 +47,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `yellow`, `green`, `orange`, `pink`, `amethyst`, `silver` and `onyx` color schemes in Teams theme @mnajdova ([#1826](https://github.com/stardust-ui/react/pull/1826))
 - Add `Tree` component that is flat DOM structured @silviuavram ([#1779](https://github.com/stardust-ui/react/pull/1779))
 - Add `fitted` prop to `Alert` component @layershifter ([#1872](https://github.com/stardust-ui/react/pull/1872))
-- Add `shadowLevel1Dark` in Teams themes @notandrew ([#1887](https://github.com/stardust-ui/react/pull/1887))
 - Add `backdrop` and `closeOnOutsideClick` props to `Dialog` component @layershifter ([#1847](https://github.com/stardust-ui/react/pull/1847))
 
 ### Performance
