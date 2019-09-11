@@ -81,6 +81,8 @@ export { default as Status } from './components/Status/statusStyles'
 
 export { default as Text } from './components/Text/textStyles'
 
+export { default as TextArea } from './components/TextArea/textAreaStyles'
+
 export { default as ToolbarCustomItem } from './components/Toolbar/toolbarCustomItemStyles'
 export { default as ToolbarDivider } from './components/Toolbar/toolbarDividerStyles'
 export { default as ToolbarItem } from './components/Toolbar/toolbarItemStyles'
