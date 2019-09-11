@@ -71,6 +71,8 @@ export { default as Status } from './components/Status/statusVariables'
 
 export { default as Text } from './components/Text/textVariables'
 
+export { default as TextArea } from './components/TextArea/textAreaVariables'
+
 export { default as Toolbar } from './components/Toolbar/toolbarVariables'
 export { default as ToolbarCustomItem } from './components/Toolbar/toolbarCustomItemVariables'
 export { default as ToolbarItem } from './components/Toolbar/toolbarItemVariables'
