@@ -57,7 +57,10 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
         primary
       />,
       // <Button content={`${this.state.currentAlert + 1} of ${this.props.alerts.length}`} text />,
-      <Text content={`${this.state.currentAlert + 1} of ${this.props.alerts.length}`} />,
+      <Text
+        id="pagination"
+        content={`${this.state.currentAlert + 1} of ${this.props.alerts.length}`}
+      />,
       <Button
         iconOnly
         key="nextAlert"
@@ -119,8 +122,7 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
         {reverseAlerts && reverseAlerts.length > 1 && (
           <div
             role="alertdialog"
-            aria-label="multiple notifications"
-            aria-describedby={reverseAlerts[this.state.currentAlert].contentId}
+            aria-describedby={`pagination ${reverseAlerts[this.state.currentAlert].contentId}`}
             aria-modal={false}
           >
             <Ufd
