@@ -429,7 +429,7 @@ const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVar
     }),
   }),
 
-  menu: () => ({ zIndex: '1000' }),
+  menu: () => ({ zIndex: 1000 }),
 
   indicator: ({ props: p }) => ({
     position: 'relative',

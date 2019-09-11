@@ -3,7 +3,7 @@ import { screenReaderContainerStyles } from '../../../../lib/accessibility/Style
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { default as ListItem, ListItemProps } from '../../../../components/List/ListItem'
 
-const truncateStyle = {
+const truncateStyle: ICSSInJSStyle = {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',

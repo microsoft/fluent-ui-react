@@ -12,7 +12,7 @@ const selectors = {
   MS_THUMB: '::-ms-thumb',
 }
 
-const getCommonSlotStyles = (p: SliderProps, v: SliderVariables) => ({
+const getCommonSlotStyles = (p: SliderProps, v: SliderVariables): ICSSInJSStyle => ({
   cursor: 'pointer',
   pointerEvents: 'none',
   position: 'absolute',

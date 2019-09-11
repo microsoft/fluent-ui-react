@@ -149,7 +149,7 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
       width: 'auto',
       borderRadius: '50%',
       top: pxToRem(4),
-      zIndex: '1',
+      zIndex: 1,
       [sidePosition]: 0,
       transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
     }

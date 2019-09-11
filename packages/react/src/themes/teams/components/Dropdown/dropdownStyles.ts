@@ -1,4 +1,8 @@
-import { ComponentSlotStyle, ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import {
+  ComponentSlotStylesPrepared,
+  ICSSInJSStyle,
+  ComponentSlotStyleFunction,
+} from '../../../types'
 import {
   default as Dropdown,
   DropdownProps,
@@ -26,7 +30,7 @@ const transparentColorStyleObj: ICSSInJSStyle = {
   },
 }
 
-const getIndicatorStyles: ComponentSlotStyle<DropdownPropsAndState, DropdownVariables> = ({
+const getIndicatorStyles: ComponentSlotStyleFunction<DropdownPropsAndState, DropdownVariables> = ({
   variables: v,
 }): ICSSInJSStyle => ({
   alignItems: 'center',
