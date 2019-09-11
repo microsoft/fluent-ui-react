@@ -346,7 +346,7 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'virtualized-tree',
         title: { content: 'VirtualizedTree', as: NavLink, to: '/virtualized-tree' },
-        public: false,
+        public: true,
       },
       {
         key: 'copy-to-clipboard',
