@@ -40,72 +40,73 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps, ButtonVariables> = {
       }),
 
       // rectangular button defaults
-      ...(!p.text && {
-        borderStyle: 'solid',
-        borderColor: v.borderColor,
-        boxShadow: v.boxShadow,
-        borderRadius: '.2rem',
-        border: 0,
-
-        '::after': {
-          position: 'absolute',
-          content: '""',
+      ...(!p.circular &&
+        !p.text && {
+          borderStyle: 'solid',
+          borderColor: v.borderColor,
+          boxShadow: v.boxShadow,
           borderRadius: '.2rem',
-          border: '1px solid',
-          borderColor: '#e1dfdd',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          ...(p.primary && {
-            borderColor: v.primaryBorderColor,
-          }),
-        },
+          border: 0,
 
-        '::before': {
-          position: 'absolute',
-          content: '""',
-          borderRadius: '.2rem',
-          border: '.1rem solid transparent',
-          top: '.1rem',
-          right: '.1rem',
-          bottom: '.1rem',
-          left: '.1rem',
-        },
-
-        ...(p.isFromKeyboard && {
-          ':focus::after': {
-            borderColor: '#252423',
+          '::after': {
+            position: 'absolute',
+            content: '""',
+            borderRadius: '.2rem',
+            border: '1px solid',
+            borderColor: '#e1dfdd',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            ...(p.primary && {
+              borderColor: v.primaryBorderColor,
+            }),
           },
 
-          ':focus::before': {
-            borderColor: '#fff',
+          '::before': {
+            position: 'absolute',
+            content: '""',
+            borderRadius: '.2rem',
+            border: '.1rem solid transparent',
+            top: '.1rem',
+            right: '.1rem',
+            bottom: '.1rem',
+            left: '.1rem',
+          },
+
+          ...(p.isFromKeyboard && {
+            ':focus::after': {
+              borderColor: '#252423',
+            },
+
+            ':focus::before': {
+              borderColor: '#fff',
+            },
+          }),
+
+          ':hover': {
+            color: v.colorHover,
+            backgroundColor: v.backgroundColorHover,
+            borderColor: v.borderColorHover,
+          },
+
+          ':active': {
+            backgroundColor: v.backgroundColorFocus,
+            boxShadow: 'none',
+          },
+
+          ':focus': {
+            ...borderFocusStyles[':focus'],
+            boxShadow: 'none',
+
+            ':active': { backgroundColor: v.backgroundColorActive },
+          },
+          ':focus-visible': {
+            ...borderFocusStyles[':focus-visible'],
+            color: v.colorFocus,
+            backgroundColor: v.backgroundColorFocus,
           },
         }),
-
-        ':hover': {
-          color: v.colorHover,
-          backgroundColor: v.backgroundColorHover,
-          borderColor: v.borderColorHover,
-        },
-
-        ':active': {
-          backgroundColor: v.backgroundColorFocus,
-          boxShadow: 'none',
-        },
-
-        ':focus': {
-          ...borderFocusStyles[':focus'],
-          boxShadow: 'none',
-
-          ':active': { backgroundColor: v.backgroundColorActive },
-        },
-        ':focus-visible': {
-          ...borderFocusStyles[':focus-visible'],
-          color: v.colorFocus,
-          backgroundColor: v.backgroundColorFocus,
-        },
-      }),
 
       // circular button defaults
       ...(p.circular &&
