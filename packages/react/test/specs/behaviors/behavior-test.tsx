@@ -46,6 +46,9 @@ import {
   chatMessageBehavior,
   toolbarBehavior,
   toolbarItemBehavior,
+  toolbarMenuItemCheckboxBehavior,
+  toolbarMenuItemRadioBehavior,
+  toolbarMenuRadioGroupBehavior,
   toolbarRadioGroupBehavior,
   toolbarRadioGroupItemBehavior,
   tooltipBehavior,
@@ -105,6 +108,9 @@ testHelper.addBehavior('chatBehavior', chatBehavior)
 testHelper.addBehavior('chatMessageBehavior', chatMessageBehavior)
 testHelper.addBehavior('toolbarBehavior', toolbarBehavior)
 testHelper.addBehavior('toolbarItemBehavior', toolbarItemBehavior)
+testHelper.addBehavior('toolbarMenuItemCheckboxBehavior', toolbarMenuItemCheckboxBehavior)
+testHelper.addBehavior('toolbarMenuItemRadioBehavior', toolbarMenuItemRadioBehavior)
+testHelper.addBehavior('toolbarMenuRadioGroupBehavior', toolbarMenuRadioGroupBehavior)
 testHelper.addBehavior('toolbarRadioGroupBehavior', toolbarRadioGroupBehavior)
 testHelper.addBehavior('toolbarRadioGroupItemBehavior', toolbarRadioGroupItemBehavior)
 testHelper.addBehavior('tooltipBehavior', tooltipBehavior)
