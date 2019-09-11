@@ -1,9 +1,9 @@
 import * as React from 'react'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
-import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
+import UsageSection from 'docs/src/components/ComponentDoc/UsageSection'
 
 const Usage = () => (
-  <ExampleSection title="">
+  <UsageSection>
     <ComponentExample
       title="Custom panel title"
       description="Accordion panel's title can be customized."
@@ -14,7 +14,7 @@ const Usage = () => (
       description="Accordion panel's content can be customized."
       examplePath="components/Accordion/Usage/AccordionPanelCustomContentExample"
     />
-  </ExampleSection>
+  </UsageSection>
 )
 
 export default Usage

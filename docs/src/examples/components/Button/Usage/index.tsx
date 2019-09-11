@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
-import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
+import UsageSection from 'docs/src/components/ComponentDoc/UsageSection'
 
 const Usage = () => (
-  <ExampleSection title="">
+  <UsageSection>
     <ComponentExample
       title="Content and Icon"
       description="A button can have an icon in addition to content."
@@ -30,7 +30,7 @@ const Usage = () => (
       }
       examplePath="components/Button/Usage/ButtonExampleWithTooltip"
     />
-  </ExampleSection>
+  </UsageSection>
 )
 
 export default Usage

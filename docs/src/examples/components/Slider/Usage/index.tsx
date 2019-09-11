@@ -1,9 +1,9 @@
 import * as React from 'react'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
-import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
+import UsageSection from 'docs/src/components/ComponentDoc/UsageSection'
 
 const Usage = () => (
-  <ExampleSection title="">
+  <UsageSection>
     <ComponentExample
       title="Slider with label in a form"
       description="Shows how a slider can be used together with a label to display information in the context of a form."
@@ -31,7 +31,7 @@ const Usage = () => (
       }
       examplePath="components/Slider/Usage/SliderExampleAction"
     />
-  </ExampleSection>
+  </UsageSection>
 )
 
 export default Usage

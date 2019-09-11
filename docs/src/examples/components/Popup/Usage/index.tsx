@@ -1,10 +1,10 @@
 import * as React from 'react'
 
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
-import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
+import UsageSection from 'docs/src/components/ComponentDoc/UsageSection'
 
 const Usage = () => (
-  <ExampleSection title="">
+  <UsageSection>
     <ComponentExample
       title="Async popup position update"
       description="A popup can be forced to update its position - this comes in handy in async data loading scenarios."
@@ -40,7 +40,7 @@ const Usage = () => (
       description="Popups can have close button."
       examplePath="components/Popup/Usage/PopupExampleCloseButton"
     />
-  </ExampleSection>
+  </UsageSection>
 )
 
 export default Usage

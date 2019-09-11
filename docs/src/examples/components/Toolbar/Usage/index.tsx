@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
-import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
+import UsageSection from 'docs/src/components/ComponentDoc/UsageSection'
 
 const Usage = () => (
-  <ExampleSection title="">
+  <UsageSection>
     <ComponentExample
       title="With tooltips"
       description={
@@ -15,7 +15,7 @@ const Usage = () => (
       }
       examplePath="components/Toolbar/Usage/ToolbarExampleWithTooltip"
     />
-  </ExampleSection>
+  </UsageSection>
 )
 
 export default Usage
