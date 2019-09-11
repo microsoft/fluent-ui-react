@@ -8,7 +8,7 @@ const ToolbarExampleMenuShorthand = () => {
 
   const onItemClick = useLogKnob('onItemClick', null, createCallbackLogFormatter(['content']))
   const onMenuOpenChange = useLogKnob(
-    'onItemClick',
+    'onMenuOpenChange',
     (e, { menuOpen }) => setMenuOpen(menuOpen),
     createCallbackLogFormatter(['menuOpen']),
   )
