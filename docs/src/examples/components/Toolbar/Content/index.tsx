@@ -30,7 +30,12 @@ const Content = () => (
     <ComponentExample
       title="TODO"
       description="TODO."
-      examplePath="components/Toolbar/Content/ToolbarExampleMenuCheckboxGroup"
+      examplePath="components/Toolbar/Content/ToolbarExampleMenuItemCheckbox"
+    />
+    <ComponentExample
+      title="TODO"
+      description="TODO."
+      examplePath="components/Toolbar/Content/ToolbarExampleMenuRadioGroup"
     />
     <ComponentExample
       title="Toolbar can contain custom content"

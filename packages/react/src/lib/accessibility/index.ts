@@ -25,6 +25,15 @@ export {
 } from './Behaviors/Toolbar/menuItemAsToolbarButtonBehavior'
 export { default as toolbarBehavior } from './Behaviors/Toolbar/toolbarBehavior'
 export { default as toolbarItemBehavior } from './Behaviors/Toolbar/toolbarItemBehavior'
+export {
+  default as toolbarMenuItemCheckboxBehavior,
+} from './Behaviors/Toolbar/toolbarMenuItemCheckboxBehavior'
+export {
+  default as toolbarMenuItemRadioBehavior,
+} from './Behaviors/Toolbar/toolbarMenuItemRadioBehavior'
+export {
+  default as toolbarMenuRadioGroupBehavior,
+} from './Behaviors/Toolbar/toolbarMenuRadioGroupBehavior'
 export { default as toolbarRadioGroupBehavior } from './Behaviors/Toolbar/toolbarRadioGroupBehavior'
 export {
   default as toolbarRadioGroupItemBehavior,

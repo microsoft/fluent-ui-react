@@ -17,9 +17,9 @@ import {
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 import { ComponentEventHandler, ShorthandCollection, withSafeTypeForAs } from '../../types'
-import { submenuBehavior } from '../../lib/accessibility'
+import { submenuBehavior, toolbarMenuItemCheckboxBehavior } from '../../lib/accessibility'
 
-import ToolbarMenuCheckboxGroup from './ToolbarMenuCheckboxGroup'
+import ToolbarMenuRadioGroup, { ToolbarMenuRadioGroupProps } from './ToolbarMenuRadioGroup'
 import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
 
@@ -71,23 +71,34 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
     variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
+  handleRadioGroupOverrides = variables => (predefinedProps: ToolbarMenuRadioGroupProps) => ({
+    onItemClick: (e, itemProps) => {
+      _.invoke(predefinedProps, 'onItemClick', e, itemProps)
+      _.invoke(this.props, 'onItemClick', e, itemProps)
+    },
+    variables: mergeComponentVariables(variables, predefinedProps.variables),
+  })
+
   renderItems(items, variables) {
     const itemOverridesFn = this.handleItemOverrides(variables)
     const dividerOverridesFn = this.handleDividerOverrides(variables)
+    const radioGroupOverrides = this.handleRadioGroupOverrides(variables)
 
     return _.map(items, item => {
       const kind = _.get(item, 'kind', 'item')
 
       switch (kind) {
-        case 'checkbox-group':
-          return ToolbarMenuCheckboxGroup.create(item, {
-            overrideProps: {
-              /* TODO */
-            },
+        case 'checkbox':
+          return ToolbarMenuItem.create(item, {
+            defaultProps: { accessibility: toolbarMenuItemCheckboxBehavior },
+            overrideProps: itemOverridesFn,
           })
 
         case 'divider':
           return ToolbarMenuDivider.create(item, { overrideProps: dividerOverridesFn })
+
+        case 'group':
+          return ToolbarMenuRadioGroup.create(item, { overrideProps: radioGroupOverrides })
 
         default:
           return ToolbarMenuItem.create(item, { overrideProps: itemOverridesFn })
