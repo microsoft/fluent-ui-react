@@ -50,7 +50,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
       const { history, location } = this.props
       const at = location.pathname
       const newLocation = at.replace(this.tabRegex, 'definition')
-      history.replace(newLocation)
+      history.push(newLocation)
       return 0
     }
     return index
@@ -106,13 +106,13 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
     const at = location.pathname
     const newLocation = at.replace(this.tabRegex, this.props.tabs[newIndex].toLowerCase())
 
-    history.replace(newLocation)
+    history.push(newLocation)
     this.setState({ currentTabIndex: newIndex })
   }
 
   onPropComponentSelected = (e, props) => {
     const { history } = this.props
-    history.replace({ ...history.location, hash: props.value })
+    history.push({ ...history.location, hash: props.value })
   }
 
   render() {
