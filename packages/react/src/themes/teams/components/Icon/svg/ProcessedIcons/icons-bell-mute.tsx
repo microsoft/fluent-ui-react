@@ -17,5 +17,5 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'bell-mute',
+  exportedAs: 'bell-slash',
 } as TeamsProcessedSvgIconSpec

@@ -168,7 +168,7 @@ export default {
   'arrow-right': arrowRight,
   'audio-off': audioOff,
   ban,
-  'bell-mute': bellMute,
+  'bell-slash': bellMute,
   bold,
   bookmark,
   broadcast,
