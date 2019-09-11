@@ -1,5 +1,6 @@
 import { ICSSInJSStyle } from '../../../types'
 import { getColorScheme } from '../../colors'
+import { pxToRem } from '@stardust-ui/react'
 
 const toolbarMenuItemStyles = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
@@ -40,6 +41,12 @@ const toolbarMenuItemStyles = {
       }),
     }
   },
+
+  checkedIndicator: ({ variables: v }) => ({
+    float: 'right',
+    position: 'fixed',
+    right: pxToRem(7),
+  }),
 
   wrapper: {
     display: 'block',

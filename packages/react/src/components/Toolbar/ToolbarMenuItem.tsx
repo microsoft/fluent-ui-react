@@ -63,6 +63,7 @@ export interface ToolbarMenuItemProps
 }
 
 export interface ToolbarMenuItemSlotClassNames {
+  checkedIndicator: string
   wrapper: string
 }
 
@@ -72,6 +73,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
   static className = 'ui-toolbar__menuitem'
 
   static slotClassNames: ToolbarMenuItemSlotClassNames = {
+    checkedIndicator: `${ToolbarMenuItem.className}__checkedIndicator`,
     wrapper: `${ToolbarMenuItem.className}__wrapper`,
   }
 
@@ -84,6 +86,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
     checkedIndicator: customPropTypes.itemShorthand,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
+    index: PropTypes.number,
     onClick: PropTypes.func,
     wrapper: customPropTypes.itemShorthand,
   }
@@ -102,7 +105,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
     },
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
     const { checked, checkedIndicator, children, content, disabled, icon, wrapper } = this.props
 
     const menuItemInner = childrenExist(children) ? (
@@ -122,7 +125,13 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
           <>
             {Icon.create(icon, { defaultProps: { xSpacing: !!content ? 'after' : 'none' } })}
             {content}
-            {checked && Icon.create(checkedIndicator)}
+            {checked &&
+              Icon.create(checkedIndicator, {
+                defaultProps: {
+                  className: ToolbarMenuItem.slotClassNames.checkedIndicator,
+                  styles: styles.checkedIndicator,
+                },
+              })}
           </>
         )}
       </ElementType>
