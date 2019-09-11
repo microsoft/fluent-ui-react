@@ -283,7 +283,7 @@ export default {
   send,
   settings,
   'share-alt': shareAlt,
-  snooze,
+  'bell-snooze': snooze,
   star,
   sticker,
   strike,

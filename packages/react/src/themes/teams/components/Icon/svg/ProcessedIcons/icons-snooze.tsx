@@ -19,5 +19,5 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'snooze',
+  exportedAs: 'bell-snooze',
 } as TeamsSvgIconSpec
