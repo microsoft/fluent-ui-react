@@ -155,7 +155,7 @@ ToolbarRadioGroup.create = createShorthandFactory({
 })
 
 /**
- * A ToolbarRadiouGroup renders Toolbar item as a group of mutually exclusive options.
+ * A ToolbarRadioGroup renders Toolbar item as a group of mutually exclusive options.
  * Component doesn't implement mutual exclusiveness, it just serves accessibility purposes.
  *
  * @accessibility

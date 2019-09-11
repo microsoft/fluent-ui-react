@@ -158,7 +158,8 @@ ToolbarMenuRadioGroup.create = createShorthandFactory({
 })
 
 /**
- * TODO.
+ * A ToolbarMenuRadioGroup renders ToolbarMenuItem as a group of mutually exclusive options.
+ * Component doesn't implement mutual exclusiveness, it just serves accessibility purposes.
  */
 export default withSafeTypeForAs<typeof ToolbarMenuRadioGroup, ToolbarMenuRadioGroupProps, 'ul'>(
   ToolbarMenuRadioGroup,

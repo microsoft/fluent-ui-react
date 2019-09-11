@@ -28,13 +28,13 @@ const Content = () => (
       examplePath="components/Toolbar/Content/ToolbarExampleMenu"
     />
     <ComponentExample
-      title="TODO"
-      description="TODO."
+      title="Toolbar can contain checkbox items in a menu"
+      description="Toolbar item can open a menu which can contain checkbox items."
       examplePath="components/Toolbar/Content/ToolbarExampleMenuItemCheckbox"
     />
     <ComponentExample
-      title="TODO"
-      description="TODO."
+      title="Toolbar can contain a radio group in a menu"
+      description="Toolbar item can open a menu which can contain radio groups."
       examplePath="components/Toolbar/Content/ToolbarExampleMenuRadioGroup"
     />
     <ComponentExample

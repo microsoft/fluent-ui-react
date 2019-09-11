@@ -47,7 +47,7 @@ export interface ToolbarMenuItemProps
   /** Name or shorthand for Toolbar Item Icon */
   icon?: ShorthandValue<IconProps>
 
-  /** TODO: */
+  /** ToolbarMenuItem index inside ToolbarMenu. */
   index?: number
 
   /**
