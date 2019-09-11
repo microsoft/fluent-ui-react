@@ -1,7 +1,8 @@
 import { TreeItem, TreeTitle } from '@stardust-ui/react'
 
 const selectors = {
-  treeItem: (itemIndex: number) =>
+  treeItem: (itemIndex: number) => `.${TreeItem.className}:nth-of-type(${itemIndex})`,
+  treeTitle: (itemIndex: number) =>
     `.${TreeItem.className}:nth-of-type(${itemIndex}) .${TreeTitle.className}`,
 }
 
@@ -10,12 +11,12 @@ const config: ScreenerTestsConfig = {
   steps: [
     builder =>
       builder
-        .click(selectors.treeItem(1))
-        .click(selectors.treeItem(2))
+        .click(selectors.treeTitle(1))
+        .click(selectors.treeTitle(2))
         .snapshot('Focus on click subtree'),
     (builder, keys) =>
       builder.keys(selectors.treeItem(2), keys.downArrow).snapshot('Focus on keyboard leaf'),
-    builder => builder.click(selectors.treeItem(5)).snapshot('Focus on click leaf'),
+    builder => builder.click(selectors.treeTitle(5)).snapshot('Focus on click leaf'),
     (builder, keys) =>
       builder.keys(selectors.treeItem(5), keys.downArrow).snapshot('Focus on keyboard subtree'),
   ],
