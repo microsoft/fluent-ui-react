@@ -1,6 +1,10 @@
 import { isConformant } from 'test/specs/commonTests'
+
+import Box from 'src/components/Box/Box'
 import ToolbarMenuRadioGroup from 'src/components/Toolbar/ToolbarMenuRadioGroup'
 
-describe('ToolbarMenuDivider', () => {
-  isConformant(ToolbarMenuRadioGroup)
+describe('ToolbarMenuRadioGroup', () => {
+  isConformant(ToolbarMenuRadioGroup, {
+    wrapperComponent: Box,
+  })
 })

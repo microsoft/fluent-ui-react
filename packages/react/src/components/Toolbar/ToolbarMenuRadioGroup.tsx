@@ -75,7 +75,7 @@ class ToolbarMenuRadioGroup extends AutoControlledComponent<
 
   static create: ShorthandFactory<ToolbarMenuRadioGroupProps>
 
-  static className = 'ui-toolbar__menucheckboxgroup'
+  static className = 'ui-toolbars' // FIXME: required by getComponentInfo/isConformant. But this is group inside a toolbar not a group of toolbars
 
   static slotClassNames: ToolbarMenuRadioGroupSlotClassNames = {
     wrapper: `${ToolbarMenuRadioGroup.className}__wrapper`,
@@ -159,7 +159,6 @@ ToolbarMenuRadioGroup.create = createShorthandFactory({
 
 /**
  * A ToolbarMenuRadioGroup renders ToolbarMenuItem as a group of mutually exclusive options.
- * Component doesn't implement mutual exclusiveness, it just serves accessibility purposes.
  */
 export default withSafeTypeForAs<typeof ToolbarMenuRadioGroup, ToolbarMenuRadioGroupProps, 'ul'>(
   ToolbarMenuRadioGroup,

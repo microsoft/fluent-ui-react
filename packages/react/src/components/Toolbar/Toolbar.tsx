@@ -29,6 +29,7 @@ import ToolbarItem, { ToolbarItemProps } from './ToolbarItem'
 import ToolbarMenu from './ToolbarMenu'
 import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem from './ToolbarMenuItem'
+import ToolbarMenuRadioGroup from './ToolbarMenuRadioGroup'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
 import Box, { BoxProps } from '../Box/Box'
 import * as PropTypes from 'prop-types'
@@ -115,6 +116,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   static Menu = ToolbarMenu
   static MenuDivider = ToolbarMenuDivider
   static MenuItem = ToolbarMenuItem
+  static MenuRadioGroup = ToolbarMenuRadioGroup
   static RadioGroup = ToolbarRadioGroup
 
   state: ToolbarState = {
