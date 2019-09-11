@@ -1,5 +1,5 @@
 import { GridVariables } from './gridVariables'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { GridProps } from '../../../../components/Grid/Grid'
 
 const getCSSTemplateValue = (template: string | number): string => {
@@ -10,7 +10,7 @@ const getCSSTemplateValue = (template: string | number): string => {
     : String(template)
 }
 
-const gridStyles: ComponentSlotStylesInput<GridProps, GridVariables> = {
+const gridStyles: ComponentSlotStylesPrepared<GridProps, GridVariables> = {
   root: ({
     props,
     variables: { height, width, defaultColumnCount, gridGap, padding },
