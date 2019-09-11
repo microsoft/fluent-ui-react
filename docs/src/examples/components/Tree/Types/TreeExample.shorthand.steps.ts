@@ -12,14 +12,14 @@ const config: ScreenerTestsConfig = {
     (builder, keys) =>
       builder
         .click(selectors.treeTitle(1))
-        .click(selectors.treeTitle(2))
         .snapshot('Focus on click subtree')
         .keys(selectors.treeItem(2), keys.downArrow)
+        .snapshot('Focus on keyboard subtree')
+        .click(selectors.treeTitle(2))
+        .keys(selectors.treeItem(2), keys.downArrow)
         .snapshot('Focus on keyboard leaf')
-        .click(selectors.treeTitle(5))
-        .snapshot('Focus on click leaf')
-        .keys(selectors.treeItem(5), keys.downArrow)
-        .snapshot('Focus on keyboard subtree'),
+        .click(selectors.treeTitle(4))
+        .snapshot('Focus on click leaf'),
   ],
 }
 
