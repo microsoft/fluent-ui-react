@@ -9,16 +9,17 @@ const selectors = {
 const config: ScreenerTestsConfig = {
   themes: ['teams', 'teamsDark', 'teamsHighContrast'],
   steps: [
-    builder =>
+    (builder, keys) =>
       builder
         .click(selectors.treeTitle(1))
         .click(selectors.treeTitle(2))
-        .snapshot('Focus on click subtree'),
-    (builder, keys) =>
-      builder.keys(selectors.treeItem(2), keys.downArrow).snapshot('Focus on keyboard leaf'),
-    builder => builder.click(selectors.treeTitle(5)).snapshot('Focus on click leaf'),
-    (builder, keys) =>
-      builder.keys(selectors.treeItem(5), keys.downArrow).snapshot('Focus on keyboard subtree'),
+        .snapshot('Focus on click subtree')
+        .keys(selectors.treeItem(2), keys.downArrow)
+        .snapshot('Focus on keyboard leaf')
+        .click(selectors.treeTitle(5))
+        .snapshot('Focus on click leaf')
+        .keys(selectors.treeItem(5), keys.downArrow)
+        .snapshot('Focus on keyboard subtree'),
   ],
 }
 
