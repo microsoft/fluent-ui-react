@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { SliderVariables } from './sliderVariables'
 import Slider, { SliderProps, SliderState } from '../../../../components/Slider/Slider'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const selectors = {
@@ -26,7 +26,7 @@ const thumbFromPreviousSiblingSelector = `&+ .${Slider.slotClassNames.thumb}`
 
 const getFluidStyles = (p: SliderProps) => p.fluid && !p.vertical && { width: '100%' }
 
-const sliderStyles: ComponentSlotStylesInput<SliderProps & SliderState, SliderVariables> = {
+const sliderStyles: ComponentSlotStylesPrepared<SliderProps & SliderState, SliderVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     height: v.height,
 

@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import * as _ from 'lodash'
 import {
   default as ChatMessage,
@@ -10,7 +10,7 @@ import { screenReaderContainerStyles } from '../../../../lib/accessibility/Style
 import { pxToRem } from '../../../../lib'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
-const chatMessageStyles: ComponentSlotStylesInput<
+const chatMessageStyles: ComponentSlotStylesPrepared<
   ChatMessageProps & ChatMessageState,
   ChatMessageVariables
 > = {

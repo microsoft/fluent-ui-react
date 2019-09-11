@@ -1,9 +1,9 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { MenuDividerProps } from '../../../../components/Menu/MenuDivider'
 import { MenuVariables } from './menuVariables'
 import { getColorScheme } from '../../colors'
 
-const menuDividerStyles: ComponentSlotStylesInput<MenuDividerProps, MenuVariables> = {
+const menuDividerStyles: ComponentSlotStylesPrepared<MenuDividerProps, MenuVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const colors = getColorScheme(v.colorScheme, null, p.primary)
     const borderColor = p.primary ? v.primaryBorderColor : v.borderColor || colors.border

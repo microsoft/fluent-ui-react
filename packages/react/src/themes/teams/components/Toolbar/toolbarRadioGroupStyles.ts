@@ -1,6 +1,6 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 
-const toolbarRadioGroupStyles: ComponentSlotStylesInput = {
+const toolbarRadioGroupStyles: ComponentSlotStylesPrepared = {
   root: (): ICSSInJSStyle => ({
     whiteSpace: 'nowrap',
   }),

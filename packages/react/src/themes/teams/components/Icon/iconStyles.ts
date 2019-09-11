@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 
 import { callable, pxToRem, SizeValue } from '../../../../lib'
 import {
-  ComponentSlotStylesInput,
+  ComponentSlotStylesPrepared,
   ICSSInJSStyle,
   StrictColorScheme,
   ItemType,
@@ -57,7 +57,7 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
   }
 }
 
-const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
+const iconStyles: ComponentSlotStylesPrepared<IconProps, IconVariables> = {
   root: ({ props: p, variables: v, theme: t, rtl }): ICSSInJSStyle => {
     const iconSpec: ThemeIconSpec = t.icons[p.name] || emptyIcon
     const isFontIcon = !iconSpec.isSvg

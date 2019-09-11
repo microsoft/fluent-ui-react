@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
 import {
-  ComponentSlotStylesInput,
+  ComponentSlotStylesPrepared,
   ICSSInJSStyle,
   StrictColorScheme,
   ItemType,
@@ -144,7 +144,7 @@ const pointingBeak = ({
   }
 }
 
-const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
+const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVariables> = {
   wrapper: ({ props, variables: v, theme }): ICSSInJSStyle => {
     const {
       active,

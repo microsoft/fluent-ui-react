@@ -1,6 +1,6 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 
-const toolbarStyles: ComponentSlotStylesInput = {
+const toolbarStyles: ComponentSlotStylesPrepared = {
   root: (): ICSSInJSStyle => ({
     display: 'flex',
     alignItems: 'center',

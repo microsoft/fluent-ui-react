@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { ImageProps } from '../../../../components/Image/Image'
 
 export default {
@@ -14,4 +14,4 @@ export default {
       borderRadius: variables.avatarRadius,
     }),
   }),
-} as ComponentSlotStylesInput<ImageProps, any>
+} as ComponentSlotStylesPrepared<ImageProps, any>

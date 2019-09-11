@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import {
   createComponent,
   ComponentSlotStylesInput,
-  ThemeInput,
+  ThemePrepared,
   Grid,
   Header,
   HeaderProps,
@@ -14,7 +14,7 @@ import ColorBox from './ColorBox'
 
 type ColorVariantsProps = {
   name?: string
-  themes?: ThemeInput[]
+  themes?: ThemePrepared[]
   headers?: ShorthandCollection<HeaderProps>
 }
 

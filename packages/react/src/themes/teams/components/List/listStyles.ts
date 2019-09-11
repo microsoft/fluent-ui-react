@@ -1,8 +1,8 @@
 import { debugRoot } from '../../../../styles/debugStyles'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { ListProps } from '../../../../components/List/List'
 
-const listStyles: ComponentSlotStylesInput<ListProps> = {
+const listStyles: ComponentSlotStylesPrepared<ListProps> = {
   root: ({ props: p }): ICSSInJSStyle => ({
     ...(p.debug && debugRoot()),
     display: p.horizontal ? 'inline-flex' : 'block',

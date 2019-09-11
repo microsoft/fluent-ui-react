@@ -1,4 +1,4 @@
-import { ComponentSlotStyle, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStyle, ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import {
   default as Dropdown,
   DropdownProps,
@@ -56,7 +56,7 @@ const getWidth = (p: DropdownPropsAndState, v: DropdownVariables): string => {
   return v.width
 }
 
-const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVariables> = {
+const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, DropdownVariables> = {
   root: ({ props: p }): ICSSInJSStyle => ({
     ...(p.inline && { display: 'inline-flex' }),
   }),

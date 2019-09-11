@@ -1,6 +1,10 @@
+import {
+  ComponentSlotStylesPrepared,
+  ComponentStyleFunctionParam,
+  ICSSInJSStyle,
+} from '../../../types'
 import { FlexDirectionProperty } from 'csstype'
 import { LoaderProps } from '../../../../components/Loader/Loader'
-import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { LoaderVariables } from './loaderVariables'
 import { pxToRem } from '../../../../lib'
 import { ObjectOf } from '../../../../types'
@@ -12,7 +16,7 @@ const rootFlexDirections: ObjectOf<FlexDirectionProperty> = {
   end: 'row',
 }
 
-export default {
+const loaderStyles: ComponentSlotStylesPrepared<LoaderProps, LoaderVariables> = {
   root: ({
     props: p,
   }: ComponentStyleFunctionParam<LoaderProps, LoaderVariables>): ICSSInJSStyle => ({
@@ -82,7 +86,9 @@ export default {
       },
     }
   },
-  label: {
+  label: () => ({
     margin: pxToRem(10),
-  },
+  }),
 }
+
+export default loaderStyles
