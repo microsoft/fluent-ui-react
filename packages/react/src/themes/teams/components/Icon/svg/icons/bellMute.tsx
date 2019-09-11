@@ -17,5 +17,4 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'bell-mute',
 } as TeamsProcessedSvgIconSpec
