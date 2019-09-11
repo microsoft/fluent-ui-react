@@ -12,12 +12,18 @@ import {
   AutoControlledComponent,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
+import {
+  ComponentEventHandler,
+  ShorthandCollection,
+  ShorthandValue,
+  WithAsProp,
+  withSafeTypeForAs,
+} from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
 import * as PropTypes from 'prop-types'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 import {
   toolbarMenuRadioGroupBehavior,
   toolbarMenuItemRadioBehavior,
@@ -41,13 +47,16 @@ export interface ToolbarMenuRadioGroupProps
   /** Shorthand array of props for ToolbarMenuRadioGroup. */
   items?: ShorthandCollection<ToolbarMenuItemProps>
 
-  /** TODO */
-  onIndexChange: Function
+  /**
+   * Called on item click.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All item props.
+   */
+  onItemClick?: ComponentEventHandler<ToolbarMenuItemProps>
 
-  /** TODO */
-  onItemClick: Function
-
-  wrapper?: any
+  /** Shorthand for the wrapper component. */
+  wrapper?: ShorthandValue<BoxProps>
 }
 
 export interface ToolbarMenuRadioGroupState {
@@ -77,7 +86,6 @@ class ToolbarMenuRadioGroup extends AutoControlledComponent<
     activeIndex: PropTypes.number,
     defaultActiveIndex: PropTypes.number,
     items: customPropTypes.collectionShorthand,
-    onIndexChange: PropTypes.func,
     onItemClick: PropTypes.func,
     wrapper: customPropTypes.itemShorthand,
   }
@@ -99,7 +107,6 @@ class ToolbarMenuRadioGroup extends AutoControlledComponent<
       _.invoke(predefinedProps, 'onClick', e, itemProps)
       _.invoke(this.props, 'onItemClick', e, itemProps)
 
-      _.invoke(this.props, 'onIndexChange', e, { ...this.props, activeIndex: index })
       this.setState({ activeIndex: index })
     },
     variables: mergeComponentVariables(variables, predefinedProps.variables),

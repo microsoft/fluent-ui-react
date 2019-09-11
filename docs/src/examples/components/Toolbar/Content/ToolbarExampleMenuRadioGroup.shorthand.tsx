@@ -23,7 +23,7 @@ const ToolbarExampleMenuRadioGroup = () => {
                 { key: 'right', content: 'Right' },
                 { key: 'justify', content: 'Justify' },
               ],
-              onIndexChange: (e, data) => setActiveIndex(data.activeIndex),
+              onItemClick: (e, data) => setActiveIndex(data.index),
             },
             { key: 'divider', kind: 'divider' },
             'About...',
