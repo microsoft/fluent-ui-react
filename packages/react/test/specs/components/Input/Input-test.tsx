@@ -67,25 +67,6 @@ describe('Input', () => {
     })
   })
 
-  describe('auto-controlled', () => {
-    it('sets input value from user when the value prop is not set (non-controlled mode)', () => {
-      const inputComp = mount(<Input />)
-      const domNode = getInputDomNode(inputComp)
-      setUserInputValue(inputComp, testValue)
-
-      expect(domNode.value).toEqual(testValue)
-    })
-
-    it('cannot set input value from user when the value prop is already set (controlled mode)', () => {
-      const controlledInputValue = 'controlled input value'
-      const inputComp = mount(<Input value={controlledInputValue} />)
-      const domNode = getInputDomNode(inputComp)
-      setUserInputValue(inputComp, testValue)
-
-      expect(domNode.value).toEqual(controlledInputValue)
-    })
-  })
-
   describe('clearable', () => {
     it('calls onChange on Icon click with an `empty` value', () => {
       const onChange = jest.fn()
