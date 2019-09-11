@@ -5030,7 +5030,7 @@ dot-prop@^4.1.0, dot-prop@^4.2.0:
   dependencies:
     is-obj "^1.0.0"
 
-downshift@~3.2.14:
+downshift@3.2.14:
   version "3.2.14"
   resolved "https://registry.yarnpkg.com/downshift/-/downshift-3.2.14.tgz#5ca9ebc1ce65141652cf9ae71e3528dc95bc74ee"
   integrity sha512-1gdKK6CtvLnHtNN4FRvLzdhjIoga6NnpkDVNf0WIpnpkU1d0c+EkYzZQd9bJnPafGIbgQjNOrGYAv7r3biGVgg==
