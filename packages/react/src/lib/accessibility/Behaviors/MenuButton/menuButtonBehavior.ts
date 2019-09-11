@@ -9,7 +9,7 @@ import popupBehavior, { PopupBehaviorProps } from '../Popup/popupBehavior'
  *
  * @specification
  * Adds role='none'.
- * Adds attribute 'aria-haspopup=true' to 'trigger' slot.
+ * Adds attribute 'aria-haspopup=true' to 'trigger' slot if 'contextMenu' property is not set.
  * Adds attribute 'tabIndex=-1' based on the property 'open' to 'trigger' slot.
  * Adds attribute 'aria-controls=menu-id' based on the property 'menuId' to 'trigger' slot.
  * Adds attribute 'aria-expanded=true' based on the property 'open' to 'trigger' slot.
@@ -27,7 +27,7 @@ const menuButtonBehavior: Accessibility<MenuButtonBehaviorProps> = props => {
       trigger: {
         'aria-controls': props.menuId,
         'aria-expanded': props.open || undefined,
-        'aria-haspopup': 'true',
+        'aria-haspopup': props.contextMenu ? undefined : 'true',
         id: props.triggerId,
         tabIndex: props.open ? -1 : undefined,
       },
@@ -68,6 +68,8 @@ export interface MenuButtonBehaviorProps extends PopupBehaviorProps {
   triggerId?: string
   /** Defines whether popup is displayed. */
   open?: boolean
+  /** Defines whether button behaves as context menu */
+  contextMenu?: boolean
 }
 
 export default menuButtonBehavior
