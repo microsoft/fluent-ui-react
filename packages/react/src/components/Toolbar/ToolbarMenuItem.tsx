@@ -22,6 +22,7 @@ import { menuItemBehavior } from '../../lib/accessibility'
 
 import Box, { BoxProps } from '../Box/Box'
 import Icon, { IconProps } from '../Icon/Icon'
+import Popup, { PopupProps } from '../Popup/Popup'
 
 export interface ToolbarMenuItemProps
   extends UIComponentProps,
@@ -49,6 +50,14 @@ export interface ToolbarMenuItemProps
    */
   onClick?: ComponentEventHandler<ToolbarMenuItemProps>
 
+  /**
+   * Attaches a `Popup` component to the ToolbarItem.
+   * Accepts all props as a `Popup`, except `trigger` and `children`.
+   * Traps focus by default.
+   * @see PopupProps
+   */
+  popup?: Omit<PopupProps, 'trigger' | 'children'> | string
+
   /** Shorthand for the wrapper component. */
   wrapper?: ShorthandValue<BoxProps>
 }
@@ -74,6 +83,14 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
+    popup: PropTypes.oneOfType([
+      PropTypes.shape({
+        ...Popup.propTypes,
+        trigger: customPropTypes.never,
+        children: customPropTypes.never,
+      }),
+      PropTypes.string,
+    ]),
     wrapper: customPropTypes.itemShorthand,
   }
 
@@ -91,11 +108,9 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
-    const { children, content, disabled, icon, wrapper } = this.props
+    const { children, content, disabled, icon, wrapper, popup } = this.props
 
-    const menuItemInner = childrenExist(children) ? (
-      children
-    ) : (
+    const elementType = (
       <ElementType
         {...accessibility.attributes.root}
         {...unhandledProps}
@@ -114,6 +129,20 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
         )}
       </ElementType>
     )
+
+    const menuItemInner = childrenExist(children) ? children : elementType
+
+    if (popup && !childrenExist(children)) {
+      return Popup.create(popup, {
+        defaultProps: {
+          trapFocus: true,
+        },
+        overrideProps: {
+          trigger: elementType,
+          children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger`
+        },
+      })
+    }
 
     if (!wrapper) {
       return menuItemInner

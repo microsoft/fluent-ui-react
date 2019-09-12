@@ -179,6 +179,9 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
               overrideProps: (predefinedProps: ToolbarItemProps) => ({
                 onItemClick: (e, itemProps: ToolbarItemProps) => {
                   _.invoke(predefinedProps, 'onItemClick', e, itemProps)
+                  if (itemProps.popup) {
+                    return
+                  }
                   // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
                   this.trySetMenuOpen(false, e)
                   if (this.itemRef) {
@@ -226,7 +229,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
         },
         overrideProps: {
           trigger: renderedItem,
-          children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger
+          children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger`
         },
       })
     }
@@ -264,7 +267,11 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
   }
 
   handleWrapperBlur = e => {
-    if (this.props.menu && !e.currentTarget.contains(e.relatedTarget)) {
+    if (
+      this.props.menu &&
+      !e.currentTarget.contains(e.relatedTarget) &&
+      e instanceof KeyboardEvent
+    ) {
       this.trySetMenuOpen(false, e)
     }
   }

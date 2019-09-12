@@ -15,6 +15,11 @@ const Usage = () => (
       }
       examplePath="components/Toolbar/Usage/ToolbarExampleWithTooltip"
     />
+    <ComponentExample
+      title="Popup in Menu"
+      description="Menus can contain items that show a Popup"
+      examplePath="components/Toolbar/Usage/ToolbarExamplePopupInMenu"
+    />
   </ExampleSection>
 )
 
