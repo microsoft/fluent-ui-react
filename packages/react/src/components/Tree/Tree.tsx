@@ -24,7 +24,7 @@ import {
   ShorthandValue,
 } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
-import { treeAsListBehavior } from '../../lib/accessibility'
+import { treeBehavior } from '../../lib/accessibility'
 import { getNextElement } from '../../lib/accessibility/FocusZone/focusUtilities'
 import { hasSubtree, removeItemAtIndex } from './lib'
 import { TreeTitleProps } from './TreeTitle'
@@ -97,7 +97,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   static defaultProps = {
     as: 'div',
-    accessibility: treeAsListBehavior,
+    accessibility: treeBehavior,
   }
 
   static autoControlledProps = ['activeItemIds']
