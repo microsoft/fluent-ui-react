@@ -20,6 +20,7 @@ import {
 } from '../themes/types'
 import callable from './callable'
 import toCompactArray from './toCompactArray'
+import deepmerge from './deepmerge'
 
 export const emptyTheme: ThemePrepared = {
   siteVariables: {
@@ -74,7 +75,7 @@ export const mergeComponentVariables = (
       const accumulatedVariables = acc(...args)
       const computedComponentVariables = callable(next)(...args)
 
-      return _.merge(accumulatedVariables, computedComponentVariables)
+      return deepmerge(accumulatedVariables, computedComponentVariables)
     }
   }, initial)
 }
@@ -93,7 +94,7 @@ export const mergeSiteVariables = (
   const initial: SiteVariablesPrepared = {
     fontSizes: {},
   }
-  return sources.reduce<SiteVariablesPrepared>((acc, next) => _.merge(acc, next), initial)
+  return deepmerge(initial, ...sources)
 }
 
 /**

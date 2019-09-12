@@ -41,10 +41,6 @@ describe('felaSanitizeCssPlugin', () => {
     })
   })
 
-  test('should strip null values', () => {
-    expect(sanitize({ bottom: 2, top: null })).toEqual({ bottom: 2 })
-  })
-
   test('should skip excluded CSS props', () => {
     const withSkip = sanitizeCss({
       skip: ['propertyWithInvalidValue'],

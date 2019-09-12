@@ -30,11 +30,11 @@ describe('mergeComponentVariables', () => {
     expect(mergeComponentVariables({ color: undefined }, { color: 'black' })).not.toThrow()
   })
 
-  test('undefined does NOT overwrite previously set value', () => {
+  test('undefined overwrites previously set value', () => {
     const merged = mergeComponentVariables({ color: 'black' }, { color: undefined })
 
     expect(merged()).toMatchObject({
-      color: 'black',
+      color: undefined,
     })
   })
 

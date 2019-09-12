@@ -9,7 +9,7 @@ export default (siteVars: any): Partial<ToolbarVariables> => ({
     extendColorScheme(siteVars.colorScheme, {
       default: {
         foregroundHover: siteVars.colorScheme.brand.foregroundHover,
-        borderFocus: null,
+        borderFocus: undefined,
         foregroundActive: siteVars.accessibleYellow,
         backgroundFocus: siteVars.colorScheme.default.backgroundHover,
 
@@ -23,7 +23,7 @@ export default (siteVars: any): Partial<ToolbarVariables> => ({
   ),
 
   borderWidth: '0',
-  borderRadius: null,
+  borderRadius: undefined,
 
-  menuBoxShadow: null,
+  menuBoxShadow: undefined,
 })
