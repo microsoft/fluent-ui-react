@@ -1,10 +1,10 @@
 import * as _ from 'lodash'
-import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
+import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '../../../types'
 import { HeaderProps } from '../../../../components/Header/Header'
 import { HeaderVariables } from './headerVariables'
 import translateAlignProp from '../../../../styles/translateAlignProp'
 
-const headerStyles: ComponentSlotStylesInput<HeaderProps, HeaderVariables> = {
+const headerStyles: ComponentSlotStylesPrepared<HeaderProps, HeaderVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const colors = v.colorScheme[p.color]
     return {

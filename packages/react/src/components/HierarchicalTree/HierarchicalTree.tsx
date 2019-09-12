@@ -4,6 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import HierarchicalTreeItem, { HierarchicalTreeItemProps } from './HierarchicalTreeItem'
+import { HierarchicalTreeTitleProps } from './HierarchicalTreeTitle'
 import {
   AutoControlledComponent,
   childrenExist,
@@ -53,7 +54,7 @@ export interface HierarchicalTreeProps extends UIComponentProps, ChildrenCompone
    * @param {object} props - The computed props for this slot.
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
-  renderItemTitle?: ShorthandRenderFunction
+  renderItemTitle?: ShorthandRenderFunction<HierarchicalTreeTitleProps>
 
   /** Called when activeIndex changes.
    *

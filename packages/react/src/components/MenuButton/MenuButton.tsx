@@ -254,7 +254,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
       overrideProps: this.handleMenuOverrides,
     })
 
-    const overrideProps = {
+    const overrideProps: PopupProps = {
       open: this.state.open,
       onOpenChange: this.handleOpenChange,
       content: {

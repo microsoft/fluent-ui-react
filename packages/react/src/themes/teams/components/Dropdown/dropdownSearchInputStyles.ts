@@ -1,8 +1,8 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { DropdownSearchInputProps } from '../../../../components/Dropdown/DropdownSearchInput'
 import { DropdownVariables } from './dropdownVariables'
 
-const dropdownSearchInputStyles: ComponentSlotStylesInput<
+const dropdownSearchInputStyles: ComponentSlotStylesPrepared<
   DropdownSearchInputProps,
   DropdownVariables
 > = {
