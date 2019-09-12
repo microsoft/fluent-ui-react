@@ -26,12 +26,12 @@ describe('deepmerge', () => {
     expect(merged).toStrictEqual({ color: null })
   })
 
-  test('undefined gets overwritten  by next value', () => {
+  test('undefined gets overwritten by next value', () => {
     const merged = deepmerge({ color: undefined }, { color: 'black' })
     expect(merged).toStrictEqual({ color: 'black' })
   })
 
-  test('null gets overwritten  by next value', () => {
+  test('null gets overwritten by next value', () => {
     const merged = deepmerge({ color: null }, { color: 'black' })
     expect(merged).toStrictEqual({ color: 'black' })
   })
