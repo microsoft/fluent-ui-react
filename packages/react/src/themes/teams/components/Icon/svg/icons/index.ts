@@ -9,6 +9,7 @@ import arrowLeft from './arrowLeft'
 import arrowRight from './arrowRight'
 import audioOff from './audioOff'
 import ban from './ban'
+import bellMute from './bellMute'
 import bold from './bold'
 import bookmark from './bookmark'
 import broadcast from './broadcast'
@@ -126,6 +127,7 @@ import reply from './reply'
 import retry from './retry'
 import shareAlt from './shareAlt'
 import skypeLogo from './skypeLogo'
+import snooze from './snooze'
 import search from './search'
 import send from './send'
 import settings from './settings'
@@ -166,6 +168,7 @@ export default {
   'arrow-right': arrowRight,
   'audio-off': audioOff,
   ban,
+  'bell-slash': bellMute,
   bold,
   bookmark,
   broadcast,
@@ -280,6 +283,7 @@ export default {
   send,
   settings,
   'share-alt': shareAlt,
+  'bell-snooze': snooze,
   star,
   sticker,
   strike,
