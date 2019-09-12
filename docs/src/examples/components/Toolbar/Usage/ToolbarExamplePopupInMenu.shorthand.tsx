@@ -4,7 +4,6 @@ import { Toolbar, ToolbarItemShorthandKinds, Input } from '@stardust-ui/react'
 const PopupContent = <Input icon="search" placeholder="Search..." />
 
 const ToolbarExamplePopupInMenu = () => {
-  /* TODO: can these be removed? */
   const [menu1Open, setMenu1Open] = React.useState(false)
   const [menu2Open, setMenu2Open] = React.useState(false)
 
