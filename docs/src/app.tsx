@@ -6,6 +6,7 @@ import { mergeThemes } from 'src/lib'
 import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
 import Routes from './routes'
 import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
+import Debug from '../../packages/react/src/components/Debug/Debug'
 
 class App extends React.Component<any, ThemeContextData> {
   // State also contains the updater function so it will
@@ -32,7 +33,10 @@ class App extends React.Component<any, ThemeContextData> {
           })}
         >
           <PerfDataProvider>
-            <Routes />
+            <div>
+              <Debug />
+              <Routes />
+            </div>
           </PerfDataProvider>
         </Provider>
       </ThemeContext.Provider>
