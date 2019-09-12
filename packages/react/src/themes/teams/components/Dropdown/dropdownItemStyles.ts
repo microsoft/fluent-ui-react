@@ -1,10 +1,10 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { DropdownVariables } from './dropdownVariables'
 import DropdownItem, { DropdownItemProps } from '../../../../components/Dropdown/DropdownItem'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import { pxToRem } from '../../../../lib'
 
-const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVariables> = {
+const dropdownItemStyles: ComponentSlotStylesPrepared<DropdownItemProps, DropdownVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     minHeight: 0,
     padding: `${pxToRem(4)} ${pxToRem(11)}`,
