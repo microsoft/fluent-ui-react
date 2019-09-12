@@ -10561,6 +10561,13 @@ fela-plugin-embedded@^10.6.1:
     fast-loops "^1.0.0"
     isobject "^3.0.1"
 
+fela-plugin-expand-shorthand@^10.6.1:
+  version "10.6.1"
+  resolved "https://registry.yarnpkg.com/fela-plugin-expand-shorthand/-/fela-plugin-expand-shorthand-10.6.1.tgz#a54ee5081f7b4017939133072e7e48fe52d7d636"
+  integrity sha512-jhKhZOW7X0ZUxmKTV30sQn81haFpGg1IJWRlf80xk+yBMTuR6fxjVslGDRWQ2lbnfWd6ZaOug3RlVod2OS3X0g==
+  dependencies:
+    inline-style-expand-shorthand "^1.1.1"
+
 fela-plugin-fallback-value@^10.6.1:
   version "10.6.1"
   resolved "https://registry.yarnpkg.com/fela-plugin-fallback-value/-/fela-plugin-fallback-value-10.6.1.tgz#124da673e7ba4b8d59bdd83ae6d904160c131497"
@@ -12488,6 +12495,11 @@ init-package-json@^1.10.3:
     semver "2.x || 3.x || 4 || 5"
     validate-npm-package-license "^3.0.1"
     validate-npm-package-name "^3.0.0"
+
+inline-style-expand-shorthand@^1.1.1:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/inline-style-expand-shorthand/-/inline-style-expand-shorthand-1.2.0.tgz#951ed9918ba9fe87af0e11c20fd2fb1f5075cae2"
+  integrity sha512-YdteDMlG1StHeEXF7opaVfPMCIVO8B4TPjE6kZLwdhZdgjH3Q7lxwSe+89sMhdPN77F3quOYhBbqBE0+KXuHpA==
 
 inline-style-parser@0.1.1:
   version "0.1.1"

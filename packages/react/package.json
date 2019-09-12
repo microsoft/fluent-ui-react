@@ -18,6 +18,7 @@
     "fast-memoize": "^2.5.1",
     "fela": "^10.6.1",
     "fela-plugin-embedded": "^10.6.1",
+    "fela-plugin-expand-shorthand": "^10.6.1",
     "fela-plugin-fallback-value": "^10.6.1",
     "fela-plugin-placeholder-prefixer": "^10.6.1",
     "fela-plugin-prefixer": "^10.6.1",

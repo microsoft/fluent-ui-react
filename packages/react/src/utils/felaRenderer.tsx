@@ -58,9 +58,10 @@ const rendererConfig = {
 
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
-    felaSanitizeCss({
-      skip: ['content', 'keyframe'],
-    }),
+    process.env.NODE_ENV !== 'production' &&
+      felaSanitizeCss({
+        skip: ['content', 'keyframe'],
+      }),
 
     felaPluginPlaceholderPrefixer(),
     felaInvokeKeyframesPlugin(),
@@ -70,11 +71,10 @@ const rendererConfig = {
     // Heads up!
     // This is required after fela-plugin-prefixer to resolve the array of fallback values prefixer produces.
     felaPluginFallbackValue(),
-
     felaExpandCssShorthandsPlugin(),
 
     felaPluginRtl(),
-  ],
+  ].filter(Boolean),
 }
 
 export const createRenderer = (): Renderer => createFelaRenderer(rendererConfig) as Renderer
