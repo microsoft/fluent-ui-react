@@ -315,6 +315,11 @@ class Sidebar extends React.Component<any, any> {
         public: true,
       },
       {
+        key: 'participants-list',
+        title: { content: 'Participants list', as: NavLink, to: '/prototype-participants-list' },
+        public: true,
+      },
+      {
         key: 'searchpage',
         title: { content: 'Search Page', as: NavLink, to: '/prototype-search-page' },
         public: false,
