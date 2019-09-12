@@ -25,6 +25,8 @@ const items = [
   },
 ]
 
-const SplitButtonExampleIconShorthand = () => <SplitButton menu={items} button={items[0]} />
+const SplitButtonIconAndContentExampleShorthand = () => (
+  <SplitButton menu={items} button={items[0]} />
+)
 
-export default SplitButtonExampleIconShorthand
+export default SplitButtonIconAndContentExampleShorthand

@@ -18,6 +18,7 @@ import {
   commonPropTypes,
   AutoControlledComponent,
   RenderResultConfig,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import Button, { ButtonProps } from '../Button/Button'
@@ -94,7 +95,7 @@ export interface SplitButtonState {
 }
 
 class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, SplitButtonState> {
-  static create: Function
+  static create: ShorthandFactory<SplitButton>
 
   static displayName = 'SplitButton'
 
@@ -141,7 +142,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
   handleMenuButtonOverrides = (predefinedProps: MenuButtonProps) => ({
     onMenuItemClick: (e: React.SyntheticEvent, menuItemProps: MenuItemProps) => {
       this.setState({ open: false })
-      _.invoke(this.props, 'onOpenChange', e, { open: false, ...this.props })
+      _.invoke(this.props, 'onOpenChange', e, { ...this.props, open: false })
 
       _.invoke(predefinedProps, 'onMenuItemClick', e, menuItemProps)
       _.invoke(this.props, 'onMenuItemClick', e, menuItemProps)
@@ -149,7 +150,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
     onOpenChange: (e: React.SyntheticEvent, popupProps: PopupProps) => {
       e.stopPropagation()
       this.setState({ open: popupProps.open })
-      _.invoke(this.props, 'onOpenChange', e, { open: popupProps.open, ...this.props })
+      _.invoke(this.props, 'onOpenChange', e, { ...this.props, open: popupProps.open })
     },
   })
 
@@ -216,7 +217,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
 
               this.setState(state => {
                 const open = !state.open
-                _.invoke(this.props, 'onOpenChange', e, { open, ...this.props })
+                _.invoke(this.props, 'onOpenChange', e, { ...this.props, open })
                 return { open }
               })
             },

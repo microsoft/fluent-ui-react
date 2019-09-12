@@ -6,7 +6,7 @@ const States = () => (
   <ExampleSection title="States">
     <ComponentExample
       title="Disabled"
-      description="A split button can be disabled."
+      description="A SplitButton can be disabled."
       examplePath="components/SplitButton/States/SplitButtonExampleDisabled"
     />
   </ExampleSection>
