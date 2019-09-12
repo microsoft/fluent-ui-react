@@ -1,5 +1,3 @@
-export { default as AccordionContent } from './components/Accordion/accordionContentVariables'
-
 export { default as Attachment } from './components/Attachment/attachmentVariables'
 
 export { default as Alert } from './components/Alert/alertVariables'
