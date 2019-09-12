@@ -107,12 +107,30 @@ describe('deepmerge', () => {
     })
   })
 
-  test('array replaces an array', () => {
+  test('array replaces an array and does NOT concat (CSS fallback value requirement)', () => {
     const target = { overridden: [1, 2, 3] }
     const source = { overridden: [4, 5] }
 
     expect(deepmerge(target, source)).toStrictEqual({
       overridden: [4, 5],
+    })
+  })
+
+  test('different value types replace previous value', () => {
+    expect(deepmerge({ color: 'black' }, { color: ['green', 'red'] })).toStrictEqual({
+      color: ['green', 'red'],
+    })
+    expect(deepmerge({ color: ['green', 'red'] }, { color: 'black' })).toStrictEqual({
+      color: 'black',
+    })
+    expect(deepmerge({ color: { nested: 'object' } }, { color: ['green', 'red'] })).toStrictEqual({
+      color: ['green', 'red'],
+    })
+    expect(deepmerge({ color: ['green', 'red'] }, { color: { nested: 'object' } })).toStrictEqual({
+      color: { nested: 'object' },
+    })
+    expect(deepmerge({ color: { nested: 'object' } }, { color: undefined })).toStrictEqual({
+      color: undefined,
     })
   })
 
