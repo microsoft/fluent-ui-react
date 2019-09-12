@@ -1,11 +1,7 @@
 import { ComponentSlotStylesPrepared } from '../../../types'
 import { AccordionContentProps } from '../../../../components/Accordion/AccordionContent'
-import { AccordionContentVariables } from './accordionContentVariables'
 
-const accordionContentStyles: ComponentSlotStylesPrepared<
-  AccordionContentProps,
-  AccordionContentVariables
-> = {
+const accordionContentStyles: ComponentSlotStylesPrepared<AccordionContentProps> = {
   root: ({ props }) => ({
     display: 'none',
     verticalAlign: 'middle',
