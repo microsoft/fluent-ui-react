@@ -55,6 +55,9 @@ import {
   treeItemBehavior,
   treeTitleBehavior,
   textAreaBehavior,
+  treeAsListBehavior,
+  treeItemAsListItemBehavior,
+  treeTitleAsListItemTitleBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -114,5 +117,8 @@ testHelper.addBehavior('treeBehavior', treeBehavior)
 testHelper.addBehavior('treeItemBehavior', treeItemBehavior)
 testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
 testHelper.addBehavior('textAreaBehavior', textAreaBehavior)
+testHelper.addBehavior('treeAsListBehavior', treeAsListBehavior)
+testHelper.addBehavior('treeItemAsListItemBehavior', treeItemAsListItemBehavior)
+testHelper.addBehavior('treeTitleAsListItemTitleBehavior', treeTitleAsListItemTitleBehavior)
 
 testHelper.run(behaviorMenuItems)
