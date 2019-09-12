@@ -41,6 +41,7 @@ import processedIcons_starred from './icons-starred'
 import processedIcons_star from './icons-star'
 import processedIcons_speakerslashed from './icons-speaker-slashed'
 import processedIcons_speakeroff from './icons-speaker-off'
+import processedIcons_snooze from './icons-snooze'
 import processedIcons_sketch from './icons-sketch'
 import processedIcons_shareobject from './icons-share-object'
 import processedIcons_share from './icons-share'
@@ -351,6 +352,7 @@ export default {
   processedIcons_speakerslashed,
   processedIcons_speakeroff,
   processedIcons_speakermute,
+  processedIcons_snooze,
   processedIcons_sketch,
   processedIcons_shareobject,
   processedIcons_share,
