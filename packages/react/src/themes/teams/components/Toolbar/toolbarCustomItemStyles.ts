@@ -1,9 +1,9 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { ToolbarCustomItemProps } from '../../../../components/Toolbar/ToolbarCustomItem'
 import { ToolbarVariables } from './toolbarVariables'
 import { getColorScheme } from '../../colors'
 
-const toolbarCustomItemStyles: ComponentSlotStylesInput<
+const toolbarCustomItemStyles: ComponentSlotStylesPrepared<
   ToolbarCustomItemProps,
   ToolbarVariables
 > = {

@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import {
   RadioGroupItemProps,
   RadioGroupItemState,
@@ -21,7 +21,7 @@ const restHoverFocusTextColor = textColor => ({
   },
 })
 
-const radioStyles: ComponentSlotStylesInput<
+const radioStyles: ComponentSlotStylesPrepared<
   RadioGroupItemProps & RadioGroupItemState,
   RadioGroupItemVariables
 > = {

@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import {
   default as Dropdown,
   DropdownProps,
@@ -14,7 +14,7 @@ const transparentColorStyle: ICSSInJSStyle = {
   borderBottomColor: 'transparent',
 }
 
-const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVariablesHC> = {
+const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, DropdownVariablesHC> = {
   container: ({ props: p, variables: v }): ICSSInJSStyle => ({
     ...(!p.open && {
       ':hover': {

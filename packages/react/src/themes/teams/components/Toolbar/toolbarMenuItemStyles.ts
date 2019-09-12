@@ -41,9 +41,9 @@ const toolbarMenuItemStyles = {
     }
   },
 
-  wrapper: {
+  wrapper: () => ({
     display: 'block',
-  },
+  }),
 }
 
 export default toolbarMenuItemStyles
