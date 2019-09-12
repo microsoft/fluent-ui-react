@@ -17,7 +17,7 @@ const config: ScreenerTestsConfig = {
         .snapshot('Clicks on an item')
         .hover(selectors.item(3))
         .snapshot('Highlights another item')
-        .keys(selectors.list, keys.downArrow)
+        .keys(selectors.item(2), keys.downArrow)
         .snapshot('Focuses last item using keyboard'),
     (builder, keys) => builder.keys('body', keys.tab).snapshot('Focuses item'),
   ],
