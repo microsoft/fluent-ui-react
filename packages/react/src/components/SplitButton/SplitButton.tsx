@@ -73,7 +73,7 @@ export interface SplitButtonProps
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onOpenChange?: ComponentEventHandler<PopupProps>
+  onOpenChange?: ComponentEventHandler<SplitButtonProps>
 
   /** Defines whether menu is displayed. */
   open?: boolean
