@@ -72,10 +72,14 @@ export const mergeComponentVariables = (
 
   return sources.reduce<ComponentVariablesPrepared>((acc, next) => {
     return (...args) => {
-      const accumulatedVariables = acc(...args)
+      const { _debug, ...accumulatedVariables } = acc(...args)
       const computedComponentVariables = callable(next)(...args)
 
-      return deepmerge(accumulatedVariables, computedComponentVariables)
+      const merged = deepmerge(accumulatedVariables, computedComponentVariables)
+      merged._debug = _debug
+        ? [..._debug, computedComponentVariables]
+        : [computedComponentVariables]
+      return merged
     }
   }, initial)
 }
