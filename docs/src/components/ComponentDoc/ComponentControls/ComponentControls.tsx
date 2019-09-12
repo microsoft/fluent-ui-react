@@ -18,7 +18,10 @@ type ComponentControlsProps = {
   onShowRtl: (e: React.SyntheticEvent) => void
   onShowTransparent: (e: React.SyntheticEvent) => void
   onShowVariables: (e: React.SyntheticEvent) => void
+  showCode: boolean
   showRtl: boolean
+  showVariables: boolean
+  showTransparent: boolean
 }
 
 const controlsTheme: ThemeInput = {
@@ -48,7 +51,10 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
     exampleCode,
     exampleLanguage,
     examplePath,
+    showCode,
     showRtl,
+    showVariables,
+    showTransparent,
     onCopyLink,
     onShowCode,
     onShowRtl,
@@ -69,6 +75,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
             key: 'show-code',
             content: <ComponentButton iconName="code" label="Try it" />,
             onClick: onShowCode,
+            active: showCode,
           },
           {
             key: 'show-codesandbox',
@@ -84,16 +91,19 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
             key: 'show-variables',
             content: <ComponentButton iconName="paint brush" label="Theme it" />,
             onClick: onShowVariables,
+            active: showVariables,
           },
           {
             key: 'show-transparent',
             content: <ComponentButton iconName="adjust" label="Transparent" />,
             onClick: onShowTransparent,
+            active: showTransparent,
           },
           {
             key: 'show-rtl',
             content: <ComponentButton iconName="align right" label="RTL" />,
             onClick: onShowRtl,
+            active: showRtl,
           },
           {
             key: 'maximize',

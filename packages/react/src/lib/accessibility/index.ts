@@ -63,3 +63,4 @@ export { default as splitButtonBehavior } from './Behaviors/SplitButton/splitBut
 export { default as treeBehavior } from './Behaviors/Tree/treeBehavior'
 export { default as treeItemBehavior } from './Behaviors/Tree/treeItemBehavior'
 export { default as treeTitleBehavior } from './Behaviors/Tree/treeTitleBehavior'
+export { default as textAreaBehavior } from './Behaviors/TextArea/textAreaBehavior'

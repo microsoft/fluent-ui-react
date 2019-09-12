@@ -64,7 +64,7 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
    * @param {React.ReactType} Component - The panel's component type.
    * @param {object} props - The panel's computed props.
    */
-  renderPanelTitle?: ShorthandRenderFunction
+  renderPanelTitle?: ShorthandRenderFunction<AccordionTitleProps>
 
   /**
    * A custom renderer for each Accordion's panel content.
@@ -72,7 +72,7 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
    * @param {React.ReactType} Component - The panel's component type.
    * @param {object} props - The panel's computed props.
    */
-  renderPanelContent?: ShorthandRenderFunction
+  renderPanelContent?: ShorthandRenderFunction<AccordionContentProps>
 
   /**
    * Accessibility behavior if overridden by the user.

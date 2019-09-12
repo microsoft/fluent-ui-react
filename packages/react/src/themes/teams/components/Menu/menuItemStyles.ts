@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
 import {
-  ComponentSlotStylesInput,
+  ComponentSlotStylesPrepared,
   ICSSInJSStyle,
   StrictColorScheme,
   ItemType,
@@ -144,7 +144,7 @@ const pointingBeak = ({
   }
 }
 
-const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
+const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVariables> = {
   wrapper: ({ props, variables: v, theme }): ICSSInJSStyle => {
     const {
       active,
@@ -429,7 +429,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }),
   }),
 
-  menu: () => ({ zIndex: '1000' }),
+  menu: () => ({ zIndex: 1000 }),
 
   indicator: ({ props: p }) => ({
     position: 'relative',

@@ -1,4 +1,4 @@
-import { InputVariables } from '../../../base/components/Input/inputVariables'
+import { InputVariables } from '../../../teams/components/Input/inputVariables'
 import { pxToRem } from '../../../../lib'
 
 export default (siteVars: any): Partial<InputVariables> => {

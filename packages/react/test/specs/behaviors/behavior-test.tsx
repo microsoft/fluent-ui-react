@@ -55,6 +55,7 @@ import {
   treeBehavior,
   treeItemBehavior,
   treeTitleBehavior,
+  textAreaBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -114,5 +115,6 @@ testHelper.addBehavior('splitButtonBehavior', splitButtonBehavior)
 testHelper.addBehavior('treeBehavior', treeBehavior)
 testHelper.addBehavior('treeItemBehavior', treeItemBehavior)
 testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
+testHelper.addBehavior('textAreaBehavior', textAreaBehavior)
 
 testHelper.run(behaviorMenuItems)

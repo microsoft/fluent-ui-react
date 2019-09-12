@@ -142,9 +142,9 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {hasChildren && children}
         {!hasChildren && loading && this.renderLoader(variables, styles)}

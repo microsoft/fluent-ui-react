@@ -1,9 +1,9 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { AlertProps } from '../../../../components/Alert/Alert'
 import { AlertHighContrastVariables } from './alertVariables'
 import getBorderFocusStyles from '../../../teams/getBorderFocusStyles'
 
-const alertStyles: ComponentSlotStylesInput<AlertProps, AlertHighContrastVariables> = {
+const alertStyles: ComponentSlotStylesPrepared<AlertProps, AlertHighContrastVariables> = {
   dismissAction: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => ({
     ':focus-visible': {
       backgroundColor: v.focusBackgroundColor,
