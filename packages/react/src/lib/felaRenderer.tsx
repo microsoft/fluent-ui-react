@@ -1,4 +1,4 @@
-import { createRenderer } from '@stardust-ui/fela'
+import { createRenderer as createFelaRenderer } from 'fela'
 import felaPluginEmbedded from 'fela-plugin-embedded'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
 import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
@@ -8,6 +8,7 @@ import felaPluginRtl from 'fela-plugin-rtl'
 import { Renderer } from '../themes/types'
 import felaDisableAnimationsPlugin from './felaDisableAnimationsPlugin'
 import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
+import felaFocusVisibleEnhancer from './felaFocusVisibleEnhancer'
 import felaInvokeKeyframesPlugin from './felaInvokeKeyframesPlugin'
 import felaSanitizeCss from './felaSanitizeCssPlugin'
 
@@ -50,7 +51,7 @@ const filterClassName = (className: string): boolean =>
 const rendererConfig = {
   devMode: felaDevMode,
   filterClassName,
-  enhancers: [],
+  enhancers: [felaFocusVisibleEnhancer],
   plugins: [
     felaDisableAnimationsPlugin(),
 
@@ -75,6 +76,6 @@ const rendererConfig = {
   ],
 }
 
-const felaRenderer: Renderer = createRenderer(rendererConfig)
+export const createRenderer = (): Renderer => createFelaRenderer(rendererConfig)
 
-export default felaRenderer
+export const felaRenderer = createRenderer()

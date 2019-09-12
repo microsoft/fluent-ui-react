@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
-import { ThemeProvider } from '@stardust-ui/react-fela'
+import { ThemeProvider } from 'react-fela'
 import { felaRenderer } from 'src/lib'
 import { ThemeInput } from 'src/themes/types'
 

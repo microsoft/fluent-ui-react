@@ -49,6 +49,9 @@ export { default as ChatMessage } from './components/Chat/ChatMessage'
 export * from './components/Checkbox/Checkbox'
 export { default as Checkbox } from './components/Checkbox/Checkbox'
 
+export * from './components/Design/Design'
+export { default as Design } from './components/Design/Design'
+
 export * from './components/MenuButton/MenuButton'
 export { default as MenuButton } from './components/MenuButton/MenuButton'
 
@@ -154,6 +157,9 @@ export { default as Text } from './components/Text/Text'
 export * from './components/Animation/Animation'
 export { default as Animation } from './components/Animation/Animation'
 
+export * from './components/TextArea/TextArea'
+export { default as TextArea } from './components/TextArea/TextArea'
+
 export * from './components/Toolbar/Toolbar'
 export { default as Toolbar } from './components/Toolbar/Toolbar'
 export * from './components/Toolbar/ToolbarCustomItem'
@@ -180,10 +186,20 @@ export {
   default as HierarchicalTreeTitle,
 } from './components/HierarchicalTree/HierarchicalTreeTitle'
 
+export * from './components/Tree/Tree'
+export { default as Tree } from './components/Tree/Tree'
+export * from './components/Tree/TreeItem'
+export { default as TreeItem } from './components/Tree/TreeItem'
+export * from './components/Tree/TreeTitle'
+export { default as TreeTitle } from './components/Tree/TreeTitle'
+
 export * from './components/Reaction/Reaction'
 export { default as Reaction } from './components/Reaction/Reaction'
 export * from './components/Reaction/ReactionGroup'
 export { default as ReactionGroup } from './components/Reaction/ReactionGroup'
+
+export * from './components/SplitButton/SplitButton'
+export { default as SplitButton } from './components/SplitButton/SplitButton'
 
 export * from './components/Video/Video'
 export { default as Video } from './components/Video/Video'

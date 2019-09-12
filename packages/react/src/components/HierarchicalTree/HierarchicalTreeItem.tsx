@@ -17,6 +17,7 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import {
   ComponentEventHandler,
@@ -60,14 +61,14 @@ export interface HierarchicalTreeItemProps extends UIComponentProps, ChildrenCom
    * @param {object} props - The computed props for this slot.
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
-  renderItemTitle?: ShorthandRenderFunction
+  renderItemTitle?: ShorthandRenderFunction<HierarchicalTreeTitleProps>
 
   /** Properties for TreeTitle. */
   title?: ShorthandValue<HierarchicalTreeTitleProps>
 }
 
 class HierarchicalTreeItem extends UIComponent<WithAsProp<HierarchicalTreeItemProps>> {
-  static create: Function
+  static create: ShorthandFactory<HierarchicalTreeItemProps>
 
   static displayName = 'HierarchicalTreeItem'
 
@@ -88,7 +89,6 @@ class HierarchicalTreeItem extends UIComponent<WithAsProp<HierarchicalTreeItemPr
     onTitleClick: PropTypes.func,
     open: PropTypes.bool,
     renderItemTitle: PropTypes.func,
-    treeItemRtlAttributes: PropTypes.func,
     title: customPropTypes.itemShorthand,
   }
 
@@ -198,8 +198,8 @@ class HierarchicalTreeItem extends UIComponent<WithAsProp<HierarchicalTreeItemPr
           className={classes.root}
           {...accessibility.attributes.root}
           {...rtlTextContainer.getAttributes({ forElements: [children] })}
-          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
           {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           {childrenExist(children) ? children : this.renderContent()}
         </ElementType>

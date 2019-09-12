@@ -13,6 +13,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -40,7 +41,7 @@ export interface TooltipContentProps
 }
 
 class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
-  static create: Function
+  static create: ShorthandFactory<TooltipContentProps>
 
   static displayName = 'TooltipContent'
   static className = 'ui-tooltip__content'

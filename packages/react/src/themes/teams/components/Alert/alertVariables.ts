@@ -18,6 +18,7 @@ export interface AlertVariables {
 
   dismissActionSize: string
   dismissActionColor: string
+  dismissiblePadding: string
 
   dangerColor: string
   dangerBackgroundColor: string
@@ -36,6 +37,11 @@ export interface AlertVariables {
   urgentColor: string
   urgentBackgroundColor: string
   urgentBorderColor: string
+
+  headerFontWeight: FontWeightProperty
+  headerMargin: string
+
+  iconMargin: string
 }
 
 export default (siteVars: SiteVariablesPrepared): AlertVariables => {
@@ -50,12 +56,13 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     color: siteVars.colors.grey[500],
     fontWeight: siteVars.fontWeightRegular,
     minHeight,
-    padding: `0 0 0 ${pxToRem(16)}`,
+    padding: `0 ${pxToRem(16)}`,
 
     actionsMargin: pxToRem(5),
 
     dismissActionSize: minHeight,
     dismissActionColor: undefined,
+    dismissiblePadding: `0 0 0 ${pxToRem(16)}`,
 
     dangerColor: siteVars.colors.red[400],
     dangerBackgroundColor: siteVars.colors.red[50],
@@ -74,5 +81,10 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     urgentColor: siteVars.colors.white,
     urgentBackgroundColor: siteVars.colors.red[400],
     urgentBorderColor: siteVars.colors.red[400],
+
+    headerFontWeight: siteVars.fontWeightBold,
+    headerMargin: `0 ${pxToRem(10)} 0 0`,
+
+    iconMargin: `0 ${pxToRem(10)} 0 0`,
   }
 }

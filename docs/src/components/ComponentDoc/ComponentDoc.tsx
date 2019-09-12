@@ -28,8 +28,18 @@ type ComponentDocProps = {
   tabs: string[]
 } & RouteComponentProps<{}>
 
-class ComponentDoc extends React.Component<ComponentDocProps, any> {
-  state: any = {}
+type ComponentDocState = {
+  activePath: string
+  currentTabIndex: number
+  defaultPropComponent: string
+}
+
+class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState> {
+  state = {
+    activePath: '',
+    defaultPropComponent: '',
+    currentTabIndex: 0,
+  }
 
   tabRegex = new RegExp(/[^\/]*$/)
 
@@ -40,7 +50,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
       const { history, location } = this.props
       const at = location.pathname
       const newLocation = at.replace(this.tabRegex, 'definition')
-      history.replace(newLocation)
+      history.push(newLocation)
       return 0
     }
     return index
@@ -58,7 +68,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
 
     if (location.hash) {
       const activePath = getFormattedHash(location.hash)
-      history.replace(`${location.pathname}#${activePath}`)
+      history.replace({ ...history.location, hash: activePath })
       this.setState({ activePath })
       if (this.props.tabs[tabIndex] === 'Props') {
         this.setState({ defaultPropComponent: activePath })
@@ -79,14 +89,12 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
     this.setState({ activePath: passedAnchorName })
   }
 
-  handleExamplesRef = examplesRef => this.setState({ examplesRef })
-
   /* TODO: bring back the right floating menu
   handleSidebarItemClick = (e, { examplePath }) => {
-    const { history, location } = this.props
+    const { history } = this.props
     const activePath = examplePathToHash(examplePath)
 
-    history.replace(`${location.pathname}#${activePath}`)
+    history.replace({ ...history.location, hash: activePath })
     // set active hash path
     this.setState({ activePath }, scrollToAnchor)
   }
@@ -98,13 +106,13 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
     const at = location.pathname
     const newLocation = at.replace(this.tabRegex, this.props.tabs[newIndex].toLowerCase())
 
-    history.replace(newLocation)
+    history.push(newLocation)
     this.setState({ currentTabIndex: newIndex })
   }
 
   onPropComponentSelected = (e, props) => {
-    const { history, location } = this.props
-    history.replace(`${location.pathname}#${props.value}`)
+    const { history } = this.props
+    history.push({ ...history.location, hash: props.value })
   }
 
   render() {
@@ -134,8 +142,8 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
       return ''
     }
 
-    const { info } = this.props
-    const { activePath } = this.state
+    const { info, tabs } = this.props
+    const { activePath, currentTabIndex, defaultPropComponent } = this.state
 
     return (
       <div style={{ padding: '20px' }}>
@@ -177,9 +185,8 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
               <Menu
                 underlined
                 primary
-                defaultActiveIndex={0}
-                activeIndex={this.state.currentTabIndex}
-                items={this.props.tabs}
+                activeIndex={currentTabIndex}
+                items={tabs}
                 onItemClick={this.handleTabClick}
                 accessibility={tabListBehavior}
               />
@@ -194,7 +201,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
           <ComponentProps
             displayName={info.displayName}
             props={info.props}
-            defaultComponentProp={this.state.defaultPropComponent}
+            defaultComponentProp={defaultPropComponent}
             onPropComponentSelected={this.onPropComponentSelected}
           />
         )}
@@ -214,16 +221,14 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
             >
               <div>
                 <ComponentBestPractices displayName={info.displayName} />
-                <div ref={this.handleExamplesRef}>
-                  <ExampleContext.Provider
-                    value={{
-                      activeAnchorName: activePath,
-                      onExamplePassed: this.handleExamplePassed,
-                    }}
-                  >
-                    <ComponentExamples displayName={info.displayName} />
-                  </ExampleContext.Provider>
-                </div>
+                <ExampleContext.Provider
+                  value={{
+                    activeAnchorName: activePath,
+                    onExamplePassed: this.handleExamplePassed,
+                  }}
+                >
+                  <ComponentExamples displayName={info.displayName} />
+                </ExampleContext.Provider>
               </div>
             </Grid>
           </>

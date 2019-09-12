@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ComponentSlotStylesInput, ICSSInJSStyle, SiteVariablesPrepared } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle, SiteVariablesPrepared } from '../../../types'
 import { AlertProps } from '../../../../components/Alert/Alert'
 import { AlertVariables } from './alertVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
@@ -67,12 +67,11 @@ const getIntentColorsFromProps = (
   }
 }
 
-const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
+const alertStyles: ComponentSlotStylesPrepared<AlertProps, AlertVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
-    width: '100%',
     borderStyle: v.borderStyle,
     borderWidth: v.borderWidth,
     borderRadius: v.borderRadius,
@@ -91,6 +90,10 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
       borderRadius: `0 0 ${v.borderRadius} ${v.borderRadius}`,
     }),
 
+    ...(p.fitted && { display: 'inline-flex' }),
+
+    ...(p.dismissible && { padding: v.dismissiblePadding }),
+
     ...(!p.visible && {
       visibility: 'hidden',
     }),
@@ -100,12 +103,27 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
     margin: v.actionsMargin,
   }),
 
+  header: ({ variables: v }): ICSSInJSStyle => ({
+    fontWeight: v.headerFontWeight,
+    margin: v.headerMargin,
+  }),
+
+  body: (): ICSSInJSStyle => ({
+    display: 'flex',
+    flexGrow: 1,
+  }),
+
   content: (): ICSSInJSStyle => ({
     flexGrow: 1,
   }),
 
+  icon: ({ variables: v }): ICSSInJSStyle => ({
+    margin: v.iconMargin,
+  }),
+
   dismissAction: ({ variables: v, props: p, theme: { siteVariables } }): ICSSInJSStyle => {
     const iconFilledStyles = getIconFillOrOutlineStyles({ outline: false })
+    const borderFocusStyles = getBorderFocusStyles({ siteVariables })
 
     return {
       height: v.dismissActionSize,
@@ -120,9 +138,10 @@ const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
         ...iconFilledStyles,
       },
 
-      ':focus': {
-        ...(p.isFromKeyboard && iconFilledStyles),
-        ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard })[':focus'],
+      ':focus': borderFocusStyles[':focus'],
+      ':focus-visible': {
+        ...iconFilledStyles,
+        ...borderFocusStyles[':focus-visible'],
       },
     }
   },

@@ -1,7 +1,13 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
+import {
+  createShorthandFactory,
+  UIComponent,
+  UIComponentProps,
+  commonPropTypes,
+  ShorthandFactory,
+} from '../../lib'
 import { imageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
@@ -25,7 +31,7 @@ export interface ImageProps extends UIComponentProps {
 }
 
 class Image extends UIComponent<WithAsProp<ImageProps>, any> {
-  static create: Function
+  static create: ShorthandFactory<ImageProps>
 
   static className = 'ui-image'
 

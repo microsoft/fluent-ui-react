@@ -7,8 +7,8 @@ import {
   UIComponentProps,
   commonPropTypes,
   ContentComponentProps,
-  isFromKeyboard,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import Flex from '../Flex/Flex'
 import { listItemBehavior } from '../../lib/accessibility'
@@ -46,6 +46,9 @@ export interface ListItemProps
   /** A list item can indicate that it can be selected. */
   selectable?: boolean
 
+  /** A list item can indicate that it can be navigable. */
+  navigable?: boolean
+
   /** Indicates if the current list item is selected. */
   selected?: boolean
   truncateContent?: boolean
@@ -57,21 +60,10 @@ export interface ListItemProps
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<ListItemProps>
-
-  /**
-   * Called after user's focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
-   */
-  onFocus?: ComponentEventHandler<ListItemProps>
 }
 
-export interface ListItemState {
-  isFromKeyboard: boolean
-}
-
-class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
-  static create: Function
+class ListItem extends UIComponent<WithAsProp<ListItemProps>> {
+  static create: ShorthandFactory<ListItemProps>
 
   static displayName = 'ListItem'
 
@@ -96,6 +88,7 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
     media: PropTypes.any,
 
     selectable: PropTypes.bool,
+    navigable: PropTypes.bool,
     index: PropTypes.number,
     selected: PropTypes.bool,
 
@@ -103,16 +96,11 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
     truncateHeader: PropTypes.bool,
 
     onClick: PropTypes.func,
-    onFocus: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'li',
     accessibility: listItemBehavior as Accessibility,
-  }
-
-  state = {
-    isFromKeyboard: false,
   }
 
   actionHandlers = {
@@ -124,11 +112,6 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
 
   handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     _.invoke(this.props, 'onClick', e, this.props)
-  }
-
-  handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-    _.invoke(this.props, 'onFocus', e, this.props)
   }
 
   renderComponent({ classes, accessibility, unhandledProps, styles }) {
@@ -196,7 +179,6 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>, ListItemState> {
         debug={debug}
         className={classes.root}
         onClick={this.handleClick}
-        onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 // @ts-ignore We have this export in package, but it is not present in typings
-import { ThemeContext } from '@stardust-ui/react-fela'
+import { ThemeContext } from 'react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/reactTypes'

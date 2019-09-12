@@ -6,6 +6,7 @@ import {
   UIComponentProps,
   UIComponent,
   commonPropTypes,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
@@ -23,7 +24,7 @@ export interface ToolbarDividerProps
 class ToolbarDivider extends UIComponent<WithAsProp<ToolbarDividerProps>> {
   static displayName = 'ToolbarDivider'
 
-  static create: Function
+  static create: ShorthandFactory<ToolbarDividerProps>
 
   static className = 'ui-toolbar__divider'
 

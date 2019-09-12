@@ -14,16 +14,6 @@ const Types = () => (
       description="The form controls can appear next to the label instead of below it."
       examplePath="components/Form/Types/FormExampleInline"
     />
-    <ComponentExample
-      title="Dropdown"
-      description="A form can have a Dropdown as a field."
-      examplePath="components/Form/Types/FormExampleDropdown"
-    />
-    <ComponentExample
-      title="Slider"
-      description="A form can have a Slider as a field."
-      examplePath="components/Form/Types/FormExampleSlider"
-    />
   </ExampleSection>
 )
 

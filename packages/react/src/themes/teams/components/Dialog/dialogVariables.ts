@@ -1,7 +1,18 @@
-import { DialogVariables as BaseDialogVariables } from '../../../base/components/Dialog/dialogVariables'
 import { pxToRem } from '../../../../lib'
 
-export interface DialogVariables extends BaseDialogVariables {
+export interface DialogVariables {
+  rootBackground: string
+  rootBorderRadius: string
+  rootPadding: string
+  rootWidth: string
+
+  contentMargin: string
+
+  headerMargin: string
+
+  overlayBackground: string
+  overlayZIndex: number
+
   boxShadow: string
   foregroundColor: string
 
@@ -11,16 +22,16 @@ export interface DialogVariables extends BaseDialogVariables {
   headerActionMargin: string
 }
 
-export default (siteVariables): DialogVariables => ({
-  boxShadow: siteVariables.shadowLevel4,
-  foregroundColor: siteVariables.colors.grey[900],
-
+export default (siteVariables): Partial<DialogVariables> => ({
   rootBackground: siteVariables.colors.white,
   rootBorderRadius: pxToRem(3),
-  rootPadding: `${pxToRem(27)} ${pxToRem(32)} ${pxToRem(20)} ${pxToRem(32)}`,
   rootWidth: '50vw',
+  rootPadding: `${pxToRem(27)} ${pxToRem(32)} ${pxToRem(20)} ${pxToRem(32)}`,
 
   contentMargin: `0 0 ${pxToRem(20)} 0`,
+
+  boxShadow: siteVariables.shadowLevel4,
+  foregroundColor: siteVariables.colors.grey[900],
 
   headerFontSize: siteVariables.fontSizes.large,
   headerFontWeight: siteVariables.fontWeightBold,

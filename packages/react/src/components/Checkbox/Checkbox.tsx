@@ -9,8 +9,8 @@ import {
   createShorthandFactory,
   ChildrenComponentProps,
   commonPropTypes,
-  isFromKeyboard,
   UIComponentProps,
+  ShorthandFactory,
 } from '../../lib'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -66,13 +66,12 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
 
 export interface CheckboxState {
   checked: CheckboxProps['checked']
-  isFromKeyboard: boolean
 }
 
 class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, CheckboxState> {
   static slotClassNames: CheckboxSlotClassNames
 
-  static create: Function
+  static create: ShorthandFactory<CheckboxProps>
 
   static displayName = 'Checkbox'
 
@@ -109,7 +108,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
   }
 
   getInitialAutoControlledState(): CheckboxState {
-    return { checked: false, isFromKeyboard: false }
+    return { checked: false }
   }
 
   handleChange = (e: React.ChangeEvent) => {
@@ -137,8 +136,6 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
   }
 
   handleFocus = (e: React.FocusEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 

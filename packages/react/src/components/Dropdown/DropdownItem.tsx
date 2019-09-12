@@ -3,7 +3,13 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropTypes } from '../../lib'
+import {
+  UIComponent,
+  RenderResultConfig,
+  createShorthandFactory,
+  commonPropTypes,
+  ShorthandFactory,
+} from '../../lib'
 import { ShorthandValue, ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
@@ -58,7 +64,7 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
 class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
   static displayName = 'DropdownItem'
 
-  static create: Function
+  static create: ShorthandFactory<DropdownItemProps>
 
   static className = 'ui-dropdown__item'
 

@@ -9,6 +9,7 @@ import arrowLeft from './arrowLeft'
 import arrowRight from './arrowRight'
 import audioOff from './audioOff'
 import ban from './ban'
+import bellMute from './bellMute'
 import bold from './bold'
 import bookmark from './bookmark'
 import broadcast from './broadcast'
@@ -33,6 +34,8 @@ import callMissedLine from './callMissedLine'
 import screencast from './screencast'
 import chat from './chat'
 import chevronDown from './chevronDown'
+import chevronDownMedium from './chevronDownMedium'
+import chevronRightMedium from './chevronRightMedium'
 import clipboardCopiedTo from './clipboardCopiedTo'
 import close from './close'
 import codeSnippet from './codeSnippet'
@@ -124,6 +127,7 @@ import reply from './reply'
 import retry from './retry'
 import shareAlt from './shareAlt'
 import skypeLogo from './skypeLogo'
+import snooze from './snooze'
 import search from './search'
 import send from './send'
 import settings from './settings'
@@ -164,6 +168,7 @@ export default {
   'arrow-right': arrowRight,
   'audio-off': audioOff,
   ban,
+  'bell-slash': bellMute,
   bold,
   bookmark,
   broadcast,
@@ -189,6 +194,8 @@ export default {
   'canvas-add-page': canvasAddPage,
   chat,
   'chevron-down': chevronDown,
+  'chevron-down-medium': chevronDownMedium,
+  'chevron-right-medium': chevronRightMedium,
   'clipboard-copied-to': clipboardCopiedTo,
   close,
   'code-snippet': codeSnippet,
@@ -276,6 +283,7 @@ export default {
   send,
   settings,
   'share-alt': shareAlt,
+  'bell-snooze': snooze,
   star,
   sticker,
   strike,

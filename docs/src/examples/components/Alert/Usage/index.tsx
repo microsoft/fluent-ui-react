@@ -10,6 +10,16 @@ const Usage = () => (
       description="You can also dismiss alerts on actions."
       examplePath="components/Alert/Usage/AlertExampleDismissActions"
     />
+    <ComponentExample
+      title="Important message"
+      description="An Alert that displays an important information."
+      examplePath="components/Alert/Usage/AlertExampleImportantMessage"
+    />
+    <ComponentExample
+      title="Width"
+      description="An Alert can fit container width."
+      examplePath="components/Alert/Usage/AlertExampleWidth"
+    />
   </ExampleSection>
 )
 

@@ -7,11 +7,11 @@ import * as _ from 'lodash'
 import {
   AutoControlledComponent,
   createShorthandFactory,
-  isFromKeyboard,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import Box, { BoxProps } from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
@@ -49,25 +49,11 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
   name?: string
 
   /**
-   * Called after radio item blurs.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
-   */
-  onBlur?: ComponentEventHandler<RadioGroupItemProps>
-
-  /**
    * Called after radio item is clicked.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<RadioGroupItemProps>
-
-  /**
-   * Called after radio item gets focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
-   */
-  onFocus?: ComponentEventHandler<RadioGroupItemProps>
 
   /** Whether should focus when checked */
   shouldFocus?: boolean // TODO: RFC #306
@@ -81,7 +67,6 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
 
 export interface RadioGroupItemState {
   checked: boolean
-  isFromKeyboard: boolean
 }
 
 class RadioGroupItem extends AutoControlledComponent<
@@ -90,7 +75,7 @@ class RadioGroupItem extends AutoControlledComponent<
 > {
   elementRef = React.createRef<HTMLElement>()
 
-  static create: Function
+  static create: ShorthandFactory<RadioGroupItemProps>
 
   static displayName = 'RadioGroupItem'
 
@@ -106,9 +91,7 @@ class RadioGroupItem extends AutoControlledComponent<
     icon: customPropTypes.itemShorthandWithoutJSX,
     label: customPropTypes.itemShorthand,
     name: PropTypes.string,
-    onBlur: PropTypes.func,
     onClick: PropTypes.func,
-    onFocus: PropTypes.func,
     checkedChanged: PropTypes.func,
     shouldFocus: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -129,16 +112,6 @@ class RadioGroupItem extends AutoControlledComponent<
     },
   }
 
-  handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-    _.invoke(this.props, 'onFocus', e, this.props)
-  }
-
-  handleBlur = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: false })
-    _.invoke(this.props, 'onBlur', e, this.props)
-  }
-
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
@@ -157,8 +130,6 @@ class RadioGroupItem extends AutoControlledComponent<
     return (
       <Ref innerRef={this.elementRef}>
         <ElementType
-          onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
           onClick={this.handleClick}
           className={classes.root}
           {...accessibility.attributes.root}

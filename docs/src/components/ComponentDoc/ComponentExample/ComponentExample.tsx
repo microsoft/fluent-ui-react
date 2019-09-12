@@ -1,14 +1,15 @@
 import {
   CopyToClipboard,
-  CodeSnippet,
   KnobInspector,
   KnobProvider,
+  LogInspector,
 } from '@stardust-ui/docs-components'
-import { Divider, Flex, Menu, Segment, Provider, ICSSInJSStyle } from '@stardust-ui/react'
+import { Flex, ICSSInJSStyle, Menu, Provider, Segment } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import * as copyToClipboard from 'copy-to-clipboard'
+import qs from 'qs'
 import SourceRender from 'react-source-render'
 import VisibilitySensor from 'react-visibility-sensor'
 
@@ -28,6 +29,8 @@ import ExamplePlaceholder from '../../ExamplePlaceholder'
 import VariableResolver from 'docs/src/components/VariableResolver/VariableResolver'
 import ComponentExampleVariables from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleVariables'
 
+const ERROR_COLOR = '#D34'
+
 export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
     ComponentSourceManagerRenderProps,
@@ -38,7 +41,10 @@ export interface ComponentExampleProps
 }
 
 interface ComponentExampleState {
+  anchorName: string
   componentVariables: Object
+  isActive: boolean
+  isActiveHash: boolean
   usedVariables: Record<string, string[]>
   showCode: boolean
   showRtl: boolean
@@ -57,71 +63,115 @@ const childrenStyle: React.CSSProperties = {
  * Allows toggling the the raw `code` code block.
  */
 class ComponentExample extends React.Component<ComponentExampleProps, ComponentExampleState> {
-  anchorName: string
   kebabExamplePath: string
 
-  constructor(props) {
-    super(props)
+  static getClearedActiveState = () => ({
+    showCode: false,
+    showRtl: false,
+    showVariables: false,
+    showTransparent: false,
+  })
 
-    const { examplePath } = props
+  static getAnchorName = props => examplePathToHash(props.examplePath)
 
-    this.anchorName = examplePathToHash(examplePath)
-    this.state = {
-      showCode: this.isActiveHash(),
-      componentVariables: {},
-      usedVariables: {},
-      showRtl: examplePath && examplePath.endsWith('rtl'),
-      showTransparent: false,
-      showVariables: false,
-      wasEverVisible: false,
-    }
+  static isActiveHash = props => {
+    const anchorName = ComponentExample.getAnchorName(props)
+    const formattedHash = getFormattedHash(props.location.hash)
+
+    return anchorName === formattedHash
   }
 
-  componentWillReceiveProps(nextProps: ComponentExampleProps) {
-    // deactivate examples when switching from one to the next
-    if (
-      this.isActiveHash() &&
-      this.isActiveState() &&
-      this.props.location.hash !== nextProps.location.hash
-    ) {
-      this.clearActiveState()
-    }
-  }
-
-  clearActiveState = () => {
-    this.setState({
-      showCode: false,
-      showRtl: false,
-      showVariables: false,
+  static getStateFromURL = props => {
+    return qs.parse(props.location.search, {
+      ignoreQueryPrefix: true,
+      decoder: (raw, parse) => {
+        const result = parse(raw)
+        return result === 'false' ? false : result === 'true' ? true : result
+      },
     })
   }
 
-  isActiveState = () => {
-    const { showCode, showVariables } = this.state
+  static setStateToURL = (props, state) => {
+    const nextQueryState = {
+      showCode: state.showCode,
+      showRtl: state.showRtl,
+      showTransparent: state.showTransparent,
+      showVariables: state.showVariables,
+    }
 
-    return showCode || showVariables
+    const prevQueryState = ComponentExample.getStateFromURL(props)
+
+    // don't trigger re-renders if the state in the query string is the same as the state
+    // that is trying to be set
+    if (_.isEqual(prevQueryState, nextQueryState)) {
+      return
+    }
+
+    const nextQueryString = qs.stringify(nextQueryState)
+
+    props.history.replace({ ...props.history.location, search: `?${nextQueryString}` })
   }
 
-  isActiveHash = () => this.anchorName === getFormattedHash(this.props.location.hash)
+  static getDerivedStateFromProps(props, state) {
+    const anchorName = ComponentExample.getAnchorName(props)
+    const isActiveHash = ComponentExample.isActiveHash(props)
+    const isActive = !!state.showCode || !!state.showVariables
+    const nextHash = props.location.hash !== state.prevHash ? props.location.hash : state.prevHash
+
+    const nextState = {
+      anchorName,
+      isActive,
+      isActiveHash,
+      prevHash: nextHash,
+    }
+
+    // deactivate examples when switching from one to the next
+    if (!isActiveHash && state.prevHash !== nextHash) {
+      Object.assign(nextState, ComponentExample.getClearedActiveState())
+    }
+
+    return nextState
+  }
+
+  componentDidUpdate(
+    prevProps: Readonly<ComponentExampleProps>,
+    prevState: Readonly<ComponentExampleState>,
+    snapshot?: any,
+  ): void {
+    if (this.state.isActiveHash) {
+      ComponentExample.setStateToURL(this.props, this.state)
+    }
+  }
+
+  constructor(props) {
+    super(props)
+    const isActiveHash = ComponentExample.isActiveHash(props)
+
+    this.state = {
+      componentVariables: {},
+      usedVariables: {},
+      showCode: isActiveHash,
+      showRtl: false,
+      showTransparent: false,
+      showVariables: false,
+      wasEverVisible: false,
+      ...(isActiveHash && ComponentExample.getStateFromURL(props)),
+      ...(/\.rtl$/.test(props.examplePath) && { showRtl: true }),
+    }
+  }
 
   updateHash = () => {
-    if (this.isActiveState()) this.setHashAndScroll()
-    else if (this.isActiveHash()) this.removeHash()
+    const { isActive } = this.state
+
+    if (isActive) this.setHashAndScroll()
   }
 
   setHashAndScroll = () => {
-    const { history, location } = this.props
+    const { anchorName } = this.state
+    const { history } = this.props
 
-    history.replace(`${location.pathname}#${this.anchorName}`)
+    history.replace({ ...history.location, hash: anchorName })
     scrollToAnchor()
-  }
-
-  removeHash = () => {
-    const { history, location } = this.props
-
-    history.replace(location.pathname)
-
-    this.clearActiveState()
   }
 
   handleDirectLinkClick = () => {
@@ -408,6 +458,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       title,
     } = this.props
     const {
+      anchorName,
       componentVariables,
       usedVariables,
       showCode,
@@ -427,7 +478,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           <Flex.Item>
             <KnobProvider>
               {/* Ensure anchor links don't occlude card shadow effect */}
-              <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
+              <div id={anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
               <ExamplePlaceholder visible={wasEverVisible}>
                 <Segment styles={{ borderBottom: '1px solid #ddd' }}>
@@ -436,7 +487,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
                     <Flex.Item push>
                       <ComponentControls
-                        anchorName={this.anchorName}
+                        anchorName={anchorName}
                         exampleCode={currentCode}
                         exampleLanguage={currentCodeLanguage}
                         examplePath={currentCodePath}
@@ -445,7 +496,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                         onShowRtl={this.handleShowRtlClick}
                         onShowVariables={this.handleShowVariablesClick}
                         onShowTransparent={this.handleShowTransparentClick}
+                        showCode={showCode}
                         showRtl={showRtl}
+                        showVariables={showVariables}
+                        showTransparent={showTransparent}
                       />
                     </Flex.Item>
                   </Flex>
@@ -462,12 +516,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                 <SourceRender
                   babelConfig={babelConfig}
                   source={currentCode}
-                  renderHtml={showCode}
+                  renderHtml={false}
                   resolver={importResolver}
                   wrap={this.renderElement}
                   unstable_hot
                 >
-                  {({ element, error, markup }) => (
+                  {({ element, error }) => (
                     <>
                       <Segment
                         className={`rendered-example ${this.getKebabExamplePath()}`}
@@ -484,26 +538,38 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                           {element}
                         </VariableResolver>
                       </Segment>
+
+                      <Segment styles={{ padding: 0 }}>
+                        <LogInspector silent />
+                      </Segment>
+
                       {showCode && (
-                        <Segment styles={{ padding: 0 }}>
-                          {showCode && this.renderSourceCode()}
+                        <div
+                          style={{
+                            boxShadow: `0 0 0 0.5em ${error ? ERROR_COLOR : 'transparent'}`,
+                          }}
+                        >
+                          {this.renderSourceCode()}
                           {error && (
-                            <Segment inverted color="red">
-                              <pre style={{ whiteSpace: 'pre-wrap' }}>{error.toString()}</pre>
-                            </Segment>
+                            <pre
+                              style={{
+                                position: 'sticky',
+                                bottom: 0,
+                                padding: '1em',
+                                // don't block viewport
+                                maxHeight: '50vh',
+                                overflowY: 'auto',
+                                color: '#fff',
+                                background: ERROR_COLOR,
+                                whiteSpace: 'pre-wrap',
+                                // above code editor text :/
+                                zIndex: 4,
+                              }}
+                            >
+                              {error.toString()}
+                            </pre>
                           )}
-                          {showCode && (
-                            <div>
-                              <Divider fitted />
-                              <CodeSnippet
-                                fitted
-                                label="Rendered HTML"
-                                mode="html"
-                                value={markup}
-                              />
-                            </div>
-                          )}
-                        </Segment>
+                        </div>
                       )}
                     </>
                   )}

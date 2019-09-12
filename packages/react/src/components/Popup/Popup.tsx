@@ -34,7 +34,7 @@ import { AutoFocusZoneProps, FocusTrapZoneProps } from '../../lib/accessibility/
 
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
-import { createShorthandFactory } from '../../lib/factories'
+import { createShorthandFactory, ShorthandFactory } from '../../lib/factories'
 import createReferenceFromContextClick from './createReferenceFromContextClick'
 import isRightClick from '../../lib/isRightClick'
 import PortalInner from '../Portal/PortalInner'
@@ -133,7 +133,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   static className = 'ui-popup'
 
-  static create: Function
+  static create: ShorthandFactory<PopupProps>
 
   static slotClassNames: PopupSlotClassNames = {
     content: `${Popup.className}__content`,
@@ -283,14 +283,15 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   isOutsidePopupElementAndOutsideTriggerElement(refs: NodeRef[], e) {
     const isOutsidePopupElement = this.isOutsidePopupElement(refs, e)
     const isOutsideTriggerElement =
-      this.triggerRef.current && !doesNodeContainClick(this.triggerRef.current, e)
+      this.triggerRef.current &&
+      !doesNodeContainClick(this.triggerRef.current, e, this.context.target)
 
     return isOutsidePopupElement && isOutsideTriggerElement
   }
 
   isOutsidePopupElement(refs: NodeRef[], e) {
     const isInsideNested = _.some(refs, (childRef: NodeRef) => {
-      return doesNodeContainClick(childRef.current, e)
+      return doesNodeContainClick(childRef.current as HTMLElement, e, this.context.target)
     })
 
     const isOutsidePopupElement = this.popupDomElement && !isInsideNested

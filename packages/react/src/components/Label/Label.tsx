@@ -13,6 +13,7 @@ import {
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
+  ShorthandFactory,
 } from '../../lib'
 
 import Icon, { IconProps } from '../Icon/Icon'
@@ -54,7 +55,7 @@ export interface LabelProps
 class Label extends UIComponent<WithAsProp<LabelProps>, any> {
   static displayName = 'Label'
 
-  static create: Function
+  static create: ShorthandFactory<LabelProps>
 
   static className = 'ui-label'
 

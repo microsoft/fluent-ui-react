@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 // @ts-ignore
-import { ThemeContext } from '@stardust-ui/react-fela'
+import { ThemeContext } from 'react-fela'
 
 import { isBrowser, ChildrenComponentProps, commonPropTypes } from '../../lib'
 

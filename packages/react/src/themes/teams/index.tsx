@@ -1,7 +1,5 @@
 import { ThemeIconSpec, ThemeIcons, SvgIconSpec } from '../types'
 
-import mergeThemes from '../../lib/mergeThemes'
-import base from '../base'
 import animations from './animations'
 import * as siteVariables from './siteVariables'
 import * as componentVariables from './componentVariables'
@@ -42,11 +40,13 @@ const icons: ThemeIcons = {
   'stardust-arrow-up': themeIcons['triangle-up'],
   'stardust-arrow-down': themeIcons['triangle-down'],
   'stardust-arrow-end': themeIcons['triangle-right'],
+  'stardust-menu-arrow-down': themeIcons['chevron-down-medium'],
+  'stardust-menu-arrow-end': themeIcons['chevron-right-medium'],
   'stardust-pause': themeIcons['pause'],
   'stardust-play': themeIcons['play'],
 }
 
-export default mergeThemes(base, {
+export default {
   siteVariables,
   componentVariables,
   componentStyles,
@@ -54,4 +54,4 @@ export default mergeThemes(base, {
   staticStyles,
   icons,
   animations,
-})
+}

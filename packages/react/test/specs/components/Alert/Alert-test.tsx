@@ -18,12 +18,12 @@ describe('Alert', () => {
   handlesAccessibility(Alert, { defaultRootRole: undefined, requiredProps: { content: 'test' } })
   handlesAccessibility(Alert, {
     defaultRootRole: undefined,
-    partSelector: `.${Alert.slotClassNames.content}`,
+    partSelector: `.${Alert.slotClassNames.body}`,
     requiredProps: { content: 'test' },
   })
   handlesAccessibility(Alert, {
     defaultRootRole: 'alert',
-    partSelector: `.${Alert.slotClassNames.content}`,
+    partSelector: `.${Alert.slotClassNames.body}`,
     requiredProps: { content: 'test', warning: true },
   })
 

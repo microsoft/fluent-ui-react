@@ -1,10 +1,10 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { DropdownVariables } from './dropdownVariables'
 import DropdownItem, { DropdownItemProps } from '../../../../components/Dropdown/DropdownItem'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import { pxToRem } from '../../../../lib'
 
-const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVariables> = {
+const dropdownItemStyles: ComponentSlotStylesPrepared<DropdownItemProps, DropdownVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     minHeight: 0,
     padding: `${pxToRem(4)} ${pxToRem(11)}`,
@@ -17,11 +17,8 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
     }),
     position: 'relative',
     ...(p.active && {
-      ...getBorderFocusStyles({
-        siteVariables,
-        isFromKeyboard: p.isFromKeyboard,
-        borderRadius: 0,
-      })[':focus'],
+      ...(p.isFromKeyboard &&
+        getBorderFocusStyles({ siteVariables, borderRadius: 0 })[':focus-visible']),
       ...(!p.isFromKeyboard && {
         color: v.listItemColorHover,
         backgroundColor: v.listItemBackgroundColorHover,

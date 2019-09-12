@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Button, MenuButton } from '@stardust-ui/react'
 
 const MenuButtonOpenExample = () => {
-  const [open, setOpen] = useBooleanKnob({ name: 'open', initialValue: true })
+  const [open, setOpen] = useBooleanKnob({ name: 'open' })
 
   return (
     <MenuButton

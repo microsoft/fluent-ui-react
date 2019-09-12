@@ -1,19 +1,27 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import Checkbox, { CheckboxProps, CheckboxState } from '../../../../components/Checkbox/Checkbox'
 import { CheckboxVariables } from './checkboxVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
-const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, CheckboxVariables> = {
+const checkboxStyles: ComponentSlotStylesPrepared<
+  CheckboxProps & CheckboxState,
+  CheckboxVariables
+> = {
   root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => ({
+    position: 'relative',
+
+    display: 'inline-grid',
+    // IE11: Gap is done via virtual column as in autoprefixer
+    gridTemplateColumns: p.labelPosition === 'start' ? `1fr ${v.gap} auto` : `auto ${v.gap} 1fr`,
+    cursor: 'pointer',
+    outline: 0,
+
     color: v.textColor,
     padding: v.rootPadding,
     verticalAlign: 'middle',
+    alignItems: 'start',
 
-    ...getBorderFocusStyles({
-      siteVariables: t.siteVariables,
-      isFromKeyboard: p.isFromKeyboard,
-      borderRadius: '3px',
-    }),
+    ...getBorderFocusStyles({ siteVariables: t.siteVariables, borderRadius: '3px' }),
 
     ':hover': {
       color: v.textColorHover,
@@ -38,12 +46,17 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
     }),
 
     ...(p.disabled && {
+      cursor: 'default',
       pointerEvents: 'none',
       color: v.disabledColor,
     }),
   }),
 
   checkbox: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    gridColumn: p.labelPosition === 'start' ? 3 : 1,
+    '-ms-grid-row-align': 'center',
+    boxShadow: 'unset',
+
     background: v.background,
     borderColor: v.borderColor,
     borderStyle: v.borderStyle,
@@ -73,6 +86,10 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
   }),
 
   toggle: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    '-ms-grid-row-align': 'center',
+    gridColumn: p.labelPosition === 'start' ? 3 : 1,
+    boxShadow: 'unset',
+
     background: v.background,
     borderColor: v.borderColor,
     borderStyle: v.borderStyle,
@@ -107,6 +124,11 @@ const checkboxStyles: ComponentSlotStylesInput<CheckboxProps & CheckboxState, Ch
         background: v.disabledBackgroundChecked,
         borderColor: 'transparent',
       }),
+  }),
+
+  label: ({ props: p }): ICSSInJSStyle => ({
+    display: 'block', // IE11: should be forced to be block, as inline-block is not supported
+    gridColumn: p.labelPosition === 'start' ? 1 : 3,
   }),
 }
 

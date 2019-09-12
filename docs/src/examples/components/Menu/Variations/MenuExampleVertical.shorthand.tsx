@@ -18,6 +18,29 @@ const items = [
     },
   },
   { key: 'events', content: 'Upcoming Events' },
+  {
+    key: 'moreevents',
+    content: 'View full calendar with content so long that it wraps',
+    icon: {
+      name: 'calendar',
+    },
+    menu: {
+      items: [
+        {
+          key: '1',
+          content: 'item1',
+        },
+        {
+          key: '2',
+          content: 'item2',
+        },
+        {
+          key: '3',
+          content: 'item3',
+        },
+      ],
+    },
+  },
 ]
 
 const MenuExampleVertical = () => <Menu defaultActiveIndex={0} items={items} vertical />

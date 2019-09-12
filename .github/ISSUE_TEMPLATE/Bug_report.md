@@ -19,5 +19,5 @@ The actual result that happened 💣
 x.y.z
 
 ### Testcase
-[Fork, update, and replace this pen to show the bug]:
-https://codesandbox.io/s/2l3n74j9y
+[Fork, update, and replace this sandbox to show the bug]:
+https://codesandbox.io/s/stardust-ui-example-8ismt

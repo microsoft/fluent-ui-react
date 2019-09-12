@@ -1,8 +1,10 @@
 import { mount } from 'enzyme'
+import { createRenderer } from 'fela'
 import * as React from 'react'
 
 import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
+import { ThemeInput } from 'src/themes/types'
 
 describe('Provider', () => {
   test('is exported', () => {
@@ -183,5 +185,51 @@ describe('Provider', () => {
         expect(nestedProviderDiv.prop('dir')).toEqual(expectedChildDir)
       })
     })
+  })
+
+  describe('calls provided renderer', () => {
+    test('calls renderFont', () => {
+      const theme: ThemeInput = {
+        fontFaces: [
+          {
+            name: 'Segoe UI',
+            paths: ['public/fonts/segoe-ui-regular.woff2'],
+            style: { fontWeight: 400 },
+          },
+        ],
+      }
+      const renderer = createRenderer()
+      const renderFont = jest.spyOn(renderer, 'renderFont')
+
+      mount(
+        <Provider theme={theme} renderer={renderer}>
+          <div />
+        </Provider>,
+      )
+
+      expect(renderFont).toHaveBeenCalled()
+    })
+  })
+
+  test('calls renderStatic', () => {
+    const theme: ThemeInput = {
+      staticStyles: [
+        {
+          a: {
+            textDecoration: 'none',
+          },
+        },
+      ],
+    }
+    const renderer = createRenderer()
+    const renderStatic = jest.spyOn(renderer, 'renderStatic')
+
+    mount(
+      <Provider theme={theme} renderer={renderer}>
+        <div />
+      </Provider>,
+    )
+
+    expect(renderStatic).toHaveBeenCalled()
   })
 })

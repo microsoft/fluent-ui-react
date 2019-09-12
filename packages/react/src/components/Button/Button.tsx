@@ -7,7 +7,6 @@ import {
   UIComponent,
   childrenExist,
   createShorthandFactory,
-  isFromKeyboard,
   UIComponentProps,
   ContentComponentProps,
   ChildrenComponentProps,
@@ -15,6 +14,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   SizeValue,
+  ShorthandFactory,
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
@@ -82,12 +82,8 @@ export interface ButtonProps
   size?: SizeValue
 }
 
-export interface ButtonState {
-  isFromKeyboard: boolean
-}
-
-class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
-  static create: Function
+class Button extends UIComponent<WithAsProp<ButtonProps>> {
+  static create: ShorthandFactory<ButtonProps>
 
   static displayName = 'Button'
 
@@ -121,10 +117,6 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
 
   static Group = ButtonGroup
 
-  state = {
-    isFromKeyboard: false,
-  }
-
   actionHandlers = {
     performClick: event => {
       event.preventDefault()
@@ -150,9 +142,9 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {hasChildren && children}
         {!hasChildren && loading && this.renderLoader(variables, styles)}
@@ -200,8 +192,6 @@ class Button extends UIComponent<WithAsProp<ButtonProps>, ButtonState> {
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 }

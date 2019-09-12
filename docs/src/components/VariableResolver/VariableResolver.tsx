@@ -1,8 +1,8 @@
-// @ts-ignore
-import { ThemeContext } from '@stardust-ui/react-fela'
 import { Provider, ProviderContextPrepared } from '@stardust-ui/react'
-import * as React from 'react'
 import * as _ from 'lodash'
+import * as React from 'react'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
 
 import useClassNamesListener from './useClassNamesListener'
 import useEnhancedRenderer, { UsedVariables } from './useEnhancedRenderer'

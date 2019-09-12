@@ -3,6 +3,7 @@ import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 import ImportantAndMentionMessages from './ImportantAndMentionMessages'
 import ChatMessageWithPopover from './ChatMessageWithPopover'
 import ControlMessages from './ControlMessages'
+import ThreadedMessages from './ThreadedMessages'
 
 export default () => (
   <PrototypeSection title="Chat messages">
@@ -20,6 +21,9 @@ export default () => (
     </ComponentPrototype>
     <ComponentPrototype title="Control messages" description="Control messages example">
       <ControlMessages />
+    </ComponentPrototype>
+    <ComponentPrototype title="Threaded messages" description="Threaded messages example">
+      <ThreadedMessages />
     </ComponentPrototype>
   </PrototypeSection>
 )
