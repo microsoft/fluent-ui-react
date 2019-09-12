@@ -167,6 +167,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
 
   itemRef = React.createRef<HTMLElement>()
   menuRef = React.createRef<HTMLElement>()
+  disregardBlurEvent = false
 
   renderSubmenu(menu, variables) {
     const targetRef = toRefObject(this.context.target)
@@ -180,6 +181,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
                 onItemClick: (e, itemProps: ToolbarItemProps) => {
                   _.invoke(predefinedProps, 'onItemClick', e, itemProps)
                   if (itemProps.popup) {
+                    this.disregardBlurEvent = true
                     return
                   }
                   // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
@@ -267,12 +269,12 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
   }
 
   handleWrapperBlur = e => {
-    if (
-      this.props.menu &&
-      !e.currentTarget.contains(e.relatedTarget) &&
-      e instanceof KeyboardEvent
-    ) {
+    if (this.props.menu && !e.currentTarget.contains(e.relatedTarget) && !this.disregardBlurEvent) {
       this.trySetMenuOpen(false, e)
+    }
+
+    if (this.disregardBlurEvent) {
+      this.disregardBlurEvent = false
     }
   }
 

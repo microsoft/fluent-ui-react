@@ -50,8 +50,8 @@ const ToolbarExampleShorthand = () => {
               icon: 'quote',
             },
             {
-              wrapper: undefined,
-              key: 'code-snippet', // to avoid issue with keys
+              wrapper: undefined, // to avoid issue with keys
+              key: 'code-snippet',
               content: 'Code snippet',
               icon: 'code-snippet',
             },
