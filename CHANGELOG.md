@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Remove base theme and move everything to teams theme @mnajdova ([#1908](https://github.com/stardust-ui/react/pull/1908))
+
 ### Fixes
 - Fix `Menu` and `Submenu` to use correct indicator icon and have correct width behavior [redlines] @bcalvery ([#1831](https://github.com/stardust-ui/react/pull/1831))
 - Fix order of applying unhandled props and key handlers @jurokapsiar ([#1901](https://github.com/stardust-ui/react/pull/1901)) 

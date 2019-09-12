@@ -1,9 +1,9 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { InputProps } from '../../../../components/Input/Input'
 import { InputVariables } from './inputVariables'
 import { PositionProperty } from 'csstype'
 
-const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
+const inputStyles: ComponentSlotStylesPrepared<InputProps, InputVariables> = {
   root: ({ props: p }): ICSSInJSStyle => ({
     alignItems: 'center',
     display: 'inline-flex',

@@ -1,8 +1,8 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { TooltipProps } from '../../../../components/Tooltip/Tooltip'
 import { TooltipVariables } from './tooltipVariables'
 
-const tooltipStyles: ComponentSlotStylesInput<TooltipProps, TooltipVariables> = {
+const tooltipStyles: ComponentSlotStylesPrepared<TooltipProps, TooltipVariables> = {
   root: (): ICSSInJSStyle => ({}),
 
   content: ({ variables: v, props: p }): ICSSInJSStyle => ({
