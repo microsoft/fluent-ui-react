@@ -141,7 +141,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
   handleMenuButtonOverrides = (predefinedProps: MenuButtonProps) => ({
     onMenuItemClick: (e: React.SyntheticEvent, menuItemProps: MenuItemProps) => {
       this.setState({ open: false })
-      _.invoke(this.props, 'onOpenChange', e, { open: false, ...menuItemProps })
+      _.invoke(this.props, 'onOpenChange', e, { open: false, ...this.props })
 
       _.invoke(predefinedProps, 'onMenuItemClick', e, menuItemProps)
       _.invoke(this.props, 'onMenuItemClick', e, menuItemProps)
@@ -149,7 +149,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
     onOpenChange: (e: React.SyntheticEvent, popupProps: PopupProps) => {
       e.stopPropagation()
       this.setState({ open: popupProps.open })
-      _.invoke(this.props, 'onOpenChange', e, popupProps)
+      _.invoke(this.props, 'onOpenChange', e, { open: popupProps.open, ...this.props })
     },
   })
 
@@ -213,8 +213,12 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
           overrideProps: (predefinedProps: ButtonProps) => ({
             onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
               _.invoke(predefinedProps, 'onClick', e, buttonProps)
-              this.setState(state => ({ open: !state.open }))
-              _.invoke(this.props, 'onOpenChange', e, { open: !this.state.open, ...buttonProps })
+
+              this.setState(state => {
+                const open = !state.open
+                _.invoke(this.props, 'onOpenChange', e, { open, ...this.props })
+                return { open }
+              })
             },
           }),
         })}
