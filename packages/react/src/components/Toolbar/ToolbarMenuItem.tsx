@@ -16,7 +16,13 @@ import {
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
 } from '../../lib'
-import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
+import {
+  ComponentEventHandler,
+  ShorthandValue,
+  WithAsProp,
+  withSafeTypeForAs,
+  Omit,
+} from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { menuItemBehavior } from '../../lib/accessibility'
 
