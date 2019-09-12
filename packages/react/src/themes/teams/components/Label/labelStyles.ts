@@ -1,10 +1,10 @@
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { LabelProps } from '../../../../components/Label/Label'
 import { LabelVariables } from './labelVariables'
 import { getColorScheme } from '../../colors'
 
-const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
+const labelStyles: ComponentSlotStylesPrepared<LabelProps, LabelVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const colors = getColorScheme(v.colorScheme, p.color)
 

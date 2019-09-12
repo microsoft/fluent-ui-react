@@ -1,9 +1,9 @@
-import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
+import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '../../../types'
 import { ChatItemVariables } from './chatItemVariables'
 import { ChatItemProps } from '../../../../components/Chat/ChatItem'
 import { pxToRem } from '../../../../lib'
 
-const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables> = {
+const chatItemStyles: ComponentSlotStylesPrepared<ChatItemProps, ChatItemVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'relative',
     ...((!p.attached || p.attached === 'top') && { paddingTop: pxToRem(16) }),
