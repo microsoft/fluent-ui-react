@@ -45,12 +45,12 @@ const ToolbarExampleShorthand = () => {
           menu: [
             {
               wrapper: undefined, // to avoid issue with keys
-              key: 'quote', // to avoid issue with keys
+              key: 'quote',
               content: 'Quote',
               icon: 'quote',
             },
             {
-              wrapper: undefined, // to avoid issue with keys
+              wrapper: undefined,
               key: 'code-snippet', // to avoid issue with keys
               content: 'Code snippet',
               icon: 'code-snippet',
@@ -71,7 +71,7 @@ const ToolbarExampleShorthand = () => {
                   // Adding tooltipAsLabelBehavior as the ToolbarItems contains only icon
                   return (
                     <Tooltip
-                      key={`${rest.key}-tooltip`} // to avoid errors with keys
+                      key={`${rest.key}-tooltip`}
                       trigger={<ToolbarItem {...rest} />}
                       accessibility={tooltipAsLabelBehavior}
                       content={tooltip}
