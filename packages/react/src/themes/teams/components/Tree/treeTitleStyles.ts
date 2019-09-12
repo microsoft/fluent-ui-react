@@ -7,12 +7,7 @@ const treeTitleStyles = {
     cursor: 'pointer',
     color: v.color,
     position: 'relative',
-    ':focus': {
-      outline: 0,
-    },
-    ':focus-visible': {
-      ...getBorderFocusStyles({ siteVariables })[':focus-visible'],
-    },
+    ...getBorderFocusStyles({ siteVariables }),
   }),
 }
 

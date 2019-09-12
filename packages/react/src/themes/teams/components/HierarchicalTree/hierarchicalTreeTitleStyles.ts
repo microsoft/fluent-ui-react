@@ -8,12 +8,7 @@ const hierarchicalTreeTitleStyles = {
     cursor: 'pointer',
     color: variables.defaultColor,
     position: 'relative',
-    ':focus': {
-      outline: 0,
-    },
-    ':focus-visible': {
-      ...getBorderFocusStyles({ siteVariables })[':focus-visible'],
-    },
+    ...getBorderFocusStyles({ siteVariables }),
   }),
 }
 
