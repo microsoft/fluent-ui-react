@@ -115,4 +115,22 @@ describe('deepmerge', () => {
       overridden: [4, 5],
     })
   })
+
+  test('merges more objects', () => {
+    const target = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+    const source1 = { b: 'bS1', d: false, bb: 'bbS1' }
+    const source2 = { c: 'bS2', cc: 'bbS2' }
+    const source3 = { d: 'bS3', dd: 'bbS3' }
+
+    expect(deepmerge(target, source1, source2, source3)).toStrictEqual({
+      a: 1,
+      b: 'bS1',
+      c: 'bS2',
+      d: 'bS3',
+      e: 5,
+      bb: 'bbS1',
+      cc: 'bbS2',
+      dd: 'bbS3',
+    })
+  })
 })
