@@ -33,6 +33,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Export `bell-slash` and `bell-snooze` icon to Teams theme @musingh ([#1921](https://github.com/stardust-ui/react/pull/1921))
 - Add `navigable` `List` variant @jurokapsiar ([#1904](https://github.com/stardust-ui/react/pull/1904))
 - Add the `SplitButton` component @silviuavram ([#1789](https://github.com/stardust-ui/react/pull/1798))
+- Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
 
 ### Documentation
 - Fix broken code editor in some doc site examples and improve error experience @levithomason ([#1906](https://github.com/stardust-ui/react/pull/1906))
@@ -100,7 +101,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Upgrade `FocusZone` to the latest version from `fabric-ui` @sophieH29 ([#1772](https://github.com/stardust-ui/react/pull/1772))
 - Add `inverted` prop to `Input` for changing the background color [redlines] @codepretty ([#1684](https://github.com/stardust-ui/react/pull/1684))
 - Edit `buttonBehavior` Adding aria-disabled when button has loading state @kolaps33 ([#1789](https://github.com/stardust-ui/react/pull/1789))
-- Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
 - Added `audio-off` and `clipboard-copied-to` icon to Teams theme @bcalvery ([#1792](https://github.com/stardust-ui/react/pull/1792))
 - Added `window-maximize`, `window-minimize` and `window-restore` icons to Teams theme @codepretty ([#1803](https://github.com/stardust-ui/react/pull/1803))
 - Export `FocusTrapZoneProps` and `AutoFocusZoneProps` from the main package @sophieH29 ([#1795](https://github.com/stardust-ui/react/pull/1795))
