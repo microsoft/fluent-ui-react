@@ -265,6 +265,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
     })
 
     const overrideProps: PopupProps = {
+      accessibility: () => accessibility,
       open: this.state.open,
       onOpenChange: this.handleOpenChange,
       content: {
@@ -280,7 +281,6 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
             tabbableTrigger: false,
           }
         : {
-            accessibility: () => accessibility,
             inline: true,
             autoFocus: true,
           }),
