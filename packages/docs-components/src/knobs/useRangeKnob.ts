@@ -8,13 +8,19 @@ type UseRangeKnobSpecificOptions = {
   step?: number | string
   unit?: string
 }
-type UseRangeKnobOptions = UseKnobOptions<number | string> & UseRangeKnobSpecificOptions
+type UseRangeKnobOptions<T> = UseKnobOptions<T> & UseRangeKnobSpecificOptions
 
-const useRangeKnob = (options: UseRangeKnobOptions) => {
-  const { initialValue = 3, min = 0, max = parseValue(initialValue), step = 1, ...rest } = options
+const useRangeKnob = <T extends number | string>(options: UseRangeKnobOptions<T>) => {
+  const {
+    initialValue = 3 as T,
+    min = 0,
+    max = parseValue(initialValue),
+    step = 1,
+    ...rest
+  } = options
   const unit = `${initialValue}`.replace(`${parseValue(initialValue)}`, '')
 
-  return useKnob<number | string, Required<UseRangeKnobSpecificOptions>>({
+  return useKnob<T, Required<UseRangeKnobSpecificOptions>>({
     initialValue,
     unit,
     min: parseValue(min),
