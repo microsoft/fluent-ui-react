@@ -47,6 +47,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         borderStyle: 'solid',
         borderColor: v.borderColor,
         boxShadow: v.boxShadow,
+        transform: 'translateZ(0)',
         transition: 'all .1s cubic-bezier(.78, 0, .22, 1)',
 
         ':hover': {
