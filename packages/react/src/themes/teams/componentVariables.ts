@@ -94,3 +94,5 @@ export { default as Video } from './components/Video/videoVariables'
 
 export { default as Tooltip } from './components/Tooltip/tooltipVariables'
 export { default as TooltipContent } from './components/Tooltip/tooltipContentVariables'
+
+export { default as SplitButton } from './components/SplitButton/splitButtonVariables'
