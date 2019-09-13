@@ -7,6 +7,7 @@ export type CodeSnippetProps = {
   className?: string
   copyable?: boolean
   fitted?: boolean
+  formattable?: boolean
   label?: React.ReactNode | false
   mode?: CodeSnippetMode
   style?: React.CSSProperties
