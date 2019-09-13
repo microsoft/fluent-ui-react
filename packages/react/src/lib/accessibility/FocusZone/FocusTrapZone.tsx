@@ -209,6 +209,8 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
     if (!this._root.current.contains(relatedTarget as HTMLElement)) {
       this._hasFocus = false
     }
+
+    ev.stopPropagation()
   }
 
   _onFirstBumperFocus = () => {
