@@ -1,9 +1,26 @@
 import { pxToRem } from '../../../../lib'
 import { SiteVariablesPrepared } from '../../../types'
-import { SliderVariables as BaseSliderVariables } from '../../../base/components/Slider/sliderVariables'
 
-export type SliderVariables = Partial<BaseSliderVariables>
+export interface SliderVariables {
+  height: string
+  length: string
 
+  railColor: string
+  railHeight: string
+  disabledRailColor: string
+
+  thumbColor: string
+  activeThumbColor: string
+  disabledThumbColor: string
+  thumbHeight: string
+  activeThumbHeight: string
+  thumbBorderPadding: string
+  thumbWidth: string
+  activeThumbWidth: string
+
+  trackColor: string
+  disabledTrackColor: string
+}
 export default (siteVars: SiteVariablesPrepared): SliderVariables => {
   const { colorScheme } = siteVars
 

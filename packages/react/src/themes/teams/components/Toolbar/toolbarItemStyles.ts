@@ -1,10 +1,10 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { ToolbarItemProps } from '../../../../components/Toolbar/ToolbarItem'
 import { ToolbarVariables } from './toolbarVariables'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 import { getColorScheme } from '../../colors'
 
-const toolbarItemStyles: ComponentSlotStylesInput<ToolbarItemProps, ToolbarVariables> = {
+const toolbarItemStyles: ComponentSlotStylesPrepared<ToolbarItemProps, ToolbarVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const colors = getColorScheme(v.colorScheme)
 
