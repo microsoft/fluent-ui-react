@@ -315,6 +315,11 @@ class Sidebar extends React.Component<any, any> {
         public: true,
       },
       {
+        key: 'participants-list',
+        title: { content: 'Participants list', as: NavLink, to: '/prototype-participants-list' },
+        public: true,
+      },
+      {
         key: 'searchpage',
         title: { content: 'Search Page', as: NavLink, to: '/prototype-search-page' },
         public: false,
@@ -342,6 +347,11 @@ class Sidebar extends React.Component<any, any> {
         key: 'menu-button',
         title: { content: 'MenuButton', as: NavLink, to: '/menu-button' },
         public: false,
+      },
+      {
+        key: 'virtualized-tree',
+        title: { content: 'VirtualizedTree', as: NavLink, to: '/virtualized-tree' },
+        public: true,
       },
       {
         key: 'copy-to-clipboard',

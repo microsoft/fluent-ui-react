@@ -1,13 +1,13 @@
 import * as _ from 'lodash'
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import Loader from '../../../../components/Loader/Loader'
 import { ButtonProps } from '../../../../components/Button/Button'
 import { ButtonVariables } from './buttonVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
-const buttonStyles: ComponentSlotStylesInput<ButtonProps, ButtonVariables> = {
+const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
     const { borderWidth } = siteVariables
 
