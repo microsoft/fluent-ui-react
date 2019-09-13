@@ -212,7 +212,22 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     }
 
     return (
-      <Popper unstable_pinned targetRef={this.state.messageDomNode} position="above" align="end">
+      <Popper
+        align="end"
+        modifiers={{
+          // https://popper.js.org/popper-documentation.html#modifiers..flip.behavior
+          // Forces to flip only in "top-*" positions
+          flip: { behavior: ['top'] },
+          preventOverflow: {
+            escapeWithReference: false,
+            // https://popper.js.org/popper-documentation.html#modifiers..preventOverflow.priority
+            // Forces to stop prevent overflow on bottom and bottom
+            priority: ['left', 'right'],
+          },
+        }}
+        position="above"
+        targetRef={this.state.messageDomNode}
+      >
         {({ scheduleUpdate }) => {
           this.updateActionsMenuPosition = scheduleUpdate
           return actionMenuElement

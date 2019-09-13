@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `Menu` and `Submenu` to use correct indicator icon and have correct width behavior [redlines] @bcalvery ([#1831](https://github.com/stardust-ui/react/pull/1831))
 - Fix order of applying unhandled props and key handlers @jurokapsiar ([#1901](https://github.com/stardust-ui/react/pull/1901))
 - Fix focus styles for `TreeItem` and `HierarchicalTreeItem` @silviuavram ([#1912](https://github.com/stardust-ui/react/pull/1912))
+- Use more accurate positioning for `actions` in `Chat.Message` when is inside scrollable containers @layershifter ([#1929](https://github.com/stardust-ui/react/pull/1929))
 
 ### Features
 - Add `navigable` `List` variant @jurokapsiar ([#1904](https://github.com/stardust-ui/react/pull/1904))
