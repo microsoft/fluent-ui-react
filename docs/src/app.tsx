@@ -7,6 +7,7 @@ import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/
 import Routes from './routes'
 import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
 import Debug from '../../packages/react/src/components/Debug/Debug'
+// import DebugPanel from '../../packages/react/src/components/Debug/DebugPanel'
 
 class App extends React.Component<any, ThemeContextData> {
   // State also contains the updater function so it will
@@ -35,6 +36,8 @@ class App extends React.Component<any, ThemeContextData> {
           <PerfDataProvider>
             <div>
               <Debug />
+              {/* TODO: add logic for when the DebugPanel should be shown */}
+              {/* <DebugPanel debugData={...} /> */}
               <Routes />
             </div>
           </PerfDataProvider>
