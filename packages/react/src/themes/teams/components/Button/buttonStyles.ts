@@ -133,6 +133,11 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps, ButtonVariables> = {
           color: v.primaryColor,
           backgroundColor: v.primaryBackgroundColor,
           borderColor: v.primaryBorderColor,
+          boxShadow: siteVariables.shadowLevel1Dark,
+
+          ':active': {
+            background: v.primaryBackgroundColorActive,
+          },
 
           ':hover': {
             color: v.primaryColorHover,
