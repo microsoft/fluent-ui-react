@@ -56,6 +56,12 @@ export interface ToolbarMenuItemProps
    */
   onClick?: ComponentEventHandler<ToolbarMenuItemProps>
 
+  /** TODO */
+  onPopupDocumentClick?: ComponentEventHandler<ToolbarMenuItemProps & { outside: boolean }>
+
+  /** TODO */
+  onPopupOpenChange?: ComponentEventHandler<PopupProps>
+
   /**
    * Attaches a `Popup` component to the ToolbarItem.
    * Accepts all props as a `Popup`, except `trigger` and `children`.
@@ -89,6 +95,8 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
+    onPopupDocumentClick: PropTypes.func,
+    onPopupOpenChange: PropTypes.func,
     popup: PropTypes.oneOfType([
       PropTypes.shape({
         ...Popup.propTypes,
@@ -142,6 +150,8 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
       return Popup.create(popup, {
         defaultProps: {
           trapFocus: true,
+          onDocumentClick: this.handlePopupDocumentClick,
+          onOpenChange: this.handlePopupOpenChange,
         },
         overrideProps: {
           trigger: elementType,
@@ -174,6 +184,14 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
     }
 
     _.invoke(this.props, 'onClick', e, this.props)
+  }
+
+  handlePopupDocumentClick = (e: React.SyntheticEvent, data) => {
+    _.invoke(this.props, 'onPopupDocumentClick', e, { ...this.props, outside: data.outside })
+  }
+
+  handlePopupOpenChange = (e: React.SyntheticEvent, data) => {
+    _.invoke(this.props, 'onPopupOpenChange', e, data)
   }
 }
 

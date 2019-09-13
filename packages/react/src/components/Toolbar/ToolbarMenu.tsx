@@ -21,6 +21,7 @@ import { submenuBehavior } from '../../lib/accessibility'
 
 import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
+import { PopupProps } from '../Popup/Popup'
 
 export type ToolbarMenuItemShorthandKinds = 'divider' | 'item'
 
@@ -38,6 +39,12 @@ export interface ToolbarMenuProps
    * @param {object} data - All item props.
    */
   onItemClick?: ComponentEventHandler<ToolbarMenuItemProps>
+
+  /** TODO * */
+  onPopupDocumentClick?: ComponentEventHandler<ToolbarMenuItemProps & { outside: boolean }>
+
+  /** TODO */
+  onPopupOpenChange?: ComponentEventHandler<PopupProps>
 }
 
 class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
@@ -51,6 +58,8 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
     ...commonPropTypes.createCommon(),
     items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
     onItemClick: PropTypes.func,
+    onPopupDocumentClick: PropTypes.func,
+    onPopupOpenChange: PropTypes.func,
   }
 
   static defaultProps = {
@@ -79,8 +88,22 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
       if (kind === 'divider') {
         return ToolbarMenuDivider.create(item, { overrideProps: dividerOverridesFn })
       }
-      return ToolbarMenuItem.create(item, { overrideProps: itemOverridesFn })
+      return ToolbarMenuItem.create(item, {
+        overrideProps: itemOverridesFn,
+        defaultProps: {
+          onPopupDocumentClick: this.handlePopupDocumentClick,
+          onPopupOpenChange: this.handlePopupOpenChange,
+        },
+      })
     })
+  }
+
+  handlePopupDocumentClick = (e: React.SyntheticEvent, data) => {
+    _.invoke(this.props, 'onPopupDocumentClick', e, { ...this.props, outside: data.outside })
+  }
+
+  handlePopupOpenChange = (e: React.SyntheticEvent, data) => {
+    _.invoke(this.props, 'onPopupOpenChange', e, data)
   }
 
   renderComponent({ ElementType, classes, accessibility, variables, unhandledProps }) {

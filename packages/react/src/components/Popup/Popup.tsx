@@ -80,6 +80,9 @@ export interface PopupProps
   /** Events triggering the popup. */
   on?: PopupEvents | PopupEventsArray
 
+  /** TODO */
+  onDocumentClick?: ComponentEventHandler<PopupProps & { outside: boolean }>
+
   /** Defines whether popup is displayed. */
   open?: boolean
 
@@ -159,6 +162,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       PropTypes.arrayOf(PropTypes.oneOf(['click', 'focus', 'context'])),
       PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus', 'context'])),
     ]),
+    onDocumentClick: PropTypes.func,
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
     pointing: PropTypes.bool,
@@ -250,7 +254,10 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 
   handleDocumentClick = (getRefs: Function) => e => {
-    if (this.state.isOpenedByRightClick && this.isOutsidePopupElement(getRefs(), e)) {
+    const outside = this.isOutsidePopupElement(getRefs(), e)
+    _.invoke(this.props, 'onDocumentClick', e, { ...this.props, outside })
+
+    if (this.state.isOpenedByRightClick && outside) {
       this.trySetOpen(false, e)
       return
     }
@@ -507,6 +514,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       },
       overrideProps: this.getContentProps,
     })
+    console.error('render popper children in Popup')
 
     return (
       <Unstable_NestingAuto>

@@ -169,6 +169,8 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
   menuRef = React.createRef<HTMLElement>()
   disregardBlurEvent = false
 
+  state = { useEventListener: true }
+
   renderSubmenu(menu, variables) {
     const targetRef = toRefObject(this.context.target)
 
@@ -192,15 +194,21 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
                 },
                 variables: mergeComponentVariables(variables, predefinedProps.variables),
               }),
+              defaultProps: {
+                onPopupDocumentClick: this.handlePopupDocumentClick,
+                onPopupOpenChange: this.handlePopupOpenChange,
+              },
             })}
           </Popper>
         </Ref>
-        <EventListener
-          listener={this.handleOutsideClick}
-          targetRef={targetRef}
-          type="click"
-          capture
-        />
+        {this.state.useEventListener && (
+          <EventListener
+            listener={this.handleOutsideClick}
+            targetRef={targetRef}
+            type="click"
+            capture
+          />
+        )}
       </>
     )
   }
@@ -301,11 +309,25 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  handleOutsideClick = (e: MouseEvent) => {
-    if (
+  handlePopupDocumentClick = (e: React.SyntheticEvent, data) => {
+    if (data.outside && this.isNotMenuNorItemClick(e as any)) {
+      this.trySetMenuOpen(false, e)
+    }
+  }
+
+  handlePopupOpenChange = (e: React.SyntheticEvent, data) => {
+    this.setState({ useEventListener: !data.open })
+  }
+
+  isNotMenuNorItemClick = (e: MouseEvent) => {
+    return (
       !doesNodeContainClick(this.menuRef.current, e, this.context.target) &&
       !doesNodeContainClick(this.itemRef.current, e, this.context.target)
-    ) {
+    )
+  }
+
+  handleOutsideClick = (e: MouseEvent) => {
+    if (this.isNotMenuNorItemClick(e)) {
       this.trySetMenuOpen(false, e)
     }
   }
