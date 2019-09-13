@@ -135,10 +135,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           borderColor: v.primaryBorderColor,
           boxShadow: siteVariables.shadowLevel1Dark,
 
-          ':active': {
-            background: v.primaryBackgroundColorActive,
-          },
-
           ':hover': {
             color: v.primaryColorHover,
             backgroundColor: v.primaryBackgroundColorHover,
