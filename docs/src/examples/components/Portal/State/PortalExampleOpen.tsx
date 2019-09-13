@@ -1,10 +1,11 @@
+import { createCallbackLogFormatter } from '@stardust-ui/code-sandbox'
 import { useBooleanKnob, useLogKnob } from '@stardust-ui/docs-components'
 import { Button, Header, Portal } from '@stardust-ui/react'
 import * as React from 'react'
 
 const PortalExampleOpen = () => {
   const [open, setOpen] = useBooleanKnob({ name: 'open' })
-  const onClick = useLogKnob('onClick()', () => setOpen(!open))
+  const onClick = useLogKnob('onClick()', () => setOpen(!open), createCallbackLogFormatter([]))
 
   return (
     <>
