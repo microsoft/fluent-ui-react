@@ -6,8 +6,8 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Usage = () => (
   <ExampleSection title="">
     <ComponentExample
-      title="Default"
-      description="A default Chat."
+      title="In scrollable container"
+      description="A Chat can be placed in a scrollable container."
       examplePath="components/Chat/Usage/ChatExampleInScrollable"
     />
   </ExampleSection>
