@@ -73,7 +73,7 @@ export interface ToolbarMenuItemProps
   onPopupOpenChange?: ComponentEventHandler<PopupProps>
 
   /**
-   * Attaches a `Popup` component to the ToolbarItem.
+   * Attaches a `Popup` component to the ToolbarMenuItem.
    * Accepts all props as a `Popup`, except `trigger` and `children`.
    * Traps focus by default.
    * @see PopupProps
