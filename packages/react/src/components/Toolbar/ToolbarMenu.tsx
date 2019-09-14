@@ -16,7 +16,12 @@ import {
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
-import { ComponentEventHandler, ShorthandCollection, withSafeTypeForAs } from '../../types'
+import {
+  ComponentEventHandler,
+  ShorthandCollection,
+  withSafeTypeForAs,
+  ComponentMouseEventHandler,
+} from '../../types'
 import { submenuBehavior } from '../../lib/accessibility'
 
 import ToolbarMenuDivider from './ToolbarMenuDivider'
@@ -40,10 +45,19 @@ export interface ToolbarMenuProps
    */
   onItemClick?: ComponentEventHandler<ToolbarMenuItemProps>
 
-  /** TODO * */
-  onPopupDocumentClick?: ComponentEventHandler<ToolbarMenuItemProps & { outside: boolean }>
+  /**
+   * Event that occurs when a click is detected by `Popup` in a document.
+   * @param {MouseEvent} event - React's original MouseEvent.
+   * @param {object} data - All `Popup` props and an `outside` prop indicating whether the click was outside of `Popup`.
+   */
+  onPopupDocumentClick?: ComponentMouseEventHandler<PopupProps & { outside: boolean }>
 
-  /** TODO */
+  /**
+   * Called when `Popup`'s open state changes.
+   *
+   * @param {SyntheticEvent} event - React's original SynteticEvent.
+   * @param {object} data - All `Popup` props.
+   */
   onPopupOpenChange?: ComponentEventHandler<PopupProps>
 }
 
