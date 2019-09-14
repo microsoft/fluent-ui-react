@@ -144,9 +144,9 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
       </ElementType>
     )
 
-    const menuItemInner = childrenExist(children) ? children : elementType
+    const hasChildren = childrenExist(children)
 
-    if (popup && !childrenExist(children)) {
+    if (popup && !hasChildren) {
       return Popup.create(popup, {
         defaultProps: {
           trapFocus: true,
@@ -159,6 +159,8 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
         },
       })
     }
+
+    const menuItemInner = hasChildren ? children : elementType
 
     if (!wrapper) {
       return menuItemInner

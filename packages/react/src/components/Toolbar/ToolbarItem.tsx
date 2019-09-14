@@ -183,7 +183,6 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
                 onItemClick: (e, itemProps: ToolbarItemProps) => {
                   _.invoke(predefinedProps, 'onItemClick', e, itemProps)
                   if (itemProps.popup) {
-                    this.disregardBlurEvent = true
                     return
                   }
                   // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
@@ -316,6 +315,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
   }
 
   handlePopupOpenChange = (e: React.SyntheticEvent, data) => {
+    this.disregardBlurEvent = true
     this.setState({ useEventListener: !data.open })
   }
 
