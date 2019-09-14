@@ -36,10 +36,7 @@ export type ComponentKeyboardEventHandler<TProps> = (
   data?: TProps,
 ) => void
 
-export type ComponentMouseEventHandler<TProps> = (
-  event: React.MouseEvent<any>,
-  data?: TProps,
-) => void
+export type ComponentMouseEventHandler<TProps> = (event: MouseEvent, data?: TProps) => void
 
 export type InstanceOf<T> = T extends { new (...args: any[]): infer TInstance } ? TInstance : never
 
