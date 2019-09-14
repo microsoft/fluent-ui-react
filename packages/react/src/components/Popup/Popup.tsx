@@ -514,7 +514,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       },
       overrideProps: this.getContentProps,
     })
-    console.error('render popper children in Popup')
 
     return (
       <Unstable_NestingAuto>
