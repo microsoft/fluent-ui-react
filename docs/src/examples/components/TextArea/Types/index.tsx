@@ -14,6 +14,16 @@ const Types = () => (
       description="A text area can show an inverted background color."
       examplePath="components/TextArea/Types/TextAreaInvertedExample"
     />
+    <ComponentExample
+      title="Fluid"
+      description="A text area can take up the entire horizontal space of its parent container."
+      examplePath="components/TextArea/Types/TextAreaFluidExample"
+    />
+    <ComponentExample
+      title="Resize"
+      description="A text area can be resized either horizontally, vertically, or in both directions."
+      examplePath="components/TextArea/Types/TextAreaResizeExample"
+    />
   </ExampleSection>
 )
 

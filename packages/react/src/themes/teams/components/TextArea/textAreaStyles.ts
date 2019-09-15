@@ -5,7 +5,6 @@ import { TextAreaProps } from 'packages/react/src/components/TextArea/TextArea'
 const textAreaStyles: ComponentSlotStylesInput<TextAreaProps, TextAreaVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     margin: v.margin,
-    resize: v.resize,
 
     backgroundColor: v.backgroundColor,
     ...(p.inverted && {
@@ -20,6 +19,19 @@ const textAreaStyles: ComponentSlotStylesInput<TextAreaProps, TextAreaVariables>
     borderWidth: v.borderWidth,
 
     outline: 0,
+    padding: v.padding,
+
+    ...(!p.resize && {
+      resize: 'none',
+    }),
+
+    ...(p.resize && {
+      resize: p.resize,
+    }),
+
+    ...(p.fluid && {
+      width: '100%',
+    }),
 
     '::placeholder': {
       color: v.placeholderColor,
