@@ -16,7 +16,7 @@ import {
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import ChatItemGutter, { ChatItemGutterProps } from './ChatItemGutter'
+import ChatItemGutter, { ChatGutterProps } from './ChatGutter'
 import ChatMessage, { ChatMessageProps } from './ChatMessage'
 
 export interface ChatItemSlotClassNames {
@@ -34,7 +34,7 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
   attached?: boolean | 'top' | 'bottom'
 
   /** Chat items can have a gutter. */
-  gutter?: ShorthandValue<ChatItemGutterProps>
+  gutter?: ShorthandValue<ChatGutterProps>
 
   /** Indicates whether the content is positioned at the start or the end. */
   contentPosition?: 'start' | 'end'
@@ -71,14 +71,7 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
     styles,
   }: RenderResultConfig<ChatItemProps>) {
     const { attached, contentPosition, children, gutter, message } = this.props
-
-    const gutterElement = ChatItemGutter.create(gutter, {
-      // TODO: remove styles
-      defaultProps: { styles: styles.gutter },
-    })
-    const messageElement = ChatMessage.create(message, {
-      defaultProps: { attached, styles: styles.message },
-    })
+    const gutterElement = ChatItemGutter.create(gutter)
 
     return (
       <ElementType
@@ -92,7 +85,9 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
         ) : (
           <>
             {contentPosition === 'start' && gutterElement}
-            {messageElement}
+            {ChatMessage.create(message, {
+              defaultProps: { attached },
+            })}
             {contentPosition === 'end' && gutterElement}
           </>
         )}

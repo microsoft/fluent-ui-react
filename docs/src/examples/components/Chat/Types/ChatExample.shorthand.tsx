@@ -66,17 +66,15 @@ const items: ShorthandCollection<ChatItemProps> = [
   },
   {
     gutter: <Avatar {...janeAvatar} />,
-    message: (
-      <Chat.Message
-        content={
-          <div>
-            I also like <a href="#">www.goodFood2.com</a>.
-          </div>
-        }
-        author="Jane Doe"
-        timestamp="Yesterday, 10:15 PM"
-      />
-    ),
+    message: {
+      content: (
+        <div>
+          I also like <a href="#">www.goodFood2.com</a>.
+        </div>
+      ),
+      author: 'Jane Doe',
+      timestamp: 'Yesterday, 10:15 PM',
+    },
     attached: 'bottom',
     key: 'message-id-6',
   },

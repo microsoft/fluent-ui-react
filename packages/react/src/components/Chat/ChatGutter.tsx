@@ -14,7 +14,7 @@ import { WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 
-export interface ChatItemGutterProps
+export interface ChatGutterProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
@@ -22,12 +22,12 @@ export interface ChatItemGutterProps
   accessibility?: Accessibility
 }
 
-class ChatItemGutter extends UIComponent<WithAsProp<ChatItemGutterProps>, any> {
-  static displayName = 'ChatItemGutter'
+class ChatGutter extends UIComponent<WithAsProp<ChatGutterProps>> {
+  static displayName = 'ChatGutter'
   static propTypes = commonPropTypes.createCommon()
 
-  static create: ShorthandFactory<ChatItemGutterProps>
-  static className = 'ui-chat__item__gutter'
+  static create: ShorthandFactory<ChatGutterProps>
+  static className = 'ui-chat__gutter'
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, content } = this.props
@@ -46,9 +46,9 @@ class ChatItemGutter extends UIComponent<WithAsProp<ChatItemGutterProps>, any> {
   }
 }
 
-ChatItemGutter.create = createShorthandFactory({ Component: ChatItemGutter, mappedProp: 'content' })
+ChatGutter.create = createShorthandFactory({ Component: ChatGutter, mappedProp: 'content' })
 
 /**
  * A Chat displays conversation messages between users.
  */
-export default withSafeTypeForAs<typeof ChatItemGutter, ChatItemGutterProps, 'div'>(ChatItemGutter)
+export default withSafeTypeForAs<typeof ChatGutter, ChatGutterProps, 'div'>(ChatGutter)

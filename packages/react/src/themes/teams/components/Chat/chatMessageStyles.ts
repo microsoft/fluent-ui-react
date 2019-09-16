@@ -18,8 +18,9 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
     display: 'inline-block',
     position: 'relative',
 
-    marginLeft: p.mine ? v.offset : 0,
-    marginRight: !p.mine ? v.offset : 0,
+    marginLeft: v.margin,
+    marginRight: v.margin,
+
     maxWidth: `calc(100% - ${v.offset})`,
     minWidth: v.offset,
 

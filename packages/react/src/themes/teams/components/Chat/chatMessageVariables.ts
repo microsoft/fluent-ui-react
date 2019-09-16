@@ -28,6 +28,8 @@ export interface ChatMessageVariables {
   reactionGroupMarginLeft: string
   showActionMenu?: boolean
   timestampColorMine: string
+
+  margin: string
 }
 
 export default (siteVars): ChatMessageVariables => ({
@@ -58,4 +60,6 @@ export default (siteVars): ChatMessageVariables => ({
   reactionGroupMarginLeft: pxToRem(12),
   showActionMenu: undefined,
   timestampColorMine: siteVars.colors.grey[500],
+
+  margin: pxToRem(40),
 })

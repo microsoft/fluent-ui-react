@@ -10,6 +10,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
+import ChatGutter from './ChatGutter'
 import ChatItem, { ChatItemProps } from './ChatItem'
 import ChatMessage from './ChatMessage'
 import { WithAsProp, withSafeTypeForAs, ShorthandCollection } from '../../types'
@@ -50,6 +51,7 @@ class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
     as: 'ul',
   }
 
+  static Gutter = ChatGutter
   static Item = ChatItem
   static Message = ChatMessage
 
