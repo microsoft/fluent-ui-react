@@ -21,7 +21,7 @@ const Types = () => (
     />
     <ComponentExample
       title="Resize"
-      description="A text area can be resized either horizontally, vertically, or in both directions."
+      description="A text area can be resized either horizontally, vertically, or in both directions. (Not supported in IE)"
       examplePath="components/TextArea/Types/TextAreaResizeExample"
     />
   </ExampleSection>
