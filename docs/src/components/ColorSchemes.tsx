@@ -3,18 +3,18 @@ import * as _ from 'lodash'
 import {
   createComponent,
   ComponentSlotStylesInput,
-  ThemePrepared,
   Grid,
   Header,
   HeaderProps,
   ShorthandCollection,
+  ThemeInput,
 } from '@stardust-ui/react'
 
 import ColorBox from './ColorBox'
 
 type ColorVariantsProps = {
   name?: string
-  themes?: ThemePrepared[]
+  themes?: ThemeInput[]
   headers?: ShorthandCollection<HeaderProps>
 }
 

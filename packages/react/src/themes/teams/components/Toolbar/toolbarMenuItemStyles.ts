@@ -1,6 +1,6 @@
 import { ICSSInJSStyle } from '../../../types'
 import { getColorScheme } from '../../colors'
-import { pxToRem } from '../../lib'
+import { pxToRem } from '../../../../lib'
 
 const toolbarMenuItemStyles = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
