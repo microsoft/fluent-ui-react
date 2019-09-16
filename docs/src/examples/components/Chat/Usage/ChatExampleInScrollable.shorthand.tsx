@@ -40,41 +40,35 @@ const ChatExampleInScrollableShorthand = () => {
     {
       attached: 'top',
       contentPosition: 'end',
-      message: (
-        <Chat.Message
-          actionMenu={actionMenu}
-          author="John Doe"
-          content="Hello"
-          mine
-          timestamp="Yesterday, 10:15 PM"
-        />
-      ),
+      message: {
+        actionMenu,
+        author: 'John Doe',
+        content: 'Hello',
+        mine: true,
+        timestamp: 'Yesterday, 10:15 PM',
+      },
       key: 'message-1',
     },
     {
       attached: 'bottom',
       contentPosition: 'end',
       key: 'message-2',
-      message: (
-        <Chat.Message
-          actionMenu={actionMenu}
-          author="John Doe"
-          content="I'm back!"
-          mine
-          timestamp="Yesterday, 10:15 PM"
-        />
-      ),
+      message: {
+        actionMenu,
+        author: 'John Doe',
+        content: "I'm back!",
+        mine: true,
+        timestamp: 'Yesterday, 10:15 PM',
+      },
     },
     {
       gutter: <Avatar image="public/images/avatar/small/ade.jpg" />,
-      message: (
-        <Chat.Message
-          actionMenu={actionMenu}
-          author="Jane Doe"
-          content="Hi"
-          timestamp="Yesterday, 10:15 PM"
-        />
-      ),
+      message: {
+        actionMenu,
+        author: 'Jane Doe',
+        content: 'Hi',
+        timestamp: 'Yesterday, 10:15 PM',
+      },
       key: 'message-3',
     },
   ]

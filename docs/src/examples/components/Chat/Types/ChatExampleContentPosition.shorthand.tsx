@@ -19,7 +19,12 @@ const items: ShorthandCollection<ChatItemProps> = [
   {
     contentPosition: 'end',
     gutter: <Avatar {...janeAvatar} />,
-    message: <Chat.Message content="Hi" author="Jane Doe" timestamp="Yesterday, 10:15 PM" mine />,
+    message: {
+      content: 'Hi',
+      author: 'Jane Doe',
+      timestamp: 'Yesterday, 10:15 PM',
+      mine: true,
+    },
     key: 'message-id-2',
   },
 ]

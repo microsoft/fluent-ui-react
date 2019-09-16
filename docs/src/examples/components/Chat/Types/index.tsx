@@ -15,11 +15,6 @@ const Types = () => (
       examplePath="components/Chat/Types/ChatExampleContentPosition"
     />
     <ComponentExample
-      title="Styled Chat Item"
-      description="A Chat item with custom styles for every slot."
-      examplePath="components/Chat/Types/ChatMessageExampleStyled"
-    />
-    <ComponentExample
       title="Badge"
       description="A Chat message may contained badge positioned at the start or end of the message."
       examplePath="components/Chat/Types/ChatMessageExampleBadge"

@@ -8,35 +8,27 @@ const janeAvatar = {
 
 const items: ShorthandCollection<ChatItemProps> = [
   {
-    message: (
-      <Chat.Message
-        content="Hi, can we talk? It's important!"
-        author="John Doe"
-        timestamp="Yesterday, 10:15 PM"
-        mine
-        badge={{
-          icon: 'redbang',
-        }}
-        badgePosition="start"
-        variables={{ isImportant: true }}
-      />
-    ),
+    message: {
+      content: "Hi, can we talk? It's important!",
+      author: 'John Doe',
+      timestamp: 'Yesterday, 10:15 PM',
+      mine: true,
+      badge: { icon: 'redbang' },
+      badgePosition: 'start',
+      variables: { isImportant: true },
+    },
     contentPosition: 'end',
     key: 'message-id-1',
   },
   {
     gutter: <Avatar {...janeAvatar} />,
-    message: (
-      <Chat.Message
-        content="Sure @John. Let's schedule a meeting."
-        author="Jane Doe"
-        timestamp="Yesterday, 10:15 PM"
-        badge={{
-          icon: 'mention',
-        }}
-        variables={{ hasMention: true }}
-      />
-    ),
+    message: {
+      content: "Sure @John. Let's schedule a meeting.",
+      author: 'Jane Doe',
+      timestamp: 'Yesterday, 10:15 PM',
+      badge: { icon: 'mention' },
+      variables: { hasMention: true },
+    },
     attached: 'top',
     key: 'message-id-2',
   },

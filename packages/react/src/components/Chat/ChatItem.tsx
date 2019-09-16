@@ -14,10 +14,10 @@ import {
   rtlTextContainer,
   ShorthandFactory,
 } from '../../lib'
-import Box, { BoxProps } from '../Box/Box'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentSlotStylesPrepared } from '../../themes/types'
+import ChatItemGutter, { ChatItemGutterProps } from './ChatItemGutter'
+import ChatMessage, { ChatMessageProps } from './ChatMessage'
 
 export interface ChatItemSlotClassNames {
   message: string
@@ -34,13 +34,13 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
   attached?: boolean | 'top' | 'bottom'
 
   /** Chat items can have a gutter. */
-  gutter?: ShorthandValue<BoxProps>
+  gutter?: ShorthandValue<ChatItemGutterProps>
 
   /** Indicates whether the content is positioned at the start or the end. */
   contentPosition?: 'start' | 'end'
 
   /** Chat items can have a message. */
-  message?: ShorthandValue<BoxProps>
+  message?: ShorthandValue<ChatMessageProps>
 }
 
 class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
@@ -70,7 +70,15 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
     unhandledProps,
     styles,
   }: RenderResultConfig<ChatItemProps>) {
-    const { children } = this.props
+    const { attached, contentPosition, children, gutter, message } = this.props
+
+    const gutterElement = ChatItemGutter.create(gutter, {
+      // TODO: remove styles
+      defaultProps: { styles: styles.gutter },
+    })
+    const messageElement = ChatMessage.create(message, {
+      defaultProps: { attached, styles: styles.message },
+    })
 
     return (
       <ElementType
@@ -79,30 +87,16 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
         {...unhandledProps}
         className={classes.root}
       >
-        {childrenExist(children) ? children : this.renderChatItem(styles)}
+        {childrenExist(children) ? (
+          children
+        ) : (
+          <>
+            {contentPosition === 'start' && gutterElement}
+            {messageElement}
+            {contentPosition === 'end' && gutterElement}
+          </>
+        )}
       </ElementType>
-    )
-  }
-
-  renderChatItem(styles: ComponentSlotStylesPrepared) {
-    const { gutter, contentPosition, message } = this.props
-
-    const gutterElement = Box.create(gutter, {
-      defaultProps: { className: ChatItem.slotClassNames.gutter, styles: styles.gutter },
-    })
-    const messageElement = Box.create(message, {
-      defaultProps: {
-        className: ChatItem.slotClassNames.message,
-        styles: styles.message,
-      },
-    })
-
-    return (
-      <>
-        {contentPosition === 'start' && gutterElement}
-        {messageElement}
-        {contentPosition === 'end' && gutterElement}
-      </>
     )
   }
 }
