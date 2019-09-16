@@ -7,6 +7,7 @@ import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/
 import Routes from './routes'
 import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
 import Debug from '../../packages/react/src/components/Debug/Debug'
+// import debugData from '../../packages/react/src/components/Debug/debugData'
 // import DebugPanel from '../../packages/react/src/components/Debug/DebugPanel'
 
 class App extends React.Component<any, ThemeContextData> {
@@ -37,7 +38,7 @@ class App extends React.Component<any, ThemeContextData> {
             <div>
               <Debug />
               {/* TODO: add logic for when the DebugPanel should be shown */}
-              {/* <DebugPanel debugData={...} /> */}
+              {/* <DebugPanel debugData={debugData} /> */}
               <Routes />
             </div>
           </PerfDataProvider>

@@ -1,12 +1,10 @@
 import * as React from 'react'
-import debugData from './debugData'
 import PortalInner from '../Portal/PortalInner'
 import VariablesDebugPanel from './VariablesDebugPanel'
 import StylesDebugPanel from './StylesDebugPanel'
 
 const DebugPanel = props => {
-  // TODO get the debugData...
-  // const debugData = getDebugData(props.debugElement)
+  const { debugData } = props
 
   const node = document.createElement('div')
   document.body.parentElement.appendChild(node)
@@ -36,7 +34,7 @@ const DebugPanel = props => {
             hyphens: 'auto',
           }}
         >
-          {/* <SiteVariables data={debugData.siteVariables}/> */}
+          {/* <SiteVariablesDebugPanel data={debugData.siteVariables}/> */}
           <VariablesDebugPanel data={debugData.variables} name="variables" />
           <StylesDebugPanel data={debugData.styles.root} name={'styles'} />
         </div>
