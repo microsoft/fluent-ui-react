@@ -4,7 +4,6 @@ import * as Stardust from '@stardust-ui/react'
 import { toRefObject } from '@stardust-ui/react-component-ref'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import DebugPanel from './DebugPanel'
-import debugData from './debugData'
 
 //
 // react/packages/shared/ReactTypes.js
@@ -245,7 +244,7 @@ type Fiber = {
 }
 
 class FiberNavigator {
-  private fiber: Fiber
+  __fiber: Fiber
 
   static domNodeToReactFiber = (elm: HTMLElement): Fiber => {
     for (const k in elm) {
@@ -261,15 +260,15 @@ class FiberNavigator {
 
   static fromFiber = fiber => {
     const fiberNavigator = new FiberNavigator()
-    fiberNavigator.fiber = fiber
+    fiberNavigator.__fiber = fiber
     return fiberNavigator
   }
 
   static fromDOMNode = domNode => {
     const fiberNavigator = new FiberNavigator()
-    fiberNavigator.fiber = FiberNavigator.domNodeToReactFiber(domNode)
+    fiberNavigator.__fiber = FiberNavigator.domNodeToReactFiber(domNode)
 
-    if (!fiberNavigator.fiber) {
+    if (!fiberNavigator.__fiber) {
       throw new Error('There is no React fiber for this DOM node.')
     }
 
@@ -281,16 +280,21 @@ class FiberNavigator {
   }
 
   get parent(): FiberNavigator {
-    return FiberNavigator.fromFiber(this.fiber.return)
+    return FiberNavigator.fromFiber(this.__fiber.return)
   }
 
   get domNode() {
     // TODO: traverse down composite fibers until we get to DOM fiber, then return stateNode
-    return this.fiber.stateNode
+    return this.__fiber.stateNode
+  }
+
+  get reactElement() {
+    // TODO: hey, only works for classes :/ womp...
+    return this.__fiber.return.stateNode
   }
 
   get elementType() {
-    return this.fiber.elementType
+    return this.__fiber.elementType
   }
 
   //
@@ -300,19 +304,19 @@ class FiberNavigator {
   isClassComponent = () => {
     // React.Component subclasses have this flag
     // https://reactjs.org/docs/implementation-notes.html
-    const { type } = this.fiber
+    const { type } = this.__fiber
     return typeof type === 'function' && !!type.prototype.isReactComponent
   }
 
   isFunctionComponent = () => {
-    const { type } = this.fiber
+    const { type } = this.__fiber
     return typeof type === 'function' && !this.isClassComponent()
   }
 
   isHostComponent = () => {
     // Host components are platform components (i.e. 'div' on web)
     // https://github.com/acdlite/react-fiber-architecture#type-and-key
-    return typeof this.fiber.type === 'string'
+    return typeof this.__fiber.type === 'string'
   }
 
   //
@@ -320,7 +324,7 @@ class FiberNavigator {
   //
 
   isDOMComponent() {
-    const childNavigator = FiberNavigator.fromFiber(this.fiber.child)
+    const childNavigator = FiberNavigator.fromFiber(this.__fiber.child)
 
     return childNavigator.isHostComponent()
   }
@@ -332,8 +336,9 @@ class FiberNavigator {
 
 const INITIAL_STATE = {
   isSelecting: false,
-  stardustElement: null,
+  stardustDOMNode: null,
   stardustComponent: null,
+  stardustElement: null,
 }
 
 class Debug extends React.Component<{}> {
@@ -374,8 +379,9 @@ class Debug extends React.Component<{}> {
 
   handleMouseMove = e => {
     let node = e.target
-    let stardustElement: HTMLElement
+    let stardustDOMNode: HTMLElement
     let stardustComponent: React.Component
+    let stardustElement: React.ElementType
 
     // We start from a DOM node
     // We need to traverse up the React tree until we find a DOM component responsible for this DOM node
@@ -384,7 +390,7 @@ class Debug extends React.Component<{}> {
 
     // console.group('MOUSEMOVE')
 
-    while (!stardustElement && node && node.parentNode) {
+    while (!stardustDOMNode && node && node.parentNode) {
       const fiberNav = FiberNavigator.fromDOMNode(node)
       const SDComponent = Stardust[fiberNav.parent.elementType.name]
 
@@ -392,23 +398,25 @@ class Debug extends React.Component<{}> {
       // console.log({ node, fiber, SDComponent })
 
       if (SDComponent) {
-        stardustElement = node
+        stardustDOMNode = node
         stardustComponent = SDComponent
+        stardustElement = fiberNav.reactElement
       } else {
         node = node.parentNode
       }
 
-      // console.log({ node, fiber, stardustElement, stardustComponent })
+      // console.log({ node, fiber, stardustDOMNode, stardustComponent })
       // console.groupEnd()
     }
 
     // console.groupEnd()
 
     if (
-      stardustElement !== this.state.stardustElement ||
-      stardustComponent !== this.state.stardustComponent
+      stardustDOMNode !== this.state.stardustDOMNode ||
+      stardustComponent !== this.state.stardustComponent ||
+      stardustElement !== this.state.stardustElement
     ) {
-      this.setState({ stardustElement, stardustComponent })
+      this.setState({ stardustDOMNode, stardustComponent, stardustElement })
     }
   }
 
@@ -418,10 +426,10 @@ class Debug extends React.Component<{}> {
   }
 
   setDebugSelectorPosition = () => {
-    const { stardustElement } = this.state
+    const { stardustDOMNode } = this.state
 
-    if (stardustElement && this.selectorRef) {
-      const rect = stardustElement.getBoundingClientRect()
+    if (stardustDOMNode && this.selectorRef) {
+      const rect = stardustDOMNode.getBoundingClientRect()
 
       this.selectorRef.current.style.top = `${rect.top}px`
       this.selectorRef.current.style.left = `${rect.left}px`
@@ -433,7 +441,7 @@ class Debug extends React.Component<{}> {
   }
 
   render() {
-    const { stardustComponent, stardustElement, isSelecting } = this.state
+    const { stardustComponent, stardustElement, stardustDOMNode, isSelecting } = this.state
 
     return (
       <>
@@ -442,11 +450,11 @@ class Debug extends React.Component<{}> {
           listener={this.handleKeyDown}
           type="keydown"
         />
-        {stardustElement && (
+        {stardustDOMNode && (
           <EventListener
-            targetRef={toRefObject(stardustElement)}
+            targetRef={toRefObject(stardustDOMNode)}
             listener={e => {
-              console.log('clicked on stardustElement')
+              console.log('clicked on stardustDOMNode')
               e.preventDefault()
               e.stopPropagation()
               this.setState({ isSelecting: false })
@@ -477,7 +485,7 @@ class Debug extends React.Component<{}> {
               margin: 0,
               color: '#000',
               background: '#6495ed22',
-              border: '2px solid #6495edcc',
+              border: '1px solid #6495edcc',
               zIndex: 99999999,
               pointerEvents: 'none',
               userSelect: 'none',
@@ -487,7 +495,7 @@ class Debug extends React.Component<{}> {
               style={{
                 position: 'absolute',
                 padding: '2px 4px',
-                margin: '-2px 0 0 -2px',
+                margin: '-1px 0 0 -1px',
                 bottom: '100%',
                 left: 0,
                 color: '#fff',
@@ -498,29 +506,31 @@ class Debug extends React.Component<{}> {
                 {`<${stardustComponent.displayName || stardustComponent.name} />`}
               </span>
             </div>
-            {stardustElement && (
+            {stardustDOMNode && (
               <div
                 style={{
                   fontSize: '0.9em',
                   position: 'absolute',
                   padding: '2px 4px',
-                  margin: '0 0 2px -2px',
+                  margin: '0 0 1px -1px',
                   top: '100%',
                   left: 0,
                   background: '#6495ed',
                 }}
               >
                 <strong style={{ fontWeight: 'bold', color: 'hsl(160, 100%, 80%)' }}>
-                  {stardustElement.tagName.toLowerCase()}
+                  {stardustDOMNode.tagName.toLowerCase()}
                 </strong>
                 <span style={{ color: 'rgba(255, 255, 255, 0.75)' }}>
-                  .{stardustElement.getAttribute('class').replace(/ +/g, '.')}
+                  .{stardustDOMNode.getAttribute('class').replace(/ +/g, '.')}
                 </span>
               </div>
             )}
           </pre>
         )}
-        {!isSelecting && stardustComponent && <DebugPanel debugData={debugData} />}
+        {!isSelecting && stardustElement && stardustElement.stardustDebug && (
+          <DebugPanel debugData={stardustElement.stardustDebug} />
+        )}
       </>
     )
   }
