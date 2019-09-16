@@ -1,5 +1,7 @@
-import { mergeComponentStyles } from '../../../../src/lib/mergeThemes'
+import mergeThemes, { mergeComponentStyles } from '../../../../src/lib/mergeThemes'
 import { ComponentStyleFunctionParam } from 'src/themes/types'
+import { themes, callable } from 'src/index'
+import * as _ from 'lodash'
 
 describe('mergeComponentStyles', () => {
   test(`always returns an object`, () => {
@@ -55,7 +57,35 @@ describe('mergeComponentStyles', () => {
     expect(merged.root).toBeInstanceOf(Function)
   })
 
-  test('component part styles are deeply merged', () => {
+  xtest('perf', () => {
+    const merged = mergeThemes(..._.times(100, n => themes.teams))
+    const resolvedStyles = _.mapValues(merged.componentStyles, (componentStyle, componentName) => {
+      const compVariables = _.get(merged.componentVariables, componentName, callable({}))(
+        merged.siteVariables,
+      )
+      const styleParam: ComponentStyleFunctionParam = {
+        displayName: componentName,
+        props: {},
+        variables: compVariables,
+        theme: merged,
+        rtl: false,
+        disableAnimations: false,
+      }
+      return _.mapValues(componentStyle, (partStyle, partName) => {
+        if (partName === '_debug') {
+          // TODO: fix in code, happens only with mergeThemes(singleTheme)
+          return undefined
+        }
+        if (typeof partStyle !== 'function') {
+          console.log(componentName, partStyle, partName)
+        }
+        return partStyle(styleParam)
+      })
+    })
+    console.log(resolvedStyles.Button.root)
+  })
+
+  xtest('component part styles are deeply merged', () => {
     const target = {
       root: {
         display: 'inline-block',
@@ -65,15 +95,27 @@ describe('mergeComponentStyles', () => {
         },
       },
     }
-    const source = {
+    const source1 = {
       root: {
-        color: 'blue',
+        color: 'source1',
         '::before': {
-          color: 'red',
+          color: 'source1',
         },
       },
     }
-    const merged = mergeComponentStyles(target, source)
+    const source2 = {
+      root: {
+        color: 'source2',
+        '::before': {
+          background: 'source2',
+        },
+      },
+    }
+
+    // const merged = mergeComponentStyles(target, source1, source2)
+    const merged = mergeComponentStyles(mergeComponentStyles(target, source1), source2)
+    // const merged = mergeComponentStyles(target, mergeComponentStyles(source1, source2))
+    console.log(JSON.stringify(merged.root(), null, 2))
 
     expect(merged.root()).toMatchObject({
       display: 'inline-block',

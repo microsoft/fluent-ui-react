@@ -54,7 +54,14 @@ export const mergeComponentStyles = (
       const originalSource = partStyle
 
       partStylesPrepared[partName] = styleParam => {
-        return _.merge(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
+        const { _debug: targetDebug = [], ...targetStyles } =
+          callable(originalTarget)(styleParam) || {}
+        const { _debug: sourceDebug = undefined, ...sourceStyles } =
+          callable(originalSource)(styleParam) || {}
+
+        const merged = _.merge(targetStyles, sourceStyles)
+        merged._debug = targetDebug.concat(sourceDebug || sourceStyles)
+        return merged
       }
     })
 
@@ -71,14 +78,18 @@ export const mergeComponentVariables = (
   const initial = () => ({})
 
   return sources.reduce<ComponentVariablesPrepared>((acc, next) => {
-    return (...args) => {
-      const { _debug, ...accumulatedVariables } = acc(...args)
-      const computedComponentVariables = callable(next)(...args)
+    return siteVariables => {
+      const { _debug = [], ...accumulatedVariables } = acc(siteVariables)
+      const { _debug: computedDebug = undefined, ...computedComponentVariables } =
+        callable(next)(siteVariables) || {}
 
       const merged = deepmerge(accumulatedVariables, computedComponentVariables)
-      merged._debug = _debug
-        ? [..._debug, computedComponentVariables]
-        : [computedComponentVariables]
+      merged._debug = _debug.concat(
+        computedDebug || {
+          resolved: computedComponentVariables,
+          // input: callable(next)(objectKeyToValues(siteVariables, key => `SiteVariables[${key}]`)),
+        },
+      )
       return merged
     }
   }, initial)

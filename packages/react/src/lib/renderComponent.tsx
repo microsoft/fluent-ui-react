@@ -30,7 +30,7 @@ import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mer
 import { FocusZoneProps, FocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
-import Debug, { isEnabled as isDebugEnabled } from './debug'
+import { isEnabled as isDebugEnabled } from './debug'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -54,7 +54,7 @@ export interface RenderConfig<P> {
   state: State
   actionHandlers: AccessibilityActionHandlers
   render: RenderComponentCallback<P>
-  saveDebug: (debug: Debug | null) => void
+  saveDebug: (debug: any | null) => void
 }
 
 const emptyBehavior: ReactAccessibilityBehavior = {
@@ -133,10 +133,13 @@ const renderWithFocusZone = <P extends {}>(
 const resolveStyles = (
   styles: ComponentSlotStylesInput,
   styleParam: ComponentStyleFunctionParam,
-): ComponentSlotStylesPrepared => {
+): ComponentSlotStylesPrepared[] => {
   return Object.keys(styles).reduce(
-    (acc, next) => ({ ...acc, [next]: callable(styles[next])(styleParam) }),
-    {},
+    (acc, next) => {
+      const { _debug, ...resolvedStyles } = callable(styles[next])(styleParam)
+      return [{ ...acc[0], [next]: resolvedStyles }, { ...acc[1], [next]: _debug }]
+    },
+    [{}, {}],
   )
 }
 
@@ -201,7 +204,7 @@ const renderComponent = <P extends {}>(
     disableAnimations,
   }
 
-  const resolvedStyles: ComponentSlotStylesPrepared = resolveStyles(mergedStyles, styleParam)
+  const [resolvedStyles, resolvedStylesDebug] = resolveStyles(mergedStyles, styleParam)
 
   const classes: ComponentSlotClasses = renderer
     ? getClasses(renderer, mergedStyles, styleParam)
@@ -225,16 +228,14 @@ const renderComponent = <P extends {}>(
 
   // conditionally add sources for evaluating debug information to component
   if (isDebugEnabled) {
-    saveDebug(
-      new Debug({
-        componentName: displayName,
-        themes: context ? context.originalThemes : [],
-        instanceStylesOverrides: props.styles,
-        instanceVariablesOverrides: props.variables,
-        resolveStyles: styles => resolveStyles(styles, styleParam),
-        resolveVariables: variables => callable(variables)(theme.siteVariables),
-      }),
-    )
+    saveDebug({
+      componentName: displayName,
+      componentVariables: _.filter(
+        _.map(resolvedVariables._debug, 'resolved'),
+        _.negate(_.isEmpty),
+      ),
+      componentStyles: resolvedStylesDebug,
+    })
   }
 
   return render(resolvedConfig)

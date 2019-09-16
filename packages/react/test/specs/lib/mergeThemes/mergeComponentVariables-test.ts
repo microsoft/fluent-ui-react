@@ -87,4 +87,57 @@ describe('mergeComponentVariables', () => {
       foo: { bar: true, baz: false, deep: { dOne: 1, dTwo: 'two' } },
     })
   })
+
+  xtest('merges more objects', () => {
+    const siteVariables = {
+      colors: {
+        colorForC: 'c_color',
+      },
+    }
+    const target = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+    const source1 = { b: 'bS1', d: false, bb: 'bbS1' }
+    const source2 = sv => ({ c: sv.colors.colorForC, cc: 'bbS2' })
+    const source3 = { d: 'bS3', dd: 'bbS3' }
+
+    expect(mergeComponentVariables(target, source1, source2, source3)(siteVariables)).toStrictEqual(
+      {
+        a: 1,
+        b: 'bS1',
+        c: 'c_color',
+        d: 'bS3',
+        e: 5,
+        bb: 'bbS1',
+        cc: 'bbS2',
+        dd: 'bbS3',
+      },
+    )
+  })
+
+  xtest('multiple merges', () => {
+    const siteVariables = {
+      colors: {
+        colorForC: 'c_color',
+      },
+    }
+    const target = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+    const source1 = { b: 'bS1', d: false, bb: 'bbS1' }
+    const source2 = sv => ({ c: sv.colors.colorForC, cc: 'bbS2' })
+    const source3 = { d: 'bS3', dd: 'bbS3' }
+
+    expect(
+      mergeComponentVariables(
+        mergeComponentVariables(mergeComponentVariables(target, source1), source2),
+        source3,
+      )(siteVariables),
+    ).toStrictEqual({
+      a: 1,
+      b: 'bS1',
+      c: 'c_color',
+      d: 'bS3',
+      e: 5,
+      bb: 'bbS1',
+      cc: 'bbS2',
+      dd: 'bbS3',
+    })
+  })
 })

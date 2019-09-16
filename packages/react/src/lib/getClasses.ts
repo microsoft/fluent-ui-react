@@ -28,7 +28,11 @@ const getClasses = (
   }
 
   return componentParts.reduce((classes, partName) => {
-    classes[partName] = renderer.renderRule(callable(componentStyles[partName]), mergedStyleParam)
+    classes[partName] = renderer.renderRule((...args) => {
+      const styles = callable(componentStyles[partName])(...args)
+      delete styles._debug
+      return styles
+    }, mergedStyleParam)
 
     return classes
   }, {})
