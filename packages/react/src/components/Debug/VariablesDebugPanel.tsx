@@ -15,7 +15,7 @@ const VariablesDebugPanel = props => {
             {'{'}
             <br />
             {Object.keys(themeVariables).map(key => (
-              <>
+              <div key={key}>
                 <span>
                   {'  '}
                   {`${key}: ${
@@ -27,8 +27,7 @@ const VariablesDebugPanel = props => {
                   {/* <small style={{ color: '#999' }}>{`// ${theme.input[key]}`}</small> */}
                   {/* )} */}
                 </span>
-                <br />
-              </>
+              </div>
             ))}
             {'}'}
           </pre>

@@ -6,11 +6,12 @@ const includes = (s, target) => _.toLower(s).indexOf(_.toLower(target)) !== -1
 const StylesData = props => {
   const { data, indent = 2, highlightKey, prevMergedData } = props
 
-  if (typeof data !== 'object' || data === null) {
-    if (typeof data === 'string') {
-      return `"${data}"`
-    }
-    return data
+  if (typeof data === 'undefined') {
+    return `undefined`
+  }
+
+  if (data === null || typeof data !== 'object') {
+    return JSON.stringify(data)
   }
 
   return (
@@ -24,9 +25,8 @@ const StylesData = props => {
           prevMergedData[key] !== null &&
           prevMergedData[key] !== undefined
         return (
-          <>
+          <div key={key}>
             <span
-              key={key}
               style={{
                 ...(overriden && { textDecoration: 'line-through' }),
                 ...(highlightKey !== '' &&
@@ -46,8 +46,7 @@ const StylesData = props => {
               />
               {','}{' '}
             </span>
-            <br />
-          </>
+          </div>
         )
       })}
       {`${indent > 2 ? ' '.repeat(indent - 2) : ''}}`}
