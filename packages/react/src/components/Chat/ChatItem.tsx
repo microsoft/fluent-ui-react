@@ -12,14 +12,12 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
-  getElementProp,
   ShorthandFactory,
 } from '../../lib'
 import Box, { BoxProps } from '../Box/Box'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentSlotStylesPrepared } from '../../themes/types'
-import ChatMessage from './ChatMessage'
 
 export interface ChatItemSlotClassNames {
   message: string
@@ -87,14 +85,17 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
   }
 
   renderChatItem(styles: ComponentSlotStylesPrepared) {
-    const { gutter, contentPosition } = this.props
-    const gutterElement =
-      gutter &&
-      Box.create(gutter, {
-        defaultProps: { className: ChatItem.slotClassNames.gutter, styles: styles.gutter },
-      })
+    const { gutter, contentPosition, message } = this.props
 
-    const messageElement = this.setAttachedPropValueForChatMessage(styles)
+    const gutterElement = Box.create(gutter, {
+      defaultProps: { className: ChatItem.slotClassNames.gutter, styles: styles.gutter },
+    })
+    const messageElement = Box.create(message, {
+      defaultProps: {
+        className: ChatItem.slotClassNames.message,
+        styles: styles.message,
+      },
+    })
 
     return (
       <>
@@ -103,41 +104,6 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
         {contentPosition === 'end' && gutterElement}
       </>
     )
-  }
-
-  setAttachedPropValueForChatMessage = styles => {
-    const { message, attached } = this.props
-    const messageElement = Box.create(message, {
-      defaultProps: {
-        className: ChatItem.slotClassNames.message,
-        styles: styles.message,
-      },
-    })
-
-    // the element is ChatMessage
-    if (ChatMessage.isTypeOfElement(messageElement)) {
-      return this.cloneElementWithCustomProps(messageElement, { attached })
-    }
-
-    // the children is ChatMessage
-    if (ChatMessage.isTypeOfElement(getElementProp(messageElement, 'children'))) {
-      return this.cloneElementWithCustomProps(messageElement, { attached }, 'children')
-    }
-
-    // the content is ChatMessage
-    if (ChatMessage.isTypeOfElement(getElementProp(messageElement, 'content'))) {
-      return this.cloneElementWithCustomProps(messageElement, { attached }, 'content')
-    }
-    return messageElement
-  }
-
-  cloneElementWithCustomProps = (element, props, prop?) => {
-    if (!prop) {
-      return React.cloneElement(element, props)
-    }
-    return React.cloneElement(element, {
-      [prop]: React.cloneElement(getElementProp(element, prop), props),
-    })
   }
 }
 
