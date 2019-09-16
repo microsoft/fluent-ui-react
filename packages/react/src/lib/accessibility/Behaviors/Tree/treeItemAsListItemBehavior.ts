@@ -20,7 +20,7 @@ const treeItemAsListItemBehavior: Accessibility<TreeItemBehaviorProps> = props =
 }
 
 export type TreeItemBehaviorProps = {
-  /** Indicated if tree title has a subtree */
+  /** Indicates whether `TreeTitle` has a subtree. */
   hasSubtree?: boolean
 }
 
