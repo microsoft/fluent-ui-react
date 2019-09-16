@@ -20,7 +20,7 @@ import {
   doesNodeContainClick,
   setWhatInputSource,
 } from '../../lib'
-import { ComponentEventHandler, ShorthandValue, ComponentMouseEventHandler } from '../../types'
+import { ComponentEventHandler, ShorthandValue } from '../../types'
 import {
   ALIGNMENTS,
   POSITIONS,
@@ -85,7 +85,7 @@ export interface PopupProps
    * @param {MouseEvent} event - React's original MouseEvent.
    * @param {object} data - All props and an `outside` prop indicating whether the click was outside of `Popup`.
    */
-  onDocumentClick?: ComponentMouseEventHandler<PopupProps & { outside: boolean }>
+  onDocumentClick?: ComponentEventHandler<PopupProps & { outside: boolean }>
 
   /** Defines whether popup is displayed. */
   open?: boolean

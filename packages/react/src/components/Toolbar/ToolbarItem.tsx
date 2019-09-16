@@ -308,8 +308,8 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  handlePopupDocumentClick = (e: MouseEvent, data) => {
-    if (data.outside && this.isNotMenuNorItemClick(e)) {
+  handlePopupDocumentClick = (e: React.SyntheticEvent, data) => {
+    if (data.outside && this.isNotMenuNorItemClick((e as unknown) as MouseEvent)) {
       this.trySetMenuOpen(false, e)
     }
   }

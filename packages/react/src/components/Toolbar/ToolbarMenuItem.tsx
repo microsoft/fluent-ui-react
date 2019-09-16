@@ -22,7 +22,6 @@ import {
   WithAsProp,
   withSafeTypeForAs,
   Omit,
-  ComponentMouseEventHandler,
 } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { menuItemBehavior } from '../../lib/accessibility'
@@ -62,7 +61,7 @@ export interface ToolbarMenuItemProps
    * @param {MouseEvent} event - React's original MouseEvent.
    * @param {object} data - All `Popup` props and an `outside` prop indicating whether the click was outside of `Popup`.
    */
-  onPopupDocumentClick?: ComponentMouseEventHandler<PopupProps & { outside: boolean }>
+  onPopupDocumentClick?: ComponentEventHandler<PopupProps & { outside: boolean }>
 
   /**
    * Called when `Popup`'s open state changes.
@@ -198,7 +197,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  handlePopupDocumentClick = (e: MouseEvent, data) => {
+  handlePopupDocumentClick = (e: React.SyntheticEvent, data) => {
     _.invoke(this.props, 'onPopupDocumentClick', e, { ...this.props, outside: data.outside })
   }
 
