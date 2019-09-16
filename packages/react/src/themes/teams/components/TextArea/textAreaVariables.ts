@@ -14,6 +14,7 @@ export interface TextAreaVariables {
   placeholderColor: string
   margin: string
   padding: string
+  height: string
 }
 
 export default (siteVars): Partial<TextAreaVariables> => ({
@@ -35,4 +36,6 @@ export default (siteVars): Partial<TextAreaVariables> => ({
   fontSize: siteVars.fontSizes.medium,
 
   focusBorderColor: `transparent transparent ${siteVars.colorScheme.brand.borderFocus1} transparent`,
+
+  height: 'auto',
 })

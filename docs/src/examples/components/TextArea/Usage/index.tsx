@@ -5,9 +5,14 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Usage = () => (
   <ExampleSection title="">
     <ComponentExample
-      title="Max length"
-      description="A text area with a limited space."
+      title="Maximum character length"
+      description="A text area with a limited character length allowed."
       examplePath="components/TextArea/Usage/TextAreaMaxLengthExample"
+    />
+    <ComponentExample
+      title="Custom height"
+      description="A text area can have a custom height."
+      examplePath="components/TextArea/Usage/TextAreaHeightExample"
     />
   </ExampleSection>
 )
