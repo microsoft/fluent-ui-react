@@ -87,7 +87,11 @@ const StylesDebugPanel = props => {
     <div>
       <b>{`${_.upperCase(name)}:`}</b>
       <hr />
-      <input onChange={e => setValue(e.target.value)} style={{ width: '100%' }} />
+      <input
+        onChange={e => setValue(e.target.value)}
+        placeholder={'Search for property'}
+        style={searchInputStyles}
+      />
       {reversedData.map((theme, idx) => {
         const filteredTheme =
           value === ''
@@ -123,6 +127,17 @@ const StylesDebugPanel = props => {
       })}
     </div>
   )
+}
+
+const searchInputStyles = {
+  width: '100%',
+  background: '#222',
+  borderRadius: '5px',
+  lineHeight: '20px',
+  outline: '0',
+  color: 'white',
+  padding: '3px',
+  margin: '5px 0 5px 0',
 }
 
 export default StylesDebugPanel
