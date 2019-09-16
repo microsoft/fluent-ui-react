@@ -1,7 +1,7 @@
 {
   "name": "@stardust-ui/react",
   "description": "A themable React component library.",
-  "version": "0.38.0",
+  "version": "0.38.1",
   "author": "Levi Thomason <me@levithomason.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
@@ -29,7 +29,8 @@
   },
   "devDependencies": {
     "@stardust-ui/internal-tooling": "^0.38.0",
-    "lerna-alias": "^3.0.3-0"
+    "lerna-alias": "^3.0.3-0",
+    "qs": "^6.8.0"
   },
   "files": [
     "dist"

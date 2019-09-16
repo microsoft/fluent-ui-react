@@ -179,12 +179,7 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
 
     // we need 2 wrappers around the slider rail, track, input and thumb slots to achieve correct component sizes
     return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...restProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-      >
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...restProps}>
         <div className={cx(Slider.slotClassNames.inputWrapper, classes.inputWrapper)}>
           <span className={cx(Slider.slotClassNames.rail, classes.rail)} />
           <span

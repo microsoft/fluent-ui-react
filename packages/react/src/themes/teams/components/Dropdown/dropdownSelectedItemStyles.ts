@@ -1,9 +1,9 @@
 import { DropdownSelectedItemProps } from '../../../../components/Dropdown/DropdownSelectedItem'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { DropdownVariables } from './dropdownVariables'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
-const dropdownSelectedItemStyles: ComponentSlotStylesInput<
+const dropdownSelectedItemStyles: ComponentSlotStylesPrepared<
   DropdownSelectedItemProps,
   DropdownVariables
 > = {

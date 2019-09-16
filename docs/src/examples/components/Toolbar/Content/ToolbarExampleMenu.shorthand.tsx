@@ -1,48 +1,39 @@
-import * as React from 'react'
+import { createCallbackLogFormatter } from '@stardust-ui/code-sandbox'
+import { useLogKnob } from '@stardust-ui/docs-components'
 import { Toolbar } from '@stardust-ui/react'
+import * as React from 'react'
 
 const ToolbarExampleMenuShorthand = () => {
   const [menuOpen, setMenuOpen] = React.useState(false)
 
-  const [log, setLog] = React.useState<string[]>([])
-  const writeLog = message => {
-    setLog(prevLog => [`${new Date().toLocaleTimeString()}: ${message}`, ...prevLog])
-  }
+  const onItemClick = useLogKnob('onItemClick', null, createCallbackLogFormatter(['content']))
+  const onMenuOpenChange = useLogKnob(
+    'onMenuOpenChange',
+    (e, { menuOpen }) => setMenuOpen(menuOpen),
+    createCallbackLogFormatter(['menuOpen']),
+  )
 
   return (
-    <>
-      <Toolbar
-        items={[
-          {
-            key: 'more',
-            icon: 'more',
-            active: menuOpen,
-            menu: {
-              items: [
-                { key: 'play', content: 'Play', icon: 'play' },
-                { key: 'pause', content: 'Pause', icon: 'pause' },
-                { key: 'divider', kind: 'divider' },
-                'Without icon',
-              ],
-              onItemClick: (e, { content }) => {
-                writeLog(`Click - ${content}`)
-              },
-            },
-            menuOpen,
-            onMenuOpenChange: (e, { menuOpen }) => {
-              setMenuOpen(menuOpen)
-            },
+    <Toolbar
+      items={[
+        {
+          key: 'more',
+          icon: 'more',
+          active: menuOpen,
+          menu: {
+            items: [
+              { key: 'play', content: 'Play', icon: 'play' },
+              { key: 'pause', content: 'Pause', icon: 'pause' },
+              { key: 'divider', kind: 'divider' },
+              'Without icon',
+            ],
+            onItemClick,
           },
-        ]}
-      />
-      <br />
-      <button onClick={() => setLog([])}>Clear log</button>
-      <pre>
-        {log.map((e, i) => (
-          <div key={i}>{e}</div>
-        ))}
-      </pre>
-    </>
+          menuOpen,
+          onMenuOpenChange,
+        },
+      ]}
+    />
   )
 }
 

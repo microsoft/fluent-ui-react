@@ -1,7 +1,7 @@
 import { debugRoot, debugArea, debugGap } from '../../../../styles/debugStyles'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 
-const layoutStyles: ComponentSlotStylesInput = {
+const layoutStyles: ComponentSlotStylesPrepared = {
   root: ({ props }): ICSSInJSStyle => {
     const {
       alignItems,

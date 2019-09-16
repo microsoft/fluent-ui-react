@@ -29,7 +29,7 @@ const menuButtonBehavior: Accessibility<MenuButtonBehaviorProps> = props => {
         'aria-expanded': props.open || undefined,
         'aria-haspopup': props.contextMenu ? undefined : 'true',
         id: props.triggerId,
-        tabIndex: props.open ? -1 : undefined,
+        ...(!props.contextMenu && props.open && { tabIndex: -1 }),
       },
 
       menu: {
@@ -68,7 +68,7 @@ export interface MenuButtonBehaviorProps extends PopupBehaviorProps {
   triggerId?: string
   /** Defines whether popup is displayed. */
   open?: boolean
-  /** Defines whether button behaves as context menu */
+  /** Determines if the MenuButton behaves as context menu */
   contextMenu?: boolean
 }
 

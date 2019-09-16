@@ -7,11 +7,11 @@ const hierarchicalTreeItemStyles = {
   root: ({ theme: { siteVariables } }): ICSSInJSStyle => ({
     listStyleType: 'none',
     padding: `0 0 0 ${pxToRem(1)}`,
-    ':focus': {
-      outline: 0,
+    ...getBorderFocusStyles({ siteVariables })[':focus'],
+    ':focus-visible': {
       [`> .${HierarchicalTreeTitle.className}`]: {
         position: 'relative',
-        ...getBorderFocusStyles({ siteVariables }),
+        ...getBorderFocusStyles({ siteVariables })[':focus-visible'],
       },
     },
   }),
