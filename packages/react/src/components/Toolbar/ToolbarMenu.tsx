@@ -23,7 +23,7 @@ import ToolbarMenuRadioGroup, { ToolbarMenuRadioGroupProps } from './ToolbarMenu
 import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
 
-export type ToolbarMenuItemShorthandKinds = 'divider' | 'item'
+export type ToolbarMenuItemShorthandKinds = 'divider' | 'item' | 'toggle'
 
 export interface ToolbarMenuProps
   extends UIComponentProps,
@@ -88,17 +88,17 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
       const kind = _.get(item, 'kind', 'item')
 
       switch (kind) {
-        case 'checkbox':
-          return ToolbarMenuItem.create(item, {
-            defaultProps: { accessibility: toolbarMenuItemCheckboxBehavior },
-            overrideProps: itemOverridesFn,
-          })
-
         case 'divider':
           return ToolbarMenuDivider.create(item, { overrideProps: dividerOverridesFn })
 
         case 'group':
           return ToolbarMenuRadioGroup.create(item, { overrideProps: radioGroupOverrides })
+
+        case 'toggle':
+          return ToolbarMenuItem.create(item, {
+            defaultProps: { accessibility: toolbarMenuItemCheckboxBehavior },
+            overrideProps: itemOverridesFn,
+          })
 
         default:
           return ToolbarMenuItem.create(item, { overrideProps: itemOverridesFn })
