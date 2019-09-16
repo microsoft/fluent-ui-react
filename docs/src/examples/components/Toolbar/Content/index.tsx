@@ -28,9 +28,9 @@ const Content = () => (
       examplePath="components/Toolbar/Content/ToolbarExampleMenu"
     />
     <ComponentExample
-      title="Toolbar can contain checkbox items in a menu"
-      description="Toolbar item can open a menu which can contain checkbox items."
-      examplePath="components/Toolbar/Content/ToolbarExampleMenuItemCheckbox"
+      title="Toolbar can contain toggle items in a menu"
+      description="Toolbar item can open a menu which can contain toggle items."
+      examplePath="components/Toolbar/Content/ToolbarExampleMenuItemToggle"
     />
     <ComponentExample
       title="Toolbar can contain a radio group in a menu"

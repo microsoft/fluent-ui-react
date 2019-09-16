@@ -2,11 +2,11 @@ import { Toolbar, ToolbarMenuItemProps } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 
-const ToolbarExampleMenuItemCheckbox = () => {
+const ToolbarExampleMenuItemToggle = () => {
   const [menuOpen, setMenuOpen] = React.useState(false)
   const [activeIndexes, setActiveIndexes] = React.useState<number[]>([])
 
-  const handleCheckboxClick = (e: React.SyntheticEvent, props: ToolbarMenuItemProps) => {
+  const handleToggleClick = (e: React.SyntheticEvent, props: ToolbarMenuItemProps) => {
     if (_.includes(activeIndexes, props.index)) {
       setActiveIndexes(_.without(activeIndexes, props.index))
     } else {
@@ -26,19 +26,19 @@ const ToolbarExampleMenuItemCheckbox = () => {
               key: 'bold',
               checked: _.includes(activeIndexes, 0),
               content: 'Bold',
-              kind: 'checkbox',
+              kind: 'toggle',
               icon: 'bold',
               index: 0,
-              onClick: handleCheckboxClick,
+              onClick: handleToggleClick,
             },
             {
               key: 'italic',
               checked: _.includes(activeIndexes, 1),
               content: 'Italic',
-              kind: 'checkbox',
+              kind: 'toggle',
               icon: 'italic',
               index: 1,
-              onClick: handleCheckboxClick,
+              onClick: handleToggleClick,
             },
             { key: 'divider', kind: 'divider' },
             'About...',
@@ -51,4 +51,4 @@ const ToolbarExampleMenuItemCheckbox = () => {
   )
 }
 
-export default ToolbarExampleMenuItemCheckbox
+export default ToolbarExampleMenuItemToggle
