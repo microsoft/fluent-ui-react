@@ -7,12 +7,8 @@ const DebugPanel = props => {
   const [left, setLeft] = React.useState(false)
   const { debugData } = props
 
-  const node = document.createElement('div')
-  document.body.parentElement.appendChild(node)
-  document.body.setAttribute('style', 'width: 80%')
-
   return (
-    <PortalInner mountNode={node}>
+    <PortalInner>
       <div style={debugPanelRoot(left)}>
         <div style={debugPanelOptions}>
           <div style={debugPanelIcon(true, left)} onClick={e => setLeft(true)} />
@@ -31,13 +27,12 @@ const DebugPanel = props => {
 const debugPanelRoot = (left): React.CSSProperties => ({
   position: 'fixed',
   [left ? 'left' : 'right']: '0px',
-  bottom: '0px',
+  top: '0px',
   zIndex: 9999999,
-  width: '300px',
+  width: '350px',
   background: '#222',
   color: '#EEE',
   height: '100%',
-  marginLeft: '10px',
   overflowY: 'auto',
 })
 
