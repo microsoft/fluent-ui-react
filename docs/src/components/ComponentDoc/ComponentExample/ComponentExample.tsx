@@ -434,6 +434,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       currentCodePath,
       description,
       title,
+      wasCodeChanged,
     } = this.props
     const {
       anchorName,
@@ -488,7 +489,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
             {children && <Segment styles={childrenStyle}>{children}</Segment>}
 
-            {showCode ? (
+            {showCode || wasCodeChanged ? (
               <SourceRender
                 babelConfig={babelConfig}
                 source={currentCode}
