@@ -20,7 +20,7 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
     root: {
       role: 'none',
       ...(props.hasSubtree && {
-        'aria-expanded': props.open ? 'true' : 'false',
+        'aria-expanded': props.open,
         tabIndex: -1,
         [IS_FOCUSABLE_ATTRIBUTE]: true,
         role: 'treeitem',

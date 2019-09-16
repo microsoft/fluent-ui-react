@@ -21,12 +21,12 @@ describe('TreeItemBehavior', () => {
 
     test(`is added with 'false' value to an item that is expandable but not open`, () => {
       const expectedResult = treeItemBehavior({ hasSubtree: true, open: false })
-      expect(expectedResult.attributes.root['aria-expanded']).toEqual('false')
+      expect(expectedResult.attributes.root['aria-expanded']).toEqual(false)
     })
 
     test(`is added with 'false' value to an item that is expandable and open`, () => {
       const expectedResult = treeItemBehavior({ hasSubtree: true, open: true })
-      expect(expectedResult.attributes.root['aria-expanded']).toEqual('true')
+      expect(expectedResult.attributes.root['aria-expanded']).toEqual(true)
     })
   })
 

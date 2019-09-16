@@ -26,12 +26,12 @@ describe('HierarchicalTreeItemBehavior', () => {
 
     test(`is added with 'false' value to an item that is expandable but not open`, () => {
       const expectedResult = hierarchicalTreeItemBehavior({ items: [{ key: '1' }], open: false })
-      expect(expectedResult.attributes.root['aria-expanded']).toEqual('false')
+      expect(expectedResult.attributes.root['aria-expanded']).toEqual(false)
     })
 
     test(`is added with 'false' value to an item that is expandable and open`, () => {
       const expectedResult = hierarchicalTreeItemBehavior({ items: [{ key: '1' }], open: true })
-      expect(expectedResult.attributes.root['aria-expanded']).toEqual('true')
+      expect(expectedResult.attributes.root['aria-expanded']).toEqual(true)
     })
   })
 
