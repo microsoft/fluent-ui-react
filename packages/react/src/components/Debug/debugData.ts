@@ -207,9 +207,6 @@ const debugData = {
         alignItems: 'center',
         position: 'relative',
         padding: '0 1.4286rem',
-        verticalAlign: 'middle',
-        cursor: 'pointer',
-        outline: 0,
         borderWidth: '1px',
         borderStyle: 'solid',
         borderColor: '#484644',
@@ -221,7 +218,6 @@ const debugData = {
         },
         ':focus': {
           outline: 0,
-          boxShadow: 'none',
           ':active': {
             backgroundColor: '#484644',
           },
@@ -235,10 +231,6 @@ const debugData = {
             pointerEvents: 'none',
             top: '0',
             right: '0',
-            bottom: '0',
-            left: '0',
-            borderColor: '#000',
-            borderWidth: '1px',
             borderRadius: '2px',
           },
           ':after': {

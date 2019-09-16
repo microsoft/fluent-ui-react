@@ -49,7 +49,7 @@ const VariablesDebugPanel = props => {
 }
 
 const Data = props => {
-  const { data, indent = 2, highlightKey } = props
+  const { data, indent = 2, highlightKey, prevMergedData } = props
 
   if (typeof data !== 'object' || data === null) {
     if (typeof data === 'string') {
@@ -63,12 +63,17 @@ const Data = props => {
       {'{'}
       <br />
       {Object.keys(data).map(key => {
+        const overriden =
+          typeof data[key] !== 'object' &&
+          prevMergedData &&
+          prevMergedData[key] !== null &&
+          prevMergedData[key] !== undefined
         return (
           <>
             <span
               key={key}
               style={{
-                // ...(row.overriden && { textDecoration: 'line-through' }),
+                ...(overriden && { textDecoration: 'line-through' }),
                 ...(highlightKey !== '' &&
                   _.toLower(key).indexOf(_.toLower(highlightKey)) !== -1 && {
                     backgroundColor: 'rgb(255,255,224)',
@@ -78,7 +83,12 @@ const Data = props => {
             >
               {' '.repeat(indent)}
               {`${key}: `}
-              <Data data={data[key]} indent={indent + 2} highlightKey={highlightKey} />
+              <Data
+                data={data[key]}
+                indent={indent + 2}
+                prevMergedData={prevMergedData ? prevMergedData[key] : null}
+                highlightKey={highlightKey}
+              />
               {','}{' '}
             </span>
             <br />
@@ -93,6 +103,16 @@ const Data = props => {
 const StylesDebugPanel = props => {
   const [value, setValue] = React.useState('')
   const { name, data } = props
+
+  const reversedData = data.slice(0).reverse()
+
+  const mergedThemes = []
+
+  mergedThemes.push({}) // init
+
+  for (let i = 1; i < data.length; i++) {
+    mergedThemes.push(_.merge({}, mergedThemes[i - 1], reversedData[i - 1]))
+  }
 
   const filterR = (search, theme) => {
     let result = false
@@ -114,7 +134,7 @@ const StylesDebugPanel = props => {
       <b>{`${_.upperCase(name)}:`}</b>
       <hr />
       <input onChange={e => setValue(e.target.value)} style={{ width: '100%' }} />
-      {data.reverse().map((theme, idx) => {
+      {reversedData.map((theme, idx) => {
         const filteredTheme =
           value === ''
             ? theme
@@ -138,7 +158,7 @@ const StylesDebugPanel = props => {
             <i>{`Theme ${idx}`}</i>
             <br />
             <pre>
-              <Data data={filteredTheme} highlightKey={value} />
+              <Data data={filteredTheme} prevMergedData={mergedThemes[idx]} highlightKey={value} />
             </pre>
           </div>
         )
@@ -170,7 +190,7 @@ const DebugPanel = props => {
           overflowY: 'auto',
         }}
       >
-        <p
+        <div
           style={{
             padding: '10px',
             overflowWrap: 'break-word',
@@ -182,7 +202,7 @@ const DebugPanel = props => {
           {/* <SiteVariables data={debugData.siteVariables}/> */}
           <VariablesDebugPanel data={debugData.variables} name="variables" />
           <StylesDebugPanel data={debugData.styles.root} name={'styles'} />
-        </p>
+        </div>
       </div>
     </PortalInner>
   )
