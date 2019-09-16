@@ -12101,13 +12101,6 @@ react-vis@^1.11.6:
     prop-types "^15.5.8"
     react-motion "^0.5.2"
 
-react-visibility-sensor@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/react-visibility-sensor/-/react-visibility-sensor-5.1.0.tgz#3d3cec7df0c39da7a92ce12590be04a13dce8e14"
-  integrity sha512-DnM9+W3sHOPATMG+HLAS2vTqSnC6yizCiUrCFRdgg6whcq8Ed0Vr3hMm11Pkz8wTSgqYnkiKvSWXmviSBI99uQ==
-  dependencies:
-    prop-types "^15.6.2"
-
 react@^16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
