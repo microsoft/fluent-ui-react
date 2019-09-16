@@ -1,9 +1,10 @@
 import keyboardKey from 'keyboard-key'
 import * as React from 'react'
 import * as Stardust from '@stardust-ui/react'
-import { shotgun } from '../../themes/teams/animations/timingFunctions'
 import { toRefObject } from '@stardust-ui/react-component-ref'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
+import DebugPanel from './DebugPanel'
+import debugData from './debugData'
 
 //
 // react/packages/shared/ReactTypes.js
@@ -11,8 +12,8 @@ import { EventListener } from '@stardust-ui/react-component-event-listener'
 type ReactEventResponder<E, C> = {
   $$typeof: Symbol | number
   displayName: string
-  targetEventTypes: null | Array<string>
-  rootEventTypes: null | Array<string>
+  targetEventTypes: null | string[]
+  rootEventTypes: null | string[]
   getInitialState: null | ((props: Object) => Object)
   onEvent: null | ((event: E, context: C, props: Object, state: Object) => void)
   onRootEvent: null | ((event: E, context: C, props: Object, state: Object) => void)
@@ -71,30 +72,30 @@ type ContextDependency<T> = {
   next: ContextDependency<any> | null
 }
 
-enum WorkTag {
-  FunctionComponent = 0,
-  ClassComponent = 1,
-  IndeterminateComponent = 2, // Before we know whether it is function or class
-  HostRoot = 3, // Root of a host tree. Could be nested inside another node.
-  HostPortal = 4, // A subtree. Could be an entry point to a different renderer.
-  HostComponent = 5,
-  HostText = 6,
-  Fragment = 7,
-  Mode = 8,
-  ContextConsumer = 9,
-  ContextProvider = 10,
-  ForwardRef = 11,
-  Profiler = 12,
-  SuspenseComponent = 13,
-  MemoComponent = 14,
-  SimpleMemoComponent = 15,
-  LazyComponent = 16,
-  IncompleteClassComponent = 17,
-  DehydratedFragment = 18,
-  SuspenseListComponent = 19,
-  FundamentalComponent = 20,
-  ScopeComponent = 21,
-}
+// enum WorkTag {
+//   FunctionComponent = 0,
+//   ClassComponent = 1,
+//   IndeterminateComponent = 2, // Before we know whether it is function or class
+//   HostRoot = 3, // Root of a host tree. Could be nested inside another node.
+//   HostPortal = 4, // A subtree. Could be an entry point to a different renderer.
+//   HostComponent = 5,
+//   HostText = 6,
+//   Fragment = 7,
+//   Mode = 8,
+//   ContextConsumer = 9,
+//   ContextProvider = 10,
+//   ForwardRef = 11,
+//   Profiler = 12,
+//   SuspenseComponent = 13,
+//   MemoComponent = 14,
+//   SimpleMemoComponent = 15,
+//   LazyComponent = 16,
+//   IncompleteClassComponent = 17,
+//   DehydratedFragment = 18,
+//   SuspenseListComponent = 19,
+//   FundamentalComponent = 20,
+//   ScopeComponent = 21,
+// }
 
 type Source = {
   fileName: string
@@ -240,7 +241,7 @@ type Fiber = {
   _debugNeedsRemount?: boolean
 
   // Used to verify that the order of hooks does not change between renders.
-  _debugHookTypes?: Array<HookType> | null
+  _debugHookTypes?: HookType[] | null
 }
 
 class FiberNavigator {
@@ -250,7 +251,7 @@ class FiberNavigator {
     for (const k in elm) {
       if (k.startsWith('__reactInternalInstance$')) {
         const fiber = elm[k]
-        console.log('domNodeToReactFiber', { k, elm, fiber })
+        // console.log('domNodeToReactFiber', { k, elm, fiber })
         return fiber
       }
     }
@@ -329,29 +330,37 @@ class FiberNavigator {
   }
 }
 
+const INITIAL_STATE = {
+  isSelecting: false,
+  stardustElement: null,
+  stardustComponent: null,
+}
+
 class Debug extends React.Component<{}> {
-  state = {
-    picking: false,
-    stardustElement: null,
-    stardustComponent: null,
-    box: {
-      top: '10rem',
-      left: '10rem',
-      width: '10rem',
-      height: '10rem',
-    },
-  }
+  selectorRef = React.createRef<HTMLPreElement>()
+
+  state = { ...INITIAL_STATE }
 
   handleKeyDown = e => {
-    const key = keyboardKey.getKey(e)
+    const code = keyboardKey.getCode(e)
 
-    if (key === 'D' && e.altKey && e.shiftKey) {
-      const picking = !this.state.picking
+    switch (code) {
+      case keyboardKey.Escape: {
+        this.setState(INITIAL_STATE)
+        break
+      }
 
-      this.setState({
-        picking,
-        stardustComponent: picking ? this.state.stardustComponent : null,
-      })
+      case keyboardKey.d: {
+        if (e.altKey && e.shiftKey) {
+          const isSelecting = !this.state.isSelecting
+
+          this.setState({
+            isSelecting,
+            stardustComponent: isSelecting ? this.state.stardustComponent : null,
+          })
+        }
+        break
+      }
     }
   }
 
@@ -359,7 +368,7 @@ class Debug extends React.Component<{}> {
     e.preventDefault(e)
 
     this.setState({
-      picking: false,
+      isSelecting: false,
     })
   }
 
@@ -395,26 +404,36 @@ class Debug extends React.Component<{}> {
 
     // console.groupEnd()
 
-    const rect = stardustElement && stardustElement.getBoundingClientRect()
-
-    this.setState({
-      stardustElement,
-      stardustComponent,
-      box: {
-        top: rect && rect.top,
-        left: rect && rect.left,
-        width: rect && rect.width,
-        height: rect && rect.height,
-      },
-    })
+    if (
+      stardustElement !== this.state.stardustElement ||
+      stardustComponent !== this.state.stardustComponent
+    ) {
+      this.setState({ stardustElement, stardustComponent })
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     // console.log('DEBUG componentDidUpdate', { state: this.state, prevState })
+    this.setDebugSelectorPosition()
+  }
+
+  setDebugSelectorPosition = () => {
+    const { stardustElement } = this.state
+
+    if (stardustElement && this.selectorRef) {
+      const rect = stardustElement.getBoundingClientRect()
+
+      this.selectorRef.current.style.top = `${rect.top}px`
+      this.selectorRef.current.style.left = `${rect.left}px`
+      this.selectorRef.current.style.width = `${rect.width}px`
+      this.selectorRef.current.style.height = `${rect.height}px`
+
+      requestAnimationFrame(this.setDebugSelectorPosition)
+    }
   }
 
   render() {
-    const { box, stardustComponent, stardustElement, picking } = this.state
+    const { stardustComponent, stardustElement, isSelecting } = this.state
 
     return (
       <>
@@ -430,12 +449,12 @@ class Debug extends React.Component<{}> {
               console.log('clicked on stardustElement')
               e.preventDefault()
               e.stopPropagation()
-              this.setState({ picking: false })
+              this.setState({ isSelecting: false })
             }}
             type="click"
           />
         )}
-        {picking && (
+        {isSelecting && (
           <>
             <EventListener
               targetRef={toRefObject(document.body)}
@@ -451,14 +470,11 @@ class Debug extends React.Component<{}> {
         )}
         {stardustComponent && (
           <pre
+            ref={this.selectorRef}
             style={{
-              boxSizing: 'border-box',
-
               position: 'fixed',
               padding: 0,
               margin: 0,
-              transition: `all ${shotgun} 0.2s`,
-              ...box,
               color: '#000',
               background: '#6495ed22',
               border: '2px solid #6495edcc',
@@ -469,19 +485,42 @@ class Debug extends React.Component<{}> {
           >
             <div
               style={{
-                boxSizing: 'border-box',
                 position: 'absolute',
+                padding: '2px 4px',
+                margin: '-2px 0 0 -2px',
                 bottom: '100%',
                 left: 0,
-                background: '#6495ed',
                 color: '#fff',
+                background: '#6495ed',
               }}
             >
-              {stardustComponent && (stardustComponent.displayName || stardustComponent.name)}
-              {stardustElement && stardustElement.class}
+              <span style={{ fontWeight: 'bold' }}>
+                {`<${stardustComponent.displayName || stardustComponent.name} />`}
+              </span>
             </div>
+            {stardustElement && (
+              <div
+                style={{
+                  fontSize: '0.9em',
+                  position: 'absolute',
+                  padding: '2px 4px',
+                  margin: '0 0 2px -2px',
+                  top: '100%',
+                  left: 0,
+                  background: '#6495ed',
+                }}
+              >
+                <strong style={{ fontWeight: 'bold', color: 'hsl(160, 100%, 80%)' }}>
+                  {stardustElement.tagName.toLowerCase()}
+                </strong>
+                <span style={{ color: 'rgba(255, 255, 255, 0.75)' }}>
+                  .{stardustElement.getAttribute('class').replace(/ +/g, '.')}
+                </span>
+              </div>
+            )}
           </pre>
         )}
+        {!isSelecting && stardustComponent && <DebugPanel debugData={debugData} />}
       </>
     )
   }
