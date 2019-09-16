@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 
+const includes = (s, target) => _.toLower(s).indexOf(_.toLower(target)) !== -1
+
 const StylesData = props => {
   const { data, indent = 2, highlightKey, prevMergedData } = props
 
@@ -28,7 +30,7 @@ const StylesData = props => {
               style={{
                 ...(overriden && { textDecoration: 'line-through' }),
                 ...(highlightKey !== '' &&
-                  _.toLower(key).indexOf(_.toLower(highlightKey)) !== -1 && {
+                  includes(key, highlightKey) && {
                     backgroundColor: 'rgb(255,255,224)',
                     color: 'black',
                   }),
@@ -58,21 +60,19 @@ const StylesDebugPanel = props => {
   const { name, data } = props
 
   const reversedData = data.slice(0).reverse()
-
   const mergedThemes = []
 
   mergedThemes.push({}) // init
 
   for (let i = 1; i < data.length; i++) {
-    // TODO: consider using the same methods that mergeThemes uses...
     mergedThemes.push(_.merge({}, mergedThemes[i - 1], reversedData[i - 1]))
   }
 
   const filterR = (search, theme) => {
     let result = false
-    // TODO add breaks
+
     Object.keys(theme).forEach(key => {
-      if (_.toLower(key).indexOf(_.toLower(search)) !== -1) {
+      if (includes(key, search)) {
         result = true
       }
       if (typeof theme[key] === 'object' && filterR(search, theme[key])) {
@@ -94,7 +94,7 @@ const StylesDebugPanel = props => {
             ? theme
             : Object.keys(theme)
                 .filter(key => {
-                  if (_.toLower(key).indexOf(_.toLower(value)) !== -1) {
+                  if (includes(key, value)) {
                     return true
                   }
                   if (typeof theme[key] === 'object' && theme[key] !== null) {
@@ -106,9 +106,9 @@ const StylesDebugPanel = props => {
                   obj[key] = theme[key]
                   return obj
                 }, {})
+
         return (
           <div key={idx} style={{ marginBottom: '10px' }}>
-            {/* fix the key */}
             <i>{`Theme ${idx}`}</i>
             <br />
             <pre>

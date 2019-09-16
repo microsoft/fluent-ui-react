@@ -3,6 +3,31 @@ import PortalInner from '../Portal/PortalInner'
 import VariablesDebugPanel from './VariablesDebugPanel'
 import StylesDebugPanel from './StylesDebugPanel'
 
+const DebugPanel = props => {
+  const [left, setLeft] = React.useState(false)
+  const { debugData } = props
+
+  const node = document.createElement('div')
+  document.body.parentElement.appendChild(node)
+  document.body.setAttribute('style', 'width: 80%')
+
+  return (
+    <PortalInner mountNode={node}>
+      <div style={debugPanelRoot(left)}>
+        <div style={debugPanelOptions}>
+          <div style={debugPanelIcon(true, left)} onClick={e => setLeft(true)} />
+          <div style={debugPanelIcon(false, left)} onClick={e => setLeft(false)} />
+        </div>
+        <div style={debugPanelBody}>
+          {/* <SiteVariablesDebugPanel data={debugData.siteVariables}/> */}
+          <VariablesDebugPanel data={debugData.variables} name="variables" />
+          <StylesDebugPanel data={debugData.styles.root} name={'styles'} />
+        </div>
+      </div>
+    </PortalInner>
+  )
+}
+
 const debugPanelRoot = (left): React.CSSProperties => ({
   position: 'fixed',
   [left ? 'left' : 'right']: '0px',
@@ -44,28 +69,4 @@ const debugPanelBody: React.CSSProperties = {
   hyphens: 'auto',
 }
 
-const DebugPanel = props => {
-  const [left, setLeft] = React.useState(false)
-  const { debugData } = props
-
-  const node = document.createElement('div')
-  document.body.parentElement.appendChild(node)
-  document.body.setAttribute('style', 'width: 80%')
-
-  return (
-    <PortalInner mountNode={node}>
-      <div style={debugPanelRoot(left)}>
-        <div style={debugPanelOptions}>
-          <div style={debugPanelIcon(true, left)} onClick={e => setLeft(true)} />
-          <div style={debugPanelIcon(false, left)} onClick={e => setLeft(false)} />
-        </div>
-        <div style={debugPanelBody}>
-          {/* <SiteVariablesDebugPanel data={debugData.siteVariables}/> */}
-          <VariablesDebugPanel data={debugData.variables} name="variables" />
-          <StylesDebugPanel data={debugData.styles.root} name={'styles'} />
-        </div>
-      </div>
-    </PortalInner>
-  )
-}
 export default DebugPanel

@@ -9,8 +9,6 @@ const VariablesDebugPanel = props => {
       <hr />
       {data.reverse().map((theme, idx) => (
         <div key={idx} style={{ marginBottom: '10px' }}>
-          {' '}
-          {/* fix the key */}
           <i>{`Theme ${idx}`}</i>
           <br />
           <pre>
@@ -18,13 +16,8 @@ const VariablesDebugPanel = props => {
             <br />
             {Object.keys(theme.input).map(key => (
               <>
-                <span
-                  key={key}
-                  style={{
-                    paddingLeft: '10px',
-                    // ...(row.overriden && { textDecoration: 'line-through' }),
-                  }}
-                >
+                <span>
+                  {'  '}
                   {`${key}: ${
                     typeof theme.resolved[key] === 'string'
                       ? `"${theme.resolved[key]}"`
