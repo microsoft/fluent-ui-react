@@ -111,6 +111,7 @@ const StylesDebugPanel = props => {
   mergedThemes.push({}) // init
 
   for (let i = 1; i < data.length; i++) {
+    // TODO: consider using the same methods that mergeThemes uses...
     mergedThemes.push(_.merge({}, mergedThemes[i - 1], reversedData[i - 1]))
   }
 
