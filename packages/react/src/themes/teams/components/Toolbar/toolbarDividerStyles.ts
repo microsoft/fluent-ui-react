@@ -1,8 +1,8 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { ToolbarVariables } from './toolbarVariables'
 import { getColorScheme } from '../../colors'
 
-const toolbarDividerStyles: ComponentSlotStylesInput<{}, ToolbarVariables> = {
+const toolbarDividerStyles: ComponentSlotStylesPrepared<{}, ToolbarVariables> = {
   root: ({ variables: v }): ICSSInJSStyle => {
     const colors = getColorScheme(v.colorScheme)
     return {

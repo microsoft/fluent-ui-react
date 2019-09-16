@@ -1,10 +1,10 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from '../../../teams/components/Attachment/attachmentVariables'
 import Button from '../../../../components/Button/Button'
 import Icon from '../../../../components/Icon/Icon'
 
-const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
+const attachmentStyles: ComponentSlotStylesPrepared<AttachmentProps, AttachmentVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     ...((p.actionable || p.onClick) && {
       ':focus-visible': {

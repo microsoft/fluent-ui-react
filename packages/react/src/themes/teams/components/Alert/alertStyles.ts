@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ComponentSlotStylesInput, ICSSInJSStyle, SiteVariablesPrepared } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle, SiteVariablesPrepared } from '../../../types'
 import { AlertProps } from '../../../../components/Alert/Alert'
 import { AlertVariables } from './alertVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
@@ -67,7 +67,7 @@ const getIntentColorsFromProps = (
   }
 }
 
-const alertStyles: ComponentSlotStylesInput<AlertProps, AlertVariables> = {
+const alertStyles: ComponentSlotStylesPrepared<AlertProps, AlertVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     display: 'flex',
     alignItems: 'center',
