@@ -20,8 +20,8 @@ const DebugPanel = props => {
         </div>
         <div style={debugPanelBody}>
           {/* <SiteVariablesDebugPanel data={debugData.siteVariables}/> */}
-          <VariablesDebugPanel data={debugData.variables} name="variables" />
-          <StylesDebugPanel data={debugData.styles.root} name={'styles'} />
+          <VariablesDebugPanel data={debugData.componentVariables} name="variables" />
+          <StylesDebugPanel data={debugData.componentStyles.root} name={'styles'} />
         </div>
       </div>
     </PortalInner>

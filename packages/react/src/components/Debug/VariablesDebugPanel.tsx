@@ -7,26 +7,25 @@ const VariablesDebugPanel = props => {
     <div>
       <b>{`${_.upperCase(name)}:`}</b>
       <hr />
-      {data.reverse().map((theme, idx) => (
+      {data.reverse().map((themeVariables, idx) => (
         <div key={idx} style={{ marginBottom: '10px' }}>
           <i>{`Theme ${idx}`}</i>
           <br />
           <pre>
             {'{'}
             <br />
-            {Object.keys(theme.input).map(key => (
+            {Object.keys(themeVariables).map(key => (
               <>
                 <span>
                   {'  '}
                   {`${key}: ${
-                    typeof theme.resolved[key] === 'string'
-                      ? `"${theme.resolved[key]}"`
-                      : theme.resolved[key]
+                    typeof themeVariables[key] === 'string'
+                      ? `"${themeVariables[key]}"`
+                      : themeVariables[key]
                   }`}
-                  {','}{' '}
-                  {theme.input[key] !== theme.resolved[key] && (
-                    <small style={{ color: '#999' }}>{`// ${theme.input[key]}`}</small>
-                  )}
+                  {','} {/* {theme.input[key] !== theme.resolved[key] && ( */}
+                  {/* <small style={{ color: '#999' }}>{`// ${theme.input[key]}`}</small> */}
+                  {/* )} */}
                 </span>
                 <br />
               </>
