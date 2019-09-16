@@ -62,7 +62,7 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
   static defaultProps: FocusTrapZoneProps = {
     as: 'div',
     isClickableOutsideFocusTrap: true,
-    forceFocusInsideTrapOnOutsideFocus: true,
+    forceFocusInsideTrapOnOutsideFocus: false,
   }
 
   componentDidMount(): void {
