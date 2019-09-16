@@ -44,13 +44,11 @@ const ToolbarExampleShorthand = () => {
           tooltip: 'More options',
           menu: [
             {
-              wrapper: undefined, // to avoid issue with keys
               key: 'quote',
               content: 'Quote',
               icon: 'quote',
             },
             {
-              wrapper: undefined, // to avoid issue with keys
               key: 'code-snippet',
               content: 'Code snippet',
               icon: 'code-snippet',
