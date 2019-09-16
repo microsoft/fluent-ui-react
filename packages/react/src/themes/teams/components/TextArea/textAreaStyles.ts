@@ -33,6 +33,12 @@ const textAreaStyles: ComponentSlotStylesInput<TextAreaProps, TextAreaVariables>
       width: '100%',
     }),
 
+    ...(p.disabled && {
+      pointerEvents: 'none',
+      backgroundColor: v.backgroundColorDisabled,
+      color: v.colorDisabled,
+    }),
+
     '::placeholder': {
       color: v.placeholderColor,
       opacity: 1, // undo Firefox default opacity
