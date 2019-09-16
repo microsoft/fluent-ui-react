@@ -31,6 +31,9 @@ export { default as Embed } from './components/Embed/embedStyles'
 export { default as Form } from './components/Form/formStyles'
 export { default as FormField } from './components/Form/formFieldStyles'
 
+export { default as Flex } from './components/Flex/flexStyles'
+export { default as FlexItem } from './components/Flex/flexItemStyles'
+
 export { default as Grid } from './components/Grid/gridStyles'
 
 export { default as Header } from './components/Header/headerStyles'
@@ -45,6 +48,10 @@ export {
 } from './components/HierarchicalTree/hierarchicalTreeTitleStyles'
 
 export { default as Icon } from './components/Icon/iconStyles'
+
+export { default as Image } from './components/Image/imageStyles'
+
+export { default as Input } from './components/Input/inputStyles'
 
 export { default as Label } from './components/Label/labelStyles'
 
@@ -79,10 +86,14 @@ export { default as ReactionGroup } from './components/Reaction/reactionGroupSty
 
 export { default as Status } from './components/Status/statusStyles'
 
+export { default as SplitButton } from './components/SplitButton/splitButtonStyles'
+
 export { default as Text } from './components/Text/textStyles'
 
 export { default as TextArea } from './components/TextArea/textAreaStyles'
 
+export { default as Toolbar } from './components/Toolbar/toolbarStyles'
+export { default as ToolbarRadioGroup } from './components/Toolbar/toolbarRadioGroupStyles'
 export { default as ToolbarCustomItem } from './components/Toolbar/toolbarCustomItemStyles'
 export { default as ToolbarDivider } from './components/Toolbar/toolbarDividerStyles'
 export { default as ToolbarItem } from './components/Toolbar/toolbarItemStyles'

@@ -1,9 +1,9 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { PopupContentProps } from '../../../../components/Popup/PopupContent'
 import { PopupContentVariables } from './popupContentVariables'
 import getPointerStyles from '../../getPointerStyles'
 
-const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupContentVariables> = {
+const popupContentStyles: ComponentSlotStylesPrepared<PopupContentProps, PopupContentVariables> = {
   root: ({ props: p, variables: v, rtl }): ICSSInJSStyle => ({
     border: `${v.borderSize} solid ${v.borderColor}`,
     borderRadius: v.borderRadius,
