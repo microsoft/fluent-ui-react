@@ -1,5 +1,6 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
@@ -21,7 +22,6 @@ import {
 } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
-import * as PropTypes from 'prop-types'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 import Box, { BoxProps } from '../Box/Box'
 import {

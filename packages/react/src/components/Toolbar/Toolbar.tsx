@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import cx from 'classnames'
+import * as PropTypes from 'prop-types'
 import ReactResizeDetector from 'react-resize-detector'
 import { Ref } from '@stardust-ui/react-component-ref'
 
@@ -32,7 +33,6 @@ import ToolbarMenuItem from './ToolbarMenuItem'
 import ToolbarMenuRadioGroup from './ToolbarMenuRadioGroup'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
 import Box, { BoxProps } from '../Box/Box'
-import * as PropTypes from 'prop-types'
 
 export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group' | 'toggle' | 'custom'
 

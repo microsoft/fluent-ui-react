@@ -1,4 +1,7 @@
+import * as keyboardKey from 'keyboard-key'
+
 import { Accessibility } from '../../types'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone'
 
 /**
  * @specification
@@ -10,10 +13,18 @@ import { Accessibility } from '../../types'
 const toolbarMenuItemRadioBehavior: Accessibility<ToolbarMenuItemRadioBehaviorProps> = props => ({
   attributes: {
     root: {
+      [IS_FOCUSABLE_ATTRIBUTE]: true,
       'aria-checked': props.checked,
       'aria-disabled': props.disabled,
       role: 'menuitemradio',
       tabIndex: 0,
+    },
+  },
+  keyActions: {
+    root: {
+      performClick: {
+        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
     },
   },
 })
