@@ -10,8 +10,8 @@ import {
   UIComponentProps,
   commonPropTypes,
   ShorthandFactory,
-  AutoControlledComponent,
   applyAccessibilityKeyHandlers,
+  UIComponent,
 } from '../../lib'
 import {
   ComponentEventHandler,
@@ -41,9 +41,6 @@ export interface ToolbarMenuRadioGroupProps
   /** Index of the currently active item. */
   activeIndex?: number
 
-  /** Initial activeIndex value. */
-  defaultActiveIndex?: number
-
   /** Shorthand array of props for ToolbarMenuRadioGroup. */
   items?: ShorthandCollection<ToolbarMenuItemProps>
 
@@ -59,18 +56,11 @@ export interface ToolbarMenuRadioGroupProps
   wrapper?: ShorthandValue<BoxProps>
 }
 
-export interface ToolbarMenuRadioGroupState {
-  activeIndex: ToolbarMenuRadioGroupProps['activeIndex']
-}
-
 export interface ToolbarMenuRadioGroupSlotClassNames {
   wrapper: string
 }
 
-class ToolbarMenuRadioGroup extends AutoControlledComponent<
-  WithAsProp<ToolbarMenuRadioGroupProps>,
-  ToolbarMenuRadioGroupState
-> {
+class ToolbarMenuRadioGroup extends UIComponent<WithAsProp<ToolbarMenuRadioGroupProps>> {
   static displayName = 'ToolbarMenuRadioGroup'
 
   static create: ShorthandFactory<ToolbarMenuRadioGroupProps>
@@ -84,7 +74,6 @@ class ToolbarMenuRadioGroup extends AutoControlledComponent<
   static propTypes = {
     ...commonPropTypes.createCommon(),
     activeIndex: PropTypes.number,
-    defaultActiveIndex: PropTypes.number,
     items: customPropTypes.collectionShorthand,
     onItemClick: PropTypes.func,
     wrapper: customPropTypes.itemShorthand,
@@ -96,26 +85,19 @@ class ToolbarMenuRadioGroup extends AutoControlledComponent<
     wrapper: {},
   }
 
-  static autoControlledProps = ['activeIndex']
-
   handleItemOverrides = variables => (
     predefinedProps: ToolbarMenuItemProps,
   ): ToolbarMenuItemProps => ({
     onClick: (e, itemProps) => {
-      const { index } = itemProps
-
       _.invoke(predefinedProps, 'onClick', e, itemProps)
       _.invoke(this.props, 'onItemClick', e, itemProps)
-
-      this.setState({ activeIndex: index })
     },
     variables: mergeComponentVariables(variables, predefinedProps.variables),
     wrapper: null,
   })
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility, styles }) {
-    const { items, variables, wrapper } = this.props
-    const { activeIndex } = this.state
+    const { activeIndex, items, variables, wrapper } = this.props
 
     const content = (
       <ElementType
