@@ -245,7 +245,7 @@ type Fiber = {
 }
 
 class FiberNavigator {
-  private fiber: Fiber
+  __fiber: Fiber
 
   static domNodeToReactFiber = (elm: HTMLElement): Fiber => {
     for (const k in elm) {
@@ -261,15 +261,15 @@ class FiberNavigator {
 
   static fromFiber = fiber => {
     const fiberNavigator = new FiberNavigator()
-    fiberNavigator.fiber = fiber
+    fiberNavigator.__fiber = fiber
     return fiberNavigator
   }
 
   static fromDOMNode = domNode => {
     const fiberNavigator = new FiberNavigator()
-    fiberNavigator.fiber = FiberNavigator.domNodeToReactFiber(domNode)
+    fiberNavigator.__fiber = FiberNavigator.domNodeToReactFiber(domNode)
 
-    if (!fiberNavigator.fiber) {
+    if (!fiberNavigator.__fiber) {
       throw new Error('There is no React fiber for this DOM node.')
     }
 
@@ -281,16 +281,16 @@ class FiberNavigator {
   }
 
   get parent(): FiberNavigator {
-    return FiberNavigator.fromFiber(this.fiber.return)
+    return FiberNavigator.fromFiber(this.__fiber.return)
   }
 
   get domNode() {
     // TODO: traverse down composite fibers until we get to DOM fiber, then return stateNode
-    return this.fiber.stateNode
+    return this.__fiber.stateNode
   }
 
   get elementType() {
-    return this.fiber.elementType
+    return this.__fiber.elementType
   }
 
   //
@@ -300,19 +300,19 @@ class FiberNavigator {
   isClassComponent = () => {
     // React.Component subclasses have this flag
     // https://reactjs.org/docs/implementation-notes.html
-    const { type } = this.fiber
+    const { type } = this.__fiber
     return typeof type === 'function' && !!type.prototype.isReactComponent
   }
 
   isFunctionComponent = () => {
-    const { type } = this.fiber
+    const { type } = this.__fiber
     return typeof type === 'function' && !this.isClassComponent()
   }
 
   isHostComponent = () => {
     // Host components are platform components (i.e. 'div' on web)
     // https://github.com/acdlite/react-fiber-architecture#type-and-key
-    return typeof this.fiber.type === 'string'
+    return typeof this.__fiber.type === 'string'
   }
 
   //
@@ -320,7 +320,7 @@ class FiberNavigator {
   //
 
   isDOMComponent() {
-    const childNavigator = FiberNavigator.fromFiber(this.fiber.child)
+    const childNavigator = FiberNavigator.fromFiber(this.__fiber.child)
 
     return childNavigator.isHostComponent()
   }
