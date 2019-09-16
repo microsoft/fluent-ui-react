@@ -31,12 +31,12 @@ describe('TreeItemBehavior', () => {
   })
 
   describe('role', () => {
-    test(`is 'none' if not a leaf`, () => {
+    test(`is 'treeitem' if not a leaf`, () => {
       const expectedResult = treeItemBehavior({ hasSubtree: true })
       expect(expectedResult.attributes.root.role).toEqual('treeitem')
     })
 
-    test(`is 'treeitem' if not a leaf`, () => {
+    test(`is 'none' if a leaf`, () => {
       const expectedResult = treeItemBehavior({})
       expect(expectedResult.attributes.root.role).toEqual('none')
     })

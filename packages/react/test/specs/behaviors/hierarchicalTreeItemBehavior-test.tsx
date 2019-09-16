@@ -36,12 +36,12 @@ describe('HierarchicalTreeItemBehavior', () => {
   })
 
   describe('role', () => {
-    test(`is 'none' if not a leaf`, () => {
+    test(`is 'treeitem' if not a leaf`, () => {
       const expectedResult = hierarchicalTreeItemBehavior({ items: [{ key: '1' }] })
       expect(expectedResult.attributes.root.role).toEqual('treeitem')
     })
 
-    test(`is 'treeitem' if not a leaf`, () => {
+    test(`is 'none' if a leaf`, () => {
       const expectedResult = hierarchicalTreeItemBehavior({})
       expect(expectedResult.attributes.root.role).toEqual('none')
     })
