@@ -17,7 +17,6 @@ const toolbarMenuItemRadioBehavior: Accessibility<ToolbarMenuItemRadioBehaviorPr
       'aria-checked': props.checked,
       'aria-disabled': props.disabled,
       role: 'menuitemradio',
-      tabIndex: 0,
     },
   },
   keyActions: {
