@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Icon, HierarchicalTree } from '@stardust-ui/react'
+import { HierarchicalTree } from '@stardust-ui/react'
 
 const items = [
   {
@@ -40,15 +40,6 @@ const items = [
   },
 ]
 
-const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
-  <Component open={open} hasSubtree={hasSubtree} {...restProps}>
-    {hasSubtree && <Icon name={open ? 'arrow-down' : 'arrow-right'} />}
-    <span>{content}</span>
-  </Component>
-)
-
-const TreeExclusiveExample = () => (
-  <HierarchicalTree items={items} renderItemTitle={titleRenderer} exclusive />
-)
+const TreeExclusiveExample = () => <HierarchicalTree items={items} exclusive />
 
 export default TreeExclusiveExample
