@@ -30,28 +30,26 @@ import { chatMessageBehavior, menuAsToolbarBehavior } from '../../lib/accessibil
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import Box, { BoxProps } from '../Box/Box'
 import Label, { LabelProps } from '../Label/Label'
 import Menu, { MenuProps } from '../Menu/Menu'
-import Text, { TextProps } from '../Text/Text'
 import Reaction, { ReactionProps } from '../Reaction/Reaction'
 import { ReactionGroupProps } from '../Reaction/ReactionGroup'
 import { MenuItemProps } from '@stardust-ui/react'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
+import ChatAuthor, { ChatAuthorProps } from './ChatAuthor'
+import ChatTimestamp, { ChatTimestampProps } from './ChatTimestamp'
+import ChatContent, { ChatContentProps } from './ChatContent'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string
-  author: string
-  timestamp: string
   badge: string
-  content: string
   reactionGroup: string
 }
 
 export interface ChatMessageProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue<BoxProps>> {
+    ContentComponentProps<ShorthandValue<ChatContentProps>> {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
@@ -62,13 +60,13 @@ export interface ChatMessageProps
   attached?: boolean | 'top' | 'bottom'
 
   /** Author of the message. */
-  author?: ShorthandValue<TextProps>
+  author?: ShorthandValue<ChatAuthorProps>
 
   /** Indicates whether message belongs to the current user. */
   mine?: boolean
 
   /** Timestamp of the message. */
-  timestamp?: ShorthandValue<TextProps>
+  timestamp?: ShorthandValue<ChatTimestampProps>
 
   /** Badge attached to the message. */
   badge?: ShorthandValue<LabelProps>
@@ -96,6 +94,9 @@ export interface ChatMessageProps
    * @param {object} data - All props.
    */
   onMouseEnter?: ComponentEventHandler<ChatMessageProps>
+
+  /** Indicates whether the content is positioned at the start or the end. */
+  position?: 'start' | 'end'
 
   /** Reaction group applied to the message. */
   reactionGroup?: ShorthandValue<ReactionGroupProps> | ShorthandCollection<ReactionProps>
@@ -130,6 +131,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
     onMouseEnter: PropTypes.func,
+    position: PropTypes.oneOf(['start', 'end']),
     reactionGroup: PropTypes.oneOfType([
       customPropTypes.collectionShorthand,
       customPropTypes.itemShorthand,
@@ -169,10 +171,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
   handleFocus = (e: React.SyntheticEvent) => {
     this.updateActionsMenuPosition()
 
-    this.setState({
-      focused: true,
-    })
-
+    this.setState({ focused: true })
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
@@ -268,30 +267,6 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
 
     const actionMenuElement = this.renderActionMenu(actionMenu, styles)
 
-    const authorElement = Text.create(author, {
-      defaultProps: {
-        size: 'small',
-        styles: styles.author,
-        className: ChatMessage.slotClassNames.author,
-      },
-    })
-
-    const timestampElement = Text.create(timestamp, {
-      defaultProps: {
-        size: 'small',
-        styles: styles.timestamp,
-        timestamp: true,
-        className: ChatMessage.slotClassNames.timestamp,
-      },
-    })
-
-    const messageContent = Box.create(content, {
-      defaultProps: {
-        className: ChatMessage.slotClassNames.content,
-        styles: styles.content,
-      },
-    })
-
     return (
       <Ref
         innerRef={domNode => {
@@ -314,10 +289,10 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
             <>
               {actionMenuElement}
               {badgePosition === 'start' && badgeElement}
-              {authorElement}
-              {timestampElement}
+              {ChatAuthor.create(author)}
+              {ChatTimestamp.create(timestamp)}
               {reactionGroupPosition === 'start' && reactionGroupElement}
-              {messageContent}
+              {ChatContent.create(content)}
               {reactionGroupPosition === 'end' && reactionGroupElement}
               {badgePosition === 'end' && badgeElement}
             </>
@@ -331,10 +306,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
 ChatMessage.create = createShorthandFactory({ Component: ChatMessage, mappedProp: 'content' })
 ChatMessage.slotClassNames = {
   actionMenu: `${ChatMessage.className}__actions`,
-  author: `${ChatMessage.className}__author`,
-  timestamp: `${ChatMessage.className}__timestamp`,
   badge: `${ChatMessage.className}__badge`,
-  content: `${ChatMessage.className}__content`,
   reactionGroup: `${ChatMessage.className}__reactions`,
 }
 

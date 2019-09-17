@@ -16,6 +16,7 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
 > = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     display: 'inline-block',
+    float: p.position === 'end' ? 'right' : 'left',
     position: 'relative',
 
     marginLeft: v.margin,
@@ -111,16 +112,6 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
     fontWeight: v.authorFontWeight,
-  }),
-
-  timestamp: ({ props: p, variables: v }) => ({
-    marginBottom: v.headerMarginBottom,
-    ...(p.mine && {
-      color: v.timestampColorMine,
-    }),
-    ...((p.attached === 'bottom' || p.attached === true) &&
-      !p.reactionGroup &&
-      screenReaderContainerStyles),
   }),
 
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({

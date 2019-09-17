@@ -15,6 +15,7 @@ export { default as Chat } from './components/Chat/chatStyles'
 export { default as ChatItem } from './components/Chat/chatItemStyles'
 export { default as ChatGutter } from './components/Chat/chatGutterStyles'
 export { default as ChatMessage } from './components/Chat/chatMessageStyles'
+export { default as ChatTimestamp } from './components/Chat/chatTimestampStyles'
 
 export { default as Checkbox } from './components/Checkbox/checkboxStyles'
 

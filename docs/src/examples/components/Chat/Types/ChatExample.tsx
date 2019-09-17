@@ -1,72 +1,89 @@
-import * as React from 'react'
 import { Avatar, Chat, Divider } from '@stardust-ui/react'
+import * as React from 'react'
 
 const ChatExample = () => (
   <Chat>
-    <Chat.Item contentPosition="end">
-      <Chat.Message author="John Doe" content="Hello" timestamp="Yesterday, 10:15 PM" mine />
+    <Chat.Item attached="top" contentPosition="end">
+      <Chat.Message attached="top" position="end" mine>
+        <Chat.Author>John Doe</Chat.Author>
+        <Chat.Timestamp>Yesterday, 10:15 PM</Chat.Timestamp>
+        <Chat.Content>Hello</Chat.Content>
+      </Chat.Message>
     </Chat.Item>
 
-    <Chat.Item contentPosition="end" attached>
-      <Chat.Message content="I'm back!" author="John Doe" mine />
+    <Chat.Item attached contentPosition="end">
+      <Chat.Message attached position="end" mine>
+        <Chat.Author>John Doe</Chat.Author>
+        <Chat.Timestamp>Yesterday, 10:15 PM</Chat.Timestamp>
+        <Chat.Content>I'm back!</Chat.Content>
+      </Chat.Message>
     </Chat.Item>
 
-    <Chat.Item contentPosition="end" attached="bottom">
-      <Chat.Message
-        content={
+    <Chat.Item attached="bottom" contentPosition="end">
+      <Chat.Message attached="bottom" position="end" mine>
+        <Chat.Author>John Doe</Chat.Author>
+        <Chat.Timestamp>Yesterday, 10:15 PM</Chat.Timestamp>
+        <Chat.Content>
           <div>
             What do you think about <a href="#">www.goodFood.com</a>?
           </div>
-        }
-        author="John Doe"
-        mine
-      />
+        </Chat.Content>
+      </Chat.Message>
     </Chat.Item>
 
     <Chat.Item attached="top">
-      <Chat.Gutter>
+      <Chat.Gutter attached="top">
         <Avatar
           image="public/images/avatar/small/ade.jpg"
           status={{ color: 'green', icon: 'stardust-checkmark' }}
         />
       </Chat.Gutter>
-      <Chat.Message content="Hi" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
+      <Chat.Message attached="top">
+        <Chat.Author>Jane Doe</Chat.Author>
+        <Chat.Timestamp>Yesterday, 10:15 PM</Chat.Timestamp>
+        <Chat.Content>Hi</Chat.Content>
+      </Chat.Message>
     </Chat.Item>
 
     <Chat.Item attached>
-      <Chat.Gutter>
+      <Chat.Gutter attached>
         <Avatar
           image="public/images/avatar/small/ade.jpg"
           status={{ color: 'green', icon: 'stardust-checkmark' }}
         />
       </Chat.Gutter>
-      <Chat.Message content="Looks good!" />
+      <Chat.Message attached>
+        <Chat.Author>Jane Doe</Chat.Author>
+        <Chat.Timestamp>Yesterday, 10:15 PM</Chat.Timestamp>
+        <Chat.Content>Looks good!</Chat.Content>
+      </Chat.Message>
     </Chat.Item>
 
     <Chat.Item attached="bottom">
-      <Chat.Gutter>
+      <Chat.Gutter attached="bottom">
         <Avatar
           image="public/images/avatar/small/ade.jpg"
           status={{ color: 'green', icon: 'stardust-checkmark' }}
         />
       </Chat.Gutter>
 
-      <Chat.Message
-        content={
+      <Chat.Message attached="bottom">
+        <Chat.Author>Jane Doe</Chat.Author>
+        <Chat.Timestamp>Yesterday, 10:15 PM</Chat.Timestamp>
+        <Chat.Content>
           <div>
             I also like <a href="#">www.goodFood2.com</a>.
           </div>
-        }
-      />
+        </Chat.Content>
+      </Chat.Message>
     </Chat.Item>
 
     <Chat.Item contentPosition="end">
-      <Chat.Message
-        content="Would you like to grab lunch there?"
-        author="John Doe"
-        timestamp="Yesterday, 10:16 PM"
-        mine
-      />
+      <Chat.Message position="end" mine>
+        <Chat.Author>John Doe</Chat.Author>
+        <Chat.Timestamp>Yesterday, 10:16 PM</Chat.Timestamp>
+        <Chat.Content>Would you like to grab lunch there?</Chat.Content>
+      </Chat.Message>
     </Chat.Item>
 
     <Chat.Item>
@@ -77,11 +94,11 @@ const ChatExample = () => (
         />
       </Chat.Gutter>
 
-      <Chat.Message
-        content="Sure! Let's try it."
-        author="Jane Doe"
-        timestamp="Yesterday, 10:15 PM"
-      />
+      <Chat.Message>
+        <Chat.Author>Jane Doe</Chat.Author>
+        <Chat.Timestamp>Yesterday, 10:16 PM</Chat.Timestamp>
+        <Chat.Content>Sure! Let's try it.</Chat.Content>
+      </Chat.Message>
     </Chat.Item>
 
     <Chat.Item>
@@ -89,7 +106,11 @@ const ChatExample = () => (
     </Chat.Item>
 
     <Chat.Item contentPosition="end">
-      <Chat.Message content="Ok, let's go." author="John Doe" timestamp="Today, 11:15 PM" mine />
+      <Chat.Message position="end" mine>
+        <Chat.Author>John Doe</Chat.Author>
+        <Chat.Timestamp>Today, 11:15 PM</Chat.Timestamp>
+        <Chat.Content>Ok, let's go.</Chat.Content>
+      </Chat.Message>
     </Chat.Item>
   </Chat>
 )

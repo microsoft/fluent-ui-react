@@ -71,7 +71,9 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
     styles,
   }: RenderResultConfig<ChatItemProps>) {
     const { attached, contentPosition, children, gutter, message } = this.props
-    const gutterElement = ChatItemGutter.create(gutter)
+    const gutterElement = ChatItemGutter.create(gutter, {
+      defaultProps: { attached, position: contentPosition },
+    })
 
     return (
       <ElementType
@@ -86,7 +88,7 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
           <>
             {contentPosition === 'start' && gutterElement}
             {ChatMessage.create(message, {
-              defaultProps: { attached },
+              defaultProps: { attached, position: contentPosition },
             })}
             {contentPosition === 'end' && gutterElement}
           </>

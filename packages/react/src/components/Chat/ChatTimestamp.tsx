@@ -13,32 +13,21 @@ import {
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import * as PropTypes from 'prop-types'
 
-export interface ChatGutterProps
+export interface ChatTimestampProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
-
-  /** Controls item's relation to other chat items. */
-  attached?: boolean | 'top' | 'bottom'
-
-  /** Indicates whether the content is positioned at the start or the end. */
-  position?: 'start' | 'end'
 }
 
-class ChatGutter extends UIComponent<WithAsProp<ChatGutterProps>> {
-  static displayName = 'ChatGutter'
-  static propTypes = {
-    ...commonPropTypes.createCommon(),
-    attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
-    position: PropTypes.oneOf(['start', 'end']),
-  }
+class ChatTimestamp extends UIComponent<WithAsProp<ChatTimestampProps>> {
+  static displayName = 'ChatTimestamp'
+  static propTypes = commonPropTypes.createCommon()
 
-  static create: ShorthandFactory<ChatGutterProps>
-  static className = 'ui-chat__gutter'
+  static create: ShorthandFactory<ChatTimestampProps>
+  static className = 'ui-chat__timestamp'
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, content } = this.props
@@ -57,9 +46,9 @@ class ChatGutter extends UIComponent<WithAsProp<ChatGutterProps>> {
   }
 }
 
-ChatGutter.create = createShorthandFactory({ Component: ChatGutter, mappedProp: 'content' })
+ChatTimestamp.create = createShorthandFactory({ Component: ChatTimestamp, mappedProp: 'content' })
 
 /**
  * TODO
  */
-export default withSafeTypeForAs<typeof ChatGutter, ChatGutterProps, 'div'>(ChatGutter)
+export default withSafeTypeForAs<typeof ChatTimestamp, ChatTimestampProps, 'div'>(ChatTimestamp)

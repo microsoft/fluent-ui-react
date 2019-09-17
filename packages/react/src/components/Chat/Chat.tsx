@@ -17,6 +17,9 @@ import { WithAsProp, withSafeTypeForAs, ShorthandCollection } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import ChatContent from './ChatContent'
+import ChatAuthor from './ChatAuthor'
+import ChatTimestamp from './ChatTimestamp'
 
 export interface ChatSlotClassNames {
   item: string
@@ -51,9 +54,12 @@ class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
     as: 'ul',
   }
 
+  static Author = ChatAuthor
+  static Content = ChatContent
   static Gutter = ChatGutter
   static Item = ChatItem
   static Message = ChatMessage
+  static Timestamp = ChatTimestamp
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, items } = this.props
