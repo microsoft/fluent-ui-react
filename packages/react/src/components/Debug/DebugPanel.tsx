@@ -1,7 +1,6 @@
 import * as React from 'react'
 import PortalInner from '../Portal/PortalInner'
-import VariablesDebugPanel from './VariablesDebugPanel'
-import StylesDebugPanel from './StylesDebugPanel'
+import DebugPanelItem from './DebugPanelItem'
 
 const DebugPanel = props => {
   const [left, setLeft] = React.useState(false)
@@ -16,13 +15,12 @@ const DebugPanel = props => {
         </div>
         <div style={debugPanelBody}>
           <div style={debugPanelVariables}>
-            {/* <SiteVariablesDebugPanel data={debugData.siteVariables}/> */}
             <div style={debugHeader()}>Variables</div>
-            <VariablesDebugPanel data={debugData.componentVariables} />
+            <DebugPanelItem data={debugData.componentVariables} />
           </div>
           <div style={debugPanelStyles}>
             <div style={debugHeader()}>Styles</div>
-            <StylesDebugPanel data={debugData.componentStyles.root} />
+            <DebugPanelItem data={debugData.componentStyles.root} />
           </div>
         </div>
       </div>
