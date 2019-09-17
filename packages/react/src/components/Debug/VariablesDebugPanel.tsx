@@ -5,7 +5,7 @@ const VariablesDebugPanel = props => {
   const { name, data } = props
   return (
     <div>
-      <b>{`${_.upperCase(name)}:`}</b>
+      <b style={{ fontSize: '18px' }}>{`${_.upperCase(name)}:`}</b>
       <hr />
       {data.reverse().map((themeVariables, idx) => (
         <div key={idx} style={{ marginBottom: '10px' }}>

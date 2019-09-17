@@ -85,7 +85,7 @@ const StylesDebugPanel = props => {
 
   return (
     <div>
-      <b>{`${_.upperCase(name)}:`}</b>
+      <b style={{ fontSize: '18px' }}>{`${_.upperCase(name)}:`}</b>
       <hr />
       <input
         onChange={e => setValue(e.target.value)}
