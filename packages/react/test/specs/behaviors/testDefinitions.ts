@@ -276,10 +276,19 @@ definitions.push({
       testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAdded),
     )
 
-    const propertyWithAriaSelected = {
-      [propertyDependsOn]: valueOfAttributeToBeAdded,
+    const propertyDependsOnFalse = {
+      [propertyDependsOn]: false,
     }
-    const expectedResultAttributeDefined = parameters.behavior(propertyWithAriaSelected).attributes[
+    const expectedResultAttributeDefinedFalse = parameters.behavior(propertyDependsOnFalse)
+      .attributes[slot][attributeToBeAdded]
+    expect(
+      testHelper.convertToMatchingTypeIfApplicable(expectedResultAttributeDefinedFalse),
+    ).toEqual(testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAdded))
+
+    const propertyDependsOnExists = {
+      [propertyDependsOn]: true,
+    }
+    const expectedResultAttributeDefined = parameters.behavior(propertyDependsOnExists).attributes[
       slot
     ][attributeToBeAdded]
     expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAttributeDefined)).toEqual(
