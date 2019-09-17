@@ -16,8 +16,8 @@ const DebugPanel = props => {
         </div>
         <div style={debugPanelBody}>
           {/* <SiteVariablesDebugPanel data={debugData.siteVariables}/> */}
-          <VariablesDebugPanel data={debugData.componentVariables} name="variables" />
-          <StylesDebugPanel data={debugData.componentStyles.root} name={'styles'} />
+          <VariablesDebugPanel data={debugData.componentVariables} name="Variables" />
+          <StylesDebugPanel data={debugData.componentStyles.root} name="Styles" />
         </div>
       </div>
     </PortalInner>
@@ -29,13 +29,14 @@ const debugPanelRoot = (left): React.CSSProperties => ({
   [left ? 'left' : 'right']: '0px',
   top: '0px',
   zIndex: 999999999,
-  width: '350px',
   height: '100%',
   backgroundColor: 'white',
   lineHeight: 1,
   fontSize: '12px',
   overflowY: 'auto',
-  border: '1px solid grey',
+  boxShadow: left
+    ? '0 -.075rem .2rem .4rem rgba(0, 0, 0, .1)'
+    : '0 -.075rem .4rem .2rem  rgba(0, 0, 0, .1)',
 })
 
 const debugPanelIcon = (left, isLeftActive) => ({
@@ -44,6 +45,7 @@ const debugPanelIcon = (left, isLeftActive) => ({
   [left ? 'borderLeftWidth' : 'borderRightWidth']: '5px',
   width: '15px',
   height: '15px',
+  background: 'white',
   ...(left && {
     marginRight: '10px',
   }),
@@ -53,6 +55,8 @@ const debugPanelIcon = (left, isLeftActive) => ({
 })
 
 const debugPanelOptions: React.CSSProperties = {
+  position: 'sticky',
+  top: '0px',
   float: 'right',
   padding: '10px',
 }

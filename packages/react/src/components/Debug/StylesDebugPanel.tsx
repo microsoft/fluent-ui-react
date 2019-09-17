@@ -19,6 +19,13 @@ const StylesData = props => {
       {'{'}
       <br />
       {Object.keys(data).map(key => {
+        // TODO extract this logic on one place
+        const highlight =
+          highlightKey !== '' &&
+          (includes(key, highlightKey) ||
+            (typeof data[key] !== 'object' &&
+              !_.isNil(data[key]) &&
+              includes(data[key], highlightKey)))
         const overriden =
           typeof data[key] !== 'object' &&
           prevMergedData &&
@@ -28,10 +35,9 @@ const StylesData = props => {
           <div key={key}>
             <span
               style={{
-                ...(highlightKey !== '' &&
-                  includes(key, highlightKey) && {
-                    backgroundColor: 'rgb(255,255,224)',
-                  }),
+                ...(highlight && {
+                  backgroundColor: 'rgb(255,255,224)',
+                }),
               }}
             >
               {' '.repeat(indent)}
@@ -59,7 +65,7 @@ const StylesDebugPanel = props => {
   const [value, setValue] = React.useState('')
   const { name, data } = props
 
-  const reversedData = data.slice(0).reverse()
+  const reversedData = JSON.parse(JSON.stringify(data)).reverse()
   const mergedThemes = []
 
   mergedThemes.push({}) // init
@@ -78,6 +84,9 @@ const StylesDebugPanel = props => {
       if (typeof theme[key] === 'object' && filterR(search, theme[key])) {
         result = true
       }
+      if (typeof theme[key] !== 'object' && !_.isNil(theme[key]) && includes(theme[key], search)) {
+        result = true
+      }
     })
 
     return result
@@ -85,12 +94,10 @@ const StylesDebugPanel = props => {
 
   return (
     <div>
-      <b style={{ fontSize: '18px' }}>{`${_.upperCase(name)}:`}</b>
-      <hr />
+      <b style={{ fontSize: '18px' }}>{name}</b>
       <input
         onChange={e => setValue(e.target.value)}
-        placeholder={'Search for property'}
-        style={{ width: '100%' }}
+        style={{ width: '100%', marginTop: '10px', border: '1px solid #ccc' }}
       />
       {reversedData.map((theme, idx) => {
         const filteredTheme =
@@ -104,6 +111,13 @@ const StylesDebugPanel = props => {
                   if (typeof theme[key] === 'object' && theme[key] !== null) {
                     return filterR(value, theme[key])
                   }
+                  if (
+                    typeof theme[key] !== 'object' &&
+                    !_.isNil(theme[key]) &&
+                    includes(theme[key], value)
+                  ) {
+                    return true
+                  }
                   return false
                 })
                 .reduce((obj, key) => {
@@ -113,7 +127,16 @@ const StylesDebugPanel = props => {
 
         return (
           <div key={idx} style={{ marginBottom: '10px' }}>
-            {idx > 0 && <hr />}
+            {idx > 0 && (
+              <hr
+                style={{
+                  height: '1px',
+                  color: '#ccc',
+                  backgroundColor: '#ccc',
+                  border: 'none',
+                }}
+              />
+            )}
             <br />
             <pre>
               <StylesData
