@@ -7,11 +7,11 @@ const StylesData = props => {
   const { data, indent = 2, highlightKey, prevMergedData } = props
 
   if (typeof data === 'undefined') {
-    return `undefined`
+    return <span>undefined</span>
   }
 
   if (data === null || typeof data !== 'object') {
-    return JSON.stringify(data)
+    return <span>{JSON.stringify(data)}</span>
   }
 
   return (
