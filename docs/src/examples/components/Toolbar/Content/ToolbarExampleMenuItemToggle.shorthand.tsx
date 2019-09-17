@@ -24,7 +24,7 @@ const ToolbarExampleMenuItemToggle = () => {
           menu: [
             {
               key: 'bold',
-              checked: _.includes(activeIndexes, 0),
+              active: _.includes(activeIndexes, 0),
               content: 'Bold',
               kind: 'toggle',
               icon: 'bold',
@@ -33,7 +33,7 @@ const ToolbarExampleMenuItemToggle = () => {
             },
             {
               key: 'italic',
-              checked: _.includes(activeIndexes, 1),
+              active: _.includes(activeIndexes, 1),
               content: 'Italic',
               kind: 'toggle',
               icon: 'italic',

@@ -5,7 +5,7 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone'
 
 /**
  * @specification
- *  Adds attribute 'aria-checked=true' based on the property 'checked'.
+ *  Adds attribute 'aria-checked=true' based on the property 'active'.
  *  Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  *  Adds role='menuitemradio'.
  */
@@ -13,7 +13,7 @@ const toolbarMenuItemRadioBehavior: Accessibility<ToolbarMenuItemRadioBehaviorPr
   attributes: {
     root: {
       [IS_FOCUSABLE_ATTRIBUTE]: true,
-      'aria-checked': props.checked,
+      'aria-checked': props.active,
       'aria-disabled': props.disabled,
       role: 'menuitemradio',
     },
@@ -30,6 +30,6 @@ const toolbarMenuItemRadioBehavior: Accessibility<ToolbarMenuItemRadioBehaviorPr
 export default toolbarMenuItemRadioBehavior
 
 type ToolbarMenuItemRadioBehaviorProps = {
-  checked?: boolean
+  active?: boolean
   disabled?: boolean
 }

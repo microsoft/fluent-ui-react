@@ -111,7 +111,7 @@ class ToolbarMenuRadioGroup extends UIComponent<WithAsProp<ToolbarMenuRadioGroup
             defaultProps: {
               accessibility: toolbarMenuItemRadioBehavior,
               as: 'li',
-              checked: activeIndex === index,
+              active: activeIndex === index,
               index,
             },
             overrideProps: this.handleItemOverrides(variables),

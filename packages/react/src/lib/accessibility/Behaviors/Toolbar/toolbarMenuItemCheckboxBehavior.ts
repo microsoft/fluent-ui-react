@@ -2,7 +2,7 @@ import { Accessibility } from '../../types'
 
 /**
  * @specification
- *  Adds attribute 'aria-checked=true' based on the property 'checked'.
+ *  Adds attribute 'aria-checked=true' based on the property 'active'.
  *  Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  *  Adds role='menuitemcheckbox'.
  * Adds role 'presentation' to 'wrapper' slot.
@@ -15,7 +15,7 @@ const toolbarMenuItemCheckboxBehavior: Accessibility<
       role: 'presentation',
     },
     root: {
-      'aria-checked': props.checked,
+      'aria-checked': props.active,
       'aria-disabled': props.disabled,
       role: 'menuitemcheckbox',
     },
@@ -25,6 +25,6 @@ const toolbarMenuItemCheckboxBehavior: Accessibility<
 export default toolbarMenuItemCheckboxBehavior
 
 type ToolbarMenuItemCheckboxBehaviorProps = {
-  checked?: boolean
+  active?: boolean
   disabled?: boolean
 }

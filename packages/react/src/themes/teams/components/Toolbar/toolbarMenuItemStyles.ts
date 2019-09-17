@@ -42,7 +42,7 @@ const toolbarMenuItemStyles = {
     }
   },
 
-  checkedIndicator: ({ variables: v }): ICSSInJSStyle => ({
+  activeIndicator: ({ variables: v }): ICSSInJSStyle => ({
     float: 'right',
     position: 'fixed',
     right: pxToRem(7),

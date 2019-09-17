@@ -35,11 +35,8 @@ export interface ToolbarMenuItemProps
   /** A toolbar item can be active. */
   active?: boolean
 
-  /** Item can show check indicator if selected. */
-  checked?: boolean
-
   /** A slot for a selected indicator in the dropdown list. */
-  checkedIndicator?: ShorthandValue<IconProps>
+  activeIndicator?: ShorthandValue<IconProps>
 
   /** A toolbar item can show it is currently unable to be interacted with. */
   disabled?: boolean
@@ -63,7 +60,7 @@ export interface ToolbarMenuItemProps
 }
 
 export interface ToolbarMenuItemSlotClassNames {
-  checkedIndicator: string
+  activeIndicator: string
   wrapper: string
 }
 
@@ -73,7 +70,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
   static className = 'ui-toolbar__menuitem'
 
   static slotClassNames: ToolbarMenuItemSlotClassNames = {
-    checkedIndicator: `${ToolbarMenuItem.className}__checkedIndicator`,
+    activeIndicator: `${ToolbarMenuItem.className}__activeIndicator`,
     wrapper: `${ToolbarMenuItem.className}__wrapper`,
   }
 
@@ -82,8 +79,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
   static propTypes = {
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
-    checked: PropTypes.bool,
-    checkedIndicator: customPropTypes.itemShorthand,
+    activeIndicator: customPropTypes.itemShorthand,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     index: PropTypes.number,
@@ -94,7 +90,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
   static defaultProps = {
     as: 'button',
     accessibility: menuItemBehavior as Accessibility,
-    checkedIndicator: 'stardust-checkmark',
+    activeIndicator: 'stardust-checkmark',
     wrapper: { as: 'li' },
   }
 
@@ -106,7 +102,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
-    const { checked, checkedIndicator, children, content, disabled, icon, wrapper } = this.props
+    const { active, activeIndicator, children, content, disabled, icon, wrapper } = this.props
 
     const menuItemInner = childrenExist(children) ? (
       children
@@ -125,11 +121,11 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
           <>
             {Icon.create(icon, { defaultProps: { xSpacing: !!content ? 'after' : 'none' } })}
             {content}
-            {checked &&
-              Icon.create(checkedIndicator, {
+            {active &&
+              Icon.create(activeIndicator, {
                 defaultProps: {
-                  className: ToolbarMenuItem.slotClassNames.checkedIndicator,
-                  styles: styles.checkedIndicator,
+                  className: ToolbarMenuItem.slotClassNames.activeIndicator,
+                  styles: styles.activeIndicator,
                 },
               })}
           </>
