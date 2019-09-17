@@ -1,4 +1,4 @@
-import { ThemeIconSpec, ThemeIcons, SvgIconSpec } from '../types'
+import { ThemeIconSpec, ThemeIcons, SvgIconSpec, ThemePrepared } from '../types'
 
 import animations from './animations'
 import * as siteVariables from './siteVariables'
@@ -46,7 +46,7 @@ const icons: ThemeIcons = {
   'stardust-play': themeIcons['play'],
 }
 
-export default {
+const teamsTheme: ThemePrepared = {
   siteVariables,
   componentVariables,
   componentStyles,
@@ -55,3 +55,5 @@ export default {
   icons,
   animations,
 }
+
+export default teamsTheme
