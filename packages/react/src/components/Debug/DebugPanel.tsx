@@ -4,6 +4,7 @@ import DebugPanelItem from './DebugPanelItem'
 
 const DebugPanel = props => {
   const [left, setLeft] = React.useState(false)
+  const [slot, setSlot] = React.useState('root')
   const { debugData } = props
 
   return (
@@ -24,7 +25,14 @@ const DebugPanel = props => {
           </div>
           <div style={debugPanelStyles}>
             <div style={debugHeader()}>Styles</div>
-            <DebugPanelItem data={debugData.componentStyles.root} />
+            <select value={slot} onChange={e => setSlot(e.target.value)} style={debugPanelSelect}>
+              {Object.keys(debugData.componentStyles).map(val => (
+                <option value={val} key={val}>
+                  {val}
+                </option>
+              ))}
+            </select>
+            <DebugPanelItem data={debugData.componentStyles[slot]} />
           </div>
         </div>
       </div>
@@ -52,6 +60,11 @@ const debugHeader = (): React.CSSProperties => ({
   fontSize: '16px',
   fontWeight: 'bold',
 })
+
+const debugPanelSelect: React.CSSProperties = {
+  width: '100%',
+  marginBottom: '10px',
+}
 
 const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
   display: 'inline-block',
