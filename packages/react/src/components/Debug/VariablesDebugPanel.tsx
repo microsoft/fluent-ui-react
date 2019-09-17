@@ -9,7 +9,7 @@ const VariablesDebugPanel = props => {
       <hr />
       {data.reverse().map((themeVariables, idx) => (
         <div key={idx} style={{ marginBottom: '10px' }}>
-          <i>{`Theme ${idx}`}</i>
+          {idx > 0 && <hr />}
           <br />
           <pre>
             {'{'}
@@ -18,7 +18,8 @@ const VariablesDebugPanel = props => {
               <div key={key}>
                 <span>
                   {'  '}
-                  {`${key}: ${
+                  <span style={{ color: 'red' }}>{key}</span>
+                  {`: ${
                     typeof themeVariables[key] === 'string'
                       ? `"${themeVariables[key]}"`
                       : themeVariables[key]

@@ -28,22 +28,23 @@ const StylesData = props => {
           <div key={key}>
             <span
               style={{
-                ...(overriden && { textDecoration: 'line-through' }),
                 ...(highlightKey !== '' &&
                   includes(key, highlightKey) && {
                     backgroundColor: 'rgb(255,255,224)',
-                    color: 'black',
                   }),
               }}
             >
               {' '.repeat(indent)}
-              {`${key}: `}
-              <StylesData
-                data={data[key]}
-                indent={indent + 2}
-                prevMergedData={prevMergedData ? prevMergedData[key] : null}
-                highlightKey={highlightKey}
-              />
+              <span style={{ ...(overriden && { textDecoration: 'line-through' }) }}>
+                <span style={{ color: typeof data[key] === 'object' ? 'grey' : 'red' }}>{key}</span>
+                {': '}
+                <StylesData
+                  data={data[key]}
+                  indent={indent + 2}
+                  prevMergedData={prevMergedData ? prevMergedData[key] : null}
+                  highlightKey={highlightKey}
+                />
+              </span>
               {','}{' '}
             </span>
           </div>
@@ -89,7 +90,7 @@ const StylesDebugPanel = props => {
       <input
         onChange={e => setValue(e.target.value)}
         placeholder={'Search for property'}
-        style={searchInputStyles}
+        style={{ width: '100%' }}
       />
       {reversedData.map((theme, idx) => {
         const filteredTheme =
@@ -112,7 +113,7 @@ const StylesDebugPanel = props => {
 
         return (
           <div key={idx} style={{ marginBottom: '10px' }}>
-            <i>{`Theme ${idx}`}</i>
+            {idx > 0 && <hr />}
             <br />
             <pre>
               <StylesData
@@ -126,17 +127,6 @@ const StylesDebugPanel = props => {
       })}
     </div>
   )
-}
-
-const searchInputStyles = {
-  width: '100%',
-  background: '#222',
-  borderRadius: '5px',
-  lineHeight: '20px',
-  outline: '0',
-  color: 'white',
-  padding: '3px',
-  margin: '5px 0 5px 0',
 }
 
 export default StylesDebugPanel

@@ -28,17 +28,19 @@ const debugPanelRoot = (left): React.CSSProperties => ({
   position: 'fixed',
   [left ? 'left' : 'right']: '0px',
   top: '0px',
-  zIndex: 9999999,
+  zIndex: 999999999,
   width: '350px',
-  background: '#222',
-  color: '#EEE',
   height: '100%',
+  backgroundColor: 'white',
+  lineHeight: 1,
+  fontSize: '12px',
   overflowY: 'auto',
+  border: '1px solid grey',
 })
 
 const debugPanelIcon = (left, isLeftActive) => ({
   display: 'inline-block',
-  border: '2px solid white',
+  border: '2px solid black',
   [left ? 'borderLeftWidth' : 'borderRightWidth']: '5px',
   width: '15px',
   height: '15px',
@@ -46,7 +48,7 @@ const debugPanelIcon = (left, isLeftActive) => ({
     marginRight: '10px',
   }),
   ...(left === isLeftActive && {
-    borderColor: '#00b5ad',
+    borderColor: '#6495ed',
   }),
 })
 
