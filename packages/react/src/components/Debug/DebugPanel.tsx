@@ -56,6 +56,7 @@ const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
   borderWidth: '2px',
   borderStyle: 'solid ',
   borderColor: '#888',
+  backgroundColor: 'white',
   [left ? 'borderLeftWidth' : 'borderRightWidth']: '6px',
   width: '16px',
   height: '14px',
