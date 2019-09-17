@@ -290,6 +290,11 @@ class FiberNavigator {
     return this.__fiber.stateNode
   }
 
+  get owner() {
+    // TODO: traverse down composite fibers until we get to DOM fiber, then return stateNode
+    return this.__fiber._debugOwner
+  }
+
   get ref() {
     // TODO: hey, only works for classes :/ womp...
     return this.__fiber.return.stateNode
@@ -407,7 +412,7 @@ class Debug extends React.Component<DebugProps> {
 
     while (!stardustDOMNode && node && node.parentNode) {
       const fiberNav = FiberNavigator.fromDOMNode(node)
-      const SDComponent = Stardust[fiberNav.parent.elementType.name]
+      const SDComponent = Stardust[fiberNav.owner.elementType.name]
 
       // console.group('WHILE')
       // console.debug({ node, fiber, SDComponent })
@@ -459,6 +464,8 @@ class Debug extends React.Component<DebugProps> {
     const { mountDocument } = this.props
     const { stardustComponent, stardustRef, stardustDOMNode, isSelecting } = this.state
 
+    const domNodeClassString = (stardustDOMNode && stardustDOMNode.getAttribute('class')) || ''
+
     return (
       <>
         <EventListener
@@ -470,7 +477,11 @@ class Debug extends React.Component<DebugProps> {
           <EventListener
             targetRef={toRefObject(stardustDOMNode)}
             listener={e => {
-              console.debug('Clicked stardustDOMNode. Prevent default and stop propagation.')
+              console.debug('Clicked stardustDOMNode. Prevent default and stop propagation.', {
+                stardustDOMNode,
+                stardustRef,
+                stardustComponent,
+              })
               e.preventDefault()
               e.stopPropagation()
               this.setState({ isSelecting: false })
@@ -536,9 +547,11 @@ class Debug extends React.Component<DebugProps> {
                 <strong style={{ fontWeight: 'bold', color: 'hsl(160, 100%, 80%)' }}>
                   {stardustDOMNode.tagName.toLowerCase()}
                 </strong>
-                <span style={{ color: 'rgba(255, 255, 255, 0.75)' }}>
-                  .{stardustDOMNode.getAttribute('class').replace(/ +/g, '.')}
-                </span>
+                {domNodeClassString && (
+                  <span style={{ color: 'rgba(255, 255, 255, 0.75)' }}>
+                    .{domNodeClassString.replace(/ +/g, '.')}
+                  </span>
+                )}
               </div>
             )}
           </pre>
