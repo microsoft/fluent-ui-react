@@ -21,7 +21,6 @@ import { submenuBehavior } from '../../lib/accessibility'
 
 import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
-import { PopupProps } from '../Popup/Popup'
 
 export type ToolbarMenuItemShorthandKinds = 'divider' | 'item'
 
@@ -39,21 +38,6 @@ export interface ToolbarMenuProps
    * @param {object} data - All item props.
    */
   onItemClick?: ComponentEventHandler<ToolbarMenuItemProps>
-
-  /**
-   * Event that occurs when a click is detected by `Popup` in a document.
-   * @param {MouseEvent} event - React's original MouseEvent.
-   * @param {object} data - All `Popup` props and an `outside` prop indicating whether the click was outside of `Popup`.
-   */
-  onPopupDocumentClick?: ComponentEventHandler<PopupProps & { outside: boolean }>
-
-  /**
-   * Called when `Popup`'s open state changes.
-   *
-   * @param {SyntheticEvent} event - React's original SynteticEvent.
-   * @param {object} data - All `Popup` props.
-   */
-  onPopupOpenChange?: ComponentEventHandler<PopupProps>
 }
 
 class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
@@ -67,8 +51,6 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
     ...commonPropTypes.createCommon(),
     items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
     onItemClick: PropTypes.func,
-    onPopupDocumentClick: PropTypes.func,
-    onPopupOpenChange: PropTypes.func,
   }
 
   static defaultProps = {
@@ -97,22 +79,8 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
       if (kind === 'divider') {
         return ToolbarMenuDivider.create(item, { overrideProps: dividerOverridesFn })
       }
-      return ToolbarMenuItem.create(item, {
-        overrideProps: itemOverridesFn,
-        // defaultProps: {
-        //   onPopupDocumentClick: this.handlePopupDocumentClick,
-        //   onPopupOpenChange: this.handlePopupOpenChange,
-        // },
-      })
+      return ToolbarMenuItem.create(item, { overrideProps: itemOverridesFn })
     })
-  }
-
-  handlePopupDocumentClick = (e: React.SyntheticEvent, data) => {
-    _.invoke(this.props, 'onPopupDocumentClick', e, { ...this.props, outside: data.outside })
-  }
-
-  handlePopupOpenChange = (e: React.SyntheticEvent, data) => {
-    _.invoke(this.props, 'onPopupOpenChange', e, data)
   }
 
   renderComponent({ ElementType, classes, accessibility, variables, unhandledProps }) {

@@ -80,13 +80,6 @@ export interface PopupProps
   /** Events triggering the popup. */
   on?: PopupEvents | PopupEventsArray
 
-  /**
-   * Event that occurs when a click is detected in a document.
-   * @param {MouseEvent} event - React's original MouseEvent.
-   * @param {object} data - All props and an `outside` prop indicating whether the click was outside of `Popup`.
-   */
-  onDocumentClick?: ComponentEventHandler<PopupProps & { outside: boolean }>
-
   /** Defines whether popup is displayed. */
   open?: boolean
 
@@ -166,7 +159,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       PropTypes.arrayOf(PropTypes.oneOf(['click', 'focus', 'context'])),
       PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus', 'context'])),
     ]),
-    onDocumentClick: PropTypes.func,
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
     pointing: PropTypes.bool,
@@ -258,10 +250,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 
   handleDocumentClick = (getRefs: Function) => e => {
-    const outside = this.isOutsidePopupElement(getRefs(), e)
-    _.invoke(this.props, 'onDocumentClick', e, { ...this.props, outside })
-
-    if (this.state.isOpenedByRightClick && outside) {
+    if (this.state.isOpenedByRightClick && this.isOutsidePopupElement(getRefs(), e)) {
       this.trySetOpen(false, e)
       return
     }

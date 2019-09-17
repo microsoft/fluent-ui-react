@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { Toolbar, ToolbarItemShorthandKinds, Input } from '@stardust-ui/react'
 
-const PopupContent = <Input icon="search" placeholder="Search..." />
-
 const ToolbarExamplePopupInMenu = () => {
   const [menu1Open, setMenu1Open] = React.useState(false)
   const [menu2Open, setMenu2Open] = React.useState(false)
@@ -20,7 +18,7 @@ const ToolbarExamplePopupInMenu = () => {
                 key: 'popup',
                 content: 'Open Popup',
                 popup: {
-                  content: PopupContent,
+                  content: <Input icon="search" placeholder="Search..." />,
                 },
               },
             ],
@@ -43,7 +41,7 @@ const ToolbarExamplePopupInMenu = () => {
                 key: 'popup',
                 content: 'Open Popup',
                 popup: {
-                  content: PopupContent,
+                  content: <Input icon="search" placeholder="Search..." />,
                 },
               },
               { key: 'about', content: 'About...' },

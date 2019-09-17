@@ -57,21 +57,6 @@ export interface ToolbarMenuItemProps
   onClick?: ComponentEventHandler<ToolbarMenuItemProps>
 
   /**
-   * Event that occurs when a click is detected by `Popup` in a document.
-   * @param {MouseEvent} event - React's original MouseEvent.
-   * @param {object} data - All `Popup` props and an `outside` prop indicating whether the click was outside of `Popup`.
-   */
-  onPopupDocumentClick?: ComponentEventHandler<PopupProps & { outside: boolean }>
-
-  /**
-   * Called when `Popup`'s open state changes.
-   *
-   * @param {SyntheticEvent} event - React's original SynteticEvent.
-   * @param {object} data - All `Popup` props.
-   */
-  onPopupOpenChange?: ComponentEventHandler<PopupProps>
-
-  /**
    * Attaches a `Popup` component to the ToolbarMenuItem.
    * Accepts all props as a `Popup`, except `trigger` and `children`.
    * Traps focus by default.
@@ -104,8 +89,6 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
-    onPopupDocumentClick: PropTypes.func,
-    onPopupOpenChange: PropTypes.func,
     popup: PropTypes.oneOfType([
       PropTypes.shape({
         ...Popup.propTypes,
@@ -131,7 +114,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
-    const { children, content, disabled, icon, wrapper, popup } = this.props
+    const { children, content, disabled, icon, popup, wrapper } = this.props
 
     const elementType = (
       <ElementType
@@ -159,8 +142,6 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
       return Popup.create(popup, {
         defaultProps: {
           trapFocus: true,
-          onDocumentClick: this.handlePopupDocumentClick,
-          onOpenChange: this.handlePopupOpenChange,
         },
         overrideProps: {
           trigger: elementType,
@@ -195,14 +176,6 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
     }
 
     _.invoke(this.props, 'onClick', e, this.props)
-  }
-
-  handlePopupDocumentClick = (e: React.SyntheticEvent, data) => {
-    _.invoke(this.props, 'onPopupDocumentClick', e, { ...this.props, outside: data.outside })
-  }
-
-  handlePopupOpenChange = (e: React.SyntheticEvent, data) => {
-    _.invoke(this.props, 'onPopupOpenChange', e, data)
   }
 }
 

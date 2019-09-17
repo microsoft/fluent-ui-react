@@ -65,11 +65,11 @@ const ToolbarExampleShorthand = () => {
                 item,
                 // rendering Tooltip for the Toolbar Item
                 (ToolbarItem, props) => {
-                  const { tooltip, ...rest } = props
+                  const { tooltip, key, ...rest } = props
                   // Adding tooltipAsLabelBehavior as the ToolbarItems contains only icon
                   return (
                     <Tooltip
-                      key={`${rest.key}-tooltip`}
+                      key={key}
                       trigger={<ToolbarItem {...rest} />}
                       accessibility={tooltipAsLabelBehavior}
                       content={tooltip}
