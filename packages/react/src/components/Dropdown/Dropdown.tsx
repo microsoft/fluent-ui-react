@@ -126,7 +126,7 @@ export interface DropdownProps
   items?: ShorthandCollection<DropdownItemProps>
 
   /**
-   * Function that converts an item to string. Used when dropdown has the `search` boolean prop set to true.
+   * Function that converts an item to string. Used when dropdown has the `search` boolean prop set to true. It is also used in multiple selection.
    * By default, it:
    * - returns the `header` property (if it exists on an item)
    * - converts an item to string (if the item is a primitive)
@@ -370,7 +370,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     const normalizedValue = _.isArray(rawValue) ? rawValue : [rawValue]
     const value = multiple ? normalizedValue : normalizedValue.slice(0, 1)
 
-    const filteredItemsByValue = multiple ? _.difference(items, value) : items
+    const filteredItemsByValue = multiple ? _.differenceBy(items, value, itemToString) : items
     const filteredItemStrings = _.map(filteredItemsByValue, filteredItem =>
       itemToString(filteredItem).toLowerCase(),
     )
