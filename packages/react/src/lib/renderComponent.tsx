@@ -234,7 +234,7 @@ const renderComponent = <P extends {}>(
         _.map(resolvedVariables._debug, 'resolved'),
         _.negate(_.isEmpty),
       ),
-      componentStyles: resolvedStylesDebug,
+      componentStyles: _.mapValues(resolvedStylesDebug, v => _.filter(v, _.negate(_.isEmpty))),
     })
   }
 
