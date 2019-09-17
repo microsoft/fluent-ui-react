@@ -21,6 +21,7 @@ import {
 import callable from './callable'
 import toCompactArray from './toCompactArray'
 import deepmerge from './deepmerge'
+import objectKeyToValues from './objectKeysToValues'
 
 export const emptyTheme: ThemePrepared = {
   siteVariables: {
@@ -87,7 +88,7 @@ export const mergeComponentVariables = (
       merged._debug = _debug.concat(
         computedDebug || {
           resolved: computedComponentVariables,
-          // input: callable(next)(objectKeyToValues(siteVariables, key => `SiteVariables[${key}]`)),
+          input: callable(next)(siteVariables._invertedKeys),
         },
       )
       return merged
@@ -112,10 +113,12 @@ export const mergeSiteVariables = (
 
   return sources.reduce<SiteVariablesPrepared>((acc, next) => {
     const { _debug = [], ...accumulatedSiteVariables } = acc
-    const { _debug: computedDebug = undefined, ...nextSiteVariables } = next || {}
+    const { _debug: computedDebug = undefined, _invertedKeys = undefined, ...nextSiteVariables } =
+      next || {}
 
     const merged = deepmerge(accumulatedSiteVariables, nextSiteVariables)
     merged._debug = _debug.concat(computedDebug || nextSiteVariables)
+    merged._invertedKeys = _invertedKeys || objectKeyToValues(merged, key => `siteVariables.${key}`)
     return merged
   }, initial)
 }

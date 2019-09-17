@@ -5,7 +5,9 @@ import { find } from './utils'
 
 const DebugPanelItem = props => {
   const [value, setValue] = React.useState('')
-  const { data } = props
+  const { data: propData, rootKey } = props
+
+  const data = rootKey ? propData.map(v => v[rootKey]) : propData
 
   const reversedData = JSON.parse(JSON.stringify(data)).reverse()
   const mergedThemes = []

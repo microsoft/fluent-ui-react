@@ -1,11 +1,16 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 import PortalInner from '../Portal/PortalInner'
 import DebugPanelItem from './DebugPanelItem'
 
 export type DebugPanelProps = {
   debugData: {
     componentStyles: object[]
-    componentVariables: object[]
+    componentVariables: {
+      input: { [key: string]: any }
+      resolved: { [key: string]: any }
+    }[]
+    siteVariables: object[]
   }
 }
 
@@ -15,6 +20,27 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
   const { debugData } = props
 
   const styleSlots = Object.keys(debugData.componentStyles)
+  const siteVariablesKey = []
+
+  debugData.componentVariables
+    .map(val => val.input)
+    .forEach(val =>
+      _.forEach(val, (val, key) => {
+        if (_.includes(val, 'siteVariables.')) {
+          siteVariablesKey.push(val)
+        }
+      }),
+    )
+
+  const uniqSiteVariables = _.uniq(siteVariablesKey)
+  const siteVariablesData = debugData.siteVariables.map(val => {
+    return uniqSiteVariables.reduce((acc, next) => {
+      const key = _.replace(next, 'siteVariables.', '')
+      acc[key] = _.get(val, key)
+      return acc
+    }, {})
+  })
+
   return (
     <PortalInner>
       <div style={debugPanelRoot(left)}>
@@ -24,32 +50,28 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
         </div>
 
         <div style={debugPanelBody}>
-          {/* <div style={debugPanel}> */}
-          {/* <div style={debugHeader()}>Site variables</div> */}
-          {/* <DebugPanelItem data={debugData.siteVariables} /> */}
-          {/* </div> */}
+          <div style={debugPanel}>
+            <div style={debugHeader()}>Site variables</div>
+            <DebugPanelItem data={siteVariablesData} />
+          </div>
           <div style={debugPanel}>
             <div style={debugHeaderContainer()}>
               <div style={debugHeader()}>Variables</div>
             </div>
-            <DebugPanelItem data={debugData.componentVariables} />
+            <DebugPanelItem data={debugData.componentVariables} rootKey="resolved" />
           </div>
 
           <div style={debugPanel}>
             <div style={debugHeaderContainer()}>
               <div style={debugHeader()}>Styles</div>
               <div style={debugPanelSelectContainer()}>
-                {styleSlots.length > 1 ? (
-                  <select value={slot} onChange={e => setSlot(e.target.value)}>
-                    {styleSlots.map(val => (
-                      <option value={val} key={val}>
-                        Slot: {val}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  <span>Slot: {styleSlots[0]}</span>
-                )}
+                <select value={slot} onChange={e => setSlot(e.target.value)}>
+                  {styleSlots.map(val => (
+                    <option value={val} key={val}>
+                      Slot: {val}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
@@ -66,7 +88,7 @@ const debugPanelRoot = (left): React.CSSProperties => ({
   [left ? 'left' : 'right']: 0,
   top: 0,
   zIndex: 999999999,
-  width: '300px',
+  maxWidth: '500px',
   height: '100vh',
   color: '#222',
   background: '#fff',
