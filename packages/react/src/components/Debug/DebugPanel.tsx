@@ -2,11 +2,19 @@ import * as React from 'react'
 import PortalInner from '../Portal/PortalInner'
 import DebugPanelItem from './DebugPanelItem'
 
-const DebugPanel = props => {
+export type DebugPanelProps = {
+  debugData: {
+    componentStyles: object[]
+    componentVariables: object[]
+  }
+}
+
+const DebugPanel: React.FC<DebugPanelProps> = props => {
   const [left, setLeft] = React.useState(false)
   const [slot, setSlot] = React.useState('root')
   const { debugData } = props
 
+  const styleSlots = Object.keys(debugData.componentStyles)
   return (
     <PortalInner>
       <div style={debugPanelRoot(left)}>
@@ -14,24 +22,37 @@ const DebugPanel = props => {
           <div style={debugPanelIcon(true, left)} onClick={e => setLeft(true)} />
           <div style={debugPanelIcon(false, left)} onClick={e => setLeft(false)} />
         </div>
+
         <div style={debugPanelBody}>
-          {/* <div style={debugPanelSiteVariables}> */}
+          {/* <div style={debugPanel}> */}
           {/* <div style={debugHeader()}>Site variables</div> */}
           {/* <DebugPanelItem data={debugData.siteVariables} /> */}
           {/* </div> */}
-          <div style={debugPanelVariables}>
-            <div style={debugHeader()}>Variables</div>
+          <div style={debugPanel}>
+            <div style={debugHeaderContainer()}>
+              <div style={debugHeader()}>Variables</div>
+            </div>
             <DebugPanelItem data={debugData.componentVariables} />
           </div>
-          <div style={debugPanelStyles}>
-            <div style={debugHeader()}>Styles</div>
-            <select value={slot} onChange={e => setSlot(e.target.value)} style={debugPanelSelect}>
-              {Object.keys(debugData.componentStyles).map(val => (
-                <option value={val} key={val}>
-                  {val}
-                </option>
-              ))}
-            </select>
+
+          <div style={debugPanel}>
+            <div style={debugHeaderContainer()}>
+              <div style={debugHeader()}>Styles</div>
+              <div style={debugPanelSelectContainer()}>
+                {styleSlots.length > 1 ? (
+                  <select value={slot} onChange={e => setSlot(e.target.value)}>
+                    {styleSlots.map(val => (
+                      <option value={val} key={val}>
+                        Slot: {val}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <span>Slot: {styleSlots[0]}</span>
+                )}
+              </div>
+            </div>
+
             <DebugPanelItem data={debugData.componentStyles[slot]} />
           </div>
         </div>
@@ -55,16 +76,21 @@ const debugPanelRoot = (left): React.CSSProperties => ({
   boxShadow: '0 0 .25em .5em rgba(0, 0, 0, .1)',
 })
 
-const debugHeader = (): React.CSSProperties => ({
+const debugHeaderContainer = (): React.CSSProperties => ({
+  display: 'flex',
+  justifyContent: 'space-between',
   marginBottom: '0.5em',
-  fontSize: '16px',
+})
+
+const debugHeader = (): React.CSSProperties => ({
+  float: 'left',
+  fontSize: '1rem',
   fontWeight: 'bold',
 })
 
-const debugPanelSelect: React.CSSProperties = {
-  width: '100%',
-  marginBottom: '10px',
-}
+const debugPanelSelectContainer = (): React.CSSProperties => ({
+  float: 'right',
+})
 
 const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
   display: 'inline-block',
@@ -97,15 +123,7 @@ const debugPanelBody: React.CSSProperties = {
   hyphens: 'auto',
 }
 
-// const debugPanelSiteVariables: React.CSSProperties = {
-//   padding: '10px',
-// }
-
-const debugPanelVariables: React.CSSProperties = {
-  padding: '10px',
-}
-
-const debugPanelStyles: React.CSSProperties = {
+const debugPanel: React.CSSProperties = {
   padding: '10px',
 }
 
