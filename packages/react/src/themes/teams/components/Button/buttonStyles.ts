@@ -64,6 +64,10 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           color: v.colorFocus,
           backgroundColor: v.backgroundColorFocus,
         },
+
+        ...(p.size === 'small' && {
+          boxShadow: 'none',
+        }),
       }),
 
       // circular button defaults
