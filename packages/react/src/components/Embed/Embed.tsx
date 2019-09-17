@@ -14,7 +14,7 @@ import {
 import { embedBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import Icon, { IconProps } from '../Icon/Icon'
-import Image, { ImageProps } from '../Image/Image'
+import Image from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
 import Box, { BoxProps } from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
@@ -55,7 +55,7 @@ export interface EmbedProps extends UIComponentProps {
   onClick?: ComponentEventHandler<EmbedProps>
 
   /** Image source URL for when video isn't playing. */
-  placeholder?: ShorthandValue<ImageProps>
+  placeholder?: string
 
   /** Shorthand for an embedded video. */
   video?: ShorthandValue<VideoProps>
@@ -126,15 +126,13 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     const { control, iframe, placeholder, video } = this.props
     const { active, iframeLoaded } = this.state
     const controlVisible = !_.isNil(video) || !active
-    const placeholderImage = Image.create(placeholder, {
-      defaultProps: {
-        styles: styles.image,
-        variables: {
-          width: variables.width,
-          height: variables.height,
-        },
-      },
-    })
+    const placeholderImage = placeholder ? (
+      <Image
+        src={placeholder}
+        styles={styles.image}
+        variables={{ width: variables.width, height: variables.height }}
+      />
+    ) : null
 
     return (
       <ElementType
