@@ -1,9 +1,11 @@
 import keyboardKey from 'keyboard-key'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as Stardust from '@stardust-ui/react'
 import { toRefObject } from '@stardust-ui/react-component-ref'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import DebugPanel from './DebugPanel'
+import { isBrowser } from '../../lib'
 
 //
 // react/packages/shared/ReactTypes.js
@@ -250,7 +252,7 @@ class FiberNavigator {
     for (const k in elm) {
       if (k.startsWith('__reactInternalInstance$')) {
         const fiber = elm[k]
-        // console.log('domNodeToReactFiber', { k, elm, fiber })
+        // console.debug('domNodeToReactFiber', { k, elm, fiber })
         return fiber
       }
     }
@@ -288,7 +290,7 @@ class FiberNavigator {
     return this.__fiber.stateNode
   }
 
-  get reactElement() {
+  get ref() {
     // TODO: hey, only works for classes :/ womp...
     return this.__fiber.return.stateNode
   }
@@ -338,13 +340,26 @@ const INITIAL_STATE = {
   isSelecting: false,
   stardustDOMNode: null,
   stardustComponent: null,
-  stardustElement: null,
+  stardustRef: null,
 }
 
-class Debug extends React.Component<{}> {
+type DebugProps = {
+  /** Existing document the popup should add listeners. */
+  mountDocument?: Document
+}
+
+class Debug extends React.Component<DebugProps> {
   selectorRef = React.createRef<HTMLPreElement>()
 
   state = { ...INITIAL_STATE }
+
+  static defaultProps = {
+    mountDocument: isBrowser() ? window.document : null,
+  }
+
+  static propTypes = {
+    mountDocument: PropTypes.object.isRequired,
+  }
 
   handleKeyDown = e => {
     const code = keyboardKey.getCode(e)
@@ -381,7 +396,7 @@ class Debug extends React.Component<{}> {
     let node = e.target
     let stardustDOMNode: HTMLElement
     let stardustComponent: React.Component
-    let stardustElement: React.ElementType
+    let stardustRef: React.ElementType
 
     // We start from a DOM node
     // We need to traverse up the React tree until we find a DOM component responsible for this DOM node
@@ -395,17 +410,17 @@ class Debug extends React.Component<{}> {
       const SDComponent = Stardust[fiberNav.parent.elementType.name]
 
       // console.group('WHILE')
-      // console.log({ node, fiber, SDComponent })
+      // console.debug({ node, fiber, SDComponent })
 
       if (SDComponent) {
         stardustDOMNode = node
         stardustComponent = SDComponent
-        stardustElement = fiberNav.reactElement
+        stardustRef = fiberNav.ref
       } else {
         node = node.parentNode
       }
 
-      // console.log({ node, fiber, stardustDOMNode, stardustComponent })
+      // console.debug({ node, fiber, stardustDOMNode, stardustComponent })
       // console.groupEnd()
     }
 
@@ -414,14 +429,14 @@ class Debug extends React.Component<{}> {
     if (
       stardustDOMNode !== this.state.stardustDOMNode ||
       stardustComponent !== this.state.stardustComponent ||
-      stardustElement !== this.state.stardustElement
+      stardustRef !== this.state.stardustRef
     ) {
-      this.setState({ stardustDOMNode, stardustComponent, stardustElement })
+      this.setState({ stardustDOMNode, stardustComponent, stardustRef })
     }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    // console.log('DEBUG componentDidUpdate', { state: this.state, prevState })
+    // console.debug('DEBUG componentDidUpdate', { state: this.state, prevState })
     this.setDebugSelectorPosition()
   }
 
@@ -441,12 +456,13 @@ class Debug extends React.Component<{}> {
   }
 
   render() {
-    const { stardustComponent, stardustElement, stardustDOMNode, isSelecting } = this.state
+    const { mountDocument } = this.props
+    const { stardustComponent, stardustRef, stardustDOMNode, isSelecting } = this.state
 
     return (
       <>
         <EventListener
-          targetRef={toRefObject(document.body)}
+          targetRef={toRefObject(mountDocument.body)}
           listener={this.handleKeyDown}
           type="keydown"
         />
@@ -454,7 +470,7 @@ class Debug extends React.Component<{}> {
           <EventListener
             targetRef={toRefObject(stardustDOMNode)}
             listener={e => {
-              console.log('clicked on stardustDOMNode')
+              console.debug('Clicked stardustDOMNode. Prevent default and stop propagation.')
               e.preventDefault()
               e.stopPropagation()
               this.setState({ isSelecting: false })
@@ -465,12 +481,12 @@ class Debug extends React.Component<{}> {
         {isSelecting && (
           <>
             <EventListener
-              targetRef={toRefObject(document.body)}
+              targetRef={toRefObject(mountDocument.body)}
               listener={this.handleMouseMove}
               type="mousemove"
             />
             <EventListener
-              targetRef={toRefObject(document.body)}
+              targetRef={toRefObject(mountDocument.body)}
               listener={this.handleClick}
               type="click"
             />
@@ -527,8 +543,8 @@ class Debug extends React.Component<{}> {
             )}
           </pre>
         )}
-        {!isSelecting && stardustElement && stardustElement.stardustDebug && (
-          <DebugPanel debugData={stardustElement.stardustDebug} />
+        {!isSelecting && stardustRef && stardustRef.stardustDebug && (
+          <DebugPanel debugData={stardustRef.stardustDebug} />
         )}
       </>
     )
