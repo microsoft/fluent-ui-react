@@ -8,7 +8,6 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone'
  *  Adds attribute 'aria-checked=true' based on the property 'checked'.
  *  Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  *  Adds role='menuitemradio'.
- *  Adds attribute 'tabIndex=0' to 'root' slot.
  */
 const toolbarMenuItemRadioBehavior: Accessibility<ToolbarMenuItemRadioBehaviorProps> = props => ({
   attributes: {
