@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { Ref } from '@stardust-ui/react-component-ref'
 
@@ -34,6 +35,9 @@ export interface ToolbarRadioGroupProps
    */
   accessibility?: Accessibility
 
+  /** Index of the currently active item. */
+  activeIndex?: number
+
   /** Shorthand array of props for ToolbarRadioGroup. */
   items?: ShorthandCollection<ToolbarItemProps, ToolbarRadioGroupItemShorthandKinds>
 }
@@ -47,6 +51,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
+    activeIndex: PropTypes.number,
     items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
   }
 
@@ -105,7 +110,8 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
     variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
-  renderItems(items, variables) {
+  renderItems(variables) {
+    const { activeIndex, items } = this.props
     const itemOverridesFn = this.handleItemOverrides(variables)
     this.itemRefs = []
 
@@ -122,6 +128,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
       const toolbarItem = ToolbarItem.create(item, {
         defaultProps: {
           accessibility: toolbarRadioGroupItemBehavior,
+          active: activeIndex === index,
         },
         overrideProps: itemOverridesFn,
       })
@@ -135,7 +142,8 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
   }
 
   renderComponent({ ElementType, classes, variables, accessibility, unhandledProps }) {
-    const { children, items } = this.props
+    const { children } = this.props
+
     return (
       <ElementType
         {...accessibility.attributes.root}
@@ -143,7 +151,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         className={classes.root}
       >
-        {childrenExist(children) ? children : this.renderItems(items, variables)}
+        {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )
   }
