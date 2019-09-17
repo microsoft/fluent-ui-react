@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 import PortalInner from '../Portal/PortalInner'
 import DebugPanelItem from './DebugPanelItem'
 
@@ -6,6 +7,27 @@ const DebugPanel = props => {
   const [left, setLeft] = React.useState(false)
   const [slot, setSlot] = React.useState('root')
   const { debugData } = props
+
+  const siteVariablesKey = []
+
+  debugData.componentVariables
+    .map(val => val.input)
+    .forEach(val =>
+      _.forEach(val, (val, key) => {
+        if (val.indexOf('siteVariables.') > -1) {
+          siteVariablesKey.push(val)
+        }
+      }),
+    )
+
+  const uniqSiteVariables = _.uniq(siteVariablesKey)
+  const siteVariablesData = debugData.siteVariables.map(val => {
+    return uniqSiteVariables.reduce((acc, next) => {
+      const key = _.replace(next, 'siteVariables.', '')
+      acc[key] = _.get(val, key)
+      return acc
+    }, {})
+  })
 
   return (
     <PortalInner>
@@ -15,13 +37,13 @@ const DebugPanel = props => {
           <div style={debugPanelIcon(false, left)} onClick={e => setLeft(false)} />
         </div>
         <div style={debugPanelBody}>
-          {/* <div style={debugPanelSiteVariables}> */}
-          {/* <div style={debugHeader()}>Site variables</div> */}
-          {/* <DebugPanelItem data={debugData.siteVariables} /> */}
-          {/* </div> */}
+          <div style={debugPanelSiteVariables}>
+            <div style={debugHeader()}>Site variables</div>
+            <DebugPanelItem data={siteVariablesData} />
+          </div>
           <div style={debugPanelVariables}>
             <div style={debugHeader()}>Variables</div>
-            <DebugPanelItem data={debugData.componentVariables} />
+            <DebugPanelItem data={debugData.componentVariables} rootKey="resolved" />
           </div>
           <div style={debugPanelStyles}>
             <div style={debugHeader()}>Styles</div>
@@ -45,7 +67,7 @@ const debugPanelRoot = (left): React.CSSProperties => ({
   [left ? 'left' : 'right']: 0,
   top: 0,
   zIndex: 999999999,
-  width: '300px',
+  maxWidth: '500px',
   height: '100vh',
   color: '#222',
   background: '#fff',
@@ -97,9 +119,9 @@ const debugPanelBody: React.CSSProperties = {
   hyphens: 'auto',
 }
 
-// const debugPanelSiteVariables: React.CSSProperties = {
-//   padding: '10px',
-// }
+const debugPanelSiteVariables: React.CSSProperties = {
+  padding: '10px',
+}
 
 const debugPanelVariables: React.CSSProperties = {
   padding: '10px',

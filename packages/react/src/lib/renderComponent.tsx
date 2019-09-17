@@ -230,9 +230,8 @@ const renderComponent = <P extends {}>(
   if (isDebugEnabled) {
     saveDebug({
       componentName: displayName,
-      componentVariables: _.filter(
-        _.map(resolvedVariables._debug, 'resolved'),
-        _.negate(_.isEmpty),
+      componentVariables: resolvedVariables._debug.filter(
+        variables => !_.isEmpty(variables.resolved),
       ),
       componentStyles: _.mapValues(resolvedStylesDebug, v => _.filter(v, _.negate(_.isEmpty))),
       siteVariables: theme.siteVariables._debug.filter(siteVars => {
