@@ -14,22 +14,44 @@ export type DebugPanelProps = {
   }
 }
 
+const getValues = (value, predicate) => {
+  if (_.isNil(value)) {
+    return []
+  }
+
+  if (typeof value === 'string') {
+    if (predicate(value)) {
+      return [value]
+    }
+  }
+
+  if (typeof value === 'object') {
+    let arr = []
+    Object.keys(value).forEach(key => {
+      arr = _.concat(arr, getValues(value[key], predicate))
+    })
+    return arr
+  }
+
+  return []
+}
+
 const DebugPanel: React.FC<DebugPanelProps> = props => {
   const [left, setLeft] = React.useState(false)
   const [slot, setSlot] = React.useState('root')
   const { debugData } = props
 
   const styleSlots = Object.keys(debugData.componentStyles)
-  const siteVariablesKey = []
+  let siteVariablesKey = []
 
   debugData.componentVariables
     .map(val => val.input)
-    .forEach(val =>
-      _.forEach(val, (val, key) => {
-        if (_.includes(val, 'siteVariables.')) {
-          siteVariablesKey.push(val)
-        }
-      }),
+    .forEach(
+      val =>
+        (siteVariablesKey = _.concat(
+          siteVariablesKey,
+          getValues(val, val => val.indexOf('siteVariables.') > -1),
+        )),
     )
 
   const uniqSiteVariables = _.uniq(siteVariablesKey)
@@ -58,7 +80,14 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
             <div style={debugHeaderContainer()}>
               <div style={debugHeader()}>Variables</div>
             </div>
-            <DebugPanelItem data={debugData.componentVariables} rootKey="resolved" />
+            <DebugPanelItem
+              data={debugData.componentVariables}
+              valueKey="resolved"
+              commentKey="input"
+              commentKeyPredicate={val =>
+                typeof val === 'string' && val.indexOf('siteVariables.') > -1
+              }
+            />
           </div>
 
           <div style={debugPanel}>
@@ -75,7 +104,11 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
               </div>
             </div>
 
-            <DebugPanelItem data={debugData.componentStyles[slot]} />
+            <DebugPanelItem
+              data={debugData.componentStyles[slot]}
+              valueKey="styles"
+              idKey="debugId"
+            />
           </div>
         </div>
       </div>

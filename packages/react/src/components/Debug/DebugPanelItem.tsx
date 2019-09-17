@@ -5,17 +5,20 @@ import { find } from './utils'
 
 const DebugPanelItem = props => {
   const [value, setValue] = React.useState('')
-  const { data: propData, rootKey } = props
+  const { data: propData, valueKey, commentKey, commentKeyPredicate, idKey } = props
 
-  const data = rootKey ? propData.map(v => v[rootKey]) : propData
+  const reversedData = JSON.parse(JSON.stringify(propData)).reverse()
 
-  const reversedData = JSON.parse(JSON.stringify(data)).reverse()
+  const data = valueKey ? reversedData.map(v => v[valueKey]) : reversedData
+  const comments = commentKey ? reversedData.map(v => v[commentKey]) : []
+  const ids = idKey ? reversedData.map(v => v[idKey]) : []
+
   const mergedThemes = []
 
   mergedThemes.push({}) // init
 
   for (let i = 1; i < data.length; i++) {
-    mergedThemes.push(_.merge({}, mergedThemes[i - 1], reversedData[i - 1]))
+    mergedThemes.push(_.merge({}, mergedThemes[i - 1], data[i - 1]))
   }
 
   const filterR = (search, data) => {
@@ -44,7 +47,7 @@ const DebugPanelItem = props => {
         style={{ padding: '2px 4px', width: '100%', border: '1px solid #ccc' }}
         placeholder="Filter"
       />
-      {reversedData.map((theme, idx) => {
+      {data.map((theme, idx) => {
         const filteredTheme =
           value === ''
             ? theme
@@ -74,8 +77,11 @@ const DebugPanelItem = props => {
               borderTop: idx > 0 ? '1px solid #ddd' : 'none',
             }}
           >
+            {ids && ids[idx] && <div style={{ marginBottom: '10px' }}>{ids[idx]}</div>}
             <DebugPanelData
               data={filteredTheme}
+              comments={comments[idx]}
+              commentKeyPredicate={commentKeyPredicate}
               prevMergedData={mergedThemes[idx]}
               highlightKey={value}
             />

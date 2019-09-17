@@ -2,21 +2,31 @@ import * as React from 'react'
 import { find, isOverridden } from './utils'
 
 const DebugPanelData = props => {
-  const { data, indent = 2, highlightKey, prevMergedData } = props
+  const { data, indent = 2, highlightKey, prevMergedData, comments, commentKeyPredicate } = props
+
+  const isValidComment =
+    typeof comments === 'string' && commentKeyPredicate && commentKeyPredicate(comments)
 
   if (typeof data === 'undefined') {
-    return <span>undefined</span>
+    return isValidComment ? <abbr title={comments}>undefined</abbr> : <span>undefined</span>
   }
 
   if (data === null || typeof data !== 'object') {
-    return <span>{JSON.stringify(data)}</span>
+    return isValidComment ? (
+      <abbr title={comments}>{JSON.stringify(data)}</abbr>
+    ) : (
+      <span>{JSON.stringify(data)}</span>
+    )
   }
 
   return (
     <>
       {'{'}
-      {Object.keys(data).map(key => {
+      {Object.keys(data).map((key, idx) => {
         const value = data[key]
+
+        const comment = comments && comments[key]
+
         const highlight = find(data, key, highlightKey)
         const overridden = isOverridden(data, key, prevMergedData)
 
@@ -29,6 +39,8 @@ const DebugPanelData = props => {
                 {': '}
                 <DebugPanelData
                   data={value}
+                  comments={comment}
+                  commentKeyPredicate={commentKeyPredicate}
                   indent={indent + 2}
                   prevMergedData={prevMergedData ? prevMergedData[key] : null}
                   highlightKey={highlightKey}
