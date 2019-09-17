@@ -31,6 +31,7 @@ import { FocusZoneProps, FocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug'
+import withDebugId from './withDebugId'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -133,7 +134,8 @@ const renderWithFocusZone = <P extends {}>(
 const resolveStyles = (
   styles: ComponentSlotStylesInput,
   styleParam: ComponentStyleFunctionParam,
-): ComponentSlotStylesPrepared[] => {
+): any[] => {
+  // FIXME: ComponentSlotStylesPrepared tuple
   return Object.keys(styles).reduce(
     (acc, next) => {
       const { _debug, ...resolvedStyles } = callable(styles[next])(styleParam)
@@ -182,9 +184,9 @@ const renderComponent = <P extends {}>(
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
     theme.componentStyles[displayName],
-    { root: props.design },
-    { root: props.styles },
-    { root: animationCSSProp },
+    withDebugId({ root: props.design }, 'props.design'),
+    withDebugId({ root: props.styles }, 'props.styles'),
+    withDebugId({ root: animationCSSProp }, 'props.animation'),
   )
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
@@ -233,7 +235,11 @@ const renderComponent = <P extends {}>(
       componentVariables: resolvedVariables._debug.filter(
         variables => !_.isEmpty(variables.resolved),
       ),
-      componentStyles: _.mapValues(resolvedStylesDebug, v => _.filter(v, _.negate(_.isEmpty))),
+      componentStyles: _.mapValues(resolvedStylesDebug, v =>
+        _.filter(v, v => {
+          return !_.isEmpty(v.styles)
+        }),
+      ),
       siteVariables: theme.siteVariables._debug.filter(siteVars => {
         if (_.isEmpty(siteVars)) {
           return false

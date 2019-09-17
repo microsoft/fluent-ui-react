@@ -6,6 +6,7 @@ import * as componentVariables from './componentVariables'
 import * as componentStyles from './componentStyles'
 import fontFaces from './fontFaces'
 import staticStyles from './staticStyles'
+import withDebugId from '../../lib/withDebugId'
 
 import { default as svgIconsAndStyles } from './components/Icon/svg'
 
@@ -49,7 +50,7 @@ const icons: ThemeIcons = {
 export default {
   siteVariables,
   componentVariables,
-  componentStyles,
+  componentStyles: withDebugId(componentStyles, 'teams'),
   fontFaces,
   staticStyles,
   icons,

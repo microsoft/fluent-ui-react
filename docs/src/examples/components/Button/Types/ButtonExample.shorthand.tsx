@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Provider, themes, mergeThemes } from '@stardust-ui/react'
+import { Button, Provider, themes, mergeThemes, withDebugId } from '@stardust-ui/react'
 
 const customTheme = {
   componentVariables: {
@@ -7,17 +7,20 @@ const customTheme = {
       backgroundColor: 'green',
     },
   },
-  componentStyles: {
-    Button: {
-      root: {
-        outline: '5px solid red',
+  componentStyles: withDebugId(
+    {
+      Button: {
+        root: {
+          outline: '5px solid red',
+        },
       },
     },
-  },
+    'customTheme',
+  ),
 }
 
 const ButtonExample = () => (
-  <Provider theme={mergeThemes(customTheme, themes.teamsDark)}>
+  <Provider theme={mergeThemes(customTheme, themes.teamsHighContrast)}>
     <Button
       variables={siteVariables => ({ color: siteVariables.colors.red[500] })}
       styles={{ color: 'blue' }}

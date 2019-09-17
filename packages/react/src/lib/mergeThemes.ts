@@ -61,7 +61,9 @@ export const mergeComponentStyles = (
           callable(originalSource)(styleParam) || {}
 
         const merged = _.merge(targetStyles, sourceStyles)
-        merged._debug = targetDebug.concat(sourceDebug || sourceStyles)
+        merged._debug = targetDebug.concat(
+          sourceDebug || { styles: sourceStyles, debugId: stylesByPart._debugId },
+        )
         return merged
       }
     })
@@ -153,6 +155,13 @@ export const mergeThemeStyles = (
 
   return sources.reduce<ThemeComponentStylesPrepared>((themeComponentStyles, next) => {
     _.forEach(next, (stylesByPart, displayName) => {
+      if (_.isObject(stylesByPart)) {
+        Object.defineProperty(stylesByPart, '_debugId', {
+          value: next._debugId,
+          writable: false,
+          enumerable: false,
+        })
+      }
       themeComponentStyles[displayName] = mergeComponentStyles(
         themeComponentStyles[displayName],
         stylesByPart,
