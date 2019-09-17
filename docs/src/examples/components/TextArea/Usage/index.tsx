@@ -7,12 +7,12 @@ const Usage = () => (
     <ComponentExample
       title="Maximum character length"
       description="A text area with a limited character length allowed."
-      examplePath="components/TextArea/Usage/TextAreaMaxLengthExample"
+      examplePath="components/TextArea/Usage/TextAreaExampleMaxLength"
     />
     <ComponentExample
       title="Custom height"
       description="A text area can have a custom height."
-      examplePath="components/TextArea/Usage/TextAreaHeightExample"
+      examplePath="components/TextArea/Usage/TextAreaExampleHeight"
     />
   </ExampleSection>
 )

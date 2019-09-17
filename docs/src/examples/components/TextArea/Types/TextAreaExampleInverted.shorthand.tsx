@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Grid, TextArea } from '@stardust-ui/react'
 
-const TextAreaExample = () => (
+const TextAreaExampleInverted = () => (
   <div>
     <Grid
       styles={({ theme: { siteVariables } }) => ({
@@ -22,4 +22,4 @@ const TextAreaExample = () => (
   </div>
 )
 
-export default TextAreaExample
+export default TextAreaExampleInverted
