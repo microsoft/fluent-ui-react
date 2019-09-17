@@ -1,4 +1,4 @@
-import { ChatTimestampVariables } from '../../../teams/components/Chat/ChatTimestampVariables'
+import { ChatTimestampVariables } from '../../../teams/components/Chat/chatTimestampVariables'
 
 export default (siteVars: any): Partial<ChatTimestampVariables> => {
   return {

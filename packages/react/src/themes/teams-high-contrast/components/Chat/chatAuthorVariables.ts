@@ -1,4 +1,4 @@
-import { ChatAuthorVariables } from '../../../teams/components/Chat/ChatAuthorVariables'
+import { ChatAuthorVariables } from '../../../teams/components/Chat/chatAuthorVariables'
 
 export default (siteVars: any): Partial<ChatAuthorVariables> => {
   return {
