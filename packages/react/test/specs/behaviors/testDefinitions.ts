@@ -258,6 +258,45 @@ definitions.push({
   },
 })
 
+// Adds attribute 'aria-haspopup=true' to 'trigger' slot if 'contextMenu' property is not set.
+definitions.push({
+  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' slot if '([\w-]+)' property is not set\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [
+      attributeToBeAdded,
+      valueOfAttributeToBeAdded,
+      slot,
+      propertyDependsOn,
+    ] = parameters.props
+
+    const propertyDependsOnUndefined = {}
+    const expectedResultAttributeNotDefined = parameters.behavior(propertyDependsOnUndefined)
+      .attributes[slot][attributeToBeAdded]
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAttributeNotDefined)).toEqual(
+      testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAdded),
+    )
+
+    const propertyDependsOnFalse = {
+      [propertyDependsOn]: false,
+    }
+    const expectedResultAttributeDefinedFalse = parameters.behavior(propertyDependsOnFalse)
+      .attributes[slot][attributeToBeAdded]
+    expect(
+      testHelper.convertToMatchingTypeIfApplicable(expectedResultAttributeDefinedFalse),
+    ).toEqual(testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAdded))
+
+    const propertyDependsOnExists = {
+      [propertyDependsOn]: true,
+    }
+    const expectedResultAttributeDefined = parameters.behavior(propertyDependsOnExists).attributes[
+      slot
+    ][attributeToBeAdded]
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAttributeDefined)).toEqual(
+      undefined,
+    )
+  },
+})
+
 // Example: Adds attribute 'aria-hidden=true', if there is no 'alt' property provided.
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=(\w+)', if there is no '([\w-]+)' property provided\./g,
