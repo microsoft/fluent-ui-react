@@ -1,10 +1,10 @@
 import * as React from 'react'
 import PortalInner from '../Portal/PortalInner'
-import VariablesDebugPanel from './VariablesDebugPanel'
-import StylesDebugPanel from './StylesDebugPanel'
+import DebugPanelItem from './DebugPanelItem'
 
 const DebugPanel = props => {
   const [left, setLeft] = React.useState(false)
+  const [slot, setSlot] = React.useState('root')
   const { debugData } = props
 
   return (
@@ -15,14 +15,24 @@ const DebugPanel = props => {
           <div style={debugPanelIcon(false, left)} onClick={e => setLeft(false)} />
         </div>
         <div style={debugPanelBody}>
+          {/* <div style={debugPanelSiteVariables}> */}
+          {/* <div style={debugHeader()}>Site variables</div> */}
+          {/* <DebugPanelItem data={debugData.siteVariables} /> */}
+          {/* </div> */}
           <div style={debugPanelVariables}>
-            {/* <SiteVariablesDebugPanel data={debugData.siteVariables}/> */}
             <div style={debugHeader()}>Variables</div>
-            <VariablesDebugPanel data={debugData.componentVariables} />
+            <DebugPanelItem data={debugData.componentVariables} />
           </div>
           <div style={debugPanelStyles}>
             <div style={debugHeader()}>Styles</div>
-            <StylesDebugPanel data={debugData.componentStyles.root} />
+            <select value={slot} onChange={e => setSlot(e.target.value)} style={debugPanelSelect}>
+              {Object.keys(debugData.componentStyles).map(val => (
+                <option value={val} key={val}>
+                  {val}
+                </option>
+              ))}
+            </select>
+            <DebugPanelItem data={debugData.componentStyles[slot]} />
           </div>
         </div>
       </div>
@@ -51,11 +61,17 @@ const debugHeader = (): React.CSSProperties => ({
   fontWeight: 'bold',
 })
 
+const debugPanelSelect: React.CSSProperties = {
+  width: '100%',
+  marginBottom: '10px',
+}
+
 const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
   display: 'inline-block',
   borderWidth: '2px',
   borderStyle: 'solid ',
   borderColor: '#888',
+  backgroundColor: 'white',
   [left ? 'borderLeftWidth' : 'borderRightWidth']: '6px',
   width: '16px',
   height: '14px',
@@ -80,6 +96,10 @@ const debugPanelBody: React.CSSProperties = {
   wordBreak: 'break-all',
   hyphens: 'auto',
 }
+
+// const debugPanelSiteVariables: React.CSSProperties = {
+//   padding: '10px',
+// }
 
 const debugPanelVariables: React.CSSProperties = {
   padding: '10px',
