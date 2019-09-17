@@ -139,8 +139,8 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
         className={classes.root}
         onClick={this.handleClick}
         {...accessibility.attributes.root}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {iframe && active && !iframeLoaded && placeholderImage}
         {active ? (

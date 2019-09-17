@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 
 import { childrenExist, pxToRem } from '../../../../lib'
 import {
-  ComponentSlotStylesInput,
+  ComponentSlotStylesPrepared,
   ICSSInJSStyle,
   StrictColorScheme,
   ItemType,
@@ -21,7 +21,7 @@ const beforeAndAfter = (
   background: _.get(colors, 'foreground', variables.dividerColor),
 })
 
-const dividerStyles: ComponentSlotStylesInput<DividerProps, DividerVariables> = {
+const dividerStyles: ComponentSlotStylesPrepared<DividerProps, DividerVariables> = {
   root: ({ props, variables }): ICSSInJSStyle => {
     const { children, color, fitted, size, important, content } = props
     const colors = variables.colorScheme[color]
