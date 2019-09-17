@@ -19,11 +19,6 @@ import { Accessibility } from '../../lib/accessibility/types'
 import ChatItemGutter, { ChatGutterProps } from './ChatGutter'
 import ChatMessage, { ChatMessageProps } from './ChatMessage'
 
-export interface ChatItemSlotClassNames {
-  message: string
-  gutter: string
-}
-
 export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -47,7 +42,6 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
   static className = 'ui-chat__item'
   static create: ShorthandFactory<ChatItemProps>
   static displayName = 'ChatItem'
-  static slotClassNames: ChatItemSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon({ content: false }),
@@ -99,10 +93,6 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
 }
 
 ChatItem.create = createShorthandFactory({ Component: ChatItem, mappedProp: 'message' })
-ChatItem.slotClassNames = {
-  message: `${ChatItem.className}__message`,
-  gutter: `${ChatItem.className}__gutter`,
-}
 
 /**
  * A ChatItem is container for single entity in Chat (e.g. message, notification, etc).

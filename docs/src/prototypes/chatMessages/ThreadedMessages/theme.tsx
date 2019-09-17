@@ -1,11 +1,11 @@
-import { ThemeInput, ChatItem, Input, Icon, Button, pxToRem } from '@stardust-ui/react'
+import { ThemeInput, Input, Icon, Button, pxToRem, ChatMessage } from '@stardust-ui/react'
 import classNames from './classNames'
 
 const customizedTheme: ThemeInput = {
   componentStyles: {
     ChatItem: {
       root: ({ props: p, theme: { siteVariables } }) => ({
-        [`& .${ChatItem.slotClassNames.message}`]: {
+        [`& .${ChatMessage.className}`]: {
           width: '100%',
         },
         [`&.${classNames.threadReplies.chatItem}`]: {

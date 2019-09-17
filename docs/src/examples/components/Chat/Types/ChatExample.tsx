@@ -5,24 +5,36 @@ const ChatExample = () => (
   <Chat>
     <Chat.Item attached="top" contentPosition="end">
       <Chat.Message attached="top" position="end" mine>
-        <Chat.Author>John Doe</Chat.Author>
-        <Chat.Timestamp>Yesterday, 10:15 PM</Chat.Timestamp>
+        <Chat.Author attached="top" mine>
+          John Doe
+        </Chat.Author>
+        <Chat.Timestamp attached="top" mine>
+          Yesterday, 10:15 PM
+        </Chat.Timestamp>
         <Chat.Content>Hello</Chat.Content>
       </Chat.Message>
     </Chat.Item>
 
     <Chat.Item attached contentPosition="end">
       <Chat.Message attached position="end" mine>
-        <Chat.Author>John Doe</Chat.Author>
-        <Chat.Timestamp>Yesterday, 10:15 PM</Chat.Timestamp>
+        <Chat.Author attached mine>
+          John Doe
+        </Chat.Author>
+        <Chat.Timestamp attached mine>
+          Yesterday, 10:15 PM
+        </Chat.Timestamp>
         <Chat.Content>I'm back!</Chat.Content>
       </Chat.Message>
     </Chat.Item>
 
     <Chat.Item attached="bottom" contentPosition="end">
       <Chat.Message attached="bottom" position="end" mine>
-        <Chat.Author>John Doe</Chat.Author>
-        <Chat.Timestamp>Yesterday, 10:15 PM</Chat.Timestamp>
+        <Chat.Author attached="bottom" mine>
+          John Doe
+        </Chat.Author>
+        <Chat.Timestamp attached="bottom" mine>
+          Yesterday, 10:15 PM
+        </Chat.Timestamp>
         <Chat.Content>
           <div>
             What do you think about <a href="#">www.goodFood.com</a>?
@@ -39,8 +51,8 @@ const ChatExample = () => (
         />
       </Chat.Gutter>
       <Chat.Message attached="top">
-        <Chat.Author>Jane Doe</Chat.Author>
-        <Chat.Timestamp>Yesterday, 10:15 PM</Chat.Timestamp>
+        <Chat.Author attached="top">Jane Doe</Chat.Author>
+        <Chat.Timestamp attached="top">Yesterday, 10:15 PM</Chat.Timestamp>
         <Chat.Content>Hi</Chat.Content>
       </Chat.Message>
     </Chat.Item>
@@ -53,8 +65,8 @@ const ChatExample = () => (
         />
       </Chat.Gutter>
       <Chat.Message attached>
-        <Chat.Author>Jane Doe</Chat.Author>
-        <Chat.Timestamp>Yesterday, 10:15 PM</Chat.Timestamp>
+        <Chat.Author attached>Jane Doe</Chat.Author>
+        <Chat.Timestamp attached>Yesterday, 10:15 PM</Chat.Timestamp>
         <Chat.Content>Looks good!</Chat.Content>
       </Chat.Message>
     </Chat.Item>
@@ -68,8 +80,8 @@ const ChatExample = () => (
       </Chat.Gutter>
 
       <Chat.Message attached="bottom">
-        <Chat.Author>Jane Doe</Chat.Author>
-        <Chat.Timestamp>Yesterday, 10:15 PM</Chat.Timestamp>
+        <Chat.Author attached="bottom">Jane Doe</Chat.Author>
+        <Chat.Timestamp attached="bottom">Yesterday, 10:15 PM</Chat.Timestamp>
         <Chat.Content>
           <div>
             I also like <a href="#">www.goodFood2.com</a>.
@@ -80,8 +92,8 @@ const ChatExample = () => (
 
     <Chat.Item contentPosition="end">
       <Chat.Message position="end" mine>
-        <Chat.Author>John Doe</Chat.Author>
-        <Chat.Timestamp>Yesterday, 10:16 PM</Chat.Timestamp>
+        <Chat.Author mine>John Doe</Chat.Author>
+        <Chat.Timestamp mine>Yesterday, 10:16 PM</Chat.Timestamp>
         <Chat.Content>Would you like to grab lunch there?</Chat.Content>
       </Chat.Message>
     </Chat.Item>
@@ -107,8 +119,8 @@ const ChatExample = () => (
 
     <Chat.Item contentPosition="end">
       <Chat.Message position="end" mine>
-        <Chat.Author>John Doe</Chat.Author>
-        <Chat.Timestamp>Today, 11:15 PM</Chat.Timestamp>
+        <Chat.Author mine>John Doe</Chat.Author>
+        <Chat.Timestamp mine>Today, 11:15 PM</Chat.Timestamp>
         <Chat.Content>Ok, let's go.</Chat.Content>
       </Chat.Message>
     </Chat.Item>

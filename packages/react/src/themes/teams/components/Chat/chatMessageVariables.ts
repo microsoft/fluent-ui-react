@@ -10,10 +10,6 @@ export interface ChatMessageVariables {
   color: string
   offset: string
   padding: string
-  authorMarginRight: string
-  authorColor: string
-  authorFontWeight: number
-  headerMarginBottom: string
   contentColor: string
   linkColor: string
   linkColorMine: string
@@ -27,7 +23,6 @@ export interface ChatMessageVariables {
   badgeTextColor: string
   reactionGroupMarginLeft: string
   showActionMenu?: boolean
-  timestampColorMine: string
 
   margin: string
 }
@@ -42,10 +37,6 @@ export default (siteVars): ChatMessageVariables => ({
   color: 'rgb(64, 64, 64)',
   offset: pxToRem(100),
   padding: pxToRem(16),
-  authorMarginRight: pxToRem(12),
-  authorColor: siteVars.colors.grey[500],
-  authorFontWeight: siteVars.fontWeightRegular,
-  headerMarginBottom: pxToRem(2),
   contentColor: siteVars.colors.grey[750],
   linkColor: siteVars.colorScheme.brand.foreground1,
   linkColorMine: siteVars.colorScheme.brand.foreground2,
@@ -59,7 +50,6 @@ export default (siteVars): ChatMessageVariables => ({
   badgeTextColor: siteVars.colors.white,
   reactionGroupMarginLeft: pxToRem(12),
   showActionMenu: undefined,
-  timestampColorMine: siteVars.colors.grey[500],
 
   margin: pxToRem(40),
 })

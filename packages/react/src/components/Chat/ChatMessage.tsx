@@ -240,11 +240,13 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
   }: RenderResultConfig<ChatMessageProps>) {
     const {
       actionMenu,
+      attached,
       author,
       badge,
       badgePosition,
       children,
       content,
+      mine,
       timestamp,
       reactionGroup,
       reactionGroupPosition,
@@ -289,8 +291,18 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
             <>
               {actionMenuElement}
               {badgePosition === 'start' && badgeElement}
-              {ChatAuthor.create(author)}
-              {ChatTimestamp.create(timestamp)}
+              {ChatAuthor.create(author, {
+                defaultProps: {
+                  attached,
+                  mine,
+                },
+              })}
+              {ChatTimestamp.create(timestamp, {
+                defaultProps: {
+                  attached,
+                  mine,
+                },
+              })}
               {reactionGroupPosition === 'start' && reactionGroupElement}
               {ChatContent.create(content)}
               {reactionGroupPosition === 'end' && reactionGroupElement}

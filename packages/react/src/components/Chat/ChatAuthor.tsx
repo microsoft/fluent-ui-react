@@ -1,3 +1,4 @@
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
@@ -20,11 +21,24 @@ export interface ChatAuthorProps
     ContentComponentProps {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
+
+  /** Controls item's relation to other chat items. */
+  attached?: boolean | 'top' | 'bottom'
+
+  /** Indicates whether message belongs to the current user. */
+  mine?: boolean
 }
 
 class ChatAuthor extends UIComponent<WithAsProp<ChatAuthorProps>> {
   static displayName = 'ChatAuthor'
-  static propTypes = commonPropTypes.createCommon()
+  static propTypes = {
+    ...commonPropTypes.createCommon(),
+    attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
+    mine: PropTypes.bool,
+  }
+  static defaultProps = {
+    as: 'span',
+  }
 
   static create: ShorthandFactory<ChatAuthorProps>
   static className = 'ui-chat__author'
@@ -51,4 +65,4 @@ ChatAuthor.create = createShorthandFactory({ Component: ChatAuthor, mappedProp: 
 /**
  * TODO
  */
-export default withSafeTypeForAs<typeof ChatAuthor, ChatAuthorProps, 'div'>(ChatAuthor)
+export default withSafeTypeForAs<typeof ChatAuthor, ChatAuthorProps, 'span'>(ChatAuthor)

@@ -1,14 +1,7 @@
-import { ChatMessageVariables } from '../../../teams/components/Chat/chatMessageVariables'
+import { ChatTimestampVariables } from '../../../teams/components/Chat/chatTimestampVariables'
 
-export default (siteVars: any): Partial<ChatMessageVariables> => {
+export default (siteVars: any): Partial<ChatTimestampVariables> => {
   return {
-    backgroundColor: siteVars.colors.grey[600],
-    backgroundColorMine: siteVars.colors.brand[900],
-    authorColor: siteVars.colors.grey[250],
-    contentColor: siteVars.colors.white,
-    color: siteVars.colors.white,
-    timestampColorMine: siteVars.colors.grey[250],
-    hasMentionNubbinColor: siteVars.colors.orange[300],
-    isImportantColor: siteVars.colors.red[300],
+    mineColor: siteVars.colors.grey[250],
   }
 }

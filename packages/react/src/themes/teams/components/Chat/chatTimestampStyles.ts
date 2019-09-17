@@ -9,10 +9,19 @@ const chatTimestampStyles: ComponentSlotStylesPrepared<
   ChatTimestampVariables
 > = {
   root: ({ props: p, variables: v }) => ({
+    color: v.color,
+    fontSize: v.fontSize,
+    lineHeight: v.lineHeight,
     margin: v.margin,
+
+    ':hover': {
+      color: v.colorHover,
+    },
+
     ...(p.mine && {
       color: v.mineColor,
     }),
+
     ...((p.attached === 'bottom' || p.attached === true) &&
       !p.reactionGroup &&
       screenReaderContainerStyles),

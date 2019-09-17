@@ -1,3 +1,4 @@
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
@@ -20,11 +21,24 @@ export interface ChatTimestampProps
     ContentComponentProps {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
+
+  /** Controls item's relation to other chat items. */
+  attached?: boolean | 'top' | 'bottom'
+
+  /** Indicates whether message belongs to the current user. */
+  mine?: boolean
 }
 
 class ChatTimestamp extends UIComponent<WithAsProp<ChatTimestampProps>> {
   static displayName = 'ChatTimestamp'
-  static propTypes = commonPropTypes.createCommon()
+  static propTypes = {
+    ...commonPropTypes.createCommon(),
+    attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
+    mine: PropTypes.bool,
+  }
+  static defaultProps = {
+    as: 'span',
+  }
 
   static create: ShorthandFactory<ChatTimestampProps>
   static className = 'ui-chat__timestamp'
@@ -51,4 +65,4 @@ ChatTimestamp.create = createShorthandFactory({ Component: ChatTimestamp, mapped
 /**
  * TODO
  */
-export default withSafeTypeForAs<typeof ChatTimestamp, ChatTimestampProps, 'div'>(ChatTimestamp)
+export default withSafeTypeForAs<typeof ChatTimestamp, ChatTimestampProps, 'span'>(ChatTimestamp)

@@ -6,7 +6,6 @@ import {
   ChatMessageState,
 } from '../../../../components/Chat/ChatMessage'
 import { ChatMessageVariables } from './chatMessageVariables'
-import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../lib'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
@@ -105,13 +104,6 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
       opacity: v.showActionMenu ? 1 : 0,
       width: v.showActionMenu ? 'auto' : 0,
     }),
-  }),
-  author: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    ...((p.mine || p.attached === 'bottom' || p.attached === true) && screenReaderContainerStyles),
-    color: v.authorColor,
-    marginRight: v.authorMarginRight,
-    marginBottom: v.headerMarginBottom,
-    fontWeight: v.authorFontWeight,
   }),
 
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
