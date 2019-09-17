@@ -15,9 +15,15 @@ const DebugPanel = props => {
           <div style={debugPanelIcon(false, left)} onClick={e => setLeft(false)} />
         </div>
         <div style={debugPanelBody}>
-          {/* <SiteVariablesDebugPanel data={debugData.siteVariables}/> */}
-          <VariablesDebugPanel data={debugData.componentVariables} name="Variables" />
-          <StylesDebugPanel data={debugData.componentStyles.root} name="Styles" />
+          <div style={debugPanelVariables}>
+            {/* <SiteVariablesDebugPanel data={debugData.siteVariables}/> */}
+            <div style={debugHeader()}>Variables</div>
+            <VariablesDebugPanel data={debugData.componentVariables} />
+          </div>
+          <div style={debugPanelStyles}>
+            <div style={debugHeader()}>Styles</div>
+            <StylesDebugPanel data={debugData.componentStyles.root} />
+          </div>
         </div>
       </div>
     </PortalInner>
@@ -26,26 +32,33 @@ const DebugPanel = props => {
 
 const debugPanelRoot = (left): React.CSSProperties => ({
   position: 'fixed',
-  [left ? 'left' : 'right']: '0px',
-  top: '0px',
+  [left ? 'left' : 'right']: 0,
+  top: 0,
   zIndex: 999999999,
-  height: '100%',
-  backgroundColor: 'white',
-  lineHeight: 1,
+  width: '300px',
+  height: '100vh',
+  color: '#222',
+  background: '#fff',
+  lineHeight: 1.1,
   fontSize: '12px',
   overflowY: 'auto',
-  boxShadow: left
-    ? '0 -.075rem .2rem .4rem rgba(0, 0, 0, .1)'
-    : '0 -.075rem .4rem .2rem  rgba(0, 0, 0, .1)',
+  boxShadow: '0 0 .25em .5em rgba(0, 0, 0, .1)',
 })
 
-const debugPanelIcon = (left, isLeftActive) => ({
+const debugHeader = (): React.CSSProperties => ({
+  marginBottom: '0.5em',
+  fontSize: '16px',
+  fontWeight: 'bold',
+})
+
+const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
   display: 'inline-block',
-  border: '2px solid black',
-  [left ? 'borderLeftWidth' : 'borderRightWidth']: '5px',
-  width: '15px',
-  height: '15px',
-  background: 'white',
+  borderWidth: '2px',
+  borderStyle: 'solid ',
+  borderColor: '#888',
+  [left ? 'borderLeftWidth' : 'borderRightWidth']: '6px',
+  width: '16px',
+  height: '14px',
   ...(left && {
     marginRight: '10px',
   }),
@@ -56,18 +69,24 @@ const debugPanelIcon = (left, isLeftActive) => ({
 
 const debugPanelOptions: React.CSSProperties = {
   position: 'sticky',
-  top: '0px',
+  top: 0,
   float: 'right',
   padding: '10px',
 }
 
 const debugPanelBody: React.CSSProperties = {
-  marginTop: '20px',
-  padding: '10px',
   overflowWrap: 'break-word',
   wordWrap: 'break-word',
   wordBreak: 'break-all',
   hyphens: 'auto',
+}
+
+const debugPanelVariables: React.CSSProperties = {
+  padding: '10px',
+}
+
+const debugPanelStyles: React.CSSProperties = {
+  padding: '10px',
 }
 
 export default DebugPanel

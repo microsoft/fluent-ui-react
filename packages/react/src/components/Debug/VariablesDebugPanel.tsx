@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 const VariablesDebugPanel = props => {
-  const { name, data } = props
+  const { data } = props
 
   const reversedData = JSON.parse(JSON.stringify(data)).reverse()
   const mergedThemes = []
@@ -12,56 +12,50 @@ const VariablesDebugPanel = props => {
     mergedThemes.push(_.merge({}, mergedThemes[i - 1], reversedData[i - 1]))
   }
 
-  return (
-    <div>
-      <b style={{ fontSize: '18px' }}>{name}</b>
-      {reversedData.map((themeVariables, idx) => {
-        const mergedData = mergedThemes[idx]
-        return (
-          <div key={idx} style={{ marginBottom: '10px' }}>
-            {idx > 0 && (
-              <hr
-                style={{
-                  height: '1px',
-                  color: '#ccc',
-                  backgroundColor: '#ccc',
-                  border: 'none',
-                }}
-              />
-            )}
-            <br />
-            <pre>
-              {'{'}
-              <br />
-              {Object.keys(themeVariables).map((key, idx) => {
-                const overriden = !!mergedData[key]
+  return reversedData.map((themeVariables, idx) => {
+    const mergedData = mergedThemes[idx]
+    return (
+      <div key={idx}>
+        {idx > 0 && (
+          <hr
+            style={{
+              height: '1px',
+              color: '#ccc',
+              backgroundColor: '#ccc',
+              border: 'none',
+            }}
+          />
+        )}
+        <pre>
+          {'{'}
+          {Object.keys(themeVariables).map((key, idx) => {
+            const overriden = !!mergedData[key]
+            const value = themeVariables[key]
 
-                return (
-                  <div key={key}>
-                    <span>
-                      {'  '}
-                      <span style={{ ...(overriden && { textDecoration: 'line-through' }) }}>
-                        <span style={{ color: 'red' }}>{key}</span>
-                        {`: ${
-                          typeof themeVariables[key] === 'string'
-                            ? `"${themeVariables[key]}"`
-                            : themeVariables[key]
-                        }`}
-                      </span>
-                      {','} {/* {theme.input[key] !== theme.resolved[key] && ( */}
-                      {/* <small style={{ color: '#999' }}>{`// ${theme.input[key]}`}</small> */}
-                      {/* )} */}
-                    </span>
-                  </div>
-                )
-              })}
-              {'}'}
-            </pre>
-          </div>
-        )
-      })}
-    </div>
-  )
+            return (
+              <div key={key}>
+                {'  '}
+                <span style={{ textDecoration: overriden ? 'line-through' : 'none' }}>
+                  <span style={{ color: 'red' }}>{key}</span>
+                  {`: ${
+                    typeof value === 'string'
+                      ? `'${value}'`
+                      : typeof value === 'object' && value !== null
+                      ? '{ ... }' // TODO: recursively resolve variable objects
+                      : value
+                  }`}
+                </span>
+                {','} {/* {theme.input[key] !== theme.resolved[key] && ( */}
+                {/* <small style={{ color: '#999' }}>{`// ${theme.input[key]}`}</small> */}
+                {/* )} */}
+              </div>
+            )
+          })}
+          {'}'}
+        </pre>
+      </div>
+    )
+  })
 }
 
 export default VariablesDebugPanel

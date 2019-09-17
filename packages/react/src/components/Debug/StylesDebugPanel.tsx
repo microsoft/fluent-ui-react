@@ -17,7 +17,6 @@ const StylesData = props => {
   return (
     <>
       {'{'}
-      <br />
       {Object.keys(data).map(key => {
         // TODO extract this logic on one place
         const highlight =
@@ -33,15 +32,9 @@ const StylesData = props => {
           prevMergedData[key] !== undefined
         return (
           <div key={key}>
-            <span
-              style={{
-                ...(highlight && {
-                  backgroundColor: 'rgb(255,255,224)',
-                }),
-              }}
-            >
+            <span style={{ background: highlight ? 'rgb(255,255,224)' : '' }}>
               {' '.repeat(indent)}
-              <span style={{ ...(overriden && { textDecoration: 'line-through' }) }}>
+              <span style={{ textDecoration: overriden ? 'line-through' : 'none' }}>
                 <span style={{ color: typeof data[key] === 'object' ? 'grey' : 'red' }}>{key}</span>
                 {': '}
                 <StylesData
@@ -51,7 +44,7 @@ const StylesData = props => {
                   highlightKey={highlightKey}
                 />
               </span>
-              {','}{' '}
+              {','}
             </span>
           </div>
         )
@@ -63,7 +56,7 @@ const StylesData = props => {
 
 const StylesDebugPanel = props => {
   const [value, setValue] = React.useState('')
-  const { name, data } = props
+  const { data } = props
 
   const reversedData = JSON.parse(JSON.stringify(data)).reverse()
   const mergedThemes = []
@@ -93,11 +86,11 @@ const StylesDebugPanel = props => {
   }
 
   return (
-    <div>
-      <b style={{ fontSize: '18px' }}>{name}</b>
+    <>
       <input
         onChange={e => setValue(e.target.value)}
-        style={{ width: '100%', marginTop: '10px', border: '1px solid #ccc' }}
+        style={{ padding: '2px 4px', width: '100%', border: '1px solid #ccc' }}
+        placeholder="Filter"
       />
       {reversedData.map((theme, idx) => {
         const filteredTheme =
@@ -126,29 +119,22 @@ const StylesDebugPanel = props => {
                 }, {})
 
         return (
-          <div key={idx} style={{ marginBottom: '10px' }}>
-            {idx > 0 && (
-              <hr
-                style={{
-                  height: '1px',
-                  color: '#ccc',
-                  backgroundColor: '#ccc',
-                  border: 'none',
-                }}
-              />
-            )}
-            <br />
-            <pre>
-              <StylesData
-                data={filteredTheme}
-                prevMergedData={mergedThemes[idx]}
-                highlightKey={value}
-              />
-            </pre>
-          </div>
+          <pre
+            key={idx}
+            style={{
+              padding: '0.5em 0',
+              borderTop: idx > 0 ? '1px solid #ddd' : 'none',
+            }}
+          >
+            <StylesData
+              data={filteredTheme}
+              prevMergedData={mergedThemes[idx]}
+              highlightKey={value}
+            />
+          </pre>
         )
       })}
-    </div>
+    </>
   )
 }
 

@@ -360,8 +360,8 @@ class Debug extends React.Component<{}> {
           const isSelecting = !this.state.isSelecting
 
           this.setState({
+            ...(!isSelecting && INITIAL_STATE),
             isSelecting,
-            stardustComponent: isSelecting ? this.state.stardustComponent : null,
           })
         }
         break
@@ -428,7 +428,7 @@ class Debug extends React.Component<{}> {
   setDebugSelectorPosition = () => {
     const { stardustDOMNode } = this.state
 
-    if (stardustDOMNode && this.selectorRef) {
+    if (stardustDOMNode && this.selectorRef.current) {
       const rect = stardustDOMNode.getBoundingClientRect()
 
       this.selectorRef.current.style.top = `${rect.top}px`
@@ -483,7 +483,6 @@ class Debug extends React.Component<{}> {
               position: 'fixed',
               padding: 0,
               margin: 0,
-              color: '#000',
               background: '#6495ed22',
               border: '1px solid #6495edcc',
               zIndex: 99999999,
