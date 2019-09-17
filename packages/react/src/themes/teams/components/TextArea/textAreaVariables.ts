@@ -2,15 +2,15 @@ import { pxToRem } from '../../../../lib'
 
 export interface TextAreaVariables {
   backgroundColor: string
-  backgroundColorInverted: string
-  backgroundColorDisabled: string
-  colorDisabled: string
+  invertedBackgroundColor: string
+  disabledBackgroundColor: string
+  disabledColor: string
   borderColor: string
   borderRadius: string
   borderWidth: string
   fontColor: string
   fontSize: string
-  focusBorderColor: string
+  borderColorFocus: string
   placeholderColor: string
   margin: string
   padding: string
@@ -26,16 +26,16 @@ export default (siteVars): Partial<TextAreaVariables> => ({
   borderWidth: `0 0 ${pxToRem(2)} 0`,
 
   backgroundColor: siteVars.colorScheme.default.background2,
-  backgroundColorInverted: siteVars.colorScheme.default.background,
+  invertedBackgroundColor: siteVars.colorScheme.default.background,
   placeholderColor: siteVars.colorScheme.default.foreground1,
 
-  backgroundColorDisabled: siteVars.colorScheme.default.backgroundColorDisabled,
-  colorDisabled: siteVars.colorScheme.default.colorDisabled,
+  disabledBackgroundColor: siteVars.colorScheme.default.backgroundColorDisabled,
+  disabledColor: siteVars.colorScheme.default.colorDisabled,
 
   fontColor: siteVars.colorScheme.default.foreground,
   fontSize: siteVars.fontSizes.medium,
 
-  focusBorderColor: `transparent transparent ${siteVars.colorScheme.brand.borderFocus1} transparent`,
+  borderColorFocus: `transparent transparent ${siteVars.colorScheme.brand.borderFocus1} transparent`,
 
   height: 'auto',
 })

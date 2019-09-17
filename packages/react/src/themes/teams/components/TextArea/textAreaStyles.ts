@@ -9,7 +9,7 @@ const textAreaStyles: ComponentSlotStylesPrepared<TextAreaProps, TextAreaVariabl
 
     backgroundColor: v.backgroundColor,
     ...(p.inverted && {
-      backgroundColor: v.backgroundColorInverted,
+      backgroundColor: v.invertedBackgroundColor,
     }),
 
     color: v.fontColor,
@@ -22,13 +22,7 @@ const textAreaStyles: ComponentSlotStylesPrepared<TextAreaProps, TextAreaVariabl
     outline: 0,
     padding: v.padding,
 
-    ...(!p.resize && {
-      resize: 'none',
-    }),
-
-    ...(p.resize && {
-      resize: p.resize,
-    }),
+    resize: p.resize || 'none',
 
     ...(p.fluid && {
       width: '100%',
@@ -36,8 +30,8 @@ const textAreaStyles: ComponentSlotStylesPrepared<TextAreaProps, TextAreaVariabl
 
     ...(p.disabled && {
       pointerEvents: 'none',
-      backgroundColor: v.backgroundColorDisabled,
-      color: v.colorDisabled,
+      backgroundColor: v.disabledBackgroundColor,
+      color: v.disabledColor,
     }),
 
     '::placeholder': {
@@ -46,7 +40,7 @@ const textAreaStyles: ComponentSlotStylesPrepared<TextAreaProps, TextAreaVariabl
     },
 
     ':focus': {
-      borderColor: v.focusBorderColor,
+      borderColor: v.borderColorFocus,
     },
   }),
 }
