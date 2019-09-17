@@ -99,10 +99,10 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
       }
       return ToolbarMenuItem.create(item, {
         overrideProps: itemOverridesFn,
-        defaultProps: {
-          onPopupDocumentClick: this.handlePopupDocumentClick,
-          onPopupOpenChange: this.handlePopupOpenChange,
-        },
+        // defaultProps: {
+        //   onPopupDocumentClick: this.handlePopupDocumentClick,
+        //   onPopupOpenChange: this.handlePopupOpenChange,
+        // },
       })
     })
   }

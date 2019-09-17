@@ -15,17 +15,15 @@ const ToolbarExamplePopupInMenu = () => {
             key: 'menu1',
             icon: 'more',
             active: menu1Open,
-            menu: {
-              items: [
-                {
-                  key: 'popup1',
-                  content: 'Open Popup',
-                  popup: {
-                    content: PopupContent,
-                  },
+            menu: [
+              {
+                key: 'popup',
+                content: 'Open Popup',
+                popup: {
+                  content: PopupContent,
                 },
-              ],
-            },
+              },
+            ],
             menuOpen: menu1Open,
             onMenuOpenChange: (e, { menuOpen }) => {
               setMenu1Open(menuOpen)
@@ -40,17 +38,16 @@ const ToolbarExamplePopupInMenu = () => {
             key: 'menu2',
             icon: 'more',
             active: menu2Open,
-            menu: {
-              items: [
-                {
-                  key: 'popup2',
-                  content: 'Open Popup',
-                  popup: {
-                    content: PopupContent,
-                  },
+            menu: [
+              {
+                key: 'popup',
+                content: 'Open Popup',
+                popup: {
+                  content: PopupContent,
                 },
-              ],
-            },
+              },
+              { key: 'about', content: 'About...' },
+            ],
             menuOpen: menu2Open,
             onMenuOpenChange: (e, { menuOpen }) => {
               setMenu2Open(menuOpen)
