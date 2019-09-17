@@ -75,6 +75,7 @@ import filesPowerPointBrand from './filesPowerPointBrand'
 import filesWord from './filesWord'
 import filesWordBrand from './filesWordBrand'
 import filesVisio from './filesVisio'
+import filesVisioBrand from './filesVisioBrand'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
 import format from './format'
@@ -214,7 +215,6 @@ export default {
   'files-txt': filesTxt,
   'files-upload': filesUpload,
   'files-video': filesVideo,
-  'files-visio': filesVisio,
   'files-zip': filesZip,
   flag,
   download,
@@ -319,4 +319,6 @@ export default {
   'excel-color': filesExcelBrand,
   'powerpoint-color': filesPowerPointBrand,
   'onenote-color': filesOneNoteBrand,
+  visio: filesVisio,
+  'visio-color': filesVisioBrand,
 } as { [iconName: string]: TeamsSvgIconSpec }

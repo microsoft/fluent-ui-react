@@ -4,93 +4,29 @@ import { TeamsProcessedSvgIconSpec } from '../types'
 export default {
   icon: ({ classes }) => (
     <svg role="presentation" focusable="false" viewBox="0 0 32 32" className={classes.svg}>
-      <defs>
-        <linearGradient
-          id="linear-gradient"
-          x1="5.08"
-          y1="3.61"
-          x2="27.96"
-          y2="30.87"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0" stopColor="#fff" stopOpacity="0" />
-          <stop offset=".86" stopColor="#5e5e5e" stopOpacity=".06" />
-          <stop offset="1" stopOpacity=".1" />
-        </linearGradient>
-        <linearGradient
-          id="linear-gradient-2"
-          x1="22.15"
-          y1="9.1"
-          x2="26.11"
-          y2="5.14"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0" stopColor="#fff" stopOpacity="0" />
-          <stop offset=".45" stopColor="#fff" stopOpacity=".01" />
-          <stop offset=".64" stopColor="#fff" stopOpacity=".04" />
-          <stop offset=".78" stopColor="#fff" stopOpacity=".08" />
-          <stop offset=".89" stopColor="#fff" stopOpacity=".15" />
-          <stop offset=".99" stopColor="#fff" stopOpacity=".24" />
-          <stop offset="1" stopColor="#fff" stopOpacity=".25" />
-        </linearGradient>
-        <linearGradient
-          id="linear-gradient-3"
-          x1="9.5"
-          y1="26.44"
-          x2="9.5"
-          y2="9.53"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0" stopColor="#fff" stopOpacity="0" />
-          <stop offset=".53" stopColor="#fff" stopOpacity=".01" />
-          <stop offset=".72" stopColor="#fff" stopOpacity=".03" />
-          <stop offset=".85" stopColor="#fff" stopOpacity=".08" />
-          <stop offset=".96" stopColor="#fff" stopOpacity=".15" />
-          <stop offset="1" stopColor="#fff" stopOpacity=".18" />
-        </linearGradient>
-        <linearGradient
-          id="linear-gradient-4"
-          x1="11.28"
-          y1="29.35"
-          x2="11.62"
-          y2="26.21"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0" stopColor="#828282" stopOpacity="0" />
-          <stop offset=".86" stopColor="#303030" stopOpacity=".13" />
-          <stop offset="1" stopOpacity=".2" />
-        </linearGradient>
-        <linearGradient
-          id="linear-gradient-5"
-          x1="25"
-          y1="10.94"
-          x2="25"
-          y2="9.06"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0" stopColor="#828282" stopOpacity="0" />
-          <stop offset=".86" stopColor="#303030" stopOpacity=".06" />
-          <stop offset="1" stopOpacity=".1" />
-        </linearGradient>
-      </defs>
-      <g>
-        <path fill="#fff" d="M28 29H8V3h15l5 5v21z" />
-        <path fill="#a6a6a6" d="M23 2H7v28h22V8zm0 1.5L27.5 8H23zM28 29H8V3h14v6h6z" />
-        <path
-          fill="#c8c8c8"
-          d="M22 23h4v1h-4zM22 25h4v1h-4zM22 19h4v1h-4zM22 21h4v1h-4zM22 15h4v1h-4zM22 17h4v1h-4zM22 11h4v1h-4zM22 13h4v1h-4zM17 23h4v1h-4zM17 25h4v1h-4zM17 19h4v1h-4zM17 21h4v1h-4zM17 15h4v1h-4zM17 17h4v1h-4zM17 11h4v1h-4zM17 13h4v1h-4z"
-        />
-        <path fill="#008641" d="M3 11l13-2v18L3 25V11z" />
-        <path
-          fill="#fff"
-          d="M13 22h-2l-1.3-2.61a2.39 2.39 0 0 1-.15-.54 4.23 4.23 0 0 1-.17.56L8 22H6l2.41-4-2.2-4h2.07l1.08 2.4a4.31 4.31 0 0 1 .23.68q.06-.23.24-.7L11 14h1.9l-2.26 4z"
-        />
-        <path fill="url(#linear-gradient)" d="M29 8l-6-6H7v28h22z" />
-        <path fill="url(#linear-gradient-2)" d="M7 2v1h15v6h6v15.5h1V8l-6-6H7z" />
-        <path fill="url(#linear-gradient-3)" d="M16 9L3 11v14l13 2V9z" />
-        <path fill="url(#linear-gradient-4)" d="M16 29H7v-3.38L16 27v2z" />
-        <path fill="url(#linear-gradient-5)" d="M22 9h6v2h-6z" />
-      </g>
+      <path d="M24 15h-3v-2h3m0 5h-3v-2h3m0 5h-3v-2h3m-4-4h-3v-2h3m0 5h-3v-2h3m0 5h-3v-2h3m6.781-10a.96.96 0 0 1 .297.703V29c0 .271-.099.505-.297.703s-.432.297-.703.297h-19a.928.928 0 0 1-.703-.297.96.96 0 0 1-.297-.703v-6H3.172A1.149 1.149 0 0 1 2 21.828V10.172c0-.333.115-.609.344-.828.218-.229.495-.344.828-.344h2.906V3a.96.96 0 0 1 .297-.703A.928.928 0 0 1 7.078 2h12.281c.26 0 .5.099.719.297m0 6.703h5.281l-5.281-5.297M7.297 20l1.547-2.812.125-.203.062-.156L10.703 20h1.875l-2.5-4.031 2.438-4.016h-1.844l-1.578 3.141a12.361 12.361 0 0 0-.25-.547L7.547 12H5.641l2.375 3.984L5.422 20m20.656-10h-6a.928.928 0 0 1-.703-.297.96.96 0 0 1-.297-.703V3h-12v6h7.75c.333 0 .615.115.844.344.219.218.328.495.328.828v11.656c0 .333-.109.615-.328.844a1.175 1.175 0 0 1-.844.328h-7.75v6h19V10z" />
+      <path
+        fill="#FAFAFA"
+        d="M6.5 29V3a.484.484 0 0 1 .5-.5h12.297c.135 0 .25.047.344.141L26.36 9.36c.093.093.14.208.14.343V29a.484.484 0 0 1-.5.5H7a.484.484 0 0 1-.5-.5z"
+      />
+      <path
+        fill="#797774"
+        d="M26.703 9a.96.96 0 0 1 .297.703V29c0 .271-.099.505-.297.703S26.271 30 26 30H7c-.271 0-.505-.099-.703-.297S6 29.271 6 29V3c0-.271.099-.505.297-.703S6.729 2 7 2h12.297a.96.96 0 0 1 .703.297M20 9h5.297L20 3.703M26 29V10h-6c-.271 0-.505-.099-.703-.297S19 9.271 19 9V3H7v26h19z"
+      />
+      <path fill="#21A366" d="M20 15h-3v-2h3v2z" />
+      <path fill="#107C41" d="M20 18h-3v-2h3v2z" />
+      <path fill="#185C37" d="M20 21h-3v-2h3v2z" />
+      <path fill="#33C481" d="M24 15h-3v-2h3v2z" />
+      <path fill="#21A366" d="M24 18h-3v-2h3v2z" />
+      <path fill="#134A2C" d="M24 21h-3v-2h3v2z" />
+      <path
+        fill="#107C41"
+        d="M14.828 23H3.172A1.149 1.149 0 0 1 2 21.828V10.172c0-.333.115-.609.344-.828.218-.229.495-.344.828-.344h11.656c.333 0 .615.115.844.344.219.218.328.495.328.828v11.656c0 .333-.109.615-.328.844a1.175 1.175 0 0 1-.844.328z"
+      />
+      <path
+        fill="#FFF"
+        d="M5.422 20l2.594-4.016L5.641 12h1.906l1.297 2.547c.115.24.198.422.25.547l1.578-3.141h1.844l-2.438 4.016 2.5 4.031h-1.875l-1.672-3.172-.062.156-.125.203L7.297 20H5.422z"
+      />
     </svg>
   ),
   styles: {},
