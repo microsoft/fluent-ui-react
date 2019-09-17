@@ -14,6 +14,10 @@ const DebugPanel = props => {
           <div style={debugPanelIcon(false, left)} onClick={e => setLeft(false)} />
         </div>
         <div style={debugPanelBody}>
+          {/* <div style={debugPanelSiteVariables}> */}
+          {/* <div style={debugHeader()}>Site variables</div> */}
+          {/* <DebugPanelItem data={debugData.siteVariables} /> */}
+          {/* </div> */}
           <div style={debugPanelVariables}>
             <div style={debugHeader()}>Variables</div>
             <DebugPanelItem data={debugData.componentVariables} />
@@ -79,6 +83,10 @@ const debugPanelBody: React.CSSProperties = {
   wordBreak: 'break-all',
   hyphens: 'auto',
 }
+
+// const debugPanelSiteVariables: React.CSSProperties = {
+//   padding: '10px',
+// }
 
 const debugPanelVariables: React.CSSProperties = {
   padding: '10px',

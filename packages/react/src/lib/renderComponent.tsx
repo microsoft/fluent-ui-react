@@ -235,6 +235,18 @@ const renderComponent = <P extends {}>(
         _.negate(_.isEmpty),
       ),
       componentStyles: _.mapValues(resolvedStylesDebug, v => _.filter(v, _.negate(_.isEmpty))),
+      siteVariables: theme.siteVariables._debug.filter(siteVars => {
+        if (_.isEmpty(siteVars)) {
+          return false
+        }
+
+        const keys = Object.keys(siteVars)
+        if (keys.length === 1 && keys.pop() === 'fontSizes' && _.isEmpty(siteVars['fontSizes'])) {
+          return false
+        }
+
+        return true
+      }),
     })
   }
 

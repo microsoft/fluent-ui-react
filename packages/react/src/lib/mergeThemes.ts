@@ -109,7 +109,15 @@ export const mergeSiteVariables = (
   const initial: SiteVariablesPrepared = {
     fontSizes: {},
   }
-  return deepmerge(initial, ...sources)
+
+  return sources.reduce<SiteVariablesPrepared>((acc, next) => {
+    const { _debug = [], ...accumulatedSiteVariables } = acc
+    const { _debug: computedDebug = undefined, ...nextSiteVariables } = next || {}
+
+    const merged = deepmerge(accumulatedSiteVariables, nextSiteVariables)
+    merged._debug = _debug.concat(computedDebug || nextSiteVariables)
+    return merged
+  }, initial)
 }
 
 /**
