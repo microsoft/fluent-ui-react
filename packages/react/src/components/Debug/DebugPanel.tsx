@@ -4,6 +4,7 @@ import PortalInner from '../Portal/PortalInner'
 import DebugPanelItem from './DebugPanelItem'
 
 export type DebugPanelProps = {
+  cssStyles: string[]
   debugData: {
     componentStyles: object[]
     componentVariables: {
@@ -17,7 +18,7 @@ export type DebugPanelProps = {
 const DebugPanel: React.FC<DebugPanelProps> = props => {
   const [left, setLeft] = React.useState(false)
   const [slot, setSlot] = React.useState('root')
-  const { debugData } = props
+  const { cssStyles, debugData } = props
 
   const styleSlots = Object.keys(debugData.componentStyles)
   const siteVariablesKey = []
@@ -60,7 +61,6 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
             </div>
             <DebugPanelItem data={debugData.componentVariables} rootKey="resolved" />
           </div>
-
           <div style={debugPanel}>
             <div style={debugHeaderContainer()}>
               <div style={debugHeader()}>Styles</div>
@@ -76,6 +76,15 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
             </div>
 
             <DebugPanelItem data={debugData.componentStyles[slot]} />
+          </div>
+
+          <div style={debugPanel}>
+            <div style={debugHeader()}>HTML Styles</div>
+            <div style={{ clear: 'both', paddingBottom: '10rem' }}>
+              {cssStyles.map(l => (
+                <pre key={l}>{l}</pre>
+              ))}
+            </div>
           </div>
         </div>
       </div>

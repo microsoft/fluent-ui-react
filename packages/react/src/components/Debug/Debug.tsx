@@ -281,23 +281,42 @@ class FiberNavigator {
     return fiber && fiber.elementType && fiber.type && fiber.tag && fiber.key && fiber.stateNode
   }
 
+  get name() {
+    return this.__fiber.stateNode.constructor.name
+  }
+
   get parent(): FiberNavigator {
     return FiberNavigator.fromFiber(this.__fiber.return)
   }
 
   get domNode() {
-    // TODO: traverse down composite fibers until we get to DOM fiber, then return stateNode
-    return this.__fiber.stateNode
+    // TODO: what the hell, clean this up.....
+    // TODO: what the hell, clean this up.....
+    // TODO: what the hell, clean this up.....
+    // TODO: what the hell, clean this up.....
+    // TODO: what the hell, clean this up.....
+    let fiber = this.__fiber
+
+    if (fiber.stateNode instanceof HTMLElement) {
+      return fiber.stateNode
+    }
+
+    // TODO: and if no child?
+    do {
+      fiber = fiber.child
+    } while (!(fiber.stateNode instanceof HTMLElement))
+
+    // TODO: and if nothing?
+    return fiber.stateNode
   }
 
   get owner() {
-    // TODO: traverse down composite fibers until we get to DOM fiber, then return stateNode
-    return this.__fiber._debugOwner
+    return FiberNavigator.fromFiber(this.__fiber._debugOwner)
   }
 
   get ref() {
     // TODO: hey, only works for classes :/ womp...
-    return this.__fiber.return.stateNode
+    return this.__fiber.stateNode
   }
 
   get elementType() {
@@ -340,6 +359,29 @@ class FiberNavigator {
     return !this.isDOMComponent()
   }
 }
+
+const stylesForNode = (node: HTMLElement) => {
+  const styleSheets = Array.from<any>(document.styleSheets)
+
+  return styleSheets
+
+    .filter(styleSheet => styleSheet.ownerNode.dataset && styleSheet.ownerNode.dataset.felaType)
+
+    .reduce((acc, next) => {
+      Array.from(next.cssRules).forEach(rule => {
+        const nodesForSelector = Array.from(document.querySelectorAll(rule.selectorText))
+
+        const isMatch = nodesForSelector.some(nodeForRule => {
+          return node === nodeForRule
+        })
+
+        if (isMatch) acc.push(rule.cssText)
+      })
+
+      return acc
+    }, [])
+}
+;(window as any).F = FiberNavigator
 
 const INITIAL_STATE = {
   isSelecting: false,
@@ -398,7 +440,6 @@ class Debug extends React.Component<DebugProps> {
   }
 
   handleMouseMove = e => {
-    let node = e.target
     let stardustDOMNode: HTMLElement
     let stardustComponent: React.Component
     let stardustRef: React.ElementType
@@ -410,22 +451,30 @@ class Debug extends React.Component<DebugProps> {
 
     // console.group('MOUSEMOVE')
 
-    while (!stardustDOMNode && node && node.parentNode) {
-      const fiberNav = FiberNavigator.fromDOMNode(node)
-      const SDComponent = Stardust[fiberNav.owner.elementType.name]
+    let fiberNav = FiberNavigator.fromDOMNode(e.target)
+
+    while (!stardustDOMNode && fiberNav && fiberNav.parent) {
+      const owner = fiberNav.owner
+      const SDComponent = Stardust[owner.name]
 
       // console.group('WHILE')
-      // console.debug({ node, fiber, SDComponent })
+      // console.debug({ node, fiberNav, SDComponent })
 
       if (SDComponent) {
-        stardustDOMNode = node
+        stardustDOMNode = owner.domNode
         stardustComponent = SDComponent
-        stardustRef = fiberNav.ref
+        stardustRef = owner.ref
       } else {
-        node = node.parentNode
+        fiberNav = fiberNav.parent
       }
 
-      // console.debug({ node, fiber, stardustDOMNode, stardustComponent })
+      console.debug({
+        node: fiberNav.domNode,
+        fiberNav,
+        stardustRef,
+        stardustDOMNode,
+        stardustComponent,
+      })
       // console.groupEnd()
     }
 
@@ -466,6 +515,8 @@ class Debug extends React.Component<DebugProps> {
 
     const domNodeClassString = (stardustDOMNode && stardustDOMNode.getAttribute('class')) || ''
 
+    const cssStyles = stylesForNode(stardustDOMNode)
+    console.log(cssStyles)
     return (
       <>
         <EventListener
@@ -557,7 +608,7 @@ class Debug extends React.Component<DebugProps> {
           </pre>
         )}
         {!isSelecting && stardustRef && stardustRef.stardustDebug && (
-          <DebugPanel debugData={stardustRef.stardustDebug} />
+          <DebugPanel cssStyles={cssStyles} debugData={stardustRef.stardustDebug} />
         )}
       </>
     )
