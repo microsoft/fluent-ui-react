@@ -122,6 +122,13 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     _.invoke(this.props, 'onClick', e, { ...this.props, active: !this.state.active })
   }
 
+  handleFrameOverrides = predefinedProps => ({
+    onLoad: (e: React.SyntheticEvent) => {
+      _.invoke(predefinedProps, 'onLoad', e)
+      this.setState({ iframeLoaded: true })
+    },
+  })
+
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { control, iframe, placeholder, video } = this.props
     const { active, iframeLoaded } = this.state
@@ -164,11 +171,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                 as: 'iframe',
                 styles: styles.iframe,
               },
-              overrideProps: {
-                onLoad: () => {
-                  this.setState({ iframeLoaded: true })
-                },
-              },
+              overrideProps: this.handleFrameOverrides,
             })}
           </>
         ) : (
