@@ -164,6 +164,8 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                 as: 'iframe',
                 styles: styles.iframe,
                 style: { visibility: iframeLoaded ? 'visible' : 'hidden' },
+              },
+              overrideProps: {
                 onLoad: () => {
                   this.setState({ iframeLoaded: true })
                 },
