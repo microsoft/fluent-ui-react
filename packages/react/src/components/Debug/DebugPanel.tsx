@@ -4,7 +4,7 @@ import PortalInner from '../Portal/PortalInner'
 import DebugPanelItem from './DebugPanelItem'
 
 export type DebugPanelProps = {
-  cssStyles: string[]
+  cssStyles?: string[]
   componentName: string
   debugData: {
     componentStyles: { [key: string]: { styles: any; debugId: string } }
@@ -148,14 +148,16 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
           )}
         </div>
 
-        <div style={debugPanel}>
-          <div style={debugHeader()}>HTML Styles</div>
-          <div style={{ clear: 'both', paddingBottom: '10rem' }}>
-            {cssStyles.map(l => (
-              <pre key={l}>{l}</pre>
-            ))}
+        {!!cssStyles && !!cssStyles.length && (
+          <div style={debugPanel}>
+            <div style={debugHeader()}>HTML Styles</div>
+            <div style={{ clear: 'both', paddingBottom: '10rem' }}>
+              {cssStyles.map(l => (
+                <pre key={l}>{l}</pre>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </PortalInner>
   )
