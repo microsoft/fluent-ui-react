@@ -82,7 +82,7 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, content } = this.props
 
     return (

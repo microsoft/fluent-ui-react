@@ -1,6 +1,7 @@
 import * as _ from 'lodash'
 import { Accessibility } from '../../types'
 import treeItemBehavior from './treeItemBehavior'
+import treeTitleAsListItemTitleBehavior from './treeTitleAsListItemTitleBehavior'
 
 /**
  * @description
@@ -15,6 +16,9 @@ const treeItemAsListItemBehavior: Accessibility<TreeItemBehaviorProps> = props =
           role: 'listitem',
         }),
       },
+    },
+    childBehaviors: {
+      title: treeTitleAsListItemTitleBehavior,
     },
   })
 }

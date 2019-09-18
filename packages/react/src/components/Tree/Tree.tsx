@@ -28,6 +28,7 @@ import { treeBehavior } from '../../lib/accessibility'
 import { getNextElement } from '../../lib/accessibility/FocusZone/focusUtilities'
 import { hasSubtree, removeItemAtIndex } from './lib'
 import { TreeTitleProps } from './TreeTitle'
+import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 export interface TreeSlotClassNames {
   item: string
@@ -261,7 +262,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     },
   })
 
-  renderContent(): React.ReactElement[] {
+  renderContent(accessibility: ReactAccessibilityBehavior): React.ReactElement[] {
     const { itemsForRender } = this.state
     const { items, renderItemTitle } = this.props
 
@@ -276,6 +277,9 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           const isSubtreeOpen = isSubtree && this.isActiveItem(item['id'])
           const renderedItem = TreeItem.create(item, {
             defaultProps: {
+              accessibility: accessibility.childBehaviors
+                ? accessibility.childBehaviors.item
+                : undefined,
               className: Tree.slotClassNames.item,
               open: isSubtreeOpen,
               renderItemTitle,
@@ -299,7 +303,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     return renderItems(items)
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, renderedItems } = this.props
 
     return (
@@ -314,8 +318,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           {childrenExist(children)
             ? children
             : renderedItems
-            ? renderedItems(this.renderContent())
-            : this.renderContent()}
+            ? renderedItems(this.renderContent(accessibility))
+            : this.renderContent(accessibility)}
         </ElementType>
       </Ref>
     )
