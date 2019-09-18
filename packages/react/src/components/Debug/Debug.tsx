@@ -292,6 +292,9 @@ class Debug extends React.Component<DebugProps> {
         )}
         {!isSelecting && stardustInstance && (
           <DebugPanel
+            activateDebugSelector={() => {
+              this.setState({ isSelecting: true })
+            }}
             componentName={componentName}
             // TODO: Integrate CSS in JS Styles for Host Components (DOM nodes)
             // cssStyles={stylesForNode(stardustDOMNode)}

@@ -14,6 +14,7 @@ export type DebugPanelProps = {
     }[]
     siteVariables: object[]
   }
+  activateDebugSelector: (e) => void
 }
 
 const getValues = (value, predicate) => {
@@ -41,7 +42,7 @@ const getValues = (value, predicate) => {
 const DebugPanel: React.FC<DebugPanelProps> = props => {
   const [left, setLeft] = React.useState(false)
   const [slot, setSlot] = React.useState('root')
-  const { cssStyles, componentName, debugData: inputDebugData } = props
+  const { cssStyles, componentName, debugData: inputDebugData, activateDebugSelector } = props
 
   const debugData =
     _.isNil(inputDebugData) || _.isEmpty(inputDebugData)
@@ -82,8 +83,13 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
     <PortalInner>
       <div style={debugPanelRoot(left)}>
         <div style={debugPanelOptions}>
-          <div style={debugPanelIcon(true, left)} onClick={e => setLeft(true)} />
-          <div style={debugPanelIcon(false, left)} onClick={e => setLeft(false)} />
+          <div tabIndex={0} onClick={activateDebugSelector} style={debugPanelArrowIcon}>
+            {'\u21f1'}
+          </div>
+          <div style={{ float: 'right' }}>
+            <div style={debugPanelIcon(true, left)} onClick={e => setLeft(true)} />
+            <div style={debugPanelIcon(false, left)} onClick={e => setLeft(false)} />
+          </div>
         </div>
 
         <div style={debugPanelBody}>
@@ -163,6 +169,15 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
   )
 }
 
+const debugPanelArrowIcon: React.CSSProperties = {
+  float: 'left',
+  fontSize: '20px',
+  color: 'grey',
+  marginTop: '-4px',
+  outline: '0',
+  cursor: 'pointer',
+}
+
 const debugPanelRoot = (left): React.CSSProperties => ({
   position: 'fixed',
   [left ? 'left' : 'right']: 0,
@@ -215,12 +230,12 @@ const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
   ...(left === isLeftActive && {
     borderColor: '#6495ed',
   }),
+  cursor: 'pointer',
 })
 
 const debugPanelOptions: React.CSSProperties = {
   position: 'sticky',
   top: 0,
-  float: 'right',
   padding: '10px',
 }
 
