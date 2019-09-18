@@ -14,7 +14,7 @@ export type DebugPanelProps = {
     }[]
     siteVariables: object[]
   }
-  activateDebugSelector: (e) => void
+  onActivateDebugSelectorClick: (e) => void
 }
 
 const getValues = (value, predicate) => {
@@ -42,7 +42,12 @@ const getValues = (value, predicate) => {
 const DebugPanel: React.FC<DebugPanelProps> = props => {
   const [left, setLeft] = React.useState(false)
   const [slot, setSlot] = React.useState('root')
-  const { cssStyles, componentName, debugData: inputDebugData, activateDebugSelector } = props
+  const {
+    cssStyles,
+    componentName,
+    debugData: inputDebugData,
+    onActivateDebugSelectorClick,
+  } = props
 
   const debugData =
     _.isNil(inputDebugData) || _.isEmpty(inputDebugData)
@@ -83,7 +88,7 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
     <PortalInner>
       <div style={debugPanelRoot(left)}>
         <div style={debugPanelOptions}>
-          <div tabIndex={0} onClick={activateDebugSelector} style={debugPanelArrowIcon}>
+          <div tabIndex={0} onClick={onActivateDebugSelectorClick} style={debugPanelArrowIcon}>
             {'\u21f1'}
           </div>
           <div style={{ float: 'right' }}>

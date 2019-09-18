@@ -292,7 +292,7 @@ class Debug extends React.Component<DebugProps> {
         )}
         {!isSelecting && stardustInstance && (
           <DebugPanel
-            activateDebugSelector={() => {
+            onActivateDebugSelectorClick={() => {
               this.setState({ isSelecting: true })
             }}
             componentName={componentName}
