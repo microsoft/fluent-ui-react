@@ -224,10 +224,6 @@ const renderComponent = <P extends {}>(
     theme,
   }
 
-  if (accessibility.focusZone) {
-    return renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
-  }
-
   // conditionally add sources for evaluating debug information to component
   if (isDebugEnabled) {
     saveDebug({
@@ -253,6 +249,10 @@ const renderComponent = <P extends {}>(
         return true
       }),
     })
+  }
+
+  if (accessibility.focusZone) {
+    return renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
   }
 
   return render(resolvedConfig)
