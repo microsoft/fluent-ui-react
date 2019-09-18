@@ -89,7 +89,7 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
         <div style={debugPanelBody}>
           {componentName && (
             <div style={debugPanel}>
-              <h2>{componentName}</h2>
+              <h2 style={{ marginTop: 0 }}>{componentName}</h2>
             </div>
           )}
 

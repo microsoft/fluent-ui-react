@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom'
 import Sidebar from 'docs/src/components/Sidebar/Sidebar'
 import { scrollToAnchor } from 'docs/src/utils'
 import { mergeThemes } from 'src/lib'
+import withDebugId from 'src/lib/withDebugId'
 
 const anchors = new AnchorJS({
   class: 'anchor-link',
@@ -105,20 +106,23 @@ class DocsLayout extends React.Component<any, any> {
                 },
               },
             },
-            componentStyles: {
-              HierarchicalTreeItem: {
-                root: ({ variables: v, props: p }) => ({
-                  ...(!p.items && treeItemStyle),
-                  ...(p.items && treeSectionStyle),
-                }),
-              },
-              HierarchicalTreeTitle: {
-                root: {
-                  display: 'block',
-                  width: '100%',
+            componentStyles: withDebugId(
+              {
+                HierarchicalTreeItem: {
+                  root: ({ variables: v, props: p }) => ({
+                    ...(!p.items && treeItemStyle),
+                    ...(p.items && treeSectionStyle),
+                  }),
+                },
+                HierarchicalTreeTitle: {
+                  root: {
+                    display: 'block',
+                    width: '100%',
+                  },
                 },
               },
-            },
+              'DocsLayout',
+            ),
           })}
         >
           <Sidebar width={sidebarWidth} treeItemStyle={treeItemStyle} />

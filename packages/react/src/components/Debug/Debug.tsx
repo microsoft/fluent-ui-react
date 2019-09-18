@@ -1,9 +1,7 @@
 import keyboardKey from 'keyboard-key'
-import _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import * as Stardust from '@stardust-ui/react'
 import { toRefObject } from '@stardust-ui/react-component-ref'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import DebugPanel from './DebugPanel'
@@ -261,6 +259,8 @@ class FiberNavigator {
   }
 
   static fromFiber = fiber => {
+    if (!fiber) return null
+
     const fiberNavigator = new FiberNavigator()
 
     Object.defineProperty(fiberNavigator, '__fiber', {
@@ -276,9 +276,7 @@ class FiberNavigator {
   static fromDOMNode = domNode => {
     const fiber = FiberNavigator.domNodeToReactFiber(domNode)
 
-    if (!fiber) {
-      return null
-    }
+    if (!fiber) return null
 
     const fiberNavigator = new FiberNavigator()
 
@@ -328,8 +326,6 @@ class FiberNavigator {
       ? this.__fiber.memoizedState &&
         this.__fiber.memoizedState.memoizedState &&
         this.__fiber.memoizedState.memoizedState.current
-      : this.isHostComponent
-      ? this.owner.instance
       : null
   }
 
@@ -410,6 +406,8 @@ if (isBrowser()) {
 }
 
 const INITIAL_STATE = {
+  fiberNav: null,
+  stardustOwnerFiberNav: null,
   intermediaryFibers: [],
   isSelecting: false,
   stardustDOMNode: null,
@@ -473,44 +471,86 @@ class Debug extends React.Component<DebugProps> {
     this.setState({ isSelecting: false })
   }
 
-  handleMouseMoveThrottled = _.throttle(e => {
+  handleMouseMove = e => {
+    // console.log('MOUSEMOVE')
+    this.debugDOMNode(e.target)
+  }
+
+  debugDOMNode = domNode => {
     let stardustDOMNode
     let stardustComponent: React.Component
     let stardustInstance: object
     const intermediaryFibers = []
 
-    // console.group('MOUSEMOVE')
+    if (!domNode) {
+      return
+    }
 
-    let fiberNav = FiberNavigator.fromDOMNode(e.target)
+    // console.group('debugDOMNode')
 
-    while (!stardustDOMNode && fiberNav) {
+    const isFiberDebuggable = (fiber: FiberNavigator) => {
+      // console.log('isFiberDebuggable', fiber)
+      return !!fiber && !!fiber.instance && !!fiber.instance.stardustDebug
+    }
+
+    //
+    // Find nearest Stardust owner
+    //
+    let stardustOwnerFiberNav = FiberNavigator.fromDOMNode(domNode)
+    let foundStardustOwner
+
+    while (!foundStardustOwner && stardustOwnerFiberNav) {
+      if (isFiberDebuggable(stardustOwnerFiberNav)) {
+        foundStardustOwner = true
+      } else {
+        stardustOwnerFiberNav = stardustOwnerFiberNav.owner
+      }
+    }
+
+    if (!foundStardustOwner && !stardustOwnerFiberNav) {
+      // console.log("Reached top, didn't find Stardust Owner in DOM")
+      // console.groupEnd()
+      return
+    }
+
+    //
+    // Find parents up to Stardust owner
+    //
+    let parentsFiberNav = FiberNavigator.fromDOMNode(domNode)
+
+    while (!stardustDOMNode && parentsFiberNav) {
       // console.group('WHILE')
-      // console.debug({ node, fiberNav, SDComponent })
+      // console.debug({ node, parentsFiberNav, SDComponent })
 
-      if (Stardust[fiberNav.owner.name]) {
-        stardustDOMNode = e.target
-        stardustComponent = fiberNav.owner.reactComponent
-        stardustInstance = fiberNav.owner.instance
+      // compare owner owner to parents owner
+      if (parentsFiberNav && stardustOwnerFiberNav.instance === parentsFiberNav.instance) {
+        stardustDOMNode = ReactDOM.findDOMNode(parentsFiberNav.instance)
+        stardustComponent = stardustOwnerFiberNav.reactComponent
+        stardustInstance = stardustOwnerFiberNav.instance
 
-        console.debug('FOUND', {
-          intermediaryFibers,
-          fiberNav,
-          stardustInstance,
-          stardustDOMNode,
-          stardustComponent,
-        })
+        // console.debug('FOUND', {
+        //   intermediaryFibers,
+        //   parentsFiberNav,
+        //   stardustOwnerFiberNav,
+        //   stardustInstance,
+        //   stardustDOMNode,
+        //   stardustComponent,
+        // })
       } else {
         // Track all React components between the original fiber and the eventual Stardust owner.
         // This will enable us to show a selector for choosing DOM nodes and Stardust components
         //   between the selected element at the nearest Stardust owner.
-        intermediaryFibers.push(fiberNav)
-        fiberNav = fiberNav.parent
+        if (isFiberDebuggable(parentsFiberNav)) {
+          intermediaryFibers.push(parentsFiberNav)
+        }
+        parentsFiberNav = parentsFiberNav.parent
 
-        console.debug('SEARCHING', {
-          intermediaryFibers,
-          fiberNav,
-          stardustDOMNode,
-        })
+        // console.debug('SEARCHING', {
+        //   intermediaryFibers,
+        //   parentsFiberNav,
+        //   stardustOwnerFiberNav,
+        //   stardustDOMNode,
+        // })
       }
 
       // console.groupEnd()
@@ -519,14 +559,23 @@ class Debug extends React.Component<DebugProps> {
     // console.groupEnd()
 
     if (
+      stardustOwnerFiberNav !== this.state.stardustOwnerFiberNav ||
+      parentsFiberNav !== this.state.fiberNav ||
       intermediaryFibers !== this.state.intermediaryFibers ||
       stardustDOMNode !== this.state.stardustDOMNode ||
       stardustComponent !== this.state.stardustComponent ||
       stardustInstance !== this.state.stardustInstance
     ) {
-      this.setState({ stardustDOMNode, stardustComponent, stardustInstance })
+      this.setState({
+        stardustOwnerFiberNav,
+        fiberNav: parentsFiberNav,
+        intermediaryFibers,
+        stardustDOMNode,
+        stardustComponent,
+        stardustInstance,
+      })
     }
-  }, 30)
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     // console.debug('DEBUG componentDidUpdate', { state: this.state, prevState })
@@ -551,7 +600,9 @@ class Debug extends React.Component<DebugProps> {
   render() {
     const { mountDocument } = this.props
     const {
-      intermediaryFibers,
+      // fiberNav,
+      // stardustOwnerFiberNav,
+      // intermediaryFibers,
       stardustComponent,
       stardustInstance,
       stardustDOMNode,
@@ -572,7 +623,7 @@ class Debug extends React.Component<DebugProps> {
         {isSelecting && (
           <EventListener
             targetRef={toRefObject(mountDocument.body)}
-            listener={this.handleMouseMoveThrottled}
+            listener={this.handleMouseMove}
             type="mousemove"
           />
         )}
@@ -622,11 +673,6 @@ class Debug extends React.Component<DebugProps> {
                   background: '#6495ed',
                 }}
               >
-                <div>
-                  {intermediaryFibers.map(fiberNav => {
-                    return <div key={fiberNav.name}>{fiberNav.name}</div>
-                  })}
-                </div>
                 <strong style={{ fontWeight: 'bold', color: 'hsl(160, 100%, 80%)' }}>
                   {stardustDOMNode.tagName.toLowerCase()}
                 </strong>
