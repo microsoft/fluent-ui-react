@@ -42,9 +42,24 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
     }))
   }
 
+  getNextButtonTitle() {
+    if (this.state.currentAlert + 1 === this.props.alerts.length) {
+      return `No next alert`
+    }
+    return `Next alert ${this.state.currentAlert + 2} of ${this.props.alerts.length}`
+  }
+
+  getPreviousButtonTitle() {
+    if (this.state.currentAlert === 0) {
+      return `No previous alert`
+    }
+    return `Previous alert ${this.state.currentAlert} of ${this.props.alerts.length}`
+  }
+
   alertButtonsForMultipleAlerts(anotherButtons, closeButton) {
     const baseButtons = [
       <Button
+        aria-disabled={this.state.currentAlert === 0}
         key="previousAlert"
         iconOnly
         icon={{
@@ -52,7 +67,7 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
           rotate: 90,
           outline: true,
         }}
-        title="Previous alert"
+        title={this.getPreviousButtonTitle()}
         onClick={() => this.setPrevious()}
         primary
       />,
@@ -62,6 +77,7 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
         content={`${this.state.currentAlert + 1} of ${this.props.alerts.length}`}
       />,
       <Button
+        aria-disabled={this.state.currentAlert + 1 === this.props.alerts.length}
         iconOnly
         key="nextAlert"
         icon={{
@@ -69,7 +85,7 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
           rotate: -90,
           outline: true,
         }}
-        title="Next alert"
+        title={this.getNextButtonTitle()}
         onClick={() => this.setNext()}
         primary
       />,
