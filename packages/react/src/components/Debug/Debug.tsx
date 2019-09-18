@@ -334,7 +334,7 @@ class FiberNavigator {
   }
 
   get reactComponent() {
-    return this.owner.elementType
+    return this.isHostComponent ? this.owner.elementType : this.elementType
   }
 
   get elementType() {
@@ -489,8 +489,8 @@ class Debug extends React.Component<DebugProps> {
 
       if (Stardust[fiberNav.owner.name]) {
         stardustDOMNode = e.target
-        stardustComponent = fiberNav.reactComponent
-        stardustInstance = fiberNav.instance
+        stardustComponent = fiberNav.owner.reactComponent
+        stardustInstance = fiberNav.owner.instance
 
         console.debug('FOUND', {
           intermediaryFibers,
@@ -500,6 +500,9 @@ class Debug extends React.Component<DebugProps> {
           stardustComponent,
         })
       } else {
+        // Track all React components between the original fiber and the eventual Stardust owner.
+        // This will enable us to show a selector for choosing DOM nodes and Stardust components
+        //   between the selected element at the nearest Stardust owner.
         intermediaryFibers.push(fiberNav)
         fiberNav = fiberNav.parent
 
