@@ -18,6 +18,7 @@ const INITIAL_STATE = {
   stardustDOMNode: null,
   stardustComponent: null,
   stardustInstance: null,
+  debugPanelPosition: undefined,
 }
 
 type DebugProps = {
@@ -25,7 +26,18 @@ type DebugProps = {
   mountDocument?: Document
 }
 
-class Debug extends React.Component<DebugProps> {
+type DebugState = {
+  fiberNav: any
+  stardustOwnerFiberNav: any
+  intermediaryFibers: any[]
+  isSelecting: boolean
+  stardustDOMNode: any
+  stardustComponent: React.Component
+  stardustInstance: object
+  debugPanelPosition: 'left' | 'right' | undefined
+}
+
+class Debug extends React.Component<DebugProps, DebugState> {
   selectorRef = React.createRef<HTMLPreElement>()
 
   state = INITIAL_STATE
@@ -292,13 +304,17 @@ class Debug extends React.Component<DebugProps> {
         )}
         {!isSelecting && stardustInstance && (
           <DebugPanel
-            onActivateDebugSelectorClick={() => {
-              this.setState({ isSelecting: true })
-            }}
+            onActivateDebugSelectorClick={() => this.setState({ isSelecting: true })}
+            onClose={() =>
+              this.setState({ ...INITIAL_STATE, debugPanelPosition: this.state.debugPanelPosition })
+            }
             componentName={componentName}
             // TODO: Integrate CSS in JS Styles for Host Components (DOM nodes)
             // cssStyles={stylesForNode(stardustDOMNode)}
             debugData={stardustInstance.stardustDebug}
+            position={this.state.debugPanelPosition || 'right'}
+            onPositionLeft={() => this.setState({ debugPanelPosition: 'left' })}
+            onPositionRight={() => this.setState({ debugPanelPosition: 'right' })}
           />
         )}
       </>

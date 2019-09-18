@@ -14,6 +14,10 @@ export type DebugPanelProps = {
     siteVariables: object[]
   }
   onActivateDebugSelectorClick: (e) => void
+  onClose: (e) => void
+  onPositionLeft: (e) => void
+  onPositionRight: (e) => void
+  position: 'left' | 'right'
 }
 
 const getValues = (value, predicate) => {
@@ -39,14 +43,19 @@ const getValues = (value, predicate) => {
 }
 
 const DebugPanel: React.FC<DebugPanelProps> = props => {
-  const [left, setLeft] = React.useState(false)
   const [slot, setSlot] = React.useState('root')
   const {
     cssStyles,
     componentName,
     debugData: inputDebugData,
     onActivateDebugSelectorClick,
+    onClose,
+    position,
+    onPositionLeft,
+    onPositionRight,
   } = props
+
+  const left = position === 'left'
 
   const debugData =
     _.isNil(inputDebugData) || _.isEmpty(inputDebugData)
@@ -87,11 +96,14 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
     <div style={debugPanelRoot(left)}>
       <div style={debugPanelOptions}>
         <div tabIndex={0} onClick={onActivateDebugSelectorClick} style={debugPanelArrowIcon}>
-          {'\u21f1'}
+          ⇱
         </div>
         <div style={{ float: 'right' }}>
-          <div style={debugPanelIcon(true, left)} onClick={e => setLeft(true)} />
-          <div style={debugPanelIcon(false, left)} onClick={e => setLeft(false)} />
+          <div tabIndex={0} style={debugPanelIcon(true, left)} onClick={onPositionLeft} />
+          <div tabIndex={0} style={debugPanelIcon(false, left)} onClick={onPositionRight} />
+          <div tabIndex={0} onClick={onClose} style={debugPanelCloseIcon}>
+            ✕
+          </div>
         </div>
       </div>
 
@@ -172,14 +184,42 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
   )
 }
 
+const commonIconStyle: React.CSSProperties = {
+  display: 'inline-block',
+  cursor: 'pointer',
+}
+
+const debugPanelCloseIcon: React.CSSProperties = {
+  ...commonIconStyle,
+  fontSize: '20px',
+  color: 'grey',
+  outline: '0',
+  cursor: 'pointer',
+}
+
 const debugPanelArrowIcon: React.CSSProperties = {
+  ...commonIconStyle,
   float: 'left',
   fontSize: '20px',
   color: 'grey',
   marginTop: '-4px',
   outline: '0',
-  cursor: 'pointer',
 }
+
+const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
+  ...commonIconStyle,
+  borderWidth: '2px',
+  borderStyle: 'solid ',
+  borderColor: '#888',
+  backgroundColor: 'white',
+  [left ? 'borderLeftWidth' : 'borderRightWidth']: '6px',
+  width: '16px',
+  height: '14px',
+  marginRight: '0.8em',
+  ...(left === isLeftActive && {
+    borderColor: '#6495ed',
+  }),
+})
 
 const debugPanelRoot = (left): React.CSSProperties => ({
   position: 'fixed',
@@ -223,24 +263,6 @@ const debugNoData = (): React.CSSProperties => ({
 
 const debugPanelSelectContainer = (): React.CSSProperties => ({
   float: 'right',
-})
-
-const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
-  display: 'inline-block',
-  borderWidth: '2px',
-  borderStyle: 'solid ',
-  borderColor: '#888',
-  backgroundColor: 'white',
-  [left ? 'borderLeftWidth' : 'borderRightWidth']: '6px',
-  width: '16px',
-  height: '14px',
-  ...(left && {
-    marginRight: '0.5em',
-  }),
-  ...(left === isLeftActive && {
-    borderColor: '#6495ed',
-  }),
-  cursor: 'pointer',
 })
 
 const debugPanelOptions: React.CSSProperties = {
