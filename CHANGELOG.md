@@ -33,6 +33,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add support for `Popup` in `ToolbarMenu` @lucivpav ([#1927](https://github.com/stardust-ui/react/pull/1927))
 
 ### Documentation
+- Remove Usage tab @lucivpav ([#1948](https://github.com/stardust-ui/react/pull/1948))
 - Fix props links @lucivpav ([#1892](https://github.com/stardust-ui/react/pull/1892))
 
 <!--------------------------------[ v0.38.1 ]------------------------------- -->
