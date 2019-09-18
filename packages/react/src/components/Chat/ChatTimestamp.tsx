@@ -27,6 +27,9 @@ export interface ChatTimestampProps
 
   /** Indicates whether message belongs to the current user. */
   mine?: boolean
+
+  /** TODO ??? */
+  hasReactionGroup?: boolean
 }
 
 class ChatTimestamp extends UIComponent<WithAsProp<ChatTimestampProps>> {
@@ -35,6 +38,7 @@ class ChatTimestamp extends UIComponent<WithAsProp<ChatTimestampProps>> {
     ...commonPropTypes.createCommon(),
     attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
     mine: PropTypes.bool,
+    hasReactionGroup: PropTypes.bool,
   }
   static defaultProps = {
     as: 'span',

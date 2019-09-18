@@ -10,9 +10,6 @@ export interface ChatMessageVariables {
   color: string
   offset: string
   padding: string
-  contentColor: string
-  linkColor: string
-  linkColorMine: string
   border: string
   badgeShadow: string
   isImportant: boolean
@@ -37,9 +34,6 @@ export default (siteVars): ChatMessageVariables => ({
   color: 'rgb(64, 64, 64)',
   offset: pxToRem(100),
   padding: pxToRem(16),
-  contentColor: siteVars.colors.grey[750],
-  linkColor: siteVars.colorScheme.brand.foreground1,
-  linkColorMine: siteVars.colorScheme.brand.foreground2,
   border: 'none',
   badgeShadow: siteVars.shadowLevel1Darker,
   isImportant: false,

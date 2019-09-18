@@ -23,7 +23,7 @@ const chatTimestampStyles: ComponentSlotStylesPrepared<
     }),
 
     ...((p.attached === 'bottom' || p.attached === true) &&
-      !p.reactionGroup &&
+      !p.hasReactionGroup &&
       screenReaderContainerStyles),
   }),
 }

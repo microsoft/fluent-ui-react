@@ -9,6 +9,7 @@ export { default as ButtonGroup } from './components/Button/buttonVariables'
 
 export { default as Chat } from './components/Chat/chatVariables'
 export { default as ChatAuthor } from './components/Chat/chatAuthorVariables'
+export { default as ChatContent } from './components/Chat/chatContentVariables'
 export { default as ChatItem } from './components/Chat/chatItemVariables'
 export { default as ChatGutter } from './components/Chat/chatGutterVariables'
 export { default as ChatMessage } from './components/Chat/chatMessageVariables'

@@ -105,22 +105,6 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
       width: v.showActionMenu ? 'auto' : 0,
     }),
   }),
-
-  content: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    color: v.contentColor,
-    display: 'block',
-    '& a': {
-      outline: 'none',
-      color: p.mine ? v.linkColorMine : v.linkColor,
-      ':focus': {
-        textDecoration: 'underline',
-      },
-    },
-    ...(p.badge &&
-      p.badgePosition === 'end' && {
-        marginRight: pxToRem(4),
-      }),
-  }),
   badge: ({ props: p, variables: v }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
     return {

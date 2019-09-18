@@ -2,6 +2,7 @@ export { default as Attachment } from './components/Attachment/attachmentVariabl
 export { default as Button } from './components/Button/buttonVariables'
 export { default as Chat } from './components/Chat/chatVariables'
 export { default as ChatAuthor } from './components/Chat/chatAuthorVariables'
+export { default as ChatContent } from './components/Chat/chatContentVariables'
 export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 export { default as ChatTimestampVariables } from './components/Chat/chatTimestampVariables'
 export { default as Dialog } from './components/Dialog/dialogVariables'

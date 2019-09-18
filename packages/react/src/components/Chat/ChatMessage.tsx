@@ -301,10 +301,17 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
                 defaultProps: {
                   attached,
                   mine,
+                  hasReactionGroup: !_.isNil(reactionGroup),
                 },
               })}
               {reactionGroupPosition === 'start' && reactionGroupElement}
-              {ChatContent.create(content)}
+              {ChatContent.create(content, {
+                defaultProps: {
+                  badgePosition,
+                  hasBadge: !_.isNil(badge),
+                  mine,
+                },
+              })}
               {reactionGroupPosition === 'end' && reactionGroupElement}
               {badgePosition === 'end' && badgeElement}
             </>
