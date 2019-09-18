@@ -187,9 +187,9 @@ const debugHeader = (): React.CSSProperties => ({
 })
 
 const debugNoDataHeader = (): React.CSSProperties => ({
-  marginTop: '40px',
   fontSize: '1rem',
   fontWeight: 'bold',
+  padding: '10px',
 })
 
 const debugPanelSelectContainer = (): React.CSSProperties => ({
