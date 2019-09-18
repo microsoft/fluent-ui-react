@@ -18,14 +18,24 @@ const Content = () => (
       examplePath="components/Toolbar/Content/ToolbarExamplePopup"
     />
     <ComponentExample
+      title="Toolbar can contain a radio group"
+      description="Toolbar items can be grouped into radio group. Up/Down arrow keys can be used to cycle between radio items. Only one of the radio items can be selected at a time, should be implemented additionally."
+      examplePath="components/Toolbar/Content/ToolbarExampleRadioGroup"
+    />
+    <ComponentExample
       title="Toolbar can contain a menu"
       description="Toolbar item can open a menu."
       examplePath="components/Toolbar/Content/ToolbarExampleMenu"
     />
     <ComponentExample
-      title="Toolbar can contain a radio group"
-      description="Toolbar items can be grouped into radio group. Up/Down arrow keys can be used to cycle between radio items. Only one of the radio items can be selected at a time, should be implemented additionally."
-      examplePath="components/Toolbar/Content/ToolbarExampleRadioGroup"
+      title="Toolbar can contain toggle items in a menu"
+      description="Toolbar item can open a menu which can contain toggle items."
+      examplePath="components/Toolbar/Content/ToolbarExampleMenuItemToggle"
+    />
+    <ComponentExample
+      title="Toolbar can contain a radio group in a menu"
+      description="Toolbar item can open a menu which can contain radio groups."
+      examplePath="components/Toolbar/Content/ToolbarExampleMenuRadioGroup"
     />
     <ComponentExample
       title="Toolbar can contain custom content"
