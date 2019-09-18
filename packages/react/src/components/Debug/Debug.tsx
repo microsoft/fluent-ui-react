@@ -18,7 +18,7 @@ const INITIAL_STATE = {
   stardustDOMNode: null,
   stardustComponent: null,
   stardustInstance: null,
-  debugPanelPosition: undefined,
+  debugPanelPosition: null,
 }
 
 type DebugProps = {
@@ -34,7 +34,7 @@ type DebugState = {
   stardustDOMNode: any
   stardustComponent: React.Component
   stardustInstance: object
-  debugPanelPosition: 'left' | 'right' | undefined
+  debugPanelPosition: 'left' | 'right' | null
 }
 
 class Debug extends React.Component<DebugProps, DebugState> {
