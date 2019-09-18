@@ -93,13 +93,15 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
             </div>
           )}
 
-          {!_.isEmpty(debugData.siteVariables) ? (
+          {!_.isEmpty(siteVariablesData) && !_.isEmpty(uniqSiteVariables) ? (
             <div style={debugPanel}>
-              <div style={debugHeader()}>Site variables</div>
+              <div style={debugHeaderContainer()}>
+                <div style={debugHeader()}>Site variables</div>
+              </div>
               <DebugPanelItem data={siteVariablesData} />
             </div>
           ) : (
-            <div style={debugNoDataHeader()}>No Site variables defined</div>
+            <div style={debugNoDataHeader()}>No site variables defined/used</div>
           )}
 
           {!_.isEmpty(debugData.componentVariables) ? (
