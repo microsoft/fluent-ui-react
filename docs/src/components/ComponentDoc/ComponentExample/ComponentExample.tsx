@@ -445,11 +445,20 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showTransparent,
       showVariables,
     } = this.state
+
     const newTheme: ThemeInput = {
       componentVariables: {
         ...componentVariables,
         ProviderBox: { background: showTransparent ? 'initial' : undefined },
       },
+    }
+    const exampleStyles = {
+      padding: '2rem',
+      ...(showTransparent && {
+        backgroundImage:
+          'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+        backgroundRepeat: 'repeat',
+      }),
     }
 
     return (
@@ -501,14 +510,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                   <>
                     <Segment
                       className={`rendered-example ${this.getKebabExamplePath()}`}
-                      styles={{
-                        padding: '2rem',
-                        ...(showTransparent && {
-                          backgroundImage:
-                            'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                          backgroundRepeat: 'repeat',
-                        }),
-                      }}
+                      styles={exampleStyles}
                     >
                       <Provider theme={newTheme} rtl={showRtl}>
                         <VariableResolver onResolve={this.handleVariableResolve}>
@@ -553,14 +555,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             ) : (
               <Segment
                 className={`rendered-example ${this.getKebabExamplePath()}`}
-                styles={{
-                  padding: '2rem',
-                  ...(showTransparent && {
-                    backgroundImage:
-                      'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                    backgroundRepeat: 'repeat',
-                  }),
-                }}
+                styles={exampleStyles}
               >
                 {React.createElement(component)}
               </Segment>
